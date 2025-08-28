@@ -61,8 +61,8 @@ extension AppearanceOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 1 {
-			guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectableSettingsCell.identifier)")
+			guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: "\(SelectableSettingsCell.self)", for: indexPath) as? SelectableSettingsCell else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.self)")
 			}
 			if let darkThemeOption = DarkThemeOption(rawValue: indexPath.item) {
 				selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]

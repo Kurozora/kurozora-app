@@ -20,17 +20,19 @@ class AccountTableViewController: SubSettingsViewController {
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var userEmailLabel: KSecondaryLabel!
-	@IBOutlet weak var languageButton: KButton!
-	@IBOutlet weak var tvRatingButton: KButton!
-	@IBOutlet weak var timezoneButton: KButton!
+	@IBOutlet weak var languageLabel: KSecondaryLabel!
+	@IBOutlet weak var tvRatingLabel: KSecondaryLabel!
+	@IBOutlet weak var timezoneLabel: KSecondaryLabel!
 
 	// MARK: - Properties
 	var languages: [String: String] = [:]
 	var tvRatings: [String: String] = [:]
 	var timezones: [String: String] = [:]
-	var selectedLanguage: String = "en"
-	var selectedTVRating: String = "4"
-	var selectedTimezone: String = "UTC"
+	var selectedLanguage: [String: String].Element = ("", "")
+	var selectedTVRating: [String: String].Element = ("", "")
+	var selectedTimezone: [String: String].Element = ("", "")
+
+	var selectedAccountSetting: AccountSetting?
 
 	// MARK: - View
 	override func viewWillReload() {
@@ -60,35 +62,34 @@ class AccountTableViewController: SubSettingsViewController {
 		self.configureUserDetails()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		self.configureUserDetails()
+	}
+
 	// MARK: - Functions
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		guard let user = User.current else { return }
 
-		// Setup username.
+		// Configure username
 		self.usernameLabel.text = user.attributes.username
 
-		// Setup email address.
+		// Configure email address
 		self.userEmailLabel.text = user.attributes.email
 
-		// Setup profile image.
+		// Configure profile image
 		user.attributes.profileImage(imageView: self.profileImageView)
 
-		self.selectedLanguage = self.languages.first(where: { $0.key == user.attributes.preferredLanguage })?.value ?? self.selectedLanguage
-		self.selectedTVRating = self.tvRatings.first(where: { $0.key == user.attributes.preferredTVRating?.string })?.value ?? self.selectedTVRating
-		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone })?.value ?? self.selectedTimezone
+		// Configure preferences
+		self.selectedLanguage = self.languages.first(where: { $0.key == user.attributes.preferredLanguage }) ?? self.selectedLanguage
+		self.selectedTVRating = self.tvRatings.first(where: { $0.key == user.attributes.preferredTVRating?.string }) ?? self.selectedTVRating
+		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone }) ?? self.selectedTimezone
 
-		self.languageButton.titleLabel?.numberOfLines = 0
-		self.languageButton.contentHorizontalAlignment = .trailing
-		self.languageButton.menu = self.configureMenu(accountSetting: .language, options: self.languages.map({ $0.value }), selected: self.selectedLanguage)
-
-		self.tvRatingButton.titleLabel?.numberOfLines = 0
-		self.tvRatingButton.contentHorizontalAlignment = .trailing
-		self.tvRatingButton.menu = self.configureMenu(accountSetting: .tvRating, options: self.tvRatings.map({ $0.value }), selected: self.selectedTVRating)
-
-		self.timezoneButton.titleLabel?.numberOfLines = 0
-		self.timezoneButton.contentHorizontalAlignment = .trailing
-		self.timezoneButton.menu = self.configureMenu(accountSetting: .timezone, options: self.timezones.map({ $0.value }), selected: self.selectedTimezone)
+		self.languageLabel.text = self.selectedLanguage.value
+		self.tvRatingLabel.text = self.selectedTVRating.value.replacingOccurrences(of: " - .*", with: "", options: .regularExpression)
+		self.timezoneLabel.text = self.selectedTimezone.value.replacingOccurrences(of: ".*\\/|\\s*\\(.*\\)", with: "", options: .regularExpression)
 	}
 
 	func loadOptions(from file: String) -> [String: String] {
@@ -100,42 +101,21 @@ class AccountTableViewController: SubSettingsViewController {
 		}
 	}
 
-	func configureMenu(accountSetting: AccountSetting, options: [String], selected: String) -> UIMenu {
-		return UIMenu(title: "", options: .singleSelection, children: options.sorted().map { option in
-			return UIAction(title: option, state: option == selected ? .on : .off) { [weak self] action in
-				guard let self = self else { return }
+	func updateInformation() async {
+		let selectedLanguage = self.selectedLanguage.key
+		let selectedTVRating = self.selectedTVRating.key.int
+		let selectedTimezone = self.selectedTimezone.key
 
-				switch accountSetting {
-				case .language:
-					self.selectedLanguage = action.title
-				case .tvRating:
-					self.selectedTVRating = action.title
-				case .timezone:
-					self.selectedTimezone = action.title
-				}
+		do {
+			let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: nil, profileImageRequest: nil, bannerImageRequest: nil, preferredLanguage: selectedLanguage, preferredTVRating: selectedTVRating,
+				preferredTimezone: selectedTimezone)
 
-				self.updateInformation()
-			}
-		})
-	}
-
-	func updateInformation() {
-		guard let selectedLanguage = self.languages.first(where: { $0.value == self.selectedLanguage })?.key else { return }
-		guard let selectedTVRating = self.tvRatings.first(where: { $0.value == self.selectedTVRating })?.key.int else { return }
-		guard let selectedTimezone = self.timezones.first(where: { $0.value == self.selectedTimezone })?.key  else { return }
-
-		Task {
-			do {
-				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: nil, profileImageRequest: nil, bannerImageRequest: nil, preferredLanguage: selectedLanguage, preferredTVRating: selectedTVRating,
-					preferredTimezone: selectedTimezone)
-
-				// Perform update request.
-				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
-				User.current?.attributes.update(using: userUpdateResponse.data)
-				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-			} catch {
-				print(error.localizedDescription)
-			}
+			// Perform update request.
+			let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+			User.current?.attributes.update(using: userUpdateResponse.data)
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }
@@ -158,6 +138,31 @@ extension AccountTableViewController {
 		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
 		switch Section(rawValue: indexPath.section) {
+		case .account:
+			switch indexPath.row {
+			case 0:
+				self.selectedAccountSetting = .language
+
+				let viewController = SettingsPickerTableViewController(items: self.languages, selectedKey: self.selectedLanguage.key)
+				viewController.title = "Language"
+				viewController.delegate = self
+				self.show(viewController, sender: nil)
+			case 1:
+				self.selectedAccountSetting = .tvRating
+
+				let viewController = SettingsPickerTableViewController(items: self.tvRatings, selectedKey: self.selectedTVRating.key)
+				viewController.title = "TV Rating"
+				viewController.delegate = self
+				self.show(viewController, sender: nil)
+			case 2:
+				self.selectedAccountSetting = .timezone
+
+				let viewController = SettingsPickerTableViewController(items: self.timezones, selectedKey: self.selectedTimezone.key)
+				viewController.title = "Time Zone"
+				viewController.delegate = self
+				self.show(viewController, sender: nil)
+			default: break
+			}
 		case .danger:
 			switch indexPath.row {
 			case 0:
@@ -257,5 +262,24 @@ extension AccountTableViewController {
 		case signOut
 		/// The row for the delete account settings.
 		case deleteAccount
+	}
+}
+
+extension AccountTableViewController: SettingsPickerTableViewControllerDelegate {
+	func settingsPickerTableViewController(_ controller: SettingsPickerTableViewController, didSelectKey key: String) async {
+		switch self.selectedAccountSetting {
+		case .language:
+			self.selectedLanguage = self.selectedLanguage.key == key ? self.selectedLanguage : (key, self.languages[key] ?? "")
+			await self.updateInformation()
+		case .tvRating:
+			self.selectedTVRating = self.selectedTVRating.key == key ? self.selectedTVRating : (key, self.tvRatings[key] ?? "")
+			await self.updateInformation()
+		case .timezone:
+			self.selectedTimezone = self.selectedTimezone.key == key ? self.selectedTimezone : (key, self.timezones[key] ?? "")
+			await self.updateInformation()
+		default: break
+		}
+
+		self.configureUserDetails()
 	}
 }
