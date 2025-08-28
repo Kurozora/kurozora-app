@@ -43,8 +43,8 @@ extension SwitchAccountsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectableSettingsCell.identifier)")
+		guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: "\(SelectableSettingsCell.self)", for: indexPath) as? SelectableSettingsCell else {
+			fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.self)")
 		}
 		let accountKey = self.accounts[indexPath.item]
 		selectableSettingsCell.primaryLabel?.text = accountKey

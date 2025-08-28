@@ -100,21 +100,21 @@ extension LibraryImportTableViewController {
 			switch Row(rawValue: indexPath.row) {
 			case .service:
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
 				}
 				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? "Select service") ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			case .behavior:
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
 				}
 				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? "Select behavior") ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			default:
 				guard let libraryImportActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.libraryImportActionTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.libraryImportActionTableViewCell.identifier)")
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryImportActionTableViewCell.identifier)")
 				}
 				libraryImportActionTableViewCell.actionTextField.tag = indexPath.row
 				libraryImportActionTableViewCell.actionTextField.delegate = self

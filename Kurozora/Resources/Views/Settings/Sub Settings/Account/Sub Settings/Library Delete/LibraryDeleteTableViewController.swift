@@ -100,7 +100,7 @@ extension LibraryDeleteTableViewController {
 			switch Row(rawValue: indexPath.row) {
 			case .library:
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
 				}
 				selectTableViewCell.configureCell(using: "\(self.selectedLibraryKind?.stringValue ?? "Select library") ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self

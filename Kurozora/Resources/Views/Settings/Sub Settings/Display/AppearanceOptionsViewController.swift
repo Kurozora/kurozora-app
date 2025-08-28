@@ -71,7 +71,7 @@ extension AppearanceOptionsViewController {
 			return selectableSettingsCell
 		} else if datePickerIndexPath == indexPath {
 			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.datePickerSettingsCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.datePickerSettingsCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.datePickerSettingsCell.identifier)")
 			}
 			datePickerSettingsCell.updateCell(with: inputDates[indexPath.row - 1], for: indexPath)
 			datePickerSettingsCell.delegate = self
