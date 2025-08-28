@@ -496,7 +496,7 @@
                                             <outlet property="primaryLabel" destination="yYu-Ua-h2Y" id="QDu-j9-OqK"/>
                                             <outlet property="secondaryLabel" destination="XLF-Ry-3Ft" id="O9N-Ao-DJZ"/>
                                             <outlet property="selectedView" destination="SZi-N4-cL0" id="dse-fF-sNX"/>
-                                            <segue destination="nbe-8X-tly" kind="show" id="zYA-oN-GRK"/>
+                                            <segue destination="nbe-8X-tly" kind="show" identifier="DeleteLibrarySegue" id="zYA-oN-GRK"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -586,6 +586,7 @@
                                             <outlet property="primaryLabel" destination="cAf-xt-ycl" id="Vnc-U1-cbb"/>
                                             <outlet property="secondaryLabel" destination="f9U-jC-Hg6" id="qdD-30-fZp"/>
                                             <outlet property="selectedView" destination="90q-8i-GR2" id="S15-WZ-n0S"/>
+                                            <segue destination="zNe-eX-9qe" kind="show" identifier="SignInWithAppleSegue" id="1RW-2I-M5z"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
