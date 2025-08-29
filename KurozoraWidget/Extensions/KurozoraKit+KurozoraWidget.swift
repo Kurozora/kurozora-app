@@ -44,11 +44,9 @@ extension Media {
 	/// Converts `Media` to `Banner`.
 	func asBanner() async -> Banner {
 		return Banner(
-			image: nil,
-			url: await ImageFetcher.fetchImage(from: URL(string: self.url)),
+			image: try? await ImageFetcher.shared.fetchImage(from: URL(string: self.url)),
 			height: self.height,
 			width: self.width,
-			backgroundColor: UIColor(hexString: self.backgroundColor ?? "")?.color,
 			deeplinkURL: self.deeplinkURL
 		)
 	}

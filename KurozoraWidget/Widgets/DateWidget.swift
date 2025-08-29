@@ -12,17 +12,20 @@ import WidgetKit
 
 struct Provider: IntentTimelineProvider {
 	func placeholder(in context: Context) -> DateEntry {
+		let image = ImageFetcher.shared.fetchRandomImage() ?? UIImage(named: "starry_sky")
+
 		return DateEntry(
 			date: Date(),
 			banner: Banner(
-				image: UIImage(named: "starry_sky")?.resized(toWidth: context.displaySize.width),
-				url: nil,
-				height: 1080,
-				width: 1920,
-				backgroundColor: UIColor(hexString: "#1e1731")?.color,
+				image: image?.resized(toWidth: context.displaySize.width),
+				height: Int(image?.size.height ?? 1080),
+				width: Int(image?.size.width ?? 1920),
 				deeplinkURL: nil
 			),
-			showDate: true
+			isDimmed: true,
+			isAdaptive: true,
+			isDateShown: true,
+			fontStyle: .system
 		)
 	}
 
@@ -43,7 +46,14 @@ struct Provider: IntentTimelineProvider {
 			if context.isPreview {
 				entry = self.placeholder(in: context)
 			} else {
-				entry = DateEntry(date: date, banner: await media.asBanner(), showDate: configuration.showDate == true)
+				entry = DateEntry(
+					date: date,
+					banner: await media.asBanner(),
+					isDimmed: configuration.isDimmed == true,
+					isAdaptive: configuration.isAdaptive == true,
+					isDateShown: configuration.isDateShown == true,
+					fontStyle: configuration.font
+				)
 			}
 
 			completion(entry)
@@ -66,13 +76,20 @@ struct Provider: IntentTimelineProvider {
 			var entries: [DateEntry] = []
 
 			for (index, media) in mediaResponse.data.enumerated() {
-				entries.append(DateEntry(date: date.adding(.hour, value: index), banner: await media.asBanner(), showDate: configuration.showDate == true))
+				entries.append(
+					DateEntry(
+						date: date.adding(.hour, value: index),
+						banner: await media.asBanner(),
+						isDimmed: configuration.isDimmed == true,
+						isAdaptive: configuration.isAdaptive == true,
+						isDateShown: configuration.isDateShown == true,
+						fontStyle: configuration.font
+					)
+				)
 			}
 
-			// Next fetch happens 1 hour later
-			let nextUpdate = Calendar.current.date(byAdding: DateComponents(hour: limit), to: date)!
-			let timeline = Timeline(entries: entries, policy: .after(nextUpdate))
-
+			// Next fetch after last entry
+			let timeline = Timeline(entries: entries, policy: .atEnd)
 			completion(timeline)
 		}
 	}
@@ -84,16 +101,22 @@ struct DateEntry: TimelineEntry {
 	/// The banner to display.
 	let banner: Banner
 
+	/// Specifies whether to dim the image.
+	let isDimmed: Bool
+
+	/// Specifies whether to adapt to `accent` and `vibrant` modes.
+	let isAdaptive: Bool
+
 	/// Specifies whether to show the date.
-	let showDate: Bool
+	let isDateShown: Bool
+
+	/// Specify font style
+	let fontStyle: IntentFont
 }
 
 struct Banner {
 	/// The image of the media.
 	let image: UIImage?
-
-	/// The url of the media.
-	let url: URL?
 
 	/// The height of the media.
 	let height: Int?
@@ -101,71 +124,8 @@ struct Banner {
 	/// The width of the media.
 	let width: Int?
 
-	/// The background color of the media.
-	let backgroundColor: Color?
-
 	/// The deeplink URL of the media.
 	let deeplinkURL: URL?
-}
-
-struct DateWidgetEntryView: View {
-	@Environment(\.widgetFamily) var family
-	@Environment(\.widgetContentMarginsWithFallback) var margins
-
-	var entry: Provider.Entry
-
-	var body: some View {
-		switch self.family {
-		default:
-			ZStack {
-				if let image = self.entry.banner.image {
-					GeometryReader { geometry in
-						Image(uiImage: image)
-							.resizable()
-							.scaledToFill()
-							.overlay {
-								self.entry.banner.backgroundColor?.opacity(0.25)
-							}
-							.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-					}
-				} else if let url = self.entry.banner.url, let image = try? UIImage(url: url) {
-					GeometryReader { geometry in
-						if let image = image.resized(toWidth: geometry.size.width) {
-							Image(uiImage: image)
-								.resizable()
-								.scaledToFill()
-								.overlay {
-									self.entry.banner.backgroundColor?.opacity(0.25)
-								}
-								.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-						}
-					}
-				}
-
-				if self.entry.showDate {
-					VStack(spacing: .zero) {
-						VStack(spacing: .zero) {
-							Text(self.entry.date, format: .dateTime.weekday(.wide))
-								.font(.headline)
-								.fontWeight(.bold)
-								.foregroundColor(self.entry.banner.backgroundColor?.accessibleFontColor)
-								.frame(maxWidth: .infinity, alignment: .leading)
-
-							Text(self.entry.date, format: .dateTime.day())
-								.font(.largeTitle)
-								.fontWeight(.bold)
-								.foregroundColor(self.entry.banner.backgroundColor?.accessibleFontColor)
-								.frame(maxWidth: .infinity, alignment: .leading)
-						}
-
-						Spacer()
-					}
-					.padding(self.margins)
-				}
-			}
-			.widgetURL(self.entry.banner.deeplinkURL)
-		}
-	}
 }
 
 struct DateWidget: Widget {
@@ -177,9 +137,12 @@ struct DateWidget: Widget {
 			intent: ToggleDateIntent.self,
 			provider: Provider()
 		) { entry in
-			if #available(macOS 14.0, iOS 17.0, *) {
-				DateWidgetEntryView(entry: entry)
+			if #available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *) {
+				DateWidgetEntryView16(entry: entry)
 					.containerBackground(.fill.secondary, for: .widget)
+			} else if #available(iOS 16.0, tvOS 16.0, macOS 13.0, watchOS 9.0, *) {
+				DateWidgetEntryView16(entry: entry)
+					.background()
 			} else {
 				DateWidgetEntryView(entry: entry)
 					.background()
@@ -191,22 +154,152 @@ struct DateWidget: Widget {
 	}
 }
 
+@available(iOS 16.0, watchOS 9.0, macOS 13.0, *)
+struct DateWidgetEntryView16: View, LocationAwareWidget {
+	@Environment(\.widgetFamily) var widgetFamily
+	@Environment(\.widgetRenderingMode) var widgetRenderingMode
+	@Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
+
+	var entry: Provider.Entry
+
+	var body: some View {
+		if self.entry.isAdaptive && (self.widgetRenderingMode == .accented) {
+			self.widgetView
+				.widgetAccentable()
+		} else {
+			self.widgetView
+		}
+	}
+
+	@ViewBuilder
+	var widgetView: some View {
+		DateWidgetEntryContentView(
+			entry: self.entry,
+			isPhoneStandByWidget: self.isPhoneStandByWidget,
+			isVibrant: self.widgetRenderingMode == .vibrant,
+			isAccented: self.widgetRenderingMode == .accented
+		)
+	}
+}
+
+struct DateWidgetEntryView: View {
+	var entry: Provider.Entry
+
+	var body: some View {
+		DateWidgetEntryContentView(
+			entry: self.entry,
+			isPhoneStandByWidget: false,
+			isVibrant: false,
+			isAccented: false
+		)
+	}
+}
+
+struct DateWidgetEntryContentView: View {
+	@Environment(\.widgetFamily) var family
+	@Environment(\.widgetContentMarginsWithFallback) var margins
+	@Environment(\.showsWidgetContainerBackground) var showsContainerBackground
+
+	var entry: Provider.Entry
+	var isPhoneStandByWidget: Bool
+	var isVibrant: Bool
+	var isAccented: Bool
+
+	var body: some View {
+		if !self.isPhoneStandByWidget, self.isVibrant || self.isAccented, self.entry.isAdaptive, self.showsContainerBackground {
+			self.widgetView
+				.luminanceToAlpha()
+		} else {
+			self.widgetView
+		}
+	}
+
+	@ViewBuilder
+	var widgetView: some View {
+		ZStack {
+			GeometryReader { geometry in
+				if #available(iOS 18.0, watchOS 11.0, macOS 15.0, *), self.showsContainerBackground {
+					self.imageView(geometry: geometry)
+						.widgetAccentedRenderingMode(.fullColor)
+						.scaledToFill()
+						.overlay {
+							if self.entry.isDimmed {
+								Color.black.opacity(0.20)
+							}
+						}
+						.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+				} else {
+					self.imageView(geometry: geometry)
+						.scaledToFill()
+						.overlay {
+							if self.entry.isDimmed {
+								Color.black.opacity(0.20)
+							}
+						}
+						.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+						.clipShape(ContainerRelativeShape())
+				}
+			}
+
+			self.dateView
+		}
+		.widgetURL(self.entry.banner.deeplinkURL)
+	}
+
+	@ViewBuilder
+	var dateView: some View {
+		if self.entry.isDateShown {
+			VStack(spacing: .zero) {
+				VStack(spacing: .zero) {
+					Text(self.entry.date, format: .dateTime.weekday(.wide))
+						.font(self.entry.fontStyle.toFontStyle(.caption).weight(.black))
+						.fontWeight(.black)
+						.foregroundStyle(.white)
+						.shadow(color: .black.opacity(0.30), radius: 2)
+						.frame(maxWidth: .infinity, alignment: .leading)
+
+					Text(self.entry.date, format: .dateTime.day())
+						.font(self.entry.fontStyle.toFontStyle(.title).weight(.black))
+						.fontWeight(.black)
+						.foregroundStyle(.white)
+						.shadow(color: .black.opacity(0.50), radius: 2)
+						.frame(maxWidth: .infinity, alignment: .leading)
+				}
+
+				Spacer()
+			}
+			.padding(self.margins)
+			.padding(self.isPhoneStandByWidget || self.showsContainerBackground ? .zero : 8)
+		}
+	}
+
+	func imageView(geometry: GeometryProxy) -> Image {
+		if let image = self.entry.banner.image?.resized(toWidth: geometry.size.width) {
+			return Image(uiImage: image)
+				.resizable()
+		}
+		return Image("starry_sky")
+			.resizable()
+	}
+}
+
 #if DEBUG
 @available(iOS 17.0, macOS 14.0, *)
-#Preview("System Small", as: .systemMedium) {
+#Preview("System Medium", as: .systemMedium) {
 	DateWidget()
 } timeline: {
 	DateEntry(
 		date: Date(),
 		banner: Banner(
 			image: UIImage(named: "starry_sky"),
-			url: nil,
 			height: 1080,
 			width: 1920,
-			backgroundColor: UIColor(hexString: "#1e1731")?.color,
 			deeplinkURL: nil
 		),
-		showDate: true
+		isDimmed: false,
+		isAdaptive: false,
+		isDateShown: true,
+		fontStyle: .system
 	)
 }
 
@@ -218,13 +311,14 @@ struct DateWidget: Widget {
 		date: Date(),
 		banner: Banner(
 			image: UIImage(named: "starry_sky"),
-			url: nil,
 			height: 1080,
 			width: 1920,
-			backgroundColor: UIColor(hexString: "#1e1731")?.color,
 			deeplinkURL: nil
 		),
-		showDate: false
+		isDimmed: false,
+		isAdaptive: false,
+		isDateShown: false,
+		fontStyle: .system
 	)
 }
 #endif

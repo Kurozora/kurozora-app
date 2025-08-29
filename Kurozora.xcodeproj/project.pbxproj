@@ -90,7 +90,7 @@
 		6615A2FC2DA20A5A005DBB96 /* Exceptions for "KurozoraWidget" folder in "Kurozora" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				LaunchAppControl.swift,
+				Widgets/LaunchAppControl.swift,
 			);
 			target = 66647B4F2084995500CF624F /* Kurozora */;
 		};
