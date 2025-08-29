@@ -79,19 +79,19 @@ extension ServiceTableViewController {
 		switch Section(rawValue: indexPath.section) {
 		case .preview:
 			guard let servicePreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.servicePreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.servicePreviewTableViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.servicePreviewTableViewCell.identifier)")
 			}
 			servicePreviewTableViewCell.previewImage = previewImage
 			return servicePreviewTableViewCell
 		case .header:
 			guard let serviceHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceHeaderTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceHeaderTableViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.serviceHeaderTableViewCell.identifier)")
 			}
 			serviceHeaderTableViewCell.serviceType = serviceType
 			return serviceHeaderTableViewCell
 		default:
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
 			}
 			serviceFooterTableViewCell.delegate = self
 			serviceFooterTableViewCell.serviceType = serviceType

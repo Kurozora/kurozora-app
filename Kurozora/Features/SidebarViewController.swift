@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 class SidebarViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SidebarSection: Int {
+		case main
+	}
+
 	// MARK: - Properties
 	// Refresh control
 	override var prefersRefreshControlDisabled: Bool {
@@ -46,8 +51,8 @@ class SidebarViewController: KCollectionViewController {
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			if let colllectionViewLayout = self.createLayout() {
-				self.collectionView.collectionViewLayout = colllectionViewLayout
+			if let collectionViewLayout = self.createLayout() {
+				self.collectionView.collectionViewLayout = collectionViewLayout
 			}
 
 			self.reloadDataSource()
