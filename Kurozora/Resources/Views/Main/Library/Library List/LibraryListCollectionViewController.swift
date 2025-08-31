@@ -279,7 +279,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: user.id)
 
 		do {
-			let libraryResponse = try await KService.getLibrary(forUser: userIdentity, libraryKind: UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: self.librarySortTypeOption, next: self.nextPageURL).value
+			let libraryResponse = try await KService.getLibrary(forUser: userIdentity, libraryKind: UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: self.librarySortTypeOption, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Update total library items count
 			self.totalLibraryItemsCount = libraryResponse.total ?? 0

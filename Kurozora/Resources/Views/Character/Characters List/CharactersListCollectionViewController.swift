@@ -159,7 +159,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		case .explore:
 			do {
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -175,7 +175,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

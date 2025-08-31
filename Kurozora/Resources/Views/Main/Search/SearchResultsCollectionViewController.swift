@@ -347,7 +347,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		do {
 			// Perform library search request.
-			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: 25, filter: filter).value
+			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: next != nil ? 100 : 25, filter: filter).value
 
 			if types.count > 1 {
 				self.searchResults = searchResponse.data

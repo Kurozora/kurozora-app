@@ -204,7 +204,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
 				self.gameIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -270,7 +270,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.gameIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

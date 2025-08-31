@@ -204,7 +204,7 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 				self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
 				self.literatureIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.literatures], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.literatures], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -270,7 +270,7 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 				self.literatureIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

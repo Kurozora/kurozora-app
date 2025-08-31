@@ -226,7 +226,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
