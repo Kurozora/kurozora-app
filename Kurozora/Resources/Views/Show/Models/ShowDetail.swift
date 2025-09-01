@@ -6,10 +6,10 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-struct ShowDetail { }
+struct ShowDetail {}
 
 // MARK: - Badge
 extension ShowDetail {
@@ -311,12 +311,12 @@ extension ShowDetail {
 				return show.attributes.duration
 			case .broadcast:
 				var broadcastInfo = show.attributes.airDay ?? "-"
-				if let airTime = show.attributes.airTime {
-					broadcastInfo += airTime.isEmpty ? "" : " at " + airTime + " UTC"
+				if let airTime = show.attributes.airTime, let startedAt = show.attributes.startedAt, let fullDate = startedAt.settingTime(from: airTime) {
+					broadcastInfo += " at " + DateFormatter.broadcastTime.string(from: fullDate)
 				}
 				return broadcastInfo
 			case .airDates:
-				guard let startedAt = show.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
+				guard let startedAt = show.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"
 			case .rating:
 				return show.attributes.tvRating.name
@@ -373,7 +373,7 @@ extension ShowDetail {
 				if show.attributes.type.name == "Movie" {
 					return self.information(from: show)
 				}
-				guard let endedAt = show.attributes.endedAt?.formatted(date: .abbreviated, time: .omitted) else { return nil }
+				guard let endedAt = show.attributes.endedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return nil }
 				return "\(endedAt) 🏁"
 			default: return nil
 			}

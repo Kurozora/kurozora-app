@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -47,11 +47,8 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure broadcast
 		self.timeLabel.text = ""
 		self.broadcastLabel.text = ""
-		if scheduleIsShown,
-		   let publicationDate = game?.attributes.publicationDate {
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "HH:mm zzz"
-			self.timeLabel.text = dateFormatter.string(from: publicationDate)
+		if scheduleIsShown, let publicationDate = game?.attributes.publicationDate {
+			self.timeLabel.text = DateFormatter.broadcastTime.string(from: publicationDate)
 
 			self.broadcastLabel.startCountdown(to: publicationDate, duration: game?.attributes.durationCount ?? 0)
 		}

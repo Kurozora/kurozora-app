@@ -316,7 +316,7 @@ extension GameDetail {
 				}
 				return publicationInfo
 			case .publicationDates:
-				guard let startedAt = game.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
+				guard let startedAt = game.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"
 			case .rating:
 				return game.attributes.tvRating.name
@@ -373,7 +373,7 @@ extension GameDetail {
 				if game.attributes.type.name == "Movie" {
 					return self.information(from: game)
 				}
-				guard let endedAt = game.attributes.endedAt?.formatted(date: .abbreviated, time: .omitted) else { return nil }
+				guard let endedAt = game.attributes.endedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return nil }
 				return "\(endedAt) 🏁"
 			default: return nil
 			}

@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ScheduleCollectionViewController {
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
@@ -43,7 +43,7 @@ extension ScheduleCollectionViewController {
 
 			switch sectionLayoutKind {
 			case .schedule(let schedule):
-				let dateFormatter = DateFormatter()
+				let dateFormatter = DateFormatter.app
 				dateFormatter.dateFormat = "EEEE MMM d"
 				title = dateFormatter.string(from: schedule.attributes.date)
 
@@ -67,21 +67,21 @@ extension ScheduleCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		// Add schedules
-		self.schedules.forEach { schedule in
+		for schedule in self.schedules {
 			let sectionHeader: SectionLayoutKind = .schedule(schedule)
 			var itemKinds: [ItemKind] = []
 
 			if let shows = schedule.relationships.shows?.data {
 				itemKinds = shows.map { show in
-					return .show(show, section: sectionHeader)
+					.show(show, section: sectionHeader)
 				}
 			} else if let literatures = schedule.relationships.literatures?.data {
 				itemKinds = literatures.map { literature in
-					return .literature(literature, section: sectionHeader)
+					.literature(literature, section: sectionHeader)
 				}
 			} else if let games = schedule.relationships.games?.data {
 				itemKinds = games.map { game in
-					return .game(game, section: sectionHeader)
+					.game(game, section: sectionHeader)
 				}
 			}
 

@@ -32,24 +32,25 @@ extension Date {
 		formatter.dateFormat = "EEEE"
 		let weekDay = formatter.string(from: self)
 
-		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
-			return (yearsAgo == 1 ? "Last Year" : "\(yearsAgo) Years Ago") // If exactly 1 year, then Last Year, otherwise # Years Ago
-		} else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
-			return (monthsAgo == 1 ? "Last Month" : "\(monthsAgo) Months ago") // If exactly 1 month, then Last Month, otherwise # Months Ago
-		} else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
-			return (weeksAgo == 1 ? "Last Week" : "\(weeksAgo) Weeks Ago") // If 1 week exactly, then Last Week, otherwise # Weeks Ago
-		} else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
-			return (daysAgo == 1 ? "Yesterday" : weekDay) // If 1 day exactly, then Yesterday, otherwise Day Of Week
-		} else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
+		if let yearsAgo = timeInterval / (12 * 4 * 7 * 24 * 60 * 60) as Int?, yearsAgo > 0 {
+			return yearsAgo == 1 ? "Last Year" : "\(yearsAgo) Years Ago" // If exactly 1 year, then Last Year, otherwise # Years Ago
+		} else if let monthsAgo = timeInterval / (4 * 7 * 24 * 60 * 60) as Int?, monthsAgo > 0 {
+			return monthsAgo == 1 ? "Last Month" : "\(monthsAgo) Months ago" // If exactly 1 month, then Last Month, otherwise # Months Ago
+		} else if let weeksAgo = timeInterval / (7 * 24 * 60 * 60) as Int?, weeksAgo > 0 {
+			return weeksAgo == 1 ? "Last Week" : "\(weeksAgo) Weeks Ago" // If 1 week exactly, then Last Week, otherwise # Weeks Ago
+		} else if let daysAgo = timeInterval / (24 * 60 * 60) as Int?, daysAgo > 0 {
+			return daysAgo == 1 ? "Yesterday" : weekDay // If 1 day exactly, then Yesterday, otherwise Day Of Week
+		} else if let hoursAgo = timeInterval / (60 * 60) as Int?, hoursAgo > 0 {
 			return "Earlier Today" // If 1 hour or more, then Earlier Today
 		}
 		return "Recent" // If less than 1 hour, then Recent
 	}
 
 	// MARK: - Initializers
-	/// Creates a new Date based on the first date detected on a string using data dectors.
+	/// Creates a new `Date` based on the first date detected in a string using data dectors.
 	///
-	/// - Parameter string: The string from which the date should be detected.
+	/// - Parameters:
+	///    - string: The string from which the date should be detected.
 	///
 	/// - Returns: `null` if a date object cannot be initiated from the given string.
 	init?(from string: String) {
@@ -70,44 +71,6 @@ extension Date {
 	}
 
 	// MARK: - Functions
-	/// Converts the date to string based on DateFormatter's date style and time style with optional relative date formatting, optional time zone and optional locale.
-	///
-	/// - Parameters:
-	///    - dateStyle: The style of the date.
-	///    - timeStyle: The style of the time.
-	///    - isRelative: Whether relative syntax is used. (Today, Tomorrow, etc.)
-	///    - timeZone: The time zone of the time.
-	///    - locale: The locale of the string.
-	///
-	/// - Returns: the date as a formatted string.
-	func toString(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style, isRelative: Bool = false, timeZone: TimeZone = TimeZone.current, locale: Locale = Locale.current) -> String {
-		let formatter = DateFormatter()
-		formatter.dateStyle = dateStyle
-		formatter.timeStyle = timeStyle
-		formatter.doesRelativeDateFormatting = isRelative
-		formatter.timeZone = timeZone
-		formatter.locale = locale
-		return formatter.string(from: self)
-	}
-
-	///  Converts the date to string using the short date and time style.
-	///
-	/// - Parameter style: The style of the formatted string.
-	///
-	/// - Returns: the date as a formatted string.
-	func toString(style: DateFormatter.Style = .short) -> String {
-		switch style {
-		case .short:
-			return self.toString(dateStyle: .short, timeStyle: .short, isRelative: false)
-		case .medium:
-			return self.toString(dateStyle: .medium, timeStyle: .medium, isRelative: false)
-		case .long:
-			return self.toString(dateStyle: .long, timeStyle: .long, isRelative: false)
-		default:
-			return self.toString(dateStyle: .full, timeStyle: .full, isRelative: false)
-		}
-	}
-
 	/// Formats the date as a AM/PM time.
 	func convertToAMPM() -> String {
 		let dateFormatter = DateFormatter()
@@ -134,9 +97,11 @@ extension Date {
 		var uptime: time_t = -1
 
 		time(&now)
-		if sysctl(&mib, 2, &boottime, &size, nil, 0) != -1 && boottime.tv_sec != 0 {
+
+		if sysctl(&mib, 2, &boottime, &size, nil, 0) != -1, boottime.tv_sec != 0 {
 			uptime = now - boottime.tv_sec
 		}
+
 		return uptime
 	}
 
@@ -148,7 +113,6 @@ extension Date {
 		let cal = Calendar.current
 		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute, .second])
 		let components = cal.dateComponents(unitFlags, from: now, to: self)
-
 		return (components.day ?? 0, components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
 	}
 
@@ -160,9 +124,10 @@ extension Date {
 	///
 	/// - Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
 	func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
-		let (days, hours, minutes, seconds) = etaDate()
+		let (days, hours, minutes, seconds) = self.etaDate()
 
 		var etaTime = ""
+
 		if days != 0 {
 			etaTime = short ? "\(days)d \(hours)h" : "\(days)d \(hours)h \(minutes)m"
 		} else if hours != 0 {
@@ -182,7 +147,7 @@ extension Date {
 	///
 	/// - Returns: the eta string of the date in a human readable form.
 	func etaStringForDate(short: Bool = false) -> String {
-		return etaForDateWithString(short: short).etaString
+		return self.etaForDateWithString(short: short).etaString
 	}
 
 	/// Returns the number of months between the current date and the specified date.
@@ -193,5 +158,119 @@ extension Date {
 	/// - Returns: The number of months between the current and the specified date.
 	func months(from date: Date) -> Int {
 		return Calendar.current.dateComponents([.month], from: date, to: self).month ?? 0
+	}
+
+	/// Returns a new date by setting the time components from a given time string.
+	///
+	/// - Parameters:
+	///   - timeString: The time string in "HH:mm" format.
+	///   - calendar: The calendar to use for date calculations. Defaults to the current calendar.
+	///
+	/// - Returns: A new `Date` with the time components set from the given string, or `nil` if the string is invalid.
+	func settingTime(from timeString: String, calendar: Calendar = .app) -> Date? {
+		let parts = timeString.split(separator: ":")
+		guard
+			parts.count == 2,
+			let hour = Int(parts[0]),
+			let minute = Int(parts[1])
+		else { return nil }
+
+		var comps = calendar.dateComponents(in: calendar.timeZone, from: self)
+		comps.hour = hour
+		comps.minute = minute
+		return calendar.date(from: comps)
+	}
+
+	/// Converts `self` to its textual representation that contains both the date and time parts. The exact format depends on the user's preferences.
+	///
+	/// - Parameters:
+	///    - date: The style for describing the date part.
+	///    - time: The style for describing the time part.
+	///
+	/// - Returns: A `String` describing `self`.
+	func appFormatted(date: Date.FormatStyle.DateStyle, time: Date.FormatStyle.TimeStyle) -> String {
+		let formatter = DateFormatter.app(date: date, time: time)
+		return formatter.string(from: self)
+	}
+}
+
+// MARK: - DateFormatter
+extension DateFormatter {
+	/// A date formatter configured with the user's preferred locale and timezone.
+	static var app: DateFormatter {
+		let formatter = DateFormatter()
+		formatter.calendar = .app
+		formatter.timeZone = .app
+		formatter.locale = .app
+		return formatter
+	}
+
+	/// A date formatter configured to display broadcast times in 24-hour format with timezone.
+	static var broadcastTime: DateFormatter {
+		let formatter = DateFormatter.app
+		formatter.dateFormat = "HH:mm '\(formatter.timeZone.localizedName(for: .shortStandard, locale: .app) ?? "UTC")"
+		return formatter
+	}
+
+	/// A date formatter configured with the user's preferred locale and timezone, and the given date and time styles.
+	///
+	/// - Parameters:
+	///    - date: The style for describing the date part.
+	///    - time: The style for describing the time part.
+	///
+	/// - Returns: A date formatter configured with the user's preferred locale and timezone, and the given date and time styles.
+	static func app(date: Date.FormatStyle.DateStyle, time: Date.FormatStyle.TimeStyle) -> DateFormatter {
+		let formatter = DateFormatter()
+		formatter.dateStyle = .init(date)
+		formatter.timeStyle = .init(time)
+		formatter.calendar = .app
+		return formatter
+	}
+}
+
+// MARK: - DateFormatter.Style
+extension DateFormatter.Style {
+	/// Initializes a `DateFormatter.Style` from a `Date.FormatStyle.DateStyle`.
+	///
+	/// - Parameters:
+	///    - style: The style for describing the date part.
+	///
+	/// - Returns: A `DateFormatter.Style` corresponding to the given `Date.FormatStyle.DateStyle`.
+	init(_ style: Date.FormatStyle.DateStyle) {
+		switch style {
+		case .abbreviated:
+			self = .medium
+		case .complete:
+			self = .full
+		case .long:
+			self = .long
+		case .numeric:
+			self = .short
+		case .omitted:
+			self = .none
+		default:
+			self = .full
+		}
+	}
+
+	/// Initializes a `DateFormatter.Style` from a `Date.FormatStyle.TimeStyle`.
+	///
+	/// - Parameters:
+	///    - style: The style for describing the time part.
+	///
+	/// - Returns: A `DateFormatter.Style` corresponding to the given `Date.FormatStyle.TimeStyle`.
+	init(_ style: Date.FormatStyle.TimeStyle) {
+		switch style {
+		case .complete:
+			self = .full
+		case .shortened:
+			self = .short
+		case .standard:
+			self = .medium
+		case .omitted:
+			self = .none
+		default:
+			self = .medium
+		}
 	}
 }

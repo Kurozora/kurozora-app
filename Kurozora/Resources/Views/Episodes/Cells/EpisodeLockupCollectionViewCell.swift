@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async
@@ -63,14 +63,14 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		// Configure ternary label
 		let viewCount = episode.attributes.viewCount
 		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
-		let dateText = episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		let dateText = episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? "TBA"
 		self.secondaryLabel.text = "\(viewCountText) · \(dateText)"
 
 		// Configure season button
 		self.seasonButton.theme_setTitleColor(KThemePicker.subTextColor.rawValue, forState: .normal)
 		self.seasonButton.theme_tintColor = KThemePicker.subTextColor.rawValue
 		self.seasonButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
-		self.seasonButton.setTitle( "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))", for: .normal)
+		self.seasonButton.setTitle("S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))", for: .normal)
 
 		// Configure watch button
 		let watchStatusButtonTitle = episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched

@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Literature {
 	/// The webpage URL of the literature.
@@ -15,8 +15,7 @@ extension Literature {
 		return "https://kurozora.app/manga/\(self.attributes.slug)"
 	}
 
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
@@ -172,7 +171,7 @@ extension Literature {
 
 			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
-				"favoriteStatus": favoriteResponse.data.favoriteStatus
+				"favoriteStatus": favoriteResponse.data.favoriteStatus,
 			])
 		} catch let error as KKAPIError {
 			viewController?.presentAlertController(title: "Can't Favorite", message: error.message)
@@ -189,7 +188,6 @@ extension Literature {
 		guard signedIn else { return }
 		let viewController = viewController ?? UIApplication.topViewController
 
-
 		if await WorkflowController.shared.isSubscribed(on: viewController) {
 			do {
 				if self.attributes.library?.status == nil {
@@ -200,7 +198,7 @@ extension Literature {
 
 				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
-					"reminderStatus": updateReminderResponse.data.reminderStatus
+					"reminderStatus": updateReminderResponse.data.reminderStatus,
 				])
 			} catch let error as KKAPIError {
 				viewController?.presentAlertController(title: "Can't Add Reminder", message: error.message)

@@ -312,7 +312,7 @@ extension LiteratureDetail {
 				}
 				return publicationInfo
 			case .publicationDates:
-				guard let startedAt = literature.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
+				guard let startedAt = literature.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"
 			case .rating:
 				return literature.attributes.tvRating.name
@@ -369,7 +369,7 @@ extension LiteratureDetail {
 				if literature.attributes.type.name == "Movie" {
 					return self.information(from: literature)
 				}
-				guard let endedAt = literature.attributes.endedAt?.formatted(date: .abbreviated, time: .omitted) else { return nil }
+				guard let endedAt = literature.attributes.endedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return nil }
 				return "\(endedAt) 🏁"
 			default: return nil
 			}

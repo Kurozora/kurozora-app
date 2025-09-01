@@ -19,7 +19,7 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		guard let show = show else { return }
 
 		if let startedAt = show.attributes.startedAt {
-			self.secondaryLabel?.text = "\(Trans.expected.capitalized) \(startedAt.formatted(date: .abbreviated, time: .omitted))"
+			self.secondaryLabel?.text = "\(Trans.expected.capitalized) \(startedAt.appFormatted(date: .abbreviated, time: .omitted))"
 		} else {
 			self.secondaryLabel?.text = Trans.comingSoon.capitalized
 		}

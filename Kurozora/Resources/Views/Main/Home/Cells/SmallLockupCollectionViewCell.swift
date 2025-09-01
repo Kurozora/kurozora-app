@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -20,7 +20,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Properties
 	lazy var literatureMask: CALayer = {
 		let literatureMask = CALayer()
-		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
+		literatureMask.contents = UIImage(named: "book_mask")?.cgImage
 		literatureMask.frame = self.posterImageView?.bounds ?? .zero
 		return literatureMask
 	}()
@@ -58,11 +58,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure broadcast
 		self.timeLabel.text = ""
 		self.broadcastLabel.text = ""
-		if scheduleIsShown,
-		   let nextBroadcastAt = show?.attributes.nextBroadcastAt {
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "HH:mm"
-			self.timeLabel.text = dateFormatter.string(from: nextBroadcastAt)
+		if scheduleIsShown, let nextBroadcastAt = show?.attributes.nextBroadcastAt {
+			self.timeLabel.text = DateFormatter.broadcastTime.string(from: nextBroadcastAt)
 
 			self.broadcastLabel.startCountdown(to: nextBroadcastAt, duration: show?.attributes.durationCount ?? 0)
 		}
@@ -93,11 +90,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure broadcast
 		self.timeLabel.text = ""
 		self.broadcastLabel.text = ""
-		if scheduleIsShown,
-		   let publicationDate = literature?.attributes.publicationDate {
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "HH:mm zzz"
-			self.timeLabel.text = dateFormatter.string(from: publicationDate)
+		if scheduleIsShown, let publicationDate = literature?.attributes.publicationDate {
+			self.timeLabel.text = DateFormatter.broadcastTime.string(from: publicationDate)
 
 			self.broadcastLabel.startCountdown(to: publicationDate, duration: literature?.attributes.durationCount ?? 0)
 		}

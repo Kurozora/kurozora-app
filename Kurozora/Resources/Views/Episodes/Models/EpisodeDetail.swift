@@ -217,7 +217,7 @@ extension EpisodeDetail {
 			case .duration:
 				return episode.attributes.duration
 			case .airDate:
-				return episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? Trans.tba
+				return episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? Trans.tba
 			}
 		}
 
