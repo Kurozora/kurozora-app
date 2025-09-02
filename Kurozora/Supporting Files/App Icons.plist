@@ -38,6 +38,8 @@
 		<string>Anime</string>
 		<key>icons</key>
 		<array>
+			<string>Korosensei</string>
+			<string>Tanjiro</string>
 			<string>Monokuro</string>
 		</array>
 	</dict>
