@@ -235,7 +235,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		case .season:
 			do {
 				guard let seasonIdentity = self.seasonIdentity else { return }
-				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL).value
+				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25,).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
