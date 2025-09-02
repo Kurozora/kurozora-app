@@ -58,6 +58,28 @@ extension Show.Attributes {
 		return informationString
 	}
 
+	/// A string describing when the show is next broadcasted.
+	var broadcastString: String? {
+		let date: Date?
+
+		if let nextBroadcastAt = self.nextBroadcastAt {
+			date = nextBroadcastAt
+		} else if let airTime = self.airTime {
+			date = self.startedAt?.settingTime(from: airTime)
+		} else {
+			date = self.startedAt
+		}
+
+		guard let broadcastAt = date else { return nil }
+		let dateFormatter = DateFormatter.app
+		dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
+
+		let timeString = DateFormatter.broadcastTime.string(from: broadcastAt)
+		let weekdayString = dateFormatter.string(from: broadcastAt)
+
+		return "\(weekdayString) at \(timeString)"
+	}
+
 	// MARK: - Functions
 	/// Set the poster.
 	///
@@ -75,7 +97,7 @@ extension Show.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
-		guard let placeholderImage = R.image.placeholders.showBanner()  else { return }
+		guard let placeholderImage = R.image.placeholders.showBanner() else { return }
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 }

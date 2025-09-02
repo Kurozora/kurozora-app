@@ -310,11 +310,7 @@ extension GameDetail {
 			case .duration:
 				return game.attributes.duration
 			case .publication:
-				var publicationInfo = game.attributes.publicationDay ?? "-"
-				if let publicationTime = game.attributes.publicationTime {
-					publicationInfo += publicationTime.isEmpty ? "" : " at " + publicationTime + " UTC"
-				}
-				return publicationInfo
+				return game.attributes.publicationString ?? "-"
 			case .publicationDates:
 				guard let startedAt = game.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"

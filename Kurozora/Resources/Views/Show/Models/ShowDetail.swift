@@ -310,11 +310,7 @@ extension ShowDetail {
 			case .duration:
 				return show.attributes.duration
 			case .broadcast:
-				var broadcastInfo = show.attributes.airDay ?? "-"
-				if let airTime = show.attributes.airTime, let startedAt = show.attributes.startedAt, let fullDate = startedAt.settingTime(from: airTime) {
-					broadcastInfo += " at " + DateFormatter.broadcastTime.string(from: fullDate)
-				}
-				return broadcastInfo
+				return show.attributes.broadcastString ?? "-"
 			case .airDates:
 				guard let startedAt = show.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"

@@ -6,10 +6,10 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-struct LiteratureDetail { }
+struct LiteratureDetail {}
 
 // MARK: - Badge
 extension LiteratureDetail {
@@ -306,11 +306,7 @@ extension LiteratureDetail {
 			case .duration:
 				return literature.attributes.duration
 			case .publication:
-				var publicationInfo = literature.attributes.publicationDay ?? "-"
-				if let publicationTime = literature.attributes.publicationTime {
-					publicationInfo += publicationTime.isEmpty ? "" : " at " + publicationTime + " UTC"
-				}
-				return publicationInfo
+				return literature.attributes.publicationString ?? "-"
 			case .publicationDates:
 				guard let startedAt = literature.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(startedAt)"

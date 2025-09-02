@@ -64,6 +64,28 @@ extension Game.Attributes {
 		return Date(from: "\(publicationDay) at \(publicationTime)")
 	}
 
+	/// A string describing when the game is published.
+	var publicationString: String? {
+		let date: Date?
+
+		if let nextPublicationAt = self.publicationDate {
+			date = nextPublicationAt
+		} else if let publicationTime = self.publicationTime {
+			date = self.startedAt?.settingTime(from: publicationTime)
+		} else {
+			date = self.startedAt
+		}
+
+		guard let publicationAt = date else { return nil }
+		let dateFormatter = DateFormatter.app
+		dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
+
+		let timeString = DateFormatter.broadcastTime.string(from: publicationAt)
+		let weekdayString = dateFormatter.string(from: publicationAt)
+
+		return "\(weekdayString) at \(timeString)"
+	}
+
 	// MARK: - Functions
 	/// Set the poster.
 	///
