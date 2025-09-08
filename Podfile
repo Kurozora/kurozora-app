@@ -12,7 +12,6 @@ def shared_pods
 	pod 'Kingfisher'
 	pod 'KurozoraKit'#, path: '../KurozoraKit'
 	pod 'R.swift'
-	pod 'SwifterSwift'
 	pod 'SwiftTheme'
 	pod 'TRON', '5.5.0-beta.1'
 	pod 'TRON/SwiftyJSON'
@@ -22,7 +21,6 @@ def kurozora_pods
 	shared_pods
 
 	pod 'Cosmos'
-	pod 'ESTabBarController-swift'
 	pod 'FLEX', :configurations => ['Debug']
 	pod 'IQKeyboardManagerSwift'
 	pod 'ReachabilitySwift'

@@ -1,7 +1,6 @@
 PODS:
   - Alamofire (5.10.2)
   - Cosmos (25.0.1)
-  - ESTabBarController-swift (2.8.0)
   - FLEX (5.22.10)
   - IQKeyboardCore (1.0.5)
   - IQKeyboardManagerSwift (8.0.1):
@@ -53,37 +52,6 @@ PODS:
   - ReachabilitySwift (5.2.4)
   - Solar (2.1.0)
   - SPConfetti (1.4.0)
-  - SwifterSwift (7.0.0):
-    - SwifterSwift/AppKit (= 7.0.0)
-    - SwifterSwift/CoreAnimation (= 7.0.0)
-    - SwifterSwift/CoreGraphics (= 7.0.0)
-    - SwifterSwift/CoreLocation (= 7.0.0)
-    - SwifterSwift/CryptoKit (= 7.0.0)
-    - SwifterSwift/Dispatch (= 7.0.0)
-    - SwifterSwift/Foundation (= 7.0.0)
-    - SwifterSwift/HealthKit (= 7.0.0)
-    - SwifterSwift/MapKit (= 7.0.0)
-    - SwifterSwift/SceneKit (= 7.0.0)
-    - SwifterSwift/SpriteKit (= 7.0.0)
-    - SwifterSwift/StoreKit (= 7.0.0)
-    - SwifterSwift/SwiftStdlib (= 7.0.0)
-    - SwifterSwift/UIKit (= 7.0.0)
-    - SwifterSwift/WebKit (= 7.0.0)
-  - SwifterSwift/AppKit (7.0.0)
-  - SwifterSwift/CoreAnimation (7.0.0)
-  - SwifterSwift/CoreGraphics (7.0.0)
-  - SwifterSwift/CoreLocation (7.0.0)
-  - SwifterSwift/CryptoKit (7.0.0)
-  - SwifterSwift/Dispatch (7.0.0)
-  - SwifterSwift/Foundation (7.0.0)
-  - SwifterSwift/HealthKit (7.0.0)
-  - SwifterSwift/MapKit (7.0.0)
-  - SwifterSwift/SceneKit (7.0.0)
-  - SwifterSwift/SpriteKit (7.0.0)
-  - SwifterSwift/StoreKit (7.0.0)
-  - SwifterSwift/SwiftStdlib (7.0.0)
-  - SwifterSwift/UIKit (7.0.0)
-  - SwifterSwift/WebKit (7.0.0)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.2)
   - Tabman (3.2.0):
@@ -102,7 +70,6 @@ PODS:
 
 DEPENDENCIES:
   - Cosmos
-  - ESTabBarController-swift
   - FLEX
   - IQKeyboardManagerSwift
   - KeychainAccess
@@ -112,7 +79,6 @@ DEPENDENCIES:
   - ReachabilitySwift
   - Solar
   - SPConfetti
-  - SwifterSwift
   - SwiftTheme
   - Tabman
   - TRON (= 5.5.0-beta.1)
@@ -124,7 +90,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Cosmos
-    - ESTabBarController-swift
     - FLEX
     - IQKeyboardCore
     - IQKeyboardManagerSwift
@@ -142,7 +107,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - Solar
     - SPConfetti
-    - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
     - Tabman
@@ -181,7 +145,6 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPConfetti: 4ba720ff652d960f59c3e4eadee2c0c3ef6ce9a4
-  SwifterSwift: e9caf990fc72e835432280755d1f4c43f2a483d5
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
   Tabman: 49f9181a2bfe5c29d002864dac2de8e0b7ea9180
