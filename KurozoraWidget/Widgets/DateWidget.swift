@@ -74,11 +74,14 @@ struct Provider: IntentTimelineProvider {
 			}
 			let date = Date()
 			var entries: [DateEntry] = []
+			let calendar = Calendar.current
 
 			for (index, media) in mediaResponse.data.enumerated() {
+				let entryDate = calendar.date(byAdding: .hour, value: index, to: date) ?? date
+
 				entries.append(
 					DateEntry(
-						date: date.adding(.hour, value: index),
+						date: entryDate,
 						banner: await media.asBanner(),
 						isDimmed: configuration.isDimmed == true,
 						isAdaptive: configuration.isAdaptive == true,
@@ -241,36 +244,57 @@ struct DateWidgetEntryContentView: View {
 				}
 			}
 
-			self.dateView
+			if self.entry.isDateShown {
+				self.dateView
+			}
 		}
 		.widgetURL(self.entry.banner.deeplinkURL)
 	}
 
 	@ViewBuilder
 	var dateView: some View {
-		if self.entry.isDateShown {
-			VStack(spacing: .zero) {
-				VStack(spacing: .zero) {
-					Text(self.entry.date, format: .dateTime.weekday(.wide))
-						.font(self.entry.fontStyle.toFontStyle(.caption).weight(.black))
-						.fontWeight(.black)
-						.foregroundStyle(.white)
-						.shadow(color: .black.opacity(0.30), radius: 2)
-						.frame(maxWidth: .infinity, alignment: .leading)
+		let isAdaptive = self.entry.isAdaptive && (self.isVibrant || self.isAccented)
 
-					Text(self.entry.date, format: .dateTime.day())
-						.font(self.entry.fontStyle.toFontStyle(.title).weight(.black))
-						.fontWeight(.black)
-						.foregroundStyle(.white)
-						.shadow(color: .black.opacity(0.50), radius: 2)
-						.frame(maxWidth: .infinity, alignment: .leading)
+		VStack(spacing: .zero) {
+			VStack(spacing: .zero) {
+				ZStack {
+					self.weekDayView(isAdaptive: isAdaptive)
+				}
+				.background {
+					self.weekDayView(isAdaptive: isAdaptive)
 				}
 
-				Spacer()
+				ZStack {
+					self.dayView(isAdaptive: isAdaptive)
+				}
+				.background {
+					self.dayView(isAdaptive: isAdaptive)
+				}
 			}
-			.padding(self.margins)
-			.padding(self.isPhoneStandByWidget || self.showsContainerBackground ? .zero : 8)
+			.frame(maxWidth: .infinity, alignment: .leading)
+
+			Spacer()
 		}
+		.padding(self.margins)
+		.padding(self.isPhoneStandByWidget || self.showsContainerBackground ? .zero : 8)
+	}
+
+	func weekDayView(isAdaptive: Bool) -> some View {
+		Text(self.entry.date, format: .dateTime.weekday(.wide))
+			.font(self.entry.fontStyle.toFontStyle(.caption).weight(.black))
+			.fontWeight(.black)
+			.foregroundStyle(.white)
+//			.stroke(.black, lineWidth: isAdaptive ? 1 : 0)
+			.shadow(color: .black.opacity(0.35), radius: 2)
+	}
+
+	func dayView(isAdaptive: Bool) -> some View {
+		Text(self.entry.date, format: .dateTime.day())
+			.font(self.entry.fontStyle.toFontStyle(.title).weight(.black))
+			.fontWeight(.black)
+			.foregroundStyle(.white)
+//			.stroke(.black, lineWidth: isAdaptive ? 1 : 0)
+			.shadow(color: .black.opacity(0.35), radius: 2)
 	}
 
 	func imageView(geometry: GeometryProxy) -> Image {
