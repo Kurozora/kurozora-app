@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import ESTabBarController_swift
 import LocalAuthentication
 import XCDYouTubeKit
 

@@ -12,32 +12,34 @@ import SPConfetti
 final class ConfettiManager: NSObject {
 	// MARK: - Properties
 	/// The shared instance of `ConfettiManager`.
-    static let shared = ConfettiManager()
+	static let shared = ConfettiManager()
 
 	// MARL: - Initializers
-	private override init() {
+	override private init() {
 		super.init()
 	}
 
-    /// Play confetti animation for special day.
+	/// Play confetti animation for special day.
 	///
 	/// - Note: The confetti animation will only play once a day.
-    func play() {
-        guard let specialDay = SpecialDay.allCases.first(where: { $0.isToday() }),
-              !UserSettings.confettiLastSeenAt.isInToday else {
-            return
-        }
+	func play() {
+		guard
+			let specialDay = SpecialDay.allCases.first(where: { $0.isToday() }),
+			!Calendar.current.isDateInToday(UserSettings.confettiLastSeenAt)
+		else {
+			return
+		}
 
-        UserSettings.set(Date(), forKey: .confettiLastSeenAt)
-        SPConfettiConfiguration.particlesConfig.colors = specialDay.confettiColors
-        SPConfetti.startAnimating(.fullWidthToDown, particles: specialDay.confettiParticles)
+		UserSettings.set(Date(), forKey: .confettiLastSeenAt)
+		SPConfettiConfiguration.particlesConfig.colors = specialDay.confettiColors
+		SPConfetti.startAnimating(.fullWidthToDown, particles: specialDay.confettiParticles)
 
-        print("----- 🎉 Playing confetti for \(specialDay)")
-    }
+		print("----- 🎉 Playing confetti for \(specialDay)")
+	}
 
-    /// Stop confetti animation.
-    func stop() {
-        SPConfetti.stopAnimating()
-        print("----- 🛑 Confetti stopped.")
-    }
+	/// Stop confetti animation.
+	func stop() {
+		SPConfetti.stopAnimating()
+		print("----- 🛑 Confetti stopped.")
+	}
 }

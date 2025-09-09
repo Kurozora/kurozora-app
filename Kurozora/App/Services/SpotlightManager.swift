@@ -19,15 +19,27 @@ final class SpotlightManager: NSObject {
 	}
 
 	// MARK: - Functions
+	/// Adds a searchable item to Spotlight index.
 	func addToSpotlightSearch(contentAttributeSet: CSSearchableItemAttributeSet) {
 		guard let title = contentAttributeSet.title else { return }
 		let item = CSSearchableItem(uniqueIdentifier: title, domainIdentifier: "app.kurozora.tracker", attributeSet: contentAttributeSet)
 
 		CSSearchableIndex.default().indexSearchableItems([item]) { error in
-			if let error =  error {
-				print("Indexing error: \(error.localizedDescription)")
+			if let error = error {
+				print("----- Indexing error: \(error.localizedDescription)")
 			} else {
-				print("Search Title Added to Spotlight for \(title)")
+				print("----- Search Title Added to Spotlight for \(title)")
+			}
+		}
+	}
+
+	/// Cleans all searchable items from Spotlight index.
+	func cleanSpotlightSearch() {
+		CSSearchableIndex.default().deleteAllSearchableItems { error in
+			if let error = error {
+				print("----- Failed to delete searchable items: \(error.localizedDescription)")
+			} else {
+				print("----- Successfully deleted all searchable items")
 			}
 		}
 	}

@@ -102,7 +102,7 @@ enum KThemeStyle: Int {
 			if let themeID = Int(currentTheme) {
 				// Use a non default theme if it exists
 				if let themeDirectoryURLPath = self.themesDirectoryUrl?.appendingPathComponent("theme-\(themeID).plist").path, FileManager.default.fileExists(atPath: themeDirectoryURLPath) {
-					KThemeStyle.switchTo(themeID: themeID.string)
+					KThemeStyle.switchTo(themeID: String(themeID))
 				} else {
 					// Fallback to default if theme doesn't exist
 					KThemeStyle.switchTo(style: .day)

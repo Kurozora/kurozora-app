@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import IQKeyboardManagerSwift
-import SwifterSwift
 
 // MARK: - Kurozora
 @UIApplicationMain
@@ -159,7 +158,7 @@ extension AppDelegate {
 		let splitViewController = UIApplication.topViewController?.splitViewController
 		let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
 		let sidebarViewController = navigationController?.topViewController as? SidebarViewController
-		sidebarViewController?.kSearchController.searchBar.textField?.becomeFirstResponder()
+		sidebarViewController?.kSearchController.searchBar.searchTextField.becomeFirstResponder()
 	}
 
 	/// User chose the "View My Account..." from the account menu.

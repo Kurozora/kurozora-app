@@ -74,9 +74,13 @@ extension WorkflowController {
 	func subscribeToReminders(on viewController: UIViewController? = nil) async {
 		if await WorkflowController.shared.isSubscribed(on: viewController) {
 			let reminderSubscriptionURL = KService.reminderSubscriptionURL
-			let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
 
-			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
+			if let scheme = reminderSubscriptionURL.scheme {
+				let reminderWebcalURL = reminderSubscriptionURL.absoluteString.replacingOccurrences(of: scheme, with: "webcal")
+				UIApplication.shared.kOpen(nil, deepLink: URL(string: reminderWebcalURL))
+			} else {
+				UIApplication.shared.kOpen(reminderSubscriptionURL)
+			}
 		}
 	}
 

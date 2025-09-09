@@ -6,9 +6,9 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Combine
+import KurozoraKit
+import UIKit
 
 @MainActor
 class NavigationManager: NSObject {
@@ -23,7 +23,7 @@ class NavigationManager: NSObject {
 	@Published var selectedDestination: URL? = nil
 
 	// MARK: - Initializers
-	private override init() {
+	override private init() {
 		super.init()
 
 		self.$selectedDestination.sink { [weak self] url in
@@ -182,18 +182,18 @@ class NavigationManager: NSObject {
 		let type: KKSearchType = KKSearchType(rawValue: typeString) ?? .shows
 
 		if parameters.isEmpty {
-			searchController.searchBar.textField?.becomeFirstResponder()
+			searchController.searchBar.searchTextField.becomeFirstResponder()
 		} else if !queryString.isEmpty {
 			viewController.searchQuery = queryString
 			viewController.currentScope = scope
 			viewController.currentTypes = [type]
-			searchController.searchBar.textField?.text = queryString
+			searchController.searchBar.searchTextField.text = queryString
 			searchController.searchBar.selectedScopeButtonIndex = scope.rawValue
 
 			if viewController.dataSource == nil {
 				viewController.isDeepLinked = true
-				searchController.searchBar.textField?.resignFirstResponder()
-				searchController.searchBar.textField?.resignFirstResponder()
+				searchController.searchBar.searchTextField.resignFirstResponder()
+				searchController.searchBar.searchTextField.resignFirstResponder()
 			} else {
 				viewController.performSearch(with: queryString, in: scope, for: [type], with: nil, next: nil, resettingResults: true)
 			}
