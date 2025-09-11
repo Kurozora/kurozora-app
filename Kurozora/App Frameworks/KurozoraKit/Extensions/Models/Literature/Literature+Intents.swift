@@ -8,13 +8,13 @@
 
 import CoreSpotlight
 import Intents
-import MobileCoreServices
 import KurozoraKit
+import MobileCoreServices
 
 extension Literature {
 	// MARK: - Properties
 	/// Create an NSUserActivity from the selected literature.
-	public var openDetailUserActivity: NSUserActivity {
+	var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: "OpenLiteratureIntent")
 		let title = "Open \(self.attributes.title)"
 		userActivity.contentAttributeSet = self.contentAttributeSet
@@ -30,12 +30,14 @@ extension Literature {
 	}
 
 	/// The detailed metadata for making the selected literature searchable.
-	public var contentAttributeSet: CSSearchableItemAttributeSet {
+	var contentAttributeSet: CSSearchableItemAttributeSet {
 		let attributeSet = CSSearchableItemAttributeSet(contentType: .content)
 		attributeSet.title = self.attributes.title
 		attributeSet.alternateNames = self.attributes.synonymTitles
 		attributeSet.contentDescription = self.attributes.synopsis
-		attributeSet.thumbnailURL = URL(string: self.attributes.poster?.url)
+		if let urlString = self.attributes.poster?.url {
+			attributeSet.thumbnailURL = URL(string: urlString)
+		}
 		attributeSet.genre = self.attributes.genres?.joined(separator: ", ")
 		attributeSet.rating = self.attributes.stats?.ratingAverage as? NSNumber
 		if let ratingDescription = self.attributes.stats?.ratingCount {

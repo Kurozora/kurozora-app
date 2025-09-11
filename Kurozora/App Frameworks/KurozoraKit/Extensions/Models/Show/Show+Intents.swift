@@ -35,7 +35,9 @@ extension Show {
 		attributeSet.title = self.attributes.title
 		attributeSet.alternateNames = self.attributes.synonymTitles
 		attributeSet.contentDescription = self.attributes.synopsis
-		attributeSet.thumbnailURL = URL(string: self.attributes.poster?.url)
+		if let urlString = self.attributes.poster?.url {
+			attributeSet.thumbnailURL = URL(string: urlString)
+		}
 		attributeSet.genre = self.attributes.genres?.joined(separator: ", ")
 		attributeSet.rating = self.attributes.stats?.ratingAverage as? NSNumber
 		if let ratingDescription = self.attributes.stats?.ratingCount {

@@ -81,8 +81,8 @@ extension User {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, shareText: String, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = [shareText]
 
-		if let personalImage = self.attributes.profileImageView.image {
-			activityItems.append(personalImage)
+		if let profileImageView = self.attributes.profileImageView.image {
+			activityItems.append(profileImageView)
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])

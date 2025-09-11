@@ -33,7 +33,9 @@ extension User {
 		let attributeSet = CSSearchableItemAttributeSet(contentType: .contact)
 		attributeSet.title = self.attributes.username
 		attributeSet.contentDescription = self.attributes.biography
-		attributeSet.thumbnailURL = URL(string: self.attributes.profile?.url)
+		if let urlString = self.attributes.profile?.url {
+			attributeSet.thumbnailURL = URL(string: urlString)
+		}
 		attributeSet.startDate = self.attributes.joinedAt
 		attributeSet.accountIdentifier = "@\(self.attributes.slug)"
 		attributeSet.url = URL(string: "https://kurozora.app/profile/\(self.attributes.slug)")

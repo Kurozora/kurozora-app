@@ -35,7 +35,17 @@ extension User.Attributes {
 	///
 	/// - Returns: a placeholder `UIImage` user's banner using `UIColor.kurozora` color.
 	var bannerPlaceholderImage: UIImage {
-		return UIImage(color: .kurozora, size: CGSize(width: 50, height: 50))
+		let size = CGSize(width: 50, height: 50)
+		let color: UIColor = .kurozora
+		let format = UIGraphicsImageRendererFormat()
+		format.scale = 1
+		guard let image = UIGraphicsImageRenderer(size: size, format: format).image(actions: { context in
+			color.setFill()
+			context.fill(context.format.bounds)
+		}).cgImage else {
+			return UIImage()
+		}
+		return UIImage(cgImage: image)
 	}
 
 	// MARK: - Functions

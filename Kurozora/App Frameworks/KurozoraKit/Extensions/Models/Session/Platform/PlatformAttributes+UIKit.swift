@@ -6,23 +6,23 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Platform.Attributes {
 	/// An image corresponding to the device model.
 	var deviceImage: UIImage? {
-		guard let deviceModel = self.deviceModel else {
+		guard let deviceModel = self.deviceModel?.lowercased() else {
 			return UIImage(systemName: "bolt.horizontal")
 		}
 
-		if deviceModel.contains("iPhone", caseSensitive: false) {
+		if deviceModel.contains("iphone") {
 			return UIImage(systemName: "iphone")
-		} else if deviceModel.contains("iPad", caseSensitive: false) {
+		} else if deviceModel.contains("ipad") {
 			return UIImage(systemName: "ipad.landscape")
-		} else if deviceModel.contains("TV", caseSensitive: false) {
+		} else if deviceModel.contains("tv") {
 			return UIImage(systemName: "appletv")
-		} else if deviceModel.contains("Mac", caseSensitive: false) {
+		} else if deviceModel.contains("mac") || deviceModel.contains("windows") || deviceModel.contains("linux") {
 			return UIImage(systemName: "laptopcomputer")
 		}
 

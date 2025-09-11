@@ -10,10 +10,10 @@ import KurozoraKit
 
 extension Game.Attributes {
 	// MARK: - Properties
-	/// Returns a string containing all the necessary information of a game. If one of the informations is missing then that particular part is ommitted.
+	/// Returns a string containing all the necessary information of a game. If one of the informations is missing then that particular part is omitted.
 	///
-	/// ```
-	/// "Manga · R15+ · 25 editions · 25 minutes · Spring 2016"
+	/// ```swift
+	/// "Full Game · R15+ · 25 editions · 25 minutes · Spring 2016"
 	/// ```
 	var informationString: String {
 		var informationString = "\(self.type.name) · \(self.tvRating.name)"
@@ -27,7 +27,7 @@ extension Game.Attributes {
 		informationString += " · \(self.duration)"
 
 		// Add the year
-		if let publicationYear = self.startedAt?.year {
+		if let publicationYear = self.startedAt?.components.year {
 			informationString += " · "
 			if let publicationSeason = self.publicationSeason {
 				informationString += "\(publicationSeason) "
@@ -38,17 +38,18 @@ extension Game.Attributes {
 		return informationString
 	}
 
-	/// Returns a short version of the game information. If one of the informations is missing then that particular part is ommitted.
+	/// Returns a short version of the game information. If one of the informations is missing then that particular part is omitted.
 	///
-	/// ```
-	/// "TV · ✓ 10/25 · ☆ 5"
+	/// ```swift
+	/// "Full Game · ✓ 25% · ☆ 5"
 	/// ```
 	var informationStringShort: String {
 		var informationString = ""
 		informationString += "\(self.type.name)"
 
-//		if let watchedEpisodesCount = self.watchedEpisodesCount {
-//			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
+		// TODO: Add completion percentage to the short information string
+//		if let completionPercentage = self.completionPercentage {
+//			informationString += " · ✓ \(completionPercentage)/\(self.episodeCount)"
 //		}
 
 		if let givenRating = self.library?.rating {

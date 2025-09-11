@@ -10,9 +10,9 @@ import KurozoraKit
 
 extension Show.Attributes {
 	// MARK: - Properties
-	/// Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
+	/// Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is omitted.
 	///
-	/// ```
+	/// ```swift
 	/// "TV · R15+ · 25 episodes · 25 minutes · Spring 2016"
 	/// ```
 	var informationString: String {
@@ -27,7 +27,7 @@ extension Show.Attributes {
 		informationString += " · \(self.duration)"
 
 		// Add the year
-		if let airYear = self.startedAt?.year {
+		if let airYear = self.startedAt?.components.year {
 			informationString += " · "
 			if let airSeason = self.airSeason {
 				informationString += "\(airSeason) "
@@ -38,15 +38,16 @@ extension Show.Attributes {
 		return informationString
 	}
 
-	/// Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
+	/// Returns a short version of the shows information. If one of the informations is missing then that particular part is omitted.
 	///
-	/// ```
+	/// ```swift
 	/// "TV · ✓ 10/25 · ☆ 5"
 	/// ```
 	var informationStringShort: String {
 		var informationString = ""
 		informationString += "\(self.type.name)"
 
+		// TODO: Add watched episodes count to the short information string
 //		if let watchedEpisodesCount = self.watchedEpisodesCount {
 //			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
 //		}

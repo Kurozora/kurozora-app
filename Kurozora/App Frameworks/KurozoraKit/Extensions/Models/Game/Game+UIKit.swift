@@ -138,7 +138,7 @@ extension Game {
 			NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 			// Request review
-			ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
+			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 		} catch let error as KKAPIError {
 //			self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 			print("----- Add to library failed:", error.message)
