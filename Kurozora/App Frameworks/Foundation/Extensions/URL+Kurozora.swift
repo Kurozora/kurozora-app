@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit.UIApplication
+import UIKit
 
 extension URL {
 	// MARK: - Properties
@@ -47,6 +47,40 @@ extension URL {
 	/// Log Horizon — Database website URL.
 	static let livingInTheDatabase = URL(string: "https://database.kurozora.app")
 
+	/// The root domain of the URL or domain name.
+	var rootDomain: String? {
+		return self.host?.replacingOccurrences(of: "www.", with: "")
+	}
+
+	/// Returns true if the extension is an image.
+	var isImageURL: Bool {
+		return [
+			"jpg", "jpeg", "jpgxl",
+			"png", "apng", "avif",
+			"gif", "webp",
+			"bmp", "tiff",
+		].contains(self.pathExtension)
+	}
+
+	/// Returns true if the scheme is `HTTP` or `HTTPS`
+	var isWebURL: Bool {
+		return self.scheme?.starts(with: "http") ?? false
+	}
+
+	/// Dictionary of the URL's query parameters that have values.
+	///
+	/// Duplicated query keys are ignored, taking only the first instance.
+	var queryParameters: [String: String]? {
+		guard let queryItems = URLComponents(url: self, resolvingAgainstBaseURL: false)?.queryItems else {
+			return nil
+		}
+
+		return Dictionary(queryItems.lazy.compactMap {
+			guard let value = $0.value else { return nil }
+			return ($0.name, value)
+		}) { first, _ in first }
+	}
+
 	// MARK: - Functions
 	/// The Amazon Music URL for the given ID.
 	///
@@ -84,11 +118,6 @@ extension URL {
 		return URL(string: "https://music.youtube.com/watch?v=\(youtubeID)")
 	}
 
-	/// The root domain of the URL or domain name.
-	var rootDomain: String? {
-		return self.host?.replacingOccurrences(of: "www.", with: "")
-	}
-
 	/// Returns the preferred `URL` to open by the app.
 	///
 	/// Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
@@ -100,27 +129,12 @@ extension URL {
 		guard kBrowser.schemeValue(for: scheme) != "" else { return self }
 
 		var urlWithPreferredScheme = self
-		if let kBrowserShortSchemeUrl = kBrowser.shortSchemeUrlValue(for: scheme), UIApplication.shared.canOpenURL(kBrowserShortSchemeUrl) {
+		if let kBrowserShortSchemeURL = kBrowser.shortSchemeURLValue(for: scheme), UIApplication.shared.canOpenURL(kBrowserShortSchemeURL) {
 			let urlStringWithNewScheme = "\(self)".replacingOccurrences(of: scheme, with: kBrowser.schemeValue(for: scheme))
-			if let newUrlWithNewScheme = URL(string: urlStringWithNewScheme) {
-				urlWithPreferredScheme = newUrlWithNewScheme
+			if let newURLWithNewScheme = URL(string: urlStringWithNewScheme) {
+				urlWithPreferredScheme = newURLWithNewScheme
 			}
 		}
 		return urlWithPreferredScheme
-	}
-
-	/// Returns true if the extension is an image.
-	public var isImageURL: Bool {
-		return [
-			"jpg", "jpeg", "jpgxl",
-			"png", "apng", "avif",
-			"gif", "webp",
-			"bmp", "tiff"
-		].contains(self.pathExtension)
-	}
-
-	/// Returns true if the scheme is `HTTP` or `HTTPS`
-	public var isWebURL: Bool {
-		return self.scheme?.starts(with: "http") ?? false
 	}
 }
