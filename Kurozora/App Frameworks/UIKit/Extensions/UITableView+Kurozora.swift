@@ -9,8 +9,22 @@
 import UIKit
 
 extension UITableView {
+	// MARK: - Properties
+	/// Number of all rows in all sections of tableView.
+	///
+	/// - Returns: The count of all rows in the tableView.
+	var numberOfRows: Int {
+		var section = 0
+		var rowCount = 0
+		while section < self.numberOfSections {
+			rowCount += self.numberOfRows(inSection: section)
+			section += 1
+		}
+		return rowCount
+	}
+
 	// MARK: - Functions
-	/// Set table header view & add Auto layout.
+	// Set table header view & add Auto layout.
 	func setTableHeaderView(headerView: UIView?) {
 		guard let headerView = headerView else { return }
 		headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +48,37 @@ extension UITableView {
 		// Trigger table view to know that header should be updated.
 		let header = self.tableHeaderView
 		self.tableHeaderView = header
+	}
+
+	/// Safely scrolls through the table view until a row that an index path identifies is at a particular location on the screen.
+	///
+	/// Invoking this method doesn’t cause the delegate to receive a [`scrollViewDidScroll(_:)`](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/scrollviewdidscroll(_:)) message, as is normal for programmatically invoked user interface operations.
+	///
+	///
+	/// - Parameters:
+	///    - indexPath:
+	///        An index path that identifies a row in the table view by its row index and its section index.
+	///
+	///        `NSNotFound` is a valid row index for scrolling to a section with zero rows.
+	///    - scrollPosition:
+	///        A constant that identifies a relative position in the table view (top, middle, bottom) for row when scrolling concludes. See [`UITableView.ScrollPosition`](https://developer.apple.com/documentation/uikit/uitableview/scrollposition) for descriptions of valid constants.
+	///    - animated:
+	///        [`true`](https://developer.apple.com/documentation/swift/true) if you want to animate the change in position; [`false`](https://developer.apple.com/documentation/swift/false) if it should be immediate.
+	func safeScrollToRow(at indexPath: IndexPath, at scrollPosition: UITableView.ScrollPosition, animated: Bool) {
+		guard indexPath.section < numberOfSections else { return }
+		guard indexPath.row < self.numberOfRows(inSection: indexPath.section) else { return }
+		self.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
+	}
+
+	/// Reload data with a completion handler.
+	///
+	/// - Parameter completion: completion handler to run after reloadData finishes.
+	func reloadData(_ completion: @escaping () -> Void) {
+		UIView.animate(withDuration: 0, animations: {
+			self.reloadData()
+		}, completion: { _ in
+			completion()
+		})
 	}
 }
 
@@ -73,7 +118,7 @@ extension UITableView {
 	/// - Tag: UIKit-UITableView-CellRegistration
 	struct CellRegistration<Cell, Item> where Cell: UITableViewCell {
 		// swiftlint:disable nesting
-		/// A closure that handles the cell registration and configuration.
+		// A closure that handles the cell registration and configuration.
 		typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ itemIdentifier: Item) -> Void
 
 		/// A closure that handles the cell registration and configuration.

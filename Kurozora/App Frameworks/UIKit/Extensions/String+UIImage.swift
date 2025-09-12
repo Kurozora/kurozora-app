@@ -22,7 +22,7 @@ extension String {
 	/// - Returns: A UIImage from the string.
 	func toImage(withFrameSize frame: CGRect = CGRect(x: 0, y: 0, width: 50, height: 50), backgroundColor: UIColor = .lightGray, textColor: UIColor = .white, fontSize: CGFloat = 20, placeholder placeholderImage: UIImage) -> UIImage {
 		// Calculate optimal font size
-		let shortestLength = frame.size.minDimension
+		let shortestLength = min(frame.size.height, frame.size.width)
 		let fontFraction = shortestLength / 50
 		let fontSize = fontSize * fontFraction
 

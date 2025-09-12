@@ -17,6 +17,17 @@ extension UIView {
 	}
 	#endif
 
+	/// Corner radius of view; also inspectable from Storyboard.
+	var layerCornerRadius: CGFloat {
+		get {
+			return self.layer.cornerRadius
+		}
+		set {
+			self.layer.masksToBounds = true
+			self.layer.cornerRadius = abs(CGFloat(Int(newValue * 100)) / 100)
+		}
+	}
+
 	// MARK: - Functions
 	/// Adds parallax effect to the view.
 	///
@@ -104,5 +115,50 @@ extension UIView {
 
 		self.layer.shouldRasterize = shouldRasterize
 		self.layer.rasterizationScale = shouldRasterize ? UIScreen.main.scale : 1.0
+	}
+}
+
+// MARK: - Constraints
+extension UIView {
+	/// Search constraints until we find one for the given view
+	/// and attribute. This will enumerate ancestors since constraints are
+	/// always added to the common ancestor.
+	///
+	/// - Parameter attribute: the attribute to find.
+	/// - Parameter at: the view to find.
+	///
+	/// - Returns: matching constraint.
+	func findConstraint(attribute: NSLayoutConstraint.Attribute, for view: UIView) -> NSLayoutConstraint? {
+		let constraint = self.constraints.first {
+			($0.firstAttribute == attribute && $0.firstItem as? UIView == view) ||
+				($0.secondAttribute == attribute && $0.secondItem as? UIView == view)
+		}
+		return constraint ?? self.superview?.findConstraint(attribute: attribute, for: view)
+	}
+
+	/// First top constraint for this view.
+	var topConstraint: NSLayoutConstraint? {
+		self.findConstraint(attribute: .top, for: self)
+	}
+
+	/// First bottom constraint for this view.
+	var bottomConstraint: NSLayoutConstraint? {
+		self.findConstraint(attribute: .bottom, for: self)
+	}
+
+	/// Anchor all sides of the view into it's superview.
+	///
+	/// - Note: This will set `translatesAutoresizingMaskIntoConstraints` to `false`.
+	func fillToSuperview() {
+		self.translatesAutoresizingMaskIntoConstraints = false
+
+		if let superview = self.superview {
+			let leading = self.leadingAnchor.constraint(equalTo: superview.leadingAnchor)
+			let trailing = self.trailingAnchor.constraint(equalTo: superview.trailingAnchor)
+			let top = self.topAnchor.constraint(equalTo: superview.topAnchor)
+			let bottom = self.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
+
+			NSLayoutConstraint.activate([leading, trailing, top, bottom])
+		}
 	}
 }

@@ -27,7 +27,7 @@ extension UIButton {
 				.onFailure { _ in } // error
 				.set(to: self, for: .normal)
 		} else {
-			self.setImage(placeholder.original, for: .normal)
+			self.setImage(placeholder.withRenderingMode(.alwaysOriginal), for: .normal)
 		}
 	}
 
