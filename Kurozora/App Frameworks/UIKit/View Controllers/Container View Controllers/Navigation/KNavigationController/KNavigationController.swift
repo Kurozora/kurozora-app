@@ -6,16 +6,16 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import SwiftTheme
+import UIKit
 
 class KNavigationController: UINavigationController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		NotificationCenter.default.addObserver(self, selector: #selector(updateTheme(_:)), name: .ThemeUpdateNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(updatePrefersLargeTitles(_:)), name: .KSPrefersLargeTitlesDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateTheme(_:)), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updatePrefersLargeTitles(_:)), name: .KSPrefersLargeTitlesDidChange, object: nil)
 
 		self.sharedInit()
 	}
@@ -25,7 +25,7 @@ class KNavigationController: UINavigationController {
 	private func sharedInit() {
 		// Configure theme
 		self.configureNavigationBarStyle()
-		self.setupToolbarStyle()
+		self.configureToolbarStyle()
 	}
 
 	/// Used to update the large title preference.
@@ -42,44 +42,55 @@ class KNavigationController: UINavigationController {
 		self.configureNavigationBarStyle()
 	}
 
-	/// Setup navigation bar style with the currently used theme.
+	/// Configure the navigation bar style with the currently used theme.
 	func configureNavigationBarStyle() {
-		self.navigationBar.isTranslucent = true
-		self.navigationBar.backgroundColor = .clear
-		self.navigationBar.barStyle = .default
-		self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
 		if #available(iOS 16.0, macCatalyst 16.0, *) {
 			self.navigationBar.preferredBehavioralStyle = .pad
 		}
 
-		let appearance = UINavigationBarAppearance()
-		appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
-		appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-			guard let rgba = value as? String else { return nil }
-			let color = UIColor(rgba: rgba)
-			let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			let appearance = UINavigationBarAppearance()
+			self.navigationBar.theme_standardAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
+			self.navigationBar.theme_compactAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
+			self.navigationBar.theme_scrollEdgeAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
+		} else {
+			self.navigationBar.isTranslucent = true
+			self.navigationBar.backgroundColor = .clear
+			self.navigationBar.barStyle = .default
+			self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
 
-			return titleTextAttributes
+			let appearance = UINavigationBarAppearance()
+			appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
+			appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				return [NSAttributedString.Key.foregroundColor: color]
+			}
+			appearance.theme_largeTitleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				return [NSAttributedString.Key.foregroundColor: color]
+			}
+
+			self.navigationBar.theme_standardAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
+			self.navigationBar.theme_compactAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
 		}
-		appearance.theme_largeTitleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-			guard let rgba = value as? String else { return nil }
-			let color = UIColor(rgba: rgba)
-			let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
 
-			return titleTextAttributes
-		}
-
-		self.navigationBar.theme_standardAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
-		self.navigationBar.theme_compactAppearance = ThemeNavigationBarAppearancePicker(appearances: appearance)
 		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
-	/// Setup toolbar style with the currently used theme.
-	func setupToolbarStyle() {
-		self.toolbar.isTranslucent = true
+	/// Configure the toolbar style with the currently used theme.
+	func configureToolbarStyle() {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.toolbar.isTranslucent = false
+			self.toolbar.theme_barTintColor = KThemePicker.textColor.rawValue
+		} else {
+			self.toolbar.isTranslucent = true
+			self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+		}
+
 		self.toolbar.backgroundColor = .clear
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 	}
 }

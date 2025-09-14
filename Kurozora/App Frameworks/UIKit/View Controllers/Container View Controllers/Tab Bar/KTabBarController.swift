@@ -6,14 +6,13 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
-import ESTabBarController_swift
+import UIKit
 #if DEBUG
 import FLEX
 #endif
 
-class KTabBarController: ESTabBarController {
+class KTabBarController: UITabBarController {
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -38,7 +37,19 @@ class KTabBarController: ESTabBarController {
 		// Initialize views
 		self.viewControllers = TabBarItem.tabBarCases.map {
 			let rootNavigationController = $0.kViewControllerValue
-			let tabBarItem = ESTabBarItem(BounceAnimation(), title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
+			// MARK: Refactor
+//			BounceAnimation()
+			let tabBarItem: UITabBarItem
+
+			if $0 != .search {
+				tabBarItem = UITabBarItem(title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
+			} else {
+				tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: $0.rawValue)
+				tabBarItem.title = $0.stringValue
+				tabBarItem.image = $0.imageValue
+				tabBarItem.selectedImage = $0.selectedImageValue
+			}
+
 			rootNavigationController.tabBarItem = tabBarItem
 			return rootNavigationController
 		}
@@ -50,20 +61,31 @@ class KTabBarController: ESTabBarController {
 	// MARK: - Functions
 	/// The shared settings used to initialize tab bar view.
 	private func sharedInit() {
-		self.tabBar.isTranslucent = true
-		self.tabBar.itemPositioning = .centered
-		self.tabBar.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.tabBar.barStyle = .default
-
 		#if DEBUG
 		let showFlexLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
 		showFlexLongPressGestureRecognizer.numberOfTouchesRequired = 2
-		self.tabBar.addGestureRecognizer(showFlexLongPressGestureRecognizer)
 		#endif
 
-		let showAccountSwitcherLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showAccountSwitcher))
-		showAccountSwitcherLongPressGestureRecognizer.numberOfTouchesRequired = 1
-		self.tabBar.addGestureRecognizer(showAccountSwitcherLongPressGestureRecognizer)
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.tabBarMinimizeBehavior = .onScrollDown
+
+			#if DEBUG
+			UIApplication.topViewController?.view.window?.addGestureRecognizer(showFlexLongPressGestureRecognizer)
+			#endif
+		} else {
+			self.tabBar.isTranslucent = true
+			self.tabBar.itemPositioning = .centered
+			self.tabBar.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			self.tabBar.barStyle = .default
+
+			#if DEBUG
+			self.tabBar.addGestureRecognizer(showFlexLongPressGestureRecognizer)
+			#endif
+
+			let showAccountSwitcherLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showAccountSwitcher))
+			showAccountSwitcherLongPressGestureRecognizer.numberOfTouchesRequired = 1
+			self.tabBar.addGestureRecognizer(showAccountSwitcherLongPressGestureRecognizer)
+		}
 	}
 
 	#if DEBUG
@@ -99,7 +121,7 @@ class KTabBarController: ESTabBarController {
 
 	/// Toggles the badge on/off on the tab bar item.
 	@objc func toggleBadge() {
-		setupBadgeValue()
+		self.setupBadgeValue()
 	}
 
 	/// Sets up the badge value on the tab bar item.
@@ -115,15 +137,14 @@ class KTabBarController: ESTabBarController {
 // MARK: - UITabBarDelegate
 extension KTabBarController {
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-		let selectedTwice = tabBar.selectedItem == item
-
-		super.tabBar(tabBar, didSelect: item)
+		guard let idx = tabBar.items?.firstIndex(of: item), self.viewControllers?[idx] != nil else { return }
+		self.selectedIndex = idx
 
 		if UserSettings.hapticsAllowed {
-			UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+			UISelectionFeedbackGenerator().selectionChanged()
 		}
 
-		if selectedTwice {
+		if tabBar.selectedItem == item { // Same tab selected
 			let selectedViewController = (self.viewControllers?[safe: self.selectedIndex] as? KNavigationController)?.visibleViewController
 			switch self.selectedIndex {
 			case 0:
@@ -155,7 +176,7 @@ extension KTabBarController {
 					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
 				}
 			case 4:
-				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
+				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
 			default: break
 			}
 		}

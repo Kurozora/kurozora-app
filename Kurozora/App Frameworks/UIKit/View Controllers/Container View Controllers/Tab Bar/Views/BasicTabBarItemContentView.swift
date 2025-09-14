@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import ESTabBarController_swift
 
-class BasicTabBarItemContentView: ESTabBarItemContentView {
+// TODO: Refactor
+class BasicTabBarItemContentView: UIView /* ESTabBarItemContentView */ {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -24,17 +24,17 @@ class BasicTabBarItemContentView: ESTabBarItemContentView {
 	// MARK: - Function
 	/// The shared settings used to initialize the tab bar item content view.
 	fileprivate func sharedInit() {
-		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: .ThemeUpdateNotification, object: nil)
-		ESTabBar.appearance().theme_barTintColor = KThemePicker.barTintColor.rawValue
-		self.imageView.contentMode = .scaleAspectFit
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateTabBarItemStyle), name: .ThemeUpdateNotification, object: nil)
+		UITabBar.appearance().theme_barTintColor = KThemePicker.barTintColor.rawValue
+//		self.imageView.contentMode = .scaleAspectFit
 		self.updateTabBarItemStyle()
 	}
 
 	/// Applies the default tab bar item style to the tab bar items.
 	@objc fileprivate func updateTabBarItemStyle() {
-		self.textColor = KThemePicker.subTextColor.colorValue
-		self.iconColor = KThemePicker.subTextColor.colorValue
-		self.highlightTextColor = KThemePicker.tintColor.colorValue
-		self.highlightIconColor = KThemePicker.tintColor.colorValue
+//		self.textColor = KThemePicker.subTextColor.colorValue
+//		self.iconColor = KThemePicker.subTextColor.colorValue
+//		self.highlightTextColor = KThemePicker.tintColor.colorValue
+//		self.highlightIconColor = KThemePicker.tintColor.colorValue
 	}
 }
