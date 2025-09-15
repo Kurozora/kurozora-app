@@ -39,14 +39,10 @@ class KCollectionViewController: UICollectionViewController {
 	}()
 
 	/// The activity indicator view object of the view controller.
-	private lazy var activityIndicatorView: KActivityIndicatorView = {
-		return KActivityIndicatorView()
-	}()
+	private lazy var activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
 
 	/// The object controlling the empty background view.
-	lazy var emptyBackgroundView: EmptyBackgroundView = {
-		return EmptyBackgroundView()
-	}()
+	lazy var emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
 
 	/// Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 	///
@@ -136,7 +132,7 @@ class KCollectionViewController: UICollectionViewController {
 			self.gradientView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.gradientView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			self.gradientView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+			self.gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
 		])
 	}
 
@@ -144,38 +140,40 @@ class KCollectionViewController: UICollectionViewController {
 	///
 	/// Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	fileprivate func configureCollectionView() {
-		collectionView.prefetchDataSource = self
+		self.collectionView.prefetchDataSource = self
 		if let colllectionViewLayout = self.createLayout() {
-			collectionView.collectionViewLayout = colllectionViewLayout
+			self.collectionView.collectionViewLayout = colllectionViewLayout
 		}
-		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		collectionView.backgroundView = self.emptyBackgroundView
+		self.collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		self.collectionView.backgroundView = self.emptyBackgroundView
 
 		// Register cells with the collection view.
-		registerCells()
+		self.registerCells()
 
 		// Register reusable views with the collection view.
-		registerNibs()
+		self.registerNibs()
 	}
 
 	/// Registers cells returned by [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	fileprivate func registerCells() {
-		for cell in registerCells(for: collectionView) {
-			collectionView.register(nibWithCellClass: cell)
+		for cell in self.registerCells(for: self.collectionView) {
+			let identifier = String(describing: cell)
+			self.collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
 		}
 	}
 
 	/// Registers reusable views returned by [registerNibs(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerNibsForCollectionView).
 	fileprivate func registerNibs() {
-		for nib in registerNibs(for: collectionView) {
-			collectionView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: nib)
+		for nib in self.registerNibs(for: self.collectionView) {
+			let identifier = String(describing: nib)
+			self.collectionView.register(UINib(nibName: identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: identifier)
 		}
 	}
 }
 
 // MARK: - UICollectionViewDataSourcePrefetching
 extension KCollectionViewController: UICollectionViewDataSourcePrefetching {
-	func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) { }
+	func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {}
 }
 
 // MARK: - UICollectionViewDelegate
@@ -213,8 +211,8 @@ extension KCollectionViewController {
 	private func configureRefreshControl() {
 		#if targetEnvironment(macCatalyst)
 		#else
-		collectionView.refreshControl = KRefreshControl()
-		refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
+		self.collectionView.refreshControl = KRefreshControl()
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
 		#endif
 	}
 
@@ -224,7 +222,7 @@ extension KCollectionViewController {
 	///
 	/// - Tag: KCollectionViewController-setNeedsRefreshControlAppearanceUpdate
 	func setNeedsRefreshControlAppearanceUpdate() {
-		if prefersRefreshControlDisabled {
+		if self.prefersRefreshControlDisabled {
 			#if targetEnvironment(macCatalyst)
 			#else
 			self.collectionView.refreshControl = nil
@@ -239,7 +237,7 @@ extension KCollectionViewController {
 	/// This method is called upon activation of the refresh control. Call the refresh control’s [endRefreshing()](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuirefreshcontrol%2F1624848-endrefreshing) method when you are done.
 	///
 	/// - Tag: KCollectionViewController-handleRefreshControl
-	@objc func handleRefreshControl() { }
+	@objc func handleRefreshControl() {}
 }
 
 // MARK: - Activity Indicator
@@ -247,10 +245,10 @@ extension KCollectionViewController {
 	/// Configures the activity indicator with default values.
 	private func configureActivityIndicator() {
 		self.activityIndicatorView.removeFromSuperview()
-		self.view.addSubview(activityIndicatorView)
+		self.view.addSubview(self.activityIndicatorView)
 		self.activityIndicatorView.center = self.view.center
 
-		setNeedsActivityIndicatorAppearanceUpdate()
+		self.setNeedsActivityIndicatorAppearanceUpdate()
 	}
 
 	/// Indicates to the system that the view controller activity indicator attributes have changed.
@@ -259,7 +257,7 @@ extension KCollectionViewController {
 	///
 	/// - Tag: KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate
 	func setNeedsActivityIndicatorAppearanceUpdate() {
-		self.activityIndicatorView.prefersHidden = prefersActivityIndicatorHidden
+		self.activityIndicatorView.prefersHidden = self.prefersActivityIndicatorHidden
 	}
 }
 
@@ -269,8 +267,8 @@ extension KCollectionViewController {
 	///
 	/// Use this method to show a beautiful and informative view when the collection view is empty.
 	@objc @MainActor
-	func configureEmptyDataView() { }
+	func configureEmptyDataView() {}
 }
 
 // MARK: - UINavigationControllerDelegate
-extension KCollectionViewController: UINavigationControllerDelegate { }
+extension KCollectionViewController: UINavigationControllerDelegate {}

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `RoundedRectangleImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `RoundedRectangleImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `RoundedRectangleImageView` adjusts some options to achieve its design, this includes:
 /// - Rounding the image's corners.

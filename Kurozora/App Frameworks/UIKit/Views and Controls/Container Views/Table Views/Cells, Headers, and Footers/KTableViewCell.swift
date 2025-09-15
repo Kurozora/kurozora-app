@@ -43,7 +43,7 @@ class KTableViewCell: UITableViewCell, SkeletonDisplayable {
 	// MARK: - Functions
 	/// The shared settings used to initialize the table view cell.
 	func sharedInit() {
-		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
+		self.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
 		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 	}
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `CharacterImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `CharacterImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `CharacterImageView` adjusts some options to achieve its design, this includes:
 /// - Applying a border width and border color.
@@ -42,6 +42,6 @@ class CharacterImageView: CircularImageView {
 		self.image = self.image ?? R.image.placeholders.personPoster()
 
 		self.layer.borderWidth = 2
-		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
+		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
 	}
 }

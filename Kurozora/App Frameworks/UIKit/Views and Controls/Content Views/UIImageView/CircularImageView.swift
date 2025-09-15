@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `CircularImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `CircularImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `CircularImageView` adjusts some options to achieve its design, this includes:
 /// - Rounding the image's corners.
@@ -16,6 +16,6 @@ class CircularImageView: KImageView {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.layerCornerRadius = self.height / 2
+		self.layerCornerRadius = self.frame.size.height / 2
 	}
 }

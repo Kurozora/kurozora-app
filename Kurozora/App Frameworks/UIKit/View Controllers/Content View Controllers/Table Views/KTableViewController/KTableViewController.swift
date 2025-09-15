@@ -139,14 +139,16 @@ class KTableViewController: UITableViewController {
 	/// Registers cells returned by [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
 	fileprivate func registerCells() {
 		for cell in registerCells(for: self.tableView) {
-			self.tableView.register(nibWithCellClass: cell)
+			let identifier = String(describing: cell)
+			self.tableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
 		}
 	}
 
 	/// Registers nibs returned by [registerNibs(for tableView: UITableView)](x-source-tag://KTableViewController-registerNibsForTableView).
 	fileprivate func registerNibs() {
 		for nib in registerNibs(for: self.tableView) {
-			self.tableView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), withHeaderFooterViewClass: nib)
+			let identifier = String(describing: nib)
+			self.tableView.register(UINib(nibName: identifier, bundle: nil), forHeaderFooterViewReuseIdentifier: identifier)
 		}
 	}
 }

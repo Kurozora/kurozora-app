@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol ProfileBadgeStackViewDelegate: AnyObject {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) async
@@ -52,7 +52,7 @@ class ProfileBadgeStackView: UIStackView {
 			button.tag = index
 			button.setImage(profileBadge.image, for: .normal)
 			button.addTarget(self, action: #selector(self.handleProfileBadgePressed(_:)), for: .touchUpInside)
-			button.heightAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0/1.0).isActive = true
+			button.heightAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0 / 1.0).isActive = true
 
 			self.addArrangedSubview(button)
 		}
@@ -69,7 +69,8 @@ class ProfileBadgeStackView: UIStackView {
 	private func getProfileBadges(for user: User) -> [ProfileBadge] {
 		var profileBadges: [ProfileBadge] = []
 
-		if user.attributes.joinedAt.isInCurrentWeek {
+		let calendar = Calendar.current
+		if calendar.isDate(user.attributes.joinedAt, equalTo: Date(), toGranularity: .weekOfYear) { // in current week
 			profileBadges.append(.newUser(username: user.attributes.username, isCurrentUser: User.current == user))
 		}
 
@@ -85,7 +86,7 @@ class ProfileBadgeStackView: UIStackView {
 		if user.attributes.isEarlySupporter {
 			profileBadges.append(.earlySupporter(username: user.attributes.username))
 		}
-		if user.attributes.isPro && !user.attributes.isSubscribed {
+		if user.attributes.isPro, !user.attributes.isSubscribed {
 			profileBadges.append(.pro(username: user.attributes.username))
 		}
 		if user.attributes.isSubscribed, let subscribedAt = user.attributes.subscribedAt {

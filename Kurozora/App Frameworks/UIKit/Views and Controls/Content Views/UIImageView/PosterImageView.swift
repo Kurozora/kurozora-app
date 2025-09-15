@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `PosterImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `PosterImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `PosterImageView` adjusts some options to achieve its design, this includes:
 /// - Applying a border width and border color.
@@ -42,6 +42,6 @@ class PosterImageView: RoundedRectangleImageView {
 		self.image = self.image ?? R.image.placeholders.showPoster()
 
 		self.layer.borderWidth = 2
-		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
+		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
 	}
 }

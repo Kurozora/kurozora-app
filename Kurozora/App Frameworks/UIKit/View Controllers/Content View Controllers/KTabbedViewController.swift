@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import Tabman
 import Pageboy
+import Tabman
 
 /// The KTabbedViewControllerDataSource protocol defines methods that guide you with managing the sections and view controllers registered with the tabbed view.
 ///
@@ -92,8 +92,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.themeWillReload), name: .ThemeUpdateNotification, object: nil)
 
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.navigationItem.hidesSearchBarWhenScrolling = false
@@ -130,7 +130,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
 		// Set corner radius after the tab bar has been populated with data so it uses the correct height
-		self.bar.layerCornerRadius = self.bar.height / 2
+		self.bar.layerCornerRadius = self.bar.frame.size.height / 2
 
 		self.configureTabBarViewVisibility()
 	}
@@ -141,7 +141,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.bar.backgroundView.style = .custom(view: KVisualEffectView())
 
 		// Indicator
-		self.bar.indicator.layout(in: bar)
+		self.bar.indicator.layout(in: self.bar)
 
 		// Scrolling
 		self.bar.scrollMode = .interactive
@@ -236,5 +236,5 @@ extension KTabbedViewController: KTabbedViewControllerDataSource {
 	/// Tells `KTabbedViewControllerDataSource` to fetch sections from an external source, such as from an API.
 	///
 	/// This method is called in `init(coder:)` when initializing the view from a storyboard.
-	func fetchSections() { }
+	func fetchSections() {}
 }

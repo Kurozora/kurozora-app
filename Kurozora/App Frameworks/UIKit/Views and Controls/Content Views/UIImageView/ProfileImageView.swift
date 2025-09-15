@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `ProfileImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `ProfileImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `ProfileImageView` adjusts some options to achieve its design, this includes:
 /// - Applying a border width and border color.
@@ -43,6 +43,6 @@ class ProfileImageView: CircularImageView {
 
 		self.theme_backgroundColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		self.layer.borderWidth = 2
-		self.layerBorderColor = UIColor.gray.withAlphaComponent(0.20)
+		self.layer.borderColor = UIColor.gray.withAlphaComponent(0.20).cgColor
 	}
 }
