@@ -16,13 +16,13 @@ extension SubscriptionCollectionViewController {
 		case .header, .currentSubscription, .subscriptions, .footer:
 			return 1
 		case .features:
-			let columnCount = (width / 374).rounded().int
+			let columnCount = Int((width / 374).rounded())
 			return columnCount > 0 ? columnCount : 1
 		}
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 
 			let subscriptionSection = self.snapshot.sectionIdentifiers[section]
@@ -49,6 +49,5 @@ extension SubscriptionCollectionViewController {
 
 			return sectionLayout
 		}
-		return layout
 	}
 }

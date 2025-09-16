@@ -6,9 +6,9 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Alamofire
+import KurozoraKit
+import UIKit
 
 enum CharactersListFetchType {
 	case person
@@ -18,13 +18,13 @@ enum CharactersListFetchType {
 
 class CharactersListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var personIdentity: PersonIdentity? = nil
+	var personIdentity: PersonIdentity?
 	var characters: [IndexPath: Character] = [:]
 	var characterIdentities: [CharacterIdentity] = []
-	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+	var exploreCategoryIdentity: ExploreCategoryIdentity?
 	var searchQuery: String = ""
 	var charactersListFetchType: CharactersListFetchType = .search
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>!
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
@@ -39,6 +39,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -49,8 +50,9 @@ class CharactersListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -106,7 +108,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 
 	/// Fades in and out the empty data view according to the number of rows.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 {
+		if self.collectionView.numberOfItems == 0 {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -210,7 +212,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 extension CharactersListCollectionViewController {
 	/// List of section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {

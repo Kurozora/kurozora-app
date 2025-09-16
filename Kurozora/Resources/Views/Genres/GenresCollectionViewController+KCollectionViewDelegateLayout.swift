@@ -12,7 +12,7 @@ extension GenresCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		let cellWidth = UIDevice.isPhone ? 200.0 : 265.0
-		let columnCount = (width / cellWidth).rounded().int
+		let columnCount = Int((width / cellWidth).rounded())
 		return columnCount > 0 ? columnCount : 1
 	}
 
@@ -21,7 +21,7 @@ extension GenresCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
@@ -36,6 +36,5 @@ extension GenresCollectionViewController {
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}
-		return layout
 	}
 }

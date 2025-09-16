@@ -14,21 +14,19 @@ extension FavoritesCollectionViewController {
 		var columnCount = 0
 
 		if width >= 414 {
-			columnCount = (width / 384).rounded().int
+			columnCount = Int((width / 384).rounded())
 		} else {
-			columnCount = (width / 284).rounded().int
+			columnCount = Int((width / 284).rounded())
 		}
 
 		return columnCount > 0 ? columnCount : 1
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-			return sectionLayout
+			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
-		return layout
 	}
 }

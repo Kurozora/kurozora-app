@@ -11,7 +11,7 @@ import UIKit
 extension LiteraturesListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+		let columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		return columnCount > 0 ? columnCount : 1
 	}
 

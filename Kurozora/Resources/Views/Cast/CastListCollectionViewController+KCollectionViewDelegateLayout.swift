@@ -15,20 +15,19 @@ extension CastListCollectionViewController {
 
 		switch self.castKind {
 		case .show, .game:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .literature:
-			columnCount = (width / 140.0).rounded().int
+			columnCount = Int((width / 140.0).rounded())
 		}
 
 		return columnCount > 0 ? columnCount : 1
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			return Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
-		return layout
 	}
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import StoreKit
+import UIKit
 import Vision
 import VisionKit
 
@@ -30,7 +30,7 @@ class RedeemTableViewController: ServiceTableViewController {
 		self.rightNavigationBarButton.isEnabled = false
 
 		// Prepare Vision
-		self.textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] (request, _) in
+		self.textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
 			guard let self = self else { return }
 			if let results = request.results, !results.isEmpty {
 				if let requestResults = request.results as? [VNRecognizedTextObservation] {
@@ -88,14 +88,14 @@ class RedeemTableViewController: ServiceTableViewController {
 
 	/// Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
 	///
-	/// - Parameter recognizedtext: An array of recognized text observation.
+	/// - Parameter recognizedText: An array of recognized text observation.
 	fileprivate func processRecognizedText(_ recognizedText: [Any]) {
 		if let recognizedText = recognizedText as? [VNRecognizedTextObservation] {
 			let maximumCandidates = 1
 			for observation in recognizedText {
 				guard let candidate = observation.topCandidates(maximumCandidates).first else { continue }
-				if candidate.string.starts(with: "XXX") && candidate.string.count == 13 {
-					showSuccess(for: candidate.string)
+				if candidate.string.starts(with: "XXX"), candidate.string.count == 13 {
+					self.showSuccess(for: candidate.string)
 				}
 			}
 		}
@@ -109,8 +109,10 @@ class RedeemTableViewController: ServiceTableViewController {
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		self.view.endEditing(true)
 
-		let redeemCode = textFieldArray.first??.trimmedText
-		showSuccess(for: redeemCode)
+		let redeemCode = self.textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+		self.showSuccess(for: redeemCode)
+
+		// TODO: Implement redeeming codes
 //		KurozoraKit.shared.redeem(code, withSuccess: { [weak self] success in
 //			guard let self = self else { return }
 //
@@ -156,26 +158,26 @@ extension RedeemTableViewController: UITextFieldDelegate {
 		}
 
 		var rightNavigationBarButtonIsEnabled = false
-		textFieldArray.forEach({
-			if let textField = $0?.text, !textField.isEmpty {
+		for item in self.textFieldArray {
+			if let textField = item?.text, !textField.isEmpty {
 				rightNavigationBarButtonIsEnabled = true
-				return
+				continue
 			}
 			rightNavigationBarButtonIsEnabled = false
-		})
+		}
 
-		rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
+		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .send : .next
+		textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .send : .next
 	}
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if textField.tag == textFieldArray.count - 1 {
-			rightNavigationBarButtonPressed(sender: textField)
+		if textField.tag == self.textFieldArray.count - 1 {
+			self.rightNavigationBarButtonPressed(sender: textField)
 		} else {
-			textFieldArray[textField.tag + 1]?.becomeFirstResponder()
+			self.textFieldArray[textField.tag + 1]?.becomeFirstResponder()
 		}
 
 		return true

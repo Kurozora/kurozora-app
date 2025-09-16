@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
@@ -23,36 +23,43 @@ class KFeedMessageTextEditorViewController: KViewController {
 	var placeholderText: String {
 		return Trans.whatsOnYourMind
 	}
+
 	var originalText = "" {
 		didSet {
 			self.editedText = self.originalText
 		}
 	}
+
 	var editedText = "" {
 		didSet {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+
 	var originalNSFW = false {
 		didSet {
 			self.editedNSFW = self.originalNSFW
 		}
 	}
+
 	var editedNSFW = false {
 		didSet {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+
 	var originalSpoiler = false {
 		didSet {
 			self.editedSpoiler = self.originalSpoiler
 		}
 	}
+
 	var editedSpoiler = false {
 		didSet {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+
 	var hasChanges: Bool {
 		if self.editingFeedMessage != nil {
 			return self.originalText != self.editedText || self.originalNSFW != self.editedNSFW || self.originalSpoiler != self.editedSpoiler
@@ -60,6 +67,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		return self.originalText != self.editedText
 	}
+
 	var editingFeedMessage: FeedMessage?
 	var dmToUser: User?
 	var userInfo: [AnyHashable: Any] = [:]
@@ -160,7 +168,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		self.sendButton.isEnabled = false
 
 		// Post is within the allowed character limit.
-		if let characterCount = self.characterCountLabel.text?.int, characterCount >= 0 {
+		if let characterCountString = self.characterCountLabel.text, let characterCount = Int(characterCountString), characterCount >= 0 {
 			// Disable editing to hide the keyboard.
 			self.view.endEditing(true)
 

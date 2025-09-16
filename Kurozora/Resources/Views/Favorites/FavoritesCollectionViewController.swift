@@ -260,7 +260,7 @@ extension FavoritesCollectionViewController: UIToolbarDelegate {
 extension FavoritesCollectionViewController {
 	/// List of  favorites section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
