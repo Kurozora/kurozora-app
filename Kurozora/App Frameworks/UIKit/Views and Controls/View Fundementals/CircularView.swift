@@ -25,9 +25,9 @@ class CircularView: UIView {
 		self.sharedInit()
 	}
 
-	// MARK: - Fucntions
+	// MARK: - Functions
 	/// The shared settings used to initialize the view.
 	private func sharedInit() {
-		self.layerCornerRadius = self.height / 2
+		self.layerCornerRadius = self.frame.size.height / 2
 	}
 }

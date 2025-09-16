@@ -93,7 +93,7 @@ class KUnderlinedLabel: UILabel {
 			(2, secondUnderlineFrame),
 			(3, thirdUnderlineFrame),
 			(4, firstCircleFrame),
-			(5, secondCircleFrame)
+			(5, secondCircleFrame),
 		] {
 			if let view = superview.subviews.first(where: { $0.tag == tag }) {
 				view.frame = frame

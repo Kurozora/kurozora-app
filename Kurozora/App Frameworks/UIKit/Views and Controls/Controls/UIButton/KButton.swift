@@ -58,8 +58,14 @@ class KButton: UIButton {
 		self.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
 
+		// Configure disabled background color
 		self.setTitleColor(.systemGray3, for: .disabled)
-		self.setBackgroundColor(color: .systemGray5, forState: .disabled)
+		let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { context in
+			UIColor.systemGray5.setFill()
+			context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+			self.draw(.zero)
+		}
+		self.setBackgroundImage(colorImage, for: .disabled)
 
 		// Add targets
 		self.addTarget(self, action: #selector(self.touchDown), for: [.touchDown, .touchDragEnter])
@@ -90,7 +96,8 @@ class KButton: UIButton {
 					if UserSettings.hapticsAllowed {
 						self.selectionFeedbackGenerator.selectionChanged()
 					}
-				}, completion: nil)
+				}, completion: nil
+			)
 		} else {
 			if UserSettings.hapticsAllowed {
 				self.selectionFeedbackGenerator.selectionChanged()
@@ -123,7 +130,8 @@ class KButton: UIButton {
 					if UserSettings.hapticsAllowed {
 						self.selectionFeedbackGenerator.selectionChanged()
 					}
-				}, completion: nil)
+				}, completion: nil
+			)
 		} else {
 			if UserSettings.hapticsAllowed {
 				self.selectionFeedbackGenerator.selectionChanged()

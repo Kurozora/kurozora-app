@@ -17,8 +17,8 @@ class KFillBarIndicator: TMBarIndicator {
 	}
 
 	// MARK: Customization
-	/// Corner style for the indicator. Default: `.eliptical`.
-	var cornerStyle: CornerStyle = .eliptical {
+	/// Corner style for the indicator. Default: `.elliptical`.
+	var cornerStyle: CornerStyle = .elliptical {
 		didSet {
 			self.setNeedsLayout()
 		}

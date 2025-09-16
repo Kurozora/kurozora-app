@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// `ProfileImageButton` is a sepcially crafted object that displays a single image in your interface.
+/// `ProfileImageButton` is a specially crafted object that displays a single image in your interface.
 ///
 /// `ProfileImageButton` adjusts some options to achieve its design, this includes:
 /// - Applying a border width and border color.
@@ -17,24 +17,26 @@ class ProfileImageButton: UIButton {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.layerCornerRadius = self.height / 2
+		self.layerCornerRadius = self.frame.size.height / 2
 	}
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the button.
 	func sharedInit() {
-		self.layer.borderWidth = 2
-		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			self.layer.borderWidth = 2
+			self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
+		}
 	}
 }
