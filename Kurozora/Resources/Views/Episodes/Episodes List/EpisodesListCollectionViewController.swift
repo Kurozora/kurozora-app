@@ -180,7 +180,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	/// Fades in and out the empty data view according to the number of rows.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 {
+		if self.collectionView.numberOfItems == 0 {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -235,7 +235,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		case .season:
 			do {
 				guard let seasonIdentity = self.seasonIdentity else { return }
-				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25,).value
+				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -478,7 +478,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 extension EpisodesListCollectionViewController {
 	/// List of episode section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {

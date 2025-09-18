@@ -17,9 +17,9 @@ extension EpisodeDetailsCollectionViewController {
 		case .header, .synopsis, .sosumi:
 			return 1
 		case .badge:
-			return width > 414 ? GameDetail.Badge.allCases.count : (width / 132).rounded().int
+			return width > 414 ? GameDetail.Badge.allCases.count : Int((width / 132).rounded())
 		case .rating:
-			let columnCount = (width / 250).rounded().int
+			let columnCount = Int((width / 250).rounded())
 			return columnCount >= 3 ? 3 : 2
 		case .rateAndReview:
 			if UIDevice.isPhone {
@@ -27,17 +27,17 @@ extension EpisodeDetailsCollectionViewController {
 			}
 			return width > 414 ? 2 : 1
 		case .reviews:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .information:
-			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
+			columnCount = Int(width >= 414 ? (width / 200).rounded() : (width / 160).rounded())
 			return columnCount > 0 ? columnCount : 2
 		case .cast:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 			if columnCount > 5 {
 				return 5
 			}
 		case .suggestedEpisodes:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 
 			if columnCount > 5 {
 				return 5
@@ -78,7 +78,7 @@ extension EpisodeDetailsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.episode != nil else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
@@ -137,13 +137,13 @@ extension EpisodeDetailsCollectionViewController {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
-					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+				)
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 
 			return sectionLayout
 		}
-		return layout
 	}
 
 	func headerSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {

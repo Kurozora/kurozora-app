@@ -22,7 +22,7 @@ extension EpisodeDetailsCollectionViewController {
 			TapToRateCollectionViewCell.self,
 			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
-			SosumiCollectionViewCell.self
+			SosumiCollectionViewCell.self,
 		]
 	}
 

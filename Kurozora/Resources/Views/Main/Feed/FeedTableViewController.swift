@@ -355,7 +355,7 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
-			self.feedMessages.prepend(feedMessage)
+			self.feedMessages.insert(feedMessage, at: 0)
 		}
 
 		self.tableView.reloadData()

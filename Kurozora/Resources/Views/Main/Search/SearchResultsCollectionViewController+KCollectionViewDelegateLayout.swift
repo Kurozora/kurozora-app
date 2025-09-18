@@ -16,39 +16,39 @@ extension SearchResultsCollectionViewController {
 		switch section {
 		case .discover:
 			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
+				columnCount = Int((width / 384.0).rounded())
 			} else {
-				columnCount = (width / 284.0).rounded().int
+				columnCount = Int((width / 284.0).rounded())
 			}
 		case .browse:
-			columnCount = (width / 250.0).rounded().int
+			columnCount = Int((width / 250.0).rounded())
 		case .characters, .people:
-			columnCount = (width / 140.0).rounded().int
+			columnCount = Int((width / 140.0).rounded())
 		case .episodes:
 			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
+				columnCount = Int((width / 384.0).rounded())
 			} else {
-				columnCount = (width / 284.0).rounded().int
+				columnCount = Int((width / 284.0).rounded())
 			}
 		case .songs:
-			columnCount = (width / 250.0).rounded().int
+			columnCount = Int((width / 250.0).rounded())
 		case .shows, .literatures, .games:
 			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
+				columnCount = Int((width / 384.0).rounded())
 			} else {
-				columnCount = (width / 284.0).rounded().int
+				columnCount = Int((width / 284.0).rounded())
 			}
 		case .studios:
 			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
+				columnCount = Int((width / 384.0).rounded())
 			} else {
-				columnCount = (width / 284.0).rounded().int
+				columnCount = Int((width / 284.0).rounded())
 			}
 		case .users:
 			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
+				columnCount = Int((width / 384.0).rounded())
 			} else {
-				columnCount = (width / 284.0).rounded().int
+				columnCount = Int((width / 284.0).rounded())
 			}
 		}
 
@@ -119,7 +119,8 @@ extension SearchResultsCollectionViewController {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
-					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+				)
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 			return sectionLayout

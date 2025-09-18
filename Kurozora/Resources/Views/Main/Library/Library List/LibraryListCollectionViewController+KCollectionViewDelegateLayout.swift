@@ -13,17 +13,17 @@ extension LibraryListCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		switch self.libraryCellStyle {
 		case .compact:
-			var columnCount = (width / 105).rounded().int
+			var columnCount = Int((width / 105).rounded())
 			if columnCount < 0 {
 				columnCount = 3
 			} else if columnCount > 8 {
 				columnCount = 8
 			} else {
-				columnCount = abs(columnCount.double/1.5).rounded().int
+				columnCount = Int(abs(Double(columnCount) / 1.5).rounded())
 			}
 			return columnCount
 		case .detailed, .list:
-			var columnCount = (width / 374).rounded().int
+			var columnCount = Int((width / 374).rounded())
 			if columnCount < 0 {
 				columnCount = 1
 			} else if columnCount > 5 {
@@ -38,7 +38,7 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
@@ -53,6 +53,5 @@ extension LibraryListCollectionViewController {
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}
-		return layout
 	}
 }

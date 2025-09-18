@@ -48,6 +48,8 @@ class LibraryViewController: KTabbedViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.navigationItem.title = Trans.library
+
 		// Configurations
 		self.configureToolbar()
 		self.configureUserDetails()
@@ -305,7 +307,11 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 	}
 
 	func libraryListViewController(updateTotalCount totalCount: Int) {
-		self.navigationItem.title = "\(Trans.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 9.0, *) {
+			self.navigationItem.subtitle = totalCount > 0 ? "\(totalCount) Items" : nil
+		} else {
+			self.navigationItem.title = "\(Trans.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+		}
 	}
 }
 

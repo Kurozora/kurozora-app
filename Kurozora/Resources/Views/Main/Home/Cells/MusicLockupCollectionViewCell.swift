@@ -6,11 +6,11 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
+import Combine
 import KurozoraKit
 import MusicKit
 import SwiftyJSON
-import Combine
+import UIKit
 
 protocol MusicLockupCollectionViewCellDelegate: AnyObject {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
@@ -146,7 +146,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.playButton.highlightBackgroundColorEnabled = false
 		self.playButton.springEnabled = true
 		self.playButton.isHidden = true
-		self.playButton.layerCornerRadius = self.playButton.height / 2
+		self.playButton.layerCornerRadius = self.playButton.frame.size.height / 2
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
@@ -173,7 +173,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Updates the play button status.
 	func updatePlayButton() {
-		if MusicManager.shared.currentSong == self.song && MusicManager.shared.isPlaying {
+		if MusicManager.shared.currentSong == self.song, MusicManager.shared.isPlaying {
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -191,7 +191,9 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.albumImageView?.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
+			if let backgroundColor = song.song.artwork?.backgroundColor {
+				self.albumImageView?.backgroundColor = UIColor(cgColor: backgroundColor)
+			}
 			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}

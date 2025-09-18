@@ -16,54 +16,54 @@ extension HomeCollectionViewController {
 		switch section {
 		case .banner:
 			if width >= 414 {
-				columnCount = (width / 562).rounded().int
+				columnCount = Int((width / 562).rounded())
 			} else {
-				columnCount = (width / 374).rounded().int
+				columnCount = Int((width / 374).rounded())
 			}
 		case .small:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		case .medium:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		case .large:
 			if width >= 414 {
-				columnCount = (width / 500).rounded().int
+				columnCount = Int((width / 500).rounded())
 			} else {
-				columnCount = (width / 324).rounded().int
+				columnCount = Int((width / 324).rounded())
 			}
 		case .upcoming:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		case .video:
 			if width >= 414 {
-				columnCount = (width / 500).rounded().int
+				columnCount = Int((width / 500).rounded())
 			} else {
-				columnCount = (width / 360).rounded().int
+				columnCount = Int((width / 360).rounded())
 			}
 		case .episode:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		case .music:
-			columnCount = (width / 250.0).rounded().int
+			columnCount = Int((width / 250.0).rounded())
 		case .profile:
-			columnCount = (width / 140.0).rounded().int
+			columnCount = Int((width / 140.0).rounded())
 		case .quickLinks:
-			columnCount = (width / 414).rounded().int
+			columnCount = Int((width / 414).rounded())
 		case .quickActions:
-			columnCount = (width / 414).rounded().int
+			columnCount = Int((width / 414).rounded())
 		case .legal:
 			columnCount = 1
 		}
@@ -126,7 +126,8 @@ extension HomeCollectionViewController {
 			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 				layoutSize: headerFooterSize,
-				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+			)
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			return sectionLayout
 		}

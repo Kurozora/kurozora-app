@@ -66,7 +66,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 			self.opProfileBadgeStackView.configure(for: opUser)
 		}
 
-		if let opView = self.opView, opView.gestureRecognizers.isNilOrEmpty {
+		if let opView = self.opView, opView.gestureRecognizers?.isEmpty ?? true {
 			let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showOPMessage(_:)))
 			self.opView?.addGestureRecognizer(tapGestureRecognizer)
 		}
@@ -130,7 +130,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	///
 	/// - Parameter view: The view to which the tap gesture should be attached.
 	fileprivate func configureOPProfilePageGesture(for view: UIView) {
-		if view.gestureRecognizers.isNilOrEmpty {
+		if view.gestureRecognizers?.isEmpty ?? true {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(opUsernameLabelPressed(_:)))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1

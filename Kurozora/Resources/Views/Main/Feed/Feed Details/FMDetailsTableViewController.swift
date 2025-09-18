@@ -113,8 +113,8 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		// TODO: - HERE: Look at this
-//		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+		// TODO: Refactor
+//		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 
 		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
 		emptyBackgroundView.configureLabels(title: "No Replies", detail: "Be the first to reply to this message!")
@@ -124,7 +124,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 	/// Fades in and out the empty data view according to the number of sections.
 	func toggleEmptyDataView() {
-		if self.tableView.numberOfRows() <= 1 {
+		if self.tableView.numberOfRows <= 1 {
 			self.tableView.backgroundView?.animateFadeIn()
 		} else {
 			self.tableView.backgroundView?.animateFadeOut()
@@ -162,7 +162,7 @@ class FMDetailsTableViewController: KTableViewController {
 					}, completion: nil)
 				default:
 					self.fmDetailsTableViewControllerDelegate?.fmDetailsTableViewController(delete: self.feedMessageID)
-					self.navigationController?.popViewController(animated: true, nil)
+					self.navigationController?.popViewController(animated: true)
 				}
 			}
 		}
@@ -361,7 +361,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
 	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
-			self.feedMessageReplies.prepend(feedMessage)
+			self.feedMessageReplies.insert(feedMessage, at: 0)
 		}
 		self.tableView.reloadSections([1], with: .automatic)
 	}

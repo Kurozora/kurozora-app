@@ -17,10 +17,10 @@ class SearchFilterSelectCollectionViewCell: SearchFilterBaseCollectionViewCell {
 		self.configureCell(title: title)
 
 		var options = options
-		options.prepend("Default")
+		options.insert("Default", at: 0)
 
 		let menu = UIMenu(title: "", options: .singleSelection, children: options.map { option in
-			return UIAction(title: option, state: option == selected ? .on : .off) { action in
+			UIAction(title: option, state: option == selected ? .on : .off) { action in
 				self.menuOptionChanged(action)
 			}
 		})

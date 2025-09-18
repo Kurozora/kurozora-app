@@ -160,7 +160,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// Fades in and out the empty data view according to the number of rows.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 || self.viewedUser == nil {
+		if self.collectionView.numberOfItems == 0 || self.viewedUser == nil {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -451,7 +451,7 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController {
 	/// List of cast section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {

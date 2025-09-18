@@ -195,7 +195,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	}
 
 	func configureReminderButton(for reminderStatus: ReminderStatus?) {
-		self.reminderButton?.layerCornerRadius = (self.reminderButton?.height ?? 30) / 2
+		self.reminderButton?.layerCornerRadius = (self.reminderButton?.frame.size.height ?? 30) / 2
 		switch reminderStatus ?? .disabled {
 		case .reminded:
 			self.reminderButton?.setTitle(nil, for: .normal)

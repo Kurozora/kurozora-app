@@ -19,7 +19,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	}
 
 	// MARK: - Properties
-	var episodeIdentity: EpisodeIdentity? = nil
+	var episodeIdentity: EpisodeIdentity?
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title

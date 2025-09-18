@@ -75,7 +75,7 @@ class SearchShowResultsCell: KCollectionViewCell {
 		self.episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let airYear = show.attributes.startedAt?.year {
+		if let airYear = show.attributes.startedAt?.components.year {
 			self.airDateLabel.text = "\(airYear)"
 			self.airDateLabel.isHidden = false
 		} else {

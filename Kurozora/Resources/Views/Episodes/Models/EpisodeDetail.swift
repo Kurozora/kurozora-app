@@ -266,7 +266,8 @@ extension EpisodeDetail {
 			case .duration:
 				return nil
 			case .airDate:
-				if let isInFuture = episode.attributes.startedAt?.isInFuture {
+				if let startedAt = episode.attributes.startedAt {
+					let isInFuture = startedAt > Date()
 					return isInFuture ? "The episode will air on the announced date." : "The episode has finished airing."
 				}
 				return "A release date has yet to be announced."

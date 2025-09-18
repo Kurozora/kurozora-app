@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
 	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: KKSearchFilter)
@@ -39,6 +39,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -49,6 +50,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -111,7 +113,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		NSLayoutConstraint.activate([
 			self.applyButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.0),
 			self.applyButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -24.0),
-			self.applyButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.0)
+			self.applyButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.0),
 		])
 	}
 
@@ -190,7 +192,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var waist: String? = characterFilter.waist
 			var weight: String? = characterFilter.weight
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .status:
 					status = value.options?.first { key, _ in
@@ -251,11 +253,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var startedAt: TimeInterval? = episodeFilter.startedAt
 			var endedAt: TimeInterval? = episodeFilter.endedAt
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .duration:
-					if let selected = (value.selected as? Double)?.int {
-						duration = selected * 60
+					if let selected = value.selected as? Double {
+						duration = Int(selected) * 60
 					}
 				case .isFiller:
 					isFiller = (value.options?.first { key, _ in
@@ -278,9 +280,17 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						key == value.selected as? String
 					}?.value as? NSNumber)?.boolValue
 				case .number:
-					number = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						number = Int(selected)
+					} else {
+						number = nil
+					}
 				case .numberTotal:
-					numberTotal = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						numberTotal = Int(selected)
+					} else {
+						numberTotal = nil
+					}
 				case .season:
 					season = value.selected as? Int
 				case .tvRating:
@@ -323,7 +333,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var countryOfOrigin: String? = gameFilter.countryOfOrigin
 			var editionCount: Int? = gameFilter.editionCount
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .publicationDay:
 					publicationDay = value.options?.first { key, _ in
@@ -334,8 +344,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						key == value.selected as? String
 					}?.value
 				case .duration:
-					if let selected = (value.selected as? Double)?.int {
-						duration = selected * 60
+					if let selected = value.selected as? Double {
+						duration = Int(selected) * 60
 					}
 				case .publishedAt:
 					publishedAt = (value.selected as? Date)?.timeIntervalSince1970
@@ -364,7 +374,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						countryOfOrigin.name == value.selected as? String
 					}?.value
 				case .editionCount:
-					editionCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						editionCount = Int(selected)
+					} else {
+						editionCount = nil
+					}
 				default: break
 				}
 			}
@@ -400,7 +414,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var chapterCount: Int? = literatureFilter.chapterCount
 			var pageCount: Int? = literatureFilter.pageCount
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .publicationDay:
 					publicationDay = value.options?.first { key, _ in
@@ -413,8 +427,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .publicationTime:
 					publicationTime = (value.selected as? Date)?.convertTo24Hour()
 				case .duration:
-					if let selected = (value.selected as? Double)?.int {
-						duration = selected * 60
+					if let selected = value.selected as? Double {
+						duration = Int(selected) * 60
 					}
 				case .startedAt:
 					startedAt = (value.selected as? Date)?.timeIntervalSince1970
@@ -445,11 +459,23 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						countryOfOrigin.name == value.selected as? String
 					}?.value
 				case .volumeCount:
-					volumeCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						volumeCount = Int(selected)
+					} else {
+						volumeCount = nil
+					}
 				case .chapterCount:
-					chapterCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						chapterCount = Int(selected)
+					} else {
+						chapterCount = nil
+					}
 				case .pageCount:
-					pageCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						pageCount = Int(selected)
+					} else {
+						pageCount = nil
+					}
 				default: break
 				}
 			}
@@ -477,7 +503,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var birthDate: TimeInterval? = personFilter.birthDate
 			var deceasedDate: TimeInterval? = personFilter.deceasedDate
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .astrologicalSign:
 					astrologicalSign = value.options?.first { key, _ in
@@ -509,7 +535,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var seasonCount: Int? = showFilter.seasonCount
 			var episodeCount: Int? = showFilter.episodeCount
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .airDay:
 					airDay = value.options?.first { key, _ in
@@ -522,8 +548,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .airTime:
 					airTime = (value.selected as? Date)?.convertTo24Hour()
 				case .duration:
-					if let selected = (value.selected as? Double)?.int {
-						duration = selected * 60
+					if let selected = value.selected as? Double {
+						duration = Int(selected) * 60
 					}
 				case .isNSFW:
 					isNSFW = (value.options?.first { key, _ in
@@ -554,9 +580,17 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						countryOfOrigin.name == value.selected as? String
 					}?.value
 				case .seasonCount:
-					seasonCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						seasonCount = Int(selected)
+					} else {
+						seasonCount = nil
+					}
 				case .episodeCount:
-					episodeCount = (value.selected as? Double)?.int
+					if let selected = value.selected as? Double {
+						episodeCount = Int(selected)
+					} else {
+						episodeCount = nil
+					}
 				default: break
 				}
 			}
@@ -579,7 +613,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			)
 			return .show(showFilter)
 		} else if searchFilter is SongFilter {
-			self.filterableAttributes.forEach { key, _ in
+			for (key, _) in self.filterableAttributes {
 				switch key {
 				default: break
 				}
@@ -595,7 +629,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var type: Int? = studioFilter.type
 			var tvRating: Int? = studioFilter.tvRating
 
-			self.filterableAttributes.forEach { key, value in
+			for (key, value) in self.filterableAttributes {
 				switch key {
 				case .address:
 					address = value.selected as? String
@@ -629,7 +663,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			)
 			return .studio(studioFilter)
 		} else if searchFilter is UserFilter {
-			self.filterableAttributes.forEach { key, _ in
+			for (key, _) in self.filterableAttributes {
 				switch key {
 				default: break
 				}
@@ -666,7 +700,7 @@ extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCe
 
 		switch itemKind {
 		case .searchFilter(let filterableAttribute, _):
-			guard let index = self.filterableAttributes.firstIndex(where: { (_, attribute) in
+			guard let index = self.filterableAttributes.firstIndex(where: { _, attribute in
 				filterableAttribute.name == attribute.name
 			}) else { return }
 
