@@ -8,6 +8,20 @@
 
 import UIKit
 
+protocol OnboardingFooterTableViewCellDelegate: UIViewController {
+	/// Notifies the delegate that the legal button was pressed.
+	func onboardingFooterTableViewCell(_ cell: OnboardingFooterTableViewCell, didPressLegalButton sender: UIButton)
+}
+
+extension OnboardingFooterTableViewCellDelegate {
+	func onboardingFooterTableViewCell(_ cell: OnboardingFooterTableViewCell, didPressLegalButton sender: UIButton) {
+		if let legalViewController = R.storyboard.legal.legalViewController() {
+			let kNavigationController = KNavigationController(rootViewController: legalViewController)
+			self.present(kNavigationController, animated: true)
+		}
+	}
+}
+
 class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var legalButton: UIButton! {
@@ -16,6 +30,9 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 			legalButton.addTarget(self, action: #selector(legalButtonTouched), for: [.touchDown, .touchDragExit, .touchDragInside, .touchCancel])
 		}
 	}
+
+	// MARK: - Properties
+	weak var delegate: OnboardingFooterTableViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
@@ -35,10 +52,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	@objc fileprivate func legalButtonPressed(_ sender: UIButton) {
 		sender.alpha = 1.0
 
-		if let legalViewController = R.storyboard.legal.legalViewController() {
-			let kNavigationController = KNavigationController(rootViewController: legalViewController)
-			self.parentViewController?.present(kNavigationController, animated: true)
-		}
+		self.delegate?.onboardingFooterTableViewCell(self, didPressLegalButton: sender)
 	}
 
 	/// Changes the opacity of the button to match the default UIButton mechanic.

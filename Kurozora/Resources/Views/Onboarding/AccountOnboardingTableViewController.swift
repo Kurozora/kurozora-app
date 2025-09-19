@@ -16,7 +16,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 	var textFieldArray: [UITextField?] = []
 	var accountOnboardingType: AccountOnboarding = .signIn {
 		didSet {
-			self.rightNavigationBarButton.title = accountOnboardingType.navigationBarButtonTitleValue
+			self.rightNavigationBarButton.title = self.accountOnboardingType.navigationBarButtonTitleValue
 		}
 	}
 
@@ -26,6 +26,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -36,6 +37,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -93,7 +95,7 @@ extension AccountOnboardingTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let onboardingBaseTableViewCell: OnboardingBaseTableViewCell?
 
-		switch accountOnboardingType.sections[indexPath.section] {
+		switch self.accountOnboardingType.sections[indexPath.section] {
 		case .header:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingHeaderTableViewCell.identifier, for: indexPath) as? OnboardingHeaderTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
@@ -101,8 +103,8 @@ extension AccountOnboardingTableViewController {
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingTextFieldTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 
-			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = accountOnboardingType.textFieldTypes[indexPath.row].textType
-			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textContentType = accountOnboardingType.textFieldTypes[indexPath.row].textContentType
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = self.accountOnboardingType.textFieldTypes[indexPath.row].textType
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textContentType = self.accountOnboardingType.textFieldTypes[indexPath.row].textContentType
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.tag = indexPath.row
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.delegate = self
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.addTarget(self, action: #selector(self.editingChanged), for: .editingChanged)
@@ -112,7 +114,13 @@ extension AccountOnboardingTableViewController {
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 			(onboardingBaseTableViewCell as? OnboardingOptionsTableViewCell)?.delegate = self as? SignInTableViewController
 		case .footer:
-			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingFooterTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			if let onboardingFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingFooterTableViewCell.identifier, for: indexPath) as? OnboardingFooterTableViewCell {
+				onboardingFooterTableViewCell.delegate = self
+				onboardingBaseTableViewCell = onboardingFooterTableViewCell
+			} else {
+				onboardingBaseTableViewCell = nil
+			}
+
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 		}
 
@@ -120,6 +128,9 @@ extension AccountOnboardingTableViewController {
 		return onboardingBaseTableViewCell ?? UITableViewCell()
 	}
 }
+
+// MARK: - OnboardingFooterTableViewCellDelegate
+extension AccountOnboardingTableViewController: OnboardingFooterTableViewCellDelegate {}
 
 // MARK: - UITextFieldDelegate
 extension AccountOnboardingTableViewController: UITextFieldDelegate {
@@ -130,10 +141,10 @@ extension AccountOnboardingTableViewController: UITextFieldDelegate {
 		}
 
 		var rightNavigationBarButtonIsEnabled = false
-		self.textFieldArray.forEach {
-			if let textField = $0?.text, !textField.isEmpty {
+		for item in self.textFieldArray {
+			if let textField = item?.text, !textField.isEmpty {
 				rightNavigationBarButtonIsEnabled = true
-				return
+				continue
 			}
 			rightNavigationBarButtonIsEnabled = false
 		}

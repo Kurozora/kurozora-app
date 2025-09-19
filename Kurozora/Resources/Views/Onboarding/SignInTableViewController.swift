@@ -6,9 +6,9 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import AuthenticationServices
+import KurozoraKit
+import UIKit
 
 class SignInTableViewController: AccountOnboardingTableViewController {
 	// MARK: - Properties
@@ -31,7 +31,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	func performExistingAccountSetupFlows() {
 		// Prepare requests for both Apple ID and password providers.
 		let requests = [ASAuthorizationAppleIDProvider().createRequest(),
-						ASAuthorizationPasswordProvider().createRequest()]
+		                ASAuthorizationPasswordProvider().createRequest()]
 
 		// Create an authorization controller with the given requests.
 		let authorizationController = ASAuthorizationController(authorizationRequests: requests)
@@ -46,7 +46,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	///    - email: The email address of the user.
 	///    - password: The password of the user.
 	func signInWithKurozora(email: String? = nil, password: String? = nil) async {
-		guard let email = email ?? self.textFieldArray.first??.trimmedText else { return }
+		guard let email = email ?? self.textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
 		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
 		do {
@@ -92,7 +92,7 @@ extension SignInTableViewController {
 		return [
 			OnboardingHeaderTableViewCell.self,
 			OnboardingTextFieldTableViewCell.self,
-			OnboardingFooterTableViewCell.self
+			OnboardingFooterTableViewCell.self,
 		]
 	}
 }

@@ -82,8 +82,8 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 		switch self.accountOnboardingType {
 		case .signUp:
-			guard let username = textFieldArray.first??.trimmedText else { return }
-			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
+			guard let username = textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+			guard let emailAddress = textFieldArray[1]?.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
 			guard let password = textFieldArray.last??.text else { return }
 			let profileImage = !self.originalProfileImage.isEqual(to: self.editedProfileImage) ? self.editedProfileImage : nil
 
@@ -96,7 +96,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 				await self.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage)
 			}
 		case .siwa:
-			let username = textFieldArray.first??.trimmedText
+			let username = textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines)
 
 			// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 			// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`

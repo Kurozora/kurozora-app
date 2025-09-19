@@ -20,7 +20,7 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		guard let emailAddress = textFieldArray.first??.trimmedText, emailAddress.isValidEmail else {
+		guard let emailAddress = textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines), emailAddress.isValidEmail else {
 			self.presentAlertController(title: Trans.forgotPasswordErrorAlertHeadline, message: Trans.forgotPasswordErrorAlertSubheadline)
 
 			self.disableUserInteraction(false)

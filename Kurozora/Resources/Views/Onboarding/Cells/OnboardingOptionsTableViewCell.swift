@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import AuthenticationServices
+import UIKit
 
 @objc protocol OnboardingOptionsTableViewCellDelegate: AnyObject {
 	@MainActor
@@ -29,13 +29,14 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		setupProviderSignInView()
+		self.setupProviderSignInView()
 	}
 
 	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
 	func setupProviderSignInView() {
 		// Create a new 'or label' separator.
-		let orLabel: KSecondaryLabel = KSecondaryLabel(text: "━━━━━━ or ━━━━━━")
+		let orLabel = KSecondaryLabel()
+		orLabel.text = "━━━━━━ or ━━━━━━"
 		orLabel.font = .preferredFont(forTextStyle: .subheadline)
 
 		// Create and setup Apple ID authorization button
@@ -49,10 +50,11 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 		// Add width constraint
 		let widthConstraint = authorizationButton.widthAnchor.constraint(equalToConstant: 220)
 		authorizationButton.addConstraint(widthConstraint)
-		authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+		authorizationButton.addTarget(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
 
 		// Add to stack view
-		optionsStackView?.addArrangedSubviews([orLabel, authorizationButton])
+		self.optionsStackView?.addArrangedSubview(orLabel)
+		self.optionsStackView?.addArrangedSubview(authorizationButton)
 	}
 
 	/// Handles the Apple ID button press.
