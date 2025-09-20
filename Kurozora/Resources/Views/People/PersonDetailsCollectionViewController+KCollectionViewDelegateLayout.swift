@@ -17,7 +17,7 @@ extension PersonDetailsCollectionViewController {
 		case .header, .about:
 			return 1
 		case .rating:
-			let columnCount = (width / 250).rounded().int
+			let columnCount = Int((width / 250).rounded())
 			return columnCount >= 3 ? 3 : 2
 		case .rateAndReview:
 			if UIDevice.isPhone {
@@ -25,17 +25,17 @@ extension PersonDetailsCollectionViewController {
 			}
 			return width > 414 ? 2 : 1
 		case .reviews:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .information:
-			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
+			columnCount = Int(width >= 414 ? (width / 200).rounded() : (width / 160).rounded())
 			return columnCount > 0 ? columnCount : 2
 		case .shows, .literatures, .games:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 			if columnCount > 5 {
 				return 5
 			}
 		case .characters:
-			columnCount = (width / 140.0).rounded().int
+			columnCount = Int((width / 140.0).rounded())
 		}
 
 		return columnCount > 0 ? columnCount : 1
@@ -68,7 +68,7 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.person != nil else { return nil }
 			let personDetailSection = self.snapshot.sectionIdentifiers[section]
@@ -128,12 +128,12 @@ extension PersonDetailsCollectionViewController {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
-					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+				)
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 
 			return sectionLayout
 		}
-		return layout
 	}
 }

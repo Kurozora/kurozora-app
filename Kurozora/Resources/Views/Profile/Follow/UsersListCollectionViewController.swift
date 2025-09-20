@@ -290,7 +290,7 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 extension UsersListCollectionViewController {
 	/// List of section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {

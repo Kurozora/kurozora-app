@@ -317,8 +317,8 @@ extension EditProfileViewController {
 	}
 
 	private func configurePlaceholderViews() {
-		self.placeholderProfileImageEditButton.layerCornerRadius = self.placeholderProfileImageEditButton.height / 2
-		self.placeholderBannerImageEditButton.layerCornerRadius = self.placeholderBannerImageEditButton.height / 2
+		self.placeholderProfileImageEditButton.layerCornerRadius = self.placeholderProfileImageEditButton.frame.size.height / 2
+		self.placeholderBannerImageEditButton.layerCornerRadius = self.placeholderBannerImageEditButton.frame.size.height / 2
 	}
 
 	private func configureBannerImageView() {
@@ -448,18 +448,17 @@ extension EditProfileViewController: UITextViewDelegate {
 		}
 	}
 
-	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		if URL.absoluteString.starts(with: "https://kurozora.app/profile") {
+	func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if url.absoluteString.starts(with: "https://kurozora.app/profile") {
 			Task { [weak self] in
 				guard let self = self else { return }
-				let username = URL.lastPathComponent
+				let username = url.lastPathComponent
 				guard let userIdentity = await self.getUserIdentity(username: username) else { return }
-				let deeplink = URL.absoluteString
+				let deeplink = url.absoluteString
 					.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
 					.replacingOccurrences(of: username, with: "\(userIdentity.id)")
-					.url
 
-				UIApplication.shared.kOpen(nil, deepLink: deeplink)
+				UIApplication.shared.kOpen(nil, deepLink: URL(string: deeplink))
 			}
 
 			return false

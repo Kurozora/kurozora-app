@@ -12,10 +12,10 @@ extension KFillBarIndicator {
 	// MARK: - Types
 	/// The set of available corner style types.
 	///
-	/// ```
+	/// ```swift
 	/// case square
 	/// case rounded
-	/// case eliptical
+	/// case elliptical
 	/// ```
 	public enum CornerStyle {
 		/// Corners are squared off.
@@ -25,7 +25,7 @@ extension KFillBarIndicator {
 		case rounded
 
 		/// Corners are completely circular.
-		case eliptical
+		case elliptical
 
 		// MARK: - Functions
 		/// Returns a `CGFloat` value indicating how much the corners should be rounded.
@@ -39,7 +39,7 @@ extension KFillBarIndicator {
 				return 0.0
 			case .rounded:
 				return frame.size.height / 6.0
-			case .eliptical:
+			case .elliptical:
 				return frame.size.height / 2.0
 			}
 		}

@@ -106,7 +106,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 
 	/// Fades in and out the empty data view according to the number of rows.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 {
+		if self.collectionView.numberOfItems == 0 {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -214,7 +214,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 extension PeopleListCollectionViewController {
 	/// List of section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {

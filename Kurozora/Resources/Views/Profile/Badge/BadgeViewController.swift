@@ -42,7 +42,7 @@ class BadgeViewController: KViewController {
 		super.viewDidLoad()
 
 		if UIDevice.isPhone {
-			self.viewWidthConstraint.constant = self.view.width
+			self.viewWidthConstraint.constant = self.view.frame.size.width
 		} else if UIDevice.isPad {
 			// iPad seems to subtract 60 points from the specified width.
 			// By adding 60 points before we calculate the width,

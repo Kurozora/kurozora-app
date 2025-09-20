@@ -96,7 +96,7 @@ class SelfLabelViewController: KViewController {
 		self.labelSegmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		if UIDevice.isPhone {
-			self.viewWidthConstraint.constant = self.view.width
+			self.viewWidthConstraint.constant = self.view.frame.size.width
 		} else {
 			// iPad seems to subtract 60 points from the specified width.
 			// By adding 60 points before we calculate the width,

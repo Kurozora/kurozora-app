@@ -185,8 +185,8 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		// MARK: - HERE: Look at this
-		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+		// MARK: Refactor
+		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 		var detailString: String
 
 		if self.userIdentity?.id == User.current?.id {
@@ -369,10 +369,10 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure online status
 		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.height / 2
+		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.frame.size.height / 2
 
 		self.onlineIndicatorView.backgroundColor = user.attributes.activityStatus.colorValue
-		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.height / 2
+		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.frame.size.height / 2
 
 		self.onlineIndicatorContainerView.isHidden = false
 		self.onlineIndicatorView.isHidden = false
@@ -602,7 +602,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
-			self.feedMessages.prepend(feedMessage)
+			self.feedMessages.insert(feedMessage, at: 0)
 		}
 
 		self.tableView.reloadData()
@@ -625,18 +625,17 @@ extension ProfileTableViewController: UITextViewDelegate {
 		}
 	}
 
-	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		if URL.absoluteString.starts(with: "https://kurozora.app/profile") {
+	func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if url.absoluteString.starts(with: "https://kurozora.app/profile") {
 			Task { [weak self] in
 				guard let self = self else { return }
-				let username = URL.lastPathComponent
+				let username = url.lastPathComponent
 				guard let userIdentity = await self.getUserIdentity(username: username) else { return }
-				let deeplink = URL.absoluteString
+				let deeplink = url.absoluteString
 					.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
 					.replacingOccurrences(of: username, with: "\(userIdentity.id)")
-					.url
 
-				UIApplication.shared.kOpen(nil, deepLink: deeplink)
+				UIApplication.shared.kOpen(nil, deepLink: URL(string: deeplink))
 			}
 
 			return false

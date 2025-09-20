@@ -14,7 +14,7 @@ enum KNotification { }
 extension KNotification {
 	/// List of notification alert styles
 	///
-	/// ```
+	/// ```swift
 	/// case basic = 0
 	/// case icon = 1
 	/// case status = 2
@@ -35,7 +35,7 @@ extension KNotification {
 extension KNotification {
 	/// List of notification group styles.
 	///
-	/// ```
+	/// ```swift
 	/// case automatic = 0
 	/// case byType
 	/// case off
@@ -68,7 +68,7 @@ extension KNotification {
 extension KNotification {
 	/// List of notification options.
 	///
-	/// ```
+	/// ```swift
 	/// case allowNotifications = 0
 	/// case sounds = 1
 	/// case badge = 2
@@ -89,7 +89,7 @@ extension KNotification {
 extension KNotification {
 	/// List of notification settings.
 	///
-	/// ```
+	/// ```swift
 	/// case notificationsGrouping = 0
 	/// ```
 	enum Settings: Int {

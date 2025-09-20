@@ -14,8 +14,8 @@ enum KBrowser: Int, CaseIterable {
 	case safari
 	case duckduckgo
 	case firefox
-	case firefoxfocus
-	case googlechrome
+	case firefoxFocus
+	case googleChrome
 	case brave
 	case opera
 	case dolphin
@@ -36,9 +36,9 @@ enum KBrowser: Int, CaseIterable {
 			return "DuckDuckGo"
 		case .firefox:
 			return "FireFox"
-		case .firefoxfocus:
+		case .firefoxFocus:
 			return "FireFox Focus"
-		case .googlechrome:
+		case .googleChrome:
 			return "Chrome"
 		case .opera:
 			return "Opera"
@@ -70,9 +70,9 @@ enum KBrowser: Int, CaseIterable {
 			return R.image.browsers.duckDuckGo()
 		case .firefox:
 			return R.image.browsers.fireFox()
-		case .firefoxfocus:
+		case .firefoxFocus:
 			return R.image.browsers.fireFoxFocus()
-		case .googlechrome:
+		case .googleChrome:
 			return R.image.browsers.googleChrome()
 		case .opera:
 			return R.image.browsers.opera()
@@ -99,9 +99,9 @@ enum KBrowser: Int, CaseIterable {
 			return "ddgQuickLink://"
 		case .firefox:
 			return "firefox://open-url?url="
-		case .firefoxfocus:
+		case .firefoxFocus:
 			return "firefox-focus://open-url?url="
-		case .googlechrome:
+		case .googleChrome:
 			if urlScheme == "http://" {
 				return "googlechrome://"
 			} else {
@@ -131,9 +131,9 @@ enum KBrowser: Int, CaseIterable {
 			return "ddgQuickLink://"
 		case .firefox:
 			return "firefox://"
-		case .firefoxfocus:
+		case .firefoxFocus:
 			return "firefox-focus://"
-		case .googlechrome:
+		case .googleChrome:
 			if urlScheme == "http://" {
 				return "googlechrome://"
 			} else {
@@ -149,7 +149,7 @@ enum KBrowser: Int, CaseIterable {
 	/// - Parameter urlScheme: The URL scheme.
 	///
 	/// - Returns: The short scheme URL value of the browser.
-	func shortSchemeUrlValue(for urlScheme: String) -> URL? {
+	func shortSchemeURLValue(for urlScheme: String) -> URL? {
 		return URL(string: self.shortSchemeValue(for: urlScheme))
 	}
 }

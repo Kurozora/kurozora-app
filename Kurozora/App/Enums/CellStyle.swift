@@ -6,13 +6,13 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension KKLibrary {
 	/// List of library layout styles.
 	///
-	/// ```
+	/// ```swift
 	/// case detailed = 0
 	/// case compact = 1
 	/// case list = 2

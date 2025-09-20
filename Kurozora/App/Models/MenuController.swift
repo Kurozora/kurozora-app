@@ -13,7 +13,7 @@ import KurozoraKit
 class MenuController {
 	/// Initialize a new `MenuController` object from the given builder.
 	///
-	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
+	/// - Parameter builder: The [UIMenuBuilder](https://developer.apple.com/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	init(with builder: UIMenuBuilder) {
 		builder.remove(menu: .newScene)
 		builder.remove(menu: .openRecent)
@@ -34,7 +34,7 @@ class MenuController {
 
 	/// Builds and returns the "Home" menu.
 	///
-	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
+	/// - Parameter builder: The [UIMenuBuilder](https://developer.apple.com/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	///
 	/// - Returns: The "Minimize and Zoom" menu.
 	class func newScene() -> UIMenu {
@@ -44,7 +44,7 @@ class MenuController {
 
 	/// Builds and returns the "Minimize and Zoom" menu.
 	///
-	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
+	/// - Parameter builder: The [UIMenuBuilder](https://developer.apple.com/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	///
 	/// - Returns: The "Minimize and Zoom" menu.
 	class func minimizeAndZoom(with builder: UIMenuBuilder) -> UIMenu? {

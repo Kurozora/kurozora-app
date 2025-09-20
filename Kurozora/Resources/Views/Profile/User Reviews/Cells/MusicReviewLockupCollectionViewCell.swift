@@ -43,7 +43,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		self.playButton.highlightBackgroundColorEnabled = false
 		self.playButton.springEnabled = true
 		self.playButton.isHidden = true
-		self.playButton.layerCornerRadius = self.playButton.height / 2
+		self.playButton.layerCornerRadius = self.playButton.frame.size.height / 2
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
@@ -79,7 +79,9 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.posterImageView.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
+			if let posterBackgroundColor = song.song.artwork?.backgroundColor {
+				self.posterImageView.backgroundColor = UIColor(cgColor: posterBackgroundColor)
+			}
 			self.posterImageView.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}
