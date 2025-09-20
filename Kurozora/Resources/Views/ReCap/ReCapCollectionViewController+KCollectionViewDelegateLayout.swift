@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ReCapCollectionViewController {
 	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
@@ -19,17 +19,17 @@ extension ReCapCollectionViewController {
 			return 1
 		case .topShows, .topGames, .topLiteratures, .topGenres, .topThemes:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		case .milestones(let isFullSection):
 			if isFullSection {
 				columnCount = 1
 			} else if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		}
 
@@ -90,7 +90,8 @@ extension ReCapCollectionViewController {
 			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 				layoutSize: headerFooterSize,
-				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+			)
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			sectionLayout?.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return sectionLayout

@@ -91,7 +91,9 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.albumImageView?.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
+			if let posterBackgroundColor = song.song.artwork?.backgroundColor {
+				self.albumImageView?.backgroundColor = UIColor(cgColor: posterBackgroundColor)
+			}
 			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}

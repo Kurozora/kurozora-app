@@ -196,7 +196,7 @@ extension ReCapCollectionViewController {
 			if let recapItem = self.recapItems.filter({
 				$0.attributes.topPercentile > 0.0
 			})
-				.sorted(by: \RecapItem.attributes.topPercentile)
+				.sorted(by: { $0.attributes.topPercentile < $1.attributes.topPercentile })
 				.first {
 				let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .topPercentile)
 

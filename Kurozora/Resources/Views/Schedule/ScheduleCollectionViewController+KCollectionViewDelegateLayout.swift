@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ScheduleCollectionViewController {
 	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
@@ -17,9 +17,9 @@ extension ScheduleCollectionViewController {
 		switch section {
 		case .schedule:
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = Int((width / 384).rounded())
 			} else {
-				columnCount = (width / 284).rounded().int
+				columnCount = Int((width / 284).rounded())
 			}
 		}
 
@@ -52,14 +52,16 @@ extension ScheduleCollectionViewController {
 			switch exploreCategorySection {
 			case .schedule(let schedule):
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-				hasBackgroundDecoration = schedule.attributes.date.isInToday
+
+				hasBackgroundDecoration = Calendar.current.isDateInToday(schedule.attributes.date)
 			}
 
 			// Add header supplementary view.
 			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 				layoutSize: headerFooterSize,
-				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+			)
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 
 			// Add background decoration view.

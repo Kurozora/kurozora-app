@@ -42,7 +42,7 @@ extension ShowSongsListCollectionViewController {
 
 		if self.showIdentity != nil {
 			SongType.allCases.forEach { songType in
-				if self.showSongCategories.has(key: songType) {
+				if self.showSongCategories.index(forKey: songType) != nil {
 					let sectionHeader = SectionLayoutKind.header()
 					self.snapshot.appendSections([sectionHeader])
 

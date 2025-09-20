@@ -207,7 +207,7 @@ extension ScheduleCollectionViewController: TMBarDataSource {
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
 		guard let date = self.schedules[safe: index]?.attributes.date else { return TMBarItem(title: "") }
 
-		let title = DayOfWeek(rawValue: date.weekday)?.name ?? "N/A"
+		let title = DayOfWeek(rawValue: date.components.weekday ?? 0)?.name ?? "N/A"
 		return TMBarItem(title: title)
 	}
 }
@@ -219,7 +219,7 @@ extension ScheduleCollectionViewController: TMBarDelegate {
 		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
 
 		guard let recapTabItem = self.schedules[safe: index] else { return }
-		self.week = recapTabItem.attributes.date.weekday
+		self.week = recapTabItem.attributes.date.components.weekday ?? 0
 
 		self.handleRefreshControl()
 	}

@@ -15,7 +15,7 @@ extension ReviewsCollectionViewController {
 
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .rating:
-			let columnCount = (width / 250).rounded().int
+			let columnCount = Int((width / 250).rounded())
 			return columnCount >= 3 ? 3 : 2
 		case .rateAndReview:
 			if UIDevice.isPhone {
@@ -23,7 +23,7 @@ extension ReviewsCollectionViewController {
 			}
 			return width > 414 ? 2 : 1
 		case .reviews:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		}
 
 		return columnCount > 0 ? columnCount : 1
@@ -46,7 +46,7 @@ extension ReviewsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 
 			let reviewSection = self.snapshot.sectionIdentifiers[section]
@@ -68,6 +68,5 @@ extension ReviewsCollectionViewController {
 
 			return sectionLayout
 		}
-		return layout
 	}
 }

@@ -17,7 +17,7 @@ extension SongDetailsCollectionViewController {
 		case .header, .lyrics, .sosumi:
 			return 1
 		case .rating:
-			let columnCount = (width / 250).rounded().int
+			let columnCount = Int((width / 250).rounded())
 			return columnCount >= 3 ? 3 : 2
 		case .rateAndReview:
 			if UIDevice.isPhone {
@@ -25,9 +25,9 @@ extension SongDetailsCollectionViewController {
 			}
 			return width > 414 ? 2 : 1
 		case .reviews:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .shows:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 			if columnCount > 5 {
 				return 5
 			}
@@ -113,7 +113,8 @@ extension SongDetailsCollectionViewController {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
-					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+				)
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 

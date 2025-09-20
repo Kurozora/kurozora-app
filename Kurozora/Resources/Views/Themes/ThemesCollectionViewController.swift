@@ -13,7 +13,7 @@ import KurozoraKit
 extension ThemesCollectionViewController {
 	/// List of  themes section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
@@ -97,7 +97,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 
 	/// Fades in and out the empty data view according to the number of .
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 {
+		if self.collectionView.numberOfItems == 0 {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()

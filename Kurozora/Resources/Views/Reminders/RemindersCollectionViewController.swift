@@ -180,7 +180,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 extension RemindersCollectionViewController {
 	/// List of  reminders section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case main = 0
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
