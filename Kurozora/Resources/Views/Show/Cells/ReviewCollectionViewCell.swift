@@ -80,7 +80,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	///
 	/// - Parameter view: The view to which the tap gesture should be attached.
 	fileprivate func configureProfilePageGesture(for view: UIView) {
-		if view.gestureRecognizers.isNilOrEmpty {
+		if view.gestureRecognizers?.isEmpty ?? true {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed(_:)))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
@@ -107,18 +107,17 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 // MARK: - UITextViewDelegate
 extension ReviewCollectionViewCell: UITextViewDelegate {
-	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		if URL.absoluteString.starts(with: "https://kurozora.app/profile") {
+	func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if url.absoluteString.starts(with: "https://kurozora.app/profile") {
 			Task { [weak self] in
 				guard let self = self else { return }
-				let username = URL.lastPathComponent
+				let username = url.lastPathComponent
 				guard let userIdentity = await self.getUserIdentity(username: username) else { return }
-				let deeplink = URL.absoluteString
+				let deeplink = url.absoluteString
 					.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
 					.replacingOccurrences(of: username, with: "\(userIdentity.id)")
-					.url
 
-				UIApplication.shared.kOpen(nil, deepLink: deeplink)
+				UIApplication.shared.kOpen(nil, deepLink: URL(string: deeplink))
 			}
 
 			return false

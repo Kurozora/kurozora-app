@@ -6,25 +6,27 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Alamofire
 import AVFoundation
 import Intents
 import IntentsUI
+import KurozoraKit
+import UIKit
 
 class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
-	@IBOutlet weak var navigationTitleLabel: UILabel! {
+	@IBOutlet weak var navigationTitleLabel: KLabel! {
 		didSet {
-			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+			if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+				self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+			}
 		}
 	}
 
 	// MARK: - Properties
-	var showIdentity: ShowIdentity? = nil
+	var showIdentity: ShowIdentity?
 	var show: Show! {
 		didSet {
 			self.title = self.show.attributes.title
@@ -96,6 +98,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -106,6 +109,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -142,8 +146,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		self.navigationTitleLabel.alpha = 0
 
@@ -183,12 +187,12 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	// MARK: - Gesture
 	override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake, self.show?.attributes.title.lowercased().contains("log horizon") == true {
-            if let url = URL.livingInTheDatabase {
-                UIApplication.shared.kOpen(url)
-            }
-        }
-    }
+		if motion == .motionShake, self.show?.attributes.title.lowercased().contains("log horizon") == true {
+			if let url = URL.livingInTheDatabase {
+				UIApplication.shared.kOpen(url)
+			}
+		}
+	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
