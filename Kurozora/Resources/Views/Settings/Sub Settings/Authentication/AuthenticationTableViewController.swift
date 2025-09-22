@@ -23,7 +23,25 @@ extension AuthenticationTableViewController {
 		return UserSettings.authenticationEnabled ? 2 : 1
 	}
 
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = super.tableView(tableView, cellForRowAt: indexPath)
+
+		if let authenticationSettingsCell = cell as? AuthenticationSettingsCell {
+			authenticationSettingsCell.delegate = self
+			return cell
+		}
+
+		return cell
+	}
+
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		return section == 0 ? UIDevice.supportedBiometric.localizedAuthenticationSettingsDescription : ""
+	}
+}
+
+// MARK: - AuthenticationSettingsCellDelegate
+extension AuthenticationTableViewController: AuthenticationSettingsCellDelegate {
+	func authenticationSettingsCell(_ cell: AuthenticationSettingsCell, authenticationEnabled: Bool) {
+		self.tableView.reloadData()
 	}
 }

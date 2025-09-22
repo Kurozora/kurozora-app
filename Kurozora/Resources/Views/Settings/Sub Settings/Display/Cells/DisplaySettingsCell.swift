@@ -8,78 +8,89 @@
 
 import UIKit
 
+protocol DisplaySettingsCellDelegate: AnyObject {
+	func displaySettingsCell(_ cell: DisplaySettingsCell, automaticDarkThemeEnabled: Bool)
+}
+
 class DisplaySettingsCell: SettingsCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lightOptionContainerView: UIView?
 	@IBOutlet weak var lightOptionImageView: UIImageView? {
 		didSet {
-			lightOptionImageView?.image = R.image.settings.display.lightOption()
-			toggleAppAppearanceOptions(!UserSettings.automaticDarkTheme)
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAppAppearance(_:)), name: .KSAppAppearanceDidChange, object: nil)
+			self.lightOptionImageView?.image = R.image.settings.display.lightOption()
+			self.toggleAppAppearanceOptions(!UserSettings.automaticDarkTheme)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppAppearance(_:)), name: .KSAppAppearanceDidChange, object: nil)
 		}
 	}
+
 	@IBOutlet weak var lightOptionSelectedImageView: UIImageView? {
 		didSet {
-			lightOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			lightOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+			self.lightOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
+			self.lightOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		}
 	}
+
 	@IBOutlet weak var lightOptionButton: UIButton?
 
 	@IBOutlet weak var darkOptionContainerView: UIView?
 	@IBOutlet weak var darkOptionImageView: UIImageView? {
 		didSet {
-			darkOptionImageView?.image = R.image.settings.display.darkOption()
+			self.darkOptionImageView?.image = R.image.settings.display.darkOption()
 		}
 	}
+
 	@IBOutlet weak var darkOptionSelectedImageView: UIImageView? {
 		didSet {
-			darkOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			darkOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+			self.darkOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
+			self.darkOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		}
 	}
+
 	@IBOutlet weak var darkOptionButton: UIButton?
 
 	@IBOutlet weak var optionsValueLabel: KSecondaryLabel? {
 		didSet {
-			updateOptionsValueLabel()
-			NotificationCenter.default.addObserver(self, selector: #selector(updateOptionsValueLabel), name: .KSAutomaticDarkThemeDidChange, object: nil)
+			self.updateOptionsValueLabel()
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateOptionsValueLabel), name: .KSAutomaticDarkThemeDidChange, object: nil)
 		}
 	}
 
 	@IBOutlet weak var enabledAutomaticDarkThemeSwitch: KSwitch? {
 		didSet {
-			enabledAutomaticDarkThemeSwitch?.isOn = UserSettings.automaticDarkTheme
-			toggleAppAppearanceOptions(UserSettings.automaticDarkTheme)
+			self.enabledAutomaticDarkThemeSwitch?.isOn = UserSettings.automaticDarkTheme
+			self.toggleAppAppearanceOptions(UserSettings.automaticDarkTheme)
 		}
 	}
 
 	@IBOutlet weak var enabledTrueBlackSwitch: KSwitch? {
 		didSet {
-			enabledTrueBlackSwitch?.isOn = UserSettings.trueBlackEnabled
+			self.enabledTrueBlackSwitch?.isOn = UserSettings.trueBlackEnabled
 		}
 	}
 
 	@IBOutlet weak var enabledLargeTitlesSwitch: KSwitch? {
 		didSet {
-			enabledLargeTitlesSwitch?.isOn = UserSettings.largeTitlesEnabled
+			self.enabledLargeTitlesSwitch?.isOn = UserSettings.largeTitlesEnabled
 		}
 	}
 
+	// MARK: - Properties
+	weak var delegate: DisplaySettingsCellDelegate?
+
 	// MARK: - Functions
 	@objc fileprivate func updateOptionsValueLabel() {
-		if UserSettings.darkThemeOption == 0 && KThemeStyle.isSolarNighttime {
-			optionsValueLabel?.text = "Dark Until Sunrise"
-		} else if UserSettings.darkThemeOption == 0 && !KThemeStyle.isSolarNighttime {
-			optionsValueLabel?.text = "Light Until Sunset"
-		} else if UserSettings.darkThemeOption == 1 && KThemeStyle.isCustomNighttime {
+		if UserSettings.darkThemeOption == 0, KThemeStyle.isSolarNighttime {
+			self.optionsValueLabel?.text = "Dark Until Sunrise"
+		} else if UserSettings.darkThemeOption == 0, !KThemeStyle.isSolarNighttime {
+			self.optionsValueLabel?.text = "Light Until Sunset"
+		} else if UserSettings.darkThemeOption == 1, KThemeStyle.isCustomNighttime {
 			let startDate = UserSettings.darkThemeOptionStart.convertToAMPM()
-			optionsValueLabel?.text = "Dark Until \(startDate)"
-		} else if UserSettings.darkThemeOption == 1 && !KThemeStyle.isCustomNighttime {
+			self.optionsValueLabel?.text = "Dark Until \(startDate)"
+		} else if UserSettings.darkThemeOption == 1, !KThemeStyle.isCustomNighttime {
 			let endDate = UserSettings.darkThemeOptionEnd.convertToAMPM()
-			optionsValueLabel?.text = "Light Until \(endDate)"
+			self.optionsValueLabel?.text = "Light Until \(endDate)"
 		} else {
-			optionsValueLabel?.text = ""
+			self.optionsValueLabel?.text = ""
 		}
 	}
 
@@ -88,15 +99,15 @@ class DisplaySettingsCell: SettingsCell {
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateAppAppearance(_ notification: NSNotification) {
 		if let option = notification.userInfo?["option"] as? Int {
-			updateAppAppearance(with: option)
+			self.updateAppAppearance(with: option)
 		} else if let isOn = notification.userInfo?["isOn"] as? Bool {
-			toggleAppAppearanceOptions(!isOn)
+			self.toggleAppAppearanceOptions(!isOn)
 		}
 	}
 
 	func updateAppAppearance(with option: Int) {
 		guard let appAppearanceOption = AppAppearanceOption(rawValue: option) else { return }
-		updateAppAppearanceOptions(with: appAppearanceOption)
+		self.updateAppAppearanceOptions(with: appAppearanceOption)
 
 		switch appAppearanceOption {
 		case .light:
@@ -113,36 +124,36 @@ class DisplaySettingsCell: SettingsCell {
 	func updateAppAppearanceOptions(with option: AppAppearanceOption) {
 		switch option {
 		case .light:
-			lightOptionSelectedImageView?.layer.borderWidth = 0
-			darkOptionSelectedImageView?.layer.borderWidth = 2
+			self.lightOptionSelectedImageView?.layer.borderWidth = 0
+			self.darkOptionSelectedImageView?.layer.borderWidth = 2
 
-			lightOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
-			darkOptionSelectedImageView?.image = nil
+			self.lightOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
+			self.darkOptionSelectedImageView?.image = nil
 		case .dark:
-			darkOptionSelectedImageView?.layer.borderWidth = 0
-			lightOptionSelectedImageView?.layer.borderWidth = 2
+			self.darkOptionSelectedImageView?.layer.borderWidth = 0
+			self.lightOptionSelectedImageView?.layer.borderWidth = 2
 
-			darkOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
-			lightOptionSelectedImageView?.image = nil
+			self.darkOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
+			self.lightOptionSelectedImageView?.image = nil
 		}
 	}
 
 	func toggleAppAppearanceOptions(_ isOn: Bool) {
-		lightOptionButton?.isUserInteractionEnabled = isOn
-		darkOptionButton?.isUserInteractionEnabled = isOn
+		self.lightOptionButton?.isUserInteractionEnabled = isOn
+		self.darkOptionButton?.isUserInteractionEnabled = isOn
 		if isOn {
-			darkOptionContainerView?.alpha = 1.0
-			lightOptionContainerView?.alpha = 1.0
+			self.darkOptionContainerView?.alpha = 1.0
+			self.lightOptionContainerView?.alpha = 1.0
 		} else {
-			darkOptionContainerView?.alpha = 0.5
-			lightOptionContainerView?.alpha = 0.5
+			self.darkOptionContainerView?.alpha = 0.5
+			self.lightOptionContainerView?.alpha = 0.5
 		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func appearanceOptionButtonTapped(_ sender: UIButton) {
 		UserSettings.set(sender.tag, forKey: .appearanceOption)
-		updateAppAppearance(with: sender.tag)
+		self.updateAppAppearance(with: sender.tag)
 	}
 
 	@IBAction func enableAutomaticDarkThemeSwitched(_ sender: KSwitch) {
@@ -151,7 +162,7 @@ class DisplaySettingsCell: SettingsCell {
 
 		KThemeStyle.startAutomaticDarkThemeSchedule()
 
-		self.parentTableView?.reloadData()
+		self.delegate?.displaySettingsCell(self, automaticDarkThemeEnabled: sender.isOn)
 	}
 
 	@IBAction func enableTrueBlackSwitched(_ sender: KSwitch) {

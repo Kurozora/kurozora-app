@@ -84,7 +84,10 @@ class AccountTableViewController: SubSettingsViewController {
 
 		// Configure preferences
 		self.selectedLanguage = self.languages.first(where: { $0.key == user.attributes.preferredLanguage }) ?? self.selectedLanguage
-		self.selectedTVRating = self.tvRatings.first(where: { $0.key == user.attributes.preferredTVRating?.string }) ?? self.selectedTVRating
+		self.selectedTVRating = self.tvRatings.first(where: {
+			guard let preferredTVRating = user.attributes.preferredTVRating else { return false }
+			return $0.key == String(preferredTVRating)
+		}) ?? self.selectedTVRating
 		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone }) ?? self.selectedTimezone
 
 		self.languageLabel.text = self.selectedLanguage.value
@@ -103,7 +106,7 @@ class AccountTableViewController: SubSettingsViewController {
 
 	func updateInformation() async {
 		let selectedLanguage = self.selectedLanguage.key
-		let selectedTVRating = self.selectedTVRating.key.int
+		let selectedTVRating = Int(self.selectedTVRating.key)
 		let selectedTimezone = self.selectedTimezone.key
 
 		do {

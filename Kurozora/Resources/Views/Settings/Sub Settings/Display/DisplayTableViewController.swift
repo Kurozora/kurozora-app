@@ -8,8 +8,7 @@
 
 import UIKit
 
-class DisplayTableViewController: SubSettingsViewController {
-}
+class DisplayTableViewController: SubSettingsViewController {}
 
 // MARK: - UITableViewDataSource
 extension DisplayTableViewController {
@@ -30,10 +29,18 @@ extension DisplayTableViewController {
 		if indexPath.section == 0, let displaySettingsCell = super.tableView(tableView, cellForRowAt: indexPath) as? DisplaySettingsCell {
 			if let appAppearanceOption = AppAppearanceOption(rawValue: UserSettings.appearanceOption) {
 				displaySettingsCell.updateAppAppearanceOptions(with: appAppearanceOption)
+				displaySettingsCell.delegate = self
 			}
 			return displaySettingsCell
 		}
 
 		return super.tableView(tableView, cellForRowAt: indexPath)
+	}
+}
+
+// MARK: - DisplaySettingsCellDelegate
+extension DisplayTableViewController: DisplaySettingsCellDelegate {
+	func displaySettingsCell(_ cell: DisplaySettingsCell, automaticDarkThemeEnabled: Bool) {
+		self.tableView.reloadData()
 	}
 }

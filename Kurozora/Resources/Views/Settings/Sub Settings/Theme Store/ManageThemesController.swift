@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -23,7 +23,8 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -31,6 +32,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -41,8 +43,9 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Initializers
@@ -95,7 +98,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 	/// Fades in and out the empty data view according to the number of rows.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems() == 0 {
+		if self.collectionView.numberOfItems == 0 {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -132,7 +135,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		case .sakura:
 			KTheme.sakura.switchToTheme()
 		case .other(let theme):
-			if KThemeStyle.themeExist(for: theme) && (!User.isPro || !User.isSubscribed) {
+			if KThemeStyle.themeExist(for: theme), !User.isPro || !User.isSubscribed {
 				KTheme.other(theme).switchToTheme()
 			} else {
 				Task {
@@ -254,7 +257,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 	/// Handle the redownload process for a downloaded theme.
 	fileprivate func handleRedownloadTheme(_ cell: ThemesCollectionViewCell) {
-		handleRemoveTheme(cell, timeout: 0) { [weak self] success in
+		self.handleRemoveTheme(cell, timeout: 0) { [weak self] success in
 			guard let self = self else { return }
 			if success {
 				self.handleDownloadTheme(cell)
@@ -267,7 +270,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 extension ManageThemesCollectionViewController {
 	/// List of theme section layout kind.
 	///
-	/// ```
+	/// ```swift
 	/// case default = 0
 	/// case premium = 1
 	/// ```

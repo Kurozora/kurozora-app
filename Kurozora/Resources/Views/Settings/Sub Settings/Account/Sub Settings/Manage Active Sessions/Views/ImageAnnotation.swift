@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import MapKit
+import UIKit
 
 class ImageAnnotation: NSObject, MKAnnotation {
 	// MARK: - Properties
@@ -51,8 +51,8 @@ class ImageAnnotationView: MKAnnotationView {
 		self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 		self.addSubview(self.imageView)
 
-		self.imageView.layerCornerRadius = self.imageView.height / 2
-		self.imageView.layerBorderColor = .green
+		self.imageView.layerCornerRadius = self.imageView.frame.size.height / 2
+		self.imageView.layer.borderColor = UIColor.green.cgColor
 		self.imageView.layer.borderWidth = 2
 		self.imageView.layer.masksToBounds = true
 	}

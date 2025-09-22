@@ -41,7 +41,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		self.downloadCountLabel.text = self.kTheme.descriptionValue
 
 		// Configure more button
-		self.moreButton.layerCornerRadius = self.moreButton.height / 2
+		self.moreButton.layerCornerRadius = self.moreButton.frame.size.height / 2
 		self.moreButton.addBlurEffect()
 		self.moreButton.theme_tintColor = KThemePicker.textColor.rawValue
 

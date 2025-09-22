@@ -26,14 +26,14 @@ class IconTableViewCell: SelectableSettingsCell {
 		UIColor(hexString: "#667F33"), // green
 		UIColor(hexString: "#664C33"), // brown
 		UIColor(hexString: "#993333"), // red
-		UIColor(hexString: "#000000")  // black
+		UIColor(hexString: "#000000"), // black
 	]
 	fileprivate var colorCycleTimer: Timer?
 
 	// MARK: View
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		stopColorCycling()
+		self.stopColorCycling()
 	}
 
 	// MARK: - Functions
@@ -85,7 +85,7 @@ class IconTableViewCell: SelectableSettingsCell {
 		self.iconImageView?.contentMode = .center
 		self.iconImageView?.layerCornerRadius = 0.0
 
-		if !self.selectedImageView.isHidden && appChimeElement.name == "jeb_" {
+		if !self.selectedImageView.isHidden, appChimeElement.name == "jeb_" {
 			self.startColorCycling()
 		} else {
 			self.primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue

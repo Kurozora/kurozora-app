@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AuthenticationSettingsCellDelegate: AnyObject {
+	func authenticationSettingsCell(_ cell: AuthenticationSettingsCell, authenticationEnabled: Bool)
+}
+
 class AuthenticationSettingsCell: SettingsCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var authenticationTitleLabel: UILabel? {
@@ -17,6 +21,7 @@ class AuthenticationSettingsCell: SettingsCell {
 			self.authenticationTitleLabel?.text = UIDevice.supportedBiometric.localizedSettingsName
 		}
 	}
+
 	@IBOutlet weak var authenticationImageView: UIImageView! {
 		didSet {
 			self.authenticationImageView.image = UIDevice.supportedBiometric.imageValue
@@ -33,9 +38,12 @@ class AuthenticationSettingsCell: SettingsCell {
 		didSet {
 			self.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			self.authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		}
 	}
+
+	// MARK: - Properties
+	weak var delegate: AuthenticationSettingsCellDelegate?
 
 	// MARK: - Functions
 	@objc func updateAuthenticationRequireValueLabel() {
@@ -46,6 +54,6 @@ class AuthenticationSettingsCell: SettingsCell {
 	@IBAction func enabledSwitchSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .authenticationEnabled)
 
-		self.parentTableView?.reloadData()
+		self.delegate?.authenticationSettingsCell(self, authenticationEnabled: sender.isOn)
 	}
 }

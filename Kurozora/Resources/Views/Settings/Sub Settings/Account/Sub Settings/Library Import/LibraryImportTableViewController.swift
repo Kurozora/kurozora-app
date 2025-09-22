@@ -6,8 +6,9 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UniformTypeIdentifiers
+import UIKit
 
 class LibraryImportTableViewController: ServiceTableViewController {
 	// MARK: - IBOutlets
@@ -20,11 +21,13 @@ class LibraryImportTableViewController: ServiceTableViewController {
 			self.tableView.reloadData()
 		}
 	}
+
 	var selectedImpotBehavrior: LibraryImport.Behavior? {
 		didSet {
 			self.tableView.reloadData()
 		}
 	}
+
 	var selectedFileURL: URL? {
 		didSet {
 			self.tableView.reloadData()
@@ -34,7 +37,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Confgure properties
+		// Configure properties
 		self.previewImage = R.image.promotional.moveToKurozora()
 		self.serviceType = .libraryImport
 
@@ -90,7 +93,7 @@ extension LibraryImportTableViewController {
 			ServicePreviewTableViewCell.self,
 			ServiceHeaderTableViewCell.self,
 			ServiceFooterTableViewCell.self,
-			SelectTableViewCell.self
+			SelectTableViewCell.self,
 		]
 	}
 
@@ -116,6 +119,7 @@ extension LibraryImportTableViewController {
 				guard let libraryImportActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.libraryImportActionTableViewCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryImportActionTableViewCell.identifier)")
 				}
+				libraryImportActionTableViewCell.delegate = self
 				libraryImportActionTableViewCell.actionTextField.tag = indexPath.row
 				libraryImportActionTableViewCell.actionTextField.delegate = self
 				libraryImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -141,6 +145,18 @@ extension LibraryImportTableViewController {
 	}
 }
 
+// MARK: - ActionButtonTableViewCellDelegate
+extension LibraryImportTableViewController: ActionButtonTableViewCellDelegate {
+	func actionButtonTableViewCell(_ cell: ActionButtonTableViewCell, didPressButton actionButton: UIButton) {
+		let documentPicker: UIDocumentPickerViewController
+		let types: [UTType] = [.xml]
+		documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
+		documentPicker.delegate = self
+		documentPicker.modalPresentationStyle = .formSheet
+		self.present(documentPicker, animated: true, completion: nil)
+	}
+}
+
 // MARK: - UITextFieldDelegate
 extension LibraryImportTableViewController: UITextFieldDelegate {
 	@objc func editingChanged(_ textField: UITextField) {
@@ -150,13 +166,13 @@ extension LibraryImportTableViewController: UITextFieldDelegate {
 		}
 
 		var rightNavigationBarButtonIsEnabled = false
-		self.textFieldArray.forEach({
-			if let textField = $0?.text, !textField.isEmpty {
+		for item in self.textFieldArray {
+			if let textField = item?.text, !textField.isEmpty {
 				rightNavigationBarButtonIsEnabled = true
-				return
+				continue
 			}
 			rightNavigationBarButtonIsEnabled = false
-		})
+		}
 
 		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
 	}
@@ -167,7 +183,7 @@ extension LibraryImportTableViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		if textField.tag == self.textFieldArray.count - 1 {
-			rightNavigationBarButtonPressed(sender: textField)
+			self.rightNavigationBarButtonPressed(sender: textField)
 		} else {
 			self.textFieldArray[textField.tag + 1]?.becomeFirstResponder()
 		}

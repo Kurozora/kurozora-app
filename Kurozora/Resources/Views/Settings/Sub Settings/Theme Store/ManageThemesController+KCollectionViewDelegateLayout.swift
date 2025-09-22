@@ -11,7 +11,7 @@ import UIKit
 extension ManageThemesCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 345).rounded().int
+		let columnCount = Int((width / 345).rounded())
 		return columnCount > 0 ? columnCount : 1
 	}
 
@@ -20,7 +20,7 @@ extension ManageThemesCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerFooterSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -29,7 +29,6 @@ extension ManageThemesCollectionViewController {
 			gridSection.boundarySupplementaryItems = [sectionHeader]
 			return gridSection
 		}
-		return layout
 	}
 
 	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
