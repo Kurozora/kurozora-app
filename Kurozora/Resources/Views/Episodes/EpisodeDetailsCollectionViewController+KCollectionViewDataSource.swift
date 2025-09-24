@@ -41,10 +41,12 @@ extension EpisodeDetailsCollectionViewController {
 			switch episodeDetailSection {
 			case .header:
 				let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeDetailHeaderCollectionViewCell, for: indexPath)
+				episodeDetailHeaderCollectionViewCell?.delegate = self
+
 				switch itemKind {
 				case .episode(let episode, _):
 					episodeDetailHeaderCollectionViewCell?.indexPath = indexPath
-					episodeDetailHeaderCollectionViewCell?.episode = episode
+					episodeDetailHeaderCollectionViewCell?.configure(using: episode)
 				default: break
 				}
 				return episodeDetailHeaderCollectionViewCell

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
@@ -38,6 +38,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			#endif
 		}
 	}
+
 	var indexPath = IndexPath()
 
 	// Review properties.
@@ -50,8 +51,11 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	// Suggested episodes properties.
 	var suggestedEpisodes: [Episode] = []
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	/// The first cell's size.
+	private var firstCellSize: CGSize = .zero
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -59,6 +63,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -69,8 +74,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Initializers
@@ -138,6 +144,19 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		// Add bottom content inset to account for tab bar
+		let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
+		self.collectionView.contentInset.bottom = tabBarHeight
+
+		// Store the first cell size
+		if let firstCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ShowDetailHeaderCollectionViewCell, self.firstCellSize.width != firstCell.frame.size.width {
+			self.firstCellSize = firstCell.frame.size
+		}
 	}
 
 	// MARK: - Functions
@@ -349,15 +368,66 @@ extension EpisodeDetailsCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let navigationBar = self.navigationController?.navigationBar
 		let firstCell = self.collectionView.cellForItem(at: [0, 0])
-
-		let globalNavigationBarPositionY = navigationBar?.superview?.convert(navigationBar?.frame.origin ?? CGPoint(x: 0, y: 0), to: nil).y ?? .zero
 		let offset = scrollView.contentOffset.y
-		let firstCellHeight = firstCell?.frame.size.height ?? .zero
 
-		let percentage = offset / (firstCellHeight - globalNavigationBarPositionY)
+		// Fade in/out the navigation title label when the first cell is fully under the navigation bar
+		if let firstCellAttributes = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0)) {
+			let firstCellBottomY = firstCellAttributes.frame.maxY
+			let navBarBottomY = (navigationBar?.frame.maxY ?? 0) +
+				(navigationBar?.superview?.frame.origin.y ?? 0)
 
-		if percentage.isFinite, percentage >= 0 {
-			self.navigationTitleLabel.alpha = percentage
+			if offset + navBarBottomY >= firstCellBottomY {
+				if self.navigationTitleLabel.alpha == 0 {
+					UIView.animate(withDuration: 0.25) {
+						self.navigationTitleLabel.alpha = 1
+					}
+				}
+			} else {
+				if self.navigationTitleLabel.alpha == 1 {
+					UIView.animate(withDuration: 0.25) {
+						self.navigationTitleLabel.alpha = 0
+					}
+				}
+			}
+		}
+
+		// Stretch the first cell when pulled down
+		if let episodeHeaderCell = firstCell as? EpisodeDetailHeaderCollectionViewCell {
+			var newFrame = episodeHeaderCell.frame
+
+			if self.firstCellSize.width != episodeHeaderCell.frame.size.width {
+				self.firstCellSize = episodeHeaderCell.frame.size
+			}
+
+			if offset < 0 {
+				newFrame.origin.y = offset
+				newFrame.size.height = self.firstCellSize.height - offset
+				episodeHeaderCell.frame = newFrame
+			} else {
+				newFrame.origin.y = 0
+				newFrame.size.height = self.firstCellSize.height
+				episodeHeaderCell.frame = newFrame
+			}
+		}
+
+		// Adjust the section background decoration view height when scrolled to bottom
+		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout, let attributes = layout.layoutAttributesForElements(in: self.collectionView.bounds) {
+			for attribute in attributes where attribute.representedElementKind == SectionBackgroundDecorationView.elementKindSectionBackground {
+				var newFrame = attribute.frame
+
+				let section = attribute.indexPath.section
+				let numberOfItemsInSection = self.collectionView.numberOfItems(inSection: section)
+				let lastItemIndexPath = IndexPath(item: numberOfItemsInSection - 1, section: section)
+				let lastItemAttributes = self.collectionView.layoutAttributesForItem(at: lastItemIndexPath)
+
+				if let lastItemAttributes, offset + scrollView.frame.size.height > (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height) {
+					let difference = (offset + scrollView.frame.size.height) - (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height)
+					newFrame.size.height += difference
+					attribute.frame = newFrame
+				} else {
+					attribute.frame = newFrame
+				}
+			}
 		}
 	}
 }
@@ -423,6 +493,71 @@ extension EpisodeDetailsCollectionViewController: WriteAReviewCollectionViewCell
 extension EpisodeDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
 	func reviewTextEditorViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
+	}
+}
+
+extension EpisodeDetailsCollectionViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		// TODO: Refactor
+		// Find the visible cell for the index and return its thumbnail UIImageView.
+		// Example (collectionView):
+		guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
+			return nil
+		}
+		return cell.posterImageView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {
+		// Scroll the collection view to make sure the cell at the given index is visible.
+		let indexPath = IndexPath(item: index, section: 0)
+		collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	}
+}
+
+// MARK: - BaseDetailHeaderCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int) {
+		let posterURL = URL(string: self.episode.attributes.poster?.url ?? "")
+		let bannerURL = URL(string: self.episode.attributes.banner?.url ?? "")
+		var items: [MediaItemV2] = []
+
+		if let posterURL = posterURL {
+			items.append(MediaItemV2(
+				url: posterURL,
+				type: .image,
+				title: self.episode.attributes.title,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+		if let bannerURL = bannerURL {
+			items.append(MediaItemV2(
+				url: bannerURL,
+				type: .image,
+				title: self.episode.attributes.title,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+
+		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		albumVC.transitionDelegateForThumbnail = self
+
+		present(albumVC, animated: true)
+	}
+
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
+		guard await WorkflowController.shared.isSignedIn() else { return }
+
+		button.isEnabled = false
+		await self.episode?.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
+		button.isEnabled = true
 	}
 }
 

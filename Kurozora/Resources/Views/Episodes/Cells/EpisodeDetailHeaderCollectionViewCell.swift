@@ -6,58 +6,51 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
+class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	// MARK: - IBOutlet
-	@IBOutlet weak var bannerImageView: UIImageView!
-	@IBOutlet weak var visualEffectView: KVisualEffectView!
-	@IBOutlet weak var bannerContainerView: UIView!
-
 	// Action buttons
 	@IBOutlet weak var watchStatusButton: KTintedButton!
 
-	// Quick details view
-	@IBOutlet weak var quickDetailsView: UIView!
-	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var posterImageView: PosterImageView!
-
 	// MARK: - Properties
-	var episode: Episode! {
-		didSet {
-			self.configureCell()
-		}
-	}
+	private var episode: Episode?
+
 	var indexPath: IndexPath = IndexPath()
 
-    // MARK: - Functions
+	// MARK: - Functions
 	/// Configures the cell with the given details.
-	fileprivate func configureCell() {
-		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+	///
+	/// - Parameters:
+	///    - episode: The `Episode` object used to configure the cell.
+	func configure(using episode: Episode) {
+		self.episode = episode
 
-		// Configure visual effect
-		self.visualEffectView.layerCornerRadius = 10.0
+		// Configure notifications
+		NotificationCenter.default.removeObserver(self)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		// Configure watch status button
-		self.configureWatchButton(with: self.episode.attributes.watchStatus)
+		self.configureWatchButton(with: episode.attributes.watchStatus)
 
 		// Configure title label
-		self.primaryLabel.text = self.episode.attributes.title
+		self.primaryLabel.text = episode.attributes.title
+
+		// Configure tags label
+		self.secondaryLabel.text = episode.attributes.informationString
 
 		// Configure poster view
-		if let posterBackgroundColor = self.episode.attributes.poster?.backgroundColor {
+		if let posterBackgroundColor = episode.attributes.poster?.backgroundColor {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		self.episode.attributes.posterImage(imageView: self.posterImageView)
+		episode.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure banner view
-		if let bannerBackgroundColor = self.episode.attributes.banner?.backgroundColor {
+		if let bannerBackgroundColor = episode.attributes.banner?.backgroundColor {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.episode.attributes.bannerImage(imageView: self.bannerImageView)
+		episode.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure shadows
 		self.shadowView.applyShadow()
@@ -72,7 +65,7 @@ class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@objc func handleWatchStatusUpdate(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.configureWatchButton(with: self.episode.attributes.watchStatus)
+			self.configureWatchButton(with: self.episode?.attributes.watchStatus)
 		}
 	}
 
@@ -80,19 +73,7 @@ class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
-		let watchStatusButtonTitle = self.episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
+		let watchStatusButtonTitle = self.episode?.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
-	}
-
-    // MARK: - IBActions
-	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		Task {
-			let signedIn = await WorkflowController.shared.isSignedIn()
-			guard signedIn else { return }
-
-			sender.isEnabled = false
-			await self.episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
-			sender.isEnabled = true
-		}
 	}
 }
