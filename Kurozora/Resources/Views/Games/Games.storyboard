@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,7 +46,7 @@
                 <navigationController storyboardIdentifier="GameKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
-                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -61,7 +62,7 @@
         <scene sceneID="Xiv-L6-KdF">
             <objects>
                 <collectionViewController storyboardIdentifier="GameDetailsCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A3e-GJ-UX5" customClass="GameDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="32t-Kh-jQa">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="32t-Kh-jQa">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,7 +76,7 @@
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowDetailHeaderCollectionViewCell" id="qlh-aU-C2J" customClass="ShowDetailHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="9" y="0.0" width="375" height="387"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="irJ-Ys-oGC">
+                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="irJ-Ys-oGC">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="387"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -91,7 +92,7 @@
                                                             <gestureRecognizers/>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstItem="rj9-Ez-leE" firstAttribute="top" secondItem="gFT-XU-4J0" secondAttribute="top" id="OKx-li-e47"/>
                                                         <constraint firstAttribute="trailing" secondItem="rj9-Ez-leE" secondAttribute="trailing" id="ffv-oO-VN4"/>
@@ -340,7 +341,6 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="375" height="387"/>
                                 <connections>
-                                    <outlet property="bannerContainerView" destination="gFT-XU-4J0" id="0Ch-Er-kyE"/>
                                     <outlet property="bannerImageView" destination="rj9-Ez-leE" id="ivi-92-PV4"/>
                                     <outlet property="favoriteButton" destination="lo1-qa-GNH" id="w4s-l6-7JZ"/>
                                     <outlet property="libraryStatusButton" destination="g7Z-lw-ybF" id="TXM-yC-1nQ"/>
@@ -362,7 +362,6 @@
                             <outlet property="delegate" destination="A3e-GJ-UX5" id="RJ0-37-o7z"/>
                         </connections>
                     </collectionView>
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="lcH-Pn-zdh">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="2Od-B7-0Nf">
@@ -540,7 +539,7 @@
         <image name="imageView:jLe-gd-nxq:image" width="160" height="240">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
-S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBcLDBscIxooLS41OD1AQUZJSk1XX2BkZ1UkbnVsbNcNDg8Q
+S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBcLDBscIxooLS41OD1AQUZJSk1ZYWJmaVUkbnVsbNcNDg8Q
 ERITFBUWFxgZGlZOU1NpemVWJGNsYXNzXE5TSW1hZ2VGbGFnc1ZOU1JlcHNbTlNUaW50Q29sb3JXTlND
 b2xvcl5OU1Jlc2l6aW5nTW9kZYACgBYSIMAAAIADgACAERAAWnsxNjAsIDI0MH3SHQ4eIlpOUy5vYmpl
 Y3Rzox8gIYAEgAqADYAQ0h0OJCeiJSaABYAGgAnTDikqKywaXxAUTlNUSUZGUmVwcmVzZW50YXRpb25f
@@ -36559,94 +36558,97 @@ VqTHpTilqaYapoum/adup+CoUqjEqTepqaocqo+rAqt1q+msXKzQrUStuK4trqGvFq+LsACwdbDqsWCx
 ts83z7jQOdC60TzRvtI/0sHTRNPG1EnUy9VO1dHWVdbY11zX4Nhk2OjZbNnx2nba+9uA3AXcit0Q3Zbe
 HN6i3ynfr+A24L3hROHM4lPi2+Nj4+vkc+T85YTmDeaW5x/nqegy6LzpRunQ6lvq5etw6/vshu0R7Zzu
 KO6070DvzPBY8OXxcvH/8ozzGfOn9DT0wvVQ9d72bfb794r4Gfio+Tj5x/pX+uf7d/wH/Jj9Kf26/kv+
-3P9t///SLzBLTF5OU011dGFibGVBcnJheaNLNjTVTk9QUQ5SU1RVVldOU1doaXRlXE5TQ29tcG9uZW50
-c1xOU0NvbG9yU3BhY2VfEBJOU0N1c3RvbUNvbG9yU3BhY2VEMCAwAEMwIDAQA4ASgBXUWFlaDltcXV5U
-TlNJRFVOU0lDQ1dOU01vZGVsEAmAExAAgBRPERGcAAARnGFwcGwCAAAAbW50ckdSQVlYWVogB9wACAAX
-AA8ALgAPYWNzcEFQUEwAAAAAbm9uZQAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBsAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFZGVzYwAAAMAAAAB5ZHNjbQAA
-ATwAAAgaY3BydAAACVgAAAAjd3RwdAAACXwAAAAUa1RSQwAACZAAAAgMZGVzYwAAAAAAAAAfR2VuZXJp
-YyBHcmF5IEdhbW1hIDIuMiBQcm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1sdWMAAAAAAAAAHwAA
-AAxza1NLAAAALgAAAYRkYURLAAAAOgAAAbJjYUVTAAAAOAAAAex2aVZOAAAAQAAAAiRwdEJSAAAASgAA
-AmR1a1VBAAAALAAAAq5mckZVAAAAPgAAAtpodUhVAAAANAAAAxh6aFRXAAAAGgAAA0xrb0tSAAAAIgAA
-A2ZuYk5PAAAAOgAAA4hjc0NaAAAAKAAAA8JoZUlMAAAAJAAAA+pyb1JPAAAAKgAABA5kZURFAAAATgAA
-BDhpdElUAAAATgAABIZzdlNFAAAAOAAABNR6aENOAAAAGgAABQxqYUpQAAAAJgAABSZlbEdSAAAAKgAA
-BUxwdFBPAAAAUgAABXZubE5MAAAAQAAABchlc0VTAAAATAAABgh0aFRIAAAAMgAABlR0clRSAAAAJAAA
-BoZmaUZJAAAARgAABqpockhSAAAAPgAABvBwbFBMAAAASgAABy5hckVHAAAALAAAB3hydVJVAAAAOgAA
-B6RlblVTAAAAPAAAB94AVgFhAGUAbwBiAGUAYwBuAOEAIABzAGkAdgDhACAAZwBhAG0AYQAgADIALAAy
-AEcAZQBuAGUAcgBpAHMAawAgAGcAcgDlACAAMgAsADIAIABnAGEAbQBtAGEALQBwAHIAbwBmAGkAbABH
-AGEAbQBtAGEAIABkAGUAIABnAHIAaQBzAG8AcwAgAGcAZQBuAOgAcgBpAGMAYQAgADIALgAyAEMepQB1
-ACAAaADsAG4AaAAgAE0A4AB1ACAAeADhAG0AIABDAGgAdQBuAGcAIABHAGEAbQBtAGEAIAAyAC4AMgBQ
-AGUAcgBmAGkAbAAgAEcAZQBuAOkAcgBpAGMAbwAgAGQAYQAgAEcAYQBtAGEAIABkAGUAIABDAGkAbgB6
-AGEAcwAgADIALAAyBBcEMAQzBDAEOwRMBD0EMAAgAEcAcgBhAHkALQQzBDAEPAQwACAAMgAuADIAUABy
-AG8AZgBpAGwAIABnAOkAbgDpAHIAaQBxAHUAZQAgAGcAcgBpAHMAIABnAGEAbQBtAGEAIAAyACwAMgDB
-AGwAdABhAGwA4QBuAG8AcwAgAHMAegD8AHIAawBlACAAZwBhAG0AbQBhACAAMgAuADKQGnUocHCWjlFJ
-XqYAMgAuADKCcl9pY8+P8Md8vBgAINaMwMkAIKwQucgAIAAyAC4AMgAg1QS4XNMMx3wARwBlAG4AZQBy
-AGkAcwBrACAAZwByAOUAIABnAGEAbQBtAGEAIAAyACwAMgAtAHAAcgBvAGYAaQBsAE8AYgBlAGMAbgDh
-ACABYQBlAGQA4QAgAGcAYQBtAGEAIAAyAC4AMgXSBdAF3gXUACAF0AXkBdUF6AAgBdsF3AXcBdkAIAAy
-AC4AMgBHAGEAbQBhACAAZwByAGkAIABnAGUAbgBlAHIAaQBjAQMAIAAyACwAMgBBAGwAbABnAGUAbQBl
-AGkAbgBlAHMAIABHAHIAYQB1AHMAdAB1AGYAZQBuAC0AUAByAG8AZgBpAGwAIABHAGEAbQBtAGEAIAAy
-ACwAMgBQAHIAbwBmAGkAbABvACAAZwByAGkAZwBpAG8AIABnAGUAbgBlAHIAaQBjAG8AIABkAGUAbABs
-AGEAIABnAGEAbQBtAGEAIAAyACwAMgBHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QAgADIALAAyACAAZwBh
-AG0AbQBhAHAAcgBvAGYAaQBsZm6QGnBwXqZ8+2VwADIALgAyY8+P8GWHTvZOAIIsMLAw7DCkMKww8zDe
-ACAAMgAuADIAIDDXMO0w1TChMKQw6wOTA7UDvQO5A7oDzAAgA5MDugPBA7kAIAOTA6wDvAO8A7EAIAAy
-AC4AMgBQAGUAcgBmAGkAbAAgAGcAZQBuAOkAcgBpAGMAbwAgAGQAZQAgAGMAaQBuAHoAZQBuAHQAbwBz
-ACAAZABhACAARwBhAG0AbQBhACAAMgAsADIAQQBsAGcAZQBtAGUAZQBuACAAZwByAGkAagBzACAAZwBh
-AG0AbQBhACAAMgAsADIALQBwAHIAbwBmAGkAZQBsAFAAZQByAGYAaQBsACAAZwBlAG4A6QByAGkAYwBv
-ACAAZABlACAAZwBhAG0AbQBhACAAZABlACAAZwByAGkAcwBlAHMAIAAyACwAMg4jDjEOBw4qDjUOQQ4B
-DiEOIQ4yDkAOAQ4jDiIOTA4XDjEOSA4nDkQOGwAgADIALgAyAEcAZQBuAGUAbAAgAEcAcgBpACAARwBh
-AG0AYQAgADIALAAyAFkAbABlAGkAbgBlAG4AIABoAGEAcgBtAGEAYQBuACAAZwBhAG0AbQBhACAAMgAs
-ADIAIAAtAHAAcgBvAGYAaQBpAGwAaQBHAGUAbgBlAHIAaQENAGsAaQAgAEcAcgBhAHkAIABHAGEAbQBt
-AGEAIAAyAC4AMgAgAHAAcgBvAGYAaQBsAFUAbgBpAHcAZQByAHMAYQBsAG4AeQAgAHAAcgBvAGYAaQBs
-ACAAcwB6AGEAcgBvAVsAYwBpACAAZwBhAG0AbQBhACAAMgAsADIGOgYnBkUGJwAgADIALgAyACAGRAZI
-BkYAIAYxBkUGJwYvBkoAIAY5BicGRQQeBDEESQQwBE8AIARBBDUEQAQwBE8AIAQzBDAEPAQ8BDAAIAAy
-ACwAMgAtBD8EQAQ+BEQEOAQ7BEwARwBlAG4AZQByAGkAYwAgAEcAcgBhAHkAIABHAGEAbQBtAGEAIAAy
-AC4AMgAgAFAAcgBvAGYAaQBsAGUAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMTIAAFhZ
-WiAAAAAAAADzUQABAAAAARbMY3VydgAAAAAAAAQAAAAABQAKAA8AFAAZAB4AIwAoAC0AMgA3ADsAQABF
-AEoATwBUAFkAXgBjAGgAbQByAHcAfACBAIYAiwCQAJUAmgCfAKQAqQCuALIAtwC8AMEAxgDLANAA1QDb
-AOAA5QDrAPAA9gD7AQEBBwENARMBGQEfASUBKwEyATgBPgFFAUwBUgFZAWABZwFuAXUBfAGDAYsBkgGa
-AaEBqQGxAbkBwQHJAdEB2QHhAekB8gH6AgMCDAIUAh0CJgIvAjgCQQJLAlQCXQJnAnECegKEAo4CmAKi
-AqwCtgLBAssC1QLgAusC9QMAAwsDFgMhAy0DOANDA08DWgNmA3IDfgOKA5YDogOuA7oDxwPTA+AD7AP5
-BAYEEwQgBC0EOwRIBFUEYwRxBH4EjASaBKgEtgTEBNME4QTwBP4FDQUcBSsFOgVJBVgFZwV3BYYFlgWm
-BbUFxQXVBeUF9gYGBhYGJwY3BkgGWQZqBnsGjAadBq8GwAbRBuMG9QcHBxkHKwc9B08HYQd0B4YHmQes
-B78H0gflB/gICwgfCDIIRghaCG4IggiWCKoIvgjSCOcI+wkQCSUJOglPCWQJeQmPCaQJugnPCeUJ+woR
-CicKPQpUCmoKgQqYCq4KxQrcCvMLCwsiCzkLUQtpC4ALmAuwC8gL4Qv5DBIMKgxDDFwMdQyODKcMwAzZ
-DPMNDQ0mDUANWg10DY4NqQ3DDd4N+A4TDi4OSQ5kDn8Omw62DtIO7g8JDyUPQQ9eD3oPlg+zD88P7BAJ
-ECYQQxBhEH4QmxC5ENcQ9RETETERTxFtEYwRqhHJEegSBxImEkUSZBKEEqMSwxLjEwMTIxNDE2MTgxOk
-E8UT5RQGFCcUSRRqFIsUrRTOFPAVEhU0FVYVeBWbFb0V4BYDFiYWSRZsFo8WshbWFvoXHRdBF2UXiReu
-F9IX9xgbGEAYZRiKGK8Y1Rj6GSAZRRlrGZEZtxndGgQaKhpRGncanhrFGuwbFBs7G2MbihuyG9ocAhwq
-HFIcexyjHMwc9R0eHUcdcB2ZHcMd7B4WHkAeah6UHr4e6R8THz4faR+UH78f6iAVIEEgbCCYIMQg8CEc
-IUghdSGhIc4h+yInIlUigiKvIt0jCiM4I2YjlCPCI/AkHyRNJHwkqyTaJQklOCVoJZclxyX3JicmVyaH
-Jrcm6CcYJ0kneierJ9woDSg/KHEooijUKQYpOClrKZ0p0CoCKjUqaCqbKs8rAis2K2krnSvRLAUsOSxu
-LKIs1y0MLUEtdi2rLeEuFi5MLoIuty7uLyQvWi+RL8cv/jA1MGwwpDDbMRIxSjGCMbox8jIqMmMymzLU
-Mw0zRjN/M7gz8TQrNGU0njTYNRM1TTWHNcI1/TY3NnI2rjbpNyQ3YDecN9c4FDhQOIw4yDkFOUI5fzm8
-Ofk6Njp0OrI67zstO2s7qjvoPCc8ZTykPOM9Ij1hPaE94D4gPmA+oD7gPyE/YT+iP+JAI0BkQKZA50Ep
-QWpBrEHuQjBCckK1QvdDOkN9Q8BEA0RHRIpEzkUSRVVFmkXeRiJGZ0arRvBHNUd7R8BIBUhLSJFI10kd
-SWNJqUnwSjdKfUrESwxLU0uaS+JMKkxyTLpNAk1KTZNN3E4lTm5Ot08AT0lPk0/dUCdQcVC7UQZRUFGb
-UeZSMVJ8UsdTE1NfU6pT9lRCVI9U21UoVXVVwlYPVlxWqVb3V0RXklfgWC9YfVjLWRpZaVm4WgdaVlqm
-WvVbRVuVW+VcNVyGXNZdJ114XcleGl5sXr1fD19hX7NgBWBXYKpg/GFPYaJh9WJJYpxi8GNDY5dj62RA
-ZJRk6WU9ZZJl52Y9ZpJm6Gc9Z5Nn6Wg/aJZo7GlDaZpp8WpIap9q92tPa6dr/2xXbK9tCG1gbbluEm5r
-bsRvHm94b9FwK3CGcOBxOnGVcfByS3KmcwFzXXO4dBR0cHTMdSh1hXXhdj52m3b4d1Z3s3gReG54zHkq
-eYl553pGeqV7BHtje8J8IXyBfOF9QX2hfgF+Yn7CfyN/hH/lgEeAqIEKgWuBzYIwgpKC9INXg7qEHYSA
-hOOFR4Wrhg6GcobXhzuHn4gEiGmIzokziZmJ/opkisqLMIuWi/yMY4zKjTGNmI3/jmaOzo82j56QBpBu
-kNaRP5GokhGSepLjk02TtpQglIqU9JVflcmWNJaflwqXdZfgmEyYuJkkmZCZ/JpomtWbQpuvnByciZz3
-nWSd0p5Anq6fHZ+Ln/qgaaDYoUehtqImopajBqN2o+akVqTHpTilqaYapoum/adup+CoUqjEqTepqaoc
-qo+rAqt1q+msXKzQrUStuK4trqGvFq+LsACwdbDqsWCx1rJLssKzOLOutCW0nLUTtYq2AbZ5tvC3aLfg
-uFm40blKucK6O7q1uy67p7whvJu9Fb2Pvgq+hL7/v3q/9cBwwOzBZ8Hjwl/C28NYw9TEUcTOxUvFyMZG
-xsPHQce/yD3IvMk6ybnKOMq3yzbLtsw1zLXNNc21zjbOts83z7jQOdC60TzRvtI/0sHTRNPG1EnUy9VO
-1dHWVdbY11zX4Nhk2OjZbNnx2nba+9uA3AXcit0Q3ZbeHN6i3ynfr+A24L3hROHM4lPi2+Nj4+vkc+T8
-5YTmDeaW5x/nqegy6LzpRunQ6lvq5etw6/vshu0R7ZzuKO6070DvzPBY8OXxcvH/8ozzGfOn9DT0wvVQ
-9d72bfb794r4Gfio+Tj5x/pX+uf7d/wH/Jj9Kf26/kv+3P9t///SLzBhYlxOU0NvbG9yU3BhY2WiYzRc
-TlNDb2xvclNwYWNl0i8wZWZXTlNDb2xvcqJlNNIvMGhpV05TSW1hZ2WiaDQAAAAIAAAAEQAAABoAAAAk
-AAAAKQAAADIAAAA3AAAASQAAAEwAAABRAAAAUwAAAG0AAABzAAAAggAAAIkAAACQAAAAnQAAAKQAAACw
-AAAAuAAAAMcAAADJAAAAywAAANAAAADSAAAA1AAAANYAAADYAAAA4wAAAOgAAADzAAAA9wAAAPkAAAD7
-AAAA/QAAAP8AAAEEAAABBwAAAQkAAAELAAABDQAAARQAAAErAAABRwAAAUkAAAFLAAJmhwACZowAAmaX
-AAJmoAACZrMAAma3AAJmwgACZssAAmbQAAJm2AACZtsAAmbgAAJm4wACZuUAAmbnAAJm6QACZvAAAmby
-AAJm9AAL1HAAC9R1AAvUeAAL1HoAC9R8AAvUfgAL1IUAC9SHAAvUiQAg+jUAIPo6ACD6SQAg+k0AIPpY
-ACD6YAAg+m0AIPp6ACD6jwAg+pQAIPqYACD6mgAg+pwAIPqeACD6pwAg+qwAIPqyACD6ugAg+rwAIPq+
-ACD6wAAg+sIAIQxiACEMZwAhDHQAIQx3ACEMhAAhDIkAIQyRACEMlAAhDJkAIQyhAAAAAAAABAEAAAAA
-AAAAagAAAAAAAAAAAAAAAAAhDKQ
+3P9t///SLzBLTF5OU011dGFibGVBcnJheaNLNjTWTg5PUFFSU1RVVldYV05TV2hpdGVcTlNDb21wb25l
+bnRzXE5TQ29sb3JTcGFjZV8QEk5TQ3VzdG9tQ29sb3JTcGFjZV8QEE5TTGluZWFyRXhwb3N1cmVEMCAw
+AIAVQzAgMBADgBJBMdRaW1wOXV5fYFROU0lEVU5TSUNDV05TTW9kZWwQCYATEACAFE8REZwAABGcYXBw
+bAIAAABtbnRyR1JBWVhZWiAH3AAIABcADwAuAA9hY3NwQVBQTAAAAABub25lAAAAAAAAAAAAAAAAAAAA
+AAAA9tYAAQAAAADTLWFwcGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAVkZXNjAAAAwAAAAHlkc2NtAAABPAAACBpjcHJ0AAAJWAAAACN3dHB0AAAJfAAAABRrVFJDAAAJ
+kAAACAxkZXNjAAAAAAAAAB9HZW5lcmljIEdyYXkgR2FtbWEgMi4yIFByb2ZpbGUAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAbWx1YwAAAAAAAAAfAAAADHNrU0sAAAAuAAABhGRhREsAAAA6AAABsmNhRVMAAAA4AAAB
+7HZpVk4AAABAAAACJHB0QlIAAABKAAACZHVrVUEAAAAsAAACrmZyRlUAAAA+AAAC2mh1SFUAAAA0AAAD
+GHpoVFcAAAAaAAADTGtvS1IAAAAiAAADZm5iTk8AAAA6AAADiGNzQ1oAAAAoAAADwmhlSUwAAAAkAAAD
+6nJvUk8AAAAqAAAEDmRlREUAAABOAAAEOGl0SVQAAABOAAAEhnN2U0UAAAA4AAAE1HpoQ04AAAAaAAAF
+DGphSlAAAAAmAAAFJmVsR1IAAAAqAAAFTHB0UE8AAABSAAAFdm5sTkwAAABAAAAFyGVzRVMAAABMAAAG
+CHRoVEgAAAAyAAAGVHRyVFIAAAAkAAAGhmZpRkkAAABGAAAGqmhySFIAAAA+AAAG8HBsUEwAAABKAAAH
+LmFyRUcAAAAsAAAHeHJ1UlUAAAA6AAAHpGVuVVMAAAA8AAAH3gBWAWEAZQBvAGIAZQBjAG4A4QAgAHMA
+aQB2AOEAIABnAGEAbQBhACAAMgAsADIARwBlAG4AZQByAGkAcwBrACAAZwByAOUAIAAyACwAMgAgAGcA
+YQBtAG0AYQAtAHAAcgBvAGYAaQBsAEcAYQBtAG0AYQAgAGQAZQAgAGcAcgBpAHMAbwBzACAAZwBlAG4A
+6AByAGkAYwBhACAAMgAuADIAQx6lAHUAIABoAOwAbgBoACAATQDgAHUAIAB4AOEAbQAgAEMAaAB1AG4A
+ZwAgAEcAYQBtAG0AYQAgADIALgAyAFAAZQByAGYAaQBsACAARwBlAG4A6QByAGkAYwBvACAAZABhACAA
+RwBhAG0AYQAgAGQAZQAgAEMAaQBuAHoAYQBzACAAMgAsADIEFwQwBDMEMAQ7BEwEPQQwACAARwByAGEA
+eQAtBDMEMAQ8BDAAIAAyAC4AMgBQAHIAbwBmAGkAbAAgAGcA6QBuAOkAcgBpAHEAdQBlACAAZwByAGkA
+cwAgAGcAYQBtAG0AYQAgADIALAAyAMEAbAB0AGEAbADhAG4AbwBzACAAcwB6APwAcgBrAGUAIABnAGEA
+bQBtAGEAIAAyAC4AMpAadShwcJaOUUlepgAyAC4AMoJyX2ljz4/wx3y8GAAg1ozAyQAgrBC5yAAgADIA
+LgAyACDVBLhc0wzHfABHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QAgAGcAYQBtAG0AYQAgADIALAAyAC0A
+cAByAG8AZgBpAGwATwBiAGUAYwBuAOEAIAFhAGUAZADhACAAZwBhAG0AYQAgADIALgAyBdIF0AXeBdQA
+IAXQBeQF1QXoACAF2wXcBdwF2QAgADIALgAyAEcAYQBtAGEAIABnAHIAaQAgAGcAZQBuAGUAcgBpAGMB
+AwAgADIALAAyAEEAbABsAGcAZQBtAGUAaQBuAGUAcwAgAEcAcgBhAHUAcwB0AHUAZgBlAG4ALQBQAHIA
+bwBmAGkAbAAgAEcAYQBtAG0AYQAgADIALAAyAFAAcgBvAGYAaQBsAG8AIABnAHIAaQBnAGkAbwAgAGcA
+ZQBuAGUAcgBpAGMAbwAgAGQAZQBsAGwAYQAgAGcAYQBtAG0AYQAgADIALAAyAEcAZQBuAGUAcgBpAHMA
+awAgAGcAcgDlACAAMgAsADIAIABnAGEAbQBtAGEAcAByAG8AZgBpAGxmbpAacHBepnz7ZXAAMgAuADJj
+z4/wZYdO9k4AgiwwsDDsMKQwrDDzMN4AIAAyAC4AMgAgMNcw7TDVMKEwpDDrA5MDtQO9A7kDugPMACAD
+kwO6A8EDuQAgA5MDrAO8A7wDsQAgADIALgAyAFAAZQByAGYAaQBsACAAZwBlAG4A6QByAGkAYwBvACAA
+ZABlACAAYwBpAG4AegBlAG4AdABvAHMAIABkAGEAIABHAGEAbQBtAGEAIAAyACwAMgBBAGwAZwBlAG0A
+ZQBlAG4AIABnAHIAaQBqAHMAIABnAGEAbQBtAGEAIAAyACwAMgAtAHAAcgBvAGYAaQBlAGwAUABlAHIA
+ZgBpAGwAIABnAGUAbgDpAHIAaQBjAG8AIABkAGUAIABnAGEAbQBtAGEAIABkAGUAIABnAHIAaQBzAGUA
+cwAgADIALAAyDiMOMQ4HDioONQ5BDgEOIQ4hDjIOQA4BDiMOIg5MDhcOMQ5IDicORA4bACAAMgAuADIA
+RwBlAG4AZQBsACAARwByAGkAIABHAGEAbQBhACAAMgAsADIAWQBsAGUAaQBuAGUAbgAgAGgAYQByAG0A
+YQBhAG4AIABnAGEAbQBtAGEAIAAyACwAMgAgAC0AcAByAG8AZgBpAGkAbABpAEcAZQBuAGUAcgBpAQ0A
+awBpACAARwByAGEAeQAgAEcAYQBtAG0AYQAgADIALgAyACAAcAByAG8AZgBpAGwAVQBuAGkAdwBlAHIA
+cwBhAGwAbgB5ACAAcAByAG8AZgBpAGwAIABzAHoAYQByAG8BWwBjAGkAIABnAGEAbQBtAGEAIAAyACwA
+MgY6BicGRQYnACAAMgAuADIAIAZEBkgGRgAgBjEGRQYnBi8GSgAgBjkGJwZFBB4EMQRJBDAETwAgBEEE
+NQRABDAETwAgBDMEMAQ8BDwEMAAgADIALAAyAC0EPwRABD4ERAQ4BDsETABHAGUAbgBlAHIAaQBjACAA
+RwByAGEAeQAgAEcAYQBtAG0AYQAgADIALgAyACAAUAByAG8AZgBpAGwAZQAAdGV4dAAAAABDb3B5cmln
+aHQgQXBwbGUgSW5jLiwgMjAxMgAAWFlaIAAAAAAAAPNRAAEAAAABFsxjdXJ2AAAAAAAABAAAAAAFAAoA
+DwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8A
+pACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUB
+TAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8C
+OAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YD
+cgN+A4oDlgOiA64DugPHA9MD4APsA/kEBgQTBCAELQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wThBPAE
+/gUNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0GrwbABtEG
+4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH+AgLCB8IMghGCFoIbgiCCJYIqgi+CNII5wj7CRAJ
+JQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQKagqBCpgKrgrFCtwK8wsLCyILOQtRC2kLgAuYC7AL
+yAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYNQA1aDXQNjg2pDcMN3g34DhMOLg5JDmQOfw6bDrYO
+0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQfhCbELkQ1xD1ERMRMRFPEW0RjBGqEckR6BIHEiYS
+RRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYUJxRJFGoUixStFM4U8BUSFTQVVhV4FZsVvRXgFgMW
+JhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsYQBhlGIoYrxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEa
+dxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUhx7HKMczBz1HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMf
+Ph9pH5Qfvx/qIBUgQSBsIJggxCDwIRwhSCF1IaEhziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0k
+fCSrJNolCSU4JWgllyXHJfcmJyZXJocmtyboJxgnSSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIq
+NSpoKpsqzysCKzYraSudK9EsBSw5LG4soizXLQwtQS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUw
+bDCkMNsxEjFKMYIxujHyMioyYzKbMtQzDTNGM38zuDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3
+JDdgN5w31zgUOFA4jDjIOQU5Qjl/Obw5+To2OnQ6sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPiA+
+YD6gPuA/IT9hP6I/4kAjQGRApkDnQSlBakGsQe5CMEJyQrVC90M6Q31DwEQDREdEikTORRJFVUWaRd5G
+IkZnRqtG8Ec1R3tHwEgFSEtIkUjXSR1JY0mpSfBKN0p9SsRLDEtTS5pL4kwqTHJMuk0CTUpNk03cTiVO
+bk63TwBPSU+TT91QJ1BxULtRBlFQUZtR5lIxUnxSx1MTU19TqlP2VEJUj1TbVShVdVXCVg9WXFapVvdX
+RFeSV+BYL1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb5Vw1XIZc1l0nXXhdyV4aXmxevV8PX2Ffs2AFYFdg
+qmD8YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1lkmXnZj1mkmboZz1nk2fpaD9olmjsaUNpmmnxakhq
+n2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv0XArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRwdMx1
+KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnnekZ6pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/I3+Ef+WA
+R4CogQqBa4HNgjCCkoL0g1eDuoQdhICE44VHhauGDoZyhteHO4efiASIaYjOiTOJmYn+imSKyoswi5aL
+/IxjjMqNMY2Yjf+OZo7OjzaPnpAGkG6Q1pE/kaiSEZJ6kuOTTZO2lCCUipT0lV+VyZY0lp+XCpd1l+CY
+TJi4mSSZkJn8mmia1ZtCm6+cHJyJnPedZJ3SnkCerp8dn4uf+qBpoNihR6G2oiailqMGo3aj5qRWpMel
+OKWpphqmi6b9p26n4KhSqMSpN6mpqhyqj6sCq3Wr6axcrNCtRK24ri2uoa8Wr4uwALB1sOqxYLHWskuy
+wrM4s660JbSctRO1irYBtnm28Ldot+C4WbjRuUq5wro7urW7LrunvCG8m70VvY++Cr6Evv+/er/1wHDA
+7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/IPci8yTrJuco4yrfLNsu2zDXMtc01zbXONs62zzfP
+uNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjXXNfg2GTY6Nls2fHadtr724DcBdyK3RDdlt4c3qLf
+Kd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbnH+ep6DLovOlG6dDqW+rl63Dr++yG7RHtnO4o7rTv
+QO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt9vv3ivgZ+Kj5OPnH+lf65/t3/Af8mP0p/br+S/7c/23/
+/9IvMGNkXE5TQ29sb3JTcGFjZaJlNFxOU0NvbG9yU3BhY2XSLzBnaFdOU0NvbG9yomc00i8wamtXTlNJ
+bWFnZaJqNAAAAAgAAAARAAAAGgAAACQAAAApAAAAMgAAADcAAABJAAAATAAAAFEAAABTAAAAbQAAAHMA
+AACCAAAAiQAAAJAAAACdAAAApAAAALAAAAC4AAAAxwAAAMkAAADLAAAA0AAAANIAAADUAAAA1gAAANgA
+AADjAAAA6AAAAPMAAAD3AAAA+QAAAPsAAAD9AAAA/wAAAQQAAAEHAAABCQAAAQsAAAENAAABFAAAASsA
+AAFHAAABSQAAAUsAAmaHAAJmjAACZpcAAmagAAJmswACZrcAAmbCAAJmywACZtAAAmbYAAJm2wACZuAA
+AmbjAAJm5QACZucAAmbpAAJm8AACZvIAAmb0AAvUcAAL1HUAC9R4AAvUegAL1HwAC9R+AAvUhQAL1IcA
+C9SJACD6NQAg+joAIPpJACD6TQAg+loAIPpiACD6bwAg+nwAIPqRACD6pAAg+qkAIPqrACD6rwAg+rEA
+IPqzACD6tQAg+r4AIPrDACD6yQAg+tEAIPrTACD61QAg+tcAIPrZACEMeQAhDH4AIQyLACEMjgAhDJsA
+IQygACEMqAAhDKsAIQywACEMuAAAAAAAAAQBAAAAAAAAAGwAAAAAAAAAAAAAAAAAIQy7A
 </mutableData>
         </image>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

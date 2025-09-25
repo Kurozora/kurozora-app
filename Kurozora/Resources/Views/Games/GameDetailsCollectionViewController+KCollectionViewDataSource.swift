@@ -45,6 +45,7 @@ extension GameDetailsCollectionViewController {
 			switch gameDetailSection {
 			case .header:
 				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
+				showDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .game(let game, _):
 					showDetailHeaderCollectionViewCell?.configure(using: game)
