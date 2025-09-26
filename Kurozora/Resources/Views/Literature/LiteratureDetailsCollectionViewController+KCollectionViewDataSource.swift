@@ -45,6 +45,7 @@ extension LiteratureDetailsCollectionViewController {
 			switch literatureDetailSection {
 			case .header:
 				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
+				showDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .literature(let literature, _):
 					showDetailHeaderCollectionViewCell?.configure(using: literature)
