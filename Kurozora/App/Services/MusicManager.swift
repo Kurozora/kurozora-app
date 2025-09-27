@@ -7,11 +7,11 @@
 //
 
 @preconcurrency import AVFoundation
-import UIKit
-import MusicKit
-import SwiftyJSON
 import Combine
+import MusicKit
 import StoreKit
+import SwiftyJSON
+import UIKit
 
 final class MusicManager: NSObject {
 	// MARK: - Properties
@@ -45,7 +45,7 @@ final class MusicManager: NSObject {
 	@Published private(set) var isPlaying: Bool = false
 
 	// MARK: - Initializers
-	private override init() {
+	override private init() {
 		super.init()
 
 		self.applicationPlayer.state.objectWillChange
@@ -93,9 +93,12 @@ final class MusicManager: NSObject {
 	///
 	/// - Returns: The fetched `MusicKit.Song` object.
 	private func authorizedMusicRequest(for appleMusicID: Int) async -> MKSong? {
-		guard let urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/\(self.countryCode)/songs/\(appleMusicID)?relate=library") else { return nil }
+		guard let url = URL(string: "https://api.music.apple.com/v1/catalog/\(self.countryCode)/songs/\(appleMusicID)?relate=library") else { return nil }
+
+		let urlRequest = URLRequest(url: url)
 		let musicDataRequest = MusicDataRequest(urlRequest: urlRequest)
 		let response = try? await musicDataRequest.response()
+
 		return await self.handleMusicResponseData(response?.data)
 	}
 
@@ -104,21 +107,23 @@ final class MusicManager: NSObject {
 	/// - Parameters:
 	///    - appleMusicID: The id of the music for which the data should be fetched.
 	private func unauthorizedMusicRequest(for appleMusicID: Int) async -> MKSong? {
-		var song: MKSong?
+		guard
+			let url = URL(string: "https://api.music.apple.com/v1/catalog/\(self.countryCode)/songs/\(appleMusicID)"),
+			let appleMusicDeveloperToken = KSettings?.appleMusicDeveloperToken
+		else { return nil }
 
-		if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/\(self.countryCode)/songs/\(appleMusicID)"), let appleMusicDeveloperToken = KSettings?.appleMusicDeveloperToken {
-			urlRequest.httpMethod = "GET"
-			urlRequest.addValue("Bearer \(appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
+		var urlRequest = URLRequest(url: url)
+		urlRequest.httpMethod = "GET"
+		urlRequest.addValue("Bearer \(appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
 
-			do {
-				let (data, _) = try await URLSession.shared.data(for: urlRequest)
-				song = await self.handleMusicResponseData(data)
-			} catch {
-				print("----- Error unauthorizedMusicRequest", String(describing: error))
-			}
+		do {
+			let (data, _) = try await URLSession.shared.data(for: urlRequest)
+			return await self.handleMusicResponseData(data)
+		} catch {
+			print("----- Error unauthorizedMusicRequest", String(describing: error))
 		}
 
-		return song
+		return nil
 	}
 
 	/// Handles the data received from the music request.
@@ -132,7 +137,7 @@ final class MusicManager: NSObject {
 			do {
 				let songJSONString = songJSON["data"][0]
 				let songJSONData = try songJSONString.rawData()
-				guard let musicKitSong = MusicKit.Song(from: songJSONData) else { return nil }
+				guard let musicKitSong = try? JSONDecoder().decode(MusicKit.Song.self, from: songJSONData) else { return nil }
 				let relationship = await self.getRelationship(json: songJSON)
 				let isInLibrary = await self.hasSongInLibrary(relationship: relationship)
 				song = MKSong(song: musicKitSong, isInLibrary: isInLibrary, relationship: relationship)

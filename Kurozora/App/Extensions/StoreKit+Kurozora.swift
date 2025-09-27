@@ -9,7 +9,7 @@
 import StoreKit
 
 extension Product {
-	/// Returns a localized string of the price devided by the availability period in months.
+	/// Returns a localized string of the price divided by the availability period in months.
 	var displayPricePerMonth: String {
 		switch self.type {
 		case .autoRenewable, .nonRenewable:
@@ -32,7 +32,7 @@ extension Product {
 		}
 	}
 
-	/// Returns the price devided by the availability period in months.
+	/// Returns the price divided by the availability period in months.
 	var pricePerMonth: Decimal {
 		switch self.type {
 		case .autoRenewable, .nonRenewable:
@@ -73,12 +73,12 @@ extension Product {
 	/// Returns a string of the percentage saved compared to the given price.
 	///
 	/// For example with a product that costs 1.99:
-	/// ```
+	/// ```swift
 	/// product.priceSaved(comparedTo: 3.99)
 	/// // Returns "50%"
 	/// ```
 	///
-	/// - Parameter price: The price by which the comparision is done.
+	/// - Parameter price: The price by which the comparison is done.
 	///
 	/// - Returns: a string of the percentage saved compared to the given price.
 	func priceSaved(comparedTo price: Decimal) -> String {
