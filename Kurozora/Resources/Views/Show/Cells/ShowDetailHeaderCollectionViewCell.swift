@@ -6,28 +6,76 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
+protocol BaseDetailHeaderCollectionViewCellDelegate: AnyObject {
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int)
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async
+}
+
+class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlet
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var visualEffectView: KVisualEffectView!
-	@IBOutlet weak var bannerContainerView: UIView!
 
+	// Quick details view
+	@IBOutlet weak var quickDetailsView: UIView!
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KLabel!
+	@IBOutlet weak var rankButton: UIButton!
+	@IBOutlet weak var shadowView: UIView!
+	@IBOutlet weak var posterImageView: PosterImageView!
+
+	weak var delegate: BaseDetailHeaderCollectionViewCellDelegate?
+
+	// MARK: - Functions
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		// Configure visual effect
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.visualEffectView.effect = UIGlassEffect(style: .clear)
+		}
+		self.visualEffectView.layerCornerRadius = 10.0
+
+		// Configure poster
+		self.posterImageView.isUserInteractionEnabled = true
+		let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapPoster))
+		self.posterImageView.addGestureRecognizer(posterTap)
+
+		// Configure banner
+		self.bannerImageView.isUserInteractionEnabled = true
+		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapBanner))
+		self.bannerImageView.addGestureRecognizer(bannerTap)
+	}
+
+	@objc private func didTapBanner(_ sender: UIImageView) {
+		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 1)
+	}
+
+	@objc private func didTapPoster(_ sender: UIImageView) {
+		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 0)
+	}
+
+	// MARK: - IBActions
+	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.delegate?.baseDetailHeaderCollectionViewCell(self, didPressStatus: sender)
+		}
+	}
+}
+
+class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
+	// MARK: - IBOutlet
 	// Action buttons
 	@IBOutlet weak var favoriteButton: UIButton!
 	@IBOutlet weak var libraryStatusButton: KTintedButton!
 	@IBOutlet weak var reminderButton: UIButton!
 
 	// Quick details view
-	@IBOutlet weak var quickDetailsView: UIView!
-	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var secondaryLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
-	@IBOutlet weak var rankButton: UIButton!
-	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 
 	// MARK: - Properties
@@ -41,24 +89,36 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		return literatureMask
 	}()
 
-	private var show: Show? = nil
-	private var literature: Literature? = nil
-	private var game: Game? = nil
+	var show: Show?
+	var literature: Literature?
+	var game: Game?
 }
 
 // MARK: - Functions
 extension ShowDetailHeaderCollectionViewCell {
-	/// Updates the view with the details fetched from the server.
-	func configure(using show: Show) {
-		self.libraryKind = .shows
-		self.literature = nil
-		self.show = show
+	/// The shared settings used to initialize the cell.
+	private func sharedConfiguration() {
+		// Configure notifications
 		NotificationCenter.default.removeObserver(self)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
-		// Configure visual effect
-		self.visualEffectView.layerCornerRadius = 10.0
+		// Configure shadows
+		self.shadowView.applyShadow()
+		self.reminderButton.applyShadow()
+		self.favoriteButton.applyShadow()
+	}
+
+	/// Configure the cell with the given details.
+	///
+	/// - Parameters:
+	///    - show: The `Show` object used to configure the cell.
+	func configure(using show: Show) {
+		self.libraryKind = .shows
+		self.literature = nil
+		self.show = show
+
+		self.sharedConfiguration()
 
 		// Configure library status
 		self.updateLibraryActions(using: show)
@@ -94,25 +154,20 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		show.attributes.bannerImage(imageView: self.bannerImageView)
 
-		// Configure shadows
-		self.shadowView.applyShadow()
-		self.reminderButton.applyShadow()
-		self.favoriteButton.applyShadow()
-
 		// Display details
 		self.quickDetailsView.isHidden = false
 	}
 
+	/// Configure the cell with the given details.
+	///
+	/// - Parameters:
+	///    - literature: The `Literature` object used to configure the cell.
 	func configure(using literature: Literature) {
 		self.libraryKind = .literatures
 		self.show = nil
 		self.literature = literature
-		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
-		// Configure visual effect
-		self.visualEffectView.layerCornerRadius = 10.0
+		self.sharedConfiguration()
 
 		// Configure library status
 		self.libraryStatus = literature.attributes.library?.status ?? .none
@@ -149,25 +204,20 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		literature.attributes.bannerImage(imageView: self.bannerImageView)
 
-		// Configure shadows
-		self.shadowView.applyShadow()
-		self.reminderButton.applyShadow()
-		self.favoriteButton.applyShadow()
-
 		// Display details
 		self.quickDetailsView.isHidden = false
 	}
 
+	/// Configure the cell with the given details.
+	///
+	/// - Parameters:
+	///    - game: The `Game` object used to configure the cell.
 	func configure(using game: Game) {
 		self.libraryKind = .games
 		self.show = nil
 		self.game = game
-		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
-		// Configure visual effect
-		self.visualEffectView.layerCornerRadius = 10.0
+		self.sharedConfiguration()
 
 		// Configure library status
 		self.libraryStatus = game.attributes.library?.status ?? .none
@@ -203,11 +253,6 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
 		game.attributes.bannerImage(imageView: self.bannerImageView)
-
-		// Configure shadows
-		self.shadowView.applyShadow()
-		self.reminderButton.applyShadow()
-		self.favoriteButton.applyShadow()
 
 		// Display details
 		self.quickDetailsView.isHidden = false
@@ -329,114 +374,6 @@ extension ShowDetailHeaderCollectionViewCell {
 
 // MARK: - IBActions
 extension ShowDetailHeaderCollectionViewCell {
-	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		Task { [weak self] in
-			guard let self = self else { return }
-			let signedIn = await WorkflowController.shared.isSignedIn()
-			guard signedIn else { return }
-			let oldLibraryStatus = self.libraryStatus
-			let modelID: String
-
-			switch self.libraryKind {
-			case .shows:
-				guard let show = self.show else { return }
-				modelID = show.id
-			case .literatures:
-				guard let literature = self.literature else { return }
-				modelID = literature.id
-			case .games:
-				guard let game = self.game else { return }
-				modelID = game.id
-			}
-
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: self.libraryKind), currentSelection: oldLibraryStatus, action: { [weak self] _, value in
-				guard let self = self else { return }
-
-				if oldLibraryStatus != value {
-					Task {
-						do {
-							let libraryUpdateResponse = try await KService.addToLibrary(self.libraryKind, withLibraryStatus: value, modelID: modelID).value
-
-							// Update entry in library
-							self.libraryStatus = value
-
-							switch self.libraryKind {
-							case .shows:
-								guard let show = self.show else { return }
-								show.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: show, animated: oldLibraryStatus == .none)
-							case .literatures:
-								guard let literature = self.literature else { return }
-								literature.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: literature, animated: oldLibraryStatus == .none)
-							case .games:
-								guard let game = self.game else { return }
-								game.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: game, animated: oldLibraryStatus == .none)
-							}
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-
-							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-
-							// Request review
-							ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-						} catch let error as KKAPIError {
-//							self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-							print("----- Add to library failed", error.message)
-						}
-					}
-				}
-			})
-
-			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
-					Task {
-						do {
-							let libraryUpdateResponse = try await KService.removeFromLibrary(self.libraryKind, modelID: modelID).value
-
-							switch self.libraryKind {
-							case .shows:
-								guard let show = self.show else { return }
-								show.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: show, animated: true)
-							case .literatures:
-								guard let literature = self.literature else { return }
-								literature.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: literature, animated: true)
-							case .games:
-								guard let game = self.game else { return }
-								game.attributes.library?.update(using: libraryUpdateResponse.data)
-								self.updateLibraryActions(using: game, animated: true)
-							}
-
-							// Update entry in library
-							self.libraryStatus = .none
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						} catch let error as KKAPIError {
-//							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-							print("----- Remove from library failed", error.message)
-						}
-					}
-				}))
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-			}
-
-			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
-			}
-		}
-	}
-
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
 		Task { [weak self] in
 			guard let self = self else { return }

@@ -82,8 +82,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// The index path of the song that's currently playing.
 	var currentPlayerIndexPath: IndexPath?
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	/// The first cell's size.
+	private var firstCellSize: CGSize = .zero
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Touch Bar
@@ -183,6 +186,19 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		// Restore the navigation bar to default
 		self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 		self.navigationController?.navigationBar.shadowImage = nil
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		// Add bottom content inset to account for tab bar
+		let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
+		self.collectionView.contentInset.bottom = tabBarHeight
+
+		// Store the first cell size
+		if let firstCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ShowDetailHeaderCollectionViewCell, self.firstCellSize.width != firstCell.frame.size.width {
+			self.firstCellSize = firstCell.frame.size
+		}
 	}
 
 	// MARK: - Gesture
@@ -507,22 +523,73 @@ extension ShowDetailsCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let navigationBar = self.navigationController?.navigationBar
 		let firstCell = self.collectionView.cellForItem(at: [0, 0])
-
-		let globalNavigationBarPositionY = navigationBar?.superview?.convert(navigationBar?.frame.origin ?? CGPoint(x: 0, y: 0), to: nil).y ?? .zero
 		let offset = scrollView.contentOffset.y
-		let firstCellHeight = firstCell?.frame.size.height ?? .zero
 
-		let percentage = offset / (firstCellHeight - globalNavigationBarPositionY)
+		// Fade in/out the navigation title label when the first cell is fully under the navigation bar
+		if let firstCellAttributes = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0)) {
+			let firstCellBottomY = firstCellAttributes.frame.maxY
+			let navBarBottomY = (navigationBar?.frame.maxY ?? 0) +
+				(navigationBar?.superview?.frame.origin.y ?? 0)
 
-		if percentage.isFinite, percentage >= 0 {
-			self.navigationTitleLabel.alpha = percentage
+			if offset + navBarBottomY >= firstCellBottomY {
+				if self.navigationTitleLabel.alpha == 0 {
+					UIView.animate(withDuration: 0.25) {
+						self.navigationTitleLabel.alpha = 1
+					}
+				}
+			} else {
+				if self.navigationTitleLabel.alpha == 1 {
+					UIView.animate(withDuration: 0.25) {
+						self.navigationTitleLabel.alpha = 0
+					}
+				}
+			}
+		}
+
+		// Stretch the first cell when pulled down
+		if let showHeaderCell = firstCell as? ShowDetailHeaderCollectionViewCell {
+			var newFrame = showHeaderCell.frame
+
+			if self.firstCellSize.width != showHeaderCell.frame.size.width {
+				self.firstCellSize = showHeaderCell.frame.size
+			}
+
+			if offset < 0 {
+				newFrame.origin.y = offset
+				newFrame.size.height = self.firstCellSize.height - offset
+				showHeaderCell.frame = newFrame
+			} else {
+				newFrame.origin.y = 0
+				newFrame.size.height = self.firstCellSize.height
+				showHeaderCell.frame = newFrame
+			}
+		}
+
+		// Adjust the section background decoration view height when scrolled to bottom
+		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout, let attributes = layout.layoutAttributesForElements(in: self.collectionView.bounds) {
+			for attribute in attributes where attribute.representedElementKind == SectionBackgroundDecorationView.elementKindSectionBackground {
+				var newFrame = attribute.frame
+
+				let section = attribute.indexPath.section
+				let numberOfItemsInSection = self.collectionView.numberOfItems(inSection: section)
+				let lastItemIndexPath = IndexPath(item: numberOfItemsInSection - 1, section: section)
+				let lastItemAttributes = self.collectionView.layoutAttributesForItem(at: lastItemIndexPath)
+
+				if let lastItemAttributes, offset + scrollView.frame.size.height > (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height) {
+					let difference = (offset + scrollView.frame.size.height) - (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height)
+					newFrame.size.height += difference
+					attribute.frame = newFrame
+				} else {
+					attribute.frame = newFrame
+				}
+			}
 		}
 	}
 }
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async { }
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {}
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
@@ -551,7 +618,7 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
@@ -691,6 +758,163 @@ extension ShowDetailsCollectionViewController: ReviewTextEditorViewControllerDel
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
+}
+
+extension ShowDetailsCollectionViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		// Find the visible cell for the index and return its thumbnail UIImageView.
+		// Example (collectionView):
+		guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
+			return nil
+		}
+		return cell.posterImageView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {
+		// Scroll the collection view to make sure the cell at the given index is visible.
+		let indexPath = IndexPath(item: index, section: 0)
+		collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	}
+}
+
+extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int) {
+		let posterURL = URL(string: self.show.attributes.poster?.url ?? "")
+		let bannerURL = URL(string: self.show.attributes.banner?.url ?? "")
+		var items: [MediaItemV2] = []
+
+		if let posterURL = posterURL {
+			items.append(MediaItemV2(
+				url: posterURL,
+				type: .image,
+				title: self.show.attributes.title,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+		if let bannerURL = bannerURL {
+			items.append(MediaItemV2(
+				url: bannerURL,
+				type: .image,
+				title: self.show.attributes.title,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+
+		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		albumVC.transitionDelegateForThumbnail = self
+
+		present(albumVC, animated: true)
+	}
+
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
+		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
+		let oldLibraryStatus = cell.libraryStatus
+		let modelID: String
+
+		switch cell.libraryKind {
+		case .shows:
+			guard let show = cell.show else { return }
+			modelID = show.id
+		case .literatures:
+			guard let literature = cell.literature else { return }
+			modelID = literature.id
+		case .games:
+			guard let game = cell.game else { return }
+			modelID = game.id
+		}
+
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { _, value in
+			if oldLibraryStatus != value {
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+						// Update entry in library
+						cell.libraryStatus = value
+
+						switch cell.libraryKind {
+						case .shows:
+							guard let show = cell.show else { return }
+							show.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: show, animated: oldLibraryStatus == .none)
+						case .literatures:
+							guard let literature = cell.literature else { return }
+							literature.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: literature, animated: oldLibraryStatus == .none)
+						case .games:
+							guard let game = cell.game else { return }
+							game.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: game, animated: oldLibraryStatus == .none)
+						}
+
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+
+						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+
+						// Request review
+						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+					} catch let error as KKAPIError {
+						//							self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
+					}
+				}
+			}
+		})
+
+		if cell.libraryStatus != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							guard let show = cell.show else { return }
+							show.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: show, animated: true)
+						case .literatures:
+							guard let literature = cell.literature else { return }
+							literature.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: literature, animated: true)
+						case .games:
+							guard let game = cell.game else { return }
+							game.attributes.library?.update(using: libraryUpdateResponse.data)
+							cell.updateLibraryActions(using: game, animated: true)
+						}
+
+						// Update entry in library
+						cell.libraryStatus = .none
+
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+					} catch let error as KKAPIError {
+//						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						print("----- Remove from library failed", error.message)
+					}
+				}
+			}))
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
+		}
+	}
 }
 
 extension ShowDetailsCollectionViewController {
