@@ -270,8 +270,9 @@ final class MusicManager: NSObject {
 	private func hasSongInLibrary(relationship: MKSong.Relationship?) async -> Bool {
 		guard let relationship = relationship else { return false }
 		guard let libraryID = relationship.library?.data.first?.id else { return false }
-		guard let urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/me/library/songs/\(libraryID)") else { return false }
+		guard let url = URL(string: "https://api.music.apple.com/v1/me/library/songs/\(libraryID)") else { return false }
 
+		let urlRequest = URLRequest(url: url)
 		let musicDataRequest = MusicDataRequest(urlRequest: urlRequest)
 		guard (try? await musicDataRequest.response()) != nil else { return false }
 
