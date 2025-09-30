@@ -27,11 +27,13 @@ import UIKit
 @MainActor
 @objc public protocol IQTextInputView where Self: UIView, Self: UITextInputTraits {
 
+#if compiler(>=5.7)    // Xcode 14
     @available(iOS 16.0, *)
     @objc var iqIsFindInteractionEnabled: Bool { get }
 
     @available(iOS 16.0, *)
     @objc var iqFindInteraction: UIFindInteraction? { get }
+#endif
 
     @objc var returnKeyType: UIReturnKeyType { get set }
     @objc var keyboardAppearance: UIKeyboardAppearance { get set }
@@ -45,11 +47,13 @@ import UIKit
 @MainActor
 @objc extension UITextField: IQTextInputView {
 
+#if compiler(>=5.7)    // Xcode 14
     @available(iOS 16.0, *)
     public var iqIsFindInteractionEnabled: Bool { false }
 
     @available(iOS 16.0, *)
     public var iqFindInteraction: UIFindInteraction? { nil }
+#endif
 
     public var iqIsEnabled: Bool { isEnabled }
 }
@@ -57,11 +61,14 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 @MainActor
 @objc extension UITextView: IQTextInputView {
+
+#if compiler(>=5.7)    // Xcode 14
     @available(iOS 16.0, *)
     public var iqIsFindInteractionEnabled: Bool { isFindInteractionEnabled }
 
     @available(iOS 16.0, *)
     public var iqFindInteraction: UIFindInteraction? { findInteraction }
+#endif
 
     public var iqIsEnabled: Bool { isEditable }
 }
@@ -70,17 +77,23 @@ import UIKit
 @MainActor
 @objc extension UISearchBar: IQTextInputView {
 
+#if compiler(>=5.7)    // Xcode 14
     @available(iOS 16.0, *)
     public var iqIsFindInteractionEnabled: Bool { false }
 
     @available(iOS 16.0, *)
     public var iqFindInteraction: UIFindInteraction? { nil }
+#endif
 
     public var iqIsEnabled: Bool {
+#if compiler(>=5.8)    // Xcode 14.4
         if #available(iOS 16.4, *) {
             return isEnabled
         } else {
             return searchTextField.isEnabled
         }
+#else
+        return searchTextField.isEnabled
+#endif
     }
 }

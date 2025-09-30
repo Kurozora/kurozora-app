@@ -466,7 +466,11 @@ typedef NS_ENUM(NSUInteger, FLEXExplorerMode) {
     toolbar.moveItem.selected = self.currentMode == FLEXExplorerModeMove;
     
     // Recent only enabled when we have a last active tab
-    toolbar.recentItem.enabled = FLEXTabList.sharedList.activeTab != nil;
+    if (!self.presentedViewController) {
+        toolbar.recentItem.enabled = FLEXTabList.sharedList.activeTab != nil;
+    } else {
+        toolbar.recentItem.enabled = NO;
+    }
 }
 
 
@@ -848,31 +852,34 @@ typedef NS_ENUM(NSUInteger, FLEXExplorerMode) {
 #pragma mark - Touch Handling
 
 - (BOOL)shouldReceiveTouchAtWindowPoint:(CGPoint)pointInWindowCoordinates {
-    BOOL shouldReceiveTouch = NO;
-    
     CGPoint pointInLocalCoordinates = [self.view convertPoint:pointInWindowCoordinates fromView:nil];
     
-    // Always if it's on the toolbar
-    if (CGRectContainsPoint(self.explorerToolbar.frame, pointInLocalCoordinates)) {
-        shouldReceiveTouch = YES;
+    // If we have a modal presented, is it in the modal?
+    if (self.presentedViewController) {
+        UIView *presentedView = self.presentedViewController.view;
+        CGPoint pipvc = [presentedView convertPoint:pointInLocalCoordinates fromView:self.view];
+        UIView *hit = [presentedView hitTest:pipvc withEvent:nil];
+        if (hit != nil) {
+            return YES;
+        }
     }
     
     // Always if we're in selection mode
-    if (!shouldReceiveTouch && self.currentMode == FLEXExplorerModeSelect) {
-        shouldReceiveTouch = YES;
+    if (self.currentMode == FLEXExplorerModeSelect) {
+        return YES;
     }
     
     // Always in move mode too
-    if (!shouldReceiveTouch && self.currentMode == FLEXExplorerModeMove) {
-        shouldReceiveTouch = YES;
+    if (self.currentMode == FLEXExplorerModeMove) {
+        return YES;
     }
     
-    // Always if we have a modal presented
-    if (!shouldReceiveTouch && self.presentedViewController) {
-        shouldReceiveTouch = YES;
+    // Always if it's on the toolbar
+    if (CGRectContainsPoint(self.explorerToolbar.frame, pointInLocalCoordinates)) {
+        return YES;
     }
     
-    return shouldReceiveTouch;
+    return NO;
 }
 
 
@@ -918,8 +925,14 @@ typedef NS_ENUM(NSUInteger, FLEXExplorerMode) {
     // up in case we start replacing them again in the future
     self.appMenuItems = UIMenuController.sharedMenuController.menuItems;
     
+    [self updateButtonStates];
+    
     // Show the view controller
-    [super presentViewController:toPresent animated:animated completion:completion];
+    [super presentViewController:toPresent animated:animated completion:^{
+        [self updateButtonStates];
+        
+        if (completion) completion();
+    }];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {    
@@ -940,7 +953,11 @@ typedef NS_ENUM(NSUInteger, FLEXExplorerMode) {
     
     [self updateButtonStates];
     
-    [super dismissViewControllerAnimated:animated completion:completion];
+    [super dismissViewControllerAnimated:animated completion:^{
+        [self updateButtonStates];
+        
+        if (completion) completion();
+    }];
 }
 
 - (BOOL)wantsWindowToBecomeKey {

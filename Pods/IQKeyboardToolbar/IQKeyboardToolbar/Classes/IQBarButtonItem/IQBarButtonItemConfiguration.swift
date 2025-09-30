@@ -70,8 +70,6 @@ import UIKit
 
         if systemItem == nil, !oldBarButtonItem.isSystemItem {
             newBarButtonItem.title = title
-            newBarButtonItem.accessibilityLabel = accessibilityLabel
-            newBarButtonItem.accessibilityIdentifier = newBarButtonItem.accessibilityLabel
             newBarButtonItem.image = image
             newBarButtonItem.target = target
             newBarButtonItem.action = action
@@ -79,6 +77,11 @@ import UIKit
             if let systemItem: UIBarButtonItem.SystemItem = systemItem {
                 newBarButtonItem = IQBarButtonItem(barButtonSystemItem: systemItem, target: target, action: action)
                 newBarButtonItem.isSystemItem = true
+#if compiler(>=6.2) // Xcode 26
+                if #available(iOS 26.0, *) {
+                    newBarButtonItem.style = .plain
+                }
+#endif
             } else if let image: UIImage = image {
                 newBarButtonItem = IQBarButtonItem(image: image, style: .plain, target: target, action: action)
             } else {
@@ -86,11 +89,13 @@ import UIKit
             }
 
             newBarButtonItem.invocation = oldBarButtonItem.invocation
-            newBarButtonItem.accessibilityLabel = accessibilityLabel
-            newBarButtonItem.accessibilityIdentifier = oldBarButtonItem.accessibilityLabel
             newBarButtonItem.isEnabled = oldBarButtonItem.isEnabled
             newBarButtonItem.tag = oldBarButtonItem.tag
         }
+
+        newBarButtonItem.accessibilityLabel = accessibilityLabel
+        newBarButtonItem.accessibilityIdentifier = oldBarButtonItem.accessibilityLabel
+
         return newBarButtonItem
     }
 }

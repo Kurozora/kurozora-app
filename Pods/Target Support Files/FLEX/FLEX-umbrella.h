@@ -76,6 +76,7 @@
 #import "FLEXShortcut.h"
 #import "FLEXShortcutsSection.h"
 #import "FLEXGlobalsEntry.h"
+#import "FLEXFileBrowserController.h"
 
 FOUNDATION_EXPORT double FLEXVersionNumber;
 FOUNDATION_EXPORT const unsigned char FLEXVersionString[];

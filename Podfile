@@ -21,7 +21,7 @@ def kurozora_pods
 	shared_pods
 
 	pod 'Cosmos'
-	pod 'FLEX', :configurations => ['Debug']
+	pod 'FLEX', :configurations => ['Debug'], :git => 'https://github.com/FLEXTool/FLEX', :branch => 'master'
 	pod 'IQKeyboardManagerSwift'
 	pod 'ReachabilitySwift'
 	pod 'Solar'

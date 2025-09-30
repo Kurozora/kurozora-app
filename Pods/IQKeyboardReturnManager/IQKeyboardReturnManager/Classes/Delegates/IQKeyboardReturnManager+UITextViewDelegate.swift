@@ -27,8 +27,11 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 @MainActor
 @objc extension IQKeyboardReturnManager: UITextViewDelegate {
+}
 
-    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+@objc public extension IQKeyboardReturnManager {
+
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
 
         var returnValue: Bool = true
 
@@ -46,7 +49,7 @@ import UIKit
         return returnValue
     }
 
-    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
 
         guard delegate == nil else { return true }
 
@@ -59,7 +62,7 @@ import UIKit
         return true
     }
 
-    public func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
 
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -73,7 +76,7 @@ import UIKit
         aDelegate?.textViewDidBeginEditing?(textView)
     }
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
 
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -87,7 +90,7 @@ import UIKit
         aDelegate?.textViewDidEndEditing?(textView)
     }
 
-    public func textView(_ textView: UITextView,
+    func textView(_ textView: UITextView,
                                shouldChangeTextIn range: NSRange,
                                replacementText text: String) -> Bool {
 
@@ -113,7 +116,7 @@ import UIKit
         return shouldChange
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
 
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -127,7 +130,7 @@ import UIKit
         aDelegate?.textViewDidChange?(textView)
     }
 
-    public func textViewDidChangeSelection(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
 
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -142,7 +145,7 @@ import UIKit
     }
 
     @available(iOS, deprecated: 17.0)
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                shouldInteractWith URL: URL,
                                in characterRange: NSRange,
                                interaction: UITextItemInteraction) -> Bool {
@@ -150,8 +153,8 @@ import UIKit
         guard delegate == nil else { return true }
 
         if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            let selector: Selector = #selector(textView as
-                                               (UITextView, URL, NSRange, UITextItemInteraction) -> Bool)
+
+            let selector: Selector = #selector(textView as (UITextView, URL, NSRange, UITextItemInteraction) -> Bool)
             if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   shouldInteractWith: URL,
@@ -164,7 +167,7 @@ import UIKit
     }
 
     @available(iOS, deprecated: 17.0)
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                shouldInteractWith textAttachment: NSTextAttachment,
                                in characterRange: NSRange,
                                interaction: UITextItemInteraction) -> Bool {
@@ -187,14 +190,17 @@ import UIKit
     }
 
     @available(iOS, deprecated: 10.0)
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                shouldInteractWith URL: URL,
                                in characterRange: NSRange) -> Bool {
 
         guard delegate == nil else { return true }
 
         if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            if textViewDelegate.responds(to: #selector(textView as (UITextView, URL, NSRange) -> Bool)) {
+
+            let selector: Selector = #selector(textView as (UITextView, URL, NSRange) -> Bool)
+
+            if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   shouldInteractWith: URL,
                                                   in: characterRange) ?? false
@@ -205,14 +211,17 @@ import UIKit
     }
 
     @available(iOS, deprecated: 10.0)
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                shouldInteractWith textAttachment: NSTextAttachment,
                                in characterRange: NSRange) -> Bool {
 
         guard delegate == nil else { return true }
 
         if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            if textViewDelegate.responds(to: #selector(textView as (UITextView, NSTextAttachment, NSRange) -> Bool)) {
+
+            let selector: Selector = #selector(textView as (UITextView, NSTextAttachment, NSRange) -> Bool)
+
+            if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   shouldInteractWith: textAttachment,
                                                   in: characterRange) ?? false
@@ -223,11 +232,12 @@ import UIKit
     }
 }
 
+#if compiler(>=5.7)    // Xcode 14
 @available(iOS 16.0, *)
 @available(iOSApplicationExtension, unavailable)
 @MainActor
-@objc extension IQKeyboardReturnManager {
-    public func textView(_ aTextView: UITextView,
+@objc public extension IQKeyboardReturnManager {
+    func textView(_ aTextView: UITextView,
                                editMenuForTextIn range: NSRange,
                                suggestedActions: [UIMenuElement]) -> UIMenu? {
 
@@ -235,8 +245,7 @@ import UIKit
 
         if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
 
-            let selector: Selector = #selector(textView as
-                                               (UITextView, NSRange, [UIMenuElement]) -> UIMenu?)
+            let selector = #selector((any UITextViewDelegate).textView(_:editMenuForTextIn:suggestedActions:))
             if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   editMenuForTextIn: range,
@@ -247,7 +256,7 @@ import UIKit
         return nil
     }
 
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                willPresentEditMenuWith animator: any UIEditMenuInteractionAnimating) {
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -261,7 +270,7 @@ import UIKit
         aDelegate?.textView?(aTextView, willPresentEditMenuWith: animator)
     }
 
-    public func textView(_ aTextView: UITextView,
+    func textView(_ aTextView: UITextView,
                                willDismissEditMenuWith animator: any UIEditMenuInteractionAnimating) {
         var aDelegate: (any UITextViewDelegate)? = delegate
 
@@ -275,8 +284,9 @@ import UIKit
         aDelegate?.textView?(aTextView, willDismissEditMenuWith: animator)
     }
 }
+#endif
 
-#if swift(>=5.9)    // Xcode 15
+#if compiler(>=5.9)    // Xcode 15
 @available(iOS 17.0, *)
 @available(iOSApplicationExtension, unavailable)
 @MainActor
@@ -288,7 +298,9 @@ import UIKit
         guard delegate == nil else { return nil }
 
         if let textViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            if textViewDelegate.responds(to: #selector(textView as (UITextView, UITextItem, UIAction) -> UIAction?)) {
+            let selector = #selector((any UITextViewDelegate).textView(_:primaryActionFor:defaultAction:))
+
+            if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   primaryActionFor: textItem,
                                                   defaultAction: defaultAction)
@@ -304,8 +316,7 @@ import UIKit
         guard delegate == nil else { return nil }
 
         if let textViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            let selector: Selector = #selector(textView as (UITextView, UITextItem, UIMenu)
-                                               -> UITextItem.MenuConfiguration?)
+            let selector = #selector((any UITextViewDelegate).textView(_:menuConfigurationFor:defaultMenu:))
             if textViewDelegate.responds(to: selector) {
                 return textViewDelegate.textView?(aTextView,
                                                   menuConfigurationFor: textItem,
@@ -348,7 +359,7 @@ import UIKit
 }
 #endif
 
-#if swift(>=6.0)    // Xcode 16
+#if compiler(>=6.0)    // Xcode 16
 @available(iOS 18.0, *)
 @available(iOSApplicationExtension, unavailable)
 @MainActor
@@ -386,13 +397,136 @@ import UIKit
                                writingToolsIgnoredRangesInEnclosingRange enclosingRange: NSRange) -> [NSValue] {
         guard delegate == nil else { return [] }
 
-        if let textViewDelegate = textInputViewCachedInfo(aTextView)?.textViewDelegate {
-            if textViewDelegate.responds(to: #selector(textView as (UITextView, NSRange) -> [NSValue])) {
-                return textViewDelegate.textView?(aTextView,
-                                                  writingToolsIgnoredRangesInEnclosingRange: enclosingRange)
+        if let textViewDelegate = textInputViewCachedInfo(textView)?.textViewDelegate {
+            let selector = #selector((any UITextViewDelegate).textView(_:writingToolsIgnoredRangesInEnclosingRange:))
+            if textViewDelegate.responds(to: selector) {
+                return textViewDelegate.textView?(textView,
+                                                  writingToolsIgnoredRangesInEnclosingRange: enclosingRange) ?? []
             }
         }
         return []
+    }
+
+    func textView(_ textView: UITextView, willBeginFormattingWith viewController: UITextFormattingViewController) {
+
+        var aDelegate: (any UITextViewDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textView) {
+                aDelegate = model.textViewDelegate
+            }
+        }
+
+        aDelegate?.textView?(textView, willBeginFormattingWith: viewController)
+    }
+
+    func textView(_ textView: UITextView, didBeginFormattingWith viewController: UITextFormattingViewController) {
+
+        var aDelegate: (any UITextViewDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textView) {
+                aDelegate = model.textViewDelegate
+            }
+        }
+
+        aDelegate?.textView?(textView, didBeginFormattingWith: viewController)
+    }
+
+    func textView(_ textView: UITextView, willEndFormattingWith viewController: UITextFormattingViewController) {
+
+        var aDelegate: (any UITextViewDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textView) {
+                aDelegate = model.textViewDelegate
+            }
+        }
+
+        aDelegate?.textView?(textView, willEndFormattingWith: viewController)
+    }
+
+    func textView(_ textView: UITextView, didEndFormattingWith viewController: UITextFormattingViewController) {
+
+        var aDelegate: (any UITextViewDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textView) {
+                aDelegate = model.textViewDelegate
+            }
+        }
+
+        aDelegate?.textView?(textView, didEndFormattingWith: viewController)
+    }
+
+#if compiler(>=6.1)    // Xcode 16.3
+    @available(iOS 18.4, *)
+    func textView(_ textView: UITextView, insertInputSuggestion inputSuggestion: UIInputSuggestion) {
+
+        var aDelegate: (any UITextViewDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textView) {
+                aDelegate = model.textViewDelegate
+            }
+        }
+
+        aDelegate?.textView?(textView, insertInputSuggestion: inputSuggestion)
+    }
+#endif
+}
+#endif
+
+#if compiler(>=6.2)    // Xcode 26
+@available(iOS 26.0, *)
+@available(iOSApplicationExtension, unavailable)
+@MainActor
+@objc public extension IQKeyboardReturnManager {
+
+    func textView(_ textView: UITextView, shouldChangeTextInRanges ranges: [NSValue], replacementText text: String) -> Bool {
+
+        var shouldChange = true
+
+        if delegate == nil {
+
+            if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(textView)?.textViewDelegate {
+                let selector = #selector((any UITextViewDelegate).textView(_:shouldChangeTextInRanges:replacementText:))
+                if textViewDelegate.responds(to: selector) {
+                    shouldChange = (textViewDelegate.textView?(textView,
+                                                               shouldChangeTextInRanges: ranges,
+                                                               replacementText: text)) ?? true
+                }
+            }
+        }
+
+        if self.dismissTextViewOnReturn, text == "\n" {
+            goToNextResponderOrResign(from: textView)
+            return false
+        }
+
+        return shouldChange
+    }
+
+    func textView(_ textView: UITextView, editMenuForTextInRanges ranges: [NSValue], suggestedActions: [UIMenuElement]) -> UIMenu? {
+
+        guard delegate == nil else { return nil }
+
+        if let textViewDelegate: any UITextViewDelegate = textInputViewCachedInfo(textView)?.textViewDelegate {
+
+            let selector = #selector((any UITextViewDelegate).textView(_:editMenuForTextInRanges:suggestedActions:))
+            if textViewDelegate.responds(to: selector) {
+                return textViewDelegate.textView?(textView,
+                                                  editMenuForTextInRanges: ranges,
+                                                  suggestedActions: suggestedActions)
+            }
+        }
+
+        return nil
     }
 }
 #endif

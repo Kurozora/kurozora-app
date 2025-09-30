@@ -27,14 +27,18 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 @MainActor
 @objc extension IQKeyboardReturnManager: UITextFieldDelegate {
+}
 
-    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+@objc public extension IQKeyboardReturnManager {
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 
         var returnValue: Bool = true
 
         if delegate == nil,
            let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
-            if textFieldDelegate.responds(to: #selector((any UITextFieldDelegate).textFieldShouldBeginEditing(_:))) {
+            let selector = #selector((any UITextFieldDelegate).textFieldShouldBeginEditing(_:))
+            if textFieldDelegate.responds(to: selector) {
                 returnValue = textFieldDelegate.textFieldShouldBeginEditing?(textField) ?? false
             }
         }
@@ -46,12 +50,13 @@ import UIKit
         return returnValue
     }
 
-    public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
 
         guard delegate == nil else { return true }
 
         if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
-            if textFieldDelegate.responds(to: #selector((any UITextFieldDelegate).textFieldShouldEndEditing(_:))) {
+            let selector = #selector((any UITextFieldDelegate).textFieldShouldEndEditing(_:))
+            if textFieldDelegate.responds(to: selector) {
                 return textFieldDelegate.textFieldShouldEndEditing?(textField) ?? false
             }
         }
@@ -59,7 +64,7 @@ import UIKit
         return true
     }
 
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
 
         var aDelegate: (any UITextFieldDelegate)? = delegate
 
@@ -73,7 +78,7 @@ import UIKit
         aDelegate?.textFieldDidBeginEditing?(textField)
     }
 
-    public func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
 
         var aDelegate: (any UITextFieldDelegate)? = delegate
 
@@ -87,7 +92,7 @@ import UIKit
         aDelegate?.textFieldDidEndEditing?(textField)
     }
 
-    public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
 
         var aDelegate: (any UITextFieldDelegate)? = delegate
 
@@ -101,7 +106,7 @@ import UIKit
         aDelegate?.textFieldDidEndEditing?(textField, reason: reason)
     }
 
-    public func textField(_ textField: UITextField,
+    func textField(_ textField: UITextField,
                                 shouldChangeCharactersIn range: NSRange,
                                 replacementString string: String) -> Bool {
 
@@ -119,12 +124,27 @@ import UIKit
         return true
     }
 
-    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+
+        var aDelegate: (any UITextFieldDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textField) {
+                aDelegate = model.textFieldDelegate
+            }
+        }
+
+        aDelegate?.textFieldDidChangeSelection?(textField)
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
 
         guard delegate == nil else { return true }
 
         if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
-            if textFieldDelegate.responds(to: #selector((any UITextFieldDelegate).textFieldShouldClear(_:))) {
+            let selector: Selector = #selector((any UITextFieldDelegate).textFieldShouldClear(_:))
+            if textFieldDelegate.responds(to: selector) {
                 return textFieldDelegate.textFieldShouldClear?(textField) ?? false
             }
         }
@@ -132,14 +152,15 @@ import UIKit
         return true
     }
 
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         guard delegate == nil else { return true }
 
         var isReturn: Bool = true
 
         if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
-            if textFieldDelegate.responds(to: #selector((any UITextFieldDelegate).textFieldShouldReturn(_:))) {
+            let selector: Selector = #selector((any UITextFieldDelegate).textFieldShouldReturn(_:))
+            if textFieldDelegate.responds(to: selector) {
                 isReturn = textFieldDelegate.textFieldShouldReturn?(textField) ?? false
             }
         }
@@ -152,3 +173,114 @@ import UIKit
         }
     }
 }
+
+#if compiler(>=5.7)    // Xcode 14
+@available(iOS 16.0, *)
+@available(iOSApplicationExtension, unavailable)
+@MainActor
+@objc public extension IQKeyboardReturnManager {
+
+    func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
+
+        guard delegate == nil else { return nil }
+
+        if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
+
+            let selector = #selector((any UITextFieldDelegate).textField(_:editMenuForCharactersIn:suggestedActions:))
+            if textFieldDelegate.responds(to: selector) {
+                return textFieldDelegate.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
+            }
+        }
+
+        return nil
+    }
+
+    func textField(_ textField: UITextField, willPresentEditMenuWith animator: any UIEditMenuInteractionAnimating) {
+        var aDelegate: (any UITextFieldDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textField) {
+                aDelegate = model.textFieldDelegate
+            }
+        }
+
+        aDelegate?.textField?(textField, willPresentEditMenuWith: animator)
+    }
+
+    func textField(_ textField: UITextField, willDismissEditMenuWith animator: any UIEditMenuInteractionAnimating) {
+        var aDelegate: (any UITextFieldDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textField) {
+                aDelegate = model.textFieldDelegate
+            }
+        }
+
+        aDelegate?.textField?(textField, willDismissEditMenuWith: animator)
+    }
+}
+#endif
+
+#if compiler(>=6.0)    // Xcode 16
+@available(iOS 18.0, *)
+@available(iOSApplicationExtension, unavailable)
+@MainActor
+@objc public extension IQKeyboardReturnManager {
+
+#if compiler(>=6.1)    // Xcode 16.3
+    @available(iOS 18.4, *)
+    func textField(_ textField: UITextField, insertInputSuggestion inputSuggestion: UIInputSuggestion) {
+        var aDelegate: (any UITextFieldDelegate)? = delegate
+
+        if aDelegate == nil {
+
+            if let model: IQTextInputViewInfoModel = textInputViewCachedInfo(textField) {
+                aDelegate = model.textFieldDelegate
+            }
+        }
+
+        aDelegate?.textField?(textField, insertInputSuggestion: inputSuggestion)
+    }
+#endif
+}
+#endif
+
+#if compiler(>=6.2)    // Xcode 26
+@available(iOS 26.0, *)
+@available(iOSApplicationExtension, unavailable)
+@MainActor
+@objc public extension IQKeyboardReturnManager {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersInRanges ranges: [NSValue], replacementString string: String) -> Bool {
+        guard delegate == nil else { return true }
+
+        if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
+            let selector: Selector = #selector((any UITextFieldDelegate).textField(_:shouldChangeCharactersInRanges:
+                                                                                    replacementString:))
+            if textFieldDelegate.responds(to: selector) {
+                return textFieldDelegate.textField?(textField,
+                                                    shouldChangeCharactersInRanges: ranges,
+                                                    replacementString: string) ?? false
+            }
+        }
+        return true
+    }
+
+    func textField(_ textField: UITextField, editMenuForCharactersInRanges ranges: [NSValue], suggestedActions: [UIMenuElement]) -> UIMenu? {
+
+        guard delegate == nil else { return nil }
+
+        if let textFieldDelegate: any UITextFieldDelegate = textInputViewCachedInfo(textField)?.textFieldDelegate {
+
+            let selector = #selector((any UITextFieldDelegate).textField(_:editMenuForCharactersInRanges:suggestedActions:))
+            if textFieldDelegate.responds(to: selector) {
+                return textFieldDelegate.textField?(textField, editMenuForCharactersInRanges: ranges, suggestedActions: suggestedActions)
+            }
+        }
+
+        return nil
+    }
+}
+#endif

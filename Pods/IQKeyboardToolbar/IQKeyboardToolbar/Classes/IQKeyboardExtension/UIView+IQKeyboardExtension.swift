@@ -54,7 +54,18 @@ public extension IQKeyboardExtension where Base: IQTextInputView {
 
             let width: CGFloat = base?.window?.windowScene?.screen.bounds.width ?? 0
 
-            let frame = CGRect(origin: .zero, size: .init(width: width, height: 44))
+            let height: CGFloat
+#if compiler(>=6.2) // Xcode 26
+            if #available(iOS 26.0, *) {
+                height = 58
+            } else {
+                height = 44
+            }
+#else
+            height = 44
+#endif
+
+            let frame = CGRect(origin: .zero, size: .init(width: width, height: height))
             let newToolbar = IQKeyboardToolbar(frame: frame)
 
             if let base = base {
@@ -298,7 +309,7 @@ private extension IQKeyboardExtension where Base: IQTextInputView {
         }
 
         if previousConfiguration != nil, nextConfiguration != nil {
-            items.append(toolbar.fixedSpaceBarButton)
+            items.append(IQBarButtonItem.fixedSpaceBarButton)
         }
 
         if let nextConfiguration: IQBarButtonItemConfiguration = nextConfiguration {
@@ -313,8 +324,17 @@ private extension IQKeyboardExtension where Base: IQTextInputView {
 
         // Title bar button item
         do {
-            // Flexible space
+#if compiler(>=6.2) // Xcode 26
+            if #available(iOS 26.0, *) {
+                if !items.isEmpty {
+                    items.append(IQBarButtonItem.flexibleBarButtonItem)
+                }
+            } else {
+                items.append(IQBarButtonItem.flexibleBarButtonItem)
+            }
+#else
             items.append(IQBarButtonItem.flexibleBarButtonItem)
+#endif
 
             // Title button
             toolbar.titleBarButton.title = title

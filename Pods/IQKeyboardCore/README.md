@@ -20,6 +20,52 @@ it, simply add the following line to your Podfile:
 pod 'IQKeyboardCore'
 ```
 
+## Usage
+
+IQKeyboardCore is not intended to use independently. It's just a helper and extension for most of the IQKeyboard related libraries
+
+This contains IQTextInputView protocol
+```swift
+@objc public protocol IQTextInputView where Self: UIView, Self: UITextInputTraits {
+}
+```
+UITextField, UITextView and UISearchBar are the known classes who adopted this protocol within the library
+
+```swift
+@objc extension UITextField: IQTextInputView {...}
+
+@objc extension UITextView: IQTextInputView {...}
+
+@objc extension UISearchBar: IQTextInputView {...}
+```
+
+This library also contains IQEnableMode which is used by other libraries
+```swift
+@objc public enum IQEnableMode: Int {
+    case `default`
+    case enabled
+    case disabled
+}
+```
+
+There are other extension functions which are available on UIView
+```swift
+public extension IQKeyboardExtension where Base: UIView {
+    func viewContainingController() -> UIViewController?
+    func superviewOf<T: UIView>(type classType: T.Type, belowView: UIView? = nil) -> T?
+    func textFieldSearchBar() -> UISearchBar?
+    func isAlertViewTextField() -> Bool
+}
+```
+
+Above extension functions can be used like below
+```swift
+  view.iq.viewContainingController()
+  view.iq.superviewOf(type: UIScrollView.self)
+  view.iq.textFieldSearchBar()
+  view.iq.isAlertViewTextField()
+```
+
 ## Author
 
 hackiftekhar, ideviftekhar@gmail.com

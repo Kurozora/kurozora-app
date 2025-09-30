@@ -129,6 +129,11 @@ import UIKit
         get {
             if privateDoneBarButton == nil {
                 privateDoneBarButton = IQBarButtonItem(title: nil, style: .done, target: nil, action: nil)
+#if compiler(>=6.2) // Xcode 26
+                if #available(iOS 26.0, *) {
+                    privateDoneBarButton?.style = .plain
+                }
+#endif
             }
             return privateDoneBarButton!
         }
@@ -138,29 +143,21 @@ import UIKit
         }
     }
 
-    /**
-     Fixed space bar button of toolbar.
-     */
-    private var privateFixedSpaceBarButton: IQBarButtonItem?
-    open var fixedSpaceBarButton: IQBarButtonItem {
-        get {
-            if privateFixedSpaceBarButton == nil {
-                privateFixedSpaceBarButton = IQBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-            }
-            privateFixedSpaceBarButton?.isSystemItem = true
-            privateFixedSpaceBarButton?.width = 6
-
-            return privateFixedSpaceBarButton!
-        }
-
-        set (newValue) {
-            privateFixedSpaceBarButton = newValue
-        }
-    }
-
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFit: CGSize = super.sizeThatFits(size)
-        sizeThatFit.height = 44
+        let height: CGFloat
+#if compiler(>=6.2) // Xcode 26
+            if #available(iOS 26.0, *) {
+                height = 58
+            } else {
+                height = 44
+            }
+#else
+            height = 44
+#endif
+
+        sizeThatFit.height = height
+
         return sizeThatFit
     }
 

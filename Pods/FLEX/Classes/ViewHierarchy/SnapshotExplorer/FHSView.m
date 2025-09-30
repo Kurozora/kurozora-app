@@ -88,8 +88,19 @@
 @implementation FHSView (Snapshotting)
 
 + (UIImage *)drawView:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0);
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    if (CGRectIsEmpty(view.bounds)) {
+        return [UIImage new];
+    }
+
+    CGSize size = view.bounds.size;
+    CGFloat minUnit = 1.f / UIScreen.mainScreen.scale;
+
+    // Every drawn view must not have 0 width or height
+    CGSize minsize = CGSizeMake(MAX(size.width, minUnit), MAX(size.height, minUnit));
+    CGRect minBounds = CGRectMake(0, 0, minsize.width, minsize.height);
+
+    UIGraphicsBeginImageContextWithOptions(minsize, NO, 0);
+    [view drawViewHierarchyInRect:minBounds afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
@@ -112,7 +123,7 @@
     }
 
     if (!rootView.isHidden) {
-        rootView.hidden = YES;
+        [self _setHidden:YES forView:rootView];
         [hiddenViews addObject:rootView];
     }
 
@@ -129,7 +140,7 @@
     }
 
     for (UIView *v in viewsToUnhide) {
-        v.hidden = NO;
+        [self _setHidden:NO forView:v];
     }
 }
 
@@ -177,7 +188,7 @@
     NSMutableIndexSet *toUnhide = [NSMutableIndexSet new];
     [view.subviews flex_forEach:^(UIView *v, NSUInteger idx) {
         if (!v.isHidden) {
-            v.hidden = YES;
+            [self _setHidden:YES forView:v];
             [toUnhide addIndex:idx];
         }
     }];
@@ -185,10 +196,22 @@
     // Snapshot the view, then unhide the previously-unhidden views
     UIImage *snapshot = [self drawView:view];
     for (UIView *v in [view.subviews objectsAtIndexes:toUnhide]) {
-        v.hidden = NO;
+        [self _setHidden:NO forView:v];
     }
 
     return snapshot;
+}
+
++ (void)_setHidden:(BOOL)hidden forView:(UIView *)view {
+    // SpringBoard's SBHomeGrabberView responds to setHidden: but raises an exception
+    // if you try to use it.
+    // Catching the exception is less fragile than hardcoding classes to ignore
+    @try {
+        view.hidden = hidden;
+    } @catch (NSException *exception) {
+        NSString *hidingOrUnhiding = hidden ? @"hiding" : @"unhiding";
+        NSLog(@"Exception raised when %@ view %@: %@", hidingOrUnhiding, view, exception);
+    }
 }
 
 @end

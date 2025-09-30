@@ -27,8 +27,35 @@ import UIKit
 @MainActor
 @objcMembers open class IQBarButtonItem: UIBarButtonItem {
 
-    internal static let flexibleBarButtonItem: IQBarButtonItem = IQBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                                                                 target: nil, action: nil)
+    internal static let flexibleBarButtonItem: IQBarButtonItem = {
+        let barButton = IQBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                     target: nil, action: nil)
+#if compiler(>=6.2) // Xcode 26
+        if #available(iOS 26.0, *) {
+            barButton.hidesSharedBackground = false
+        }
+#endif
+        return barButton
+    }()
+
+    /**
+     Fixed space bar button of toolbar.
+     */
+    internal static let fixedSpaceBarButton: IQBarButtonItem = {
+        let barButton = IQBarButtonItem(barButtonSystemItem: .fixedSpace,
+                                        target: nil, action: nil)
+#if compiler(>=6.2) // Xcode 26
+        if #available(iOS 26.0, *) {
+            barButton.hidesSharedBackground = false
+        } else {
+            barButton.width = 6
+        }
+#else
+        barButton.width = 6
+#endif
+        return barButton
+    }()
+
 
     public override init() {
         super.init()

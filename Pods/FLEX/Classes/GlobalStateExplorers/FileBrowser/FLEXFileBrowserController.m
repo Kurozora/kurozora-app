@@ -15,6 +15,7 @@
 #import "FLEXObjectExplorerFactory.h"
 #import "FLEXObjectExplorerViewController.h"
 #import <mach-o/loader.h>
+#import "FLEXFileBrowserSearchOperation.h"
 
 @interface FLEXFileBrowserTableViewCell : UITableViewCell
 @end
@@ -265,14 +266,19 @@ typedef NS_ENUM(NSUInteger, FLEXFileBrowserSortAttribute) {
         if ([pathExtension isEqualToString:@"json"]) {
             prettyString = [FLEXUtility prettyJSONStringFromData:fileData];
         } else {
-            // Regardless of file extension...
-            
-            id object = nil;
-            @try {
-                // Try to decode an archived object regardless of file extension
-                object = [NSKeyedUnarchiver unarchiveObjectWithData:fileData];
-            } @catch (NSException *e) { }
-            
+            // Try to decode an archived object, regardless of file extension
+            NSKeyedUnarchiver *unarchiver = ({
+                NSKeyedUnarchiver *obj = nil;
+                if (@available(iOS 12.0, *)) {
+                    obj = [[NSKeyedUnarchiver alloc] initForReadingFromData:fileData error:nil];
+                } else {
+                    obj = [[NSKeyedUnarchiver alloc] initForReadingWithData:fileData];
+                }
+                obj.requiresSecureCoding = NO;
+                obj;
+            });
+            id object = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+
             // Try to decode other things instead
             object = object ?: [NSPropertyListSerialization
                 propertyListWithData:fileData
