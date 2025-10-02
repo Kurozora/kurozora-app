@@ -1,6 +1,0 @@
-framework module KurozoraKit {
-  umbrella header "KurozoraKit-umbrella.h"
-
-  export *
-  module * { export * }
-}

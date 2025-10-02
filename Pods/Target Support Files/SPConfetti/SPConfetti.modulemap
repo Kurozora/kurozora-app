@@ -1,6 +1,0 @@
-framework module SPConfetti {
-  umbrella header "SPConfetti-umbrella.h"
-
-  export *
-  module * { export * }
-}
