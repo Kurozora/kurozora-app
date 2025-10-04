@@ -6,10 +6,10 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Alamofire
+import KurozoraKit
 import SPConfetti
+import UIKit
 import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
@@ -17,18 +17,18 @@ class HomeCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
-	lazy var genre: Genre?
-	lazy var theme: Theme?
+	lazy var genre: Genre? = nil
+	lazy var theme: Theme? = nil
 	let quickLinks: [QuickLink] = [
 		QuickLink(title: "About In-App Purchases", url: "https://kurozora.app/kb/iap"),
 		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),
-		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome")
+		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome"),
 	]
 	var upNextCategory: ExploreCategory?
 	var quickActions: [QuickAction] = []
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -64,6 +64,7 @@ class HomeCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -74,6 +75,7 @@ class HomeCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -228,7 +230,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 		self.quickActions = [
 			QuickAction(title: Trans.redeem, segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
-			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
+			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier),
 		]
 	}
 
@@ -480,7 +482,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
