@@ -13,7 +13,7 @@ import AVFoundation
 
 class ReviewsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var user: User? = nil
+	var user: User?
 	var characters: [IndexPath: Character] = [:]
 	var episodes: [IndexPath: Episode] = [:]
 	var games: [IndexPath: Game] = [:]

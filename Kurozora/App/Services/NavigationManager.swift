@@ -20,7 +20,7 @@ class NavigationManager: NSObject {
 	private var subscriptions = Set<AnyCancellable>()
 
 	/// Whether a song is playing.
-	@Published var selectedDestination: URL? = nil
+	@Published var selectedDestination: URL?
 
 	// MARK: - Initializers
 	override private init() {

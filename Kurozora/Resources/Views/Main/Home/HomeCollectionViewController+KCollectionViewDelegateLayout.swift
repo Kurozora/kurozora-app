@@ -90,7 +90,7 @@ extension HomeCollectionViewController {
 			guard let self = self else { return nil }
 			let exploreCategorySection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: exploreCategorySection, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 
 			switch exploreCategorySection {
 			case .banner:

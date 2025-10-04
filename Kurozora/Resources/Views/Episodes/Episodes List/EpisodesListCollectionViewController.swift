@@ -35,8 +35,8 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var season: Season? = nil
-	var seasonIdentity: SeasonIdentity? = nil
+	var season: Season?
+	var seasonIdentity: SeasonIdentity?
 	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
 	var searchQuery: String = ""

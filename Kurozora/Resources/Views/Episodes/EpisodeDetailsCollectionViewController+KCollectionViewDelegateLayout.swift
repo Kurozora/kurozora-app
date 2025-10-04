@@ -82,7 +82,7 @@ extension EpisodeDetailsCollectionViewController {
 			guard let self = self else { return nil }
 			guard self.episode != nil else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 
 			switch self.snapshot.sectionIdentifiers[section] {

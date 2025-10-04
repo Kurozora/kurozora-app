@@ -17,8 +17,8 @@ class HomeCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
-	lazy var genre: Genre? = nil
-	lazy var theme: Theme? = nil
+	lazy var genre: Genre?
+	lazy var theme: Theme?
 	let quickLinks: [QuickLink] = [
 		QuickLink(title: "About In-App Purchases", url: "https://kurozora.app/kb/iap"),
 		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),

@@ -15,7 +15,7 @@ class FeedTableViewController: KTableViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
-	var rightBarButtonItems: [UIBarButtonItem]? = nil
+	var rightBarButtonItems: [UIBarButtonItem]?
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
 			self.tableView.reloadData {

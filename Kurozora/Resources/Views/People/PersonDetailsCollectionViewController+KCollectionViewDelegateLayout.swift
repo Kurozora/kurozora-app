@@ -73,7 +73,7 @@ extension PersonDetailsCollectionViewController {
 			guard self.person != nil else { return nil }
 			let personDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 
 			switch personDetailSection {

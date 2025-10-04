@@ -12,7 +12,7 @@ import Alamofire
 
 class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
-	var studioIdentity: StudioIdentity? = nil
+	var studioIdentity: StudioIdentity?
 	var studio: Studio! {
 		didSet {
 			self.title = self.studio.attributes.name

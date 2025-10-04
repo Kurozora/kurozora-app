@@ -26,7 +26,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
-	var editedProfileImageURL: URL? = nil
+	var editedProfileImageURL: URL?
 	var isSIWA = false
 	var onSignUp: (() -> Void)?
 

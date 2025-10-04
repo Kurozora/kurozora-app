@@ -18,9 +18,9 @@ enum CastKind: String {
 
 class CastListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var literatureIdentity: LiteratureIdentity? = nil
-	var showIdentity: ShowIdentity? = nil
-	var gameIdentity: GameIdentity? = nil
+	var literatureIdentity: LiteratureIdentity?
+	var showIdentity: ShowIdentity?
+	var gameIdentity: GameIdentity?
 	var castKind: CastKind = .show
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = [] {

@@ -25,7 +25,7 @@ class ServicePreviewTableViewCell: KTableViewCell {
 	}
 
 	/// The image that should be displayed in the cell.
-	var previewImage: UIImage? = nil {
+	var previewImage: UIImage? {
 		didSet {
 			reloadCell()
 		}

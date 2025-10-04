@@ -25,19 +25,13 @@ enum GamesListFetchType {
 
 class GamesListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showIdentity: ShowIdentity? = nil
-
-	var literatureIdentity: LiteratureIdentity? = nil
-
-	var personIdentity: PersonIdentity? = nil
-
-	var characterIdentity: CharacterIdentity? = nil
-
-	var gameIdentity: GameIdentity? = nil
-
-	var studioIdentity: StudioIdentity? = nil
-
-	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+	var showIdentity: ShowIdentity?
+	var literatureIdentity: LiteratureIdentity?
+	var personIdentity: PersonIdentity?
+	var characterIdentity: CharacterIdentity?
+	var gameIdentity: GameIdentity?
+	var studioIdentity: StudioIdentity?
+	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
 	var games: [IndexPath: Game] = [:]
 	var gameIdentities: [GameIdentity] = []

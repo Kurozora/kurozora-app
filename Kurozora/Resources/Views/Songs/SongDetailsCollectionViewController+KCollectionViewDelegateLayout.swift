@@ -68,7 +68,7 @@ extension SongDetailsCollectionViewController {
 			guard self.song != nil else { return nil }
 			let songDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 

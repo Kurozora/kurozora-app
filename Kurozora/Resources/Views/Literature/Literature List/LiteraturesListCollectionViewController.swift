@@ -25,19 +25,13 @@ enum LiteraturesListFetchType {
 
 class LiteraturesListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showIdentity: ShowIdentity? = nil
-
-	var gameIdentity: GameIdentity? = nil
-
-	var personIdentity: PersonIdentity? = nil
-
-	var characterIdentity: CharacterIdentity? = nil
-
-	var literatureIdentity: LiteratureIdentity? = nil
-
-	var studioIdentity: StudioIdentity? = nil
-
-	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+	var showIdentity: ShowIdentity?
+	var gameIdentity: GameIdentity?
+	var personIdentity: PersonIdentity?
+	var characterIdentity: CharacterIdentity?
+	var literatureIdentity: LiteratureIdentity?
+	var studioIdentity: StudioIdentity?
+	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
 	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []

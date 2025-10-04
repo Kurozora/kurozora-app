@@ -140,8 +140,8 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 				return false
 			}
 
-			var highestStatus: Product.SubscriptionInfo.Status? = nil
-			var highestProduct: Product? = nil
+			var highestStatus: Product.SubscriptionInfo.Status?
+			var highestProduct: Product?
 
 			// Iterate through `statuses` for this subscription group and find
 			// the `Status` with the highest level of service which isn't

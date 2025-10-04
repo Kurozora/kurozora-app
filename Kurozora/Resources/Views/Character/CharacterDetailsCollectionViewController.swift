@@ -12,7 +12,7 @@ import Alamofire
 
 class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
-	var characterIdentity: CharacterIdentity? = nil
+	var characterIdentity: CharacterIdentity?
 	var character: Character! {
 		didSet {
 			self.title = self.character.attributes.name

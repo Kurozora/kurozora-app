@@ -17,7 +17,7 @@ enum UsersListFetchType {
 
 class UsersListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var user: User? = nil
+	var user: User?
 	var users: [IndexPath: User] = [:]
 	var userIdentities: [UserIdentity] = []
 	var searchQuery: String = ""
@@ -108,7 +108,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 		var titleString: String
 		var detailString: String
 		var buttonTitle: String = ""
-		var buttonAction: (() -> Void)? = nil
+		var buttonAction: (() -> Void)?
 
 		let username = self.user?.attributes.username
 		switch self.usersListFetchType {

@@ -97,7 +97,7 @@ extension ShowDetailsCollectionViewController {
 			guard self.show != nil else { return nil }
 			let showDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 

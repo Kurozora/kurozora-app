@@ -37,7 +37,7 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var userIdentity: UserIdentity? = nil
+	var userIdentity: UserIdentity?
 	var user: User! = User.current {
 		didSet {
 			self._prefersActivityIndicatorHidden = true

@@ -81,7 +81,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return nil }
 			guard let searchResultSection = self.dataSource.snapshot().sectionIdentifiers[safe: section] else { return nil }
 			let columns = self.columnCount(forSection: searchResultSection, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasHeader: Bool = false
 
 			switch searchResultSection {

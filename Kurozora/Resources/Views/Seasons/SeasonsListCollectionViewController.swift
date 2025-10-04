@@ -12,7 +12,7 @@ import Alamofire
 
 class SeasonsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showIdentity: ShowIdentity? = nil
+	var showIdentity: ShowIdentity?
 	var seasons: [IndexPath: Season] = [:]
 	var seasonIdentities: [SeasonIdentity] = [] {
 		didSet {

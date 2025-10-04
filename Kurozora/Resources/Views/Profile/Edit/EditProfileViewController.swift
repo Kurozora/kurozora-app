@@ -54,26 +54,26 @@ class EditProfileViewController: KViewController {
 	var imageEditKind: ImageEditKind = .none
 	var placeholderText = "Describe yourself!"
 
-	var originalUsernameText: String? = nil {
+	var originalUsernameText: String? {
 		didSet {
 			self.editedUsernameText = self.originalUsernameText
 		}
 	}
-	var editedUsernameText: String? = nil
+	var editedUsernameText: String?
 
-	var originalNicknameText: String? = nil {
+	var originalNicknameText: String? {
 		didSet {
 			self.editedNicknameText = self.originalNicknameText
 		}
 	}
-	var editedNicknameText: String? = nil
+	var editedNicknameText: String?
 
-	var originalBioText: String? = nil {
+	var originalBioText: String? {
 		didSet {
 			self.editedBioText = self.originalBioText
 		}
 	}
-	var editedBioText: String? = nil
+	var editedBioText: String?
 
 	var originalProfileImage: UIImage! = UIImage() {
 		didSet {
@@ -81,7 +81,7 @@ class EditProfileViewController: KViewController {
 		}
 	}
 	var editedProfileImage: UIImage! = UIImage()
-	var editedProfileImageURL: URL? = nil
+	var editedProfileImageURL: URL?
 
 	var originalBannerImage: UIImage! = UIImage() {
 		didSet {
@@ -89,7 +89,7 @@ class EditProfileViewController: KViewController {
 		}
 	}
 	var editedBannerImage: UIImage! = UIImage()
-	var editedBannerImageURL: URL? = nil
+	var editedBannerImageURL: URL?
 
 	var hasChanges: Bool {
 		return self.originalUsernameText != self.editedUsernameText

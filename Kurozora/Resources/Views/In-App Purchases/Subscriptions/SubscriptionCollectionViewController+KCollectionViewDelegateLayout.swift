@@ -27,7 +27,7 @@ extension SubscriptionCollectionViewController {
 
 			let subscriptionSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 
 			switch subscriptionSection {
 			case .header:

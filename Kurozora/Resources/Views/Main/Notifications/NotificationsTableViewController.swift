@@ -18,7 +18,7 @@ class NotificationsTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
-	var oldGrouping: Int? = nil
+	var oldGrouping: Int?
 	var userNotifications: [UserNotification] = [] // Grouping type: Off
 	var groupedNotifications: [GroupedNotifications] = [] // Grouping type: Automatic, ByType
 	var dataSource: NotificationDataSource! = nil
@@ -122,7 +122,7 @@ class NotificationsTableViewController: KTableViewController {
 	override func configureEmptyDataView() {
 		var detailString: String
 		var buttonTitle: String = ""
-		var buttonAction: (() -> Void)? = nil
+		var buttonAction: (() -> Void)?
 
 		if User.isSignedIn {
 			detailString = "When you have notifications, you will see them here!"

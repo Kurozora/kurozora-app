@@ -55,7 +55,7 @@ extension SearchResultsCollectionViewController {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 		var identitiesCount: Int = 0
 		var type: KKSearchType = .shows
-		var nextPageURL: String? = nil
+		var nextPageURL: String?
 
 		switch itemKind {
 		case .discoverSuggestion: break

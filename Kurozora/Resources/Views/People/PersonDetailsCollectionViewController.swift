@@ -12,7 +12,7 @@ import Alamofire
 
 class PersonDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
-	var personIdentity: PersonIdentity? = nil
+	var personIdentity: PersonIdentity?
 	var person: Person! {
 		didSet {
 			self.title = self.person.attributes.fullName

@@ -78,7 +78,7 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 	func doSubmit(request: ReviewTextEditor.Submit.Request) async {
 		let rating = max(self.rating ?? 1.0, 1.0)
 		var isSuccess: Bool = false
-		var message: String? = nil
+		var message: String?
 
 		do throws(KKAPIError) {
 			switch self.kind {

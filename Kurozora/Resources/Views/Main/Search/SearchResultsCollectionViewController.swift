@@ -87,15 +87,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var studioIdentities: [StudioIdentity] = []
 	var userIdentities: [UserIdentity] = []
 
-	var characterNextPageURL: String? = nil
-	var episodeNextPageURL: String? = nil
-	var personNextPageURL: String? = nil
-	var showNextPageURL: String? = nil
-	var literatureNextPageURL: String? = nil
-	var gameNextPageURL: String? = nil
-	var songNextPageURL: String? = nil
-	var studioNextPageURL: String? = nil
-	var userNextPageURL: String? = nil
+	var characterNextPageURL: String?
+	var episodeNextPageURL: String?
+	var personNextPageURL: String?
+	var showNextPageURL: String?
+	var literatureNextPageURL: String?
+	var gameNextPageURL: String?
+	var songNextPageURL: String?
+	var studioNextPageURL: String?
+	var userNextPageURL: String?
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>! = nil

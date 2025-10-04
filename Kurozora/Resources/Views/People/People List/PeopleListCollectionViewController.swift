@@ -18,10 +18,10 @@ enum PeopleListFetchType {
 
 class PeopleListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var characterIdentity: CharacterIdentity? = nil
+	var characterIdentity: CharacterIdentity?
 	var people: [IndexPath: Person] = [:]
 	var personIdentities: [PersonIdentity] = []
-	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+	var exploreCategoryIdentity: ExploreCategoryIdentity?
 	var searchQuery: String = ""
 	var peopleListFetchType: PeopleListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil

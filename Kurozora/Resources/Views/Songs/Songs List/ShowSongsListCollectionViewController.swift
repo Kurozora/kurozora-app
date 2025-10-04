@@ -17,7 +17,7 @@ enum SongsListViewType: Int {
 
 class ShowSongsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showIdentity: ShowIdentity? = nil
+	var showIdentity: ShowIdentity?
 	var songs: [Song] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true

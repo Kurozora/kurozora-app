@@ -22,7 +22,7 @@ class KTextView: UITextView {
 	/// The placeholder text that the text view displays.
 	///
 	/// - Tag: KTextView-placeholder
-	var placeholder: String? = nil {
+	var placeholder: String? {
 		didSet {
 			self.placeholderLabel.text = self.placeholder
 		}

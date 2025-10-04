@@ -47,7 +47,7 @@ final class Store: NSObject, ObservableObject {
 	@Published private(set) var purchasedIdentifiers = Set<String>()
 
 	/// The transaction listener `Task` object.
-	var updateListenerTask: Task<Void, Error>? = nil
+	var updateListenerTask: Task<Void, Error>?
 
 	/// The dictionary containing all `StoreKit` products.
 	private var products: [String: String] = [:]

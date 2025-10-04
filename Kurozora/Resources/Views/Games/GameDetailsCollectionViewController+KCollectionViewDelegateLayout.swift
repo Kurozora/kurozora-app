@@ -88,7 +88,7 @@ extension GameDetailsCollectionViewController {
 			guard let self = self else { return nil }
 			guard self.game != nil else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 

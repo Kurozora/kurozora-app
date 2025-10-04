@@ -16,7 +16,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	@IBOutlet weak var moreButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	var songIdentity: SongIdentity? = nil
+	var songIdentity: SongIdentity?
 	var song: KKSong! {
 		didSet {
 			self.title = self.song.attributes.title

@@ -73,7 +73,7 @@ extension CharacterDetailsCollectionViewController {
 			guard self.character != nil else { return nil }
 			let characterDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			var sectionLayout: NSCollectionLayoutSection? = nil
+			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 
 			switch characterDetailSection {
