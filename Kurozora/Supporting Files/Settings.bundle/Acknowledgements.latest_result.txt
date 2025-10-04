@@ -1,0 +1,51 @@
+name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.10.2, source: https://github.com/Alamofire/Alamofire
+
+name: Cosmos, nameSpecified: Cosmos, owner: evgenyneu, version: 25.0.1, source: https://github.com/evgenyneu/Cosmos
+
+name: IQKeyboardCore, nameSpecified: IQKeyboardCore, owner: hackiftekhar, version: 1.0.8, source: https://github.com/hackiftekhar/IQKeyboardCore
+
+name: IQKeyboardManager, nameSpecified: IQKeyboardManagerSwift, owner: hackiftekhar, version: 8.0.1, source: https://github.com/hackiftekhar/IQKeyboardManager
+
+name: IQKeyboardNotification, nameSpecified: IQKeyboardNotification, owner: hackiftekhar, version: 1.0.5, source: https://github.com/hackiftekhar/IQKeyboardNotification
+
+name: IQKeyboardReturnManager, nameSpecified: IQKeyboardReturnManager, owner: hackiftekhar, version: 1.0.6, source: https://github.com/hackiftekhar/IQKeyboardReturnManager
+
+name: IQKeyboardToolbar, nameSpecified: IQKeyboardToolbar, owner: hackiftekhar, version: 1.1.2, source: https://github.com/hackiftekhar/IQKeyboardToolbar
+
+name: IQKeyboardToolbarManager, nameSpecified: IQKeyboardToolbarManager, owner: hackiftekhar, version: 1.1.3, source: https://github.com/hackiftekhar/IQKeyboardToolbarManager
+
+name: IQTextInputViewNotification, nameSpecified: IQTextInputViewNotification, owner: hackiftekhar, version: 1.0.8, source: https://github.com/hackiftekhar/IQTextInputViewNotification
+
+name: IQTextView, nameSpecified: IQTextView, owner: hackiftekhar, version: 1.0.5, source: https://github.com/hackiftekhar/IQTextView
+
+name: KeychainAccess, nameSpecified: KeychainAccess, owner: kishikawakatsumi, version: 4.2.2, source: https://github.com/kishikawakatsumi/KeychainAccess
+
+name: Kingfisher, nameSpecified: Kingfisher, owner: onevcat, version: 8.5.0, source: https://github.com/onevcat/Kingfisher
+
+name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.0, source: https://github.com/Kurozora/KurozoraKit
+
+name: Pageboy, nameSpecified: Pageboy, owner: uias, version: 4.2.0, source: https://github.com/uias/Pageboy
+
+name: R.swift, nameSpecified: Rswift, owner: mac-cain13, version: 7.8.0, source: https://github.com/mac-cain13/R.swift
+
+name: Reachability.swift, nameSpecified: Reachability, owner: ashleymills, version: 5.2.4, source: https://github.com/ashleymills/Reachability.swift
+
+name: Solar, nameSpecified: Solar, owner: ceeK, version: 3.0.1, source: https://github.com/ceeK/Solar
+
+name: SPConfetti, nameSpecified: SPConfetti, owner: ivanvorobei, version: 1.4.2, source: https://github.com/ivanvorobei/SPConfetti
+
+name: SwiftTheme, nameSpecified: SwiftTheme, owner: wxxsw, version: 0.6.4, source: https://github.com/wxxsw/SwiftTheme
+
+name: SwiftyJSON, nameSpecified: SwiftyJSON, owner: SwiftyJSON, version: 5.0.2, source: https://github.com/SwiftyJSON/SwiftyJSON
+
+name: Tabman, nameSpecified: Tabman, owner: uias, version: 3.2.0, source: https://github.com/uias/Tabman
+
+name: TRON, nameSpecified: TRON, owner: MLSDev, version: 5.5.0-beta.1, source: https://github.com/MLSDev/TRON
+
+name: WhatsNew, nameSpecified: WhatsNew, owner: kiritokatklian, version: 0.5.0, source: https://github.com/kiritokatklian/WhatsNew
+
+name: XCDYouTubeKit, nameSpecified: XCDYouTubeKit, owner: 0xced, version: , source: https://github.com/0xced/XCDYouTubeKit
+
+add-version-numbers: false
+
+LicensePlist Version: 3.27.1

@@ -1,0 +1,14 @@
+options:
+  xcodeprojPath: "*.xcodeproj"
+  prefix: Acknowledgements
+  sandbox-mode: true
+exclude:
+  - APIKit
+  - FLEX
+  - HeliumLogger
+  - LicensePlist
+  - LoggerAPI
+  - RxSwift
+  - /^swift-.*$/
+  - XcodeEdit
+  - Yams
