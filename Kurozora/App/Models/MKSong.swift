@@ -7,7 +7,6 @@
 //
 
 import MusicKit
-import SwiftyJSON
 
 struct MKLibrary: Codable, Identifiable {
 	let id: String

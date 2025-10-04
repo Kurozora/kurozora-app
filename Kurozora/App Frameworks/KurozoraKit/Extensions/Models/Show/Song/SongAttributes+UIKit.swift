@@ -7,6 +7,7 @@
 //
 
 import KurozoraKit
+import UIKit
 
 extension Song.Attributes {
 	// MARK: - Functions

@@ -8,6 +8,7 @@
 
 import Foundation
 import KurozoraKit
+import UIKit
 
 struct EpisodeDetail {}
 

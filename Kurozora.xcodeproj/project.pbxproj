@@ -114,6 +114,7 @@
 			membershipExceptions = (
 				"App Frameworks/Foundation/Extensions/Notification+Kurozora.swift",
 				"App Frameworks/Foundation/Extensions/UserDefaults+Kurozora.swift",
+				"App Frameworks/SwiftTheme/Extensions/SwiftTheme+Kurozora.swift",
 				"App Frameworks/UIKit/Extensions/UIColor+Kurozora.swift",
 				App/Enums/AuthenticationInterval.swift,
 				App/Enums/KBrowser.swift,

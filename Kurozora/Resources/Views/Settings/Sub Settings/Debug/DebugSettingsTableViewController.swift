@@ -22,6 +22,7 @@ class DebugSettingsTableViewController: KTableViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -32,6 +33,7 @@ class DebugSettingsTableViewController: KTableViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -57,7 +59,7 @@ class DebugSettingsTableViewController: KTableViewController {
 
 	/// Fades in and out the empty data view according to `kDefaultCount`.
 	func toggleEmptyDataView() {
-		if kDefaultCount == 0 {
+		if self.kDefaultCount == 0 {
 			self.tableView.backgroundView?.animateFadeIn()
 		} else {
 			self.tableView.backgroundView?.animateFadeOut()
@@ -68,7 +70,7 @@ class DebugSettingsTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension DebugSettingsTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return kDefaultCount
+		return self.kDefaultCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,13 +89,12 @@ extension DebugSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
-			guard let key = kDefaultsTableViewCell.primaryLabel?.text else {return}
+		if editingStyle == .delete, let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as? KDefaultsCell {
+			guard let key = kDefaultsTableViewCell.primaryLabel?.text else { return }
 
 			self.tableView.beginUpdates()
 			try? SharedDelegate.shared.keychain.remove(key)
-			self.kDefaultCount = kDefaultCount - 1
+			self.kDefaultCount -= 1
 			self.tableView.deleteRows(at: [indexPath], with: .automatic)
 			self.toggleEmptyDataView()
 			self.tableView.endUpdates()

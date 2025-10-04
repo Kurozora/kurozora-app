@@ -7,6 +7,7 @@
 //
 
 import KurozoraKit
+import UIKit
 
 extension IntentMediaCollection {
 	/// The `MediaCollection` equivalent of `IntentMediaCollection`.

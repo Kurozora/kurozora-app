@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
 /// A view that displays the visual contents of a player object.
 class KTrailerPlayerView: UIView {
@@ -25,6 +25,9 @@ class KTrailerPlayerView: UIView {
 	}
 
 	var playerLayer: AVPlayerLayer {
-		self.layer as! AVPlayerLayer
+		guard let layer = self.layer as? AVPlayerLayer else {
+			fatalError("Layer is not of expected type AVPlayerLayer.")
+		}
+		return layer
 	}
 }

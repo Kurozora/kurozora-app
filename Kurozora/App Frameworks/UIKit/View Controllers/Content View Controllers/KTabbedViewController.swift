@@ -8,6 +8,7 @@
 
 import Pageboy
 import Tabman
+import UIKit
 
 /// The KTabbedViewControllerDataSource protocol defines methods that guide you with managing the sections and view controllers registered with the tabbed view.
 ///

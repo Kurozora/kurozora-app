@@ -22,8 +22,8 @@ class LibraryViewController: KTabbedViewController {
 	@IBOutlet var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var rightBarButtonItems: [UIBarButtonItem]? = nil
-	var leftBarButtonItems: [UIBarButtonItem]? = nil
+	var rightBarButtonItems: [UIBarButtonItem]?
+	var leftBarButtonItems: [UIBarButtonItem]?
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 	var user: User?
 	var viewedUser: User? {
@@ -119,7 +119,7 @@ class LibraryViewController: KTabbedViewController {
 
 			self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
 				"includeUser": self.user != nil,
-				"index": index
+				"index": index,
 			])
 			self.populateSortActions()
 			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
@@ -161,7 +161,7 @@ class LibraryViewController: KTabbedViewController {
 		guard let index = index else { return }
 		self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
 			"includeUser": self.user != nil,
-			"index": index
+			"index": index,
 		])
 	}
 
@@ -252,7 +252,7 @@ class LibraryViewController: KTabbedViewController {
 	@IBAction func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
 		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
-		self.bar.reloadData(at: 0...KKLibrary.Status.all.count - 1, context: .full)
+		self.bar.reloadData(at: 0 ... KKLibrary.Status.all.count - 1, context: .full)
 		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
 		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
 		self.populateSortActions()

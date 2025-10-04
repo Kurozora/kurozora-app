@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Foundation
 import KurozoraKit
+import UIKit
 
 extension CharactersListCollectionViewController {
 	override func configureDataSource() {

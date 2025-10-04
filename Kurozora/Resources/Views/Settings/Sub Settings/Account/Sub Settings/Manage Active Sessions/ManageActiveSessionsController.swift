@@ -214,8 +214,9 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 			annotationView = markerAnnotationView
 		} else {
 			annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
-			let annotation = annotation as! ImageAnnotation
-			annotationView.glyphImage = annotation.image
+			if let annotation = annotation as? ImageAnnotation {
+				annotationView.glyphImage = annotation.image
+			}
 		}
 
 		annotationView.markerTintColor = .kurozora

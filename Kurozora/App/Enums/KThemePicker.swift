@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import SwiftTheme
+import UIKit
 
 /// List of theme picker attributes.
 ///
@@ -224,8 +224,7 @@ enum KThemePicker: ThemeColorPicker {
 		return ThemeStringAttributesPicker(keyPath: self.stringValue) { value -> [NSAttributedString.Key: Any]? in
 			guard let rgba = value as? String else { return nil }
 			let color = UIColor(rgba: rgba)
-			let themeAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: color].merging(attributes, uniquingKeysWith: { current, _ -> Any in current })
-			return themeAttributes
+			return [NSAttributedString.Key.foregroundColor: color].merging(attributes, uniquingKeysWith: { current, _ -> Any in current })
 		}
 	}
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import SwifterSwift
 import SwiftUI
 import WidgetKit
 
