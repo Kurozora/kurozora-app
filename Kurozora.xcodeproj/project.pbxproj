@@ -336,7 +336,6 @@
 			);
 			mainGroup = 66647B472084995500CF624F;
 			packageReferences = (
-				66CBE2712E8F275300104283 /* XCLocalSwiftPackageReference "../KurozoraKit" */,
 				66CBF10E2E9022F600104283 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				66CBF1112E90234D00104283 /* XCRemoteSwiftPackageReference "Cosmos" */,
 				66CBF1142E9023AC00104283 /* XCRemoteSwiftPackageReference "FLEX" */,
@@ -348,8 +347,9 @@
 				66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */,
 				66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */,
 				66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */,
-				66CB0E9F2E90A0BD00104283 /* XCLocalSwiftPackageReference "../Projects/Swift/WhatsNew" */,
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				669FD2742E910DEB006472AA /* XCRemoteSwiftPackageReference "KurozoraKit" */,
+				660592E62E91C4C3002CC46E /* XCRemoteSwiftPackageReference "WhatsNew" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -847,10 +847,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		66CB0E9F2E90A0BD00104283 /* XCLocalSwiftPackageReference "../Projects/Swift/WhatsNew" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Projects/Swift/WhatsNew;
-		};
 		66CBE2712E8F275300104283 /* XCLocalSwiftPackageReference "../KurozoraKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../KurozoraKit;
@@ -858,6 +854,22 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		660592E62E91C4C3002CC46E /* XCRemoteSwiftPackageReference "WhatsNew" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kiritokatklian/WhatsNew.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
+		669FD2742E910DEB006472AA /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.21.0;
+			};
+		};
 		66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";

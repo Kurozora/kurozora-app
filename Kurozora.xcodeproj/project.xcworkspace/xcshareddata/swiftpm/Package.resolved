@@ -1,5 +1,5 @@
 {
-  "originHash" : "4b5c6cd028aca1a0cb652acc1849a5723de0616df2ee825d1b4c8a9fe90e8f50",
+  "originHash" : "d47b9f40f8233d347a968bdda0195ae339584cad51ab5f391e1585b005793128",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -119,6 +119,15 @@
       }
     },
     {
+      "identity" : "kurozorakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kurozora/KurozoraKit.git",
+      "state" : {
+        "revision" : "839d8afac2a39127fab994d368054f8e69da5306",
+        "version" : "1.22.0"
+      }
+    },
+    {
       "identity" : "pageboy",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/uias/Pageboy",
@@ -215,6 +224,15 @@
       "state" : {
         "revision" : "24434ce417167e320da790ee3a321770d3b142bc",
         "version" : "5.5.0-beta.1"
+      }
+    },
+    {
+      "identity" : "whatsnew",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kiritokatklian/WhatsNew.git",
+      "state" : {
+        "revision" : "d33324e2afa894dd3c8e8f4b05a383beb7b13c1a",
+        "version" : "0.5.0"
       }
     },
     {
