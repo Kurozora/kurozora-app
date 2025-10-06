@@ -38,7 +38,7 @@
         <scene sceneID="cmd-mB-OEl">
             <objects>
                 <collectionViewController storyboardIdentifier="HomeCollectionViewController" title="Explore" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lLs-XV-jFy" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="4qz-vz-vYz">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="4qz-vz-vYz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -49,10 +49,10 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionButtonExploreCollectionViewCell" id="G1M-P6-vrM" customClass="ActionButtonExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionButtonExploreCollectionViewCell" id="G1M-P6-vrM" customClass="ActionButtonExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Mv0-HY-3tH">
+                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Mv0-HY-3tH">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -93,12 +93,11 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="338" y="5" width="52" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="28" id="c3J-r2-6pk"/>
-                                    <constraint firstAttribute="width" secondItem="ZYb-6d-0Mn" secondAttribute="height" multiplier="1:1" id="g0c-cL-Xfn"/>
+                                    <constraint firstAttribute="height" constant="36" id="LuP-Rg-K02"/>
+                                    <constraint firstAttribute="width" constant="36" id="c3J-r2-6pk"/>
                                 </constraints>
                                 <state key="normal" title="Profile">
                                     <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

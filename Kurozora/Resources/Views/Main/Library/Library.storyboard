@@ -65,7 +65,7 @@
                                 <rect key="frame" x="0.0" y="142" width="414" height="48"/>
                                 <items>
                                     <barButtonItem style="plain" id="ulg-05-9h9">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" id="YLm-jv-Iqy">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" id="YLm-jv-Iqy">
                                             <rect key="frame" x="69.000000000000057" y="0.0" width="276" height="48"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
@@ -105,12 +105,11 @@
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="wda-zg-EBM">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mrO-Jg-FaX" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrO-Jg-FaX" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="338" y="5" width="52" height="34"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="mrO-Jg-FaX" secondAttribute="height" multiplier="1:1" id="Yp2-Ve-DJs"/>
-                                        <constraint firstAttribute="width" constant="28" id="dRv-Yn-Ket"/>
+                                        <constraint firstAttribute="width" constant="36" id="dRv-Yn-Ket"/>
+                                        <constraint firstAttribute="height" constant="36" id="zSL-Oc-ScT"/>
                                     </constraints>
                                     <state key="normal" title="Profile">
                                         <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

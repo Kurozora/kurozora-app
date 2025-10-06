@@ -467,7 +467,6 @@
                                                             <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectBannerImageButtonPressed:" destination="zlF-Vo-yv3" eventType="touchUpInside" id="NC6-dl-Ko0"/>
                                                             <action selector="selectBannerImageButtonPressed:" destination="gDk-s7-DM9" eventType="touchUpInside" id="ZId-lg-Qgh"/>
                                                         </connections>
                                                     </button>
@@ -506,7 +505,6 @@
                                                                         </state>
                                                                         <connections>
                                                                             <action selector="selectProfileImageButtonPressed:" destination="gDk-s7-DM9" eventType="touchUpInside" id="3Gg-tn-2fd"/>
-                                                                            <action selector="selectProfileImageButtonPressed:" destination="zlF-Vo-yv3" eventType="touchUpInside" id="eIa-ef-buv"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -836,7 +834,6 @@
                 <navigationController storyboardIdentifier="EditProfileKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rR0-ek-JER" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bSj-3Q-uxq">
-                        <rect key="frame" x="0.0" y="16" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
