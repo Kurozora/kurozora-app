@@ -6,8 +6,9 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import StoreKit
+import SwiftTheme
+import UIKit
 
 protocol PurchaseButtonCollectionViewCellDelegate: AnyObject {
 	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton) async
@@ -56,9 +57,20 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .center
 
-		let purchaseTitle = NSMutableAttributedString()
-		purchaseTitle.append(NSAttributedString(string: displayPrice, attributes: [.font: UIFont.preferredFont(forTextStyle: .headline), .paragraphStyle: paragraphStyle]))
-		purchaseTitle.append(NSAttributedString(string: "/\(displayUnit)", attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1), .paragraphStyle: paragraphStyle]))
+		let purchaseTitle = ThemeAttributedStringPicker {
+			let purchaseTitle = NSMutableAttributedString()
+			purchaseTitle.append(NSAttributedString(string: displayPrice, attributes: [
+				.font: UIFont.preferredFont(forTextStyle: .headline),
+				.paragraphStyle: paragraphStyle,
+				.foregroundColor: KThemePicker.tintedButtonTextColor.colorValue,
+			]))
+			purchaseTitle.append(NSAttributedString(string: "/\(displayUnit)", attributes: [
+				.font: UIFont.preferredFont(forTextStyle: .caption1),
+				.paragraphStyle: paragraphStyle,
+				.foregroundColor: KThemePicker.tintedButtonTextColor.colorValue,
+			]))
+			return purchaseTitle
+		}
 
 		if isPurchased {
 			self.purchaseButton.isEnabled = false
@@ -68,7 +80,7 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 			self.purchaseButton.alpha = 1.0
 		}
 
-		self.purchaseButton.setAttributedTitle(purchaseTitle, for: .normal)
+		self.purchaseButton.theme_setAttributedTitle(purchaseTitle, forState: .normal)
 	}
 
 	// MARK: - IBActions
