@@ -27,6 +27,8 @@ enum UserSettingsKey: String {
 	case currentSplashScreenAnimation
 	/// The key to the selected theme.
 	case currentTheme
+	/// The key to the selected theme's name.
+	case currentThemeName
 	/// The key to the selected app icon.
 	case appIcon
 	/// The key to the selected browser.

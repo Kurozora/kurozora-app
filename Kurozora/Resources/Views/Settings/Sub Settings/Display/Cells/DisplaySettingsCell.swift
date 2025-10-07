@@ -168,7 +168,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBAction func enableTrueBlackSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .trueBlackEnabled)
 
-		if UserSettings.currentTheme == "Night" || UserSettings.currentTheme == "Black" {
+		if UserSettings.currentTheme.lowercased() == "night" || UserSettings.currentTheme.lowercased() == "black" {
 			KThemeStyle.switchTo(style: .night)
 		}
 	}

@@ -459,7 +459,7 @@ extension SettingsTableViewController {
 			case .motion:
 				return UserSettings.currentSplashScreenAnimation.titleValue
 			case .theme:
-				return UserSettings.currentTheme
+				return UserSettings.currentThemeName
 			default:
 				return ""
 			}

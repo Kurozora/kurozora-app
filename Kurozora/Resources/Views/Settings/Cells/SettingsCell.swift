@@ -126,7 +126,7 @@ class SettingsCell: KTableViewCell {
 
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateAppTheme() {
-		self.secondaryLabel?.text = UserSettings.currentTheme
+		self.secondaryLabel?.text = UserSettings.currentThemeName
 	}
 
 	/// Updates the app theme text with the one selected by the user.

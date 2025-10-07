@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class UserSettings: UserDefaults {
 	/// The base `UserDefaults` suit of the Kurozora apps.
@@ -21,7 +21,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast,
 			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
 			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
-			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true
+			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
 		])
 		return combined
 	}
@@ -76,6 +76,12 @@ extension UserSettings {
 	static var currentTheme: String {
 		guard let currentTheme = shared.string(forKey: #function) else { return "" }
 		return currentTheme
+	}
+
+	/// Returns a string indicating the currently used theme's name.
+	static var currentThemeName: String {
+		guard let currentThemeName = shared.string(forKey: #function) else { return "" }
+		return currentThemeName
 	}
 
 	/// Returns a string indicating the currently used app icon.
@@ -212,8 +218,10 @@ extension UserSettings {
 	static var librarySortTypes: [KKLibrary.Kind: [KKLibrary.Status: (sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option)]] {
 		let decoder = PropertyListDecoder()
 
-		guard let data = shared.data(forKey: #function),
-			  let rawLibrarySortTypes = try? decoder.decode([Int: [Int: Int]].self, from: data) else {
+		guard
+			let data = shared.data(forKey: #function),
+			let rawLibrarySortTypes = try? decoder.decode([Int: [Int: Int]].self, from: data)
+		else {
 			return [:]
 		}
 
@@ -287,6 +295,16 @@ extension UserSettings {
 	/// Returns a boolean indicating if reduce motion's "Sync with Device Settings" is enabled.
 	static var isReduceMotionSyncEnabled: Bool {
 		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if Smart Rotation Lock is enabled.
+	static var isSmartRotationLockEnabled: Bool {
+		return false // self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if Portrait Lock Buddy is enabled.
+	static var isPortraitLockBuddyEnabled: Bool {
+		return true // self.shared.bool(forKey: #function)
 	}
 }
 
