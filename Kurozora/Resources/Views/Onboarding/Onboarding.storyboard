@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23077.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23068.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -102,14 +102,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="zPE-nS-ey5">
-                        <leftBarButtonItems>
-                            <barButtonItem id="JQf-Fu-Va2"/>
-                            <barButtonItem systemItem="cancel" id="WQm-jN-cE7">
-                                <connections>
-                                    <action selector="cancelButtonPressedWithSender:" destination="YYI-N7-2E4" id="anJ-qo-Sqt"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WQm-jN-cE7">
+                            <connections>
+                                <action selector="cancelButtonPressedWithSender:" destination="YYI-N7-2E4" id="anJ-qo-Sqt"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Open sesame 👐" id="NaO-6U-dMN">
                             <connections>
                                 <action selector="rightNavigationBarButtonPressedWithSender:" destination="YYI-N7-2E4" id="bz5-K2-FLr"/>
@@ -131,7 +128,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="KA1-VO-uLW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-91-4W8">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="106"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
