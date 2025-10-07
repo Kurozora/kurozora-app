@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Middle</title>
+    <defs>
+        <filter x="11.8%" y="11.3%" width="76.4%" height="79.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="11" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0.576470588   0 0 0 0 0  0 0 0 0.694672271 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="50%" y1="99.786212%" x2="50%" y2="0%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#FCFCFC" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.85">
+        <g id="Kurozora-square-Copy-2" fill="url(#linearGradient-2)" fill-rule="nonzero">
+            <g id="Logo" filter="url(#filter-1)">
+                <g id="Middle">
+                    <path d="M203.151188,575.78496 C203.064842,652.813455 235.70779,726.251712 292.94592,777.79968 C234.478373,718.526028 231.888895,624.102295 287.019964,561.713312 C342.151033,499.32433 436.175839,490.275427 502.193397,541.005123 C568.210954,591.734819 583.676805,684.919336 537.586613,754.255575 C491.496421,823.591815 399.58961,845.402016 327.26016,804.16768 C371.316724,832.81678 422.757774,848.027078 475.31008,847.944021 C625.664,847.944021 747.52,726.09792 747.52,575.78496 C747.52,425.472 625.664,303.62624 475.31008,303.62624 C325.00736,303.62624 203.151188,425.48224 203.151188,575.78496 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

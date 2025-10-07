@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Front</title>
+    <defs>
+        <filter x="11.8%" y="11.3%" width="76.4%" height="79.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="11" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.213219494   0 0 0 0 0.240995437   0 0 0 0 0.343778551  0 0 0 1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFD844" offset="0%"></stop>
+            <stop stop-color="#FF8C00" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Kurozora" transform="translate(0, -0)">
+            <g id="Logo" filter="url(#filter-1)" transform="translate(0, 0)" fill-rule="nonzero">
+                <g id="Front">
+                    <path d="M145.182713,528.13824 C145.182713,553.827829 147.858118,579.447572 153.18016,604.57984 C151.860597,592.627301 151.197415,580.611398 151.1936,568.58624 C151.1936,388.06528 297.54368,241.7152 478.06464,241.7152 C658.5856,241.7152 804.93568,388.096 804.93568,568.58624 C804.93568,742.95296 668.39552,885.42208 496.41472,894.93504 C501.69856,895.16032 507.00288,895.30368 512.34816,895.30368 C715.10016,895.30368 879.50336,730.92096 879.50336,528.13824 C879.50336,325.35552 715.12064,160.98304 512.34816,160.98304 C309.59616,160.98304 145.182713,325.36576 145.182713,528.13824 Z" id="Shape" fill="url(#linearGradient-2)"></path>
+                    <path d="M144.49664,349.29478 C180.075413,240.203316 279.867079,162.362797 388.666667,128.69632 C260.754182,128.69632 144.49664,210.76402 144.49664,349.29478 Z" id="Shape" fill="#FFB32A"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
