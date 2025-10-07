@@ -25,11 +25,9 @@
 		66CBF8722E90279E00104283 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8712E90279E00104283 /* Tabman */; };
 		66CBF8752E9027FF00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8742E9027FF00104283 /* SwiftTheme */; };
 		66CBF8782E90287A00104283 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8772E90287A00104283 /* RswiftLibrary */; };
-		66CBF87A2E90287A00104283 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8792E90287A00104283 /* rswift */; };
 		66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF87C2E902AFC00104283 /* XCDYouTubeKit */; };
 		66CBFFCC2E9045E700104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCB2E9045E700104283 /* KurozoraKit */; };
 		66CBFFD02E90463200104283 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCF2E90463200104283 /* RswiftLibrary */; };
-		66CBFFD22E90463200104283 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD12E90463200104283 /* rswift */; };
 		66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD32E904AF500104283 /* Kingfisher */; };
 		66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD52E904B3F00104283 /* SwiftTheme */; };
 /* End PBXBuildFile section */
@@ -172,7 +170,6 @@
 				66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */,
 				66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */,
 				66CBFFD02E90463200104283 /* RswiftLibrary in Frameworks */,
-				66CBFFD22E90463200104283 /* rswift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +186,6 @@
 				66CBF86C2E90260F00104283 /* Solar in Frameworks */,
 				66CBF1132E90234D00104283 /* Cosmos in Frameworks */,
 				66CBF8692E90254A00104283 /* Reachability in Frameworks */,
-				66CBF87A2E90287A00104283 /* rswift in Frameworks */,
 				66CBF8662E9024AA00104283 /* IQKeyboardManagerSwift in Frameworks */,
 				66CBF1102E9022F600104283 /* Kingfisher in Frameworks */,
 				66CBF86F2E90277800104283 /* SPConfetti in Frameworks */,
@@ -1078,11 +1074,6 @@
 			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
 			productName = RswiftLibrary;
 		};
-		66CBF8792E90287A00104283 /* rswift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = rswift;
-		};
 		66CBF87C2E902AFC00104283 /* XCDYouTubeKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */;
@@ -1097,11 +1088,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
 			productName = RswiftLibrary;
-		};
-		66CBFFD12E90463200104283 /* rswift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = rswift;
 		};
 		66CBFFD32E904AF500104283 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
