@@ -6,6 +6,7 @@
 //  Copyright © 2025 Kurozora. All rights reserved.
 //
 
+import IQKeyboardManagerSwift
 import UIKit
 
 protocol SettingsPickerTableViewControllerDelegate: AnyObject {
@@ -62,6 +63,16 @@ class SettingsPickerTableViewController: KTableViewController {
 		self.applySnapshot(animating: false)
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		IQKeyboardManager.shared.isEnabled = false
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		IQKeyboardManager.shared.isEnabled = true
+	}
+
 	// MARK: - Functions
 	private func configureSearchController() {
 		self.searchController.searchResultsUpdater = self
@@ -92,10 +103,10 @@ extension SettingsPickerTableViewController {
 // MARK: - KCollectionViewDataSource
 extension SettingsPickerTableViewController {
 	func configureDataSource() {
-		let selectableSettingsCellRegistration = getConfiguredSelectableSettingsCell()
+		let selectableSettingsCellRegistration = self.getConfiguredSelectableSettingsCell()
 
 		self.dataSource = UITableViewDiffableDataSource<Section, ItemKind>(tableView: self.tableView) { tableView, indexPath, itemKind in
-			return tableView.dequeueConfiguredReusableCell(using: selectableSettingsCellRegistration, for: indexPath, item: itemKind)
+			tableView.dequeueConfiguredReusableCell(using: selectableSettingsCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 
