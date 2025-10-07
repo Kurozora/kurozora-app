@@ -17,8 +17,8 @@ protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
 
 class SearchFilterCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
-	@IBOutlet var cancelBarButtonItem: UIBarButtonItem!
-	@IBOutlet var resetBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var resetBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Views
 	var applyButton = KTintedButton()

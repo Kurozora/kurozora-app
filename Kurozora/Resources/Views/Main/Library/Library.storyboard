@@ -124,6 +124,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
+                        <outlet property="libraryKindBarButtonItem" destination="ulg-05-9h9" id="zci-Ro-LVO"/>
                         <outlet property="libraryKindSegmentedControl" destination="YLm-jv-Iqy" id="CEV-5D-OgT"/>
                         <outlet property="moreBarButtonItem" destination="g5C-MO-gs3" id="zha-GH-Edy"/>
                         <outlet property="profileImageButton" destination="mrO-Jg-FaX" id="Rja-Zn-Mn2"/>

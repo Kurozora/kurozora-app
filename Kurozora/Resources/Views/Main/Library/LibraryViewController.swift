@@ -13,13 +13,14 @@ import UIKit
 
 class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
-	@IBOutlet var profileImageButton: ProfileImageButton!
-	@IBOutlet var toolbar: UIToolbar!
-	@IBOutlet var scrollView: UIScrollView!
-	@IBOutlet var scrollViewHeightConstraint: NSLayoutConstraint!
-	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
-	@IBOutlet var libraryKindSegmentedControl: UISegmentedControl!
-	@IBOutlet var moreBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
+	@IBOutlet weak var toolbar: UIToolbar!
+	@IBOutlet weak var scrollView: UIScrollView!
+	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
+	@IBOutlet weak var sortTypeBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var libraryKindBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
@@ -52,6 +53,9 @@ class LibraryViewController: KTabbedViewController {
 
 		// Configurations
 		self.configureToolbar()
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.libraryKindBarButtonItem.hidesSharedBackground = true
+		}
 		self.configureUserDetails()
 
 		// Actions

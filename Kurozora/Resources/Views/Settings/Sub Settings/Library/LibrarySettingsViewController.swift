@@ -11,28 +11,28 @@ import UIKit
 
 class LibrarySettingsViewController: SubSettingsViewController {
 	// MARK: _ IBOutlets
-	@IBOutlet var libraryKindSegmentedControl: UISegmentedControl!
+	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
 
-	@IBOutlet var inProgressLabel: KLabel!
-	@IBOutlet var inProgressButton: KButton!
+	@IBOutlet weak var inProgressLabel: KLabel!
+	@IBOutlet weak var inProgressButton: KButton!
 
-	@IBOutlet var planningLabel: KLabel!
-	@IBOutlet var planningButton: KButton!
+	@IBOutlet weak var planningLabel: KLabel!
+	@IBOutlet weak var planningButton: KButton!
 
-	@IBOutlet var completedLabel: KLabel!
-	@IBOutlet var completedButton: KButton!
+	@IBOutlet weak var completedLabel: KLabel!
+	@IBOutlet weak var completedButton: KButton!
 
-	@IBOutlet var onHoldLabel: KLabel!
-	@IBOutlet var onHoldButton: KButton!
+	@IBOutlet weak var onHoldLabel: KLabel!
+	@IBOutlet weak var onHoldButton: KButton!
 
-	@IBOutlet var droppedLabel: KLabel!
-	@IBOutlet var droppedButton: KButton!
+	@IBOutlet weak var droppedLabel: KLabel!
+	@IBOutlet weak var droppedButton: KButton!
 
-	@IBOutlet var interestedLabel: KLabel!
-	@IBOutlet var interestedButton: KButton!
+	@IBOutlet weak var interestedLabel: KLabel!
+	@IBOutlet weak var interestedButton: KButton!
 
-	@IBOutlet var ignoredLabel: KLabel!
-	@IBOutlet var ignoredButton: KButton!
+	@IBOutlet weak var ignoredLabel: KLabel!
+	@IBOutlet weak var ignoredButton: KButton!
 
 	// MARK: - Properties
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
