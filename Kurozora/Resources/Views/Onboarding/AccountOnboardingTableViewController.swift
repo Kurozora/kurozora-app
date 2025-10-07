@@ -51,6 +51,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 		self._prefersRefreshControlDisabled = true
 
 		self.rightNavigationBarButton.isEnabled = false
+		self.tableView.separatorStyle = .none
 	}
 
 	// MARK: - Functions

@@ -54,6 +54,8 @@ class ServiceTableViewController: KTableViewController {
 		// Stop activity indicator and disable refresh control
 		self._prefersActivityIndicatorHidden = true
 		self._prefersRefreshControlDisabled = true
+
+		self.tableView.separatorStyle = .none
 	}
 }
 
