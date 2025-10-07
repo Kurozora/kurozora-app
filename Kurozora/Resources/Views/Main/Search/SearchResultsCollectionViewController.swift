@@ -6,10 +6,11 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import Tabman
-import KurozoraKit
 import Alamofire
+import IQKeyboardManagerSwift
+import KurozoraKit
+import Tabman
+import UIKit
 
 /// The list of available search view types.
 enum SearchViewKind {
@@ -54,7 +55,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		BrowseCategory(title: Trans.episodes, image: R.image.browse.episodes(), searchType: .episodes),
 		BrowseCategory(title: Trans.characters, image: R.image.browse.characters(), searchType: .characters),
 		BrowseCategory(title: Trans.people, image: R.image.browse.people(), searchType: .people),
-		BrowseCategory(title: Trans.studio, image: R.image.browse.studios(), searchType: .studios)
+		BrowseCategory(title: Trans.studio, image: R.image.browse.studios(), searchType: .studios),
 	]
 
 	/// The collection of search types in the current search request
@@ -97,8 +98,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var studioNextPageURL: String?
 	var userNextPageURL: String?
 
-	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>!
+	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>!
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// Whether a fetch request is currently in progress.
@@ -119,6 +120,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -129,6 +131,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -166,10 +169,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.configureFilterBarButtonItem()
 			#endif
 		}
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
+		self.configureView()
 		self.configureDataSource()
 
 		switch self.searchViewKind {
@@ -191,6 +191,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		IQKeyboardManager.shared.isEnabled = false
 
 		if self.isDeepLinked {
 			self.isDeepLinked = false
@@ -198,9 +199,27 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		IQKeyboardManager.shared.isEnabled = true
+	}
+
 	// MARK: - Functions
 	func configureFilterBarButtonItem() {
 		self.filterBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(self.handleFilterBarButtonItemPressed(_:)))
+	}
+
+	func configureView() {
+		self.configureTabBarView()
+		self.configureToolbar()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
+		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			tabBarBarButtonItem.hidesSharedBackground = true
+		}
+		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
 	}
 
 	func configureTabBarView() {
@@ -250,6 +269,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			let interaction = UIScrollEdgeElementContainerInteraction()
+			interaction.scrollView = self.collectionView
+			interaction.edge = .top
+			self.toolbar.addInteraction(interaction)
+		}
 	}
 
 	/// Setup the search controller with the desired settings.
@@ -270,7 +296,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	func configureViewHierarchy() {
 		self.view.addSubview(self.toolbar)
-		self.toolbar.setItems([UIBarButtonItem(customView: self.tabBarView)], animated: true)
 	}
 
 	func configureViewConstraints() {
@@ -278,7 +303,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0)
+			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
 		])
 
 		self.tabBarView.fillToSuperview()
@@ -679,7 +704,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			// Segue to songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.songs = self.songs.map { _, song in
-				return song
+				song
 			}
 		case R.segue.searchResultsCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
@@ -705,7 +730,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 extension SearchResultsCollectionViewController: TMBarDataSource {
 	func reloadView() {
 		guard self.searchTypes.count > 0 else { return }
-		self.tabBarView.reloadData(at: 0...self.searchTypes.count - 1, context: .full)
+		self.tabBarView.reloadData(at: 0 ... self.searchTypes.count - 1, context: .full)
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
@@ -741,14 +766,14 @@ extension SearchResultsCollectionViewController: TMBarDelegate {
 
 extension TMBarUpdateDirection {
 	static func forPage(_ page: Int, previousPage: Int) -> TMBarUpdateDirection {
-		return forPosition(CGFloat(page), previous: CGFloat(previousPage))
+		return self.forPosition(CGFloat(page), previous: CGFloat(previousPage))
 	}
 
 	static func forPosition(_ position: CGFloat, previous previousPosition: CGFloat) -> TMBarUpdateDirection {
 		if position == previousPosition {
 			return .none
 		}
-		return  position > previousPosition ? .forward : .reverse
+		return position > previousPosition ? .forward : .reverse
 	}
 }
 
@@ -838,7 +863,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async { }
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {}
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
@@ -859,7 +884,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
