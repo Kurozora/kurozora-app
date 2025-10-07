@@ -6,9 +6,9 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
-import Tabman
 import KurozoraKit
+import Tabman
+import UIKit
 
 class ScheduleCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -32,7 +32,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	var currentTopContentInset: CGFloat = 0
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -40,6 +40,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -50,6 +51,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -65,10 +67,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-//		self.configureTabBarView()
-//		self.configureToolbar()
-//		self.configureViewHierarchy()
-//		self.configureViewConstraints()
+//		self.configureView()
 		self.configureDataSource()
 
 		// Fetch schedule details.
@@ -84,6 +83,19 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	func configureView() {
+		self.configureTabBarView()
+		self.configureToolbar()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
+		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			tabBarBarButtonItem.hidesSharedBackground = true
+		}
+		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
 	}
 
 	func configureTabBarView() {
@@ -133,11 +145,17 @@ class ScheduleCollectionViewController: KCollectionViewController {
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			let interaction = UIScrollEdgeElementContainerInteraction()
+			interaction.scrollView = self.collectionView
+			interaction.edge = .top
+			self.toolbar.addInteraction(interaction)
+		}
 	}
 
 	func configureViewHierarchy() {
 		self.view.addSubview(self.toolbar)
-		self.toolbar.setItems([UIBarButtonItem(customView: self.tabBarView)], animated: true)
 	}
 
 	func configureViewConstraints() {
@@ -145,7 +163,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0)
+			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
 		])
 
 		self.tabBarView.fillToSuperview()
@@ -201,7 +219,7 @@ extension ScheduleCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 
-		self.tabBarView.reloadData(at: 0...self.schedules.count - 1, context: .full)
+		self.tabBarView.reloadData(at: 0 ... self.schedules.count - 1, context: .full)
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {

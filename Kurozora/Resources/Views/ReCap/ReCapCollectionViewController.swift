@@ -6,11 +6,11 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
-import Tabman
-import KurozoraKit
 import Alamofire
 import AVFoundation
+import KurozoraKit
+import Tabman
+import UIKit
 
 struct RecapTabItem {
 	let year: Int
@@ -26,6 +26,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 			self.reloadView()
 		}
 	}
+
 	var recapItems: [RecapItem] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -37,6 +38,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
 	var recapTabItems: [RecapTabItem] = []
 
 	let toolbar = UIToolbar()
@@ -44,7 +46,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 	var currentTopContentInset: CGFloat = 0
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 
 	var shows: [IndexPath: Show] = [:]
 	var literatures: [IndexPath: Literature] = [:]
@@ -58,6 +60,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -68,6 +71,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -85,10 +89,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 
 		self.title = "\(Trans.reCAP)’\(self.year % 100)"
 
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
+		self.configureView()
 		self.configureDataSource()
 
 		// Fetch ReCap details.
@@ -114,6 +115,19 @@ class ReCapCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	func configureView() {
+		self.configureTabBarView()
+		self.configureToolbar()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
+		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			tabBarBarButtonItem.hidesSharedBackground = true
+		}
+		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
 	}
 
 	func configureTabBarView() {
@@ -163,11 +177,17 @@ class ReCapCollectionViewController: KCollectionViewController {
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			let interaction = UIScrollEdgeElementContainerInteraction()
+			interaction.scrollView = self.collectionView
+			interaction.edge = .top
+			self.toolbar.addInteraction(interaction)
+		}
 	}
 
 	func configureViewHierarchy() {
 		self.view.addSubview(self.toolbar)
-		self.toolbar.setItems([UIBarButtonItem(customView: self.tabBarView)], animated: true)
 	}
 
 	func configureViewConstraints() {
@@ -175,7 +195,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0)
+			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
 		])
 
 		self.tabBarView.fillToSuperview()
@@ -262,7 +282,7 @@ extension ReCapCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 
-		self.tabBarView.reloadData(at: 0...self.recapTabItems.count - 1, context: .full)
+		self.tabBarView.reloadData(at: 0 ... self.recapTabItems.count - 1, context: .full)
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {

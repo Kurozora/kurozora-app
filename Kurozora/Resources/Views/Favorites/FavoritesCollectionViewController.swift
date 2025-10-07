@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class FavoritesCollectionViewController: KCollectionViewController {
 	var libraryKindSegmentedControl = UISegmentedControl()
@@ -26,8 +26,8 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 	var fetchInProgress: Bool = false
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -35,6 +35,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -55,16 +56,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteModelsListDidChange, object: nil)
 		}
 
-		self.collectionView.contentInset.top = 50
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-
-		self.configureLibraryKindSegmentedControl()
-		self.configureToolbar()
-		self.toolbar.setItems([UIBarButtonItem(customView: self.libraryKindSegmentedControl)], animated: true)
-
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-
+		self.configureView()
 		self.configureDataSource()
 
 		Task { [weak self] in
@@ -79,6 +71,26 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	func configureView() {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.collectionView.contentInset.top = 54
+		} else {
+			self.collectionView.contentInset.top = 50
+		}
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+
+		self.configureLibraryKindSegmentedControl()
+		self.configureToolbar()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
+		let libraryKindBarButtonItem = UIBarButtonItem(customView: self.libraryKindSegmentedControl)
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			libraryKindBarButtonItem.hidesSharedBackground = true
+		}
+		self.toolbar.setItems([libraryKindBarButtonItem], animated: true)
+	}
+
 	func configureLibraryKindSegmentedControl() {
 		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
 		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
@@ -103,7 +115,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
 		])
 	}
 

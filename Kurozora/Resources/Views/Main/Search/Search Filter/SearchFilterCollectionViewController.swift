@@ -21,6 +21,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var resetBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Views
+	let applyButtonContainer = UIView()
 	var applyButton = KTintedButton()
 
 	// MARK: - Properties
@@ -80,6 +81,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		self.configureView()
 		self.configureCollectionView()
 		self.configureRestBarButtonItem()
+		self.configureApplyButtonContainer()
 		self.configureApplyButton()
 	}
 
@@ -99,6 +101,18 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		self.resetBarButtonItem.title = Trans.reset
 	}
 
+	func configureApplyButtonContainer() {
+		self.applyButtonContainer.translatesAutoresizingMaskIntoConstraints = false
+		self.applyButtonContainer.backgroundColor = .clear
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			let interaction = UIScrollEdgeElementContainerInteraction()
+			interaction.scrollView = self.collectionView
+			interaction.edge = .bottom
+			self.applyButtonContainer.addInteraction(interaction)
+		}
+	}
+
 	func configureApplyButton() {
 		self.applyButton.translatesAutoresizingMaskIntoConstraints = false
 		self.applyButton.setTitle(Trans.apply, for: .normal)
@@ -106,14 +120,20 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	}
 
 	func configureViewHierarchy() {
-		self.view.addSubview(self.applyButton)
+		self.view.addSubview(self.applyButtonContainer)
+		self.applyButtonContainer.addSubview(self.applyButton)
 	}
 
 	func configureViewConstraints() {
 		NSLayoutConstraint.activate([
-			self.applyButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 12.0),
-			self.applyButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -24.0),
-			self.applyButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12.0),
+			self.applyButtonContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.applyButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+			self.applyButtonContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+
+			self.applyButton.topAnchor.constraint(equalTo: self.applyButtonContainer.topAnchor, constant: 12.0),
+			self.applyButton.leadingAnchor.constraint(equalTo: self.applyButtonContainer.leadingAnchor, constant: 12.0),
+			self.applyButton.bottomAnchor.constraint(equalTo: self.applyButtonContainer.bottomAnchor, constant: -24.0),
+			self.applyButton.trailingAnchor.constraint(equalTo: self.applyButtonContainer.trailingAnchor, constant: -12.0),
 		])
 	}
 
