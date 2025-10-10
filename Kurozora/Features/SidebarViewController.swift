@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class SidebarViewController: KCollectionViewController {
 	// MARK: - Enums
@@ -32,11 +32,9 @@ class SidebarViewController: KCollectionViewController {
 
 	private var selectedItem: TabBarItem?
 	private var deselectedItem: TabBarItem?
-	private lazy var viewControllers: [UIViewController] = {
-		return TabBarItem.sideBarCases.map {
-			return $0.kViewControllerValue
-		}
-	}()
+	private lazy var viewControllers: [UIViewController] = TabBarItem.sideBarCases.map {
+		$0.kViewControllerValue
+	}
 
 	private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>!
 
@@ -54,7 +52,7 @@ class SidebarViewController: KCollectionViewController {
 			if let collectionViewLayout = self.createLayout() {
 				self.collectionView.collectionViewLayout = collectionViewLayout
 			}
-
+			self.setupView()
 			self.reloadDataSource()
 		}
 	}
@@ -70,12 +68,20 @@ class SidebarViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// The shared settings used to initialize the sidebar view.
 	fileprivate func sharedInit() {
+		self.setupView()
 		self.collectionView.isScrollEnabled = false
 		self.clearsSelectionOnViewWillAppear = false
 		self.navigationItem.hidesSearchBarWhenScrolling = false
 		self.navigationItem.largeTitleDisplayMode = .never
 
 		self.configureSearchBar()
+	}
+
+	fileprivate func setupView() {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.view.backgroundColor = .clear
+			self.collectionView.backgroundColor = .clear
+		}
 	}
 
 	/// Configures the search bar.
@@ -144,10 +150,14 @@ class SidebarViewController: KCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension SidebarViewController {
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+		let layout = UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			self.listConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-			self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.listConfiguration.backgroundColor = .clear
+			} else {
+				self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
+			}
 			self.listConfiguration.showsSeparators = false
 			let section = NSCollectionLayoutSection.list(using: self.listConfiguration, layoutEnvironment: layoutEnvironment)
 			section.contentInsets.top = 10.0
@@ -168,7 +178,7 @@ extension SidebarViewController {
 			cell.contentConfiguration = contentConfiguration
 		}
 
-		self.dataSource = UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
+		self.dataSource = UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>(collectionView: collectionView) { collectionView, indexPath, item -> UICollectionViewCell in
 			return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
 		}
 	}
