@@ -6,8 +6,10 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
+#if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
+#endif
+import UIKit
 
 protocol ReviewTextEditorDisplayLogic: AnyObject {
 	func displayConfigure(viewModel: ReviewTextEditor.Configure.ViewModel)
@@ -86,8 +88,9 @@ final class ReviewTextEditorViewController: KViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
+        #if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = false
+        #endif
 	}
 
 	override func viewWillLayoutSubviews() {
@@ -98,8 +101,9 @@ final class ReviewTextEditorViewController: KViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-
+        #if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
+        #endif
 	}
 
 	// MARK: - Functions

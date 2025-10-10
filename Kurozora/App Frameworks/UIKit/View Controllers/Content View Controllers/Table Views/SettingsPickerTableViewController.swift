@@ -6,7 +6,9 @@
 //  Copyright © 2025 Kurozora. All rights reserved.
 //
 
+#if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
+#endif
 import UIKit
 
 protocol SettingsPickerTableViewControllerDelegate: AnyObject {
@@ -65,12 +67,16 @@ class SettingsPickerTableViewController: KTableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = false
+		#endif
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
+		#endif
 	}
 
 	// MARK: - Functions

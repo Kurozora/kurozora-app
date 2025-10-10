@@ -6,9 +6,11 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
-import IQKeyboardManagerSwift
+import UIKit
+#if !targetEnvironment(macCatalyst)
+	import IQKeyboardManagerSwift
+#endif
 
 // MARK: - Kurozora
 @UIApplicationMain
@@ -24,9 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		Store.shared.initialize()
 
 		// Configure keyboard
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
 		IQKeyboardManager.shared.resignOnTouchOutside = true
-
+		#endif
 		// Set UNUserNotificationCenterDelegate
 		UNUserNotificationCenter.current().delegate = WorkflowController.shared
 
@@ -118,7 +121,7 @@ extension AppDelegate {
 		print("----- did receive notification.", userInfo)
 
 		#if DEBUG
-		userInfo.forEach({ print("\($0.key): \($0.value)") })
+		userInfo.forEach { print("\($0.key): \($0.value)") }
 		#endif
 	}
 }
@@ -143,7 +146,7 @@ extension AppDelegate {
 	}
 
 	/// Used to update your content.
-	@objc func handleRefreshControl() { }
+	@objc func handleRefreshControl() {}
 
 	/// User chose "Settings..." from the Application menu.
 	@objc func handleSettings(_ sender: AnyObject) {
@@ -173,10 +176,10 @@ extension AppDelegate {
 	}
 
 	/// User chose "Username" from the Account menu.
-	@objc func handleUsername(_ sender: AnyObject) { }
+	@objc func handleUsername(_ sender: AnyObject) {}
 
 	/// User chose "Email" from the Account menu.
-	@objc func handleEmail(_ sender: AnyObject) { }
+	@objc func handleEmail(_ sender: AnyObject) {}
 
 	/// User chose "Sign Out" from the Account menu.
 	@objc func handleSignIn(_ sender: AnyObject) {

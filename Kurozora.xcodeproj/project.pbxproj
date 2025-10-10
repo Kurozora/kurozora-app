@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 662A3D302C92433B006F6EDD /* KuroChan.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		66CB00092E909F3800104283 /* WhatsNew in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB00082E909F3800104283 /* WhatsNew */; };
 		66CB0EA12E90A0BE00104283 /* WhatsNew in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB0EA02E90A0BE00104283 /* WhatsNew */; };
 		66CB161C2E90AA4800104283 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB161B2E90AA4800104283 /* SwiftyJSON */; };
 		66CBDB1E2E8F215A00104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBDB1D2E8F215A00104283 /* KurozoraKit */; };
@@ -18,7 +17,7 @@
 		66CBF1102E9022F600104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF10F2E9022F600104283 /* Kingfisher */; };
 		66CBF1132E90234D00104283 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF1122E90234D00104283 /* Cosmos */; };
 		66CBF1162E9023AC00104283 /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF1152E9023AC00104283 /* FLEX */; };
-		66CBF8662E9024AA00104283 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8652E9024AA00104283 /* IQKeyboardManagerSwift */; };
+		66CBF8662E9024AA00104283 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 66CBF8652E9024AA00104283 /* IQKeyboardManagerSwift */; };
 		66CBF8692E90254A00104283 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8682E90254A00104283 /* Reachability */; };
 		66CBF86C2E90260F00104283 /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF86B2E90260F00104283 /* Solar */; };
 		66CBF86F2E90277800104283 /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF86E2E90277800104283 /* SPConfetti */; };
@@ -189,7 +188,6 @@
 				66CBF8662E9024AA00104283 /* IQKeyboardManagerSwift in Frameworks */,
 				66CBF1102E9022F600104283 /* Kingfisher in Frameworks */,
 				66CBF86F2E90277800104283 /* SPConfetti in Frameworks */,
-				66CB00092E909F3800104283 /* WhatsNew in Frameworks */,
 				66CBF8752E9027FF00104283 /* SwiftTheme in Frameworks */,
 				66CB0EA12E90A0BE00104283 /* WhatsNew in Frameworks */,
 				66CBF1162E9023AC00104283 /* FLEX in Frameworks */,
@@ -346,8 +344,8 @@
 				66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */,
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				669FD2742E910DEB006472AA /* XCRemoteSwiftPackageReference "KurozoraKit" */,
-				660592E62E91C4C3002CC46E /* XCRemoteSwiftPackageReference "WhatsNew" */,
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
+				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -548,10 +546,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
@@ -571,6 +580,13 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -587,10 +603,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
@@ -609,6 +636,13 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -673,11 +707,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
-				MARKETING_VERSION = 1.12.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -740,11 +774,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
-				MARKETING_VERSION = 1.12.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 1.12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -856,20 +890,20 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		660592E62E91C4C3002CC46E /* XCRemoteSwiftPackageReference "WhatsNew" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kiritokatklian/WhatsNew.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
 		660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mono0926/LicensePlist";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.27.1;
+			};
+		};
+		6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kiritokatklian/WhatsNew.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
 			};
 		};
 		669FD2742E910DEB006472AA /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
@@ -991,10 +1025,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */;
 			productName = "plugin:LicensePlistBuildTool";
-		};
-		66CB00082E909F3800104283 /* WhatsNew */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WhatsNew;
 		};
 		66CB0EA02E90A0BE00104283 /* WhatsNew */ = {
 			isa = XCSwiftPackageProductDependency;

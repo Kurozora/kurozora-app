@@ -1,5 +1,5 @@
 {
-  "originHash" : "a7750aafd3def9927f298be7eae092c3b43806aa9ec4b46884528d62158e26f6",
+  "originHash" : "e17c05da4c6d98cbf7caa6b1f43df9aae0085fcd0f31278b07c45af0afac1907",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -285,8 +285,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kiritokatklian/WhatsNew.git",
       "state" : {
-        "revision" : "d33324e2afa894dd3c8e8f4b05a383beb7b13c1a",
-        "version" : "0.5.0"
+        "revision" : "6cef1ce17803cb73406e0e20f02f405570f499c6",
+        "version" : "0.5.1"
       }
     },
     {

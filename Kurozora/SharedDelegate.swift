@@ -9,6 +9,7 @@
 import KeychainAccess
 import Kingfisher
 import KurozoraKit
+import Foundation
 
 /// A root object that stores information about a song resource.
 typealias KKSong = Song

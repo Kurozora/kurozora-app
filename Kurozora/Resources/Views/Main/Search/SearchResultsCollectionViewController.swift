@@ -7,7 +7,9 @@
 //
 
 import Alamofire
+#if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
+#endif
 import KurozoraKit
 import Tabman
 import UIKit
@@ -191,7 +193,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = false
+		#endif
 
 		if self.isDeepLinked {
 			self.isDeepLinked = false
@@ -201,7 +205,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
+		#endif
 	}
 
 	// MARK: - Functions
