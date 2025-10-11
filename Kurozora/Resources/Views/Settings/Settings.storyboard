@@ -1,115 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="GHi-cX-FjE">
-            <objects>
-                <navigationController storyboardIdentifier="SettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Y0h-Co-3aP">
-                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="A0l-x2-bz4" kind="relationship" relationship="rootViewController" id="z7V-KS-nVN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cJu-79-oFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3252" y="-998"/>
-        </scene>
         <!--Settings Split View Controller-->
         <scene sceneID="BXT-wn-ldl">
             <objects>
                 <splitViewController storyboardIdentifier="SettingsSplitViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" allowDoubleColumnStyle="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="j9b-id-9wy" kind="relationship" relationship="masterViewController" id="VeX-CZ-O8W"/>
                         <segue destination="urf-Ka-1Pe" kind="relationship" relationship="detailViewController" id="CVK-QH-6Cy"/>
+                        <segue destination="6hO-Ox-CPQ" kind="relationship" relationship="masterViewController" id="KwS-Md-ibU"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ldr-ha-pf3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4014" y="-998"/>
         </scene>
-        <!--DebugSettings-->
-        <scene sceneID="KHN-hJ-St3">
+        <!--Navigation Controller-->
+        <scene sceneID="7CV-83-z5n">
             <objects>
-                <viewControllerPlaceholder storyboardName="DebugSettings" id="ajC-l5-hFm" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="SettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6hO-Ox-CPQ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="iSy-ck-e72">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="K6i-Xz-sHu"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="A0l-x2-bz4" kind="relationship" relationship="rootViewController" id="FT3-BX-ztK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Co1-qW-O9T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1856" y="-1156"/>
-        </scene>
-        <!--PrivacySettings-->
-        <scene sceneID="IwF-zp-Lsq">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PrivacySettings" id="GAQ-MX-p4x" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Zml-UG-V8D"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1851" y="-883"/>
-        </scene>
-        <!--ThemeStore-->
-        <scene sceneID="snc-re-vTw">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ThemeStore" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1867" y="-1049"/>
-        </scene>
-        <!--ManageIconKNavigationController-->
-        <scene sceneID="pCk-tB-aID">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Icons" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1771" y="-1017"/>
-        </scene>
-        <!--NotificationSettings-->
-        <scene sceneID="cL2-5n-9vs">
-            <objects>
-                <viewControllerPlaceholder storyboardName="NotificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1832" y="-1120"/>
-        </scene>
-        <!--AuthenticationSettings-->
-        <scene sceneID="EBP-ej-D5t">
-            <objects>
-                <viewControllerPlaceholder storyboardName="AuthenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1819" y="-917"/>
-        </scene>
-        <!--DisplaySettings-->
-        <scene sceneID="RdJ-ak-oTj">
-            <objects>
-                <viewControllerPlaceholder storyboardName="DisplaySettings" id="urf-Ka-1Pe" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="ZRM-8A-D1P"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y62-rG-dh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3252" y="-509"/>
-        </scene>
-        <!--Purchase-->
-        <scene sceneID="yi4-pG-GFi">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Purchase" id="9mD-qe-ThA" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-5h-YRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1879" y="-850"/>
+            <point key="canvasLocation" x="-3252" y="-998"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Rdk-Mk-c4g">
@@ -122,14 +58,14 @@
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AccountCell" id="XOD-av-Oix" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="90.5"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOD-av-Oix" id="p4N-u1-SGA">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="91"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYv-gV-pbA">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="91"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gN1-Tz-Lyt" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="20" width="50" height="50"/>
@@ -194,20 +130,20 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="jVr-XA-ssp" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="146" width="374" height="50.5"/>
+                                <rect key="frame" x="20" y="146.5" width="374" height="51"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jVr-XA-ssp" id="Lvm-UK-iJS">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kz9-dI-QE2">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbg-4Z-cLt">
-                                                    <rect key="frame" x="8" y="10" width="30" height="30.5"/>
+                                                    <rect key="frame" x="8" y="10" width="30" height="31"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Ne-2W-pUG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="31"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -225,7 +161,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display &amp; Blindness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKc-aV-j5m" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="46" y="15" width="149.5" height="20.5"/>
+                                                    <rect key="frame" x="46" y="15.5" width="149.5" height="20.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -317,14 +253,6 @@
             </objects>
             <point key="canvasLocation" x="-2533" y="-998"/>
         </scene>
-        <!--BrowserSettings-->
-        <scene sceneID="oHr-QW-fH0">
-            <objects>
-                <viewControllerPlaceholder storyboardName="BrowserSettings" id="B3o-ew-EQQ" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NVr-Wp-8Sl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1847" y="-948"/>
-        </scene>
         <!--AccountSettings-->
         <scene sceneID="nbd-fu-5TH">
             <objects>
@@ -341,15 +269,21 @@
             </objects>
             <point key="canvasLocation" x="-1817" y="-1185"/>
         </scene>
-        <!--TipJarKNavigationController-->
-        <scene sceneID="71c-GG-QAR">
+        <!--DebugSettings-->
+        <scene sceneID="KHN-hJ-St3">
             <objects>
-                <viewControllerPlaceholder storyboardName="Purchase" referencedIdentifier="TipJarKNavigationController" id="v7i-U9-USe" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="qo0-p5-YVW"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2C9-JS-U5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="DebugSettings" id="ajC-l5-hFm" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1795" y="-816"/>
+            <point key="canvasLocation" x="-1856" y="-1156"/>
+        </scene>
+        <!--NotificationSettings-->
+        <scene sceneID="cL2-5n-9vs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="NotificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1832" y="-1120"/>
         </scene>
         <!--SoundSettings-->
         <scene sceneID="MNO-Rw-Pnj">
@@ -361,6 +295,22 @@
             </objects>
             <point key="canvasLocation" x="-1855" y="-1086"/>
         </scene>
+        <!--ThemeStore-->
+        <scene sceneID="snc-re-vTw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ThemeStore" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1867" y="-1049"/>
+        </scene>
+        <!--ManageIconKNavigationController-->
+        <scene sceneID="pCk-tB-aID">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Icons" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1771" y="-1017"/>
+        </scene>
         <!--MotionSettings-->
         <scene sceneID="hkC-6d-Hre">
             <objects>
@@ -371,6 +321,50 @@
             </objects>
             <point key="canvasLocation" x="-1853" y="-982"/>
         </scene>
+        <!--BrowserSettings-->
+        <scene sceneID="oHr-QW-fH0">
+            <objects>
+                <viewControllerPlaceholder storyboardName="BrowserSettings" id="B3o-ew-EQQ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NVr-Wp-8Sl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1847" y="-948"/>
+        </scene>
+        <!--AuthenticationSettings-->
+        <scene sceneID="EBP-ej-D5t">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AuthenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1819" y="-917"/>
+        </scene>
+        <!--PrivacySettings-->
+        <scene sceneID="IwF-zp-Lsq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PrivacySettings" id="GAQ-MX-p4x" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Zml-UG-V8D"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1851" y="-883"/>
+        </scene>
+        <!--Purchase-->
+        <scene sceneID="yi4-pG-GFi">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Purchase" id="9mD-qe-ThA" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-5h-YRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1879" y="-850"/>
+        </scene>
+        <!--TipJarKNavigationController-->
+        <scene sceneID="71c-GG-QAR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Purchase" referencedIdentifier="TipJarKNavigationController" id="v7i-U9-USe" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="qo0-p5-YVW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2C9-JS-U5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1795" y="-816"/>
+        </scene>
         <!--LibrarySettings-->
         <scene sceneID="fe6-Ei-sZj">
             <objects>
@@ -380,6 +374,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z6x-yd-Mr1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1854" y="-781"/>
+        </scene>
+        <!--DisplaySettings-->
+        <scene sceneID="RdJ-ak-oTj">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DisplaySettings" id="urf-Ka-1Pe" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ZRM-8A-D1P"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y62-rG-dh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3252" y="-509"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

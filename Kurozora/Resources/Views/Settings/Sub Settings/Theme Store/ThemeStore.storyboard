@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jTj-FV-Niv">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -13,14 +13,13 @@
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
-        <scene sceneID="jbc-HC-Hfj">
+        <scene sceneID="k9Y-3C-wBN">
             <objects>
-                <navigationController storyboardIdentifier="ManageThemesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xyg-hs-K1N" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ManageThemesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jTj-FV-Niv" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="kHM-1M-zT8">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Iu5-VZ-55c">
                         <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="Wev-0r-puT"/>
+                        <viewLayoutGuide key="safeArea" id="VN1-Hv-tm1"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -31,10 +30,10 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="gqE-BK-HBE" kind="relationship" relationship="rootViewController" id="7vM-0y-DhN"/>
+                        <segue destination="gqE-BK-HBE" kind="relationship" relationship="rootViewController" id="HjF-RY-21J"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XXk-UK-8bD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z7s-KR-w9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-339" y="-1673"/>
         </scene>

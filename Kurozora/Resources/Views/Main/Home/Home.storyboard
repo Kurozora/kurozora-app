@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
-    <device id="retina6_5" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2t6-uG-J3i">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ShowDetailsCollectionViewController-->
-        <scene sceneID="oTj-KT-RTZ">
+        <!--Navigation Controller-->
+        <scene sceneID="Pip-gE-Spj">
             <objects>
-                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="8H2-pT-d2L" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="9ku-Te-cpw"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="l8x-AP-XJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="HomeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2t6-uG-J3i" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="a93-Kr-WZq">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="f08-Kj-ToR"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lLs-XV-jFy" kind="relationship" relationship="rootViewController" id="kvM-Dg-POy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5CH-K9-JhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2101" y="155"/>
-        </scene>
-        <!--Purchase-->
-        <scene sceneID="ADX-YZ-3zP">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1976" y="438"/>
-        </scene>
-        <!--Legal-->
-        <scene sceneID="TgQ-yC-U46">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1960" y="461"/>
+            <point key="canvasLocation" x="647" y="179"/>
         </scene>
         <!--Explore-->
         <scene sceneID="cmd-mB-OEl">
             <objects>
                 <collectionViewController storyboardIdentifier="HomeCollectionViewController" title="Explore" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lLs-XV-jFy" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="4qz-vz-vYz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="4qz-vz-vYz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gxn-7Q-2Hq">
@@ -50,7 +51,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionButtonExploreCollectionViewCell" id="G1M-P6-vrM" customClass="ActionButtonExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                <rect key="frame" x="9.6666666666666661" y="0.0" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Mv0-HY-3tH">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -94,10 +95,10 @@
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="338" y="5" width="52" height="34"/>
+                                <rect key="frame" x="321" y="5" width="52" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="LuP-Rg-K02"/>
-                                    <constraint firstAttribute="width" constant="36" id="c3J-r2-6pk"/>
+                                    <constraint firstAttribute="height" constant="28" id="LuP-Rg-K02"/>
+                                    <constraint firstAttribute="width" constant="28" id="c3J-r2-6pk"/>
                                 </constraints>
                                 <state key="normal" title="Profile">
                                     <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -137,39 +138,6 @@
             </objects>
             <point key="canvasLocation" x="1450.7246376811595" y="178.79464285714286"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="KfH-cc-N2P">
-            <objects>
-                <navigationController storyboardIdentifier="HomeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eeh-Yo-M66" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Bui-bU-Slq">
-                        <rect key="frame" x="0.0" y="88" width="414" height="54"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="lLs-XV-jFy" kind="relationship" relationship="rootViewController" id="hmi-EO-vPQ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8iy-pl-SuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="648" y="179"/>
-        </scene>
-        <!--Redeem-->
-        <scene sceneID="zeC-Uz-NjZ">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1970" y="416"/>
-        </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="JZQ-XP-0tx">
             <objects>
@@ -180,15 +148,15 @@
             </objects>
             <point key="canvasLocation" x="2068" y="-103"/>
         </scene>
-        <!--ShowsListCollectionViewController-->
-        <scene sceneID="4AQ-m0-2Yb">
+        <!--ThemesCollectionViewController-->
+        <scene sceneID="URR-Sw-5Ha">
             <objects>
-                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="TkU-hQ-vfM" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="TCb-lv-nBO"/>
+                <viewControllerPlaceholder storyboardName="Theme" referencedIdentifier="ThemesCollectionViewController" id="9dW-1f-CLB" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="rQH-Xm-7Ic"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TK9-g6-Pdu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oXL-DI-6I3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2092" y="173"/>
+            <point key="canvasLocation" x="2076" y="-83"/>
         </scene>
         <!--GenresCollectionViewController-->
         <scene sceneID="kYl-2s-0xC">
@@ -200,6 +168,86 @@
             </objects>
             <point key="canvasLocation" x="2075" y="-62"/>
         </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="D5F-5P-Zt7">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="VID-kH-G6m" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="VUQ-NT-FmN"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Bi-cs-RfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2122" y="-25"/>
+        </scene>
+        <!--LiteraturesListCollectionViewController-->
+        <scene sceneID="BJz-hk-0iW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="GEx-kn-XGr" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Pgv-5h-vUf"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ypo-Ec-Nt1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2110" y="-4"/>
+        </scene>
+        <!--GameDetailsCollectionViewController-->
+        <scene sceneID="4XY-z3-wYs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="pkG-ca-5LU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gZn-F1-Bpe"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3IC-9v-R7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2100" y="30"/>
+        </scene>
+        <!--GamesListCollectionViewController-->
+        <scene sceneID="MTN-S7-rDm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GamesListCollectionViewController" id="o3G-a8-Qbb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="l49-2t-OqC"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7FB-9z-AQe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2089" y="51"/>
+        </scene>
+        <!--EpisodeDetailsCollectionViewController-->
+        <scene sceneID="u8Z-Lp-8Yg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailsCollectionViewController" id="9xN-N2-9Og" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4r4-7a-vq1"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NLC-ZR-2P1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2115" y="96"/>
+        </scene>
+        <!--EpisodesListCollectionViewController-->
+        <scene sceneID="DaD-oX-aWs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="ZQo-OB-q6J" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bnR-d6-BZt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAc-5h-2fg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2104" y="116"/>
+        </scene>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="oTj-KT-RTZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="8H2-pT-d2L" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="9ku-Te-cpw"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l8x-AP-XJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2101" y="155"/>
+        </scene>
+        <!--ShowsListCollectionViewController-->
+        <scene sceneID="4AQ-m0-2Yb">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="TkU-hQ-vfM" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="TCb-lv-nBO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TK9-g6-Pdu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2092" y="173"/>
+        </scene>
         <!--CharacterDetailsCollectionViewController-->
         <scene sceneID="SMd-V9-8qa">
             <objects>
@@ -209,6 +257,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6KD-PT-lmE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2122" y="206"/>
+        </scene>
+        <!--CharactersListCollectionViewController-->
+        <scene sceneID="v5G-rj-ee9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharactersListCollectionViewController" id="iUi-Ed-iEq" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="vV1-hN-TyH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SBL-w4-YZS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2112" y="226"/>
         </scene>
         <!--PersonDetailsCollectionViewController-->
         <scene sceneID="vml-Rx-QI2">
@@ -230,25 +288,15 @@
             </objects>
             <point key="canvasLocation" x="2091" y="282"/>
         </scene>
-        <!--CharactersListCollectionViewController-->
-        <scene sceneID="v5G-rj-ee9">
+        <!--SongDetailsCollectionViewController-->
+        <scene sceneID="VFA-hF-ijv">
             <objects>
-                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharactersListCollectionViewController" id="iUi-Ed-iEq" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="vV1-hN-TyH"/>
+                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="SongDetailsCollectionViewController" id="9os-gD-27a" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Xbs-xP-Ipn"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SBL-w4-YZS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jwT-wl-9T0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2112" y="226"/>
-        </scene>
-        <!--ThemesCollectionViewController-->
-        <scene sceneID="URR-Sw-5Ha">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Theme" referencedIdentifier="ThemesCollectionViewController" id="9dW-1f-CLB" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="rQH-Xm-7Ic"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oXL-DI-6I3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2076" y="-83"/>
+            <point key="canvasLocation" x="2100" y="315"/>
         </scene>
         <!--SongsListCollectionViewController-->
         <scene sceneID="L08-1Y-q6k">
@@ -260,76 +308,6 @@
             </objects>
             <point key="canvasLocation" x="2088" y="335"/>
         </scene>
-        <!--SongDetailsCollectionViewController-->
-        <scene sceneID="VFA-hF-ijv">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="SongDetailsCollectionViewController" id="9os-gD-27a" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Xbs-xP-Ipn"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jwT-wl-9T0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2100" y="315"/>
-        </scene>
-        <!--EpisodesListCollectionViewController-->
-        <scene sceneID="DaD-oX-aWs">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="ZQo-OB-q6J" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="bnR-d6-BZt"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cAc-5h-2fg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2104" y="116"/>
-        </scene>
-        <!--LiteraturesListCollectionViewController-->
-        <scene sceneID="BJz-hk-0iW">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="GEx-kn-XGr" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Pgv-5h-vUf"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ypo-Ec-Nt1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2110" y="-4"/>
-        </scene>
-        <!--EpisodeDetailsCollectionViewController-->
-        <scene sceneID="u8Z-Lp-8Yg">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailsCollectionViewController" id="9xN-N2-9Og" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="4r4-7a-vq1"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NLC-ZR-2P1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2115" y="96"/>
-        </scene>
-        <!--LiteratureDetailsCollectionViewController-->
-        <scene sceneID="D5F-5P-Zt7">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="VID-kH-G6m" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="VUQ-NT-FmN"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Bi-cs-RfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2122" y="-25"/>
-        </scene>
-        <!--GamesListCollectionViewController-->
-        <scene sceneID="MTN-S7-rDm">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GamesListCollectionViewController" id="o3G-a8-Qbb" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="l49-2t-OqC"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7FB-9z-AQe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2089" y="51"/>
-        </scene>
-        <!--GameDetailsCollectionViewController-->
-        <scene sceneID="4XY-z3-wYs">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="pkG-ca-5LU" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="gZn-F1-Bpe"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3IC-9v-R7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2100" y="30"/>
-        </scene>
         <!--ReCapCollectionViewController-->
         <scene sceneID="lpv-BW-ZQj">
             <objects>
@@ -339,6 +317,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gBH-fW-dL6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2074" y="376"/>
+        </scene>
+        <!--Redeem-->
+        <scene sceneID="zeC-Uz-NjZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1970" y="416"/>
+        </scene>
+        <!--Purchase-->
+        <scene sceneID="ADX-YZ-3zP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1976" y="438"/>
+        </scene>
+        <!--Legal-->
+        <scene sceneID="TgQ-yC-U46">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1960" y="461"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X1a-4x-QIU">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="H5e-l3-ehI">
+            <objects>
+                <navigationController storyboardIdentifier="EpisodesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X1a-4x-QIU" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="t8k-51-24f">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="HWn-y1-WPe"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0cA-m7-5sS" kind="relationship" relationship="rootViewController" id="Nsz-aJ-1Na"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="atB-W3-U0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1592" y="-601"/>
+        </scene>
         <!--Episodes List Collection View Controller-->
         <scene sceneID="4ts-tU-IJ6">
             <objects>
@@ -337,7 +364,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="YiI-ms-8UP">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="8If-tb-Ajc">
-                            <rect key="frame" x="51554986.666666664" y="-25165706" width="0.0" height="0.0"/>
+                            <rect key="frame" x="6599038293.333333" y="-3221225354" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5b-ab-F31">
@@ -385,32 +412,6 @@
             </objects>
             <point key="canvasLocation" x="2990" y="-360"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="hCk-kg-wbb">
-            <objects>
-                <navigationController storyboardIdentifier="EpisodesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3U2-4Z-cqf" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="gZS-xN-jcD"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="dHj-Yl-oZM">
-                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="0cA-m7-5sS" kind="relationship" relationship="rootViewController" id="HIj-9U-dHG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cdk-j3-226" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1593" y="-601"/>
-        </scene>
         <!--EpisodesListCollectionViewController-->
         <scene sceneID="u6r-06-Rad">
             <objects>
@@ -440,6 +441,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rnt-cY-ZH5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3743" y="-787"/>
+        </scene>
+        <!--SeasonsListCollectionViewController-->
+        <scene sceneID="M8O-QY-6PS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Seasons" referencedIdentifier="SeasonsListCollectionViewController" id="yhO-a7-eii" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ntM-fo-L5x"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0dE-BN-vAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3745" y="-749"/>
         </scene>
         <!--EpisodesListCollectionViewController-->
         <scene sceneID="d0C-8E-VD3">
@@ -481,16 +492,6 @@
             </objects>
             <point key="canvasLocation" x="3754" y="-603"/>
         </scene>
-        <!--SeasonsListCollectionViewController-->
-        <scene sceneID="M8O-QY-6PS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Seasons" referencedIdentifier="SeasonsListCollectionViewController" id="yhO-a7-eii" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="ntM-fo-L5x"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0dE-BN-vAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3745" y="-749"/>
-        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
@@ -500,7 +501,7 @@
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="123"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

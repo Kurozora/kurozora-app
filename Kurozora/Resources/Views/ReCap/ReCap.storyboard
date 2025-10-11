@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CkH-Ol-zFy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JQw-BS-uvZ">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="vYY-33-0rK">
+            <objects>
+                <navigationController storyboardIdentifier="ReCapKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JQw-BS-uvZ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="NDD-Wx-do7">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="XUu-UT-Wx9"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rRR-rI-O5b" kind="relationship" relationship="rootViewController" id="6BD-le-0qy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dZp-H9-3gm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-631" y="-1113"/>
+        </scene>
         <!--Re Cap Collection View Controller-->
         <scene sceneID="jnv-Nr-F6K">
             <objects>
@@ -47,40 +74,15 @@
             </objects>
             <point key="canvasLocation" x="176.33587786259542" y="-1112.6760563380283"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="67W-pV-TaO">
+        <!--ThemesCollectionViewController-->
+        <scene sceneID="2DN-fK-xat">
             <objects>
-                <navigationController storyboardIdentifier="ReCapKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CkH-Ol-zFy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="njO-6C-qjH">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="rRR-rI-O5b" kind="relationship" relationship="rootViewController" id="buV-XT-giY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oIl-TK-d6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-631" y="-1112"/>
-        </scene>
-        <!--LiteratureDetailsCollectionViewController-->
-        <scene sceneID="kbH-GP-4Fp">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="ORM-D6-DI2" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="gdn-46-thb"/>
+                <viewControllerPlaceholder storyboardName="Theme" referencedIdentifier="ThemesCollectionViewController" id="N0m-Ui-w96" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bfN-uR-zVG"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O7f-us-nHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dcg-yt-oDc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="-1113"/>
+            <point key="canvasLocation" x="819" y="-1179"/>
         </scene>
         <!--GenresCollectionViewController-->
         <scene sceneID="Nea-hN-W7A">
@@ -92,6 +94,16 @@
             </objects>
             <point key="canvasLocation" x="815" y="-1144"/>
         </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="kbH-GP-4Fp">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="ORM-D6-DI2" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gdn-46-thb"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O7f-us-nHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="-1113"/>
+        </scene>
         <!--GameDetailsCollectionViewController-->
         <scene sceneID="9VC-8R-egK">
             <objects>
@@ -101,16 +113,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Euf-G4-2FV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="841" y="-1081"/>
-        </scene>
-        <!--ThemesCollectionViewController-->
-        <scene sceneID="2DN-fK-xat">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Theme" referencedIdentifier="ThemesCollectionViewController" id="N0m-Ui-w96" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="bfN-uR-zVG"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dcg-yt-oDc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="819" y="-1179"/>
         </scene>
         <!--ShowDetailsCollectionViewController-->
         <scene sceneID="bMu-sM-ymE">

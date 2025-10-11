@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Wj7-Sr-C4D">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,27 +10,30 @@
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
-        <scene sceneID="Au8-Ad-oj1">
+        <scene sceneID="A5b-4i-nR3">
             <objects>
-                <navigationController storyboardIdentifier="LibraryKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="38B-e3-pz3" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="trA-Wa-Z9y">
+                <navigationController storyboardIdentifier="LibraryKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wj7-Sr-C4D" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Vlp-nT-bL5">
                         <rect key="frame" x="0.0" y="88" width="414" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="n6f-yf-Nko"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="B4w-wJ-4Cf" kind="relationship" relationship="rootViewController" id="1LR-Yk-cFX"/>
+                        <segue destination="B4w-wJ-4Cf" kind="relationship" relationship="rootViewController" id="FZN-89-Sc7"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9vL-CK-tr0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dqj-mu-ilQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1645" y="865"/>
+            <point key="canvasLocation" x="-1646" y="865"/>
         </scene>
         <!--Library-->
         <scene sceneID="HTe-q8-fSw">

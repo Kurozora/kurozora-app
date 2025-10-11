@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IcY-9L-3MG">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="pgU-q0-V86">
+            <objects>
+                <navigationController storyboardIdentifier="DisplayKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IcY-9L-3MG" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="16x-CW-F8B">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="Ba8-NN-i43"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y2K-Bn-OHN" kind="relationship" relationship="rootViewController" id="s7R-oc-7GW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTt-l0-d5W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4039" y="-269"/>
+        </scene>
         <!--Display & Blindness-->
         <scene sceneID="ofI-Cu-SE0">
             <objects>
@@ -20,7 +47,7 @@
                             <tableViewSection headerTitle="Appearance" id="PWQ-vE-3Vx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="212" id="XOO-96-8EI" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="49.5" width="374" height="212"/>
+                                        <rect key="frame" x="20" y="55.5" width="374" height="212"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOO-96-8EI" id="5tX-qv-LMy">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="212"/>
@@ -40,7 +67,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-pF-2Uf" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="22.5" y="128" width="33" height="26"/>
+                                                                    <rect key="frame" x="20" y="128" width="38.5" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -90,7 +117,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dark" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1e3-1i-68v" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="24" y="128" width="30.5" height="26"/>
+                                                                    <rect key="frame" x="21" y="128" width="36" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -154,20 +181,20 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="vez-MJ-1rS" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="261.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="267.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vez-MJ-1rS" id="PUN-pw-yfG">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="h67-1d-CaR" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="16.5" width="65.5" height="17"/>
+                                                    <rect key="frame" x="8" y="15" width="77.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WWc-LK-Yea" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
                                                     <connections>
                                                         <action selector="enableAutomaticDarkThemeSwitched:" destination="vez-MJ-1rS" eventType="valueChanged" id="ifi-VL-77R"/>
                                                     </connections>
@@ -192,7 +219,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="311.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="317.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qUb-FK-NCN" id="Hex-fY-tgp">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -202,21 +229,21 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSb-K7-bBy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="51" height="30"/>
+                                                            <rect key="frame" x="8" y="10" width="60" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Dark Until Sunrise" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="9gr-0c-sbs" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="239.5" y="17" width="109" height="16"/>
+                                                            <rect key="frame" x="218.5" y="15.5" width="130" height="19.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-i6-xdk">
-                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
+                                                            <rect key="frame" x="353.5" y="18.5" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="hiQ-xF-B3B"/>
@@ -259,21 +286,21 @@
                                 <string key="footerTitle">Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or...</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-sw-KLe" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="418.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="430.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFt-sw-KLe" id="mwQ-cc-SXz">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="True Black" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BWx-Ky-TvQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="16.5" width="68" height="17"/>
+                                                    <rect key="frame" x="8" y="15" width="80" height="20.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NsU-vB-Kuq" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
                                                     <connections>
                                                         <action selector="enableTrueBlackSwitched:" destination="UFt-sw-KLe" eventType="valueChanged" id="EF9-tO-FXb"/>
                                                     </connections>
@@ -302,21 +329,21 @@
                             <tableViewSection footerTitle="Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me" id="qHo-ad-Xw6">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="541" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="560.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Idl-Sy-4tK" id="wIn-nf-umu">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Titles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B7h-A4-wen" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="16.5" width="76" height="17"/>
+                                                    <rect key="frame" x="8" y="15" width="89" height="20.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S6w-ZM-ihQ" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
                                                     <connections>
                                                         <action selector="enabledSwitchSwitched:" destination="Idl-Sy-4tK" eventType="valueChanged" id="MIe-gD-YXm"/>
                                                     </connections>
@@ -354,32 +381,6 @@
             </objects>
             <point key="canvasLocation" x="-3323.1884057971015" y="-269.19642857142856"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xj3-NW-aHV">
-            <objects>
-                <navigationController storyboardIdentifier="DisplayKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="svG-2R-sWh" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="wZl-Va-6Ax">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="IeM-U7-K7Y"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y2K-Bn-OHN" kind="relationship" relationship="rootViewController" id="7dl-SB-KvK"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VlF-Eg-iD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4038" y="-269"/>
-        </scene>
         <!--Options-->
         <scene sceneID="XzS-5N-ouv">
             <objects>
@@ -390,17 +391,17 @@
                         <viewLayoutGuide key="safeArea" id="4T8-xq-hoD"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="49.5" width="374" height="37.5"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="41.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uL8-Ph-RYR" id="qf7-8g-iCz">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="37.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6M-B0-z2V">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="37.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Appearance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-to-nVy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="114.5" height="17.5"/>
+                                                    <rect key="frame" x="8" y="10" width="135" height="21.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -408,7 +409,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="7:00 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJS-jZ-b10" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="315" y="11" width="51" height="16"/>
+                                                    <rect key="frame" x="305" y="11" width="61" height="19.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -440,21 +441,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="87" width="374" height="51.5"/>
+                                <rect key="frame" x="20" y="97" width="374" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUg-XW-ius" id="4ma-HZ-R9o">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="51.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starts at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="418-MU-fP6" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="17.5" width="55.5" height="17"/>
+                                            <rect key="frame" x="8" y="18.5" width="64.5" height="20.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="MC1-jj-Ic6">
-                                            <rect key="frame" x="276" y="10" width="90" height="31.5"/>
+                                            <rect key="frame" x="269.5" y="10" width="96.5" height="37"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="999" constant="90" id="qOw-W3-R4g"/>
                                             </constraints>
@@ -496,7 +497,7 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
     </resources>
 </document>

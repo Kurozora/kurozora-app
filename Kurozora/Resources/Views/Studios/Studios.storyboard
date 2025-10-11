@@ -1,19 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UE9-Fw-9dy">
-    <device id="retina6_5" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Ev-ue-Zv7">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23719.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="ZYV-xx-I7b">
+            <objects>
+                <navigationController storyboardIdentifier="StudiosKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Ev-ue-Zv7" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="z17-A7-Fha">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="LtS-m3-CEu"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="L5f-f9-2Js" kind="relationship" relationship="rootViewController" id="7bi-OZ-ZR4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xMv-Co-RsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2025" y="-867"/>
+        </scene>
+        <!--Studios List Collection View Controller-->
+        <scene sceneID="y28-ss-ib2">
+            <objects>
+                <collectionViewController storyboardIdentifier="StudiosListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="L5f-f9-2Js" customClass="StudiosListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="5WJ-mb-zvr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dw9-3a-ybJ">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="L5f-f9-2Js" id="kDl-nz-oDq"/>
+                            <outlet property="delegate" destination="L5f-f9-2Js" id="vFN-sg-LJK"/>
+                            <outlet property="dragDelegate" destination="L5f-f9-2Js" id="Bej-4A-shq"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="tmy-jZ-yUy"/>
+                    <connections>
+                        <segue destination="LEY-8f-r49" kind="show" identifier="StudioDetailsSegue" id="Ii4-cE-Vsp"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBA-t3-D6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2884" y="-867"/>
+        </scene>
         <!--Studio-->
         <scene sceneID="yh2-3I-PRn">
             <objects>
                 <collectionViewController storyboardIdentifier="StudioDetailsCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LEY-8f-r49" customClass="StudioDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="iIM-I3-df4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="671-aU-hRr">
@@ -24,10 +81,10 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StudioHeaderCollectionViewCell" id="5yc-35-RM7" customClass="StudioHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                                <rect key="frame" x="-10.666666666666666" y="0.0" width="414" height="230"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qYU-AH-bjm">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XVM-St-eY3" customClass="StudioLogoImageView" customModule="Kurozora" customModuleProvider="target">
@@ -37,13 +94,13 @@
                                                 <constraint firstAttribute="width" secondItem="XVM-St-eY3" secondAttribute="height" multiplier="1:1" id="laq-8G-f7g"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGJ-0Y-YXG" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGJ-0Y-YXG" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="173" y="156" width="68" height="34"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Founded on April 18, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW7-a3-ILO" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Founded on April 18, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW7-a3-ILO" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="102" y="198" width="210" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <nil key="textColor"/>
@@ -94,6 +151,16 @@
             </objects>
             <point key="canvasLocation" x="3736" y="-867"/>
         </scene>
+        <!--StudioDetailsCollectionViewController-->
+        <scene sceneID="CeO-ma-nfe">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudioDetailsCollectionViewController" id="qxZ-84-4yw" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="l0H-8L-D78"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zoq-9f-dka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4407" y="-944"/>
+        </scene>
         <!--ShowDetailsCollectionViewController-->
         <scene sceneID="TWd-dP-lZ7">
             <objects>
@@ -114,53 +181,15 @@
             </objects>
             <point key="canvasLocation" x="4393" y="-879"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="fC4-lB-ohq">
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="pUh-LC-dBy">
             <objects>
-                <navigationController storyboardIdentifier="StudiosKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UE9-Fw-9dy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DFx-aw-PN5">
-                        <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="L5f-f9-2Js" kind="relationship" relationship="rootViewController" id="wiB-NC-Bel"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d6w-2c-lHn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="udT-nM-efB" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gU0-ao-bdS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j3J-jT-CFo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2026.0869565217392" y="-866.51785714285711"/>
-        </scene>
-        <!--Studios List Collection View Controller-->
-        <scene sceneID="y28-ss-ib2">
-            <objects>
-                <collectionViewController storyboardIdentifier="StudiosListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="L5f-f9-2Js" customClass="StudiosListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="5WJ-mb-zvr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dw9-3a-ybJ">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
-                        <connections>
-                            <outlet property="dataSource" destination="L5f-f9-2Js" id="kDl-nz-oDq"/>
-                            <outlet property="delegate" destination="L5f-f9-2Js" id="vFN-sg-LJK"/>
-                            <outlet property="dragDelegate" destination="L5f-f9-2Js" id="Bej-4A-shq"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="tmy-jZ-yUy"/>
-                    <connections>
-                        <segue destination="LEY-8f-r49" kind="show" identifier="StudioDetailsSegue" id="Ii4-cE-Vsp"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RBA-t3-D6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2884" y="-867"/>
+            <point key="canvasLocation" x="4422" y="-826"/>
         </scene>
         <!--LiteraturesListCollectionViewController-->
         <scene sceneID="WjW-LS-cqC">
@@ -172,26 +201,6 @@
             </objects>
             <point key="canvasLocation" x="4413" y="-806"/>
         </scene>
-        <!--LiteratureDetailsCollectionViewController-->
-        <scene sceneID="pUh-LC-dBy">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="udT-nM-efB" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="gU0-ao-bdS"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="j3J-jT-CFo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4422" y="-826"/>
-        </scene>
-        <!--GamesListCollectionViewController-->
-        <scene sceneID="ob2-cC-x0o">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GamesListCollectionViewController" id="su2-MR-PaQ" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="DtJ-dN-rFi"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BkG-FG-UtE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4393" y="-741"/>
-        </scene>
         <!--GameDetailsCollectionViewController-->
         <scene sceneID="tft-6I-gOg">
             <objects>
@@ -202,15 +211,15 @@
             </objects>
             <point key="canvasLocation" x="4404" y="-761"/>
         </scene>
-        <!--StudioDetailsCollectionViewController-->
-        <scene sceneID="CeO-ma-nfe">
+        <!--GamesListCollectionViewController-->
+        <scene sceneID="ob2-cC-x0o">
             <objects>
-                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudioDetailsCollectionViewController" id="qxZ-84-4yw" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="l0H-8L-D78"/>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GamesListCollectionViewController" id="su2-MR-PaQ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="DtJ-dN-rFi"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zoq-9f-dka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BkG-FG-UtE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4407" y="-944"/>
+            <point key="canvasLocation" x="4393" y="-741"/>
         </scene>
         <!--ReviewsCollectionViewController-->
         <scene sceneID="VPt-pY-jZv">

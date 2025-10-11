@@ -1,42 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jJE-s5-q4F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yQv-ou-iFD">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chime Sound-->
-        <scene sceneID="HUS-4g-EkZ">
-            <objects>
-                <tableViewController storyboardIdentifier="SoundOptionsViewController" title="Chime Sound" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="foP-Pf-Mwk" customClass="SoundOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="bzu-TD-nbr">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="toW-PM-vzA"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="foP-Pf-Mwk" id="rdV-pL-GgQ"/>
-                            <outlet property="delegate" destination="foP-Pf-Mwk" id="sln-gP-JCe"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="Za8-PA-9PN"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2NV-5N-ndZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-483" y="-1605"/>
-        </scene>
         <!--Navigation Controller-->
-        <scene sceneID="mQL-nb-Q6I">
+        <scene sceneID="yDU-cW-JLu">
             <objects>
-                <navigationController storyboardIdentifier="SoundSettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jJE-s5-q4F" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SoundSettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yQv-ou-iFD" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="bao-QF-JR8">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="B1C-3v-GrJ">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="09j-qE-Yxa"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,12 +28,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="aNg-gu-sku" kind="relationship" relationship="rootViewController" id="OhR-IA-Pbc"/>
+                        <segue destination="aNg-gu-sku" kind="relationship" relationship="rootViewController" id="azP-5Q-cdv"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z2b-h9-E7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l20-uF-eet" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1926.0869565217392" y="-1605.1339285714284"/>
+            <point key="canvasLocation" x="-1927" y="-1606"/>
         </scene>
         <!--Sound-->
         <scene sceneID="P3O-Ns-GxY">
@@ -145,7 +126,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDH-4J-3Dx" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -185,7 +166,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Via-nz-8uH" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -225,7 +206,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jR5-gT-alP" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -269,6 +250,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQE-fk-dkZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1203" y="-1605"/>
+        </scene>
+        <!--Chime Sound-->
+        <scene sceneID="HUS-4g-EkZ">
+            <objects>
+                <tableViewController storyboardIdentifier="SoundOptionsViewController" title="Chime Sound" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="foP-Pf-Mwk" customClass="SoundOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="bzu-TD-nbr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="toW-PM-vzA"/>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="foP-Pf-Mwk" id="rdV-pL-GgQ"/>
+                            <outlet property="delegate" destination="foP-Pf-Mwk" id="sln-gP-JCe"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Chime Sound" id="Za8-PA-9PN"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2NV-5N-ndZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-483" y="-1605"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

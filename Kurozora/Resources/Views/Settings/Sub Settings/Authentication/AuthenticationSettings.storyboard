@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTF-rJ-AtF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h8Q-kL-PZc">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="G8M-qQ-FDD">
+            <objects>
+                <navigationController storyboardIdentifier="AuthenticationKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h8Q-kL-PZc" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="Grn-LN-d2W">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="6Xb-EC-SM1"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F5a-ci-Zsf" kind="relationship" relationship="rootViewController" id="PoY-KL-iDI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0hz-Ue-Lcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4039" y="-269"/>
+        </scene>
         <!--Face ID & Passcode-->
         <scene sceneID="Zlg-Mm-Dfw">
             <objects>
@@ -22,18 +48,18 @@
                             <tableViewSection id="WQ7-1X-0vB">
                                 <string key="footerTitle">Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app.</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="6oh-ZP-WM2" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="18" width="374" height="50"/>
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="6oh-ZP-WM2" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="18" width="374" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6oh-ZP-WM2" id="lis-rD-JCx">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-te-zoj">
-                                                    <rect key="frame" x="10" y="10" width="30" height="30.5"/>
+                                                    <rect key="frame" x="10" y="10" width="30" height="31"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Face ID" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/faceid" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="31"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -53,7 +79,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="315" y="9.5" width="51" height="31.5"/>
+                                                    <rect key="frame" x="303" y="9.5" width="63" height="32"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="enabledSwitchSwitched:" destination="6oh-ZP-WM2" eventType="valueChanged" id="reQ-a1-hfT"/>
@@ -85,7 +111,7 @@
                             <tableViewSection footerTitle="You'll be asked to immediatly authenticate if you completely close the app." id="DVY-cs-STr">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="1Il-jo-KSp" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="164" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="165" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Il-jo-KSp" id="4UV-qv-99A">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -109,7 +135,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bwb-FO-ynS">
-                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
+                                                            <rect key="frame" x="353.5" y="18.5" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="KfG-fo-Xqw"/>
@@ -172,7 +198,7 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="N2e-BR-2u8"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AuthenticationOptionsCell" rowHeight="50" id="eop-Fv-7dF" customClass="AuthenticationOptionsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="38" width="374" height="50"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="eop-Fv-7dF" id="ycS-y8-3c0">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -229,41 +255,16 @@
                             <outlet property="delegate" destination="S4V-aO-eN0" id="vqT-KR-BTi"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Require Authentication" id="m6U-MY-xQR"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RtW-0S-WHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2606" y="-269"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="PMn-yS-Fyc">
-            <objects>
-                <navigationController storyboardIdentifier="AuthenticationKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bTF-rJ-AtF" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNa-kx-6yu">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="kzT-gU-ly0"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="F5a-ci-Zsf" kind="relationship" relationship="rootViewController" id="4Aw-ux-icY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bWO-dY-fdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4038" y="-269"/>
-        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Icons/Face ID" width="128" height="128"/>
+        <image name="Icons/faceid" width="128" height="128"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
     </resources>

@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4V4-jX-hcb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dV8-YA-mad">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--HomeCollectionViewController-->
-        <scene sceneID="qKy-Z2-TLG">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeCollectionViewController" id="L5r-em-CPk" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="CxP-5C-g1H"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hv1-vy-qmb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2855" y="-133"/>
-        </scene>
         <!--Navigation Controller-->
-        <scene sceneID="eBr-4S-BXK">
+        <scene sceneID="uKB-6F-42q">
             <objects>
-                <navigationController storyboardIdentifier="HomeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4V4-jX-hcb" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GenresKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dV8-YA-mad" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="YgV-UE-scc">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="hhM-YE-pm9">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="PUD-Nh-tic"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -37,12 +29,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="c9Q-qF-Dsp" kind="relationship" relationship="rootViewController" id="OJs-ee-hMx"/>
+                        <segue destination="c9Q-qF-Dsp" kind="relationship" relationship="rootViewController" id="C4I-vR-C1H"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kmP-Ff-xx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ILF-eu-yMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1417" y="-133"/>
+            <point key="canvasLocation" x="1416" y="-133"/>
         </scene>
         <!--Genres-->
         <scene sceneID="bgW-wb-fLY">
@@ -157,13 +149,23 @@
             </objects>
             <point key="canvasLocation" x="2228.985507246377" y="-133.25892857142856"/>
         </scene>
+        <!--HomeCollectionViewController-->
+        <scene sceneID="qKy-Z2-TLG">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeCollectionViewController" id="L5r-em-CPk" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="CxP-5C-g1H"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hv1-vy-qmb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2855" y="-133"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="genre_pattern" width="600" height="600"/>
         <image name="grain" width="700" height="700"/>
         <systemColor name="quaternarySystemFillColor">
-            <color red="0.4549019608" green="0.4549019608" blue="0.50196078430000002" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.45490196078431372" green="0.45490196078431372" blue="0.50196078431372548" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

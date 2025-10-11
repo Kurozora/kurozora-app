@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pBA-A4-wlh">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,6 +8,86 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="CZR-Hn-1sw">
+            <objects>
+                <navigationController storyboardIdentifier="FeedTableKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pBA-A4-wlh" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="B9w-xU-J2f">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="zMm-N9-nif"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AtO-CH-0OW" kind="relationship" relationship="rootViewController" id="Obf-1S-0oM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CUB-lw-NFo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2393" y="-70"/>
+        </scene>
+        <!--Feed-->
+        <scene sceneID="3EW-to-g3U">
+            <objects>
+                <tableViewController storyboardIdentifier="FeedTableViewController" title="Feed" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AtO-CH-0OW" customClass="FeedTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sw4-l1-VrY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="7rU-XG-jEj"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="jNb-oV-TiJ"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="nzh-Bi-y5t"/>
+                        <connections>
+                            <outlet property="dataSource" destination="AtO-CH-0OW" id="8Rj-sb-T3d"/>
+                            <outlet property="delegate" destination="AtO-CH-0OW" id="ztE-tZ-rjT"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Feed" id="4JV-Bj-kpv">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" image="gear" catalog="system" id="brK-B2-mL4">
+                            <connections>
+                                <segue destination="HFC-YJ-V83" kind="presentation" identifier="SettingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Profile" id="tt5-xx-9lS">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="338" y="5" width="52" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="36" id="4gN-1H-UE2"/>
+                                        <constraint firstAttribute="height" constant="36" id="zjC-jk-Hpl"/>
+                                    </constraints>
+                                    <state key="normal" title="Profile">
+                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="ed2-TQ-ewT"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                            <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="lOF-RI-y49">
+                                <connections>
+                                    <action selector="postMessageButton:" destination="AtO-CH-0OW" id="NQQ-sV-kFg"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="postMessageButton" destination="lOF-RI-y49" id="LT3-SE-AuC"/>
+                        <outlet property="profileImageButton" destination="egw-49-b9p" id="LjA-U7-79o"/>
+                        <segue destination="BEx-lZ-1Jp" kind="show" identifier="FeedMessageDetailsSegue" id="Z22-Fn-UgF"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="csp-1V-Ymv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3165.217391304348" y="-69.642857142857139"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="gvc-7W-Axm">
             <objects>
@@ -46,86 +126,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="psy-0z-Nae" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4561" y="27"/>
-        </scene>
-        <!--Feed-->
-        <scene sceneID="3EW-to-g3U">
-            <objects>
-                <tableViewController storyboardIdentifier="FeedTableViewController" title="Feed" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AtO-CH-0OW" customClass="FeedTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sw4-l1-VrY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="7rU-XG-jEj"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="jNb-oV-TiJ"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="nzh-Bi-y5t"/>
-                        <connections>
-                            <outlet property="dataSource" destination="AtO-CH-0OW" id="8Rj-sb-T3d"/>
-                            <outlet property="delegate" destination="AtO-CH-0OW" id="ztE-tZ-rjT"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Feed" id="4JV-Bj-kpv">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" image="gear" catalog="system" id="brK-B2-mL4">
-                            <connections>
-                                <segue destination="HFC-YJ-V83" kind="presentation" identifier="SettingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Profile" id="tt5-xx-9lS">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="52" height="34"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="36" id="4gN-1H-UE2"/>
-                                        <constraint firstAttribute="height" constant="36" id="zjC-jk-Hpl"/>
-                                    </constraints>
-                                    <state key="normal" title="Profile">
-                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="ed2-TQ-ewT"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="lOF-RI-y49">
-                                <connections>
-                                    <action selector="postMessageButton:" destination="AtO-CH-0OW" id="NQQ-sV-kFg"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="postMessageButton" destination="lOF-RI-y49" id="LT3-SE-AuC"/>
-                        <outlet property="profileImageButton" destination="egw-49-b9p" id="LjA-U7-79o"/>
-                        <segue destination="BEx-lZ-1Jp" kind="show" identifier="FeedMessageDetailsSegue" id="Z22-Fn-UgF"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="csp-1V-Ymv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3165.217391304348" y="-69.642857142857139"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="wvU-SD-VEm">
-            <objects>
-                <navigationController storyboardIdentifier="FeedTableKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="20p-4J-ZCZ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="7t8-za-yO1">
-                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="nyf-u4-8OL"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="AtO-CH-0OW" kind="relationship" relationship="rootViewController" id="EgW-gp-z04"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qoK-wR-XK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2394" y="-69"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -1,42 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MLk-bm-Urf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81c-oB-tpz">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Splash Screen-->
-        <scene sceneID="75V-H4-Alu">
-            <objects>
-                <tableViewController storyboardIdentifier="MotionOptionsViewController" title="Splash Screen" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="78a-xB-Owd" customClass="MotionOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="LyT-cD-cFN">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="PtF-QI-W21"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="78a-xB-Owd" id="Yfx-PH-maT"/>
-                            <outlet property="delegate" destination="78a-xB-Owd" id="3T9-0n-lF8"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="bBR-o3-CQh"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YNA-X3-rEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-483" y="-1605"/>
-        </scene>
         <!--Navigation Controller-->
-        <scene sceneID="oDr-Wd-FhE">
+        <scene sceneID="pzu-CS-q9g">
             <objects>
-                <navigationController storyboardIdentifier="MotionSettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MLk-bm-Urf" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MotionSettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="81c-oB-tpz" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="91b-ML-iWI">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="tEN-fq-Sem">
+                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="4U9-LA-CGv"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,12 +28,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Y8i-Hc-X0K" kind="relationship" relationship="rootViewController" id="re1-fy-nRY"/>
+                        <segue destination="Y8i-Hc-X0K" kind="relationship" relationship="rootViewController" id="8NJ-6u-2kr"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cbb-MQ-9Wk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fZE-Z6-HjC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1926.0869565217392" y="-1605.1339285714284"/>
+            <point key="canvasLocation" x="-1927" y="-1606"/>
         </scene>
         <!--Sound-->
         <scene sceneID="Rft-u4-T1M">
@@ -147,7 +128,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bD2-Sb-des" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -187,7 +168,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BpD-6R-gaZ" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -230,6 +211,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ti0-5K-gAD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1203.8167938931297" y="-1605.6338028169014"/>
+        </scene>
+        <!--Splash Screen-->
+        <scene sceneID="75V-H4-Alu">
+            <objects>
+                <tableViewController storyboardIdentifier="MotionOptionsViewController" title="Splash Screen" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="78a-xB-Owd" customClass="MotionOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="LyT-cD-cFN">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="PtF-QI-W21"/>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="78a-xB-Owd" id="Yfx-PH-maT"/>
+                            <outlet property="delegate" destination="78a-xB-Owd" id="3T9-0n-lF8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="bBR-o3-CQh"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YNA-X3-rEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-483" y="-1605"/>
         </scene>
     </scenes>
     <resources>
