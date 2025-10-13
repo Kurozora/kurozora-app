@@ -32,6 +32,16 @@ enum TabBarItem: Int, CaseIterable {
 	/// Representing the settings tab.
 	case settings
 
+	// MARK: - Initializers
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	init?(identifierValue: String) {
+		guard let tabBarItem = TabBarItem.allCases.first(where: {
+			$0.rowIdentifierValue == identifierValue
+		}) else { return nil }
+
+		self = tabBarItem
+	}
+
 	// MARK: - Properties
 	static var sideBarCases: [TabBarItem] {
 		#if targetEnvironment(macCatalyst)
@@ -42,35 +52,15 @@ enum TabBarItem: Int, CaseIterable {
 	}
 
 	static var tabBarCases: [TabBarItem] {
+		#if targetEnvironment(macCatalyst)
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			return [.search, .home, .schedule, .library, .feed, .notifications, .settings]
+		}
+		#endif
+
 		return [.home, .library, .feed, .notifications, .search]
 	}
 
-	// MARK: - Structs
-	/// List of row identifiers.
-	private struct RowIdentifier {
-		/// The unique identifier for the home tab.
-		static let home = UUID()
-
-		/// The unique identifier for the schedule tab.
-		static let schedule = UUID()
-
-		/// The unique identifier for the library tab.
-		static let library = UUID()
-
-		/// The unique identifier for the feed tab.
-		static let feed = UUID()
-
-		/// The unique identifier for the notification tab.
-		static let notifications = UUID()
-
-		/// The unique identifier for the search tab.
-		static let search = UUID()
-
-		/// The unique identifier for the settings tab.
-		static let settings = UUID()
-	}
-
-	// MARK: - Properties
 	/// The string value of the tab bar item.
 	var stringValue: String {
 		switch self {
@@ -172,22 +162,31 @@ enum TabBarItem: Int, CaseIterable {
 	}
 
 	/// The unique row identifier value of the tab bar item.
-	var rowIdentifierValue: UUID {
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	var rowIdentifierValue: String {
+		return String(describing: self)
+	}
+
+	/// The tab value of the tab bar item.
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	var tab: UITab {
 		switch self {
-		case .home:
-			return RowIdentifier.home
-		case .schedule:
-			return RowIdentifier.schedule
-		case .library:
-			return RowIdentifier.library
-		case .feed:
-			return RowIdentifier.feed
-		case .notifications:
-			return RowIdentifier.notifications
 		case .search:
-			return RowIdentifier.search
-		case .settings:
-			return RowIdentifier.settings
+			return UISearchTab(
+				title: self.stringValue,
+				image: self.imageValue,
+				identifier: self.rowIdentifierValue
+			) { _ in
+				self.kViewControllerValue
+			}
+		default:
+			return UITab(
+				title: self.stringValue,
+				image: self.imageValue,
+				identifier: self.rowIdentifierValue
+			) { _ in
+				self.kViewControllerValue
+			}
 		}
 	}
 }

@@ -35,23 +35,30 @@ class KTabBarController: UITabBarController {
 		super.viewDidLoad()
 
 		// Initialize views
-		self.viewControllers = TabBarItem.tabBarCases.map {
-			let rootNavigationController = $0.kViewControllerValue
-			// MARK: Refactor
-//			BounceAnimation()
-			let tabBarItem: UITabBarItem
-
-			if $0 != .search {
-				tabBarItem = UITabBarItem(title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
-			} else {
-				tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: $0.rawValue)
-				tabBarItem.title = $0.stringValue
-				tabBarItem.image = $0.imageValue
-				tabBarItem.selectedImage = $0.selectedImageValue
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			self.delegate = self
+			self.tabs = TabBarItem.tabBarCases.map {
+				$0.tab
 			}
+		} else {
+			self.viewControllers = TabBarItem.tabBarCases.map {
+				let rootNavigationController = $0.kViewControllerValue
+				// MARK: Refactor
+				// BounceAnimation()
+				let tabBarItem: UITabBarItem
 
-			rootNavigationController.tabBarItem = tabBarItem
-			return rootNavigationController
+				if $0 != .search {
+					tabBarItem = UITabBarItem(title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
+				} else {
+					tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: $0.rawValue)
+					tabBarItem.title = $0.stringValue
+					tabBarItem.image = $0.imageValue
+					tabBarItem.selectedImage = $0.selectedImageValue
+				}
+
+				rootNavigationController.tabBarItem = tabBarItem
+				return rootNavigationController
+			}
 		}
 
 		self.setupBadgeValue()
@@ -63,14 +70,30 @@ class KTabBarController: UITabBarController {
 	private func sharedInit() {
 		#if DEBUG
 		let showFlexLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
+		#if targetEnvironment(macCatalyst)
+		showFlexLongPressGestureRecognizer.minimumPressDuration = 2.0
+		#else
 		showFlexLongPressGestureRecognizer.numberOfTouchesRequired = 2
 		#endif
+		#endif
+
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			#if targetEnvironment(macCatalyst)
+			self.mode = .tabSidebar
+			#endif
+
+			self.sidebar.bottomBarView = UIView()
+		}
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			self.tabBarMinimizeBehavior = .onScrollDown
 
 			#if DEBUG
+			#if targetEnvironment(macCatalyst)
+			
+			#else
 			UIApplication.topViewController?.view.window?.addGestureRecognizer(showFlexLongPressGestureRecognizer)
+			#endif
 			#endif
 		} else {
 			self.tabBar.isTranslucent = true
@@ -134,50 +157,100 @@ class KTabBarController: UITabBarController {
 	}
 }
 
-// MARK: - UITabBarDelegate
-extension KTabBarController {
-	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-		guard let idx = tabBar.items?.firstIndex(of: item), self.viewControllers?[idx] != nil else { return }
+// MARK: - UITabBarControllerDelegate
+extension KTabBarController: UITabBarControllerDelegate {
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	func tabBarController(_ tabBarController: UITabBarController, didSelectTab selectedTab: UITab, previousTab: UITab?) {
+		guard let idx = self.tabs.firstIndex(of: selectedTab) else { return }
 		self.selectedIndex = idx
 
 		if UserSettings.hapticsAllowed {
 			UISelectionFeedbackGenerator().selectionChanged()
 		}
 
-		if tabBar.selectedItem == item { // Same tab selected
-			let selectedViewController = (self.viewControllers?[safe: self.selectedIndex] as? KNavigationController)?.visibleViewController
-			switch self.selectedIndex {
-			case 0:
+		if selectedTab == previousTab, let tabBarItem = TabBarItem(identifierValue: selectedTab.identifier) { // Same tab selected
+			let selectedViewController = (self.selectedViewController as? KNavigationController)?.visibleViewController
+
+			switch tabBarItem {
+			case .home, .schedule, .library:
 				let collectionView = (selectedViewController as? UICollectionViewController)?.collectionView
 				if collectionView?.isAtTop ?? true {
 					selectedViewController?.dismiss(animated: true, completion: nil)
 				} else {
 					collectionView?.safeScrollToItem(at: [0, 0], at: .top, animated: true)
 				}
-			case 1:
-				let collectionView = ((selectedViewController as? KTabbedViewController)?.currentViewController as? UICollectionViewController)?.collectionView
+			case .feed, .notifications:
+				let tableView = (selectedViewController as? UITableViewController)?.tableView
+				if tableView?.isAtTop ?? true {
+					selectedViewController?.dismiss(animated: true, completion: nil)
+				} else {
+					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				}
+			case .search:
+				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
+			case .settings: return
+			}
+		}
+	}
+
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	func tabBarController(_ tabBarController: UITabBarController, shouldSelectTab tab: UITab) -> Bool {
+		guard let tabBarItem = TabBarItem(identifierValue: tab.identifier) else { return true } // Select by default
+
+		switch tabBarItem {
+		case .settings:
+			self.presentSettingsViewController()
+			return false
+		default:
+			return true
+		}
+	}
+
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	func presentSettingsViewController() {
+		// Since the view controller in the selected tab is owned
+		// by the tab controller, the app crashes if you present it.
+		// So we create a new isntance to present instead.
+		let settingsSplitViewController = TabBarItem.settings.kViewControllerValue
+		settingsSplitViewController.modalPresentationStyle = .fullScreen
+		self.present(settingsSplitViewController, animated: true)
+	}
+}
+
+// MARK: - UITabBarDelegate
+extension KTabBarController {
+	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+		guard
+			let idx = tabBar.items?.firstIndex(of: item),
+			self.viewControllers?[idx] != nil
+		else { return }
+		self.selectedIndex = idx
+
+		if UserSettings.hapticsAllowed {
+			UISelectionFeedbackGenerator().selectionChanged()
+		}
+
+		if tabBar.selectedItem == item, let tabBarItem = TabBarItem(rawValue: self.selectedIndex) { // Same tab selected
+			let selectedViewController = (self.selectedViewController as? KNavigationController)?.visibleViewController
+
+			switch tabBarItem {
+			case .home, .schedule, .library:
+				let collectionView = (selectedViewController as? UICollectionViewController)?.collectionView
 				if collectionView?.isAtTop ?? true {
 					selectedViewController?.dismiss(animated: true, completion: nil)
 				} else {
 					collectionView?.safeScrollToItem(at: [0, 0], at: .top, animated: true)
 				}
-			case 2:
+			case .feed, .notifications:
 				let tableView = (selectedViewController as? UITableViewController)?.tableView
 				if tableView?.isAtTop ?? true {
 					selectedViewController?.dismiss(animated: true, completion: nil)
 				} else {
 					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
 				}
-			case 3:
-				let tableView = (selectedViewController as? UITableViewController)?.tableView
-				if tableView?.isAtTop ?? true {
-					selectedViewController?.dismiss(animated: true, completion: nil)
-				} else {
-					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
-				}
-			case 4:
+			case .search:
 				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
-			default: break
+			case .settings: break
 			}
 		}
 	}
