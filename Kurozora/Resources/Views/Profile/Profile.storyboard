@@ -1,42 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6QS-Km-l5h">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--FavoritesCollectionViewController-->
-        <scene sceneID="dSu-ot-U5F">
+        <!--Navigation Controller-->
+        <scene sceneID="Nhp-dy-EAz">
             <objects>
-                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="ProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6QS-Km-l5h" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="ecg-ae-q8W">
+                        <rect key="frame" x="0.0" y="100" width="375" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="mIE-AI-80U"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="f47-P0-fnG" kind="relationship" relationship="rootViewController" id="sjj-d0-5cJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yYZ-S4-CRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1609" y="-1237"/>
+            <point key="canvasLocation" x="-631" y="-1112"/>
         </scene>
-        <!--FMDetailsTableViewController-->
-        <scene sceneID="l48-2t-gRR">
+        <!--Users List Collection View Controller-->
+        <scene sceneID="Tcq-wv-cZr">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feed" referencedIdentifier="FMDetailsTableViewController" id="t9u-UF-w8N" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="j9K-JL-zLw"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jcN-Kh-Qg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <collectionViewController storyboardIdentifier="UsersListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f47-P0-fnG" customClass="UsersListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="f9F-KC-MSh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cbg-zl-RH2">
+                            <size key="itemSize" width="371" height="38"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="f47-P0-fnG" id="bZI-YI-vOU"/>
+                            <outlet property="delegate" destination="f47-P0-fnG" id="PcP-5D-EtM"/>
+                            <outlet property="dragDelegate" destination="f47-P0-fnG" id="Fbd-je-1lJ"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="68w-K2-Fam"/>
+                    <connections>
+                        <segue destination="zlF-Vo-yv3" kind="show" identifier="UserDetailsSegue" id="Umh-jV-v1e"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eFB-Vz-QNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589" y="-1187"/>
-        </scene>
-        <!--UsersListCollectionViewController-->
-        <scene sceneID="WB3-oB-wNl">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="UsersListCollectionViewController" id="fr7-NV-7bH" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="50b-ma-42I"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vZf-gO-OAw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1610" y="-1097"/>
+            <point key="canvasLocation" x="176.80000000000001" y="-1112.0689655172414"/>
         </scene>
         <!--Profile-->
         <scene sceneID="oXQ-6R-gF7">
@@ -152,7 +181,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <segue destination="rR0-ek-JER" kind="presentation" identifier="EditProfileSegue" id="7e0-Tt-w3i"/>
+                                                <segue destination="uJX-nF-kEQ" kind="presentation" identifier="EditProfileSegue" id="VlD-zy-wWj"/>
                                             </connections>
                                         </button>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -417,6 +446,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFh-8K-gm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1112.0689655172414"/>
+        </scene>
+        <!--FavoritesCollectionViewController-->
+        <scene sceneID="dSu-ot-U5F">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1609" y="-1237"/>
+        </scene>
+        <!--FMDetailsTableViewController-->
+        <scene sceneID="l48-2t-gRR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Feed" referencedIdentifier="FMDetailsTableViewController" id="t9u-UF-w8N" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="j9K-JL-zLw"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jcN-Kh-Qg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1589" y="-1187"/>
+        </scene>
+        <!--AchievementsTableViewController-->
+        <scene sceneID="CN5-5Z-irS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Achievement" referencedIdentifier="AchievementsTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="h1U-wI-JAG"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1609" y="-1149"/>
+        </scene>
+        <!--UsersListCollectionViewController-->
+        <scene sceneID="WB3-oB-wNl">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="UsersListCollectionViewController" id="fr7-NV-7bH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="50b-ma-42I"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vZf-gO-OAw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1610" y="-1097"/>
+        </scene>
+        <!--ReviewsListCollectionViewController-->
+        <scene sceneID="gfK-1p-44K">
+            <objects>
+                <viewControllerPlaceholder storyboardName="UserReviews" referencedIdentifier="ReviewsListCollectionViewController" id="r3o-1j-zLU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="CNc-ao-5WP"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gVV-52-t45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1622" y="-1038"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5SJ-je-yVh">
+            <objects>
+                <navigationController storyboardIdentifier="EditProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uJX-nF-kEQ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="Da5-9Y-Htu">
+                        <rect key="frame" x="0.0" y="16" width="375" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="pBv-aA-adF"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gDk-s7-DM9" kind="relationship" relationship="rootViewController" id="wKq-on-v3l"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cvV-T4-Ncd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1654" y="-656"/>
         </scene>
         <!--Profile-->
         <scene sceneID="mEb-oe-zNO">
@@ -736,12 +839,10 @@
                         <outlet property="bannerImageView" destination="smD-85-4IP" id="b8h-5n-SL8"/>
                         <outlet property="bioTextView" destination="9ec-fb-hS5" id="X4G-Pe-NcH"/>
                         <outlet property="displayNameTextField" destination="JxC-x4-7Lf" id="djh-L5-PIU"/>
-                        <outlet property="placeholderBannerImageEditButton" destination="lW6-AT-jU1" id="A9B-fR-WhU"/>
+                        <outlet property="placeholderBannerImageEditButton" destination="lW6-AT-jU1" id="qDN-jZ-iv5"/>
                         <outlet property="placeholderProfileImageEditButton" destination="Hee-35-wGT" id="0LR-k7-ST8"/>
                         <outlet property="profileBadgeStackView" destination="yOS-gc-0Kx" id="Boa-eh-rcT"/>
                         <outlet property="profileImageView" destination="ZEp-kb-AXW" id="muN-np-RXL"/>
-                        <outlet property="selectBannerImageButton" destination="kVx-uA-euu" id="9Id-up-xwe"/>
-                        <outlet property="selectProfileImageButton" destination="IOw-nj-Qcn" id="7j2-s0-61P"/>
                         <outlet property="usernameLabel" destination="aae-lT-o4J" id="XQJ-lb-IZl"/>
                         <outlet property="usernameTextField" destination="JFw-PB-tdp" id="I1g-Wc-kDb"/>
                         <outletCollection property="containerViews" destination="a3D-J0-tig" collectionClass="NSMutableArray" id="CrH-QV-gm1"/>
@@ -753,103 +854,11 @@
             </objects>
             <point key="canvasLocation" x="2596" y="-656.1576354679803"/>
         </scene>
-        <!--AchievementsTableViewController-->
-        <scene sceneID="CN5-5Z-irS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Achievement" referencedIdentifier="AchievementsTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="h1U-wI-JAG"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1609" y="-1149"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="o26-8I-W3L">
-            <objects>
-                <navigationController storyboardIdentifier="ProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q9O-KI-xnB" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="BjF-6X-pb5">
-                        <rect key="frame" x="0.0" y="100" width="375" height="54"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="f47-P0-fnG" kind="relationship" relationship="rootViewController" id="7lw-6O-bIA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MKR-Vl-p3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-631" y="-1112"/>
-        </scene>
-        <!--Users List Collection View Controller-->
-        <scene sceneID="Tcq-wv-cZr">
-            <objects>
-                <collectionViewController storyboardIdentifier="UsersListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f47-P0-fnG" customClass="UsersListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="f9F-KC-MSh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cbg-zl-RH2">
-                            <size key="itemSize" width="371" height="38"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
-                        <connections>
-                            <outlet property="dataSource" destination="f47-P0-fnG" id="bZI-YI-vOU"/>
-                            <outlet property="delegate" destination="f47-P0-fnG" id="PcP-5D-EtM"/>
-                            <outlet property="dragDelegate" destination="f47-P0-fnG" id="Fbd-je-1lJ"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="68w-K2-Fam"/>
-                    <connections>
-                        <segue destination="zlF-Vo-yv3" kind="show" identifier="UserDetailsSegue" id="Umh-jV-v1e"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eFB-Vz-QNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="176.80000000000001" y="-1112.0689655172414"/>
-        </scene>
-        <!--ReviewsListCollectionViewController-->
-        <scene sceneID="gfK-1p-44K">
-            <objects>
-                <viewControllerPlaceholder storyboardName="UserReviews" referencedIdentifier="ReviewsListCollectionViewController" id="r3o-1j-zLU" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="CNc-ao-5WP"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gVV-52-t45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1622" y="-1038"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="XiN-RF-fWp">
-            <objects>
-                <navigationController storyboardIdentifier="EditProfileKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rR0-ek-JER" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bSj-3Q-uxq">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="gDk-s7-DM9" kind="relationship" relationship="rootViewController" id="tcs-XS-RnV"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MWD-Di-SAV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1653.5999999999999" y="-656.1576354679803"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="bKV-NR-VeY"/>
+        <segue reference="Tep-0Z-l4o"/>
         <segue reference="qIF-9v-juK"/>
-        <segue reference="0X0-XB-akm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>

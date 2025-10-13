@@ -37,10 +37,7 @@ class EditProfileViewController: KViewController {
 	@IBOutlet weak var usernameTextField: KTextField!
 	@IBOutlet weak var displayNameTextField: KTextField!
 
-	@IBOutlet weak var selectBannerImageButton: KButton!
 	@IBOutlet weak var placeholderBannerImageEditButton: UIButton!
-
-	@IBOutlet weak var selectProfileImageButton: KButton!
 	@IBOutlet weak var placeholderProfileImageEditButton: UIButton!
 
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
@@ -308,31 +305,31 @@ class EditProfileViewController: KViewController {
 }
 
 // MARK: - Configure Views
-extension EditProfileViewController {
-	private func configureViews() {
+private extension EditProfileViewController {
+	func configureViews() {
 		self.configurePlaceholderViews()
 		self.configureBannerImageView()
 		self.configureContainerViews()
 		self.configureProfileBadgeStackView()
 	}
 
-	private func configurePlaceholderViews() {
+	func configurePlaceholderViews() {
 		self.placeholderProfileImageEditButton.layerCornerRadius = self.placeholderProfileImageEditButton.frame.size.height / 2
 		self.placeholderBannerImageEditButton.layerCornerRadius = self.placeholderBannerImageEditButton.frame.size.height / 2
 	}
 
-	private func configureBannerImageView() {
+	func configureBannerImageView() {
 		self.bannerImageView.theme_backgroundColor = KThemePicker.tintColor.rawValue
 	}
 
-	private func configureContainerViews() {
+	func configureContainerViews() {
 		self.containerViews.forEach { containerView in
 			containerView.layerCornerRadius = 12.0
 			containerView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
 
-	private func configureProfileBadgeStackView() {
+	func configureProfileBadgeStackView() {
 		self.profileBadgeStackView.delegate = self
 	}
 }
