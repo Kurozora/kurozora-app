@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ActionButtonTableViewCell" id="qPa-UJ-8Se" customClass="ActionButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="77"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qPa-UJ-8Se" id="b5D-hx-0MS">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="77"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tbu-Yi-gUg" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="149.66666666666666" y="0.0" width="94" height="33"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <state key="normal" title="Use Camera">
+                            <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="actionButtonPressed:" destination="qPa-UJ-8Se" eventType="touchUpInside" id="ozb-wR-Sz2"/>
+                        </connections>
+                    </button>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Or enter your code manually" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FQh-kD-Lb6" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="43" width="353" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="OQk-iE-Sdh"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="fCJ-wh-MKT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="FQh-kD-Lb6" firstAttribute="centerX" secondItem="b5D-hx-0MS" secondAttribute="centerX" id="0KW-PL-dfL"/>
+                    <constraint firstItem="FQh-kD-Lb6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="b5D-hx-0MS" secondAttribute="leadingMargin" id="4ne-8O-8ZO"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Tbu-Yi-gUg" secondAttribute="trailing" id="Afb-Bb-iFg"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FQh-kD-Lb6" secondAttribute="trailing" id="FWG-zF-5t7"/>
+                    <constraint firstItem="Tbu-Yi-gUg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="b5D-hx-0MS" secondAttribute="leadingMargin" id="IBz-9d-WwZ"/>
+                    <constraint firstItem="Tbu-Yi-gUg" firstAttribute="centerX" secondItem="b5D-hx-0MS" secondAttribute="centerX" id="LKR-uz-vwn"/>
+                    <constraint firstAttribute="bottom" secondItem="FQh-kD-Lb6" secondAttribute="bottom" id="Xt1-Ah-oAj"/>
+                    <constraint firstItem="Tbu-Yi-gUg" firstAttribute="top" secondItem="b5D-hx-0MS" secondAttribute="top" id="YDm-Ij-vo1"/>
+                    <constraint firstItem="FQh-kD-Lb6" firstAttribute="width" secondItem="b5D-hx-0MS" secondAttribute="width" priority="999" id="d9L-lU-T8h"/>
+                    <constraint firstItem="FQh-kD-Lb6" firstAttribute="top" secondItem="Tbu-Yi-gUg" secondAttribute="bottom" constant="10" id="dPS-hq-hXx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="d5E-lQ-JZ5"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" name="AccentColor"/>
+            <connections>
+                <outlet property="actionButton" destination="Tbu-Yi-gUg" id="xcf-Fv-wXo"/>
+                <outlet property="actionTextField" destination="FQh-kD-Lb6" id="JnJ-7C-adt"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="154"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="AccentColor">
+            <color red="1" green="0.57599997520446777" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

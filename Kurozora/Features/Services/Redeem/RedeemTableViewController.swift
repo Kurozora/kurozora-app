@@ -129,6 +129,15 @@ class RedeemTableViewController: ServiceTableViewController {
 
 // MARK: - UITableViewDataSource
 extension RedeemTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			ActionButtonTableViewCell.self,
+			ServicePreviewTableViewCell.self,
+			ServiceHeaderTableViewCell.self,
+			ServiceFooterTableViewCell.self,
+		]
+	}
+
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .body:

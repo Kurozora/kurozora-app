@@ -90,6 +90,7 @@ extension LibraryImportTableViewController {
 
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return [
+			ActionButtonTableViewCell.self,
 			ServicePreviewTableViewCell.self,
 			ServiceHeaderTableViewCell.self,
 			ServiceFooterTableViewCell.self,
@@ -105,39 +106,42 @@ extension LibraryImportTableViewController {
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
 				}
-				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? "Select service") ▾", buttonTag: indexPath.row)
+				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? Trans.selectService) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			case .behavior:
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
 				}
-				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? "Select behavior") ▾", buttonTag: indexPath.row)
+				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? Trans.selectBehavior) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			default:
-				guard let libraryImportActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.libraryImportActionTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryImportActionTableViewCell.identifier)")
+				guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.actionButtonTableViewCell, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.actionButtonTableViewCell.identifier)")
 				}
-				libraryImportActionTableViewCell.delegate = self
-				libraryImportActionTableViewCell.actionTextField.tag = indexPath.row
-				libraryImportActionTableViewCell.actionTextField.delegate = self
-				libraryImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+				actionButtonTableViewCell.delegate = self
+				actionButtonTableViewCell.actionButton.setTitle(Trans.selectFile, for: .normal)
+				actionButtonTableViewCell.actionTextField.tag = indexPath.row
+				actionButtonTableViewCell.actionTextField.delegate = self
+				actionButtonTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+				actionButtonTableViewCell.actionTextField.isEnabled = false
 
 				if let selectedImportService = self.selectedImportService {
-					libraryImportActionTableViewCell.actionTextField.placeholder = "\(selectedImportService.stringValue).xml"
+					actionButtonTableViewCell.actionTextField.placeholder = "\(selectedImportService.stringValue).xml"
 				} else {
-					libraryImportActionTableViewCell.actionTextField.placeholder = "Library.xml"
+					actionButtonTableViewCell.actionTextField.placeholder = Trans.libraryXML
 				}
 
 				if self.selectedFileURL != nil {
 					if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
-						libraryImportActionTableViewCell.actionTextField.text = ".../" + lastPathComponent
+						actionButtonTableViewCell.actionTextField.text = ".../" + lastPathComponent
 						self.rightNavigationBarButton.isEnabled = true
 					}
 				}
-				self.textFieldArray.append(libraryImportActionTableViewCell.actionTextField)
-				return libraryImportActionTableViewCell
+
+				self.textFieldArray.append(actionButtonTableViewCell.actionTextField)
+				return actionButtonTableViewCell
 			}
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
