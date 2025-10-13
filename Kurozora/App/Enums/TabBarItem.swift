@@ -52,11 +52,15 @@ enum TabBarItem: Int, CaseIterable {
 	}
 
 	static var tabBarCases: [TabBarItem] {
-		#if targetEnvironment(macCatalyst)
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			#if targetEnvironment(macCatalyst)
 			return [.search, .home, .schedule, .library, .feed, .notifications, .settings]
+			#endif
+
+			if UIDevice.isPad {
+				return [.search, .home, .schedule, .library, .feed, .notifications, .settings]
+			}
 		}
-		#endif
 
 		return [.home, .library, .feed, .notifications, .search]
 	}

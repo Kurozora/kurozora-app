@@ -78,10 +78,7 @@ class KTabBarController: UITabBarController {
 		#endif
 
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
-			#if targetEnvironment(macCatalyst)
 			self.mode = .tabSidebar
-			#endif
-
 			self.sidebar.bottomBarView = UIView()
 		}
 
@@ -89,9 +86,7 @@ class KTabBarController: UITabBarController {
 			self.tabBarMinimizeBehavior = .onScrollDown
 
 			#if DEBUG
-			#if targetEnvironment(macCatalyst)
-			
-			#else
+			#if !targetEnvironment(macCatalyst)
 			UIApplication.topViewController?.view.window?.addGestureRecognizer(showFlexLongPressGestureRecognizer)
 			#endif
 			#endif
