@@ -75,12 +75,12 @@ class MenuController {
 		return UIMenu(title: "Settings", identifier: UIMenu.Identifier("app.kurozora.menus.settings"), options: .displayInline, children: [openSettingsCommand])
 	}
 
-	///  Builds and returns the "Refresh Page" menu.
+	///  Builds and returns the "Search" menu.
 	///
-	///  - Returns: The "Refresh Page" UIMenu object.
+	///  - Returns: The "Search" UIMenu object.
 	class func search() -> UIMenu {
-		let refreshPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
-		return UIMenu(title: "Search", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [refreshPageCommand])
+		let searchPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
+		return UIMenu(title: "Search", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [searchPageCommand])
 	}
 
 	class func account() -> UIMenu {
