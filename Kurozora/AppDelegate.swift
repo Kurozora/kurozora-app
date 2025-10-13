@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 #if !targetEnvironment(macCatalyst)
-	import IQKeyboardManagerSwift
+import IQKeyboardManagerSwift
 #endif
 
 // MARK: - Kurozora
@@ -150,6 +150,16 @@ extension AppDelegate {
 
 	/// User chose "Settings..." from the Application menu.
 	@objc func handleSettings(_ sender: AnyObject) {
+		guard UIApplication.topViewController as? SubSettingsViewController == nil else { return }
+
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			#if targetEnvironment(macCatalyst)
+			guard let tabBarController = UIApplication.topViewController?.tabBarController as? KTabBarController else { return }
+			tabBarController.presentSettingsViewController()
+			return
+			#endif
+		}
+
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
 			UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
@@ -158,10 +168,15 @@ extension AppDelegate {
 
 	/// User chose "Search" from the Application menu.
 	@objc func handleSearch(_ sender: AnyObject) {
-		let splitViewController = UIApplication.topViewController?.splitViewController
-		let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
-		let sidebarViewController = navigationController?.topViewController as? SidebarViewController
-		sidebarViewController?.kSearchController.searchBar.searchTextField.becomeFirstResponder()
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			let tabBarController = UIApplication.topViewController?.tabBarController as? KTabBarController
+			tabBarController?.selectedTab = TabBarItem.search.tab
+		} else {
+			let splitViewController = UIApplication.topViewController?.splitViewController
+			let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
+			let sidebarViewController = navigationController?.topViewController as? SidebarViewController
+			sidebarViewController?.kSearchController.searchBar.searchTextField.becomeFirstResponder()
+		}
 	}
 
 	/// User chose the "View My Account..." from the account menu.
