@@ -6,9 +6,9 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
 import LocalAuthentication
+import UIKit
 import XCDYouTubeKit
 
 /// A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
@@ -80,15 +80,21 @@ final class KurozoraDelegate {
 			}
 
 			// Initialize split view controller
-			let splitViewController = await SceneDelegate.createTwoColumnSplitViewController()
+			let rootViewController: UIViewController
+
+			if #available(iOS 18.0, macCatalyst 18.0, *) {
+				rootViewController = await KTabBarController()
+			} else {
+				rootViewController = await SceneDelegate.createTwoColumnSplitViewController()
+			}
 
 			DispatchQueue.main.async {
 				if let splashViewController = window?.rootViewController as? SplashscreenViewController {
 					splashViewController.animateLogo { _ in
-						window?.rootViewController = splitViewController
+						window?.rootViewController = rootViewController
 					}
 				} else {
-					window?.rootViewController = splitViewController
+					window?.rootViewController = rootViewController
 				}
 			}
 
@@ -188,8 +194,8 @@ extension KurozoraDelegate {
 	func userShouldAuthenticate() {
 		self.authenticationEnabled = UserSettings.authenticationEnabled
 		if self.authenticationEnabled {
-			prepareView()
-			setAuthenticationInterval()
+			self.prepareView()
+			self.setAuthenticationInterval()
 		}
 	}
 
@@ -340,7 +346,7 @@ extension KurozoraDelegate {
 		case LAError.userFallback.rawValue:
 			message = "The user chose to use the fallback"
 		default:
-			message = evaluatePolicyFailErrorMessageForLA(errorCode: errorCode)
+			message = self.evaluatePolicyFailErrorMessageForLA(errorCode: errorCode)
 		}
 
 		return message
