@@ -60,6 +60,8 @@ class SettingsPickerTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+
 		self.configureSearchController()
 		self.configureDataSource()
 		self.applySnapshot(animating: false)
