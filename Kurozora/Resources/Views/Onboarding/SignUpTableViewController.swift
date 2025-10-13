@@ -12,7 +12,7 @@ import KurozoraKit
 class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var selectButton: KButton!
+	@IBOutlet weak var placeholderProfileImageEditButton: UIButton!
 
 	// MARK: - Properties
 	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
@@ -33,6 +33,8 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.configureViews()
 
 		// Configure properties
 		self.originalProfileImage = self.placeholderImage()
@@ -137,6 +139,17 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
 		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
+	}
+}
+
+// MARK: - Configure Views
+private extension SignUpTableViewController {
+	func configureViews() {
+		self.configurePlaceholderViews()
+	}
+
+	func configurePlaceholderViews() {
+		self.placeholderProfileImageEditButton.layerCornerRadius = self.placeholderProfileImageEditButton.frame.size.height / 2
 	}
 }
 

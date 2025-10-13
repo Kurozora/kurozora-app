@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QZt-83-1Jg">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="fQS-R1-XrJ">
+            <objects>
+                <navigationController storyboardIdentifier="SignInKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QZt-83-1Jg" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="O2g-dQ-Kdv">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="clk-zx-p5x"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YYI-N7-2E4" kind="relationship" relationship="rootViewController" id="twE-am-Gwn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ibj-Ix-LVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="522" y="137"/>
+        </scene>
         <!--Sign In Table View Controller-->
         <scene sceneID="8vq-hv-Hah">
             <objects>
                 <tableViewController storyboardIdentifier="SignInTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YYI-N7-2E4" customClass="SignInTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="T1q-mU-gZs">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="T1q-mU-gZs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -20,7 +48,7 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="Z1H-6u-fW1"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingOptionsTableViewCell" id="VYz-yc-iXY" customClass="OnboardingOptionsTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="38" width="414" height="288"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="288"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYz-yc-iXY" id="5B2-1M-yaM">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="288"/>
@@ -121,121 +149,6 @@
             </objects>
             <point key="canvasLocation" x="1314.4927536231885" y="136.60714285714286"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="UHM-Wc-4qv">
-            <objects>
-                <navigationController storyboardIdentifier="SignInKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGH-lg-KeC" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="KA1-VO-uLW"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-91-4W8">
-                        <rect key="frame" x="0.0" y="96" width="414" height="106"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="YYI-N7-2E4" kind="relationship" relationship="rootViewController" id="0Ja-gf-oJl"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UTC-rL-D2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="523" y="137"/>
-        </scene>
-        <!--Sign Up Table View Controller-->
-        <scene sceneID="5MS-1r-T5m">
-            <objects>
-                <tableViewController storyboardIdentifier="SignUpTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PNG-qo-j4c" customClass="SignUpTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZRy-RL-Gap">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="Mpm-wV-BMc"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="dCM-bh-z8g"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="SeV-OI-6EK">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="101" y="20" width="212" height="34"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="61" y="62" width="292.5" height="18"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-p1-Cg7" customClass="CircularView" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="167" y="110" width="80" height="80"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cG1-YT-L26" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                                            <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </imageView>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUJ-dy-UZu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                                            <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <state key="normal" title="Select">
-                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="chooseImageButtonPressed:" destination="PNG-qo-j4c" eventType="touchUpInside" id="toB-rb-a7d"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="cG1-YT-L26" firstAttribute="top" secondItem="bmz-p1-Cg7" secondAttribute="top" id="IjF-1t-jVa"/>
-                                        <constraint firstItem="qUJ-dy-UZu" firstAttribute="centerX" secondItem="cG1-YT-L26" secondAttribute="centerX" id="MLT-WR-QB9"/>
-                                        <constraint firstAttribute="trailing" secondItem="cG1-YT-L26" secondAttribute="trailing" id="S7m-33-6eh"/>
-                                        <constraint firstItem="qUJ-dy-UZu" firstAttribute="centerY" secondItem="cG1-YT-L26" secondAttribute="centerY" id="Zdk-tL-8k4"/>
-                                        <constraint firstAttribute="width" constant="80" id="biH-jg-sh7"/>
-                                        <constraint firstAttribute="height" constant="80" id="okN-kS-hln"/>
-                                        <constraint firstItem="cG1-YT-L26" firstAttribute="leading" secondItem="bmz-p1-Cg7" secondAttribute="leading" id="rLl-pF-Lim"/>
-                                        <constraint firstItem="qUJ-dy-UZu" firstAttribute="width" secondItem="cG1-YT-L26" secondAttribute="width" id="szV-9h-dcj"/>
-                                        <constraint firstItem="qUJ-dy-UZu" firstAttribute="height" secondItem="cG1-YT-L26" secondAttribute="height" id="v0g-pi-kCT"/>
-                                        <constraint firstAttribute="bottom" secondItem="cG1-YT-L26" secondAttribute="bottom" id="xSK-rP-14E"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="centerX" secondItem="xr5-LJ-ipy" secondAttribute="centerX" id="8xQ-XH-zb6"/>
-                                <constraint firstAttribute="bottom" secondItem="bmz-p1-Cg7" secondAttribute="bottom" constant="10" id="UEm-Ak-pSa"/>
-                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="XmB-Qg-3Gz"/>
-                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="top" secondItem="xr5-LJ-ipy" secondAttribute="bottom" constant="8" symbolic="YES" id="cum-ye-jJK"/>
-                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="top" secondItem="SeV-OI-6EK" secondAttribute="top" constant="20" id="j5I-nO-76I"/>
-                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xr5-LJ-ipy" secondAttribute="trailing" id="nZx-Px-Bmn"/>
-                                <constraint firstItem="bmz-p1-Cg7" firstAttribute="top" secondItem="UJ9-WL-FIr" secondAttribute="bottom" constant="30" id="rMR-UX-kuh"/>
-                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="u76-oM-Vdl"/>
-                                <constraint firstItem="bmz-p1-Cg7" firstAttribute="centerX" secondItem="UJ9-WL-FIr" secondAttribute="centerX" id="usv-De-O0O"/>
-                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="centerX" secondItem="SeV-OI-6EK" secondAttribute="centerX" id="vo4-Qz-hdf"/>
-                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UJ9-WL-FIr" secondAttribute="trailing" id="xAf-mX-KX8"/>
-                            </constraints>
-                        </view>
-                        <connections>
-                            <outlet property="dataSource" destination="PNG-qo-j4c" id="AOq-9R-ufE"/>
-                            <outlet property="delegate" destination="PNG-qo-j4c" id="5qY-Gd-90L"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="gH2-df-eqF">
-                        <barButtonItem key="rightBarButtonItem" title="Join 🤗" id="nw0-4m-Xlh">
-                            <connections>
-                                <action selector="rightNavigationBarButtonPressedWithSender:" destination="PNG-qo-j4c" id="ozf-zF-xsK"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="profileImageView" destination="cG1-YT-L26" id="sqw-dy-AN9"/>
-                        <outlet property="rightNavigationBarButton" destination="nw0-4m-Xlh" id="Fea-P0-jQO"/>
-                        <outlet property="selectButton" destination="qUJ-dy-UZu" id="HAa-jl-zgF"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LxV-Og-AFi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2129" y="453"/>
-        </scene>
         <!--Reset Password Table View Controller-->
         <scene sceneID="dhq-Jm-8ec">
             <objects>
@@ -266,9 +179,121 @@
             </objects>
             <point key="canvasLocation" x="2129" y="-234"/>
         </scene>
+        <!--Sign Up Table View Controller-->
+        <scene sceneID="5MS-1r-T5m">
+            <objects>
+                <tableViewController storyboardIdentifier="SignUpTableViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PNG-qo-j4c" customClass="SignUpTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZRy-RL-Gap">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="Mpm-wV-BMc"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="dCM-bh-z8g"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="SeV-OI-6EK">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="101" y="20" width="212" height="34"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="61" y="62" width="292.5" height="18"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-p1-Cg7" customClass="CircularView" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="167" y="110" width="80" height="80"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cG1-YT-L26" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </imageView>
+                                        <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKl-pt-0Cz" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <state key="normal">
+                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="chooseImageButtonPressed:" destination="PNG-qo-j4c" eventType="touchUpInside" id="eEu-WG-rXm"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="iKl-pt-0Cz" secondAttribute="trailing" id="EbH-J5-fzX"/>
+                                        <constraint firstItem="cG1-YT-L26" firstAttribute="top" secondItem="bmz-p1-Cg7" secondAttribute="top" id="IjF-1t-jVa"/>
+                                        <constraint firstItem="iKl-pt-0Cz" firstAttribute="top" secondItem="bmz-p1-Cg7" secondAttribute="top" id="MMx-hf-2Rg"/>
+                                        <constraint firstAttribute="bottom" secondItem="iKl-pt-0Cz" secondAttribute="bottom" id="Nx7-SV-JFP"/>
+                                        <constraint firstAttribute="trailing" secondItem="cG1-YT-L26" secondAttribute="trailing" id="S7m-33-6eh"/>
+                                        <constraint firstAttribute="width" constant="80" id="biH-jg-sh7"/>
+                                        <constraint firstItem="iKl-pt-0Cz" firstAttribute="leading" secondItem="bmz-p1-Cg7" secondAttribute="leading" id="gsa-gk-Ext"/>
+                                        <constraint firstAttribute="height" constant="80" id="okN-kS-hln"/>
+                                        <constraint firstItem="cG1-YT-L26" firstAttribute="leading" secondItem="bmz-p1-Cg7" secondAttribute="leading" id="rLl-pF-Lim"/>
+                                        <constraint firstAttribute="bottom" secondItem="cG1-YT-L26" secondAttribute="bottom" id="xSK-rP-14E"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VK7-fD-If4">
+                                    <rect key="frame" x="223" y="110" width="24" height="24"/>
+                                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="Bgp-cK-ssj"/>
+                                        <constraint firstAttribute="width" secondItem="VK7-fD-If4" secondAttribute="height" multiplier="1:1" id="V99-8l-dwu"/>
+                                    </constraints>
+                                    <color key="tintColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain">
+                                        <imageReference key="image" image="pencil" catalog="system" symbolScale="small"/>
+                                    </buttonConfiguration>
+                                </button>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="Uj9-Ia-k9d"/>
+                            <constraints>
+                                <constraint firstItem="VK7-fD-If4" firstAttribute="top" secondItem="bmz-p1-Cg7" secondAttribute="top" id="8Ep-yb-8bl"/>
+                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="centerX" secondItem="xr5-LJ-ipy" secondAttribute="centerX" id="8xQ-XH-zb6"/>
+                                <constraint firstAttribute="bottom" secondItem="bmz-p1-Cg7" secondAttribute="bottom" constant="10" id="UEm-Ak-pSa"/>
+                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="XmB-Qg-3Gz"/>
+                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="top" secondItem="xr5-LJ-ipy" secondAttribute="bottom" constant="8" symbolic="YES" id="cum-ye-jJK"/>
+                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="top" secondItem="SeV-OI-6EK" secondAttribute="top" constant="20" id="j5I-nO-76I"/>
+                                <constraint firstItem="VK7-fD-If4" firstAttribute="trailing" secondItem="bmz-p1-Cg7" secondAttribute="trailing" id="mSX-Qd-8ZP"/>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xr5-LJ-ipy" secondAttribute="trailing" id="nZx-Px-Bmn"/>
+                                <constraint firstItem="VK7-fD-If4" firstAttribute="width" secondItem="VK7-fD-If4" secondAttribute="height" multiplier="1:1" id="nny-vo-yd0"/>
+                                <constraint firstItem="bmz-p1-Cg7" firstAttribute="top" secondItem="UJ9-WL-FIr" secondAttribute="bottom" constant="30" id="rMR-UX-kuh"/>
+                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="u76-oM-Vdl"/>
+                                <constraint firstItem="bmz-p1-Cg7" firstAttribute="centerX" secondItem="UJ9-WL-FIr" secondAttribute="centerX" id="usv-De-O0O"/>
+                                <constraint firstItem="xr5-LJ-ipy" firstAttribute="centerX" secondItem="SeV-OI-6EK" secondAttribute="centerX" id="vo4-Qz-hdf"/>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UJ9-WL-FIr" secondAttribute="trailing" id="xAf-mX-KX8"/>
+                            </constraints>
+                        </view>
+                        <connections>
+                            <outlet property="dataSource" destination="PNG-qo-j4c" id="AOq-9R-ufE"/>
+                            <outlet property="delegate" destination="PNG-qo-j4c" id="5qY-Gd-90L"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="gH2-df-eqF">
+                        <barButtonItem key="rightBarButtonItem" title="Join 🤗" id="nw0-4m-Xlh">
+                            <connections>
+                                <action selector="rightNavigationBarButtonPressedWithSender:" destination="PNG-qo-j4c" id="ozf-zF-xsK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="placeholderProfileImageEditButton" destination="VK7-fD-If4" id="gE3-Hx-cW9"/>
+                        <outlet property="profileImageView" destination="cG1-YT-L26" id="sqw-dy-AN9"/>
+                        <outlet property="rightNavigationBarButton" destination="nw0-4m-Xlh" id="Fea-P0-jQO"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LxV-Og-AFi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2129" y="453"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Promotional/Kurozora Services" width="928" height="128"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
     </resources>
 </document>
