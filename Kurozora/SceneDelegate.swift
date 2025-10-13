@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
@@ -26,12 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		KThemeStyle.initAppTheme()
 
 		#if targetEnvironment(macCatalyst)
-		// Hide the title bar
-		if let titlebar = windowScene.titlebar {
-			titlebar.titleVisibility = .hidden
-			titlebar.toolbar = nil
-		}
-		windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
+        self.setupNSToolbar()
 		#endif
 
 		// Global app tint color
@@ -72,6 +67,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			}
 		}
 	}
+
+	#if targetEnvironment(macCatalyst)
+	func setupNSToolbar() {
+		let toolbar = NSToolbar()
+		toolbar.displayMode = .iconOnly
+		self.window?.windowScene?.titlebar?.toolbar = toolbar
+		self.window?.windowScene?.titlebar?.titleVisibility = .hidden
+		self.window?.windowScene?.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
+	}
+	#endif
 
 	func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 		guard let url = URLContexts.first?.url else { return }
@@ -174,13 +179,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	static func createTwoColumnSplitViewController() -> UISplitViewController {
 		let navigationController = KNavigationController(rootViewController: SidebarViewController())
+		#if targetEnvironment(macCatalyst)
+		navigationController.extendedLayoutIncludesOpaqueBars = true
+		navigationController.additionalSafeAreaInsets.top = -28  // roughly the titlebar height
+		#endif
+		navigationController.navigationItem.largeTitleDisplayMode = .never
+
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)
+		splitViewController.primaryBackgroundStyle = .sidebar
 		splitViewController.preferredDisplayMode = .oneBesideSecondary
 		#if targetEnvironment(macCatalyst)
+		splitViewController.extendedLayoutIncludesOpaqueBars = true
 		splitViewController.displayModeButtonVisibility = .never
 		splitViewController.minimumPrimaryColumnWidth = 220.0
 		splitViewController.maximumPrimaryColumnWidth = 220.0
+		splitViewController.additionalSafeAreaInsets.top = -28  // roughly the titlebar height
 		#endif
 		splitViewController.setViewController(navigationController, for: .primary)
 		splitViewController.setViewController(tabBarController, for: .compact)
