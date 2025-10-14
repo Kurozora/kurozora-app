@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -61,6 +61,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="Yga-h4-5jg"/>
+                                    <constraint firstItem="Zpv-Re-WFQ" firstAttribute="centerY" secondItem="dB3-zH-yKr" secondAttribute="centerY" id="yIU-AH-OEC"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gc5-ZB-3TO">
@@ -100,6 +101,9 @@
                                         <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
                                     </progressView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="nwt-wZ-lg2" firstAttribute="centerY" secondItem="NjB-j4-4F6" secondAttribute="centerY" id="58Q-ti-ucf"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ucW-eS-Swf">
                                 <rect key="frame" x="0.0" y="24" width="222" height="10"/>
@@ -138,6 +142,9 @@
                                         <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
                                     </progressView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="hlk-wV-qIl" firstAttribute="centerY" secondItem="Z0L-qy-ePK" secondAttribute="centerY" id="Dd4-oh-cWF"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rqI-tA-XVb">
                                 <rect key="frame" x="0.0" y="36" width="222" height="10"/>
@@ -176,6 +183,9 @@
                                         <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
                                     </progressView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="DzP-mL-sJQ" firstAttribute="centerY" secondItem="Ccn-J8-hbI" secondAttribute="centerY" id="kq2-LZ-bKf"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hHy-Qt-Hp7">
                                 <rect key="frame" x="0.0" y="48" width="222" height="10"/>
@@ -214,6 +224,9 @@
                                         <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
                                     </progressView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="J9N-0i-HyA" firstAttribute="centerY" secondItem="UeD-Qg-q26" secondAttribute="centerY" id="dtT-s2-HFe"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                     </stackView>
@@ -265,13 +278,13 @@
     <resources>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="quaternaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.17647058823529413" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.1764705882" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

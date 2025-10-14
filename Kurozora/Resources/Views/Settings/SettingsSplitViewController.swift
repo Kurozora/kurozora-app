@@ -22,7 +22,7 @@ class SettingsSplitViewController: UISplitViewController {
 		super.viewDidLoad()
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.delegate = self
-
+        self.preferredDisplayMode = .oneBesideSecondary
 		self.sharedInit()
 	}
 

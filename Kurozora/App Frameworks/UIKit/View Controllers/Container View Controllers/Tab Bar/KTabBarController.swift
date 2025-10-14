@@ -13,6 +13,23 @@ import FLEX
 #endif
 
 class KTabBarController: UITabBarController {
+	// MARK: - Properties
+	private var _previousTabs: NSObject? = nil
+
+	@available(iOS 18.0, *)
+	private var previousTabs: [UITab] {
+		get {
+			if let tabs = self._previousTabs as? [UITab] {
+				return tabs
+			} else {
+				return []
+			}
+		}
+		set {
+			self._previousTabs = newValue as NSObject
+		}
+	}
+	
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -35,11 +52,39 @@ class KTabBarController: UITabBarController {
 		super.viewDidLoad()
 
 		// Initialize views
+		self.configureTabs()
+
+		self.setupBadgeValue()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
+
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			self.registerForTraitChanges([UITraitHorizontalSizeClass.self], action: #selector(handleHorizontalSizeClass))
+		}
+	}
+
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	@objc func handleHorizontalSizeClass() {
+		if self.traitCollection.horizontalSizeClass == .compact {
+			self.previousTabs = self.tabs
+			self.tabs = self.tabs.filter({ tab in
+				tab.preferredPlacement == .fixed || tab.preferredPlacement == .pinned
+			})
+		} else if !self.previousTabs.isEmpty {
+			self.tabs = self.previousTabs
+		}
+	}
+
+	/// Configure the tabs.
+	@MainActor
+	func configureTabs() {
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
 			self.delegate = self
-			self.tabs = TabBarItem.tabBarCases.map {
-				$0.tab
-			}
+			self.tabs = TabBarItem.tabBarCases.map { $0.tab }
+//			self.selectedTab = TabBarItem.home.tab
+			self.selectedIndex = self.tabs.firstIndex(where: { tab in
+				tab.identifier == TabBarItem.home.rowIdentifierValue
+			}) ?? 0
+			self.previousTabs = self.tabs
 		} else {
 			self.viewControllers = TabBarItem.tabBarCases.map {
 				let rootNavigationController = $0.kViewControllerValue
@@ -60,9 +105,6 @@ class KTabBarController: UITabBarController {
 				return rootNavigationController
 			}
 		}
-
-		self.setupBadgeValue()
-		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
 	}
 
 	// MARK: - Functions
@@ -145,9 +187,23 @@ class KTabBarController: UITabBarController {
 	/// Sets up the badge value on the tab bar item.
 	fileprivate func setupBadgeValue() {
 		if UserSettings.notificationsBadge, User.isSignedIn {
-			self.tabBar.items?[3].badgeValue = nil
+			if #available(iOS 18.0, macCatalyst 18.0, *) {
+				let tab = self.tabs.first {
+					$0.identifier == TabBarItem.notifications.rowIdentifierValue
+				}
+
+				// MARK: Implement notification badge
+				tab?.badgeValue = nil
+			} else {
+				let tab = self.tabBar.items?.first(where: { item in
+					item.tag == TabBarItem.notifications.rawValue
+				})
+
+				// MARK: Implement notification badge
+				tab?.badgeValue = nil
+			}
 		} else {
-			self.tabBar.items?[3].badgeValue = nil
+			tab?.badgeValue = nil
 		}
 	}
 }
@@ -156,9 +212,6 @@ class KTabBarController: UITabBarController {
 extension KTabBarController: UITabBarControllerDelegate {
 	@available(iOS 18.0, macCatalyst 18.0, *)
 	func tabBarController(_ tabBarController: UITabBarController, didSelectTab selectedTab: UITab, previousTab: UITab?) {
-		guard let idx = self.tabs.firstIndex(of: selectedTab) else { return }
-		self.selectedIndex = idx
-
 		if UserSettings.hapticsAllowed {
 			UISelectionFeedbackGenerator().selectionChanged()
 		}

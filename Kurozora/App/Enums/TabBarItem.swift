@@ -62,6 +62,10 @@ enum TabBarItem: Int, CaseIterable {
 			}
 		}
 
+		return self.compactTabBarCases
+	}
+
+	static var compactTabBarCases: [TabBarItem] {
 		return [.home, .library, .feed, .notifications, .search]
 	}
 
@@ -170,27 +174,44 @@ enum TabBarItem: Int, CaseIterable {
 	var rowIdentifierValue: String {
 		return String(describing: self)
 	}
+	
+	/// A tab’s placement when displayed in contexts that allow different placement.
+	@available(iOS 18.0, macCatalyst 18.0, *)
+	var tabPlacement: UITab.Placement {
+		switch self {
+		case .home, .library, .feed, .notifications:
+			return .fixed
+		case .search:
+			return .pinned
+		default:
+			return .optional
+		}
+	}
 
 	/// The tab value of the tab bar item.
 	@available(iOS 18.0, macCatalyst 18.0, *)
 	var tab: UITab {
 		switch self {
 		case .search:
-			return UISearchTab(
+			let tab = UISearchTab(
 				title: self.stringValue,
 				image: self.imageValue,
 				identifier: self.rowIdentifierValue
 			) { _ in
 				self.kViewControllerValue
 			}
+			tab.preferredPlacement = self.tabPlacement
+			return tab
 		default:
-			return UITab(
+			let tab = UITab(
 				title: self.stringValue,
 				image: self.imageValue,
 				identifier: self.rowIdentifierValue
 			) { _ in
 				self.kViewControllerValue
 			}
+			tab.preferredPlacement = self.tabPlacement
+			return tab
 		}
 	}
 }
