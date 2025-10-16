@@ -220,6 +220,8 @@ extension SettingsTableViewController {
 			guard let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell else { return }
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
+			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 
