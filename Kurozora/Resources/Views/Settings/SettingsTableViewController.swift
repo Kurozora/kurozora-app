@@ -6,9 +6,9 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Kingfisher
+import KurozoraKit
+import UIKit
 
 class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties
@@ -24,6 +24,7 @@ class SettingsTableViewController: KTableViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -34,19 +35,20 @@ class SettingsTableViewController: KTableViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
-    override func themeWillReload() {
-        super.themeWillReload()
+	override func themeWillReload() {
+		super.themeWillReload()
 
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.setupView()
-        }
-    }
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.setupView()
+		}
+	}
 
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -63,19 +65,15 @@ class SettingsTableViewController: KTableViewController {
 		// Stop activity indicator and disable refresh control
 		self._prefersActivityIndicatorHidden = true
 		self._prefersRefreshControlDisabled = true
-        
-        self.setupView()
-		
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			
-		}
+
+		self.setupView()
 	}
-	
+
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		if self.selectedIndexPath == nil {
-			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				guard let sectionIndex = self.settingsSection.firstIndex(of: .general) else { return }
 				guard let rowIndex = self.settingsSection[safe: sectionIndex]?.rowsValue.firstIndex(of: .displayBlindness) else { return }
 
@@ -85,15 +83,15 @@ class SettingsTableViewController: KTableViewController {
 		}
 	}
 
-    fileprivate func setupView() {
-        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+	fileprivate func setupView() {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			self.clearsSelectionOnViewWillAppear = false
-            self.view.theme_backgroundColor = nil
+			self.view.theme_backgroundColor = nil
 			self.view.backgroundColor = .clear
-            self.tableView.theme_backgroundColor = nil
+			self.tableView.theme_backgroundColor = nil
 			self.tableView.backgroundColor = .clear
-        }
-    }
+		}
+	}
 
 	// MARK: - IBActions
 	@IBAction func dismissPressed(_ sender: UIBarButtonItem) {
@@ -144,14 +142,14 @@ extension SettingsTableViewController {
 		}
 		settingsCell.configureCell(using: settingsRow)
 
-        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-            settingsCell.contentView.theme_backgroundColor = nil
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
+			settingsCell.contentView.theme_backgroundColor = nil
 			settingsCell.contentView.backgroundColor = .clear
 			settingsCell.selectedView?.theme_backgroundColor = nil
-            settingsCell.selectedView?.backgroundColor = .clear
-            settingsCell.chevronImageView?.isHidden = true
+			settingsCell.selectedView?.backgroundColor = .clear
+			settingsCell.chevronImageView?.isHidden = true
 			settingsCell.selectedView?.layerCornerRadius = 12.0
-        }
+		}
 
 		return settingsCell
 	}
@@ -186,37 +184,37 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
-            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tintColor.rawValue
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
-            } else {
-                settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-                settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+			} else {
+				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+				settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-                settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-                settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-            }
+				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			}
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
 		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
-            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				settingsCell.selectedView?.theme_backgroundColor = nil
 				settingsCell.selectedView?.backgroundColor = .clear
-            } else {
-                settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-                settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-            }
+			} else {
+				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+				settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+			}
 
 			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
-	
+
 	override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			guard let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell else { return }
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
@@ -228,7 +226,7 @@ extension SettingsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let sectionRow = self.settingsSection[indexPath.section].rowsValue[indexPath.row]
 
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			if let previousIndexPath = self.selectedIndexPath, previousIndexPath != indexPath {
 				self.tableView(tableView, didDeselectRowAt: previousIndexPath)
 			}
