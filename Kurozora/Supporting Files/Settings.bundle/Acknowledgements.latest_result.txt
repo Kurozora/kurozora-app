@@ -42,7 +42,7 @@ name: Tabman, nameSpecified: Tabman, owner: uias, version: 3.2.0, source: https:
 
 name: TRON, nameSpecified: TRON, owner: MLSDev, version: 5.5.0-beta.1, source: https://github.com/MLSDev/TRON
 
-name: WhatsNew, nameSpecified: WhatsNew, owner: kiritokatklian, version: 0.5.0, source: https://github.com/kiritokatklian/WhatsNew
+name: WhatsNew, nameSpecified: WhatsNew, owner: kiritokatklian, version: 0.5.1, source: https://github.com/kiritokatklian/WhatsNew
 
 name: XCDYouTubeKit, nameSpecified: XCDYouTubeKit, owner: 0xced, version: , source: https://github.com/0xced/XCDYouTubeKit
 
