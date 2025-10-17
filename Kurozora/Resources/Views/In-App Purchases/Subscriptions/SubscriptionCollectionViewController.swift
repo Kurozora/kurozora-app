@@ -24,16 +24,16 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	var currentSubscription: Product?
 	var status: Product.SubscriptionInfo.Status?
 	var productFeatures: [ProductFeature] = [
-		ProductFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: R.image.promotional.inAppPurchases.unifiedAnimeLinking()),
-		ProductFeature(title: "Integrate with Calendar", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: R.image.promotional.inAppPurchases.reminders()),
-		ProductFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: R.image.promotional.inAppPurchases.themes()),
-		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
-		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: R.image.promotional.inAppPurchases.chimes()),
-		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: R.image.promotional.inAppPurchases.gifs()),
-		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: R.image.promotional.inAppPurchases.username()),
-		ProductFeature(title: "Up to 1000 Characters", description: "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.", image: R.image.promotional.inAppPurchases.characterCount500()),
-		ProductFeature(title: "Unlock Subscriber Badge", description: "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!", image: R.image.promotional.inAppPurchases.subscriberBadge()),
-		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: R.image.promotional.inAppPurchases.support())
+		ProductFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: .Promotional.InAppPurchases.unifiedAnimeLinking),
+		ProductFeature(title: "Integrate with Calendar", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: .Promotional.InAppPurchases.reminders),
+		ProductFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: .Promotional.InAppPurchases.themes),
+		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
+		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
+		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
+		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
+		ProductFeature(title: "Up to 1000 Characters", description: "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
+		ProductFeature(title: "Unlock Subscriber Badge", description: "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!", image: .Promotional.InAppPurchases.subscriberBadge),
+		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
 	]
 	var serviceType: ServiceType = .subscription
 

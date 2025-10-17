@@ -265,7 +265,7 @@ extension LiteratureDetail {
 			case .publicationDates:
 				return UIImage(systemName: "calendar")
 			case .rating:
-				return R.image.symbols.pgTv()
+				return .Symbols.pgTv
 			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
 			case .languages:
@@ -380,7 +380,7 @@ extension LiteratureDetail {
 			switch self {
 			case .publicationDates:
 				guard self.secondaryInformation(from: literature) != nil else { return nil }
-				return R.image.dotted_line()
+				return .dottedLine
 			default: return nil
 			}
 		}

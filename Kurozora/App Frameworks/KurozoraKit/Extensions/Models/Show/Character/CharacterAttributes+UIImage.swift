@@ -27,7 +27,7 @@ extension Character.Attributes {
 	/// - Returns: a placeholder `UIImage` for the character using the character's initials if available, otherwise a placeholder character image is returned.
 	var placeholderImage: UIImage {
 		let fullNameInitials = self.name.initials
-		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
+		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: UIImage.Placeholders.userProfile)
 	}
 
 	// MARK: - Functions

@@ -46,7 +46,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.cornerView.layerCornerRadius = 10
 
 		// Configure image view
-		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
+		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: .Placeholders.episodeBanner)
 
 		// Configure rank
 		if let rank = rank {

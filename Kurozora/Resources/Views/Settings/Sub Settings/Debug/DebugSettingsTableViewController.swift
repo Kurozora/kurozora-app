@@ -51,7 +51,7 @@ class DebugSettingsTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.keychain()!)
+		emptyBackgroundView.configureImageView(image: .Empty.keychain)
 		emptyBackgroundView.configureLabels(title: "No Keys", detail: "All Kurozora related keys in your keychain are removed.")
 
 		tableView.backgroundView?.alpha = 0

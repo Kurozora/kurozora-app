@@ -49,21 +49,21 @@ extension Studio.Attributes {
 	/// - Returns: a placeholder `UIImage` for the studio's profile using the studio's initials if available, otherwise a placeholder profile image is returned.
 	var profilePlaceholderImage: UIImage {
 		let studioameInitials = self.name.initials
-		return studioameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.studioProfile()!)
+        return studioameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: .Placeholders.studioProfile)
 	}
 
 	/// Returns a placeholder `UIImage` for the studio's banner.
 	///
 	/// - Returns: a placeholder `UIImage` studio's banner.
 	var bannerPlaceholderImage: UIImage {
-		return R.image.placeholders.studioProfile()!
+        return .Placeholders.studioProfile
 	}
 
 	/// Returns a placeholder `UIImage` for the studio's logo.
 	///
 	/// - Returns: a placeholder `UIImage` studio's logo.
 	var logoPlaceholderImage: UIImage {
-		return R.image.placeholders.studioProfile()!
+        return .Placeholders.studioProfile
 	}
 
 	// MARK: - Functions

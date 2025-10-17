@@ -39,7 +39,7 @@ class BannerImageView: RoundedRectangleImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = self.image ?? R.image.placeholders.showBanner()
+		self.image = self.image ?? .Placeholders.showBanner
 
 		self.layer.borderWidth = 2
 		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor

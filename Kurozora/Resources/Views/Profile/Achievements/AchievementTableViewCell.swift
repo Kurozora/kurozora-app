@@ -39,6 +39,6 @@ class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 		self.contentView.backgroundColor = UIColor(hexString: achievement.attributes.backgroundColor)
 
 		// Configure symbol image.
-		self.symbolImageView.setImage(with: achievement.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
+        self.symbolImageView.setImage(with: achievement.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)
 	}
 }

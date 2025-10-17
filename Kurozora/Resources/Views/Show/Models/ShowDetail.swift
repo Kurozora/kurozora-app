@@ -265,7 +265,7 @@ extension ShowDetail {
 			case .airDates:
 				return UIImage(systemName: "calendar")
 			case .rating:
-				return R.image.symbols.pgTv()
+				return .Symbols.pgTv
 			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
 			case .languages:
@@ -384,7 +384,7 @@ extension ShowDetail {
 			switch self {
 			case .airDates:
 				guard self.secondaryInformation(from: show) != nil else { return nil }
-				return R.image.dotted_line()
+                return .dottedLine
 			default: return nil
 			}
 		}

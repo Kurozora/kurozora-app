@@ -61,11 +61,11 @@ enum WarningType {
 	var image: UIImage? {
 		switch self {
 		case .forceUpdate:
-			return R.image.icons.appStore()
+            return .Icons.appStore
 		case .maintenance:
-			return R.image.icons.wrenchAndScrewdriverFill()
+            return .Icons.wrenchAndScrewdriverFill
 		case .noSignal:
-			return R.image.icons.noSignal()
+            return .Icons.noSignal
 		}
 	}
 }

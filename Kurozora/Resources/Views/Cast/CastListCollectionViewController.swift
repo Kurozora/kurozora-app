@@ -110,7 +110,7 @@ class CastListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+        self.emptyBackgroundView.configureImageView(image: .Empty.cast)
 		self.emptyBackgroundView.configureLabels(title: "No Cast", detail: "This \(self.castKind.rawValue) doesn't have casts yet. Please check back again later.")
 
 		self.collectionView.backgroundView?.alpha = 0

@@ -196,7 +196,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	override func configureEmptyDataView() {
 		DispatchQueue.main.async {
-			self.emptyBackgroundView.configureImageView(image: R.image.empty.gameLibrary()!)
+			self.emptyBackgroundView.configureImageView(image: .Empty.gameLibrary)
 			self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This game doesn't have details yet. Please check back again later.")
 
 			self.collectionView.backgroundView?.alpha = 0

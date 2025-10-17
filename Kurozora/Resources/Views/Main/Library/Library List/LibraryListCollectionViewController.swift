@@ -192,7 +192,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			} else {
 				"\(self.viewedUser?.attributes.username ?? "") has no shows in their \(libraryStatus.lowercased()) list."
 			}
-			image = R.image.empty.animeLibrary()!
+			image = .Empty.animeLibrary
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
 			titleString = "No Literatures"
@@ -201,7 +201,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			} else {
 				"\(self.viewedUser?.attributes.username ?? "") has no literatures in their \(libraryStatus.lowercased()) list."
 			}
-			image = R.image.empty.mangaLibrary()!
+			image = .Empty.mangaLibrary
 		case .games:
 			libraryStatus = self.libraryStatus.gameStringValue
 			titleString = "No Games"
@@ -210,7 +210,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			} else {
 				"\(self.viewedUser?.attributes.username ?? "") has no games in their \(libraryStatus.lowercased()) list."
 			}
-			image = R.image.empty.gameLibrary()!
+			image = .Empty.gameLibrary
 		}
 
 		if self.viewedUser == nil {
@@ -391,7 +391,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 			localObject = selectedGame
 		}
 
-		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? R.image.placeholders.showPoster()!)
+		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? .Placeholders.showPoster)
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.primaryLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 

@@ -114,7 +114,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureImageView(image: .Empty.cast)
 		emptyBackgroundView.configureLabels(title: "No show songs", detail: "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection.")
 
 		collectionView.backgroundView?.alpha = 0

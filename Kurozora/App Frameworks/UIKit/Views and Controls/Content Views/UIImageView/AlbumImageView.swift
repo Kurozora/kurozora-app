@@ -39,7 +39,7 @@ class AlbumImageView: RoundedRectangleImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = R.image.placeholders.musicAlbum()
+        self.image = .Placeholders.musicAlbum
 
 		self.layer.borderWidth = 2
 		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor

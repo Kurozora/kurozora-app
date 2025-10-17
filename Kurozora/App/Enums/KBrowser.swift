@@ -61,21 +61,21 @@ enum KBrowser: Int, CaseIterable {
 		case .kurozora:
 			return UIImage(named: UserSettings.appIcon)
 		case .safari:
-			return R.image.browsers.safari()
+            return .Browsers.safari
 		case .brave:
-			return R.image.browsers.brave()
+            return .Browsers.brave
 		case .dolphin:
-			return R.image.browsers.dolphin()
+            return .Browsers.dolphin
 		case .duckduckgo:
-			return R.image.browsers.duckDuckGo()
+            return .Browsers.duckDuckGo
 		case .firefox:
-			return R.image.browsers.fireFox()
+            return .Browsers.fireFox
 		case .firefoxFocus:
-			return R.image.browsers.fireFoxFocus()
+            return .Browsers.fireFoxFocus
 		case .googleChrome:
-			return R.image.browsers.googleChrome()
+            return .Browsers.googleChrome
 		case .opera:
-			return R.image.browsers.opera()
+            return .Browsers.opera
 		}
 	}
 

@@ -181,7 +181,7 @@ extension SignUpTableViewController: ImagePickerManagerDelegate {
 	}
 
 	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {
-		self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: R.image.placeholders.userProfile()!)
+		self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: .Placeholders.userProfile)
 		self.editedProfileImage = image
 		self.editedProfileImageURL = imageURL
 	}

@@ -172,7 +172,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.episodes()!)
+		emptyBackgroundView.configureImageView(image: .Empty.episodes)
 		emptyBackgroundView.configureLabels(title: "No Episodes", detail: "This season doesn't have episodes yet. Please check back again later.")
 
 		collectionView.backgroundView?.alpha = 0

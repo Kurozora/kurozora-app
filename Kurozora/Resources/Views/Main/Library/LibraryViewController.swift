@@ -98,7 +98,7 @@ class LibraryViewController: KTabbedViewController {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
-			self.profileImageButton?.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+			self.profileImageButton?.setImage(User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile, for: .normal)
 		}
 	}
 

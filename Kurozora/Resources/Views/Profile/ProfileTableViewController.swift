@@ -195,7 +195,7 @@ class ProfileTableViewController: KTableViewController {
 			detailString = "There are no messages on this feed!"
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureImageView(image: .Empty.comment)
 		emptyBackgroundView.configureLabels(title: "No Posts", detail: detailString)
 		emptyBackgroundView.verticalOffset = verticalOffset
 

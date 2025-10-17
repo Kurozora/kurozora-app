@@ -18,15 +18,15 @@ extension KKLibrary.SortType.Option {
 		case .ascending:
 			return UIImage(systemName: "line.3.horizontal.decrease")!
 		case .descending:
-			return R.image.symbols.line3HorizontalIncrease()!
+            return .Symbols.line3HorizontalIncrease
 		case .most:
 			return UIImage(systemName: "chart.line.uptrend.xyaxis")!
 		case .least:
-			return R.image.symbols.chartLineDowntrendXyaxis()!
+            return .Symbols.chartLineDowntrendXyaxis
 		case .newest:
-			return R.image.symbols.calendarBadgeArrowshapeTurnUpRight()!
+            return .Symbols.calendarBadgeArrowshapeTurnUpRight
 		case .oldest:
-			return R.image.symbols.calendarBadgeArrowshapeTurnUpLeft()!
+            return .Symbols.calendarBadgeArrowshapeTurnUpLeft
 		case .best:
 			return UIImage(systemName: "hand.thumbsup.fill")!
 		case .worst:

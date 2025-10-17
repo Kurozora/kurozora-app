@@ -14,15 +14,15 @@ extension LABiometryType {
 	var imageValue: UIImage? {
 		switch self {
 		case .faceID:
-			return R.image.icons.faceid()
+            return .Icons.faceid
 		case .touchID:
-			return R.image.icons.touchID()
+            return .Icons.touchID
 		case .opticID:
-			return R.image.icons.opticID()
+            return .Icons.opticID
 		case .none:
 			return nil
 		@unknown default:
-			return R.image.icons.lock()
+            return .Icons.lock
 		}
 	}
 

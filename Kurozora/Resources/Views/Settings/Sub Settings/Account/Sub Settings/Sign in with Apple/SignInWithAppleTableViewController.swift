@@ -15,7 +15,7 @@ class SignInWithAppleTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure properties
-		self.previewImage = R.image.promotional.signInWithApple()
+        self.previewImage = .Promotional.signInWithApple
 		self.serviceType = .signInWithApple
 	}
 }

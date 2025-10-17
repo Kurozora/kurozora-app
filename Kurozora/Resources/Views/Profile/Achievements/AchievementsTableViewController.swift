@@ -59,7 +59,7 @@ class AchievementsTableViewController: KTableViewController {
 			detailString = "\(self.user.attributes.username) has not earned any achievements yet."
 		}
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.achievement()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.achievement)
 		self.emptyBackgroundView.configureLabels(title: "No Achievements", detail: detailString)
 
 		self.tableView.backgroundView?.alpha = 0

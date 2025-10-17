@@ -125,7 +125,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureImageView(image: .Empty.cast)
 		emptyBackgroundView.configureLabels(title: "No Details", detail: "This studio doesn't have details yet. Please check back again later.")
 
 		collectionView.backgroundView?.alpha = 0

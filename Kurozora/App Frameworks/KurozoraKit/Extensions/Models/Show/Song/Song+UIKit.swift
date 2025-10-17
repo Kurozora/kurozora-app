@@ -65,7 +65,7 @@ extension KKSong {
 		var viewOnElements: [UIMenuElement] = []
 		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
-			let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: R.image.symbols.musicSmileCircleFill()) { _ in
+            let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: .Symbols.musicSmileCircleFill) { _ in
 				UIApplication.shared.kOpen(amazonMusicLink)
 			}
 			viewOnElements.append(amazonMusicAction)
@@ -74,7 +74,7 @@ extension KKSong {
 		// Create "View on Apple Music" element
 		if let song = userInfo["song"] as? MKSong,
 		   let appleMusicLink = song.song.url {
-			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircleFill()) { _ in
+            let amAction = UIAction(title: Trans.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}
 			viewOnElements.append(amAction)
@@ -82,7 +82,7 @@ extension KKSong {
 
 		// Create "View on Deezer" element
 		if let deezerID = self.attributes.deezerID, let deezerLink = URL.deezerURL(deezerID: deezerID) {
-			let deezerAction = UIAction(title: Trans.viewOnDeezer, image: R.image.symbols.musicWaveformCircleFill()) { _ in
+            let deezerAction = UIAction(title: Trans.viewOnDeezer, image: .Symbols.musicWaveformCircleFill) { _ in
 				UIApplication.shared.kOpen(deezerLink)
 			}
 			viewOnElements.append(deezerAction)
@@ -90,7 +90,7 @@ extension KKSong {
 
 		// Create "View on Spotify" element
 		if let spotifyID = self.attributes.spotifyID, let spotifyLink = URL.spotifyURL(spotifyID: spotifyID) {
-			let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: R.image.symbols.wave3UpCircleFill()) { _ in
+            let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: .Symbols.wave3UpCircleFill) { _ in
 				UIApplication.shared.kOpen(spotifyLink)
 			}
 			viewOnElements.append(spotifyAction)
@@ -98,7 +98,7 @@ extension KKSong {
 
 		// Create "View on YouTube Music" element
 		if let youtubeID = self.attributes.youtubeID, let youtubeLink = URL.youtubeURL(youtubeID: youtubeID) {
-			let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: R.image.symbols.playCircleCircleFill()) { _ in
+            let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: .Symbols.playCircleCircleFill) { _ in
 				UIApplication.shared.kOpen(youtubeLink)
 			}
 			viewOnElements.append(spotifyAction)

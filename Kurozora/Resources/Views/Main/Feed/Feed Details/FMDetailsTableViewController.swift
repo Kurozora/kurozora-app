@@ -116,7 +116,7 @@ class FMDetailsTableViewController: KTableViewController {
 		// TODO: Refactor
 //		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureImageView(image: .Empty.comment)
 		emptyBackgroundView.configureLabels(title: "No Replies", detail: "Be the first to reply to this message!")
 
 		tableView.backgroundView?.alpha = 0

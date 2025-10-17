@@ -49,15 +49,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
-		BrowseCategory(title: "Schedule", image: R.image.browse.schedule(), segueIdentifier: R.segue.searchResultsCollectionViewController.scheduleSegue.identifier),
-		BrowseCategory(title: Trans.shows, image: R.image.browse.shows(), searchType: .shows),
-		BrowseCategory(title: Trans.literatures, image: R.image.browse.literatures(), searchType: .literatures),
-		BrowseCategory(title: Trans.games, image: R.image.browse.games(), searchType: .games),
-		BrowseCategory(title: Trans.songs, image: R.image.browse.songs(), searchType: .songs),
-		BrowseCategory(title: Trans.episodes, image: R.image.browse.episodes(), searchType: .episodes),
-		BrowseCategory(title: Trans.characters, image: R.image.browse.characters(), searchType: .characters),
-		BrowseCategory(title: Trans.people, image: R.image.browse.people(), searchType: .people),
-		BrowseCategory(title: Trans.studio, image: R.image.browse.studios(), searchType: .studios),
+        BrowseCategory(title: "Schedule", image: .Browse.schedule, segueIdentifier: R.segue.searchResultsCollectionViewController.scheduleSegue.identifier),
+        BrowseCategory(title: Trans.shows, image: .Browse.shows, searchType: .shows),
+        BrowseCategory(title: Trans.literatures, image: .Browse.literatures, searchType: .literatures),
+        BrowseCategory(title: Trans.games, image: .Browse.games, searchType: .games),
+        BrowseCategory(title: Trans.songs, image: .Browse.songs, searchType: .songs),
+        BrowseCategory(title: Trans.episodes, image: .Browse.episodes, searchType: .episodes),
+        BrowseCategory(title: Trans.characters, image: .Browse.characters, searchType: .characters),
+        BrowseCategory(title: Trans.people, image: .Browse.people, searchType: .people),
+        BrowseCategory(title: Trans.studio, image: .Browse.studios, searchType: .studios),
 	]
 
 	/// The collection of search types in the current search request

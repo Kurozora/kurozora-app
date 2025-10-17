@@ -98,7 +98,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureImageView(image: .Empty.cast)
 		emptyBackgroundView.configureLabels(title: "No People", detail: "Can't get people list. Please reload the page or restart the app and check your WiFi connection.")
 
 		collectionView.backgroundView?.alpha = 0

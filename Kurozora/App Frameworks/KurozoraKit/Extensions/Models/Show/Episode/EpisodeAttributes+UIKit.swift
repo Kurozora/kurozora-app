@@ -37,7 +37,7 @@ extension Episode.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
-		guard let placeholderImage = R.image.placeholders.showPoster() else { return }
+        let placeholderImage = UIImage.Placeholders.showPoster
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 
@@ -47,7 +47,7 @@ extension Episode.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
-		guard let placeholderImage = R.image.placeholders.episodeBanner() else { return }
+        let placeholderImage = UIImage.Placeholders.episodeBanner
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 }

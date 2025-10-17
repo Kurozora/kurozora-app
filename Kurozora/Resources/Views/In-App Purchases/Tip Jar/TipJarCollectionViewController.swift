@@ -20,13 +20,13 @@ class TipJarCollectionViewController: KCollectionViewController {
 		return Store.shared.tips
 	}
 	var productFeatures: [ProductFeature] = [
-		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
-		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: R.image.promotional.inAppPurchases.chimes()),
-		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: R.image.promotional.inAppPurchases.gifs()),
-		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: R.image.promotional.inAppPurchases.username()),
-		ProductFeature(title: "Up to 500 Characters", description: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.", image: R.image.promotional.inAppPurchases.characterCount500()),
-		ProductFeature(title: "Unlock Pro Badge", description: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.", image: R.image.promotional.inAppPurchases.proBadge()),
-		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: R.image.promotional.inAppPurchases.support())
+        ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
+        ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
+        ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
+        ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
+        ProductFeature(title: "Up to 500 Characters", description: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
+        ProductFeature(title: "Unlock Pro Badge", description: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.", image: .Promotional.InAppPurchases.proBadge),
+        ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
 	]
 	var serviceType: ServiceType = .tipJar
 

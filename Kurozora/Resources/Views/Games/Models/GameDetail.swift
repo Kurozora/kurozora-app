@@ -265,7 +265,7 @@ extension GameDetail {
 			case .publicationDates:
 				return UIImage(systemName: "calendar")
 			case .rating:
-				return R.image.symbols.pgTv()
+				return .Symbols.pgTv
 			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
 			case .languages:
@@ -384,7 +384,7 @@ extension GameDetail {
 			switch self {
 			case .publicationDates:
 				guard self.secondaryInformation(from: game) != nil else { return nil }
-				return R.image.dotted_line()
+				return .dottedLine
 			default: return nil
 			}
 		}

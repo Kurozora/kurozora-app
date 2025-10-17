@@ -147,7 +147,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
 		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This character doesn't have details yet. Please check back again later.")
 
 		self.collectionView.backgroundView?.alpha = 0

@@ -219,7 +219,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.animeLibrary()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.animeLibrary)
 		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This show doesn't have details yet. Please check back again later.")
 
 		self.collectionView.backgroundView?.alpha = 0

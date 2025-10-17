@@ -24,7 +24,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Confgure properties
-		self.previewImage = R.image.promotional.deleteLibrary()
+        self.previewImage = .Promotional.deleteLibrary
 		self.serviceType = .libraryDelete
 
 		self.rightNavigationBarButton.isEnabled = false

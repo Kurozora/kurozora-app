@@ -78,7 +78,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 			detailString = "Reminded games will show up on this page!"
 		}
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.reminders()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.reminders)
 		self.emptyBackgroundView.configureLabels(title: "No Reminders", detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

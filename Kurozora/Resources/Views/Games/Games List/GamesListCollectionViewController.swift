@@ -105,7 +105,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.gameLibrary()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.gameLibrary)
 		self.emptyBackgroundView.configureLabels(title: "No Games", detail: "Can't get games list. Please refresh the page or restart the app and check your WiFi connection.")
 
 		self.collectionView.backgroundView?.alpha = 0

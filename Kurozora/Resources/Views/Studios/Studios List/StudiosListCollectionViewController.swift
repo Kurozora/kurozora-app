@@ -100,7 +100,7 @@ class StudiosListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
 		self.emptyBackgroundView.configureLabels(title: "No Studios", detail: "Can't get studios list. Please reload the page or restart the app and check your WiFi connection.")
 
 		self.collectionView.backgroundView?.alpha = 0

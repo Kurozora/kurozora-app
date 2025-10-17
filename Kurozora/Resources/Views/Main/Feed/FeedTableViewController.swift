@@ -94,7 +94,7 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureImageView(image: .Empty.comment)
 		emptyBackgroundView.configureLabels(title: "No Feed", detail: "Can't get feed list. Please refresh the page or restart the app and check your WiFi connection.")
 
 		tableView.backgroundView?.alpha = 0
@@ -148,7 +148,7 @@ class FeedTableViewController: KTableViewController {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile, for: .normal)
 	}
 
 	/// Fetch feed posts for the current section.

@@ -86,7 +86,7 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func configureEmptyDataView() {
 		let detailString = "Be the first to place a review!"
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.reminders()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.reminders)
 		self.emptyBackgroundView.configureLabels(title: "No Reviews", detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

@@ -140,7 +140,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 			detailString = "Can't get users list. Please reload the page or restart the app and check your WiFi connection."
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.follow()!)
+		emptyBackgroundView.configureImageView(image: .Empty.follow)
 		emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
 		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 

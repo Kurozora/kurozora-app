@@ -83,39 +83,39 @@ enum ProfileBadge {
 	var image: UIImage? {
 		switch self {
 		case .newUser:
-			return R.image.badges.beginner_shield()
+            return .Badges.beginnerShield
 		case .developer:
-			return R.image.badges.hammer_app()
+            return .Badges.hammerApp
 		case .earlySupporter:
-			return R.image.badges.bird_triangle()
+            return .Badges.birdTriangle
 		case .staff:
-			return R.image.badges.sakura_shield()
+            return .Badges.sakuraShield
 		case .pro:
-			return R.image.badges.rocket_circle()
+            return .Badges.rocketCircle
 		case .subscriber(_, let subscribedAt):
 			let numberOfMonths = Date().months(from: subscribedAt)
 
 			if numberOfMonths >= 24 {
-				return R.image.badges.twenty_four_months()
+                return .Badges.twentyFourMonths
 			} else if numberOfMonths >= 18 {
-				return R.image.badges.eighteen_months()
+                return .Badges.eighteenMonths
 			} else if numberOfMonths >= 15 {
-				return R.image.badges.fifteen_months()
+                return .Badges.fifteenMonths
 			} else if numberOfMonths >= 12 {
-				return R.image.badges.twelve_months()
+                return .Badges.twelveMonths
 			} else if numberOfMonths >= 9 {
-				return R.image.badges.nine_months()
+                return .Badges.nineMonths
 			} else if numberOfMonths >= 6 {
-				return R.image.badges.six_months()
+                return .Badges.sixMonths
 			} else if numberOfMonths >= 3 {
-				return R.image.badges.three_months()
+                return .Badges.threeMonths
 			} else if numberOfMonths >= 2 {
-				return R.image.badges.two_months()
+                return .Badges.twoMonths
 			} else {
-				return R.image.badges.one_month()
+                return .Badges.oneMonth
 			}
 		case .verified:
-			return R.image.badges.checkmark_seal()
+            return .Badges.checkmarkSeal
 		}
 	}
 }

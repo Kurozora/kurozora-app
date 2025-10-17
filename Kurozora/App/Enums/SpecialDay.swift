@@ -87,7 +87,7 @@ enum SpecialDay: CaseIterable {
 		case .tanabata:
 			return [.star, .custom(UIImage(systemName: "star.fill")!), .circle, .arc]
 		case .halloween:
-			return [.arc, .custom(R.image.spider_web()!), .custom(R.image.witch_on_broom()!), .custom(R.image.pumpkin()!)]
+            return [.arc, .custom(.spiderWeb), .custom(.witchOnBroom), .custom(.pumpkin)]
 		case .christmasEve, .christmas:
 			return [.arc, .triangle, .circle, .custom(UIImage(systemName: "star.fill")!), .custom(UIImage(systemName: "snowflake")!), .custom(UIImage(systemName: "gift.fill")!)]
 		}

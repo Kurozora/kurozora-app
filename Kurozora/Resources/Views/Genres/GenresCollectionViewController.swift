@@ -89,7 +89,7 @@ class GenresCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.genres()!)
+		emptyBackgroundView.configureImageView(image: .Empty.genres)
 		emptyBackgroundView.configureLabels(title: "No Genres", detail: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.")
 
 		collectionView.backgroundView?.alpha = 0

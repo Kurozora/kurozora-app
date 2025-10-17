@@ -209,7 +209,7 @@ extension StudioDetail {
 			case .headquarters:
 				return UIImage(systemName: "building.2")
 			case .rating:
-				return R.image.symbols.pgTv()
+                return .Symbols.pgTv
 			case .socials:
 				return UIImage(systemName: "globe")
 			case .websites:

@@ -160,7 +160,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			}
 		}
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.favorites()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.favorites)
 		self.emptyBackgroundView.configureLabels(title: "No Favorites", detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

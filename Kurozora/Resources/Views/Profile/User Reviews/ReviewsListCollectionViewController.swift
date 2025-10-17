@@ -118,7 +118,7 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 			"\(username ?? "") has not submitted any reviews yet. Check back later."
 		}
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.follow()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.follow)
 		self.emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

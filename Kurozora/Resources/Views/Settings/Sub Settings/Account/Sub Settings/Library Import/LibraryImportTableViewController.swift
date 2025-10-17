@@ -38,7 +38,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure properties
-		self.previewImage = R.image.promotional.moveToKurozora()
+		self.previewImage = .Promotional.moveToKurozora
 		self.serviceType = .libraryImport
 
 		self.rightNavigationBarButton.isEnabled = false

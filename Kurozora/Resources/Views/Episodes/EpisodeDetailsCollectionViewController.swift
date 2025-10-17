@@ -168,7 +168,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.episodes()!)
+		emptyBackgroundView.configureImageView(image: .Empty.episodes)
 		emptyBackgroundView.configureLabels(title: "No Details", detail: "This episode doesn't have details yet. Please check back again later.")
 
 		collectionView.backgroundView?.alpha = 0

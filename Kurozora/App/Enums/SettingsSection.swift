@@ -469,61 +469,61 @@ extension SettingsTableViewController {
 		var imageValue: UIImage? {
 			switch self {
 			case .account:
-				return User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile()
+                return User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 			case .switchAccount:
-				return R.image.icons.accountSwitch()
+                return .Icons.accountSwitch
 			case .keychain:
-				return R.image.icons.kDefaults()
+                return .Icons.kDefaults
 			case .browser:
-				return R.image.icons.browser()
+                return .Icons.browser
 			case .cache:
-				return R.image.icons.clearCache()
+                return .Icons.clearCache
 			case .displayBlindness:
-				return R.image.icons.textformatSize()
+                return .Icons.textformatSize
 			case .icon:
 				return UIImage(named: UserSettings.appIcon)
 			case .library:
-				return R.image.icons.library()
+                return .Icons.library
 			case .motion:
-				return R.image.icons.motion()
+                return .Icons.motion
 			case .theme:
-				return R.image.icons.theme()
+                return .Icons.theme
 			case .notifications:
-				return R.image.icons.notifications()
+                return .Icons.notifications
 			case .reminder:
-				return R.image.icons.reminder()
+                return .Icons.reminder
 			case .soundsAndHaptics:
-				return R.image.icons.sound()
+                return .Icons.sound
 			case .signalSticker:
-				return R.image.icons.kuroChanStickerSignal()
+                return .Icons.kuroChanStickerSignal
 			case .telegramSticker:
-				return R.image.icons.kuroChanStickerTelegram()
+                return .Icons.kuroChanStickerTelegram
 //			case .whatsAppSticker:
-//				return R.image.icons.kuroChanStickerWhatsApp()
+//				return .Icons.kuroChanStickerWhatsApp
 			case .biometrics:
 				return UIDevice.supportedBiometric.imageValue
 			case .privacy:
-				return R.image.icons.privacy()
+                return .Icons.privacy
 			case .unlockFeatures:
-				return R.image.icons.unlock()
+                return .Icons.unlock
 			case .tipjar:
-				return R.image.icons.tipJar()
+                return .Icons.tipJar
 			case .manageSubscriptions:
-				return R.image.icons.manageSubscriptions()
+                return .Icons.manageSubscriptions
 			case .restoreFeatures:
-				return R.image.icons.restore()
+                return .Icons.restore
 //			case .requestRefund:
-//				return R.image.icons.refund()
+//				return .Icons.refund
 			case .rate:
-				return R.image.icons.rate()
+                return .Icons.rate
 			case .joinDiscord:
-				return R.image.icons.brands.discord()
+                return .Icons.Brands.discord
 			case .followGitHub:
-				return R.image.icons.brands.gitHub()
+                return .Icons.Brands.gitHub
 			case .followMastodon:
-				return R.image.icons.brands.mastodon()
+                return .Icons.Brands.mastodon
 			case .followTwitter:
-				return R.image.icons.brands.twitter()
+                return .Icons.Brands.twitter
 			}
 		}
 	}

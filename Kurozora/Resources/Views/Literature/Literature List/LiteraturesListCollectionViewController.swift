@@ -105,7 +105,7 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.mangaLibrary()!)
+		self.emptyBackgroundView.configureImageView(image: .Empty.mangaLibrary)
 		self.emptyBackgroundView.configureLabels(title: "No Literatures", detail: "Can't get literatures list. Please refresh the page or restart the app and check your WiFi connection.")
 
 		self.collectionView.backgroundView?.alpha = 0

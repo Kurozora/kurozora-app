@@ -39,7 +39,7 @@ class ProfileImageView: CircularImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = self.image ?? R.image.placeholders.userProfile()
+		self.image = self.image ?? .Placeholders.userProfile
 
 		self.theme_backgroundColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		self.layer.borderWidth = 2

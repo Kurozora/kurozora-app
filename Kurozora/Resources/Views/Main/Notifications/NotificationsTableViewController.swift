@@ -137,7 +137,7 @@ class NotificationsTableViewController: KTableViewController {
 			}
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.notifications()!)
+		emptyBackgroundView.configureImageView(image: .Empty.notifications)
 		emptyBackgroundView.configureLabels(title: "No Notifications", detail: detailString)
 		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 

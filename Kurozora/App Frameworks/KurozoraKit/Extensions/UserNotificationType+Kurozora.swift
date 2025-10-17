@@ -33,17 +33,17 @@ extension UserNotificationType {
 	var iconValue: UIImage? {
 		switch self {
 		case .session:
-			return R.image.icons.session()
+            return .Icons.session
 		case .follower:
-			return R.image.icons.follower()
+            return .Icons.follower
 		case .feedMessageReply, .feedMessageReShare:
-			return R.image.icons.message()
+            return .Icons.message
 		case .libraryImportFinished:
-			return R.image.icons.library()
+            return .Icons.library
 		case .subscriptionStatus:
-			return R.image.icons.unlock()
+            return .Icons.unlock
 		case .other:
-			return R.image.icons.notifications()
+            return .Icons.notifications
 		}
 	}
 }

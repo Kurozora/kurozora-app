@@ -28,7 +28,7 @@ extension Person.Attributes {
 	/// - Returns: a placeholder `UIImage` for the person using the person's initials if available, otherwise a placeholder person image is returned.
 	var placeholderImage: UIImage {
 		let fullNameInitials = self.fullName.initials
-		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
+		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: UIImage.Placeholders.userProfile)
 	}
 
 	// MARK: - Functions

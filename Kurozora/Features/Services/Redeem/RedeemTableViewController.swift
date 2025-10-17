@@ -24,7 +24,7 @@ class RedeemTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure properties
-		self.previewImage = R.image.promotional.redeemCode()
+        self.previewImage = .Promotional.redeemCode
 		self.serviceType = .redeem
 
 		self.rightNavigationBarButton.isEnabled = false
