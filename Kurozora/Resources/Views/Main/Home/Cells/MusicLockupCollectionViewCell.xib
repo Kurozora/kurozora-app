@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,14 +25,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0p-jL-Bv1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="156" y="156" width="62" height="62"/>
+                                <rect key="frame" x="310" y="310" width="44" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="62" id="Wwg-28-Czf"/>
+                                    <constraint firstAttribute="width" constant="44" id="Wwg-28-Czf"/>
                                     <constraint firstAttribute="width" secondItem="H0p-jL-Bv1" secondAttribute="height" multiplier="1:1" id="ar8-Vr-m6O"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="tintColor" systemColor="secondaryLabelColor"/>
-                                <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="play.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
@@ -44,13 +44,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.33333334329999997" green="0.3333333731" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="H0p-jL-Bv1" firstAttribute="centerY" secondItem="Fmf-at-mZU" secondAttribute="centerY" id="FLQ-eu-q4Q"/>
                             <constraint firstItem="uNn-wj-mpw" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" id="G5f-XC-eAw"/>
-                            <constraint firstItem="H0p-jL-Bv1" firstAttribute="centerX" secondItem="Fmf-at-mZU" secondAttribute="centerX" id="Qvx-aW-Emj"/>
                             <constraint firstAttribute="trailing" secondItem="uNn-wj-mpw" secondAttribute="trailing" id="asx-3t-z7f"/>
+                            <constraint firstItem="H0p-jL-Bv1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Fmf-at-mZU" secondAttribute="top" constant="20" symbolic="YES" id="fdg-dC-XbM"/>
+                            <constraint firstAttribute="trailing" secondItem="H0p-jL-Bv1" secondAttribute="trailing" constant="20" symbolic="YES" id="fha-ql-9RK"/>
                             <constraint firstItem="uNn-wj-mpw" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="g7v-9T-GDN"/>
                             <constraint firstAttribute="width" secondItem="Fmf-at-mZU" secondAttribute="height" multiplier="1:1" id="heZ-HL-5Hh"/>
+                            <constraint firstItem="H0p-jL-Bv1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fmf-at-mZU" secondAttribute="leading" constant="20" symbolic="YES" id="sYC-pu-t6t"/>
                             <constraint firstAttribute="bottom" secondItem="uNn-wj-mpw" secondAttribute="bottom" id="waz-ei-bof"/>
+                            <constraint firstAttribute="bottom" secondItem="H0p-jL-Bv1" secondAttribute="bottom" constant="20" symbolic="YES" id="zoF-5S-wue"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -163,12 +165,12 @@
     </objects>
     <resources>
         <image name="Placeholders/Music Album" width="1080" height="1080"/>
-        <image name="play.fill" catalog="system" width="117" height="128"/>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color white="0.0" alpha="0.49803921568627452" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
