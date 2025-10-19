@@ -11,13 +11,27 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v1_12_0
+		return v1_13_0
 	}
+
+    /// Features of version 1.13.0 of the app.
+    static var v1_13_0: [WhatsNewItem] = [
+        .image(title: "The Haunting Returns!", subtitle: "Halloween is back with a scare. Celebrate with 『Kur O' Zora』,『John』and new app icons featuring 『Korosensei』 and『Tanjiro』.", image: .Icons.gift),
+        .image(title: "Up Next", subtitle: "Stay on top of your anime schedule with the all-new Up Next section on the Home screen and a full ‘See All’ list view.", image: .Icons.tvSparkles),
+        .image(title: "Hide & Block", subtitle: "Take control of your space with the new ability to block users directly from their profile page.", image: .Icons.shieldCheckered),
+        .image(title: "The Big Redesign", subtitle: "Refined navigation for iOS 18+ and macOS 26 featuring a sleek new tab bar, glassy sidebar, and unified toolbar design.", image: .Icons.theme),
+        .image(title: "Episode Overhaul", subtitle: "Episodes now look better than ever with a new layout, improved navigation, and cleaner seasonal structure.", image: .Icons.tvSparkles),
+        .image(title: "Image Playground", subtitle: "Unleash your creativity when setting your profile picture, now powered by Apple’s Image Playground.", image: .Icons.placeholder),
+        .image(title: "The Sound of Mischief", subtitle: "Added the new 『Nuruhuhuhuhu』 app chime to bring some character (and chaos) to your app experience.", image: .Icons.sound),
+        .image(title: "Perfect Timing", subtitle: "Updated timezone and locale-aware date formatting ensures broadcast times and release dates align perfectly with your local setup.", image: .Icons.calendar),
+        .image(title: "Faster, Smoother, Smarter", subtitle: "Improved pagination, optimized performance, and refined visuals make every tap feel instant.", image: .Icons.bunny),
+        .image(title: "Bug Fixes", subtitle: "Banish those pesky spirits! Crashes, broken layouts, and spooky bugs are gone! Your experience should now be as smooth as melted chocolate on a haunted night.", image: .Icons.ladybug)
+    ]
 
 	/// Features of version 1.12.0 of the app.
 	static var v1_12_0: [WhatsNewItem] = [
         .image(title: "7 Years of Kurozora", subtitle: "Celebrate this special occasion with all new, and old, app icons!", image: .Icons.kuroChan),
-        .image(title: "Episodes, Enhanced.", subtitle: "Revamped episode details, added suggestions, proper season names, and correct navigation titles.", image: .Icons.tvSparkles),
+        .image(title: "Episodes, Enhanced", subtitle: "Revamped episode details, added suggestions, proper season names, and correct navigation titles.", image: .Icons.tvSparkles),
         .image(title: "Rate All the Things", subtitle: "You can now rate and review characters and people. Let your voice be heard across the cast!", image: .Icons.rate),
         .image(title: "See All Reviews", subtitle: "Tap into a dedicated list to read all reviews for a title.", image: .Icons.rating),
         .image(title: "Pinned Posts", subtitle: "You can now pin your favorite feed messages to your profile. Show off your best takes!", image: .Icons.messagePin),
