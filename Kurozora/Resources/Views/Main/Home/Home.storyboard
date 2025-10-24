@@ -95,10 +95,14 @@
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="321" y="5" width="52" height="34"/>
+                                <rect key="frame" x="0.0" y="0.0" width="52" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="LuP-Rg-K02"/>
-                                    <constraint firstAttribute="width" constant="28" id="c3J-r2-6pk"/>
+                                    <constraint firstAttribute="width" constant="36" id="2S4-4c-cdW">
+                                        <variation key="userInterfaceIdiom=mac" constant="28"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="36" id="LuP-Rg-K02">
+                                        <variation key="userInterfaceIdiom=mac" constant="28"/>
+                                    </constraint>
                                 </constraints>
                                 <state key="normal" title="Profile">
                                     <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
