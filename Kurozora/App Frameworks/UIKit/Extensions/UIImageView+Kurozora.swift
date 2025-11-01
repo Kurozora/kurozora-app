@@ -19,13 +19,15 @@ extension UIImageView {
 	func setImage(with urlString: String, placeholder: UIImage) {
 		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
 			KF.url(imageURL)
-				.transition(.fade(0.2))
-				.placeholder(placeholder)
+                .transition(.fade(0.2))
 				.loadDiskFileSynchronously()
 				.lowDataModeSource(.network(imageURL))
 				.onProgress { _, _ in } // receivedSize, totalSize
 				.onSuccess { _ in } // result
-				.onFailure { _ in } // error
+				.onFailure { [weak self] _ in
+                    guard let self else { return }
+                    self.image = placeholder.withRenderingMode(.alwaysOriginal)
+                } // error
 				.set(to: self)
 		} else {
 			self.image = placeholder.withRenderingMode(.alwaysOriginal)
