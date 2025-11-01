@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0p-jL-Bv1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="310" y="310" width="44" height="44"/>
+                                <rect key="frame" x="322" y="322" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="Wwg-28-Czf"/>
                                     <constraint firstAttribute="width" secondItem="H0p-jL-Bv1" secondAttribute="height" multiplier="1:1" id="ar8-Vr-m6O"/>
@@ -47,12 +47,12 @@
                             <constraint firstItem="uNn-wj-mpw" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" id="G5f-XC-eAw"/>
                             <constraint firstAttribute="trailing" secondItem="uNn-wj-mpw" secondAttribute="trailing" id="asx-3t-z7f"/>
                             <constraint firstItem="H0p-jL-Bv1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Fmf-at-mZU" secondAttribute="top" constant="20" symbolic="YES" id="fdg-dC-XbM"/>
-                            <constraint firstAttribute="trailing" secondItem="H0p-jL-Bv1" secondAttribute="trailing" constant="20" symbolic="YES" id="fha-ql-9RK"/>
+                            <constraint firstAttribute="trailing" secondItem="H0p-jL-Bv1" secondAttribute="trailing" constant="8" id="fha-ql-9RK"/>
                             <constraint firstItem="uNn-wj-mpw" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="g7v-9T-GDN"/>
                             <constraint firstAttribute="width" secondItem="Fmf-at-mZU" secondAttribute="height" multiplier="1:1" id="heZ-HL-5Hh"/>
                             <constraint firstItem="H0p-jL-Bv1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fmf-at-mZU" secondAttribute="leading" constant="20" symbolic="YES" id="sYC-pu-t6t"/>
                             <constraint firstAttribute="bottom" secondItem="uNn-wj-mpw" secondAttribute="bottom" id="waz-ei-bof"/>
-                            <constraint firstAttribute="bottom" secondItem="H0p-jL-Bv1" secondAttribute="bottom" constant="20" symbolic="YES" id="zoF-5S-wue"/>
+                            <constraint firstAttribute="bottom" secondItem="H0p-jL-Bv1" secondAttribute="bottom" constant="8" id="zoF-5S-wue"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
