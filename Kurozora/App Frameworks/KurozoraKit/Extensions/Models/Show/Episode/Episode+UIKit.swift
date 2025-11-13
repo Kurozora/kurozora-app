@@ -77,6 +77,8 @@ extension Episode {
 
 		// Create "share" menu
 		var shareMenuChildren: [UIMenuElement] = []
+
+		// Create "copy" action
 		let copyTitleAction = UIAction(title: "Copy Title", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.attributes.title
@@ -85,12 +87,14 @@ extension Episode {
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.webpageURLString
 		}
+		let copyMenu = UIMenu(title: "Copy", image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
+
+		// Create "share" action
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
-			self.openShareSheet(on: viewController)
+			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
-		shareMenuChildren.append(copyTitleAction)
-		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(copyMenu)
 		shareMenuChildren.append(shareAction)
 
 		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
