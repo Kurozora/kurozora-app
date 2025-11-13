@@ -112,11 +112,12 @@ extension User {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, shareText: String, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		var activityItems: [Any] = [shareText]
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(activityItems: [Any], on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
+		var activityItems: [Any] = []
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Follow \(self.attributes.username) via @KurozoraApp")
 
 		if let profileImageView = self.attributes.profileImageView.image {
 			activityItems.append(profileImageView)

@@ -121,12 +121,15 @@ extension Review {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
+		var activityItems: [Any] = []
+
 		var shareText = "\"\(self.attributes.description ?? "")\""
 		if let user = self.relationships?.users?.data.first {
 			shareText += "-\(user.attributes.username)"
 		}
 
-		let activityItems: [Any] = [shareText]
+		activityItems.append(shareText)
+
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {

@@ -163,11 +163,14 @@ extension KKSong {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-		let shareText = "\(self.webpageURLString)\nListen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
+		var activityItems: [Any] = []
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Listen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp")
+
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			if let sourceView = sourceView {

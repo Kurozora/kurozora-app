@@ -89,8 +89,8 @@ extension Studio {
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
-		let shareText = "\(self.webpageURLString)\nYou should check out shows made by \"\(self.attributes.name)\" via @KurozoraApp"
-		activityItems.append(shareText)
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Check out shows made by \"\(self.attributes.name)\" via @KurozoraApp")
 
 		if let personalImage = self.attributes.profileImageView.image {
 			activityItems.append(personalImage)

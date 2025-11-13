@@ -10,6 +10,11 @@ import KurozoraKit
 import UIKit
 
 extension Genre {
+	/// The webpage URL of the genre.
+	var webpageURLString: String {
+		return "https://kurozora.app/genres/\(self.attributes.slug)"
+	}
+
 	/// Create a context menu configuration for the genre.
 	///
 	/// - Parameters:
@@ -69,8 +74,8 @@ extension Genre {
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
-		let shareText = "Discover \(self.attributes.name) shows on Kurozora.\nhttps://kurozora.app/genres/\(self.attributes.slug)"
-		activityItems.append(shareText)
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Discover \(self.attributes.name) shows via @KurozoraApp.")
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 

@@ -133,7 +133,9 @@ extension Episode {
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
-		activityItems.append(shareText)
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Track your watch progress of \"\(self.attributes.title)\" via @KurozoraApp")
+
 		if let episodeImage = self.attributes.banner?.url {
 			activityItems.append(episodeImage)
 		}

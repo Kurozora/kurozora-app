@@ -111,11 +111,14 @@ extension Game {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-		let shareText = "\(self.webpageURLString)\nYou should play \"\(self.attributes.title)\" via @KurozoraApp"
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
+		var activityItems: [Any] = []
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Track your playing progress of \"\(self.attributes.title)\" via @KurozoraApp")
+
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			if let sourceView = sourceView {
