@@ -34,6 +34,8 @@ extension CharactersListCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard self.characters[indexPath] != nil else { return nil }
-		return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
+		return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

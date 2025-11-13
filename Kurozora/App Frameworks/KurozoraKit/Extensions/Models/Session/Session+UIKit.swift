@@ -10,16 +10,38 @@ import UIKit
 import KurozoraKit
 
 extension Session {
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
+	/// Create a context menu configuration for the session.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the session.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
 
-	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	/// Create a context menu for the session.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the session.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Sign out of session action

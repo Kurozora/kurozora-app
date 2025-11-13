@@ -34,6 +34,8 @@ extension EpisodesListCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard (collectionView.cellForItem(at: indexPath) as? EpisodeLockupCollectionViewCell) != nil else { return nil }
-		return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
+		return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

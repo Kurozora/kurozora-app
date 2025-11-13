@@ -184,7 +184,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.episode?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.episode?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	func fetchDetails() async {
@@ -239,11 +239,6 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 			self.configureNavBarButtons()
 		}
-	}
-
-	/// Opens the share sheet of the episode.
-	@objc func shareEpisode() {
-		self.episode?.openShareSheet(on: self)
 	}
 
 	/// Deletes the review with the received information.

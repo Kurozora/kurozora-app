@@ -51,15 +51,17 @@ extension EpisodeDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .header, .badge, .synopsis, .rateAndReview, .rating, .information, .sosumi:
 			return nil
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
-			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .suggestedEpisodes:
-			return self.suggestedEpisodes[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.suggestedEpisodes[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

@@ -6,23 +6,46 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension FeedMessage {
+	/// Create a context menu configuration for the feed message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the feed message.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	@MainActor
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["identifier"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
 
+	/// Create a context menu for the feed message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the feed message.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	@MainActor
-	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// User actions
@@ -127,7 +150,8 @@ extension FeedMessage {
 			let messageUserID = self.relationships.users.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
-				User.current?.id == messageUserID {
+				User.current?.id == messageUserID
+			{
 				// Edit action
 				let editAction = UIAction(title: Trans.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }
@@ -158,7 +182,7 @@ extension FeedMessage {
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.shareMessage, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
 			guard let self = self else { return }
-			self.openShareSheet(on: viewController)
+			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		userMenuElements.append(shareAction)
 
@@ -195,7 +219,8 @@ extension FeedMessage {
 		guard signedIn else { return }
 
 		do {
-			let feedMessageUpdateResponse = try await KService.heartMessage(self.id).value
+			let messageIdentity = FeedMessageIdentity(id: self.id)
+			let feedMessageUpdateResponse = try await KService.heartMessage(messageIdentity).value
 
 			self.attributes.update(using: feedMessageUpdateResponse.data)
 
@@ -223,7 +248,8 @@ extension FeedMessage {
 			let pinAction = UIAlertAction(title: self.attributes.isPinned ? Trans.unpin : Trans.pin, style: primaryActionStyle) { _ in
 				Task {
 					do {
-						let feedMessageUpdateResponse = try await KService.pinMessage(self.id).value
+						let messageIdentity = FeedMessageIdentity(id: self.id)
+						let feedMessageUpdateResponse = try await KService.pinMessage(messageIdentity).value
 
 						self.attributes.update(using: feedMessageUpdateResponse.data)
 
@@ -385,7 +411,8 @@ extension FeedMessage {
 	/// - Parameter indexPath: The index path of the message.
 	private func remove(at indexPath: IndexPath) async {
 		do {
-			_ = try await KService.deleteMessage(self.id).value
+			let messageIdentity = FeedMessageIdentity(id: self.id)
+			_ = try await KService.deleteMessage(messageIdentity).value
 
 			NotificationCenter.default.post(name: .KFMDidDelete, object: nil, userInfo: ["indexPath": indexPath])
 		} catch {
@@ -447,9 +474,11 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = nil, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var shareText = "\"\(self.attributes.content)\""
 		if let user = self.relationships.users.data.first {
 			shareText += "-\(user.attributes.username)"
@@ -459,9 +488,9 @@ extension FeedMessage {
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}

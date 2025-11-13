@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Studio {
 	/// The webpage URL of the studio.
@@ -15,18 +15,41 @@ extension Studio {
 		return "https://kurozora.app/studios/\(self.attributes.slug)"
 	}
 
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	/// Create a context menu configuration for the studio.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the studio.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			return StudioDetailsCollectionViewController.`init`(with: self.id)
+			StudioDetailsCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController)
+			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	/// Create a context menu for the studio.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the studio.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "share" menu
@@ -54,15 +77,17 @@ extension Studio {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Present share sheet for the character.
+	/// Present share sheet for the studio.
 	///
 	/// Make sure to send either the view or the bar button item that's sending the request.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		let shareText = "\(self.webpageURLString)\nYou should check out shows made by \"\(self.attributes.name)\" via @KurozoraApp"
 		activityItems.append(shareText)
@@ -74,9 +99,9 @@ extension Studio {
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}

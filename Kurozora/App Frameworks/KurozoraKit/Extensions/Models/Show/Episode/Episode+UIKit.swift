@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Episode {
 	/// The webpage URL of the episode.
@@ -15,9 +15,21 @@ extension Episode {
 		return "https://kurozora.app/episodes/\(self.id)"
 	}
 
+	/// Create a context menu configuration for the episode.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the episode.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	@MainActor
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
@@ -25,12 +37,24 @@ extension Episode {
 			return EpisodeDetailsCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
 
+	/// Create a context menu for the episode.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the episode.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	@MainActor
-	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {		var menuElements: [UIMenuElement] = []
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
+		var menuElements: [UIMenuElement] = []
 
 		if User.isSignedIn {
 			// Create "update watch status" element
@@ -103,11 +127,11 @@ extension Episode {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "\(self.webpageURLString)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
-
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(shareText)
 		if let episodeImage = self.attributes.banner?.url {
@@ -117,9 +141,9 @@ extension Episode {
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}

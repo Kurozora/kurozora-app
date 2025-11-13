@@ -261,7 +261,7 @@ extension FMDetailsTableViewController {
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
 				"liveReShareEnabled": feedMessageCell.liveReShareEnabled
-			])
+			], sourceView: feedMessageCell.moreButton, barButtonItem: nil)
 			return feedMessageCell
 		default:
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
@@ -275,7 +275,7 @@ extension FMDetailsTableViewController {
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
 				"liveReShareEnabled": feedMessageCell.liveReShareEnabled
-			])
+			], sourceView: feedMessageCell.moreButton, barButtonItem: nil)
 			return feedMessageCell
 		}
 	}

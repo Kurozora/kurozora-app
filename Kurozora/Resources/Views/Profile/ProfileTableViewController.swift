@@ -251,7 +251,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.user?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.user?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	/// Fetches user detail.
@@ -528,7 +528,7 @@ extension ProfileTableViewController {
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled ?? false,
 			"liveReShareEnabled": feedMessageCell?.liveReShareEnabled ?? false
-		])
+		], sourceView: feedMessageCell?.moreButton, barButtonItem: nil)
 		return feedMessageCell ?? UITableViewCell()
 	}
 }

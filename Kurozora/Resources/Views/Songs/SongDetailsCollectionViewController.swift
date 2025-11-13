@@ -149,7 +149,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 			let songResponse = try await KService.getDetails(forSong: songIdentity).value
 			self.song = songResponse.data.first
 
-			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [:])
+			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreButton)
 
 			self.responseCount += 1
 		} catch {
@@ -320,11 +320,14 @@ extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDeleg
 	}
 
 	private func updateMenu(with song: MKSong?) {
+		guard let song = song else { return }
+
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
+
 			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [
 				"song": song
-			])
+			], sourceView: nil, barButtonItem: self.moreButton)
 		}
 	}
 }

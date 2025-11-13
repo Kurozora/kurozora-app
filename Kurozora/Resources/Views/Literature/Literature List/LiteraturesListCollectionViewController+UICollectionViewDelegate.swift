@@ -48,12 +48,14 @@ extension LiteraturesListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		switch self.literaturesListFetchType {
 		case .relatedLiterature, .show, .game:
-			return self.relatedLiteratures[safe: indexPath.item]?.literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.relatedLiteratures[safe: indexPath.item]?.literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
 			guard self.literatures[indexPath] != nil else { return nil }
-			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

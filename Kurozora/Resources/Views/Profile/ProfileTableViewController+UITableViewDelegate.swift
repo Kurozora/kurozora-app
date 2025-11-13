@@ -45,7 +45,10 @@ extension ProfileTableViewController {
 
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.feedMessages[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		let tableViewCell = tableView.cellForRow(at: indexPath)
+
+		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return nil }
+		return feedMessage.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

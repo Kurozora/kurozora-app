@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Show {
 	/// The webpage URL of the show.
@@ -15,8 +15,20 @@ extension Show {
 		return "https://kurozora.app/anime/\(self.attributes.slug)"
 	}
 
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	/// Create a context menu configuration for the show.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the show.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
@@ -24,11 +36,22 @@ extension Show {
 			return ShowDetailsCollectionViewController.`init`(with: self.id)
 		}) { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
 
-	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	/// Create a context menu for the show.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the show.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 		let libraryStatus = self.attributes.library?.status ?? .none
 
@@ -104,16 +127,18 @@ extension Show {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		let shareText = "\(self.webpageURLString)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}
@@ -146,7 +171,7 @@ extension Show {
 
 	fileprivate func addToLibrary(status: KKLibrary.Status) async {
 		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: String(self.id)).value
+			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.id).value
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -166,7 +191,7 @@ extension Show {
 
 	func removeFromLibrary() async {
 		do {
-			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: String(self.id)).value
+			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: self.id).value
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -188,7 +213,7 @@ extension Show {
 		guard signedIn else { return }
 
 		do {
-			let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: String(self.id)).value
+			let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: self.id).value
 
 			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [

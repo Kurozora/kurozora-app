@@ -6,20 +6,43 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Review {
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any?])
-	-> UIContextMenuConfiguration? {
-		let identifier = userInfo["identifier"] as? NSCopying
+	/// Create a context menu configuration for the review.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the review.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
+		let identifier = userInfo?["identifier"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
 
-	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
+	/// Create a context menu for the review.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the review.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		var userMenuElements: [UIMenuElement] = []
@@ -35,7 +58,7 @@ extension Review {
 
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.shareReview, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController)
+			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		userMenuElements.append(shareAction)
 
@@ -47,7 +70,8 @@ extension Review {
 			let reviewUserID = self.relationships?.users?.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
-				User.current?.id == reviewUserID {
+				User.current?.id == reviewUserID
+			{
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
 				let deleteAction = UIAction(title: Trans.deleteReview, attributes: .destructive) { _ in
@@ -92,9 +116,11 @@ extension Review {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var shareText = "\"\(self.attributes.description ?? "")\""
 		if let user = self.relationships?.users?.data.first {
 			shareText += "-\(user.attributes.username)"
@@ -104,9 +130,9 @@ extension Review {
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}
@@ -140,10 +166,10 @@ extension Review {
 	}
 
 	/// Confirm if the user wants to delete the review.
-	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteReviewSubheadline) { alertController in
 			let deleteAction = UIAlertAction(title: Trans.deleteReview, style: .destructive) { _ in
-				if let indexPath = userInfo["indexPath"] as? IndexPath {
+				if let indexPath = userInfo?["indexPath"] as? IndexPath {
 					Task {
 						await self.remove(at: indexPath)
 					}

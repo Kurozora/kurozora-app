@@ -188,7 +188,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 		self.goToBarButtonItem.menu = self.createGoToEpisodeMenu()
 		self.fillerBarButtonItem.menu = self.createShowFillersMenu()
 	}

@@ -54,30 +54,39 @@ extension HomeCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let exploreCategory = self.exploreCategories[safe: indexPath.section] else { return nil }
+        let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch exploreCategory.attributes.exploreCategoryType {
 		case .shows, .upcomingShows, .mostPopularShows, .newShows:
-			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let show = self.cache[indexPath] as? Show else { return nil }
+            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
-			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games, .upcomingGames, .mostPopularGames, .newGames:
-			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let game = self.cache[indexPath] as? Game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .episodes, .upNextEpisodes:
-			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let episode = self.cache[indexPath] as? Episode else { return nil }
+			return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
-			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell, let song = cell.song else { return nil }
 			return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
-				"song": cell.song
-			])
+				"song": song
+			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .genres:
-			return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let genres = self.cache[indexPath] as? Genre else { return nil }
+			return genres.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .themes:
-			return self.themes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let themes = self.cache[indexPath] as? Theme else { return nil }
+			return themes.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .characters:
-			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let character = self.cache[indexPath] as? Character else { return nil }
+			return character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .people:
-			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let person = self.cache[indexPath] as? Person else { return nil }
+			return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .recap:
 			guard let recap = self.recaps[indexPath] else { return nil }
 			let identifier = indexPath as NSCopying

@@ -49,11 +49,13 @@ extension FMDetailsTableViewController {
 
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let tableViewCell = tableView.cellForRow(at: indexPath)
+
 		switch indexPath.section {
 		case 0:
-			return self.feedMessage.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.feedMessage.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 		default:
-			return self.feedMessageReplies[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.feedMessageReplies[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 

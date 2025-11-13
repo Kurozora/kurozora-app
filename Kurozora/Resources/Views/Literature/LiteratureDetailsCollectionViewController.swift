@@ -211,7 +211,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.literature?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.literature?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	/// Fetches details for the given literature identity. If none given then the currently viewed literature's details are fetched.
@@ -322,10 +322,6 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 
 	@objc func toggleReminder() {
 //		self.literature?.toggleReminder()
-	}
-
-	@objc func shareLiterature() {
-		self.literature?.openShareSheet(on: self)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {

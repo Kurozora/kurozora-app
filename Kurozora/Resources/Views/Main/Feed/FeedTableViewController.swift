@@ -287,7 +287,7 @@ extension FeedTableViewController {
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled ?? false,
 			"liveReShareEnabled": feedMessageCell?.liveReShareEnabled ?? false
-		])
+		], sourceView: feedMessageCell?.moreButton, barButtonItem: nil)
 		return feedMessageCell ?? UITableViewCell()
 	}
 }

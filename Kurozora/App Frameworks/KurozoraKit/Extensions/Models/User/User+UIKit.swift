@@ -6,22 +6,50 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension User {
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	/// The webpage URL of the user.
+	var webpageURLString: String {
+		return "https://kurozora.app/profile/\(self.attributes.slug)"
+	}
+
+	/// Create a context menu configuration for the user.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the user.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			return ProfileTableViewController.`init`(with: self.id)
+			ProfileTableViewController.`init`(with: self.id)
 		}, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
 
-	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	/// Create a context menu for the user.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the user.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Library" element
@@ -61,8 +89,13 @@ extension User {
 		}
 
 		// Create "Share" element
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController, shareText: "https://kurozora.app/profile/\(self.attributes.slug)\nFollow \(self.attributes.username) via @KurozoraApp")
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			var activityItems: [Any] = []
+			activityItems.append(self.webpageURLString)
+			activityItems.append("Follow \(self.attributes.username) via @KurozoraApp")
+
+			self.openShareSheet(activityItems: activityItems, on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		menuElements.append(shareAction)
 
@@ -75,11 +108,15 @@ extension User {
 	/// Make sure to send either the view or the bar button item that's sending the request.
 	///
 	/// - Parameters:
+	///    - activityItems: The items to share.
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, shareText: String, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = [shareText]
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(activityItems: [Any], on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 
 		if let profileImageView = self.attributes.profileImageView.image {
 			activityItems.append(profileImageView)
@@ -88,9 +125,9 @@ extension User {
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}
@@ -202,7 +239,18 @@ extension User {
 
 // MARK: - Library
 extension User {
-	func makeLibraryContextMenu(in viewController: LibraryViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	/// Create a context menu for the user's library.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the game.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeLibraryContextMenu(in viewController: LibraryViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Layout" element
@@ -220,22 +268,29 @@ extension User {
 
 		// Create "Favorites" element
 		let includeUser = userInfo?["includeUser"] as? Bool ?? true
-		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) { _ in
+		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) {  [weak self] _ in
+			guard let self = self else { return }
 			self.openFavorites(on: viewController, includeUser: includeUser)
 		}
 		menuElements.append(favoritesAction)
 
 		if User.current?.id == self.id {
 			// Create "Reminders" element
-			let remindersAction = UIAction(title: Trans.reminders, image: UIImage(systemName: "bell.circle")) { _ in
+			let remindersAction = UIAction(title: Trans.reminders, image: UIImage(systemName: "bell.circle")) {  [weak self] _ in
+				guard let self = self else { return }
 				self.openReminders(on: viewController)
 			}
 			menuElements.append(remindersAction)
 		}
 
 		// Create "Share" element
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController, shareText: "https://kurozora.app/profile/\(self.attributes.slug)/\(UserSettings.libraryKind.urlPathName)\nCheck out \(self.attributes.username)’s library via @KurozoraApp")
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			var activityItems: [Any] = []
+			activityItems.append("https://kurozora.app/profile/\(self.attributes.slug)/\(UserSettings.libraryKind.urlPathName)")
+			activityItems.append("Check out \(self.attributes.username)’s library via @KurozoraApp")
+
+			self.openShareSheet(activityItems: activityItems, on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		menuElements.append(shareAction)
 

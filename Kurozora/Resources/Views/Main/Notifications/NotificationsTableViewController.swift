@@ -254,7 +254,7 @@ class NotificationsTableViewController: KTableViewController {
 		}
 	}
 
-	/// Update notifications status withtin a specific section.
+	/// Update notifications status within a specific section.
 	///
 	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	@objc func updateNotifications(in section: Int, sender: UIButton) {
@@ -324,7 +324,7 @@ extension NotificationsTableViewController {
 				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
-			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
+			// Reorder grouped notifications so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
 			groupedNotifications.sort {
 				$0.sectionNotifications.first?.attributes.createdAt ?? Date() > $1.sectionNotifications.first?.attributes.createdAt ?? Date()
 			}
@@ -345,7 +345,7 @@ extension NotificationsTableViewController {
 				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
-			// Reorder grouped notifiactions so it's in alphabetical order
+			// Reorder grouped notifications so it's in alphabetical order
 			groupedNotifications.sort {
 				$0.sectionTitle < $1.sectionTitle
 			}

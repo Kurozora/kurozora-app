@@ -102,6 +102,7 @@ extension ManageActiveSessionsController {
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return nil }
+		let tableViewCell = tableView.cellForRow(at: indexPath)
 
 		switch sectionIdentifier {
 		case .current:
@@ -113,7 +114,7 @@ extension ManageActiveSessionsController {
 					session.id == sessionIdentity.id
 				}?.value
 
-				return session?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return session?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 			default:
 				return nil
 			}

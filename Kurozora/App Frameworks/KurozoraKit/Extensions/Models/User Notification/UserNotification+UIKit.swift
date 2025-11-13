@@ -6,12 +6,24 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension UserNotification {
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
-	-> UIContextMenuConfiguration? {
+	/// Create a context menu configuration for the user's notification.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the user's notification.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
@@ -34,11 +46,22 @@ extension UserNotification {
 			return nil
 		}, actionProvider: { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+	/// Create a context menu for the user's notification.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the user's notification.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Update read status action
@@ -77,7 +100,7 @@ extension UserNotification {
 	///    - readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	func update(at indexPath: IndexPath, withReadStatus readStatus: ReadStatus) async {
 		do {
-			let userNotificationUpdateResponse = try await KService.updateNotification(self.id, withReadStatus: readStatus).value
+			let userNotificationUpdateResponse = try await KService.updateNotification(self.id.rawValue, withReadStatus: readStatus).value
 			self.attributes.readStatus = userNotificationUpdateResponse.data.readStatus
 
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: self, userInfo: nil)
@@ -91,7 +114,8 @@ extension UserNotification {
 	/// - Parameter indexPath: The index path of the notification.
 	func remove(at indexPath: IndexPath) async {
 		do {
-			_ = try await KService.deleteNotification(self.id).value
+			let notificationIdentity = UserNotificationIdentity(id: self.id)
+			_ = try await KService.deleteNotification(notificationIdentity).value
 
 			NotificationCenter.default.post(name: .KUNDidDelete, object: self, userInfo: nil)
 		} catch {

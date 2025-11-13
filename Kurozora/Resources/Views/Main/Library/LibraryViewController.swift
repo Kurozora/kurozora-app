@@ -124,7 +124,7 @@ class LibraryViewController: KTabbedViewController {
 			self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
 				"includeUser": self.user != nil,
 				"index": index,
-			])
+			], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 			self.populateSortActions()
 			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
 			self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
@@ -166,7 +166,7 @@ class LibraryViewController: KTabbedViewController {
 		self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
 			"includeUser": self.user != nil,
 			"index": index,
-		])
+		], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	/// Updates the sort type button icon to reflect the current sort type when switching between views.

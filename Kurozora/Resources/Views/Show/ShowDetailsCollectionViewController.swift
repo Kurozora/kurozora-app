@@ -366,10 +366,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
-	@objc func shareShow() {
-		self.show?.openShareSheet(on: self)
-	}
-
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
 		let name = self.show.attributes.library?.favoriteStatus == .favorited ? "heart.fill" : "heart"

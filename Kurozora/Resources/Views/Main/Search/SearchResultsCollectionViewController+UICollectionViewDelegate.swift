@@ -113,6 +113,7 @@ extension SearchResultsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+        let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch itemKind {
 		case .discoverSuggestion:
@@ -130,30 +131,33 @@ extension SearchResultsCollectionViewController {
 				return searchResultsCollectionViewController
 			}, actionProvider: nil)
 		case .characterIdentity:
-			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .episodeIdentity:
-			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .personIdentity:
-			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return nil }
-			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return nil }
-			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .gameIdentity:
 			guard let game = self.games[indexPath] else { return nil }
-			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songIdentity:
-			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			guard
+				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
+				let song = cell.song
+			else { return nil }
 			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
-				"song": cell.song
-			])
+				"song": song
+			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studioIdentity:
-			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .userIdentity:
-			return self.users[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.users[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .show:
 			return nil
 		case .literature:

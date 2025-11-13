@@ -20,13 +20,15 @@ extension SongDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
 			guard let show = self.shows[indexPath] else { return nil }
-			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return nil }
-			return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default: break
 		}
 

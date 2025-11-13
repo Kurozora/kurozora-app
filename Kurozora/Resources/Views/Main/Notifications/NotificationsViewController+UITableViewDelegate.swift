@@ -124,8 +124,10 @@ extension NotificationsTableViewController {
 
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let tableViewCell = tableView.cellForRow(at: indexPath)
+
 		let userNotification = self.dataSource.itemIdentifier(for: indexPath)
-		return userNotification?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		return userNotification?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

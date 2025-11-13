@@ -6,31 +6,55 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
 import MusicKit
+import UIKit
 
 extension KKSong {
 	/// The webpage URL of the song.
 	var webpageURLString: String {
 		return "https://kurozora.app/songs/\(self.id)"
 	}
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any?])
-	-> UIContextMenuConfiguration? {
-		let identifier = userInfo["indexPath"] as? NSCopying
+
+	/// Create a context menu configuration for the song.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the song.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
+		-> UIContextMenuConfiguration?
+	{
+		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			return SongDetailsCollectionViewController.`init`(with: self.id)
+			SongDetailsCollectionViewController.`init`(with: self.id)
 		}) { _ in
-			return self.makeContextMenu(in: viewController, userInfo: userInfo)
+			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
 
-	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
+	/// Create a context menu for the song.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///    - sourceView: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///
+	/// - Returns: A `UIMenu` representing the context menu for the song.
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Play" element
-		if let song = userInfo["song"] as? MKSong {
+		if let song = userInfo?["song"] as? MKSong {
 			let isPlaying = MusicManager.shared.currentSong == song && MusicManager.shared.isPlaying
 			let title = isPlaying ? "Pause" : "Play"
 			let image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
@@ -43,7 +67,7 @@ extension KKSong {
 		if MusicManager.shared.hasAMSubscription {
 			var addElements: [UIMenuElement] = []
 			// Create "Add to Apple Music" element
-			if let song = userInfo["song"] as? MKSong {
+			if let song = userInfo?["song"] as? MKSong {
 				let title = song.isInLibrary ? "In Apple Music Library" : "Add to Apple Music"
 				let image = song.isInLibrary ? UIImage(systemName: "checkmark") : UIImage(systemName: "plus")
 				let addAction = UIAction(title: title, image: image) { _ in
@@ -65,16 +89,17 @@ extension KKSong {
 		var viewOnElements: [UIMenuElement] = []
 		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
-            let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: .Symbols.musicSmileCircleFill) { _ in
+			let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: .Symbols.musicSmileCircleFill) { _ in
 				UIApplication.shared.kOpen(amazonMusicLink)
 			}
 			viewOnElements.append(amazonMusicAction)
 		}
 
 		// Create "View on Apple Music" element
-		if let song = userInfo["song"] as? MKSong,
-		   let appleMusicLink = song.song.url {
-            let amAction = UIAction(title: Trans.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
+		if let song = userInfo?["song"] as? MKSong,
+		   let appleMusicLink = song.song.url
+		{
+			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}
 			viewOnElements.append(amAction)
@@ -82,7 +107,7 @@ extension KKSong {
 
 		// Create "View on Deezer" element
 		if let deezerID = self.attributes.deezerID, let deezerLink = URL.deezerURL(deezerID: deezerID) {
-            let deezerAction = UIAction(title: Trans.viewOnDeezer, image: .Symbols.musicWaveformCircleFill) { _ in
+			let deezerAction = UIAction(title: Trans.viewOnDeezer, image: .Symbols.musicWaveformCircleFill) { _ in
 				UIApplication.shared.kOpen(deezerLink)
 			}
 			viewOnElements.append(deezerAction)
@@ -90,7 +115,7 @@ extension KKSong {
 
 		// Create "View on Spotify" element
 		if let spotifyID = self.attributes.spotifyID, let spotifyLink = URL.spotifyURL(spotifyID: spotifyID) {
-            let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: .Symbols.wave3UpCircleFill) { _ in
+			let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: .Symbols.wave3UpCircleFill) { _ in
 				UIApplication.shared.kOpen(spotifyLink)
 			}
 			viewOnElements.append(spotifyAction)
@@ -98,7 +123,7 @@ extension KKSong {
 
 		// Create "View on YouTube Music" element
 		if let youtubeID = self.attributes.youtubeID, let youtubeLink = URL.youtubeURL(youtubeID: youtubeID) {
-            let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: .Symbols.playCircleCircleFill) { _ in
+			let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: .Symbols.playCircleCircleFill) { _ in
 				UIApplication.shared.kOpen(youtubeLink)
 			}
 			viewOnElements.append(spotifyAction)
@@ -136,16 +161,18 @@ extension KKSong {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	///    - view: The `UIView` sending the request.
+	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		let shareText = "\(self.webpageURLString)\nListen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+	///
+	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			if let view = view {
-				popoverController.sourceView = view
-				popoverController.sourceRect = view.frame
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
 			} else {
 				popoverController.barButtonItem = barButtonItem
 			}

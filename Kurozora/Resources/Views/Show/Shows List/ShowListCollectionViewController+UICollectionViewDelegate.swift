@@ -48,12 +48,14 @@ extension ShowsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		switch self.showsListFetchType {
 		case .relatedShow, .literature, .game:
-			return self.relatedShows[safe: indexPath.item]?.show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+            return self.relatedShows[safe: indexPath.item]?.show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
 			guard self.shows[indexPath] != nil else { return nil }
-			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+            return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

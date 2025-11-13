@@ -27,14 +27,19 @@ extension ShowSongsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		if !self.showSongs.isEmpty {
-			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			guard
+				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
+				let song = cell.song
+			else { return nil }
 			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
-				"song": cell.song
-			])
+				"song": song
+			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		} else if !self.songs.isEmpty {
-			return self.songs[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.songs[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 
 		return nil

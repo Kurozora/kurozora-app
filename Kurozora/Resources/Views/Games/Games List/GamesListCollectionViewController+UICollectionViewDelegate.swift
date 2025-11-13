@@ -48,12 +48,14 @@ extension GamesListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
 		switch self.gamesListFetchType {
 		case .relatedGame, .show, .literature:
-			return self.relatedGames[safe: indexPath.item]?.game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.relatedGames[safe: indexPath.item]?.game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
 			guard self.games[indexPath] != nil else { return nil }
-			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

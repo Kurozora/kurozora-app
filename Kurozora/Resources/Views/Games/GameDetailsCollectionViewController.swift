@@ -213,7 +213,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.game?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.game?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	/// Fetches details for the given game identity. If none given then the currently viewed game's details are fetched.
@@ -324,10 +324,6 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	@objc func toggleReminder() {
 //		self.game?.toggleReminder()
-	}
-
-	@objc func shareGame() {
-		self.game?.openShareSheet(on: self)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
