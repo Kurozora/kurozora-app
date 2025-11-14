@@ -21,23 +21,6 @@ class LegalViewController: KViewController {
 	@IBOutlet weak var privacyPolicyTextView: KTextView!
 	@IBOutlet weak var scrollView: UIScrollView!
 
-	// MARK: - Initializers
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchData()
-		}
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchData()
-		}
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -50,6 +33,11 @@ class LegalViewController: KViewController {
 		self.navigationTitleView.alpha = 0
 
 		self.scrollView.delegate = self
+
+        Task { [weak self] in
+            guard let self = self else { return }
+            await self.fetchData()
+        }
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
