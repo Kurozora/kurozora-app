@@ -22,7 +22,8 @@ final class SpotlightManager: NSObject {
 	/// Adds a searchable item to Spotlight index.
 	func addToSpotlightSearch(contentAttributeSet: CSSearchableItemAttributeSet) {
 		guard let title = contentAttributeSet.title else { return }
-		let item = CSSearchableItem(uniqueIdentifier: title, domainIdentifier: "app.kurozora.tracker", attributeSet: contentAttributeSet)
+		let domainIdentifier = contentAttributeSet.domainIdentifier ?? "app.kurozora.tracker.core-spotlight"
+		let item = CSSearchableItem(uniqueIdentifier: title, domainIdentifier: domainIdentifier, attributeSet: contentAttributeSet)
 
 		CSSearchableIndex.default().indexSearchableItems([item]) { error in
 			if let error = error {

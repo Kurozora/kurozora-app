@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		KThemeStyle.initAppTheme()
 
 		#if targetEnvironment(macCatalyst)
-        self.setupNSToolbar()
+		self.setupNSToolbar()
 		#endif
 
 		// Global app tint color
@@ -62,9 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Configure window or restore previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
-			if !self.configure(window: self.window, with: userActivity) {
-				print("----- Failed to restore from \(userActivity)")
-			}
+			self.configure(scene: self.window?.windowScene, with: userActivity)
 		}
 	}
 
@@ -86,6 +84,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 	}
 
+	func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+		self.configure(scene: scene, with: userActivity)
+	}
+
 	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {
 		await KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
 		return true
@@ -95,7 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		print("----- Scene entered background.")
 		KurozoraDelegate.shared.userShouldAuthenticate()
 //		WorkflowController.shared.scheduleNotification("Sessionne", body: "Gol gara signed in from saboon.")
-		authenticationCount = 0
+		self.authenticationCount = 0
 	}
 
 	func sceneWillEnterForeground(_ scene: UIScene) {
@@ -131,57 +133,45 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	/// Configures the scene according to the passed activity.
 	///
 	/// - Parameters:
-	///    - window: The backdrop for your app’s user interface and the object that dispatches events to your views.
-	///    - activity: A representation of the state of your app at a moment in time.
-	func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
-		switch activity.activityType {
-		case "OpenShowIntent":
-			if let parameters = activity.userInfo as? [String: String] {
-				guard let showID = parameters["showID"], let url = URL(string: "kurozora://anime/\(showID)") else { return false }
-				guard let scene = window?.windowScene else { return false }
-
-				Task {
-					await NavigationManager.shared.schemeHandler(scene, open: url)
-				}
-			}
-		case "OpenGameIntent":
-			if let parameters = activity.userInfo as? [String: String] {
-				guard let gameID = parameters["gameID"], let url = URL(string: "kurozora://game/\(gameID)") else { return false }
-				guard let scene = window?.windowScene else { return false }
-
-				Task {
-					await NavigationManager.shared.schemeHandler(scene, open: url)
-				}
-			}
-		case "OpenLiteratureIntent":
-			if let parameters = activity.userInfo as? [String: String] {
-				guard let literatureID = parameters["literatureID"], let url = URL(string: "kurozora://literature/\(literatureID)") else { return false }
-				guard let scene = window?.windowScene else { return false }
-
-				Task {
-					await NavigationManager.shared.schemeHandler(scene, open: url)
-				}
-			}
-		case "OpenUserIntent":
-			if let parameters = activity.userInfo as? [String: String] {
-				guard let userID = parameters["userID"], let url = URL(string: "kurozora://profile/\(userID)") else { return false }
-				guard let scene = window?.windowScene else { return false }
-
-				Task {
-					await NavigationManager.shared.schemeHandler(scene, open: url)
-				}
-			}
-		default:
-			break
+	///    - scene: The object that represents one instance of the app's user interface.
+	///    - userActivity: A representation of the state of your app at a moment in time.
+	func configure(scene: UIScene?, with userActivity: NSUserActivity) {
+		guard
+			let activityType = ActivityType(rawValue: userActivity.activityType),
+			let kurozoraID = (try? userActivity.typedPayload([String: KurozoraItemID].self))?["id"],
+			let scene = scene
+		else {
+			print("----- Failed to restore from \(userActivity)")
+			return
 		}
-		return false
+
+		// Abomination of a URL scheme construction
+		guard let url: URL = switch activityType {
+		case .openShow:
+			URL(string: "kurozora://anime/\(kurozoraID)")
+		case .openGame:
+			URL(string: "kurozora://game/\(kurozoraID)")
+		case .openLiterature:
+			URL(string: "kurozora://literature/\(kurozoraID)")
+		case .openUser:
+			URL(string: "kurozora://profile/\(kurozoraID)")
+		} else {
+			print("----- Url construction failed for \(userActivity)")
+			return
+		}
+
+		Task {
+			await NavigationManager.shared.schemeHandler(scene, open: url)
+		}
+
+		print("----- Succeeded to restore from \(userActivity)")
 	}
 
 	static func createTwoColumnSplitViewController() -> UISplitViewController {
 		let navigationController = KNavigationController(rootViewController: SidebarViewController())
 		#if targetEnvironment(macCatalyst)
 		navigationController.extendedLayoutIncludesOpaqueBars = true
-		navigationController.additionalSafeAreaInsets.top = -28  // roughly the titlebar height
+		navigationController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
 		#endif
 		navigationController.navigationItem.largeTitleDisplayMode = .never
 
@@ -194,7 +184,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		splitViewController.displayModeButtonVisibility = .never
 		splitViewController.minimumPrimaryColumnWidth = 220.0
 		splitViewController.maximumPrimaryColumnWidth = 220.0
-		splitViewController.additionalSafeAreaInsets.top = -28  // roughly the titlebar height
+		splitViewController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
 		#endif
 		splitViewController.setViewController(navigationController, for: .primary)
 		splitViewController.setViewController(tabBarController, for: .compact)

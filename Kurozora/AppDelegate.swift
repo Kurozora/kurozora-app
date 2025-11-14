@@ -87,11 +87,24 @@ extension AppDelegate {
 // MARK: - Continuity
 extension AppDelegate {
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: String] {
-			guard let showID = parameters["showID"] else { return false }
+		guard
+			let activityType = ActivityType(rawValue: userActivity.activityType),
+			let kurozoraID = try? userActivity.typedPayload(KurozoraItemID.self)
+		else { return false }
 
-			let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
+		switch activityType {
+		case .openShow:
+			let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: kurozoraID)
 			UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
+		case .openLiterature:
+			let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.`init`(with: kurozoraID)
+			UIApplication.topViewController?.show(literatureDetailsCollectionViewController, sender: nil)
+		case .openGame:
+			let gameDetailsCollectionViewController = GameDetailsCollectionViewController.`init`(with: kurozoraID)
+			UIApplication.topViewController?.show(gameDetailsCollectionViewController, sender: nil)
+		case .openUser:
+			let profileTableViewController = ProfileTableViewController.`init`(with: kurozoraID)
+			UIApplication.topViewController?.show(profileTableViewController, sender: nil)
 		}
 
 		return true
