@@ -49,9 +49,9 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLIconFile</key>
-			<string>App-Icon-iPad-Day</string>
+			<string>Launch Icon</string>
 			<key>CFBundleURLName</key>
-			<string>app.kurozora.anime</string>
+			<string>app.kurozora.tracker</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kuro</string>
@@ -127,7 +127,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018-present Kurozora Kurozora. All rights reserved.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the &quot;Always&quot; option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationUsageDescription</key>
@@ -140,9 +140,10 @@
 	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile picture or share your images in the app.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>AddAnimeIntent</string>
-		<string>OpenAnimeIntent</string>
-		<string>SearchAnimeIntentIntent</string>
+		<string>app.kurozora.tracker.user-activity.openShow</string>
+		<string>app.kurozora.tracker.user-activity.openLiterature</string>
+		<string>app.kurozora.tracker.user-activity.openGame</string>
+		<string>app.kurozora.tracker.user-activity.openUser</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
