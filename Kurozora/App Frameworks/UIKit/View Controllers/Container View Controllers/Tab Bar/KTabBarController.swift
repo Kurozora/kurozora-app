@@ -14,7 +14,7 @@ import FLEX
 
 class KTabBarController: UITabBarController {
 	// MARK: - Properties
-	private var _previousTabs: NSObject? = nil
+	private var _previousTabs: NSObject?
 
 	@available(iOS 18.0, *)
 	private var previousTabs: [UITab] {
@@ -29,7 +29,7 @@ class KTabBarController: UITabBarController {
 			self._previousTabs = newValue as NSObject
 		}
 	}
-	
+
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -57,18 +57,18 @@ class KTabBarController: UITabBarController {
 		self.setupBadgeValue()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
 
-		if #available(iOS 18.0, macCatalyst 18.0, *) {
+		if #available(iOS 18.0, *) {
 			self.registerForTraitChanges([UITraitHorizontalSizeClass.self], action: #selector(handleHorizontalSizeClass))
 		}
 	}
 
-	@available(iOS 18.0, macCatalyst 18.0, *)
+	@available(iOS 18.0, *)
 	@objc func handleHorizontalSizeClass() {
 		if self.traitCollection.horizontalSizeClass == .compact {
 			self.previousTabs = self.tabs
-			self.tabs = self.tabs.filter({ tab in
+			self.tabs = self.tabs.filter { tab in
 				tab.preferredPlacement == .fixed || tab.preferredPlacement == .pinned
-			})
+			}
 		} else if !self.previousTabs.isEmpty {
 			self.tabs = self.previousTabs
 		}
@@ -77,10 +77,9 @@ class KTabBarController: UITabBarController {
 	/// Configure the tabs.
 	@MainActor
 	func configureTabs() {
-		if #available(iOS 18.0, macCatalyst 18.0, *) {
+		if #available(iOS 18.0, *) {
 			self.delegate = self
 			self.tabs = TabBarItem.tabBarCases.map { $0.tab }
-//			self.selectedTab = TabBarItem.home.tab
 			self.selectedIndex = self.tabs.firstIndex(where: { tab in
 				tab.identifier == TabBarItem.home.rowIdentifierValue
 			}) ?? 0
@@ -88,8 +87,6 @@ class KTabBarController: UITabBarController {
 		} else {
 			self.viewControllers = TabBarItem.tabBarCases.map {
 				let rootNavigationController = $0.kViewControllerValue
-				// MARK: Refactor
-				// BounceAnimation()
 				let tabBarItem: UITabBarItem
 
 				if $0 != .search {
@@ -119,7 +116,7 @@ class KTabBarController: UITabBarController {
 		#endif
 		#endif
 
-		if #available(iOS 18.0, macCatalyst 18.0, *) {
+		if #available(iOS 18.0, *) {
 			self.mode = .tabSidebar
 			self.sidebar.bottomBarView = UIView()
 		}
@@ -187,7 +184,7 @@ class KTabBarController: UITabBarController {
 	/// Sets up the badge value on the tab bar item.
 	fileprivate func setupBadgeValue() {
 		if UserSettings.notificationsBadge, User.isSignedIn {
-			if #available(iOS 18.0, macCatalyst 18.0, *) {
+			if #available(iOS 18.0, *) {
 				let tab = self.tabs.first {
 					$0.identifier == TabBarItem.notifications.rowIdentifierValue
 				}
@@ -210,7 +207,7 @@ class KTabBarController: UITabBarController {
 
 // MARK: - UITabBarControllerDelegate
 extension KTabBarController: UITabBarControllerDelegate {
-	@available(iOS 18.0, macCatalyst 18.0, *)
+	@available(iOS 18.0, *)
 	func tabBarController(_ tabBarController: UITabBarController, didSelectTab selectedTab: UITab, previousTab: UITab?) {
 		if UserSettings.hapticsAllowed {
 			UISelectionFeedbackGenerator().selectionChanged()
@@ -241,7 +238,7 @@ extension KTabBarController: UITabBarControllerDelegate {
 		}
 	}
 
-	@available(iOS 18.0, macCatalyst 18.0, *)
+	@available(iOS 18.0, *)
 	func tabBarController(_ tabBarController: UITabBarController, shouldSelectTab tab: UITab) -> Bool {
 		guard let tabBarItem = TabBarItem(identifierValue: tab.identifier) else { return true } // Select by default
 
@@ -254,11 +251,11 @@ extension KTabBarController: UITabBarControllerDelegate {
 		}
 	}
 
-	@available(iOS 18.0, macCatalyst 18.0, *)
+	@available(iOS 18.0, *)
 	func presentSettingsViewController() {
 		// Since the view controller in the selected tab is owned
 		// by the tab controller, the app crashes if you present it.
-		// So we create a new isntance to present instead.
+		// So we create a new instance to present instead.
 		let settingsSplitViewController = TabBarItem.settings.kViewControllerValue
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		self.present(settingsSplitViewController, animated: true)

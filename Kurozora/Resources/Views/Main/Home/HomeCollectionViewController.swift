@@ -232,7 +232,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
-		if WhatsNew.shouldPresent() {
+		if WhatsNew.shouldPresent(with: .majorVersion) {
 			let whatsNew = WhatsNewViewController(titleText: Trans.whatsNew, buttonText: Trans.continue, items: KWhatsNew.current)
 			self.present(whatsNew, animated: true)
 		}
