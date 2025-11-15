@@ -243,6 +243,114 @@ extension ScheduleCollectionViewController: TMBarDelegate {
 	}
 }
 
+// MARK: - BaseLockupCollectionViewCellDelegate
+extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn()
+		guard isSignedIn else { return }
+
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		let schedule = self.schedules[indexPath.section]
+		let modelID: KurozoraItemID
+
+		switch cell.libraryKind {
+		case .shows:
+			guard let show = schedule.relationships.shows?.data[safe: indexPath.item] else { return }
+			modelID = show.id
+		case .literatures:
+			guard let literature = schedule.relationships.literatures?.data[safe: indexPath.item] else { return }
+			modelID = literature.id
+		case .games:
+			guard let game = schedule.relationships.games?.data[safe: indexPath.item] else { return }
+			modelID = game.id
+		}
+
+		let oldLibraryStatus = cell.libraryStatus
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+			Task {
+				do {
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+					switch cell.libraryKind {
+					case .shows:
+						let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show
+						show?.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .literatures:
+						let literature = schedule.relationships.literatures?.data[safe: indexPath.item] as? Literature
+						literature?.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .games:
+						let game = schedule.relationships.games?.data[safe: indexPath.item] as? Game
+						game?.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					// Update entry in library
+					cell.libraryStatus = value
+					button.setTitle("\(title) ▾", for: .normal)
+
+					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+
+					// Request review
+					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+				} catch let error as KKAPIError {
+					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+					print("----- Add to library failed", error.message)
+				}
+			}
+		})
+
+		if cell.libraryStatus != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show
+							show?.attributes.library?.update(using: libraryUpdateResponse.data)
+						case .literatures:
+							let literature = schedule.relationships.literatures?.data[safe: indexPath.item] as? Literature
+							literature?.attributes.library?.update(using: libraryUpdateResponse.data)
+						case .games:
+							let game = schedule.relationships.games?.data[safe: indexPath.item] as? Game
+							game?.attributes.library?.update(using: libraryUpdateResponse.data)
+						}
+
+						// Update entry in library
+						cell.libraryStatus = .none
+						button.setTitle(Trans.add.uppercased(), for: .normal)
+
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						print("----- Remove from library failed", error.message)
+					}
+				}
+			}))
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
+		}
+	}
+
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		let schedule = self.schedules[indexPath.section]
+		guard let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show else { return }
+		await show.toggleReminder(on: self)
+		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+	}
+}
+
 // MARK: - UIToolbarDelegate
 extension ScheduleCollectionViewController: UIToolbarDelegate {
 	func position(for bar: UIBarPositioning) -> UIBarPosition {
