@@ -11,7 +11,7 @@ import KurozoraKit
 
 class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Properties
-	var feedMessageID: String = ""
+	var feedMessageID: KurozoraItemID = ""
 	var feedMessage: FeedMessage! {
 		didSet {
 			self.feedMessageID = feedMessage?.id ?? ""
@@ -48,7 +48,7 @@ class FMDetailsTableViewController: KTableViewController {
 	/// - Parameter feedMessageID: The feed message id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
-	static func `init`(with feedMessageID: String) -> FMDetailsTableViewController {
+	static func `init`(with feedMessageID: KurozoraItemID) -> FMDetailsTableViewController {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessageID = feedMessageID
 			return fmDetailsTableViewController
@@ -175,7 +175,8 @@ class FMDetailsTableViewController: KTableViewController {
 		#endif
 
 		do {
-			let feedMessageResponse = try await KService.getDetails(forFeedMessage: self.feedMessageID).value
+            let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
+			let feedMessageResponse = try await KService.getDetails(forFeedMessage: feedMessageIdentity).value
 
 			self.feedMessage = feedMessageResponse.data.first
 		} catch {
@@ -191,7 +192,8 @@ class FMDetailsTableViewController: KTableViewController {
 	@MainActor
 	func fetchFeedReplies() async {
 		do {
-			let feedMessageResponse = try await KService.getReplies(forFeedMessage: self.feedMessageID, next: self.nextPageURL).value
+            let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
+			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -221,7 +223,7 @@ class FMDetailsTableViewController: KTableViewController {
 		if segue.identifier == R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
-				guard let feedMessageID = sender as? String else { return }
+				guard let feedMessageID = sender as? KurozoraItemID else { return }
 				fmDetailsTableViewController.feedMessageID = feedMessageID
 				fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 			}
@@ -373,9 +375,9 @@ extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
 
 // MARK: - FMDetailsTableViewControllerDelegate
 extension FMDetailsTableViewController: FMDetailsTableViewControllerDelegate {
-	func fmDetailsTableViewController(delete messageID: String) {
+	func fmDetailsTableViewController(delete messageID: KurozoraItemID) {
 		self.feedMessageReplies.removeFirst { feedMessageReply in
-			feedMessageReply.id == String(messageID)
+			feedMessageReply.id == messageID
 		}
 	}
 }

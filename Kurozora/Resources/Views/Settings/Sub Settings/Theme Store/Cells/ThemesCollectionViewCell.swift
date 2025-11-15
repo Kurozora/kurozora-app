@@ -107,7 +107,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 		switch self.kTheme {
 		case .other(let theme):
-			if currentThemeID == theme.id {
+            if currentThemeID == theme.id.rawValue {
 				if User.isPro || User.isSubscribed {
 					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
 						self.getThemeButton.setTitle("USING", for: .normal)

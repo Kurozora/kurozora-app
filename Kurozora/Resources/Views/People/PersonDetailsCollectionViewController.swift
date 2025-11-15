@@ -80,7 +80,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	/// - Parameter personID: The person id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
-	static func `init`(with personID: String) -> PersonDetailsCollectionViewController {
+	static func `init`(with personID: KurozoraItemID) -> PersonDetailsCollectionViewController {
 		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
 			personDetailsCollectionViewController.personIdentity = PersonIdentity(id: personID)
 			return personDetailsCollectionViewController
@@ -284,7 +284,7 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:

@@ -268,7 +268,7 @@ class NotificationsTableViewController: KTableViewController {
 				readStatus = .read
 			}
 
-			return userNotification.id
+			return userNotification.id.rawValue
 		}.joined(separator: ",")
 
 		Task { [weak self] in

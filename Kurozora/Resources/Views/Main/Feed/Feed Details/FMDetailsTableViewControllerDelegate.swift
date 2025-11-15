@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import KurozoraKit
 
 protocol FMDetailsTableViewControllerDelegate: AnyObject {
-	func fmDetailsTableViewController(delete messageID: String)
+	func fmDetailsTableViewController(delete messageID: KurozoraItemID)
 }

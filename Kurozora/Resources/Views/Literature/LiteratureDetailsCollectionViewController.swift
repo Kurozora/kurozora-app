@@ -108,7 +108,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	/// - Parameter literatureID: The literature id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of LiteratureDetailsCollectionViewController.
-	static func `init`(with literatureID: String) -> LiteratureDetailsCollectionViewController {
+	static func `init`(with literatureID: KurozoraItemID) -> LiteratureDetailsCollectionViewController {
 		if let literatureDetailsCollectionViewController = R.storyboard.literatures.literatureDetailsCollectionViewController() {
 			literatureDetailsCollectionViewController.literatureIdentity = LiteratureIdentity(id: literatureID)
 			return literatureDetailsCollectionViewController
@@ -525,7 +525,7 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:
@@ -743,7 +743,7 @@ extension LiteratureDetailsCollectionViewController: BaseDetailHeaderCollectionV
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
 		let oldLibraryStatus = cell.libraryStatus
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:

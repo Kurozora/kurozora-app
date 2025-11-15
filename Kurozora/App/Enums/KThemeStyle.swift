@@ -102,7 +102,7 @@ enum KThemeStyle: Int {
 			if let themeID = Int(currentTheme) {
 				// Use a non default theme if it exists
 				if let themeDirectoryURLPath = self.themesDirectoryURL?.appendingPathComponent("theme-\(themeID).plist").path, FileManager.default.fileExists(atPath: themeDirectoryURLPath) {
-					KThemeStyle.switchTo(themeID: String(themeID))
+					KThemeStyle.switchTo(themeID: KurozoraItemID(String(themeID)))
 				} else {
 					// Fallback to default if theme doesn't exist
 					KThemeStyle.switchTo(style: .day)
@@ -164,7 +164,7 @@ enum KThemeStyle: Int {
 	///    - version: The expected version.
 	///
 	/// - Returns: whether the given theme matches the expected version.
-	static func isUpToDate(_ themeID: String, version: String) -> Bool {
+	static func isUpToDate(_ themeID: KurozoraItemID, version: String) -> Bool {
 		guard let themesDirectoryURL = themesDirectoryURL else { return true }
 		guard let themeContents = FileManager.default.contents(atPath: themesDirectoryURL.appendingPathComponent("theme-\(themeID).plist").path) else { return true }
 		guard let theme = try? PropertyListSerialization.propertyList(from: themeContents, options: .mutableContainersAndLeaves, format: nil) as? [String: Any] else { return true }
@@ -235,7 +235,7 @@ extension KThemeStyle {
 	/// Switch theme based on the passed theme id.
 	///
 	/// - Parameter themeID: An integer value reflecting the ID of the theme.
-	fileprivate static func switchTo(themeID: String) {
+	fileprivate static func switchTo(themeID: KurozoraItemID) {
 		self.before = self.current
 		self.current = .other
 
@@ -245,8 +245,8 @@ extension KThemeStyle {
 	/// Sets the theme with the given theme id.
 	///
 	/// - Parameter themeID: The theme ID used to set the theme.
-	fileprivate static func setTheme(themeID: String) {
-		UserSettings.set(themeID, forKey: .currentTheme)
+	fileprivate static func setTheme(themeID: KurozoraItemID) {
+		UserSettings.set("\(themeID)", forKey: .currentTheme)
 		guard let themesDirectoryURL = self.themesDirectoryURL else { return }
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryURL))
 		UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = KThemePicker.statusBarStyle.userInterfaceStyleValue

@@ -875,7 +875,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:

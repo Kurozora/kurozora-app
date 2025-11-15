@@ -107,7 +107,7 @@ class ProfileTableViewController: KTableViewController {
 	/// - Parameter userID: The user id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of ProfileTableViewController.
-	static func `init`(with userID: String) -> ProfileTableViewController {
+	static func `init`(with userID: KurozoraItemID) -> ProfileTableViewController {
 		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 			profileTableViewController.userIdentity = UserIdentity(id: userID)
 			return profileTableViewController
@@ -493,7 +493,7 @@ class ProfileTableViewController: KTableViewController {
 			reviewsListCollectionViewController.user = self.user
 		case R.segue.profileTableViewController.feedMessageDetailsSegue.identifier:
 			guard let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController else { return }
-			guard let feedMessageID = sender as? String else { return }
+			guard let feedMessageID = sender as? KurozoraItemID else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessageID
 		case R.segue.profileTableViewController.editProfileSegue.identifier:
 			guard let kNavigationController = segue.destination as? KNavigationController else { return }

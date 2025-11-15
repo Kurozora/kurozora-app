@@ -123,7 +123,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter showID: The show id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
-	static func `init`(with showID: String) -> ShowDetailsCollectionViewController {
+	static func `init`(with showID: KurozoraItemID) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 			showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
 			return showDetailsCollectionViewController
@@ -235,7 +235,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.show?.makeContextMenu(in: self, userInfo: [:])
+		self.moreBarButtonItem.menu = self.show?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	/// Fetches details for the given show identity. If none given then the currently viewed show's details are fetched.
@@ -591,7 +591,7 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:
@@ -813,7 +813,7 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
 		let oldLibraryStatus = cell.libraryStatus
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:

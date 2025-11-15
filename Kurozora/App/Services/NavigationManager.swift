@@ -66,29 +66,29 @@ class NavigationManager: NSObject {
 		guard let urlScheme = url.host?.removingPercentEncoding else { return }
 		guard let scheme: Scheme = Scheme(rawValue: urlScheme) else { return }
 		let parameters: [String: String] = url.queryParameters ?? [:]
+		let lastPathComponent = url.lastPathComponent
 
 		switch scheme {
 		case .anime, .show, .shows:
-			let showID = url.lastPathComponent
-			if !showID.isEmpty {
+			if !lastPathComponent.isEmpty {
+				let showID = KurozoraItemID(lastPathComponent)
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		case .game, .games:
-			let gameID = url.lastPathComponent
-			if !gameID.isEmpty {
+			if !lastPathComponent.isEmpty {
+				let gameID = KurozoraItemID(lastPathComponent)
 				let gameDetailsCollectionViewController = GameDetailsCollectionViewController.`init`(with: gameID)
 				UIApplication.topViewController?.show(gameDetailsCollectionViewController, sender: nil)
 			}
 		case .manga, .literature, .literatures:
-			let literatureID = url.lastPathComponent
-			if !literatureID.isEmpty {
+			if !lastPathComponent.isEmpty {
+				let literatureID = KurozoraItemID(lastPathComponent)
 				let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.`init`(with: literatureID)
 				UIApplication.topViewController?.show(literatureDetailsCollectionViewController, sender: nil)
 			}
 		case .profile, .user:
-			let lastPathComponent = url.lastPathComponent
-			guard let userID = lastPathComponent.isEmpty ? User.current?.id : lastPathComponent else { return }
+			guard let userID = lastPathComponent.isEmpty ? User.current?.id : KurozoraItemID(lastPathComponent) else { return }
 			let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 
 			if UIDevice.isPhone {

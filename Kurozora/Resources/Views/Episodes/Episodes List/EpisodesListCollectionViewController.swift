@@ -79,7 +79,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	/// - Parameter seasonID: The season id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of EpisodesListCollectionViewController.
-	static func `init`(with seasonID: String) -> EpisodesListCollectionViewController {
+	static func `init`(with seasonID: KurozoraItemID) -> EpisodesListCollectionViewController {
 		if let episodesListCollectionViewController = R.storyboard.episodes.episodesListCollectionViewController() {
 			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: seasonID)
 			episodesListCollectionViewController.episodesListFetchType = .season

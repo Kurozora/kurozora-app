@@ -74,7 +74,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter songID: The song id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of SongDetailsCollectionViewController.
-	static func `init`(with songID: String) -> SongDetailsCollectionViewController {
+	static func `init`(with songID: KurozoraItemID) -> SongDetailsCollectionViewController {
 		if let songDetailsCollectionViewController = R.storyboard.songs.songDetailsCollectionViewController() {
 			songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
 			return songDetailsCollectionViewController

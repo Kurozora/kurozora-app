@@ -85,7 +85,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	/// - Parameter episodeID: The episode id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
-	static func `init`(with episodeID: String) -> EpisodeDetailsCollectionViewController {
+	static func `init`(with episodeID: KurozoraItemID) -> EpisodeDetailsCollectionViewController {
 		if let episodeDetailsCollectionViewController = R.storyboard.episodes.episodeDetailsCollectionViewController() {
 			episodeDetailsCollectionViewController.episodeIdentity = EpisodeIdentity(id: episodeID)
 			return episodeDetailsCollectionViewController

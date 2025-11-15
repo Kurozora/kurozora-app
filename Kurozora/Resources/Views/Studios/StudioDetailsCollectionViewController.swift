@@ -73,7 +73,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 	/// - Parameter studioID: The studio id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of StudioDetailsCollectionViewController.
-	static func `init`(with studioID: String) -> StudioDetailsCollectionViewController {
+	static func `init`(with studioID: KurozoraItemID) -> StudioDetailsCollectionViewController {
 		if let studioDetailsCollectionViewController = R.storyboard.studios.studioDetailsCollectionViewController() {
 			studioDetailsCollectionViewController.studioIdentity = StudioIdentity(id: studioID)
 			return studioDetailsCollectionViewController
@@ -281,7 +281,7 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:

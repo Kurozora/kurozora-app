@@ -108,7 +108,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter gameID: The game id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of GameDetailsCollectionViewController.
-	static func `init`(with gameID: String) -> GameDetailsCollectionViewController {
+	static func `init`(with gameID: KurozoraItemID) -> GameDetailsCollectionViewController {
 		if let gameDetailsCollectionViewController = R.storyboard.games.gameDetailsCollectionViewController() {
 			gameDetailsCollectionViewController.gameIdentity = GameIdentity(id: gameID)
 			return gameDetailsCollectionViewController
@@ -531,7 +531,7 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:
@@ -749,7 +749,7 @@ extension GameDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
 		let oldLibraryStatus = cell.libraryStatus
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:
