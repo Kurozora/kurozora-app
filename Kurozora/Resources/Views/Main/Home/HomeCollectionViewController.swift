@@ -9,12 +9,13 @@
 import Alamofire
 import KurozoraKit
 import SPConfetti
+import TRON
 import UIKit
 import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageButton: ProfileImageButton!
+	@IBOutlet var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
 	lazy var genre: Genre? = nil
@@ -41,17 +42,12 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Which is used? This or exploreCategories?
-	var shows: [IndexPath: Show] = [:]
-	var literatures: [IndexPath: Literature] = [:]
-	var games: [IndexPath: Game] = [:]
-	var episodes: [IndexPath: Episode] = [:]
-	var characters: [IndexPath: Character] = [:]
-	var genres: [IndexPath: Genre] = [:]
-	var people: [IndexPath: Person] = [:]
+	// TODO: Replace those with the `cache` property too
 	var showSongs: [IndexPath: ShowSong] = [:]
-	var themes: [IndexPath: Theme] = [:]
 	var recaps: [IndexPath: Recap] = [:]
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
 
 	#if DEBUG
 	// Views
@@ -467,17 +463,17 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		guard isSignedIn else { return }
 
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: String
+		let modelID: KurozoraItemID
 
 		switch cell.libraryKind {
 		case .shows:
-			guard let show = self.shows[indexPath] else { return }
+			guard let show = self.cache[indexPath] else { return }
 			modelID = show.id
 		case .literatures:
-			guard let literature = self.literatures[indexPath] else { return }
+			guard let literature = self.cache[indexPath] else { return }
 			modelID = literature.id
 		case .games:
-			guard let game = self.games[indexPath] else { return }
+			guard let game = self.cache[indexPath] else { return }
 			modelID = game.id
 		}
 
@@ -489,11 +485,14 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 					switch cell.libraryKind {
 					case .shows:
-						self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						let show = self.cache[indexPath] as? Show
+						show?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .literatures:
-						self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						let literature = self.cache[indexPath] as? Literature
+						literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .games:
-						self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						let game = self.cache[indexPath] as? Game
+						game?.attributes.library?.update(using: libraryUpdateResponse.data)
 					}
 
 					// Update entry in library
@@ -520,11 +519,14 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						switch cell.libraryKind {
 						case .shows:
-							self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							let show = self.cache[indexPath] as? Show
+							show?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
-							self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							let literature = self.cache[indexPath] as? Literature
+							literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
-							self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							let game = self.cache[indexPath] as? Game
+							game?.attributes.library?.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -554,7 +556,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.shows[indexPath] else { return }
+		guard let show = self.cache[indexPath] as? Show else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
 	}
@@ -566,22 +568,31 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 		let isSignedIn = await WorkflowController.shared.isSignedIn()
 		guard isSignedIn else { return }
 
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode
+		else { return }
 		cell.watchStatusButton.isEnabled = false
-		await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		cell.watchStatusButton.isEnabled = true
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode,
+			let showIdentity = episode.relationships?.shows?.data.first
+		else { return }
 
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode,
+			let seasonIdentity = episode.relationships?.seasons?.data.first
+		else { return }
 
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
@@ -867,19 +878,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
 
-				if show == nil {
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -895,37 +899,23 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
 
 				if show == nil {
 					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: show)
-			case .literatureIdentity(let literatureIdentity, _):
-				let literature = self.fetchLiterature(at: indexPath)
+			case .literatureIdentity:
+				let literature: Literature? = self.fetchModel(at: indexPath)
 
 				if literature == nil {
 					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -941,19 +931,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .episodeIdentity(let episodeIdentity, _):
-				let episode = self.fetchEpisode(at: indexPath)
+			case .episodeIdentity:
+				let episode: Episode? = self.fetchModel(at: indexPath)
 
-				if episode == nil {
+				if episode == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
-
-							self.episodes[indexPath] = episodeResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -969,19 +952,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
-				let game = self.fetchGame(at: indexPath)
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
 
-				if game == nil {
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
-
-							self.games[indexPath] = gameResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -997,34 +973,22 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .genreIdentity(let genreIdentity, _):
-				let genre = self.fetchGenre(at: indexPath)
+			case .genreIdentity:
+				let genre: Genre? = self.fetchModel(at: indexPath)
 
-				if genre == nil {
+				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let genreResponse = try await KService.getDetails(forGenre: genreIdentity).value
-							self.genres[indexPath] = genreResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(GenreResponse.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
 				mediumLockupCollectionViewCell.configure(using: genre)
-			case .themeIdentity(let themeIdentity, _):
-				let theme = self.fetchTheme(at: indexPath)
+			case .themeIdentity:
+				let theme: Theme? = self.fetchModel(at: indexPath)
 
-				if theme == nil {
+				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let themeResponse = try await KService.getDetails(forTheme: themeIdentity).value
-							self.themes[indexPath] = themeResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ThemeResponse.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1039,19 +1003,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
 
-				if show == nil {
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1067,19 +1024,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
 
-				if show == nil {
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1095,19 +1045,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
 
-				if show == nil {
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1137,19 +1080,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .personIdentity(let personIdentity, _):
-				let person = self.fetchPerson(at: indexPath)
+			case .personIdentity:
+				let person: Person? = self.fetchModel(at: indexPath)
 
-				if person == nil {
+				if person == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let personResponse = try await KService.getDetails(forPerson: personIdentity).value
-
-							self.people[indexPath] = personResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1164,19 +1100,12 @@ extension HomeCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .characterIdentity(let characterIdentity, _):
-				let character = self.fetchCharacter(at: indexPath)
+			case .characterIdentity:
+				let character: Character? = self.fetchModel(at: indexPath)
 
-				if character == nil {
+				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						do {
-							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
-
-							self.characters[indexPath] = characterResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -1196,6 +1125,84 @@ extension HomeCollectionViewController {
 				recapLockupCollectionViewCell.configure(using: recap)
 			default: return
 			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .episodeIdentity(let id, _): return id as? Element
+				case .literatureIdentity(let id, _): return id as? Element
+				case .showIdentity(let id, _): return id as? Element
+				case .gameIdentity(let id, _): return id as? Element
+				case .characterIdentity(let id, _): return id as? Element
+				case .personIdentity(let id, _): return id as? Element
+				case .genreIdentity(let id, _): return id as? Element
+				case .themeIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let responseData: [KurozoraItem] = if let data = data as? ShowResponse {
+				data.data
+			} else if let data = data as? LiteratureResponse {
+				data.data
+			} else if let data = data as? GameResponse {
+				data.data
+			} else if let data = data as? PersonResponse {
+				data.data
+			} else if let data = data as? CharacterResponse {
+				data.data
+			} else if let data = data as? EpisodeResponse {
+				data.data
+			} else if let data = data as? GenreResponse {
+				data.data
+			} else if let data = data as? ThemeResponse {
+				data.data
+			} else {
+				[]
+			}
+			let sorted = responseData.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

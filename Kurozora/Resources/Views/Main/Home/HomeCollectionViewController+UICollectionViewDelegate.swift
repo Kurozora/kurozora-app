@@ -15,28 +15,28 @@ extension HomeCollectionViewController {
 		case .banner(let exploreCategory), .episode(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .shows, .mostPopularShows, .upcomingShows, .newShows:
-				guard let show = self.shows[indexPath] else { return }
+				guard let show = self.cache[indexPath] as? Show else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
 			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
-				guard let literature = self.literatures[indexPath] else { return }
+				guard let literature = self.cache[indexPath] as? Literature else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.literatureDetailsSegue, sender: literature)
 			case .games, .mostPopularGames, .upcomingGames, .newGames:
-				guard let game = self.games[indexPath] else { return }
+				guard let game = self.cache[indexPath] as? Game else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.gameDetailsSegue, sender: game)
 			case .episodes, .upNextEpisodes:
-				guard let episode = self.episodes[indexPath] else { return }
+				guard let episode = self.cache[indexPath] as? Episode else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodeDetailsSegue, sender: [indexPath: episode])
 			case .genres:
-				guard let genre = self.genres[indexPath] else { return }
+				guard let genre = self.cache[indexPath] as? Genre else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
 			case .themes:
-				guard let theme = self.themes[indexPath] else { return }
+				guard let theme = self.cache[indexPath] as? Theme else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: theme)
 			case .characters:
-				guard let character = self.characters[indexPath] else { return }
+				guard let character = self.cache[indexPath] as? Character else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: character)
 			case .people:
-				guard let person = self.people[indexPath] else { return }
+				guard let person = self.cache[indexPath] as? Person else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
 			case .songs:
 				guard let song = self.showSongs[indexPath]?.song else { return }

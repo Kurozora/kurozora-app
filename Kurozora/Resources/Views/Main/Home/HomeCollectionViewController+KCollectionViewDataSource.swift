@@ -147,15 +147,8 @@ extension HomeCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.shows = [:]
-		self.literatures = [:]
-		self.games = [:]
-		self.episodes = [:]
-		self.characters = [:]
-		self.genres = [:]
-		self.people = [:]
+		self.cache = [:]
 		self.showSongs = [:]
-		self.themes = [:]
 		self.recaps = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
@@ -334,50 +327,22 @@ extension HomeCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
 
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
+    func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+        var snapshot = self.dataSource.snapshot()
+        guard snapshot.indexOfItem(itemKind) != nil else { return }
+        snapshot.reconfigureItems([itemKind])
+        self.dataSource.apply(snapshot, animatingDifferences: true)
+    }
 
-	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
-		guard let episode = self.episodes[indexPath] else { return nil }
-		return episode
-	}
-
-	func fetchGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.games[indexPath] else { return nil }
-		return game
-	}
-
-	func fetchGenre(at indexPath: IndexPath) -> Genre? {
-		guard let genre = self.genres[indexPath] else { return nil }
-		return genre
-	}
-
-	func fetchTheme(at indexPath: IndexPath) -> Theme? {
-		guard let theme = self.themes[indexPath] else { return nil }
-		return theme
-	}
-
-	func fetchPerson(at indexPath: IndexPath) -> Person? {
-		guard let person = self.people[indexPath] else { return nil }
-		return person
-	}
-
-	func fetchCharacter(at indexPath: IndexPath) -> Character? {
-		guard let character = self.characters[indexPath] else { return nil }
-		return character
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+        let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+        snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
