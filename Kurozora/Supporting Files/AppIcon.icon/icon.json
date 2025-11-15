@@ -50,8 +50,10 @@
             }
           ],
           "glass" : true,
+          "hidden" : false,
           "image-name" : "Middle.svg",
           "name" : "Middle",
+          "opacity" : 1,
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
@@ -62,6 +64,7 @@
         }
       ],
       "lighting" : "combined",
+      "name" : "Group",
       "position" : {
         "scale" : 1,
         "translation-in-points" : [
