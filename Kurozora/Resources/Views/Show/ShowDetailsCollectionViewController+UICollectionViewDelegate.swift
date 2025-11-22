@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 extension ShowDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -45,16 +46,16 @@ extension ShowDetailsCollectionViewController {
 				return
 			}
 		case .seasons:
-			guard let season = self.seasons[indexPath] else { return }
+			guard let season = self.cache[indexPath] as? Season else { return }
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodesListSegue.identifier, sender: season)
 		case .songs:
 			guard let song = self.showSongs[safe: indexPath.item]?.song else { return }
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.songDetailsSegue.identifier, sender: song)
 		case .studios:
-			guard let studio = self.studios[indexPath] else { return }
+			guard let studio = self.cache[indexPath] as? Studio else { return }
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
 		case .moreByStudio:
-			guard let show = self.studioShows[indexPath] else { return }
+			guard let show = self.cache[indexPath] as? Show else { return }
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		case .relatedShows:
 			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
@@ -77,9 +78,11 @@ extension ShowDetailsCollectionViewController {
 		case .reviews:
 			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .seasons:
-			return self.seasons[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let season = self.cache[indexPath] as? Season else { return nil }
+			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
-			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
 			guard
 				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
@@ -90,9 +93,11 @@ extension ShowDetailsCollectionViewController {
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-            return self.studioShows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let show = self.cache[indexPath] as? Show else { return nil }
+            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedShows:
             return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedLiteratures:

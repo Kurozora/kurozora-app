@@ -50,7 +50,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var reviews: [Review] = []
 
 	/// Season properties.
-	var seasons: [IndexPath: Season] = [:]
 	var seasonIdentities: [SeasonIdentity] = []
 
 	/// Related Show properties.
@@ -63,18 +62,18 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var relatedGames: [RelatedGame] = []
 
 	/// Cast properties.
-	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = []
 
 	/// Studio properties.
-	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
 //	var studio: Studio!
-	var studioShows: [IndexPath: Show] = [:]
 	var studioShowIdentities: [ShowIdentity] = []
 
 	/// Show Song properties.
 	var showSongs: [ShowSong] = []
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?
@@ -453,17 +452,23 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			studioDetailsCollectionViewController.studio = studio
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			// Segue to character details
-			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
-			guard let cell = sender as? CastCollectionViewCell else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+			guard
+				let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController,
+				let cell = sender as? CastCollectionViewCell,
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let cast = self.cache[indexPath] as? Cast,
+				let character = cast.relationships.characters.data.first
+			else { return }
 			characterDetailsCollectionViewController.character = character
 		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
 			// Segue to person details
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
-			guard let cell = sender as? CastCollectionViewCell else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let person = self.cast[indexPath]?.relationships.people?.data.first else { return }
+			guard
+				let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController,
+				let cell = sender as? CastCollectionViewCell,
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let cast = self.cache[indexPath] as? Cast,
+				let person = cast.relationships.people?.data.first
+			else { return }
 			personDetailsCollectionViewController.person = person
 		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
 			// Segue to episodes list
@@ -597,7 +602,7 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		case .shows:
 			switch self.dataSource.sectionIdentifier(for: indexPath.section) {
 			case .moreByStudio:
-				guard let show = self.studioShows[indexPath] else { return }
+				guard let show = self.cache[indexPath] as? Show else { return }
 				modelID = show.id
 			case .relatedShows:
 				guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
@@ -760,7 +765,7 @@ extension ShowDetailsCollectionViewController: MediaTransitionDelegate {
 	func imageViewForMedia(at index: Int) -> UIImageView? {
 		// Find the visible cell for the index and return its thumbnail UIImageView.
 		// Example (collectionView):
-		guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
 			return nil
 		}
 		return cell.posterImageView
@@ -769,7 +774,7 @@ extension ShowDetailsCollectionViewController: MediaTransitionDelegate {
 	func scrollThumbnailIntoView(for index: Int) {
 		// Scroll the collection view to make sure the cell at the given index is visible.
 		let indexPath = IndexPath(item: index, section: 0)
-		collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 	}
 }
 
@@ -807,7 +812,7 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
 		albumVC.transitionDelegateForThumbnail = self
 
-		present(albumVC, animated: true)
+		self.present(albumVC, animated: true)
 	}
 
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
@@ -1152,6 +1157,185 @@ extension ShowDetailsCollectionViewController {
 			default:
 				return false
 			}
+		}
+	}
+}
+
+// MARK: Cell Configurations
+extension ShowDetailsCollectionViewController {
+	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .castIdentity:
+				let cast: Cast? = self.fetchModel(at: indexPath)
+
+				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				castCollectionViewCell.delegate = self
+				castCollectionViewCell.configure(using: cast)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredStudioShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .seasonIdentity:
+				let season: Season? = self.fetchModel(at: indexPath)
+
+				if season == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(SeasonResponse.self, SeasonIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				seasonLockupCollectionViewCell.configure(using: season)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .studioIdentity:
+				let studio: Studio? = self.fetchModel(at: indexPath)
+
+				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				studioLockupCollectionViewCell.configure(using: studio)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { musicLockupCollectionViewCell, indexPath, itemKind in
+			switch itemKind {
+			case .showSong(let showSong, _):
+				musicLockupCollectionViewCell.delegate = self
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredRelatedShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
+			smallLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .relatedShow(let relatedShow, _):
+				smallLockupCollectionViewCell.configure(using: relatedShow)
+			case .relatedLiterature(let relatedLiterature, _):
+				smallLockupCollectionViewCell.configure(using: relatedLiterature)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			gameLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .relatedGame(let relatedGame, _):
+				gameLockupCollectionViewCell.configure(using: relatedGame)
+			default: return
+			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .castIdentity(let id, _): return id as? Element
+				case .characterIdentity(let id, _): return id as? Element
+				case .personIdentity(let id, _): return id as? Element
+				case .seasonIdentity(let id, _): return id as? Element
+				case .showIdentity(let id, _): return id as? Element
+				case .studioIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let sorted = data.data.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }
