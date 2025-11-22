@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 extension LiteratureDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -45,13 +46,14 @@ extension LiteratureDetailsCollectionViewController {
 				return
 			}
 		case .cast:
-			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+			guard let cast = self.cache[indexPath] as? Cast else { return }
+			guard let character = cast.relationships.characters.data.first else { return }
 			self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.characterDetailsSegue.identifier, sender: character)
 		case .studios:
-			guard let studio = self.studios[indexPath] else { return }
+			guard let studio = self.cache[indexPath] as? Studio else { return }
 			self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
 		case .moreByStudio:
-			guard let literature = self.studioLiteratures[indexPath] else { return }
+			guard let literature = self.cache[indexPath]  as? Literature else { return }
 			self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.literatureDetailsSegue.identifier, sender: literature)
 		case .relatedLiteratures:
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
@@ -74,11 +76,14 @@ extension LiteratureDetailsCollectionViewController {
 		case .reviews:
 			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
-			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-			return self.studioLiteratures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedLiteratures:
 			return self.relatedLiteratures[indexPath.item].literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedShows:

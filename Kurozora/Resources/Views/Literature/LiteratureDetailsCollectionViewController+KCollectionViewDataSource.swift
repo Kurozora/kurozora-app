@@ -259,133 +259,15 @@ extension LiteratureDetailsCollectionViewController {
 		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
-	func fetchStudioLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.studioLiteratures[indexPath] else { return nil }
-		return literature
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
-
-	func fetchCast(at indexPath: IndexPath) -> Cast? {
-		guard let cast = self.cast[indexPath] else { return nil }
-		return cast
-	}
-
-	func fetchStudio(at indexPath: IndexPath) -> Studio? {
-		guard let studio = self.studios[indexPath] else { return nil }
-		return studio
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-extension LiteratureDetailsCollectionViewController {
-	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .castIdentity(let castIdentitiy, _):
-				let cast = self.fetchCast(at: indexPath)
-
-				if cast == nil {
-					Task {
-						do {
-							let castResponse = try await KService.getDetails(forLiteratureCast: castIdentitiy).value
-							self.cast[indexPath] = castResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				characterLockupCollectionViewCell.configure(using: cast?.relationships.characters.data.first, role: cast?.attributes.role)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredStudioLiteratureCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .literatureIdentity(let literatureIdentity, _):
-				let literature = self.fetchStudioLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.studioLiteratures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .studioIdentity(let studioIdentity, _):
-				let studio = self.fetchStudio(at: indexPath)
-
-				if studio == nil {
-					Task {
-						do {
-							let studioReponse = try await KService.getDetails(forStudio: studioIdentity).value
-							self.studios[indexPath] = studioReponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				studioLockupCollectionViewCell.configure(using: studio)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredRelatedLiteratureCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
-			smallLockupCollectionViewCell.delegate = self
-
-			switch itemKind {
-			case .relatedLiterature(let relatedLiterature, _):
-				smallLockupCollectionViewCell.configure(using: relatedLiterature)
-			case .relatedShow(let relatedShow, _):
-				smallLockupCollectionViewCell.configure(using: relatedShow)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
-			gameLockupCollectionViewCell.delegate = self
-
-			switch itemKind {
-			case .relatedGame(let relatedGame, _):
-				gameLockupCollectionViewCell.configure(using: relatedGame)
-			default: return
-			}
-		}
 	}
 }
