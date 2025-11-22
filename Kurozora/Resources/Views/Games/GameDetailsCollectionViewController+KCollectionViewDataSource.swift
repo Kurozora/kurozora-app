@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension GameDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -191,7 +191,7 @@ extension GameDetailsCollectionViewController {
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
-						return .review(review)
+						.review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: gameDetailSection)
 				}
@@ -204,7 +204,7 @@ extension GameDetailsCollectionViewController {
 				if !self.castIdentities.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let castIdentityItems: [ItemKind] = self.castIdentities.map { castIdentity in
-						return .castIdentity(castIdentity)
+						.castIdentity(castIdentity)
 					}
 					self.snapshot.appendItems(castIdentityItems, toSection: gameDetailSection)
 				}
@@ -212,7 +212,7 @@ extension GameDetailsCollectionViewController {
 				if !self.studioIdentities.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
-						return .studioIdentity(studioIdentity)
+						.studioIdentity(studioIdentity)
 					}
 					self.snapshot.appendItems(studioIdentityItems, toSection: gameDetailSection)
 				}
@@ -220,7 +220,7 @@ extension GameDetailsCollectionViewController {
 				if !self.studioGameIdentities.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let studioGameIdentyItems: [ItemKind] = self.studioGameIdentities.map { studioGameIdentity in
-						return .gameIdentity(studioGameIdentity)
+						.gameIdentity(studioGameIdentity)
 					}
 					self.snapshot.appendItems(studioGameIdentyItems, toSection: gameDetailSection)
 				}
@@ -228,7 +228,7 @@ extension GameDetailsCollectionViewController {
 				if !self.relatedGames.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
-						return .relatedGame(relatedGame)
+						.relatedGame(relatedGame)
 					}
 					self.snapshot.appendItems(relatedGameItems, toSection: gameDetailSection)
 				}
@@ -236,7 +236,7 @@ extension GameDetailsCollectionViewController {
 				if !self.relatedShows.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
-						return .relatedShow(relatedShow)
+						.relatedShow(relatedShow)
 					}
 					self.snapshot.appendItems(relatedShowItems, toSection: gameDetailSection)
 				}
@@ -244,7 +244,7 @@ extension GameDetailsCollectionViewController {
 				if !self.relatedLiteratures.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
 					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
-						return .relatedLiterature(relatedLiterature)
+						.relatedLiterature(relatedLiterature)
 					}
 					self.snapshot.appendItems(relatedLiteratureItems, toSection: gameDetailSection)
 				}
@@ -259,134 +259,15 @@ extension GameDetailsCollectionViewController {
 		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
-	func fetchStudioGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.studioGames[indexPath] else { return nil }
-		return game
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
 
-	func fetchCast(at indexPath: IndexPath) -> Cast? {
-		guard let cast = self.cast[indexPath] else { return nil }
-		return cast
-	}
-
-	func fetchStudio(at indexPath: IndexPath) -> Studio? {
-		guard let studio = self.studios[indexPath] else { return nil }
-		return studio
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-extension GameDetailsCollectionViewController {
-	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .castIdentity(let castIdentitiy, _):
-				let cast = self.fetchCast(at: indexPath)
-
-				if cast == nil {
-					Task {
-						do {
-							let castResponse = try await KService.getDetails(forGameCast: castIdentitiy).value
-							self.cast[indexPath] = castResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				castCollectionViewCell.delegate = self
-				castCollectionViewCell.configure(using: cast)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredStudioGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
-				let game = self.fetchStudioGame(at: indexPath)
-
-				if game == nil {
-					Task {
-						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
-
-							self.studioGames[indexPath] = gameResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .studioIdentity(let studioIdentity, _):
-				let studio = self.fetchStudio(at: indexPath)
-
-				if studio == nil {
-					Task {
-						do {
-							let studioReponse = try await KService.getDetails(forStudio: studioIdentity).value
-							self.studios[indexPath] = studioReponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				studioLockupCollectionViewCell.configure(using: studio)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredRelatedShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
-			smallLockupCollectionViewCell.delegate = self
-
-			switch itemKind {
-			case .relatedShow(let relatedShow, _):
-				smallLockupCollectionViewCell.configure(using: relatedShow)
-			case .relatedLiterature(let relatedLiterature, _):
-				smallLockupCollectionViewCell.configure(using: relatedLiterature)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
-			gameLockupCollectionViewCell.delegate = self
-
-			switch itemKind {
-			case .relatedGame(let relatedGame, _):
-				gameLockupCollectionViewCell.configure(using: relatedGame)
-			default: return
-			}
-		}
 	}
 }

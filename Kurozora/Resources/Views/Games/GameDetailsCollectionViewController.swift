@@ -57,15 +57,15 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var relatedLiteratures: [RelatedLiterature] = []
 
 	// Cast properties.
-	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = []
 
 	// Studio properties.
-	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
 //	var studio: Studio!
-	var studioGames: [IndexPath: Game] = [:]
 	var studioGameIdentities: [GameIdentity] = []
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// The first cell's size.
 	private var firstCellSize: CGSize = .zero
@@ -405,17 +405,23 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 			studioDetailsCollectionViewController.studio = studio
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			// Segue to character details
-			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
-			guard let cell = sender as? CastCollectionViewCell else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+			guard
+				let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController,
+				let cell = sender as? CastCollectionViewCell,
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let cast = self.cache[indexPath] as? Cast,
+				let character = cast.relationships.characters.data.first
+			else { return }
 			characterDetailsCollectionViewController.character = character
 		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
 			// Segue to person details
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
-			guard let cell = sender as? CastCollectionViewCell else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let person = self.cast[indexPath]?.relationships.people?.data.first else { return }
+			guard
+				let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController,
+				let cell = sender as? CastCollectionViewCell,
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let cast = self.cache[indexPath] as? Cast,
+				let person = cast.relationships.people?.data.first
+			else { return }
 			personDetailsCollectionViewController.person = person
 		default: break
 		}
@@ -543,7 +549,7 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		case .games:
 			switch self.dataSource.sectionIdentifier(for: indexPath.section) {
 			case .moreByStudio:
-				guard let game = self.studioGames[indexPath] else { return }
+				guard let game = self.cache[indexPath] as? Game else { return }
 				modelID = game.id
 			case .relatedGames:
 				guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
@@ -1032,6 +1038,153 @@ extension GameDetailsCollectionViewController {
 			default:
 				return false
 			}
+		}
+	}
+}
+
+// MARK: - Cell Configurations
+extension GameDetailsCollectionViewController {
+	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .castIdentity(let castIdentitiy, _):
+				let cast: Cast? = self.fetchModel(at: indexPath)
+
+				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				castCollectionViewCell.delegate = self
+				castCollectionViewCell.configure(using: cast)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredStudioGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity(let gameIdentity, _):
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .studioIdentity(let studioIdentity, _):
+				let studio: Studio? = self.fetchModel(at: indexPath)
+
+				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				studioLockupCollectionViewCell.configure(using: studio)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredRelatedShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
+			smallLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .relatedShow(let relatedShow, _):
+				smallLockupCollectionViewCell.configure(using: relatedShow)
+			case .relatedLiterature(let relatedLiterature, _):
+				smallLockupCollectionViewCell.configure(using: relatedLiterature)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			gameLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .relatedGame(let relatedGame, _):
+				gameLockupCollectionViewCell.configure(using: relatedGame)
+			default: return
+			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .castIdentity(let id, _): return id as? Element
+				case .characterIdentity(let id, _): return id as? Element
+				case .personIdentity(let id, _): return id as? Element
+				case .gameIdentity(let id, _): return id as? Element
+				case .studioIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let sorted = data.data.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

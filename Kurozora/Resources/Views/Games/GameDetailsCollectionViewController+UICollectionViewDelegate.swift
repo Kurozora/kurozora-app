@@ -6,6 +6,7 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension GameDetailsCollectionViewController {
@@ -45,13 +46,16 @@ extension GameDetailsCollectionViewController {
 				return
 			}
 		case .cast:
-			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+			guard
+				let cast = self.cache[indexPath] as? Cast,
+				let character = cast.relationships.characters.data.first
+			else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.characterDetailsSegue.identifier, sender: character)
 		case .studios:
-			guard let studio = self.studios[indexPath] else { return }
+			guard let studio = self.cache[indexPath] as? Studio else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
 		case .moreByStudio:
-			guard let game = self.studioGames[indexPath] else { return }
+			guard let game = self.cache[indexPath] as? Game else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.gameDetailsSegue.identifier, sender: game)
 		case .relatedGames:
 			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
@@ -76,11 +80,14 @@ extension GameDetailsCollectionViewController {
 		case .reviews:
 			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
-			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-			return self.studioGames[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let game = self.cache[indexPath] as? Game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedGames:
 			return self.relatedGames[indexPath.item].game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedShows:
