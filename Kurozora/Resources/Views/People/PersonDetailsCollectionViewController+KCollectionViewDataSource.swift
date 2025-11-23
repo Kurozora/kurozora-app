@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension PersonDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -153,7 +153,7 @@ extension PersonDetailsCollectionViewController {
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
-						return .review(review)
+						.review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: personDetailSection)
 				}
@@ -166,7 +166,7 @@ extension PersonDetailsCollectionViewController {
 				if !self.characterIdentities.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
 					let characterIdentityItems: [ItemKind] = self.characterIdentities.map { characterIdentity in
-						return .characterIdentity(characterIdentity)
+						.characterIdentity(characterIdentity)
 					}
 					self.snapshot.appendItems(characterIdentityItems, toSection: personDetailSection)
 				}
@@ -174,7 +174,7 @@ extension PersonDetailsCollectionViewController {
 				if !self.showIdentities.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
 					let showIdentityItems: [ItemKind] = self.showIdentities.map { showIdentity in
-						return .showIdentity(showIdentity)
+						.showIdentity(showIdentity)
 					}
 					self.snapshot.appendItems(showIdentityItems, toSection: personDetailSection)
 				}
@@ -182,7 +182,7 @@ extension PersonDetailsCollectionViewController {
 				if !self.literatureIdentities.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
 					let literatureIdentityItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity)
+						.literatureIdentity(literatureIdentity)
 					}
 					self.snapshot.appendItems(literatureIdentityItems, toSection: personDetailSection)
 				}
@@ -190,7 +190,7 @@ extension PersonDetailsCollectionViewController {
 				if !self.gameIdentities.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
 					let gameIdentityItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
-						return .gameIdentity(gameIdentity)
+						.gameIdentity(gameIdentity)
 					}
 					self.snapshot.appendItems(gameIdentityItems, toSection: personDetailSection)
 				}
@@ -200,132 +200,15 @@ extension PersonDetailsCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
 
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
-
-	func fetchGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.games[indexPath] else { return nil }
-		return game
-	}
-
-	func fetchCharacter(at indexPath: IndexPath) -> Character? {
-		guard let character = self.characters[indexPath] else { return nil }
-		return character
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-extension PersonDetailsCollectionViewController {
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			case .literatureIdentity(let literatureIdentity, _):
-				let literature = self.fetchLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
-				let game = self.fetchGame(at: indexPath)
-
-				if game == nil {
-					Task {
-						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
-
-							self.games[indexPath] = gameResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-			let character = self.fetchCharacter(at: indexPath)
-
-			switch itemKind {
-			case .characterIdentity(let characterIdentity, _):
-				if character == nil {
-					Task {
-						do {
-							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
-
-							self.characters[indexPath] = characterResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				characterLockupCollectionViewCell.configure(using: character)
-			default: break
-			}
-		}
 	}
 }
