@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -39,10 +39,10 @@ extension HomeCollectionViewController {
 				guard let person = self.cache[indexPath] as? Person else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
 			case .songs:
-				guard let song = self.showSongs[indexPath]?.song else { return }
-				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.songDetailsSegue, sender: song)
+				guard let showSong = self.cache[indexPath] as? ShowSong else { return }
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.songDetailsSegue, sender: showSong.song)
 			case .recap:
-				guard let recap = self.recaps[indexPath] else { return }
+				guard let recap = self.cache[indexPath] as? Recap else { return }
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.reCapSegue, sender: recap)
 			}
 		case .legal:
@@ -54,12 +54,12 @@ extension HomeCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let exploreCategory = self.exploreCategories[safe: indexPath.section] else { return nil }
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch exploreCategory.attributes.exploreCategoryType {
 		case .shows, .upcomingShows, .mostPopularShows, .newShows:
 			guard let show = self.cache[indexPath] as? Show else { return nil }
-            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
 			guard let literature = self.cache[indexPath] as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
@@ -70,8 +70,12 @@ extension HomeCollectionViewController {
 			guard let episode = self.cache[indexPath] as? Episode else { return nil }
 			return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
-			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell, let song = cell.song else { return nil }
-			return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: [
+			guard
+				let musicLockupCollectionViewCell = collectionViewCell as? MusicLockupCollectionViewCell,
+				let song = musicLockupCollectionViewCell.song,
+				let showSong = self.cache[indexPath] as? ShowSong
+			else { return nil }
+			return showSong.song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
@@ -88,7 +92,7 @@ extension HomeCollectionViewController {
 			guard let person = self.cache[indexPath] as? Person else { return nil }
 			return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .recap:
-			guard let recap = self.recaps[indexPath] else { return nil }
+			guard let recap = self.cache[indexPath] as? Recap else { return nil }
 			let identifier = indexPath as NSCopying
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {

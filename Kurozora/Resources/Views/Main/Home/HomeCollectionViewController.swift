@@ -42,10 +42,6 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	// TODO: Replace those with the `cache` property too
-	var showSongs: [IndexPath: ShowSong] = [:]
-	var recaps: [IndexPath: Recap] = [:]
-
 	var cache: [IndexPath: KurozoraItem] = [:]
 	private var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -856,6 +852,7 @@ extension HomeCollectionViewController {
 	}
 }
 
+// MARK: Cell Configurations
 extension HomeCollectionViewController {
 	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
@@ -1067,7 +1064,7 @@ extension HomeCollectionViewController {
 
 			switch itemKind {
 			case .showSong(let showSong, _):
-				self.showSongs[indexPath] = showSong
+				self.cache[indexPath] = showSong
 				musicLockupCollectionViewCell.delegate = self
 				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
 			default: break
@@ -1121,7 +1118,7 @@ extension HomeCollectionViewController {
 
 			switch itemKind {
 			case .recap(let recap, _):
-				self.recaps[indexPath] = recap
+				self.cache[indexPath] = recap
 				recapLockupCollectionViewCell.configure(using: recap)
 			default: return
 			}
@@ -1167,26 +1164,7 @@ extension HomeCollectionViewController {
 
 			// Maintain order based on identities array
 			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
-			let responseData: [KurozoraItem] = if let data = data as? ShowResponse {
-				data.data
-			} else if let data = data as? LiteratureResponse {
-				data.data
-			} else if let data = data as? GameResponse {
-				data.data
-			} else if let data = data as? PersonResponse {
-				data.data
-			} else if let data = data as? CharacterResponse {
-				data.data
-			} else if let data = data as? EpisodeResponse {
-				data.data
-			} else if let data = data as? GenreResponse {
-				data.data
-			} else if let data = data as? ThemeResponse {
-				data.data
-			} else {
-				[]
-			}
-			let sorted = responseData.sorted {
+			let sorted = data.data.sorted {
 				guard
 					let lhsIndex = orderLookup[$0.id],
 					let rhsIndex = orderLookup[$1.id]

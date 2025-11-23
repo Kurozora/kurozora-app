@@ -148,8 +148,6 @@ extension HomeCollectionViewController {
 
 	override func updateDataSource() {
 		self.cache = [:]
-		self.showSongs = [:]
-		self.recaps = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		// Add explore categories
@@ -330,13 +328,6 @@ extension HomeCollectionViewController {
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
 		return self.cache[indexPath] as? M
 	}
-
-    func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
-        var snapshot = self.dataSource.snapshot()
-        guard snapshot.indexOfItem(itemKind) != nil else { return }
-        snapshot.reconfigureItems([itemKind])
-        self.dataSource.apply(snapshot, animatingDifferences: true)
-    }
 
 	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
