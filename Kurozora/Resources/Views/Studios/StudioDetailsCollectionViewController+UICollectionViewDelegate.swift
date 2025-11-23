@@ -6,6 +6,7 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension StudioDetailsCollectionViewController {
@@ -32,13 +33,13 @@ extension StudioDetailsCollectionViewController {
 				return
 			}
 		case .shows:
-			guard let show = self.shows[indexPath] else { return }
+			guard let show = self.cache[indexPath] as? Show else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
 		case .literatures:
-			guard let literature = self.literatures[indexPath] else { return }
+			guard let literature = self.cache[indexPath] as? Literature else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .games:
-			guard let game = self.games[indexPath] else { return }
+			guard let game = self.cache[indexPath] as? Game else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		default: break
 		}
@@ -46,17 +47,20 @@ extension StudioDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
 			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .shows:
-            return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let show = self.cache[indexPath] as? Show else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures:
-			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games:
-			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let game = self.cache[indexPath] as? Game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default: break
 		}
 

@@ -32,16 +32,16 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 	var reviews: [Review] = []
 
 	/// Show properties.
-	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
 
 	/// Literature properties.
-	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []
 
 	/// Game properties.
-	var games: [IndexPath: Game] = [:]
 	var gameIdentities: [GameIdentity] = []
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -280,20 +280,11 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: KurozoraItemID
-
-		switch cell.libraryKind {
-		case .shows:
-			guard let show = self.shows[indexPath] else { return }
-			modelID = show.id
-		case .literatures:
-			guard let literature = self.literatures[indexPath] else { return }
-			modelID = literature.id
-		case .games:
-			guard let game = self.games[indexPath] else { return }
-			modelID = game.id
-		}
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let model = self.cache[indexPath]
+		else { return }
+		let modelID: KurozoraItemID = model.id
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
@@ -303,11 +294,14 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 					switch cell.libraryKind {
 					case .shows:
-						self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						guard let show = self.cache[indexPath] as? Show else { return }
+						show.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .literatures:
-						self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						guard let literature = self.cache[indexPath] as? Literature else { return }
+						literature.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .games:
-						self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+						guard let game = self.cache[indexPath] as? Game else { return }
+						game.attributes.library?.update(using: libraryUpdateResponse.data)
 					}
 
 					// Update entry in library
@@ -334,11 +328,14 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						switch cell.libraryKind {
 						case .shows:
-							self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							guard let show = self.cache[indexPath] as? Show else { return }
+							show.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
-							self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							guard let literature = self.cache[indexPath] as? Literature else { return }
+							literature.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
-							self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+							guard let game = self.cache[indexPath] as? Game else { return }
+							game.attributes.library?.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -367,8 +364,10 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	}
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.shows[indexPath] else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let show = self.cache[indexPath] as? Show
+		else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
 	}
@@ -579,6 +578,116 @@ extension StudioDetailsCollectionViewController {
 			default:
 				return false
 			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension StudioDetailsCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			case .literatureIdentity:
+				let literature: Literature? = self.fetchModel(at: indexPath)
+
+				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: literature)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game)
+			default: break
+			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .gameIdentity(let id, _): return id as? Element
+				case .literatureIdentity(let id, _): return id as? Element
+				case .showIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let sorted = data.data.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }
