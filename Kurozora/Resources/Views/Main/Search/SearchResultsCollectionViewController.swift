@@ -49,7 +49,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
-        BrowseCategory(title: "Schedule", image: .Browse.schedule, segueIdentifier: R.segue.searchResultsCollectionViewController.scheduleSegue.identifier),
+		BrowseCategory(title: Trans.schedule, image: .Browse.schedule, segueIdentifier: R.segue.searchResultsCollectionViewController.scheduleSegue.identifier),
         BrowseCategory(title: Trans.shows, image: .Browse.shows, searchType: .shows),
         BrowseCategory(title: Trans.literatures, image: .Browse.literatures, searchType: .literatures),
         BrowseCategory(title: Trans.games, image: .Browse.games, searchType: .games),
