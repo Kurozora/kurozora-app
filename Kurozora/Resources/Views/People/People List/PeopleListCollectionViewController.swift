@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 enum PeopleListFetchType {
 	case character
@@ -25,7 +24,6 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var peopleListFetchType: PeopleListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

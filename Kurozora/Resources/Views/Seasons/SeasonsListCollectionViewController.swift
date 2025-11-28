@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 class SeasonsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -27,7 +26,6 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, SeasonIdentity>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

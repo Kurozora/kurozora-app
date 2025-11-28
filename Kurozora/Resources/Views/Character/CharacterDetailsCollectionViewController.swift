@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
@@ -51,7 +50,6 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {

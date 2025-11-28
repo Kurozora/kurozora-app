@@ -6,7 +6,6 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import Alamofire
 import AVFoundation
 import Intents
 import IntentsUI
@@ -72,7 +71,6 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Touch Bar
 	#if targetEnvironment(macCatalyst)
@@ -1049,7 +1047,7 @@ extension GameDetailsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .castIdentity(let castIdentitiy, _):
+			case .castIdentity:
 				let cast: Cast? = self.fetchModel(at: indexPath)
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -1070,7 +1068,7 @@ extension GameDetailsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
+			case .gameIdentity:
 				let game: Game? = self.fetchModel(at: indexPath)
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -1091,7 +1089,7 @@ extension GameDetailsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .studioIdentity(let studioIdentity, _):
+			case .studioIdentity:
 				let studio: Studio? = self.fetchModel(at: indexPath)
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {

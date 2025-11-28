@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 enum CastKind: String {
 	case show
@@ -37,7 +36,6 @@ class CastListCollectionViewController: KCollectionViewController {
 	}
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CastIdentity>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

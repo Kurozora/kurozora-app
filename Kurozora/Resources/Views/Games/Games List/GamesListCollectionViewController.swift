@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 enum GamesListFetchType {
 	case show
@@ -42,7 +41,6 @@ class GamesListCollectionViewController: KCollectionViewController {
 	var gamesListFetchType: GamesListFetchType = .search
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

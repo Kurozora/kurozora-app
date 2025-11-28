@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 enum UsersListFetchType {
 	case follow
@@ -24,7 +23,6 @@ class UsersListCollectionViewController: KCollectionViewController {
 	var usersListFetchType: UsersListFetchType = .search
 	var usersListType: UsersListType = .followers
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, UserIdentity>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

@@ -6,7 +6,6 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import Alamofire
 import AVFoundation
 import Intents
 import IntentsUI
@@ -72,7 +71,6 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Touch Bar
 	#if targetEnvironment(macCatalyst)

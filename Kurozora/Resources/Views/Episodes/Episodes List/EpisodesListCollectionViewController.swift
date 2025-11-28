@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 enum EpisodesListFetchType: Equatable {
 	case season
@@ -42,7 +41,6 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var episodesListFetchType: EpisodesListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

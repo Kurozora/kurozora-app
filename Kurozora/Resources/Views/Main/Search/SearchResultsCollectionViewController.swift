@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Alamofire
 #if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
 #endif
@@ -102,7 +101,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>!
 	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>!
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false

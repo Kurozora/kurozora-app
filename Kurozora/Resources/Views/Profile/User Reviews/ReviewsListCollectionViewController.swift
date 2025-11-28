@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 import AVFoundation
 
 class ReviewsListCollectionViewController: KCollectionViewController {
@@ -24,7 +23,6 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	var studios: [IndexPath: Studio] = [:]
 	var reviews: [Review] = []
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Review>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?

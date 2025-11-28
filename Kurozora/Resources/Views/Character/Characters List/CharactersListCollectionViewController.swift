@@ -6,7 +6,6 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import Alamofire
 import KurozoraKit
 import UIKit
 
@@ -25,7 +24,6 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var charactersListFetchType: CharactersListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>!
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?

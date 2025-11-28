@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 import MusicKit
 
 class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
@@ -46,7 +45,6 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
