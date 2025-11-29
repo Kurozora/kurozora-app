@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ReCapCollectionViewController {
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
@@ -66,15 +66,11 @@ extension ReCapCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.shows = [:]
-		self.literatures = [:]
-		self.games = [:]
-		self.genres = [:]
-		self.themes = [:]
+		self.cache = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		if self.recapItems.isEmpty {
-			if self.year == Date.now.components.year && self.month == Date.now.components.month {
+			if self.year == Date.now.components.year, self.month == Date.now.components.month {
 				let title: String
 
 				if Date.now.components.month == 12 {
@@ -196,8 +192,8 @@ extension ReCapCollectionViewController {
 			if let recapItem = self.recapItems.filter({
 				$0.attributes.topPercentile > 0.0
 			})
-				.sorted(by: { $0.attributes.topPercentile < $1.attributes.topPercentile })
-				.first {
+			.sorted(by: { $0.attributes.topPercentile < $1.attributes.topPercentile })
+			.first {
 				let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .topPercentile)
 
 				self.snapshot.appendSections([.milestones(true)])
@@ -208,172 +204,15 @@ extension ReCapCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
 
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
-
-	func fetchGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.games[indexPath] else { return nil }
-		return game
-	}
-
-	func fetchGenre(at indexPath: IndexPath) -> Genre? {
-		guard let genre = self.genres[indexPath] else { return nil }
-		return genre
-	}
-
-	func fetchTheme(at indexPath: IndexPath) -> Theme? {
-		guard let theme = self.themes[indexPath] else { return nil }
-		return theme
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-extension ReCapCollectionViewController {
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.configure(using: show, rank: indexPath.item + 1)
-			case .literatureIdentity(let literatureIdentity, _):
-				let literature = self.fetchLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.configure(using: literature, rank: indexPath.item + 1)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredHeaderCell() -> UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, _, itemKind in
-
-			switch itemKind {
-			case .string(let title, _):
-				reCapHeaderCollectionViewCell.configure(using: title)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredMilestoneCell() -> UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapMilestoneCollectionViewCell)) { reCapMilestoneCollectionViewCell, _, itemKind in
-
-			switch itemKind {
-			case .recapItem(let recapItem, let milestoneKind):
-				reCapMilestoneCollectionViewCell.configure(using: recapItem, milestoneKind: milestoneKind)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
-				let game = self.fetchGame(at: indexPath)
-
-				if game == nil {
-					Task {
-						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
-
-							self.games[indexPath] = gameResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				gameLockupCollectionViewCell.configure(using: game, rank: indexPath.item + 1)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.mediumLockupCollectionViewCell)) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .genreIdentity(let genreIdentity, _):
-				let genre = self.fetchGenre(at: indexPath)
-
-				if genre == nil {
-					Task {
-						do {
-							let genreResponse = try await KService.getDetails(forGenre: genreIdentity).value
-							self.genres[indexPath] = genreResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				mediumLockupCollectionViewCell.configure(using: genre, rank: indexPath.item + 1)
-			case .themeIdentity(let themeIdentity, _):
-				let theme = self.fetchTheme(at: indexPath)
-
-				if theme == nil {
-					Task {
-						do {
-							let themeResponse = try await KService.getDetails(forTheme: themeIdentity).value
-							self.themes[indexPath] = themeResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				mediumLockupCollectionViewCell.configure(using: theme, rank: indexPath.item + 1)
-			default: break
-			}
-		}
 	}
 }

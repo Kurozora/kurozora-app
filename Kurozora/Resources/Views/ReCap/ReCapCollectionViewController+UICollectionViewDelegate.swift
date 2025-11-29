@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ReCapCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -15,19 +15,19 @@ extension ReCapCollectionViewController {
 		case .topShows(let recapItem), .topGames(let recapItem), .topLiteratures(let recapItem):
 			switch recapItem.attributes.recapItemType {
 			case .shows:
-				guard let show = self.shows[indexPath] else { return }
+				guard let show = self.cache[indexPath] as? Show else { return }
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.showDetailsSegue, sender: show)
 			case .literatures:
-				guard let literature = self.literatures[indexPath] else { return }
+				guard let literature = self.cache[indexPath] as? Literature else { return }
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.literatureDetailsSegue, sender: literature)
 			case .games:
-				guard let game = self.games[indexPath] else { return }
+				guard let game = self.cache[indexPath] as? Game else { return }
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.gameDetailsSegue, sender: game)
 			case .genres:
-				guard let genre = self.genres[indexPath] else { return }
+				guard let genre = self.cache[indexPath] as? Genre else { return }
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.genresSegue, sender: genre)
 			case .themes:
-				guard let theme = self.themes[indexPath] else { return }
+				guard let theme = self.cache[indexPath] as? Theme else { return }
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.themesSegue, sender: theme)
 			}
 		default: break
@@ -43,15 +43,20 @@ extension ReCapCollectionViewController {
 
 			switch recapItem.attributes.recapItemType {
 			case .shows:
-				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				guard let shows = self.cache[indexPath] as? Show else { return nil }
+				return shows.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .literatures:
-				return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				guard let literatures = self.cache[indexPath] as? Literature else { return nil }
+				return literatures.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .games:
-				return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				guard let games = self.cache[indexPath] as? Game else { return nil }
+				return games.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .genres:
-				return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				guard let genres = self.cache[indexPath] as? Genre else { return nil }
+				return genres.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .themes:
-				return self.themes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				guard let themes = self.cache[indexPath] as? Theme else { return nil }
+				return themes.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			}
 		}
 		return nil

@@ -45,14 +45,11 @@ class ReCapCollectionViewController: KCollectionViewController {
 	let tabBarView = TMBar.KBar()
 	var currentTopContentInset: CGFloat = 0
 
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
+
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
-
-	var shows: [IndexPath: Show] = [:]
-	var literatures: [IndexPath: Literature] = [:]
-	var games: [IndexPath: Game] = [:]
-	var genres: [IndexPath: Genre] = [:]
-	var themes: [IndexPath: Theme] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -307,6 +304,104 @@ extension ReCapCollectionViewController: TMBarDelegate {
 	}
 }
 
+// MARK: BaseLockupCollectionViewCellDelegate
+extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let model = self.cache[indexPath]
+		else { return }
+		let modelID: KurozoraItemID = model.id
+
+		let oldLibraryStatus = cell.libraryStatus
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+			Task {
+				do {
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+					switch cell.libraryKind {
+					case .shows:
+						guard let show = self.cache[indexPath] as? Show else { return }
+						show.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .literatures:
+						guard let literature = self.cache[indexPath] as? Literature else { return }
+						literature.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .games:
+						guard let game = self.cache[indexPath] as? Game else { return }
+						game.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					// Update entry in library
+					cell.libraryStatus = value
+					button.setTitle("\(title) ▾", for: .normal)
+
+					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+
+					// Request review
+					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+				} catch let error as KKAPIError {
+					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+					print("----- Add to library failed", error.message)
+				}
+			}
+		})
+
+		if cell.libraryStatus != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							guard let show = self.cache[indexPath] as? Show else { return }
+							show.attributes.library?.update(using: libraryUpdateResponse.data)
+						case .literatures:
+							guard let literature = self.cache[indexPath] as? Literature else { return }
+							literature.attributes.library?.update(using: libraryUpdateResponse.data)
+						case .games:
+							guard let game = self.cache[indexPath] as? Game else { return }
+							game.attributes.library?.update(using: libraryUpdateResponse.data)
+						}
+
+						// Update entry in library
+						cell.libraryStatus = .none
+						button.setTitle(Trans.add.uppercased(), for: .normal)
+
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						print("----- Remove from library failed", error.message)
+					}
+				}
+			})
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
+		}
+	}
+
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let show = self.cache[indexPath] as? Show
+		else { return }
+		await show.toggleReminder(on: self)
+		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+	}
+}
+
 // MARK: - UIScreenshotServiceDelegate
 extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 	func screenshotServiceGeneratePDFRepresentation(_ screenshotService: UIScreenshotService) async -> (Data?, Int, CGRect) {
@@ -467,6 +562,168 @@ extension ReCapCollectionViewController {
 			default:
 				return false
 			}
+		}
+	}
+}
+
+// MARK: - Cell Registrations
+extension ReCapCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show, rank: indexPath.item + 1)
+			case .literatureIdentity(let literatureIdentity, _):
+				let literature: Literature? = self.fetchModel(at: indexPath)
+
+				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: literature, rank: indexPath.item + 1)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredHeaderCell() -> UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .string(let title, _):
+				reCapHeaderCollectionViewCell.configure(using: title)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMilestoneCell() -> UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapMilestoneCollectionViewCell)) { reCapMilestoneCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .recapItem(let recapItem, let milestoneKind):
+				reCapMilestoneCollectionViewCell.configure(using: recapItem, milestoneKind: milestoneKind)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity(let gameIdentity, _):
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game, rank: indexPath.item + 1)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.mediumLockupCollectionViewCell)) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .genreIdentity(let genreIdentity, _):
+				let genre: Genre? = self.fetchModel(at: indexPath)
+
+				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GenreResponse.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				mediumLockupCollectionViewCell.configure(using: genre, rank: indexPath.item + 1)
+			case .themeIdentity(let themeIdentity, _):
+				let theme: Theme? = self.fetchModel(at: indexPath)
+
+				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ThemeResponse.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				mediumLockupCollectionViewCell.configure(using: theme, rank: indexPath.item + 1)
+			default: break
+			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .gameIdentity(let id, _): return id as? Element
+				case .literatureIdentity(let id, _): return id as? Element
+				case .showIdentity(let id, _): return id as? Element
+				case .genreIdentity(let id, _): return id as? Element
+				case .themeIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let sorted = data.data.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }
