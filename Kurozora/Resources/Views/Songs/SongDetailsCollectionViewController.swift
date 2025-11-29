@@ -30,18 +30,15 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 			#endif
 		}
 	}
-	var shows: [IndexPath: Show] = [:]
-	var showIdentities: [ShowIdentity] = []
-	var responseCount: Int = 0 {
-		didSet {
-			if self.responseCount == 3 {
-				self.updateDataSource()
-			}
-		}
-	}
 
-	/// Review properties.
+	// Show properties
+	var showIdentities: [ShowIdentity] = []
+
+	// Review properties.
 	var reviews: [Review] = []
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	private var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -143,21 +140,22 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
 
-		do {
-			let songResponse = try await KService.getDetails(forSong: songIdentity).value
-			self.song = songResponse.data.first
-
-			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreButton)
-
-			self.responseCount += 1
-		} catch {
-			print(error.localizedDescription)
+		if self.song == nil {
+			do {
+				let songResponse = try await KService.getDetails(forSong: songIdentity).value
+				self.song = songResponse.data.first
+			} catch {
+				print(error.localizedDescription)
+			}
+		} else {
+			self.updateDataSource()
 		}
+
+		self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreButton)
 
 		do {
 			let showIdentityResponse = try await KService.getShows(forSong: songIdentity, limit: 10).value
 			self.showIdentities = showIdentityResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -165,10 +163,11 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		do {
 			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10).value
 			self.reviews = reviewIdentityResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
+
+		self.updateDataSource()
 	}
 
 	/// Deletes the review with the received information.
@@ -244,7 +243,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.shows[indexPath] else { return }
+		guard let show = self.cache[indexPath] as? Show else { return }
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
@@ -305,7 +304,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.shows[indexPath] else { return }
+		guard let show = self.cache[indexPath] as? Show else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
 	}
@@ -498,6 +497,82 @@ extension SongDetailsCollectionViewController {
 			default:
 				return false
 			}
+		}
+	}
+}
+
+// MARK: - Cell Registrations
+extension SongDetailsCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	/// Generic helper to fetch all items in a section if not yet cached.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
+		_ response: I.Type,
+		_ item: Element.Type,
+		at indexPath: IndexPath,
+		itemKind: ItemKind
+	) async {
+		guard
+			self.cache[indexPath] == nil,
+			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
+			!self.isFetchingSection.contains(section)
+		else { return }
+
+		self.isFetchingSection.insert(section)
+
+		// Extract all identities in this section
+		let identities: [Element] = self.snapshot
+			.itemIdentifiers(inSection: section)
+			.compactMap {
+				switch $0 {
+				case .showIdentity(let id, _): return id as? Element
+				default: return nil
+				}
+			}
+
+		defer { self.isFetchingSection.remove(section) }
+
+		do {
+			let data: I = try await KService.getDetails(for: identities).value
+
+			// Maintain order based on identities array
+			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
+			let sorted = data.data.sorted {
+				guard
+					let lhsIndex = orderLookup[$0.id],
+					let rhsIndex = orderLookup[$1.id]
+				else { return false }
+				return lhsIndex < rhsIndex
+			}
+
+			// Cache results in section order
+			for (index, model) in sorted.enumerated() {
+				let ip = IndexPath(item: index, section: indexPath.section)
+				self.cache[ip] = model
+			}
+
+			self.setSectionNeedsUpdate(section)
+		} catch {
+			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

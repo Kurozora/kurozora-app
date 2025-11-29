@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension SongDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -146,7 +146,7 @@ extension SongDetailsCollectionViewController {
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([songDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
-						return .review(review)
+						.review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: songDetailSection)
 				}
@@ -154,7 +154,7 @@ extension SongDetailsCollectionViewController {
 				if !self.showIdentities.isEmpty {
 					self.snapshot.appendSections([songDetailSection])
 					let showIdentityItems: [ItemKind] = self.showIdentities.map { showIdentity in
-						return .showIdentity(showIdentity)
+						.showIdentity(showIdentity)
 					}
 					self.snapshot.appendItems(showIdentityItems, toSection: songDetailSection)
 				}
@@ -169,45 +169,15 @@ extension SongDetailsCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
+	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
+		return self.cache[indexPath] as? M
 	}
 
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
+		guard snapshot.indexOfSection(section) != nil else { return }
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-extension SongDetailsCollectionViewController {
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity(let showIdentity, _):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
 	}
 }

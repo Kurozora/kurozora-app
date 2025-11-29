@@ -30,7 +30,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		}
 	}
 
-	// Review properties.
+	// Review properties
 	var reviews: [Review] = []
 
 	// People properties
