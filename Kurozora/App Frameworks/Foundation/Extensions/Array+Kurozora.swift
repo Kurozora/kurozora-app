@@ -92,6 +92,29 @@ extension Array {
 		guard let index = try firstIndex(where: predicate) else { return nil }
 		return remove(at: index)
 	}
+
+	/// Splits the collection into consecutive chunks of the given size.
+	///
+	/// ```swift
+	/// [1, 2, 3, 4, 5].chunked(into: 2)
+	/// // [[1, 2], [3, 4], [5]]
+	/// ```
+	///
+	/// - Parameter size: The maximum number of elements in each chunk.
+	///   If `size` is less than or equal to zero, the entire collection is
+	///   returned as a single chunk.
+	///
+	/// - Returns: An array of arrays, where each inner array contains up to
+	///   `size` elements from the original collection, in order.
+	///
+	/// - Complexity: O(n)
+	@inlinable
+	func chunked(into size: Int) -> [[Element]] {
+		guard size > 0 else { return [self] }
+		return stride(from: 0, to: count, by: size).map {
+			Array(self[$0 ..< Swift.min($0 + size, count)])
+		}
+	}
 }
 
 // MARK: - Hashable
