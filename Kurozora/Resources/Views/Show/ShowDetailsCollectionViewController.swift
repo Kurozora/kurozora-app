@@ -1159,7 +1159,7 @@ extension ShowDetailsCollectionViewController {
 	}
 }
 
-// MARK: Cell Configurations
+// MARK: - Cell Configuration
 extension ShowDetailsCollectionViewController {
 	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in

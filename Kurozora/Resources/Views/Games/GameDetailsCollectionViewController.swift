@@ -1040,7 +1040,7 @@ extension GameDetailsCollectionViewController {
 	}
 }
 
-// MARK: - Cell Configurations
+// MARK: - Cell Configuration
 extension GameDetailsCollectionViewController {
 	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in

@@ -852,7 +852,7 @@ extension HomeCollectionViewController {
 	}
 }
 
-// MARK: Cell Configurations
+// MARK: - Cell Configuration
 extension HomeCollectionViewController {
 	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in

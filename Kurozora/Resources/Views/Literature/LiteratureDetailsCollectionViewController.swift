@@ -1028,7 +1028,7 @@ extension LiteratureDetailsCollectionViewController {
 	}
 }
 
-// MARK: Cell Configurations
+// MARK: - Cell Configuration
 extension LiteratureDetailsCollectionViewController {
 	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
