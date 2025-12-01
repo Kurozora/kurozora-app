@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 // MARK: - KCollectionViewDataSource
 extension ShowsListCollectionViewController {
@@ -19,59 +19,8 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		let smallLockupCellRegistration = UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity(let showIdentity):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			case .relatedShow(let relatedShow):
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: relatedShow)
-			}
-		}
-
-		let upcomingLockupCellRegistration = UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity(let showIdentity):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
+		let smallLockupCellRegistration = self.getConfiguredSmallCell()
+		let upcomingLockupCellRegistration = self.getConfiguredUpcomingCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -86,35 +35,23 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		snapshot.appendSections([.main])
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
 		// Append items
 		switch self.showsListFetchType {
 		case .relatedShow, .literature, .game:
 			let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
-				return .relatedShow(relatedShow)
+				.relatedShow(relatedShow)
 			}
-			snapshot.appendItems(relatedShowItems, toSection: .main)
+			self.snapshot.appendItems(relatedShowItems, toSection: .main)
 		default:
 			let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
-				return .showIdentity(showIdentity)
+				.showIdentity(showIdentity)
 			}
-			snapshot.appendItems(showItems, toSection: .main)
+			self.snapshot.appendItems(showItems, toSection: .main)
 		}
 
-		self.dataSource.apply(snapshot)
-	}
-
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }

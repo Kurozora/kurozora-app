@@ -6,13 +6,16 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.shows[indexPath] != nil || self.relatedShows.indices.contains(indexPath.item) else { return }
+		let show = self.cache[indexPath] as? Show
+		let relatedShow = self.relatedShows[safe: indexPath.item]?.show
+		guard let show = show ?? relatedShow else { return }
 		let segueIdentifier = R.segue.showsListCollectionViewController.showDetailsSegue
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.shows[indexPath] ?? self.relatedShows[indexPath.item].show)
+		self.performSegue(withIdentifier: segueIdentifier, sender: show)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -24,7 +27,7 @@ extension ShowsListCollectionViewController {
 			itemsCount = showIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchShows()
@@ -37,7 +40,7 @@ extension ShowsListCollectionViewController {
 			itemsCount = showIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchShows()
@@ -48,14 +51,15 @@ extension ShowsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch self.showsListFetchType {
 		case .relatedShow, .literature, .game:
-            return self.relatedShows[safe: indexPath.item]?.show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard self.shows[indexPath] != nil else { return nil }
-            return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let show = self.cache[indexPath] as? Show else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

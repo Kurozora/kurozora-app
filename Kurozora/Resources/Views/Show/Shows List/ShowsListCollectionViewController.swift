@@ -22,7 +22,7 @@ enum ShowsListFetchType {
 	case upcoming
 }
 
-class ShowsListCollectionViewController: KCollectionViewController {
+class ShowsListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var gameIdentity: GameIdentity?
 	var literatureIdentity: LiteratureIdentity?
@@ -32,7 +32,6 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	var studioIdentity: StudioIdentity?
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
-	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
 
 	var relatedShows: [RelatedShow] = []
@@ -40,7 +39,11 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var showsListFetchType: ShowsListFetchType = .search
 
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -54,6 +57,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -64,6 +68,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -282,6 +287,14 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .showIdentity(let id): return id as? Element
+		default: return nil
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -300,10 +313,10 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let show = self.shows[indexPath] ?? self.relatedShows[indexPath.item].show
+		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: value, modelID: show.id).value
@@ -360,7 +373,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let show = self.shows[indexPath] ?? self.relatedShows[indexPath.item].show
+		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
 	}
@@ -409,6 +422,53 @@ extension ShowsListCollectionViewController {
 				return relatedShow1 == relatedShow2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension ShowsListCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			case .relatedShow(let relatedShow):
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: relatedShow)
+			}
+		}
+	}
+
+	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				upcomingLockupCollectionViewCell.delegate = self
+				upcomingLockupCollectionViewCell.configure(using: show)
+			default: break
 			}
 		}
 	}
