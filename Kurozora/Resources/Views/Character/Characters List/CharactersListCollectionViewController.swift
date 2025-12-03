@@ -15,15 +15,19 @@ enum CharactersListFetchType {
 	case search
 }
 
-class CharactersListCollectionViewController: KCollectionViewController {
+class CharactersListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var personIdentity: PersonIdentity?
-	var characters: [IndexPath: Character] = [:]
 	var characterIdentities: [CharacterIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 	var searchQuery: String = ""
 	var charactersListFetchType: CharactersListFetchType = .search
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>!
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -98,10 +102,10 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.cast)
-		emptyBackgroundView.configureLabels(title: "No Characters", detail: "Can't get characters list. Please reload the page or restart the app and check your WiFi connection.")
+		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
+		self.emptyBackgroundView.configureLabels(title: "No Characters", detail: "Can't get characters list. Please reload the page or restart the app and check your WiFi connection.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -194,6 +198,13 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		self.endFetch()
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .characterIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -215,5 +226,51 @@ extension CharactersListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension CharactersListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `CharacterIdentity` object.
+		case characterIdentity(_: CharacterIdentity)
+
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .characterIdentity(let characterIdentity):
+				hasher.combine(characterIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.characterIdentity(let characterIdentity1), .characterIdentity(let characterIdentity2)):
+				return characterIdentity1 == characterIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension CharactersListCollectionViewController {
+	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .characterIdentity:
+				let character: Character? = self.fetchModel(at: indexPath)
+
+				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				characterLockupCollectionViewCell.configure(using: character)
+			}
+		}
 	}
 }

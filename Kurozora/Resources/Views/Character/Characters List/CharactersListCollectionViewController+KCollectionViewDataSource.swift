@@ -6,52 +6,30 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import KurozoraKit
 import UIKit
 
 extension CharactersListCollectionViewController {
 	override func configureDataSource() {
-		let characterCellRegistration = UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, CharacterIdentity>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, characterIdentity in
-			guard let self = self else { return }
-			let character = self.fetchCharacter(at: indexPath)
+		let characterCellRegistration = self.getConfiguredCharacterCell()
 
-			if character == nil {
-				Task {
-					do {
-						let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
-
-						self.characters[indexPath] = characterResponse.data.first
-						self.setCharacterNeedsUpdate(characterIdentity)
-					} catch {
-						print(error.localizedDescription)
-					}
-				}
-			}
-
-			characterLockupCollectionViewCell.configure(using: character)
-		}
-
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, characterIdentity: CharacterIdentity) -> UICollectionViewCell? in
-			return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: characterIdentity)
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CharacterIdentity>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.characterIdentities, toSection: .main)
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		// Append items
+		switch self.charactersListFetchType {
+		case .explore, .person, .search:
+			let characterItems: [ItemKind] = self.characterIdentities.map { characterIdentity in
+				.characterIdentity(characterIdentity)
+			}
+			self.snapshot.appendItems(characterItems, toSection: .main)
+		}
+
 		self.dataSource.apply(snapshot)
-	}
-
-	func fetchCharacter(at indexPath: IndexPath) -> Character? {
-		guard let character = self.characters[indexPath] else { return nil }
-		return character
-	}
-
-	func setCharacterNeedsUpdate(_ characterIdentity: CharacterIdentity) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(characterIdentity) != nil else { return }
-		snapshot.reconfigureItems([characterIdentity])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }

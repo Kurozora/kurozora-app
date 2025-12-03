@@ -6,11 +6,12 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let character = self.characters[indexPath] else { return }
+		guard let character = self.cache[indexPath] as? Character else { return }
 		let segueIdentifier = R.segue.charactersListCollectionViewController.characterDetailsSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: character)
@@ -23,7 +24,7 @@ extension CharactersListCollectionViewController {
 		itemsCount = characterIdentities - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchCharacters()
@@ -33,9 +34,9 @@ extension CharactersListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard self.characters[indexPath] != nil else { return nil }
+		guard let character = self.cache[indexPath] as? Character else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		return character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }
