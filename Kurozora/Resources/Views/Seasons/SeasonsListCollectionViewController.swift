@@ -6,13 +6,12 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-class SeasonsListCollectionViewController: KCollectionViewController {
+class SeasonsListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
-	var seasons: [IndexPath: Season] = [:]
 	var seasonIdentities: [SeasonIdentity] = [] {
 		didSet {
 			self.updateDataSource()
@@ -25,7 +24,12 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, SeasonIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -39,6 +43,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -49,8 +54,9 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -93,10 +99,10 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.seasons)
-		emptyBackgroundView.configureLabels(title: "No Seasons", detail: "This show doesn't have seasons yet. Please check back again later.")
+		self.emptyBackgroundView.configureImageView(image: .Empty.seasons)
+		self.emptyBackgroundView.configureLabels(title: "No Seasons", detail: "This show doesn't have seasons yet. Please check back again later.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -154,15 +160,20 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 		self.endFetch()
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .seasonIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.seasonsListCollectionViewController.episodeSegue.identifier:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
-			guard let lockupCollectionViewCell = sender as? SeasonLockupCollectionViewCell else { return }
-			guard let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) else { return }
-			episodesListCollectionViewController.seasonIdentity = self.seasonIdentities[indexPath.item]
-			episodesListCollectionViewController.season = self.seasons[indexPath]
+			guard let season = sender as? Season else { return }
+			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
 		default: break
 		}
@@ -178,5 +189,52 @@ extension SeasonsListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension SeasonsListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `SeasonIdentity` object.
+		case seasonIdentity(_: SeasonIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .seasonIdentity(let seasonIdentity):
+				hasher.combine(seasonIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.seasonIdentity(let seasonIdentity1), .seasonIdentity(let seasonIdentity2)):
+				return seasonIdentity1 == seasonIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension SeasonsListCollectionViewController {
+	func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .seasonIdentity:
+				let season: Season? = self.fetchModel(at: indexPath)
+
+				if season == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(SeasonResponse.self, SeasonIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.configure(using: season)
+			}
+		}
 	}
 }

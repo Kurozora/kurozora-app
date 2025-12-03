@@ -7,49 +7,26 @@
 //
 
 import UIKit
-import KurozoraKit
 
 extension SeasonsListCollectionViewController {
 	override func configureDataSource() {
-		let posterCellRegistration = UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, SeasonIdentity>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, seasonIdentity in
-			guard let self = self else { return }
-			let season = self.fetchSeason(at: indexPath)
+		let posterCellRegistration = self.getConfiguredSeasonCell()
 
-			if season == nil {
-				Task {
-					do {
-						let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity).value
-						self.seasons[indexPath] = seasonResponse.data.first
-						self.setSeasonNeedsUpdate(seasonIdentity)
-					} catch {
-						print(error.localizedDescription)
-					}
-				}
-			}
-
-			seasonLockupCollectionViewCell.configure(using: season)
-		}
-
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, SeasonIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, seasonIdentity: SeasonIdentity) -> UICollectionViewCell? in
-			return collectionView.dequeueConfiguredReusableCell(using: posterCellRegistration, for: indexPath, item: seasonIdentity)
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: posterCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, SeasonIdentity>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.seasonIdentities, toSection: .main)
-		self.dataSource.apply(snapshot)
-	}
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
-	func fetchSeason(at indexPath: IndexPath) -> Season? {
-		guard let season = self.seasons[indexPath] else { return nil }
-		return season
-	}
+		// Append items
+		let seasonItems: [ItemKind] = self.seasonIdentities.map { seasonIdentity in
+			.seasonIdentity(seasonIdentity)
+		}
+		self.snapshot.appendItems(seasonItems, toSection: .main)
 
-	func setSeasonNeedsUpdate(_ seasonIdentity: SeasonIdentity) {
-		var snapshot = self.dataSource.snapshot()
-		snapshot.reconfigureItems([seasonIdentity])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }

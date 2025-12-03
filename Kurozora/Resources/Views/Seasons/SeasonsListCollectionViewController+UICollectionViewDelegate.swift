@@ -6,12 +6,14 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension SeasonsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		self.performSegue(withIdentifier: R.segue.seasonsListCollectionViewController.episodeSegue, sender: collectionViewCell)
+		guard let season = self.cache[indexPath] as? Season else { return }
+
+		self.performSegue(withIdentifier: R.segue.seasonsListCollectionViewController.episodeSegue, sender: season)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -21,7 +23,7 @@ extension SeasonsListCollectionViewController {
 		itemsCount = seasonIdentities - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchSeasons()
@@ -31,8 +33,11 @@ extension SeasonsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let collectionViewCell = collectionView.cellForItem(at: indexPath) as? SeasonLockupCollectionViewCell else { return nil }
+		guard
+			let season = self.cache[indexPath] as? Season,
+			let collectionViewCell = collectionView.cellForItem(at: indexPath) as? SeasonLockupCollectionViewCell
+		else { return nil }
 
-		return self.seasons[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell.contentView, barButtonItem: nil)
+		return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell.contentView, barButtonItem: nil)
 	}
 }
