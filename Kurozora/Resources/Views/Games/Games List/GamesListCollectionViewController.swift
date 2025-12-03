@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum GamesListFetchType {
 	case show
@@ -22,7 +22,7 @@ enum GamesListFetchType {
 	case upcoming
 }
 
-class GamesListCollectionViewController: KCollectionViewController {
+class GamesListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var literatureIdentity: LiteratureIdentity?
@@ -32,7 +32,6 @@ class GamesListCollectionViewController: KCollectionViewController {
 	var studioIdentity: StudioIdentity?
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
-	var games: [IndexPath: Game] = [:]
 	var gameIdentities: [GameIdentity] = []
 
 	var relatedGames: [RelatedGame] = []
@@ -40,7 +39,11 @@ class GamesListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var gamesListFetchType: GamesListFetchType = .search
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -54,6 +57,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -64,6 +68,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -282,6 +287,14 @@ class GamesListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .gameIdentity(let id): return id as? Element
+		default: return nil
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -300,10 +313,10 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let game = self.games[indexPath] ?? self.relatedGames[indexPath.item].game
+		let game = (self.cache[indexPath] as? Game) ?? self.relatedGames[indexPath.item].game
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.games, withLibraryStatus: value, modelID: game.id).value
@@ -385,10 +398,10 @@ extension GamesListCollectionViewController {
 	/// List of item layout kind.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a Game object.
+		/// Indicates the item kind contains a `GameIdentity` object.
 		case gameIdentity(_: GameIdentity)
 
-		/// Indicates the item kind contains a RelatedGame object.
+		/// Indicates the item kind contains a `RelatedGame` object.
 		case relatedGame(_: RelatedGame)
 
 		// MARK: - Functions
@@ -409,6 +422,53 @@ extension GamesListCollectionViewController {
 				return relatedGame1 == relatedGame2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension GamesListCollectionViewController {
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game)
+			case .relatedGame(let relatedShow):
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: relatedShow)
+			}
+		}
+	}
+
+	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				upcomingLockupCollectionViewCell.delegate = self
+				upcomingLockupCollectionViewCell.configure(using: game)
+			default: break
 			}
 		}
 	}

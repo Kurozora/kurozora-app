@@ -6,13 +6,16 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension GamesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.games[indexPath] != nil || self.relatedGames.indices.contains(indexPath.item) else { return }
+		let game = self.cache[indexPath] as? Game
+		let relatedGame = self.relatedGames[safe: indexPath.item]?.game
+		guard let game = game ?? relatedGame else { return }
 		let segueIdentifier = R.segue.gamesListCollectionViewController.gameDetailsSegue
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.games[indexPath] ?? self.relatedGames[indexPath.item].game)
+		self.performSegue(withIdentifier: segueIdentifier, sender: game)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -24,7 +27,7 @@ extension GamesListCollectionViewController {
 			itemsCount = gameIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchGames()
@@ -37,7 +40,7 @@ extension GamesListCollectionViewController {
 			itemsCount = gameIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchGames()
@@ -52,10 +55,11 @@ extension GamesListCollectionViewController {
 
 		switch self.gamesListFetchType {
 		case .relatedGame, .show, .literature:
-			return self.relatedGames[safe: indexPath.item]?.game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard self.games[indexPath] != nil else { return nil }
-			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let game = self.cache[indexPath] as? Game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }
