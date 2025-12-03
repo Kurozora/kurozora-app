@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum StudiosListFetchType {
 	case game
@@ -16,16 +16,20 @@ enum StudiosListFetchType {
 	case search
 }
 
-class StudiosListCollectionViewController: KCollectionViewController {
+class StudiosListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var gameIdentity: GameIdentity?
 	var literatureIdentity: LiteratureIdentity?
 	var showIdentity: ShowIdentity?
-	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
 	var searchQuery: String = ""
 	var studiosListFetchType: StudiosListFetchType = .search
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, StudioIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -39,6 +43,7 @@ class StudiosListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -49,8 +54,9 @@ class StudiosListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -212,6 +218,13 @@ class StudiosListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .studioIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -233,5 +246,52 @@ extension StudiosListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension StudiosListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `StudioIdentity` object.
+		case studioIdentity(_: StudioIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .studioIdentity(let studioIdentity):
+				hasher.combine(studioIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.studioIdentity(let studioIdentity1), .studioIdentity(let studioIdentity2)):
+				return studioIdentity1 == studioIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension StudiosListCollectionViewController {
+	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .studioIdentity:
+				let studio: Studio? = self.fetchModel(at: indexPath)
+
+				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				studioLockupCollectionViewCell.configure(using: studio)
+			}
+		}
 	}
 }

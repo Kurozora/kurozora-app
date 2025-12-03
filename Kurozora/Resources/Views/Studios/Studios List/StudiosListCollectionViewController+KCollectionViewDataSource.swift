@@ -7,50 +7,29 @@
 //
 
 import UIKit
-import KurozoraKit
 
 extension StudiosListCollectionViewController {
 	override func configureDataSource() {
-		let studioCellRegistration = UICollectionView.CellRegistration<StudioLockupCollectionViewCell, StudioIdentity>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, studioIdentity in
-			guard let self = self else { return }
-			let studio = self.fetchStudio(at: indexPath)
+		let studioCellRegistration = self.getConfiguredStudioCell()
 
-			if studio == nil {
-				Task {
-					do {
-						let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
-						self.studios[indexPath] = studioResponse.data.first
-						self.setStudioNeedsUpdate(studioIdentity)
-					} catch {
-						print(error.localizedDescription)
-					}
-				}
-			}
-
-			studioLockupCollectionViewCell.configure(using: studio)
-		}
-
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, StudioIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, studioIdentity: StudioIdentity) -> UICollectionViewCell? in
-			return collectionView.dequeueConfiguredReusableCell(using: studioCellRegistration, for: indexPath, item: studioIdentity)
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: studioCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, StudioIdentity>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.studioIdentities, toSection: .main)
-		self.dataSource.apply(snapshot)
-	}
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
-	func fetchStudio(at indexPath: IndexPath) -> Studio? {
-		guard let studio = self.studios[indexPath] else { return nil }
-		return studio
-	}
+		// Append items
+		switch self.studiosListFetchType {
+		case .game, .literature, .search, .show:
+			let studioItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
+				.studioIdentity(studioIdentity)
+			}
+			self.snapshot.appendItems(studioItems, toSection: .main)
+		}
 
-	func setStudioNeedsUpdate(_ studioIdentity: StudioIdentity) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(studioIdentity) != nil else { return }
-		snapshot.reconfigureItems([studioIdentity])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }
