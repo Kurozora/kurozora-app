@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum CastKind: String {
 	case show
@@ -15,13 +15,12 @@ enum CastKind: String {
 	case game
 }
 
-class CastListCollectionViewController: KCollectionViewController {
+class CastListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var literatureIdentity: LiteratureIdentity?
 	var showIdentity: ShowIdentity?
 	var gameIdentity: GameIdentity?
 	var castKind: CastKind = .show
-	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = [] {
 		didSet {
 			self.updateDataSource()
@@ -34,8 +33,12 @@ class CastListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CastIdentity>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -49,6 +52,7 @@ class CastListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -59,8 +63,9 @@ class CastListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -108,7 +113,7 @@ class CastListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-        self.emptyBackgroundView.configureImageView(image: .Empty.cast)
+		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
 		self.emptyBackgroundView.configureLabels(title: "No Cast", detail: "This \(self.castKind.rawValue) doesn't have casts yet. Please check back again later.")
 
 		self.collectionView.backgroundView?.alpha = 0
@@ -206,6 +211,13 @@ class CastListCollectionViewController: KCollectionViewController {
 		self.endFetch()
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .castIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -226,7 +238,7 @@ class CastListCollectionViewController: KCollectionViewController {
 extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let cast = self.cast[indexPath] else { return }
+		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let person = cast.relationships.people?.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.personDetailsSegue.identifier, sender: person)
@@ -234,7 +246,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let cast = self.cast[indexPath] else { return }
+		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let character = cast.relationships.characters.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue.identifier, sender: character)
@@ -250,5 +262,72 @@ extension CastListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension CastListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a Show object.
+		case castIdentity(_: CastIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .castIdentity(let castIdentity):
+				hasher.combine(castIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.castIdentity(let castIdentity1), .castIdentity(let castIdentity2)):
+				return castIdentity1 == castIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Registrations
+extension CastListCollectionViewController {
+	func getCastCellRegistration() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .castIdentity:
+				let cast: Cast? = self.fetchModel(at: indexPath)
+
+				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				castCollectionViewCell.delegate = self
+				castCollectionViewCell.configure(using: cast)
+			}
+		}
+	}
+
+	func getCharacterCellRegistration() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollctionViewcell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .castIdentity:
+				let cast: Cast? = self.fetchModel(at: indexPath)
+
+				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				characterLockupCollctionViewcell.configure(using: cast?.relationships.characters.data.first, role: cast?.attributes.role)
+			}
+		}
 	}
 }

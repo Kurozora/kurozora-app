@@ -6,6 +6,7 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension CastListCollectionViewController {
@@ -14,8 +15,10 @@ extension CastListCollectionViewController {
 		case .show, .game:
 			break
 		case .literature:
-			guard let cast = self.cast[indexPath] else { return }
-			guard let character = cast.relationships.characters.data.first else { return }
+			guard
+				let cast = self.cache[indexPath] as? Cast,
+				let character = cast.relationships.characters.data.first
+			else { return }
 
 			self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue, sender: character)
 		}
@@ -28,7 +31,7 @@ extension CastListCollectionViewController {
 		itemsCount = castIdentities - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchCast()
@@ -38,9 +41,9 @@ extension CastListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard self.cast[indexPath] != nil else { return nil }
+		guard let cast = self.cache[indexPath] as? Cast else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }
