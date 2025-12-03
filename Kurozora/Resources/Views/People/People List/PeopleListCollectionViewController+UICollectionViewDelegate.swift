@@ -6,11 +6,12 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension PeopleListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let person = self.people[indexPath] else { return }
+		guard let person = self.cache[indexPath] as? Person else { return }
 		let segueIdentifier = R.segue.peopleListCollectionViewController.personDetailsSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: person)
@@ -23,7 +24,7 @@ extension PeopleListCollectionViewController {
 		itemsCount = showIdentitiesCount - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchPeople()
@@ -33,9 +34,9 @@ extension PeopleListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard let person = self.cache[indexPath] as? Person else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		guard self.people[indexPath] != nil else { return nil }
-		return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

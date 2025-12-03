@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum PeopleListFetchType {
 	case character
@@ -15,15 +15,19 @@ enum PeopleListFetchType {
 	case search
 }
 
-class PeopleListCollectionViewController: KCollectionViewController {
+class PeopleListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity?
-	var people: [IndexPath: Person] = [:]
 	var personIdentities: [PersonIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 	var searchQuery: String = ""
 	var peopleListFetchType: PeopleListFetchType = .search
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -37,6 +41,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -47,8 +52,9 @@ class PeopleListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -196,6 +202,13 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .personIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -217,5 +230,52 @@ extension PeopleListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension PeopleListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `PersonIdentity` object.
+		case personIdentity(_: PersonIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .personIdentity(let personIdentity):
+				hasher.combine(personIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.personIdentity(let personIdentity1), .personIdentity(let personIdentity2)):
+				return personIdentity1 == personIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension PeopleListCollectionViewController {
+	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .personIdentity:
+				let person: Person? = self.fetchModel(at: indexPath)
+
+				if person == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.configure(using: person)
+			}
+		}
 	}
 }
