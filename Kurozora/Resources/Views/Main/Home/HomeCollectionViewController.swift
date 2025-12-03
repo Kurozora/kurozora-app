@@ -15,7 +15,7 @@ import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
-	@IBOutlet var profileImageButton: ProfileImageButton!
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
 	lazy var genre: Genre? = nil

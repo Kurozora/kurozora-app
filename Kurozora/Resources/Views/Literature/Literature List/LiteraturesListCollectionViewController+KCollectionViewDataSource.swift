@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 
-// MARK: - KCollectionViewDataSource
 extension LiteraturesListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [

@@ -398,10 +398,10 @@ extension ShowsListCollectionViewController {
 	/// List of item layout kind.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a Show object.
+		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity)
 
-		/// Indicates the item kind contains a RelatedShow object.
+		/// Indicates the item kind contains a `RelatedShow` object.
 		case relatedShow(_: RelatedShow)
 
 		// MARK: - Functions

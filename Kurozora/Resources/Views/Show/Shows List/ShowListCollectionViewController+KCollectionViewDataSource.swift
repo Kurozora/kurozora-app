@@ -6,10 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import KurozoraKit
 import UIKit
 
-// MARK: - KCollectionViewDataSource
 extension ShowsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [

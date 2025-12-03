@@ -573,7 +573,7 @@ extension ReCapCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
+			case .showIdentity:
 				let show: Show? = self.fetchModel(at: indexPath)
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -584,7 +584,7 @@ extension ReCapCollectionViewController {
 
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: show, rank: indexPath.item + 1)
-			case .literatureIdentity(let literatureIdentity, _):
+			case .literatureIdentity:
 				let literature: Literature? = self.fetchModel(at: indexPath)
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -625,7 +625,7 @@ extension ReCapCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
+			case .gameIdentity:
 				let game: Game? = self.fetchModel(at: indexPath)
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -646,7 +646,7 @@ extension ReCapCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .genreIdentity(let genreIdentity, _):
+			case .genreIdentity:
 				let genre: Genre? = self.fetchModel(at: indexPath)
 
 				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -656,7 +656,7 @@ extension ReCapCollectionViewController {
 				}
 
 				mediumLockupCollectionViewCell.configure(using: genre, rank: indexPath.item + 1)
-			case .themeIdentity(let themeIdentity, _):
+			case .themeIdentity:
 				let theme: Theme? = self.fetchModel(at: indexPath)
 
 				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {

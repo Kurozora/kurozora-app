@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KurozoraKit
 
 extension ShowSongsListCollectionViewController {
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
