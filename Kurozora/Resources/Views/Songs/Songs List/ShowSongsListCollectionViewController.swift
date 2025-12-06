@@ -246,3 +246,21 @@ extension ShowSongsListCollectionViewController {
 		}
 	}
 }
+
+// MARK: - Cell Configuration
+extension ShowSongsListCollectionViewController {
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+			musicLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .showSong(let showSong, _):
+				let showIDExists = self.showIdentity != nil
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
+			case .song(let song, _):
+				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
+			}
+		}
+	}
+}

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum EpisodesListFetchType: Equatable {
 	case season
@@ -17,7 +17,7 @@ enum EpisodesListFetchType: Equatable {
 	static func == (_ lhs: EpisodesListFetchType, _ rhs: EpisodesListFetchType) -> Bool {
 		switch (lhs, rhs) {
 		case (.season, .season),
-			(.search, .search):
+		     (.search, .search):
 			return true
 		case (.upNext(let exploreCategory1), .upNext(exploreCategory: let exploreCategory2)):
 			return exploreCategory1 == exploreCategory2
@@ -27,20 +27,32 @@ enum EpisodesListFetchType: Equatable {
 	}
 }
 
-class EpisodesListCollectionViewController: KCollectionViewController {
+class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var fillerBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var season: Season?
+	var season: Season? {
+		didSet {
+			guard let season = self.season else {
+				self.seasonIdentity = nil
+				return
+			}
+			self.seasonIdentity = SeasonIdentity(id: season.id)
+		}
+	}
 	var seasonIdentity: SeasonIdentity?
-	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
 	var searchQuery: String = ""
 	var episodesListFetchType: EpisodesListFetchType = .search
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -57,6 +69,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -67,8 +80,9 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Initializers
@@ -170,10 +184,10 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.episodes)
-		emptyBackgroundView.configureLabels(title: "No Episodes", detail: "This season doesn't have episodes yet. Please check back again later.")
+		self.emptyBackgroundView.configureImageView(image: .Empty.episodes)
+		self.emptyBackgroundView.configureLabels(title: "No Episodes", detail: "This season doesn't have episodes yet. Please check back again later.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -275,7 +289,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 				// Save next page url and append new data
 				let episodeResponse = upNextResponse.data.first { exploreCategory in
-					return exploreCategory.relationships.episodes != nil
+					exploreCategory.relationships.episodes != nil
 				}
 
 				self.nextPageURL = episodeResponse?.relationships.episodes?.next
@@ -328,10 +342,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	/// Prepares for the Up Next list refresh by removing already watched episodes.
 	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
-		guard let index = self.episodes.firstIndex(where: { episodeIndexPath, _ in
-			episodeIndexPath == indexPath
-		}) else { return }
-		self.episodes.remove(at: index)
+		self.cache.removeValue(forKey: indexPath)
 	}
 
 	/// Goes to the first item in the presented collection view.
@@ -343,15 +354,20 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
-		self.collectionView.safeScrollToItem(at: IndexPath(row: dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
+		self.collectionView.safeScrollToItem(at: IndexPath(row: self.dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
 		self.goToBarButtonItem.image = UIImage(systemName: "chevron.up.circle")
 		self.configureNavBarButtons()
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		if let lastWatchedEpisode = self.episodes.sorted(by: { $0.value.attributes.number < $1.value.attributes.number }).first(where: { _, episode in
-			return episode.attributes.watchStatus == .notWatched
+		guard let episodes = self.cache as? [IndexPath: Episode] else {
+			self.goToLastEpisode()
+			return
+		}
+
+		if let lastWatchedEpisode = episodes.sorted(by: { $0.value.attributes.number < $1.value.attributes.number }).first(where: { _, episode in
+			episode.attributes.watchStatus == .notWatched
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
 			self.configureNavBarButtons()
@@ -410,10 +426,17 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		return UIMenu(title: "", children: menuElements)
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .episodeIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
-		case  R.segue.episodesListCollectionViewController.showDetailsSegue.identifier:
+		case R.segue.episodesListCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			if let show = sender as? Show {
 				showDetailsCollectionViewController.show = show
@@ -440,15 +463,18 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard
+			signedIn,
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode
+		else { return }
 
 		cell.watchStatusButton.isEnabled = false
 		switch self.episodesListFetchType {
 		case .season, .search:
-			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		case .upNext:
-			await self.episodes[indexPath]?.updateWatchStatus(userInfo: [:])
+			await episode.updateWatchStatus(userInfo: [:])
 			self.prepareUpNextRefresh(indexPath)
 			await self.fetchEpisodes()
 		}
@@ -456,17 +482,21 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let episode = self.episodes[indexPath] else { return }
-		guard let showIdentity = episode.relationships?.shows?.data.first else { return }
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode,
+			let showIdentity = episode.relationships?.shows?.data.first
+		else { return }
 
 		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let episode = self.episodes[indexPath] else { return }
-		guard let seasonIdentity = episode.relationships?.seasons?.data.first else { return }
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let episode = self.cache[indexPath] as? Episode,
+			let seasonIdentity = episode.relationships?.seasons?.data.first
+		else { return }
 
 		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
@@ -481,5 +511,53 @@ extension EpisodesListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension EpisodesListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `EpisodeIdentity` object.
+		case episodeIdentity(_: EpisodeIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .episodeIdentity(let episodeIdentity):
+				hasher.combine(episodeIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.episodeIdentity(let episodeIdentity1), .episodeIdentity(let episodeIdentity2)):
+				return episodeIdentity1 == episodeIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension EpisodesListCollectionViewController {
+	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .episodeIdentity:
+				let episode: Episode? = self.fetchModel(at: indexPath)
+
+				if episode == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				episodeLockupCollectionViewCell.delegate = self
+				episodeLockupCollectionViewCell.configure(using: episode)
+			}
+		}
 	}
 }

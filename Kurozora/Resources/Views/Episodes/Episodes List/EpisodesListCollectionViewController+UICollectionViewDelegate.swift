@@ -6,11 +6,12 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let episode = self.episodes[indexPath] else { return }
+		guard let episode = self.cache[indexPath] as? Episode else { return }
 		let segueIdentifier = R.segue.episodesListCollectionViewController.episodeDetailsSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: [indexPath: episode])
@@ -23,7 +24,7 @@ extension EpisodesListCollectionViewController {
 		itemsCount = episodeIdentitiesCount - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchEpisodes()
@@ -33,9 +34,9 @@ extension EpisodesListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard (collectionView.cellForItem(at: indexPath) as? EpisodeLockupCollectionViewCell) != nil else { return nil }
+		guard let episode = self.cache[indexPath] as? Episode else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }
