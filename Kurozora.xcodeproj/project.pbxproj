@@ -346,7 +346,7 @@
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
 				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
-				66974B732EC8DFED005D547D /* XCLocalSwiftPackageReference "../KurozoraKit" */,
+				66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -905,13 +905,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		66CBE2712E8F275300104283 /* XCLocalSwiftPackageReference "../KurozoraKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../KurozoraKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -927,14 +920,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.5.1;
-			};
-		};
-		669FD2742E910DEB006472AA /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.21.0;
 			};
 		};
 		66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1041,6 +1026,14 @@
 				revision = 651a6a51c695c5819eb51ba2f98d0b64094315b9;
 			};
 		};
+		66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.22.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1134,7 +1127,6 @@
 		};
 		66CBFFCB2E9045E700104283 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 66CBE2712E8F275300104283 /* XCLocalSwiftPackageReference "../KurozoraKit" */;
 			productName = KurozoraKit;
 		};
 		66CBFFCF2E90463200104283 /* RswiftLibrary */ = {

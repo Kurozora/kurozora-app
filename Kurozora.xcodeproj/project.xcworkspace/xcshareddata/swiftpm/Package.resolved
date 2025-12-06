@@ -34,7 +34,7 @@
       "location" : "https://github.com/FLEXTool/FLEX.git",
       "state" : {
         "branch" : "master",
-        "revision" : "690acaa41aa43d7c93d728af7c2c7c08c04d1695"
+        "revision" : "6cfc82bd9e648321957ad67578f15ad08f3169b6"
       }
     },
     {
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "4d75de347da985a70c63af4d799ed482021f6733",
-        "version" : "8.6.1"
+        "revision" : "d30a5fad881137e2267f96a8e3fc35c58999bb94",
+        "version" : "8.6.2"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kurozora/KurozoraKit.git",
       "state" : {
-        "revision" : "acc6648247de3ab24b7672473b635f709f239284",
-        "version" : "1.22.1"
+        "revision" : "84e01ab67869bf236f03463c8b25007b2990e455",
+        "version" : "1.22.2"
       }
     },
     {
@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mono0926/LicensePlist",
       "state" : {
-        "revision" : "ab1692c16f4ce50fc134a8f51179f3310d41c5ef",
-        "version" : "3.27.1"
+        "revision" : "d66dd02655edf264aa0647897decab7f82a869ea",
+        "version" : "3.27.2"
       }
     },
     {
@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "ce592ae52f982c847a4efc0dd881cc9eb32d29f2",
-        "version" : "1.6.4"
+        "revision" : "b1fa4ef41fe21b13120c034854042d12c43f66b2",
+        "version" : "1.7.1"
       }
     },
     {
