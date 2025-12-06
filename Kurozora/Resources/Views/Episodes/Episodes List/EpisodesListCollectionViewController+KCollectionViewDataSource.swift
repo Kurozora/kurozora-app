@@ -39,7 +39,7 @@ extension EpisodesListCollectionViewController {
 		// Append items
 		switch self.episodesListFetchType {
 		case .search, .season, .upNext:
-			let episodeItems: [ItemKind] = episodeIdentities.map { episodeIdentity in
+			let episodeItems: [ItemKind] = visibleEpisodeIdentities.map { episodeIdentity in
 				.episodeIdentity(episodeIdentity)
 			}
 			self.snapshot.appendItems(episodeItems, toSection: .main)
