@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum LiteraturesListFetchType {
 	case show
@@ -22,7 +22,7 @@ enum LiteraturesListFetchType {
 	case upcoming
 }
 
-class LiteraturesListCollectionViewController: KCollectionViewController {
+class LiteraturesListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var gameIdentity: GameIdentity?
@@ -32,7 +32,6 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 	var studioIdentity: StudioIdentity?
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
-	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []
 
 	var relatedLiteratures: [RelatedLiterature] = []
@@ -40,7 +39,11 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 	var searchQuery: String = ""
 	var literaturesListFetchType: LiteraturesListFetchType = .search
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -54,6 +57,7 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -64,6 +68,7 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -282,6 +287,14 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .literatureIdentity(let id): return id as? Element
+		default: return nil
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -300,10 +313,10 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let literature = self.literatures[indexPath] ?? self.relatedLiteratures[indexPath.item].literature
+		let literature = (self.cache[indexPath] as? Literature) ?? self.relatedLiteratures[indexPath.item].literature
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.literatures, withLibraryStatus: value, modelID: literature.id).value
@@ -385,10 +398,10 @@ extension LiteraturesListCollectionViewController {
 	/// List of item layout kind.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a Literature object.
+		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity)
 
-		/// Indicates the item kind contains a RelatedLiterature object.
+		/// Indicates the item kind contains a `RelatedLiterature` object.
 		case relatedLiterature(_: RelatedLiterature)
 
 		// MARK: - Functions
@@ -409,6 +422,53 @@ extension LiteraturesListCollectionViewController {
 				return relatedLiterature1 == relatedLiterature2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension LiteraturesListCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .literatureIdentity:
+				let literature: Literature? = self.fetchModel(at: indexPath)
+
+				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: literature)
+			case .relatedLiterature(let relatedLiterature):
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: relatedLiterature)
+			}
+		}
+	}
+
+	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .literatureIdentity:
+				let literature: Literature? = self.fetchModel(at: indexPath)
+
+				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				upcomingLockupCollectionViewCell.delegate = self
+				upcomingLockupCollectionViewCell.configure(using: literature)
+			default: break
 			}
 		}
 	}

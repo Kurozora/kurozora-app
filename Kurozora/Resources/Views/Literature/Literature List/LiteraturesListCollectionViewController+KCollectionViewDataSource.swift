@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension LiteraturesListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -18,59 +18,8 @@ extension LiteraturesListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		let smallLockupCellRegistration = UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .literatureIdentity(let literatureIdentity):
-				let literature = self.fetchLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature)
-			case .relatedLiterature(let relatedLiterature):
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: relatedLiterature)
-			}
-		}
-
-		let upcomingLockupCellRegistration = UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .literatureIdentity(let literatureIdentity):
-				let literature = self.fetchLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.configure(using: literature)
-			default: break
-			}
-		}
+		let smallLockupCellRegistration = self.getConfiguredSmallCell()
+		let upcomingLockupCellRegistration = self.getConfiguredUpcomingCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -85,35 +34,23 @@ extension LiteraturesListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		snapshot.appendSections([.main])
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
 		// Append items
 		switch self.literaturesListFetchType {
 		case .relatedLiterature, .show, .game:
 			let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
-				return .relatedLiterature(relatedLiterature)
+				.relatedLiterature(relatedLiterature)
 			}
-			snapshot.appendItems(relatedLiteratureItems, toSection: .main)
+			self.snapshot.appendItems(relatedLiteratureItems, toSection: .main)
 		default:
 			let literatureItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
-				return .literatureIdentity(literatureIdentity)
+				.literatureIdentity(literatureIdentity)
 			}
-			snapshot.appendItems(literatureItems, toSection: .main)
+			self.snapshot.appendItems(literatureItems, toSection: .main)
 		}
 
-		self.dataSource.apply(snapshot)
-	}
-
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }

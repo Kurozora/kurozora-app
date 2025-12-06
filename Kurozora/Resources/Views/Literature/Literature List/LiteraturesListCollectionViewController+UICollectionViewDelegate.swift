@@ -6,13 +6,16 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension LiteraturesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.literatures[indexPath] != nil || self.relatedLiteratures.indices.contains(indexPath.item) else { return }
+		let literature = self.cache[indexPath] as? Literature
+		let relatedLiterature = self.relatedLiteratures[safe: indexPath.item]?.literature
+		guard let literature = literature ?? relatedLiterature else { return }
 		let segueIdentifier = R.segue.literaturesListCollectionViewController.literatureDetailsSegue
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.literatures[indexPath] ?? self.relatedLiteratures[indexPath.item].literature)
+		self.performSegue(withIdentifier: segueIdentifier, sender: literature)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -24,7 +27,7 @@ extension LiteraturesListCollectionViewController {
 			itemsCount = literatureIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchLiteratures()
@@ -37,7 +40,7 @@ extension LiteraturesListCollectionViewController {
 			itemsCount = literatureIdentitiesCount - itemsCount
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			if indexPath.item >= itemsCount, self.nextPageURL != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchLiteratures()
@@ -52,10 +55,11 @@ extension LiteraturesListCollectionViewController {
 
 		switch self.literaturesListFetchType {
 		case .relatedLiterature, .show, .game:
-			return self.relatedLiteratures[safe: indexPath.item]?.literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return nil }
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard self.literatures[indexPath] != nil else { return nil }
-			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }
