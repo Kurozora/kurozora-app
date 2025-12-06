@@ -20,7 +20,7 @@ name: IQTextView, nameSpecified: IQTextView, owner: hackiftekhar, version: 1.0.5
 
 name: KeychainAccess, nameSpecified: KeychainAccess, owner: kishikawakatsumi, version: 4.2.2, source: https://github.com/kishikawakatsumi/KeychainAccess
 
-name: Kingfisher, nameSpecified: Kingfisher, owner: onevcat, version: 8.6.1, source: https://github.com/onevcat/Kingfisher
+name: Kingfisher, nameSpecified: Kingfisher, owner: onevcat, version: 8.6.2, source: https://github.com/onevcat/Kingfisher
 
 name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.2, source: https://github.com/Kurozora/KurozoraKit
 
@@ -48,4 +48,4 @@ name: XCDYouTubeKit, nameSpecified: XCDYouTubeKit, owner: 0xced, version: , sour
 
 add-version-numbers: false
 
-LicensePlist Version: 3.27.1
+LicensePlist Version: 3.27.2
