@@ -11,7 +11,7 @@ import AppIntents
 /// An `AppShortcut` wraps an intent to make it automatically discoverable throughout the system. An `AppShortcutsProvider` manages the shortcuts the app
 /// makes available. The app can update the available shortcuts by calling `updateAppShortcutParameters()` as needed.
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-class ShortcutsProvider: AppShortcutsProvider {
+final class ShortcutsProvider: AppShortcutsProvider {
 	/// The color the system uses to display the App Shortcuts in the Shortcuts app.
 	static let shortcutTileColor: ShortcutTileColor = ShortcutTileColor.purple
 
