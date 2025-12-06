@@ -34,6 +34,8 @@ name: Solar, nameSpecified: Solar, owner: ceeK, version: 3.0.1, source: https://
 
 name: SPConfetti, nameSpecified: SPConfetti, owner: ivanvorobei, version: 1.4.2, source: https://github.com/ivanvorobei/SPConfetti
 
+name: SwiftLintPlugins, nameSpecified: SwiftLintPlugins, owner: SimplyDanny, version: 0.62.2, source: https://github.com/SimplyDanny/SwiftLintPlugins
+
 name: SwiftTheme, nameSpecified: SwiftTheme, owner: wxxsw, version: 0.6.4, source: https://github.com/wxxsw/SwiftTheme
 
 name: SwiftyJSON, nameSpecified: SwiftyJSON, owner: SwiftyJSON, version: 5.0.2, source: https://github.com/SwiftyJSON/SwiftyJSON

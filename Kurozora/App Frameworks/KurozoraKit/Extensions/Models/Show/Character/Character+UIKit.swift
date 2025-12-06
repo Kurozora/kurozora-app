@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Character {
 	/// The webpage URL of the character.
@@ -26,14 +26,13 @@ extension Character {
 	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the character.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
-	-> UIContextMenuConfiguration? {
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			return CharacterDetailsCollectionViewController.`init`(with: self.id)
+			CharacterDetailsCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
+			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
 
@@ -53,7 +52,7 @@ extension Character {
 
 		// Create "share" menu
 		var shareMenuChildren: [UIMenuElement] = []
-		
+
 		// Create "copy" action
 		let copyTitleAction = UIAction(title: "Name", image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.name
@@ -62,7 +61,7 @@ extension Character {
 			UIPasteboard.general.string = self.webpageURLString
 		}
 		let copyMenu = UIMenu(title: "Copy", image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
-		
+
 		// Create "share" action
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)

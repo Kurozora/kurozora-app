@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension LiteratureDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -191,7 +191,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
-						return .review(review)
+						.review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: literatureDetailSection)
 				}
@@ -204,7 +204,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.castIdentities.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let castIdentityItems: [ItemKind] = self.castIdentities.map { castIdentity in
-						return .castIdentity(castIdentity)
+						.castIdentity(castIdentity)
 					}
 					self.snapshot.appendItems(castIdentityItems, toSection: literatureDetailSection)
 				}
@@ -212,7 +212,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.studioIdentities.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
-						return .studioIdentity(studioIdentity)
+						.studioIdentity(studioIdentity)
 					}
 					self.snapshot.appendItems(studioIdentityItems, toSection: literatureDetailSection)
 				}
@@ -220,7 +220,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.studioLiteratureIdentities.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let studioLiteratureIdentyItems: [ItemKind] = self.studioLiteratureIdentities.map { studioLiteratureIdentity in
-						return .literatureIdentity(studioLiteratureIdentity)
+						.literatureIdentity(studioLiteratureIdentity)
 					}
 					self.snapshot.appendItems(studioLiteratureIdentyItems, toSection: literatureDetailSection)
 				}
@@ -228,7 +228,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.relatedLiteratures.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
-						return .relatedLiterature(relatedLiterature)
+						.relatedLiterature(relatedLiterature)
 					}
 					self.snapshot.appendItems(relatedLiteratureItems, toSection: literatureDetailSection)
 				}
@@ -236,7 +236,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.relatedShows.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
-						return .relatedShow(relatedShow)
+						.relatedShow(relatedShow)
 					}
 					self.snapshot.appendItems(relatedShowItems, toSection: literatureDetailSection)
 				}
@@ -244,7 +244,7 @@ extension LiteratureDetailsCollectionViewController {
 				if !self.relatedGames.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])
 					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
-						return .relatedGame(relatedGame)
+						.relatedGame(relatedGame)
 					}
 					self.snapshot.appendItems(relatedGameItems, toSection: literatureDetailSection)
 				}
@@ -262,7 +262,7 @@ extension LiteratureDetailsCollectionViewController {
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
 		return self.cache[indexPath] as? M
 	}
-	
+
 	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
 		guard snapshot.indexOfSection(section) != nil else { return }

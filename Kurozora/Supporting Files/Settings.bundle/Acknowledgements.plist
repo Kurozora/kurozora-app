@@ -156,6 +156,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>Acknowledgements/SwiftLintPlugins</string>
+			<key>Title</key>
+			<string>SwiftLintPlugins</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>Acknowledgements/SwiftTheme</string>
 			<key>Title</key>
 			<string>SwiftTheme</string>

@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol OnboardingFooterTableViewCellDelegate: UIViewController {
+protocol OnboardingFooterTableViewCellDelegate: AnyObject {
 	/// Notifies the delegate that the legal button was pressed.
 	func onboardingFooterTableViewCell(_ cell: OnboardingFooterTableViewCell, didPressLegalButton sender: UIButton)
 }
 
-extension OnboardingFooterTableViewCellDelegate {
+extension OnboardingFooterTableViewCellDelegate where Self: UIViewController {
 	func onboardingFooterTableViewCell(_ cell: OnboardingFooterTableViewCell, didPressLegalButton sender: UIButton) {
 		if let legalViewController = R.storyboard.legal.legalViewController() {
 			let kNavigationController = KNavigationController(rootViewController: legalViewController)
@@ -26,8 +26,8 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var legalButton: UIButton! {
 		didSet {
-			legalButton.addTarget(self, action: #selector(legalButtonPressed), for: .touchUpInside)
-			legalButton.addTarget(self, action: #selector(legalButtonTouched), for: [.touchDown, .touchDragExit, .touchDragInside, .touchCancel])
+			self.legalButton.addTarget(self, action: #selector(self.legalButtonPressed), for: .touchUpInside)
+			self.legalButton.addTarget(self, action: #selector(self.legalButtonTouched), for: [.touchDown, .touchDragExit, .touchDragInside, .touchCancel])
 		}
 	}
 
@@ -43,7 +43,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		// Normal state
 		let attributedString = NSMutableAttributedString(string: "Your Kurozora Account information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. \n", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
 		attributedString.append(NSAttributedString(string: "See how your data is managed...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
-		legalButton?.setAttributedTitle(attributedString, for: .normal)
+		self.legalButton?.setAttributedTitle(attributedString, for: .normal)
 	}
 
 	/// Modally presents the legal view controller.

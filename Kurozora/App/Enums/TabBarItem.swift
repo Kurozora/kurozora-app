@@ -174,7 +174,7 @@ enum TabBarItem: Int, CaseIterable {
 	var rowIdentifierValue: String {
 		return String(describing: self)
 	}
-	
+
 	/// A tab’s placement when displayed in contexts that allow different placement.
 	@available(iOS 18.0, macCatalyst 18.0, *)
 	var tabPlacement: UITab.Placement {

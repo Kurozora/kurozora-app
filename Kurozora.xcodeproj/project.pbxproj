@@ -247,6 +247,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				66E55B152EE453DB009E12A3 /* PBXTargetDependency */,
 				66CB0EB02E90A27100104283 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -264,7 +265,6 @@
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
 				66647B4E2084995500CF624F /* Resources */,
-				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
@@ -272,6 +272,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				66E55B132EE453CC009E12A3 /* PBXTargetDependency */,
 				660593072E91CE80002CC46E /* PBXTargetDependency */,
 				66CBFFD82E904CDB00104283 /* PBXTargetDependency */,
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
@@ -347,6 +348,7 @@
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
 				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
 				66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */,
+				66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -423,25 +425,6 @@
 			shellPath = /bin/sh;
 			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
 		};
-		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -487,6 +470,14 @@
 		66CBFFD82E904CDB00104283 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 66CBFFD72E904CDB00104283 /* RswiftGenerateInternalResources */;
+		};
+		66E55B132EE453CC009E12A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 66E55B122EE453CC009E12A3 /* SwiftLintBuildToolPlugin */;
+		};
+		66E55B152EE453DB009E12A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 66E55B142EE453DB009E12A3 /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1034,6 +1025,14 @@
 				minimumVersion = 1.22.2;
 			};
 		};
+		66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.62.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1148,6 +1147,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
 			productName = "plugin:RswiftGenerateInternalResources";
+		};
+		66E55B122EE453CC009E12A3 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		66E55B142EE453DB009E12A3 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
