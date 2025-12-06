@@ -7,52 +7,34 @@
 //
 
 import UIKit
-import KurozoraKit
 
 extension UsersListCollectionViewController {
 	override func configureDataSource() {
-		let userCellRegistration = UICollectionView.CellRegistration<UserLockupCollectionViewCell, UserIdentity>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, userIdentity in
-			guard let self = self else { return }
-			let user = self.fetchUser(at: indexPath)
+		let userLockupCellRegistration = self.getConfiguredUserCell()
 
-			if user == nil {
-				Task {
-					do {
-						let userResponse = try await KService.getDetails(forUser: userIdentity).value
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
 
-						self.users[indexPath] = userResponse.data.first
-						self.setUserNeedsUpdate(userIdentity)
-					} catch {
-						print(error.localizedDescription)
-					}
-				}
+			switch self.usersListFetchType {
+			case .follow, .search:
+				return collectionView.dequeueConfiguredReusableCell(using: userLockupCellRegistration, for: indexPath, item: itemKind)
 			}
-
-			userLockupCollectionViewCell.delegate = self
-			userLockupCollectionViewCell.configure(using: user)
-		}
-
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, UserIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, userIdentity: UserIdentity) -> UICollectionViewCell? in
-			return collectionView.dequeueConfiguredReusableCell(using: userCellRegistration, for: indexPath, item: userIdentity)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, UserIdentity>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.userIdentities, toSection: .main)
-		self.dataSource.apply(snapshot)
-	}
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
-	func fetchUser(at indexPath: IndexPath) -> User? {
-		guard let user = self.users[indexPath] else { return nil }
-		return user
-	}
+		// Append items
+		switch self.usersListFetchType {
+		case .follow, .search:
+			let userItems: [ItemKind] = self.userIdentities.map { userIdentity in
+				.userIdentity(userIdentity)
+			}
+			self.snapshot.appendItems(userItems, toSection: .main)
+		}
 
-	func setUserNeedsUpdate(_ userIdentity: UserIdentity) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(userIdentity) != nil else { return }
-		snapshot.reconfigureItems([userIdentity])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }

@@ -6,23 +6,27 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum UsersListFetchType {
 	case follow
 	case search
 }
 
-class UsersListCollectionViewController: KCollectionViewController {
+class UsersListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Properties
 	var user: User?
-	var users: [IndexPath: User] = [:]
 	var userIdentities: [UserIdentity] = []
 	var searchQuery: String = ""
 	var usersListFetchType: UsersListFetchType = .search
 	var usersListType: UsersListType = .followers
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, UserIdentity>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -36,6 +40,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -46,8 +51,9 @@ class UsersListCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Views
@@ -138,9 +144,9 @@ class UsersListCollectionViewController: KCollectionViewController {
 			detailString = "Can't get users list. Please reload the page or restart the app and check your WiFi connection."
 		}
 
-		emptyBackgroundView.configureImageView(image: .Empty.follow)
-		emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
-		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
+		self.emptyBackgroundView.configureImageView(image: .Empty.follow)
+		self.emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
+		self.emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -253,6 +259,13 @@ class UsersListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .userIdentity(let id): return id as? Element
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -268,8 +281,10 @@ class UsersListCollectionViewController: KCollectionViewController {
 // MARK: - UserLockupCollectionViewCellDelegate
 extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegate {
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let user = self.users[indexPath] else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let user = self.cache[indexPath] as? User
+		else { return }
 		let userIdentity = UserIdentity(id: user.id)
 
 		Task {
@@ -293,5 +308,53 @@ extension UsersListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension UsersListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `UserIdentity` object.
+		case userIdentity(_: UserIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .userIdentity(let userIdentity):
+				hasher.combine(userIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.userIdentity(let userIdentity1), .userIdentity(let userIdentity2)):
+				return userIdentity1 == userIdentity2
+			}
+		}
+	}
+}
+
+// MARK: - Cell Configuration
+extension UsersListCollectionViewController {
+	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .userIdentity:
+				let user: User? = self.fetchModel(at: indexPath)
+
+				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(UserResponse.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				userLockupCollectionViewCell.delegate = self
+				userLockupCollectionViewCell.configure(using: user)
+			}
+		}
 	}
 }
