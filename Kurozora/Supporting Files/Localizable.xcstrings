@@ -1,0 +1,567 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ total series" : {
+      "comment" : "The string for the word '%@ total series'."
+    },
+    "About" : {
+      "comment" : "The string for the word 'about'."
+    },
+    "Account" : {
+      "comment" : "The string for the word 'account'."
+    },
+    "Account created successfully! Please check your email for confirmation." : {
+      "comment" : "The subheadline string for sign up alert."
+    },
+    "Achievements" : {
+      "comment" : "The string for the word 'achievements'."
+    },
+    "Add" : {
+      "comment" : "The string for the word 'add'."
+    },
+    "Add to Library" : {
+      "comment" : "The string for the word 'add to library'."
+    },
+    "Age" : {
+      "comment" : "The string for the word 'age'."
+    },
+    "Aired" : {
+      "comment" : "The string for the word 'aired'."
+    },
+    "Alerts" : {
+      "comment" : "The string for the word 'alerts'."
+    },
+    "Aliases" : {
+      "comment" : "The string for the word 'aliases'."
+    },
+    "Anime" : {
+      "comment" : "The string for the word 'anime'."
+    },
+    "Apply" : {
+      "comment" : "The string for the word 'apply'."
+    },
+    "As Heard On" : {
+      "comment" : "The string for the word 'As Heard On'."
+    },
+    "Automatic" : {
+      "comment" : "The string for the word 'automatic'."
+    },
+    "Badges" : {
+      "comment" : "The string for the word 'badges'."
+    },
+    "Become a Subscriber" : {
+      "comment" : "The string for the word 'Become a Subscriber'."
+    },
+    "Browse" : {
+      "comment" : "The string for the word 'browse'."
+    },
+    "Browser" : {
+      "comment" : "The string for the word 'browser'."
+    },
+    "By Type" : {
+      "comment" : "The string for the word 'by type'."
+    },
+    "Cache" : {
+      "comment" : "The string for the word 'cache'."
+    },
+    "Can’t delete library 😔" : {
+      "comment" : "The string for the sentence 'Can’t delete library 😔'."
+    },
+    "Can't Sign Up 😔" : {
+      "comment" : "The headline string for sign up alert."
+    },
+    "Cancel" : {
+      "comment" : "The string for the word 'cancel'."
+    },
+    "Cast" : {
+      "comment" : "The string for the word 'cast'."
+    },
+    "Catalog" : {
+      "comment" : "The string for the word 'catalog'."
+    },
+    "Characteristics" : {
+      "comment" : "The string for the word 'characteristics'."
+    },
+    "Characters" : {
+      "comment" : "The string for the word 'characters'."
+    },
+    "Chart" : {
+      "comment" : "The string for the word 'chart'."
+    },
+    "Click to Rate:" : {
+      "comment" : "The string for the word 'click to rate'."
+    },
+    "Coming Soon" : {
+      "comment" : "The string for the word 'coming soon'."
+    },
+    "Continue" : {
+      "comment" : "The string for the word 'Continue'."
+    },
+    "Copyright" : {
+      "comment" : "The string for the word 'copyright'."
+    },
+    "Country" : {
+      "comment" : "The string for the word 'country'."
+    },
+    "Debug" : {
+      "comment" : "The string for the word 'debug'."
+    },
+    "Debut" : {
+      "comment" : "The string for the word 'debut'."
+    },
+    "Defunct" : {
+      "comment" : "The string for the word 'defunct'."
+    },
+    "Delete Permanently" : {
+      "comment" : "The string for the phrase 'Delete Permanently'."
+    },
+    "Discard" : {
+      "comment" : "The string for the word 'discard'."
+    },
+    "Discover" : {
+      "comment" : "The string for the word 'discover'."
+    },
+    "Done" : {
+      "comment" : "The string for the word 'done'."
+    },
+    "Download" : {
+      "comment" : "The string for the word 'download'."
+    },
+    "Duration" : {
+      "comment" : "The string for the word 'duration'."
+    },
+    "Episodes" : {
+      "comment" : "The string for the word 'episodes'."
+    },
+    "Errr..." : {
+      "comment" : "The headline string for resetting password alert."
+    },
+    "Expected" : {
+      "comment" : "The string for the word 'expected'."
+    },
+    "Explore" : {
+      "comment" : "The string for the word 'explore'."
+    },
+    "Favorites" : {
+      "comment" : "The string for the word 'Favorites'"
+    },
+    "Feed" : {
+      "comment" : "The string for the word 'feed'."
+    },
+    "Filters" : {
+      "comment" : "The string for the word 'filters'."
+    },
+    "Find %@" : {
+
+    },
+    "Find %@ in %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Find %1$@ in %2$@"
+          }
+        }
+      }
+    },
+    "Find ${title} on Kurozora" : {
+
+    },
+    "Find on Kurozora" : {
+
+    },
+    "Follow" : {
+      "comment" : "The string for the word 'follow'."
+    },
+    "Follower" : {
+      "comment" : "The string for the word 'follower'."
+    },
+    "Following" : {
+      "comment" : "The string for the word 'following'."
+    },
+    "For" : {
+
+    },
+    "Founded" : {
+      "comment" : "The string for the word 'founded'."
+    },
+    "Games" : {
+      "comment" : "The string for the word 'games'."
+    },
+    "General" : {
+      "comment" : "The string for the word 'general'."
+    },
+    "Header" : {
+      "comment" : "The string for the word 'header'."
+    },
+    "Headquarters" : {
+      "comment" : "The string for the word 'headquarters'."
+    },
+    "Hide from Public" : {
+      "comment" : "The string for the phrase 'hide from public'."
+    },
+    "Home" : {
+
+    },
+    "Hooray!" : {
+      "comment" : "The headline string for sign up alert."
+    },
+    "Icon" : {
+      "comment" : "The string for the word 'icon'."
+    },
+    "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly." : {
+      "comment" : "The subheadline string for resetting password alert."
+    },
+    "Information" : {
+      "comment" : "The string for the word 'information'."
+    },
+    "Just to confirm, you wanted ‘%@’?" : {
+
+    },
+    "Kurozora" : {
+
+    },
+    "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter." : {
+      "comment" : "The string for the maintenance warning message."
+    },
+    "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store." : {
+      "comment" : "The string for the force update warning message."
+    },
+    "Kurozora’s Screens" : {
+
+    },
+    "Languages" : {
+      "comment" : "The string for the word 'language'."
+    },
+    "Launch Kurozora" : {
+
+    },
+    "Library" : {
+      "comment" : "The string for the word 'library'."
+    },
+    "Literatures" : {
+      "comment" : "The string for the word 'literatures'."
+    },
+    "Lyrics" : {
+      "comment" : "The string for the word 'Lyrics'."
+    },
+    "Mark All Unwatched" : {
+      "comment" : "The string for the phrase 'mark all unwatched'."
+    },
+    "Mark All Watched" : {
+      "comment" : "The string for the phrase 'mark all watched'."
+    },
+    "Mark as Unwatched" : {
+      "comment" : "The string for the phrase 'mark as unwatched'."
+    },
+    "Mark as Watched" : {
+      "comment" : "The string for the phrase 'mark as watched'."
+    },
+    "Measurements" : {
+      "comment" : "The string for the word 'measurements'."
+    },
+    "Message" : {
+      "comment" : "The string for the word 'message'."
+    },
+    "Milestones" : {
+      "comment" : "The string for the word 'Milestones'."
+    },
+    "More by" : {
+      "comment" : "The string for the word 'more by'."
+    },
+    "Motion" : {
+      "comment" : "The string for the word 'motion'."
+    },
+    "Network Unavailable" : {
+      "comment" : "The string for the no signal warning title."
+    },
+    "New" : {
+      "comment" : "The string for the word 'new'."
+    },
+    "Next" : {
+      "comment" : "The string for the word 'next'."
+    },
+    "Notifications" : {
+      "comment" : "The string for the word 'notifications'."
+    },
+    "Number" : {
+      "comment" : "The string for the word 'number'."
+    },
+    "Off" : {
+      "comment" : "The string for the word 'off'."
+    },
+    "Open Kurozora" : {
+
+    },
+    "Open Kurozora to your preferred page." : {
+
+    },
+    "Open Twitter" : {
+      "comment" : "The string for the word 'Open Twitter'."
+    },
+    "Other" : {
+      "comment" : "The string for the word 'other'."
+    },
+    "Page" : {
+
+    },
+    "Passcode" : {
+      "comment" : "The string for the word 'passcode'."
+    },
+    "Password" : {
+      "comment" : "The string for the word 'password'."
+    },
+    "Pauze" : {
+      "comment" : "The string for the word 'pauze'."
+    },
+    "People" : {
+      "comment" : "The string for the word 'people'."
+    },
+    "Play" : {
+      "comment" : "The string for the word 'play'."
+    },
+    "Please type a valid Kurozora Account 😣" : {
+      "comment" : "The subheadline string for resetting password alert."
+    },
+    "Preview" : {
+      "comment" : "The string for the word 'preview'."
+    },
+    "Previous" : {
+      "comment" : "The string for the word 'previous'."
+    },
+    "Privacy" : {
+      "comment" : "The string for the word 'privacy'."
+    },
+    "Pro" : {
+      "comment" : "The string for the word 'pro'."
+    },
+    "Quikly launch the Kurozora app" : {
+
+    },
+    "Rank" : {
+      "comment" : "The string for the word 'rank'."
+    },
+    "Rating" : {
+      "comment" : "The string for the word 'rating'."
+    },
+    "Ratings" : {
+      "comment" : "The string for the word 'ratings'."
+    },
+    "Ratings & Reviews" : {
+      "comment" : "The string for the word 'ratings & reviews'."
+    },
+    "Re:CAP" : {
+      "comment" : "The string for the word 'Re:CAP'."
+    },
+    "Reconnect!" : {
+      "comment" : "The string for the word 'reconnect'."
+    },
+    "Redeem" : {
+      "comment" : "The string for the word 'Redeem'."
+    },
+    "Related Games" : {
+      "comment" : "The string for the word 'related games'."
+    },
+    "Related Literatures" : {
+      "comment" : "The string for the word 'related literatures'."
+    },
+    "Related Shows" : {
+      "comment" : "The string for the word 'related shows'."
+    },
+    "Remind Me" : {
+      "comment" : "The string for the word 'Remind Me'"
+    },
+    "Reminders" : {
+      "comment" : "The string for the word 'Reminders'"
+    },
+    "Remove" : {
+      "comment" : "The string for the word 'remove'."
+    },
+    "Remove from Library" : {
+      "comment" : "The string for the word 'remove from library'."
+    },
+    "Reset" : {
+      "comment" : "The string for the word 'reset'."
+    },
+    "Schedule" : {
+      "comment" : "The string for the word 'schedule'."
+    },
+    "Scheduled Maintenance" : {
+      "comment" : "The string for the maintenance warning title."
+    },
+    "Search" : {
+      "comment" : "The string for the word 'search'."
+    },
+    "Search for %@ in %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Search for %1$@ in %2$@"
+          }
+        }
+      }
+    },
+    "Search for %@ in Kurozora" : {
+
+    },
+    "Search for anime, manga, games, and more in Kurozora" : {
+
+    },
+    "Search in" : {
+
+    },
+    "Search Kind" : {
+
+    },
+    "Search Scope" : {
+
+    },
+    "Searching for %@ in Kurozora..." : {
+
+    },
+    "Season" : {
+      "comment" : "The string for the word 'season'."
+    },
+    "Seasons" : {
+      "comment" : "The string for the word 'seasons'."
+    },
+    "Security" : {
+      "comment" : "The string for the word 'security'."
+    },
+    "Send" : {
+      "comment" : "The string for the word 'send'."
+    },
+    "Settings" : {
+      "comment" : "The string for the word 'settings'."
+    },
+    "Share" : {
+      "comment" : "The string for the word 'share'."
+    },
+    "Show to Public" : {
+      "comment" : "The string for the phrase 'show to public'."
+    },
+    "Shows" : {
+      "comment" : "The string for the word 'shows'."
+    },
+    "Social" : {
+      "comment" : "The string for the word 'social'."
+    },
+    "Socials" : {
+      "comment" : "The string for the word 'socials'."
+    },
+    "Songs" : {
+      "comment" : "The string for the word 'songs'."
+    },
+    "Stickers" : {
+      "comment" : "The string for the word 'stickers'."
+    },
+    "Stop" : {
+      "comment" : "The string for the word 'stop'."
+    },
+    "Studio" : {
+      "comment" : "The string for the word 'studio'."
+    },
+    "Studios" : {
+      "comment" : "The string for the word 'studios'."
+    },
+    "Submitted" : {
+      "comment" : "The string for the word 'submitted'."
+    },
+    "Subscribe" : {
+      "comment" : "The string for the word 'subscribe'."
+    },
+    "Success!" : {
+      "comment" : "The headline string for resetting password alert."
+    },
+    "Successor" : {
+      "comment" : "The string for the word 'successor'."
+    },
+    "Support Us" : {
+      "comment" : "The string for the word 'support us'."
+    },
+    "Synopsis" : {
+      "comment" : "The string for the word 'synopsis'."
+    },
+    "Tap to Rate:" : {
+      "comment" : "The string for the word 'tap to rate'."
+    },
+    "TBA" : {
+      "comment" : "The string for the word 'tba'."
+    },
+    "Theme" : {
+      "comment" : "The string for the word 'theme'."
+    },
+    "There are %lld titles matching ‘%@’." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "There are %1$lld titles matching ‘%2$@’."
+          }
+        }
+      }
+    },
+    "Title" : {
+
+    },
+    "Top %@" : {
+      "comment" : "The string for the word 'Top %@'."
+    },
+    "TV Rating" : {
+      "comment" : "The string for the word 'TV rating'."
+    },
+    "Update Available" : {
+      "comment" : "The string for the force update warning title."
+    },
+    "Update Library Status" : {
+      "comment" : "The string for the word 'update library status'."
+    },
+    "Update!" : {
+      "comment" : "The string for the word 'update'."
+    },
+    "User" : {
+      "comment" : "The string for the word 'user'."
+    },
+    "Users" : {
+      "comment" : "The string for the word 'users'."
+    },
+    "View on Amazon Music" : {
+      "comment" : "The string for the word 'View on Amazon Music'."
+    },
+    "View on Apple Music" : {
+      "comment" : "The string for the word 'View on Apple Music'."
+    },
+    "View on Deezer" : {
+      "comment" : "The string for the word 'View on Deezer'."
+    },
+    "View on Spotify" : {
+      "comment" : "The string for the word 'View on Spotify'."
+    },
+    "View on YouTube" : {
+      "comment" : "The string for the word 'View on YouTube'."
+    },
+    "View Subscription" : {
+      "comment" : "The string for the word 'View Subscription'."
+    },
+    "Watched" : {
+      "comment" : "The string for the word 'watched'."
+    },
+    "Websites" : {
+      "comment" : "The string for the word 'websites'."
+    },
+    "What’s New in Kurozora" : {
+      "comment" : "The string for the word 'What’s New'."
+    },
+    "Write a Review" : {
+      "comment" : "The string for the word 'write a review'."
+    },
+    "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora." : {
+      "comment" : "The string for the no signal warning message."
+    },
+    "Your Library" : {
+      "comment" : "The string for the word 'your library'."
+    }
+  },
+  "version" : "1.1"
+}
