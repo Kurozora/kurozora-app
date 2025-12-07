@@ -196,11 +196,11 @@ enum RatingComponent: Int, CaseIterable {
 	var identifierString: String {
 		switch self {
 		case .average:
-			return R.reuseIdentifier.ratingCollectionViewCell.identifier
+			return RatingCollectionViewCell.reuseID
 		case .sentiment:
-			return R.reuseIdentifier.ratingSentimentCollectionViewCell.identifier
+			return RatingSentimentCollectionViewCell.reuseID
 		case .bar:
-			return R.reuseIdentifier.ratingBarCollectionViewCell.identifier
+			return RatingBarCollectionViewCell.reuseID
 		}
 	}
 }
@@ -215,9 +215,9 @@ enum RateAndReview: Int, CaseIterable {
 	var identifierString: String {
 		switch self {
 		case .tapToRate:
-			return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+			return TapToRateCollectionViewCell.reuseID
 		case .writeAReview:
-			return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
+			return WriteAReviewCollectionViewCell.reuseID
 		}
 	}
 }

@@ -44,7 +44,7 @@ extension LiteratureDetailsCollectionViewController {
 
 			switch literatureDetailSection {
 			case .header:
-				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
+				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
 				showDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .literature(let literature, _):
@@ -54,7 +54,7 @@ extension LiteratureDetailsCollectionViewController {
 				return showDetailHeaderCollectionViewCell
 			case .badge:
 				let literatureDetailBadge = LiteratureDetail.Badge(rawValue: indexPath.item) ?? .rating
-				let badgeReuseIdentifier = literatureDetailBadge == LiteratureDetail.Badge.rating ? R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier : R.reuseIdentifier.badgeCollectionViewCell.identifier
+				let badgeReuseIdentifier = literatureDetailBadge == LiteratureDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
 				case .literature(let literature, _):

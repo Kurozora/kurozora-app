@@ -98,10 +98,10 @@ extension AccountOnboardingTableViewController {
 
 		switch self.accountOnboardingType.sections[indexPath.section] {
 		case .header:
-			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingHeaderTableViewCell.identifier, for: indexPath) as? OnboardingHeaderTableViewCell
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: OnboardingHeaderTableViewCell.self, for: indexPath)
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 		case .textFields:
-			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingTextFieldTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: OnboardingTextFieldTableViewCell.self, for: indexPath)
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = self.accountOnboardingType.textFieldTypes[indexPath.row].textType
@@ -111,11 +111,11 @@ extension AccountOnboardingTableViewController {
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.addTarget(self, action: #selector(self.editingChanged), for: .editingChanged)
 			self.textFieldArray.append((onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField)
 		case .options:
-			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingOptionsTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: OnboardingOptionsTableViewCell.self, for: indexPath)
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 			(onboardingBaseTableViewCell as? OnboardingOptionsTableViewCell)?.delegate = self as? SignInTableViewController
 		case .footer:
-			if let onboardingFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingFooterTableViewCell.identifier, for: indexPath) as? OnboardingFooterTableViewCell {
+			if let onboardingFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: OnboardingFooterTableViewCell.self, for: indexPath) {
 				onboardingFooterTableViewCell.delegate = self
 				onboardingBaseTableViewCell = onboardingFooterTableViewCell
 			} else {

@@ -38,7 +38,7 @@ extension CharacterDetailsCollectionViewController {
 
 			switch characterDetailSection {
 			case .header:
-				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.characterHeaderCollectionViewCell, for: indexPath)
+				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterHeaderCollectionViewCell.reuseID, for: indexPath) as? CharacterHeaderCollectionViewCell
 				switch itemKind {
 				case .character(let character, _):
 					characterHeaderCollectionViewCell?.character = character
@@ -46,7 +46,7 @@ extension CharacterDetailsCollectionViewController {
 				}
 				return characterHeaderCollectionViewCell
 			case .about:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 				switch itemKind {

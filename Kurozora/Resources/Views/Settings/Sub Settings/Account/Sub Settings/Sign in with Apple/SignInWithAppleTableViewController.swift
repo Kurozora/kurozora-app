@@ -25,8 +25,8 @@ extension SignInWithAppleTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
-			guard let siwaButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.siwaButtonTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.siwaButtonTableViewCell.identifier)")
+			guard let siwaButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: SIWAButtonTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SIWAButtonTableViewCell.reuseID)")
 			}
 			siwaButtonTableViewCell.onboardingFooterTableViewCellDelegate = self
 			return siwaButtonTableViewCell

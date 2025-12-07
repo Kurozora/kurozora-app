@@ -141,8 +141,8 @@ extension RedeemTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
-			guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.actionButtonTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.actionButtonTableViewCell.identifier)")
+			guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: ActionButtonTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(ActionButtonTableViewCell.reuseID)")
 			}
 			actionButtonTableViewCell.delegate = self
 			actionButtonTableViewCell.actionTextField.tag = indexPath.row

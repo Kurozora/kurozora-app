@@ -251,9 +251,9 @@ extension FMDetailsTableViewController {
 		case 0:
 			let feedMessageCell: BaseFeedMessageCell!
 			if self.feedMessage.attributes.isReShare {
-				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
+				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageReShareCell.self, for: indexPath)
 			} else {
-				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
+				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath)
 			}
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = true
@@ -266,8 +266,8 @@ extension FMDetailsTableViewController {
 			], sourceView: feedMessageCell.moreButton, barButtonItem: nil)
 			return feedMessageCell
 		default:
-			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
+			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(FeedMessageCell.reuseID)")
 			}
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false

@@ -40,7 +40,7 @@ extension EpisodeDetailsCollectionViewController {
 
 			switch episodeDetailSection {
 			case .header:
-				let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeDetailHeaderCollectionViewCell, for: indexPath)
+				let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeDetailHeaderCollectionViewCell.self, for: indexPath)
 				episodeDetailHeaderCollectionViewCell?.delegate = self
 
 				switch itemKind {
@@ -52,7 +52,7 @@ extension EpisodeDetailsCollectionViewController {
 				return episodeDetailHeaderCollectionViewCell
 			case .badge:
 				let episodeDetailBadge = EpisodeDetail.Badge(rawValue: indexPath.item) ?? .rating
-				let badgeReuseIdentifier = episodeDetailBadge == EpisodeDetail.Badge.rating ? R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier : R.reuseIdentifier.badgeCollectionViewCell.identifier
+				let badgeReuseIdentifier = episodeDetailBadge == EpisodeDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
 				case .episode(let episode, _):

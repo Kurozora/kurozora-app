@@ -78,7 +78,7 @@ extension HomeCollectionViewController {
 			case .quickActions:
 				switch itemKind {
 				case .quickAction(let quickAction, _):
-					let actionButtonExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.actionButtonExploreCollectionViewCell, for: indexPath)
+					let actionButtonExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ActionButtonExploreCollectionViewCell.reuseID, for: indexPath) as? ActionButtonExploreCollectionViewCell
 					actionButtonExploreCollectionViewCell?.delegate = self
 					actionButtonExploreCollectionViewCell?.configure(using: quickAction)
 					return actionButtonExploreCollectionViewCell

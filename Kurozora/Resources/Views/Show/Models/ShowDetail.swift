@@ -48,9 +48,9 @@ extension ShowDetail {
 		var identifierString: String {
 			switch self {
 			case .rating:
-				return R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier
+				return RatingBadgeCollectionViewCell.reuseID
 			default:
-				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+				return BadgeCollectionViewCell.reuseID
 			}
 		}
 
@@ -164,11 +164,11 @@ extension ShowDetail {
 		var identifierString: String {
 			switch self {
 			case .average:
-				return R.reuseIdentifier.ratingCollectionViewCell.identifier
+				return RatingCollectionViewCell.reuseID
 			case .sentiment:
-				return R.reuseIdentifier.ratingSentimentCollectionViewCell.identifier
+				return RatingSentimentCollectionViewCell.reuseID
 			case .bar:
-				return R.reuseIdentifier.ratingBarCollectionViewCell.identifier
+				return RatingBarCollectionViewCell.reuseID
 			}
 		}
 	}
@@ -186,9 +186,9 @@ extension ShowDetail {
 		var identifierString: String {
 			switch self {
 			case .tapToRate:
-				return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+				return TapToRateCollectionViewCell.reuseID
 			case .writeAReview:
-				return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
+				return WriteAReviewCollectionViewCell.reuseID
 			}
 		}
 	}
@@ -281,11 +281,11 @@ extension ShowDetail {
 		var identifierString: String {
 			switch self {
 			default:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
+				return InformationCollectionViewCell.reuseID
 //			case .studio:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//				return InformationCollectionViewCell.reuseID
 //			case .network:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//				return InformationCollectionViewCell.reuseID
 			}
 		}
 

@@ -80,20 +80,20 @@ extension ServiceTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .preview:
-			guard let servicePreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.servicePreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.servicePreviewTableViewCell.identifier)")
+			guard let servicePreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: ServicePreviewTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(ServicePreviewTableViewCell.reuseID)")
 			}
 			servicePreviewTableViewCell.previewImage = previewImage
 			return servicePreviewTableViewCell
 		case .header:
-			guard let serviceHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceHeaderTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.serviceHeaderTableViewCell.identifier)")
+			guard let serviceHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: ServiceHeaderTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(ServiceHeaderTableViewCell.reuseID)")
 			}
 			serviceHeaderTableViewCell.serviceType = serviceType
 			return serviceHeaderTableViewCell
 		default:
-			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
+			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: ServiceFooterTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(ServiceFooterTableViewCell.reuseID)")
 			}
 			serviceFooterTableViewCell.delegate = self
 			serviceFooterTableViewCell.serviceType = serviceType

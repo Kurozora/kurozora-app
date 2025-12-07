@@ -37,8 +37,8 @@ extension MotionOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell.identifier, for: indexPath) as? IconTableViewCell else {
-			fatalError("Couldn't dequeue cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
+			fatalError("Couldn't dequeue cell with identifier \(IconTableViewCell.reuseID)")
 		}
 		let animation = SplashScreenAnimation.allCases[indexPath.row]
 		let currentAnimation = UserSettings.currentSplashScreenAnimation

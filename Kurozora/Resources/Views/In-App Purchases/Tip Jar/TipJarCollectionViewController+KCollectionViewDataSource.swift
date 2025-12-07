@@ -25,7 +25,7 @@ extension TipJarCollectionViewController {
 
 			switch tipJarSection {
 			case .header:
-				let purchaseHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseHeaderCollectionViewCell, for: indexPath)
+				let purchaseHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseHeaderCollectionViewCell.self, for: indexPath)
 				purchaseHeaderCollectionViewCell?.configureCell(using: "Kurozora Tip Jar", secondaryText: """
 					The Kurozora app is built by a small team—me and my little sister! We may be small, but we're mighty, and we pour our hearts into making this app as useful and delightful as possible.
 
@@ -35,7 +35,7 @@ extension TipJarCollectionViewController {
 				""")
 				return purchaseHeaderCollectionViewCell
 			case .products:
-				let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseButtonCollectionViewCell, for: indexPath)
+				let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseButtonCollectionViewCell.self, for: indexPath)
 				purchaseButtonCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .product(let product, _):
@@ -45,7 +45,7 @@ extension TipJarCollectionViewController {
 				}
 				return purchaseButtonCollectionViewCell
 			case .features:
-				let purchaseFeatureCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFeatureCollectionViewCell, for: indexPath)
+				let purchaseFeatureCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseFeatureCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .productFeature(let productFeature, _):
 					purchaseFeatureCollectionViewCell?.configureCell(using: productFeature)
@@ -54,7 +54,7 @@ extension TipJarCollectionViewController {
 				}
 				return purchaseFeatureCollectionViewCell
 			case .footer:
-				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFooterCollectionViewCell, for: indexPath)
+				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseFooterCollectionViewCell.self, for: indexPath)
 				purchaseFooterCollectionViewCell?.delegate = self
 				purchaseFooterCollectionViewCell?.configureCell(using: Trans.subscriptionFooter, termsOfUseButtonText: Trans.termsOfUse, privacyButtonText: Trans.privacyPolicy, restorePurchaseButtonText: Trans.restorePurchase)
 				return purchaseFooterCollectionViewCell

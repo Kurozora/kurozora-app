@@ -74,8 +74,8 @@ extension DebugSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.kDefaultsCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.kDefaultsCell.identifier)")
+		guard let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: KDefaultsCell.self, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(KDefaultsCell.reuseID)")
 		}
 
 		if let key = kDefaultItems[indexPath.row]["key"] as? String, !key.isEmpty {

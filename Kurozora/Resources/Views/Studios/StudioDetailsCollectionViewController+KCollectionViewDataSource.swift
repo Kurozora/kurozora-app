@@ -40,7 +40,7 @@ extension StudioDetailsCollectionViewController {
 
 			switch studioDetailSection {
 			case .header:
-				let studioHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.studioHeaderCollectionViewCell, for: indexPath)
+				let studioHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StudioHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .studio(let studio, _):
 					studioHeaderCollectionViewCell?.configure(using: studio)
@@ -57,7 +57,7 @@ extension StudioDetailsCollectionViewController {
 				}
 				return badgeCollectionViewCell
 			case .about:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 				switch itemKind {

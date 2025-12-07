@@ -48,11 +48,11 @@ extension KKLibrary {
 		var identifierString: String {
 			switch self {
 			case .detailed:
-				return R.reuseIdentifier.libraryDetailedCollectionViewCell.identifier
+				return LibraryDetailedCollectionViewCell.reuseID
 			case .compact:
-				return R.reuseIdentifier.libraryCompactCollectionViewCell.identifier
+				return LibraryCompactCollectionViewCell.reuseID
 			case .list:
-				return R.reuseIdentifier.libraryListCollectionViewCell.identifier
+				return LibraryListCollectionViewCell.reuseID
 			}
 		}
 

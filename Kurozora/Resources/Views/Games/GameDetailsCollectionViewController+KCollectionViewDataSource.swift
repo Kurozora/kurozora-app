@@ -44,7 +44,7 @@ extension GameDetailsCollectionViewController {
 
 			switch gameDetailSection {
 			case .header:
-				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
+				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
 				showDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .game(let game, _):
@@ -54,7 +54,7 @@ extension GameDetailsCollectionViewController {
 				return showDetailHeaderCollectionViewCell
 			case .badge:
 				let gameDetailBadge = GameDetail.Badge(rawValue: indexPath.item) ?? .rating
-				let badgeReuseIdentifier = gameDetailBadge == GameDetail.Badge.rating ? R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier : R.reuseIdentifier.badgeCollectionViewCell.identifier
+				let badgeReuseIdentifier = gameDetailBadge == GameDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
 				case .game(let game, _):

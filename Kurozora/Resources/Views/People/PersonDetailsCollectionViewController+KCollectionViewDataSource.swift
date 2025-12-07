@@ -38,7 +38,7 @@ extension PersonDetailsCollectionViewController {
 
 			switch personDetailSection {
 			case .header:
-				let personHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.personHeaderCollectionViewCell, for: indexPath)
+				let personHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .person(let person, _):
 					personHeaderCollectionViewCell?.person = person
@@ -46,7 +46,7 @@ extension PersonDetailsCollectionViewController {
 				}
 				return personHeaderCollectionViewCell
 			case .about:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 				switch itemKind {

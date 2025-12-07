@@ -70,16 +70,16 @@ extension AppearanceOptionsViewController {
 			}
 			return selectableSettingsCell
 		} else if datePickerIndexPath == indexPath {
-			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.datePickerSettingsCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.datePickerSettingsCell.identifier)")
+			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: DatePickerSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(DatePickerSettingsCell.reuseID)")
 			}
 			datePickerSettingsCell.updateCell(with: inputDates[indexPath.row - 1], for: indexPath)
 			datePickerSettingsCell.delegate = self
 			return datePickerSettingsCell
 		}
 
-		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dateSettingsCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.dateSettingsCell.identifier)")
+		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: DateSettingsCell.self, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(DateSettingsCell.reuseID)")
 		}
 		let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? (datePickerIndexPath?.row ?? 1) - 1 : indexPath.row
 		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPathRow]

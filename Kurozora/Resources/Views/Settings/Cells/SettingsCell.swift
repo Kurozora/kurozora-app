@@ -6,9 +6,9 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Kingfisher
+import KurozoraKit
+import UIKit
 
 class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
@@ -75,15 +75,15 @@ class SettingsCell: KTableViewCell {
 		switch sectionRow?.accessoryValue ?? .none {
 		case .none:
 			self.chevronImageView?.isHidden = true
-			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
 		case .chevron:
-			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
 		case .label:
 			self.chevronImageView?.isHidden = true
 			self.secondaryLabel?.isHidden = false
 		case .labelAndChevron:
-			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
 			self.secondaryLabel?.isHidden = false
 		}

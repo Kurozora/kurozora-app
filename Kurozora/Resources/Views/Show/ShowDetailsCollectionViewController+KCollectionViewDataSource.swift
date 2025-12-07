@@ -46,7 +46,7 @@ extension ShowDetailsCollectionViewController {
 
 			switch showDetailSection {
 			case .header:
-				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
+				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
 				showDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .show(let show, _):

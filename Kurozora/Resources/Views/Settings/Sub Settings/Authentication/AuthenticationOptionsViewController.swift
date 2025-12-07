@@ -20,8 +20,8 @@ extension AuthenticationOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.authenticationOptionsCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.authenticationOptionsCell.identifier)")
+		guard let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: AuthenticationOptionsCell.self, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(AuthenticationOptionsCell.reuseID)")
 		}
 		let authenticationInterval = authenticationIntervals[indexPath.row]
 		let selectedAuthenticationInterval = UserSettings.authenticationInterval

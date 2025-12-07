@@ -26,11 +26,11 @@ extension SubscriptionCollectionViewController {
 
 			switch subscriptionSection {
 			case .header:
-				let purchaseHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseHeaderCollectionViewCell, for: indexPath)
+				let purchaseHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseHeaderCollectionViewCell.self, for: indexPath)
 				purchaseHeaderCollectionViewCell?.configureCell(using: "Elevate your tracking with Kurozora+", secondaryText: "Take your tracking to the next level with Kurozora+. Get access to exclusive features like GIF profile images, premium app icons, customizable themes, and iCal reminders to never miss an episode. Upgrade to Kurozora+ and get the ultimate experience.")
 				return purchaseHeaderCollectionViewCell
 			case .currentSubscription:
-				let purchaseStatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseStatusCollectionViewCell, for: indexPath)
+				let purchaseStatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseStatusCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .product(let product, _):
 					purchaseStatusCollectionViewCell?.configureCell(using: product, status: self.status)
@@ -39,7 +39,7 @@ extension SubscriptionCollectionViewController {
 				}
 				return purchaseStatusCollectionViewCell
 			case .subscriptions:
-				let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseButtonCollectionViewCell, for: indexPath)
+				let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseButtonCollectionViewCell.self, for: indexPath)
 				purchaseButtonCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .product(let product, _):
@@ -49,7 +49,7 @@ extension SubscriptionCollectionViewController {
 				}
 				return purchaseButtonCollectionViewCell
 			case .features:
-				let purchaseFeatureCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFeatureCollectionViewCell, for: indexPath)
+				let purchaseFeatureCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseFeatureCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .productFeature(let productFeature, _):
 					purchaseFeatureCollectionViewCell?.configureCell(using: productFeature)
@@ -58,7 +58,7 @@ extension SubscriptionCollectionViewController {
 				}
 				return purchaseFeatureCollectionViewCell
 			case .footer:
-				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFooterCollectionViewCell, for: indexPath)
+				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseFooterCollectionViewCell.self, for: indexPath)
 				purchaseFooterCollectionViewCell?.delegate = self
 				purchaseFooterCollectionViewCell?.configureCell(using: Trans.subscriptionFooter, termsOfUseButtonText: Trans.termsOfUse, privacyButtonText: Trans.privacyPolicy, restorePurchaseButtonText: Trans.restorePurchase)
 				return purchaseFooterCollectionViewCell

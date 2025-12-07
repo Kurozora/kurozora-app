@@ -103,22 +103,22 @@ extension LibraryImportTableViewController {
 		case .body:
 			switch Row(rawValue: indexPath.row) {
 			case .service:
-				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
+				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: SelectTableViewCell.self, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(SelectTableViewCell.reuseID)")
 				}
 				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? Trans.selectService) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			case .behavior:
-				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.selectTableViewCell.identifier)")
+				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: SelectTableViewCell.self, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(SelectTableViewCell.reuseID)")
 				}
 				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? Trans.selectBehavior) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			default:
-				guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.actionButtonTableViewCell, for: indexPath) else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.actionButtonTableViewCell.identifier)")
+				guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: ActionButtonTableViewCell.self, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(ActionButtonTableViewCell.reuseID)")
 				}
 				actionButtonTableViewCell.delegate = self
 				actionButtonTableViewCell.actionButton.setTitle(Trans.selectFile, for: .normal)

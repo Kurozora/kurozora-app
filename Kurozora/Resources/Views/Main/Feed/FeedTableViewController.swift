@@ -274,9 +274,9 @@ extension FeedTableViewController {
 		let feedMessage = self.feedMessages[indexPath.row]
 
 		if feedMessage.attributes.isReShare {
-			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageReShareCell.self, for: indexPath)
 		} else {
-			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath)
 		}
 
 		feedMessageCell?.delegate = self
