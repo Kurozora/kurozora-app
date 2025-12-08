@@ -128,17 +128,17 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var identifier = R.reuseIdentifier.settingsCell
+		var identifier = SettingsCell.self
 		let settingsRow = self.settingsSection[indexPath.section].rowsValue[indexPath.row]
 
 		switch settingsRow {
 		case .account:
-			identifier = R.reuseIdentifier.accountCell
+			identifier = AccountCell.self
 		default: break
 		}
 
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
-			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
+			fatalError("Cannot dequeue cell with reuse identifier \(identifier.reuseID)")
 		}
 		settingsCell.configureCell(using: settingsRow)
 
