@@ -97,7 +97,7 @@ extension ReviewsListCollectionViewController {
 
 extension ReviewsListCollectionViewController {
 	func getConfiguredGameReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.gameReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: GameReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 			let gameIdentity = review.relationships?.games?.data.first
 			let game = self.fetchGame(at: indexPath)
@@ -120,7 +120,7 @@ extension ReviewsListCollectionViewController {
 	}
 
 	func getConfiguredBaseReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.baseReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: BaseReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 
 			if let showIdentity = review.relationships?.shows?.data.first {
@@ -162,7 +162,7 @@ extension ReviewsListCollectionViewController {
 	}
 
 	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.musicReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review>(cellNib: MusicReviewLockupCollectionViewCell.nib) { [weak self] musicReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 			let songIdentity = review.relationships?.songs?.data.first
 			let song = self.fetchSong(at: indexPath)
@@ -180,12 +180,12 @@ extension ReviewsListCollectionViewController {
 				}
 			}
 
-			baseReviewLockupCollectionViewCell.configure(using: review, for: song)
+			musicReviewLockupCollectionViewCell.configure(using: review, for: song)
 		}
 	}
 
 	func getConfiguredEpisodeReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.episodeReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: EpisodeReviewLockupCollectionViewCell.nib) { [weak self] episodeReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 			let episodeIdentity = review.relationships?.episodes?.data.first
 			let episode = self.fetchEpisode(at: indexPath)
@@ -203,12 +203,12 @@ extension ReviewsListCollectionViewController {
 				}
 			}
 
-			baseReviewLockupCollectionViewCell.configure(using: review, for: episode)
+			episodeReviewLockupCollectionViewCell.configure(using: review, for: episode)
 		}
 	}
 
 	func getConfiguredPersonReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.personReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: PersonReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 
 			if let characterIdentity = review.relationships?.characters?.data.first {
