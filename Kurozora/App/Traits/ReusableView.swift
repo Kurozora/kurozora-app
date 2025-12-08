@@ -8,28 +8,24 @@
 
 import UIKit
 
-/// A protocol that provides a custom reuse identifier for reusable views.
+/// A protocol that provides a reuse identifier for reusable views.
 protocol ReusableView: AnyObject {
 	// MARK: - Properties
 	/// A string that identifies the purpose of the view.
-	///
-	/// The collection view identifies and queues reusable views using their reuse identifiers. The collection view sets this value when it first creates the view, and the value cannot be changed later. When your data source is prompted to provide a given view, it can use the reuse identifier to dequeue a view of the appropriate type.
 	static var reuseID: String { get }
 }
 
-// MARK: - UICollectionViewCell
-extension UICollectionViewCell: ReusableView {
+extension ReusableView {
 	static var reuseID: String {
 		return String(describing: self)
 	}
 }
 
+// MARK: - UICollectionViewCell
+extension UICollectionViewCell: ReusableView {}
+
 // MARK: - UITableViewCell
-extension UITableViewCell: ReusableView {
-	static var reuseID: String {
-		return String(describing: self)
-	}
-}
+extension UITableViewCell: ReusableView {}
 
 // MARK: - UITableView
 extension UITableView {
@@ -43,8 +39,8 @@ extension UITableView {
 	/// - Returns: The `UITableViewCell` object with the associated reuse identifier, or `nil` if the cell could not be dequeued as the correct type.
 	///
 	/// - Important: You must specify a cell with a matching identifier in your storyboard file. You may also register a class or nib file using the `register(_:forCellReuseIdentifier:)` or `register(_:forCellReuseIdentifier:)` method, but must do so before calling this method.
-	func dequeueReusableCell<Identifier: ReusableView>(withIdentifier identifier: Identifier.Type, for indexPath: IndexPath) -> Identifier? where Identifier: UITableViewCell {
-		self.dequeueReusableCell(withIdentifier: identifier.reuseID, for: indexPath) as? Identifier
+	func dequeueReusableCell<T: UITableViewCell>(withIdentifier identifier: T.Type, for indexPath: IndexPath) -> T? where T: ReusableView {
+		self.dequeueReusableCell(withIdentifier: identifier.reuseID, for: indexPath) as? T
 	}
 }
 
@@ -59,7 +55,7 @@ extension UICollectionView {
 	/// - Returns: A valid `UICollectionReusableView` object, or `nil` if the cell could not be dequeued as the correct type.
 	///
 	/// - Important: You must register a class or nib file using the `register(_:forCellWithReuseIdentifier:) `or `register(_:forCellWithReuseIdentifier:)` method before calling this method.
-	func dequeueReusableCell<Identifier: ReusableView>(withReuseIdentifier identifier: Identifier.Type, for indexPath: IndexPath) -> Identifier? where Identifier: UICollectionReusableView {
-		self.dequeueReusableCell(withReuseIdentifier: identifier.reuseID, for: indexPath) as? Identifier
+	func dequeueReusableCell<T: UICollectionReusableView>(withReuseIdentifier identifier: T.Type, for indexPath: IndexPath) -> T? where T: ReusableView {
+		self.dequeueReusableCell(withReuseIdentifier: identifier.reuseID, for: indexPath) as? T
 	}
 }
