@@ -86,9 +86,9 @@ extension AchievementsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = (indexPath.section % 2 == 0) ? R.reuseIdentifier.leftAchievementCell : R.reuseIdentifier.rightAchievementCell
+		let identifier = (indexPath.section % 2 == 0) ? LeftAchievementCell.self : RightAchievementCell.self
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
-			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
+			fatalError("Cannot dequeue cell with reuse identifier \(identifier.reuseID)")
 		}
 		badgeTableViewCell.configureCell(using: self.achievements[indexPath.section])
 		return badgeTableViewCell

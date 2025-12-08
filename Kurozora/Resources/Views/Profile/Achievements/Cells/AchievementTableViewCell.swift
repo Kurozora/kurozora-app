@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 	// MARK: - IBOutlets
@@ -39,6 +39,6 @@ class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 		self.contentView.backgroundColor = UIColor(hexString: achievement.attributes.backgroundColor)
 
 		// Configure symbol image.
-        self.symbolImageView.setImage(with: achievement.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)
+		self.symbolImageView.setImage(with: achievement.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)
 	}
 }
