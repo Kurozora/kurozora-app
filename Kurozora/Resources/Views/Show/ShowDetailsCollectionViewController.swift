@@ -1162,7 +1162,7 @@ extension ShowDetailsCollectionViewController {
 // MARK: - Cell Configuration
 extension ShowDetailsCollectionViewController {
 	func getConfiguredCastCell() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: CastCollectionViewCell.nib) { [weak self] castCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -1183,7 +1183,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredStudioShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -1204,7 +1204,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: SeasonLockupCollectionViewCell.nib) { [weak self] seasonLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -1224,7 +1224,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: StudioLockupCollectionViewCell.nib) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -1244,7 +1244,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { musicLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { musicLockupCollectionViewCell, indexPath, itemKind in
 			switch itemKind {
 			case .showSong(let showSong, _):
 				musicLockupCollectionViewCell.delegate = self
@@ -1255,7 +1255,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredRelatedShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { smallLockupCollectionViewCell, _, itemKind in
 			smallLockupCollectionViewCell.delegate = self
 
 			switch itemKind {
@@ -1269,7 +1269,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { gameLockupCollectionViewCell, _, itemKind in
 			gameLockupCollectionViewCell.delegate = self
 
 			switch itemKind {

@@ -569,7 +569,7 @@ extension ReCapCollectionViewController {
 // MARK: - Cell Registrations
 extension ReCapCollectionViewController {
 	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -601,7 +601,7 @@ extension ReCapCollectionViewController {
 	}
 
 	func getConfiguredHeaderCell() -> UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: ReCapHeaderCollectionViewCell.nib) { reCapHeaderCollectionViewCell, _, itemKind in
 			switch itemKind {
 			case .string(let title, _):
 				reCapHeaderCollectionViewCell.configure(using: title)
@@ -611,7 +611,7 @@ extension ReCapCollectionViewController {
 	}
 
 	func getConfiguredMilestoneCell() -> UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapMilestoneCollectionViewCell)) { reCapMilestoneCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind>(cellNib: ReCapMilestoneCollectionViewCell.nib) { reCapMilestoneCollectionViewCell, _, itemKind in
 			switch itemKind {
 			case .recapItem(let recapItem, let milestoneKind):
 				reCapMilestoneCollectionViewCell.configure(using: recapItem, milestoneKind: milestoneKind)
@@ -621,7 +621,7 @@ extension ReCapCollectionViewController {
 	}
 
 	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -642,7 +642,7 @@ extension ReCapCollectionViewController {
 	}
 
 	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.mediumLockupCollectionViewCell)) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: MediumLockupCollectionViewCell.nib) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

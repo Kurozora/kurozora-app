@@ -308,7 +308,7 @@ extension SearchResultsCollectionViewController {
 
 extension SearchResultsCollectionViewController {
 	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -335,7 +335,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -362,7 +362,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -389,7 +389,7 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -416,7 +416,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -444,7 +444,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -490,7 +490,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item>(cellNib: StudioLockupCollectionViewCell.nib) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -516,7 +516,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -544,7 +544,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -558,7 +558,7 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredBrowseCell() -> UICollectionView.CellRegistration<BrowseCategoryLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<BrowseCategoryLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.browseCategoryLockupCollectionViewCell)) { browseCategoryLockupCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<BrowseCategoryLockupCollectionViewCell, SearchResults.Item>(cellNib: BrowseCategoryLockupCollectionViewCell.nib) { browseCategoryLockupCollectionViewCell, _, itemKind in
 			switch itemKind {
 			case .browseCategory(let browseCategory):
 				browseCategoryLockupCollectionViewCell.configure(using: browseCategory)

@@ -220,7 +220,7 @@ extension SeasonsListCollectionViewController {
 // MARK: - Cell Configuration
 extension SeasonsListCollectionViewController {
 	func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: SeasonLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

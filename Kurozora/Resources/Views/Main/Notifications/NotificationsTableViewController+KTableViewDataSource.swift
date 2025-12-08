@@ -58,19 +58,19 @@ extension NotificationsTableViewController {
 	}
 
 	func getConfiguredBaseNotificationCell() -> UITableView.CellRegistration<BaseNotificationCell, UserNotification> {
-		return UITableView.CellRegistration<BaseNotificationCell, UserNotification>(cellNib: UINib(resource: R.nib.baseNotificationCell)) { baseNotificationCell, _, userNotification in
+		return UITableView.CellRegistration<BaseNotificationCell, UserNotification>(cellNib: BaseNotificationCell.nib) { baseNotificationCell, _, userNotification in
 			baseNotificationCell.configureCell(using: userNotification)
 		}
 	}
 
 	func getConfiguredBasicNotificationCell() -> UITableView.CellRegistration<BasicNotificationCell, UserNotification> {
-		return UITableView.CellRegistration<BasicNotificationCell, UserNotification>(cellNib: UINib(resource: R.nib.basicNotificationCell)) { basicNotificationCell, _, userNotification in
+		return UITableView.CellRegistration<BasicNotificationCell, UserNotification>(cellNib: BasicNotificationCell.nib) { basicNotificationCell, _, userNotification in
 			basicNotificationCell.configureCell(using: userNotification)
 		}
 	}
 
 	func getConfiguredIconNotificationCell() -> UITableView.CellRegistration<IconNotificationCell, UserNotification> {
-		return UITableView.CellRegistration<IconNotificationCell, UserNotification>(cellNib: UINib(resource: R.nib.iconNotificationCell)) { iconNotificationCell, _, userNotification in
+		return UITableView.CellRegistration<IconNotificationCell, UserNotification>(cellNib: IconNotificationCell.nib) { iconNotificationCell, _, userNotification in
 			iconNotificationCell.configureCell(using: userNotification)
 		}
 	}

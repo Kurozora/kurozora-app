@@ -293,7 +293,7 @@ extension CastListCollectionViewController {
 // MARK: - Cell Registrations
 extension CastListCollectionViewController {
 	func getCastCellRegistration() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: CastCollectionViewCell.nib) { [weak self] castCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -313,7 +313,7 @@ extension CastListCollectionViewController {
 	}
 
 	func getCharacterCellRegistration() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollctionViewcell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollctionViewcell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

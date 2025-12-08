@@ -339,7 +339,7 @@ extension UsersListCollectionViewController {
 // MARK: - Cell Configuration
 extension UsersListCollectionViewController {
 	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

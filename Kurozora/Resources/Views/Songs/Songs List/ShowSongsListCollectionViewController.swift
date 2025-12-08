@@ -250,7 +250,7 @@ extension ShowSongsListCollectionViewController {
 // MARK: - Cell Configuration
 extension ShowSongsListCollectionViewController {
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			musicLockupCollectionViewCell.delegate = self
 

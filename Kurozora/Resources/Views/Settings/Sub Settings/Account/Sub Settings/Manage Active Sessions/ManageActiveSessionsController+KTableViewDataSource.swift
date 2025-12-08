@@ -66,7 +66,7 @@ extension ManageActiveSessionsController {
 	}
 
 	func getConfiguredCurrentSessionCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
-		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: UINib(resource: R.nib.sessionLockupCell)) { currentSessionCell, _, itemKind in
+		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { currentSessionCell, _, itemKind in
 			switch itemKind {
 			case .accessToken(let accessToken):
 				currentSessionCell.configureCell(using: accessToken)
@@ -76,7 +76,7 @@ extension ManageActiveSessionsController {
 	}
 
 	func getConfiguredSessionLockupCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
-		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: UINib(resource: R.nib.sessionLockupCell)) { [weak self] sessionLockupCell, indexPath, itemKind in
+		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { [weak self] sessionLockupCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

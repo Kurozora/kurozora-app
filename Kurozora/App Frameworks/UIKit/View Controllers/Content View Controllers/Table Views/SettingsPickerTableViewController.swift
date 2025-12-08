@@ -119,7 +119,7 @@ extension SettingsPickerTableViewController {
 	}
 
 	func getConfiguredSelectableSettingsCell() -> UITableView.CellRegistration<SelectableSettingsCell, ItemKind> {
-		return UITableView.CellRegistration<SelectableSettingsCell, ItemKind>(cellNib: UINib(resource: R.nib.selectableSettingsCell)) { [weak self] selectableSettingsCell, _, itemKind in
+		return UITableView.CellRegistration<SelectableSettingsCell, ItemKind>(cellNib: SelectableSettingsCell.nib) { [weak self] selectableSettingsCell, _, itemKind in
 			guard let self else { return }
 			selectableSettingsCell.primaryLabel?.text = itemKind.value
 			selectableSettingsCell.setSelected(itemKind.key == self.selectedKey)
