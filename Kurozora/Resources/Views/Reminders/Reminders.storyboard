@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v3b-ya-WR1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v3b-ya-WR1">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,9 +55,9 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="My Reminders" id="RL5-3m-KWS"/>
                     <connections>
-                        <segue destination="WFm-W5-wwN" kind="show" identifier="ShowDetailsSegue" id="YvC-GF-DHL"/>
-                        <segue destination="Izm-6X-3Dc" kind="show" identifier="LiteratureDetailsSegue" id="uKQ-Zi-V1O"/>
-                        <segue destination="vQY-iZ-3bF" kind="show" identifier="GameDetailsSegue" id="Wcy-8E-8HM"/>
+                        <segue destination="WFm-W5-wwN" kind="show" identifier="showDetailsSegue" id="YvC-GF-DHL"/>
+                        <segue destination="Izm-6X-3Dc" kind="show" identifier="literatureDetailsSegue" id="uKQ-Zi-V1O"/>
+                        <segue destination="vQY-iZ-3bF" kind="show" identifier="gameDetailsSegue" id="Wcy-8E-8HM"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rVz-7h-Vho" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

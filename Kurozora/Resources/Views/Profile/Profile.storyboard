@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6QS-Km-l5h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6QS-Km-l5h">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -60,7 +59,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="68w-K2-Fam"/>
                     <connections>
-                        <segue destination="zlF-Vo-yv3" kind="show" identifier="UserDetailsSegue" id="Umh-jV-v1e"/>
+                        <segue destination="zlF-Vo-yv3" kind="show" identifier="userDetailsSegue" id="Umh-jV-v1e"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eFB-Vz-QNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -181,7 +180,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <segue destination="uJX-nF-kEQ" kind="presentation" identifier="EditProfileSegue" id="VlD-zy-wWj"/>
+                                                <segue destination="uJX-nF-kEQ" kind="presentation" identifier="editProfileSegue" id="VlD-zy-wWj"/>
                                             </connections>
                                         </button>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -255,7 +254,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="AchievementsSegue" id="qIF-9v-juK">
+                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="achievementsSegue" id="qIF-9v-juK">
                                                             <segue key="commit" inheritsFrom="parent" id="mfz-u7-T02"/>
                                                             <segue key="preview" inheritsFrom="commit" id="Ban-ki-CNE"/>
                                                         </segue>
@@ -285,7 +284,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="FollowingSegue" id="0X0-XB-akm">
+                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="followingSegue" id="0X0-XB-akm">
                                                             <segue key="commit" inheritsFrom="parent" id="6vK-T2-he1"/>
                                                             <segue key="preview" inheritsFrom="commit" id="Ogs-LM-dvT"/>
                                                         </segue>
@@ -319,7 +318,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="FollowersSegue" id="Tep-0Z-l4o">
+                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="followersSegue" id="Tep-0Z-l4o">
                                                             <segue key="commit" inheritsFrom="parent" id="iR8-zv-nqG"/>
                                                             <segue key="preview" inheritsFrom="commit" id="cAC-je-wqd"/>
                                                         </segue>
@@ -353,7 +352,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="r3o-1j-zLU" kind="show" identifier="ReviewsSegue" id="bKV-NR-VeY">
+                                                        <segue destination="r3o-1j-zLU" kind="show" identifier="reviewsSegue" id="bKV-NR-VeY">
                                                             <segue key="commit" inheritsFrom="parent" id="ww5-qz-lQA"/>
                                                             <segue key="preview" inheritsFrom="commit" id="HnS-qO-1KM"/>
                                                         </segue>
@@ -439,8 +438,8 @@
                         <outlet property="reviewsButton" destination="Ldj-y1-nlK" id="MUc-mx-6u2"/>
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="usernameLabel" destination="Q1N-a3-7LT" id="7mj-ic-6jh"/>
-                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoritesSegue" id="q0e-Li-wfz"/>
-                        <segue destination="t9u-UF-w8N" kind="show" identifier="FeedMessageDetailsSegue" id="xgQ-g1-FoH"/>
+                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="favoritesSegue" id="q0e-Li-wfz"/>
+                        <segue destination="t9u-UF-w8N" kind="show" identifier="feedMessageDetailsSegue" id="xgQ-g1-FoH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFh-8K-gm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -530,7 +529,7 @@
                         <viewControllerLayoutGuide type="bottom" id="byD-So-ZUt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="8dF-n5-5pJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="762"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFp-dv-JTs">

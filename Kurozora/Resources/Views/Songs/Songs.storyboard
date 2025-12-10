@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jmn-EW-tfJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jmn-EW-tfJ">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,8 +57,8 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Songs" id="93t-Yy-CvQ"/>
                     <connections>
-                        <segue destination="cdP-i1-iOe" kind="show" identifier="ShowDetailsSegue" id="q95-hq-O9u"/>
-                        <segue destination="IsD-SY-DpV" kind="show" identifier="SongDetailsSegue" id="hlo-G6-ZzW"/>
+                        <segue destination="cdP-i1-iOe" kind="show" identifier="showDetailsSegue" id="q95-hq-O9u"/>
+                        <segue destination="IsD-SY-DpV" kind="show" identifier="songDetailsSegue" id="hlo-G6-ZzW"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYz-WA-mZY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -185,9 +184,9 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="moreButton" destination="xLx-bR-OAz" id="hSw-I6-bL0"/>
-                        <segue destination="rma-UE-TIB" kind="show" identifier="ShowDetailsSegue" id="OpG-Vz-QyO"/>
-                        <segue destination="1jI-ql-yXY" kind="show" identifier="ShowsListSegue" id="wzp-Xi-IjB"/>
-                        <segue destination="Dz2-OR-ppf" kind="show" identifier="ReviewsSegue" id="DiG-Ue-n9l"/>
+                        <segue destination="rma-UE-TIB" kind="show" identifier="showDetailsSegue" id="OpG-Vz-QyO"/>
+                        <segue destination="1jI-ql-yXY" kind="show" identifier="showsListSegue" id="wzp-Xi-IjB"/>
+                        <segue destination="Dz2-OR-ppf" kind="show" identifier="reviewsSegue" id="DiG-Ue-n9l"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zv1-tS-rP8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

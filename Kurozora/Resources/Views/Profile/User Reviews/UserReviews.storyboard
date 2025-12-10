@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="05Z-f7-Kig">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="05Z-f7-Kig">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,14 +55,14 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Ratings &amp; Reviews" id="fZE-AO-lXd"/>
                     <connections>
-                        <segue destination="DgN-46-CLL" kind="show" identifier="ShowDetailsSegue" id="HHH-bC-d1f"/>
-                        <segue destination="Td7-Ga-Gc7" kind="show" identifier="LiteratureDetailsSegue" id="uHC-e7-cK2"/>
-                        <segue destination="ho1-tZ-hU9" kind="show" identifier="GameDetailsSegue" id="rLn-hY-hDq"/>
-                        <segue destination="APv-5F-jgW" kind="show" identifier="StudioDetailsSegue" id="NTG-FN-lnj"/>
-                        <segue destination="gIb-NS-WMb" kind="show" identifier="SongDetailsSegue" id="S7z-Np-J82"/>
-                        <segue destination="G9J-sb-DaP" kind="show" identifier="PersonDetailsSegue" id="kGf-xO-vtW"/>
-                        <segue destination="sdR-ES-8Gv" kind="show" identifier="CharacterDetailsSegue" id="JUe-tS-8p3"/>
-                        <segue destination="WOJ-AO-xmr" kind="show" identifier="EpisodeDetailsSegue" id="fku-Ei-CZi"/>
+                        <segue destination="DgN-46-CLL" kind="show" identifier="showDetailsSegue" id="HHH-bC-d1f"/>
+                        <segue destination="Td7-Ga-Gc7" kind="show" identifier="literatureDetailsSegue" id="uHC-e7-cK2"/>
+                        <segue destination="ho1-tZ-hU9" kind="show" identifier="gameDetailsSegue" id="rLn-hY-hDq"/>
+                        <segue destination="APv-5F-jgW" kind="show" identifier="studioDetailsSegue" id="NTG-FN-lnj"/>
+                        <segue destination="gIb-NS-WMb" kind="show" identifier="songDetailsSegue" id="S7z-Np-J82"/>
+                        <segue destination="G9J-sb-DaP" kind="show" identifier="personDetailsSegue" id="kGf-xO-vtW"/>
+                        <segue destination="sdR-ES-8Gv" kind="show" identifier="characterDetailsSegue" id="JUe-tS-8p3"/>
+                        <segue destination="WOJ-AO-xmr" kind="show" identifier="episodeDetailsSegue" id="fku-Ei-CZi"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mP7-bu-GHk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

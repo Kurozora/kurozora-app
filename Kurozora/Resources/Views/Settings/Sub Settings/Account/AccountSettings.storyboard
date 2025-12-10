@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Z3H-uJ-7qJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Z3H-uJ-7qJ">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -451,7 +450,7 @@
                                             <outlet property="primaryLabel" destination="DM1-7u-B1i" id="kWk-RM-enm"/>
                                             <outlet property="secondaryLabel" destination="MaH-GN-l5c" id="ctb-dk-5kt"/>
                                             <outlet property="selectedView" destination="ViS-6i-h9d" id="cNi-Ly-lrw"/>
-                                            <segue destination="DIR-xz-9GA" kind="show" identifier="ImportLibrarySegue" id="gps-Hr-430"/>
+                                            <segue destination="DIR-xz-9GA" kind="show" identifier="importLibrarySegue" id="gps-Hr-430"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="5w3-Dw-rpa" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -537,7 +536,7 @@
                                             <outlet property="primaryLabel" destination="yYu-Ua-h2Y" id="QDu-j9-OqK"/>
                                             <outlet property="secondaryLabel" destination="XLF-Ry-3Ft" id="O9N-Ao-DJZ"/>
                                             <outlet property="selectedView" destination="SZi-N4-cL0" id="dse-fF-sNX"/>
-                                            <segue destination="nbe-8X-tly" kind="show" identifier="DeleteLibrarySegue" id="zYA-oN-GRK"/>
+                                            <segue destination="nbe-8X-tly" kind="show" identifier="deleteLibrarySegue" id="zYA-oN-GRK"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -627,7 +626,7 @@
                                             <outlet property="primaryLabel" destination="cAf-xt-ycl" id="Vnc-U1-cbb"/>
                                             <outlet property="secondaryLabel" destination="f9U-jC-Hg6" id="qdD-30-fZp"/>
                                             <outlet property="selectedView" destination="90q-8i-GR2" id="S15-WZ-n0S"/>
-                                            <segue destination="zNe-eX-9qe" kind="show" identifier="SignInWithAppleSegue" id="1RW-2I-M5z"/>
+                                            <segue destination="zNe-eX-9qe" kind="show" identifier="signInWithAppleSegue" id="1RW-2I-M5z"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -717,7 +716,7 @@
                                             <outlet property="primaryLabel" destination="com-5g-Jx0" id="7PV-eC-Zjr"/>
                                             <outlet property="secondaryLabel" destination="HJs-Xw-Ha4" id="Oc3-AV-Lh3"/>
                                             <outlet property="selectedView" destination="Tyx-kM-u6l" id="fAB-E3-Y46"/>
-                                            <segue destination="xKL-la-epl" kind="show" identifier="ActiveSessionsSegue" id="RXp-CZ-g41"/>
+                                            <segue destination="xKL-la-epl" kind="show" identifier="activeSessionsSegue" id="RXp-CZ-g41"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

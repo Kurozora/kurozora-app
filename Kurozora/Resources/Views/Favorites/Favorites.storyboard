@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nyj-nI-6L8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nyj-nI-6L8">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -96,9 +95,9 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Favorites" id="NFd-7S-oCL"/>
                     <connections>
-                        <segue destination="l9G-KJ-lhF" kind="show" identifier="ShowDetailsSegue" id="jq7-tr-0gm"/>
-                        <segue destination="Eoi-uv-foo" kind="show" identifier="LiteratureDetailsSegue" id="yQ3-a8-bij"/>
-                        <segue destination="iz2-d0-Vjl" kind="show" identifier="GameDetailsSegue" id="Uep-Qm-BQC"/>
+                        <segue destination="l9G-KJ-lhF" kind="show" identifier="showDetailsSegue" id="jq7-tr-0gm"/>
+                        <segue destination="Eoi-uv-foo" kind="show" identifier="literatureDetailsSegue" id="yQ3-a8-bij"/>
+                        <segue destination="iz2-d0-Vjl" kind="show" identifier="gameDetailsSegue" id="Uep-Qm-BQC"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UB3-8V-Y1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IEG-wS-yoe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IEG-wS-yoe">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -325,9 +324,9 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="hdC-Io-Wsy"/>
                     <connections>
-                        <segue destination="3xf-dq-TdG" kind="show" identifier="ShowDetailsSegue" id="acw-1g-1eB"/>
-                        <segue destination="9jn-OH-mnf" kind="show" identifier="LiteratureDetailsSegue" id="eCq-e0-lMj"/>
-                        <segue destination="IC9-zz-BIp" kind="show" identifier="GameDetailsSegue" id="gjk-fh-csi"/>
+                        <segue destination="3xf-dq-TdG" kind="show" identifier="showDetailsSegue" id="acw-1g-1eB"/>
+                        <segue destination="9jn-OH-mnf" kind="show" identifier="literatureDetailsSegue" id="eCq-e0-lMj"/>
+                        <segue destination="IC9-zz-BIp" kind="show" identifier="gameDetailsSegue" id="gjk-fh-csi"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORQ-vq-p8c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

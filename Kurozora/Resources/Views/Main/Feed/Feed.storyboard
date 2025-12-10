@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pBA-A4-wlh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pBA-A4-wlh">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,6 +13,7 @@
                 <navigationController storyboardIdentifier="FeedTableKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pBA-A4-wlh" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="B9w-xU-J2f">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="zMm-N9-nif"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -51,7 +51,7 @@
                     <navigationItem key="navigationItem" title="Feed" id="4JV-Bj-kpv">
                         <barButtonItem key="leftBarButtonItem" title="Settings" image="gear" catalog="system" id="brK-B2-mL4">
                             <connections>
-                                <segue destination="HFC-YJ-V83" kind="presentation" identifier="SettingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
+                                <segue destination="HFC-YJ-V83" kind="presentation" identifier="settingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -84,7 +84,7 @@
                     <connections>
                         <outlet property="postMessageButton" destination="lOF-RI-y49" id="LT3-SE-AuC"/>
                         <outlet property="profileImageButton" destination="egw-49-b9p" id="LjA-U7-79o"/>
-                        <segue destination="BEx-lZ-1Jp" kind="show" identifier="FeedMessageDetailsSegue" id="Z22-Fn-UgF"/>
+                        <segue destination="BEx-lZ-1Jp" kind="show" identifier="feedMessageDetailsSegue" id="Z22-Fn-UgF"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="csp-1V-Ymv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -113,7 +113,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="y3o-gW-Pcu"/>
                     <connections>
-                        <segue destination="TwR-M5-22y" kind="show" identifier="FeedMessageDetailsSegue" id="SwS-4o-U1T"/>
+                        <segue destination="TwR-M5-22y" kind="show" identifier="feedMessageDetailsSegue" id="SwS-4o-U1T"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48u-Ct-3eU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

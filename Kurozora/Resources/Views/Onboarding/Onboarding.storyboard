@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QZt-83-1Jg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QZt-83-1Jg">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -64,7 +63,7 @@
                                                         <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="qIf-Aa-QPo" kind="show" identifier="ResetPasswordSegue" id="7TR-x7-dhG"/>
+                                                        <segue destination="qIf-Aa-QPo" kind="show" identifier="resetPasswordSegue" id="7TR-x7-dhG"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="━━━━━━ or ━━━━━━" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
@@ -242,6 +241,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="24" id="Bgp-cK-ssj"/>
                                         <constraint firstAttribute="width" secondItem="VK7-fD-If4" secondAttribute="height" multiplier="1:1" id="V99-8l-dwu"/>
+                                        <constraint firstAttribute="width" secondItem="VK7-fD-If4" secondAttribute="height" multiplier="1:1" id="nny-vo-yd0"/>
                                     </constraints>
                                     <color key="tintColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
@@ -260,7 +260,6 @@
                                 <constraint firstItem="xr5-LJ-ipy" firstAttribute="top" secondItem="SeV-OI-6EK" secondAttribute="top" constant="20" id="j5I-nO-76I"/>
                                 <constraint firstItem="VK7-fD-If4" firstAttribute="trailing" secondItem="bmz-p1-Cg7" secondAttribute="trailing" id="mSX-Qd-8ZP"/>
                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xr5-LJ-ipy" secondAttribute="trailing" id="nZx-Px-Bmn"/>
-                                <constraint firstItem="VK7-fD-If4" firstAttribute="width" secondItem="VK7-fD-If4" secondAttribute="height" multiplier="1:1" id="nny-vo-yd0"/>
                                 <constraint firstItem="bmz-p1-Cg7" firstAttribute="top" secondItem="UJ9-WL-FIr" secondAttribute="bottom" constant="30" id="rMR-UX-kuh"/>
                                 <constraint firstItem="UJ9-WL-FIr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="u76-oM-Vdl"/>
                                 <constraint firstItem="bmz-p1-Cg7" firstAttribute="centerX" secondItem="UJ9-WL-FIr" secondAttribute="centerX" id="usv-De-O0O"/>

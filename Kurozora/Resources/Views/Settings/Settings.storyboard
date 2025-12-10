@@ -232,21 +232,21 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="ajC-l5-hFm" kind="showDetail" identifier="KeysSegue" id="aMZ-Va-QD6"/>
-                        <segue destination="vBk-eI-Fsp" kind="showDetail" identifier="NotificationSegue" id="iJu-bZ-4lW"/>
-                        <segue destination="urf-Ka-1Pe" kind="showDetail" identifier="DisplaySegue" id="JqT-i1-ECV"/>
-                        <segue destination="4UV-W6-1yL" kind="showDetail" identifier="IconSegue" id="VrC-nK-bwx"/>
-                        <segue destination="GAQ-MX-p4x" kind="showDetail" identifier="PrivacySegue" id="DS0-nx-xBb"/>
-                        <segue destination="Qbb-Nv-rmu" kind="showDetail" identifier="ThemeSegue" id="QUV-Rc-9a7"/>
-                        <segue destination="9mD-qe-ThA" kind="showDetail" identifier="SubscriptionSegue" id="tmQ-Ga-tgo"/>
-                        <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="BiometricsSegue" id="6OH-ww-Ncv"/>
-                        <segue destination="41N-ao-yZL" kind="showDetail" identifier="AccountSegue" id="ivv-DR-gda"/>
-                        <segue destination="v7i-U9-USe" kind="showDetail" identifier="TipJarSegue" id="TGi-W3-7pk"/>
-                        <segue destination="B3o-ew-EQQ" kind="showDetail" identifier="BrowserSegue" id="EJd-Ik-boK"/>
-                        <segue destination="rXI-hr-RBS" kind="showDetail" identifier="SwitchAccountSegue" id="RsV-c8-7Ym"/>
-                        <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="SoundSegue" id="gvC-fL-6dY"/>
-                        <segue destination="Rix-Ql-Mkr" kind="showDetail" identifier="MotionSegue" id="Bmi-Hv-ehH"/>
-                        <segue destination="KzC-8n-L4v" kind="showDetail" identifier="LibrarySegue" id="0t0-0U-RbR"/>
+                        <segue destination="ajC-l5-hFm" kind="showDetail" identifier="keysSegue" id="aMZ-Va-QD6"/>
+                        <segue destination="vBk-eI-Fsp" kind="showDetail" identifier="notificationSegue" id="iJu-bZ-4lW"/>
+                        <segue destination="urf-Ka-1Pe" kind="showDetail" identifier="displaySegue" id="JqT-i1-ECV"/>
+                        <segue destination="4UV-W6-1yL" kind="showDetail" identifier="iconSegue" id="VrC-nK-bwx"/>
+                        <segue destination="GAQ-MX-p4x" kind="showDetail" identifier="privacySegue" id="DS0-nx-xBb"/>
+                        <segue destination="Qbb-Nv-rmu" kind="showDetail" identifier="themeSegue" id="QUV-Rc-9a7"/>
+                        <segue destination="9mD-qe-ThA" kind="showDetail" identifier="subscriptionSegue" id="tmQ-Ga-tgo"/>
+                        <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="biometricsSegue" id="6OH-ww-Ncv"/>
+                        <segue destination="41N-ao-yZL" kind="showDetail" identifier="accountSegue" id="ivv-DR-gda"/>
+                        <segue destination="v7i-U9-USe" kind="showDetail" identifier="tipJarSegue" id="TGi-W3-7pk"/>
+                        <segue destination="B3o-ew-EQQ" kind="showDetail" identifier="browserSegue" id="EJd-Ik-boK"/>
+                        <segue destination="rXI-hr-RBS" kind="showDetail" identifier="switchAccountSegue" id="RsV-c8-7Ym"/>
+                        <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="soundSegue" id="gvC-fL-6dY"/>
+                        <segue destination="Rix-Ql-Mkr" kind="showDetail" identifier="motionSegue" id="Bmi-Hv-ehH"/>
+                        <segue destination="KzC-8n-L4v" kind="showDetail" identifier="librarySegue" id="0t0-0U-RbR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>

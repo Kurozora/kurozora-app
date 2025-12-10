@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K6o-fJ-TEG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K6o-fJ-TEG">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,7 +14,7 @@
                 <navigationController storyboardIdentifier="CharactersKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K6o-fJ-TEG" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="zcg-O5-Xps">
-                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="VUU-Kt-5R5"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,7 +57,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Characters" id="93t-Yy-CvQ"/>
                     <connections>
-                        <segue destination="cQO-0N-MAy" kind="show" identifier="CharacterDetailsSegue" id="lSl-ls-OQv"/>
+                        <segue destination="cQO-0N-MAy" kind="show" identifier="characterDetailsSegue" id="lSl-ls-OQv"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYz-WA-mZY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -127,15 +126,15 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Character" id="An6-QF-wCU"/>
                     <connections>
-                        <segue destination="cdP-i1-iOe" kind="show" identifier="ShowDetailsSegue" id="yfp-Pm-pGP"/>
-                        <segue destination="KC6-Qs-BNG" kind="show" identifier="ShowsListSegue" id="TEk-dB-pBC"/>
-                        <segue destination="8It-Wp-9UB" kind="show" identifier="PeopleListSegue" id="dF8-nT-d2W"/>
-                        <segue destination="0Jq-Bj-HEL" kind="show" identifier="PersonDetailsSegue" id="xuT-bX-nvW"/>
-                        <segue destination="ccY-eX-KEU" kind="show" identifier="LiteratureDetailsSegue" id="pBz-YL-tCN"/>
-                        <segue destination="91Q-UJ-nlL" kind="show" identifier="LiteraturesListSegue" id="w5q-Yp-DTI"/>
-                        <segue destination="CNA-Ei-iHf" kind="show" identifier="GameDetailsSegue" id="IqU-Yk-Ayd"/>
-                        <segue destination="7af-b0-Bz3" kind="show" identifier="GamesListSegue" id="Lbh-qj-zML"/>
-                        <segue destination="MXb-2E-wWr" kind="show" identifier="ReviewsSegue" id="8Am-Lp-7he"/>
+                        <segue destination="cdP-i1-iOe" kind="show" identifier="showDetailsSegue" id="yfp-Pm-pGP"/>
+                        <segue destination="KC6-Qs-BNG" kind="show" identifier="showsListSegue" id="TEk-dB-pBC"/>
+                        <segue destination="8It-Wp-9UB" kind="show" identifier="peopleListSegue" id="dF8-nT-d2W"/>
+                        <segue destination="0Jq-Bj-HEL" kind="show" identifier="personDetailsSegue" id="xuT-bX-nvW"/>
+                        <segue destination="ccY-eX-KEU" kind="show" identifier="literatureDetailsSegue" id="pBz-YL-tCN"/>
+                        <segue destination="91Q-UJ-nlL" kind="show" identifier="literaturesListSegue" id="w5q-Yp-DTI"/>
+                        <segue destination="CNA-Ei-iHf" kind="show" identifier="gameDetailsSegue" id="IqU-Yk-Ayd"/>
+                        <segue destination="7af-b0-Bz3" kind="show" identifier="gamesListSegue" id="Lbh-qj-zML"/>
+                        <segue destination="MXb-2E-wWr" kind="show" identifier="reviewsSegue" id="8Am-Lp-7he"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZB-Hc-Zu0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

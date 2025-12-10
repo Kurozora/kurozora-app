@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zg8-8i-dXW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zg8-8i-dXW">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -173,7 +172,7 @@
                                             <outlet property="primaryLabel" destination="0UW-QR-FTb" id="haP-dM-nFh"/>
                                             <outlet property="secondaryLabel" destination="ixE-zS-toS" id="Xqw-si-Cgy"/>
                                             <outlet property="selectedView" destination="Xnn-up-RZi" id="qej-mH-dBq"/>
-                                            <segue destination="6zO-7o-cem" kind="presentation" identifier="LegalSegue" id="v5S-pA-OUH"/>
+                                            <segue destination="6zO-7o-cem" kind="presentation" identifier="legalSegue" id="v5S-pA-OUH"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

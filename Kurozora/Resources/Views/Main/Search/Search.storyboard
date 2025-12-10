@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IRA-yM-K2l">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IRA-yM-K2l">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,26 +55,26 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Search" id="Kpv-Pe-ep6"/>
                     <connections>
-                        <segue destination="uMA-Uj-cNY" kind="show" identifier="ShowDetailsSegue" id="lUW-RX-SXL"/>
-                        <segue destination="lXe-6H-qNU" kind="show" identifier="UserDetailsSegue" id="70s-BL-LEo"/>
-                        <segue destination="4bL-pK-p4r" kind="show" identifier="CharacterDetailsSegue" id="0Zn-pT-iu8"/>
-                        <segue destination="wO9-2k-ZU5" kind="show" identifier="PersonDetailsSegue" id="MeE-3o-57j"/>
-                        <segue destination="xje-gI-aW9" kind="show" identifier="StudioDetailsSegue" id="MwY-lY-0R6"/>
-                        <segue destination="CJO-zh-L0x" kind="show" identifier="SongsListSegue" id="3XF-oX-Jgv"/>
-                        <segue destination="qYs-4G-DEE" kind="show" identifier="ShowsListSegue" id="MHw-JA-XkQ"/>
-                        <segue destination="hN8-12-HuW" kind="show" identifier="PeopleListSegue" id="cUx-0V-lWL"/>
-                        <segue destination="Xmj-mX-MtD" kind="show" identifier="CharactersListSegue" id="3eo-3M-if8"/>
-                        <segue destination="JNO-Hl-lYH" kind="show" identifier="StudiosListSegue" id="gMX-SU-VU4"/>
-                        <segue destination="FJD-ss-Chi" kind="show" identifier="UsersListSegue" id="gbe-zW-w3O"/>
-                        <segue destination="ppa-E9-yS2" kind="show" identifier="EpisodesListSegue" id="flg-He-OxF"/>
-                        <segue destination="6up-ll-8ww" kind="show" identifier="EpisodeDetailsSegue" id="lbA-26-H2f"/>
-                        <segue destination="Hwn-f8-kD2" kind="show" identifier="SongDetailsSegue" id="LPB-L9-ffH"/>
-                        <segue destination="iWE-Te-U0Y" kind="show" identifier="LiteraturesListSegue" id="eb1-5K-4eV"/>
-                        <segue destination="72A-m4-h2J" kind="show" identifier="LiteratureDetailsSegue" id="6Tu-q8-8JC"/>
-                        <segue destination="Iuf-To-QEl" kind="show" identifier="GameDetailsSegue" id="BdW-OU-toQ"/>
-                        <segue destination="c9g-hy-12f" kind="show" identifier="GamesListSegue" id="s0d-WA-ukU"/>
-                        <segue destination="m8V-ho-2Px" kind="show" identifier="SearchSegue" id="Qew-sZ-bkn"/>
-                        <segue destination="MNv-Ms-u2V" kind="show" identifier="ScheduleSegue" id="LZL-UI-PPb"/>
+                        <segue destination="uMA-Uj-cNY" kind="show" identifier="showDetailsSegue" id="lUW-RX-SXL"/>
+                        <segue destination="lXe-6H-qNU" kind="show" identifier="userDetailsSegue" id="70s-BL-LEo"/>
+                        <segue destination="4bL-pK-p4r" kind="show" identifier="characterDetailsSegue" id="0Zn-pT-iu8"/>
+                        <segue destination="wO9-2k-ZU5" kind="show" identifier="personDetailsSegue" id="MeE-3o-57j"/>
+                        <segue destination="xje-gI-aW9" kind="show" identifier="studioDetailsSegue" id="MwY-lY-0R6"/>
+                        <segue destination="CJO-zh-L0x" kind="show" identifier="songsListSegue" id="3XF-oX-Jgv"/>
+                        <segue destination="qYs-4G-DEE" kind="show" identifier="showsListSegue" id="MHw-JA-XkQ"/>
+                        <segue destination="hN8-12-HuW" kind="show" identifier="peopleListSegue" id="cUx-0V-lWL"/>
+                        <segue destination="Xmj-mX-MtD" kind="show" identifier="charactersListSegue" id="3eo-3M-if8"/>
+                        <segue destination="JNO-Hl-lYH" kind="show" identifier="studiosListSegue" id="gMX-SU-VU4"/>
+                        <segue destination="FJD-ss-Chi" kind="show" identifier="usersListSegue" id="gbe-zW-w3O"/>
+                        <segue destination="ppa-E9-yS2" kind="show" identifier="episodesListSegue" id="flg-He-OxF"/>
+                        <segue destination="6up-ll-8ww" kind="show" identifier="episodeDetailsSegue" id="lbA-26-H2f"/>
+                        <segue destination="Hwn-f8-kD2" kind="show" identifier="songDetailsSegue" id="LPB-L9-ffH"/>
+                        <segue destination="iWE-Te-U0Y" kind="show" identifier="literaturesListSegue" id="eb1-5K-4eV"/>
+                        <segue destination="72A-m4-h2J" kind="show" identifier="literatureDetailsSegue" id="6Tu-q8-8JC"/>
+                        <segue destination="Iuf-To-QEl" kind="show" identifier="gameDetailsSegue" id="BdW-OU-toQ"/>
+                        <segue destination="c9g-hy-12f" kind="show" identifier="gamesListSegue" id="s0d-WA-ukU"/>
+                        <segue destination="m8V-ho-2Px" kind="show" identifier="searchSegue" id="Qew-sZ-bkn"/>
+                        <segue destination="MNv-Ms-u2V" kind="show" identifier="scheduleSegue" id="LZL-UI-PPb"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIZ-Ff-stf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

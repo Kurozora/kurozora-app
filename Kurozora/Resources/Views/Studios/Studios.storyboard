@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Ev-ue-Zv7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Ev-ue-Zv7">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,7 +57,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="tmy-jZ-yUy"/>
                     <connections>
-                        <segue destination="LEY-8f-r49" kind="show" identifier="StudioDetailsSegue" id="Ii4-cE-Vsp"/>
+                        <segue destination="LEY-8f-r49" kind="show" identifier="studioDetailsSegue" id="Ii4-cE-Vsp"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBA-t3-D6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -137,14 +136,14 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Studio" id="WyH-2I-v0S"/>
                     <connections>
-                        <segue destination="pb1-tA-Wcg" kind="show" identifier="ShowDetailsSegue" id="w9j-21-D7A"/>
-                        <segue destination="AI9-TJ-gCE" kind="show" identifier="ShowsListSegue" id="r0N-jA-TMz"/>
-                        <segue destination="udT-nM-efB" kind="show" identifier="LiteratureDetailsSegue" id="frW-I1-Ggn"/>
-                        <segue destination="S9X-4W-5rO" kind="show" identifier="LiteraturesListSegue" id="MSO-W8-Uhc"/>
-                        <segue destination="reT-hx-mhI" kind="show" identifier="GameDetailsSegue" id="npx-7s-rjg"/>
-                        <segue destination="su2-MR-PaQ" kind="show" identifier="GamesListSegue" id="8SJ-Dm-GNo"/>
-                        <segue destination="qxZ-84-4yw" kind="show" identifier="StudioDetailsSegue" id="NAu-2Y-2KP"/>
-                        <segue destination="LJJ-YW-flI" kind="show" identifier="ReviewsSegue" id="lup-fQ-sfK"/>
+                        <segue destination="pb1-tA-Wcg" kind="show" identifier="showDetailsSegue" id="w9j-21-D7A"/>
+                        <segue destination="AI9-TJ-gCE" kind="show" identifier="showsListSegue" id="r0N-jA-TMz"/>
+                        <segue destination="udT-nM-efB" kind="show" identifier="literatureDetailsSegue" id="frW-I1-Ggn"/>
+                        <segue destination="S9X-4W-5rO" kind="show" identifier="literaturesListSegue" id="MSO-W8-Uhc"/>
+                        <segue destination="reT-hx-mhI" kind="show" identifier="gameDetailsSegue" id="npx-7s-rjg"/>
+                        <segue destination="su2-MR-PaQ" kind="show" identifier="gamesListSegue" id="8SJ-Dm-GNo"/>
+                        <segue destination="qxZ-84-4yw" kind="show" identifier="studioDetailsSegue" id="NAu-2Y-2KP"/>
+                        <segue destination="LJJ-YW-flI" kind="show" identifier="reviewsSegue" id="lup-fQ-sfK"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgn-nr-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

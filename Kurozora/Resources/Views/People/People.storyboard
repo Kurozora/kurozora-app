@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2NE-pN-o3f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2NE-pN-o3f">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,7 +57,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="People" id="3pg-K4-orU"/>
                     <connections>
-                        <segue destination="3Bk-kb-2nM" kind="show" identifier="PersonDetailsSegue" id="p6a-VB-rqm"/>
+                        <segue destination="3Bk-kb-2nM" kind="show" identifier="personDetailsSegue" id="p6a-VB-rqm"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mGo-e3-PuJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -127,15 +126,15 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Person" id="cgf-bI-XTM"/>
                     <connections>
-                        <segue destination="4id-fB-aKt" kind="show" identifier="ShowDetailsSegue" id="Trw-CX-YW3"/>
-                        <segue destination="5be-S9-IEG" kind="show" identifier="ShowsListSegue" id="rMe-81-LfS"/>
-                        <segue destination="kKM-2N-uwE" kind="show" identifier="CharactersListSegue" id="sIx-q7-dCa"/>
-                        <segue destination="CVK-4m-JQM" kind="show" identifier="CharacterDetailsSegue" id="ATk-vT-1ZC"/>
-                        <segue destination="Isr-MK-fnn" kind="show" identifier="LiteratureDetailsSegue" id="oyx-WX-Jqx"/>
-                        <segue destination="vpE-Qa-FFg" kind="show" identifier="LiteraturesListSegue" id="t6H-54-YBd"/>
-                        <segue destination="1jc-Dp-i6l" kind="show" identifier="GameDetailsSegue" id="dkA-ee-Z4P"/>
-                        <segue destination="5ZX-YI-SBH" kind="show" identifier="GamesListSegue" id="fTG-VL-CcJ"/>
-                        <segue destination="Zrs-h0-Ci6" kind="show" identifier="ReviewsSegue" id="oeY-gR-VwV"/>
+                        <segue destination="4id-fB-aKt" kind="show" identifier="showDetailsSegue" id="Trw-CX-YW3"/>
+                        <segue destination="5be-S9-IEG" kind="show" identifier="showsListSegue" id="rMe-81-LfS"/>
+                        <segue destination="kKM-2N-uwE" kind="show" identifier="charactersListSegue" id="sIx-q7-dCa"/>
+                        <segue destination="CVK-4m-JQM" kind="show" identifier="characterDetailsSegue" id="ATk-vT-1ZC"/>
+                        <segue destination="Isr-MK-fnn" kind="show" identifier="literatureDetailsSegue" id="oyx-WX-Jqx"/>
+                        <segue destination="vpE-Qa-FFg" kind="show" identifier="literaturesListSegue" id="t6H-54-YBd"/>
+                        <segue destination="1jc-Dp-i6l" kind="show" identifier="gameDetailsSegue" id="dkA-ee-Z4P"/>
+                        <segue destination="5ZX-YI-SBH" kind="show" identifier="gamesListSegue" id="fTG-VL-CcJ"/>
+                        <segue destination="Zrs-h0-Ci6" kind="show" identifier="reviewsSegue" id="oeY-gR-VwV"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eW9-Cw-VCA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JQw-BS-uvZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JQw-BS-uvZ">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -63,11 +62,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="N0m-Ui-w96" kind="show" identifier="ThemesSegue" id="ze3-pm-pt6"/>
-                        <segue destination="Gcv-Zm-Hty" kind="show" identifier="GenresSegue" id="tH7-G2-EVE"/>
-                        <segue destination="ORM-D6-DI2" kind="show" identifier="LiteratureDetailsSegue" id="zjG-NP-txW"/>
-                        <segue destination="Whg-3J-lxg" kind="show" identifier="GameDetailsSegue" id="h8b-cs-R8W"/>
-                        <segue destination="4a9-go-nKj" kind="show" identifier="ShowDetailsSegue" id="2lF-mK-3qU"/>
+                        <segue destination="N0m-Ui-w96" kind="show" identifier="themesSegue" id="ze3-pm-pt6"/>
+                        <segue destination="Gcv-Zm-Hty" kind="show" identifier="genresSegue" id="tH7-G2-EVE"/>
+                        <segue destination="ORM-D6-DI2" kind="show" identifier="literatureDetailsSegue" id="zjG-NP-txW"/>
+                        <segue destination="Whg-3J-lxg" kind="show" identifier="gameDetailsSegue" id="h8b-cs-R8W"/>
+                        <segue destination="4a9-go-nKj" kind="show" identifier="showDetailsSegue" id="2lF-mK-3qU"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCO-Gs-FxE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

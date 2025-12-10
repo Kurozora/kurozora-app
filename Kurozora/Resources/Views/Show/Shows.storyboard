@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1XT-ch-uHu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1XT-ch-uHu">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,6 +16,7 @@
                 <navigationController storyboardIdentifier="ShowsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1XT-ch-uHu" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="ows-Ix-Hk8">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="16M-pD-krD"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -59,7 +59,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="Ixr-AY-2v5"/>
                     <connections>
-                        <segue destination="A3e-GJ-UX5" kind="show" identifier="ShowDetailsSegue" id="hPd-LT-0sF"/>
+                        <segue destination="A3e-GJ-UX5" kind="show" identifier="showDetailsSegue" id="hPd-LT-0sF"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gjt-8B-0c3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -399,23 +399,23 @@
                         <outlet property="moreBarButtonItem" destination="bSI-Te-0Ll" id="cwd-tU-zGf"/>
                         <outlet property="navigationTitleLabel" destination="nSg-hj-AjS" id="Br8-BR-C87"/>
                         <outlet property="navigationTitleView" destination="2Od-B7-0Nf" id="R7u-fJ-Lnu"/>
-                        <segue destination="Nem-gQ-vzJ" kind="show" identifier="CastListSegue" id="xyZ-T3-j6h"/>
-                        <segue destination="hBE-dn-oqP" kind="show" identifier="EpisodesListSegue" id="m5c-UF-zyP"/>
-                        <segue destination="WgT-YJ-daL" kind="show" identifier="SeasonsListSegue" id="CoC-Lm-cl4"/>
-                        <segue destination="urV-HF-poe" kind="show" identifier="StudioDetailsSegue" id="YkB-FM-SBI"/>
-                        <segue destination="0CH-ol-MCV" kind="show" identifier="ShowDetailsSegue" id="8X9-Ml-Zaa"/>
-                        <segue destination="xgN-Jn-ydw" kind="show" identifier="ShowsListSegue" id="diw-vY-oOt"/>
-                        <segue destination="TlV-BJ-YqV" kind="show" identifier="PersonDetailsSegue" id="Jby-Sd-cNh"/>
-                        <segue destination="KF6-eM-yUm" kind="show" identifier="CharacterDetailsSegue" id="arD-Sg-qCx"/>
-                        <segue destination="XRk-F5-HRl" kind="show" identifier="EpisodeDetailsSegue" id="qyr-Pr-uji"/>
-                        <segue destination="o2u-Zs-Thd" kind="show" identifier="SongsListSegue" id="JVk-HQ-LJe"/>
-                        <segue destination="Ezz-hJ-5Fa" kind="show" identifier="StudiosListSegue" id="onh-0z-l5I"/>
-                        <segue destination="vUa-J9-eXs" kind="show" identifier="SongDetailsSegue" id="KIW-Zs-vPb"/>
-                        <segue destination="ndD-jI-dc3" kind="show" identifier="LiteratureDetailsSegue" id="RvY-hD-OBh"/>
-                        <segue destination="bE1-bd-5X6" kind="show" identifier="LiteraturesListSegue" id="ozi-Lu-uSw"/>
-                        <segue destination="Rrl-6T-ANd" kind="show" identifier="GameDetailsSegue" id="gn0-Fv-lcO"/>
-                        <segue destination="eaM-6l-RGP" kind="show" identifier="GamesListSegue" id="j4J-S1-dLD"/>
-                        <segue destination="bcW-Oq-B67" kind="show" identifier="ReviewsSegue" id="RYo-u4-MrZ"/>
+                        <segue destination="Nem-gQ-vzJ" kind="show" identifier="castListSegue" id="xyZ-T3-j6h"/>
+                        <segue destination="hBE-dn-oqP" kind="show" identifier="episodesListSegue" id="m5c-UF-zyP"/>
+                        <segue destination="WgT-YJ-daL" kind="show" identifier="seasonsListSegue" id="CoC-Lm-cl4"/>
+                        <segue destination="urV-HF-poe" kind="show" identifier="studioDetailsSegue" id="YkB-FM-SBI"/>
+                        <segue destination="0CH-ol-MCV" kind="show" identifier="showDetailsSegue" id="8X9-Ml-Zaa"/>
+                        <segue destination="xgN-Jn-ydw" kind="show" identifier="showsListSegue" id="diw-vY-oOt"/>
+                        <segue destination="TlV-BJ-YqV" kind="show" identifier="personDetailsSegue" id="Jby-Sd-cNh"/>
+                        <segue destination="KF6-eM-yUm" kind="show" identifier="characterDetailsSegue" id="arD-Sg-qCx"/>
+                        <segue destination="XRk-F5-HRl" kind="show" identifier="episodeDetailsSegue" id="qyr-Pr-uji"/>
+                        <segue destination="o2u-Zs-Thd" kind="show" identifier="songsListSegue" id="JVk-HQ-LJe"/>
+                        <segue destination="Ezz-hJ-5Fa" kind="show" identifier="studiosListSegue" id="onh-0z-l5I"/>
+                        <segue destination="vUa-J9-eXs" kind="show" identifier="songDetailsSegue" id="KIW-Zs-vPb"/>
+                        <segue destination="ndD-jI-dc3" kind="show" identifier="literatureDetailsSegue" id="RvY-hD-OBh"/>
+                        <segue destination="bE1-bd-5X6" kind="show" identifier="literaturesListSegue" id="ozi-Lu-uSw"/>
+                        <segue destination="Rrl-6T-ANd" kind="show" identifier="gameDetailsSegue" id="gn0-Fv-lcO"/>
+                        <segue destination="eaM-6l-RGP" kind="show" identifier="gamesListSegue" id="j4J-S1-dLD"/>
+                        <segue destination="bcW-Oq-B67" kind="show" identifier="reviewsSegue" id="RYo-u4-MrZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -600,7 +600,7 @@
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

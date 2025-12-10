@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X1a-4x-QIU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X1a-4x-QIU">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,7 +16,7 @@
                 <navigationController storyboardIdentifier="EpisodesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X1a-4x-QIU" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="t8k-51-24f">
-                        <rect key="frame" x="0.0" y="118" width="393" height="54"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="HWn-y1-WPe"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,9 +69,9 @@
                         <outlet property="fillerBarButtonItem" destination="9sC-Ml-ISR" id="pOf-2s-qwa"/>
                         <outlet property="goToBarButtonItem" destination="JHc-4N-4gk" id="yqT-kh-FpK"/>
                         <outlet property="moreBarButtonItem" destination="crX-mN-Ueb" id="xSB-x6-j98"/>
-                        <segue destination="W7w-EE-TzB" kind="show" identifier="EpisodeDetailsSegue" id="3RX-8T-Ezs"/>
-                        <segue destination="2Zb-yS-ryX" kind="show" identifier="ShowDetailsSegue" id="fad-aB-AWU"/>
-                        <segue destination="kR2-Jy-46d" kind="show" identifier="EpisodesListSegue" id="D5a-pU-FUv"/>
+                        <segue destination="W7w-EE-TzB" kind="show" identifier="episodeDetailsSegue" id="3RX-8T-Ezs"/>
+                        <segue destination="2Zb-yS-ryX" kind="show" identifier="showDetailsSegue" id="fad-aB-AWU"/>
+                        <segue destination="kR2-Jy-46d" kind="show" identifier="episodesListSegue" id="D5a-pU-FUv"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WYa-x6-y0C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -389,13 +388,13 @@
                         <outlet property="moreBarButtonItem" destination="gis-4h-2YB" id="HzI-Nz-Jfz"/>
                         <outlet property="navigationTitleLabel" destination="a5b-ab-F31" id="key-0T-kyD"/>
                         <outlet property="navigationTitleView" destination="8If-tb-Ajc" id="6EN-IH-0DH"/>
-                        <segue destination="Rrb-t9-3pN" kind="show" identifier="ReviewsSegue" id="3R8-By-e3a"/>
-                        <segue destination="Zcx-qT-vAM" kind="show" identifier="ShowDetailsSegue" id="XuW-ms-Kop"/>
-                        <segue destination="oFN-M4-3f6" kind="show" identifier="EpisodesListSegue" id="4aG-Iu-mhY"/>
-                        <segue destination="JuK-hS-Nhl" kind="show" identifier="CharacterDetailsSegue" id="6Tj-G8-XDa"/>
-                        <segue destination="Nez-cX-Olz" kind="show" identifier="PersonDetailsSegue" id="44w-9c-kuO"/>
-                        <segue destination="csV-7i-ZFF" kind="show" identifier="EpisodeDetailsSegue" id="vf4-bU-mHd"/>
-                        <segue destination="yhO-a7-eii" kind="show" identifier="SeasonsListSegue" id="61K-f4-i6T"/>
+                        <segue destination="Rrb-t9-3pN" kind="show" identifier="reviewsSegue" id="3R8-By-e3a"/>
+                        <segue destination="Zcx-qT-vAM" kind="show" identifier="showDetailsSegue" id="XuW-ms-Kop"/>
+                        <segue destination="oFN-M4-3f6" kind="show" identifier="episodesListSegue" id="4aG-Iu-mhY"/>
+                        <segue destination="JuK-hS-Nhl" kind="show" identifier="characterDetailsSegue" id="6Tj-G8-XDa"/>
+                        <segue destination="Nez-cX-Olz" kind="show" identifier="personDetailsSegue" id="44w-9c-kuO"/>
+                        <segue destination="csV-7i-ZFF" kind="show" identifier="episodeDetailsSegue" id="vf4-bU-mHd"/>
+                        <segue destination="yhO-a7-eii" kind="show" identifier="seasonsListSegue" id="61K-f4-i6T"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veZ-5T-yYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
