@@ -14,8 +14,7 @@ extension GamesListCollectionViewController {
 		let game = self.cache[indexPath] as? Game
 		let relatedGame = self.relatedGames[safe: indexPath.item]?.game
 		guard let game = game ?? relatedGame else { return }
-		let segueIdentifier = R.segue.gamesListCollectionViewController.gameDetailsSegue
-		self.performSegue(withIdentifier: segueIdentifier, sender: game)
+		self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

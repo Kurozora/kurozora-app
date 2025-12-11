@@ -13,10 +13,26 @@ import KurozoraKit
 import UIKit
 
 class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case reviewsSegue
+		case castListSegue
+		case literaturesListSegue
+		case showsListSegue
+		case gamesListSegue
+		case studiosListSegue
+		case literatureDetailsSegue
+		case showDetailsSegue
+		case gameDetailsSegue
+		case studioDetailsSegue
+		case characterDetailsSegue
+		case personDetailsSegue
+	}
+
 	// MARK: - IBOutlets
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var navigationTitleView: UIView!
-	@IBOutlet weak var navigationTitleLabel: UILabel! {
+	@IBOutlet var moreBarButtonItem: UIBarButtonItem!
+	@IBOutlet var navigationTitleView: UIView!
+	@IBOutlet var navigationTitleLabel: UILabel! {
 		didSet {
 			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
 		}
@@ -338,17 +354,22 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.literatureDetailsCollectionViewController.reviewsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .reviewsSegue:
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .literature(self.literature)
-		case R.segue.literatureDetailsCollectionViewController.castListSegue.identifier:
+		case .castListSegue:
 			// Segue to cast list
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
 			castListCollectionViewController.castKind = .literature
 			castListCollectionViewController.literatureIdentity = self.literatureIdentity
-		case R.segue.literatureDetailsCollectionViewController.literaturesListSegue.identifier:
+		case .literaturesListSegue:
 			// Segue to literatures list
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
@@ -362,54 +383,53 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 				literaturesListCollectionViewController.literatureIdentity = self.literatureIdentity
 				literaturesListCollectionViewController.literaturesListFetchType = .relatedLiterature
 			}
-		case R.segue.literatureDetailsCollectionViewController.showsListSegue.identifier:
+		case .showsListSegue:
 			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.title = Trans.relatedShows
 			showsListCollectionViewController.literatureIdentity = self.literatureIdentity
 			showsListCollectionViewController.showsListFetchType = .literature
-		case R.segue.literatureDetailsCollectionViewController.gamesListSegue.identifier:
+		case .gamesListSegue:
 			// Segue to games list
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.title = Trans.relatedGames
 			gamesListCollectionViewController.literatureIdentity = self.literatureIdentity
 			gamesListCollectionViewController.gamesListFetchType = .literature
-		case R.segue.literatureDetailsCollectionViewController.studiosListSegue.identifier:
+		case .studiosListSegue:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
 			studiosListCollectionViewController.literatureIdentity = self.literatureIdentity
 			studiosListCollectionViewController.studiosListFetchType = .literature
-		case R.segue.literatureDetailsCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			// Segue to literature details
 			guard let literatureDetailsCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailsCollectionViewController.literature = literature
-		case R.segue.literatureDetailsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			// Segue to show details
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.literatureDetailsCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			// Segue to game details
 			guard let gameDetailsCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailsCollectionViewController.game = game
-		case R.segue.literatureDetailsCollectionViewController.studioDetailsSegue.identifier:
+		case .studioDetailsSegue:
 			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
-		case R.segue.literatureDetailsCollectionViewController.characterDetailsSegue.identifier:
+		case .characterDetailsSegue:
 			// Segue to character details
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
-		case R.segue.literatureDetailsCollectionViewController.personDetailsSegue.identifier:
+		case .personDetailsSegue:
 			// Segue to person details
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
-		default: break
 		}
 	}
 }
@@ -417,11 +437,11 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 // MARK: - CastCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.personDetailsSegue.identifier, sender: cell)
+		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.characterDetailsSegue.identifier, sender: cell)
+		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: cell)
 	}
 }
 
@@ -442,7 +462,8 @@ extension LiteratureDetailsCollectionViewController: TextViewCollectionViewCellD
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension LiteratureDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -896,36 +917,24 @@ extension LiteratureDetailsCollectionViewController {
 		}
 
 		/// The string value of a literature section type segue identifier.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header:
-				return ""
-			case .badge:
-				return ""
-			case .synopsis:
-				return ""
+			case .header, .badge, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
+				return nil
 			case .rating:
-				return R.segue.literatureDetailsCollectionViewController.reviewsSegue.identifier
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .information:
-				return ""
+				return .reviewsSegue
 			case .cast:
-				return R.segue.literatureDetailsCollectionViewController.castListSegue.identifier
+				return .castListSegue
 			case .studios:
-				return R.segue.literatureDetailsCollectionViewController.studiosListSegue.identifier
+				return .studiosListSegue
 			case .moreByStudio:
-				return R.segue.literatureDetailsCollectionViewController.literaturesListSegue.identifier
+				return .literaturesListSegue
 			case .relatedLiteratures:
-				return R.segue.literatureDetailsCollectionViewController.literaturesListSegue.identifier
+				return .literaturesListSegue
 			case .relatedShows:
-				return R.segue.literatureDetailsCollectionViewController.showsListSegue.identifier
+				return .showsListSegue
 			case .relatedGames:
-				return R.segue.literatureDetailsCollectionViewController.gamesListSegue.identifier
-			case .sosumi:
-				return ""
+				return .gamesListSegue
 			}
 		}
 	}

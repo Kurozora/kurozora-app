@@ -51,11 +51,15 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 	}
 
 	@objc private func didTapBanner(_ sender: UIImageView) {
+        #if DEBUG
 		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 1)
+        #endif
 	}
 
 	@objc private func didTapPoster(_ sender: UIImageView) {
+        #if DEBUG
 		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 0)
+        #endif
 	}
 
 	// MARK: - IBActions

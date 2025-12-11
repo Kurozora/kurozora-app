@@ -22,11 +22,11 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	// MARK: - Properties
 	static let reuseIdentifier = "TitleHeaderCollectionReusableView"
 	weak var delegate: TitleHeaderCollectionReusableViewDelegate?
-	private(set)var segueID: String = ""
-	private(set)var indexPath: IndexPath?
+	private(set) var segueID: (any SegueIdentifier)?
+	private(set) var indexPath: IndexPath?
 
 	// MARK: - Functions
-	/// Configures the views in the resuable view.
+	/// Configures the views in the reusable view.
 	///
 	/// - Parameters:
 	///  - title: The title of the section.
@@ -37,7 +37,7 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 		withTitle title: String? = nil,
 		_ subtitle: String? = nil,
 		indexPath: IndexPath? = nil,
-		segueID: String = "",
+		segueID: (any SegueIdentifier)? = nil,
 		separatorIsHidden: Bool = false
 	) {
 		self.segueID = segueID
@@ -48,7 +48,7 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 		self.subTitleHeader.text = subtitle
 
 		// Show or hide see all button
-		self.headerButton.isHidden = segueID.isEmpty
+		self.headerButton.isHidden = segueID == nil
 
 		// Show or hide separator
 		self.separatorView.isHidden = separatorIsHidden

@@ -91,7 +91,7 @@ extension HomeCollectionViewController {
 		}
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
-			var segueID: String = ""
+			var segueID: SegueIdentifiers?
 			let sectionLayoutKind = self.snapshot.sectionIdentifiers[indexPath.section]
 
 			// Get a supplementary view of the desired kind.
@@ -102,38 +102,38 @@ extension HomeCollectionViewController {
 			case .banner(let exploreCategory), .video(let exploreCategory), .upcoming(let exploreCategory), .small(let exploreCategory), .large(let exploreCategory):
 				switch exploreCategory.attributes.exploreCategoryType {
 				case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
-					segueID = R.segue.homeCollectionViewController.literaturesListSegue.identifier
+					segueID = .literaturesListSegue
 				case .games, .mostPopularGames, .upcomingGames, .newGames:
-					segueID = R.segue.homeCollectionViewController.gamesListSegue.identifier
+					segueID = .gamesListSegue
 				case .recap:
 					break
 				default:
-					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+					segueID = .showsListSegue
 				}
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .medium(let exploreCategory):
 				switch exploreCategory.attributes.exploreCategoryType {
 				case .genres:
-					segueID = R.segue.homeCollectionViewController.genresSegue.identifier
+					segueID = .genresSegue
 				case .themes:
-					segueID = R.segue.homeCollectionViewController.themesSegue.identifier
+					segueID = .themesSegue
 				default: break
 				}
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .profile(let exploreCategory):
 				switch exploreCategory.attributes.exploreCategoryType {
 				case .characters:
-					segueID = R.segue.homeCollectionViewController.charactersListSegue.identifier
+					segueID = .charactersListSegue
 				case .people:
-					segueID = R.segue.homeCollectionViewController.peopleListSegue.identifier
+					segueID = .peopleListSegue
 				default: break
 				}
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .episode(let exploreCategory):
-				segueID = R.segue.homeCollectionViewController.episodesListSegue.identifier
+				segueID = .episodesListSegue
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .music(let exploreCategory):
-				segueID = R.segue.homeCollectionViewController.songsListSegue.identifier
+				segueID = .songsListSegue
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .quickLinks:
 				exploreSectionTitleCell.configure(withTitle: "Quick Links", indexPath: indexPath)

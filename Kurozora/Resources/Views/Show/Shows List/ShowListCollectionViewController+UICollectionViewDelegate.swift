@@ -14,8 +14,7 @@ extension ShowsListCollectionViewController {
 		let show = self.cache[indexPath] as? Show
 		let relatedShow = self.relatedShows[safe: indexPath.item]?.show
 		guard let show = show ?? relatedShow else { return }
-		let segueIdentifier = R.segue.showsListCollectionViewController.showDetailsSegue
-		self.performSegue(withIdentifier: segueIdentifier, sender: show)
+		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

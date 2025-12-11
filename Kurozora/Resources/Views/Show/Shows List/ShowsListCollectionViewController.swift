@@ -23,6 +23,11 @@ enum ShowsListFetchType {
 }
 
 class ShowsListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+	}
+
 	// MARK: - Properties
 	var gameIdentity: GameIdentity?
 	var literatureIdentity: LiteratureIdentity?
@@ -297,12 +302,16 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.showsListCollectionViewController.showDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		default: break
 		}
 	}
 }
