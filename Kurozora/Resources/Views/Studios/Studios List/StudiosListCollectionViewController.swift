@@ -17,6 +17,11 @@ enum StudiosListFetchType {
 }
 
 class StudiosListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case studioDetailsSegue
+	}
+
 	// MARK: - Properties
 	var gameIdentity: GameIdentity?
 	var literatureIdentity: LiteratureIdentity?
@@ -227,12 +232,16 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.studiosListCollectionViewController.studioDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .studioDetailsSegue:
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
-		default: break
 		}
 	}
 }

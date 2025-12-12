@@ -14,16 +14,16 @@ extension CharacterDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
-			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: show)
+			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatures:
 			guard let literature = self.cache[indexPath] as? Literature else { return }
-			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
+			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .games:
 			guard let game = self.cache[indexPath] as? Game else { return }
-			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.gameDetailsSegue, sender: game)
+			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 		case .people:
 			guard let person = self.cache[indexPath] as? Person else { return }
-			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.personDetailsSegue, sender: person)
+			self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: person)
 		default: break
 		}
 	}

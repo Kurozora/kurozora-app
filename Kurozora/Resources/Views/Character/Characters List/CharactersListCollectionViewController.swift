@@ -16,6 +16,11 @@ enum CharactersListFetchType {
 }
 
 class CharactersListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case characterDetailsSegue
+	}
+
 	// MARK: - Properties
 	var personIdentity: PersonIdentity?
 	var characterIdentities: [CharacterIdentity] = []
@@ -207,12 +212,16 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .characterDetailsSegue:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
-		default: break
 		}
 	}
 }

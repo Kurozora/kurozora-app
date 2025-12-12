@@ -10,6 +10,18 @@ import UIKit
 import KurozoraKit
 
 class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case reviewsSegue
+		case showDetailsSegue
+		case showsListSegue
+		case literatureDetailsSegue
+		case literaturesListSegue
+		case gameDetailsSegue
+		case gamesListSegue
+		case studioDetailsSegue
+	}
+
 	// MARK: - Properties
 	var studioIdentity: StudioIdentity?
 	var studio: Studio! {
@@ -207,36 +219,42 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.studioDetailsCollectionViewController.reviewsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .reviewsSegue:
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .studio(self.studio)
-		case R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.studioDetailsCollectionViewController.showsListSegue.identifier:
+		case .showsListSegue:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.studioIdentity = self.studioIdentity
 			showsListCollectionViewController.showsListFetchType = .studio
-		case R.segue.studioDetailsCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.studioDetailsCollectionViewController.literaturesListSegue.identifier:
+		case .literaturesListSegue:
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.studioIdentity = self.studioIdentity
 			literaturesListCollectionViewController.literaturesListFetchType = .studio
-		case R.segue.studioDetailsCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		case R.segue.studioDetailsCollectionViewController.gamesListSegue.identifier:
+		case .gamesListSegue:
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.studioIdentity = self.studioIdentity
 			gamesListCollectionViewController.gamesListFetchType = .studio
-		default: break
+		case .studioDetailsSegue:
+			return
 		}
 	}
 }
@@ -269,7 +287,8 @@ extension StudioDetailsCollectionViewController: TextViewCollectionViewCellDeleg
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension StudioDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -496,28 +515,18 @@ extension StudioDetailsCollectionViewController {
 		}
 
 		/// The string value of a studio section type segue identifier.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header:
-				return ""
-			case .badges:
-				return ""
-			case .about:
-				return ""
+			case .header, .badges, .about, .rateAndReview, .reviews, .information:
+				return nil
 			case .rating:
-				return R.segue.studioDetailsCollectionViewController.reviewsSegue.identifier
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .information:
-				return ""
+				return .reviewsSegue
 			case .shows:
-				return R.segue.studioDetailsCollectionViewController.showsListSegue.identifier
+				return .showsListSegue
 			case .literatures:
-				return R.segue.studioDetailsCollectionViewController.literaturesListSegue.identifier
+				return .literaturesListSegue
 			case .games:
-				return R.segue.studioDetailsCollectionViewController.gamesListSegue.identifier
+				return .gamesListSegue
 			}
 		}
 	}

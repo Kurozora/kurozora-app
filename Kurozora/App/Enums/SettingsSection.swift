@@ -258,64 +258,43 @@ extension SettingsTableViewController {
 		static let allAbout: [Row] = []
 
 		/// The segue identifier string of a settings row.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
+			case .cache, .reminder,
+			     .signalSticker, .telegramSticker, // .whatsAppSticker,
+			     .manageSubscriptions, .restoreFeatures, // .requestRefund,
+			     .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter:
+				return nil
 			case .account:
-				return R.segue.settingsTableViewController.accountSegue.identifier
+				return .accountSegue
 			case .switchAccount:
-				return R.segue.settingsTableViewController.switchAccountSegue.identifier
+				return .switchAccountSegue
 			case .keychain:
-				return R.segue.settingsTableViewController.keysSegue.identifier
+				return .keysSegue
 			case .browser:
-				return R.segue.settingsTableViewController.browserSegue.identifier
-			case .cache:
-				return ""
+				return .browserSegue
 			case .displayBlindness:
-				return R.segue.settingsTableViewController.displaySegue.identifier
+				return .displaySegue
 			case .icon:
-				return R.segue.settingsTableViewController.iconSegue.identifier
+				return .iconSegue
 			case .library:
-				return R.segue.settingsTableViewController.librarySegue.identifier
+				return .librarySegue
 			case .motion:
-				return R.segue.settingsTableViewController.motionSegue.identifier
+				return .motionSegue
 			case .theme:
-				return R.segue.settingsTableViewController.themeSegue.identifier
+				return .themeSegue
 			case .notifications:
-				return R.segue.settingsTableViewController.notificationSegue.identifier
-			case .reminder:
-				return ""
+				return .notificationSegue
 			case .soundsAndHaptics:
-				return R.segue.settingsTableViewController.soundSegue.identifier
-			case .signalSticker:
-				return ""
-			case .telegramSticker:
-				return ""
-//			case .whatsAppSticker:
-//				return ""
+				return .soundSegue
 			case .biometrics:
-				return R.segue.settingsTableViewController.biometricsSegue.identifier
+				return .biometricsSegue
 			case .privacy:
-				return R.segue.settingsTableViewController.privacySegue.identifier
+				return .privacySegue
 			case .unlockFeatures:
-				return R.segue.settingsTableViewController.subscriptionSegue.identifier
+				return .subscriptionSegue
 			case .tipjar:
-				return R.segue.settingsTableViewController.tipJarSegue.identifier
-			case .manageSubscriptions:
-				return ""
-			case .restoreFeatures:
-				return ""
-//			case .requestRefund:
-//				return ""
-			case .rate:
-				return ""
-			case .joinDiscord:
-				return ""
-			case .followGitHub:
-				return ""
-			case .followMastodon:
-				return ""
-			case .followTwitter:
-				return ""
+				return .tipJarSegue
 			}
 		}
 

@@ -18,6 +18,15 @@ struct RecapTabItem {
 }
 
 class ReCapCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+		case literatureDetailsSegue
+		case gameDetailsSegue
+		case genresSegue
+		case themesSegue
+	}
+
 	// MARK: - Properties
 	var year: Int = 0
 	var month: Int = 0

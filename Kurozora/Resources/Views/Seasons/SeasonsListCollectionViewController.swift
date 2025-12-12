@@ -10,6 +10,11 @@ import KurozoraKit
 import UIKit
 
 class SeasonsListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case episodesListSegue
+	}
+
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var seasonIdentities: [SeasonIdentity] = [] {
@@ -169,13 +174,17 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.seasonsListCollectionViewController.episodeSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .episodesListSegue:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
-		default: break
 		}
 	}
 }

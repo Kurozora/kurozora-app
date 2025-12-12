@@ -58,7 +58,7 @@ extension SearchResultsCollectionViewController {
 		}
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
-			var segueID: String = ""
+			var segueID: SegueIdentifiers?
 			let sectionLayoutKind = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
 
 			// Get a supplementary view of the desired kind.
@@ -71,31 +71,31 @@ extension SearchResultsCollectionViewController {
 			case .browse:
 				exploreSectionTitleCell.configure(withTitle: Trans.browse, indexPath: indexPath, segueID: segueID)
 			case .characters:
-				segueID = R.segue.searchResultsCollectionViewController.charactersListSegue.identifier
+				segueID = .charactersListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.characters, indexPath: indexPath, segueID: segueID)
 			case .episodes:
-				segueID = R.segue.searchResultsCollectionViewController.episodesListSegue.identifier
+				segueID = .episodesListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.episodes, indexPath: indexPath, segueID: segueID)
 			case .games:
-				segueID = R.segue.searchResultsCollectionViewController.gamesListSegue.identifier
+				segueID = .gamesListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.games, indexPath: indexPath, segueID: segueID)
 			case .literatures:
-				segueID = R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier
+				segueID = .literaturesListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.literatures, indexPath: indexPath, segueID: segueID)
 			case .people:
-				segueID = R.segue.searchResultsCollectionViewController.peopleListSegue.identifier
+				segueID = .peopleListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.people, indexPath: indexPath, segueID: segueID)
 			case .songs:
-				segueID = R.segue.searchResultsCollectionViewController.songsListSegue.identifier
+				segueID = .songsListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.songs, indexPath: indexPath, segueID: segueID)
 			case .shows:
-				segueID = R.segue.searchResultsCollectionViewController.showsListSegue.identifier
+				segueID = .showsListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.shows, indexPath: indexPath, segueID: segueID)
 			case .studios:
-				segueID = R.segue.searchResultsCollectionViewController.studiosListSegue.identifier
+				segueID = .studiosListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.studios, indexPath: indexPath, segueID: segueID)
 			case .users:
-				segueID = R.segue.searchResultsCollectionViewController.usersListSegue.identifier
+				segueID = .usersListSegue
 				exploreSectionTitleCell.configure(withTitle: Trans.users, indexPath: indexPath, segueID: segueID)
 			}
 

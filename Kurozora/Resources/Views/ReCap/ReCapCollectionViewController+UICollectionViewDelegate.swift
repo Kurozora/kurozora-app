@@ -16,19 +16,19 @@ extension ReCapCollectionViewController {
 			switch recapItem.attributes.recapItemType {
 			case .shows:
 				guard let show = self.cache[indexPath] as? Show else { return }
-				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.showDetailsSegue, sender: show)
+				self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 			case .literatures:
 				guard let literature = self.cache[indexPath] as? Literature else { return }
-				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.literatureDetailsSegue, sender: literature)
+				self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
 			case .games:
 				guard let game = self.cache[indexPath] as? Game else { return }
-				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.gameDetailsSegue, sender: game)
+				self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 			case .genres:
 				guard let genre = self.cache[indexPath] as? Genre else { return }
-				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.genresSegue, sender: genre)
+				self.performSegue(withIdentifier: SegueIdentifiers.genresSegue, sender: genre)
 			case .themes:
 				guard let theme = self.cache[indexPath] as? Theme else { return }
-				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.themesSegue, sender: theme)
+				self.performSegue(withIdentifier: SegueIdentifiers.themesSegue, sender: theme)
 			}
 		default: break
 		}

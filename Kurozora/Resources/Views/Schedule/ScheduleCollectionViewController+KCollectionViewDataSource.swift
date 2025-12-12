@@ -56,7 +56,7 @@ extension ScheduleCollectionViewController {
 				}
 			}
 
-			exploreSectionTitleCell.configure(withTitle: title, segueID: "", separatorIsHidden: true)
+			exploreSectionTitleCell.configure(withTitle: title, segueID: nil, separatorIsHidden: true)
 
 			// Return the view.
 			return exploreSectionTitleCell

@@ -10,6 +10,12 @@ import UIKit
 import KurozoraKit
 
 class FeedTableViewController: KTableViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case feedMessageDetailsSegue
+		case settingsSegue
+	}
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var postMessageButton: UIBarButtonItem!
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
@@ -199,7 +205,7 @@ class FeedTableViewController: KTableViewController {
 
 	/// Performs segue to the settings view.
 	@objc func segueToSettings() {
-		self.performSegue(withIdentifier: R.segue.feedTableViewController.settingsSegue, sender: nil)
+		self.performSegue(withIdentifier: SegueIdentifiers.settingsSegue, sender: nil)
 	}
 
 	/// Performs segue to the profile view.
@@ -248,13 +254,21 @@ class FeedTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.feedTableViewController.feedMessageDetailsSegue.identifier {
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .feedMessageDetailsSegue:
 			// Show details of feed message
-			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
-				guard let feedMessageID = sender as? KurozoraItemID else { return }
-				fmDetailsTableViewController.feedMessageID = feedMessageID
-				fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
-			}
+			guard
+				let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController,
+				let feedMessageID = sender as? KurozoraItemID
+			else { return }
+			fmDetailsTableViewController.feedMessageID = feedMessageID
+			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
+		case .settingsSegue: return
 		}
 	}
 }
@@ -347,7 +361,7 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
-		self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
 	}
 }
 
@@ -362,7 +376,7 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
 	}
 }
 

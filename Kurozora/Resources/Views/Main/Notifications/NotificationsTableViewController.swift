@@ -13,6 +13,11 @@ import Foundation
 class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> { }
 
 class NotificationsTableViewController: KTableViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case notificationsGroupingSegue
+	}
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 

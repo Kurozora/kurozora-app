@@ -11,7 +11,7 @@ import UIKit
 class NotificationsOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
 	var notificationSegueIdentifier: KNotification.Settings = .notificationsGrouping
-	var segueIdentifier: String?
+	var segueIdentifier: NotificationsTableViewController.SegueIdentifiers?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -26,7 +26,8 @@ class NotificationsOptionsViewController: SubSettingsViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		let notificationSegueIdentifier = KNotification.Settings(stringValue: segueIdentifier)
+		guard let segueIdentifier = segueIdentifier else { return }
+		let notificationSegueIdentifier = KNotification.Settings(segueIdentifier: segueIdentifier)
 		self.notificationSegueIdentifier = notificationSegueIdentifier
 	}
 }

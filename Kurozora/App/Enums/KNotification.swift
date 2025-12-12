@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum KNotification { }
+enum KNotification {}
 
 // MARK: - AlertStyle
 extension KNotification {
@@ -97,20 +97,18 @@ extension KNotification {
 		case notificationsGrouping = 0
 
 		// MARK: - Initializers
-		init(stringValue: String?) {
-			switch stringValue {
-			case R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier:
-				self = .notificationsGrouping
-			default:
+		init(segueIdentifier: NotificationsTableViewController.SegueIdentifiers) {
+			switch segueIdentifier {
+			case .notificationsGroupingSegue:
 				self = .notificationsGrouping
 			}
 		}
 
 		// MARK: - Properties
-		var segueIdentifier: String {
+		var segueIdentifier: NotificationsTableViewController.SegueIdentifiers {
 			switch self {
 			case .notificationsGrouping:
-				return R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier
+				return .notificationsGroupingSegue
 			}
 		}
 	}

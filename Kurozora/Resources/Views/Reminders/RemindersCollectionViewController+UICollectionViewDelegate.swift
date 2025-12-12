@@ -13,13 +13,13 @@ extension RemindersCollectionViewController {
 		switch self.libraryKind {
 		case .shows:
 			guard let show = self.shows[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.showDetailsSegue, sender: show)
+			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatures:
 			guard let literature = self.literatures[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.literatureDetailsSegue, sender: literature)
+			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .games:
 			guard let game = self.games[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.gameDetailsSegue, sender: game)
+			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 		}
 	}
 

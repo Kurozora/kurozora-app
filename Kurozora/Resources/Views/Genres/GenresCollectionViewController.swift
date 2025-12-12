@@ -22,6 +22,11 @@ extension GenresCollectionViewController {
 }
 
 class GenresCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case exploreSegue
+	}
+
 	// MARK: - Properties
 	var genres: [Genre] = [] {
 		didSet {
@@ -125,12 +130,16 @@ class GenresCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.genresCollectionViewController.exploreSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .exploreSegue:
 			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
 			guard let genre = sender as? Genre else { return }
 			homeCollectionViewController.genre = genre
-		default: break
 		}
 	}
 }

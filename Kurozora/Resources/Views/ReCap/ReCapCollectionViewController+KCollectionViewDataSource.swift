@@ -58,7 +58,7 @@ extension ReCapCollectionViewController {
 				return nil
 			}
 
-			exploreSectionTitleCell.configure(withTitle: title, subtitle, segueID: "", separatorIsHidden: true)
+			exploreSectionTitleCell.configure(withTitle: title, subtitle, segueID: nil, separatorIsHidden: true)
 
 			// Return the view.
 			return exploreSectionTitleCell

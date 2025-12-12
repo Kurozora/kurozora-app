@@ -10,6 +10,19 @@ import KurozoraKit
 import UIKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case castListSegue
+		case reviewsSegue
+		case showDetailsSegue
+		case seasonsListSegue
+		case episodeDetailsSegue
+		case episodesListSegue
+		case personDetailsSegue
+		case characterDetailsSegue
+	}
+
+	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
@@ -260,12 +273,17 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.episodeDetailsCollectionViewController.reviewsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .reviewsSegue:
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .episode(self.episode)
-		case R.segue.episodeDetailsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			// Segue to show details
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {
@@ -273,16 +291,16 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			} else if let show = sender as? Show {
 				showDetailsCollectionViewController.show = show
 			}
-		case R.segue.episodeDetailsCollectionViewController.seasonsListSegue.identifier:
+		case .seasonsListSegue:
 			// Segue to seasons list
 			guard let seasonsListCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			seasonsListCollectionViewController.showIdentity = ShowIdentity(id: show.id)
-		case R.segue.episodeDetailsCollectionViewController.episodeDetailsSegue.identifier:
+		case .episodeDetailsSegue:
 			// Segue to episode details
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			episodeDetailsCollectionViewController.episode = sender as? Episode
-		case R.segue.episodeDetailsCollectionViewController.episodesListSegue.identifier:
+		case .episodesListSegue:
 			// Segue to episode details
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let seasonIdentity = sender as? SeasonIdentity else { return }
@@ -296,11 +314,11 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 // MARK: - CastCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.personDetailsSegue.identifier, sender: cell)
+		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.characterDetailsSegue.identifier, sender: cell)
+		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: cell)
 	}
 }
 
@@ -326,14 +344,14 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = self.suggestedEpisodes[indexPath.item].relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.showDetailsSegue, sender: showIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = self.suggestedEpisodes[indexPath.item].relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.episodesListSegue, sender: seasonIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -354,7 +372,8 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -599,28 +618,14 @@ extension EpisodeDetailsCollectionViewController {
 		}
 
 		/// The string value of a section type segue identifier.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header:
-				return ""
-			case .badge:
-				return ""
-			case .synopsis:
-				return ""
+			case .header, .badge, .synopsis, .rateAndReview, .reviews, .information, .suggestedEpisodes, .sosumi:
+				return nil
 			case .rating:
-				return R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .information:
-				return ""
+				return .reviewsSegue
 			case .cast:
-				return R.segue.gameDetailsCollectionViewController.castListSegue.identifier
-			case .suggestedEpisodes:
-				return ""
-			case .sosumi:
-				return ""
+				return .castListSegue
 			}
 		}
 	}

@@ -160,7 +160,7 @@ extension AppDelegate {
 	@objc func handleSearch(_ sender: AnyObject) {
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
 			let tabBarController = UIApplication.topViewController?.tabBarController as? KTabBarController
-			tabBarController?.selectedTab = TabBarItem.search.tab
+			tabBarController?.selectTab(.search)
 		} else {
 			let splitViewController = UIApplication.topViewController?.splitViewController
 			let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
@@ -174,7 +174,7 @@ extension AppDelegate {
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
 			if let settingsTableViewController = (settingsSplitViewController.viewControllers.first as? KNavigationController)?.visibleViewController as? SettingsTableViewController {
-				settingsTableViewController.performSegue(withIdentifier: R.segue.settingsTableViewController.accountSegue.identifier, sender: nil)
+				settingsTableViewController.performSegue(withIdentifier: SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
 			}
 			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 		}

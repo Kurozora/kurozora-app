@@ -16,6 +16,11 @@ enum PeopleListFetchType {
 }
 
 class PeopleListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case personDetailsSegue
+	}
+
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity?
 	var personIdentities: [PersonIdentity] = []
@@ -211,12 +216,16 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.peopleListCollectionViewController.personDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .personDetailsSegue:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
-		default: break
 		}
 	}
 }

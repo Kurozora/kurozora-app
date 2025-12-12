@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 // MARK: - UICollectionViewDelegate
 extension SearchResultsCollectionViewController {
@@ -17,34 +17,34 @@ extension SearchResultsCollectionViewController {
 		switch itemKind {
 		case .discoverSuggestion: break
 		case .browseCategory(let browseCategory):
-			self.performSegue(withIdentifier: browseCategory.segueIdentifier ?? R.segue.searchResultsCollectionViewController.searchSegue.identifier, sender: browseCategory)
+			self.performSegue(withIdentifier: browseCategory.segueIdentifier ?? SegueIdentifiers.searchSegue, sender: browseCategory)
 		case .characterIdentity:
 			guard let character = self.characters[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
+			self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
 		case .episodeIdentity:
 			guard let episode = self.episodes[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodeDetailsSegue, sender: episode)
+			self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: episode)
 		case .personIdentity:
 			guard let person = self.people[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.personDetailsSegue, sender: person)
+			self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: person)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
+			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.literatureDetailsSegue, sender: literature)
+			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .gameIdentity:
 			guard let game = self.games[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.gameDetailsSegue, sender: game)
+			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			guard let song = self.songs[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
+			self.performSegue(withIdentifier: SegueIdentifiers.songDetailsSegue, sender: song)
 		case .studioIdentity:
 			guard let studio = self.studios[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.studioDetailsSegue, sender: studio)
+			self.performSegue(withIdentifier: SegueIdentifiers.studioDetailsSegue, sender: studio)
 		case .userIdentity:
 			guard let user = self.users[indexPath] else { return }
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
+			self.performSegue(withIdentifier: SegueIdentifiers.userDetailsSegue, sender: user)
 		case .show: break
 		case .literature: break
 		case .game: break
@@ -104,7 +104,7 @@ extension SearchResultsCollectionViewController {
 		if identitiesCount != 0 {
 			let itemsCount = identitiesCount - 1
 
-			if indexPath.item == itemsCount && nextPageURL != nil && !self.isRequestInProgress {
+			if indexPath.item == itemsCount, nextPageURL != nil, !self.isRequestInProgress {
 				self.performSearch(with: self.searchQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
 			}
 		}
@@ -113,7 +113,7 @@ extension SearchResultsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch itemKind {
 		case .discoverSuggestion:
@@ -124,8 +124,7 @@ extension SearchResultsCollectionViewController {
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 				guard let searchType = browseCategory.searchType else { return nil }
-				let searchResultsCollectionViewController =
-				R.storyboard.search.searchResultsCollectionViewController()
+				let searchResultsCollectionViewController = R.storyboard.search.searchResultsCollectionViewController()
 				searchResultsCollectionViewController?.title = browseCategory.title
 				searchResultsCollectionViewController?.searchViewKind = .single(searchType)
 				return searchResultsCollectionViewController
@@ -138,7 +137,7 @@ extension SearchResultsCollectionViewController {
 			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return nil }
-            return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

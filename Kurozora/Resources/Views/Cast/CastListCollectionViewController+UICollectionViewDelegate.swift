@@ -20,7 +20,7 @@ extension CastListCollectionViewController {
 				let character = cast.relationships.characters.data.first
 			else { return }
 
-			self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue, sender: character)
+			self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
 		}
 	}
 

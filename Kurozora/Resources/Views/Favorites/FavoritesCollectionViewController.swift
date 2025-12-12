@@ -10,6 +10,14 @@ import KurozoraKit
 import UIKit
 
 class FavoritesCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+		case literatureDetailsSegue
+		case gameDetailsSegue
+	}
+
+	// MARK: - Views
 	var libraryKindSegmentedControl = UISegmentedControl()
 	var toolbar = UIToolbar()
 
@@ -243,20 +251,24 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.favoritesCollectionViewController.showDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.favoritesCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.favoritesCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		default: break
 		}
 	}
 }

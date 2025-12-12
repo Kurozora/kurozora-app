@@ -28,6 +28,13 @@ enum EpisodesListFetchType: Equatable {
 }
 
 class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+		case episodeDetailsSegue
+		case episodesListSegue
+	}
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var fillerBarButtonItem: UIBarButtonItem!
@@ -435,26 +442,30 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.episodesListCollectionViewController.showDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			if let show = sender as? Show {
 				showDetailsCollectionViewController.show = show
 			} else if let showIdentity = sender as? ShowIdentity {
 				showDetailsCollectionViewController.showIdentity = showIdentity
 			}
-		case R.segue.episodesListCollectionViewController.episodeDetailsSegue.identifier:
+		case .episodeDetailsSegue:
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episodeDict = (sender as? [IndexPath: Episode])?.first else { return }
 
 			episodeDetailsCollectionViewController.indexPath = episodeDict.key
 			episodeDetailsCollectionViewController.episode = episodeDict.value
-		case R.segue.episodesListCollectionViewController.episodesListSegue.identifier:
+		case .episodesListSegue:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let seasonIdentity = sender as? SeasonIdentity else { return }
 			episodesListCollectionViewController.seasonIdentity = seasonIdentity
 			episodesListCollectionViewController.episodesListFetchType = .season
-		default: break
 		}
 	}
 }
@@ -488,7 +499,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: showIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
@@ -498,7 +509,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: seasonIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

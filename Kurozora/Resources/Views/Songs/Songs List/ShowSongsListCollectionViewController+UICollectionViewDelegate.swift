@@ -12,10 +12,10 @@ extension ShowSongsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if !self.showSongs.isEmpty {
 			guard let showSong = self.showSongs[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: showSong.song)
+			self.performSegue(withIdentifier: SegueIdentifiers.songDetailsSegue, sender: showSong.song)
 		} else if !self.songs.isEmpty {
 			guard let song = self.songs[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: song)
+			self.performSegue(withIdentifier: SegueIdentifiers.songDetailsSegue, sender: song)
 		}
 	}
 

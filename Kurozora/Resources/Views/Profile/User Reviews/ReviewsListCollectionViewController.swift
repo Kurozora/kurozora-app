@@ -11,6 +11,18 @@ import KurozoraKit
 import AVFoundation
 
 class ReviewsListCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case characterDetailsSegue
+		case episodeDetailsSegue
+		case gameDetailsSegue
+		case literatureDetailsSegue
+		case personDetailsSegue
+		case showDetailsSegue
+		case songDetailsSegue
+		case studioDetailsSegue
+	}
+
 	// MARK: - Properties
 	var user: User?
 	var characters: [IndexPath: Character] = [:]
@@ -185,42 +197,46 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.reviewsListCollectionViewController.characterDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .characterDetailsSegue:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
-		case R.segue.reviewsListCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		case R.segue.reviewsListCollectionViewController.episodeDetailsSegue.identifier:
+		case .episodeDetailsSegue:
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episode = sender as? Episode else { return }
 			episodeDetailsCollectionViewController.episode = episode
-		case R.segue.reviewsListCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.reviewsListCollectionViewController.personDetailsSegue.identifier:
+		case .personDetailsSegue:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
-		case R.segue.reviewsListCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.reviewsListCollectionViewController.songDetailsSegue.identifier:
+		case .songDetailsSegue:
 			// Segue to song details
 			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
-		case R.segue.reviewsListCollectionViewController.studioDetailsSegue.identifier:
+		case .studioDetailsSegue:
 			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
-		default: break
 		}
 	}
 }

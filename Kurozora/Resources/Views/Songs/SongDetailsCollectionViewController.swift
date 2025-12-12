@@ -11,6 +11,12 @@ import KurozoraKit
 import MusicKit
 
 class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case reviewsSegue
+		case showDetailsSegue
+	}
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreButton: UIBarButtonItem!
 
@@ -191,16 +197,20 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.songDetailsCollectionViewController.reviewsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .reviewsSegue:
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .song(self.song)
-		case R.segue.songDetailsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		default: break
 		}
 	}
 }
@@ -233,7 +243,8 @@ extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension SongDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -439,22 +450,12 @@ extension SongDetailsCollectionViewController {
 		}
 
 		/// The string value of a song section type segue identifier.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header:
-				return ""
-			case .lyrics:
-				return ""
+			case .header, .lyrics, .rateAndReview, .reviews, .shows, .sosumi:
+				return nil
 			case .rating:
-				return R.segue.songDetailsCollectionViewController.reviewsSegue.identifier
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .shows:
-				return ""
-			case .sosumi:
-				return ""
+				return .reviewsSegue
 			}
 		}
 	}

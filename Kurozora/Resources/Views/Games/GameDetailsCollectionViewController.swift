@@ -357,8 +357,8 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		guard
-			let sgueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: sgueIdentifier)
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
 		else { return }
 
 		switch segueID {

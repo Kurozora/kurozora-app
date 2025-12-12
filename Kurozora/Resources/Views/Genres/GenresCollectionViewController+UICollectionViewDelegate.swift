@@ -11,7 +11,7 @@ import UIKit
 extension GenresCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let genre = self.dataSource.itemIdentifier(for: indexPath) else { return }
-		self.performSegue(withIdentifier: R.segue.genresCollectionViewController.exploreSegue, sender: genre)
+		self.performSegue(withIdentifier: SegueIdentifiers.exploreSegue, sender: genre)
 	}
 
 	// MARK: - Managing Context Menus

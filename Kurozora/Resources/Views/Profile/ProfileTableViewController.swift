@@ -10,6 +10,16 @@ import UIKit
 import KurozoraKit
 
 class ProfileTableViewController: KTableViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case achievementsSegue
+		case followingSegue
+		case followersSegue
+		case reviewsSegue
+		case feedMessageDetailsSegue
+		case editProfileSegue
+	}
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 	@IBOutlet weak var postMessageButton: UIBarButtonItem!
@@ -474,32 +484,36 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.profileTableViewController.achievementsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .achievementsSegue:
 			guard let achievementsTableViewController = segue.destination as? AchievementsTableViewController else { return }
 			achievementsTableViewController.user = self.user
-		case R.segue.profileTableViewController.followingSegue.identifier:
+		case .followingSegue:
 			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
 			followTableViewController.usersListType = .following
 			followTableViewController.usersListFetchType = .follow
-		case R.segue.profileTableViewController.followersSegue.identifier:
+		case .followersSegue:
 			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
 			followTableViewController.usersListType = .followers
 			followTableViewController.usersListFetchType = .follow
-		case R.segue.profileTableViewController.reviewsSegue.identifier:
+		case .reviewsSegue:
 			guard let reviewsListCollectionViewController = segue.destination as? ReviewsListCollectionViewController else { return }
 			reviewsListCollectionViewController.user = self.user
-		case R.segue.profileTableViewController.feedMessageDetailsSegue.identifier:
+		case .feedMessageDetailsSegue:
 			guard let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController else { return }
 			guard let feedMessageID = sender as? KurozoraItemID else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessageID
-		case R.segue.profileTableViewController.editProfileSegue.identifier:
+		case .editProfileSegue:
 			guard let kNavigationController = segue.destination as? KNavigationController else { return }
 			guard let editProfileViewController = kNavigationController.viewControllers.first as? EditProfileViewController else { return }
 			editProfileViewController.user = self.user
-		default: break
 		}
 	}
 }
@@ -594,7 +608,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
 	}
 }
 
@@ -609,7 +623,7 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
 	}
 }
 

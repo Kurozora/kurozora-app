@@ -29,18 +29,18 @@ extension StudioDetailsCollectionViewController {
 				return
 			case .successor:
 				guard let successor = self.studio.relationships?.successors?.data.first else { return }
-				self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.studioDetailsSegue.identifier, sender: successor)
+				self.performSegue(withIdentifier: SegueIdentifiers.studioDetailsSegue, sender: successor)
 				return
 			}
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
-			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
+			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatures:
 			guard let literature = self.cache[indexPath] as? Literature else { return }
-			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
+			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .games:
 			guard let game = self.cache[indexPath] as? Game else { return }
-			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.gameDetailsSegue, sender: game)
+			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
 		default: break
 		}
 	}

@@ -10,9 +10,9 @@ import UIKit
 
 class NotificationsSettingsViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var allowNotificationsSwitch: KSwitch!
-	@IBOutlet weak var soundsSwitch: KSwitch!
-	@IBOutlet weak var badgeSwitch: KSwitch!
+	@IBOutlet var allowNotificationsSwitch: KSwitch!
+	@IBOutlet var soundsSwitch: KSwitch!
+	@IBOutlet var badgeSwitch: KSwitch!
 
 	// MARK: - Properties
 	var numberOfSections = 3
@@ -55,8 +55,13 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = NotificationsTableViewController.SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
 		if let notificationsOptionsViewController = segue.destination as? NotificationsOptionsViewController {
-			notificationsOptionsViewController.segueIdentifier = segue.identifier
+			notificationsOptionsViewController.segueIdentifier = segueID
 		}
 	}
 }

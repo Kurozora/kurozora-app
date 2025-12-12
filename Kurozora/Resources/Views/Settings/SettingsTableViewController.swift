@@ -11,6 +11,25 @@ import KurozoraKit
 import UIKit
 
 class SettingsTableViewController: KTableViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case accountSegue
+		case switchAccountSegue
+		case keysSegue
+		case browserSegue
+		case displaySegue
+		case iconSegue
+		case librarySegue
+		case motionSegue
+		case themeSegue
+		case notificationSegue
+		case soundSegue
+		case biometricsSegue
+		case privacySegue
+		case subscriptionSegue
+		case tipJarSegue
+	}
+
 	// MARK: - Properties
 	var settingsSection: [Section] {
 		return Section.all
@@ -100,14 +119,24 @@ class SettingsTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.settingsTableViewController.subscriptionSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .accountSegue, .switchAccountSegue, .keysSegue,
+		     .browserSegue, .displaySegue, .iconSegue,
+		     .librarySegue, .motionSegue, .themeSegue,
+		     .notificationSegue, .soundSegue,
+		     .biometricsSegue, .privacySegue:
+			return
+		case .subscriptionSegue:
 			let kNavigationController = segue.destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? SubscriptionCollectionViewController)?.leftNavigationBarButtonIsHidden = true
-		case R.segue.settingsTableViewController.tipJarSegue.identifier:
+		case .tipJarSegue:
 			let kNavigationController = segue.destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? TipJarCollectionViewController)?.leftNavigationBarButtonIsHidden = true
-		default: break
 		}
 	}
 }
@@ -242,7 +271,8 @@ extension SettingsTableViewController {
 
 		switch sectionRow {
 		case .account:
-			self.authAndSegue(to: sectionRow.segueIdentifier)
+			guard let segueID = sectionRow.segueIdentifier else { return }
+			self.authAndSegue(to: segueID)
 			return
 		case .switchAccount: break
 		case .keychain: break
@@ -272,7 +302,8 @@ extension SettingsTableViewController {
 		case .motion: break
 		case .theme: break
 		case .notifications:
-			self.authAndSegue(to: sectionRow.segueIdentifier)
+			guard let segueID = sectionRow.segueIdentifier else { return }
+			self.authAndSegue(to: segueID)
 			return
 		case .reminder:
 			Task { [weak self] in
@@ -327,8 +358,7 @@ extension SettingsTableViewController {
 			return
 		}
 
-		let identifierString = sectionRow.segueIdentifier
-		if !identifierString.isEmpty {
+		if let identifierString = sectionRow.segueIdentifier {
 			self.performSegue(withIdentifier: identifierString, sender: nil)
 		}
 	}
@@ -336,7 +366,7 @@ extension SettingsTableViewController {
 	/// Authenticate user and perform segue.
 	///
 	/// - Parameter identifier: The segue identifier.
-	private func authAndSegue(to identifier: String) {
+	private func authAndSegue(to identifier: SegueIdentifiers) {
 		Task {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }

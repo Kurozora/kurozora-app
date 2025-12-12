@@ -21,6 +21,13 @@ enum ReviewsListType {
 }
 
 class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+		case literatureDetailsSegue
+		case gameDetailsSegue
+	}
+
 	// MARK: - Properties
 	var listType: ReviewsListType?
 	var reviews: [Review] = []
@@ -229,20 +236,24 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.remindersCollectionViewController.showDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.remindersCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.remindersCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		default: break
 		}
 	}
 }

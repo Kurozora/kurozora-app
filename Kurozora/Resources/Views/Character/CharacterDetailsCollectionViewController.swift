@@ -6,10 +6,23 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case reviewsSegue
+		case showsListSegue
+		case showDetailsSegue
+		case literaturesListSegue
+		case literatureDetailsSegue
+		case gamesListSegue
+		case gameDetailsSegue
+		case peopleListSegue
+		case personDetailsSegue
+	}
+
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity?
 	var character: Character! {
@@ -48,8 +61,8 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 	var cache: [IndexPath: KurozoraItem] = [:]
 	private var isFetchingSection: Set<SectionLayoutKind> = []
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -57,6 +70,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -67,6 +81,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
 		return self._prefersActivityIndicatorHidden
 	}
@@ -232,44 +247,48 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.characterDetailsCollectionViewController.reviewsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .reviewsSegue:
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .character(self.character)
-		case R.segue.characterDetailsCollectionViewController.showsListSegue.identifier:
+		case .showsListSegue:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity
 			showsListCollectionViewController.showsListFetchType = .character
-		case R.segue.characterDetailsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier:
+		case .literaturesListSegue:
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.characterIdentity = self.characterIdentity
 			literaturesListCollectionViewController.literaturesListFetchType = .character
-		case R.segue.characterDetailsCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.characterDetailsCollectionViewController.gamesListSegue.identifier:
+		case .gamesListSegue:
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.characterIdentity = self.characterIdentity
 			gamesListCollectionViewController.gamesListFetchType = .character
-		case R.segue.characterDetailsCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		case R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier:
+		case .peopleListSegue:
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
 			peopleListCollectionViewController.characterIdentity = self.characterIdentity
 			peopleListCollectionViewController.peopleListFetchType = .character
-		case R.segue.characterDetailsCollectionViewController.personDetailsSegue.identifier:
+		case .personDetailsSegue:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
-		default: break
 		}
 	}
 }
@@ -302,7 +321,8 @@ extension CharacterDetailsCollectionViewController: TextViewCollectionViewCellDe
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension CharacterDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -512,28 +532,20 @@ extension CharacterDetailsCollectionViewController {
 		}
 
 		/// The string value of a character section type segue identifier.
-		var segueIdentifier: String {
+		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header:
-				return ""
-			case .about:
-				return ""
+			case .header, .about, .rateAndReview, .reviews, .information:
+				return nil
 			case .rating:
-				return R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .information:
-				return ""
+				return .reviewsSegue
 			case .people:
-				return R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier
+				return .peopleListSegue
 			case .shows:
-				return R.segue.characterDetailsCollectionViewController.showsListSegue.identifier
+				return .showsListSegue
 			case .literatures:
-				return R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier
+				return .literaturesListSegue
 			case .games:
-				return R.segue.characterDetailsCollectionViewController.gamesListSegue.identifier
+				return .gamesListSegue
 			}
 		}
 	}

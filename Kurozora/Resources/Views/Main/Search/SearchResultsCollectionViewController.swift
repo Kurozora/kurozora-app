@@ -21,6 +21,30 @@ enum SearchViewKind {
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case scheduleSegue
+		case searchSegue
+		case characterDetailsSegue
+		case episodeDetailsSegue
+		case literatureDetailsSegue
+		case gameDetailsSegue
+		case personDetailsSegue
+		case showDetailsSegue
+		case songDetailsSegue
+		case studioDetailsSegue
+		case userDetailsSegue
+		case charactersListSegue
+		case episodesListSegue
+		case literaturesListSegue
+		case gamesListSegue
+		case peopleListSegue
+		case songsListSegue
+		case showsListSegue
+		case studiosListSegue
+		case usersListSegue
+	}
+
 	// MARK: - Properties
 	var filterBarButtonItem: UIBarButtonItem!
 	let toolbar = UIToolbar()
@@ -48,15 +72,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
-		BrowseCategory(title: Trans.schedule, image: .Browse.schedule, segueIdentifier: R.segue.searchResultsCollectionViewController.scheduleSegue.identifier),
-        BrowseCategory(title: Trans.shows, image: .Browse.shows, searchType: .shows),
-        BrowseCategory(title: Trans.literatures, image: .Browse.literatures, searchType: .literatures),
-        BrowseCategory(title: Trans.games, image: .Browse.games, searchType: .games),
-        BrowseCategory(title: Trans.songs, image: .Browse.songs, searchType: .songs),
-        BrowseCategory(title: Trans.episodes, image: .Browse.episodes, searchType: .episodes),
-        BrowseCategory(title: Trans.characters, image: .Browse.characters, searchType: .characters),
-        BrowseCategory(title: Trans.people, image: .Browse.people, searchType: .people),
-        BrowseCategory(title: Trans.studio, image: .Browse.studios, searchType: .studios),
+		BrowseCategory(title: Trans.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
+		BrowseCategory(title: Trans.shows, image: .Browse.shows, searchType: .shows),
+		BrowseCategory(title: Trans.literatures, image: .Browse.literatures, searchType: .literatures),
+		BrowseCategory(title: Trans.games, image: .Browse.games, searchType: .games),
+		BrowseCategory(title: Trans.songs, image: .Browse.songs, searchType: .songs),
+		BrowseCategory(title: Trans.episodes, image: .Browse.episodes, searchType: .episodes),
+		BrowseCategory(title: Trans.characters, image: .Browse.characters, searchType: .characters),
+		BrowseCategory(title: Trans.people, image: .Browse.people, searchType: .people),
+		BrowseCategory(title: Trans.studio, image: .Browse.studios, searchType: .studios),
 	]
 
 	/// The collection of search types in the current search request
@@ -334,7 +358,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.resetSearchResults(for: types.count > 1 ? nil : types.first)
 		}
 
-		// Decide with wich endpoint to perform the search
+		// Decide with which endpoint to perform the search
 		switch searchScope {
 		case .kurozora:
 			Task { [weak self] in
@@ -615,40 +639,45 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.searchResultsCollectionViewController.searchSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .searchSegue:
 			// Segue to character details
 			guard let searchResultsCollectionViewController = segue.destination as? SearchResultsCollectionViewController else { return }
 			guard let browseCategory = sender as? BrowseCategory else { return }
 			guard let searchType = browseCategory.searchType else { return }
 			searchResultsCollectionViewController.title = browseCategory.title
 			searchResultsCollectionViewController.searchViewKind = .single(searchType)
-		case R.segue.searchResultsCollectionViewController.characterDetailsSegue.identifier:
+		case .characterDetailsSegue:
 			// Segue to character details
 			guard let characterDetailCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailCollectionViewController.character = character
-		case R.segue.searchResultsCollectionViewController.episodeDetailsSegue.identifier:
+		case .episodeDetailsSegue:
 			// Segue to episode details
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episode = sender as? Episode else { return }
 			episodeDetailsCollectionViewController.episode = episode
-		case R.segue.searchResultsCollectionViewController.literatureDetailsSegue.identifier:
+		case .literatureDetailsSegue:
 			// Segue to literature details
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
-		case R.segue.searchResultsCollectionViewController.gameDetailsSegue.identifier:
+		case .gameDetailsSegue:
 			// Segue to game details
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		case R.segue.searchResultsCollectionViewController.personDetailsSegue.identifier:
+		case .personDetailsSegue:
 			// Segue to person details
 			guard let personDetailCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailCollectionViewController.person = person
-		case R.segue.searchResultsCollectionViewController.showDetailsSegue.identifier:
+		case .showDetailsSegue:
 			// Segue to show details
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			if let show = sender as? Show {
@@ -656,27 +685,27 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			} else if let showIdentity = sender as? ShowIdentity {
 				showDetailsCollectionViewController.showIdentity = showIdentity
 			}
-		case R.segue.searchResultsCollectionViewController.songDetailsSegue.identifier:
+		case .songDetailsSegue:
 			// Segue to studio details
 			guard let songDetailCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailCollectionViewController.song = song
-		case R.segue.searchResultsCollectionViewController.studioDetailsSegue.identifier:
+		case .studioDetailsSegue:
 			// Segue to studio details
 			guard let studioDetailCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailCollectionViewController.studio = studio
-		case R.segue.searchResultsCollectionViewController.userDetailsSegue.identifier:
+		case .userDetailsSegue:
 			// Segue to user details
 			guard let profileTableViewController = segue.destination as? ProfileTableViewController else { return }
 			guard let user = sender as? User else { return }
 			profileTableViewController.user = user
-		case R.segue.searchResultsCollectionViewController.charactersListSegue.identifier:
+		case .charactersListSegue:
 			// Segue to characters list
 			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
 			charactersListCollectionViewController.searchQuery = self.searchQuery
 			charactersListCollectionViewController.charactersListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.episodesListSegue.identifier:
+		case .episodesListSegue:
 			// Segue to episodes list
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 
@@ -689,43 +718,43 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			}
 
 			episodesListCollectionViewController.episodesListFetchType = .season
-		case R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier:
+		case .literaturesListSegue:
 			// Segue to literatures list
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.searchQuery = self.searchQuery
 			literaturesListCollectionViewController.literaturesListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.gamesListSegue.identifier:
+		case .gamesListSegue:
 			// Segue to games list
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.searchQuery = self.searchQuery
 			gamesListCollectionViewController.gamesListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.peopleListSegue.identifier:
+		case .peopleListSegue:
 			// Segue to people list
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
 			peopleListCollectionViewController.searchQuery = self.searchQuery
 			peopleListCollectionViewController.peopleListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.songsListSegue.identifier:
+		case .songsListSegue:
 			// Segue to songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.songs = self.songs.map { _, song in
 				song
 			}
-		case R.segue.searchResultsCollectionViewController.showsListSegue.identifier:
+		case .showsListSegue:
 			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.searchQuery = self.searchQuery
 			showsListCollectionViewController.showsListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.studiosListSegue.identifier:
+		case .studiosListSegue:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
 			studiosListCollectionViewController.searchQuery = self.searchQuery
 			studiosListCollectionViewController.studiosListFetchType = .search
-		case R.segue.searchResultsCollectionViewController.usersListSegue.identifier:
+		case .usersListSegue:
 			// Segue to users list
 			guard let usersListCollectionViewController = segue.destination as? UsersListCollectionViewController else { return }
 			usersListCollectionViewController.searchQuery = self.searchQuery
 			usersListCollectionViewController.usersListFetchType = .search
-		default: break
+		case .scheduleSegue: break
 		}
 	}
 }
@@ -962,7 +991,8 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension SearchResultsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID else { return }
+		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -1001,14 +1031,14 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: showIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodesListSegue, sender: seasonIdentity)
+		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

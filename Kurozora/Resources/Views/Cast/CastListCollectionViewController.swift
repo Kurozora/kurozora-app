@@ -16,6 +16,12 @@ enum CastKind: String {
 }
 
 class CastListCollectionViewController: KCollectionViewController, SectionFetchable {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case characterDetailsSegue
+		case personDetailsSegue
+	}
+
 	// MARK: - Properties
 	var literatureIdentity: LiteratureIdentity?
 	var showIdentity: ShowIdentity?
@@ -220,16 +226,20 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.castListCollectionViewController.characterDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .characterDetailsSegue:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
-		case R.segue.castListCollectionViewController.personDetailsSegue.identifier:
+		case .personDetailsSegue:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
-		default: break
 		}
 	}
 }
@@ -241,7 +251,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let person = cast.relationships.people?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.personDetailsSegue.identifier, sender: person)
+		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: person)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
@@ -249,7 +259,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let character = cast.relationships.characters.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue.identifier, sender: character)
+		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
 	}
 }
 

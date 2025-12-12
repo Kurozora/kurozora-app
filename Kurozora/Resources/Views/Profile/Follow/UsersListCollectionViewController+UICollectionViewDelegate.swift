@@ -12,9 +12,7 @@ import UIKit
 extension UsersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let user = self.cache[indexPath] as? User else { return }
-		let segueIdentifier = R.segue.usersListCollectionViewController.userDetailsSegue
-
-		self.performSegue(withIdentifier: segueIdentifier, sender: user)
+		self.performSegue(withIdentifier: SegueIdentifiers.userDetailsSegue, sender: user)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

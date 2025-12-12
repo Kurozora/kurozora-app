@@ -16,6 +16,12 @@ enum SongsListViewType: Int {
 }
 
 class ShowSongsListCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case showDetailsSegue
+		case songDetailsSegue
+	}
+
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var songs: [Song] = [] {
@@ -157,18 +163,22 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.showSongsListCollectionViewController.showDetailsSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			  let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .showDetailsSegue:
 			// Segue to show details
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
-		case R.segue.showSongsListCollectionViewController.songDetailsSegue.identifier:
+		case .songDetailsSegue:
 			// Segue to song details
 			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
-		default: break
 		}
 	}
 }
@@ -182,7 +192,7 @@ extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableVi
 extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.showSongs[safe: indexPath.item]?.show else { return }
-		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)
+		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
 	}
 }
 

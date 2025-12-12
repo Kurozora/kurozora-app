@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 // MARK: - SectionLayoutKind
 extension ThemesCollectionViewController {
@@ -22,6 +22,11 @@ extension ThemesCollectionViewController {
 }
 
 class ThemesCollectionViewController: KCollectionViewController {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case exploreSegue
+	}
+
 	// MARK: - Properties
 	var themes: [Theme] = [] {
 		didSet {
@@ -35,8 +40,9 @@ class ThemesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Theme>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Theme>! = nil
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Theme>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Theme>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -44,6 +50,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -54,8 +61,9 @@ class ThemesCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -125,12 +133,16 @@ class ThemesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case R.segue.themesCollectionViewController.exploreSegue.identifier:
+		guard
+			let segueIdentifier = segue.identifier,
+			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
+		else { return }
+
+		switch segueID {
+		case .exploreSegue:
 			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
 			guard let theme = sender as? Theme else { return }
 			homeCollectionViewController.theme = theme
-		default: break
 		}
 	}
 }

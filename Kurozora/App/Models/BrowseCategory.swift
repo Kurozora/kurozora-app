@@ -6,22 +6,22 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 struct BrowseCategory: Hashable {
 	// MARK: - Properties
 	let title: String
 	let image: UIImage?
 	let searchType: KKSearchType?
-	let segueIdentifier: String?
+	let segueIdentifier: (any SegueIdentifier)?
 
 	// MARK: - Initializers
 	init(
 		title: String,
 		image: UIImage?,
 		searchType: KKSearchType? = nil,
-		segueIdentifier: String? = nil
+		segueIdentifier: (any SegueIdentifier)? = nil
 	) {
 		self.title = title
 		self.image = image
@@ -31,12 +31,12 @@ struct BrowseCategory: Hashable {
 
 	// MARK: - Functions
 	static func == (lhs: BrowseCategory, rhs: BrowseCategory) -> Bool {
-		lhs.title == rhs.title && lhs.searchType == rhs.searchType && lhs.segueIdentifier == rhs.segueIdentifier
+		lhs.title == rhs.title && lhs.searchType == rhs.searchType && lhs.segueIdentifier?.rawValue == rhs.segueIdentifier?.rawValue
 	}
 
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(self.title)
 		hasher.combine(self.searchType)
-		hasher.combine(self.segueIdentifier)
+		hasher.combine(self.segueIdentifier?.rawValue)
 	}
 }

@@ -13,7 +13,7 @@ extension SeasonsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let season = self.cache[indexPath] as? Season else { return }
 
-		self.performSegue(withIdentifier: R.segue.seasonsListCollectionViewController.episodeSegue, sender: season)
+		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: season)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
