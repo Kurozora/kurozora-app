@@ -80,9 +80,7 @@ class KTabBarController: UITabBarController {
 		if #available(iOS 18.0, *) {
 			self.delegate = self
 			self.tabs = TabBarItem.tabBarCases.map { $0.tab }
-			self.selectedIndex = self.tabs.firstIndex(where: { tab in
-				tab.identifier == TabBarItem.home.rowIdentifierValue
-			}) ?? 0
+			self.selectTab(.home)
 			self.previousTabs = self.tabs
 		} else {
 			self.viewControllers = TabBarItem.tabBarCases.map {
@@ -105,6 +103,14 @@ class KTabBarController: UITabBarController {
 	}
 
 	// MARK: - Functions
+	func selectTab(_ tabItem: TabBarItem) {
+		if #available(iOS 18.0, *) {
+			self.selectedIndex = self.tabs.firstIndex(of: tabItem.tab) ?? 0
+		} else {
+			self.selectedIndex = tabItem.rawValue
+		}
+	}
+
 	/// The shared settings used to initialize tab bar view.
 	private func sharedInit() {
 		#if DEBUG
@@ -200,7 +206,7 @@ class KTabBarController: UITabBarController {
 				tab?.badgeValue = nil
 			}
 		} else {
-			tab?.badgeValue = nil
+			self.tab?.badgeValue = nil
 		}
 	}
 }
@@ -266,10 +272,10 @@ extension KTabBarController: UITabBarControllerDelegate {
 extension KTabBarController {
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 		guard
-			let idx = tabBar.items?.firstIndex(of: item),
-			self.viewControllers?[idx] != nil
+			let index = tabBar.items?.firstIndex(of: item),
+			self.viewControllers?[index] != nil
 		else { return }
-		self.selectedIndex = idx
+		self.selectedIndex = index
 
 		if UserSettings.hapticsAllowed {
 			UISelectionFeedbackGenerator().selectionChanged()

@@ -41,30 +41,13 @@ class NavigationManager: NSObject {
 	/// - Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	fileprivate func routeScheme(with url: URL) async {
 		if url.pathExtension == "xml" {
-			let signedIn = await WorkflowController.shared.isSignedIn()
-			guard signedIn else { return }
-
-			let topViewController = UIApplication.topViewController
-			if let libraryImportTableViewController = topViewController as? LibraryImportTableViewController {
-				libraryImportTableViewController.selectedFileURL = url
-			} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
-				if let libraryImportTableViewController = kNavigationController.topViewController as? LibraryImportTableViewController {
-					libraryImportTableViewController.selectedFileURL = url
-				} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
-					libraryImportTableViewController.selectedFileURL = url
-					kNavigationController.show(libraryImportTableViewController, sender: nil)
-				}
-			} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
-				let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: libraryImportTableViewController, action: #selector(libraryImportTableViewController.dismissButtonPressed))
-				libraryImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
-				libraryImportTableViewController.selectedFileURL = url
-				let kNavigationController = KNavigationController(rootViewController: libraryImportTableViewController)
-				topViewController?.show(kNavigationController, sender: nil)
-			}
+			await self.handleFileImport(from: url)
 		}
 
-		guard let urlScheme = url.host?.removingPercentEncoding else { return }
-		guard let scheme: Scheme = Scheme(rawValue: urlScheme) else { return }
+		guard
+			let urlScheme = url.host?.removingPercentEncoding,
+			let scheme: Scheme = Scheme(rawValue: urlScheme)
+		else { return }
 		let parameters: [String: String] = url.queryParameters ?? [:]
 		let lastPathComponent = url.lastPathComponent
 
@@ -102,7 +85,7 @@ class NavigationManager: NSObject {
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = TabBarItem.home.rawValue
+				tabBarController.selectTab(.home)
 			}
 		case .schedule:
 			if UIDevice.isPhone {
@@ -111,25 +94,25 @@ class NavigationManager: NSObject {
 			} else {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = TabBarItem.schedule.rawValue
+				tabBarController.selectTab(.schedule)
 			}
 		case .library, .myLibrary, .list:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = TabBarItem.library.rawValue
+				tabBarController.selectTab(.library)
 			}
 		case .feed, .timeline:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = TabBarItem.feed.rawValue
+				tabBarController.selectTab(.feed)
 			}
 		case .notification, .notifications:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = TabBarItem.notifications.rawValue
+				tabBarController.selectTab(.notifications)
 			}
 		case .search:
 			if UIDevice.isPhone {
@@ -157,6 +140,32 @@ class NavigationManager: NSObject {
 					)
 				}
 			}
+		}
+	}
+
+	/// Handles file import for the given URL.
+	///
+	/// - Parameter url: The URL of the file to import.
+	fileprivate func handleFileImport(from url: URL) async {
+		let signedIn = await WorkflowController.shared.isSignedIn()
+		guard signedIn else { return }
+
+		let topViewController = UIApplication.topViewController
+		if let libraryImportTableViewController = topViewController as? LibraryImportTableViewController {
+			libraryImportTableViewController.selectedFileURL = url
+		} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
+			if let libraryImportTableViewController = kNavigationController.topViewController as? LibraryImportTableViewController {
+				libraryImportTableViewController.selectedFileURL = url
+			} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
+				libraryImportTableViewController.selectedFileURL = url
+				kNavigationController.show(libraryImportTableViewController, sender: nil)
+			}
+		} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
+			let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: libraryImportTableViewController, action: #selector(libraryImportTableViewController.dismissButtonPressed))
+			libraryImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
+			libraryImportTableViewController.selectedFileURL = url
+			let kNavigationController = KNavigationController(rootViewController: libraryImportTableViewController)
+			topViewController?.show(kNavigationController, sender: nil)
 		}
 	}
 
