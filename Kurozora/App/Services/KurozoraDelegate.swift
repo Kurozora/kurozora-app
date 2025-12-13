@@ -364,15 +364,15 @@ extension KurozoraDelegate {
 	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async {
 		switch shortcutItem.type {
 		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
-			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.library.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: .library)
 		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
 			let signedIn = await WorkflowController.shared.isSignedIn()
 			guard signedIn else { return }
-			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.profile.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: .profile)
 		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
-			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.notifications.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: .notifications)
 		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
-			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.search.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: .search)
 		default: break
 		}
 	}
