@@ -26,7 +26,6 @@
 		66CBF8782E90287A00104283 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8772E90287A00104283 /* RswiftLibrary */; };
 		66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF87C2E902AFC00104283 /* XCDYouTubeKit */; };
 		66CBFFCC2E9045E700104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCB2E9045E700104283 /* KurozoraKit */; };
-		66CBFFD02E90463200104283 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCF2E90463200104283 /* RswiftLibrary */; };
 		66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD32E904AF500104283 /* Kingfisher */; };
 		66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD52E904B3F00104283 /* SwiftTheme */; };
 /* End PBXBuildFile section */
@@ -168,7 +167,6 @@
 				66CBFFCC2E9045E700104283 /* KurozoraKit in Frameworks */,
 				66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */,
 				66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */,
-				66CBFFD02E90463200104283 /* RswiftLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +246,6 @@
 			);
 			dependencies = (
 				66E55B152EE453DB009E12A3 /* PBXTargetDependency */,
-				66CB0EB02E90A27100104283 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6615A2EE2DA20A5A005DBB96 /* KurozoraWidget */,
@@ -462,10 +459,6 @@
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
-		};
-		66CB0EB02E90A27100104283 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 66CB0EAF2E90A27100104283 /* RswiftGenerateInternalResources */;
 		};
 		66CBFFD82E904CDB00104283 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1045,11 +1038,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WhatsNew;
 		};
-		66CB0EAF2E90A27100104283 /* RswiftGenerateInternalResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = "plugin:RswiftGenerateInternalResources";
-		};
 		66CB161B2E90AA4800104283 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
@@ -1127,11 +1115,6 @@
 		66CBFFCB2E9045E700104283 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KurozoraKit;
-		};
-		66CBFFCF2E90463200104283 /* RswiftLibrary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = RswiftLibrary;
 		};
 		66CBFFD32E904AF500104283 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
