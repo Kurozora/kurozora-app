@@ -223,13 +223,16 @@ extension KTabBarController: UITabBarControllerDelegate {
 			let selectedViewController = (self.selectedViewController as? KNavigationController)?.visibleViewController
 
 			switch tabBarItem {
-			case .home, .schedule, .library:
+			case .home, .library:
 				let collectionView = (selectedViewController as? UICollectionViewController)?.collectionView
 				if collectionView?.isAtTop ?? true {
 					selectedViewController?.dismiss(animated: true, completion: nil)
 				} else {
 					collectionView?.safeScrollToItem(at: [0, 0], at: .top, animated: true)
 				}
+			case .schedule:
+				let collectionViewController = selectedViewController as? ScheduleCollectionViewController
+				collectionViewController?.scrollToToday(animated: true)
 			case .feed, .notifications:
 				let tableView = (selectedViewController as? UITableViewController)?.tableView
 				if tableView?.isAtTop ?? true {
@@ -238,7 +241,8 @@ extension KTabBarController: UITabBarControllerDelegate {
 					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
 				}
 			case .search:
-				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
+				let collectionViewController = selectedViewController as? UICollectionViewController
+				collectionViewController?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
 			case .settings: return
 			}
 		}

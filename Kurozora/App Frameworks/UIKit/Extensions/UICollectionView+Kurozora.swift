@@ -39,6 +39,29 @@ extension UICollectionView {
 		self.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
 	}
 
+	/// Scrolls the collection view contents until the specified section is visible.
+	///
+	/// - Parameters:
+	///    - section: The section to scroll into view.
+	///    - animated: Specify [`true`](https://developer.apple.com/documentation/swift/true) to animate the scrolling behavior or [`false`](https://developer.apple.com/documentation/swift/false) to adjust the scroll view’s visible content immediately.
+	func scrollToSection(_ section: Int, animated: Bool) {
+		self.layoutIfNeeded()
+
+		let indexPath = IndexPath(item: 0, section: section)
+
+		guard let headerAttributes = self.collectionViewLayout.layoutAttributesForSupplementaryView(
+			ofKind: UICollectionView.elementKindSectionHeader,
+			at: indexPath
+		) else {
+			return
+		}
+
+		let yOffset = headerAttributes.frame.minY - self.adjustedContentInset.top
+		let contentOffset = CGPoint(x: 0, y: max(yOffset, -self.adjustedContentInset.top))
+
+		self.setContentOffset(contentOffset, animated: animated)
+	}
+
 	/// Reload data with a completion handler.
 	///
 	/// - Parameter completion: completion handler to run after reloadData finishes.

@@ -505,6 +505,9 @@
     "Title" : {
 
     },
+    "Today" : {
+      "comment" : "The string for the word 'today'."
+    },
     "Top %@" : {
       "comment" : "The string for the word 'Top %@'."
     },

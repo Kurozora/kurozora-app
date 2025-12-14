@@ -18,6 +18,9 @@ class ScheduleCollectionViewController: KCollectionViewController {
 		case gameDetailsSegue
 	}
 
+	// MARK: - Views
+	var todayBarButtonItem: UIBarButtonItem!
+
 	// MARK: - Properties
 	var week: Int = 0
 	var schedules: [Schedule] = [] {
@@ -74,13 +77,14 @@ class ScheduleCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-//		self.configureView()
+		self.configureView()
 		self.configureDataSource()
 
 		// Fetch schedule details.
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
+			self.scrollToToday(animated: false)
 		}
 	}
 
@@ -93,6 +97,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	}
 
 	func configureView() {
+		self.configureNavBarButtons()
 		self.configureTabBarView()
 		self.configureToolbar()
 		self.configureViewHierarchy()
@@ -103,6 +108,11 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			tabBarBarButtonItem.hidesSharedBackground = true
 		}
 		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+	}
+
+	func configureNavBarButtons() {
+		self.todayBarButtonItem = UIBarButtonItem(title: Trans.today, style: .plain, target: self, action: #selector(self.handleTodayButtonPressed))
+		self.navigationItem.rightBarButtonItem = self.todayBarButtonItem
 	}
 
 	func configureTabBarView() {
@@ -194,6 +204,20 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
+		}
+	}
+
+	/// Scroll to today's schedule section.
+	///
+	/// - Parameter animated: Specify [`true`](https://developer.apple.com/documentation/swift/true) to animate the scrolling behavior or [`false`](https://developer.apple.com/documentation/swift/false) to adjust the scroll view’s visible content immediately.
+	func scrollToToday(animated: Bool) {
+		self.collectionView.scrollToSection(1, animated: animated)
+	}
+
+	/// Handles today button pressed.
+	@objc func handleTodayButtonPressed() {
+		Task { @MainActor in
+			self.scrollToToday(animated: true)
 		}
 	}
 

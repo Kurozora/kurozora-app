@@ -958,6 +958,11 @@ struct Trans {
 											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'today'.
+	///
+	/// - Tag: Trans-today
+	static let today: String = String(localized: "Today",
+									  comment: "The string for the word 'today'.")
 	/// The string for the word 'submitted'.
 	///
 	/// - Tag: Trans-submitted
