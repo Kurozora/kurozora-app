@@ -74,6 +74,9 @@ final class KurozoraDelegate {
 				return
 			}
 
+			// Register Home Screen shortcut items
+			await self.registerHomeScreenShortcutItems()
+
 			// Play chime
 			if UserSettings.startupSoundAllowed {
 				Chime.shared.play()
@@ -353,8 +356,14 @@ extension KurozoraDelegate {
 	}
 }
 
-// MARK: - Quick Actions
+// MARK: - Home Screen Shortcut Item
 extension KurozoraDelegate {
+	/// Register Home Screen shortcut items.
+	@MainActor
+	func registerHomeScreenShortcutItems() {
+		UIApplication.shared.shortcutItems = HomeScreenShortcutItem.allCases.map { $0.shortcutItem }
+	}
+
 	/// Handle the selected quick action.
 	///
 	/// - Parameters:
@@ -362,18 +371,18 @@ extension KurozoraDelegate {
 	///    - shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	@MainActor
 	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async {
-		switch shortcutItem.type {
-		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
-			await NavigationManager.shared.schemeHandler(windowScene, open: .library)
-		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
-			let signedIn = await WorkflowController.shared.isSignedIn()
-			guard signedIn else { return }
-			await NavigationManager.shared.schemeHandler(windowScene, open: .profile)
-		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
-			await NavigationManager.shared.schemeHandler(windowScene, open: .notifications)
-		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
+		guard let action = HomeScreenShortcutItem(type: shortcutItem.type) else { return }
+
+		switch action {
+		case .search:
 			await NavigationManager.shared.schemeHandler(windowScene, open: .search)
-		default: break
+		case .library:
+			await NavigationManager.shared.schemeHandler(windowScene, open: .library)
+		case .profile:
+			guard await WorkflowController.shared.isSignedIn() else { return }
+			await NavigationManager.shared.schemeHandler(windowScene, open: .profile)
+		case .notifications:
+			await NavigationManager.shared.schemeHandler(windowScene, open: .notifications)
 		}
 	}
 }

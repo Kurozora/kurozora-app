@@ -335,6 +335,9 @@
     "Pro" : {
       "comment" : "The string for the word 'pro'."
     },
+    "Profile" : {
+      "comment" : "The string for the word 'profile'."
+    },
     "Quikly launch the Kurozora app" : {
 
     },

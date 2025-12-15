@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The set of available  subscription tier types.
+/// The set of available subscription tier types.
 public enum SubscriptionTier: Int, Comparable {
 	// MARK: - Cases
 	/// Indicating no subscription tier.

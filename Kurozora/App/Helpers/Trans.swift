@@ -1327,6 +1327,11 @@ struct Trans {
 	/// - Tag: Trans-notifications
 	static let notifications: String = String(localized: "Notifications",
 											  comment: "The string for the word 'notifications'.")
+	/// The string for the word 'profile'.
+	///
+	/// - Tag: Trans-profile
+	static let profile: String = String(localized: "Profile",
+										comment: "The string for the word 'profile'.")
 	/// The string for the word 'stickers'.
 	///
 	/// - Tag: Trans-stickers
