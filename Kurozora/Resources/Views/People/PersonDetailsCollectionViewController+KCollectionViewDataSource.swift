@@ -91,7 +91,7 @@ extension PersonDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
@@ -100,7 +100,7 @@ extension PersonDetailsCollectionViewController {
 				}
 				return reviewCollectionViewCell
 			case .information:
-				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
+				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .person(let person, _):
 					informationCollectionViewCell?.configure(using: person, for: PersonDetail.Information(rawValue: indexPath.item) ?? .aliases)

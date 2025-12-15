@@ -8,8 +8,4 @@
 
 import UIKit
 
-class ShowMoreCell: UITableViewCell {
-	public class func registerNibFor(tableView: UITableView) {
-		tableView.register(R.nib.showMoreCell)
-	}
-}
+class ShowMoreCell: UITableViewCell {}

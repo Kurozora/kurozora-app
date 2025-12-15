@@ -61,7 +61,7 @@ extension EpisodeDetailsCollectionViewController {
 				}
 				return badgeCollectionViewCell
 			case .synopsis:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.episode.attributes.synopsis
@@ -102,7 +102,7 @@ extension EpisodeDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
@@ -111,7 +111,7 @@ extension EpisodeDetailsCollectionViewController {
 				}
 				return reviewCollectionViewCell
 			case .information:
-				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
+				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .episode(let episode, _):
 					informationCollectionViewCell?.configure(using: episode, for: EpisodeDetail.Information(rawValue: indexPath.item) ?? .number)
@@ -123,7 +123,7 @@ extension EpisodeDetailsCollectionViewController {
 			case .suggestedEpisodes:
 				return collectionView.dequeueConfiguredReusableCell(using: episodeCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi: return nil
-//				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
+//				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
 //				switch itemKind {
 //				case .episode(let episode, _):
 //					sosumiCollectionViewCell?.copyrightText = episode.attributes.copyright

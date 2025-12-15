@@ -85,7 +85,7 @@ extension HomeCollectionViewController {
 				default: return nil
 				}
 			case .legal:
-				let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.legalCollectionViewCell, for: indexPath)
+				let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LegalCollectionViewCell.self, for: indexPath)
 				return legalExploreCollectionViewCell
 			}
 		}

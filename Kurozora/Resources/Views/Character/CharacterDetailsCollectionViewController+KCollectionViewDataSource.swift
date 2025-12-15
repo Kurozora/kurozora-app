@@ -38,7 +38,7 @@ extension CharacterDetailsCollectionViewController {
 
 			switch characterDetailSection {
 			case .header:
-				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterHeaderCollectionViewCell.reuseID, for: indexPath) as? CharacterHeaderCollectionViewCell
+				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .character(let character, _):
 					characterHeaderCollectionViewCell?.character = character
@@ -46,7 +46,7 @@ extension CharacterDetailsCollectionViewController {
 				}
 				return characterHeaderCollectionViewCell
 			case .about:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 				switch itemKind {
@@ -91,7 +91,7 @@ extension CharacterDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
@@ -100,7 +100,7 @@ extension CharacterDetailsCollectionViewController {
 				}
 				return reviewCollectionViewCell
 			case .information:
-				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
+				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .character(let character, _):
 					informationCollectionViewCell?.configure(using: character, for: CharacterDetail.Information(rawValue: indexPath.item) ?? .debut)

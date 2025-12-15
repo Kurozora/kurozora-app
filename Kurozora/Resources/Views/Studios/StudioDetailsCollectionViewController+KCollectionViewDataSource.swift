@@ -102,7 +102,7 @@ extension StudioDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self

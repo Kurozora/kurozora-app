@@ -45,7 +45,7 @@ extension SongDetailsCollectionViewController {
 				}
 				return songHeaderCollectionViewCell
 			case .lyrics:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .lyrics
 				textViewCollectionViewCell?.textViewContent = self.song.attributes.originalLyrics
@@ -86,7 +86,7 @@ extension SongDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
@@ -97,7 +97,7 @@ extension SongDetailsCollectionViewController {
 			case .shows:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
 			case .sosumi:
-				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
+				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .song(let song, _):
 					sosumiCollectionViewCell?.copyrightText = song.attributes.copyright

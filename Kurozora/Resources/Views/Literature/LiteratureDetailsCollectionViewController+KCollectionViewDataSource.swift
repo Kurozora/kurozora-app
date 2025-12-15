@@ -63,7 +63,7 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return badgeCollectionViewCell
 			case .synopsis:
-				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.textViewCollectionViewCell, for: indexPath)
+				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.literature.attributes.synopsis
@@ -104,7 +104,7 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
@@ -113,7 +113,7 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return reviewCollectionViewCell
 			case .information:
-				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
+				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .literature(let literature, _):
 					informationCollectionViewCell?.configure(using: literature, for: LiteratureDetail.Information(rawValue: indexPath.item) ?? .type)
@@ -131,7 +131,7 @@ extension LiteratureDetailsCollectionViewController {
 			case .relatedGames:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
-				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
+				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .literature(let literature, _):
 					sosumiCollectionViewCell?.copyrightText = literature.attributes.copyright
