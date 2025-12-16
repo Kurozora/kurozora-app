@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kurozora/KurozoraKit.git",
       "state" : {
-        "revision" : "84e01ab67869bf236f03463c8b25007b2990e455",
-        "version" : "1.22.2"
+        "revision" : "ef193f42f0a824f717c54bb9961247bafeead71a",
+        "version" : "1.22.3"
       }
     },
     {
@@ -231,8 +231,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "b1fa4ef41fe21b13120c034854042d12c43f66b2",
-        "version" : "1.7.1"
+        "revision" : "bc386b95f2a16ccd0150a8235e7c69eab2b866ca",
+        "version" : "1.8.0"
       }
     },
     {

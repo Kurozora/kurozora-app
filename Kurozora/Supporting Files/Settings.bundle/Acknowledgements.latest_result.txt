@@ -22,7 +22,7 @@ name: KeychainAccess, nameSpecified: KeychainAccess, owner: kishikawakatsumi, ve
 
 name: Kingfisher, nameSpecified: Kingfisher, owner: onevcat, version: 8.6.2, source: https://github.com/onevcat/Kingfisher
 
-name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.2, source: https://github.com/Kurozora/KurozoraKit
+name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.3, source: https://github.com/Kurozora/KurozoraKit
 
 name: Pageboy, nameSpecified: Pageboy, owner: uias, version: 4.2.0, source: https://github.com/uias/Pageboy
 
