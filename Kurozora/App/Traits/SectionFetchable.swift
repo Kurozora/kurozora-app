@@ -9,14 +9,18 @@
 import KurozoraKit
 import UIKit
 
-/// A protocol that provides functionality for fetching and caching section data in a collection view.
+/// A protocol that provides functionality for fetching and caching section data in a view controller.
 @MainActor
 protocol SectionFetchable: AnyObject {
 	// MARK: - Associated Types
-	/// The type of items in the collection view.
-	associatedtype ItemKind: Hashable
-	/// The type of sections in the collection view.
+	/// The type of sections in the view controller.
 	associatedtype SectionLayoutKind: Hashable
+	/// The type of items in the view controller.
+	associatedtype ItemKind: Hashable
+	/// The type of the diffable data source used by the view controller.
+	associatedtype DataSource: DiffableDataSourceProtocol
+		where DataSource.SectionIdentifierType == SectionLayoutKind,
+		DataSource.ItemIdentifierType == ItemKind
 
 	// MARK: - Properties
 	/// A cache mapping IndexPaths to their corresponding KurozoraItem models.
@@ -26,8 +30,8 @@ protocol SectionFetchable: AnyObject {
 
 	/// The current snapshot of the data source.
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! { get }
-	/// The collection view's diffable data source.
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! { get }
+	/// The view controller's diffable data source.
+	var dataSource: DataSource! { get }
 
 	// MARK: - Methods
 	/// Extracts a Kurozora identity from an ItemKind
@@ -54,7 +58,7 @@ extension SectionFetchable {
 
 		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
 		snapshot.reconfigureItems(itemsInSection)
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
 	}
 
 	/// Fetches details for all uncached identities in the section containing the given index path.
