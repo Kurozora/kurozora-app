@@ -20,7 +20,9 @@ enum SearchViewKind {
 }
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
-class SearchResultsCollectionViewController: KCollectionViewController {
+class SearchResultsCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Search"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case scheduleSegue
@@ -620,7 +622,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return nil }
-		guard let searchFilterViewController = R.storyboard.searchFilter.searchFilterCollectionViewController() else { return nil }
+		let searchFilterViewController = SearchFilterCollectionViewController.instantiate()
 		searchFilterViewController.delegate = self
 		searchFilterViewController.searchType = searchType
 		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil

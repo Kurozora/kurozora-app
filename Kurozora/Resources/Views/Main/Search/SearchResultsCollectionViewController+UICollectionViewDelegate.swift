@@ -124,9 +124,9 @@ extension SearchResultsCollectionViewController {
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 				guard let searchType = browseCategory.searchType else { return nil }
-				let searchResultsCollectionViewController = R.storyboard.search.searchResultsCollectionViewController()
-				searchResultsCollectionViewController?.title = browseCategory.title
-				searchResultsCollectionViewController?.searchViewKind = .single(searchType)
+				let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
+				searchResultsCollectionViewController.title = browseCategory.title
+				searchResultsCollectionViewController.searchViewKind = .single(searchType)
 				return searchResultsCollectionViewController
 			}, actionProvider: nil)
 		case .characterIdentity:

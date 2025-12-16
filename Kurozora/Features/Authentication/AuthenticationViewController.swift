@@ -8,7 +8,9 @@
 
 import UIKit
 
-class AuthenticationViewController: KViewController {
+class AuthenticationViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Authentication"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var blurEffectView: KVisualEffectView!
 	@IBOutlet weak var lockImageView: UIImageView!

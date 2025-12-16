@@ -29,14 +29,14 @@ extension UserNotification {
 
 			switch self.attributes.type {
 			case .session:
-				return R.storyboard.accountSettings.manageActiveSessionsController()
+				return ManageActiveSessionsController.instantiate()
 			case .follower:
 				if let userID = self.attributes.payload.userID {
-					return ProfileTableViewController.`init`(with: userID)
+					return ProfileTableViewController()(with: userID)
 				}
 			case .feedMessageReply, .feedMessageReShare:
 				if let feedMessageID = self.attributes.payload.feedMessageID {
-					return FMDetailsTableViewController.`init`(with: feedMessageID)
+					return FMDetailsTableViewController()(with: feedMessageID)
 				}
 			default: break
 			}

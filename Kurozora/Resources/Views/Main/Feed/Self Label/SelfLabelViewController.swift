@@ -30,7 +30,9 @@ protocol SelfLabelViewDelegate: AnyObject {
 	func selectedOptionChanged(_ option: SelfLabel?)
 }
 
-class SelfLabelViewController: KViewController {
+class SelfLabelViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "SelfLabel"
+
 	// MARK: - Views
 	@IBOutlet weak var labelSegmentedControl: DeselectableSegmentedControl!
 	@IBOutlet weak var primaryButton: KTintedButton!

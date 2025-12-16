@@ -30,7 +30,7 @@ extension Studio {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			StudioDetailsCollectionViewController.`init`(with: self.id)
+			StudioDetailsCollectionViewController()(with: self.id)
 		}, actionProvider: { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})

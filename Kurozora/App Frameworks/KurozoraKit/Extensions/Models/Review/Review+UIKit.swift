@@ -103,7 +103,7 @@ extension Review {
 	/// - Parameter viewController: The view controller initialing the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships?.users?.data.first else { return }
-		let profileTableViewController = ProfileTableViewController.`init`(with: user)
+		let profileTableViewController = ProfileTableViewController()(with: user)
 
 		viewController?.show(profileTableViewController, sender: nil)
 	}

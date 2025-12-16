@@ -96,7 +96,7 @@ extension HomeCollectionViewController {
 			let identifier = indexPath as NSCopying
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-				guard let reCapCollectionViewController = R.storyboard.reCap.reCapCollectionViewController() else { return nil }
+				let reCapCollectionViewController = ReCapCollectionViewController.instantiate()
 				reCapCollectionViewController.year = recap.attributes.year
 				reCapCollectionViewController.month = recap.attributes.month
 				return reCapCollectionViewController

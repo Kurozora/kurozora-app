@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class SignUpTableViewController: AccountOnboardingTableViewController {
+class SignUpTableViewController: AccountOnboardingTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Onboarding"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var placeholderProfileImageEditButton: UIButton!

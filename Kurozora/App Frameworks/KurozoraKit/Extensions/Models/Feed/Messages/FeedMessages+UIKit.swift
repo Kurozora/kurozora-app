@@ -314,26 +314,25 @@ extension FeedMessage {
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
-			kfmReplyTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
-			if isEditingMessage {
-				kfmReplyTextEditorViewController.editingFeedMessage = self
-				kfmReplyTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReplyTextEditorViewController.userInfo = userInfo ?? [:]
-			} else {
-				kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
-				kfmReplyTextEditorViewController.opFeedMessage = self
-			}
-
-			let kurozoraNavigationController = KNavigationController(rootViewController: kfmReplyTextEditorViewController)
-			kurozoraNavigationController.presentationController?.delegate = kfmReplyTextEditorViewController
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-			kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-			kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-			kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-			viewController?.present(kurozoraNavigationController, animated: true)
+		let kfmReplyTextEditorViewController = KFMReplyTextEditorViewController.instantiate()
+		kfmReplyTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
+		if isEditingMessage {
+			kfmReplyTextEditorViewController.editingFeedMessage = self
+			kfmReplyTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
+			kfmReplyTextEditorViewController.userInfo = userInfo ?? [:]
+		} else {
+			kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
+			kfmReplyTextEditorViewController.opFeedMessage = self
 		}
+
+		let kurozoraNavigationController = KNavigationController(rootViewController: kfmReplyTextEditorViewController)
+		kurozoraNavigationController.presentationController?.delegate = kfmReplyTextEditorViewController
+		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+		viewController?.present(kurozoraNavigationController, animated: true)
 	}
 
 	/// Presents the re-share text editor on the given view controller. Otherwise the view is presented on the top most view controller.
@@ -343,26 +342,25 @@ extension FeedMessage {
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
-			kfmReShareTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
-			if isEditingMessage {
-				kfmReShareTextEditorViewController.editingFeedMessage = self
-				kfmReShareTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReShareTextEditorViewController.userInfo = userInfo ?? [:]
-			} else {
-				kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
-				kfmReShareTextEditorViewController.opFeedMessage = self
-			}
-
-			let kurozoraNavigationController = KNavigationController(rootViewController: kfmReShareTextEditorViewController)
-			kurozoraNavigationController.presentationController?.delegate = kfmReShareTextEditorViewController
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-			kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-			kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-			kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-			viewController?.present(kurozoraNavigationController, animated: true)
+		let kfmReShareTextEditorViewController = KFMReShareTextEditorViewController.instantiate()
+		kfmReShareTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
+		if isEditingMessage {
+			kfmReShareTextEditorViewController.editingFeedMessage = self
+			kfmReShareTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
+			kfmReShareTextEditorViewController.userInfo = userInfo ?? [:]
+		} else {
+			kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
+			kfmReShareTextEditorViewController.opFeedMessage = self
 		}
+
+		let kurozoraNavigationController = KNavigationController(rootViewController: kfmReShareTextEditorViewController)
+		kurozoraNavigationController.presentationController?.delegate = kfmReShareTextEditorViewController
+		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+		viewController?.present(kurozoraNavigationController, animated: true)
 	}
 
 	/// Presents the default text editor on the given view controller. Otherwise the view is presented on the top most view controller.
@@ -372,21 +370,20 @@ extension FeedMessage {
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
-			if isEditingMessage {
-				kFeedMessageTextEditorViewController.editingFeedMessage = self
-				kFeedMessageTextEditorViewController.userInfo = userInfo ?? [:]
-			}
-
-			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
-			kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-			kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-			kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-			kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-			viewController?.present(kurozoraNavigationController, animated: true)
+		let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
+		if isEditingMessage {
+			kFeedMessageTextEditorViewController.editingFeedMessage = self
+			kFeedMessageTextEditorViewController.userInfo = userInfo ?? [:]
 		}
+
+		let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
+		kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+		viewController?.present(kurozoraNavigationController, animated: true)
 	}
 
 	/// Presents the edit view for the current message.
@@ -449,11 +446,10 @@ extension FeedMessage {
 	///
 	/// - Parameter viewController: The view controller initiating the segue.
 	func visitRepliesView(from viewController: UIViewController? = UIApplication.topViewController) {
-		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
-			fmDetailsTableViewController.feedMessageID = self.id
+		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		fmDetailsTableViewController.feedMessageID = self.id
 
-			viewController?.show(fmDetailsTableViewController, sender: nil)
-		}
+		viewController?.show(fmDetailsTableViewController, sender: nil)
 	}
 
 	/// Presents the profile view for the message poster.
@@ -461,7 +457,7 @@ extension FeedMessage {
 	/// - Parameter viewController: The view controller initiating the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships.users.data.first else { return }
-		let profileTableViewController = ProfileTableViewController.`init`(with: user)
+		let profileTableViewController = ProfileTableViewController()(with: user)
 
 		viewController?.show(profileTableViewController, sender: nil)
 	}

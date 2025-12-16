@@ -12,7 +12,9 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class GameDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class GameDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "Games"
+
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -122,13 +124,10 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter gameID: The game id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of GameDetailsCollectionViewController.
-	static func `init`(with gameID: KurozoraItemID) -> GameDetailsCollectionViewController {
-		if let gameDetailsCollectionViewController = R.storyboard.games.gameDetailsCollectionViewController() {
-			gameDetailsCollectionViewController.gameIdentity = GameIdentity(id: gameID)
-			return gameDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate GameDetailsCollectionViewController with the given game id.")
+	func callAsFunction(with gameID: KurozoraItemID) -> GameDetailsCollectionViewController {
+		let gameDetailsCollectionViewController = GameDetailsCollectionViewController.instantiate()
+		gameDetailsCollectionViewController.gameIdentity = GameIdentity(id: gameID)
+		return gameDetailsCollectionViewController
 	}
 
 	/// Initialize a new instance of GameDetailsCollectionViewController with the given game object.
@@ -136,13 +135,10 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter game: The `Game` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of GameDetailsCollectionViewController.
-	static func `init`(with game: Game) -> GameDetailsCollectionViewController {
-		if let gameDetailsCollectionViewController = R.storyboard.games.gameDetailsCollectionViewController() {
-			gameDetailsCollectionViewController.game = game
-			return gameDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate GameDetailsCollectionViewController with the given Game object.")
+	func callAsFunction(with game: Game) -> GameDetailsCollectionViewController {
+		let gameDetailsCollectionViewController = GameDetailsCollectionViewController.instantiate()
+		gameDetailsCollectionViewController.game = game
+		return gameDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -460,14 +456,14 @@ extension GameDetailsCollectionViewController: CastCollectionViewCellDelegate {
 // MARK: - TextViewCollectionViewCellDelegate
 extension GameDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.game.attributes.synopsis
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.game.attributes.synopsis
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -660,13 +656,12 @@ extension GameDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

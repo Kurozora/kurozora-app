@@ -15,7 +15,9 @@ protocol LibraryListViewControllerDelegate: AnyObject {
 	func libraryListViewController(updateTotalCount totalCount: Int)
 }
 
-class LibraryListCollectionViewController: KCollectionViewController {
+class LibraryListCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static let storyboardName = "LibraryList"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -224,10 +226,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			subtitleString = "Library is currently available to registered Kurozora users only."
 			buttonTitle = "Sign In"
 			buttonAction = {
-				if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-					let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-					self.present(kNavigationController, animated: true)
-				}
+				let signInTableViewController = SignInTableViewController.instantiate()
+				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+				self.present(kNavigationController, animated: true)
 			}
 		} else {
 			buttonTitle = ""

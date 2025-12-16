@@ -9,7 +9,9 @@
 import KurozoraKit
 import UIKit
 
-class PersonDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class PersonDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "People"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -92,13 +94,10 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	/// - Parameter personID: The person id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
-	static func `init`(with personID: KurozoraItemID) -> PersonDetailsCollectionViewController {
-		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
-			personDetailsCollectionViewController.personIdentity = PersonIdentity(id: personID)
-			return personDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate PersonDetailsCollectionViewController with the given perosn id.")
+	func callAsFunction(with personID: KurozoraItemID) -> PersonDetailsCollectionViewController {
+		let personDetailsCollectionViewController = PersonDetailsCollectionViewController.instantiate()
+		personDetailsCollectionViewController.personIdentity = PersonIdentity(id: personID)
+		return personDetailsCollectionViewController
 	}
 
 	/// Initialize a new instance of PersonDetailsCollectionViewController with the given person object.
@@ -106,13 +105,10 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	/// - Parameter show: The `Show` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
-	static func `init`(with person: Person) -> PersonDetailsCollectionViewController {
-		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
-			personDetailsCollectionViewController.person = person
-			return personDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate PersonDetailsCollectionViewController with the given Person object.")
+	func callAsFunction(with person: Person) -> PersonDetailsCollectionViewController {
+		let personDetailsCollectionViewController = PersonDetailsCollectionViewController.instantiate()
+		personDetailsCollectionViewController.person = person
+		return personDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -395,14 +391,14 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 // MARK: - TextViewCollectionViewCellDelegate
 extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.person.attributes.about
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.person.attributes.about
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -422,13 +418,12 @@ extension PersonDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

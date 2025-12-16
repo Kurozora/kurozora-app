@@ -121,9 +121,9 @@ extension ServiceTableViewController {
 // MARK: - ServiceFooterTableViewCellDelegate
 extension ServiceTableViewController: ServiceFooterTableViewCellDelegate {
 	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton) {
-		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
-			self.present(legalKNavigationViewController, animated: true)
-		}
+		let legalViewController = LegalViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: legalViewController)
+		self.present(kNavigationController, animated: true)
 	}
 }
 

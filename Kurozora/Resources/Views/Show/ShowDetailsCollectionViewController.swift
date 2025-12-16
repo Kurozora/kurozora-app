@@ -12,7 +12,9 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
+class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable, StoryboardInstantiable {
+	static var storyboardName: String = "Shows"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -140,13 +142,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter showID: The show id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
-	static func `init`(with showID: KurozoraItemID) -> ShowDetailsCollectionViewController {
-		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
-			return showDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate ShowDetailsCollectionViewController with the given show id.")
+	func callAsFunction(with showID: KurozoraItemID) -> ShowDetailsCollectionViewController {
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.instantiate()
+		showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
+		return showDetailsCollectionViewController
 	}
 
 	/// Initialize a new instance of ShowDetailsCollectionViewController with the given show object.
@@ -154,13 +153,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter show: The `Show` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
-	static func `init`(with show: Show) -> ShowDetailsCollectionViewController {
-		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.show = show
-			return showDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate ShowDetailsCollectionViewController with the given Show object.")
+	func callAsFunction(with show: Show) -> ShowDetailsCollectionViewController {
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.instantiate()
+		showDetailsCollectionViewController.show = show
+		return showDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -536,14 +532,14 @@ extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
 // MARK: - TextViewCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.show.attributes.synopsis
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.show.attributes.synopsis
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -736,13 +732,12 @@ extension ShowDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

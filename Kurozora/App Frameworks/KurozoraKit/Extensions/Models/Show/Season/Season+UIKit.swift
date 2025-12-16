@@ -31,7 +31,7 @@ extension Season {
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
 			guard let self = self else { return nil }
-			return EpisodesListCollectionViewController.`init`(with: self.id)
+			return EpisodesListCollectionViewController()(with: self.id)
 		}, actionProvider: { [weak self] _ in
 			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)

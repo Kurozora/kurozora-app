@@ -78,21 +78,21 @@ final class NavigationManager: NSObject {
 		case .anime, .show, .shows:
 			guard !lastPathComponent.isEmpty else { return }
 			let showID = KurozoraItemID(lastPathComponent)
-			let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
+			let showDetailsCollectionViewController = ShowDetailsCollectionViewController()(with: showID)
 			context.show(showDetailsCollectionViewController)
 		case .game, .games:
 			guard !lastPathComponent.isEmpty else { return }
 			let gameID = KurozoraItemID(lastPathComponent)
-			let gameDetailsCollectionViewController = GameDetailsCollectionViewController.`init`(with: gameID)
+			let gameDetailsCollectionViewController = GameDetailsCollectionViewController()(with: gameID)
 			context.show(gameDetailsCollectionViewController)
 		case .manga, .literature, .literatures:
 			guard !lastPathComponent.isEmpty else { return }
 			let literatureID = KurozoraItemID(lastPathComponent)
-			let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.`init`(with: literatureID)
+			let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController()(with: literatureID)
 			context.show(literatureDetailsCollectionViewController)
 		case .profile, .user:
 			guard let userID = lastPathComponent.isEmpty ? User.current?.id : KurozoraItemID(lastPathComponent) else { return }
-			let profileTableViewController = ProfileTableViewController.`init`(with: userID)
+			let profileTableViewController = ProfileTableViewController()(with: userID)
 			context.show(profileTableViewController)
 		case .home, .explore:
 			context.selectTab(.home)
@@ -129,8 +129,8 @@ final class NavigationManager: NSObject {
 			return
 		}
 
-		let controller = R.storyboard.accountSettings.libraryImportTableViewController()
-		controller?.selectedFileURL = url
+		let controller = LibraryImportTableViewController.instantiate()
+		controller.selectedFileURL = url
 		context.show(controller)
 	}
 

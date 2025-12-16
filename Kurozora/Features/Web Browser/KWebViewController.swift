@@ -9,7 +9,9 @@
 import UIKit
 import WebKit
 
-class KWebViewController: UIViewController {
+class KWebViewController: UIViewController, StoryboardInstantiable {
+	static var storyboardName: String = "WebBrowser"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
 

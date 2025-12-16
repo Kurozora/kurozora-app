@@ -8,7 +8,9 @@
 
 import UIKit
 
-class BadgeViewController: KViewController {
+class BadgeViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Badge"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!

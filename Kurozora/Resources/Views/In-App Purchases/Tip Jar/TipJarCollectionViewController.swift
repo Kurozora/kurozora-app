@@ -10,7 +10,9 @@ import UIKit
 import StoreKit
 import SPConfetti
 
-class TipJarCollectionViewController: KCollectionViewController {
+class TipJarCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Purchase"
+
 	// MARK: - IBOutlets
 	/// The left navigation bar button of the navigation controller's `navigationItem`.
 	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem?
@@ -145,8 +147,9 @@ extension TipJarCollectionViewController: PurchaseFooterCollectionViewCellDelega
 	}
 
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) async {
-		guard let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() else { return }
-		self.present(legalKNavigationViewController, animated: true)
+		let legalViewController = LegalViewController.instantiate()
+		let kNavigationViewController = KNavigationController(rootViewController: legalViewController)
+		self.present(kNavigationViewController, animated: true)
 	}
 }
 

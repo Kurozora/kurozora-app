@@ -17,7 +17,9 @@ struct RecapTabItem {
 	let month: Month?
 }
 
-class ReCapCollectionViewController: KCollectionViewController {
+class ReCapCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "ReCap"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

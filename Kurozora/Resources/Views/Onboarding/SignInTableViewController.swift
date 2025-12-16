@@ -10,7 +10,9 @@ import AuthenticationServices
 import KurozoraKit
 import UIKit
 
-class SignInTableViewController: AccountOnboardingTableViewController {
+class SignInTableViewController: AccountOnboardingTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Onboarding"
+
 	// MARK: - Properties
 	var onSignIn: (() -> Void)?
 
@@ -150,11 +152,10 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							self.onSignIn?()
 						}
 					case .setupAccount:
-						if let signUpTableViewController = R.storyboard.onboarding.signUpTableViewController() {
-							signUpTableViewController.isSIWA = true
-							signUpTableViewController.onSignUp = self.onSignIn
-							self.show(signUpTableViewController, sender: nil)
-						}
+						let signUpTableViewController = SignUpTableViewController.instantiate()
+						signUpTableViewController.isSIWA = true
+						signUpTableViewController.onSignUp = self.onSignIn
+						self.show(signUpTableViewController, sender: nil)
 					default:
 						DispatchQueue.main.async {
 							// Re-enable user interaction.

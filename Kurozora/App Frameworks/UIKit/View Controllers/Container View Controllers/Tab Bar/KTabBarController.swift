@@ -167,18 +167,18 @@ class KTabBarController: UITabBarController {
 	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
 	@objc private func showAccountSwitcher(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		if UIApplication.topViewController as? SwitchAccountsTableViewController == nil {
-			if let switchAccountKNavigationController = R.storyboard.switchAccountSettings.switchAccountKNavigationController() {
-				switchAccountKNavigationController.sheetPresentationController?.detents = [.medium()]
-				switchAccountKNavigationController.sheetPresentationController?.selectedDetentIdentifier = .medium
-				switchAccountKNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-				switchAccountKNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+			let switchAccountsTableViewController = SwitchAccountsTableViewController.instantiate()
+			let kNavigationController = KNavigationController(rootViewController: switchAccountsTableViewController)
+			kNavigationController.sheetPresentationController?.detents = [.medium()]
+			kNavigationController.sheetPresentationController?.selectedDetentIdentifier = .medium
+			kNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+			kNavigationController.sheetPresentationController?.prefersGrabberVisible = true
 
-				if UserSettings.hapticsAllowed {
-					UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-				}
-
-				self.show(switchAccountKNavigationController, sender: nil)
+			if UserSettings.hapticsAllowed {
+				UIImpactFeedbackGenerator(style: .medium).impactOccurred()
 			}
+
+			self.show(kNavigationController, sender: nil)
 		}
 	}
 

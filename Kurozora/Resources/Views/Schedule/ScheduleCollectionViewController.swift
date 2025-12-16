@@ -10,7 +10,9 @@ import KurozoraKit
 import Tabman
 import UIKit
 
-class ScheduleCollectionViewController: KCollectionViewController {
+class ScheduleCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Schedule"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

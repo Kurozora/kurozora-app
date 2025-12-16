@@ -9,7 +9,9 @@
 import KurozoraKit
 import UIKit
 
-class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "Characters"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -92,13 +94,10 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 	/// - Parameter characterID: The character id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of CharacterDetailsCollectionViewController.
-	static func `init`(with characterID: KurozoraItemID) -> CharacterDetailsCollectionViewController {
-		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
-			characterDetailsCollectionViewController.characterIdentity = CharacterIdentity(id: characterID)
-			return characterDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate CharacterDetailsCollectionViewController with the given character id.")
+	func callAsFunction(with characterID: KurozoraItemID) -> CharacterDetailsCollectionViewController {
+		let characterDetailsCollectionViewController = CharacterDetailsCollectionViewController.instantiate()
+		characterDetailsCollectionViewController.characterIdentity = CharacterIdentity(id: characterID)
+		return characterDetailsCollectionViewController
 	}
 
 	/// Initialize a new instance of CharacterDetailsCollectionViewController with the given character object.
@@ -106,13 +105,10 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 	/// - Parameter show: The `Show` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of CharacterDetailsCollectionViewController.
-	static func `init`(with character: Character) -> CharacterDetailsCollectionViewController {
-		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
-			characterDetailsCollectionViewController.character = character
-			return characterDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate CharacterDetailsCollectionViewController with the given Character object.")
+	func callAsFunction(with character: Character) -> CharacterDetailsCollectionViewController {
+		let characterDetailsCollectionViewController = CharacterDetailsCollectionViewController.instantiate()
+		characterDetailsCollectionViewController.character = character
+		return characterDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -307,14 +303,14 @@ extension CharacterDetailsCollectionViewController {
 // MARK: - TextViewCollectionViewCellDelegate
 extension CharacterDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.character.attributes.about
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.character.attributes.about
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -432,13 +428,12 @@ extension CharacterDetailsCollectionViewController: ReviewCollectionViewCellDele
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

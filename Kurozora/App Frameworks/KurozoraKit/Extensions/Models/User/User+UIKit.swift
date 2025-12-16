@@ -30,7 +30,7 @@ extension User {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			ProfileTableViewController.`init`(with: self.id)
+			ProfileTableViewController()(with: self.id)
 		}, actionProvider: { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
@@ -192,11 +192,10 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openLibrary(on viewController: UIViewController? = UIApplication.topViewController) {
-		if let libraryViewController = R.storyboard.library.libraryViewController() {
-			libraryViewController.user = self
+		let libraryViewController = LibraryViewController.instantiate()
+		libraryViewController.user = self
 
-			viewController?.show(libraryViewController, sender: nil)
-		}
+		viewController?.show(libraryViewController, sender: nil)
 	}
 
 	/// Performs segue to `FavoritesCollectionViewController`.
@@ -205,13 +204,12 @@ extension User {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - includeUser: A boolean value indicating whether to pass the user to `FavoritesCollectionViewController`.
 	func openFavorites(on viewController: UIViewController? = UIApplication.topViewController, includeUser: Bool) {
-		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
-			if includeUser {
-				favoritesCollectionViewController.user = self
-			}
-
-			viewController?.show(favoritesCollectionViewController, sender: nil)
+		let favoritesCollectionViewController = FavoritesCollectionViewController.instantiate()
+		if includeUser {
+			favoritesCollectionViewController.user = self
 		}
+
+		viewController?.show(favoritesCollectionViewController, sender: nil)
 	}
 
 	/// Performs segue to `RemindersCollectionViewController`.
@@ -219,9 +217,8 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
-		if let remindersCollectionViewController = R.storyboard.reminders.remindersCollectionViewController() {
-			viewController?.show(remindersCollectionViewController, sender: nil)
-		}
+		let remindersCollectionViewController = RemindersCollectionViewController.instantiate()
+		viewController?.show(remindersCollectionViewController, sender: nil)
 	}
 
 	/// Performs segue to `SettingsSplitViewController`.
@@ -229,10 +226,9 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openSettings(on viewController: UIViewController? = UIApplication.topViewController) {
-		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
-			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			viewController?.present(settingsSplitViewController, animated: true)
-		}
+		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		settingsSplitViewController.modalPresentationStyle = .fullScreen
+		viewController?.present(settingsSplitViewController, animated: true)
 	}
 }
 

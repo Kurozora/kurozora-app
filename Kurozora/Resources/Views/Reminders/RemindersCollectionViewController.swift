@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class RemindersCollectionViewController: KCollectionViewController {
+class RemindersCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Reminders"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

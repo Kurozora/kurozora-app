@@ -11,7 +11,9 @@ import UIKit
 import Vision
 import VisionKit
 
-class RedeemTableViewController: ServiceTableViewController {
+class RedeemTableViewController: ServiceTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Redeem"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 

@@ -30,7 +30,7 @@ extension Character {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			CharacterDetailsCollectionViewController.`init`(with: self.id)
+			CharacterDetailsCollectionViewController()(with: self.id)
 		}, actionProvider: { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})

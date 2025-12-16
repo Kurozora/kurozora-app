@@ -12,7 +12,9 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "Literatures"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -122,13 +124,10 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	/// - Parameter literatureID: The literature id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of LiteratureDetailsCollectionViewController.
-	static func `init`(with literatureID: KurozoraItemID) -> LiteratureDetailsCollectionViewController {
-		if let literatureDetailsCollectionViewController = R.storyboard.literatures.literatureDetailsCollectionViewController() {
-			literatureDetailsCollectionViewController.literatureIdentity = LiteratureIdentity(id: literatureID)
-			return literatureDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate LiteratureDetailsCollectionViewController with the given literature id.")
+	func callAsFunction(with literatureID: KurozoraItemID) -> LiteratureDetailsCollectionViewController {
+		let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.instantiate()
+		literatureDetailsCollectionViewController.literatureIdentity = LiteratureIdentity(id: literatureID)
+		return literatureDetailsCollectionViewController
 	}
 
 	/// Initialize a new instance of LiteratureDetailsCollectionViewController with the given literature object.
@@ -136,13 +135,10 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	/// - Parameter literature: The `Literature` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of LiteratureDetailsCollectionViewController.
-	static func `init`(with literature: Literature) -> LiteratureDetailsCollectionViewController {
-		if let literatureDetailsCollectionViewController = R.storyboard.literatures.literatureDetailsCollectionViewController() {
-			literatureDetailsCollectionViewController.literature = literature
-			return literatureDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate LiteratureDetailsCollectionViewController with the given Literature object.")
+	func callAsFunction(with literature: Literature) -> LiteratureDetailsCollectionViewController {
+		let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.instantiate()
+		literatureDetailsCollectionViewController.literature = literature
+		return literatureDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -448,14 +444,14 @@ extension LiteratureDetailsCollectionViewController: CastCollectionViewCellDeleg
 // MARK: - TextViewCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.literature.attributes.synopsis
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.literature.attributes.synopsis
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -648,13 +644,12 @@ extension LiteratureDetailsCollectionViewController: ReviewCollectionViewCellDel
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

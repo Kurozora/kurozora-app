@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class ProfileTableViewController: KTableViewController {
+class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Profile"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case achievementsSegue
@@ -117,13 +119,10 @@ class ProfileTableViewController: KTableViewController {
 	/// - Parameter userID: The user id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of ProfileTableViewController.
-	static func `init`(with userID: KurozoraItemID) -> ProfileTableViewController {
-		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-			profileTableViewController.userIdentity = UserIdentity(id: userID)
-			return profileTableViewController
-		}
-
-		fatalError("Failed to instantiate ProfileTableViewController with the given user id.")
+	func callAsFunction(with userID: KurozoraItemID) -> ProfileTableViewController {
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		profileTableViewController.userIdentity = UserIdentity(id: userID)
+		return profileTableViewController
 	}
 
 	/// Initialize a new instance of ProfileTableViewController with the given user object.
@@ -131,13 +130,10 @@ class ProfileTableViewController: KTableViewController {
 	/// - Parameter user: The `User` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of ProfileTableViewController.
-	static func `init`(with user: User) -> ProfileTableViewController {
-		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-			profileTableViewController.user = user
-			return profileTableViewController
-		}
-
-		fatalError("Failed to instantiate ProfileTableViewController with the given User object.")
+	func callAsFunction(with user: User) -> ProfileTableViewController {
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		profileTableViewController.user = user
+		return profileTableViewController
 	}
 
 	// MARK: - View
@@ -443,19 +439,18 @@ class ProfileTableViewController: KTableViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
-				kFeedMessageTextEditorViewController.delegate = self
-				kFeedMessageTextEditorViewController.dmToUser = self.user
+			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
+			kFeedMessageTextEditorViewController.delegate = self
+			kFeedMessageTextEditorViewController.dmToUser = self.user
 
-				let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
-				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
-				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-				self.present(kurozoraNavigationController, animated: true)
-			}
+			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
+			kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+			kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+			kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+			kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+			self.present(kurozoraNavigationController, animated: true)
 		}
 	}
 
@@ -589,13 +584,12 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
@@ -662,13 +656,12 @@ extension ProfileTableViewController: UITextViewDelegate {
 // MARK: - ProfileBadgeStackViewDelegate
 extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
 
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }

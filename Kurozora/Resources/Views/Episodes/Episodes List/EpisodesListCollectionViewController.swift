@@ -27,7 +27,9 @@ enum EpisodesListFetchType: Equatable {
 	}
 }
 
-class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable {
+class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
+	static var storyboardName: String = "Episodes"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -98,14 +100,11 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	/// - Parameter seasonID: The season id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of EpisodesListCollectionViewController.
-	static func `init`(with seasonID: KurozoraItemID) -> EpisodesListCollectionViewController {
-		if let episodesListCollectionViewController = R.storyboard.episodes.episodesListCollectionViewController() {
-			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: seasonID)
-			episodesListCollectionViewController.episodesListFetchType = .season
-			return episodesListCollectionViewController
-		}
-
-		fatalError("Failed to instantiate EpisodesListCollectionViewController with the given season id.")
+	func callAsFunction(with seasonID: KurozoraItemID) -> EpisodesListCollectionViewController {
+		let episodesListCollectionViewController = EpisodesListCollectionViewController.instantiate()
+		episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: seasonID)
+		episodesListCollectionViewController.episodesListFetchType = .season
+		return episodesListCollectionViewController
 	}
 
 	// MARK: - View

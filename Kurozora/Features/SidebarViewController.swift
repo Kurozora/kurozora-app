@@ -27,7 +27,7 @@ class SidebarViewController: KCollectionViewController {
 	}
 
 	lazy var kSearchController: KSearchController = KSearchController()
-	lazy var searchResultsCollectionViewController: SearchResultsCollectionViewController = R.storyboard.search.searchResultsCollectionViewController()!
+	lazy var searchResultsCollectionViewController: SearchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
 	var listConfiguration: UICollectionLayoutListConfiguration!
 
 	private var selectedItem: TabBarItem?

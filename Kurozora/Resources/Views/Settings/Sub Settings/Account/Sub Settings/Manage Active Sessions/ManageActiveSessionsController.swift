@@ -18,7 +18,9 @@ class SessionDataSource: UITableViewDiffableDataSource<ManageActiveSessionsContr
 	}
 }
 
-class ManageActiveSessionsController: KTableViewController {
+class ManageActiveSessionsController: KTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "AccountSettings"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var mapView: MKMapView!
 

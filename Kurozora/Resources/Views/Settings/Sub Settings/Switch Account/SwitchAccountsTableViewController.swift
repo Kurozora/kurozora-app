@@ -10,7 +10,9 @@ import UIKit
 import KurozoraKit
 
 /// The table view controller responsible for adding, deleting and listing of user's accounts.
-class SwitchAccountsTableViewController: SubSettingsViewController {
+class SwitchAccountsTableViewController: SubSettingsViewController, StoryboardInstantiable {
+	static var storyboardName: String = "SwitchAccountSettings"
+
 	// MARK: - Properties
 	/// All user accounts.
 	var accounts: [String] {
@@ -29,10 +31,9 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 
 	// MARK: - IBActions
 	@IBAction func addAccountBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-			UIApplication.topViewController?.present(kNavigationController, animated: true)
-		}
+		let signInTableViewController = SignInTableViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+		UIApplication.topViewController?.present(kNavigationController, animated: true)
 	}
 }
 

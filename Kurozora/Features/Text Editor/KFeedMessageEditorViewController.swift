@@ -9,7 +9,9 @@
 import KurozoraKit
 import UIKit
 
-class KFeedMessageTextEditorViewController: KViewController {
+class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "TextEditor"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var currentUsernameLabel: KLabel!
@@ -235,7 +237,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	@IBAction func labelsButtonPressed(_ sender: UIButton) {
-		let bottomSheet = R.storyboard.selfLabel.selfLabelViewController()!
+		let bottomSheet = SelfLabelViewController.instantiate()
 		bottomSheet.selectedOption = self.selectedSelfLabel
 		bottomSheet.delegate = self
 		bottomSheet.modalPresentationStyle = .popover

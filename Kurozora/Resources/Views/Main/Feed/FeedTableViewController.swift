@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class FeedTableViewController: KTableViewController {
+class FeedTableViewController: KTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Feed"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
@@ -215,9 +217,8 @@ class FeedTableViewController: KTableViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-				self.show(profileTableViewController, sender: nil)
-			}
+			let profileTableViewController = ProfileTableViewController.instantiate()
+			self.show(profileTableViewController, sender: nil)
 		}
 	}
 
@@ -228,18 +229,17 @@ class FeedTableViewController: KTableViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
-				kFeedMessageTextEditorViewController.delegate = self
+			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
+			kFeedMessageTextEditorViewController.delegate = self
 
-				let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
-				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
-				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-				self.present(kurozoraNavigationController, animated: true)
-			}
+			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
+			kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+			kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+			kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+			kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+			self.present(kurozoraNavigationController, animated: true)
 		}
 	}
 
@@ -343,13 +343,12 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

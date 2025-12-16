@@ -11,7 +11,9 @@ import Pageboy
 import Tabman
 import UIKit
 
-class LibraryViewController: KTabbedViewController {
+class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Library"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 	@IBOutlet weak var toolbar: UIToolbar!
@@ -109,9 +111,8 @@ class LibraryViewController: KTabbedViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-				self.show(profileTableViewController, sender: nil)
-			}
+			let profileTableViewController = ProfileTableViewController.instantiate()
+			self.show(profileTableViewController, sender: nil)
 		}
 	}
 
@@ -325,22 +326,21 @@ extension LibraryViewController {
 		var viewControllers: [UIViewController] = []
 
 		for index in 0 ..< count {
-			if let libraryListCollectionViewController = R.storyboard.libraryList.libraryListCollectionViewController() {
-				let libraryStatus = KKLibrary.Status.all[index]
+			let libraryListCollectionViewController = LibraryListCollectionViewController.instantiate()
+			let libraryStatus = KKLibrary.Status.all[index]
 
-				// Get the user's preferred library layout
-				let libraryLayouts = UserSettings.libraryCellStyles
-				let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
-				if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
-					libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
-				}
-
-				libraryListCollectionViewController.libraryStatus = libraryStatus
-				libraryListCollectionViewController.sectionIndex = index
-				libraryListCollectionViewController.user = self.user
-				libraryListCollectionViewController.delegate = self
-				viewControllers.append(libraryListCollectionViewController)
+			// Get the user's preferred library layout
+			let libraryLayouts = UserSettings.libraryCellStyles
+			let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
+			if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
+				libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
 			}
+
+			libraryListCollectionViewController.libraryStatus = libraryStatus
+			libraryListCollectionViewController.sectionIndex = index
+			libraryListCollectionViewController.user = self.user
+			libraryListCollectionViewController.delegate = self
+			viewControllers.append(libraryListCollectionViewController)
 		}
 
 		return viewControllers

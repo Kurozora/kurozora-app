@@ -15,7 +15,9 @@ protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 }
 
-class SearchFilterCollectionViewController: KCollectionViewController {
+class SearchFilterCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "SearchFilter"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var resetBarButtonItem: UIBarButtonItem!

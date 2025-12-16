@@ -13,7 +13,9 @@ import TRON
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController {
+class HomeCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Home"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case redeemSegue
@@ -103,13 +105,10 @@ class HomeCollectionViewController: KCollectionViewController {
 	/// - Parameter genre: The genre object to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of HomeCollectionViewController.
-	static func `init`(with genre: Genre) -> HomeCollectionViewController {
-		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
+	func callAsFunction(with genre: Genre) -> HomeCollectionViewController {
+		let homeCollectionViewController = HomeCollectionViewController.instantiate()
 			homeCollectionViewController.genre = genre
-			return homeCollectionViewController
-		}
-
-		fatalError("Failed to instantiate HomeCollectionViewController with the given Genre object.")
+		return homeCollectionViewController
 	}
 
 	/// Initialize a new instance of HomeCollectionViewController with the given theme object.
@@ -117,13 +116,10 @@ class HomeCollectionViewController: KCollectionViewController {
 	/// - Parameter theme: The theme object to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of HomeCollectionViewController.
-	static func `init`(with theme: Theme) -> HomeCollectionViewController {
-		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
+	func callAsFunction(with theme: Theme) -> HomeCollectionViewController {
+		let homeCollectionViewController = HomeCollectionViewController.instantiate()
 			homeCollectionViewController.theme = theme
-			return homeCollectionViewController
-		}
-
-		fatalError("Failed to instantiate HomeCollectionViewController with the given Theme object.")
+		return homeCollectionViewController
 	}
 
 	// MARK: - View
@@ -309,9 +305,8 @@ class HomeCollectionViewController: KCollectionViewController {
 			let isSignedIn = await WorkflowController.shared.isSignedIn()
 			guard isSignedIn else { return }
 
-			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-				self.show(profileTableViewController, sender: nil)
-			}
+			let profileTableViewController = ProfileTableViewController.instantiate()
+			self.show(profileTableViewController, sender: nil)
 		}
 	}
 
@@ -640,15 +635,16 @@ extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDeleg
 
 		switch cell.self {
 		case is ActionLinkExploreCollectionViewCell:
-			guard let kNavigationController = R.storyboard.webBrowser.kWebViewKNavigationController() else { return }
 			let quickLink = self.quickLinks[indexPath.item]
-			if let kWebViewController = kNavigationController.viewControllers.first as? KWebViewController {
-				kWebViewController.title = quickLink.title
-				kWebViewController.url = quickLink.url
 
-				kNavigationController.modalPresentationStyle = .custom
-				self.present(kNavigationController, animated: true)
-			}
+			let kWebViewController = KWebViewController.instantiate()
+			kWebViewController.title = quickLink.title
+			kWebViewController.url = quickLink.url
+
+			let kNavigationController = KNavigationController(rootViewController: kWebViewController)
+			kNavigationController.modalPresentationStyle = .custom
+
+			self.present(kNavigationController, animated: true)
 		case is ActionButtonExploreCollectionViewCell:
 			let quickAction = self.quickActions[indexPath.item]
 			self.performSegue(withIdentifier: quickAction.segueID, sender: nil)

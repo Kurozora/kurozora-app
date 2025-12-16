@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Wd-6W-Or0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Wd-6W-Or0">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,32 +18,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLp-wA-oiC">
-                                <rect key="frame" x="0.0" y="59" width="906.33333333333337" height="759"/>
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2rJ-Uz-xjn">
-                                        <rect key="frame" x="20" y="20" width="866.33333333333337" height="719"/>
+                                        <rect key="frame" x="20" y="20" width="353" height="626"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lIz-qm-bzx">
-                                                <rect key="frame" x="0.0" y="0.0" width="866.33333333333337" height="93.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="353" height="93.333333333333329"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4c-gd-WNy">
-                                                        <rect key="frame" x="0.0" y="0.0" width="866.33333333333337" height="93.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="93.333333333333329"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a content warning" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OmU-9d-aUL">
-                                                                <rect key="frame" x="0.0" y="0.0" width="179" height="20.333333333333332"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="179" height="0.0"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZD-Bg-0od">
-                                                                <rect key="frame" x="0.0" y="28.333333333333329" width="866.33333333333337" height="18"/>
+                                                                <rect key="frame" x="0.0" y="8" width="353" height="38.333333333333336"/>
                                                                 <string key="text">Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences.</string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ivk-ZH-vK3" customClass="DeselectableSegmentedControl" customModule="Kurozora" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="62.333333333333343" width="866.33333333333337" height="32"/>
+                                                                <rect key="frame" x="0.0" y="62.333333333333343" width="353" height="32"/>
                                                                 <segments>
                                                                     <segment title="First"/>
                                                                     <segment title="Second"/>
@@ -69,10 +69,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NfJ-hh-pDZ">
-                                                <rect key="frame" x="0.0" y="109.33333333333331" width="866.33333333333337" height="553.66666666666674"/>
+                                                <rect key="frame" x="0.0" y="109.33333333333334" width="353" height="460.66666666666663"/>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8D-od-2ab" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="679" width="866.33333333333337" height="40"/>
+                                                <rect key="frame" x="0.0" y="586" width="353" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="nqN-TK-199"/>
                                                 </constraints>

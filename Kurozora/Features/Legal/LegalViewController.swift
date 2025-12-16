@@ -8,7 +8,9 @@
 
 import UIKit
 
-class LegalViewController: KViewController {
+class LegalViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Legal"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {

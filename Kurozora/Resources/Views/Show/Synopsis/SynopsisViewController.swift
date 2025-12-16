@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SynopsisViewController: KViewController {
+class SynopsisViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Synopsis"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var synopsisTextView: KTextView!
 

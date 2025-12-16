@@ -71,16 +71,16 @@ extension AppDelegate {
 
 		switch activityType {
 		case .openShow:
-			let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: kurozoraID)
+			let showDetailsCollectionViewController = ShowDetailsCollectionViewController()(with: kurozoraID)
 			UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 		case .openLiterature:
-			let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.`init`(with: kurozoraID)
+			let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController()(with: kurozoraID)
 			UIApplication.topViewController?.show(literatureDetailsCollectionViewController, sender: nil)
 		case .openGame:
-			let gameDetailsCollectionViewController = GameDetailsCollectionViewController.`init`(with: kurozoraID)
+			let gameDetailsCollectionViewController = GameDetailsCollectionViewController()(with: kurozoraID)
 			UIApplication.topViewController?.show(gameDetailsCollectionViewController, sender: nil)
 		case .openUser:
-			let profileTableViewController = ProfileTableViewController.`init`(with: kurozoraID)
+			let profileTableViewController = ProfileTableViewController()(with: kurozoraID)
 			UIApplication.topViewController?.show(profileTableViewController, sender: nil)
 		}
 
@@ -150,10 +150,9 @@ extension AppDelegate {
 			#endif
 		}
 
-		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
-			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
-		}
+		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		settingsSplitViewController.modalPresentationStyle = .fullScreen
+		UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
 	}
 
 	/// User chose "Search" from the Application menu.
@@ -171,13 +170,12 @@ extension AppDelegate {
 
 	/// User chose the "View My Account..." from the account menu.
 	@objc func handleViewMyAccount(_ sender: AnyObject) {
-		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
-			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			if let settingsTableViewController = (settingsSplitViewController.viewControllers.first as? KNavigationController)?.visibleViewController as? SettingsTableViewController {
-				settingsTableViewController.performSegue(withIdentifier: SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
-			}
-			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		settingsSplitViewController.modalPresentationStyle = .fullScreen
+		if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
+			settingsTableViewController.performSegue(withIdentifier: SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
 		}
+		UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 	}
 
 	/// User chose "Username" from the Account menu.
@@ -200,10 +198,10 @@ extension AppDelegate {
 
 	/// User chose "Upgrade to Kurozora+..." from the Account menu.
 	@objc func handleUpgradeToKurozoraPlus(_ sender: AnyObject) {
-		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
-			subscriptionKNavigationController.navigationItem.leftBarButtonItem = nil
-			UIApplication.topViewController?.show(subscriptionKNavigationController, sender: nil)
-		}
+		let subscriptionCollectionViewController = SubscriptionCollectionViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: subscriptionCollectionViewController)
+		kNavigationController.navigationItem.leftBarButtonItem = nil
+		UIApplication.topViewController?.show(kNavigationController, sender: nil)
 	}
 
 	/// User chose "Subscribe to Reminders..." from the Account menu.
@@ -215,10 +213,10 @@ extension AppDelegate {
 
 	/// User chose "Redeem" from the Account menu.
 	@objc func handleRedeem(_ sender: AnyObject) {
-		if let redeemKNavigationController = R.storyboard.redeem.redeemKNavigationController() {
-			redeemKNavigationController.navigationItem.leftBarButtonItem = nil
-			UIApplication.topViewController?.show(redeemKNavigationController, sender: nil)
-		}
+		let redeemTableViewController = RedeemTableViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: redeemTableViewController)
+		kNavigationController.navigationItem.leftBarButtonItem = nil
+		UIApplication.topViewController?.show(kNavigationController, sender: nil)
 	}
 
 	/// User chose "Favorites" from the Account menu.
@@ -227,9 +225,8 @@ extension AppDelegate {
 			let signedIn = await WorkflowController.shared.isSignedIn()
 			guard signedIn else { return }
 
-			if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
-				UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
-			}
+			let favoritesCollectionViewController = FavoritesCollectionViewController.instantiate()
+			UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
 		}
 	}
 }

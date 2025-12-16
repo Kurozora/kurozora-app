@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SettingsSplitViewController: UISplitViewController {
+class SettingsSplitViewController: UISplitViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Settings"
+
 	// MARK: - Properties
 	private var gradientView: GradientView = {
 		let gradientView = GradientView()

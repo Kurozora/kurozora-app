@@ -12,7 +12,9 @@ import Foundation
 
 class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> { }
 
-class NotificationsTableViewController: KTableViewController {
+class NotificationsTableViewController: KTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Notifications"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case notificationsGroupingSegue
@@ -135,10 +137,9 @@ class NotificationsTableViewController: KTableViewController {
 			detailString = "Notifications are only available to registered Kurozora users."
 			buttonTitle = "Sign In"
 			buttonAction = {
-				if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-					let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-					self.present(kNavigationController, animated: true)
-				}
+				let signInTableViewController = SignInTableViewController.instantiate()
+				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+				self.present(kNavigationController, animated: true)
 			}
 		}
 

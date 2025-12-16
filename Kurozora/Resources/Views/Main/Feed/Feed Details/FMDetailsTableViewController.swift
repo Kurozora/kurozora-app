@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class FMDetailsTableViewController: KTableViewController {
+class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Feed"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
@@ -53,13 +55,10 @@ class FMDetailsTableViewController: KTableViewController {
 	/// - Parameter feedMessageID: The feed message id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
-	static func `init`(with feedMessageID: KurozoraItemID) -> FMDetailsTableViewController {
-		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
-			fmDetailsTableViewController.feedMessageID = feedMessageID
-			return fmDetailsTableViewController
-		}
-
-		fatalError("Failed to instantiate FMDetailsTableViewController with the given feed message id.")
+	func callAsFunction(with feedMessageID: KurozoraItemID) -> FMDetailsTableViewController {
+		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		fmDetailsTableViewController.feedMessageID = feedMessageID
+		return fmDetailsTableViewController
 	}
 
 	/// Initialize a new instance of FMDetailsTableViewController with the given feed message object.
@@ -67,13 +66,10 @@ class FMDetailsTableViewController: KTableViewController {
 	/// - Parameter user: The `FeedMessage` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
-	static func `init`(with feedMessage: FeedMessage) -> FMDetailsTableViewController {
-		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
-			fmDetailsTableViewController.feedMessage = feedMessage
-			return fmDetailsTableViewController
-		}
-
-		fatalError("Failed to instantiate FMDetailsTableViewController with the given FeedMessage object.")
+	func callAsFunction(with feedMessage: FeedMessage) -> FMDetailsTableViewController {
+		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		fmDetailsTableViewController.feedMessage = feedMessage
+		return fmDetailsTableViewController
 	}
 
 	// MARK: - View
@@ -352,13 +348,12 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

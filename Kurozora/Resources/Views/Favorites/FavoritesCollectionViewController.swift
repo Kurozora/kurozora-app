@@ -9,7 +9,9 @@
 import KurozoraKit
 import UIKit
 
-class FavoritesCollectionViewController: KCollectionViewController {
+class FavoritesCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Favorites"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

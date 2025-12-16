@@ -8,7 +8,9 @@
 
 import UIKit
 
-class NotificationsSettingsViewController: SubSettingsViewController {
+class NotificationsSettingsViewController: SubSettingsViewController, StoryboardInstantiable {
+	static var storyboardName: String = "NotificationSettings"
+
 	// MARK: - IBOutlets
 	@IBOutlet var allowNotificationsSwitch: KSwitch!
 	@IBOutlet var soundsSwitch: KSwitch!

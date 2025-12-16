@@ -144,18 +144,16 @@ extension WorkflowController {
 	/// Open the notification settings view if the current view is not the sessions view.
 	func openNotificationSettings(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? NotificationsSettingsViewController == nil {
-			if let notificationsSettingsViewController = R.storyboard.notificationSettings.notificationsSettingsViewController() {
-				viewController?.show(notificationsSettingsViewController, sender: nil)
-			}
+			let notificationsSettingsViewController = NotificationsSettingsViewController.instantiate()
+			viewController?.show(notificationsSettingsViewController, sender: nil)
 		}
 	}
 
 	/// Open the sessions view if the current view is not the sessions view.
 	func openSessionsManager(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
-			if let manageActiveSessionsController = R.storyboard.accountSettings.manageActiveSessionsController() {
-				viewController?.show(manageActiveSessionsController, sender: nil)
-			}
+			let manageActiveSessionsController = ManageActiveSessionsController.instantiate()
+			viewController?.show(manageActiveSessionsController, sender: nil)
 		}
 	}
 
@@ -163,7 +161,7 @@ extension WorkflowController {
 	///
 	/// - Parameter showID: The id of the show with which the details view will be loaded.
 	func openShowDetails(for showID: KurozoraItemID, in viewController: UIViewController? = UIApplication.topViewController) {
-		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController()(with: showID)
 		viewController?.show(showDetailsCollectionViewController, sender: nil)
 	}
 
@@ -171,7 +169,7 @@ extension WorkflowController {
 	///
 	/// - Parameter userID: The id of the user with which the profile view will be loaded.
 	func openUserProfile(for userID: KurozoraItemID, in viewController: UIViewController? = UIApplication.topViewController) {
-		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
+		let profileTableViewController = ProfileTableViewController()(with: userID)
 		viewController?.show(profileTableViewController, sender: nil)
 	}
 
@@ -179,7 +177,7 @@ extension WorkflowController {
 	///
 	/// - Parameter userID: The id of the feed message with which the feed message details view will be loaded.
 	func openFeedMessage(for feedMessageID: KurozoraItemID, in viewController: UIViewController? = UIApplication.topViewController) {
-		let fmDetailsTableViewController = FMDetailsTableViewController.`init`(with: feedMessageID)
+		let fmDetailsTableViewController = FMDetailsTableViewController()(with: feedMessageID)
 		viewController?.show(fmDetailsTableViewController, sender: nil)
 	}
 }

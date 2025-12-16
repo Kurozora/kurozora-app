@@ -27,7 +27,9 @@ enum ImageEditKind {
 	case none
 }
 
-class EditProfileViewController: KViewController {
+class EditProfileViewController: KViewController, StoryboardInstantiable {
+	static var storyboardName: String = "Profile"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
@@ -108,13 +110,10 @@ class EditProfileViewController: KViewController {
 	/// - Parameter user: The `User` object to use when initializing the view controller.
 	///
 	/// - Returns: an initialized instance of EditProfileViewController.
-	static func `init`(with user: User) -> EditProfileViewController {
-		if let editProfileViewController = R.storyboard.profile.editProfileViewController() {
-			editProfileViewController.user = user
-			return editProfileViewController
-		}
-
-		fatalError("Failed to instantiate EditProfileViewController with the given User object.")
+	func callAsFunction(with user: User) -> EditProfileViewController {
+		let editProfileViewController = EditProfileViewController.instantiate()
+		editProfileViewController.user = user
+		return editProfileViewController
 	}
 
 	// MARK: - View
@@ -468,13 +467,12 @@ extension EditProfileViewController: UITextViewDelegate {
 // MARK: - ProfileBadgeStackViewDelegate
 extension EditProfileViewController: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
 
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }

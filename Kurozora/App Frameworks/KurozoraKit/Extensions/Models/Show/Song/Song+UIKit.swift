@@ -31,7 +31,7 @@ extension KKSong {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			SongDetailsCollectionViewController.`init`(with: self.id)
+			SongDetailsCollectionViewController()(with: self.id)
 		}) { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}

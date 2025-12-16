@@ -133,19 +133,19 @@ enum TabBarItem: Int, CaseIterable {
 	var viewControllerValue: UIViewController {
 		switch self {
 		case .home:
-			return R.storyboard.home.homeCollectionViewController()!
+			return HomeCollectionViewController.instantiate()
 		case .schedule:
-			return R.storyboard.schedule.scheduleCollectionViewController()!
+			return ScheduleCollectionViewController.instantiate()
 		case .library:
-			return R.storyboard.library.libraryViewController()!
+			return LibraryViewController.instantiate()
 		case .feed:
-			return R.storyboard.feed.feedTableViewController()!
+			return FeedTableViewController.instantiate()
 		case .notifications:
-			return R.storyboard.notifications.notificationsTableViewController()!
+			return NotificationsTableViewController.instantiate()
 		case .search:
-			return R.storyboard.search.searchResultsCollectionViewController()!
+			return SearchResultsCollectionViewController.instantiate()
 		case .settings:
-			return R.storyboard.settings.settingsSplitViewController()!
+			return SettingsSplitViewController.instantiate()
 		}
 	}
 
@@ -153,19 +153,25 @@ enum TabBarItem: Int, CaseIterable {
 	var kViewControllerValue: UIViewController {
 		switch self {
 		case .home:
-			return R.storyboard.home.homeKNavigationController()!
+			let homeCollectionViewController = HomeCollectionViewController.instantiate()
+			return KNavigationController(rootViewController: homeCollectionViewController)
 		case .schedule:
-			return R.storyboard.schedule.scheduleKNavigationController()!
+			let scheduleCollectionViewController = ScheduleCollectionViewController.instantiate()
+			return KNavigationController(rootViewController: scheduleCollectionViewController)
 		case .library:
-			return R.storyboard.library.libraryKNavigationController()!
+			let libraryViewController = LibraryViewController.instantiate()
+			return KNavigationController(rootViewController: libraryViewController)
 		case .feed:
-			return R.storyboard.feed.feedTableKNavigationController()!
+			let feedTableViewController = FeedTableViewController.instantiate()
+			return KNavigationController(rootViewController: feedTableViewController)
 		case .notifications:
-			return R.storyboard.notifications.notificationKNvaigationController()!
+			let notificationsTableViewController = NotificationsTableViewController.instantiate()
+			return KNavigationController(rootViewController: notificationsTableViewController)
 		case .search:
-			return R.storyboard.search.searchKNvaigationController()!
+			let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
+			return KNavigationController(rootViewController: searchResultsCollectionViewController)
 		case .settings:
-			return R.storyboard.settings.instantiateInitialViewController()!
+			return SettingsSplitViewController.instantiate()
 		}
 	}
 

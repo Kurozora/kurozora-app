@@ -9,7 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "Studios"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -83,13 +85,10 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 	/// - Parameter studioID: The studio id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of StudioDetailsCollectionViewController.
-	static func `init`(with studioID: KurozoraItemID) -> StudioDetailsCollectionViewController {
-		if let studioDetailsCollectionViewController = R.storyboard.studios.studioDetailsCollectionViewController() {
-			studioDetailsCollectionViewController.studioIdentity = StudioIdentity(id: studioID)
-			return studioDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate StudioDetailsCollectionViewController with the given studio id.")
+	func callAsFunction(with studioID: KurozoraItemID) -> StudioDetailsCollectionViewController {
+		let studioDetailsCollectionViewController = StudioDetailsCollectionViewController.instantiate()
+		studioDetailsCollectionViewController.studioIdentity = StudioIdentity(id: studioID)
+		return studioDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -273,14 +272,13 @@ extension StudioDetailsCollectionViewController {
 // MARK: - TextViewCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.studio.attributes.about
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.studio.attributes.about
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .fullScreen
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -398,13 +396,12 @@ extension StudioDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

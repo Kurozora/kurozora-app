@@ -10,7 +10,9 @@ import KurozoraKit
 import UniformTypeIdentifiers
 import UIKit
 
-class LibraryImportTableViewController: ServiceTableViewController {
+class LibraryImportTableViewController: ServiceTableViewController, StoryboardInstantiable {
+	static var storyboardName: String = "AccountSettings"
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 

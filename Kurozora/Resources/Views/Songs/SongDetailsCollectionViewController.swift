@@ -10,7 +10,9 @@ import UIKit
 import KurozoraKit
 import MusicKit
 
-class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+	static var storyboardName: String = "Songs"
+
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -75,13 +77,10 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	/// - Parameter songID: The song id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of SongDetailsCollectionViewController.
-	static func `init`(with songID: KurozoraItemID) -> SongDetailsCollectionViewController {
-		if let songDetailsCollectionViewController = R.storyboard.songs.songDetailsCollectionViewController() {
-			songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
-			return songDetailsCollectionViewController
-		}
-
-		fatalError("Failed to instantiate SongDetailsCollectionViewController with the given song id.")
+	func callAsFunction(with songID: KurozoraItemID) -> SongDetailsCollectionViewController {
+		let songDetailsCollectionViewController = SongDetailsCollectionViewController.instantiate()
+		songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
+		return songDetailsCollectionViewController
 	}
 
 	// MARK: - View
@@ -229,14 +228,14 @@ extension SongDetailsCollectionViewController {
 // MARK: - TextViewCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.song.attributes.originalLyrics
-			}
-			synopsisKNavigationController.modalPresentationStyle = .formSheet
-			self.present(synopsisKNavigationController, animated: true)
-		}
+		let synopsisViewController = SynopsisViewController.instantiate()
+		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+		synopsisViewController.synopsis = self.song.attributes.originalLyrics
+
+		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
+		kNavigationController.modalPresentationStyle = .formSheet
+
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -348,13 +347,12 @@ extension SongDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
-			badgeViewController.profileBadge = profileBadge
-			badgeViewController.popoverPresentationController?.sourceView = button
-			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+		let badgeViewController = BadgeViewController.instantiate()
+		badgeViewController.profileBadge = profileBadge
+		badgeViewController.popoverPresentationController?.sourceView = button
+		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
-			self.present(badgeViewController, animated: true, completion: nil)
-		}
+		self.present(badgeViewController, animated: true, completion: nil)
 	}
 }
 

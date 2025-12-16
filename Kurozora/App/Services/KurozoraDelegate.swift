@@ -225,18 +225,13 @@ extension KurozoraDelegate {
 
 	/// Prepare the app for authentication.
 	@objc func prepareForAuthentication() {
-		let topViewController = UIApplication.topViewController
+		guard
+			let topViewController = UIApplication.topViewController,
+			!(topViewController is AuthenticationViewController)
+		else { return }
 
-		// If user should authenticate but the top view controller isn't AuthenticationViewController
-		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
-			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
-				topViewController?.present(authenticationViewController, animated: true)
-			}
-		} else if topViewController == nil {
-			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
-				topViewController?.present(authenticationViewController, animated: true)
-			}
-		}
+		let authenticationViewController = AuthenticationViewController.instantiate()
+		topViewController.present(authenticationViewController, animated: true)
 	}
 
 	/// Handle the user authentication

@@ -30,7 +30,7 @@ extension Person {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			PersonDetailsCollectionViewController.`init`(with: self.id)
+			PersonDetailsCollectionViewController()(with: self.id)
 		}, actionProvider: { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})

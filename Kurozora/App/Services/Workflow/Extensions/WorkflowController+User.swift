@@ -21,7 +21,7 @@ extension WorkflowController {
 			return true
 		} else {
 			return await withCheckedContinuation { continuation in
-				self.presentSignInView(on: viewController)?.onSignIn = {
+				self.presentSignInView(on: viewController).onSignIn = {
 					continuation.resume(returning: true)
 				}
 			}
@@ -122,36 +122,33 @@ extension WorkflowController {
 	///
 	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
 	@discardableResult
-	func presentSignInView(on viewController: UIViewController? = nil) -> SignInTableViewController? {
-		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-			let viewController = viewController ?? UIApplication.topViewController
-			viewController?.present(kNavigationController, animated: true)
+	func presentSignInView(on viewController: UIViewController? = nil) -> SignInTableViewController {
+		let signInTableViewController = SignInTableViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+		let viewController = viewController ?? UIApplication.topViewController
+		viewController?.present(kNavigationController, animated: true)
 
-			return signInTableViewController
-		}
-
-		return nil
+		return signInTableViewController
 	}
 
 	/// Presents the user with the subscribe view.
 	///
 	///	- Parameter viewController: The view controller on which the subscription view is presented.
 	func presentSubscribeView(on viewController: UIViewController? = nil) {
-		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
-			let viewController = viewController ?? UIApplication.topViewController
-			viewController?.present(subscriptionKNavigationController, animated: true)
-		}
+		let subscriptionCollectionViewController = SubscriptionCollectionViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: subscriptionCollectionViewController)
+		let viewController = viewController ?? UIApplication.topViewController
+		viewController?.present(kNavigationController, animated: true)
 	}
 
 	/// Presents the user with the tip jar view.
 	///
 	///	- Parameter viewController: The view controller on which the Tip Jar view is presented .
 	func presentTipJarView(on viewController: UIViewController? = nil) {
-		if let tipJarKNavigationController = R.storyboard.purchase.tipJarKNavigationController() {
-			let viewController = viewController ?? UIApplication.topViewController
-			viewController?.present(tipJarKNavigationController, animated: true)
-		}
+		let tipJarCollectionViewController = TipJarCollectionViewController.instantiate()
+		let kNavigationController = KNavigationController(rootViewController: tipJarCollectionViewController)
+		let viewController = viewController ?? UIApplication.topViewController
+		viewController?.present(kNavigationController, animated: true)
 	}
 
 	/// Signs out the user and removes all data from the keychain.
