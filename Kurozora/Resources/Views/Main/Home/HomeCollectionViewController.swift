@@ -195,6 +195,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	#if DEBUG
 	/// Configures the navigation items.
 	fileprivate func configureNavigationItems() {
+		guard self.genre == nil && self.theme == nil else { return }
+
 		self.apiBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"))
 		self.populateAPIEndpoints()
 
