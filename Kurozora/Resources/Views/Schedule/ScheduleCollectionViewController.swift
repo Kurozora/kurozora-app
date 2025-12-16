@@ -10,7 +10,7 @@ import KurozoraKit
 import Tabman
 import UIKit
 
-class ScheduleCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
 	static var storyboardName: String = "Schedule"
 
 	// MARK: - Enums
@@ -43,8 +43,11 @@ class ScheduleCollectionViewController: KCollectionViewController, StoryboardIns
 	let tabBarView = TMBar.KBar()
 	var currentTopContentInset: CGFloat = 0
 
-	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -220,6 +223,13 @@ class ScheduleCollectionViewController: KCollectionViewController, StoryboardIns
 	@objc func handleTodayButtonPressed() {
 		Task { @MainActor in
 			self.scrollToToday(animated: true)
+		}
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .game, .literature, .show: return nil
 		}
 	}
 
@@ -459,6 +469,34 @@ extension ScheduleCollectionViewController {
 				return game1 == game2 && section1 == section2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+// MARK: - Cell Registrations
+extension ScheduleCollectionViewController {
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { smallLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .show(let show, _):
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show, scheduleIsShown: true)
+			case .literature(let literature, _):
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: literature, scheduleIsShown: true)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { gameLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .game(let game, _):
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game, scheduleIsShown: true)
+			default: break
 			}
 		}
 	}

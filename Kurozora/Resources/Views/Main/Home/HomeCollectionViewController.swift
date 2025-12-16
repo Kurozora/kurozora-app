@@ -13,7 +13,7 @@ import TRON
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController, StoryboardInstantiable {
+class HomeCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
 	static var storyboardName: String = "Home"
 
 	// MARK: - Enums
@@ -44,6 +44,11 @@ class HomeCollectionViewController: KCollectionViewController, StoryboardInstant
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
+	#if DEBUG
+	// Views
+	var apiBarButtonItem: UIBarButtonItem!
+	#endif
+
 	// MARK: - Properties
 	lazy var genre: Genre? = nil
 	lazy var theme: Theme? = nil
@@ -55,8 +60,6 @@ class HomeCollectionViewController: KCollectionViewController, StoryboardInstant
 	var upNextCategory: ExploreCategory?
 	var quickActions: [QuickAction] = []
 
-	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -70,12 +73,10 @@ class HomeCollectionViewController: KCollectionViewController, StoryboardInstant
 	}
 
 	var cache: [IndexPath: KurozoraItem] = [:]
-	private var isFetchingSection: Set<SectionLayoutKind> = []
+	var isFetchingSection: Set<SectionLayoutKind> = []
 
-	#if DEBUG
-	// Views
-	var apiBarButtonItem: UIBarButtonItem!
-	#endif
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -329,6 +330,21 @@ class HomeCollectionViewController: KCollectionViewController, StoryboardInstant
 	// MARK: - IBActions
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
 		self.segueToProfile()
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .episodeIdentity(let id, _): return id as? Element
+		case .literatureIdentity(let id, _): return id as? Element
+		case .showIdentity(let id, _): return id as? Element
+		case .gameIdentity(let id, _): return id as? Element
+		case .characterIdentity(let id, _): return id as? Element
+		case .personIdentity(let id, _): return id as? Element
+		case .genreIdentity(let id, _): return id as? Element
+		case .themeIdentity(let id, _): return id as? Element
+		default: return nil
+		}
 	}
 
 	// MARK: - Segue
@@ -1149,65 +1165,6 @@ extension HomeCollectionViewController {
 				recapLockupCollectionViewCell.configure(using: recap)
 			default: return
 			}
-		}
-	}
-
-	/// Generic helper to fetch all items in a section if not yet cached.
-	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
-		_ response: I.Type,
-		_ item: Element.Type,
-		at indexPath: IndexPath,
-		itemKind: ItemKind
-	) async {
-		guard
-			self.cache[indexPath] == nil,
-			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
-			!self.isFetchingSection.contains(section)
-		else { return }
-
-		self.isFetchingSection.insert(section)
-
-		// Extract all identities in this section
-		let identities: [Element] = self.snapshot
-			.itemIdentifiers(inSection: section)
-			.compactMap {
-				switch $0 {
-				case .episodeIdentity(let id, _): return id as? Element
-				case .literatureIdentity(let id, _): return id as? Element
-				case .showIdentity(let id, _): return id as? Element
-				case .gameIdentity(let id, _): return id as? Element
-				case .characterIdentity(let id, _): return id as? Element
-				case .personIdentity(let id, _): return id as? Element
-				case .genreIdentity(let id, _): return id as? Element
-				case .themeIdentity(let id, _): return id as? Element
-				default: return nil
-				}
-			}
-
-		defer { self.isFetchingSection.remove(section) }
-
-		do {
-			let data: I = try await KService.getDetails(for: identities).value
-
-			// Maintain order based on identities array
-			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
-			let sorted = data.data.sorted {
-				guard
-					let lhsIndex = orderLookup[$0.id],
-					let rhsIndex = orderLookup[$1.id]
-				else { return false }
-				return lhsIndex < rhsIndex
-			}
-
-			// Cache results in section order
-			for (index, model) in sorted.enumerated() {
-				let ip = IndexPath(item: index, section: indexPath.section)
-				self.cache[ip] = model
-			}
-
-			self.setSectionNeedsUpdate(section)
-		} catch {
-			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

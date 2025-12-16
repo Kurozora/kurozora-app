@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import MusicKit
 
-class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable, StoryboardInstantiable {
 	static var storyboardName: String = "Songs"
 
 	// MARK: - Enums
@@ -46,7 +46,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var reviews: [Review] = []
 
 	var cache: [IndexPath: KurozoraItem] = [:]
-	private var isFetchingSection: Set<SectionLayoutKind> = []
+	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -191,6 +191,14 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 			self.song.attributes.library?.review = nil
 
 			self.updateDataSource()
+		}
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .showIdentity(let id, _): return id as? Element
+		default: return nil
 		}
 	}
 
@@ -520,58 +528,6 @@ extension SongDetailsCollectionViewController {
 				smallLockupCollectionViewCell.configure(using: show)
 			default: break
 			}
-		}
-	}
-
-	/// Generic helper to fetch all items in a section if not yet cached.
-	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
-		_ response: I.Type,
-		_ item: Element.Type,
-		at indexPath: IndexPath,
-		itemKind: ItemKind
-	) async {
-		guard
-			self.cache[indexPath] == nil,
-			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
-			!self.isFetchingSection.contains(section)
-		else { return }
-
-		self.isFetchingSection.insert(section)
-
-		// Extract all identities in this section
-		let identities: [Element] = self.snapshot
-			.itemIdentifiers(inSection: section)
-			.compactMap {
-				switch $0 {
-				case .showIdentity(let id, _): return id as? Element
-				default: return nil
-				}
-			}
-
-		defer { self.isFetchingSection.remove(section) }
-
-		do {
-			let data: I = try await KService.getDetails(for: identities).value
-
-			// Maintain order based on identities array
-			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
-			let sorted = data.data.sorted {
-				guard
-					let lhsIndex = orderLookup[$0.id],
-					let rhsIndex = orderLookup[$1.id]
-				else { return false }
-				return lhsIndex < rhsIndex
-			}
-
-			// Cache results in section order
-			for (index, model) in sorted.enumerated() {
-				let ip = IndexPath(item: index, section: indexPath.section)
-				self.cache[ip] = model
-			}
-
-			self.setSectionNeedsUpdate(section)
-		} catch {
-			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

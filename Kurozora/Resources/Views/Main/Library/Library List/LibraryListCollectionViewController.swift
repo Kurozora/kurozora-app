@@ -44,7 +44,9 @@ class LibraryListCollectionViewController: KCollectionViewController, Storyboard
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
 
 	weak var delegate: LibraryListViewControllerDelegate?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	var user: User?
 	private var viewedUser: User? {

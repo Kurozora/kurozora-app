@@ -99,30 +99,3 @@ extension ScheduleCollectionViewController {
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
-
-extension ScheduleCollectionViewController {
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { smallLockupCollectionViewCell, _, itemKind in
-			switch itemKind {
-			case .show(let show, _):
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show, scheduleIsShown: true)
-			case .literature(let literature, _):
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature, scheduleIsShown: true)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { gameLockupCollectionViewCell, _, itemKind in
-			switch itemKind {
-			case .game(let game, _):
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game, scheduleIsShown: true)
-			default: break
-			}
-		}
-	}
-}

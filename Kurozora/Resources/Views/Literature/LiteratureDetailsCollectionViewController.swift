@@ -12,7 +12,7 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
+class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable, StoryboardInstantiable {
 	static var storyboardName: String = "Literatures"
 
 	// MARK: - Enums
@@ -81,12 +81,12 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 //	var studio: Studio!
 	var studioLiteratureIdentities: [LiteratureIdentity] = []
 
-	var cache: [IndexPath: KurozoraItem] = [:]
-	private var isFetchingSection: Set<SectionLayoutKind> = []
-
 	/// The first cell's size.
 	private var firstCellSize: CGSize = .zero
 
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+	
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -346,6 +346,18 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 		let name = self.literature.attributes.library?.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleLiteratureIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .castIdentity(let id, _): return id as? Element
+		case .characterIdentity(let id, _): return id as? Element
+		case .literatureIdentity(let id, _): return id as? Element
+		case .personIdentity(let id, _): return id as? Element
+		case .studioIdentity(let id, _): return id as? Element
+		default: return nil
+		}
 	}
 
 	// MARK: - Segue
@@ -1118,62 +1130,6 @@ extension LiteratureDetailsCollectionViewController {
 				gameLockupCollectionViewCell.configure(using: relatedGame)
 			default: return
 			}
-		}
-	}
-
-	/// Generic helper to fetch all items in a section if not yet cached.
-	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(
-		_ response: I.Type,
-		_ item: Element.Type,
-		at indexPath: IndexPath,
-		itemKind: ItemKind
-	) async {
-		guard
-			self.cache[indexPath] == nil,
-			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
-			!self.isFetchingSection.contains(section)
-		else { return }
-
-		self.isFetchingSection.insert(section)
-
-		// Extract all identities in this section
-		let identities: [Element] = self.snapshot
-			.itemIdentifiers(inSection: section)
-			.compactMap {
-				switch $0 {
-				case .castIdentity(let id, _): return id as? Element
-				case .characterIdentity(let id, _): return id as? Element
-				case .literatureIdentity(let id, _): return id as? Element
-				case .personIdentity(let id, _): return id as? Element
-				case .studioIdentity(let id, _): return id as? Element
-				default: return nil
-				}
-			}
-
-		defer { self.isFetchingSection.remove(section) }
-
-		do {
-			let data: I = try await KService.getDetails(for: identities).value
-
-			// Maintain order based on identities array
-			let orderLookup = Dictionary(uniqueKeysWithValues: identities.enumerated().map { ($1.id, $0) })
-			let sorted = data.data.sorted {
-				guard
-					let lhsIndex = orderLookup[$0.id],
-					let rhsIndex = orderLookup[$1.id]
-				else { return false }
-				return lhsIndex < rhsIndex
-			}
-
-			// Cache results in section order
-			for (index, model) in sorted.enumerated() {
-				let ip = IndexPath(item: index, section: indexPath.section)
-				self.cache[ip] = model
-			}
-
-			self.setSectionNeedsUpdate(section)
-		} catch {
-			print("Fetch error for section \(section): \(error)", error.localizedDescription)
 		}
 	}
 }

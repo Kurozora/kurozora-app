@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension LibraryListCollectionViewController {
 	override func configureDataSource() {
@@ -29,27 +29,27 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		snapshot.appendSections([.main])
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
 		switch UserSettings.libraryKind {
 		case .shows:
 			let shows: [ItemKind] = self.shows.map { show in
-				return .show(show)
+				.show(show)
 			}
-			snapshot.appendItems(shows, toSection: .main)
+			self.snapshot.appendItems(shows, toSection: .main)
 		case .literatures:
 			let literatures: [ItemKind] = self.literatures.map { literature in
-				return .literature(literature)
+				.literature(literature)
 			}
-			snapshot.appendItems(literatures, toSection: .main)
+			self.snapshot.appendItems(literatures, toSection: .main)
 		case .games:
 			let games: [ItemKind] = self.games.map { game in
-				return .game(game)
+				.game(game)
 			}
-			snapshot.appendItems(games, toSection: .main)
+			self.snapshot.appendItems(games, toSection: .main)
 		}
 
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}
 }

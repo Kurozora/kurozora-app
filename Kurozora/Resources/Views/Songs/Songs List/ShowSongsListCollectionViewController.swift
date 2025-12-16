@@ -15,7 +15,7 @@ enum SongsListViewType: Int {
 	case showSongs
 }
 
-class ShowSongsListCollectionViewController: KCollectionViewController {
+class ShowSongsListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -45,8 +45,12 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 		}
 	}
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
-	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?
@@ -159,6 +163,13 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 		// Assign the new grouped show songs
 		self.showSongCategories = categorisedShowSongs
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .song, .showSong: return nil
+		}
 	}
 
 	// MARK: - Segue
