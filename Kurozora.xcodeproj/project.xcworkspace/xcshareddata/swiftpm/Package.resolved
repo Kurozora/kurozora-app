@@ -1,5 +1,5 @@
 {
-  "originHash" : "87dec884f409bee9f3ce4078a20c2994712f975a155e5d1d784b4005289bea21",
+  "originHash" : "22771c3afb29a337c5480e23d19c0316f125a3d14d7f14d1abfd5a658bc8c6f8",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -170,15 +170,6 @@
       "state" : {
         "revision" : "be0c1f6f1964cfb07f9d819b0863f2c3f255f612",
         "version" : "4.2.0"
-      }
-    },
-    {
-      "identity" : "r.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mac-cain13/R.swift.git",
-      "state" : {
-        "revision" : "a9abc6b0afe0fc4a5a71e1d7d2872143dff2d2f1",
-        "version" : "7.8.0"
       }
     },
     {

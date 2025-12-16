@@ -23,7 +23,6 @@
 		66CBF86F2E90277800104283 /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF86E2E90277800104283 /* SPConfetti */; };
 		66CBF8722E90279E00104283 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8712E90279E00104283 /* Tabman */; };
 		66CBF8752E9027FF00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8742E9027FF00104283 /* SwiftTheme */; };
-		66CBF8782E90287A00104283 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8772E90287A00104283 /* RswiftLibrary */; };
 		66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF87C2E902AFC00104283 /* XCDYouTubeKit */; };
 		66CBFFCC2E9045E700104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCB2E9045E700104283 /* KurozoraKit */; };
 		66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD32E904AF500104283 /* Kingfisher */; };
@@ -177,7 +176,6 @@
 				66CBDB1E2E8F215A00104283 /* KurozoraKit in Frameworks */,
 				66CB161C2E90AA4800104283 /* SwiftyJSON in Frameworks */,
 				66CBDB212E8F221600104283 /* KeychainAccess in Frameworks */,
-				66CBF8782E90287A00104283 /* RswiftLibrary in Frameworks */,
 				66CBF8722E90279E00104283 /* Tabman in Frameworks */,
 				66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */,
 				66CBF86C2E90260F00104283 /* Solar in Frameworks */,
@@ -271,7 +269,6 @@
 			dependencies = (
 				66E55B132EE453CC009E12A3 /* PBXTargetDependency */,
 				660593072E91CE80002CC46E /* PBXTargetDependency */,
-				66CBFFD82E904CDB00104283 /* PBXTargetDependency */,
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 				6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */,
 				662A3D362C92433F006F6EDD /* PBXTargetDependency */,
@@ -339,7 +336,6 @@
 				66CBF86D2E90277800104283 /* XCRemoteSwiftPackageReference "SPConfetti" */,
 				66CBF8702E90279E00104283 /* XCRemoteSwiftPackageReference "Tabman" */,
 				66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */,
-				66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */,
 				66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */,
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
@@ -459,10 +455,6 @@
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
-		};
-		66CBFFD82E904CDB00104283 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 66CBFFD72E904CDB00104283 /* RswiftGenerateInternalResources */;
 		};
 		66E55B132EE453CC009E12A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -994,14 +986,6 @@
 				minimumVersion = 0.6.4;
 			};
 		};
-		66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mac-cain13/R.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.8.0;
-			};
-		};
 		66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/0xced/XCDYouTubeKit.git";
@@ -1102,11 +1086,6 @@
 			package = 66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */;
 			productName = SwiftTheme;
 		};
-		66CBF8772E90287A00104283 /* RswiftLibrary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = RswiftLibrary;
-		};
 		66CBF87C2E902AFC00104283 /* XCDYouTubeKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */;
@@ -1125,11 +1104,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */;
 			productName = SwiftTheme;
-		};
-		66CBFFD72E904CDB00104283 /* RswiftGenerateInternalResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF8762E90287A00104283 /* XCRemoteSwiftPackageReference "R.swift" */;
-			productName = "plugin:RswiftGenerateInternalResources";
 		};
 		66E55B122EE453CC009E12A3 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -26,8 +26,6 @@ name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.2,
 
 name: Pageboy, nameSpecified: Pageboy, owner: uias, version: 4.2.0, source: https://github.com/uias/Pageboy
 
-name: R.swift, nameSpecified: Rswift, owner: mac-cain13, version: 7.8.0, source: https://github.com/mac-cain13/R.swift
-
 name: Reachability.swift, nameSpecified: Reachability, owner: ashleymills, version: 5.2.4, source: https://github.com/ashleymills/Reachability.swift
 
 name: Solar, nameSpecified: Solar, owner: ceeK, version: 3.0.1, source: https://github.com/ceeK/Solar
