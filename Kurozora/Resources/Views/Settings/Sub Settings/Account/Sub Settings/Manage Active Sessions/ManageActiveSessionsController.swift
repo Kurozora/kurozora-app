@@ -6,28 +6,25 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import CoreLocation
+import KurozoraKit
 import MapKit
+import UIKit
 
-class SessionDataSource: UITableViewDiffableDataSource<ManageActiveSessionsController.SectionLayoutKind, ManageActiveSessionsController.ItemKind> {
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		guard let sectionIdentifier = self.sectionIdentifier(for: indexPath.section) else { return false }
-		return sectionIdentifier != .current
-	}
-}
-
-class ManageActiveSessionsController: KTableViewController, StoryboardInstantiable {
+class ManageActiveSessionsController: KTableViewController, SectionFetchable, StoryboardInstantiable {
 	static var storyboardName: String = "AccountSettings"
 
 	// MARK: - IBOutlets
-	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet var mapView: MKMapView!
 
 	// MARK: - Properties
-	var sessions: [IndexPath: Session] = [:]
 	var sessionIdentities: [SessionIdentity] = []
-	var dataSource: SessionDataSource! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	var dataSource: UITableViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -46,8 +43,9 @@ class ManageActiveSessionsController: KTableViewController, StoryboardInstantiab
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -59,7 +57,7 @@ class ManageActiveSessionsController: KTableViewController, StoryboardInstantiab
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
@@ -153,7 +151,9 @@ class ManageActiveSessionsController: KTableViewController, StoryboardInstantiab
 
 	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
-		self.sessions.forEach { [weak self] _, session in
+		guard let sessions = cache as? [IndexPath: Session] else { return }
+
+		sessions.forEach { [weak self] _, session in
 			guard let self = self else { return }
 			let annotation = ImageAnnotation()
 
@@ -193,6 +193,22 @@ class ManageActiveSessionsController: KTableViewController, StoryboardInstantiab
 	func removeSession(at indexPath: IndexPath) {
 		self.sessionIdentities.remove(at: indexPath.item)
 		self.updateDataSource()
+	}
+
+	// MARK: - SectionFetchable
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .sessionIdentity(let id): return id as? Element
+		default: return nil
+		}
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension ManageActiveSessionsController {
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return false }
+		return sectionIdentifier != .current
 	}
 }
 
@@ -286,6 +302,39 @@ extension ManageActiveSessionsController {
 				return sessionIdentity1 == sessionIdentity2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+// MARK: - Cell Registration
+extension ManageActiveSessionsController {
+	func getConfiguredCurrentSessionCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
+		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { currentSessionCell, _, itemKind in
+			switch itemKind {
+			case .accessToken(let accessToken):
+				currentSessionCell.configureCell(using: accessToken)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredSessionLockupCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
+		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { [weak self] sessionLockupCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .sessionIdentity:
+				let session: Session? = self.fetchModel(at: indexPath)
+
+				if session == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(SessionResponse.self, SessionIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				sessionLockupCell.configureCell(using: session)
+			default: break
 			}
 		}
 	}
