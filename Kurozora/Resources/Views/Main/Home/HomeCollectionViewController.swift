@@ -41,11 +41,10 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		case legalSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageButton: ProfileImageButton!
-
+	// MARK: - Views
+	var profileImageButton: ProfileImageButton!
+	var profileBarButtonItem: UIBarButtonItem!
 	#if DEBUG
-	// Views
 	var apiBarButtonItem: UIBarButtonItem!
 	#endif
 
@@ -153,10 +152,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		// Configurations
 		self.configureQuickActions()
 		self.configureDataSource()
-		self.configureUserDetails()
-		#if DEBUG
 		self.configureNavigationItems()
-		#endif
+		self.configureUserDetails()
 
 		// Fetch explore details.
 		Task { [weak self] in
@@ -192,17 +189,36 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		}
 	}
 
-	#if DEBUG
 	/// Configures the navigation items.
 	fileprivate func configureNavigationItems() {
-		guard self.genre == nil && self.theme == nil else { return }
+		self.profileImageButton = ProfileImageButton()
+		self.profileImageButton.addTarget(self, action: #selector(self.segueToProfile), for: .touchUpInside)
+		self.profileBarButtonItem = UIBarButtonItem(customView: self.profileImageButton)
+		self.navigationItem.rightBarButtonItem = self.profileBarButtonItem
 
-		self.apiBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"))
-		self.populateAPIEndpoints()
+		let buttonSize: CGFloat
+		#if targetEnvironment(macCatalyst)
+		buttonSize = 28
+		#else
+		buttonSize = 36
+		#endif
 
-		self.navigationItem.leftBarButtonItem = self.apiBarButtonItem
+		NSLayoutConstraint.activate([
+			self.profileImageButton.widthAnchor.constraint(equalToConstant: buttonSize),
+			self.profileImageButton.heightAnchor.constraint(equalToConstant: buttonSize),
+		])
+
+		#if DEBUG
+		if self.genre == nil && self.theme == nil {
+			self.apiBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"))
+			self.populateAPIEndpoints()
+
+			self.navigationItem.leftBarButtonItem = self.apiBarButtonItem
+		}
+		#endif
 	}
 
+	#if DEBUG
 	/// Builds and presents the API endpoints in an action sheet.
 	fileprivate func populateAPIEndpoints() {
 		var menuItems: [UIMenuElement] = []
@@ -327,11 +343,6 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 				self.dataSource.apply(newSnapshot)
 			}
 		}
-	}
-
-	// MARK: - IBActions
-	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		self.segueToProfile()
 	}
 
 	// MARK: - SectionFetchable

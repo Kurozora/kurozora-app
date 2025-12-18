@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2t6-uG-J3i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2t6-uG-J3i">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -91,29 +92,8 @@
                             <outlet property="delegate" destination="lLs-XV-jFy" id="czP-tB-SM9"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
-                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="52" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="2S4-4c-cdW">
-                                        <variation key="userInterfaceIdiom=mac" constant="28"/>
-                                    </constraint>
-                                    <constraint firstAttribute="height" constant="36" id="LuP-Rg-K02">
-                                        <variation key="userInterfaceIdiom=mac" constant="28"/>
-                                    </constraint>
-                                </constraints>
-                                <state key="normal" title="Profile">
-                                    <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="profileButtonPressed:" destination="lLs-XV-jFy" eventType="touchUpInside" id="WVw-G6-XN6"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm"/>
                     <connections>
-                        <outlet property="profileImageButton" destination="ZYb-6d-0Mn" id="TNK-Mo-WCl"/>
                         <segue destination="0a7-9G-Fd6" kind="presentation" identifier="subscriptionSegue" id="3ef-dN-WV5"/>
                         <segue destination="SJ2-V2-Ihb" kind="presentation" identifier="redeemSegue" id="X7E-Wd-lXb"/>
                         <segue destination="iCt-dj-RF4" kind="presentation" identifier="legalSegue" id="ctZ-Iy-Ut3"/>
