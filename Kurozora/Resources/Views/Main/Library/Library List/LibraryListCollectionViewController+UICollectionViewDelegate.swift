@@ -52,28 +52,27 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func setEditing(_ editing: Bool, animated: Bool) {
-		if self.isEditing != editing {
-			super.setEditing(editing, animated: animated)
-			self.collectionView.isEditing = editing
+		guard self.isEditing != editing else { return }
+		super.setEditing(editing, animated: animated)
+		self.collectionView.isEditing = editing
 
-			// Reload visible items to make sure our collection view cells show their selection indicators.
-			var snapshot = self.dataSource.snapshot()
-			snapshot.reconfigureItems(snapshot.itemIdentifiers)
-			self.dataSource.apply(snapshot, animatingDifferences: true)
+		// Reload visible items to make sure our collection view cells show their selection indicators.
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems(snapshot.itemIdentifiers)
+		self.dataSource.apply(snapshot, animatingDifferences: true)
 
-			if !editing {
-				// Clear selection if leaving edit mode.
-				self.collectionView.indexPathsForSelectedItems?.forEach { indexPath in
-					self.collectionView.deselectItem(at: indexPath, animated: animated)
-				}
+		if !editing {
+			// Clear selection if leaving edit mode.
+			self.collectionView.indexPathsForSelectedItems?.forEach { indexPath in
+				self.collectionView.deselectItem(at: indexPath, animated: animated)
 			}
-
-//			self.updateNavigationBar()
 		}
+
+//		self.updateNavigationBar()
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
-		return false
+		return false // true
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {

@@ -20,6 +20,9 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		case notificationsGroupingSegue
 	}
 
+	// MARK: - Views
+	var profileBarButtonItem: ProfileBarButtonItem!
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
@@ -59,6 +62,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
+			self.configureUserDetails()
 			self.enableRefreshControl()
 			self.enableActions()
 		}
@@ -79,6 +83,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		self.enableActions()
 
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		if !self.userNotifications.isEmpty {
 			self.endFetch()
@@ -124,6 +129,24 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 			guard let self = self else { return }
 			await self.fetchNotifications()
 		}
+	}
+
+	/// Configures the profile bar button item.
+	private func configureProfileBarButtonItem() {
+		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			Task {
+				await self.segueToProfile()
+			}
+		})
+		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		self.configureUserDetails()
+	}
+	
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureProfileBarButtonItem()
 	}
 
 	override func configureEmptyDataView() {
@@ -216,6 +239,20 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		}
 
 		self.endFetch()
+	}
+
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+	}
+
+	/// Performs segue to the profile view.
+	func segueToProfile() async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard isSignedIn else { return }
+
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	// MARK: - IBActions

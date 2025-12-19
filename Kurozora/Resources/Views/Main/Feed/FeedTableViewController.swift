@@ -20,7 +20,9 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var postMessageButton: UIBarButtonItem!
-	@IBOutlet weak var profileImageButton: ProfileImageButton!
+
+	// MARK: - Views
+	var profileBarButtonItem: ProfileBarButtonItem!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
@@ -70,7 +72,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 
 		// Configure navigation bar items
 		self.enableActions()
-		self.configureUserDetails()
+		self.configureNavigationItems()
 
 		// Fetch feed posts.
 		Task { [weak self] in
@@ -99,6 +101,24 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 			guard let self = self else { return }
 			await self.fetchFeedMessages()
 		}
+	}
+
+	/// Configures the profile bar button item.
+	private func configureProfileBarButtonItem() {
+		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			Task {
+				await self.segueToProfile()
+			}
+		})
+		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		self.configureUserDetails()
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureProfileBarButtonItem()
 	}
 
 	override func configureEmptyDataView() {
@@ -154,11 +174,6 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
-	/// Configures the view with the user's details.
-	func configureUserDetails() {
-		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile, for: .normal)
-	}
-
 	/// Fetch feed posts for the current section.
 	@MainActor
 	func fetchFeedMessages() async {
@@ -210,16 +225,18 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		self.performSegue(withIdentifier: SegueIdentifiers.settingsSegue, sender: nil)
 	}
 
-	/// Performs segue to the profile view.
-	@objc func segueToProfile() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-			guard signedIn else { return }
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+	}
 
-			let profileTableViewController = ProfileTableViewController.instantiate()
-			self.show(profileTableViewController, sender: nil)
-		}
+	/// Performs segue to the profile view.
+	func segueToProfile() async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard isSignedIn else { return }
+
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Shows the text editor for posting a new message.
@@ -244,10 +261,6 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	// MARK: - IBActions
-	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		self.segueToProfile()
-	}
-
 	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
 		self.postNewMessage()
 	}

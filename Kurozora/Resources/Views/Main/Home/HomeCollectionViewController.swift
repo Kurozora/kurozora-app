@@ -42,8 +42,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	// MARK: - Views
-	var profileImageButton: ProfileImageButton!
-	var profileBarButtonItem: UIBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem!
 	#if DEBUG
 	var apiBarButtonItem: UIBarButtonItem!
 	#endif
@@ -153,7 +152,6 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		self.configureQuickActions()
 		self.configureDataSource()
 		self.configureNavigationItems()
-		self.configureUserDetails()
 
 		// Fetch explore details.
 		Task { [weak self] in
@@ -189,24 +187,22 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		}
 	}
 
-	/// Configures the navigation items.
-	fileprivate func configureNavigationItems() {
-		self.profileImageButton = ProfileImageButton()
-		self.profileImageButton.addTarget(self, action: #selector(self.segueToProfile), for: .touchUpInside)
-		self.profileBarButtonItem = UIBarButtonItem(customView: self.profileImageButton)
+	/// Configures the profile bar button item.
+	private func configureProfileBarButtonItem() {
+		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			Task {
+				await self.segueToProfile()
+			}
+		})
 		self.navigationItem.rightBarButtonItem = self.profileBarButtonItem
 
-		let buttonSize: CGFloat
-		#if targetEnvironment(macCatalyst)
-		buttonSize = 28
-		#else
-		buttonSize = 36
-		#endif
+		self.configureUserDetails()
+	}
 
-		NSLayoutConstraint.activate([
-			self.profileImageButton.widthAnchor.constraint(equalToConstant: buttonSize),
-			self.profileImageButton.heightAnchor.constraint(equalToConstant: buttonSize),
-		])
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureProfileBarButtonItem()
 
 		#if DEBUG
 		if self.genre == nil && self.theme == nil {
@@ -315,18 +311,16 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile, for: .normal)
+		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Performs segue to the profile view.
-	@objc func segueToProfile() {
-		Task {
-			let isSignedIn = await WorkflowController.shared.isSignedIn()
-			guard isSignedIn else { return }
+	func segueToProfile() async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard isSignedIn else { return }
 
-			let profileTableViewController = ProfileTableViewController.instantiate()
-			self.show(profileTableViewController, sender: nil)
-		}
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Handles the episode watch status update notification.

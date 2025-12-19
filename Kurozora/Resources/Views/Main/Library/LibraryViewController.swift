@@ -14,8 +14,10 @@ import UIKit
 class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	static var storyboardName: String = "Library"
 
+	// MARK: - Views
+	var profileBarButtonItem: ProfileBarButtonItem!
+
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageButton: ProfileImageButton!
 	@IBOutlet weak var toolbar: UIToolbar!
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
@@ -40,12 +42,15 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.configureUserDetails()
-		self.enableActions()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.configureUserDetails()
+			self.enableActions()
 
-		#if targetEnvironment(macCatalyst)
-		self.touchBar = nil
-		#endif
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
+		}
 	}
 
 	override func viewDidLoad() {
@@ -58,7 +63,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			self.libraryKindBarButtonItem.hidesSharedBackground = true
 		}
-		self.configureUserDetails()
+		self.configureNavigationItems()
 
 		// Actions
 		self.enableActions()
@@ -76,6 +81,24 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	}
 
 	// MARK: - Functions
+	/// Configures the profile bar button item.
+	private func configureProfileBarButtonItem() {
+		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			Task {
+				await self.segueToProfile()
+			}
+		})
+		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		self.configureUserDetails()
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureProfileBarButtonItem()
+	}
+
 	override func configureTabBarViewVisibility() {
 		if self.viewedUser == nil {
 			self.bar.isHidden = true
@@ -97,63 +120,53 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-
-			self.profileImageButton?.setImage(User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile, for: .normal)
-		}
+		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Performs segue to the profile view.
-	@objc func segueToProfile() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-			guard signedIn else { return }
+	func segueToProfile() async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard isSignedIn else { return }
 
-			let profileTableViewController = ProfileTableViewController.instantiate()
-			self.show(profileTableViewController, sender: nil)
-		}
+		let profileTableViewController = ProfileTableViewController.instantiate()
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			guard let index = self.currentIndex else { return }
+		guard let index = self.currentIndex else { return }
 
-			self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
-				"includeUser": self.user != nil,
-				"index": index,
-			], sourceView: nil, barButtonItem: self.moreBarButtonItem)
-			self.populateSortActions()
-			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
-			self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
+		self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
+			"includeUser": self.user != nil,
+			"index": index,
+		], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		self.populateSortActions()
+		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
+		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 
-			if self.viewedUser == nil {
-				self.toolbar.isHidden = true
+		if self.viewedUser == nil {
+			self.toolbar.isHidden = true
 
-				self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
-				self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
+			self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
+			self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
 
-				self.navigationItem.rightBarButtonItems = nil
-				self.navigationItem.leftBarButtonItems = nil
-			} else if self.viewedUser != User.current {
-				self.toolbar.isHidden = false
+			self.navigationItem.rightBarButtonItems = nil
+			self.navigationItem.leftBarButtonItems = nil
+		} else if self.viewedUser != User.current {
+			self.toolbar.isHidden = false
 
-				self.navigationItem.rightBarButtonItems = self.navigationItem.rightBarButtonItems?.filter { barButtonItem in
-					barButtonItem.customView != self.profileImageButton
-				}
-			} else {
-				self.toolbar.isHidden = false
+			self.navigationItem.rightBarButtonItems = self.navigationItem.rightBarButtonItems?.filter { barButtonItem in
+				barButtonItem != self.profileBarButtonItem
+			}
+		} else {
+			self.toolbar.isHidden = false
 
-				if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
-					self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
-				}
+			if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
+				self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
+			}
 
-				if self.navigationItem.leftBarButtonItems == nil, self.leftBarButtonItems != nil {
-					self.navigationItem.leftBarButtonItems = self.leftBarButtonItems
-				}
+			if self.navigationItem.leftBarButtonItems == nil, self.leftBarButtonItems != nil {
+				self.navigationItem.leftBarButtonItems = self.leftBarButtonItems
 			}
 		}
 	}
@@ -261,10 +274,6 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
 		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
 		self.populateSortActions()
-	}
-
-	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		self.segueToProfile()
 	}
 
 	// MARK: - TMBarDataSource
