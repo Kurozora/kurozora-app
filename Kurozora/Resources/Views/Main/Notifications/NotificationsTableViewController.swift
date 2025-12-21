@@ -143,7 +143,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 
 		self.configureUserDetails()
 	}
-	
+
 	/// Configures the navigation items.
 	fileprivate func configureNavigationItems() {
 		self.configureProfileBarButtonItem()

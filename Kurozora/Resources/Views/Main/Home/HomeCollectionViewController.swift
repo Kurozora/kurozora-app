@@ -162,7 +162,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? "Explore"
+		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? Trans.explore
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -915,6 +915,19 @@ extension HomeCollectionViewController {
 				actionLinkExploreCollectionViewCell.separatorIsHidden = self.quickLinks.last == quickLink
 				#endif
 				actionLinkExploreCollectionViewCell.configure(using: quickLink)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredActionButtonCell() -> UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind>(cellNib: ActionButtonExploreCollectionViewCell.nib) { [weak self] actionButtonExploreCollectionViewCell, _, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .quickAction(let quickAction, _):
+				actionButtonExploreCollectionViewCell.delegate = self
+				actionButtonExploreCollectionViewCell.configure(using: quickAction)
 			default: break
 			}
 		}

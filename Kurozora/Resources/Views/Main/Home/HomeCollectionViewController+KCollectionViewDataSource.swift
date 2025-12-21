@@ -33,6 +33,7 @@ extension HomeCollectionViewController {
 		let upcomingCellConfiguration = self.getConfiguredUpcomingCell()
 		let videoCellConfiguration = self.getConfiguredVideoCell()
 		let actionLinkCellConfiguration = self.getConfiguredActionLinkCell()
+		let actionButtonCellConfiguration = self.getConfiguredActionButtonCell()
 		let recapCellConfiguration = self.getConfiguredRecapCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
@@ -76,14 +77,7 @@ extension HomeCollectionViewController {
 			case .quickLinks:
 				return collectionView.dequeueConfiguredReusableCell(using: actionLinkCellConfiguration, for: indexPath, item: itemKind)
 			case .quickActions:
-				switch itemKind {
-				case .quickAction(let quickAction, _):
-					let actionButtonExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ActionButtonExploreCollectionViewCell.reuseID, for: indexPath) as? ActionButtonExploreCollectionViewCell
-					actionButtonExploreCollectionViewCell?.delegate = self
-					actionButtonExploreCollectionViewCell?.configure(using: quickAction)
-					return actionButtonExploreCollectionViewCell
-				default: return nil
-				}
+				return collectionView.dequeueConfiguredReusableCell(using: actionButtonCellConfiguration, for: indexPath, item: itemKind)
 			case .legal:
 				let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LegalCollectionViewCell.self, for: indexPath)
 				return legalExploreCollectionViewCell
