@@ -30,7 +30,7 @@ extension Theme {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-			HomeCollectionViewController()(with: self)
+			HomeCollectionViewController(with: self)
 		}, actionProvider: { _ in
 			self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})

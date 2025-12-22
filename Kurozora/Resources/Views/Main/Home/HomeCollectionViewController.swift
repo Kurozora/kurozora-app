@@ -99,26 +99,32 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	// MARK: - Initializers
+	@available(*, unavailable)
+	@MainActor required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	init() {
+		let layout = UICollectionViewFlowLayout()
+		super.init(collectionViewLayout: layout)
+	}
+
 	/// Initialize a new instance of HomeCollectionViewController with the given genre object.
 	///
 	/// - Parameter genre: The genre object to use when initializing the view.
-	///
-	/// - Returns: an initialized instance of HomeCollectionViewController.
-	func callAsFunction(with genre: Genre) -> HomeCollectionViewController {
-		let homeCollectionViewController = HomeCollectionViewController.instantiate()
-			homeCollectionViewController.genre = genre
-		return homeCollectionViewController
+	init(with genre: Genre) {
+		let layout = UICollectionViewFlowLayout()
+		super.init(collectionViewLayout: layout)
+		self.genre = genre
 	}
 
 	/// Initialize a new instance of HomeCollectionViewController with the given theme object.
 	///
 	/// - Parameter theme: The theme object to use when initializing the view.
-	///
-	/// - Returns: an initialized instance of HomeCollectionViewController.
-	func callAsFunction(with theme: Theme) -> HomeCollectionViewController {
-		let homeCollectionViewController = HomeCollectionViewController.instantiate()
-			homeCollectionViewController.theme = theme
-		return homeCollectionViewController
+	init(with theme: Theme) {
+		let layout = UICollectionViewFlowLayout()
+		super.init(collectionViewLayout: layout)
+		self.theme = theme
 	}
 
 	// MARK: - View

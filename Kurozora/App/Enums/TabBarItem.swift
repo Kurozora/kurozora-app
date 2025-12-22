@@ -133,7 +133,7 @@ enum TabBarItem: Int, CaseIterable {
 	var viewControllerValue: UIViewController {
 		switch self {
 		case .home:
-			return HomeCollectionViewController.instantiate()
+			return HomeCollectionViewController()
 		case .schedule:
 			return ScheduleCollectionViewController.instantiate()
 		case .library:
@@ -151,27 +151,13 @@ enum TabBarItem: Int, CaseIterable {
 
 	/// The navigation controller value of the tab bar item.
 	var kViewControllerValue: UIViewController {
+		let viewController = self.viewControllerValue
+
 		switch self {
-		case .home:
-			let homeCollectionViewController = HomeCollectionViewController.instantiate()
-			return KNavigationController(rootViewController: homeCollectionViewController)
-		case .schedule:
-			let scheduleCollectionViewController = ScheduleCollectionViewController.instantiate()
-			return KNavigationController(rootViewController: scheduleCollectionViewController)
-		case .library:
-			let libraryViewController = LibraryViewController.instantiate()
-			return KNavigationController(rootViewController: libraryViewController)
-		case .feed:
-			let feedTableViewController = FeedTableViewController.instantiate()
-			return KNavigationController(rootViewController: feedTableViewController)
-		case .notifications:
-			let notificationsTableViewController = NotificationsTableViewController.instantiate()
-			return KNavigationController(rootViewController: notificationsTableViewController)
-		case .search:
-			let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
-			return KNavigationController(rootViewController: searchResultsCollectionViewController)
+		case .home, .schedule, .library, .feed, .notifications, .search:
+			return KNavigationController(rootViewController: viewController)
 		case .settings:
-			return SettingsSplitViewController.instantiate()
+			return viewController
 		}
 	}
 
