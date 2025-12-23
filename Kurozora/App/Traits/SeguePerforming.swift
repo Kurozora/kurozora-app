@@ -20,13 +20,37 @@ protocol SeguePerforming where Self: UIViewController {
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue. If you do not specify a value, the view controller uses itself as the sender.
 	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?)
+
+	/// Displays the view controller identified by the specified segue identifier.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///    - sender: The object to use as the sender of the segue.
+	func show(_ identifier: SegueIdentifier, sender: Any?)
+
+	/// Presents the view controller identified by the specified segue identifier modally.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///    - sender: The object to use as the sender of the segue.
+	func present(_ identifier: SegueIdentifier, sender: Any?)
 }
 
-extension SeguePerforming {
-	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?) {
-		self.performSegue(withIdentifier: identifier.rawValue, sender: sender)
-	}
-}
+/// A protocol that defines a type capable of handling segues identified by an associated type.
+protocol SegueHandler where Self: UIViewController {
+	/// Creates the destination view controller for the specified segue identifier.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///
+	/// - Returns: The destination view controller for the specified segue identifier.
+	func makeDestination(for identifier: SegueIdentifier) -> UIViewController?
 
-// MARK: - UIViewController
-extension UIViewController: SeguePerforming {}
+	/// Prepares the destination view controller before the segue is performed.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///    - destination: The destination view controller for the segue
+	///    - sender: The object to use as the sender of the segue.
+	func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?)
+}

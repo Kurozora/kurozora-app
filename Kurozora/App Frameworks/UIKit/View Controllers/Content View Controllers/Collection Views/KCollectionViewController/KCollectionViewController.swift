@@ -10,7 +10,7 @@ import UIKit
 
 /// A supercharged view controller that specializes in managing a collection view.
 ///
-/// This implemenation of [UICollectionViewController](apple-reference-documentation://hskgp2RLo1) implements the following behavior:
+/// This implementation of [UICollectionViewController](apple-reference-documentation://hskgp2RLo1) implements the following behavior:
 /// - A [KRefreshControl](x-source-tag://KRefreshControl) is added to the collection view.
 /// - A [UIActivityIndicatorView](apple-reference-documentation://hsXlO5I6Ag) is shown when [viewDidLoad](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuiviewcontroller%2F1621495-viewdidload) is called.
 /// - The view controller subscribes to the `theme_backgroundColor` of the currently selected theme.
@@ -28,7 +28,7 @@ import UIKit
 /// - Important: Refresh control is unavailable on macOS and as such it is disabled by default. Instead, the key-command `⌘+R` is added.
 ///
 /// - Tag: KCollectionViewController
-class KCollectionViewController: UICollectionViewController {
+class KCollectionViewController: UICollectionViewController, SegueHandler {
 	// MARK: - Properties
 	/// The gradient view object of the view controller.
 	private lazy var gradientView: GradientView = {
@@ -169,6 +169,13 @@ class KCollectionViewController: UICollectionViewController {
 			self.collectionView.register(UINib(nibName: identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: identifier)
 		}
 	}
+
+	// MARK: - SegueHandler
+	func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		return nil
+	}
+
+	func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {}
 }
 
 // MARK: - UICollectionViewDataSourcePrefetching
@@ -272,3 +279,22 @@ extension KCollectionViewController {
 
 // MARK: - UINavigationControllerDelegate
 extension KCollectionViewController: UINavigationControllerDelegate {}
+
+// MARK: - SeguePerforming
+extension KCollectionViewController: SeguePerforming {
+	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?) {
+		self.performSegue(withIdentifier: identifier.rawValue, sender: sender)
+	}
+
+	func show(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.show(destination, sender: sender)
+	}
+
+	func present(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.present(destination, animated: true)
+	}
+}

@@ -10,13 +10,13 @@ import UIKit
 
 /// A supercharged object that manages a view hierarchy for your UIKit app.
 ///
-/// This implemenation of [UIViewController](apple-reference-documentation://hs37A1uTs6) implements the following behavior:
+/// This implementation of [UIViewController](apple-reference-documentation://hs37A1uTs6) implements the following behavior:
 /// - The view controller subscribes to the `theme_backgroundColor` of the currently selected theme.
 ///
 /// Create a custom subclass of `KViewController` for each view that you manage.
 ///
 /// - Tag: KViewController
-class KViewController: UIViewController {
+class KViewController: UIViewController, SegueHandler {
 	// MARK: - Properties
 	/// The gradient view object of the view controller.
 	private var gradientView: GradientView = {
@@ -52,5 +52,31 @@ class KViewController: UIViewController {
 			self.gradientView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
+	}
+
+	// MARK: - SegueHandler
+	func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		return nil
+	}
+
+	func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {}
+}
+
+// MARK: - SeguePerforming
+extension KViewController: SeguePerforming {
+	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?) {
+		self.performSegue(withIdentifier: identifier.rawValue, sender: sender)
+	}
+
+	func show(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.show(destination, sender: sender)
+	}
+
+	func present(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.present(destination, animated: true)
 	}
 }
