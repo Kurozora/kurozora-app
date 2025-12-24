@@ -148,8 +148,7 @@ extension FeedMessage {
 			let messageUserID = self.relationships.users.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
-				User.current?.id == messageUserID
-			{
+				User.current?.id == messageUserID {
 				// Edit action
 				let editAction = UIAction(title: Trans.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }

@@ -95,8 +95,7 @@ extension KKSong {
 
 		// Create "View on Apple Music" element
 		if let song = userInfo?["song"] as? MKSong,
-		   let appleMusicLink = song.song.url
-		{
+		   let appleMusicLink = song.song.url {
 			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}

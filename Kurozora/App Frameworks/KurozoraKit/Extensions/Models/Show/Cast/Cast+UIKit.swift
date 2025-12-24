@@ -67,8 +67,7 @@ extension Cast {
 		var activityItems: [Any] = []
 
 		if let person = self.relationships.people?.data.first?.attributes.fullName,
-		   let character = self.relationships.characters.data.first?.attributes.name
-		{
+		   let character = self.relationships.characters.data.first?.attributes.name {
 			activityItems.append("TIL, \(person) is the voice actor of \(character) via @KurozoraApp")
 		}
 

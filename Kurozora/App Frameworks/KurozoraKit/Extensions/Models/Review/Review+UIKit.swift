@@ -68,8 +68,7 @@ extension Review {
 			let reviewUserID = self.relationships?.users?.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
-				User.current?.id == reviewUserID
-			{
+				User.current?.id == reviewUserID {
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
 				let deleteAction = UIAction(title: Trans.deleteReview, attributes: .destructive) { _ in
