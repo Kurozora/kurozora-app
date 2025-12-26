@@ -9,11 +9,11 @@
 import UIKit
 import WebKit
 
-class KWebViewController: UIViewController, StoryboardInstantiable {
-	static var storyboardName: String = "WebBrowser"
-
-	// MARK: - IBOutlets
-	@IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+class KWebViewController: UIViewController {
+	// MARK: - Views
+	private var doneBarButtonItem: UIBarButtonItem!
+	private var shareBarButtonItem: UIBarButtonItem!
+	private var activityIndicatorView: KActivityIndicatorView!
 
 	// MARK: - Properties
 	var webView: WKWebView!
@@ -23,11 +23,7 @@ class KWebViewController: UIViewController, StoryboardInstantiable {
 	override func loadView() {
 		super.loadView()
 
-		webView = WKWebView(frame: view.frame)
-		webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		webView.navigationDelegate = self
-		view.addSubview(webView)
-		view.sendSubviewToBack(webView)
+		self.configureView()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -36,16 +32,58 @@ class KWebViewController: UIViewController, StoryboardInstantiable {
 
 		if let urlString = url, let url = URL(string: urlString) {
 			let request = URLRequest(url: url)
-			webView.load(request)
+			self.webView.load(request)
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
+	// MARK: - Functions
+	func configureView() {
+		self.configureNavigationItems()
+		self.configureActivityIndicator()
+		self.configureWebView()
+		self.configureViewHierarchy()
 	}
 
-	@IBAction func actionButtonPressed(_ sender: UIBarButtonItem) {
+	/// Configures the done bar button item.
+	private func configureDoneBarButtonItem() {
+		self.doneBarButtonItem = UIBarButtonItem(systemItem: .done, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.dismiss(animated: true, completion: nil)
+		})
+		self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
+	}
+
+	/// Configures the share bar button item.
+	private func configureShareBarButtonItem() {
+		self.shareBarButtonItem = UIBarButtonItem(systemItem: .action, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.handleShareBarButtonItem()
+		})
+		self.navigationItem.rightBarButtonItems?.append(self.shareBarButtonItem)
+	}
+
+	private func configureNavigationItems() {
+		self.configureDoneBarButtonItem()
+		self.configureShareBarButtonItem()
+	}
+
+	func configureActivityIndicator() {
+		self.activityIndicatorView = KActivityIndicatorView()
+	}
+
+	func configureWebView() {
+		self.webView = WKWebView(frame: view.frame)
+		self.webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		self.webView.navigationDelegate = self
+	}
+
+	func configureViewHierarchy() {
+		self.view.addSubview(self.activityIndicatorView)
+		self.view.addSubview(self.webView)
+		self.view.sendSubviewToBack(self.webView)
+	}
+
+	func handleShareBarButtonItem() {
 		guard let url = url else { return }
 		guard let title = title else { return }
 
@@ -53,7 +91,7 @@ class KWebViewController: UIViewController, StoryboardInstantiable {
 		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.barButtonItem = sender
+			popoverController.barButtonItem = self.shareBarButtonItem
 		}
 		self.present(activityViewController, animated: true, completion: nil)
 	}
@@ -62,14 +100,14 @@ class KWebViewController: UIViewController, StoryboardInstantiable {
 // MARK: - WKNavigationDelegate
 extension KWebViewController: WKNavigationDelegate {
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-		activityIndicatorView.startAnimating()
+		self.activityIndicatorView.startAnimating()
 	}
 
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-		activityIndicatorView.stopAnimating()
+		self.activityIndicatorView.stopAnimating()
 	}
 
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-		activityIndicatorView.stopAnimating()
+		self.activityIndicatorView.stopAnimating()
 	}
 }
