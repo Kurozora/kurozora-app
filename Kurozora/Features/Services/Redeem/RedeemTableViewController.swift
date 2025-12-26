@@ -11,11 +11,10 @@ import UIKit
 import Vision
 import VisionKit
 
-class RedeemTableViewController: ServiceTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Redeem"
-
-	// MARK: - IBOutlets
-	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
+class RedeemTableViewController: ServiceTableViewController {
+	// MARK: - Views
+	var cancelBarButtonItem: UIBarButtonItem!
+	var redeemBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
@@ -25,11 +24,14 @@ class RedeemTableViewController: ServiceTableViewController, StoryboardInstantia
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.redeem
+
 		// Configure properties
         self.previewImage = .Promotional.redeemCode
 		self.serviceType = .redeem
 
-		self.rightNavigationBarButton.isEnabled = false
+		self.configureNavigationItems()
 
 		// Prepare Vision
 		self.textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
@@ -48,6 +50,33 @@ class RedeemTableViewController: ServiceTableViewController, StoryboardInstantia
 	}
 
 	// MARK: - Functions
+	/// Configure the cancel bar button item.
+	private func configureCancelBarButtonItem() {
+		self.cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.dismiss(animated: true, completion: nil)
+		})
+
+		self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
+	}
+
+	/// Configures the redeem bar button item.
+	private func configureRedeemBarButtonItem() {
+		self.redeemBarButtonItem = UIBarButtonItem(title: "Redeem 🚀", primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.handleRedeemBarButtonItem()
+		})
+		self.redeemBarButtonItem.isEnabled = false
+
+		self.navigationItem.rightBarButtonItem = self.redeemBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureCancelBarButtonItem()
+		self.configureRedeemBarButtonItem()
+	}
+
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -103,29 +132,22 @@ class RedeemTableViewController: ServiceTableViewController, StoryboardInstantia
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
-	}
-
-	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
+	fileprivate func handleRedeemBarButtonItem() {
 		self.view.endEditing(true)
 
 		let redeemCode = self.textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines)
 		self.showSuccess(for: redeemCode)
 
 		// TODO: Implement redeeming codes
-//		KurozoraKit.shared.redeem(code, withSuccess: { [weak self] success in
-//			guard let self = self else { return }
+//		let success = await KurozoraKit.shared.redeem(code)
 //
-//			if success {
-//				DispatchQueue.main.async {
+//		if success {
+//			DispatchQueue.main.async {
 //
-//				}
 //			}
+//		}
 //
-//			self.rightNavigationBarButton.isEnabled = false
-//		})
+//		self.redeemBarButtonItem.isEnabled = false
 	}
 }
 
@@ -177,7 +199,7 @@ extension RedeemTableViewController: UITextFieldDelegate {
 			rightNavigationBarButtonIsEnabled = false
 		}
 
-		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
+		self.redeemBarButtonItem.isEnabled = rightNavigationBarButtonIsEnabled
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -186,7 +208,7 @@ extension RedeemTableViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		if textField.tag == self.textFieldArray.count - 1 {
-			self.rightNavigationBarButtonPressed(sender: textField)
+			self.handleRedeemBarButtonItem()
 		} else {
 			self.textFieldArray[textField.tag + 1]?.becomeFirstResponder()
 		}
