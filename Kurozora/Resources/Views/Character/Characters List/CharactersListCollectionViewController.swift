@@ -72,6 +72,8 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.characters
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -151,7 +153,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 		case .person:
 			do {
 				guard let personIdentity = self.personIdentity else { return }
-				let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL).value
+				let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -211,15 +213,20 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .characterDetailsSegue:
-			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
 		}

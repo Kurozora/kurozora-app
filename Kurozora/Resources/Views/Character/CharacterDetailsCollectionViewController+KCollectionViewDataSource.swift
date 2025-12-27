@@ -12,6 +12,7 @@ import UIKit
 extension CharacterDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			CharacterHeaderCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,

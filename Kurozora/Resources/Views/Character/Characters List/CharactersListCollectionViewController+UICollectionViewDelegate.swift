@@ -12,7 +12,7 @@ import UIKit
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let character = self.cache[indexPath] as? Character else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
+		self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
