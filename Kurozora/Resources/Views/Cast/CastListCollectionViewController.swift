@@ -84,6 +84,8 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.cast
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -164,7 +166,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .show:
 			do {
 				guard let showIdentity = self.showIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL).value
+				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -181,7 +183,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .literature:
 			do {
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL).value
+				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -198,7 +200,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .game:
 			do {
 				guard let gameIdentity = self.gameIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL).value
+				let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -225,19 +227,25 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
+		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .characterDetailsSegue:
-			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
 		case .personDetailsSegue:
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
 		}
@@ -251,7 +259,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let person = cast.relationships.people?.data.first else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: person)
+		self.show(SegueIdentifiers.personDetailsSegue, sender: person)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
@@ -259,7 +267,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let character = cast.relationships.characters.data.first else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
+		self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
 	}
 }
 
@@ -300,7 +308,7 @@ extension CastListCollectionViewController {
 	}
 }
 
-// MARK: - Cell Registrations
+// MARK: - Cell Configuration
 extension CastListCollectionViewController {
 	func getCastCellRegistration() -> UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<CastCollectionViewCell, ItemKind>(cellNib: CastCollectionViewCell.nib) { [weak self] castCollectionViewCell, indexPath, itemKind in
@@ -323,7 +331,7 @@ extension CastListCollectionViewController {
 	}
 
 	func getCharacterCellRegistration() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollctionViewcell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollctionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -336,7 +344,7 @@ extension CastListCollectionViewController {
 					}
 				}
 
-				characterLockupCollctionViewcell.configure(using: cast?.relationships.characters.data.first, role: cast?.attributes.role)
+				characterLockupCollctionViewCell.configure(using: cast?.relationships.characters.data.first, role: cast?.attributes.role)
 			}
 		}
 	}
