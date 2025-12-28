@@ -27,9 +27,7 @@ enum EpisodesListFetchType: Equatable {
 	}
 }
 
-class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "Episodes"
-
+class EpisodesListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -37,10 +35,10 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case episodesListSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var fillerBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
+	// MARK: - Views
+	private var moreBarButtonItem: UIBarButtonItem!
+	private var fillerBarButtonItem: UIBarButtonItem!
+	private var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var season: Season? {
@@ -101,7 +99,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	///
 	/// - Returns: an initialized instance of EpisodesListCollectionViewController.
 	func callAsFunction(with seasonID: KurozoraItemID) -> EpisodesListCollectionViewController {
-		let episodesListCollectionViewController = EpisodesListCollectionViewController.instantiate()
+		let episodesListCollectionViewController = EpisodesListCollectionViewController()
 		episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: seasonID)
 		episodesListCollectionViewController.episodesListFetchType = .season
 		return episodesListCollectionViewController
@@ -138,17 +136,11 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case .search:
 			self.title = self.searchQuery
 		case .upNext:
-			self.title = "Up Next"
-		}
-
-		// Configure bar buttons
-		if #available(iOS 16.0, *) {
-			self.moreBarButtonItem.isHidden = self.episodesListFetchType != .season
-			self.fillerBarButtonItem.isHidden = self.episodesListFetchType != .season
-			self.goToBarButtonItem.isHidden = self.episodesListFetchType != .season
+			self.title = Trans.upNext
 		}
 
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		if !self.episodeIdentities.isEmpty {
 			self.endFetch()
@@ -202,6 +194,40 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
+	/// Configures the filler bar button item.
+	private func configureFillerBarButtonItem() {
+		self.fillerBarButtonItem = UIBarButtonItem(title: Trans.filters, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
+		self.navigationItem.rightBarButtonItems?.append(self.fillerBarButtonItem)
+	}
+
+	/// Configures the filler bar button item.
+	private func configureGoToBarButtonItem() {
+		self.goToBarButtonItem = UIBarButtonItem(title: Trans.goTo, image: UIImage(systemName: "chevron.down.circle"))
+		self.navigationItem.rightBarButtonItems?.append(self.goToBarButtonItem)
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureMoreBarButtonItem()
+		self.configureFillerBarButtonItem()
+		self.configureGoToBarButtonItem()
+
+		// Hide buttons if not in season fetch type
+		if #available(iOS 16.0, *) {
+			self.moreBarButtonItem.isHidden = self.episodesListFetchType != .season
+			self.fillerBarButtonItem.isHidden = self.episodesListFetchType != .season
+			self.goToBarButtonItem.isHidden = self.episodesListFetchType != .season
+		} else if self.episodesListFetchType != .season {
+			self.navigationItem.rightBarButtonItems = []
 		}
 	}
 
@@ -286,7 +312,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case .upNext(let exploreCategory):
 			do {
 				let exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
-				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL).value
+				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -319,7 +345,10 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleSeasonWatchStatusDidUpdate(_ notification: NSNotification) {
-		self.configureNavBarButtons()
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.configureNavBarButtons()
+		}
 	}
 
 	/// Handles the episode watch status update notification.
@@ -329,7 +358,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		switch self.episodesListFetchType {
 		case .season, .search:
-			DispatchQueue.main.async { [weak self] in
+			Task { @MainActor [weak self] in
 				guard let self = self else { return }
 				guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
@@ -389,14 +418,14 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
 			// Go to first episode
-			let goToFirstEpisode = UIAction(title: "Go to first episode", image: nil) { [weak self] _ in
+			let goToFirstEpisode = UIAction(title: Trans.goToFirstEpisode, image: nil) { [weak self] _ in
 				guard let self = self else { return }
 				self.goToFirstEpisode()
 			}
 			menuElements.append(goToFirstEpisode)
 		} else {
 			// Go to last episode
-			let goToLastEpisode = UIAction(title: "Go to last episode", image: nil) { [weak self] _ in
+			let goToLastEpisode = UIAction(title: Trans.goToLastEpisode, image: nil) { [weak self] _ in
 				guard let self = self else { return }
 				self.goToLastEpisode()
 			}
@@ -404,7 +433,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		}
 
 		// Go to last watched episode
-		let goToLastWatchedEpisode = UIAction(title: "Go to last watched episode", image: nil) { [weak self] _ in
+		let goToLastWatchedEpisode = UIAction(title: Trans.goToLastWatchedEpisode, image: nil) { [weak self] _ in
 			guard let self = self else { return }
 			self.goToLastWatchedEpisode()
 		}
@@ -419,7 +448,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Show fillers" element
-		let title = self.shouldHideFillers ? "Show fillers" : "Hide fillers"
+		let title = self.shouldHideFillers ? Trans.showFillers : Trans.hideFillers
 		let toggleFillers = UIAction(title: title, image: nil) { [weak self] _ in
 			guard let self = self else { return }
 			self.shouldHideFillers = !self.shouldHideFillers
@@ -440,28 +469,35 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
+		case .episodesListSegue: return EpisodesListCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .showDetailsSegue:
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let show = sender as? Show {
 				showDetailsCollectionViewController.show = show
 			} else if let showIdentity = sender as? ShowIdentity {
 				showDetailsCollectionViewController.showIdentity = showIdentity
 			}
 		case .episodeDetailsSegue:
-			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			guard let episodeDetailsCollectionViewController = destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episodeDict = (sender as? [IndexPath: Episode])?.first else { return }
 
 			episodeDetailsCollectionViewController.indexPath = episodeDict.key
 			episodeDetailsCollectionViewController.episode = episodeDict.value
 		case .episodesListSegue:
-			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
 			guard let seasonIdentity = sender as? SeasonIdentity else { return }
 			episodesListCollectionViewController.seasonIdentity = seasonIdentity
 			episodesListCollectionViewController.episodesListFetchType = .season
@@ -498,7 +534,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
@@ -508,7 +544,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

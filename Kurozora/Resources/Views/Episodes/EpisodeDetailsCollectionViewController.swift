@@ -9,9 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, StoryboardInstantiable {
-	static var storyboardName: String = "Episodes"
-
+class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case castListSegue
@@ -24,14 +22,15 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		case characterDetailsSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var navigationTitleView: UIView!
-	@IBOutlet weak var navigationTitleLabel: UILabel! {
-		didSet {
-			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
-		}
-	}
+	// MARK: - Views
+	private var moreBarButtonItem: UIBarButtonItem!
+	private var navigationTitleView: UIView!
+	private var navigationTitleLabel: KLabel! = {
+		let label = KLabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.alpha = 0
+		return label
+	}()
 
 	// MARK: - Properties
 	var episodeIdentity: EpisodeIdentity?
@@ -101,7 +100,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	///
 	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
 	func callAsFunction(with episodeID: KurozoraItemID) -> EpisodeDetailsCollectionViewController {
-		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController.instantiate()
+		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController()
 		episodeDetailsCollectionViewController.episodeIdentity = EpisodeIdentity(id: episodeID)
 		return episodeDetailsCollectionViewController
 	}
@@ -112,7 +111,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	///
 	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
 	func callAsFunction(with episode: Episode) -> EpisodeDetailsCollectionViewController {
-		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController.instantiate()
+		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController()
 		episodeDetailsCollectionViewController.episode = episode
 		return episodeDetailsCollectionViewController
 	}
@@ -127,8 +126,6 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.navigationTitleLabel.alpha = 0
-
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -136,6 +133,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		#endif
 
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -190,6 +188,40 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
 		}
+	}
+
+	/// Configures the navigation title view.
+	private func configureNavigationTitleView() {
+		self.navigationTitleView = UIView()
+
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+		}
+
+		// Layout
+		self.navigationItem.titleView = self.navigationTitleView
+		self.navigationTitleView.addSubview(self.navigationTitleLabel)
+
+		NSLayoutConstraint.activate([
+			self.navigationTitleLabel.topAnchor.constraint(equalTo: self.navigationTitleView.topAnchor),
+			self.navigationTitleLabel.bottomAnchor.constraint(equalTo: self.navigationTitleView.bottomAnchor),
+			self.navigationTitleLabel.leadingAnchor.constraint(equalTo: self.navigationTitleView.leadingAnchor),
+			self.navigationTitleLabel.trailingAnchor.constraint(equalTo: self.navigationTitleView.trailingAnchor),
+			self.navigationTitleLabel.centerXAnchor.constraint(equalTo: self.navigationTitleView.centerXAnchor),
+			self.navigationTitleLabel.centerYAnchor.constraint(equalTo: self.navigationTitleView.centerYAnchor)
+		])
+	}
+
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureNavigationTitleView()
+		self.configureMoreBarButtonItem()
 	}
 
 	func configureNavBarButtons() {
@@ -268,20 +300,33 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .seasonsListSegue: return SeasonsListCollectionViewController()
+		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
+		case .episodesListSegue: return EpisodesListCollectionViewController()
+		case .castListSegue: return CastListCollectionViewController()
+		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
+		case .personDetailsSegue:
+			return PersonDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .reviewsSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .episode(self.episode)
 		case .showDetailsSegue:
 			// Segue to show details
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {
 				showDetailsCollectionViewController.showIdentity = showIdentity
 			} else if let show = sender as? Show {
@@ -289,20 +334,23 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			}
 		case .seasonsListSegue:
 			// Segue to seasons list
-			guard let seasonsListCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
+			guard let seasonsListCollectionViewController = destination as? SeasonsListCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			seasonsListCollectionViewController.showIdentity = ShowIdentity(id: show.id)
 		case .episodeDetailsSegue:
 			// Segue to episode details
-			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			guard let episodeDetailsCollectionViewController = destination as? EpisodeDetailsCollectionViewController else { return }
 			episodeDetailsCollectionViewController.episode = sender as? Episode
 		case .episodesListSegue:
 			// Segue to episode details
-			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
 			guard let seasonIdentity = sender as? SeasonIdentity else { return }
 			episodesListCollectionViewController.seasonIdentity = seasonIdentity
 			episodesListCollectionViewController.episodesListFetchType = .season
-		default: break
+		case .castListSegue: break
+		case .characterDetailsSegue: break
+		case .personDetailsSegue:
+			break
 		}
 	}
 }
@@ -310,11 +358,11 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 // MARK: - CastCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: cell)
+		self.show(SegueIdentifiers.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: cell)
+		self.show(SegueIdentifiers.characterDetailsSegue, sender: cell)
 	}
 }
 
@@ -340,14 +388,14 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = self.suggestedEpisodes[indexPath.item].relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = self.suggestedEpisodes[indexPath.item].relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -369,7 +417,7 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		guard let segueID = reusableView.segueID else { return }
-		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
+		self.show(segueID, sender: reusableView.indexPath)
 	}
 }
 

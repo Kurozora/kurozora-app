@@ -12,7 +12,7 @@ import UIKit
 extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let episode = self.cache[indexPath] as? Episode else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: [indexPath: episode])
+		self.show(SegueIdentifiers.episodeDetailsSegue, sender: [indexPath: episode])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

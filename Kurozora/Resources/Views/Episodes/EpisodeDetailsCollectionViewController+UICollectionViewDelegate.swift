@@ -20,7 +20,7 @@ extension EpisodeDetailsCollectionViewController {
 				return
 			case .season:
 				guard let seasonIdentity = self.episode.relationships?.seasons?.data.first else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.seasonsListSegue, sender: seasonIdentity)
+				self.show(SegueIdentifiers.seasonsListSegue, sender: seasonIdentity)
 				return
 			case .rank:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
@@ -28,23 +28,23 @@ extension EpisodeDetailsCollectionViewController {
 				return
 			case .previousEpisode:
 				guard let previousEpisode = self.episode.relationships?.previousEpisodes?.data.first else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: previousEpisode)
+				self.show(SegueIdentifiers.episodeDetailsSegue, sender: previousEpisode)
 				return
 			case .nextEpisode:
 				guard let nextEpisode = self.episode.relationships?.nextEpisodes?.data.first else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: nextEpisode)
+				self.show(SegueIdentifiers.episodeDetailsSegue, sender: nextEpisode)
 				return
 			case .show:
 				guard let show = self.episode.relationships?.shows?.data.first else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+				self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 				return
 			}
 		case .cast:
 			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
 		case .suggestedEpisodes:
 			let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
-			self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: suggestedEpisode)
+			self.show(SegueIdentifiers.episodeDetailsSegue, sender: suggestedEpisode)
 		default: return
 		}
 	}
