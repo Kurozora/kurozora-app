@@ -12,6 +12,7 @@ import UIKit
 extension GameDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			GameDetailHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
@@ -44,14 +45,14 @@ extension GameDetailsCollectionViewController {
 
 			switch gameDetailSection {
 			case .header:
-				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
-				showDetailHeaderCollectionViewCell?.delegate = self
+				let gameDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: GameDetailHeaderCollectionViewCell.self, for: indexPath)
+				gameDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .game(let game, _):
-					showDetailHeaderCollectionViewCell?.configure(using: game)
+					gameDetailHeaderCollectionViewCell?.configure(using: game)
 				default: break
 				}
-				return showDetailHeaderCollectionViewCell
+				return gameDetailHeaderCollectionViewCell
 			case .badge:
 				let gameDetailBadge = GameDetail.Badge(rawValue: indexPath.item) ?? .rating
 				let badgeReuseIdentifier = gameDetailBadge == GameDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
