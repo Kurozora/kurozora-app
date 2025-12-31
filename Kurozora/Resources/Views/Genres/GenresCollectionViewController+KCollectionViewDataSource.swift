@@ -6,15 +6,15 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension GenresCollectionViewController {
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Genre>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, genre: Genre) -> UICollectionViewCell? in
-			let genreLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: GenreLockupCollectionViewCell.self, for: indexPath)
-			genreLockupCollectionViewCell.configure(using: genre)
-			return genreLockupCollectionViewCell
+		let genreCellRegistration = self.getConfiguredGenreCell()
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Genre>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			collectionView.dequeueConfiguredReusableCell(using: genreCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class GenreLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
@@ -43,6 +43,34 @@ class GenreLockupCollectionViewCell: KCollectionViewCell {
 		self.secondaryLabel.textColor = UIColor(hexString: genre.attributes.textColor2)
 
 		self.symbolImageView.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: UIImage())
+
+		self.contentView.layerCornerRadius = 10.0
+	}
+
+	/// Configures the cell with the given `Theme` obejct.
+	///
+	/// - Parameter theme: The `Theme` object used to configure the cell.
+	func configure(using theme: Theme?) {
+		guard let theme = theme else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.gradientView.backgroundColors = [
+			UIColor(hexString: theme.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
+			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
+		]
+
+		self.borderView.backgroundColor = UIColor(hexString: theme.attributes.backgroundColor2)
+
+		self.primaryLabel.text = theme.attributes.name.uppercased()
+		self.primaryLabel.textColor = UIColor(hexString: theme.attributes.textColor1)
+
+		self.secondaryLabel.text = theme.attributes.description?.uppercased()
+		self.secondaryLabel.textColor = UIColor(hexString: theme.attributes.textColor2)
+
+		self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: UIImage())
 
 		self.contentView.layerCornerRadius = 10.0
 	}

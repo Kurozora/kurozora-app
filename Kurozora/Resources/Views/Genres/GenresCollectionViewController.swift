@@ -6,20 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
-
-// MARK: - SectionLayoutKind
-extension GenresCollectionViewController {
-	/// List of  genres section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
+import UIKit
 
 class GenresCollectionViewController: KCollectionViewController {
 	// MARK: - Enums
@@ -40,8 +28,9 @@ class GenresCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Genre>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Genre>! = nil
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Genre>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Genre>!
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -49,6 +38,7 @@ class GenresCollectionViewController: KCollectionViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -59,13 +49,16 @@ class GenresCollectionViewController: KCollectionViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.browseGenres
 
 		#if DEBUG
 		// Setup refresh control
@@ -120,7 +113,7 @@ class GenresCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let genreResponse = try await  KService.getGenres().value
+			let genreResponse = try await KService.getGenres().value
 			self.genres = genreResponse.data
 			self.updateDataSource()
 		} catch {
@@ -129,17 +122,45 @@ class GenresCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .exploreSegue: return HomeCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .exploreSegue:
-			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
-			guard let genre = sender as? Genre else { return }
+			guard
+				let homeCollectionViewController = destination as? HomeCollectionViewController,
+				let genre = sender as? Genre
+			else { return }
 			homeCollectionViewController.genre = genre
+		}
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension GenresCollectionViewController {
+	/// List of  genres section layout kind.
+	///
+	/// ```swift
+	/// case main = 0
+	/// ```
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+}
+
+// MARK: - Cell Configuration
+extension GenresCollectionViewController {
+	func getConfiguredGenreCell() -> UICollectionView.CellRegistration<GenreLockupCollectionViewCell, Genre> {
+		return UICollectionView.CellRegistration<GenreLockupCollectionViewCell, Genre>(cellNib: GenreLockupCollectionViewCell.nib) { genreLockupCollectionViewCell, _, itemKind in
+			genreLockupCollectionViewCell.configure(using: itemKind)
 		}
 	}
 }
