@@ -17,34 +17,34 @@ extension SearchResultsCollectionViewController {
 		switch itemKind {
 		case .discoverSuggestion: break
 		case .browseCategory(let browseCategory):
-			self.performSegue(withIdentifier: browseCategory.segueIdentifier ?? SegueIdentifiers.searchSegue, sender: browseCategory)
+			self.show(browseCategory.segueIdentifier ?? SegueIdentifiers.searchSegue, sender: browseCategory)
 		case .characterIdentity:
 			guard let character = self.characters[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
 		case .episodeIdentity:
 			guard let episode = self.episodes[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.episodeDetailsSegue, sender: episode)
+			self.show(SegueIdentifiers.episodeDetailsSegue, sender: episode)
 		case .personIdentity:
 			guard let person = self.people[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: person)
+			self.show(SegueIdentifiers.personDetailsSegue, sender: person)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .gameIdentity:
 			guard let game = self.games[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			guard let song = self.songs[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.songDetailsSegue, sender: song)
+			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
 		case .studioIdentity:
 			guard let studio = self.studios[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.studioDetailsSegue, sender: studio)
+			self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
 		case .userIdentity:
 			guard let user = self.users[indexPath] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.userDetailsSegue, sender: user)
+			self.show(SegueIdentifiers.userDetailsSegue, sender: user)
 		case .show: break
 		case .literature: break
 		case .game: break
@@ -124,7 +124,7 @@ extension SearchResultsCollectionViewController {
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 				guard let searchType = browseCategory.searchType else { return nil }
-				let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
+				let searchResultsCollectionViewController = SearchResultsCollectionViewController()
 				searchResultsCollectionViewController.title = browseCategory.title
 				searchResultsCollectionViewController.searchViewKind = .single(searchType)
 				return searchResultsCollectionViewController
