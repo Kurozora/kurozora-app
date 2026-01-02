@@ -84,6 +84,16 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		return true
 	}
 
+	// MARK: - Initializers
+	@MainActor required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
+
+	init() {
+		let layout = UICollectionViewFlowLayout()
+		super.init(collectionViewLayout: layout)
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -140,9 +150,10 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	///
 	/// Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	fileprivate func configureCollectionView() {
+		self.collectionView.backgroundColor = nil
 		self.collectionView.prefetchDataSource = self
-		if let colllectionViewLayout = self.createLayout() {
-			self.collectionView.collectionViewLayout = colllectionViewLayout
+		if let collectionViewLayout = self.createLayout() {
+			self.collectionView.collectionViewLayout = collectionViewLayout
 		}
 		self.collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		self.collectionView.backgroundView = self.emptyBackgroundView
@@ -290,6 +301,12 @@ extension KCollectionViewController: SeguePerforming {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.show(destination, sender: sender)
+	}
+
+	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.showDetailViewController(destination, sender: sender)
 	}
 
 	func present(_ identifier: SegueIdentifier, sender: Any?) {

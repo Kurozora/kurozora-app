@@ -93,6 +93,9 @@ class KTableViewController: UITableViewController, SegueHandler {
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.tableView.theme_separatorColor = KThemePicker.separatorColorLight.rawValue
 
+		// Configure the gradient view.
+		self.configureGradientView()
+
 		// Configure table view.
 		self.configureTableView()
 
@@ -104,9 +107,6 @@ class KTableViewController: UITableViewController, SegueHandler {
 
 		// Configure empty view.
 		self.configureEmptyDataView()
-
-		// Configure the gradient view.
-		self.configureGradientView()
 	}
 
 	// MARK: - Functions
@@ -133,6 +133,8 @@ class KTableViewController: UITableViewController, SegueHandler {
 
 		// Register cells with the table view.
 		self.registerCells()
+
+		// Register reusable views with the table view.
 		self.registerNibs()
 	}
 
@@ -242,6 +244,12 @@ extension KTableViewController: SeguePerforming {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.show(destination, sender: sender)
+	}
+
+	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.showDetailViewController(destination, sender: sender)
 	}
 
 	func present(_ identifier: SegueIdentifier, sender: Any?) {

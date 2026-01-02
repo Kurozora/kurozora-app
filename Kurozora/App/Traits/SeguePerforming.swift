@@ -28,6 +28,13 @@ protocol SeguePerforming where Self: UIViewController {
 	///    - sender: The object to use as the sender of the segue.
 	func show(_ identifier: SegueIdentifier, sender: Any?)
 
+	/// Presents a view controller in a secondary (or detail) context.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///    - sender: The object to use as the sender of the segue.
+	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?)
+
 	/// Presents the view controller identified by the specified segue identifier modally.
 	///
 	/// - Parameters:

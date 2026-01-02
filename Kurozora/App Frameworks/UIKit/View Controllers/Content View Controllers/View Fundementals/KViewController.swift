@@ -74,6 +74,12 @@ extension KViewController: SeguePerforming {
 		self.show(destination, sender: sender)
 	}
 
+	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+		self.showDetailViewController(destination, sender: sender)
+	}
+
 	func present(_ identifier: SegueIdentifier, sender: Any?) {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
