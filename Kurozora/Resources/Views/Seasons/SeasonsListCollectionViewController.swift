@@ -68,6 +68,8 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.seasons
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -147,7 +149,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 		do {
 			guard let showIdentity = self.showIdentity else { return }
-			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL).value
+			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -173,15 +175,20 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .episodesListSegue: return EpisodesListCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .episodesListSegue:
-			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
