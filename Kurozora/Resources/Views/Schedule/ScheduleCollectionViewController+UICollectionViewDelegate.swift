@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension ScheduleCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -15,13 +15,13 @@ extension ScheduleCollectionViewController {
 		case .schedule(let schedule):
 			if let shows = schedule.relationships.shows?.data {
 				guard let show = shows[safe: indexPath.item] else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+				self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 			} else if let literatures = schedule.relationships.literatures?.data {
 				guard let literature = literatures[safe: indexPath.item] else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
+				self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
 			} else if let games = schedule.relationships.games?.data {
 				guard let game = games[safe: indexPath.item] else { return }
-				self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
+				self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
 			}
 		default: break
 		}
@@ -29,19 +29,20 @@ extension ScheduleCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		guard let itemKind = self.dataSource.sectionIdentifier(for: indexPath.section) else { return nil }
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		if indexPath.section <= self.schedules.count {
-			let schedule = self.schedules[indexPath.section]
-
+		switch itemKind {
+		case .schedule(let schedule):
 			if let shows = schedule.relationships.shows?.data {
-                return shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+				return shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			} else if let literatures = schedule.relationships.literatures?.data {
 				return literatures[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			} else if let games = schedule.relationships.games?.data {
 				return games[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			}
 		}
+
 		return nil
 	}
 }
