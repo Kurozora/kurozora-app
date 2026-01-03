@@ -56,6 +56,8 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.reviews
+
 		self.collectionView.contentInset.top = 20
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 
@@ -235,23 +237,30 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
+		case .gameDetailsSegue: return GameDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .showDetailsSegue:
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case .literatureDetailsSegue:
-			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literatureDetailCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
 		case .gameDetailsSegue:
-			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
 		}
