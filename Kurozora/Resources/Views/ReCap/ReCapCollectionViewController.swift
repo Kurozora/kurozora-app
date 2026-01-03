@@ -17,9 +17,7 @@ struct RecapTabItem {
 	let month: Month?
 }
 
-class ReCapCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "ReCap"
-
+class ReCapCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -28,6 +26,9 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		case genresSegue
 		case themesSegue
 	}
+
+	// MARK: - Views
+	private var shareBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var year: Int = 0
@@ -126,6 +127,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	}
 
 	func configureView() {
+		self.configureShareBarButtonItem()
 		self.configureTabBarView()
 		self.configureToolbar()
 		self.configureViewHierarchy()
@@ -136,6 +138,15 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 			tabBarBarButtonItem.hidesSharedBackground = true
 		}
 		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+	}
+
+	/// Configures the share bar button item.
+	private func configureShareBarButtonItem() {
+		self.shareBarButtonItem = UIBarButtonItem(systemItem: .action, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.shareBarButtonItemPressed()
+		})
+		self.navigationItem.rightBarButtonItem = self.shareBarButtonItem
 	}
 
 	func configureTabBarView() {
@@ -255,7 +266,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	}
 
 	// MARK: - IBActions
-	@IBAction func shareBarButtonItemPressed(_ sender: UIBarButtonItem) {
+	func shareBarButtonItemPressed() {
 		// Share Re:CAP view as screenshot.
 		self.toggleScreenshotState(isScreenshotting: true)
 		guard let image = self.collectionView.screenshot(fullScreen: true) else {
@@ -265,7 +276,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		self.toggleScreenshotState(isScreenshotting: false)
 
 		let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-		activityViewController.popoverPresentationController?.barButtonItem = sender
+		activityViewController.popoverPresentationController?.barButtonItem = self.shareBarButtonItem
 		self.present(activityViewController, animated: true)
 	}
 
@@ -278,6 +289,48 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		case .genreIdentity(let id, _): return id as? Element
 		case .themeIdentity(let id, _): return id as? Element
 		default: return nil
+		}
+	}
+
+	// MARK: - Segue
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
+
+		switch segue {
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
+		case .gameDetailsSegue: return GameDetailsCollectionViewController()
+		case .genresSegue, .themesSegue: return HomeCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
+		case .showDetailsSegue:
+			// Segue to show details
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.show = show
+		case .literatureDetailsSegue:
+			// Segue to literature details
+			guard let literatureDetailsCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailsCollectionViewController.literature = literature
+		case .gameDetailsSegue:
+			// Segue to game details
+			guard let gameDetailsCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailsCollectionViewController.game = game
+		case .genresSegue:
+			guard let homeCollectionViewController = destination as? HomeCollectionViewController else { return }
+			guard let genre = sender as? Genre else { return }
+			homeCollectionViewController.genre = genre
+		case .themesSegue:
+			guard let homeCollectionViewController = destination as? HomeCollectionViewController else { return }
+			guard let theme = sender as? Theme else { return }
+			homeCollectionViewController.theme = theme
 		}
 	}
 }
@@ -589,7 +642,7 @@ extension ReCapCollectionViewController {
 	}
 }
 
-// MARK: - Cell Registrations
+// MARK: - Cell Configuration
 extension ReCapCollectionViewController {
 	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
