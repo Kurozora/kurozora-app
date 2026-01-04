@@ -272,15 +272,20 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .userDetailsSegue: return ProfileTableViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .userDetailsSegue:
-			guard let profileTableViewController = segue.destination as? ProfileTableViewController else { return }
+			guard let profileTableViewController = destination as? ProfileTableViewController else { return }
 			guard let user = sender as? User else { return }
 			profileTableViewController.user = user
 		}
