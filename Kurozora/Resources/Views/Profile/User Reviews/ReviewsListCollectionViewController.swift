@@ -78,6 +78,8 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.ratingsAndReviews
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -172,7 +174,7 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: user.id)
 
 		do {
-			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL).value
+			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -196,45 +198,57 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
+		case .gameDetailsSegue: return GameDetailsCollectionViewController()
+		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
+		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
+		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .songDetailsSegue: return SongDetailsCollectionViewController()
+		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .characterDetailsSegue:
-			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
 		case .gameDetailsSegue:
-			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
 		case .episodeDetailsSegue:
-			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			guard let episodeDetailsCollectionViewController = destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episode = sender as? Episode else { return }
 			episodeDetailsCollectionViewController.episode = episode
 		case .literatureDetailsSegue:
-			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literatureDetailCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
 		case .personDetailsSegue:
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
 		case .showDetailsSegue:
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case .songDetailsSegue:
 			// Segue to song details
-			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let songDetailsCollectionViewController = destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
 		case .studioDetailsSegue:
 			// Segue to studio details
-			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
+			guard let studioDetailsCollectionViewController = destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
 		}
