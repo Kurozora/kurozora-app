@@ -72,6 +72,8 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.people
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -215,15 +217,20 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .personDetailsSegue:
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
 		}
