@@ -15,13 +15,13 @@ extension LibraryListCollectionViewController {
 		switch UserSettings.libraryKind {
 		case .shows:
 			guard let show = self.shows[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 		case .literatures:
 			guard let literature = self.literatures[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		case .games:
 			guard let game = self.games[safe: indexPath.item] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
 		}
 	}
 

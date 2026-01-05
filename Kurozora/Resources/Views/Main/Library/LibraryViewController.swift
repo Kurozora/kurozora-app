@@ -335,7 +335,7 @@ extension LibraryViewController {
 		var viewControllers: [UIViewController] = []
 
 		for index in 0 ..< count {
-			let libraryListCollectionViewController = LibraryListCollectionViewController.instantiate()
+			let libraryListCollectionViewController = LibraryListCollectionViewController()
 			let libraryStatus = KKLibrary.Status.all[index]
 
 			// Get the user's preferred library layout

@@ -10,6 +10,14 @@ import KurozoraKit
 import UIKit
 
 extension LibraryListCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		[
+			LibraryDetailedCollectionViewCell.self,
+			LibraryCompactCollectionViewCell.self,
+			LibraryListCollectionViewCell.self
+		]
+	}
+
 	override func configureDataSource() {
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
