@@ -96,7 +96,7 @@ extension HomeCollectionViewController {
 			let identifier = indexPath as NSCopying
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-				let reCapCollectionViewController = ReCapCollectionViewController.instantiate()
+				let reCapCollectionViewController = ReCapCollectionViewController()
 				reCapCollectionViewController.year = recap.attributes.year
 				reCapCollectionViewController.month = recap.attributes.month
 				return reCapCollectionViewController

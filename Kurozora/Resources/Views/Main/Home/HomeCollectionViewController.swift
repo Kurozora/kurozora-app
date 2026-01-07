@@ -13,9 +13,7 @@ import TRON
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "Home"
-
+class HomeCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case redeemSegue
@@ -104,17 +102,15 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	init() {
-		let layout = UICollectionViewFlowLayout()
-		super.init(collectionViewLayout: layout)
+	override init() {
+		super.init()
 	}
 
 	/// Initialize a new instance of HomeCollectionViewController with the given genre object.
 	///
 	/// - Parameter genre: The genre object to use when initializing the view.
 	init(with genre: Genre) {
-		let layout = UICollectionViewFlowLayout()
-		super.init(collectionViewLayout: layout)
+		super.init()
 		self.genre = genre
 	}
 
@@ -122,8 +118,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	///
 	/// - Parameter theme: The theme object to use when initializing the view.
 	init(with theme: Theme) {
-		let layout = UICollectionViewFlowLayout()
-		super.init(collectionViewLayout: layout)
+		super.init()
 		self.theme = theme
 	}
 
@@ -361,9 +356,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	// MARK: - Segue
-	override func makeDestination(
-		for identifier: SegueIdentifier
-	) -> UIViewController? {
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
 		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
 		switch segue {
@@ -385,17 +378,13 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
 		case .episodesListSegue: return EpisodesListCollectionViewController()
 		case .reCapSegue: return ReCapCollectionViewController()
-		case .redeemSegue: return RedeemTableViewController()
-		case .subscriptionSegue: return SubscriptionCollectionViewController()
+		case .redeemSegue: return KNavigationController(rootViewController: RedeemTableViewController())
+		case .subscriptionSegue: return KNavigationController(rootViewController: SubscriptionCollectionViewController())
 		case .legalSegue: return LegalViewController()
 		}
 	}
 
-	override func prepare(
-		for identifier: SegueIdentifier,
-		destination: UIViewController,
-		sender: Any?
-	) {
+	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
@@ -499,7 +488,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			peopleListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
 			peopleListCollectionViewController.peopleListFetchType = .explore
 		case .reCapSegue:
-			let reCapCollectionViewController = ReCapCollectionViewController()
+			guard let reCapCollectionViewController = destination as? ReCapCollectionViewController else { return }
 			guard let recap = sender as? Recap else { return }
 			reCapCollectionViewController.year = recap.attributes.year
 			reCapCollectionViewController.month = recap.attributes.month
@@ -523,8 +512,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		guard let segueID = reusableView.segueID else { return }
-		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
+		guard let segueID = reusableView.segueID as? SegueIdentifiers else { return }
+		self.show(segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -656,7 +645,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
@@ -666,7 +655,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -674,7 +663,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 	}
 }
 
@@ -687,7 +676,7 @@ extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDeleg
 		case is ActionLinkExploreCollectionViewCell:
 			let quickLink = self.quickLinks[indexPath.item]
 
-			let kWebViewController = KWebViewController.instantiate()
+			let kWebViewController = KWebViewController()
 			kWebViewController.title = quickLink.title
 			kWebViewController.url = quickLink.url
 
@@ -697,7 +686,7 @@ extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDeleg
 			self.present(kNavigationController, animated: true)
 		case is ActionButtonExploreCollectionViewCell:
 			let quickAction = self.quickActions[indexPath.item]
-			self.performSegue(withIdentifier: quickAction.segueID, sender: nil)
+			self.present(quickAction.segueID, sender: nil)
 		default: break
 		}
 	}
