@@ -6,9 +6,9 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import AVFoundation
+import KurozoraKit
+import UIKit
 
 enum SongsListViewType: Int {
 	case songs = 0
@@ -34,6 +34,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 			#endif
 		}
 	}
+
 	var showSongs: [ShowSong] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -44,6 +45,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 			#endif
 		}
 	}
+
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
 
 	var cache: [IndexPath: KurozoraItem] = [:]
@@ -64,6 +66,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -74,8 +77,9 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -87,6 +91,8 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.songs
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -173,21 +179,27 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			  let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .songDetailsSegue: return SongDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .showDetailsSegue:
 			// Segue to show details
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case .songDetailsSegue:
 			// Segue to song details
-			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let songDetailsCollectionViewController = destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
 		}
@@ -203,7 +215,7 @@ extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableVi
 extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.showSongs[safe: indexPath.item]?.show else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 	}
 }
 

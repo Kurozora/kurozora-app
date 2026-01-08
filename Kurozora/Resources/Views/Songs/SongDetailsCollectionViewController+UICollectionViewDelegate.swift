@@ -14,7 +14,7 @@ extension SongDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 		default: break
 		}
 	}

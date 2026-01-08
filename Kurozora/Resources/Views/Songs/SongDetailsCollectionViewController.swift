@@ -10,17 +10,15 @@ import UIKit
 import KurozoraKit
 import MusicKit
 
-class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "Songs"
-
+class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
 		case showDetailsSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var moreButton: UIBarButtonItem!
+	// MARK: - Views
+	private var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var songIdentity: SongIdentity?
@@ -78,7 +76,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	///
 	/// - Returns: an initialized instance of SongDetailsCollectionViewController.
 	func callAsFunction(with songID: KurozoraItemID) -> SongDetailsCollectionViewController {
-		let songDetailsCollectionViewController = SongDetailsCollectionViewController.instantiate()
+		let songDetailsCollectionViewController = SongDetailsCollectionViewController()
 		songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
 		return songDetailsCollectionViewController
 	}
@@ -100,6 +98,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		#endif
 
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -141,6 +140,21 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureMoreBarButtonItem()
+	}
+
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+	}
+
 	/// Fetches the currently viewed song's details.
 	func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
@@ -156,7 +170,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 			self.updateDataSource()
 		}
 
-		self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreButton)
+		self.configureNavBarButtons()
 
 		do {
 			let showIdentityResponse = try await KService.getShows(forSong: songIdentity, limit: 10).value
@@ -203,19 +217,25 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .reviewsSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .song(self.song)
 		case .showDetailsSegue:
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		}
@@ -251,7 +271,7 @@ extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 extension SongDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		guard let segueID = reusableView.segueID else { return }
-		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
+		self.show(segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -340,9 +360,9 @@ extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDeleg
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
-			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [
+			self.moreBarButtonItem.menu = self.song?.makeContextMenu(in: self, userInfo: [
 				"song": song
-			], sourceView: nil, barButtonItem: self.moreButton)
+			], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 		}
 	}
 }
@@ -508,7 +528,7 @@ extension SongDetailsCollectionViewController {
 	}
 }
 
-// MARK: - Cell Registrations
+// MARK: - Cell Configuration
 extension SongDetailsCollectionViewController {
 	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in

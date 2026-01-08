@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="1Ik-iL-nUa" customClass="SongHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gom-U6-7E9">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q0I-12-fgP" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="156.66666666666666" y="20.000000000000007" width="100.66666666666666" height="100.66666666666669"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="256" id="BUm-5M-KdJ"/>
+                            <constraint firstAttribute="width" secondItem="Q0I-12-fgP" secondAttribute="height" multiplier="1:1" id="HWR-5p-Z3G"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OV-E9-jsQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="173" y="128.66666666666666" width="68" height="33.666666666666657"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCF-FR-u3F" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="186.66666666666666" y="170.33333333333334" width="40.666666666666657" height="21.666666666666657"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qji-7f-QMR">
+                        <rect key="frame" x="152.66666666666666" y="200" width="108.99999999999997" height="30"/>
+                        <subviews>
+                            <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXU-Vw-tcL" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="109" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="yeg-LE-F74"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="15" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="-5" maxY="0.0"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="PREVIEW" image="play.fill" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="1Ik-iL-nUa" eventType="touchUpInside" id="kai-mB-iRi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fCF-FR-u3F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leadingMargin" id="2Cf-zL-dGS"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qji-7f-QMR" secondAttribute="trailing" id="5g9-92-V91"/>
+                    <constraint firstItem="qji-7f-QMR" firstAttribute="centerX" secondItem="gom-U6-7E9" secondAttribute="centerX" id="8Qd-CE-Z1s"/>
+                    <constraint firstItem="3OV-E9-jsQ" firstAttribute="centerX" secondItem="gom-U6-7E9" secondAttribute="centerX" id="B0M-Cr-Bb3"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="3OV-E9-jsQ" secondAttribute="trailing" id="DTp-uG-9W7"/>
+                    <constraint firstItem="Q0I-12-fgP" firstAttribute="centerX" secondItem="gom-U6-7E9" secondAttribute="centerX" id="Ha2-NB-5AW"/>
+                    <constraint firstItem="qji-7f-QMR" firstAttribute="top" secondItem="fCF-FR-u3F" secondAttribute="bottom" constant="8" symbolic="YES" id="OFB-2W-npE"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Q0I-12-fgP" secondAttribute="trailing" id="Ozi-Wn-X4C"/>
+                    <constraint firstAttribute="bottom" secondItem="qji-7f-QMR" secondAttribute="bottom" id="QMb-LI-glR"/>
+                    <constraint firstItem="3OV-E9-jsQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leadingMargin" id="V5j-rf-bRN"/>
+                    <constraint firstItem="3OV-E9-jsQ" firstAttribute="top" secondItem="Q0I-12-fgP" secondAttribute="bottom" constant="8" symbolic="YES" id="X1a-o4-QAj"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="fCF-FR-u3F" secondAttribute="trailing" id="awS-T2-t8K"/>
+                    <constraint firstItem="Q0I-12-fgP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leadingMargin" id="jEN-EF-Hor"/>
+                    <constraint firstItem="fCF-FR-u3F" firstAttribute="centerX" secondItem="gom-U6-7E9" secondAttribute="centerX" id="oU8-1f-bkf"/>
+                    <constraint firstItem="fCF-FR-u3F" firstAttribute="top" secondItem="3OV-E9-jsQ" secondAttribute="bottom" constant="8" symbolic="YES" id="wcA-FO-QNM"/>
+                    <constraint firstItem="Q0I-12-fgP" firstAttribute="top" secondItem="gom-U6-7E9" secondAttribute="top" constant="20" id="wt9-I0-V8I"/>
+                    <constraint firstItem="qji-7f-QMR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leading" id="yb5-Tx-9gw"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="albumImageView" destination="Q0I-12-fgP" id="vXC-la-lCz"/>
+                <outlet property="playButton" destination="fXU-Vw-tcL" id="Cmu-ra-8wL"/>
+                <outlet property="primaryLabel" destination="3OV-E9-jsQ" id="Gt5-Wi-0Ml"/>
+                <outlet property="secondaryLabel" destination="fCF-FR-u3F" id="yM9-TE-2b6"/>
+            </connections>
+            <point key="canvasLocation" x="99" y="154"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
+    </resources>
+</document>
