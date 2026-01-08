@@ -12,9 +12,7 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "Shows"
-
+class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsSegue
@@ -35,16 +33,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case songDetailsSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet var moreBarButtonItem: UIBarButtonItem!
-	@IBOutlet var navigationTitleView: UIView!
-	@IBOutlet var navigationTitleLabel: KLabel! {
-		didSet {
-			if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
-				self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
-			}
-		}
-	}
+	// MARK: - Views
+	private var moreBarButtonItem: UIBarButtonItem!
+	private var navigationTitleView: UIView!
+	private var navigationTitleLabel: KLabel! = {
+		let label = KLabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.alpha = 0
+		return label
+	}()
 
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
@@ -143,7 +140,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	func callAsFunction(with showID: KurozoraItemID) -> ShowDetailsCollectionViewController {
-		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.instantiate()
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController()
 		showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
 		return showDetailsCollectionViewController
 	}
@@ -154,7 +151,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	func callAsFunction(with show: Show) -> ShowDetailsCollectionViewController {
-		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.instantiate()
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController()
 		showDetailsCollectionViewController.show = show
 		return showDetailsCollectionViewController
 	}
@@ -165,8 +162,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
-		self.navigationTitleLabel.alpha = 0
-
 		// Add refresh control
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -175,6 +170,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		#endif
 
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		// Fetch show details.
 		Task { [weak self] in
@@ -245,6 +241,40 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
 		}
+	}
+
+	/// Configures the navigation title view.
+	private func configureNavigationTitleView() {
+		self.navigationTitleView = UIView()
+
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+		}
+
+		// Layout
+		self.navigationItem.titleView = self.navigationTitleView
+		self.navigationTitleView.addSubview(self.navigationTitleLabel)
+
+		NSLayoutConstraint.activate([
+			self.navigationTitleLabel.topAnchor.constraint(equalTo: self.navigationTitleView.topAnchor),
+			self.navigationTitleLabel.bottomAnchor.constraint(equalTo: self.navigationTitleView.bottomAnchor),
+			self.navigationTitleLabel.leadingAnchor.constraint(equalTo: self.navigationTitleView.leadingAnchor),
+			self.navigationTitleLabel.trailingAnchor.constraint(equalTo: self.navigationTitleView.trailingAnchor),
+			self.navigationTitleLabel.centerXAnchor.constraint(equalTo: self.navigationTitleView.centerXAnchor),
+			self.navigationTitleLabel.centerYAnchor.constraint(equalTo: self.navigationTitleView.centerYAnchor)
+		])
+	}
+
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureNavigationTitleView()
+		self.configureMoreBarButtonItem()
 	}
 
 	func configureNavBarButtons() {
@@ -407,33 +437,53 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .seasonsListSegue: return SeasonsListCollectionViewController()
+		case .castListSegue: return CastListCollectionViewController()
+		case .songsListSegue: return ShowSongsListCollectionViewController()
+		case .showsListSegue: return ShowsListCollectionViewController()
+		case .literaturesListSegue: return LiteraturesListCollectionViewController()
+		case .gamesListSegue: return GamesListCollectionViewController()
+		case .studiosListSegue: return StudiosListCollectionViewController()
+		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
+		case .gameDetailsSegue: return GameDetailsCollectionViewController()
+		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
+		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
+		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		case .episodesListSegue: return EpisodesListCollectionViewController()
+		case .songDetailsSegue: return SongDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .reviewsSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .show(self.show)
 		case .seasonsListSegue:
 			// Segue to seasons list
-			guard let seasonsCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
+			guard let seasonsCollectionViewController = destination as? SeasonsListCollectionViewController else { return }
 			seasonsCollectionViewController.showIdentity = self.showIdentity
 		case .castListSegue:
 			// Segue to cast list
-			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
+			guard let castListCollectionViewController = destination as? CastListCollectionViewController else { return }
 			castListCollectionViewController.castKind = .show
 			castListCollectionViewController.showIdentity = self.showIdentity
 		case .songsListSegue:
 			// Segue to songs list
-			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
+			guard let showSongsListCollectionViewController = destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
 		case .showsListSegue:
 			// Segue to shows list
-			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 
 			if self.snapshot.sectionIdentifiers[indexPath.section] == .moreByStudio {
@@ -447,45 +497,45 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			}
 		case .literaturesListSegue:
 			// Segue to literatures list
-			guard let literatureListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
+			guard let literatureListCollectionViewController = destination as? LiteraturesListCollectionViewController else { return }
 			literatureListCollectionViewController.title = Trans.relatedLiteratures
 			literatureListCollectionViewController.showIdentity = self.showIdentity
 			literatureListCollectionViewController.literaturesListFetchType = .show
 		case .gamesListSegue:
 			// Segue to games list
-			guard let gameListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			guard let gameListCollectionViewController = destination as? GamesListCollectionViewController else { return }
 			gameListCollectionViewController.title = Trans.relatedGames
 			gameListCollectionViewController.showIdentity = self.showIdentity
 			gameListCollectionViewController.gamesListFetchType = .show
 		case .studiosListSegue:
 			// Segue to studios list
-			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
+			guard let studiosListCollectionViewController = destination as? StudiosListCollectionViewController else { return }
 			studiosListCollectionViewController.showIdentity = self.showIdentity
 			studiosListCollectionViewController.studiosListFetchType = .show
 		case .showDetailsSegue:
 			// Segue to show details
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case .literatureDetailsSegue:
 			// Segue to literature details
-			guard let literatureDetailsCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literatureDetailsCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailsCollectionViewController.literature = literature
 		case .gameDetailsSegue:
 			// Segue to game details
-			guard let gameDetailsCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let gameDetailsCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailsCollectionViewController.game = game
 		case .studioDetailsSegue:
 			// Segue to studio details
-			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
+			guard let studioDetailsCollectionViewController = destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
 		case .characterDetailsSegue:
 			// Segue to character details
 			guard
-				let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController,
+				let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController,
 				let cell = sender as? CastCollectionViewCell,
 				let indexPath = self.collectionView.indexPath(for: cell),
 				let cast = self.cache[indexPath] as? Cast,
@@ -495,7 +545,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case .personDetailsSegue:
 			// Segue to person details
 			guard
-				let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController,
+				let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController,
 				let cell = sender as? CastCollectionViewCell,
 				let indexPath = self.collectionView.indexPath(for: cell),
 				let cast = self.cache[indexPath] as? Cast,
@@ -504,14 +554,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			personDetailsCollectionViewController.person = person
 		case .episodesListSegue:
 			// Segue to episodes list
-			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
 			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
 		case .songDetailsSegue:
 			// Segue to song details
-			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let songDetailsCollectionViewController = destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
 		}
@@ -521,11 +571,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 // MARK: - CastCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.performSegue(withIdentifier: SegueIdentifiers.personDetailsSegue, sender: cell)
+		self.show(SegueIdentifiers.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.performSegue(withIdentifier: SegueIdentifiers.characterDetailsSegue, sender: cell)
+		self.show(SegueIdentifiers.characterDetailsSegue, sender: cell)
 	}
 }
 
@@ -547,7 +597,7 @@ extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 extension ShowDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		guard let segueID = reusableView.segueID else { return }
-		self.performSegue(withIdentifier: segueID, sender: reusableView.indexPath)
+		self.show(segueID, sender: reusableView.indexPath)
 	}
 }
 
