@@ -301,15 +301,20 @@ class LiteraturesListCollectionViewController: KCollectionViewController, Sectio
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .literatureDetailsSegue:
-			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literatureDetailCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
 		}

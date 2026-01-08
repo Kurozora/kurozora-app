@@ -12,6 +12,7 @@ import UIKit
 extension LiteratureDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			LiteratureDetailHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
@@ -44,14 +45,14 @@ extension LiteratureDetailsCollectionViewController {
 
 			switch literatureDetailSection {
 			case .header:
-				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
-				showDetailHeaderCollectionViewCell?.delegate = self
+				let literatureDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LiteratureDetailHeaderCollectionViewCell.self, for: indexPath)
+				literatureDetailHeaderCollectionViewCell?.delegate = self
 				switch itemKind {
 				case .literature(let literature, _):
-					showDetailHeaderCollectionViewCell?.configure(using: literature)
+					literatureDetailHeaderCollectionViewCell?.configure(using: literature)
 				default: break
 				}
-				return showDetailHeaderCollectionViewCell
+				return literatureDetailHeaderCollectionViewCell
 			case .badge:
 				let literatureDetailBadge = LiteratureDetail.Badge(rawValue: indexPath.item) ?? .rating
 				let badgeReuseIdentifier = literatureDetailBadge == LiteratureDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID

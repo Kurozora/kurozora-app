@@ -14,7 +14,7 @@ extension LiteraturesListCollectionViewController {
 		let literature = self.cache[indexPath] as? Literature
 		let relatedLiterature = self.relatedLiteratures[safe: indexPath.item]?.literature
 		guard let literature = literature ?? relatedLiterature else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.literatureDetailsSegue, sender: literature)
+		self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
