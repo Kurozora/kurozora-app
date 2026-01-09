@@ -6,23 +6,21 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
-import StoreKit
 import SPConfetti
+import StoreKit
+import UIKit
 
-class SubscriptionCollectionViewController: KCollectionViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Purchase"
-
-	// MARK: - IBOutlets
-	/// The left navigation bar button of the navigation controller's `navigationItem`.
-	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem?
+class SubscriptionCollectionViewController: KCollectionViewController {
+	// MARK: - Views
+	private var closeBarButtonItem: UIBarButtonItem?
 
 	// MARK: - Properties
 	var products: [Product] {
 		return Store.shared.subscriptions.filter {
-			return $0.id != self.currentSubscription?.id
+			$0.id != self.currentSubscription?.id
 		}
 	}
+
 	var currentSubscription: Product?
 	var status: Product.SubscriptionInfo.Status?
 	var productFeatures: [ProductFeature] = [
@@ -39,8 +37,8 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 	]
 	var serviceType: ServiceType = .subscription
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// A storage for the `leftBarButtonItems` of `navigationItem`.
 	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
@@ -65,8 +63,9 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
 
 	// Activity indicator
@@ -75,13 +74,16 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.becomeASubscriber
 
 		// Disable refresh control
 		self._prefersRefreshControlDisabled = true
@@ -91,6 +93,7 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 
 		// Configure data source
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		// Dismiss the view if the user is not allowed to make purchases.
 		if !AppStore.canMakePayments {
@@ -138,7 +141,8 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 			// array all belong to the same group. The statuses returned by
 			// `product.subscription.status` apply to the entire subscription group.
 			guard let product = Store.shared.subscriptions.first,
-				  let statuses = try await product.subscription?.status else {
+			      let statuses = try await product.subscription?.status
+			else {
 				return false
 			}
 
@@ -184,9 +188,18 @@ class SubscriptionCollectionViewController: KCollectionViewController, Storyboar
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
+	/// Configures the close bar button item.
+	private func configureCloseBarButtonItem() {
+		self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.dismiss(animated: true, completion: nil)
+		})
+		self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	private func configureNavigationItems() {
+		self.configureCloseBarButtonItem()
 	}
 }
 

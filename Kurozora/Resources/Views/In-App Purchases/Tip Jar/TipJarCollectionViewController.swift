@@ -6,48 +6,46 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
-import StoreKit
 import SPConfetti
+import StoreKit
+import UIKit
 
-class TipJarCollectionViewController: KCollectionViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Purchase"
-
-	// MARK: - IBOutlets
-	/// The left navigation bar button of the navigation controller's `navigationItem`.
-	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem?
+class TipJarCollectionViewController: KCollectionViewController {
+	// MARK: - Views
+	private var closeBarButtonItem: UIBarButtonItem?
 
 	// MARK: - Properties
 	var products: [Product] {
 		return Store.shared.tips
 	}
+
 	var productFeatures: [ProductFeature] = [
-        ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
-        ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
-        ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
-        ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
-        ProductFeature(title: "Up to 500 Characters", description: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
-        ProductFeature(title: "Unlock Pro Badge", description: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.", image: .Promotional.InAppPurchases.proBadge),
-        ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
+		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
+		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
+		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
+		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
+		ProductFeature(title: "Up to 500 Characters", description: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
+		ProductFeature(title: "Unlock Pro Badge", description: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.", image: .Promotional.InAppPurchases.proBadge),
+		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
 	]
 	var serviceType: ServiceType = .tipJar
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// A storage for the `leftBarButtonItems` of `navigationItem`.
 	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
 	/// Set to `false` to hide the left navigation bar.
 	var leftNavigationBarButtonIsHidden: Bool = false {
 		didSet {
-			if leftNavigationBarButtonIsHidden {
+			if self.leftNavigationBarButtonIsHidden {
 				let leftBarButtonItems = navigationItem.leftBarButtonItems
 				if leftBarButtonItems != nil {
-					_leftBarButtonItems = navigationItem.leftBarButtonItems
+					self._leftBarButtonItems = navigationItem.leftBarButtonItems
 					navigationItem.leftBarButtonItems = nil
 				}
 			} else {
-				navigationItem.leftBarButtonItems = _leftBarButtonItems
+				navigationItem.leftBarButtonItems = self._leftBarButtonItems
 			}
 		}
 	}
@@ -58,8 +56,9 @@ class TipJarCollectionViewController: KCollectionViewController, StoryboardInsta
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
 
 	// Activity indicator
@@ -68,13 +67,16 @@ class TipJarCollectionViewController: KCollectionViewController, StoryboardInsta
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.tipJar
 
 		// Disable refresh control
 		self._prefersRefreshControlDisabled = true
@@ -84,6 +86,7 @@ class TipJarCollectionViewController: KCollectionViewController, StoryboardInsta
 
 		// Configure data source
 		self.configureDataSource()
+		self.configureNavigationItems()
 
 		// Dismiss the view if the user is not allowed to make purchases.
 		if !AppStore.canMakePayments {
@@ -99,9 +102,19 @@ class TipJarCollectionViewController: KCollectionViewController, StoryboardInsta
 		SPConfetti.stopAnimating()
 	}
 
-	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
+	// MARK: - Functions
+	/// Configures the close bar button item.
+	private func configureCloseBarButtonItem() {
+		self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.dismiss(animated: true, completion: nil)
+		})
+		self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	private func configureNavigationItems() {
+		self.configureCloseBarButtonItem()
 	}
 }
 
@@ -161,7 +174,7 @@ extension TipJarCollectionViewController {
 		/// The header section of the collection view.
 		case header
 
-		/// The prodcuts section of the collection view.
+		/// The products section of the collection view.
 		case products
 
 		/// The features section of the collection view.
