@@ -9,18 +9,6 @@
 import KurozoraKit
 import UIKit
 
-// MARK: - SectionLayoutKind
-extension ThemesCollectionViewController {
-	/// List of  themes section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
-
 class ThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
@@ -69,6 +57,8 @@ class ThemesCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.browseThemes
 
 		#if DEBUG
 		// Setup refresh control
@@ -132,17 +122,45 @@ class ThemesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .exploreSegue: return HomeCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .exploreSegue:
-			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
-			guard let theme = sender as? Theme else { return }
+			guard
+				let homeCollectionViewController = destination as? HomeCollectionViewController,
+				let theme = sender as? Theme
+			else { return }
 			homeCollectionViewController.theme = theme
+		}
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension ThemesCollectionViewController {
+	/// List of  themes section layout kind.
+	///
+	/// ```swift
+	/// case main = 0
+	/// ```
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+}
+
+// MARK: - Cell Configuration
+extension ThemesCollectionViewController {
+	func getConfiguredGenreCell() -> UICollectionView.CellRegistration<GenreLockupCollectionViewCell, Theme> {
+		return UICollectionView.CellRegistration<GenreLockupCollectionViewCell, Theme>(cellNib: GenreLockupCollectionViewCell.nib) { genreLockupCollectionViewCell, _, itemKind in
+			genreLockupCollectionViewCell.configure(using: itemKind)
 		}
 	}
 }

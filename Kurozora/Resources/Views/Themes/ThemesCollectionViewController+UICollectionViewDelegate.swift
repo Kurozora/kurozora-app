@@ -11,7 +11,7 @@ import UIKit
 extension ThemesCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let theme = self.dataSource.itemIdentifier(for: indexPath) else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.exploreSegue, sender: theme)
+		self.show(SegueIdentifiers.exploreSegue, sender: theme)
 	}
 
 	// MARK: - Managing Context Menus
