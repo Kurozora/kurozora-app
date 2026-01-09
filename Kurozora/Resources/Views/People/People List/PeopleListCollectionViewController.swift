@@ -152,7 +152,7 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 		case .character:
 			do {
 				guard let characterIdentity = self.characterIdentity else { return }
-				let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL).value
+				let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

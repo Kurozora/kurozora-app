@@ -153,7 +153,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 			switch self.showsListFetchType {
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL).value
+				let relatedShowsResponse = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -167,7 +167,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedShows.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL).value
+				let relatedShowsResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -181,7 +181,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedShows.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL).value
+				let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -194,7 +194,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.showIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL).value
+				let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -220,7 +220,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.showIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let showIdentity = self.showIdentity else { return }
-				let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL).value
+				let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -233,7 +233,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.showIdentities.removeDuplicates()
 			case .relatedShow:
 				guard let showIdentity = self.showIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL).value
+				let relatedShowsResponse = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -247,7 +247,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedShows.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL).value
+				let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -259,7 +259,7 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 				self.showIdentities.append(contentsOf: showIdentityResponse.data)
 				self.showIdentities.removeDuplicates()
 			case .upcoming:
-				let showIdentityResponse = try await KService.getUpcomingShows(next: self.nextPageURL).value
+				let showIdentityResponse = try await KService.getUpcomingShows(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

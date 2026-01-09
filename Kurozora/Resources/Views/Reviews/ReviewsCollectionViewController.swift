@@ -137,28 +137,28 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 			switch listType {
 			case .character(let character):
 				let identity = CharacterIdentity(id: character.id)
-				reviewsResponse = try await KService.getReviews(forCharacter: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forCharacter: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .episode(let episode):
 				let identity = EpisodeIdentity(id: episode.id)
-				reviewsResponse = try await KService.getReviews(forEpisode: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forEpisode: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .game(let game):
 				let identity = GameIdentity(id: game.id)
-				reviewsResponse = try await KService.getReviews(forGame: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forGame: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .literature(let literature):
 				let identity = LiteratureIdentity(id: literature.id)
-				reviewsResponse = try await KService.getReviews(forLiterature: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forLiterature: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .person(let person):
 				let identity = PersonIdentity(id: person.id)
-				reviewsResponse = try await KService.getReviews(forPerson: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forPerson: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .show(let show):
 				let identity = ShowIdentity(id: show.id)
-				reviewsResponse = try await KService.getReviews(forShow: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forShow: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .song(let song):
 				let identity = SongIdentity(id: song.id)
-				reviewsResponse = try await KService.getReviews(forSong: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forSong: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			case .studio(let studio):
 				let identity = StudioIdentity(id: studio.id)
-				reviewsResponse = try await KService.getReviews(forStudio: identity, next: self.nextPageURL).value
+				reviewsResponse = try await KService.getReviews(forStudio: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 			}
 
 			// Reset data if necessary

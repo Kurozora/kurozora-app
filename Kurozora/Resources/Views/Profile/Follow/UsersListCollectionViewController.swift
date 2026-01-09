@@ -219,7 +219,7 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 			let userIdentity = UserIdentity(id: user.id)
 
 			do {
-				let userIdentityResponse = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL).value
+				let userIdentityResponse = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
