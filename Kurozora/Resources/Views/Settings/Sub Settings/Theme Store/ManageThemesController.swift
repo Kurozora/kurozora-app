@@ -49,15 +49,17 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
+	override init() {
+		super.init()
+		self.sharedInit()
+	}
+
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
+		self.sharedInit()
+	}
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
+	private func sharedInit() {
 		// Fetch app themes
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -74,6 +76,14 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = Trans.themeStore
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		self.configureDataSource()
 		self.updateDataSource()
@@ -170,7 +180,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 				// Add remove action
 				let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive) { _ in
 					self.handleRemoveTheme(cell)
-                    if UserSettings.currentTheme == theme.id.rawValue {
+					if UserSettings.currentTheme == theme.id.rawValue {
 						KThemeStyle.switchTo(style: .default)
 					}
 				}

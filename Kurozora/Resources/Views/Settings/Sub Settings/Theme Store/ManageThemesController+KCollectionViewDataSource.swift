@@ -9,6 +9,10 @@
 import UIKit
 
 extension ManageThemesCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [ThemesCollectionViewCell.self]
+	}
+
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return [TitleHeaderCollectionReusableView.self]
 	}

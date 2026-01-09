@@ -9,6 +9,11 @@
 import UIKit
 import KurozoraKit
 
+protocol ThemesCollectionViewCellDelegate: AnyObject {
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton)
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton)
+}
+
 class ScreenshotView: UIView {
 	@IBOutlet weak var screenshotImageView: PosterImageView!
 }
