@@ -12,6 +12,7 @@ import UIKit
 extension StudioDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			StudioHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,

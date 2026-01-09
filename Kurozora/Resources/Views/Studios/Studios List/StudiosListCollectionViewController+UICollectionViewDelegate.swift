@@ -12,7 +12,7 @@ import UIKit
 extension StudiosListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let studio = self.cache[indexPath] as? Studio else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.studioDetailsSegue, sender: studio)
+		self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

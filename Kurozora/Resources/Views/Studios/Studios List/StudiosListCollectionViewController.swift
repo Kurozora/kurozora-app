@@ -74,6 +74,8 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.studios
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -231,15 +233,20 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .studioDetailsSegue:
-			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
+			guard let studioDetailsCollectionViewController = destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
 		}
