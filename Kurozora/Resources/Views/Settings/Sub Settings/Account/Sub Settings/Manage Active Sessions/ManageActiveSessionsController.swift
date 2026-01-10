@@ -130,7 +130,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable, St
 		#endif
 
 		do {
-			let sessionResponse = try await KService.getSessions(next: self.nextPageURL).value
+			let sessionResponse = try await KService.getSessions(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

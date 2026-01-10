@@ -12,11 +12,7 @@ import UIKit
 
 class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var iconImageView: KImageView? {
-		didSet {
-			self.iconImageView?.layer.borderColor = UIColor.white.withAlphaComponent(0.2).cgColor
-		}
-	}
+	@IBOutlet weak var iconImageView: IconImageView?
 	@IBOutlet weak var primaryLabel: KLabel?
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel?
 	@IBOutlet weak var selectedView: UIView? {

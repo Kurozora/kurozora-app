@@ -30,6 +30,9 @@ class SettingsTableViewController: KTableViewController {
 		case tipJarSegue
 	}
 
+	// MARK: - Views
+	private var closeBarButtonItem: UIBarButtonItem!
+
 	// MARK: - Properties
 	var settingsSection: [Section] {
 		return Section.all
@@ -65,7 +68,7 @@ class SettingsTableViewController: KTableViewController {
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.setupView()
+			self.configureTableView()
 		}
 	}
 
@@ -81,11 +84,13 @@ class SettingsTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.settings
+
 		// Stop activity indicator and disable refresh control
 		self._prefersActivityIndicatorHidden = true
 		self._prefersRefreshControlDisabled = true
 
-		self.setupView()
+		self.configureView()
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -102,29 +107,64 @@ class SettingsTableViewController: KTableViewController {
 		}
 	}
 
-	fileprivate func setupView() {
+	private func configureView() {
+		self.configureNavigationItems()
+		self.configureTableView()
+	}
+
+	private func configureTableView() {
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			self.clearsSelectionOnViewWillAppear = false
 			self.view.theme_backgroundColor = nil
 			self.view.backgroundColor = .clear
 			self.tableView.theme_backgroundColor = nil
 			self.tableView.backgroundColor = .clear
+			self.tableView.theme_separatorColor = nil
+			self.tableView.separatorColor = .clear
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func dismissPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
+	/// Configures the close bar button item.
+	private func configureCloseBarButtonItem() {
+		self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.dismiss(animated: true, completion: nil)
+		})
+		self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+	}
+
+	/// Configures the navigation items.
+	private func configureNavigationItems() {
+		self.configureCloseBarButtonItem()
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch segue {
+		case .accountSegue: return AccountTableViewController()
+		case .switchAccountSegue: return SwitchAccountsTableViewController()
+		case .keysSegue: return DebugSettingsTableViewController()
+		case .browserSegue: return BrowserSettingsTableViewController()
+		case .displaySegue: return DisplayTableViewController()
+		case .iconSegue: return ManageIconTableViewController()
+		case .librarySegue: return LibrarySettingsViewController()
+		case .motionSegue: return MotionOptionsViewController()
+		case .themeSegue: return ManageThemesCollectionViewController()
+		case .notificationSegue: return NotificationsOptionsViewController()
+		case .soundSegue: return SoundSettingsViewController()
+		case .biometricsSegue: return AuthenticationViewController()
+		case .privacySegue: return PrivacySettingsViewController()
+		case .subscriptionSegue: return SubscriptionCollectionViewController()
+		case .tipJarSegue: return TipJarCollectionViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .accountSegue, .switchAccountSegue, .keysSegue,
 		     .browserSegue, .displaySegue, .iconSegue,
 		     .librarySegue, .motionSegue, .themeSegue,
@@ -132,10 +172,10 @@ class SettingsTableViewController: KTableViewController {
 		     .biometricsSegue, .privacySegue:
 			return
 		case .subscriptionSegue:
-			let kNavigationController = segue.destination as? KNavigationController
+			let kNavigationController = destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? SubscriptionCollectionViewController)?.leftNavigationBarButtonIsHidden = true
 		case .tipJarSegue:
-			let kNavigationController = segue.destination as? KNavigationController
+			let kNavigationController = destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? TipJarCollectionViewController)?.leftNavigationBarButtonIsHidden = true
 		}
 	}
@@ -162,7 +202,7 @@ extension SettingsTableViewController {
 
 		switch settingsRow {
 		case .account:
-			identifier = AccountCell.self
+			identifier = AccountSettingsCell.self
 		default: break
 		}
 
@@ -177,7 +217,7 @@ extension SettingsTableViewController {
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
 			settingsCell.chevronImageView?.isHidden = true
-			settingsCell.selectedView?.layerCornerRadius = 12.0
+			settingsCell.selectedView?.layerCornerRadius = (settingsCell.selectedView?.frame.height ?? 44) / 2
 		}
 
 		return settingsCell
@@ -274,9 +314,15 @@ extension SettingsTableViewController {
 			guard let segueID = sectionRow.segueIdentifier else { return }
 			self.authAndSegue(to: segueID)
 			return
-		case .switchAccount: break
-		case .keychain: break
-		case .browser: break
+		case .switchAccount:
+			self.showDetailViewController(SegueIdentifiers.switchAccountSegue, sender: nil)
+			return
+		case .keychain:
+			self.showDetailViewController(SegueIdentifiers.keysSegue, sender: nil)
+			return
+		case .browser:
+			self.showDetailViewController(SegueIdentifiers.browserSegue, sender: nil)
+			return
 		case .cache:
 			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "The number you see in Kurozora might not match the one in the Settings app. That’s because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.", defaultActionButtonTitle: Trans.cancel)
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
@@ -297,10 +343,14 @@ extension SettingsTableViewController {
 			})
 			return
 		case .displayBlindness: break
-		case .icon: break
+		case .icon:
+			self.showDetailViewController(SegueIdentifiers.iconSegue, sender: nil)
+			return
 		case .library: break
 		case .motion: break
-		case .theme: break
+		case .theme:
+			self.showDetailViewController(SegueIdentifiers.themeSegue, sender: nil)
+			return
 		case .notifications:
 			guard let segueID = sectionRow.segueIdentifier else { return }
 			self.authAndSegue(to: segueID)
@@ -324,8 +374,12 @@ extension SettingsTableViewController {
 			return
 		case .biometrics: break
 		case .privacy: break
-		case .unlockFeatures: break
-		case .tipjar: break
+		case .unlockFeatures:
+			self.showDetailViewController(SegueIdentifiers.subscriptionSegue, sender: nil)
+			return
+		case .tipjar:
+			self.showDetailViewController(SegueIdentifiers.tipJarSegue, sender: nil)
+			return
 		case .manageSubscriptions:
 			Task { [weak self] in
 				await Store.shared.manageSubscriptions(in: self?.view.window?.windowScene)
@@ -373,5 +427,15 @@ extension SettingsTableViewController {
 
 			self.performSegue(withIdentifier: identifier, sender: nil)
 		}
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension SettingsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			AccountSettingsCell.self,
+			SettingsCell.self
+		]
 	}
 }

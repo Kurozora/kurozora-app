@@ -6,17 +6,27 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 /// The table view controller responsible for adding, deleting and listing of user's accounts.
-class SwitchAccountsTableViewController: SubSettingsViewController, StoryboardInstantiable {
-	static var storyboardName: String = "SwitchAccountSettings"
+class SwitchAccountsTableViewController: SubSettingsViewController {
+	// MARK: - Views
+	private var addAccountBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	/// All user accounts.
 	var accounts: [String] {
 		return SharedDelegate.shared.keychain.allKeys()
+	}
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
 	}
 
 	// MARK: - View
@@ -29,11 +39,37 @@ class SwitchAccountsTableViewController: SubSettingsViewController, StoryboardIn
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func addAccountBarButtonItemPressed(_ sender: UIBarButtonItem) {
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		self.title = Trans.switchAccount
+
+		self.configureView()
+	}
+
+	// MARK: - Functions
+	private func configureView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+
+		self.configureNavigationItems()
+	}
+
+	private func configureNavigationItems() {
+		self.configureAddAccountBarButtonItem()
+	}
+
+	private func configureAddAccountBarButtonItem() {
+		self.addAccountBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.addAccountBarButtonItemPressed()
+		})
+		self.navigationItem.rightBarButtonItem = self.addAccountBarButtonItem
+	}
+
+	private func addAccountBarButtonItemPressed() {
 		let signInTableViewController = SignInTableViewController.instantiate()
 		let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-		UIApplication.topViewController?.present(kNavigationController, animated: true)
+		self.present(kNavigationController, animated: true)
 	}
 }
 
@@ -82,7 +118,7 @@ extension SwitchAccountsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let removeAction = UIContextualAction(style: .destructive, title: "Sign out", handler: {_, _, completion in
+		let removeAction = UIContextualAction(style: .destructive, title: "Sign out", handler: { _, _, completion in
 			let accountKey = self.accounts[indexPath.item]
 
 			// Remove user's authentication key from keychain and update tableView.

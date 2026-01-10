@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IcM-Ic-9ol">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IcM-Ic-9ol">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
@@ -55,11 +55,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xju-z9-DYH">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xju-z9-DYH">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="52"/>
                                                     <subviews>
                                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="OAL-zv-e1V">
-                                                            <rect key="frame" x="8" y="10" width="337" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="321" height="33"/>
                                                             <segments>
                                                                 <segment title="Anime"/>
                                                                 <segment title="Literatures"/>
@@ -98,11 +98,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Mh-PM-OYx">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Mh-PM-OYx">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="In-Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXR-WJ-6mH" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="89" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="89" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="ImO-vp-VLM"/>
                                                             </constraints>
@@ -111,21 +111,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SMA-FW-ejk">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="EdW-LR-EyI"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ozs-FN-ukr">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aen-O0-QqZ" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="Rkc-Ir-8Sk">
                                                                 <children>
                                                                     <command title="Item 1" id="BfD-Nh-uvh"/>
@@ -177,11 +177,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxx-b7-udW">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jxx-b7-udW">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Planning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qf-YL-qmE" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="65.666666666666671" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="65.666666666666671" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="fRo-O5-FoV"/>
                                                             </constraints>
@@ -190,21 +190,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qCx-k1-9fx">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="DZ9-vD-MWF"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-qC-abg">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c25-NJ-Ydw" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="2aY-qx-yUp">
                                                                 <children>
                                                                     <command title="Item 1" id="bI1-Ch-Ney"/>
@@ -256,11 +256,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1l-vZ-wjN">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g1l-vZ-wjN">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CF4-d3-9zz" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="84" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="84" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="mPd-om-Zq4"/>
                                                             </constraints>
@@ -269,21 +269,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="54Y-cz-W5g">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="cWK-xS-Mp1"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz5-ID-HGb">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8FS-DY-VKY" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="sob-BW-2aw">
                                                                 <children>
                                                                     <command title="Item 1" id="c2W-fl-tlZ"/>
@@ -335,11 +335,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5c-TZ-LOY">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d5c-TZ-LOY">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="On-Hold" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="waw-m3-6vB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="65.666666666666671" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="65.666666666666671" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="vkD-DQ-sig"/>
                                                             </constraints>
@@ -348,21 +348,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6y0-oS-6s5">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="jrS-H5-pFH"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6n-2I-JxM">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFJ-db-jSU" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="d3V-kJ-JsV">
                                                                 <children>
                                                                     <command title="Item 1" id="v01-HH-jGU"/>
@@ -414,11 +414,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8R8-a0-B7i">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8R8-a0-B7i">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Dropped" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ho-21-ph8" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="66.666666666666671" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="66.666666666666671" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="Y09-6V-MSI"/>
                                                             </constraints>
@@ -427,21 +427,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Dvw-qy-22E">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="ZWv-NV-X7T"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx3-le-FXx">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dq0-it-ewN" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="Rfb-2j-eKL">
                                                                 <children>
                                                                     <command title="Item 1" id="0fx-W7-g7z"/>
@@ -493,11 +493,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geX-Vz-khD">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geX-Vz-khD">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Interested" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1WN-6y-1kD" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="77" height="33"/>
+                                                            <rect key="frame" x="16" y="10" width="77" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="wfP-Qn-Kjh"/>
                                                             </constraints>
@@ -506,21 +506,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="u05-rm-tUj">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="BvN-eS-4ko"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Bh-Dp-FM1">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dvV-WN-TTl" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="bpg-kO-uF0">
                                                                 <children>
                                                                     <command title="Item 1" id="lEh-7u-QvL"/>
@@ -572,11 +572,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ngW-9f-Lkv">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ngW-9f-Lkv">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Ignored" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQd-VB-9ak" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8.0000000000000036" y="10" width="58.333333333333343" height="33"/>
+                                                            <rect key="frame" x="16.000000000000004" y="10" width="58.333333333333343" height="33"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="e4V-t7-OTJ"/>
                                                             </constraints>
@@ -585,21 +585,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4LX-5P-eGI">
-                                                            <rect key="frame" x="332.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="20.666666666666671" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="3L9-l8-aIu"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imW-RC-F8q">
-                                                            <rect key="frame" x="345" y="26.666666666666668" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="337" y="26.666666666666668" width="0.0" height="0.0"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rwd-dV-apy" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="304" y="8" width="41" height="37"/>
+                                                            <rect key="frame" x="296" y="8" width="41" height="37"/>
                                                             <menu key="menu" id="tQM-3m-FZv">
                                                                 <children>
                                                                     <command title="Item 1" id="r9d-EE-rIq"/>

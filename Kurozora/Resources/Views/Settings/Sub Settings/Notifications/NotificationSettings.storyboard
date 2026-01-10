@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nX6-Sq-TTA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nX6-Sq-TTA">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,13 +53,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8nU-Eg-bdX" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="141.5" height="20"/>
+                                                    <rect key="frame" x="20" y="15" width="141.5" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KlJ-qn-pPg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
+                                                    <rect key="frame" x="293" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -69,12 +69,12 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="KlJ-qn-pPg" secondAttribute="trailing" constant="8" id="8oh-5R-R2l"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="KlJ-qn-pPg" secondAttribute="trailing" id="8oh-5R-R2l"/>
                                                 <constraint firstItem="KlJ-qn-pPg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8nU-Eg-bdX" secondAttribute="trailing" constant="8" symbolic="YES" id="CfO-1n-2yN"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8nU-Eg-bdX" secondAttribute="bottom" constant="10" id="a9h-bf-xwO"/>
                                                 <constraint firstItem="8nU-Eg-bdX" firstAttribute="centerY" secondItem="KlJ-qn-pPg" secondAttribute="centerY" id="cUX-XM-3bF"/>
                                                 <constraint firstItem="KlJ-qn-pPg" firstAttribute="top" secondItem="hv5-7d-C2b" secondAttribute="top" constant="10" id="lfr-dn-2GU"/>
-                                                <constraint firstItem="8nU-Eg-bdX" firstAttribute="leading" secondItem="hv5-7d-C2b" secondAttribute="leading" constant="8" id="mbJ-eI-Sjz"/>
+                                                <constraint firstItem="8nU-Eg-bdX" firstAttribute="leading" secondItem="hv5-7d-C2b" secondAttribute="leadingMargin" id="mbJ-eI-Sjz"/>
                                                 <constraint firstAttribute="bottom" secondItem="KlJ-qn-pPg" secondAttribute="bottom" constant="10" id="qbD-SV-oQ6"/>
                                                 <constraint firstItem="8nU-Eg-bdX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hv5-7d-C2b" secondAttribute="top" constant="10" id="vzb-mE-YgP"/>
                                             </constraints>
@@ -96,14 +96,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sounds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCT-vt-NF5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="57.5" height="20"/>
+                                                    <rect key="frame" x="20" y="15" width="57.5" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKd-mg-6mV" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
+                                                    <rect key="frame" x="293" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -113,11 +113,11 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="eCT-vt-NF5" firstAttribute="leading" secondItem="JrI-GZ-IDb" secondAttribute="leading" constant="8" id="5Wb-LK-DVd"/>
+                                                <constraint firstItem="eCT-vt-NF5" firstAttribute="leading" secondItem="JrI-GZ-IDb" secondAttribute="leadingMargin" id="5Wb-LK-DVd"/>
                                                 <constraint firstItem="FKd-mg-6mV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eCT-vt-NF5" secondAttribute="trailing" constant="8" symbolic="YES" id="IXy-es-Thn"/>
                                                 <constraint firstItem="eCT-vt-NF5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JrI-GZ-IDb" secondAttribute="top" constant="10" id="JUp-KT-SSD"/>
                                                 <constraint firstItem="FKd-mg-6mV" firstAttribute="centerY" secondItem="eCT-vt-NF5" secondAttribute="centerY" id="ZQt-XX-UXE"/>
-                                                <constraint firstAttribute="trailing" secondItem="FKd-mg-6mV" secondAttribute="trailing" constant="8" id="arb-0I-uuG"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FKd-mg-6mV" secondAttribute="trailing" id="arb-0I-uuG"/>
                                                 <constraint firstItem="FKd-mg-6mV" firstAttribute="top" secondItem="JrI-GZ-IDb" secondAttribute="top" constant="10" id="bE9-os-VOZ"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eCT-vt-NF5" secondAttribute="bottom" constant="10" id="ltk-ZW-HhY"/>
                                                 <constraint firstAttribute="bottom" secondItem="FKd-mg-6mV" secondAttribute="bottom" constant="10" id="m5h-Vn-ELU"/>
@@ -136,14 +136,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Un-39-pw2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="57.5" height="20"/>
+                                                    <rect key="frame" x="20" y="15" width="57.5" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-LP-bDA" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="305" y="10" width="63" height="30"/>
+                                                    <rect key="frame" x="293" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -159,8 +159,8 @@
                                                 <constraint firstItem="2Un-39-pw2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZG6-E4-Ut2" secondAttribute="top" constant="10" id="Uay-sP-bPH"/>
                                                 <constraint firstItem="XSM-LP-bDA" firstAttribute="top" secondItem="ZG6-E4-Ut2" secondAttribute="top" constant="10" id="YhR-Le-ipf"/>
                                                 <constraint firstItem="XSM-LP-bDA" firstAttribute="centerY" secondItem="2Un-39-pw2" secondAttribute="centerY" id="gRk-e7-AxU"/>
-                                                <constraint firstAttribute="trailing" secondItem="XSM-LP-bDA" secondAttribute="trailing" constant="8" id="jjg-Uv-6lq"/>
-                                                <constraint firstItem="2Un-39-pw2" firstAttribute="leading" secondItem="ZG6-E4-Ut2" secondAttribute="leading" constant="8" id="zVM-gB-Neo"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="XSM-LP-bDA" secondAttribute="trailing" id="jjg-Uv-6lq"/>
+                                                <constraint firstItem="2Un-39-pw2" firstAttribute="leading" secondItem="ZG6-E4-Ut2" secondAttribute="leadingMargin" id="zVM-gB-Neo"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,18 +179,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cZu-SV-9yh">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZu-SV-9yh">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Notification Grouping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9RM-9n-wxa" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="162.5" height="30"/>
+                                                            <rect key="frame" x="20" y="10" width="162.5" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Automatic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="qzX-ES-5e4" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="274.5" y="15.499999999999998" width="74" height="18.999999999999993"/>
+                                                            <rect key="frame" x="262.5" y="15.499999999999998" width="74" height="18.999999999999993"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -198,7 +198,7 @@
                                                             <size key="shadowOffset" width="0.0" height="1"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HDY-BI-Q3W">
-                                                            <rect key="frame" x="353.5" y="18.5" width="12.5" height="12.5"/>
+                                                            <rect key="frame" x="341.5" y="18.5" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="9Ph-2L-07m"/>

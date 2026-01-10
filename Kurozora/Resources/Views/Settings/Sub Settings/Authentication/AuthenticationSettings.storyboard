@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h8Q-kL-PZc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h8Q-kL-PZc">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,7 +56,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-te-zoj">
-                                                    <rect key="frame" x="10" y="10" width="30" height="31"/>
+                                                    <rect key="frame" x="20" y="10" width="30" height="31"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/faceid" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="31"/>
@@ -72,14 +72,14 @@
                                                     </constraints>
                                                 </view>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with Face ID &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrA-AR-cki" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="48" y="15" width="227.5" height="21"/>
+                                                    <rect key="frame" x="58" y="15" width="227" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="303" y="9.5" width="63" height="32"/>
+                                                    <rect key="frame" x="293" y="9.5" width="63" height="32"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="enabledSwitchSwitched:" destination="6oh-ZP-WM2" eventType="valueChanged" id="reQ-a1-hfT"/>
@@ -88,13 +88,13 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="PGA-te-zoj" firstAttribute="leading" secondItem="lis-rD-JCx" secondAttribute="leading" constant="10" id="0k4-f2-MVk"/>
+                                                <constraint firstItem="PGA-te-zoj" firstAttribute="leading" secondItem="lis-rD-JCx" secondAttribute="leadingMargin" id="0k4-f2-MVk"/>
                                                 <constraint firstItem="vrA-AR-cki" firstAttribute="leading" secondItem="PGA-te-zoj" secondAttribute="trailing" constant="8" symbolic="YES" id="EYq-AI-9Wm"/>
                                                 <constraint firstItem="vrA-AR-cki" firstAttribute="centerY" secondItem="PGA-te-zoj" secondAttribute="centerY" id="HZ0-NB-Tn6"/>
                                                 <constraint firstAttribute="bottom" secondItem="OFc-qj-smH" secondAttribute="bottom" constant="9.5" id="LRa-q0-lfK"/>
                                                 <constraint firstItem="OFc-qj-smH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vrA-AR-cki" secondAttribute="trailing" constant="8" symbolic="YES" id="TIo-Cw-Lue"/>
                                                 <constraint firstAttribute="bottom" secondItem="PGA-te-zoj" secondAttribute="bottom" constant="10" id="V5A-dT-fwQ"/>
-                                                <constraint firstAttribute="trailing" secondItem="OFc-qj-smH" secondAttribute="trailing" constant="10" id="f9J-yz-jFw"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="OFc-qj-smH" secondAttribute="trailing" id="f9J-yz-jFw"/>
                                                 <constraint firstItem="OFc-qj-smH" firstAttribute="top" secondItem="lis-rD-JCx" secondAttribute="top" constant="9.5" id="jag-hq-o46"/>
                                                 <constraint firstItem="PGA-te-zoj" firstAttribute="top" secondItem="lis-rD-JCx" secondAttribute="top" constant="10" id="nPW-IE-zap"/>
                                             </constraints>
@@ -117,25 +117,25 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnh-ey-GH6">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnh-ey-GH6">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Require Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Nad-PE-BM9" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="173" height="30"/>
+                                                            <rect key="frame" x="20" y="10" width="173" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Immediately" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="idh-YM-Jj3" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="260.5" y="15.5" width="88" height="19.5"/>
+                                                            <rect key="frame" x="248.5" y="15.5" width="88" height="19.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bwb-FO-ynS">
-                                                            <rect key="frame" x="353.5" y="18.5" width="12.5" height="12.5"/>
+                                                            <rect key="frame" x="341.5" y="18.5" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="KfG-fo-Xqw"/>
@@ -204,11 +204,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qge-UM-9hX">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qge-UM-9hX">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Immediately" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="cgQ-O9-7hB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="93" height="30"/>
+                                                    <rect key="frame" x="20" y="10" width="93" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -216,7 +216,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="23e-My-92v">
-                                                    <rect key="frame" x="347.5" y="19" width="18.5" height="12.5"/>
+                                                    <rect key="frame" x="335.5" y="19" width="18.5" height="12.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Fb5-ls-BzX"/>
                                                     </constraints>

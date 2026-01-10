@@ -9,6 +9,22 @@
 import UIKit
 
 class BrowserSettingsTableViewController: SubSettingsViewController {
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
+	// MARK: - Functions
+	/// The shared settings used to initialize the table view
+	private func sharedInit() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
 }
 
 // MARK: - UITableViewDataSource

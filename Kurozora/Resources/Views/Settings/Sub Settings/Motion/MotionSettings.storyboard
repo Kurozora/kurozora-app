@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81c-oB-tpz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81c-oB-tpz">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -54,18 +54,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3p-6s-OHe">
+                                                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C3p-6s-OHe">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Splash Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y7g-DP-KXp" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="109" height="30"/>
+                                                            <rect key="frame" x="16" y="10" width="109" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="KSJ-Iu-hOM" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="275.33333333333331" y="15" width="52.333333333333314" height="20"/>
+                                                            <rect key="frame" x="267.33333333333331" y="15" width="52.333333333333314" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -73,7 +73,7 @@
                                                             <size key="shadowOffset" width="0.0" height="1"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-3f-vyr">
-                                                            <rect key="frame" x="332.66666666666669" y="19" width="12.333333333333314" height="12.333333333333329"/>
+                                                            <rect key="frame" x="324.66666666666669" y="19" width="12.333333333333314" height="12.333333333333329"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="ZtP-kG-sjm"/>
@@ -121,14 +121,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reduce Motion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NeG-Vg-coF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="14.666666666666664" width="115" height="21"/>
+                                                    <rect key="frame" x="16" y="14.666666666666664" width="115" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bD2-Sb-des" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
+                                                    <rect key="frame" x="276" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -138,13 +138,13 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="NeG-Vg-coF" firstAttribute="leading" secondItem="tzy-Vu-2ab" secondAttribute="leading" constant="8" id="4HF-sw-B3A"/>
+                                                <constraint firstItem="NeG-Vg-coF" firstAttribute="leading" secondItem="tzy-Vu-2ab" secondAttribute="leadingMargin" id="4HF-sw-B3A"/>
                                                 <constraint firstItem="bD2-Sb-des" firstAttribute="top" secondItem="tzy-Vu-2ab" secondAttribute="top" constant="10" id="7w1-KK-jDg"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NeG-Vg-coF" secondAttribute="bottom" constant="10" id="93t-hR-R4C"/>
                                                 <constraint firstItem="bD2-Sb-des" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NeG-Vg-coF" secondAttribute="trailing" constant="8" symbolic="YES" id="ZRt-VE-jdA"/>
                                                 <constraint firstItem="bD2-Sb-des" firstAttribute="centerY" secondItem="NeG-Vg-coF" secondAttribute="centerY" id="fyn-LL-zgS"/>
                                                 <constraint firstAttribute="bottom" secondItem="bD2-Sb-des" secondAttribute="bottom" constant="10" id="lab-PQ-NNa"/>
-                                                <constraint firstAttribute="trailing" secondItem="bD2-Sb-des" secondAttribute="trailing" constant="8" id="pmb-0M-mGM"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bD2-Sb-des" secondAttribute="trailing" id="pmb-0M-mGM"/>
                                                 <constraint firstItem="NeG-Vg-coF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tzy-Vu-2ab" secondAttribute="top" constant="10" id="trz-4P-vwX"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -161,14 +161,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync with Device Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2W-09-4Z7" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="14.666666666666664" width="198" height="21"/>
+                                                    <rect key="frame" x="16" y="14.666666666666664" width="198" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BpD-6R-gaZ" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="284" y="10" width="63" height="30"/>
+                                                    <rect key="frame" x="276" y="10" width="63" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -179,8 +179,8 @@
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c2W-09-4Z7" secondAttribute="bottom" constant="10" id="0az-8j-gth"/>
-                                                <constraint firstItem="c2W-09-4Z7" firstAttribute="leading" secondItem="PW0-FY-xU8" secondAttribute="leading" constant="8" id="5IL-VO-lhf"/>
-                                                <constraint firstAttribute="trailing" secondItem="BpD-6R-gaZ" secondAttribute="trailing" constant="8" id="87h-6N-RQh"/>
+                                                <constraint firstItem="c2W-09-4Z7" firstAttribute="leading" secondItem="PW0-FY-xU8" secondAttribute="leadingMargin" id="5IL-VO-lhf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BpD-6R-gaZ" secondAttribute="trailing" id="87h-6N-RQh"/>
                                                 <constraint firstAttribute="bottom" secondItem="BpD-6R-gaZ" secondAttribute="bottom" constant="10" id="N9f-6I-lcg"/>
                                                 <constraint firstItem="BpD-6R-gaZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c2W-09-4Z7" secondAttribute="trailing" constant="8" symbolic="YES" id="V3j-P1-66c"/>
                                                 <constraint firstItem="BpD-6R-gaZ" firstAttribute="top" secondItem="PW0-FY-xU8" secondAttribute="top" constant="10" id="XDO-o1-hEz"/>

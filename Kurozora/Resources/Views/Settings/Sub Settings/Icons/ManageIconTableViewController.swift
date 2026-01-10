@@ -13,8 +13,8 @@ class ManageIconTableViewController: SubSettingsViewController {
 	var alternativeIcons: [AlternativeIcons] = []
 
 	// MARK: - Initializers
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+	init() {
+		super.init(style: .insetGrouped)
 		self.sharedInit()
 	}
 
@@ -27,19 +27,24 @@ class ManageIconTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.appIcon
+
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true
 	}
 
 	// MARK: - Functions
-	/// The shared settings used to initialize tab bar view.
+	/// The shared settings used to initialize the table view
 	private func sharedInit() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+
 		if let path = Bundle.main.path(forResource: "App Icons", ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
 			let alternativeIconsDict = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [[String: Any]]) ?? []
 			alternativeIconsDict.forEach { alternativeIconPack in
-				guard let title = alternativeIconPack["title"] as? String,
-					  let icons = alternativeIconPack["icons"] as? [String]
+				guard
+					let title = alternativeIconPack["title"] as? String,
+					let icons = alternativeIconPack["icons"] as? [String]
 				else { return }
 
 				self.alternativeIcons.append(AlternativeIcons(title: title, icons: icons))

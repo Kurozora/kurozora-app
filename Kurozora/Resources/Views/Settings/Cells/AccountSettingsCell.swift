@@ -1,5 +1,5 @@
 //
-//  AccountCell.swift
+//  AccountSettingsCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/12/2025.
@@ -8,4 +8,4 @@
 
 import UIKit
 
-class AccountCell: SettingsCell {}
+class AccountSettingsCell: SettingsCell {}
