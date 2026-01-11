@@ -12,7 +12,7 @@ class PurchaseFeatureCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
-	@IBOutlet weak var productImageView: KImageView!
+	@IBOutlet weak var productImageView: AspectRatioImageView!
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
