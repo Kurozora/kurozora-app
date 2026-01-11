@@ -329,14 +329,37 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable 
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
+			guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
+			self.prepareUpNextRefresh(indexPath)
+			await self.fetchEpisodes()
+		}
+	}
 
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) {
-				var newSnapshot = self.dataSource.snapshot()
-				newSnapshot.reloadItems([selectedEpisode])
-				self.dataSource.apply(newSnapshot)
-			}
+	/// Prepares for the Up Next list refresh by removing already watched episodes.
+	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
+		self.cache.removeValue(forKey: indexPath)
+	}
+
+	fileprivate func fetchEpisodes() async {
+		guard
+			let upNextCategory = self.upNextCategory,
+			let index = self.exploreCategories.firstIndex(of: upNextCategory)
+		else { return }
+		let exploreCategoryIdentity = ExploreCategoryIdentity(id: upNextCategory.id)
+
+		do {
+			let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, limit: 10).value
+
+			// Save next page url and append new data
+			guard let episodeResponse = upNextResponse.data.first(where: { exploreCategory in
+				exploreCategory.relationships.episodes != nil
+			}) else { return }
+
+			self.exploreCategories[index] = episodeResponse
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
