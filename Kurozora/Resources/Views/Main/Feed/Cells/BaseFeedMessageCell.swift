@@ -6,9 +6,9 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
 import LinkPresentation
+import UIKit
 
 protocol BaseFeedMessageCellDelegate: AnyObject {
 	// MARK: Feed Message Base
@@ -17,6 +17,7 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didLoadGIF sender: AnyObject)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
@@ -79,9 +80,6 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure heart status for feed message.
 		self.updateHeartStatus(for: feedMessage)
-
-		// Configure stack view
-		self.richLinkStackView.distribution = .fillProportionally
 
 		// Configure status image
 		self.statusImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
@@ -172,6 +170,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
 		if let gifURL = metadata.url, gifURL.isImageURL {
 			let gifView = GIFView(url: gifURL, in: self.richLinkStackView)
+			gifView.delegate = self
 			self.richLinkStackView.addArrangedSubview(gifView)
 		} else {
 			let linkView = KLinkView(metadata: metadata)
@@ -218,7 +217,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure warning transcript
-		if isNSFW && isSpoiler {
+		if isNSFW, isSpoiler {
 			self.warningTranscriptLabel?.text = "This message is NSFW and contains spoilers - tap to view"
 		} else if isNSFW {
 			self.warningTranscriptLabel?.text = "This message is NSFW - tap to view"
@@ -330,5 +329,15 @@ extension BaseFeedMessageCell: UITextViewDelegate {
 extension BaseFeedMessageCell: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) async {
 		await self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: button, for: profileBadge)
+	}
+}
+
+// MARK: - GIFViewDelegate
+extension BaseFeedMessageCell: GIFViewDelegate {
+	func gifViewDidLoadGIF(_ gifView: GIFView) {
+		self.richLinkStackView.setNeedsLayout()
+		self.richLinkStackView.layoutIfNeeded()
+
+		self.delegate?.baseFeedMessageCell(self, didLoadGIF: gifView)
 	}
 }

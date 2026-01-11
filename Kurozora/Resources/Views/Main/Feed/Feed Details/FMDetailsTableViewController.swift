@@ -366,6 +366,11 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didLoadGIF sender: AnyObject) {
+		self.tableView.beginUpdates()
+		self.tableView.endUpdates()
+	}
+
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
 		self.feedMessage.relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 	}

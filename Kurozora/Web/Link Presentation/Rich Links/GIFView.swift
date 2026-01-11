@@ -8,16 +8,21 @@
 
 import UIKit
 
+protocol GIFViewDelegate: AnyObject {
+	func gifViewDidLoadGIF(_ gifView: GIFView)
+}
+
 class GIFView: UIView {
 	// MARK: - Properties
+	weak var delegate: GIFViewDelegate?
+
 	let gifURL: URL
 	private let _superview: UIView
 	var imageViewHeightConstraint: NSLayoutConstraint!
-	var aspectRatio: CGFloat = 0.0
 
 	// MARK: - Views
-	let gifImageView: UIImageView = {
-		let imageView = UIImageView()
+	let gifImageView: AspectRatioImageView = {
+		let imageView = AspectRatioImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFill
 		imageView.layerCornerRadius = 10.0
@@ -33,6 +38,7 @@ class GIFView: UIView {
 		self.configureGIF()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) is not supported. Use init(url: URL) instead.")
 	}
@@ -43,12 +49,8 @@ class GIFView: UIView {
 			guard let self = self else { return }
 
 			switch result {
-			case .success(let value):
-				// Update height constraint based on image aspect ratio
-				let image = value.image
-				self.aspectRatio = image.size.height / image.size.width
-
-				self.sizeToFit(self._superview.frame.size)
+			case .success:
+				self.delegate?.gifViewDidLoadGIF(self)
 			case .failure(let error):
 				print("Failed to load image: \(error)")
 			}
@@ -62,18 +64,9 @@ class GIFView: UIView {
 		self.gifImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
 		self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 
-		// Height constraint
-		self.imageViewHeightConstraint = self.gifImageView.heightAnchor.constraint(equalToConstant: 0.0)
-		self.imageViewHeightConstraint.isActive = true
-
 		// Top and bottom constraints are optional depending on the usage within the superview
 		// Adjust as needed
 		self.gifImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
 		self.gifImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-	}
-
-	func sizeToFit(_ size: CGSize) {
-		self.imageViewHeightConstraint.constant = size.width * self.aspectRatio
-		self.setNeedsUpdateConstraints()
 	}
 }

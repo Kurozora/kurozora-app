@@ -375,6 +375,11 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didLoadGIF sender: AnyObject) {
+		self.tableView.beginUpdates()
+		self.tableView.endUpdates()
+	}
+
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.row].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
