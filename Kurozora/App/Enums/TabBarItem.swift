@@ -135,7 +135,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .home:
 			return HomeCollectionViewController()
 		case .schedule:
-			return ScheduleCollectionViewController.instantiate()
+			return ScheduleCollectionViewController()
 		case .library:
 			return LibraryViewController.instantiate()
 		case .feed:
@@ -143,7 +143,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .notifications:
 			return NotificationsTableViewController.instantiate()
 		case .search:
-			return SearchResultsCollectionViewController.instantiate()
+			return SearchResultsCollectionViewController()
 		case .settings:
 			return SettingsSplitViewController.instantiate()
 		}

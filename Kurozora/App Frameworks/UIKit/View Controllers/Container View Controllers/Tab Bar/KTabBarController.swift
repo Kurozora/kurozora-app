@@ -167,7 +167,7 @@ class KTabBarController: UITabBarController {
 	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
 	@objc private func showAccountSwitcher(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		if UIApplication.topViewController as? SwitchAccountsTableViewController == nil {
-			let switchAccountsTableViewController = SwitchAccountsTableViewController.instantiate()
+			let switchAccountsTableViewController = SwitchAccountsTableViewController()
 			let kNavigationController = KNavigationController(rootViewController: switchAccountsTableViewController)
 			kNavigationController.sheetPresentationController?.detents = [.medium()]
 			kNavigationController.sheetPresentationController?.selectedDetentIdentifier = .medium

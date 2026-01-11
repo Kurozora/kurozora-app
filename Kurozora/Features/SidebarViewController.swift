@@ -27,7 +27,7 @@ class SidebarViewController: KCollectionViewController {
 	}
 
 	lazy var kSearchController: KSearchController = KSearchController()
-	lazy var searchResultsCollectionViewController: SearchResultsCollectionViewController = SearchResultsCollectionViewController.instantiate()
+	lazy var searchResultsCollectionViewController: SearchResultsCollectionViewController = SearchResultsCollectionViewController()
 	var listConfiguration: UICollectionLayoutListConfiguration!
 
 	private var selectedItem: TabBarItem?
@@ -37,11 +37,6 @@ class SidebarViewController: KCollectionViewController {
 	}
 
 	private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>!
-
-	// MARK: - Initializers
-	convenience init() {
-		self.init(collectionViewLayout: UICollectionViewLayout())
-	}
 
 	// MARK: - View
 	override func themeWillReload() {

@@ -135,7 +135,7 @@ extension WorkflowController {
 	///
 	///	- Parameter viewController: The view controller on which the subscription view is presented.
 	func presentSubscribeView(on viewController: UIViewController? = nil) {
-		let subscriptionCollectionViewController = SubscriptionCollectionViewController.instantiate()
+		let subscriptionCollectionViewController = SubscriptionCollectionViewController()
 		let kNavigationController = KNavigationController(rootViewController: subscriptionCollectionViewController)
 		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.present(kNavigationController, animated: true)
@@ -145,7 +145,7 @@ extension WorkflowController {
 	///
 	///	- Parameter viewController: The view controller on which the Tip Jar view is presented .
 	func presentTipJarView(on viewController: UIViewController? = nil) {
-		let tipJarCollectionViewController = TipJarCollectionViewController.instantiate()
+		let tipJarCollectionViewController = TipJarCollectionViewController()
 		let kNavigationController = KNavigationController(rootViewController: tipJarCollectionViewController)
 		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.present(kNavigationController, animated: true)

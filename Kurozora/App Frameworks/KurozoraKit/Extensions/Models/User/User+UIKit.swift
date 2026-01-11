@@ -204,7 +204,7 @@ extension User {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - includeUser: A boolean value indicating whether to pass the user to `FavoritesCollectionViewController`.
 	func openFavorites(on viewController: UIViewController? = UIApplication.topViewController, includeUser: Bool) {
-		let favoritesCollectionViewController = FavoritesCollectionViewController.instantiate()
+		let favoritesCollectionViewController = FavoritesCollectionViewController()
 		if includeUser {
 			favoritesCollectionViewController.user = self
 		}
@@ -217,7 +217,7 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
-		let remindersCollectionViewController = RemindersCollectionViewController.instantiate()
+		let remindersCollectionViewController = RemindersCollectionViewController()
 		viewController?.show(remindersCollectionViewController, sender: nil)
 	}
 

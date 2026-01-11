@@ -198,7 +198,7 @@ extension AppDelegate {
 
 	/// User chose "Upgrade to Kurozora+..." from the Account menu.
 	@objc func handleUpgradeToKurozoraPlus(_ sender: AnyObject) {
-		let subscriptionCollectionViewController = SubscriptionCollectionViewController.instantiate()
+		let subscriptionCollectionViewController = SubscriptionCollectionViewController()
 		let kNavigationController = KNavigationController(rootViewController: subscriptionCollectionViewController)
 		kNavigationController.navigationItem.leftBarButtonItem = nil
 		UIApplication.topViewController?.show(kNavigationController, sender: nil)
@@ -213,7 +213,7 @@ extension AppDelegate {
 
 	/// User chose "Redeem" from the Account menu.
 	@objc func handleRedeem(_ sender: AnyObject) {
-		let redeemTableViewController = RedeemTableViewController.instantiate()
+		let redeemTableViewController = RedeemTableViewController()
 		let kNavigationController = KNavigationController(rootViewController: redeemTableViewController)
 		kNavigationController.navigationItem.leftBarButtonItem = nil
 		UIApplication.topViewController?.show(kNavigationController, sender: nil)
@@ -225,7 +225,7 @@ extension AppDelegate {
 			let signedIn = await WorkflowController.shared.isSignedIn()
 			guard signedIn else { return }
 
-			let favoritesCollectionViewController = FavoritesCollectionViewController.instantiate()
+			let favoritesCollectionViewController = FavoritesCollectionViewController()
 			UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
 		}
 	}
