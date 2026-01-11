@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="pgp-ja-Cac" customClass="LibraryStatisticsCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="62"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JSR-2W-1ka">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="62"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcI-fn-XB6" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="16" y="0.0" width="342" height="33.666666666666664"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33.666666666666664" id="7UH-3H-Tqz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69 TV · 20 Movie · 12 OVA/ONA/Specials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqV-Of-cd0" userLabel="Subtitle Label" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="16" y="41.666666666666664" width="342" height="20.333333333333336"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PcI-fn-XB6" firstAttribute="leading" secondItem="jqV-Of-cd0" secondAttribute="leading" id="Atn-Gy-ijj"/>
+                    <constraint firstItem="PcI-fn-XB6" firstAttribute="top" secondItem="JSR-2W-1ka" secondAttribute="top" id="NGA-fU-Ga6"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="PcI-fn-XB6" secondAttribute="trailing" id="P3v-bF-tla"/>
+                    <constraint firstAttribute="bottom" secondItem="jqV-Of-cd0" secondAttribute="bottom" id="bPq-X5-SeM"/>
+                    <constraint firstItem="PcI-fn-XB6" firstAttribute="leading" secondItem="JSR-2W-1ka" secondAttribute="leadingMargin" id="kbG-4b-f09"/>
+                    <constraint firstItem="jqV-Of-cd0" firstAttribute="top" secondItem="PcI-fn-XB6" secondAttribute="bottom" constant="8" symbolic="YES" id="nrw-tS-Yzg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jqV-Of-cd0" secondAttribute="trailing" id="uOB-6F-ZkZ"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="340" height="62"/>
+            <connections>
+                <outlet property="primaryLabel" destination="PcI-fn-XB6" id="cY3-rV-gsL"/>
+                <outlet property="secondaryLabel" destination="jqV-Of-cd0" id="04R-GD-4Am"/>
+            </connections>
+            <point key="canvasLocation" x="109.9236641221374" y="153.52112676056339"/>
+        </collectionViewCell>
+    </objects>
+</document>
