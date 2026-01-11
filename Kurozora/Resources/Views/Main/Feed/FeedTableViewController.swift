@@ -26,20 +26,13 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
-	var feedMessages: [FeedMessage] = [] {
-		didSet {
-			self.tableView.reloadData {
-				self._prefersActivityIndicatorHidden = true
-				self.toggleEmptyDataView()
-			}
+	var feedMessages: [FeedMessage] = []
 
-			// Reset refresh controller title
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
-			#endif
-		}
-	}
+	/// The next page url of the pagination.
 	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -174,15 +167,35 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
+	func endFetch() {
+		self.tableView.reloadData {
+			self.isRequestInProgress = false
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
+		#endif
+	}
+
 	/// Fetch feed posts for the current section.
 	@MainActor
 	func fetchFeedMessages() async {
+		guard !self.isRequestInProgress else {
+			return
+		}
+
+		// Set request in progress
+		self.isRequestInProgress = true
+
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
 		#endif
 
 		do {
-			let feedMessageResponse = try await KService.getFeedExplore(next: self.nextPageURL).value
+			let feedMessageResponse = try await KService.getFeedExplore(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -196,9 +209,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 			print(error.localizedDescription)
 		}
 
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
+		self.endFetch()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

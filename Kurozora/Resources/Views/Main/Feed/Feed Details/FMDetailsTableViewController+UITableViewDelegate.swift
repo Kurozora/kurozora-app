@@ -19,7 +19,13 @@ extension FMDetailsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.row == self.feedMessageReplies.count - 20 && self.nextPageURL != nil {
+		let feedMessageReplies = self.feedMessageReplies.count - 1
+		var itemsCount = feedMessageReplies / 4 / 2
+		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+		itemsCount = feedMessageReplies - itemsCount
+		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+		if indexPath.item >= itemsCount, self.nextPageURL != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchFeedReplies()

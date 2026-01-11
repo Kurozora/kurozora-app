@@ -34,10 +34,15 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 
 	// Reply variables
 	var feedMessageReplies: [FeedMessage] = []
-	var nextPageURL: String?
 
 	// Delegates
 	weak var fmDetailsTableViewControllerDelegate: FMDetailsTableViewControllerDelegate?
+
+	/// The next page url of the pagination.
+	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -169,6 +174,19 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 		}
 	}
 
+	func endFetch() {
+		self.tableView.reloadData {
+			self.isRequestInProgress = false
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
+		#endif
+	}
+
 	/// Fetch feed message details.
 	func fetchDetails() async {
 		#if !targetEnvironment(macCatalyst)
@@ -194,7 +212,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	func fetchFeedReplies() async {
 		do {
             let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
-			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL).value
+			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -208,15 +226,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 			print(error.localizedDescription)
 		}
 
-		self.tableView.reloadData {
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-		}
-
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
-		#endif
+		self.endFetch()
 	}
 
 	// MARK: - Segue

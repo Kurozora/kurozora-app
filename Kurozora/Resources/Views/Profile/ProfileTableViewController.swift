@@ -68,19 +68,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
-	var feedMessages: [FeedMessage] = [] {
-		didSet {
-			self.tableView.reloadData {
-				self._prefersActivityIndicatorHidden = true
-				self.toggleEmptyDataView()
-			}
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
-			#endif
-		}
-	}
-	var nextPageURL: String?
+	var feedMessages: [FeedMessage] = []
 
 	// Styling
 	var countValueAttributes: [NSAttributedString.Key: Any] {
@@ -102,6 +90,12 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 			NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2).bold
 		]
 	}
+
+	/// The next page url of the pagination.
+	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -284,13 +278,34 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		await self.fetchFeedMessages()
 	}
 
+	func endFetch() {
+		self.tableView.reloadData {
+			self.isRequestInProgress = false
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		#endif
+	}
+
 	/// Fetches posts for the user whose page is being viewed.
 	@MainActor
 	func fetchFeedMessages() async {
-		guard let userIdentity = self.userIdentity else { return }
+		guard
+			!self.isRequestInProgress,
+			let userIdentity = self.userIdentity
+		else {
+			return
+		}
+
+		// Set request in progress
+		self.isRequestInProgress = true
 
 		do {
-			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL).value
+			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -304,9 +319,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 			print(error.localizedDescription)
 		}
 
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
+		self.endFetch()
 	}
 
 	fileprivate func configureCountButtons() {

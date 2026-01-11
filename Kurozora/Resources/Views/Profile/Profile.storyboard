@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6QS-Km-l5h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6QS-Km-l5h">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -16,7 +17,6 @@
                 <navigationController storyboardIdentifier="ProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6QS-Km-l5h" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="ecg-ae-q8W">
-                        <rect key="frame" x="0.0" y="100" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="mIE-AI-80U"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,42 +29,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="f47-P0-fnG" kind="relationship" relationship="rootViewController" id="sjj-d0-5cJ"/>
+                        <segue destination="zlF-Vo-yv3" kind="relationship" relationship="rootViewController" id="pb3-YC-ZA7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yYZ-S4-CRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-631" y="-1112"/>
-        </scene>
-        <!--Users List Collection View Controller-->
-        <scene sceneID="Tcq-wv-cZr">
-            <objects>
-                <collectionViewController storyboardIdentifier="UsersListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f47-P0-fnG" customClass="UsersListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="f9F-KC-MSh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cbg-zl-RH2">
-                            <size key="itemSize" width="371" height="38"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
-                        <connections>
-                            <outlet property="dataSource" destination="f47-P0-fnG" id="bZI-YI-vOU"/>
-                            <outlet property="delegate" destination="f47-P0-fnG" id="PcP-5D-EtM"/>
-                            <outlet property="dragDelegate" destination="f47-P0-fnG" id="Fbd-je-1lJ"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="68w-K2-Fam"/>
-                    <connections>
-                        <segue destination="zlF-Vo-yv3" kind="show" identifier="userDetailsSegue" id="Umh-jV-v1e"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eFB-Vz-QNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="176.80000000000001" y="-1112.0689655172414"/>
+            <point key="canvasLocation" x="177" y="-1112"/>
         </scene>
         <!--Profile-->
         <scene sceneID="oXQ-6R-gF7">
@@ -283,12 +253,6 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
-                                                    <connections>
-                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="followingSegue" id="0X0-XB-akm">
-                                                            <segue key="commit" inheritsFrom="parent" id="6vK-T2-he1"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="Ogs-LM-dvT"/>
-                                                        </segue>
-                                                    </connections>
                                                 </button>
                                                 <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggb-4z-Awv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
@@ -317,12 +281,6 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
-                                                    <connections>
-                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="followersSegue" id="Tep-0Z-l4o">
-                                                            <segue key="commit" inheritsFrom="parent" id="iR8-zv-nqG"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="cAC-je-wqd"/>
-                                                        </segue>
-                                                    </connections>
                                                 </button>
                                                 <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
@@ -351,12 +309,6 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
-                                                    <connections>
-                                                        <segue destination="r3o-1j-zLU" kind="show" identifier="reviewsSegue" id="bKV-NR-VeY">
-                                                            <segue key="commit" inheritsFrom="parent" id="ww5-qz-lQA"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="HnS-qO-1KM"/>
-                                                        </segue>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -438,21 +390,12 @@
                         <outlet property="reviewsButton" destination="Ldj-y1-nlK" id="MUc-mx-6u2"/>
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="usernameLabel" destination="Q1N-a3-7LT" id="7mj-ic-6jh"/>
-                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="favoritesSegue" id="q0e-Li-wfz"/>
                         <segue destination="t9u-UF-w8N" kind="show" identifier="feedMessageDetailsSegue" id="xgQ-g1-FoH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFh-8K-gm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1112.0689655172414"/>
-        </scene>
-        <!--FavoritesCollectionViewController-->
-        <scene sceneID="dSu-ot-U5F">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1609" y="-1237"/>
         </scene>
         <!--FMDetailsTableViewController-->
         <scene sceneID="l48-2t-gRR">
@@ -473,26 +416,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1609" y="-1149"/>
-        </scene>
-        <!--UsersListCollectionViewController-->
-        <scene sceneID="WB3-oB-wNl">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="UsersListCollectionViewController" id="fr7-NV-7bH" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="50b-ma-42I"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vZf-gO-OAw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1610" y="-1097"/>
-        </scene>
-        <!--ReviewsListCollectionViewController-->
-        <scene sceneID="gfK-1p-44K">
-            <objects>
-                <viewControllerPlaceholder storyboardName="UserReviews" referencedIdentifier="ReviewsListCollectionViewController" id="r3o-1j-zLU" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="CNc-ao-5WP"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gVV-52-t45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1622" y="-1038"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5SJ-je-yVh">
@@ -533,7 +456,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFp-dv-JTs">
-                                <rect key="frame" x="0.0" y="70" width="375" height="658"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="675"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Tt-cT-fOx">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="568"/>
@@ -855,8 +778,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bKV-NR-VeY"/>
-        <segue reference="Tep-0Z-l4o"/>
         <segue reference="qIF-9v-juK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
