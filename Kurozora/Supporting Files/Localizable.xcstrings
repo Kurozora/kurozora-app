@@ -55,6 +55,12 @@
     "Browse" : {
       "comment" : "The string for the word 'browse'."
     },
+    "Browse Genres" : {
+      "comment" : "The string for the word 'browse genres'."
+    },
+    "Browse Themes" : {
+      "comment" : "The string for the word 'browse themes'."
+    },
     "Browser" : {
       "comment" : "The string for the word 'browser'."
     },
@@ -147,6 +153,9 @@
     },
     "Feed" : {
       "comment" : "The string for the word 'feed'."
+    },
+    "Filter" : {
+      "comment" : "The string for the word 'filter'."
     },
     "Filters" : {
       "comment" : "The string for the word 'filters'."
@@ -266,11 +275,20 @@
     "Milestones" : {
       "comment" : "The string for the word 'Milestones'."
     },
+    "More" : {
+      "comment" : "The string for the word 'more'."
+    },
     "More by" : {
       "comment" : "The string for the word 'more by'."
     },
     "Motion" : {
       "comment" : "The string for the word 'motion'."
+    },
+    "My Favorites" : {
+      "comment" : "The string for the word 'My Favorites'"
+    },
+    "My Reminders" : {
+      "comment" : "The string for the word 'My Reminders'"
     },
     "Network Unavailable" : {
       "comment" : "The string for the no signal warning title."
@@ -385,6 +403,9 @@
     },
     "Reset" : {
       "comment" : "The string for the word 'reset'."
+    },
+    "Reviews" : {
+      "comment" : "The string for the word 'reviews'."
     },
     "Schedule" : {
       "comment" : "The string for the word 'schedule'."

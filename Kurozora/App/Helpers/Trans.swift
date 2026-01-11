@@ -377,6 +377,50 @@ struct Trans {
 											table: "Authentication",
 											comment: "The string for authenticating after 5 minutes.")
 
+	// MARK: - Episodes
+	/// The string for the 'Up Next' view title.
+	///
+	/// - Tag: Trans-upNext
+	static let upNext: String = String(localized: "Up Next",
+									   table: "Episodes",
+									   comment: "The string for the 'Up Next' view title.")
+	/// The string for the 'Go To' bar button item.
+	///
+	/// - Tag: Trans-goTo
+	static let goTo: String = String(localized: "Go To",
+									 table: "Episodes",
+									 comment: "The string for the 'Go To' context menu option.")
+	/// The string for the 'Go to first episode' context menu option.
+	///
+	/// - Tag: Trans-goToFirstEpisode
+	static let goToFirstEpisode: String = String(localized: "Go to first episode",
+												 table: "Episodes",
+												 comment: "The string for the 'Go to first episode' context menu option.")
+	/// The string for the 'Go to last episode' context menu option.
+	///
+	/// - Tag: Trans-goToLastEpisode
+	static let goToLastEpisode: String = String(localized: "Go to last episode",
+												table: "Episodes",
+												comment: "The string for the 'Go to last episode' context menu option.")
+	/// The string for the 'Go to last watched episode' context menu option.
+	///
+	/// - Tag: Trans-goToLastWatchedEpisode
+	static let goToLastWatchedEpisode: String = String(localized: "Go to last watched episode",
+													   table: "Episodes",
+													   comment: "The string for the 'Go to last watched episode' context menu option.")
+	/// The string for the 'Show fillers' context menu option.
+	///
+	/// - Tag: Trans-showFillers
+	static let showFillers: String = String(localized: "Show fillers",
+											table: "Episodes",
+											comment: "The string for the 'Show fillers' context menu option.")
+	/// The string for the 'Hide fillers' context menu option.
+	///
+	/// - Tag: Trans-hideFillers
+	static let hideFillers: String = String(localized: "Hide fillers",
+											table: "Episodes",
+											comment: "The string for the 'Hide fillers' context menu option.")
+
 	// MARK: - Feed
 	/// The placeholder string for creating a new feed message.
 	///
@@ -742,6 +786,18 @@ struct Trans {
 										   comment: "The string for 'this device'.")
 
 	// MARK: - Settings
+	/// The title string or the 'App Icon' settings.
+	///
+	/// - Tag: Trans-appIcon
+	static let appIcon: String = String(localized: "App Icon",
+										table: "Settings",
+										comment: "The title string or the 'App Icon' settings.")
+	/// The title string or the 'Theme Store' settings.
+	///
+	/// - Tag: Trans-themeStore
+	static let themeStore: String = String(localized: "Theme Store",
+										   table: "Settings",
+										   comment: "The title string or the 'Theme Store Grouping' settings.")
 	/// The title string or the 'Notification Grouping' settings.
 	///
 	/// - Tag: Trans-notificationGrouping
@@ -993,6 +1049,16 @@ struct Trans {
 	/// - Tag: Trans-browse
 	static let browse: String = String(localized: "Browse",
 									   comment: "The string for the word 'browse'.")
+	/// The string for the word 'browse genres'.
+	///
+	/// - Tag: Trans-browseGenres
+	static let browseGenres: String = String(localized: "Browse Genres",
+											 comment: "The string for the word 'browse genres'.")
+	/// The string for the word 'browse themes'.
+	///
+	/// - Tag: Trans-browseThemes
+	static let browseThemes: String = String(localized: "Browse Themes",
+											 comment: "The string for the word 'browse themes'.")
 	/// The string for the word 'header'.
 	///
 	/// - Tag: Trans-header
@@ -1048,6 +1114,11 @@ struct Trans {
 	/// - Tag: Trans-people
 	static let people: String = String(localized: "People",
 									   comment: "The string for the word 'people'.")
+	/// The string for the word 'more'.
+	///
+	/// - Tag: Trans-more
+	static let more: String = String(localized: "More",
+									 comment: "The string for the word 'more'.")
 	/// The string for the word 'debut'.
 	///
 	/// - Tag: Trans-debut
@@ -1422,11 +1493,21 @@ struct Trans {
 	/// - Tag: Trans-feed
 	static let feed: String = String(localized: "Feed",
 									 comment: "The string for the word 'feed'.")
+	/// The string for the word 'reviews'.
+	///
+	/// - Tag: Trans-reviews
+	static let reviews: String = String(localized: "Reviews",
+										comment: "The string for the word 'reviews'.")
 	/// The string for the word 'search'.
 	///
 	/// - Tag: Trans-search
 	static let search: String = String(localized: "Search",
 									   comment: "The string for the word 'search'.")
+	/// The string for the word 'filter'.
+	///
+	/// - Tag: Trans-filter
+	static let filter: String = String(localized: "Filter",
+									   comment: "The string for the word 'filter'.")
 	/// The string for the word 'filters'.
 	///
 	/// - Tag: Trans-filters
@@ -1682,16 +1763,26 @@ struct Trans {
 	/// - Tag: Trans-favorites
 	static let favorites: String = String(localized: "Favorites",
 										  comment: "The string for the word 'Favorites'")
+	/// The string for the word 'My Favorites'.
+	///
+	/// - Tag: Trans-myFavorites
+	static let myFavorites: String = String(localized: "My Favorites",
+											comment: "The string for the word 'My Favorites'")
 	/// The string for the word 'Reminders'.
 	///
 	/// - Tag: Trans-reminders
 	static let reminders: String = String(localized: "Reminders",
 										  comment: "The string for the word 'Reminders'")
-	/// The string for the word 'remindMe'.
+	/// The string for the word 'Remind Me'.
 	///
 	/// - Tag: Trans-remindMe
 	static let remindMe: String = String(localized: "Remind Me",
 										 comment: "The string for the word 'Remind Me'")
+	/// The string for the word 'My Reminders'.
+	///
+	/// - Tag: Trans-myReminders
+	static let myReminders: String = String(localized: "My Reminders",
+											comment: "The string for the word 'My Reminders'")
 
 	// MARK: - Ratings
 	/// The string for the word 'ratings'.
