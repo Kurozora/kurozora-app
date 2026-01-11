@@ -14,7 +14,7 @@ import UIKit
 /// - Applying a border width and border color.
 /// - Presenting a default banner image if none is specified.
 /// - Rounding the image's corners.
-class BannerImageView: RoundedRectangleImageView {
+final class BannerImageView: RoundedRectangleImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

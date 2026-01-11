@@ -14,7 +14,7 @@ import UIKit
 /// - Applying a border width and border color.
 /// - Presenting a default album image if none is specified.
 /// - Rounding the image's corners.
-class AlbumImageView: RoundedRectangleImageView {
+final class AlbumImageView: RoundedRectangleImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

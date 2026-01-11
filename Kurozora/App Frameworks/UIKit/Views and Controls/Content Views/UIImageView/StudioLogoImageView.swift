@@ -14,7 +14,7 @@ import UIKit
 /// - Applying a border width and border color.
 /// - Presenting a default studio logo image if none is specified.
 /// - Rounding the image's corners.
-class StudioLogoImageView: CircularImageView {
+final class StudioLogoImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

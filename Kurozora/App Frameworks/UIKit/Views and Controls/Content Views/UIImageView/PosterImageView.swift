@@ -14,7 +14,7 @@ import UIKit
 /// - Applying a border width and border color.
 /// - Presenting a default poster image if none is specified.
 /// - Rounding the image's corners.
-class PosterImageView: RoundedRectangleImageView {
+final class PosterImageView: RoundedRectangleImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

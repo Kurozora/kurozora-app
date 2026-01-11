@@ -14,7 +14,7 @@ import UIKit
 /// - Applying a border width and border color.
 /// - Presenting a default person image if none is specified.
 /// - Rounding the image's corners.
-class PersonImageView: CircularImageView {
+final class PersonImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
