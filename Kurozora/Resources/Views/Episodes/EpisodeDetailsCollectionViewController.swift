@@ -402,7 +402,7 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 // MARK: - TextViewCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		let synopsisViewController = SynopsisViewController.instantiate()
+		let synopsisViewController = SynopsisViewController()
 		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
 		synopsisViewController.synopsis = self.episode.attributes.synopsis
 

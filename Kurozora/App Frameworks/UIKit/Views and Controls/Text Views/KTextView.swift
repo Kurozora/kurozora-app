@@ -117,6 +117,7 @@ private extension KTextView {
 
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
+		self.font = .preferredFont(forTextStyle: .body)
 	}
 
 	func configurePlaceholderLabel() {

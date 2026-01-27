@@ -9,7 +9,7 @@
 import UIKit
 
 class LegalViewController: KViewController {
-	// MARK: - IBOutlets
+	// MARK: - Views
 	private var doneBarButtonItem: UIBarButtonItem!
 	private var navigationTitleView: UIView!
 	private var navigationTitleLabel: KLabel = {
@@ -18,9 +18,9 @@ class LegalViewController: KViewController {
 		return label
 	}()
 
+	private var scrollView: UIScrollView!
 	private var titleLabel: KLabel!
 	private var textView: KTextView!
-	private var scrollView: UIScrollView!
 
 	// MARK: - View
 	override func viewDidLoad() {

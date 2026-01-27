@@ -256,7 +256,7 @@ extension SongDetailsCollectionViewController {
 // MARK: - TextViewCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		let synopsisViewController = SynopsisViewController.instantiate()
+		let synopsisViewController = SynopsisViewController()
 		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
 		synopsisViewController.synopsis = self.song.attributes.originalLyrics
 
