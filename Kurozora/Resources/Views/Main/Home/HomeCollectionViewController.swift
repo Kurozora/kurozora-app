@@ -403,7 +403,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable 
 		case .reCapSegue: return ReCapCollectionViewController()
 		case .redeemSegue: return KNavigationController(rootViewController: RedeemTableViewController())
 		case .subscriptionSegue: return KNavigationController(rootViewController: SubscriptionCollectionViewController())
-		case .legalSegue: return LegalViewController()
+		case .legalSegue: return KNavigationController(rootViewController: LegalViewController())
 		}
 	}
 

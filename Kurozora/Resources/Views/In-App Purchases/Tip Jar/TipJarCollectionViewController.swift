@@ -160,7 +160,7 @@ extension TipJarCollectionViewController: PurchaseFooterCollectionViewCellDelega
 	}
 
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) async {
-		let legalViewController = LegalViewController.instantiate()
+		let legalViewController = LegalViewController()
 		let kNavigationViewController = KNavigationController(rootViewController: legalViewController)
 		self.present(kNavigationViewController, animated: true)
 	}

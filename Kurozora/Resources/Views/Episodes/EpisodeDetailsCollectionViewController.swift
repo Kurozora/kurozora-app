@@ -25,7 +25,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	// MARK: - Views
 	private var moreBarButtonItem: UIBarButtonItem!
 	private var navigationTitleView: UIView!
-	private var navigationTitleLabel: KLabel! = {
+	private var navigationTitleLabel: KLabel = {
 		let label = KLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.alpha = 0
@@ -55,14 +55,14 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 	var indexPath = IndexPath()
 
-	// Review properties.
+	// Review
 	var reviews: [Review] = []
 
-	// Cast properties.
+	// Cast
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = []
 
-	// Suggested episodes properties.
+	// Suggested episodes
 	var suggestedEpisodes: [Episode] = []
 
 	/// The first cell's size.

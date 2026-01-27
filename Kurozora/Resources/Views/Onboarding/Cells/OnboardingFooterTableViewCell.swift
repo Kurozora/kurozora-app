@@ -15,7 +15,7 @@ protocol OnboardingFooterTableViewCellDelegate: AnyObject {
 
 extension OnboardingFooterTableViewCellDelegate where Self: UIViewController {
 	func onboardingFooterTableViewCell(_ cell: OnboardingFooterTableViewCell, didPressLegalButton sender: UIButton) {
-		let legalViewController = LegalViewController.instantiate()
+		let legalViewController = LegalViewController()
 		let kNavigationController = KNavigationController(rootViewController: legalViewController)
 		self.present(kNavigationController, animated: true)
 	}

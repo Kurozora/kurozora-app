@@ -302,6 +302,12 @@ struct Trans {
 											 comment: "The footer string for the Tip Jar view.")
 
 	// MARK: - Privacy Policy
+	/// The string for the phrase 'Kurozora & Privacy'.
+	///
+	/// - Tag: Trans-kurozoraAndPrivacy
+	static let kurozoraAndPrivacy: String = String(localized: "Kurozora & Privacy",
+												   table: "Legal",
+												   comment: "The string for the phrase 'Kurozora & Privacy'.")
 	/// The string for the word terms of use.
 	///
 	/// - Tag: Trans-termsOfUse
