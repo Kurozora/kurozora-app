@@ -254,11 +254,26 @@
     "Lyrics" : {
       "comment" : "The string for the word 'Lyrics'."
     },
+    "Mark all" : {
+      "comment" : "The string for the phrase 'Mark all'."
+    },
+    "Mark all as read" : {
+      "comment" : "The string for the phrase 'Mark all as read'."
+    },
+    "Mark all as unread" : {
+      "comment" : "The string for the phrase 'Mark all as unread'."
+    },
     "Mark All Unwatched" : {
       "comment" : "The string for the phrase 'mark all unwatched'."
     },
     "Mark All Watched" : {
       "comment" : "The string for the phrase 'mark all watched'."
+    },
+    "Mark as read" : {
+      "comment" : "The string for the phrase 'Mark as read'."
+    },
+    "Mark as unread" : {
+      "comment" : "The string for the phrase 'Mark as unread'."
     },
     "Mark as Unwatched" : {
       "comment" : "The string for the phrase 'mark as unwatched'."

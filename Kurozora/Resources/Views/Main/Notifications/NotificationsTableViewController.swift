@@ -80,6 +80,7 @@ class NotificationsTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotificationBadgeToggle), name: .KSNotificationsBadgeIsOn, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateNotifications(_:)), name: .KUNDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.removeNotification(_:)), name: .KUNDidDelete, object: nil)
 
@@ -167,7 +168,6 @@ class NotificationsTableViewController: KTableViewController {
 				}
 			})
 		]))
-		self.navigationItem.rightBarButtonItem = self.markAllBarButtonItem
 	}
 
 	/// Configures the profile bar button item.
@@ -178,7 +178,7 @@ class NotificationsTableViewController: KTableViewController {
 				await self.segueToProfile()
 			}
 		})
-		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+		self.navigationItem.rightBarButtonItem = self.profileBarButtonItem
 
 		self.configureUserDetails()
 	}
@@ -231,6 +231,7 @@ class NotificationsTableViewController: KTableViewController {
 		self.refreshControl?.endRefreshing()
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications.")
 		#endif
+		self.updateTabBarBadge()
 	}
 
 	/// Enables and disables the refresh control according to the user sign in state.
@@ -240,8 +241,17 @@ class NotificationsTableViewController: KTableViewController {
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		self.markAllBarButtonItem.isEnabled = User.isSignedIn
-		self.markAllBarButtonItem.title = User.isSignedIn ? Trans.markAll : ""
+		if User.isSignedIn {
+			self.navigationItem.rightBarButtonItems = [
+				self.profileBarButtonItem,
+				self.markAllBarButtonItem
+			]
+		} else {
+			self.navigationItem.rightBarButtonItems = [
+				self.profileBarButtonItem
+			]
+		}
+
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.isEnabled = User.isSignedIn
 		#endif
@@ -295,46 +305,35 @@ class NotificationsTableViewController: KTableViewController {
 		self.show(profileTableViewController, sender: nil)
 	}
 
-//	/// Show options for editing notifications in batch.
-//	///
-//	/// - Parameter sender: The object containing a reference to the button that initiated this action.
-//	func markAllBarButtonItemPressed() {
-//		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-//			guard let self = self else { return }
-//			// Mark all as read action
-//			let markAllAsRead = UIAlertAction(title: "Mark all as read", style: .default) { _ in
-//				Task {
-//					let readStatus = await self.updateNotification("all", withStatus: .read)
-//					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-//					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-//				}
-//			}
-//			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
-//			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//			actionSheetAlertController.addAction(markAllAsRead)
-//
-//			// Mark all as unread action
-//			let markAllAsUnread = UIAlertAction(title: "Mark all as unread", style: .default) { _ in
-//				Task {
-//					let readStatus = await self.updateNotification("all", withStatus: .unread)
-//					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-//					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-//				}
-//			}
-//			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
-//			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//			actionSheetAlertController.addAction(markAllAsUnread)
-//		}
-//
-//		// Present the controller
-//		if let popoverController = actionSheetAlertController.popoverPresentationController {
-//			popoverController.barButtonItem = self.markAllBarButtonItem
-//		}
-//
-//		if (navigationController?.visibleViewController as? UIAlertController) == nil {
-//			self.present(actionSheetAlertController, animated: true, completion: nil)
-//		}
-//	}
+	/// Updates the tab bar badge value according to the number of unread notifications.
+	func updateTabBarBadge() {
+		let unreadCount: Int
+
+		switch self.grouping {
+		case .automatic, .byType:
+			unreadCount = self.groupedNotifications.reduce(0) { partialResult, groupedNotifications in
+				partialResult + groupedNotifications.sectionNotifications.filter { $0.attributes.readStatus == .unread }.count
+			}
+		case .off:
+			unreadCount = self.userNotifications.filter { $0.attributes.readStatus == .unread }.count
+		}
+
+		if let tabBarController = self.tabBarController as? KTabBarController {
+			if unreadCount == 0 {
+				tabBarController.setBadgeValue(nil, for: .notifications)
+			} else {
+				tabBarController.setBadgeValue("\(unreadCount)", for: .notifications)
+			}
+		}
+	}
+
+	/// Handles notification badge toggle.
+	@objc func handleNotificationBadgeToggle() {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.updateTabBarBadge()
+		}
+	}
 
 	/// Update notifications status within a specific section.
 	///
@@ -381,6 +380,7 @@ class NotificationsTableViewController: KTableViewController {
 		snapshot.reconfigureItems(userNotifications)
 		self.dataSource.defaultRowAnimation = .automatic
 		self.dataSource.apply(snapshot)
+		self.updateTabBarBadge()
 	}
 }
 
@@ -444,12 +444,13 @@ extension NotificationsTableViewController {
 	@objc fileprivate func updateNotifications(_ notification: NSNotification) {
 		guard let userNotification = notification.object as? UserNotification else { return }
 
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			var newSnapshot = self.dataSource.snapshot()
 			newSnapshot.reloadItems([userNotification])
 			self.dataSource.defaultRowAnimation = .automatic
 			self.dataSource.apply(newSnapshot)
+			self.updateTabBarBadge()
 		}
 	}
 

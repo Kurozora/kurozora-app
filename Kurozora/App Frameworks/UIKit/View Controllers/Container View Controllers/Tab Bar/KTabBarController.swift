@@ -54,9 +54,6 @@ class KTabBarController: UITabBarController {
 		// Initialize views
 		self.configureTabs()
 
-		self.setupBadgeValue()
-		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
-
 		if #available(iOS 18.0, *) {
 			self.registerForTraitChanges([UITraitHorizontalSizeClass.self], action: #selector(handleHorizontalSizeClass))
 		}
@@ -182,31 +179,25 @@ class KTabBarController: UITabBarController {
 		}
 	}
 
-	/// Toggles the badge on/off on the tab bar item.
-	@objc func toggleBadge() {
-		self.setupBadgeValue()
-	}
-
 	/// Sets up the badge value on the tab bar item.
-	fileprivate func setupBadgeValue() {
-		if UserSettings.notificationsBadge, User.isSignedIn {
-			if #available(iOS 18.0, *) {
-				let tab = self.tabs.first {
-					$0.identifier == TabBarItem.notifications.rowIdentifierValue
-				}
+	func setBadgeValue(_ value: String?, for tabBarItem: TabBarItem) {
+		let badgeValue = switch tabBarItem {
+		case .home, .schedule, .library, .feed, .search, .settings:
+			value
+		case .notifications:
+			UserSettings.notificationsBadge && User.isSignedIn ? value : nil
+		}
 
-				// MARK: Implement notification badge
-				tab?.badgeValue = nil
-			} else {
-				let tab = self.tabBar.items?.first(where: { item in
-					item.tag == TabBarItem.notifications.rawValue
-				})
-
-				// MARK: Implement notification badge
-				tab?.badgeValue = nil
+		if #available(iOS 18.0, *) {
+			let tab = self.tabs.first {
+				$0.identifier == tabBarItem.rowIdentifierValue
 			}
+			tab?.badgeValue = badgeValue
 		} else {
-			self.tab?.badgeValue = nil
+			let tab = self.tabBar.items?.first(where: { item in
+				item.tag == tabBarItem.rawValue
+			})
+			tab?.badgeValue = badgeValue
 		}
 	}
 }
