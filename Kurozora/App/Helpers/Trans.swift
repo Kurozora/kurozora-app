@@ -1334,6 +1334,31 @@ struct Trans {
 	/// - Tag: Trans-markAllUnwatched
 	static let markAllUnwatched: String = String(localized: "Mark All Unwatched",
 												 comment: "The string for the phrase 'mark all unwatched'.")
+	/// The string for the phrase 'Mark all'.
+	///
+	/// - Tag: Trans-markAll
+	static let markAll: String = String(localized: "Mark all",
+										comment: "The string for the phrase 'Mark all'.")
+	/// The string for the phrase 'Mark all as read'.
+	///
+	/// - Tag: Trans-markAllAsRead
+	static let markAllAsRead: String = String(localized: "Mark all as read",
+											  comment: "The string for the phrase 'Mark all as read'.")
+	/// The string for the phrase 'Mark all as unread'.
+	///
+	/// - Tag: Trans-markAllAsUnread
+	static let markAllAsUnread: String = String(localized: "Mark all as unread",
+												comment: "The string for the phrase 'Mark all as unread'.")
+	/// The string for the phrase 'Mark as read'.
+	///
+	/// - Tag: Trans-markAsRead
+	static let markAsRead: String = String(localized: "Mark as read",
+										   comment: "The string for the phrase 'Mark as read'.")
+	/// The string for the phrase 'Mark as unread'.
+	///
+	/// - Tag: Trans-markAsUnread
+	static let markAsUnread: String = String(localized: "Mark as unread",
+											 comment: "The string for the phrase 'Mark as unread'.")
 	/// The string for the word 'next'.
 	///
 	/// - Tag: Trans-next

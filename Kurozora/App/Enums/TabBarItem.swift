@@ -141,7 +141,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .feed:
 			return FeedTableViewController.instantiate()
 		case .notifications:
-			return NotificationsTableViewController.instantiate()
+			return NotificationsTableViewController()
 		case .search:
 			return SearchResultsCollectionViewController()
 		case .settings:

@@ -6,32 +6,28 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import Foundation
+import KurozoraKit
+import UIKit
 
-class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> { }
+class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> {}
 
-class NotificationsTableViewController: KTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Notifications"
-
+class NotificationsTableViewController: KTableViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case notificationsGroupingSegue
 	}
 
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
-
-	// MARK: - IBOutlets
-	@IBOutlet weak var markAllButton: UIBarButtonItem!
+	private var profileBarButtonItem: ProfileBarButtonItem!
+	private var markAllBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int?
 	var userNotifications: [UserNotification] = [] // Grouping type: Off
 	var groupedNotifications: [GroupedNotifications] = [] // Grouping type: Automatic, ByType
-	var dataSource: NotificationDataSource! = nil
+	var dataSource: NotificationDataSource!
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -42,6 +38,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
 	}
@@ -52,8 +49,20 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
+	}
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
 	}
 
 	// MARK: - View
@@ -74,16 +83,18 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateNotifications(_:)), name: .KUNDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.removeNotification(_:)), name: .KUNDidDelete, object: nil)
 
+		self.title = Trans.notifications
+
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
 		#endif
 
+		self.configureNavigationItems()
 		self.enableRefreshControl()
 		self.enableActions()
 
 		self.configureDataSource()
-		self.configureNavigationItems()
 
 		if !self.userNotifications.isEmpty {
 			self.endFetch()
@@ -131,6 +142,34 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		}
 	}
 
+	/// The shared settings used to initialize the table view
+	private func sharedInit() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
+
+	/// Configure the mark all bar button item.
+	private func configureMarkAllBarButtonItem() {
+		self.markAllBarButtonItem = UIBarButtonItem(title: Trans.markAll, menu: UIMenu(children: [
+			UIAction(title: Trans.markAllAsRead, image: UIImage(systemName: "circlebadge"), handler: { [weak self] _ in
+				guard let self = self else { return }
+				Task {
+					let readStatus = await self.updateNotification("all", withStatus: .read)
+					let userNotifications = self.dataSource.snapshot().itemIdentifiers
+					self.updateUserNotifications(userNotifications, withStatus: readStatus)
+				}
+			}),
+			UIAction(title: Trans.markAllAsUnread, image: UIImage(systemName: "circlebadge.fill"), handler: { [weak self] _ in
+				guard let self = self else { return }
+				Task {
+					let readStatus = await self.updateNotification("all", withStatus: .unread)
+					let userNotifications = self.dataSource.snapshot().itemIdentifiers
+					self.updateUserNotifications(userNotifications, withStatus: readStatus)
+				}
+			})
+		]))
+		self.navigationItem.rightBarButtonItem = self.markAllBarButtonItem
+	}
+
 	/// Configures the profile bar button item.
 	private func configureProfileBarButtonItem() {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
@@ -146,6 +185,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 
 	/// Configures the navigation items.
 	fileprivate func configureNavigationItems() {
+		self.configureMarkAllBarButtonItem()
 		self.configureProfileBarButtonItem()
 	}
 
@@ -200,8 +240,8 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		markAllButton.isEnabled = User.isSignedIn
-		markAllButton.title = User.isSignedIn ? "Mark all" : ""
+		self.markAllBarButtonItem.isEnabled = User.isSignedIn
+		self.markAllBarButtonItem.title = User.isSignedIn ? Trans.markAll : ""
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.isEnabled = User.isSignedIn
 		#endif
@@ -255,47 +295,46 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 		self.show(profileTableViewController, sender: nil)
 	}
 
-	// MARK: - IBActions
-	/// Show options for editing notifications in batch.
-	///
-	/// - Parameter sender: The object containing a reference to the button that initiated this action.
-	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			// Mark all as read action
-			let markAllAsRead = UIAlertAction(title: "Mark all as read", style: .default) { _ in
-				Task {
-					let readStatus = await self.updateNotification("all", withStatus: .read)
-					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-				}
-			}
-			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
-			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			actionSheetAlertController.addAction(markAllAsRead)
-
-			// Mark all as unread action
-			let markAllAsUnread = UIAlertAction(title: "Mark all as unread", style: .default) { _ in
-				Task {
-					let readStatus = await self.updateNotification("all", withStatus: .unread)
-					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-				}
-			}
-			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
-			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			actionSheetAlertController.addAction(markAllAsUnread)
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		if (navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
-	}
+//	/// Show options for editing notifications in batch.
+//	///
+//	/// - Parameter sender: The object containing a reference to the button that initiated this action.
+//	func markAllBarButtonItemPressed() {
+//		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+//			guard let self = self else { return }
+//			// Mark all as read action
+//			let markAllAsRead = UIAlertAction(title: "Mark all as read", style: .default) { _ in
+//				Task {
+//					let readStatus = await self.updateNotification("all", withStatus: .read)
+//					let userNotifications = self.dataSource.snapshot().itemIdentifiers
+//					self.updateUserNotifications(userNotifications, withStatus: readStatus)
+//				}
+//			}
+//			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
+//			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//			actionSheetAlertController.addAction(markAllAsRead)
+//
+//			// Mark all as unread action
+//			let markAllAsUnread = UIAlertAction(title: "Mark all as unread", style: .default) { _ in
+//				Task {
+//					let readStatus = await self.updateNotification("all", withStatus: .unread)
+//					let userNotifications = self.dataSource.snapshot().itemIdentifiers
+//					self.updateUserNotifications(userNotifications, withStatus: readStatus)
+//				}
+//			}
+//			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
+//			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//			actionSheetAlertController.addAction(markAllAsUnread)
+//		}
+//
+//		// Present the controller
+//		if let popoverController = actionSheetAlertController.popoverPresentationController {
+//			popoverController.barButtonItem = self.markAllBarButtonItem
+//		}
+//
+//		if (navigationController?.visibleViewController as? UIAlertController) == nil {
+//			self.present(actionSheetAlertController, animated: true, completion: nil)
+//		}
+//	}
 
 	/// Update notifications status within a specific section.
 	///
@@ -307,7 +346,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 
 		// Iterate over all the rows of a section
 		let notificationIDs = userNotifications.compactMap { userNotification in
-			if userNotification.attributes.readStatus == .unread && readStatus == .unread {
+			if userNotification.attributes.readStatus == .unread, readStatus == .unread {
 				readStatus = .read
 			}
 
@@ -320,7 +359,7 @@ class NotificationsTableViewController: KTableViewController, StoryboardInstanti
 			self.updateUserNotifications(userNotifications, withStatus: readStatus)
 		}
 
-		sender.setTitle(readStatus == .unread ? "Mark as read" : "Mark as unread", for: .normal)
+		sender.setTitle(readStatus == .unread ? Trans.markAsRead : Trans.markAsUnread, for: .normal)
 	}
 
 	func updateNotification(_ notificationID: String, withStatus readStatus: ReadStatus) async -> ReadStatus {
@@ -375,12 +414,12 @@ extension NotificationsTableViewController {
 			self.groupedNotifications = groupedNotifications
 		case .byType:
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
-			let groupedNotificationsArray = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+			let groupedNotificationsArray = userNotifications.reduce(into: [String: [UserNotification]]()) { result, userNotification in
 				let userNotificationType = userNotification.attributes.type
 				let timeKey = userNotificationType.stringValue
 
 				result[timeKey, default: []].append(userNotification)
-			})
+			}
 
 			// Append the grouped elements to the grouped notifications array
 			var groupedNotifications: [GroupedNotifications] = []
