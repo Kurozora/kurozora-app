@@ -15,6 +15,9 @@ class UserSettings: UserDefaults {
 		let combined = UserDefaults.standard
 		combined.addSuite(named: "group.settings.app.kurozora.anime")
 		combined.register(defaults: [
+			UserSettingsKey.notificationsAllowed.rawValue: true,
+			UserSettingsKey.notificationsSound.rawValue: true,
+			UserSettingsKey.notificationsBadge.rawValue: true,
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
 			UserSettingsKey.hapticsAllowed.rawValue: true,
