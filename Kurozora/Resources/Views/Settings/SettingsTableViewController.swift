@@ -66,7 +66,7 @@ class SettingsTableViewController: KTableViewController {
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			self.configureTableView()
 		}
@@ -75,7 +75,7 @@ class SettingsTableViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			self.tableView.reloadData()
 		}
@@ -198,7 +198,7 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var identifier = SettingsCell.self
-		let settingsRow = self.settingsSection[indexPath.section].rowsValue[indexPath.row]
+		let settingsRow = self.settingsSection[indexPath.section].rowsValue[safe: indexPath.row]
 
 		switch settingsRow {
 		case .account:

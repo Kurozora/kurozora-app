@@ -74,7 +74,7 @@ class KTableViewController: UITableViewController, SegueHandler {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			self.configureEmptyDataView()
 		}
