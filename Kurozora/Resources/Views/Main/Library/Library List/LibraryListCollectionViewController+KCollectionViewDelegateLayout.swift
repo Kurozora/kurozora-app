@@ -14,7 +14,7 @@ extension LibraryListCollectionViewController {
 		switch self.libraryCellStyle {
 		case .compact:
 			var columnCount = Int((width / 105).rounded())
-			if columnCount < 0 {
+			if columnCount <= 0 {
 				columnCount = 3
 			} else if columnCount > 8 {
 				columnCount = 8
@@ -24,7 +24,7 @@ extension LibraryListCollectionViewController {
 			return columnCount
 		case .detailed, .list:
 			var columnCount = Int((width / 374).rounded())
-			if columnCount < 0 {
+			if columnCount <= 0 {
 				columnCount = 1
 			} else if columnCount > 5 {
 				columnCount = 5
