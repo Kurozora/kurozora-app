@@ -16,19 +16,17 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 
 	// MARK: - Views
 	var profileBarButtonItem: ProfileBarButtonItem!
+	var sortTypeBarButtonItem: UIBarButtonItem!
+	var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var toolbar: UIToolbar!
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
-	@IBOutlet weak var sortTypeBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var libraryKindBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var rightBarButtonItems: [UIBarButtonItem]?
-	var leftBarButtonItems: [UIBarButtonItem]?
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 	var user: User?
 	var viewedUser: User? {
@@ -81,6 +79,16 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	}
 
 	// MARK: - Functions
+	/// Configures the sort type bar button item.
+	private func configureSortTypeBarButtonItem () {
+		self.sortTypeBarButtonItem = UIBarButtonItem(title: Trans.sort, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
+	}
+
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+	}
+	
 	/// Configures the profile bar button item.
 	private func configureProfileBarButtonItem() {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
@@ -96,6 +104,8 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 
 	/// Configures the navigation items.
 	fileprivate func configureNavigationItems() {
+		self.configureSortTypeBarButtonItem()
+		self.configureMoreBarButtonItem()
 		self.configureProfileBarButtonItem()
 	}
 
@@ -147,27 +157,27 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		if self.viewedUser == nil {
 			self.toolbar.isHidden = true
 
-			self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
-			self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
-
 			self.navigationItem.rightBarButtonItems = nil
 			self.navigationItem.leftBarButtonItems = nil
 		} else if self.viewedUser != User.current {
 			self.toolbar.isHidden = false
 
-			self.navigationItem.rightBarButtonItems = self.navigationItem.rightBarButtonItems?.filter { barButtonItem in
-				barButtonItem != self.profileBarButtonItem
-			}
+			self.navigationItem.rightBarButtonItems = [
+				self.moreBarButtonItem
+			]
+			self.navigationItem.leftBarButtonItems = [
+				self.sortTypeBarButtonItem
+			]
 		} else {
 			self.toolbar.isHidden = false
 
-			if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
-				self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
-			}
-
-			if self.navigationItem.leftBarButtonItems == nil, self.leftBarButtonItems != nil {
-				self.navigationItem.leftBarButtonItems = self.leftBarButtonItems
-			}
+			self.navigationItem.rightBarButtonItems = [
+				self.profileBarButtonItem,
+				self.moreBarButtonItem
+			]
+			self.navigationItem.leftBarButtonItems = [
+				self.sortTypeBarButtonItem
+			]
 		}
 	}
 

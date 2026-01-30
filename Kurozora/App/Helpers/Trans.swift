@@ -1534,6 +1534,11 @@ struct Trans {
 	/// - Tag: Trans-search
 	static let search: String = String(localized: "Search",
 									   comment: "The string for the word 'search'.")
+	/// The string for the word 'sort'.
+	///
+	/// - Tag: Trans-sort
+	static let sort: String = String(localized: "Sort",
+									 comment: "The string for the word 'sort'.")
 	/// The string for the word 'filter'.
 	///
 	/// - Tag: Trans-filter

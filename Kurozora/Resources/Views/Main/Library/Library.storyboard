@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,6 +14,7 @@
                 <navigationController storyboardIdentifier="LibraryKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wj7-Sr-C4D" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Vlp-nT-bL5">
+                        <rect key="frame" x="0.0" y="88" width="414" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="n6f-yf-Nko"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -101,20 +101,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="JeV-PO-okM" secondAttribute="trailing" id="y1E-ur-s5u"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Library" leftItemsSupplementBackButton="YES" id="Aja-xv-l4D">
-                        <barButtonItem key="leftBarButtonItem" title="Filter" id="0uS-C2-wld">
-                            <imageReference key="image" image="line.3.horizontal.decrease.circle" catalog="system"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="g5C-MO-gs3"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Library" leftItemsSupplementBackButton="YES" id="Aja-xv-l4D"/>
                     <connections>
                         <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
                         <outlet property="libraryKindBarButtonItem" destination="ulg-05-9h9" id="zci-Ro-LVO"/>
                         <outlet property="libraryKindSegmentedControl" destination="YLm-jv-Iqy" id="CEV-5D-OgT"/>
-                        <outlet property="moreBarButtonItem" destination="g5C-MO-gs3" id="zha-GH-Edy"/>
                         <outlet property="scrollView" destination="tcz-X9-dwb" id="6gt-P2-2yy"/>
                         <outlet property="scrollViewHeightConstraint" destination="vcV-WQ-WIv" id="lqY-zo-25h"/>
-                        <outlet property="sortTypeBarButtonItem" destination="0uS-C2-wld" id="pgJ-HN-nHY"/>
                         <outlet property="toolbar" destination="eO3-3e-MEr" id="SlQ-4i-DCL"/>
                     </connections>
                 </viewController>
@@ -124,8 +117,4 @@
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-    <resources>
-        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
-        <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="123"/>
-    </resources>
 </document>
