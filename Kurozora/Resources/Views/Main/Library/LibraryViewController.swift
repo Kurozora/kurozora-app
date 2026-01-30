@@ -15,16 +15,17 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	static var storyboardName: String = "Library"
 
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
-	var sortTypeBarButtonItem: UIBarButtonItem!
-	var moreBarButtonItem: UIBarButtonItem!
+	private var profileBarButtonItem: ProfileBarButtonItem!
+	private var sortTypeBarButtonItem: UIBarButtonItem!
+	private var moreBarButtonItem: UIBarButtonItem!
+
+	private var toolbar: UIToolbar!
+	private var libraryKindBarButtonItem: UIBarButtonItem!
+	private var libraryKindSegmentedControl: UISegmentedControl!
 
 	// MARK: - IBOutlets
-	@IBOutlet weak var toolbar: UIToolbar!
-	@IBOutlet weak var scrollView: UIScrollView!
-	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
-	@IBOutlet weak var libraryKindBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
+	@IBOutlet var scrollView: UIScrollView!
+	@IBOutlet var scrollViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
@@ -57,11 +58,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		self.navigationItem.title = Trans.library
 
 		// Configurations
-		self.configureToolbar()
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			self.libraryKindBarButtonItem.hidesSharedBackground = true
-		}
-		self.configureNavigationItems()
+		self.configureView()
 
 		// Actions
 		self.enableActions()
@@ -79,8 +76,35 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	}
 
 	// MARK: - Functions
+	private func configureView() {
+		self.configureNavigationItems()
+		self.configureViews()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+	}
+
+	private func configureViews() {
+		self.configureLibraryKindSegmentedControl()
+		self.configureLibraryKindBarButtonItem()
+		self.configureToolbar()
+	}
+
+	private func configureViewHierarchy() {
+		self.toolbar.setItems([self.libraryKindBarButtonItem], animated: false)
+
+		self.view.addSubview(self.toolbar)
+	}
+
+	private func configureViewConstraints() {
+		NSLayoutConstraint.activate([
+			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+		])
+	}
+
 	/// Configures the sort type bar button item.
-	private func configureSortTypeBarButtonItem () {
+	private func configureSortTypeBarButtonItem() {
 		self.sortTypeBarButtonItem = UIBarButtonItem(title: Trans.sort, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
 	}
 
@@ -88,7 +112,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	private func configureMoreBarButtonItem() {
 		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
 	}
-	
+
 	/// Configures the profile bar button item.
 	private func configureProfileBarButtonItem() {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
@@ -109,6 +133,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		self.configureProfileBarButtonItem()
 	}
 
+	/// Configures the tab bar visibility.
 	override func configureTabBarViewVisibility() {
 		if self.viewedUser == nil {
 			self.bar.isHidden = true
@@ -119,13 +144,37 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		}
 	}
 
-	func configureToolbar() {
+	/// Configure the tool bar.
+	private func configureToolbar() {
+		self.toolbar = UIToolbar()
+		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
 		self.toolbar.delegate = self
 		self.toolbar.isTranslucent = false
 		self.toolbar.backgroundColor = .clear
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
+	/// Configure the library kind bar button item.
+	private func configureLibraryKindBarButtonItem() {
+		self.libraryKindBarButtonItem = UIBarButtonItem(customView: self.libraryKindSegmentedControl)
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.libraryKindBarButtonItem.hidesSharedBackground = true
+		}
+	}
+
+	/// Configure the library kind segmented control.
+	private func configureLibraryKindSegmentedControl() {
+		let items = KKLibrary.Kind.allCases.map { libraryKind in
+			UIAction(title: libraryKind.stringValue) { [weak self] _ in
+				guard let self = self else { return }
+				self.libraryKindSegmentedControlDidChange(to: libraryKind)
+			}
+		}
+		self.libraryKindSegmentedControl = UISegmentedControl(items: items)
+		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 	}
 
 	/// Configures the view with the user's details.
@@ -151,8 +200,6 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 			"index": index,
 		], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 		self.populateSortActions()
-		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
-		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 
 		if self.viewedUser == nil {
 			self.toolbar.isHidden = true
@@ -276,9 +323,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	}
 	#endif
 
-	// MARK: - IBActions
-	@IBAction func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
-		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
+	func libraryKindSegmentedControlDidChange(to libraryKind: KKLibrary.Kind) {
 		self.libraryKind = libraryKind
 		self.bar.reloadData(at: 0 ... KKLibrary.Status.all.count - 1, context: .full)
 		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)

@@ -45,8 +45,8 @@ import UIKit
 ///
 /// - Tag: KTabbedViewController
 class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewControllerDataSource {
-	// MARK: - IBOutlets
-	@IBOutlet weak var bottomBarView: UIView!
+	// MARK: - Views
+	var bottomBarView: UIView!
 
 	// MARK: - Properties
 	/// The view controllers that are associated with the bar.
@@ -84,7 +84,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		DispatchQueue.main.async {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
 			self.configureViewControllers()
 			self.reloadData()
 			self.configureTabBarViewVisibility()
@@ -100,13 +101,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Configure view controllers.
-		self.configureViewControllers()
-
-		// Tabman view controllers
-		self.dataSource = self
-
-		// Configure tabman bar
-		self.configureTabBarView()
+		self.configureView()
 	}
 
 	// MARK: - Functions
@@ -120,6 +115,32 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		}
 	}
 
+	/// Configure the view.
+	private func configureView() {
+		self.configureViews()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+	}
+
+	/// Configure the views.
+	private func configureViews() {
+		self.configureBottomBarView()
+		self.configureViewControllers()
+
+		// Set data source before configuring the tab bar view
+		// to ensure the tab bar has data when it is being styled.
+		self.dataSource = self
+
+		self.configureTabBarView()
+	}
+
+	/// Configure the bottom bar view.
+	private func configureBottomBarView() {
+		self.bottomBarView = UIView()
+		self.bottomBarView.translatesAutoresizingMaskIntoConstraints = false
+		self.bottomBarView.backgroundColor = nil
+	}
+
 	/// Configures the view controllers for the tab bar data source.
 	private func configureViewControllers() {
 		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self)) ?? []
@@ -130,7 +151,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.styleTabBarView()
 		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
-		// Set corner radius after the tab bar has been populated with data so it uses the correct height
+		// Set corner radius after the tab bar has been populated
+		// with data so it uses the correct height.
 		self.bar.layerCornerRadius = self.bar.frame.size.height / 2
 
 		self.configureTabBarViewVisibility()
@@ -170,6 +192,22 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// - Tag: KTabbedViewController-configureTabBarViewVisibility
 	func configureTabBarViewVisibility() {
 		self.bar.isHidden = self.bar.items?.count ?? 0 <= 1
+	}
+
+	/// Configure the view hierarchy.
+	private func configureViewHierarchy() {
+		self.view.addSubview(self.bottomBarView)
+	}
+
+	/// Configure the view constraints.
+	private func configureViewConstraints() {
+		NSLayoutConstraint.activate([
+			self.bottomBarView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
+			self.bottomBarView.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor),
+			self.bottomBarView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+			self.bottomBarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0),
+			self.bottomBarView.heightAnchor.constraint(equalToConstant: 44.0),
+		])
 	}
 
 	// MARK: - TMBarDataSource

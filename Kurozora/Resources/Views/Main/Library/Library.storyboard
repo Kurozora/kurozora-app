@@ -57,58 +57,22 @@
                                     <constraint firstAttribute="bottom" secondItem="gPc-nI-2L5" secondAttribute="bottom" id="vOo-ym-1pH"/>
                                 </constraints>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeV-PO-okM">
-                                <rect key="frame" x="20" y="776" width="374" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="qFh-Wc-p4X"/>
-                                </constraints>
-                            </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eO3-3e-MEr">
-                                <rect key="frame" x="0.0" y="142" width="414" height="48"/>
-                                <items>
-                                    <barButtonItem style="plain" id="ulg-05-9h9">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" id="YLm-jv-Iqy">
-                                            <rect key="frame" x="69.000000000000057" y="0.0" width="276" height="48"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="Anime"/>
-                                                <segment title="Literatures"/>
-                                                <segment title="Games"/>
-                                            </segments>
-                                            <connections>
-                                                <action selector="libraryKindSegmentedControlDidChange:" destination="B4w-wJ-4Cf" eventType="valueChanged" id="YeU-7X-Byd"/>
-                                            </connections>
-                                        </segmentedControl>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="66t-RL-IQm"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tcz-X9-dwb" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="0fH-OT-TI9"/>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="eO3-3e-MEr" secondAttribute="trailing" id="1Km-Ko-7Uu"/>
                             <constraint firstAttribute="top" secondItem="tcz-X9-dwb" secondAttribute="top" id="3vH-iB-Tad"/>
-                            <constraint firstItem="JeV-PO-okM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mUg-UP-NVd" secondAttribute="leadingMargin" id="Uae-7L-uBe"/>
-                            <constraint firstItem="eO3-3e-MEr" firstAttribute="top" secondItem="66t-RL-IQm" secondAttribute="top" id="VdP-kY-5wf"/>
                             <constraint firstItem="gPc-nI-2L5" firstAttribute="width" secondItem="mUg-UP-NVd" secondAttribute="width" id="Vwp-S1-VXK"/>
-                            <constraint firstItem="JeV-PO-okM" firstAttribute="centerX" secondItem="66t-RL-IQm" secondAttribute="centerX" id="hmW-9H-Q4y"/>
-                            <constraint firstItem="eO3-3e-MEr" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="l1G-y1-zoB"/>
                             <constraint firstItem="gPc-nI-2L5" firstAttribute="height" secondItem="mUg-UP-NVd" secondAttribute="height" id="nzt-3V-8ao"/>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="JeV-PO-okM" secondAttribute="bottom" constant="8" id="pQ5-V8-eO5"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="tcz-X9-dwb" secondAttribute="trailing" id="twA-Je-J4S"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="tcz-X9-dwb" secondAttribute="bottom" constant="-34" id="vcV-WQ-WIv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JeV-PO-okM" secondAttribute="trailing" id="y1E-ur-s5u"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Library" leftItemsSupplementBackButton="YES" id="Aja-xv-l4D"/>
                     <connections>
-                        <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
-                        <outlet property="libraryKindBarButtonItem" destination="ulg-05-9h9" id="zci-Ro-LVO"/>
-                        <outlet property="libraryKindSegmentedControl" destination="YLm-jv-Iqy" id="CEV-5D-OgT"/>
                         <outlet property="scrollView" destination="tcz-X9-dwb" id="6gt-P2-2yy"/>
                         <outlet property="scrollViewHeightConstraint" destination="vcV-WQ-WIv" id="lqY-zo-25h"/>
-                        <outlet property="toolbar" destination="eO3-3e-MEr" id="SlQ-4i-DCL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
