@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="33C-Gf-wkp" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="353" height="77"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="33C-Gf-wkp" id="sLQ-OJ-w3r">
+                <rect key="frame" x="0.0" y="0.0" width="353" height="77"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MK8-Zq-tWp">
+                        <rect key="frame" x="20" y="13.666666666666664" width="50" height="50"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJe-4i-wKq" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="mJe-4i-wKq" firstAttribute="leading" secondItem="MK8-Zq-tWp" secondAttribute="leading" id="6cb-cD-9d8"/>
+                            <constraint firstAttribute="trailing" secondItem="mJe-4i-wKq" secondAttribute="trailing" id="U8K-fC-Pd8"/>
+                            <constraint firstItem="mJe-4i-wKq" firstAttribute="top" secondItem="MK8-Zq-tWp" secondAttribute="top" id="Uco-lt-u6B"/>
+                            <constraint firstAttribute="bottom" secondItem="mJe-4i-wKq" secondAttribute="bottom" id="d4v-ZY-MI6"/>
+                            <constraint firstAttribute="height" constant="50" id="jsv-Dg-6dY"/>
+                            <constraint firstAttribute="width" constant="50" id="poO-XN-2mH"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqN-jL-WVY" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="80" y="10" width="41" height="21"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of an achievements." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6m-U4-Rll" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="80.000000000000014" y="31" width="193.33333333333337" height="38"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="R6m-U4-Rll" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="sLQ-OJ-w3r" secondAttribute="trailingMargin" id="2JA-6z-ewG"/>
+                    <constraint firstItem="MK8-Zq-tWp" firstAttribute="centerY" secondItem="sLQ-OJ-w3r" secondAttribute="centerY" id="953-KA-UPc"/>
+                    <constraint firstItem="MK8-Zq-tWp" firstAttribute="leading" secondItem="sLQ-OJ-w3r" secondAttribute="leadingMargin" id="FpY-Ew-Qax"/>
+                    <constraint firstItem="MK8-Zq-tWp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="sLQ-OJ-w3r" secondAttribute="top" constant="10" id="GJ2-y1-TkE"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="MK8-Zq-tWp" secondAttribute="bottom" constant="10" id="LUy-vc-4Hw"/>
+                    <constraint firstItem="KqN-jL-WVY" firstAttribute="top" secondItem="sLQ-OJ-w3r" secondAttribute="top" constant="10" id="NDG-jk-vnx"/>
+                    <constraint firstItem="KqN-jL-WVY" firstAttribute="leading" secondItem="MK8-Zq-tWp" secondAttribute="trailing" constant="10" id="aiy-Nn-9na"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="R6m-U4-Rll" secondAttribute="bottom" constant="8" id="eL1-D5-KDg"/>
+                    <constraint firstItem="R6m-U4-Rll" firstAttribute="top" secondItem="KqN-jL-WVY" secondAttribute="bottom" id="gXX-7I-rsZ"/>
+                    <constraint firstItem="KqN-jL-WVY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="sLQ-OJ-w3r" secondAttribute="trailingMargin" id="jiP-gD-TUD"/>
+                    <constraint firstItem="R6m-U4-Rll" firstAttribute="leading" secondItem="KqN-jL-WVY" secondAttribute="leading" id="jjy-yf-Eak"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="primaryLabel" destination="KqN-jL-WVY" id="2bB-Rr-0j6"/>
+                <outlet property="secondaryLabel" destination="R6m-U4-Rll" id="GuK-W0-0Hc"/>
+                <outlet property="symbolImageView" destination="mJe-4i-wKq" id="cZ8-AC-ggC"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="153"/>
+        </tableViewCell>
+    </objects>
+</document>

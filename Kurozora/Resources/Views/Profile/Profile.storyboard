@@ -223,12 +223,6 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
-                                                    <connections>
-                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="achievementsSegue" id="qIF-9v-juK">
-                                                            <segue key="commit" inheritsFrom="parent" id="mfz-u7-T02"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="Ban-ki-CNE"/>
-                                                        </segue>
-                                                    </connections>
                                                 </button>
                                                 <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-l1-I4p" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
@@ -407,23 +401,12 @@
             </objects>
             <point key="canvasLocation" x="1589" y="-1187"/>
         </scene>
-        <!--AchievementsTableViewController-->
-        <scene sceneID="CN5-5Z-irS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Achievement" referencedIdentifier="AchievementsTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="h1U-wI-JAG"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1609" y="-1149"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="5SJ-je-yVh">
             <objects>
                 <navigationController storyboardIdentifier="EditProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uJX-nF-kEQ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="Da5-9Y-Htu">
-                        <rect key="frame" x="0.0" y="16" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="pBv-aA-adF"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -777,9 +760,6 @@
             <point key="canvasLocation" x="2596" y="-656.1576354679803"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="qIF-9v-juK"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>

@@ -11,8 +11,8 @@ import UIKit
 
 class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var secondaryLabel: UILabel!
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KLabel!
 	@IBOutlet weak var symbolImageView: ProfileImageView!
 
 	// MARK: - Functions
@@ -26,17 +26,15 @@ class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 
 		// Configure primary text.
 		self.primaryLabel.text = achievement.attributes.name
-		self.primaryLabel.textColor = UIColor(hexString: achievement.attributes.textColor)
 
 		// Configure secondary text.
 		self.secondaryLabel.text = achievement.attributes.description
-		self.secondaryLabel.textColor = UIColor(hexString: achievement.attributes.textColor)
 
 		// Configure symbol image view.
 		self.symbolImageView.layer.borderColor = UIColor(hexString: achievement.attributes.textColor)?.cgColor
 
 		// Configure background color.
-		self.contentView.backgroundColor = UIColor(hexString: achievement.attributes.backgroundColor)
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
 		// Configure symbol image.
 		self.symbolImageView.setImage(with: achievement.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)

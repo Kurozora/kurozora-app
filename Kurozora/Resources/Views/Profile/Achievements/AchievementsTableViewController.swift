@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class AchievementsTableViewController: KTableViewController {
 	// MARK: - Properties
@@ -19,7 +19,8 @@ class AchievementsTableViewController: KTableViewController {
 			}
 		}
 	}
-	var user: User!
+
+	var user: User?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -27,8 +28,9 @@ class AchievementsTableViewController: KTableViewController {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// Refresh control
@@ -37,16 +39,31 @@ class AchievementsTableViewController: KTableViewController {
 			self.setNeedsRefreshControlAppearanceUpdate()
 		}
 	}
+
 	override var prefersRefreshControlDisabled: Bool {
 		return self._prefersRefreshControlDisabled
+	}
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.achievements
+
 		self._prefersRefreshControlDisabled = true
-		self.achievements = self.user.relationships?.achievements?.data ?? []
+
+		self.configureView()
+
+		self.achievements = self.user?.relationships?.achievements?.data ?? []
 	}
 
 	// MARK: - Functions
@@ -55,8 +72,10 @@ class AchievementsTableViewController: KTableViewController {
 
 		if self.user?.id == User.current?.id {
 			detailString = "Achievements you earn show up here."
+		} else if let user = self.user {
+			detailString = "\(user.attributes.username) has not earned any achievements yet."
 		} else {
-			detailString = "\(self.user.attributes.username) has not earned any achievements yet."
+			detailString = ""
 		}
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.achievement)
@@ -73,6 +92,21 @@ class AchievementsTableViewController: KTableViewController {
 			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
+
+	/// Configure the view.
+	private func configureView() {
+		self.configureViews()
+	}
+
+	/// Configure the views.
+	private func configureViews() {
+		self.configureTableView()
+	}
+
+	/// Configure the table view.
+	private func configureTableView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -86,11 +120,19 @@ extension AchievementsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = (indexPath.section % 2 == 0) ? LeftAchievementCell.self : RightAchievementCell.self
-		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
-			fatalError("Cannot dequeue cell with reuse identifier \(identifier.reuseID)")
+		guard let achievementTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: AchievementTableViewCell.self, for: indexPath as IndexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(AchievementTableViewCell.reuseID)")
 		}
-		badgeTableViewCell.configureCell(using: self.achievements[indexPath.section])
-		return badgeTableViewCell
+		achievementTableViewCell.configureCell(using: self.achievements[indexPath.section])
+		return achievementTableViewCell
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension AchievementsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		[
+			AchievementTableViewCell.self
+		]
 	}
 }

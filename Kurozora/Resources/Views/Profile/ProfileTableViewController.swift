@@ -211,9 +211,27 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
+	/// Configure the view.
+	private func configureView() {
+		self.configureViews()
+	}
+
+	/// Configure the views.
+	private func configureViews() {
+		self.configureAchievementsButton()
+	}
+
+	/// Configure the achievements button.
+	private func configureAchievementsButton() {
+		self.achievementsButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.show(SegueIdentifiers.achievementsSegue, sender: self)
+		}, for: .touchUpInside)
+	}
+
 	/// Update the attributed text.
 	@objc private func updateAttributedText() {
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			self.configureCountButtons()
 		}
@@ -223,7 +241,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		DispatchQueue.main.sync { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			// Start update process
@@ -237,7 +255,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
-		DispatchQueue.main.sync { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			// Start delete process
@@ -491,6 +509,28 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	// MARK: - Segue
+	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
+		guard let segue = identifier as? SegueIdentifiers else { return nil }
+
+		switch segue {
+		case .achievementsSegue: return AchievementsTableViewController()
+		case .followingSegue: return UsersListCollectionViewController()
+		case .followersSegue: return UsersListCollectionViewController()
+		case .editProfileSegue, .feedMessageDetailsSegue, .reviewsSegue: return nil
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
+		case .achievementsSegue:
+			guard let achievementsTableViewController = destination as? AchievementsTableViewController else { return }
+			achievementsTableViewController.user = self.user
+		case .editProfileSegue, .feedMessageDetailsSegue, .followingSegue, .followersSegue .reviewsSegue: break
+		}
+	}
+
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		guard
 			let segueIdentifier = segue.identifier,
@@ -498,9 +538,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		else { return }
 
 		switch segueID {
-		case .achievementsSegue:
-			guard let achievementsTableViewController = segue.destination as? AchievementsTableViewController else { return }
-			achievementsTableViewController.user = self.user
+		case .achievementsSegue: break
 		case .followingSegue:
 			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
