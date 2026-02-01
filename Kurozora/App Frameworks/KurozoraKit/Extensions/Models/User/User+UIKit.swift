@@ -192,7 +192,7 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openLibrary(on viewController: UIViewController? = UIApplication.topViewController) {
-		let libraryViewController = LibraryViewController.instantiate()
+		let libraryViewController = LibraryViewController()
 		libraryViewController.user = self
 
 		viewController?.show(libraryViewController, sender: nil)

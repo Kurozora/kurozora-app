@@ -202,8 +202,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Configure the view constraints.
 	private func configureViewConstraints() {
 		NSLayoutConstraint.activate([
-			self.bottomBarView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
-			self.bottomBarView.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor),
+			self.bottomBarView.leadingAnchor.constraint(equalTo: self.view.readableContentGuide.leadingAnchor),
+			self.bottomBarView.trailingAnchor.constraint(equalTo: self.view.readableContentGuide.trailingAnchor),
 			self.bottomBarView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
 			self.bottomBarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0),
 			self.bottomBarView.heightAnchor.constraint(equalToConstant: 44.0),

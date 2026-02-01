@@ -11,9 +11,7 @@ import Pageboy
 import Tabman
 import UIKit
 
-class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Library"
-
+class LibraryViewController: KTabbedViewController {
 	// MARK: - Views
 	private var profileBarButtonItem: ProfileBarButtonItem!
 	private var sortTypeBarButtonItem: UIBarButtonItem!
@@ -23,9 +21,8 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	private var libraryKindBarButtonItem: UIBarButtonItem!
 	private var libraryKindSegmentedControl: UISegmentedControl!
 
-	// MARK: - IBOutlets
-	@IBOutlet var scrollView: UIScrollView!
-	@IBOutlet var scrollViewHeightConstraint: NSLayoutConstraint!
+	var scrollView: UIScrollView = UIScrollView()
+	private var scrollViewContentView: UIView!
 
 	// MARK: - Properties
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
@@ -62,9 +59,6 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 
 		// Actions
 		self.enableActions()
-
-		// Make sure scrollView is always first hierarchically
-		self.view.sendSubviewToBack(self.scrollView)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -84,19 +78,38 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 	}
 
 	private func configureViews() {
+		self.configureScrollViewContentView()
+		self.configureScrollView()
 		self.configureLibraryKindSegmentedControl()
 		self.configureLibraryKindBarButtonItem()
 		self.configureToolbar()
 	}
 
 	private func configureViewHierarchy() {
+		self.scrollView.addSubview(self.scrollViewContentView)
 		self.toolbar.setItems([self.libraryKindBarButtonItem], animated: false)
 
+		self.view.addSubview(self.scrollView)
 		self.view.addSubview(self.toolbar)
+
+		// Make sure scrollView is always first hierarchically
+		self.view.sendSubviewToBack(self.scrollView)
 	}
 
 	private func configureViewConstraints() {
 		NSLayoutConstraint.activate([
+			self.scrollViewContentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
+			self.scrollViewContentView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+			self.scrollViewContentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+			self.scrollViewContentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
+			self.scrollViewContentView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+			self.scrollViewContentView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+
+			self.scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			self.scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+			self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -34),
+
 			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
@@ -177,6 +190,16 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 	}
 
+	private func configureScrollViewContentView() {
+		self.scrollViewContentView = UIView()
+		self.scrollViewContentView.translatesAutoresizingMaskIntoConstraints = false
+		self.scrollViewContentView.backgroundColor = nil
+	}
+
+	private func configureScrollView() {
+		self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+	}
+
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
@@ -212,6 +235,8 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 			self.navigationItem.rightBarButtonItems = [
 				self.moreBarButtonItem
 			]
+
+			self.navigationItem.leftItemsSupplementBackButton = true
 			self.navigationItem.leftBarButtonItems = [
 				self.sortTypeBarButtonItem
 			]
@@ -222,6 +247,8 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 				self.profileBarButtonItem,
 				self.moreBarButtonItem
 			]
+
+			self.navigationItem.leftItemsSupplementBackButton = true
 			self.navigationItem.leftBarButtonItems = [
 				self.sortTypeBarButtonItem
 			]
@@ -249,7 +276,7 @@ class LibraryViewController: KTabbedViewController, StoryboardInstantiable {
 		self.sortTypeBarButtonItem.title = "Sorting by \(sortType.stringValue) (\(option.stringValue))"
 		self.sortTypeBarButtonItem.image = sortType == .none
 			? UIImage(systemName: "line.3.horizontal.decrease.circle")
-			: UIImage(systemName: "line.3.horizontal.decrease.circle.fill") //		self.populateSortActions()
+			: UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
 	}
 
 	/// Changes the layout between the available library cell styles.
