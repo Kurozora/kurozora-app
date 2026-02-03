@@ -21,15 +21,15 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lVp-GP-uLb">
-                        <rect key="frame" x="0.0" y="0.0" width="107.5" height="41"/>
+                        <rect key="frame" x="0.0" y="0.0" width="107.33333333333333" height="41"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-OK-T2f" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="107.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="107.33333333333333" height="20.666666666666668"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="923 Downloads" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmW-Ef-nmY" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20.5" width="107.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="20.666666666666671" width="107.33333333333333" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -83,10 +83,10 @@
                         <rect key="frame" x="0.0" y="51" width="362" height="250"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dD3-63-2Tq" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
+                                <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T9u-p2-Jsh" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_1"/>
                                     </imageView>
                                 </subviews>
@@ -102,10 +102,10 @@
                                 </connections>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIy-2g-3gR" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="123.5" y="0.0" width="115" height="250"/>
+                                <rect key="frame" x="123.33333333333334" y="0.0" width="115.33333333333334" height="250"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RC1-qQ-BiE" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="115" height="250"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_2"/>
                                     </imageView>
                                 </subviews>
@@ -121,10 +121,10 @@
                                 </connections>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AUm-8s-w3U" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="246.5" y="0.0" width="115.5" height="250"/>
+                                <rect key="frame" x="246.66666666666666" y="0.0" width="115.33333333333334" height="250"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oU7-Gi-IVY" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_3"/>
                                     </imageView>
                                 </subviews>
@@ -178,7 +178,7 @@
         <image name="Themes/Default/Screenshot_3" width="1170" height="2532"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

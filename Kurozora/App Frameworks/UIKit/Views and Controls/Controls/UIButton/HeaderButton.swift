@@ -15,6 +15,7 @@ class HeaderButton: KButton {
 	override func sharedInit() {
 		super.sharedInit()
 
+		self.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		self.titleLabel?.font = .preferredFont(forTextStyle: .body)
 	}
 }

@@ -74,12 +74,14 @@ class KButton: UIButton {
 
 	/// The actions performed when the user touches the button.
 	@objc private func touchDown() {
-		self._highlightBackgroundColor = (self.backgroundColor != .white) ? self.backgroundColor?.lighten(by: 0.1) : self.backgroundColor?.darken(by: 0.15)
-		if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
-			self.normalBackgroundColor = backgroundColor
-			UIViewPropertyAnimator().stopAnimation(true)
-			self.animator.stopAnimation(true)
-			self.backgroundColor = self.highlightBackgroundColor ?? self._highlightBackgroundColor
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			self._highlightBackgroundColor = (self.backgroundColor != .white) ? self.backgroundColor?.lighten(by: 0.1) : self.backgroundColor?.darken(by: 0.15)
+			if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
+				self.normalBackgroundColor = backgroundColor
+				UIViewPropertyAnimator().stopAnimation(true)
+				self.animator.stopAnimation(true)
+				self.backgroundColor = self.highlightBackgroundColor ?? self._highlightBackgroundColor
+			}
 		}
 
 		if self.springEnabled {
@@ -107,11 +109,13 @@ class KButton: UIButton {
 
 	/// The actions performed when the user lets go of the button.
 	@objc private func touchUp() {
-		if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
-			self.animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: { [weak self] in
-				guard let self = self else { return }
-				self.backgroundColor = self.normalBackgroundColor
-			})
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
+				self.animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: { [weak self] in
+					guard let self = self else { return }
+					self.backgroundColor = self.normalBackgroundColor
+				})
+			}
 		}
 
 		self.animator.startAnimation()
