@@ -198,10 +198,10 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Segue
-	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
-		guard let segue = identifier as? SegueIdentifiers else { return nil }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segue {
+		switch identifier {
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .gameDetailsSegue: return GameDetailsCollectionViewController()
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
@@ -213,7 +213,7 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {

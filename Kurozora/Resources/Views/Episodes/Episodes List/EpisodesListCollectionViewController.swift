@@ -469,10 +469,10 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	}
 
 	// MARK: - Segue
-	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
-		guard let segue = identifier as? SegueIdentifiers else { return nil }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segue {
+		switch identifier {
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
 		case .episodesListSegue: return EpisodesListCollectionViewController()

@@ -233,10 +233,10 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 	}
 
 	// MARK: - Segue
-	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
-		guard let segue = identifier as? SegueIdentifiers else { return nil }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segue {
+		switch identifier {
 		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
 		}
 	}

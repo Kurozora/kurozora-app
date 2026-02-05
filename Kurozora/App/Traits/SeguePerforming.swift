@@ -51,7 +51,7 @@ protocol SegueHandler where Self: UIViewController {
 	///    - identifier: The object that identifies the triggered segue.
 	///
 	/// - Returns: The destination view controller for the specified segue identifier.
-	func makeDestination(for identifier: SegueIdentifier) -> UIViewController?
+	func makeDestination(for identifier: any SegueIdentifier) -> UIViewController?
 
 	/// Prepares the destination view controller before the segue is performed.
 	///
@@ -59,5 +59,5 @@ protocol SegueHandler where Self: UIViewController {
 	///    - identifier: The object that identifies the triggered segue.
 	///    - destination: The destination view controller for the segue
 	///    - sender: The object to use as the sender of the segue.
-	func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?)
+	func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?)
 }

@@ -252,10 +252,10 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	}
 
 	// MARK: - Segue
-	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
-		guard let segue = identifier as? SegueIdentifiers else { return nil }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segue {
+		switch identifier {
 		case .reviewsSegue: return ReviewsCollectionViewController()
 		case .showsListSegue: return ShowsListCollectionViewController()
 		case .literaturesListSegue: return LiteraturesListCollectionViewController()
