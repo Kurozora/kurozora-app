@@ -76,6 +76,7 @@ class KButton: UIButton {
 	@objc private func touchDown() {
 		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
 			self._highlightBackgroundColor = (self.backgroundColor != .white) ? self.backgroundColor?.lighten(by: 0.1) : self.backgroundColor?.darken(by: 0.15)
+
 			if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
 				self.normalBackgroundColor = backgroundColor
 				UIViewPropertyAnimator().stopAnimation(true)
