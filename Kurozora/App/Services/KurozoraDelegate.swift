@@ -230,7 +230,8 @@ extension KurozoraDelegate {
 			!(topViewController is AuthenticationViewController)
 		else { return }
 
-		let authenticationViewController = AuthenticationViewController.instantiate()
+		let authenticationViewController = AuthenticationViewController()
+		authenticationViewController.modalPresentationStyle = .overFullScreen
 		topViewController.present(authenticationViewController, animated: true)
 	}
 
