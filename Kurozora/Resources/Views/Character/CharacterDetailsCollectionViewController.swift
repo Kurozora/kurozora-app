@@ -331,7 +331,7 @@ extension CharacterDetailsCollectionViewController: TextViewCollectionViewCellDe
 		synopsisViewController.synopsis = self.character.attributes.about
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}

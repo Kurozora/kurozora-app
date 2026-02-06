@@ -587,7 +587,7 @@ extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 		synopsisViewController.synopsis = self.show.attributes.synopsis
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}

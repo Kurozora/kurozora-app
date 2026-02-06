@@ -418,7 +418,7 @@ extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDeleg
 		synopsisViewController.synopsis = self.person.attributes.about
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}

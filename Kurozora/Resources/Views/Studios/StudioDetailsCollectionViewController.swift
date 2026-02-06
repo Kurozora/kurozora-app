@@ -297,7 +297,8 @@ extension StudioDetailsCollectionViewController: TextViewCollectionViewCellDeleg
 		synopsisViewController.synopsis = self.studio.attributes.about
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
+
 		self.present(kNavigationController, animated: true)
 	}
 }

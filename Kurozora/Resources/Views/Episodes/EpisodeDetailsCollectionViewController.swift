@@ -407,7 +407,7 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 		synopsisViewController.synopsis = self.episode.attributes.synopsis
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}

@@ -509,7 +509,7 @@ extension LiteratureDetailsCollectionViewController: TextViewCollectionViewCellD
 		synopsisViewController.synopsis = self.literature.attributes.synopsis
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}

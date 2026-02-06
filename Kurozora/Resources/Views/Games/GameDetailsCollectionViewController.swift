@@ -521,7 +521,7 @@ extension GameDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 		synopsisViewController.synopsis = self.game.attributes.synopsis
 
 		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .fullScreen
+		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
 	}
