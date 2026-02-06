@@ -154,7 +154,7 @@ class SettingsTableViewController: KTableViewController {
 		case .themeSegue: return ManageThemesCollectionViewController()
 		case .notificationSegue: return NotificationsOptionsViewController()
 		case .soundSegue: return SoundSettingsViewController()
-		case .biometricsSegue: return AuthenticationViewController()
+		case .biometricsSegue: return AuthenticationTableViewController()
 		case .privacySegue: return PrivacySettingsViewController()
 		case .subscriptionSegue: return SubscriptionCollectionViewController()
 		case .tipJarSegue: return TipJarCollectionViewController()
