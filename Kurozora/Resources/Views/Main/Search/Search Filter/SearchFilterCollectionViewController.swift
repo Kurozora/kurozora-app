@@ -15,16 +15,12 @@ protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 }
 
-class SearchFilterCollectionViewController: KCollectionViewController, StoryboardInstantiable {
-	static var storyboardName: String = "SearchFilter"
-
-	// MARK: - IBOutlets
-	@IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var resetBarButtonItem: UIBarButtonItem!
-
+class SearchFilterCollectionViewController: KCollectionViewController {
 	// MARK: - Views
-	let applyButtonContainer = UIView()
-	var applyButton = KTintedButton()
+	private var cancelBarButtonItem: UIBarButtonItem!
+	private var resetBarButtonItem: UIBarButtonItem!
+	private var applyButtonContainer: UIView!
+	private var applyButton: KTintedButton!
 
 	// MARK: - Properties
 	var searchType: KKSearchType?
@@ -73,37 +69,51 @@ class SearchFilterCollectionViewController: KCollectionViewController, Storyboar
 	}
 
 	// MARK: - Functions
-	func configure() {
+	private func configure() {
 		self.configureViews()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
 	}
 
-	func configureViews() {
+	private func configureViews() {
 		self.configureView()
 		self.configureCollectionView()
+		self.configureCancelBarButtonItem()
 		self.configureRestBarButtonItem()
 		self.configureApplyButtonContainer()
 		self.configureApplyButton()
 	}
 
-	func configureView() {
+	private func configureView() {
 		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
 		self.title = Trans.filters
 	}
 
-	func configureCollectionView() {
+	private func configureCollectionView() {
 		self.collectionView.contentInset.bottom = 50
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 	}
 
-	func configureRestBarButtonItem() {
-		self.resetBarButtonItem.title = Trans.reset
+	private func configureCancelBarButtonItem() {
+		self.cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.cancelButtonPressed()
+		})
+		self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
 	}
 
-	func configureApplyButtonContainer() {
+	private func configureRestBarButtonItem() {
+		self.resetBarButtonItem = UIBarButtonItem(title: Trans.reset, primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.resetButtonPressed()
+		})
+		self.navigationItem.rightBarButtonItem = self.resetBarButtonItem
+	}
+
+	private func configureApplyButtonContainer() {
+		self.applyButtonContainer = UIView()
 		self.applyButtonContainer.translatesAutoresizingMaskIntoConstraints = false
 		self.applyButtonContainer.backgroundColor = .clear
 
@@ -115,18 +125,22 @@ class SearchFilterCollectionViewController: KCollectionViewController, Storyboar
 		}
 	}
 
-	func configureApplyButton() {
+	private func configureApplyButton() {
+		self.applyButton = KTintedButton()
 		self.applyButton.translatesAutoresizingMaskIntoConstraints = false
 		self.applyButton.setTitle(Trans.apply, for: .normal)
-		self.applyButton.addTarget(self, action: #selector(self.handleApplyButtonPressed(_:)), for: .touchUpInside)
+		self.applyButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.applyButtonPressed()
+		}, for: .touchUpInside)
 	}
 
-	func configureViewHierarchy() {
+	private func configureViewHierarchy() {
 		self.view.addSubview(self.applyButtonContainer)
 		self.applyButtonContainer.addSubview(self.applyButton)
 	}
 
-	func configureViewConstraints() {
+	private func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.applyButtonContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.applyButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -139,12 +153,7 @@ class SearchFilterCollectionViewController: KCollectionViewController, Storyboar
 		])
 	}
 
-	@objc
-	func handleApplyButtonPressed(_ sender: UIButton) {
-		self.applyButtonPressed()
-	}
-
-	func applyButtonPressed() {
+	private func applyButtonPressed() {
 		var newSearchFilter: KKSearchFilter?
 
 		if let oldSearchFilter = self.filter {
@@ -698,8 +707,7 @@ class SearchFilterCollectionViewController: KCollectionViewController, Storyboar
 		return nil
 	}
 
-	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+	private func cancelButtonPressed() {
 		let searchFilterCollectionViewController = self
 
 		self.dismiss(animated: true) {
@@ -707,7 +715,7 @@ class SearchFilterCollectionViewController: KCollectionViewController, Storyboar
 		}
 	}
 
-	@IBAction func resetButtonPressed(_ sender: UIBarButtonItem) {
+	private func resetButtonPressed() {
 		self.filter = nil
 
 		self.updateDataSource()

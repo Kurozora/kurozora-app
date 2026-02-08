@@ -623,7 +623,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return nil }
-		let searchFilterViewController = SearchFilterCollectionViewController.instantiate()
+		let searchFilterViewController = SearchFilterCollectionViewController()
 		searchFilterViewController.delegate = self
 		searchFilterViewController.searchType = searchType
 		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil
@@ -641,10 +641,10 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Segue
-	override func makeDestination(for identifier: SegueIdentifier) -> UIViewController? {
-		guard let segue = identifier as? SegueIdentifiers else { return nil }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segue {
+		switch identifier {
 		case .searchSegue: return SearchResultsCollectionViewController()
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
@@ -668,7 +668,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	override func prepare(for identifier: SegueIdentifier, destination: UIViewController, sender: Any?) {
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
