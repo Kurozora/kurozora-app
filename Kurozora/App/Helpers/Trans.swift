@@ -530,6 +530,12 @@ struct Trans {
 	static let reshare: String = String(localized: "Re-share",
 										table: "Feed",
 										comment: "The string for the 'Re-share' context menu option.")
+	/// The string for the 'Post Message' context menu option.
+	///
+	/// - Tag: Trans-postMessage
+	static let postMessage: String = String(localized: "Post Message",
+											table: "Feed",
+											comment: "The string for the 'Post Message' context menu option.")
 	/// The string for the 'Delete Message' context menu option.
 	///
 	/// - Tag: Trans-deleteMessage

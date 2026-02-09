@@ -14,7 +14,7 @@ extension FMDetailsTableViewController {
 		case 0: break
 		default:
 			guard let feedMessage = self.feedMessageReplies[safe: indexPath.row] else { return }
-			self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+			self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 		}
 	}
 

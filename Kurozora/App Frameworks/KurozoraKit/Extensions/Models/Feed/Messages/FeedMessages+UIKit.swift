@@ -445,7 +445,7 @@ extension FeedMessage {
 	///
 	/// - Parameter viewController: The view controller initiating the segue.
 	func visitRepliesView(from viewController: UIViewController? = UIApplication.topViewController) {
-		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		let fmDetailsTableViewController = FMDetailsTableViewController()
 		fmDetailsTableViewController.feedMessageID = self.id
 
 		viewController?.show(fmDetailsTableViewController, sender: nil)

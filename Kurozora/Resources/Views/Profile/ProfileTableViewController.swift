@@ -516,7 +516,8 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		case .achievementsSegue: return AchievementsTableViewController()
 		case .followingSegue: return UsersListCollectionViewController()
 		case .followersSegue: return UsersListCollectionViewController()
-		case .editProfileSegue, .feedMessageDetailsSegue, .reviewsSegue: return nil
+		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
+		case .editProfileSegue, .reviewsSegue: return nil
 		}
 	}
 
@@ -527,7 +528,24 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		case .achievementsSegue:
 			guard let achievementsTableViewController = destination as? AchievementsTableViewController else { return }
 			achievementsTableViewController.user = self.user
-		case .editProfileSegue, .feedMessageDetailsSegue, .followingSegue, .followersSegue .reviewsSegue: break
+		case .followingSegue:
+			guard let followTableViewController = destination as? UsersListCollectionViewController else { return }
+			followTableViewController.user = self.user
+			followTableViewController.usersListType = .following
+			followTableViewController.usersListFetchType = .follow
+		case .followersSegue:
+			guard let followTableViewController = destination as? UsersListCollectionViewController else { return }
+			followTableViewController.user = self.user
+			followTableViewController.usersListType = .followers
+			followTableViewController.usersListFetchType = .follow
+		case .feedMessageDetailsSegue:
+			guard
+				let fmDetailsTableViewController = destination as? FMDetailsTableViewController,
+				let feedMessage = sender as? FeedMessage
+			else { return }
+			fmDetailsTableViewController.feedMessageID = feedMessage.id
+			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
+		case .editProfileSegue, .reviewsSegue: break
 		}
 	}
 
@@ -538,17 +556,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		else { return }
 
 		switch segueID {
-		case .achievementsSegue: break
-		case .followingSegue:
-			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
-			followTableViewController.user = self.user
-			followTableViewController.usersListType = .following
-			followTableViewController.usersListFetchType = .follow
-		case .followersSegue:
-			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
-			followTableViewController.user = self.user
-			followTableViewController.usersListType = .followers
-			followTableViewController.usersListFetchType = .follow
+		case .achievementsSegue, .followingSegue, .followersSegue: break
 		case .reviewsSegue:
 			guard let reviewsListCollectionViewController = segue.destination as? ReviewsListCollectionViewController else { return }
 			reviewsListCollectionViewController.user = self.user
@@ -658,7 +666,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
 
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -673,7 +681,7 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -719,5 +727,15 @@ extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+}
+
+// MARK: - FMDetailsTableViewControllerDelegate
+extension ProfileTableViewController: FMDetailsTableViewControllerDelegate {
+	func fmDetailsTableViewController(delete messageID: KurozoraItemID) {
+		self.feedMessages.removeFirst { feedMessage in
+			feedMessage.id == messageID
+		}
+		self.tableView.reloadData()
 	}
 }

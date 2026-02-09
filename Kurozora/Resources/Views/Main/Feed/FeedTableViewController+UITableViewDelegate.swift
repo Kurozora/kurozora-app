@@ -11,7 +11,7 @@ import UIKit
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

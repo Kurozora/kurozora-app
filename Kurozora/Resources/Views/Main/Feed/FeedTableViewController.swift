@@ -6,23 +6,20 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-class FeedTableViewController: KTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Feed"
-
+class FeedTableViewController: KTableViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
 		case settingsSegue
 	}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var postMessageButton: UIBarButtonItem!
-
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
+	private var settingsBarButtonItem: UIBarButtonItem!
+	private var postMessageButtonBarButtonItem: UIBarButtonItem!
+	private var profileBarButtonItem: ProfileBarButtonItem!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
@@ -40,15 +37,16 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			self.enableActions()
 			self.configureUserDetails()
@@ -63,9 +61,11 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
 		#endif
 
+		self.title = Trans.feed
+
 		// Configure navigation bar items
-		self.enableActions()
 		self.configureNavigationItems()
+		self.enableActions()
 
 		// Fetch feed posts.
 		Task { [weak self] in
@@ -76,8 +76,8 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -96,6 +96,24 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
+	/// Configures the settings bar button item.
+	private func configureSettingsBarButtonItem() {
+		self.settingsBarButtonItem = UIBarButtonItem(title: Trans.settings, image: UIImage(systemName: "gear"), primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.segueToSettings()
+		})
+		self.navigationItem.leftBarButtonItem = self.settingsBarButtonItem
+	}
+
+	/// Configures the post message bar button item.
+	private func configurePostMessageBarButtonItem() {
+		self.postMessageButtonBarButtonItem = UIBarButtonItem(title: Trans.postMessage, image: UIImage(systemName: "pencil.circle"), primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.postNewMessage()
+		})
+		self.navigationItem.rightBarButtonItem = self.postMessageButtonBarButtonItem
+	}
+
 	/// Configures the profile bar button item.
 	private func configureProfileBarButtonItem() {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
@@ -110,7 +128,9 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	/// Configures the navigation items.
-	fileprivate func configureNavigationItems() {
+	private func configureNavigationItems() {
+		self.configureSettingsBarButtonItem()
+		self.configurePostMessageBarButtonItem()
 		self.configureProfileBarButtonItem()
 	}
 
@@ -144,7 +164,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			// Start update process
@@ -158,7 +178,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
@@ -214,7 +234,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		DispatchQueue.main.async { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			if !User.isSignedIn {
 				if let barButtonItem = self.navigationItem.rightBarButtonItems?[safe: 1] {
@@ -232,8 +252,10 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	/// Performs segue to the settings view.
-	@objc func segueToSettings() {
-		self.performSegue(withIdentifier: SegueIdentifiers.settingsSegue, sender: nil)
+	func segueToSettings() {
+		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		settingsSplitViewController.modalPresentationStyle = .fullScreen
+		self.present(settingsSplitViewController, animated: true)
 	}
 
 	/// Configures the view with the user's details.
@@ -251,7 +273,7 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	/// Shows the text editor for posting a new message.
-	@objc func postNewMessage() {
+	func postNewMessage() {
 		Task { [weak self] in
 			guard let self = self else { return }
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
@@ -271,26 +293,27 @@ class FeedTableViewController: KTableViewController, StoryboardInstantiable {
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
-		self.postNewMessage()
+	// MARK: - Segue
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
+
+		switch identifier {
+		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
+		case .settingsSegue: return KNavigationController(rootViewController: SettingsSplitViewController())
+		}
 	}
 
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
 
-		switch segueID {
+		switch identifier {
 		case .feedMessageDetailsSegue:
-			// Show details of feed message
+			// Segue to feed message details
 			guard
-				let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController,
-				let feedMessageID = sender as? KurozoraItemID
+				let fmDetailsTableViewController = destination as? FMDetailsTableViewController,
+				let feedMessage = sender as? FeedMessage
 			else { return }
-			fmDetailsTableViewController.feedMessageID = feedMessageID
+			fmDetailsTableViewController.feedMessageID = feedMessage.id
 			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 		case .settingsSegue: return
 		}
@@ -367,7 +390,7 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		let badgeViewController = BadgeViewController.instantiate()
+		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 		badgeViewController.popoverPresentationController?.sourceView = button
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
@@ -389,7 +412,7 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -404,7 +427,7 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 

@@ -6,12 +6,10 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
-class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Feed"
-
+class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
@@ -21,9 +19,9 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	var feedMessageID: KurozoraItemID = ""
 	var feedMessage: FeedMessage! {
 		didSet {
-			self.feedMessageID = feedMessage?.id ?? ""
+			self.feedMessageID = self.feedMessage?.id ?? ""
 
-			let repliesCount = feedMessage.attributes.metrics.replyCount
+			let repliesCount = self.feedMessage.attributes.metrics.replyCount
 			self.title = "\(repliesCount.kkFormatted(precision: 0)) replies"
 
 			#if !targetEnvironment(macCatalyst)
@@ -50,8 +48,9 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Initializers
@@ -61,7 +60,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
 	func callAsFunction(with feedMessageID: KurozoraItemID) -> FMDetailsTableViewController {
-		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		let fmDetailsTableViewController = FMDetailsTableViewController()
 		fmDetailsTableViewController.feedMessageID = feedMessageID
 		return fmDetailsTableViewController
 	}
@@ -72,7 +71,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
 	func callAsFunction(with feedMessage: FeedMessage) -> FMDetailsTableViewController {
-		let fmDetailsTableViewController = FMDetailsTableViewController.instantiate()
+		let fmDetailsTableViewController = FMDetailsTableViewController()
 		fmDetailsTableViewController.feedMessage = feedMessage
 		return fmDetailsTableViewController
 	}
@@ -98,8 +97,8 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -194,7 +193,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 		#endif
 
 		do {
-            let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
+			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
 			let feedMessageResponse = try await KService.getDetails(forFeedMessage: feedMessageIdentity).value
 
 			self.feedMessage = feedMessageResponse.data.first
@@ -211,7 +210,7 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	@MainActor
 	func fetchFeedReplies() async {
 		do {
-            let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
+			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
 			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
 
 			// Reset data if necessary
@@ -230,20 +229,25 @@ class FMDetailsTableViewController: KTableViewController, StoryboardInstantiable
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard
-			let segueIdentifier = segue.identifier,
-			let segueID = SegueIdentifiers(rawValue: segueIdentifier)
-		else { return }
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
-		switch segueID {
+		switch identifier {
+		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
 		case .feedMessageDetailsSegue:
-			// Show detail for explore cell
+			// Segue to feed message details
 			guard
-				let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController,
-				let feedMessageID = sender as? KurozoraItemID
+				let fmDetailsTableViewController = destination as? FMDetailsTableViewController,
+				let feedMessage = sender as? FeedMessage
 			else { return }
-			fmDetailsTableViewController.feedMessageID = feedMessageID
+			fmDetailsTableViewController.feedMessageID = feedMessage.id
 			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 		}
 	}
@@ -260,7 +264,7 @@ extension FMDetailsTableViewController {
 		case 0:
 			return self.feedMessage != nil ? 1 : 0
 		default:
-			return feedMessageReplies.count
+			return self.feedMessageReplies.count
 		}
 	}
 
@@ -358,7 +362,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		let badgeViewController = BadgeViewController.instantiate()
+		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 		badgeViewController.popoverPresentationController?.sourceView = button
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
@@ -377,7 +381,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let feedMessage = self.feedMessage.relationships.parent?.data.first else { return }
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -391,7 +395,7 @@ extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.performSegue(withIdentifier: SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage.id)
+		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
