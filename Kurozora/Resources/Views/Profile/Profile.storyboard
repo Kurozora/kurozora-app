@@ -17,6 +17,7 @@
                 <navigationController storyboardIdentifier="ProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6QS-Km-l5h" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="ecg-ae-q8W">
+                        <rect key="frame" x="0.0" y="100" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="mIE-AI-80U"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -353,16 +354,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Profile" id="yJS-kC-jrS">
-                        <rightBarButtonItems>
-                            <barButtonItem title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa"/>
-                            <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="7dS-3F-kJw">
-                                <connections>
-                                    <action selector="postMessageButton:" destination="zlF-Vo-yv3" id="XVS-Dc-E56"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="yJS-kC-jrS"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="achievementsButton" destination="E2w-Ry-UIw" id="iFf-UH-1dR"/>
@@ -374,13 +366,10 @@
                         <outlet property="followButton" destination="bkn-1Z-yJM" id="13G-xZ-1KA"/>
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="0tj-jo-lQ8"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
-                        <outlet property="moreBarButtonItem" destination="7V8-8E-uOa" id="Pje-4v-OD8"/>
                         <outlet property="onlineIndicatorContainerView" destination="IvN-D6-AVe" id="k1b-86-JqY"/>
                         <outlet property="onlineIndicatorView" destination="P4i-DJ-cm7" id="fKP-bx-typ"/>
-                        <outlet property="postMessageButton" destination="7dS-3F-kJw" id="OhT-AW-TQ3"/>
                         <outlet property="profileBadgeStackView" destination="r4X-ZG-tb5" id="VeD-bF-T3D"/>
                         <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
-                        <outlet property="profileNavigationItem" destination="yJS-kC-jrS" id="V2w-eF-nJ2"/>
                         <outlet property="reviewsButton" destination="Ldj-y1-nlK" id="MUc-mx-6u2"/>
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="usernameLabel" destination="Q1N-a3-7LT" id="7mj-ic-6jh"/>
@@ -407,6 +396,7 @@
                 <navigationController storyboardIdentifier="EditProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uJX-nF-kEQ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="Da5-9Y-Htu">
+                        <rect key="frame" x="0.0" y="16" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="pBv-aA-adF"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -435,24 +425,24 @@
                         <viewControllerLayoutGuide type="bottom" id="byD-So-ZUt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="8dF-n5-5pJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="762"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFp-dv-JTs">
-                                <rect key="frame" x="0.0" y="70" width="375" height="675"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="658"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Tt-cT-fOx">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="568"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="518"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="obv-fa-CDB" userLabel="User Details Banner">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="smD-85-4IP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="200" id="0PA-k0-EH6"/>
+                                                            <constraint firstAttribute="height" constant="150" id="0PA-k0-EH6"/>
                                                         </constraints>
                                                     </imageView>
                                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW6-AT-jU1">
@@ -469,7 +459,7 @@
                                                         </buttonConfiguration>
                                                     </button>
                                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVx-uA-euu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                         <state key="normal">
                                                             <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -493,7 +483,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YQq-y2-zCj" userLabel="User Details Header">
-                                                <rect key="frame" x="8" y="151" width="359" height="98"/>
+                                                <rect key="frame" x="8" y="101" width="359" height="98"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MHf-G0-Udc" userLabel="Profile Photo Wrapper">
                                                         <rect key="frame" x="8" y="18" width="80" height="80"/>
@@ -597,7 +587,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="V6M-gF-Iuy">
-                                                <rect key="frame" x="16" y="257" width="343" height="311"/>
+                                                <rect key="frame" x="16" y="207" width="343" height="311"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qvc-wN-u8H">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="78.333333333333329"/>
@@ -763,9 +753,7 @@
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="pencil.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

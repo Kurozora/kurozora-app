@@ -21,12 +21,12 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		case feedMessageDetailsSegue
 		case editProfileSegue
 	}
+	
+	// MARK: - Views
+	private var postMessageButton: UIBarButtonItem!
+	private var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileNavigationItem: UINavigationItem!
-	@IBOutlet weak var postMessageButton: UIBarButtonItem!
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var displayNameLabel: KLabel!
 	@IBOutlet weak var usernameLabel: KSecondaryLabel!
@@ -152,6 +152,8 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 			self.userIdentity = UserIdentity(id: self.user.id)
 		}
 
+		self.configureView()
+
 		// Fetch user details
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -214,6 +216,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	/// Configure the view.
 	private func configureView() {
 		self.configureViews()
+		self.configureNavigationItems()
 	}
 
 	/// Configure the views.
@@ -221,11 +224,48 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		self.configureAchievementsButton()
 	}
 
+	/// Configures the more bar button item.
+	private func configureMoreBarButtonItem() {
+		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
+	/// Configures the more bar button item.
+	private func configurePostMessageBarButtonItem() {
+		self.postMessageButton = UIBarButtonItem(title: Trans.postMessage, image: UIImage(systemName: "pencil.circle"), primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.postNewMessage()
+		})
+		self.navigationItem.rightBarButtonItems?.append(self.postMessageButton)
+	}
+
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.configureMoreBarButtonItem()
+		self.configurePostMessageBarButtonItem()
+	}
+
 	/// Configure the achievements button.
 	private func configureAchievementsButton() {
 		self.achievementsButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.show(SegueIdentifiers.achievementsSegue, sender: self)
+		}, for: .touchUpInside)
+	}
+
+	/// Configure the followers button.
+	private func configureFollowersButton() {
+		self.followersButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.show(SegueIdentifiers.followersSegue, sender: self)
+		}, for: .touchUpInside)
+	}
+
+	/// Configure the following button.
+	private func configureFollowingButton() {
+		self.followingButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.show(SegueIdentifiers.followingSegue, sender: self)
 		}, for: .touchUpInside)
 	}
 
@@ -464,7 +504,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	}
 
 	/// Shows the text editor for posting a new message.
-	@objc func postNewMessage() {
+	func postNewMessage() {
 		Task { [weak self] in
 			guard let self = self else { return }
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
@@ -502,10 +542,6 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 				print("-----", error.localizedDescription)
 			}
 		}
-	}
-
-	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
-		self.postNewMessage()
 	}
 
 	// MARK: - Segue
