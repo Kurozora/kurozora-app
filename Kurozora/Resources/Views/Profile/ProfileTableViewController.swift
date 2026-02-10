@@ -21,7 +21,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		case feedMessageDetailsSegue
 		case editProfileSegue
 	}
-	
+
 	// MARK: - Views
 	private var postMessageButton: UIBarButtonItem!
 	private var moreBarButtonItem: UIBarButtonItem!

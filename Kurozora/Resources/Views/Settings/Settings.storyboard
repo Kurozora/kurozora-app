@@ -64,7 +64,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="NWr-hf-Is2"/>
                     <connections>
-                        <segue destination="vBk-eI-Fsp" kind="showDetail" identifier="notificationSegue" id="iJu-bZ-4lW"/>
                         <segue destination="urf-Ka-1Pe" kind="showDetail" identifier="displaySegue" id="JqT-i1-ECV"/>
                         <segue destination="GAQ-MX-p4x" kind="showDetail" identifier="privacySegue" id="DS0-nx-xBb"/>
                         <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="biometricsSegue" id="6OH-ww-Ncv"/>
@@ -85,14 +84,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRz-7w-VBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1847" y="-1106"/>
-        </scene>
-        <!--NotificationSettings-->
-        <scene sceneID="cL2-5n-9vs">
-            <objects>
-                <viewControllerPlaceholder storyboardName="NotificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1833" y="-1067"/>
         </scene>
         <!--SoundSettings-->
         <scene sceneID="MNO-Rw-Pnj">

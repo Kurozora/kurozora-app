@@ -97,7 +97,7 @@ extension KNotification {
 		case notificationsGrouping = 0
 
 		// MARK: - Initializers
-		init(segueIdentifier: NotificationsTableViewController.SegueIdentifiers) {
+		init(segueIdentifier: NotificationsSettingsViewController.SegueIdentifiers) {
 			switch segueIdentifier {
 			case .notificationsGroupingSegue:
 				self = .notificationsGrouping
@@ -105,7 +105,7 @@ extension KNotification {
 		}
 
 		// MARK: - Properties
-		var segueIdentifier: NotificationsTableViewController.SegueIdentifiers {
+		var segueIdentifier: NotificationsSettingsViewController.SegueIdentifiers {
 			switch self {
 			case .notificationsGrouping:
 				return .notificationsGroupingSegue

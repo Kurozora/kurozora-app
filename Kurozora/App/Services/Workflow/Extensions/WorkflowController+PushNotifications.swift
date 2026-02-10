@@ -144,7 +144,7 @@ extension WorkflowController {
 	/// Open the notification settings view if the current view is not the sessions view.
 	func openNotificationSettings(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? NotificationsSettingsViewController == nil {
-			let notificationsSettingsViewController = NotificationsSettingsViewController.instantiate()
+			let notificationsSettingsViewController = NotificationsSettingsViewController()
 			viewController?.show(notificationsSettingsViewController, sender: nil)
 		}
 	}

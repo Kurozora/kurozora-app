@@ -56,7 +56,6 @@ extension SubSettingsViewController {
 
 			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 			selectableSettingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			selectableSettingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
@@ -67,7 +66,6 @@ extension SubSettingsViewController {
 
 			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 			selectableSettingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			selectableSettingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 

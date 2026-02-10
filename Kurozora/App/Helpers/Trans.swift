@@ -810,6 +810,12 @@ struct Trans {
 	static let themeStore: String = String(localized: "Theme Store",
 										   table: "Settings",
 										   comment: "The title string or the 'Theme Store Grouping' settings.")
+	/// The title string or the 'Allow Notifications' settings.
+	///
+	/// - Tag: Trans-allowNotifications
+	static let allowNotifications: String = String(localized: "Allow Notifications",
+												   table: "Settings",
+												   comment: "The title string or the 'Allow Notifications' settings.")
 	/// The title string or the 'Notification Grouping' settings.
 	///
 	/// - Tag: Trans-notificationGrouping
@@ -864,6 +870,12 @@ struct Trans {
 	static let sound: String = String(localized: "Sound",
 									  table: "Settings",
 									  comment: "The string for the 'Sound' settings option.")
+	/// The string for the 'Sounds' settings option.
+	///
+	/// - Tag: Trans-sounds
+	static let sounds: String = String(localized: "Sounds",
+									   table: "Settings",
+									   comment: "The string for the 'Sounds' settings option.")
 	/// The string for the 'Sounds & Haptics' settings option.
 	///
 	/// - Tag: Trans-soundsAndHaptics

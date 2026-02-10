@@ -12,6 +12,7 @@ import UIKit
 
 class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var iconImageViewContrainer: UIView?
 	@IBOutlet weak var iconImageView: IconImageView?
 	@IBOutlet weak var primaryLabel: KLabel?
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel?
@@ -25,12 +26,6 @@ class SettingsCell: KTableViewCell {
 			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 		}
 	}
-	@IBOutlet weak var notificationGroupingValueLabel: KSecondaryLabel? {
-		didSet {
-			self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
-			NotificationCenter.default.addObserver(self, selector: #selector(self.updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
-		}
-	}
 	@IBOutlet weak var popupButton: KButton?
 
 	// MARK: - Properties
@@ -39,6 +34,19 @@ class SettingsCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given title.
+	func configure(using title: String, secondaryTitle: String? = nil, icon: UIImage? = nil) {
+		self.primaryLabel?.text = title
+		self.secondaryLabel?.text = secondaryTitle
+
+		if let icon = icon {
+			self.iconImageView?.image = icon
+			self.iconImageViewContrainer?.isHidden = false
+		} else {
+			self.iconImageViewContrainer?.isHidden = true
+		}
+	}
+
 	/// Configure the cell with the given details.
 	func configureCell(using sectionRow: SettingsTableViewController.Row?) {
 		self.iconImageView?.image = sectionRow?.imageValue
@@ -128,10 +136,5 @@ class SettingsCell: KTableViewCell {
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateSplashScreenAnimation() {
 		self.secondaryLabel?.text = UserSettings.currentSplashScreenAnimation.titleValue
-	}
-
-	/// Updates the notification value labels with the respective options selected by the user.
-	@objc func updateNotificationValueLabels() {
-		self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
 	}
 }

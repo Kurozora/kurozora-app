@@ -152,7 +152,7 @@ class SettingsTableViewController: KTableViewController {
 		case .librarySegue: return LibrarySettingsViewController()
 		case .motionSegue: return MotionOptionsViewController()
 		case .themeSegue: return ManageThemesCollectionViewController()
-		case .notificationSegue: return NotificationsOptionsViewController()
+		case .notificationSegue: return NotificationsSettingsViewController()
 		case .soundSegue: return SoundSettingsViewController()
 		case .biometricsSegue: return AuthenticationTableViewController()
 		case .privacySegue: return PrivacySettingsViewController()
@@ -425,7 +425,12 @@ extension SettingsTableViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			self.performSegue(withIdentifier: identifier, sender: nil)
+			switch identifier {
+			case .notificationSegue:
+				self.showDetailViewController(identifier, sender: nil)
+			default:
+				self.performSegue(withIdentifier: identifier, sender: nil)
+			}
 		}
 	}
 }
