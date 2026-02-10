@@ -69,7 +69,6 @@
                         <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="biometricsSegue" id="6OH-ww-Ncv"/>
                         <segue destination="41N-ao-yZL" kind="showDetail" identifier="accountSegue" id="ivv-DR-gda"/>
                         <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="soundSegue" id="gvC-fL-6dY"/>
-                        <segue destination="Rix-Ql-Mkr" kind="showDetail" identifier="motionSegue" id="Bmi-Hv-ehH"/>
                         <segue destination="KzC-8n-L4v" kind="showDetail" identifier="librarySegue" id="0t0-0U-RbR"/>
                     </connections>
                 </tableViewController>
@@ -83,7 +82,7 @@
                 <viewControllerPlaceholder storyboardName="AccountSettings" id="41N-ao-yZL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRz-7w-VBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1847" y="-1106"/>
+            <point key="canvasLocation" x="-1849" y="-1066"/>
         </scene>
         <!--SoundSettings-->
         <scene sceneID="MNO-Rw-Pnj">
@@ -95,23 +94,13 @@
             </objects>
             <point key="canvasLocation" x="-1855" y="-1033"/>
         </scene>
-        <!--MotionSettings-->
-        <scene sceneID="hkC-6d-Hre">
-            <objects>
-                <viewControllerPlaceholder storyboardName="MotionSettings" id="Rix-Ql-Mkr" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="dvM-4L-sj2"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Me-Vs-Kkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1854" y="-998"/>
-        </scene>
         <!--AuthenticationSettings-->
         <scene sceneID="EBP-ej-D5t">
             <objects>
                 <viewControllerPlaceholder storyboardName="AuthenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1820" y="-966"/>
+            <point key="canvasLocation" x="-1820" y="-1002"/>
         </scene>
         <!--PrivacySettings-->
         <scene sceneID="IwF-zp-Lsq">
@@ -121,7 +110,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1852" y="-932"/>
+            <point key="canvasLocation" x="-1852" y="-970"/>
         </scene>
         <!--LibrarySettings-->
         <scene sceneID="fe6-Ei-sZj">
@@ -131,7 +120,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z6x-yd-Mr1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1852" y="-893"/>
+            <point key="canvasLocation" x="-1852" y="-931"/>
         </scene>
         <!--DisplaySettings-->
         <scene sceneID="RdJ-ak-oTj">

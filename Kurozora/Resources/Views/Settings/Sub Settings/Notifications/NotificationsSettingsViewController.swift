@@ -192,8 +192,6 @@ extension NotificationsSettingsViewController {
 		case .allowNotifications, .preferences:
 			break
 		}
-
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
 

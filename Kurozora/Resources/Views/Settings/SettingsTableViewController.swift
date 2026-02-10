@@ -150,7 +150,7 @@ class SettingsTableViewController: KTableViewController {
 		case .displaySegue: return DisplayTableViewController()
 		case .iconSegue: return ManageIconTableViewController()
 		case .librarySegue: return LibrarySettingsViewController()
-		case .motionSegue: return MotionOptionsViewController()
+		case .motionSegue: return MotionSettingsViewController()
 		case .themeSegue: return ManageThemesCollectionViewController()
 		case .notificationSegue: return NotificationsSettingsViewController()
 		case .soundSegue: return SoundSettingsViewController()
@@ -347,7 +347,9 @@ extension SettingsTableViewController {
 			self.showDetailViewController(SegueIdentifiers.iconSegue, sender: nil)
 			return
 		case .library: break
-		case .motion: break
+		case .motion:
+			self.showDetailViewController(SegueIdentifiers.motionSegue, sender: nil)
+			return
 		case .theme:
 			self.showDetailViewController(SegueIdentifiers.themeSegue, sender: nil)
 			return

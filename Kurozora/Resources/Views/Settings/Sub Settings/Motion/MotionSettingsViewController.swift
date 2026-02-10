@@ -9,72 +9,129 @@
 import UIKit
 
 class MotionSettingsViewController: SubSettingsViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var selectedSplashScreenLabel: KSecondaryLabel!
-	@IBOutlet weak var reduceMotionSwitch: KSwitch!
-	@IBOutlet weak var syncWithDeviceSettingsSwitch: KSwitch!
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case motionOptionsSegue
+	}
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Observe changes in the reduce motion setting
+		NotificationCenter.default.addObserver(forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+			guard let self = self else { return }
+			let section = Motion.Section.reduceMotion
+			guard let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) else { return }
+			let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+			guard let reduceMotionSyncSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else { return }
+
+			self.switchTapped(reduceMotionSyncSwitchSettingsCell.toggleSwitch)
+		}
 
 		self.title = Trans.motion
 
-		// Observe changes in the reduce motion setting
-		NotificationCenter.default.addObserver(forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
-			self?.configureReduceMotionSwitches()
-		}
-
-		// Configure settings
-		self.selectedSplashScreenLabel.text = UserSettings.currentSplashScreenAnimation.titleValue
-
-		self.configureReduceMotionSwitches()
+		self.configureView()
 	}
 
-	// MARK: Functions
-	private func configureReduceMotionSwitches() {
-		self.reduceMotionSwitch.isOn = UserSettings.isReduceMotionEnabled
-		self.syncWithDeviceSettingsSwitch.isOn = UserSettings.isReduceMotionSyncEnabled
+	// MARK: - Functions
+	private func configureView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 
-	// MARK: - IBActions
-	@IBAction func reduceMotionSwitchTapped(_ sender: KSwitch) {
-		// Update sync setting if necessary
-		if UserSettings.isReduceMotionSyncEnabled, UIAccessibility.isReduceMotionEnabled != sender.isOn {
-			UserSettings.set(false, forKey: .isReduceMotionSyncEnabled)
-			self.syncWithDeviceSettingsSwitch.isOn = false
-		}
-
-		// Update reduce motion setting
-		UserSettings.set(sender.isOn, forKey: .isReduceMotionEnabled)
+	private func configureSwitchCell(_ cell: SwitchSettingsCell, title: String, isOn: Bool, tag: Motion.Row) {
+		cell.configure(title: title, isOn: isOn, tag: tag.rawValue, action: UIAction { [weak self] action in
+			guard
+				let self = self,
+				let sender = action.sender as? KSwitch
+			else { return }
+			self.switchTapped(sender)
+		})
 	}
 
-	@IBAction func syncWithDeviceSettingsSwitchTapped(_ sender: KSwitch) {
-		// Sync reduce motion switch with device settings if necessary
-		if sender.isOn {
-			let isAccessibilityReduceMotionEnabled = UIAccessibility.isReduceMotionEnabled
+	// MARK: - Actions
+	@objc private func switchTapped(_ sender: KSwitch) {
+		guard let switchType = Motion.Row(rawValue: sender.tag) else { return }
+		let isOn = sender.isOn
 
-			if self.reduceMotionSwitch.isOn != isAccessibilityReduceMotionEnabled {
-				self.reduceMotionSwitch.isOn = isAccessibilityReduceMotionEnabled
-				UserSettings.set(isAccessibilityReduceMotionEnabled, forKey: .isReduceMotionEnabled)
+		switch switchType {
+		case .splashScreen: break
+		case .toggleReduceMotion:
+			// Update sync setting if necessary
+			if UserSettings.isReduceMotionSyncEnabled, UIAccessibility.isReduceMotionEnabled != sender.isOn {
+				UserSettings.set(false, forKey: .isReduceMotionSyncEnabled)
+				let section = Motion.Section.reduceMotion
+				let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) ?? 0
+				let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+				guard let switchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else {
+					sender.isOn = !isOn
+					return
+				}
+				switchSettingsCell.toggleSwitch.isOn = false
 			}
-		}
 
-		// Update sync setting
-		UserSettings.set(sender.isOn, forKey: .isReduceMotionSyncEnabled)
+			// Update reduce motion setting
+			UserSettings.set(sender.isOn, forKey: .isReduceMotionEnabled)
+		case .toggleReduceMotionSync:
+			// Sync reduce motion switch with device settings if necessary
+			let isAccessibilityReduceMotionEnabled = UIAccessibility.isReduceMotionEnabled
+			let section = Motion.Section.reduceMotion
+			let rowIndex = section.rows.firstIndex(of: .toggleReduceMotion) ?? 0
+			let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+
+			if let reduceMotionSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell {
+				if sender.isOn {
+					if reduceMotionSwitchSettingsCell.toggleSwitch.isOn != isAccessibilityReduceMotionEnabled {
+						reduceMotionSwitchSettingsCell.toggleSwitch.isOn = isAccessibilityReduceMotionEnabled
+						UserSettings.set(isAccessibilityReduceMotionEnabled, forKey: .isReduceMotionEnabled)
+					} else if !isAccessibilityReduceMotionEnabled {
+						reduceMotionSwitchSettingsCell.toggleSwitch.isOn = false
+						UserSettings.set(isAccessibilityReduceMotionEnabled, forKey: .isReduceMotionEnabled)
+					}
+				}
+			}
+
+			// Update sync setting
+			UserSettings.set(sender.isOn, forKey: .isReduceMotionSyncEnabled)
+		}
 	}
 
 	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard let motionOptionsViewController = segue.destination as? MotionOptionsViewController else { return }
-		motionOptionsViewController.delegate = self
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
+
+		switch identifier {
+		case .motionOptionsSegue: return MotionOptionsViewController()
+		}
+	}
+
+	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
+		guard let identifier = identifier as? SegueIdentifiers else { return }
+
+		switch identifier {
+		case .motionOptionsSegue:
+			guard let motionOptionsViewController = destination as? MotionOptionsViewController else { return }
+			motionOptionsViewController.delegate = self
+		}
 	}
 }
 
-// MARK: - MotionOptionsViewControllerDelegate
-extension MotionSettingsViewController: MotionOptionsViewControllerDelegate {
-	func motionOptionsViewController(_ vc: MotionOptionsViewController, didChangeAnimationTo animation: SplashScreenAnimation) {
-		self.selectedSplashScreenLabel.text = animation.titleValue
+// MARK: - KTableViewDataSource
+extension MotionSettingsViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			SwitchSettingsCell.self,
+			SettingsCell.self
+		]
 	}
 }
 
@@ -88,6 +145,47 @@ extension MotionSettingsViewController {
 		return Motion.Section.allCases[section].rows.count
 	}
 
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let section = Motion.Section.allCases[indexPath.section]
+
+		switch section {
+		case .animations:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
+			}
+			let currentSplashScreenAnimation = UserSettings.currentSplashScreenAnimation
+
+			cell.configure(using: Trans.splashScreen, secondaryTitle: currentSplashScreenAnimation.titleValue)
+			return cell
+		case .reduceMotion:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
+			}
+			let row = section.rows[indexPath.row]
+
+			switch row {
+			case .splashScreen: break
+			case .toggleReduceMotion:
+				self.configureSwitchCell(cell, title: Trans.reduceMotion, isOn: UserSettings.isReduceMotionEnabled, tag: .toggleReduceMotion)
+			case .toggleReduceMotionSync:
+				self.configureSwitchCell(cell, title: Trans.syncWithDeviceSettings, isOn: UserSettings.isReduceMotionSyncEnabled, tag: .toggleReduceMotionSync)
+			}
+
+			return cell
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		guard let section = Motion.Section(rawValue: section) else { return nil }
+
+		switch section {
+		case .animations:
+			return Trans.animations
+		case .reduceMotion:
+			return Trans.reduceMotion
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		guard let section = Motion.Section(rawValue: section) else { return nil }
 
@@ -97,5 +195,29 @@ extension MotionSettingsViewController {
 		case .reduceMotion:
 			return Trans.reduceMotionFooter
 		}
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension MotionSettingsViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard
+			let section = Motion.Section(rawValue: indexPath.section),
+			let row = section.rows[safe: indexPath.row]
+		else { return }
+
+		switch row {
+		case .splashScreen:
+			self.show(SegueIdentifiers.motionOptionsSegue, sender: nil)
+		case .toggleReduceMotion, .toggleReduceMotionSync:
+			break
+		}
+	}
+}
+
+// MARK: - MotionOptionsViewControllerDelegate
+extension MotionSettingsViewController: MotionOptionsViewControllerDelegate {
+	func motionOptionsViewController(_ vc: MotionOptionsViewController, didChangeAnimationTo animation: SplashScreenAnimation) {
+		self.tableView.reloadData()
 	}
 }
