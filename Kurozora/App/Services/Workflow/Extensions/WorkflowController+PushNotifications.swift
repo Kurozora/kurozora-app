@@ -152,7 +152,7 @@ extension WorkflowController {
 	/// Open the sessions view if the current view is not the sessions view.
 	func openSessionsManager(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
-			let manageActiveSessionsController = ManageActiveSessionsController.instantiate()
+			let manageActiveSessionsController = ManageActiveSessionsController()
 			viewController?.show(manageActiveSessionsController, sender: nil)
 		}
 	}

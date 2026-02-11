@@ -29,7 +29,7 @@ extension UserNotification {
 
 			switch self.attributes.type {
 			case .session:
-				return ManageActiveSessionsController.instantiate()
+				return ManageActiveSessionsController()
 			case .follower:
 				if let userID = self.attributes.payload.userID {
 					return ProfileTableViewController()(with: userID)

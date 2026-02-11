@@ -129,7 +129,7 @@ final class NavigationManager: NSObject {
 			return
 		}
 
-		let controller = LibraryImportTableViewController.instantiate()
+		let controller = LibraryImportTableViewController()
 		controller.selectedFileURL = url
 		context.show(controller)
 	}
