@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DatePickerSettingsCellDelegate: AnyObject {
+	func datePickerSettingsCell(_ cell: DatePickerSettingsCell, didChangeDate datePicker: UIDatePicker)
+}
+
 class DatePickerSettingsCell: SettingsCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var datePicker: UIDatePicker!
@@ -23,7 +27,9 @@ class DatePickerSettingsCell: SettingsCell {
 	}
 
 	// MARK: - Functions
-	func updateCell(with date: Date, for indexPath: IndexPath) {
+	func configure(title: String?, date: Date) {
+		self.configure(title: title)
+
 		self.datePicker.setDate(date, animated: true)
 	}
 

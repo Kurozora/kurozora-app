@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="212" id="uNN-YB-GYB" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="212"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uNN-YB-GYB" id="8fG-2I-I8m">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="212"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6R3-Hp-j8a">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="212"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="28X-XR-jSD">
+                                <rect key="frame" x="105" y="10" width="164" height="192"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="28X-XR-jSD" firstAttribute="top" secondItem="6R3-Hp-j8a" secondAttribute="top" constant="10" id="3et-E2-eoU"/>
+                            <constraint firstItem="28X-XR-jSD" firstAttribute="centerX" secondItem="6R3-Hp-j8a" secondAttribute="centerX" id="5g5-Jd-RzT"/>
+                            <constraint firstAttribute="bottom" secondItem="28X-XR-jSD" secondAttribute="bottom" constant="10" id="QxL-CG-8eH"/>
+                            <constraint firstItem="28X-XR-jSD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6R3-Hp-j8a" secondAttribute="leadingMargin" id="loU-Ca-eEe"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="28X-XR-jSD" secondAttribute="trailing" id="v5g-BC-CuS"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="6R3-Hp-j8a" secondAttribute="trailing" id="Vyb-BY-BJv"/>
+                    <constraint firstItem="6R3-Hp-j8a" firstAttribute="leading" secondItem="8fG-2I-I8m" secondAttribute="leading" id="jPL-h8-yGz"/>
+                    <constraint firstAttribute="bottom" secondItem="6R3-Hp-j8a" secondAttribute="bottom" id="rJd-sf-2Pw"/>
+                    <constraint firstItem="6R3-Hp-j8a" firstAttribute="top" secondItem="8fG-2I-I8m" secondAttribute="top" id="x9S-gz-2Xs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="optionsStackView" destination="28X-XR-jSD" id="1by-7U-IvK"/>
+                <outlet property="selectedView" destination="6R3-Hp-j8a" id="GX9-qN-OwD"/>
+            </connections>
+            <point key="canvasLocation" x="320" y="122"/>
+        </tableViewCell>
+    </objects>
+</document>
