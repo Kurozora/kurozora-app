@@ -61,7 +61,7 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 		self.tableView.reloadData()
 	}
 
-	private func configureSwitchCell(_ cell: SwitchSettingsCell, title: String, isOn: Bool, tag: KNotification.Options) {
+	private func configureSwitchCell(_ cell: SwitchSettingsCell, title: String, isOn: Bool, tag: Row) {
 		cell.configure(title: title, isOn: isOn, tag: tag.rawValue, action: UIAction { [weak self] action in
 			guard
 				let self = self,
@@ -73,7 +73,7 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 
 	// MARK: - Actions
 	@objc private func switchTapped(_ sender: KSwitch) {
-		guard let switchType = KNotification.Options(rawValue: sender.tag) else { return }
+		guard let switchType = Row(rawValue: sender.tag) else { return }
 		let isOn = sender.isOn
 
 		switch switchType {
@@ -83,9 +83,10 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 			self.tableView.reloadData()
 		case .sounds:
 			UserSettings.set(isOn, forKey: .notificationsSound)
-		case .badge:
+		case .badges:
 			UserSettings.set(isOn, forKey: .notificationsBadge)
 			NotificationCenter.default.post(name: .KSNotificationsBadgeIsOn, object: nil)
+		case .grouping: break
 		}
 	}
 
@@ -103,10 +104,7 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .notificationsGroupingSegue:
-			if let notificationsOptionsViewController = destination as? NotificationsOptionsViewController {
-				notificationsOptionsViewController.segueIdentifier = identifier
-			}
+		case .notificationsGroupingSegue: break
 		}
 	}
 }
@@ -128,37 +126,29 @@ extension NotificationsSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch self.visibleSections[section] {
-		case .allowNotifications:
-			return 1
-		case .preferences:
-			return PreferencesRow.allCases.count
-		case .grouping:
-			return 1
-		}
+		return self.visibleSections[section].rows.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch self.visibleSections[indexPath.section] {
+		let row = self.visibleSections[indexPath.section].rows[indexPath.row]
+		switch row {
 		case .allowNotifications:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.allowNotifications, isOn: UserSettings.notificationsAllowed, tag: .allowNotifications)
+			self.configureSwitchCell(cell, title: Trans.allowNotifications, isOn: UserSettings.notificationsAllowed, tag: row)
 			return cell
-		case .preferences:
+		case .sounds:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-
-			let row = PreferencesRow(rawValue: indexPath.row) ?? .sounds
-			switch row {
-			case .sounds:
-				self.configureSwitchCell(cell, title: Trans.sounds, isOn: UserSettings.notificationsSound, tag: .sounds)
-			case .badges:
-				self.configureSwitchCell(cell, title: Trans.badges, isOn: UserSettings.notificationsBadge, tag: .badge)
+			self.configureSwitchCell(cell, title: Trans.sounds, isOn: UserSettings.notificationsSound, tag: row)
+			return cell
+		case .badges:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-
+			self.configureSwitchCell(cell, title: Trans.badges, isOn: UserSettings.notificationsBadge, tag: row)
 			return cell
 		case .grouping:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
@@ -166,7 +156,7 @@ extension NotificationsSettingsViewController {
 			}
 			let notificationGroupingValue = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)
 
-			cell.configure(using: Trans.notificationGrouping, secondaryTitle: notificationGroupingValue?.stringValue)
+			cell.configure(title: Trans.notificationGrouping, detail: notificationGroupingValue?.stringValue)
 			return cell
 		}
 	}
@@ -185,28 +175,39 @@ extension NotificationsSettingsViewController {
 extension NotificationsSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch self.visibleSections[indexPath.section] {
+		case .allowNotifications, .preferences: break
 		case .grouping:
-			let optionsViewController = NotificationsOptionsViewController()
-			optionsViewController.segueIdentifier = .notificationsGroupingSegue
-			self.show(optionsViewController, sender: nil)
-		case .allowNotifications, .preferences:
-			break
+			self.show(SegueIdentifiers.notificationsGroupingSegue, sender: nil)
 		}
 	}
 }
 
 // MARK: - Sections and Rows
-extension NotificationsSettingsViewController {
+private extension NotificationsSettingsViewController {
 	/// List of notification settings sections.
 	enum Section: Int, CaseIterable {
 		case allowNotifications = 0
 		case preferences
 		case grouping
+
+		/// List of rows in the section.
+		var rows: [Row] {
+			switch self {
+			case .allowNotifications:
+				return [.allowNotifications]
+			case .preferences:
+				return [.sounds, .badges]
+			case .grouping:
+				return [.grouping]
+			}
+		}
 	}
 
 	/// List of notification settings preferences rows.
-	private enum PreferencesRow: Int, CaseIterable {
+	enum Row: Int, CaseIterable {
+		case allowNotifications = 0
 		case sounds
 		case badges
+		case grouping
 	}
 }

@@ -40,7 +40,7 @@ extension KNotification {
 	/// case byType
 	/// case off
 	/// ```
-	enum GroupStyle: Int {
+	enum GroupStyle: Int, CaseIterable {
 		/// Groups the notifications in sections by their date and time.
 		case automatic = 0
 
@@ -59,56 +59,6 @@ extension KNotification {
 				return Trans.byType
 			case .off:
 				return Trans.off
-			}
-		}
-	}
-}
-
-// MARK: - Options
-extension KNotification {
-	/// List of notification options.
-	///
-	/// ```swift
-	/// case allowNotifications = 0
-	/// case sounds = 1
-	/// case badge = 2
-	/// ```
-	enum Options: Int {
-		/// Indicates if the in-app notifications are allowed.
-		case allowNotifications = 0
-
-		/// Indicates if a sound should be played when a notification is shown.
-		case sounds
-
-		/// Indicates if the notifications tab icon should show a badge with the number of unread notifications.
-		case badge
-	}
-}
-
-// MARK: - Settings
-extension KNotification {
-	/// List of notification settings.
-	///
-	/// ```swift
-	/// case notificationsGrouping = 0
-	/// ```
-	enum Settings: Int {
-		/// Indicates the view should segue to the notifications grouping options view.
-		case notificationsGrouping = 0
-
-		// MARK: - Initializers
-		init(segueIdentifier: NotificationsSettingsViewController.SegueIdentifiers) {
-			switch segueIdentifier {
-			case .notificationsGroupingSegue:
-				self = .notificationsGrouping
-			}
-		}
-
-		// MARK: - Properties
-		var segueIdentifier: NotificationsSettingsViewController.SegueIdentifiers {
-			switch self {
-			case .notificationsGrouping:
-				return .notificationsGroupingSegue
 			}
 		}
 	}
