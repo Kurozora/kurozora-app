@@ -315,7 +315,7 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns a string indicating the preferred chime sound.
 	static var selectedChime: String {
-		guard let selectedChime = shared.string(forKey: #function) else { return "" }
+		guard let selectedChime = shared.string(forKey: #function) else { return "Default" }
 		return selectedChime
 	}
 
