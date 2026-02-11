@@ -122,14 +122,6 @@ extension Notification.Name {
 	}
 }
 
-// MARK: - User settings
-extension Notification.Name {
-	/// A notification posted after the value of `authenticationInterval` in `UserSettings` has changed.
-	static var KSAuthenticationRequireTimeoutValueDidChange: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-}
-
 // MARK: - Review
 extension Notification.Name {
 	/// A notification posted when the review is updated.

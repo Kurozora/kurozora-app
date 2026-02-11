@@ -76,4 +76,24 @@ enum AuthenticationInterval: Int, CaseIterable {
 			return Trans.fiveMinutes
 		}
 	}
+
+	/// The footer string value of an authentication interval type.
+	var footerStringValue: String {
+		switch self {
+		case .immediately:
+			return Trans.immediateAuthenticationRequired
+		case .thirtySeconds:
+			return Trans.authenticationInterval("30 seconds.")
+		case .oneMinute:
+			return Trans.authenticationInterval("1 minute.")
+		case .twoMinutes:
+			return Trans.authenticationInterval("2 minutes.")
+		case .threeMinutes:
+			return Trans.authenticationInterval("3 minutes.")
+		case .fourMinutes:
+			return Trans.authenticationInterval("4 minutes.")
+		case .fiveMinutes:
+			return Trans.authenticationInterval("5 minutes")
+		}
+	}
 }

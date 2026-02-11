@@ -338,8 +338,34 @@ struct Trans {
 			return attributedString
 		}
 	}()
+	/// The string for the phrase 'Open in Settings app'.
+	///
+	/// - Tag: Trans-openInSettingsApp
+	static let openInSettingsApp: String = String(localized: "Open in Settings app",
+												  table: "Legal",
+												  comment: "The string for the phrase 'Open in Settings app'.")
 
 	// MARK: - Authentication
+	/// The string for 'Require Authentication' settings.
+	///
+	/// - Tag: Trans-requireAuthentication
+	static let requireAuthentication: String = String(localized: "Require Authentication",
+													  table: "Authentication",
+													  comment: "The string for 'Require Authentication' settings.")
+	/// The string for requiring authentication immediately.
+	///
+	/// - Tag: Trans-immediateAuthenticationRequired
+	static let immediateAuthenticationRequired: String = String(localized: "Authentication is required every time you return to the app.",
+																table: "Authentication",
+																comment: "The string for requiring authentication immediately.")
+	/// The string for the 'Authentication Interval' settings description.
+	///
+	/// - Tag: Trans-authenticationInterval
+	static func authenticationInterval(_ interval: String) -> String {
+		return String(localized: "Authentication is required if the app remains in the background for more than \(interval).",
+			   table: "Authentication",
+			   comment: "The string for the 'Authentication Interval' settings description.")
+	}
 	/// The string for authenticating immediately.
 	///
 	/// - Tag: Trans-immediately
@@ -798,31 +824,31 @@ struct Trans {
 										   comment: "The string for 'this device'.")
 
 	// MARK: - Settings
-	/// The title string or the 'App Icon' settings.
+	/// The title string for the 'App Icon' settings.
 	///
 	/// - Tag: Trans-appIcon
 	static let appIcon: String = String(localized: "App Icon",
 										table: "Settings",
-										comment: "The title string or the 'App Icon' settings.")
-	/// The title string or the 'Theme Store' settings.
+										comment: "The title string for the 'App Icon' settings.")
+	/// The title string for the 'Theme Store' settings.
 	///
 	/// - Tag: Trans-themeStore
 	static let themeStore: String = String(localized: "Theme Store",
 										   table: "Settings",
-										   comment: "The title string or the 'Theme Store Grouping' settings.")
-	/// The title string or the 'Allow Notifications' settings.
+										   comment: "The title string for the 'Theme Store Grouping' settings.")
+	/// The title string for the 'Allow Notifications' settings.
 	///
 	/// - Tag: Trans-allowNotifications
 	static let allowNotifications: String = String(localized: "Allow Notifications",
 												   table: "Settings",
-												   comment: "The title string or the 'Allow Notifications' settings.")
-	/// The title string or the 'Notification Grouping' settings.
+												   comment: "The title string for the 'Allow Notifications' settings.")
+	/// The title string for the 'Notification Grouping' settings.
 	///
 	/// - Tag: Trans-notificationGrouping
 	static let notificationGrouping: String = String(localized: "Notification Grouping",
 													 table: "Settings",
-													 comment: "The title string or the 'Notification Grouping' settings.")
-	/// The title string or the 'Timezone' settings.
+													 comment: "The title string for the 'Notification Grouping' settings.")
+	/// The title string for the 'Timezone' settings.
 	///
 	/// - Tag: Trans-timezone
 	static let timezone: String = String(localized: "Timezone",
