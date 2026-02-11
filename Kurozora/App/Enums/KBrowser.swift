@@ -49,7 +49,7 @@ enum KBrowser: Int, CaseIterable {
 	var shortStringValue: String {
 		switch self {
 		case .kurozora:
-			return "Default"
+			return Trans.default
 		default:
 			return self.stringValue
 		}

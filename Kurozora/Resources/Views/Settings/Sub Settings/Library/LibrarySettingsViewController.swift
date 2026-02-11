@@ -125,7 +125,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		let currentSortTypAndOption = UserSettings.librarySortTypes[kind]?[status]
 
 		// Create default action
-		let defaultSortingAction = UIAction(title: "Default") { [weak self] _ in
+		let defaultSortingAction = UIAction(title: Trans.default) { [weak self] _ in
 			guard let self = self else { return }
 
 			var updated = UserSettings.librarySortTypes

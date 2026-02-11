@@ -37,7 +37,7 @@ extension ManageThemesCollectionViewController {
 		self.dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			// Get a supplementary view of the desired kind.
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-			titleHeaderCollectionReusableView.configure(withTitle: indexPath.section == 0 ? "Default" : "Premium", indexPath: indexPath, segueID: nil)
+			titleHeaderCollectionReusableView.configure(withTitle: indexPath.section == 0 ? Trans.default : Trans.premium, indexPath: indexPath, segueID: nil)
 
 			// Return the view.
 			return titleHeaderCollectionReusableView
