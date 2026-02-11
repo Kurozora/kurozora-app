@@ -18,6 +18,16 @@ class SoundOptionsViewController: SubSettingsViewController {
 	private var numberOfTaps: Int = 0
 	private var selectedChime: AppChimeElement?
 
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -27,7 +37,16 @@ class SoundOptionsViewController: SubSettingsViewController {
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true
 
-		self.selectedChime = Chime.shared.appChimeGroups.flatMap({ $0.chimes }).flatMap({ $0 }).first(where: { $0.name == UserSettings.selectedChime })
+		self.selectedChime = Chime.shared.appChimeGroups.flatMap { $0.chimes }
+			.flatMap { $0 }
+			.first { $0.name == UserSettings.selectedChime }
+
+		self.configureView()
+	}
+
+	// MARK: - Functions
+	private func configureView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 }
 
@@ -87,7 +106,7 @@ extension SoundOptionsViewController {
 			return chimes.first
 		}() ?? chimes.first else { return }
 
-		if sameChimeGroup && self.selectedChime?.alternativeFile != nil && self.selectedChime?.alternativeFileRequiredTaps != self.numberOfTaps {
+		if sameChimeGroup, self.selectedChime?.alternativeFile != nil, self.selectedChime?.alternativeFileRequiredTaps != self.numberOfTaps {
 			self.numberOfTaps += 1
 		} else {
 			self.numberOfTaps = 1

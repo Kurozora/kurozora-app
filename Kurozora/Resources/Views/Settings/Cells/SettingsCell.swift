@@ -35,9 +35,9 @@ class SettingsCell: KTableViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given title.
-	func configure(using title: String, secondaryTitle: String? = nil, icon: UIImage? = nil) {
+	func configure(title: String?, detail: String? = nil, icon: UIImage? = nil) {
 		self.primaryLabel?.text = title
-		self.secondaryLabel?.text = secondaryTitle
+		self.secondaryLabel?.text = detail
 
 		if let icon = icon {
 			self.iconImageView?.image = icon
@@ -48,10 +48,8 @@ class SettingsCell: KTableViewCell {
 	}
 
 	/// Configure the cell with the given details.
-	func configureCell(using sectionRow: SettingsTableViewController.Row?) {
-		self.iconImageView?.image = sectionRow?.imageValue
-		self.primaryLabel?.text = sectionRow?.primaryStringValue
-		self.secondaryLabel?.text = sectionRow?.secondaryStringValue
+	func configure(using sectionRow: SettingsTableViewController.Row?) {
+		self.configure(title: sectionRow?.primaryStringValue, detail: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue)
 
 		switch sectionRow {
 		case .motion:
@@ -79,15 +77,15 @@ class SettingsCell: KTableViewCell {
 		switch sectionRow?.accessoryValue ?? .none {
 		case .none:
 			self.chevronImageView?.isHidden = true
-			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
+			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 		case .chevron:
-			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
+			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
 		case .label:
 			self.chevronImageView?.isHidden = true
 			self.secondaryLabel?.isHidden = false
 		case .labelAndChevron:
-			self.secondaryLabel?.isHidden = reuseIdentifier == SettingsCell.reuseID
+			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
 			self.secondaryLabel?.isHidden = false
 		}

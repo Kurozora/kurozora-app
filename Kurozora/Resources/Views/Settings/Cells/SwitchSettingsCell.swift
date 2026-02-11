@@ -13,8 +13,9 @@ class SwitchSettingsCell: SettingsCell {
 	@IBOutlet var toggleSwitch: KSwitch!
 
 	// MARK: - Functions
-	func configure(title: String, isOn: Bool, tag: Int, action: UIAction) {
-		self.primaryLabel?.text = title
+	func configure(title: String, icon: UIImage? = nil, isOn: Bool, tag: Int, action: UIAction) {
+		super.configure(title: title, icon: icon)
+
 		self.toggleSwitch.isOn = isOn
 		self.toggleSwitch.tag = tag
 

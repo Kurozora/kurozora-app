@@ -16,13 +16,42 @@
                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Qd-VX-qlt" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="19.999999999999996" y="14.666666666666664" width="38.666666666666657" height="21"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Y31-RW-gUA">
+                        <rect key="frame" x="20" y="10" width="76.666666666666671" height="30"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qEb-g3-EET">
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H1B-0G-moQ" customClass="IconImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="H1B-0G-moQ" secondAttribute="bottom" id="5kX-35-8eq"/>
+                                    <constraint firstAttribute="width" constant="30" id="G2f-89-M6p"/>
+                                    <constraint firstItem="H1B-0G-moQ" firstAttribute="leading" secondItem="qEb-g3-EET" secondAttribute="leading" id="PEE-Kc-71Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="H1B-0G-moQ" secondAttribute="trailing" id="PwU-zA-Ayw"/>
+                                    <constraint firstAttribute="height" constant="30" id="apl-ZM-nX1"/>
+                                    <constraint firstItem="H1B-0G-moQ" firstAttribute="top" secondItem="qEb-g3-EET" secondAttribute="top" id="iSW-zD-ITD"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbD-SM-YPi" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="38" y="0.0" width="38.666666666666657" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="999" constant="30" id="g3o-n2-Da4"/>
+                        </constraints>
+                    </stackView>
                     <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xza-hC-5Zc" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="293" y="10" width="63" height="30"/>
                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -33,17 +62,19 @@
                 <constraints>
                     <constraint firstItem="Xza-hC-5Zc" firstAttribute="top" secondItem="8vq-1V-XNP" secondAttribute="top" constant="10" id="03d-o0-4W9"/>
                     <constraint firstAttribute="bottom" secondItem="Xza-hC-5Zc" secondAttribute="bottom" constant="10" id="2iR-Bw-lgW"/>
-                    <constraint firstItem="Xza-hC-5Zc" firstAttribute="centerY" secondItem="0Qd-VX-qlt" secondAttribute="centerY" id="bqi-WA-fTT"/>
+                    <constraint firstItem="Y31-RW-gUA" firstAttribute="top" secondItem="8vq-1V-XNP" secondAttribute="top" constant="10" id="9hr-wk-0nq"/>
+                    <constraint firstItem="Y31-RW-gUA" firstAttribute="leading" secondItem="8vq-1V-XNP" secondAttribute="leadingMargin" id="HAq-F5-eT9"/>
+                    <constraint firstItem="Xza-hC-5Zc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y31-RW-gUA" secondAttribute="trailing" constant="8" symbolic="YES" id="Ubw-DU-bJJ"/>
+                    <constraint firstAttribute="bottom" secondItem="Y31-RW-gUA" secondAttribute="bottom" constant="10" id="a2U-Y5-BIs"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Xza-hC-5Zc" secondAttribute="trailing" id="hIR-u6-zhb"/>
-                    <constraint firstItem="0Qd-VX-qlt" firstAttribute="leading" secondItem="8vq-1V-XNP" secondAttribute="leadingMargin" id="jaH-bA-jQV"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Qd-VX-qlt" secondAttribute="bottom" constant="10" id="jti-Ph-ZKy"/>
-                    <constraint firstItem="0Qd-VX-qlt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="8vq-1V-XNP" secondAttribute="top" constant="10" id="ke4-GX-bvb"/>
-                    <constraint firstItem="Xza-hC-5Zc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0Qd-VX-qlt" secondAttribute="trailing" constant="8" symbolic="YES" id="sXT-5A-PDE"/>
+                    <constraint firstItem="Y31-RW-gUA" firstAttribute="centerY" secondItem="8vq-1V-XNP" secondAttribute="centerY" id="r4L-ef-WC2"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="primaryLabel" destination="0Qd-VX-qlt" id="6DE-2I-uTy"/>
+                <outlet property="iconImageView" destination="H1B-0G-moQ" id="n2I-D9-tmY"/>
+                <outlet property="iconImageViewContrainer" destination="qEb-g3-EET" id="SMg-yO-IlI"/>
+                <outlet property="primaryLabel" destination="CbD-SM-YPi" id="m7D-pn-woN"/>
                 <outlet property="toggleSwitch" destination="Xza-hC-5Zc" id="GYm-Wx-oZQ"/>
             </connections>
             <point key="canvasLocation" x="299" y="114"/>
