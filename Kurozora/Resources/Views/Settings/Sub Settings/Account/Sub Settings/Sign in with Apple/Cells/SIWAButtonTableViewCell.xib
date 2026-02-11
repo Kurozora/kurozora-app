@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="YER-hW-6XD" customClass="SIWAButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YER-hW-6XD" id="yXu-8A-0ZC">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bLA-1a-xPe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="bLA-1a-xPe" firstAttribute="top" secondItem="yXu-8A-0ZC" secondAttribute="top" id="6oP-7l-dJc"/>
+                    <constraint firstAttribute="bottom" secondItem="bLA-1a-xPe" secondAttribute="bottom" id="9t3-Fm-qMx"/>
+                    <constraint firstItem="bLA-1a-xPe" firstAttribute="leading" secondItem="yXu-8A-0ZC" secondAttribute="leading" id="Bbp-Qx-Mu0"/>
+                    <constraint firstAttribute="trailing" secondItem="bLA-1a-xPe" secondAttribute="trailing" id="y26-0h-XOM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="rS0-Hb-p1i"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="stackView" destination="bLA-1a-xPe" id="uEx-4Z-7G0"/>
+            </connections>
+            <point key="canvasLocation" x="101" y="127"/>
+        </tableViewCell>
+    </objects>
+</document>

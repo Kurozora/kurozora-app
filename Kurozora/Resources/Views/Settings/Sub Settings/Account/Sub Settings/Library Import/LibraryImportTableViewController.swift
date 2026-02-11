@@ -7,14 +7,21 @@
 //
 
 import KurozoraKit
-import UniformTypeIdentifiers
 import UIKit
+import UniformTypeIdentifiers
 
-class LibraryImportTableViewController: ServiceTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "AccountSettings"
+class LibraryImportTableViewController: ServiceTableViewController {
+	// MARK: - Views
+	private var rightNavigationBarButton: UIBarButtonItem!
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
+	// MARK: - Initializers
+	init() {
+		super.init(style: .grouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
@@ -39,6 +46,11 @@ class LibraryImportTableViewController: ServiceTableViewController, StoryboardIn
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = "Import Library"
+
+		self.configureNavigationItems()
+
 		// Configure properties
 		self.previewImage = .Promotional.moveToKurozora
 		self.serviceType = .libraryImport
@@ -47,6 +59,18 @@ class LibraryImportTableViewController: ServiceTableViewController, StoryboardIn
 	}
 
 	// MARK: - Functions
+	/// Configures the navigation items.
+	private func configureNavigationItems() {
+		let rightNavigationBarButton = UIBarButtonItem(
+			title: "Import 📲",
+			style: .plain,
+			target: self,
+			action: #selector(rightNavigationBarButtonPressed(sender:))
+		)
+		self.rightNavigationBarButton = rightNavigationBarButton
+		self.navigationItem.rightBarButtonItem = rightNavigationBarButton
+	}
+
 	/// Dismiss the view. Used by the dismiss button when presented modally.
 	@objc func dismissButtonPressed() {
 		self.dismiss(animated: true, completion: nil)

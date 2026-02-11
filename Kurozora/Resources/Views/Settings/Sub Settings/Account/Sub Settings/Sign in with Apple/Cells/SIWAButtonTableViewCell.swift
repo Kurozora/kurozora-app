@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import AuthenticationServices
+import UIKit
 
 class SIWAButtonTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
@@ -19,13 +19,13 @@ class SIWAButtonTableViewCell: UITableViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		setupProviderSignInView()
+		self.setupProviderSignInView()
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		setupProviderSignInView()
+		self.setupProviderSignInView()
 	}
 
 	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
@@ -41,7 +41,7 @@ class SIWAButtonTableViewCell: UITableViewCell {
 		// Add width constraint
 		let widthConstraint = authorizationButton.widthAnchor.constraint(equalToConstant: 220)
 		authorizationButton.addConstraint(widthConstraint)
-		authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+		authorizationButton.addTarget(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
 
 		// Add to stack view
 		self.stackView.addArrangedSubview(authorizationButton)
@@ -49,6 +49,6 @@ class SIWAButtonTableViewCell: UITableViewCell {
 
 	/// Handles the Apple ID button press.
 	@objc func handleAuthorizationAppleIDButtonPress() {
-		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
+		self.onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
 	}
 }

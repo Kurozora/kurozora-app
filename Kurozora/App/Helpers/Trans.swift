@@ -853,7 +853,43 @@ struct Trans {
 	/// - Tag: Trans-timezone
 	static let timezone: String = String(localized: "Timezone",
 										 table: "Settings",
-										 comment: "The title string or the 'Timezone' settings.")
+										 comment: "The title string for the 'Timezone' settings.")
+	/// The title string for the 'Sign in with Apple' settings.
+	///
+	/// - Tag: Trans-signInWithApple
+	static let signInWithApple: String = String(localized: "Sign in with Apple",
+												table: "Settings",
+												comment: "The title string for the 'Sign in with Apple' settings.")
+	/// The title string for the 'Manage Active Sessions' settings.
+	///
+	/// - Tag: Trans-manageActiveSessions
+	static let manageActiveSessions: String = String(localized: "Manage Active Sessions",
+													 table: "Settings",
+													 comment: "The title string for the 'Manage Active Sessions' settings.")
+	/// The title string for the 'Import Library' settings.
+	///
+	/// - Tag: Trans-importLibrary
+	static let importLibrary: String = String(localized: "Import Library",
+											  table: "Settings",
+											  comment: "The title string for the 'Import Library' settings.")
+	/// The title string for the 'Delete Library' settings.
+	///
+	/// - Tag: Trans-deleteLibrary
+	static let deleteLibrary: String = String(localized: "Delete Library",
+											  table: "Settings",
+											  comment: "The title string for the 'Delete Library' settings.")
+	/// The title string for the 'Delete Account' settings.
+	///
+	/// - Tag: Trans-deleteAccount
+	static let deleteAccount: String = String(localized: "Delete Account",
+											  table: "Settings",
+											  comment: "The title string for the 'Delete Account' settings button.")
+	/// The title string for the 'Sign Out' settings.
+	///
+	/// - Tag: Trans-signOut
+	static let signOut: String = String(localized: "Sign Out",
+										table: "Settings",
+										comment: "The title string for the 'Sign Out' settings button.")
 	/// The headline string for the account settings option.
 	///
 	/// - Tag: Trans-accountHeadline
@@ -1032,6 +1068,12 @@ struct Trans {
 												   comment: "The footer string for the 'Reduce Motion' settings option.")
 
 	// MARK: - Sounds & Haptics
+	/// The string for the 'Chime & Sound Effects' settings option.
+	///
+	/// - Tag: Trans-chimeAndSoundEffects
+	static let chimeAndSoundEffects: String = String(localized: "Chime & Sound Effects",
+													 table: "Sounds & Haptics",
+													 comment: "The string for the 'Chime & Sound Effects' settings option.")
 	/// The string for the 'Chime Sound' settings option.
 	///
 	/// - Tag: Trans-chimeSound
@@ -1064,6 +1106,16 @@ struct Trans {
 											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'Default'.
+	///
+	/// - Tag: Trans-default
+	static let `default`: String = String(localized: "Default",
+										  comment: "The string for the word 'Default'.")
+	/// The string for the word 'Premium'.
+	///
+	/// - Tag: Trans-premium
+	static let premium: String = String(localized: "Premium",
+										comment: "The string for the word 'Premium'.")
 	/// The string for the word 'today'.
 	///
 	/// - Tag: Trans-today

@@ -6,22 +6,43 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
-import KurozoraKit
 import AuthenticationServices
+import KurozoraKit
+import UIKit
 
 class SignInWithAppleTableViewController: ServiceTableViewController {
+	// MARK: - Initializers
+	init() {
+		super.init(style: .grouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = "Sign in with Apple"
+
 		// Configure properties
-        self.previewImage = .Promotional.signInWithApple
+		self.previewImage = .Promotional.signInWithApple
 		self.serviceType = .signInWithApple
 	}
 }
 
 // MARK: - UITableViewDataSource
 extension SignInWithAppleTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			ServicePreviewTableViewCell.self,
+			ServiceHeaderTableViewCell.self,
+			ServiceFooterTableViewCell.self,
+			SIWAButtonTableViewCell.self
+		]
+	}
+
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .body:

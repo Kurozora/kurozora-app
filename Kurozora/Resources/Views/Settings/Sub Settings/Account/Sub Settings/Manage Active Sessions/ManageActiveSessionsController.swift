@@ -11,11 +11,19 @@ import KurozoraKit
 import MapKit
 import UIKit
 
-class ManageActiveSessionsController: KTableViewController, SectionFetchable, StoryboardInstantiable {
-	static var storyboardName: String = "AccountSettings"
+class ManageActiveSessionsController: KTableViewController, SectionFetchable {
+	// MARK: - Views
+	private let mapContainerView = UIView()
+	private let mapView = MKMapView()
 
-	// MARK: - IBOutlets
-	@IBOutlet var mapView: MKMapView!
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
 
 	// MARK: - Properties
 	var sessionIdentities: [SessionIdentity] = []
@@ -58,12 +66,14 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable, St
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
+		self.title = "Active Sessions"
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions!")
 		#endif
 
+		self.configureView()
 		self.configureDataSource()
 
 		// Fetch sessions
@@ -73,26 +83,64 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable, St
 		}
 
 		// Configure map view
+		self.mapView.delegate = self
 		self.mapView.showsUserLocation = true
-
-		// Configure table view height
-		self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
+		self.mapView.pointOfInterestFilter = .excludingAll
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 
-		if UIDevice.isLandscape {
-			self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
-		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
-			}
-		}
+		coordinator.animate(alongsideTransition: { [weak self] _ in
+			self?.updateTableHeaderHeight()
+		})
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		self.updateTableHeaderHeight()
 	}
 
 	// MARK: - Functions
+	/// The shared settings used to initialize the table view.
+	private func configureView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+		self.configureTableHeaderView()
+	}
+
+	private func configureTableHeaderView() {
+		self.mapContainerView.backgroundColor = .white
+		self.mapContainerView.addSubview(self.mapView)
+		self.mapView.translatesAutoresizingMaskIntoConstraints = false
+
+		NSLayoutConstraint.activate([
+			self.mapView.leadingAnchor.constraint(equalTo: self.mapContainerView.leadingAnchor),
+			self.mapView.trailingAnchor.constraint(equalTo: self.mapContainerView.trailingAnchor),
+			self.mapView.topAnchor.constraint(equalTo: self.mapContainerView.topAnchor),
+			self.mapView.bottomAnchor.constraint(equalTo: self.mapContainerView.bottomAnchor)
+		])
+
+		self.tableView.tableHeaderView = self.mapContainerView
+		self.updateTableHeaderHeight()
+	}
+
+	private func updateTableHeaderHeight() {
+		guard self.tableView.tableHeaderView === self.mapContainerView else { return }
+
+		let height = self.view.frame.height / 3
+		let width = self.tableView.bounds.width
+		guard width > 0 else { return }
+
+		var frame = self.mapContainerView.frame
+		frame.size.width = width
+		frame.size.height = height
+
+		if self.mapContainerView.frame != frame {
+			self.mapContainerView.frame = frame
+			self.tableView.tableHeaderView = self.mapContainerView
+		}
+	}
+
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
 		Task { [weak self] in

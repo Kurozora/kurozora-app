@@ -6,12 +6,21 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class LibraryDeleteTableViewController: ServiceTableViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
+	// MARK: - Views
+	private var rightNavigationBarButton: UIBarButtonItem!
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .grouped)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
 
 	// MARK: - Properties
 	var selectedLibraryKind: KKLibrary.Kind? {
@@ -23,14 +32,32 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.title = "Delete Library"
+
+		self.configureNavigationItems()
+
 		// Confgure properties
-        self.previewImage = .Promotional.deleteLibrary
+		self.previewImage = .Promotional.deleteLibrary
 		self.serviceType = .libraryDelete
 
 		self.rightNavigationBarButton.isEnabled = false
 	}
 
 	// MARK: - Functions
+	/// Configures the navigation items.
+	private func configureNavigationItems() {
+		let rightNavigationBarButton = UIBarButtonItem(
+			title: "Delete",
+			style: .plain,
+			target: self,
+			action: #selector(rightNavigationBarButtonPressed(sender:))
+		)
+		rightNavigationBarButton.tintColor = UIColor(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1)
+		self.rightNavigationBarButton = rightNavigationBarButton
+		self.navigationItem.rightBarButtonItem = rightNavigationBarButton
+	}
+
 	/// Dismiss the view. Used by the dismiss button when presented modally.
 	@objc func dismissButtonPressed() {
 		self.dismiss(animated: true, completion: nil)
