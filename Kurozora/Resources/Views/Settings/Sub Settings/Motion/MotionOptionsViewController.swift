@@ -15,7 +15,7 @@ protocol MotionOptionsViewControllerDelegate: AnyObject {
 class MotionOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
 	weak var delegate: MotionOptionsViewControllerDelegate?
-	private var selectedAnimation: SplashScreenAnimation?
+	private var selectedAnimation: SplashScreenAnimation = UserSettings.currentSplashScreenAnimation
 
 	// MARK: - Initializers
 	init() {
@@ -32,11 +32,6 @@ class MotionOptionsViewController: SubSettingsViewController {
 		super.viewDidLoad()
 
 		self.title = Trans.splashScreen
-
-		// Disable activity indicator
-		self._prefersActivityIndicatorHidden = true
-
-		self.selectedAnimation = UserSettings.currentSplashScreenAnimation
 	}
 }
 

@@ -155,7 +155,7 @@ extension MotionSettingsViewController {
 			}
 			let currentSplashScreenAnimation = UserSettings.currentSplashScreenAnimation
 
-			cell.configure(using: Trans.splashScreen, secondaryTitle: currentSplashScreenAnimation.titleValue)
+			cell.configure(title: Trans.splashScreen, detail: currentSplashScreenAnimation.titleValue)
 			return cell
 		case .reduceMotion:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
