@@ -26,7 +26,6 @@ class SettingsCell: KTableViewCell {
 			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 		}
 	}
-	@IBOutlet weak var popupButton: KButton?
 
 	// MARK: - Properties
 	override var isSkeletonEnabled: Bool {

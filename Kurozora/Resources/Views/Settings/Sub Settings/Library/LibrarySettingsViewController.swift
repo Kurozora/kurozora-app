@@ -10,32 +10,18 @@ import KurozoraKit
 import UIKit
 
 class LibrarySettingsViewController: SubSettingsViewController {
-	// MARK: _ IBOutlets
-	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
-
-	@IBOutlet weak var inProgressLabel: KLabel!
-	@IBOutlet weak var inProgressButton: KButton!
-
-	@IBOutlet weak var planningLabel: KLabel!
-	@IBOutlet weak var planningButton: KButton!
-
-	@IBOutlet weak var completedLabel: KLabel!
-	@IBOutlet weak var completedButton: KButton!
-
-	@IBOutlet weak var onHoldLabel: KLabel!
-	@IBOutlet weak var onHoldButton: KButton!
-
-	@IBOutlet weak var droppedLabel: KLabel!
-	@IBOutlet weak var droppedButton: KButton!
-
-	@IBOutlet weak var interestedLabel: KLabel!
-	@IBOutlet weak var interestedButton: KButton!
-
-	@IBOutlet weak var ignoredLabel: KLabel!
-	@IBOutlet weak var ignoredButton: KButton!
-
 	// MARK: - Properties
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	private var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -43,49 +29,34 @@ class LibrarySettingsViewController: SubSettingsViewController {
 
 		self.title = Trans.library
 
-		// Configure settings
-		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
-		self.libraryKindSegmentedControl.selectedSegmentIndex = UserSettings.libraryKind.rawValue
-
-		self.configureLabels()
-
-		self.planningLabel.text = KKLibrary.Status.planning.stringValue
-		self.completedLabel.text = KKLibrary.Status.completed.stringValue
-		self.droppedLabel.text = KKLibrary.Status.dropped.stringValue
-		self.onHoldLabel.text = KKLibrary.Status.onHold.stringValue
-		self.interestedLabel.text = KKLibrary.Status.interested.stringValue
-		self.ignoredLabel.text = KKLibrary.Status.ignored.stringValue
-
-		self.configureButtons()
+		self.configureView()
 	}
 
-	// MARK: Functions
-	private func configureLabels() {
-		switch self.libraryKind {
-		case .games:
-			self.inProgressLabel.text = KKLibrary.Status.inProgress.gameStringValue
-		case .literatures:
-			self.inProgressLabel.text = KKLibrary.Status.inProgress.literatureStringValue
-		case .shows:
-			self.inProgressLabel.text = KKLibrary.Status.inProgress.showStringValue
+	// MARK: - Functions
+	private func configureView() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
+
+	private func statusTitle(for status: KKLibrary.Status) -> String {
+		switch status {
+		case .inProgress:
+			switch self.libraryKind {
+			case .games:
+				return status.gameStringValue
+			case .literatures:
+				return status.literatureStringValue
+			case .shows:
+				return status.showStringValue
+			}
+		case .none,
+		     .planning,
+		     .completed,
+		     .dropped,
+		     .onHold,
+		     .interested,
+		     .ignored:
+			return status.stringValue
 		}
-
-		self.planningLabel.text = KKLibrary.Status.planning.stringValue
-		self.completedLabel.text = KKLibrary.Status.completed.stringValue
-		self.droppedLabel.text = KKLibrary.Status.dropped.stringValue
-		self.onHoldLabel.text = KKLibrary.Status.onHold.stringValue
-		self.interestedLabel.text = KKLibrary.Status.interested.stringValue
-		self.ignoredLabel.text = KKLibrary.Status.ignored.stringValue
-	}
-
-	private func configureButtons() {
-		self.configureSortTypeButton(self.inProgressButton, status: .inProgress)
-		self.configureSortTypeButton(self.planningButton, status: .planning)
-		self.configureSortTypeButton(self.completedButton, status: .completed)
-		self.configureSortTypeButton(self.droppedButton, status: .dropped)
-		self.configureSortTypeButton(self.onHoldButton, status: .onHold)
-		self.configureSortTypeButton(self.interestedButton, status: .interested)
-		self.configureSortTypeButton(self.ignoredButton, status: .ignored)
 	}
 
 	private func configureSortTypeButton(_ button: UIButton, status: KKLibrary.Status) {
@@ -119,10 +90,8 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	fileprivate func populateSortActions(_ button: UIButton, status: KKLibrary.Status) {
 		var menuItems: [UIMenuElement] = []
 
-		let selectedKindIndex = self.libraryKindSegmentedControl.selectedSegmentIndex
-		guard let kind = KKLibrary.Kind(rawValue: selectedKindIndex) else { return }
-
-		let currentSortTypAndOption = UserSettings.librarySortTypes[kind]?[status]
+		let kind = self.libraryKind
+		let currentSortTypeAndOption = UserSettings.librarySortTypes[kind]?[status]
 
 		// Create default action
 		let defaultSortingAction = UIAction(title: Trans.default) { [weak self] _ in
@@ -153,10 +122,10 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		KKLibrary.SortType.allCases.forEach { [weak self] sortType in
 			guard let self = self else { return }
 			var subMenuItems: [UIAction] = []
-			let sortTypeSelected = currentSortTypAndOption?.sortType == sortType
+			let sortTypeSelected = currentSortTypeAndOption?.sortType == sortType
 
 			for option in sortType.optionValue {
-				let sortOptionSelected = currentSortTypAndOption?.sortOption == option
+				let sortOptionSelected = currentSortTypeAndOption?.sortOption == option
 				let actionIsOn = sortTypeSelected && sortOptionSelected
 
 				let action = UIAction(title: option.stringValue, image: option.imageValue, state: actionIsOn ? .on : .off) { _ in
@@ -188,12 +157,101 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		button.menu = UIMenu(title: "", children: menuItems)
 	}
 
-	// MARK: - IBActions
-	@IBAction func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
+	@objc private func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
 		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 
-		self.configureLabels()
-		self.configureButtons()
+		self.tableView.reloadData()
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension LibrarySettingsViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			SegmentedControlSettingsCell.self,
+			MenuSettingsCell.self
+		]
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension LibrarySettingsViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return Section.allCases.count
+	}
+
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let section = Section(rawValue: section) else { return 0 }
+		return section.rows.count
+	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let section = Section(rawValue: indexPath.section),
+			let row = section.rows[safe: indexPath.row]
+		else {
+			return UITableViewCell()
+		}
+
+		switch row {
+		case .libraryKind:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SegmentedControlSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SegmentedControlSettingsCell.reuseID)")
+			}
+			let action = UIAction { [weak self] action in
+				guard
+					let self = self,
+					let segmentedControl = action.sender as? UISegmentedControl
+				else { return }
+				self.libraryKindSegmentedControlDidChange(segmentedControl)
+			}
+			cell.configure(title: Trans.libraryType, segmentTitles: KKLibrary.Kind.allString, selectedSegmentIndex: self.libraryKind.rawValue, action: action)
+			return cell
+		case .status(let status):
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(MenuSettingsCell.reuseID)")
+			}
+			cell.configure(title: self.statusTitle(for: status))
+			self.configureSortTypeButton(cell.menuActionButton, status: status)
+			return cell
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		guard let section = Section(rawValue: section) else { return nil }
+
+		switch section {
+		case .sorting:
+			return Trans.sorting
+		}
+	}
+}
+
+// MARK: - Sections and Rows
+private extension LibrarySettingsViewController {
+	enum Section: Int, CaseIterable {
+		case sorting = 0
+
+		var rows: [Row] {
+			switch self {
+			case .sorting:
+				return [
+					.libraryKind,
+					.status(.inProgress),
+					.status(.planning),
+					.status(.completed),
+					.status(.onHold),
+					.status(.dropped),
+					.status(.interested),
+					.status(.ignored)
+				]
+			}
+		}
+	}
+
+	enum Row {
+		case libraryKind
+		case status(KKLibrary.Status)
 	}
 }

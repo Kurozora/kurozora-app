@@ -1365,6 +1365,16 @@ struct Trans {
 	/// - Tag: Trans-library
 	static let library: String = String(localized: "Library",
 										comment: "The string for the word 'library'.")
+	/// The string for the word 'Sorting'.
+	///
+	/// - Tag: Trans-sorting
+	static let sorting: String = String(localized: "Sorting",
+										comment: "The string for the word 'Sorting'.")
+	/// The string for the word 'Library Type'.
+	///
+	/// - Tag: Trans-libraryType
+	static let libraryType: String = String(localized: "Library Type",
+											comment: "The string for the word 'Library Type'.")
 	/// The string for the word 'your library'.
 	///
 	/// - Tag: Trans-yourLibrary
