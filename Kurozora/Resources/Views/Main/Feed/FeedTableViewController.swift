@@ -253,7 +253,7 @@ class FeedTableViewController: KTableViewController {
 
 	/// Performs segue to the settings view.
 	func segueToSettings() {
-		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		self.present(settingsSplitViewController, animated: true)
 	}

@@ -62,6 +62,16 @@ class SettingsTableViewController: KTableViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	init() {
+		super.init(style: .insetGrouped)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	// MARK: - View
 	override func themeWillReload() {
 		super.themeWillReload()
@@ -147,14 +157,14 @@ class SettingsTableViewController: KTableViewController {
 		case .switchAccountSegue: return SwitchAccountsTableViewController()
 		case .keysSegue: return DebugSettingsTableViewController()
 		case .browserSegue: return BrowserSettingsTableViewController()
-		case .displaySegue: return DisplayTableViewController()
+		case .displaySegue: return DisplaySettingsTableViewController()
 		case .iconSegue: return ManageIconTableViewController()
 		case .librarySegue: return LibrarySettingsViewController()
 		case .motionSegue: return MotionSettingsViewController()
 		case .themeSegue: return ManageThemesCollectionViewController()
 		case .notificationSegue: return NotificationsSettingsViewController()
 		case .soundSegue: return SoundSettingsViewController()
-		case .biometricsSegue: return AuthenticationTableViewController()
+		case .biometricsSegue: return AuthenticationSettingsViewController()
 		case .privacySegue: return PrivacySettingsViewController()
 		case .subscriptionSegue: return SubscriptionCollectionViewController()
 		case .tipJarSegue: return TipJarCollectionViewController()
@@ -209,7 +219,7 @@ extension SettingsTableViewController {
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.reuseID)")
 		}
-		settingsCell.configureCell(using: settingsRow)
+		settingsCell.configure(using: settingsRow)
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			settingsCell.contentView.theme_backgroundColor = nil
@@ -324,8 +334,8 @@ extension SettingsTableViewController {
 			self.showDetailViewController(SegueIdentifiers.browserSegue, sender: nil)
 			return
 		case .cache:
-			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "The number you see in Kurozora might not match the one in the Settings app. That’s because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.", defaultActionButtonTitle: Trans.cancel)
-			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
+			let alertController = self.presentAlertController(title: Trans.clearAllCache, message: Trans.clearAllCacheMessage, defaultActionButtonTitle: Trans.cancel)
+			alertController.addAction(UIAlertAction(title: Trans.clearCacheAction, style: .destructive) { _ in
 				// Clear RichLink cache right away.
 				RichLink.shared.clearCache()
 
@@ -342,11 +352,15 @@ extension SettingsTableViewController {
 				tableView.reloadData()
 			})
 			return
-		case .displayBlindness: break
+		case .displayBlindness:
+			self.showDetailViewController(SegueIdentifiers.displaySegue, sender: nil)
+			return
 		case .icon:
 			self.showDetailViewController(SegueIdentifiers.iconSegue, sender: nil)
 			return
-		case .library: break
+		case .library:
+			self.showDetailViewController(SegueIdentifiers.librarySegue, sender: nil)
+			return
 		case .motion:
 			self.showDetailViewController(SegueIdentifiers.motionSegue, sender: nil)
 			return
@@ -363,7 +377,8 @@ extension SettingsTableViewController {
 			}
 			return
 		case .soundsAndHaptics:
-			break
+			self.showDetailViewController(SegueIdentifiers.soundSegue, sender: nil)
+			return
 		case .signalSticker:
 			if let signalStickerURL = URL.signalStickerURL {
 				UIApplication.shared.open(signalStickerURL)
@@ -374,8 +389,12 @@ extension SettingsTableViewController {
 				UIApplication.shared.open(telegramStickerURL)
 			}
 			return
-		case .biometrics: break
-		case .privacy: break
+		case .biometrics:
+			self.showDetailViewController(SegueIdentifiers.biometricsSegue, sender: nil)
+			return
+		case .privacy:
+			self.showDetailViewController(SegueIdentifiers.privacySegue, sender: nil)
+			return
 		case .unlockFeatures:
 			self.showDetailViewController(SegueIdentifiers.subscriptionSegue, sender: nil)
 			return
@@ -413,10 +432,6 @@ extension SettingsTableViewController {
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return
 		}
-
-		if let identifierString = sectionRow.segueIdentifier {
-			self.performSegue(withIdentifier: identifierString, sender: nil)
-		}
 	}
 
 	/// Authenticate user and perform segue.
@@ -426,13 +441,7 @@ extension SettingsTableViewController {
 		Task {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
-
-			switch identifier {
-			case .notificationSegue:
-				self.showDetailViewController(identifier, sender: nil)
-			default:
-				self.performSegue(withIdentifier: identifier, sender: nil)
-			}
+			self.showDetailViewController(identifier, sender: nil)
 		}
 	}
 }

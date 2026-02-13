@@ -1034,6 +1034,24 @@ struct Trans {
 	static let followTwitter: String = String(localized: "Follow us on Twitter",
 											  table: "Settings",
 											  comment: "The string for the 'Follow us on Twitter' settings option.")
+	/// The title string for the 'Clear all Cache?' alert.
+	///
+	/// - Tag: Trans-clearAllCache
+	static let clearAllCache: String = String(localized: "Clear all Cache?",
+											  table: "Settings",
+											  comment: "The title string for the 'Clear all Cache?' alert.")
+	/// The message string for the clear cache alert.
+	///
+	/// - Tag: Trans-clearAllCacheMessage
+	static let clearAllCacheMessage: String = String(localized: "The number you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.",
+													 table: "Settings",
+													 comment: "The message string for the clear cache alert explaining cache behavior.")
+	/// The title string for the 'Clear' destructive button in the cache alert.
+	///
+	/// - Tag: Trans-clearCacheAction
+	static let clearCacheAction: String = String(localized: "Clear 🗑",
+												 table: "Settings",
+												 comment: "The title string for the destructive 'Clear' button in the cache alert.")
 
 	// MARK: - Motion Settings
 	/// The string for the 'Animations' settings header.

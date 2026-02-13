@@ -226,7 +226,7 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openSettings(on viewController: UIViewController? = UIApplication.topViewController) {
-		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		viewController?.present(settingsSplitViewController, animated: true)
 	}

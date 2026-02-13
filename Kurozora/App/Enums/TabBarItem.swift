@@ -145,7 +145,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .search:
 			return SearchResultsCollectionViewController()
 		case .settings:
-			return SettingsSplitViewController.instantiate()
+			return SettingsSplitViewController()
 		}
 	}
 

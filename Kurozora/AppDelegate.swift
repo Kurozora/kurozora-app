@@ -150,7 +150,7 @@ extension AppDelegate {
 			#endif
 		}
 
-		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
 	}
@@ -170,10 +170,10 @@ extension AppDelegate {
 
 	/// User chose the "View My Account..." from the account menu.
 	@objc func handleViewMyAccount(_ sender: AnyObject) {
-		let settingsSplitViewController = SettingsSplitViewController.instantiate()
+		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
-			settingsTableViewController.performSegue(withIdentifier: SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
+			settingsTableViewController.showDetailViewController(SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
 		}
 		UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 	}

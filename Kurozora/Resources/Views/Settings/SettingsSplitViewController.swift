@@ -8,8 +8,18 @@
 
 import UIKit
 
-class SettingsSplitViewController: UISplitViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Settings"
+class SettingsSplitViewController: UISplitViewController {
+	// MARK: - Initializers
+	init() {
+		super.init(style: .doubleColumn)
+		self.setViewController(KNavigationController(rootViewController: SettingsTableViewController()), for: .primary)
+		self.setViewController(KNavigationController(rootViewController: DisplaySettingsTableViewController()), for: .secondary)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	// MARK: - Properties
 	private var gradientView: GradientView = {

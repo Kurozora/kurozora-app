@@ -115,6 +115,9 @@
     "Debut" : {
       "comment" : "The string for the word 'debut'."
     },
+    "Default" : {
+      "comment" : "The string for the word 'Default'."
+    },
     "Defunct" : {
       "comment" : "The string for the word 'defunct'."
     },
@@ -248,6 +251,9 @@
     "Library" : {
       "comment" : "The string for the word 'library'."
     },
+    "Library Type" : {
+      "comment" : "The string for the word 'Library Type'."
+    },
     "Literatures" : {
       "comment" : "The string for the word 'literatures'."
     },
@@ -355,6 +361,9 @@
     },
     "Please type a valid Kurozora Account 😣" : {
       "comment" : "The subheadline string for resetting password alert."
+    },
+    "Premium" : {
+      "comment" : "The string for the word 'Premium'."
     },
     "Preview" : {
       "comment" : "The string for the word 'preview'."
@@ -491,6 +500,12 @@
     },
     "Songs" : {
       "comment" : "The string for the word 'songs'."
+    },
+    "Sort" : {
+      "comment" : "The string for the word 'sort'."
+    },
+    "Sorting" : {
+      "comment" : "The string for the word 'Sorting'."
     },
     "Stickers" : {
       "comment" : "The string for the word 'stickers'."
