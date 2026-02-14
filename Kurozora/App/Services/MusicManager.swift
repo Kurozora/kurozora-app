@@ -56,10 +56,18 @@ final class MusicManager: NSObject {
 			.store(in: &self.subscriptions)
 
 		Task {
+			_ = await MusicAuthorization.request()
+
 			do {
-				let capabilities = try await SKCloudServiceController().requestCapabilities()
-				self.hasAMSubscription = !capabilities.contains(.musicCatalogSubscriptionEligible) && capabilities.contains(.musicCatalogPlayback)
+				if #available(iOS 18.0, *) {
+					let currentMusicSubscription = try await MusicSubscription.current
+					self.hasAMSubscription = !currentMusicSubscription.canBecomeSubscriber && currentMusicSubscription.canPlayCatalogContent
+				} else {
+					let capabilities = try await SKCloudServiceController().requestCapabilities()
+					self.hasAMSubscription = !capabilities.contains(.musicCatalogSubscriptionEligible) && capabilities.contains(.musicCatalogPlayback)
+				}
 			} catch {
+				print("----- MusicKit init error:", error.localizedDescription)
 				self.hasAMSubscription = false
 			}
 
