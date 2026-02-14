@@ -115,6 +115,7 @@ private extension KTextView {
 		self.theme_textColor = KThemePicker.textColor.rawValue
 		self.theme_tintColor = KThemePicker.tintColor.rawValue
 
+		self.backgroundColor = nil
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
 		self.font = .preferredFont(forTextStyle: .body)

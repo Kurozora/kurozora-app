@@ -222,6 +222,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	/// Configure the views.
 	private func configureViews() {
 		self.configureAchievementsButton()
+		self.configureEditProfileButton()
 	}
 
 	/// Configures the more bar button item.
@@ -243,6 +244,14 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 	fileprivate func configureNavigationItems() {
 		self.configureMoreBarButtonItem()
 		self.configurePostMessageBarButtonItem()
+	}
+
+	/// Configure the edit profile button.
+	private func configureEditProfileButton() {
+		self.editProfileButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.present(SegueIdentifiers.editProfileSegue, sender: self)
+		}, for: .touchUpInside)
 	}
 
 	/// Configure the achievements button.
@@ -553,7 +562,8 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 		case .followingSegue: return UsersListCollectionViewController()
 		case .followersSegue: return UsersListCollectionViewController()
 		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
-		case .editProfileSegue, .reviewsSegue: return nil
+		case .editProfileSegue: return KNavigationController(rootViewController: EditProfileViewController(user: self.user))
+		case .reviewsSegue: return nil
 		}
 	}
 
@@ -581,7 +591,8 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 			else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessage.id
 			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
-		case .editProfileSegue, .reviewsSegue: break
+		case .editProfileSegue, .reviewsSegue:
+			break
 		}
 	}
 
@@ -601,9 +612,7 @@ class ProfileTableViewController: KTableViewController, StoryboardInstantiable {
 			guard let feedMessageID = sender as? KurozoraItemID else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessageID
 		case .editProfileSegue:
-			guard let kNavigationController = segue.destination as? KNavigationController else { return }
-			guard let editProfileViewController = kNavigationController.viewControllers.first as? EditProfileViewController else { return }
-			editProfileViewController.user = self.user
+			break
 		}
 	}
 }
