@@ -25,6 +25,14 @@ extension UIView {
 		set {
 			self.layer.masksToBounds = true
 			self.layer.cornerRadius = abs(CGFloat(Int(newValue * 100)) / 100)
+
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				if let button = self as? KTintedButton {
+					button.clipsToBounds = false
+					button.layer.masksToBounds = false
+					button.configuration?.background.cornerRadius = self.layer.cornerRadius
+				}
+			}
 		}
 	}
 

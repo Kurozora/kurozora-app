@@ -268,7 +268,7 @@ class FeedTableViewController: KTableViewController {
 		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard isSignedIn else { return }
 
-		let profileTableViewController = ProfileTableViewController.instantiate()
+		let profileTableViewController = ProfileTableViewController()
 		self.show(profileTableViewController, sender: nil)
 	}
 
