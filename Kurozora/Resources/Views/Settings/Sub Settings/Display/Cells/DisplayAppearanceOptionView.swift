@@ -30,8 +30,7 @@ final class DisplayAppearanceOptionView: UIView {
 		imageView.contentMode = .scaleAspectFit
 		imageView.theme_tintColor = KThemePicker.tintColor.rawValue
 		imageView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
-		imageView.layer.cornerRadius = 15
-		imageView.clipsToBounds = true
+		imageView.layerCornerRadius = 15
 		return imageView
 	}()
 

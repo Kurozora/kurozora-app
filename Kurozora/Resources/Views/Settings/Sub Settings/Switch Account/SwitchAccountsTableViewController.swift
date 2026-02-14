@@ -84,7 +84,7 @@ extension SwitchAccountsTableViewController {
 			fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.self)")
 		}
 		let accountKey = self.accounts[indexPath.item]
-		selectableSettingsCell.primaryLabel?.text = accountKey
+		selectableSettingsCell.configure(title: accountKey)
 		selectableSettingsCell.setSelected(accountKey == UserSettings.selectedAccount)
 		return selectableSettingsCell
 	}
