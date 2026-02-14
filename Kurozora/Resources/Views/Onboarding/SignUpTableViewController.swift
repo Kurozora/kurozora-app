@@ -6,13 +6,18 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - Properties
-	private(set) var profileImageView: ProfileImageView!
-	private(set) var placeholderProfileImageEditButton: UIButton!
+	private let headerView = UIView()
+	private let titleLabel = KLabel()
+	private let subtitleLabel = KLabel()
+	private let circularView = CircularView()
+	private let profileImageView = ProfileImageView(frame: .zero)
+	private let overlayButton = KButton()
+	private let placeholderProfileImageEditButton = UIButton()
 
 	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
 	var originalProfileImage: UIImage! = UIImage() {
@@ -20,11 +25,13 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			self.editedProfileImage = self.originalProfileImage
 		}
 	}
+
 	var editedProfileImage: UIImage! = UIImage() {
 		didSet {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+
 	var editedProfileImageURL: URL?
 	var isSIWA = false
 	var onSignUp: (() -> Void)?
@@ -33,12 +40,16 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.configureTableHeaderView()
-		self.configureViews()
+		self.configureView()
 
 		// Configure properties
 		self.originalProfileImage = self.placeholderImage()
 		self.accountOnboardingType = self.isSIWA ? .siwa : .signUp
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		self.updateTableHeaderWidth()
 	}
 
 	// MARK: - Functions
@@ -144,106 +155,128 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 // MARK: - Configure Views
 private extension SignUpTableViewController {
-	func configureTableHeaderView() {
-		let headerView = UIView()
-		headerView.frame = CGRect(x: 0, y: 0, width: 0, height: 200)
-
-		// Title label
-		let titleLabel = KLabel()
-		titleLabel.text = Trans.Onboarding.signUpHeadline
-		titleLabel.font = .preferredFont(forTextStyle: .title1)
-		titleLabel.textColor = .white
-		titleLabel.textAlignment = .center
-		titleLabel.translatesAutoresizingMaskIntoConstraints = false
-		headerView.addSubview(titleLabel)
-
-		// Subtitle label
-		let subtitleLabel = KLabel()
-		subtitleLabel.text = Trans.Onboarding.signUpSubheadline
-		subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
-		subtitleLabel.textColor = .white
-		subtitleLabel.textAlignment = .center
-		subtitleLabel.numberOfLines = 0
-		subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		headerView.addSubview(subtitleLabel)
-
-		// Circular view with profile image
-		let circularView = CircularView()
-		circularView.translatesAutoresizingMaskIntoConstraints = false
-		headerView.addSubview(circularView)
-
-		let profileImageView = ProfileImageView(frame: .zero)
-		profileImageView.backgroundColor = UIColor(red: 0.584, green: 0.616, blue: 0.678, alpha: 1.0)
-		profileImageView.translatesAutoresizingMaskIntoConstraints = false
-		circularView.addSubview(profileImageView)
-		self.profileImageView = profileImageView
-
-		let overlayButton = KButton(type: .custom)
-		overlayButton.clipsToBounds = true
-		overlayButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-		overlayButton.setTitleColor(UIColor(red: 1, green: 0.576, blue: 0, alpha: 1), for: .normal)
-		overlayButton.translatesAutoresizingMaskIntoConstraints = false
-		overlayButton.addTarget(self, action: #selector(chooseImageButtonPressed(_:)), for: .touchUpInside)
-		circularView.addSubview(overlayButton)
-
-		// Pencil icon button
-		let pencilButton = UIButton(type: .system)
-		pencilButton.isUserInteractionEnabled = false
-		pencilButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
-		pencilButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
-		pencilButton.setImage(UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small)), for: .normal)
-		pencilButton.translatesAutoresizingMaskIntoConstraints = false
-		headerView.addSubview(pencilButton)
-		self.placeholderProfileImageEditButton = pencilButton
-
-		NSLayoutConstraint.activate([
-			// Title label
-			titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
-			titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-			titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
-			headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor),
-
-			// Subtitle label
-			subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-			subtitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
-			subtitleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
-			headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: subtitleLabel.trailingAnchor),
-
-			// Circular view
-			circularView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 30),
-			circularView.centerXAnchor.constraint(equalTo: subtitleLabel.centerXAnchor),
-			circularView.widthAnchor.constraint(equalToConstant: 80),
-			circularView.heightAnchor.constraint(equalToConstant: 80),
-			headerView.bottomAnchor.constraint(equalTo: circularView.bottomAnchor, constant: 10),
-
-			// Profile image view
-			profileImageView.topAnchor.constraint(equalTo: circularView.topAnchor),
-			profileImageView.leadingAnchor.constraint(equalTo: circularView.leadingAnchor),
-			profileImageView.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
-			profileImageView.bottomAnchor.constraint(equalTo: circularView.bottomAnchor),
-
-			// Overlay button
-			overlayButton.topAnchor.constraint(equalTo: circularView.topAnchor),
-			overlayButton.leadingAnchor.constraint(equalTo: circularView.leadingAnchor),
-			overlayButton.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
-			overlayButton.bottomAnchor.constraint(equalTo: circularView.bottomAnchor),
-
-			// Pencil button
-			pencilButton.topAnchor.constraint(equalTo: circularView.topAnchor),
-			pencilButton.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
-			pencilButton.widthAnchor.constraint(equalToConstant: 24),
-			pencilButton.heightAnchor.constraint(equalToConstant: 24),
-		])
-
-		self.tableView.tableHeaderView = headerView
+	func configureView() {
+		self.configureViews()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+		self.tableView.tableHeaderView = self.headerView
 	}
 
 	func configureViews() {
+		self.configureTableHeaderView()
+		self.configureTitleLabel()
+		self.configureSubtitleLabel()
+		self.configureCircularView()
+		self.configureProfileImageView()
+		self.configureOverlayButton()
 		self.configurePlaceholderViews()
 	}
 
+	func configureTableHeaderView() {
+		self.headerView.frame = CGRect(x: 0, y: 0, width: 0, height: 200)
+	}
+
+	private func updateTableHeaderWidth() {
+		guard let headerView = self.tableView.tableHeaderView else { return }
+		let width = self.tableView.bounds.width
+		guard width > 0 else { return }
+
+		if headerView.frame.width != width {
+			headerView.frame.size.width = width
+			self.tableView.tableHeaderView = headerView
+		}
+	}
+
+	func configureTitleLabel() {
+		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		self.titleLabel.text = Trans.Onboarding.signUpHeadline
+		self.titleLabel.font = .preferredFont(forTextStyle: .title1)
+		self.titleLabel.textAlignment = .center
+	}
+
+	func configureSubtitleLabel() {
+		self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+		self.subtitleLabel.text = Trans.Onboarding.signUpSubheadline
+		self.subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
+		self.subtitleLabel.textAlignment = .center
+		self.subtitleLabel.numberOfLines = 0
+	}
+
+	func configureCircularView() {
+		self.circularView.translatesAutoresizingMaskIntoConstraints = false
+	}
+
+	func configureProfileImageView() {
+		self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
+	}
+
+	func configureOverlayButton() {
+		self.overlayButton.translatesAutoresizingMaskIntoConstraints = false
+		self.overlayButton.clipsToBounds = true
+		self.overlayButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+		self.overlayButton.setTitleColor(UIColor(red: 1, green: 0.576, blue: 0, alpha: 1), for: .normal)
+		self.overlayButton.addTarget(self, action: #selector(self.chooseImageButtonPressed(_:)), for: .touchUpInside)
+	}
+
 	func configurePlaceholderViews() {
-		self.placeholderProfileImageEditButton.layerCornerRadius = self.placeholderProfileImageEditButton.frame.size.height / 2
+		self.placeholderProfileImageEditButton.translatesAutoresizingMaskIntoConstraints = false
+		self.placeholderProfileImageEditButton.layerCornerRadius = 12
+		self.placeholderProfileImageEditButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
+		self.placeholderProfileImageEditButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
+		self.placeholderProfileImageEditButton.setImage(UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small)), for: .normal)
+		self.placeholderProfileImageEditButton.isUserInteractionEnabled = false
+	}
+
+	func configureViewHierarchy() {
+		self.headerView.addSubview(self.titleLabel)
+		self.headerView.addSubview(self.subtitleLabel)
+		self.headerView.addSubview(self.circularView)
+
+		self.circularView.addSubview(self.profileImageView)
+		self.circularView.addSubview(self.overlayButton)
+
+		self.headerView.addSubview(self.placeholderProfileImageEditButton)
+	}
+
+	func configureViewConstraints() {
+		NSLayoutConstraint.activate([
+			// Title label
+			self.titleLabel.topAnchor.constraint(equalTo: self.headerView.topAnchor, constant: 20),
+			self.titleLabel.centerXAnchor.constraint(equalTo: self.headerView.centerXAnchor),
+			self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.headerView.layoutMarginsGuide.leadingAnchor),
+			self.headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor),
+
+			// Subtitle label
+			self.subtitleLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 8),
+			self.subtitleLabel.centerXAnchor.constraint(equalTo: self.titleLabel.centerXAnchor),
+			self.subtitleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.headerView.layoutMarginsGuide.leadingAnchor),
+			self.headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.subtitleLabel.trailingAnchor),
+
+			// Circular view
+			self.circularView.topAnchor.constraint(equalTo: self.subtitleLabel.bottomAnchor, constant: 30),
+			self.circularView.centerXAnchor.constraint(equalTo: self.subtitleLabel.centerXAnchor),
+			self.circularView.widthAnchor.constraint(equalToConstant: 80),
+			self.circularView.heightAnchor.constraint(equalToConstant: 80),
+			self.headerView.bottomAnchor.constraint(equalTo: self.circularView.bottomAnchor, constant: 10),
+
+			// Profile image view
+			self.profileImageView.topAnchor.constraint(equalTo: self.circularView.topAnchor),
+			self.profileImageView.leadingAnchor.constraint(equalTo: self.circularView.leadingAnchor),
+			self.profileImageView.trailingAnchor.constraint(equalTo: self.circularView.trailingAnchor),
+			self.profileImageView.bottomAnchor.constraint(equalTo: self.circularView.bottomAnchor),
+
+			// Overlay button
+			self.overlayButton.topAnchor.constraint(equalTo: self.circularView.topAnchor),
+			self.overlayButton.leadingAnchor.constraint(equalTo: self.circularView.leadingAnchor),
+			self.overlayButton.trailingAnchor.constraint(equalTo: self.circularView.trailingAnchor),
+			self.overlayButton.bottomAnchor.constraint(equalTo: self.circularView.bottomAnchor),
+
+			// Pencil button
+			self.placeholderProfileImageEditButton.topAnchor.constraint(equalTo: self.circularView.topAnchor),
+			self.placeholderProfileImageEditButton.trailingAnchor.constraint(equalTo: self.circularView.trailingAnchor),
+			self.placeholderProfileImageEditButton.widthAnchor.constraint(equalToConstant: 24),
+			self.placeholderProfileImageEditButton.heightAnchor.constraint(equalToConstant: 24),
+		])
 	}
 }
 
