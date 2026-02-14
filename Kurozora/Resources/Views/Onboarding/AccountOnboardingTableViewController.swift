@@ -9,8 +9,8 @@
 import UIKit
 
 class AccountOnboardingTableViewController: KTableViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
+    // MARK: - Views
+    var rightNavigationBarButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
@@ -42,6 +42,15 @@ class AccountOnboardingTableViewController: KTableViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	init() {
+		super.init(style: .grouped)
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) is not supported")
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -49,6 +58,10 @@ class AccountOnboardingTableViewController: KTableViewController {
 		// Stop activity indicator and disable refresh control
 		self._prefersActivityIndicatorHidden = true
 		self._prefersRefreshControlDisabled = true
+
+		// Create right navigation bar button programmatically
+		self.rightNavigationBarButton = UIBarButtonItem(title: nil, style: .plain, target: self, action: #selector(self.rightNavigationBarButtonPressed(sender:)))
+		self.navigationItem.rightBarButtonItem = self.rightNavigationBarButton
 
 		self.rightNavigationBarButton.isEnabled = false
 		self.tableView.separatorStyle = .none
@@ -68,12 +81,12 @@ class AccountOnboardingTableViewController: KTableViewController {
 		self.view.isUserInteractionEnabled = !disable
 	}
 
-	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
+	// MARK: - Actions
+	@objc func cancelButtonPressed(sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
 	}
 
-	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
+	@objc func rightNavigationBarButtonPressed(sender: AnyObject) {
 		self.disableUserInteraction(true)
 	}
 }

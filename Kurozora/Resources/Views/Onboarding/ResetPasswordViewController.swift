@@ -21,7 +21,7 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
 		guard let emailAddress = textFieldArray.first??.text?.trimmingCharacters(in: .whitespacesAndNewlines), emailAddress.isValidEmail else {
-			self.presentAlertController(title: Trans.forgotPasswordErrorAlertHeadline, message: Trans.forgotPasswordErrorAlertSubheadline)
+			self.presentAlertController(title: Trans.Onboarding.forgotPasswordErrorAlertHeadline, message: Trans.Onboarding.forgotPasswordErrorAlertSubheadline)
 
 			self.disableUserInteraction(false)
 			return
@@ -37,11 +37,11 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 		do {
 			_ = try await KService.resetPassword(withEmailAddress: email).value
 
-			self.presentAlertController(title: Trans.forgotPasswordAlertHeadline, message: Trans.forgotPasswordAlertSubheadline, defaultActionButtonTitle: Trans.done) { _ in
+			self.presentAlertController(title: Trans.Onboarding.forgotPasswordAlertHeadline, message: Trans.Onboarding.forgotPasswordAlertSubheadline, defaultActionButtonTitle: Trans.done) { _ in
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 			}
 		} catch {
-			self.presentAlertController(title: Trans.forgotPasswordErrorAlertHeadline, message: error.localizedDescription)
+			self.presentAlertController(title: Trans.Onboarding.forgotPasswordErrorAlertHeadline, message: error.localizedDescription)
 			print(error.localizedDescription)
 		}
 

@@ -10,15 +10,17 @@ import AuthenticationServices
 import KurozoraKit
 import UIKit
 
-class SignInTableViewController: AccountOnboardingTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Onboarding"
-
+class SignInTableViewController: AccountOnboardingTableViewController {
 	// MARK: - Properties
 	var onSignIn: (() -> Void)?
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		// Add cancel button
+		self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed(sender:)))
+
 		// Configure properties
 		self.accountOnboardingType = .signIn
 	}
@@ -70,15 +72,15 @@ class SignInTableViewController: AccountOnboardingTableViewController, Storyboar
 		} catch let error as KKAPIError {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
-			self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+			self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
 		} catch {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
-			self.presentAlertController(title: "Can't Sign In 😔", message: "An error occurred while trying to sign in. Please try again.")
+			self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
 		}
 	}
 
-	// MARK: - IBActions
+	// MARK: - Actions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
@@ -94,6 +96,7 @@ extension SignInTableViewController {
 		return [
 			OnboardingHeaderTableViewCell.self,
 			OnboardingTextFieldTableViewCell.self,
+			OnboardingOptionsTableViewCell.self,
 			OnboardingFooterTableViewCell.self,
 		]
 	}
@@ -110,6 +113,17 @@ extension SignInTableViewController: OnboardingOptionsTableViewCellDelegate {
 		authorizationController.delegate = self
 		authorizationController.presentationContextProvider = self
 		authorizationController.performRequests()
+	}
+
+	func handleForgotPasswordButtonPress() {
+		let resetPasswordTableViewController = ResetPasswordTableViewController()
+		self.show(resetPasswordTableViewController, sender: nil)
+	}
+
+	func handleRegisterButtonPress() {
+		let signUpTableViewController = SignUpTableViewController()
+		signUpTableViewController.onSignUp = self.onSignIn
+		self.show(signUpTableViewController, sender: nil)
 	}
 }
 
@@ -152,7 +166,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							self.onSignIn?()
 						}
 					case .setupAccount:
-						let signUpTableViewController = SignUpTableViewController.instantiate()
+						let signUpTableViewController = SignUpTableViewController()
 						signUpTableViewController.isSIWA = true
 						signUpTableViewController.onSignUp = self.onSignIn
 						self.show(signUpTableViewController, sender: nil)
@@ -165,11 +179,11 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 				} catch let error as KKAPIError {
 					// Re-enable user interaction.
 					self.disableUserInteraction(false)
-					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
 				} catch {
 					// Re-enable user interaction.
 					self.disableUserInteraction(false)
-					self.presentAlertController(title: "Can't Sign In 😔", message: "An error occurred while trying to sign in. Please try again.")
+					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
 				}
 			}
 		case let passwordCredential as ASPasswordCredential:
@@ -190,17 +204,17 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				message = "Authentication failed by Apple. Please try again."
+				message = Trans.Onboarding.appleAuthenticationFailedMessage
 			case .invalidResponse:
-				message = "The app received an invalid response from Apple. Please try again."
+				message = Trans.Onboarding.appleInvalidResponseMessage
 			case .notHandled:
-				message = "An error occurred and the authentication was not handled by Apple. Please try again."
+				message = Trans.Onboarding.appleAuthenticationNotHandledMessage
 			default: break
 			}
 		}
 
 		if !message.isEmpty {
-			self.presentAlertController(title: "Error", message: message)
+			self.presentAlertController(title: Trans.error, message: message)
 		}
 	}
 }

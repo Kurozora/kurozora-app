@@ -200,7 +200,7 @@ class NotificationsTableViewController: KTableViewController {
 			detailString = "Notifications are only available to registered Kurozora users."
 			buttonTitle = "Sign In"
 			buttonAction = {
-				let signInTableViewController = SignInTableViewController.instantiate()
+				let signInTableViewController = SignInTableViewController()
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 				self.present(kNavigationController, animated: true)
 			}

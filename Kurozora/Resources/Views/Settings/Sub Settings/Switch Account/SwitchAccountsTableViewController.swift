@@ -67,7 +67,7 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	}
 
 	private func addAccountBarButtonItemPressed() {
-		let signInTableViewController = SignInTableViewController.instantiate()
+		let signInTableViewController = SignInTableViewController()
 		let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 		self.present(kNavigationController, animated: true)
 	}

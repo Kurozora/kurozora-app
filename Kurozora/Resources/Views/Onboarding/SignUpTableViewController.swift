@@ -9,14 +9,11 @@
 import UIKit
 import KurozoraKit
 
-class SignUpTableViewController: AccountOnboardingTableViewController, StoryboardInstantiable {
-	static var storyboardName: String = "Onboarding"
-
-	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var placeholderProfileImageEditButton: UIButton!
-
+class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - Properties
+	private(set) var profileImageView: ProfileImageView!
+	private(set) var placeholderProfileImageEditButton: UIButton!
+
 	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
 	var originalProfileImage: UIImage! = UIImage() {
 		didSet {
@@ -36,6 +33,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController, Storyboar
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.configureTableHeaderView()
 		self.configureViews()
 
 		// Configure properties
@@ -63,14 +61,14 @@ class SignUpTableViewController: AccountOnboardingTableViewController, Storyboar
 		do {
 			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage).value
 
-			self.presentAlertController(title: Trans.signUpAlertHeadline, message: Trans.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
+			self.presentAlertController(title: Trans.Onboarding.signUpAlertHeadline, message: Trans.Onboarding.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
 				guard let self = self else { return }
 				self.dismiss(animated: true) {
 					self.onSignUp?()
 				}
 			}
 		} catch let error as KKAPIError {
-			self.presentAlertController(title: Trans.signUpErrorAlertHeadline, message: error.message)
+			self.presentAlertController(title: Trans.Onboarding.signUpErrorAlertHeadline, message: error.message)
 			print(error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -80,7 +78,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController, Storyboar
 		self.disableUserInteraction(false)
 	}
 
-	// MARK: - IBActions
+	// MARK: - Actions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
@@ -139,13 +137,107 @@ class SignUpTableViewController: AccountOnboardingTableViewController, Storyboar
 		}
 	}
 
-	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
+	@objc func chooseImageButtonPressed(_ sender: UIButton) {
 		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
 	}
 }
 
 // MARK: - Configure Views
 private extension SignUpTableViewController {
+	func configureTableHeaderView() {
+		let headerView = UIView()
+		headerView.frame = CGRect(x: 0, y: 0, width: 0, height: 200)
+
+		// Title label
+		let titleLabel = KLabel()
+		titleLabel.text = Trans.Onboarding.signUpHeadline
+		titleLabel.font = .preferredFont(forTextStyle: .title1)
+		titleLabel.textColor = .white
+		titleLabel.textAlignment = .center
+		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(titleLabel)
+
+		// Subtitle label
+		let subtitleLabel = KLabel()
+		subtitleLabel.text = Trans.Onboarding.signUpSubheadline
+		subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
+		subtitleLabel.textColor = .white
+		subtitleLabel.textAlignment = .center
+		subtitleLabel.numberOfLines = 0
+		subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(subtitleLabel)
+
+		// Circular view with profile image
+		let circularView = CircularView()
+		circularView.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(circularView)
+
+		let profileImageView = ProfileImageView(frame: .zero)
+		profileImageView.backgroundColor = UIColor(red: 0.584, green: 0.616, blue: 0.678, alpha: 1.0)
+		profileImageView.translatesAutoresizingMaskIntoConstraints = false
+		circularView.addSubview(profileImageView)
+		self.profileImageView = profileImageView
+
+		let overlayButton = KButton(type: .custom)
+		overlayButton.clipsToBounds = true
+		overlayButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+		overlayButton.setTitleColor(UIColor(red: 1, green: 0.576, blue: 0, alpha: 1), for: .normal)
+		overlayButton.translatesAutoresizingMaskIntoConstraints = false
+		overlayButton.addTarget(self, action: #selector(chooseImageButtonPressed(_:)), for: .touchUpInside)
+		circularView.addSubview(overlayButton)
+
+		// Pencil icon button
+		let pencilButton = UIButton(type: .system)
+		pencilButton.isUserInteractionEnabled = false
+		pencilButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
+		pencilButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
+		pencilButton.setImage(UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small)), for: .normal)
+		pencilButton.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(pencilButton)
+		self.placeholderProfileImageEditButton = pencilButton
+
+		NSLayoutConstraint.activate([
+			// Title label
+			titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
+			titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+			titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
+			headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor),
+
+			// Subtitle label
+			subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+			subtitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
+			subtitleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
+			headerView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: subtitleLabel.trailingAnchor),
+
+			// Circular view
+			circularView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 30),
+			circularView.centerXAnchor.constraint(equalTo: subtitleLabel.centerXAnchor),
+			circularView.widthAnchor.constraint(equalToConstant: 80),
+			circularView.heightAnchor.constraint(equalToConstant: 80),
+			headerView.bottomAnchor.constraint(equalTo: circularView.bottomAnchor, constant: 10),
+
+			// Profile image view
+			profileImageView.topAnchor.constraint(equalTo: circularView.topAnchor),
+			profileImageView.leadingAnchor.constraint(equalTo: circularView.leadingAnchor),
+			profileImageView.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
+			profileImageView.bottomAnchor.constraint(equalTo: circularView.bottomAnchor),
+
+			// Overlay button
+			overlayButton.topAnchor.constraint(equalTo: circularView.topAnchor),
+			overlayButton.leadingAnchor.constraint(equalTo: circularView.leadingAnchor),
+			overlayButton.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
+			overlayButton.bottomAnchor.constraint(equalTo: circularView.bottomAnchor),
+
+			// Pencil button
+			pencilButton.topAnchor.constraint(equalTo: circularView.topAnchor),
+			pencilButton.trailingAnchor.constraint(equalTo: circularView.trailingAnchor),
+			pencilButton.widthAnchor.constraint(equalToConstant: 24),
+			pencilButton.heightAnchor.constraint(equalToConstant: 24),
+		])
+
+		self.tableView.tableHeaderView = headerView
+	}
+
 	func configureViews() {
 		self.configurePlaceholderViews()
 	}

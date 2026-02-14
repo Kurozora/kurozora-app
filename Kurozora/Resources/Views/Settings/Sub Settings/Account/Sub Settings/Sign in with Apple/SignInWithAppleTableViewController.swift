@@ -24,7 +24,7 @@ class SignInWithAppleTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Sign in with Apple"
+		self.title = Trans.signInWithApple
 
 		// Configure properties
 		self.previewImage = .Promotional.signInWithApple
@@ -69,6 +69,9 @@ extension SignInWithAppleTableViewController: OnboardingOptionsTableViewCellDele
 		authorizationController.presentationContextProvider = self
 		authorizationController.performRequests()
 	}
+
+	func handleForgotPasswordButtonPress() {}
+	func handleRegisterButtonPress() {}
 }
 
 // MARK: - ASAuthorizationControllerDelegate
@@ -112,10 +115,10 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 					}
 				} catch let error as KKAPIError {
 					self.view.endEditing(true)
-					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
 				} catch {
 					self.view.endEditing(true)
-					self.presentAlertController(title: "Can't Sign In 😔", message: "An error occured. Please try again.")
+					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
 				}
 			}
 
@@ -130,17 +133,17 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				message = "Authentication failed by Apple. Please try again."
+				message = Trans.Onboarding.appleAuthenticationFailedMessage
 			case .invalidResponse:
-				message = "The app received an invalid response from Apple. Please try again."
+				message = Trans.Onboarding.appleInvalidResponseMessage
 			case .notHandled:
-				message = "An error occurred and the authentication was not handled by Apple. Please try again."
+				message = Trans.Onboarding.appleAuthenticationNotHandledMessage
 			default: break
 			}
 		}
 
 		if !message.isEmpty {
-			self.presentAlertController(title: "Error", message: message)
+			self.presentAlertController(title: Trans.error, message: message)
 		}
 	}
 }

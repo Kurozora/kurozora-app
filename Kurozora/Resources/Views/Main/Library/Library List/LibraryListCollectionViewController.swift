@@ -226,7 +226,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			subtitleString = "Library is currently available to registered Kurozora users only."
 			buttonTitle = "Sign In"
 			buttonAction = {
-				let signInTableViewController = SignInTableViewController.instantiate()
+				let signInTableViewController = SignInTableViewController()
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 				self.present(kNavigationController, animated: true)
 			}

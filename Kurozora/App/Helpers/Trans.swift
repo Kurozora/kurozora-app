@@ -12,113 +12,256 @@ import UIKit
 /// - Tag: Trans
 struct Trans {
 	// MARK: - Onboarding
-	/// The headline string for signing up.
-	///
-	/// - Tag: Trans-signUpHeadline
-	static let signUpHeadline: String = String(localized: "New to Kurozora?",
-											   table: "Onboarding",
-											   comment: "The headline string for signing up.")
-	/// The subheadline string for signing up.
-	///
-	/// - Tag: Trans-signUpSubheadline
-	static let signUpSubheadline: String = String(localized: "Create an account and join the community.",
-												  table: "Onboarding",
-												  comment: "")
-	/// The button string for signing up.
-	///
-	/// - Tag: Trans-signUpButton
-	static let signUpButton: String = String(localized: "Join 🤗",
-											 table: "Onboarding",
-											 comment: "The button string for signing up.")
-	/// The headline string for sign up alert.
-	///
-	/// - Tag: Trans-signUpAlertHeadline
-	static let signUpAlertHeadline: String = String(localized: "Hooray!",
-													comment: "The headline string for sign up alert.")
-	/// The subheadline string for sign up alert.
-	///
-	/// - Tag: Trans-signUpAlertSubheadline
-	static let signUpAlertSubheadline: String = String(localized: "Account created successfully! Please check your email for confirmation.",
-													   comment: "The subheadline string for sign up alert.")
-	/// The headline string for sign up alert.
-	///
-	/// - Tag: Trans-signUpErrorAlertHeadline
-	static let signUpErrorAlertHeadline: String = String(localized: "Can't Sign Up 😔",
-														 comment: "The headline string for sign up alert.")
-	/// The headline string for signing in.
-	///
-	/// - Tag: Trans-signInHeadline
-	static let signInHeadline: String = String(localized: "Kurozora Account",
-											   table: "Onboarding",
-											   comment: "The headline string for signing in.")
-	/// The subheadline string for signing in.
-	///
-	/// - Tag: Trans-signInSubheadline
-	static let signInSubheadline: String = String(localized: "Sign in with your Kurozora Account to use the library and other Kurozora services.",
-												  table: "Onboarding",
-												  comment: "The subheadline string for signing in.")
-	/// The button string for signing in.
-	///
-	/// - Tag: Trans-signInButton
-	static let signInButton: String = String(localized: "Open sesame 👐",
-											 table: "Onboarding",
-											 comment: "The button string for signing in.")
-	/// The headline string for Sign in with Apple.
-	///
-	/// - Tag: Trans-siwaHeadline
-	static let siwaHeadline: String = String(localized: "Setup Account",
-											 table: "Onboarding",
-											 comment: "The headline string for Sign in with Apple.")
-	/// The subheadline string for Sign in with Apple.
-	///
-	/// - Tag: Trans-siwaSubheadline
-	static let siwaSubheadline: String = String(localized: "Finish setting up your account and join the community.",
-												table: "Onboarding",
-												comment: "")
-	/// The button string for sign in with Apple.
-	///
-	/// - Tag: Trans-siwaButton
-	static let siwaButton: String = String(localized: "Join 🤗",
-										   table: "Onboarding",
-										   comment: "The button string for sign in with Apple.")
-	/// The headline string for resetting password.
-	///
-	/// - Tag: Trans-forgotPasswordHeadline
-	static let forgotPasswordHeadline: String = String(localized: "Forgot Password?",
-													   table: "Onboarding",
-													   comment: "The headline string for resetting password.")
-	/// The subheadline string for resetting password.
-	///
-	/// - Tag: Trans-forgotPasswordSubheadline
-	static let forgotPasswordSubheadline: String = String(localized: "Enter your Kurozora Account to continue.",
-														  table: "Onboarding",
-														  comment: "The subheadline string for resetting password.")
-	/// The button string for resetting password.
-	///
-	/// - Tag: Trans-resetButton
-	static let forgotPasswordButton: String = String(localized: "Send ✨",
-													 table: "Onboarding",
-													 comment: "The button string for resetting password.")
-	/// The headline string for resetting password alert.
-	///
-	/// - Tag: Trans-forgotPasswordAlertHeadline
-	static let forgotPasswordAlertHeadline: String = String(localized: "Success!",
-															comment: "The headline string for resetting password alert.")
-	/// The subheadline string for resetting password alert.
-	///
-	/// - Tag: Trans-forgotPasswordAlertSubheadline
-	static let forgotPasswordAlertSubheadline: String = String(localized: "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly.",
-															   comment: "The subheadline string for resetting password alert.")
-	/// The headline string for resetting password alert.
-	///
-	/// - Tag: Trans-forgotPasswordErrorAlertHeadline
-	static let forgotPasswordErrorAlertHeadline: String = String(localized: "Errr...",
-																 comment: "The headline string for resetting password alert.")
-	/// The subheadline string for resetting password alert.
-	///
-	/// - Tag: Trans-forgotPasswordErrorAlertSubheadline
-	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora Account 😣",
-																	comment: "The subheadline string for resetting password alert.")
+	struct Onboarding {
+		/// The headline string for signing up.
+		///
+		/// - Tag: Trans-signUpHeadline
+		static let signUpHeadline: String = String(
+			localized: "onboarding.signUpHeadline",
+			defaultValue: "New to Kurozora?",
+			comment: "The headline string for signing up."
+		)
+
+		/// The subheadline string for signing up.
+		///
+		/// - Tag: Trans-signUpSubheadline
+		static let signUpSubheadline: String = String(
+			localized: "onboarding.signUpSubheadline",
+			defaultValue: "Create an account and join the community.",
+			comment: "The subheadline string for signing up."
+		)
+
+		/// The button string for signing up.
+		///
+		/// - Tag: Trans-signUpButton
+		static let signUpButton: String = String(
+			localized: "onboarding.signUpButton",
+			defaultValue: "Join 🤗",
+			comment: "The button string for signing up."
+		)
+
+		/// The headline string for sign up alert.
+		///
+		/// - Tag: Trans-signUpAlertHeadline
+		static let signUpAlertHeadline: String = String(
+			localized: "onboarding.signUpAlertHeadline",
+			defaultValue: "Hooray!",
+			comment: "The headline string for sign up alert."
+		)
+
+		/// The subheadline string for sign up alert.
+		///
+		/// - Tag: Trans-signUpAlertSubheadline
+		static let signUpAlertSubheadline: String = String(
+			localized: "onboarding.signUpAlertSubheadline",
+			defaultValue: "Account created successfully! Please check your email for confirmation.",
+			comment: "The subheadline string for sign up alert."
+		)
+
+		/// The headline string for sign up alert.
+		///
+		/// - Tag: Trans-signUpErrorAlertHeadline
+		static let signUpErrorAlertHeadline: String = String(
+			localized: "onboarding.signUpErrorAlertHeadline",
+			defaultValue: "Can't Sign Up 😔",
+			comment: "The headline string for sign up alert."
+		)
+
+		/// The headline string for signing in.
+		///
+		/// - Tag: Trans-signInHeadline
+		static let signInHeadline: String = String(
+			localized: "onboarding.signInHeadline",
+			defaultValue: "Kurozora Account",
+			comment: "The headline string for signing in."
+		)
+
+		/// The subheadline string for signing in.
+		///
+		/// - Tag: Trans-signInSubheadline
+		static let signInSubheadline: String = String(
+			localized: "onboarding.signInSubheadline",
+			defaultValue: "Sign in with your Kurozora Account to use the library and other Kurozora services.",
+			comment: "The subheadline string for signing in."
+		)
+
+		/// The button string for signing in.
+		///
+		/// - Tag: Trans-signInButton
+		static let signInButton: String = String(
+			localized: "onboarding.signInButton",
+			defaultValue: "Open sesame 👐",
+			comment: "The button string for signing in."
+		)
+
+		/// The headline string for Sign in with Apple.
+		///
+		/// - Tag: Trans-siwaHeadline
+		static let siwaHeadline: String = String(
+			localized: "onboarding.siwaHeadline",
+			defaultValue: "Setup Account",
+			comment: "The headline string for Sign in with Apple."
+		)
+
+		/// The subheadline string for Sign in with Apple.
+		///
+		/// - Tag: Trans-siwaSubheadline
+		static let siwaSubheadline: String = String(
+			localized: "onboarding.siwaSubheadline",
+			defaultValue: "Finish setting up your account and join the community.",
+			comment: ""
+		)
+
+		/// The button string for sign in with Apple.
+		///
+		/// - Tag: Trans-siwaButton
+		static let siwaButton: String = String(
+			localized: "onboarding.siwaButton",
+			defaultValue: "Join 🤗",
+			comment: "The button string for sign in with Apple."
+		)
+
+		/// The headline string for resetting password.
+		///
+		/// - Tag: Trans-forgotPasswordHeadline
+		static let forgotPasswordHeadline: String = String(
+			localized: "onboarding.forgotPasswordHeadline",
+			defaultValue: "Forgot Password?",
+			comment: "The headline string for resetting password."
+		)
+
+		/// The subheadline string for resetting password.
+		///
+		/// - Tag: Trans-forgotPasswordSubheadline
+		static let forgotPasswordSubheadline: String = String(
+			localized: "onboarding.forgotPasswordSubheadline",
+			defaultValue: "Enter your Kurozora Account to continue.",
+			comment: "The subheadline string for resetting password."
+		)
+
+		/// The button string for resetting password.
+		///
+		/// - Tag: Trans-resetButton
+		static let forgotPasswordButton: String = String(
+			localized: "onboarding.forgotPasswordButton",
+			defaultValue: "Send ✨",
+			comment: "The button string for resetting password."
+		)
+
+		/// The headline string for resetting password alert.
+		///
+		/// - Tag: Trans-forgotPasswordAlertHeadline
+		static let forgotPasswordAlertHeadline: String = String(
+			localized: "onboarding.forgotPasswordAlertHeadline",
+			defaultValue: "Success!",
+			comment: "The headline string for resetting password alert."
+		)
+
+		/// The subheadline string for resetting password alert.
+		///
+		/// - Tag: Trans-forgotPasswordAlertSubheadline
+		static let forgotPasswordAlertSubheadline: String = String(
+			localized: "onboarding.forgotPasswordAlertSubheadline",
+			defaultValue: "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly.",
+			comment: "The subheadline string for resetting password alert."
+		)
+
+		/// The headline string for resetting password alert.
+		///
+		/// - Tag: Trans-forgotPasswordErrorAlertHeadline
+		static let forgotPasswordErrorAlertHeadline: String = String(
+			localized: "onboarding.forgotPasswordErrorAlertHeadline",
+			defaultValue: "Errr...",
+			comment: "The headline string for resetting password alert."
+		)
+
+		/// The subheadline string for resetting password alert.
+		///
+		/// - Tag: Trans-forgotPasswordErrorAlertSubheadline
+		static let forgotPasswordErrorAlertSubheadline: String = String(
+			localized: "onboarding.forgotPasswordErrorAlertSubheadline",
+			defaultValue: "Please type a valid Kurozora Account 😣",
+			comment: "The subheadline string for resetting password alert."
+		)
+
+		/// The button string for the forgot password option on the sign in screen.
+		///
+		/// - Tag: Trans-forgotPasswordOptionsButton
+		static let forgotPasswordOptionsButton: String = String(
+			localized: "onboarding.forgotPasswordOptionsButton",
+			defaultValue: "Forgot your password? Let's reset 📧",
+			comment: "The button string for the forgot password option on the sign in screen."
+		)
+
+		/// The separator string between onboarding options.
+		///
+		/// - Tag: Trans-onboardingOrSeparator
+		static let onboardingOrSeparator: String = String(
+			localized: "onboarding.onboardingOrSeparator",
+			defaultValue: "━━━━━━ or ━━━━━━",
+			comment: "The separator string between onboarding options."
+		)
+
+		/// The button string for the register option on the sign in screen.
+		///
+		/// - Tag: Trans-registerOptionsButton
+		static let registerOptionsButton: String = String(
+			localized: "onboarding.registerOptionsButton",
+			defaultValue: "New to Kurozora? Join us 🔥",
+			comment: "The button string for the register option on the sign in screen."
+		)
+
+		/// The description string shown below onboarding options.
+		///
+		/// - Tag: Trans-onboardingDescription
+		static let onboardingDescription: String = String(
+			localized: "onboarding.onboardingDescription",
+			defaultValue: "Your Kurozora Account lets you access your library, favorites, reminders, reviews, and more on your devices, automatically.",
+			comment: "The description string shown below onboarding options."
+		)
+
+		/// Title shown on the Apple sign-in screen.
+		static let signInWithAppleTitle: String = String(
+			localized: "onboarding.signInWithAppleTitle",
+			defaultValue: "Sign in with Apple",
+			comment: "Title for the button or screen that allows the user to sign in with Apple."
+		)
+
+		/// Title shown when sign-in fails.
+		static let signInErrorTitle: String = String(
+			localized: "onboarding.signInErrorTitle",
+			defaultValue: "Can't Sign In 😔",
+			comment: "Alert title shown when the user cannot sign in."
+		)
+
+		/// Generic fallback error message for sign-in failures.
+		static let genericSignInErrorMessage: String = String(
+			localized: "onboarding.genericSignInErrorMessage",
+			defaultValue: "An error occurred while trying to sign in. Please try again.",
+			comment: "Generic error message shown when sign-in fails for an unknown reason."
+		)
+
+		/// Error message when Apple authentication fails.
+		static let appleAuthenticationFailedMessage: String = String(
+			localized: "onboarding.appleAuthenticationFailedMessage",
+			defaultValue: "Authentication failed by Apple. Please try again.",
+			comment: "Error message shown when Apple authentication fails."
+		)
+
+		/// Error message when Apple returns invalid response.
+		static let appleInvalidResponseMessage: String = String(
+			localized: "onboarding.appleInvalidResponseMessage",
+			defaultValue: "The app received an invalid response from Apple. Please try again.",
+			comment: "Error message shown when Apple returns an invalid authentication response."
+		)
+
+		/// Error message when Apple authentication is not handled.
+		static let appleAuthenticationNotHandledMessage: String = String(
+			localized: "onboarding.appleAuthenticationNotHandledMessage",
+			defaultValue: "An error occurred and the authentication was not handled by Apple. Please try again.",
+			comment: "Error message shown when Apple authentication was not handled properly."
+		)
+	}
 
 	// MARK: - Library Delete
 	/// The headline string for the Library Delete view.
@@ -1124,6 +1267,11 @@ struct Trans {
 											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'Error'.
+	///
+	/// - Tag: Trans-error
+	static let `error`: String = String(localized: "Error",
+										comment: "The string for the word 'Error'.")
 	/// The string for the word 'Default'.
 	///
 	/// - Tag: Trans-default

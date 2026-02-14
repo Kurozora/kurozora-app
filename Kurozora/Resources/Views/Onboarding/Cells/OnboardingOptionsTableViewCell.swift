@@ -12,6 +12,10 @@ import UIKit
 @objc protocol OnboardingOptionsTableViewCellDelegate: AnyObject {
 	@MainActor
 	func handleAuthorizationAppleIDButtonPress()
+	@MainActor
+	func handleForgotPasswordButtonPress()
+	@MainActor
+	func handleRegisterButtonPress()
 }
 
 class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
@@ -26,9 +30,20 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - Properties
 	weak var delegate: OnboardingOptionsTableViewCellDelegate?
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.forgotPasswordButton.addTarget(self, action: #selector(self.forgotPasswordButtonPressed), for: .touchUpInside)
+		self.registerPasswordButton.addTarget(self, action: #selector(self.registerButtonPressed), for: .touchUpInside)
+	}
+
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
+		self.forgotPasswordButton.setTitle(Trans.Onboarding.forgotPasswordOptionsButton, for: .normal)
+		self.orLabel.text = Trans.Onboarding.onboardingOrSeparator
+		self.registerPasswordButton.setTitle(Trans.Onboarding.registerOptionsButton, for: .normal)
+		self.descriptionLabel?.text = Trans.Onboarding.onboardingDescription
 		self.setupProviderSignInView()
 	}
 
@@ -36,7 +51,7 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	func setupProviderSignInView() {
 		// Create a new 'or label' separator.
 		let orLabel = KSecondaryLabel()
-		orLabel.text = "━━━━━━ or ━━━━━━"
+		orLabel.text = Trans.Onboarding.onboardingOrSeparator
 		orLabel.font = .preferredFont(forTextStyle: .subheadline)
 
 		// Create and setup Apple ID authorization button
@@ -60,5 +75,15 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	/// Handles the Apple ID button press.
 	@objc func handleAuthorizationAppleIDButtonPress() {
 		self.delegate?.handleAuthorizationAppleIDButtonPress()
+	}
+
+	/// Handles the forgot password button press.
+	@objc func forgotPasswordButtonPressed() {
+		self.delegate?.handleForgotPasswordButtonPress()
+	}
+
+	/// Handles the register button press.
+	@objc func registerButtonPressed() {
+		self.delegate?.handleRegisterButtonPress()
 	}
 }

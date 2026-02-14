@@ -123,7 +123,7 @@ extension WorkflowController {
 	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
 	@discardableResult
 	func presentSignInView(on viewController: UIViewController? = nil) -> SignInTableViewController {
-		let signInTableViewController = SignInTableViewController.instantiate()
+		let signInTableViewController = SignInTableViewController()
 		let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.present(kNavigationController, animated: true)
