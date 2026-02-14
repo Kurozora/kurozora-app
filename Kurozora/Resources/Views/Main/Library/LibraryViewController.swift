@@ -11,9 +11,9 @@ import Pageboy
 import Tabman
 import UIKit
 
-class LibraryViewController: KTabbedViewController {
+class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	// MARK: - Views
-	private var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem!
 	private var sortTypeBarButtonItem = UIBarButtonItem()
 	private var moreBarButtonItem = UIBarButtonItem()
 
@@ -203,15 +203,6 @@ class LibraryViewController: KTabbedViewController {
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
 		])
-	}
-
-	/// Performs segue to the profile view.
-	func segueToProfile() async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard isSignedIn else { return }
-
-		let profileTableViewController = ProfileTableViewController()
-		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

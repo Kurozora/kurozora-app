@@ -13,7 +13,7 @@ import TRON
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController, SectionFetchable {
+class HomeCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case redeemSegue
@@ -313,15 +313,6 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
-	}
-
-	/// Performs segue to the profile view.
-	func segueToProfile() async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard isSignedIn else { return }
-
-		let profileTableViewController = ProfileTableViewController()
-		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Handles the episode watch status update notification.

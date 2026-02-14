@@ -12,14 +12,14 @@ import UIKit
 
 class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> {}
 
-class NotificationsTableViewController: KTableViewController {
+class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case notificationsGroupingSegue
 	}
 
 	// MARK: - Views
-	private var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem!
 	private var markAllBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -294,15 +294,6 @@ class NotificationsTableViewController: KTableViewController {
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
-	}
-
-	/// Performs segue to the profile view.
-	func segueToProfile() async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard isSignedIn else { return }
-
-		let profileTableViewController = ProfileTableViewController()
-		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Updates the tab bar badge value according to the number of unread notifications.

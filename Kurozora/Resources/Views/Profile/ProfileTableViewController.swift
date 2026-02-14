@@ -46,6 +46,7 @@ class ProfileTableViewController: KTableViewController {
 	private let reviewsButton = KButton()
 	private let separatorView: SeparatorView = SeparatorView()
 
+	var sidebarBottomProfileView: KSidebarBottomProfileView?
 
 	// MARK: - Properties
 	var userIdentity: UserIdentity?
@@ -189,6 +190,10 @@ class ProfileTableViewController: KTableViewController {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
+
+		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
+			self.sidebarBottomProfileView?.isSelected = false
+		}
 	}
 
 	// MARK: - Functions
@@ -261,7 +266,6 @@ class ProfileTableViewController: KTableViewController {
 		self.followButton.isHidden = true
 		self.followButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
 		self.followButton.setTitle(Trans.follow, for: .normal)
-		self.followButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 		self.followButton.highlightBackgroundColorEnabled = true
 		self.followButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
@@ -273,7 +277,6 @@ class ProfileTableViewController: KTableViewController {
 		self.editProfileButton.isHidden = true
 		self.editProfileButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
 		self.editProfileButton.setTitle(Trans.edit, for: .normal)
-		self.editProfileButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 		self.editProfileButton.layerCornerRadius = 12
 		self.editProfileButton.highlightBackgroundColorEnabled = true
 		self.editProfileButton.addAction(UIAction { [weak self] _ in
@@ -921,7 +924,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
-		let badgeViewController = BadgeViewController.instantiate()
+		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 		badgeViewController.popoverPresentationController?.sourceView = button
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
@@ -998,7 +1001,7 @@ extension ProfileTableViewController: UITextViewDelegate {
 // MARK: - ProfileBadgeStackViewDelegate
 extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
-		let badgeViewController = BadgeViewController.instantiate()
+		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 
 		badgeViewController.popoverPresentationController?.sourceView = button

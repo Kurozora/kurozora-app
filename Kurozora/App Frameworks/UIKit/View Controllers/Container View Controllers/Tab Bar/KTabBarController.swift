@@ -121,7 +121,10 @@ class KTabBarController: UITabBarController {
 
 		if #available(iOS 18.0, *) {
 			self.mode = .tabSidebar
-			self.sidebar.bottomBarView = UIView()
+
+			let sidebarBottomProfileView = KSidebarBottomProfileView()
+			sidebarBottomProfileView.delegate = self
+			self.sidebar.bottomBarView = sidebarBottomProfileView
 		}
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
@@ -208,6 +211,10 @@ extension KTabBarController: UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelectTab selectedTab: UITab, previousTab: UITab?) {
 		if UserSettings.hapticsAllowed {
 			UISelectionFeedbackGenerator().selectionChanged()
+		}
+
+		if let sidebarBottomProfileView = self.sidebar.bottomBarView as? KSidebarBottomProfileView {
+			sidebarBottomProfileView.isSelected = false
 		}
 
 		if selectedTab == previousTab, let tabBarItem = TabBarItem(identifierValue: selectedTab.identifier) { // Same tab selected
@@ -299,5 +306,26 @@ extension KTabBarController {
 			case .settings: break
 			}
 		}
+	}
+}
+
+// MARK: - KSidebarBottomProfileViewDelegate
+extension KTabBarController: KSidebarBottomProfileViewDelegate {
+	func sidebarBottomProfileViewDidTap(_ profileView: KSidebarBottomProfileView) async {
+		let isSignedIn = await WorkflowController.shared.isSignedIn()
+		guard isSignedIn, let user = User.current else { return }
+
+		if let navigationController = self.selectedViewController as? KNavigationController,
+		   let visibleProfile = navigationController.visibleViewController as? ProfileTableViewController,
+		   visibleProfile.user?.id == user.id {
+			return
+		}
+
+		let profileTableViewController = ProfileTableViewController()(with: user)
+		if #available(iOS 18.0, *) {
+			profileTableViewController.sidebarBottomProfileView = self.sidebar.bottomBarView as? KSidebarBottomProfileView
+			self.selectedTab = nil
+		}
+		self.selectedViewController?.show(profileTableViewController, sender: nil)
 	}
 }

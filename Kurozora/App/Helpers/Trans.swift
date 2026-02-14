@@ -1696,6 +1696,11 @@ struct Trans {
 	/// - Tag: Trans-general
 	static let general: String = String(localized: "General",
 										comment: "The string for the word 'general'.")
+	/// The string for the word 'Guest'.
+	///
+	/// - Tag: Trans-guest
+	static let guest: String = String(localized: "Guest",
+									  comment: "The string for the word 'Guest'.")
 	/// The string for the word 'notifications'.
 	///
 	/// - Tag: Trans-notifications

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class FeedTableViewController: KTableViewController {
+class FeedTableViewController: KTableViewController, ProfileNavigable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
@@ -19,7 +19,7 @@ class FeedTableViewController: KTableViewController {
 	// MARK: - Views
 	private var settingsBarButtonItem: UIBarButtonItem!
 	private var postMessageButtonBarButtonItem: UIBarButtonItem!
-	private var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
@@ -261,15 +261,6 @@ class FeedTableViewController: KTableViewController {
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
-	}
-
-	/// Performs segue to the profile view.
-	func segueToProfile() async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard isSignedIn else { return }
-
-		let profileTableViewController = ProfileTableViewController()
-		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Shows the text editor for posting a new message.

@@ -10,7 +10,7 @@ import KurozoraKit
 import Tabman
 import UIKit
 
-class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable {
+class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -246,15 +246,6 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
-	}
-
-	/// Performs segue to the profile view.
-	func segueToProfile() async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard isSignedIn else { return }
-
-		let profileTableViewController = ProfileTableViewController()
-		self.show(profileTableViewController, sender: nil)
 	}
 
 	/// Scroll to today's schedule section.
