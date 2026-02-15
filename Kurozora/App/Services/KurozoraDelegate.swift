@@ -95,14 +95,15 @@ final class KurozoraDelegate {
 				if let splashViewController = window?.rootViewController as? SplashscreenViewController {
 					splashViewController.animateLogo { _ in
 						window?.rootViewController = rootViewController
+						// Check if user should authenticate
+						KurozoraDelegate.shared.userHasToAuthenticate()
 					}
 				} else {
 					window?.rootViewController = rootViewController
+					// Check if user should authenticate
+					KurozoraDelegate.shared.userHasToAuthenticate()
 				}
 			}
-
-			// Check if user should authenticate
-			KurozoraDelegate.shared.userHasToAuthenticate()
 		}
 	}
 
