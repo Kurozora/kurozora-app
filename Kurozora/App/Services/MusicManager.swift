@@ -41,6 +41,9 @@ final class MusicManager: NSObject {
 	/// The current playing song.
 	@Published private(set) var currentSong: MKSong?
 
+	/// The Kurozora song model associated with the currently playing song.
+	@Published private(set) var currentKKSong: KKSong?
+
 	/// Whether a song is playing.
 	@Published private(set) var isPlaying: Bool = false
 
@@ -162,7 +165,7 @@ final class MusicManager: NSObject {
 	/// - Parameters:
 	///   - song: The song to be played.
 	///   - playButton: The button that initiated the action.
-	func play(song: MKSong, playButton: UIButton?) {
+	func play(song: MKSong, playButton: UIButton?, kkSong: KKSong? = nil) {
 		Task {
 			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 			case (.authorized, true):
@@ -176,10 +179,12 @@ final class MusicManager: NSObject {
 					} else {
 						self.applicationPlayer.queue = [song.song]
 						self.currentSong = song
+						self.currentKKSong = kkSong
 						try await self.applicationPlayer.play()
 					}
 				} catch {
 					self.currentSong = nil
+					self.currentKKSong = nil
 					print("----- Error play", String(describing: error))
 				}
 			default:
@@ -202,12 +207,14 @@ final class MusicManager: NSObject {
 						if self.isPlaying {
 							self.player = nil
 							self.currentSong = nil
+							self.currentKKSong = nil
 							self.isPlaying = false
 						}
 
 						self.player = AVPlayer(playerItem: playerItem)
 						self.player?.actionAtItemEnd = .none
 						self.currentSong = song
+						self.currentKKSong = kkSong
 						await playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 						await self.player?.play()
 						self.isPlaying = true
@@ -218,6 +225,7 @@ final class MusicManager: NSObject {
 							Task {
 								self.player = nil
 								self.currentSong = nil
+								self.currentKKSong = nil
 								self.isPlaying = false
 								await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
 							}
@@ -285,5 +293,25 @@ final class MusicManager: NSObject {
 		guard (try? await musicDataRequest.response()) != nil else { return false }
 
 		return true
+	}
+}
+
+// MARK: - MediaPlaybackControlling
+extension MusicManager: MediaPlaybackControlling {
+	var currentSongPublisher: Published<MKSong?>.Publisher {
+		return self.$currentSong
+	}
+
+	var currentKKSongPublisher: Published<KKSong?>.Publisher {
+		return self.$currentKKSong
+	}
+
+	var isPlayingPublisher: Published<Bool>.Publisher {
+		return self.$isPlaying
+	}
+
+	func togglePlayPause() {
+		guard let song = self.currentSong else { return }
+		self.play(song: song, playButton: nil)
 	}
 }

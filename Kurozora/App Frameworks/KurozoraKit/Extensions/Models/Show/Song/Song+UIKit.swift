@@ -190,7 +190,7 @@ extension KKSong {
 	/// - Parameters:
 	///    - song: The song to play.
 	func playSong(song: MKSong) {
-		MusicManager.shared.play(song: song, playButton: nil)
+		MusicManager.shared.play(song: song, playButton: nil, kkSong: self)
 	}
 
 	/// Rate the song with the given rating.

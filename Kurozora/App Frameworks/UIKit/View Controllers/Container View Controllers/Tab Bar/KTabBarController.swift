@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Combine
 import KurozoraKit
 import UIKit
 #if DEBUG
@@ -14,6 +15,7 @@ import FLEX
 
 class KTabBarController: UITabBarController {
 	// MARK: - Properties
+	private var subscriptions = Set<AnyCancellable>()
 	private var _previousTabs: NSObject?
 
 	@available(iOS 18.0, *)
@@ -129,6 +131,7 @@ class KTabBarController: UITabBarController {
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			self.tabBarMinimizeBehavior = .onScrollDown
+			self.observePlayback()
 
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
@@ -149,6 +152,29 @@ class KTabBarController: UITabBarController {
 			showAccountSwitcherLongPressGestureRecognizer.numberOfTouchesRequired = 1
 			self.tabBar.addGestureRecognizer(showAccountSwitcherLongPressGestureRecognizer)
 		}
+	}
+
+	/// Observes `MusicManager` playback state and shows or hides the bottom accessory accordingly.
+	@available(iOS 26.0, *)
+	private func observePlayback() {
+		MusicManager.shared.$currentSong
+			.receive(on: RunLoop.main)
+			.sink { [weak self] song in
+				guard let self = self else { return }
+
+				if song != nil {
+					if self.bottomAccessory == nil {
+						let musicPlaybackControlView = MusicPlaybackControlView()
+						musicPlaybackControlView.playbackController = MusicManager.shared
+						self.setBottomAccessory(UITabAccessory(contentView: musicPlaybackControlView), animated: true)
+					}
+				} else {
+					if self.bottomAccessory != nil {
+						self.setBottomAccessory(nil, animated: true)
+					}
+				}
+			}
+			.store(in: &self.subscriptions)
 	}
 
 	#if DEBUG

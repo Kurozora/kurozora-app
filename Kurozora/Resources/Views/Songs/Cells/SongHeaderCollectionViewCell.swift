@@ -29,6 +29,9 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	/// A single music item.
 	var song: MKSong?
 
+	/// The Kurozora song model used for context menu actions.
+	var kkSong: KKSong?
+
 	/// The `SongHeaderCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: SongHeaderCollectionViewCellDelegate?
 
@@ -37,6 +40,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter song: The `Song` object used to configure the cell.
 	func configure(using song: KKSong) {
+		self.kkSong = song
 		self.primaryLabel.text = song.attributes.title
 		self.secondaryLabel.text = song.attributes.artist
 
@@ -113,7 +117,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
 		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, playButton: sender)
+		MusicManager.shared.play(song: song, playButton: sender, kkSong: self.kkSong)
 		self.delegate?.playStateChanged(song)
 	}
 }

@@ -20,6 +20,9 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	/// A single music item.
 	var song: MKSong?
 
+	/// The Kurozora song model used for context menu actions.
+	var kkSong: KKSong?
+
 	// MARK: - Functions
 	override func configure(using review: Review?, for song: KKSong?) {
 		super.configure(using: review, for: song)
@@ -35,6 +38,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			return
 		}
 		self.hideSkeleton()
+		self.kkSong = song
 
 		// Configure title
 		self.primaryLabel.text = song.attributes.title
@@ -101,6 +105,6 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
 		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, playButton: sender)
+		MusicManager.shared.play(song: song, playButton: sender, kkSong: self.kkSong)
 	}
 }

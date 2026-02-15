@@ -51,6 +51,9 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// A single music item.
 	var song: MKSong?
 
+	/// The Kurozora song model used for context menu actions.
+	var kkSong: KKSong?
+
 	/// The `MusicLockupCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: MusicLockupCollectionViewCellDelegate?
 
@@ -126,6 +129,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 		self.indexPath = indexPath
+		self.kkSong = song
 
 		// Configure title
 		self.primaryLabel.text = song.attributes.title
@@ -213,7 +217,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
 		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, playButton: sender)
+		MusicManager.shared.play(song: song, playButton: sender, kkSong: self.kkSong)
 	}
 
 	@IBAction func showButtonPressed(_ sender: UIButton) {
