@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import SwiftTheme
+import UIKit
 
 /// A themed, scrollable, multiline text region.
 ///
@@ -17,6 +17,7 @@ import SwiftTheme
 class KTextView: UITextView {
 	// MARK: - Views
 	private let placeholderLabel = UILabel()
+	private var customLayoutManager = RichTextLayoutManager()
 
 	// MARK: - Properties
 	/// The placeholder text that the text view displays.
@@ -48,7 +49,17 @@ class KTextView: UITextView {
 		}
 	}
 
+	/// When `true`, the owning controller manages attributed text formatting
+	/// and `KTextView` skips its own `updateAttributedText()` on theme changes.
+	var managedFormattingMode: Bool = false
+
 	override var text: String! {
+		didSet {
+			self.placeholderLabel.isHidden = !self.text.isEmpty
+		}
+	}
+
+	override var attributedText: NSAttributedString! {
 		didSet {
 			self.placeholderLabel.isHidden = !self.text.isEmpty
 		}
@@ -77,6 +88,10 @@ class KTextView: UITextView {
 		self.configureViewConstraints()
 	}
 
+	override var layoutManager: NSLayoutManager {
+		return self.customLayoutManager
+	}
+
 	/// Set attributed text with predefined attributes.
 	///
 	/// - Parameter text: The string to set.
@@ -89,6 +104,7 @@ class KTextView: UITextView {
 
 	/// Update the attributed text.
 	@objc private func updateAttributedText() {
+		guard !self.managedFormattingMode else { return }
 		self.setAttributedText(self.attributedText)
 	}
 
@@ -101,6 +117,41 @@ class KTextView: UITextView {
 	/// Called when the user ends editing.
 	@objc private func handleTextDidEndEditing() {
 		self.placeholderLabel.isHidden = !self.text.isEmpty
+	}
+
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		guard let touch = touches.first else { return }
+
+		let point = touch.location(in: self)
+
+		let index = self.layoutManager.characterIndex(
+			for: point,
+			in: textContainer,
+			fractionOfDistanceBetweenInsertionPoints: nil
+		)
+
+		guard index < self.attributedText.length else {
+			super.touchesEnded(touches, with: event)
+			return
+		}
+
+		var range = NSRange(location: 0, length: 0)
+
+		if self.attributedText.attribute(.spoilerHidden, at: index, effectiveRange: &range) != nil {
+			self.revealSpoiler(in: range)
+			return
+		}
+
+		super.touchesEnded(touches, with: event)
+	}
+
+	private func revealSpoiler(in range: NSRange) {
+		guard let mutable = attributedText.mutableCopy() as? NSMutableAttributedString else { return }
+
+		mutable.removeAttribute(.spoilerHidden, range: range)
+		mutable.removeAttribute(.foregroundColor, range: range)
+
+		self.attributedText = mutable
 	}
 }
 
@@ -119,6 +170,10 @@ private extension KTextView {
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
 		self.font = .preferredFont(forTextStyle: .body)
+
+		self.customLayoutManager.textStorage = self.textStorage
+		self.customLayoutManager.addTextContainer(self.textContainer)
+		self.textContainer.replaceLayoutManager(self.customLayoutManager)
 	}
 
 	func configurePlaceholderLabel() {
@@ -128,22 +183,70 @@ private extension KTextView {
 		self.placeholderLabel.isHidden = !self.text.isEmpty
 		self.placeholderLabel.theme_textColor = self.theme_placeholderColor
 	}
-}
 
-// MARK: - Hierarchy
-private extension KTextView {
 	func configureViewHierarchy() {
 		self.addSubview(self.placeholderLabel)
 	}
-}
 
-// MARK: - Constraints
-private extension KTextView {
 	func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor),
 			self.placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
 		])
+	}
+}
+
+// MARK: - NSAttributedString Keys
+extension NSAttributedString.Key {
+	static let inlineCode = NSAttributedString.Key("inlineCode")
+	static let spoiler = NSAttributedString.Key("spoiler")
+	static let spoilerHidden = NSAttributedString.Key("spoilerHidden")
+}
+
+final class RichTextLayoutManager: NSLayoutManager {
+	var cornerRadius: CGFloat = 6
+	var horizontalPadding: CGFloat = 4
+	var verticalPadding: CGFloat = 0
+
+	override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+		super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
+
+		guard let textStorage = textStorage,
+		      let textContainer = textContainers.first else { return }
+
+		let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
+
+		textStorage.enumerateAttribute(.inlineCode, in: characterRange, options: []) { value, range, _ in
+			guard let value = value as? UIColor else { return }
+			let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+			var rect = self.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+
+			rect.origin.x += origin.x
+			rect.origin.y += origin.y
+
+			rect = rect.insetBy(dx: -self.horizontalPadding, dy: -self.verticalPadding)
+
+			let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+
+			value.setFill()
+			path.fill()
+		}
+
+		textStorage.enumerateAttribute(.spoiler, in: characterRange, options: []) { value, range, _ in
+			guard let value = value as? UIColor else { return }
+			let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+			var rect = self.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+
+			rect.origin.x += origin.x
+			rect.origin.y += origin.y
+
+			rect = rect.insetBy(dx: -self.horizontalPadding, dy: -self.verticalPadding)
+
+			let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+
+			value.setFill()
+			path.fill()
+		}
 	}
 }

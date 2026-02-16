@@ -80,6 +80,9 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 	var isSpoiler: Bool = false
 	var isNSFW: Bool = false
 
+	private let markdownFormatter = MarkdownTextFormatter()
+	private var isUpdatingFormatting = false
+
 	// MARK: - View
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
@@ -93,6 +96,10 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeChange), name: .ThemeUpdateNotification, object: nil)
+
+		self.configureCommentTextView()
+
 		if let user = User.current {
 			self.currentUsernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
@@ -102,8 +109,7 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit)"
 
 		if let feedMessage = self.editingFeedMessage {
-			self.commentTextView.text = nil
-			self.commentTextView.insertText(feedMessage.attributes.content)
+			self.commentTextView.text = feedMessage.attributes.content
 			self.originalText = feedMessage.attributes.content
 			self.isNSFW = feedMessage.attributes.isNSFW
 			self.originalNSFW = feedMessage.attributes.isNSFW
@@ -119,19 +125,31 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 			} else {
 				self.selectedOptionChanged(nil)
 			}
+
+			self.applyMarkdownFormatting(to: self.commentTextView)
 		} else if let dmToUser = self.dmToUser, dmToUser != User.current {
-			self.commentTextView.text = nil
-			self.commentTextView.insertText("@\(dmToUser.attributes.slug) ")
+			self.commentTextView.text = "@\(dmToUser.attributes.slug) "
 			self.originalText = "@\(dmToUser.attributes.slug) "
-		} else {
-			self.commentTextView.text = self.placeholderText
-			self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
-			self.commentTextView.selectedTextRange = self.commentTextView.textRange(from: self.commentTextView.beginningOfDocument, to: self.commentTextView.beginningOfDocument)
+			self.applyMarkdownFormatting(to: self.commentTextView)
 		}
+
 		self.commentTextView.becomeFirstResponder()
 	}
 
 	// MARK: - Functions
+	func configureCommentTextView() {
+		let textStorage = NSTextStorage()
+		let layoutManager = RichTextLayoutManager()
+		let textContainer = NSTextContainer(size: .zero)
+
+		textStorage.addLayoutManager(layoutManager)
+		layoutManager.addTextContainer(textContainer)
+
+		self.commentTextView.text = nil
+		self.commentTextView.placeholder = self.placeholderText
+		self.commentTextView.managedFormattingMode = true
+	}
+
 	/// Confirm whether to cancel the message.
 	///
 	/// - Parameter showingSend: Indicates whether to show the send message option.
@@ -218,6 +236,44 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 		self.dismiss(animated: true, completion: nil)
 	}
 
+	/// Applies live markdown formatting to the text view while preserving cursor position.
+	///
+	/// - Parameter textView: The text view to format.
+	private func applyMarkdownFormatting(to textView: UITextView) {
+		guard !self.isUpdatingFormatting else { return }
+		self.isUpdatingFormatting = true
+		defer { self.isUpdatingFormatting = false }
+
+		let selectedRange = textView.selectedRange
+		let font = textView.font ?? .preferredFont(forTextStyle: .body)
+		let textColor = KThemePicker.textColor.colorValue
+		let tintColor = KThemePicker.tintColor.colorValue
+
+		let formatted = self.markdownFormatter.format(
+			textView.text,
+			font: font,
+			textColor: textColor,
+			tintColor: tintColor
+		)
+
+		textView.attributedText = formatted
+
+		// Restore cursor position.
+		if selectedRange.location + selectedRange.length <= (textView.text as NSString).length {
+			textView.selectedRange = selectedRange
+		}
+
+		// Reset typing attributes so new characters don't inherit formatting.
+		textView.typingAttributes = [
+			.font: font,
+			.foregroundColor: textColor
+		]
+	}
+
+	@objc private func handleThemeChange() {
+		self.applyMarkdownFormatting(to: self.commentTextView)
+	}
+
 	// MARK: - IBActions
 	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		if self.hasChanges {
@@ -280,7 +336,7 @@ extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
 			self.labelsButton.setTitle("Labels Added", for: .normal)
 			self.labelsButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
 		} else {
-			self.labelsButton.setTitle("Lebels", for: .normal)
+			self.labelsButton.setTitle("Labels", for: .normal)
 			self.labelsButton.setImage(UIImage(systemName: "shield"), for: .normal)
 		}
 	}
@@ -300,20 +356,7 @@ extension KFeedMessageTextEditorViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit - textView.text.count)"
 		self.editedText = textView.text
-	}
-
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		if textView.text == self.placeholderText, textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
-			textView.text = ""
-			textView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-
-	func textViewDidEndEditing(_ textView: UITextView) {
-		if textView.text.isEmpty {
-			textView.text = self.placeholderText
-			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
-		}
+		self.applyMarkdownFormatting(to: textView)
 	}
 }
 
