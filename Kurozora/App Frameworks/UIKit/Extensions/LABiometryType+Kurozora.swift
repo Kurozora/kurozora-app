@@ -20,7 +20,7 @@ extension LABiometryType {
 		case .opticID:
             return .Icons.opticID
 		case .none:
-			return nil
+			return .Icons.lock
 		@unknown default:
             return .Icons.lock
 		}

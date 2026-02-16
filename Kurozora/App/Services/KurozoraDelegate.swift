@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import LocalAuthentication
 import UIKit
 import XCDYouTubeKit
 
@@ -15,7 +14,6 @@ import XCDYouTubeKit
 ///
 /// The `KurozoraDelegate` object manages the app’s shared behaviors.
 /// Use the `KurozoraDelegate` object to handle the following tasks:
-/// - Ask the user for authentication before using the app.
 /// - Handle URL schemes supported by the app.
 /// - Initializing your app’s central data structures.
 /// - Present appropriate views when the devices reachability changes.
@@ -24,13 +22,6 @@ import XCDYouTubeKit
 /// - Tag: Kurozora
 final class KurozoraDelegate {
 	// MARK: - Properties
-	// Authentication
-	/// Indicates whether authentication has been enabled by the user.
-	var authenticationEnabled: Bool = false
-
-	/// The interval used to determine whether the app should ask the user for authentication.
-	var authenticationInterval: Int = 0
-
 	/// Returns the singleton `KurozoraDelegate` instance.
 	static let shared: KurozoraDelegate = KurozoraDelegate()
 
@@ -96,12 +87,12 @@ final class KurozoraDelegate {
 					splashViewController.animateLogo { _ in
 						window?.rootViewController = rootViewController
 						// Check if user should authenticate
-						KurozoraDelegate.shared.userHasToAuthenticate()
+						AuthenticationManager.shared.authenticateIfRequired()
 					}
 				} else {
 					window?.rootViewController = rootViewController
 					// Check if user should authenticate
-					KurozoraDelegate.shared.userHasToAuthenticate()
+					AuthenticationManager.shared.authenticateIfRequired()
 				}
 			}
 		}
@@ -123,7 +114,7 @@ final class KurozoraDelegate {
 
 		if User.isSignedIn {
 			// Check if user should authenticate
-			KurozoraDelegate.shared.userHasToAuthenticate()
+			AuthenticationManager.shared.authenticateIfRequired()
 		}
 	}
 
@@ -189,167 +180,6 @@ final class KurozoraDelegate {
 				topViewController?.present(warningViewController, animated: true)
 			}
 		}
-	}
-}
-
-// MARK: - Authentication
-extension KurozoraDelegate {
-	/// Asks the app if the user should authenticate so the app prepares for it.
-	func userShouldAuthenticate() {
-		self.authenticationEnabled = UserSettings.authenticationEnabled
-		if self.authenticationEnabled {
-			self.prepareView()
-			self.setAuthenticationInterval()
-		}
-	}
-
-	/// Tells the app that the user has to authenticate so the app prepares for it.
-	func userHasToAuthenticate() {
-		if UserSettings.authenticationEnabled {
-			DispatchQueue.main.async {
-				self.prepareForAuthentication()
-			}
-		}
-	}
-
-	/// Prepare the view to prepare the app for authentication.
-	func prepareView() {
-		if let authenticationViewController = UIApplication.topViewController as? AuthenticationViewController {
-			authenticationViewController.dismiss(animated: false, completion: nil)
-		}
-	}
-
-	/// Sets the authentication interval.
-	func setAuthenticationInterval() {
-		self.authenticationInterval = Date.uptime() + UserSettings.authenticationInterval.rawValue
-	}
-
-	/// Prepare the app for authentication.
-	@objc func prepareForAuthentication() {
-		guard
-			let topViewController = UIApplication.topViewController,
-			!(topViewController is AuthenticationViewController)
-		else { return }
-
-		let authenticationViewController = AuthenticationViewController()
-		authenticationViewController.modalPresentationStyle = .overFullScreen
-		topViewController.present(authenticationViewController, animated: true)
-	}
-
-	/// Handle the user authentication
-	func handleUserAuthentication() {
-		guard let viewController = UIApplication.topViewController as? AuthenticationViewController else { return }
-
-		self.localAuthentication(viewController: viewController) { success in
-			if success {
-				DispatchQueue.main.async {
-					viewController.dismiss(animated: true, completion: nil)
-				}
-			} else {
-				viewController.toggleHide()
-			}
-		}
-	}
-
-	/// Start local authentication.
-	///
-	/// - Parameters:
-	///    - viewController: The view controller on which the authentication is taking place.
-	///    - successHandler: A closure returning a boolean indicating whether authentication is successful.
-	///    - isSuccess: A boolean value indicating whether authentication is successful.
-	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let localAuthenticationContext = LAContext()
-		var authError: NSError?
-
-		#if targetEnvironment(macCatalyst)
-		let reasonString = "authenticate to continue."
-		#else
-		let reasonString = "Welcome back! Please authenticate to continue."
-		#endif
-
-		if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
-			localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, evaluateError in
-				if success {
-					// User authenticated successfully.
-					successHandler(success)
-				} else {
-					// User did not authenticate successfully.
-					DispatchQueue.main.async {
-						guard let error = evaluateError else { return }
-
-						// If user has chosen the 'Fallback authentication mechanism selected' (LAError.userFallback). Handle gracefully.
-						switch error._code {
-						case LAError.userFallback.rawValue:
-							print("fallback chosen")
-						case LAError.userCancel.rawValue:
-							successHandler(success)
-						default: break
-						}
-					}
-				}
-			}
-		} else {
-			guard let error = authError else { return }
-
-			Task { @MainActor in
-				// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled.
-				UIApplication.topViewController?.presentAlertController(title: "Error Authenticating", message: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
-			}
-		}
-	}
-
-	/// Return a string describing the evaluated Policy Fail Error error code.
-	///
-	/// - Parameter errorCode: The error code to evaluate.
-	///
-	/// - Returns: a string describing the evaluated error code.
-	fileprivate func evaluatePolicyFailErrorMessageForLA(errorCode: Int) -> String {
-		var message = ""
-
-		switch errorCode {
-		case LAError.biometryNotAvailable.rawValue:
-			message = "Authentication could not start because the device does not support biometric authentication."
-		case LAError.biometryLockout.rawValue:
-			message = "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
-		case LAError.biometryNotEnrolled.rawValue:
-			message = "Authentication could not start because the user has not enrolled in biometric authentication."
-		default:
-			message = "Did not find error code on LAError object"
-		}
-
-		return message
-	}
-
-	/// Return a string describing the evaluated Authentication Policy error code.
-	///
-	/// - Parameter errorCode: The error code to evaluate.
-	///
-	/// - Returns: a string describing the evaluated error code.
-	fileprivate func evaluateAuthenticationPolicyMessageForLA(errorCode: Int) -> String {
-		var message = ""
-
-		switch errorCode {
-		case LAError.authenticationFailed.rawValue:
-			message = "The user failed to provide valid credentials"
-		case LAError.appCancel.rawValue:
-			message = "Authentication was cancelled by application"
-		case LAError.invalidContext.rawValue:
-			message = "The context is invalid"
-		case LAError.notInteractive.rawValue:
-			message = "Not interactive"
-		case LAError.passcodeNotSet.rawValue:
-			message = "Passcode is not set on the device"
-		case LAError.systemCancel.rawValue:
-			message = "Authentication was cancelled by the system"
-		case LAError.userCancel.rawValue:
-			message = "The user did cancel"
-		case LAError.userFallback.rawValue:
-			message = "The user chose to use the fallback"
-		default:
-			message = self.evaluatePolicyFailErrorMessageForLA(errorCode: errorCode)
-		}
-
-		return message
 	}
 }
 

@@ -73,9 +73,27 @@ class AuthenticationSettingsViewController: SubSettingsViewController {
 
 		switch switchType {
 		case .toggleAuthentication:
-			UserSettings.set(isOn, forKey: .authenticationEnabled)
-			self.allowsAuthentication = isOn
-			self.tableView.reloadData()
+			sender.isEnabled = false
+
+			var reasonString = isOn ? "Authenticate to enable app lock." : "Authenticate to disable app lock."
+
+			#if targetEnvironment(macCatalyst)
+			reasonString = reasonString.lowercased()
+			#endif
+
+			AuthenticationManager.shared.requestBiometricPermission(for: reasonString) { [weak self] success in
+				guard let self = self else { return }
+				sender.isEnabled = true
+
+				if success {
+					UserSettings.set(isOn, forKey: .authenticationEnabled)
+					self.allowsAuthentication = isOn
+				} else {
+					sender.setOn(!isOn, animated: true)
+				}
+
+				self.tableView.reloadData()
+			}
 		case .requireAuthentication: break
 		}
 	}
