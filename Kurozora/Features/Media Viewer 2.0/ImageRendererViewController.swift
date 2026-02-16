@@ -56,5 +56,11 @@ final class ImageRendererViewController: UIViewController, MediaRenderable, UISc
 		}
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		guard scrollView.zoomScale > scrollView.minimumZoomScale else { return }
+		scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
+	}
+
 	var mediaView: UIView { self.imageView }
 }

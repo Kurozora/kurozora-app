@@ -46,7 +46,9 @@ final class MediaPresentAnimator: NSObject, UIViewControllerAnimatedTransitionin
 			toVC.view.alpha = 0
 			UIView.animate(withDuration: self.transitionDuration(using: ctx), animations: {
 				toVC.view.alpha = 1
+				toVC.view.backgroundColor = .black
 			}) { _ in
+				mediaView?.isHidden = false
 				ctx.completeTransition(!ctx.transitionWasCancelled)
 			}
 			return

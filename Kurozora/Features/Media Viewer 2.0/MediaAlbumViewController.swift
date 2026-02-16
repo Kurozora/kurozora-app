@@ -9,21 +9,23 @@
 import UIKit
 
 final class MediaAlbumViewController: UIPageViewController {
+	// MARK: - Orientation
 	private let orientationManager = OrientationManager()
+	private var currentForcedOrientation: UIInterfaceOrientationMask?
 	private var rotateToastButton: UIButton?
 	private var rotateToastConstraints: [NSLayoutConstraint] = []
-	private var isViewerForcedLandscape: Bool = false
+	private var effectiveViewerOrientation: UIInterfaceOrientationMask = .portrait
 
+	// MARK: - Data
 	private(set) var items: [MediaItemV2]
 	private(set) var currentIndex: Int
 	let startIndex: Int
 
-	// Attach the feed's transition delegate (set before presenting)
+	// MARK: - Transition
 	weak var transitionDelegateForThumbnail: MediaTransitionDelegate?
-
-	// Interactive controller
 	private let interactionController = MediaInteractionController()
 
+	// MARK: - UI
 	private let actionBar = MediaActionBar()
 	private let closeButton: UIButton = {
 		let button = UIButton(type: .system)
@@ -42,63 +44,94 @@ final class MediaAlbumViewController: UIPageViewController {
 		return label
 	}()
 
+	// MARK: - Callbacks
 	var onClose: (() -> Void)?
 	var onCopy: ((MediaItemV2) -> Void)?
 	var onShare: ((MediaItemV2) -> [Any])?
 	var onSave: ((MediaItemV2) -> Void)?
 	var onMore: ((MediaItemV2) -> Void)?
 
+	// MARK: - Guards
+	private var isDismissing = false
+	private var isApplyingRotation = false
+	private var controlsAreVisible = true
+
+	// MARK: - Init
 	init(items: [MediaItemV2], startIndex: Int) {
 		self.items = items
 		self.currentIndex = startIndex
 		self.startIndex = startIndex
 		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-		// use custom transitions
-		transitioningDelegate = self
-		modalPresentationStyle = .custom
-
-		// monitor device orientation for smart rotation lock
-		self.orientationManager.delegate = self
-		self.orientationManager.startMonitoring()
+		self.transitioningDelegate = self
+		self.modalPresentationStyle = .custom
 	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { fatalError() }
 
+	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .black
 
-		dataSource = self
-		delegate = self
+		self.dataSource = self
+		self.delegate = self
 
-		// prepare initial page
 		let initial = MediaRendererFactory.makeRenderer(for: self.items[self.currentIndex])
 		setViewControllers([initial], direction: .forward, animated: false)
 
-		// wire interactive dismiss
 		self.interactionController.wireToViewController(self)
 
-		// setup UI
 		self.setupUI()
+		self.configureGestureConflictResolution()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		self.isDismissing = false
+
+		if let sysOrientation = view.window?.windowScene?.interfaceOrientation {
+			self.effectiveViewerOrientation = self.mask(for: sysOrientation)
+		}
+
+		self.orientationManager.delegate = self
+		self.orientationManager.startMonitoring()
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		guard self.isBeingDismissed || self.isMovingFromParent else { return }
+
+		if self.currentForcedOrientation != nil {
+			self.applyForcedRotation(.portrait)
+		}
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		self.orientationManager.stopMonitoring()
+		self.hideRotateToast()
 	}
 
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+			guard let self else { return }
+			if let sysOrientation = self.view.window?.windowScene?.interfaceOrientation {
+				self.effectiveViewerOrientation = self.mask(for: sysOrientation)
+			}
+			self.isApplyingRotation = false
+		}
+	}
+
+	// MARK: - Setup UI
 	private func setupUI() {
 		self.setupTopControls()
 		self.setupActionBar()
 		self.bindActions(for: self.items[self.currentIndex])
 		self.setupToggleGesture()
 		self.updateIndexLabel()
-	}
-
-	private func updateIndexLabel() {
-		self.indexLabel.text = "\(self.currentIndex + 1) of \(self.items.count)"
 	}
 
 	private func setupTopControls() {
@@ -131,14 +164,26 @@ final class MediaAlbumViewController: UIPageViewController {
 		])
 	}
 
+	private func setupToggleGesture() {
+		let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.toggleControls))
+		singleTap.delegate = self
+		view.addGestureRecognizer(singleTap)
+	}
+
+	// MARK: - Index Label
+	private func updateIndexLabel() {
+		self.indexLabel.text = "\(self.currentIndex + 1) of \(self.items.count)"
+		self.indexLabel.isHidden = self.items.count <= 1
+	}
+
+	// MARK: - Actions
 	private func bindActions(for item: MediaItemV2) {
 		var actions: [MediaAction] = []
 		actions.append(.share)
 		actions.append(.save)
 
-		// Build the "More" menu dynamically
 		let moreMenu = self.makeMoreMenu(for: item)
-		if moreMenu.children.isEmpty == false {
+		if !moreMenu.children.isEmpty {
 			actions.append(.more(moreMenu))
 		}
 
@@ -171,16 +216,10 @@ final class MediaAlbumViewController: UIPageViewController {
 		return UIMenu(title: "", children: options)
 	}
 
-	@objc private func closeTapped() {
-		dismiss(animated: true) { [weak self] in
-			self?.onClose?()
-		}
-	}
-
 	private func share(_ item: MediaItemV2) {
 		var objects: [Any] = []
 		if let onShare = self.onShare {
-			objects.append(onShare(self.items[self.currentIndex]))
+			objects.append(onShare(item))
 		} else {
 			objects.append(item.url)
 		}
@@ -190,161 +229,239 @@ final class MediaAlbumViewController: UIPageViewController {
 		present(activityVC, animated: true)
 	}
 
-	@objc private func saveTapped() {
-		self.onSave?(self.items[self.currentIndex])
+	@objc private func closeTapped() {
+		guard !self.isDismissing else { return }
+		self.isDismissing = true
+
+		if self.currentForcedOrientation != nil {
+			self.applyForcedRotation(.portrait)
+
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+				self?.dismiss(animated: true) {
+					self?.onClose?()
+				}
+			}
+		} else {
+			dismiss(animated: true) { [weak self] in
+				self?.onClose?()
+			}
+		}
 	}
 
-	@objc private func moreTapped() {
-		self.onMore?(self.items[self.currentIndex])
-	}
+	// MARK: - Toggle Controls
+	@objc private func toggleControls() {
+		self.controlsAreVisible.toggle()
 
-	private func setupToggleGesture() {
-		let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.toggleActionBar))
-		singleTap.require(toFail: self.closeButton.gestureRecognizers?.first ?? singleTap)
-		view.addGestureRecognizer(singleTap)
-	}
-
-	@objc private func toggleActionBar() {
-		let isHidden = self.actionBar.transform == .identity
-
-		UIView.animate(withDuration: 0.25, animations: { [weak self] in
+		UIView.animate(withDuration: 0.25) { [weak self] in
 			guard let self else { return }
 
-			if isHidden {
-				// slide out
-				self.actionBar.transform = CGAffineTransform(translationX: 0, y: self.actionBar.frame.height + 40 + self.view.safeAreaInsets.bottom)
-				self.closeButton.transform = CGAffineTransform(translationX: 0, y: -(self.closeButton.frame.maxY + 40))
-				self.indexLabel.transform = CGAffineTransform(translationX: 0, y: -(self.indexLabel.frame.maxY + 40))
-			} else {
-				// reset to visible
+			if self.controlsAreVisible {
 				self.actionBar.transform = .identity
 				self.closeButton.transform = .identity
 				self.indexLabel.transform = .identity
+			} else {
+				self.actionBar.transform = CGAffineTransform(translationX: 0, y: self.actionBar.frame.height + 40 + self.view.safeAreaInsets.bottom)
+				self.closeButton.transform = CGAffineTransform(translationX: 0, y: -(self.closeButton.frame.maxY + 40))
+				self.indexLabel.transform = CGAffineTransform(translationX: 0, y: -(self.indexLabel.frame.maxY + 40))
 			}
-		})
+		}
 	}
 
-	// Expose the current media view so animators can snapshot it
+	// MARK: - Helpers
 	func currentMediaView() -> UIView? {
 		guard let currentVC = viewControllers?.first as? MediaRenderable else { return nil }
 		return currentVC.mediaView
 	}
 
-	// Update current index on page change
-	func updateCurrentIndexFromCurrentVC() {
-		if let currentVC = viewControllers?.first as? MediaRenderable {
-			if let idx = items.firstIndex(where: { $0.url == currentVC.mediaItem.url }) {
-				self.currentIndex = idx
+	private func index(of vc: UIViewController) -> Int? {
+		guard let renderable = vc as? MediaRenderable else { return nil }
+		return self.items.firstIndex(where: { $0.url == renderable.mediaItem.url })
+	}
+
+	private func currentChildScrollView() -> UIScrollView? {
+		guard let currentVC = viewControllers?.first else { return nil }
+		return self.findFirstScrollView(in: currentVC.view)
+	}
+
+	private func findFirstScrollView(in view: UIView) -> UIScrollView? {
+		if let sv = view as? UIScrollView { return sv }
+		for sub in view.subviews {
+			if let found = self.findFirstScrollView(in: sub) { return found }
+		}
+		return nil
+	}
+
+	private var pageViewControllerScrollView: UIScrollView? {
+		return view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
+	}
+
+	// MARK: - Gesture Conflict Resolution
+	private func configureGestureConflictResolution() {
+		guard let gestureRecognizers = self.view.gestureRecognizers else { return }
+		let pageScrollPan = self.pageViewControllerScrollView?.panGestureRecognizer
+
+		for gesture in gestureRecognizers {
+			if let pan = gesture as? UIPanGestureRecognizer, pan !== pageScrollPan {
+				pan.delegate = self
+				break
 			}
 		}
 	}
 
+	// MARK: - Orientation Overrides
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		if UserSettings.isSmartRotationLockEnabled {
-			return [.portrait, .landscapeLeft, .landscapeRight]
-		} else {
-			return UIApplication.shared.supportedInterfaceOrientations(for: self.view.window)
+		if let currentForcedOrientation = self.currentForcedOrientation {
+			return currentForcedOrientation
 		}
+
+		return super.supportedInterfaceOrientations
 	}
 
 	override var shouldAutorotate: Bool {
+		if UserSettings.isPortraitLockBuddyEnabled {
+			return true
+		}
 		return UserSettings.isSmartRotationLockEnabled
 	}
 }
 
-// MARK: - Page view data source/delegate
-extension MediaAlbumViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+// MARK: - UIPageViewControllerDataSource
+extension MediaAlbumViewController: UIPageViewControllerDataSource {
 	func pageViewController(_ pvc: UIPageViewController, viewControllerBefore vc: UIViewController) -> UIViewController? {
-		guard self.currentIndex > 0 else { return nil }
-		let idx = self.currentIndex - 1
-		return MediaRendererFactory.makeRenderer(for: self.items[idx])
+		guard let idx = self.index(of: vc), idx > 0 else { return nil }
+		return MediaRendererFactory.makeRenderer(for: self.items[idx - 1])
 	}
 
 	func pageViewController(_ pvc: UIPageViewController, viewControllerAfter vc: UIViewController) -> UIViewController? {
-		guard self.currentIndex < self.items.count - 1 else { return nil }
-		let idx = self.currentIndex + 1
-		return MediaRendererFactory.makeRenderer(for: self.items[idx])
+		guard let idx = self.index(of: vc), idx < self.items.count - 1 else { return nil }
+		return MediaRendererFactory.makeRenderer(for: self.items[idx + 1])
 	}
+}
 
+// MARK: - UIPageViewControllerDelegate
+extension MediaAlbumViewController: UIPageViewControllerDelegate {
 	func pageViewController(_ pvc: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-		if completed {
-			self.updateCurrentIndexFromCurrentVC()
-			self.updateIndexLabel()
-			self.bindActions(for: self.items[self.currentIndex])
+		guard completed else { return }
+
+		if let currentVC = viewControllers?.first as? MediaRenderable,
+		   let idx = self.items.firstIndex(where: { $0.url == currentVC.mediaItem.url })
+		{
+			self.currentIndex = idx
 		}
 
+		self.updateIndexLabel()
+		self.bindActions(for: self.items[self.currentIndex])
 		self.transitionDelegateForThumbnail?.scrollThumbnailIntoView(for: self.currentIndex)
 	}
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
 extension MediaAlbumViewController: UIViewControllerTransitioningDelegate {
-	// Present: animate from the tapped thumbnail (startIndex)
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return MediaPresentAnimator(startIndex: self.startIndex, transitionDelegate: self.transitionDelegateForThumbnail)
 	}
 
-	// Provide the interaction controller only if gesture has started
 	func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
 		return self.interactionController.hasStarted ? self.interactionController : nil
 	}
 
-	// Dismiss: animate from current page to thumbnail
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return MediaDismissAnimator(transitionDelegate: self.transitionDelegateForThumbnail)
 	}
 
-	// Provide the interaction controller only if gesture has started
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
 		return self.interactionController.hasStarted ? self.interactionController : nil
 	}
 }
 
+// MARK: - UIGestureRecognizerDelegate
+extension MediaAlbumViewController: UIGestureRecognizerDelegate {
+	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+		// Tap gesture: exclude taps on UIControl (buttons, menus, etc.)
+		if gestureRecognizer is UITapGestureRecognizer {
+			let location = gestureRecognizer.location(in: self.view)
+			if let hitView = self.view.hitTest(location, with: nil), hitView is UIControl {
+				return false
+			}
+			return true
+		}
+
+		// Dismiss pan: require primarily vertical velocity AND zoom scale at 1.0
+		if let pan = gestureRecognizer as? UIPanGestureRecognizer {
+			let velocity = pan.velocity(in: self.view)
+
+			guard abs(velocity.y) > abs(velocity.x) else { return false }
+
+			if let scrollView = self.currentChildScrollView(), scrollView.zoomScale > 1.0 {
+				return false
+			}
+
+			return true
+		}
+
+		return true
+	}
+}
+
 // MARK: - OrientationManagerDelegate
 extension MediaAlbumViewController: OrientationManagerDelegate {
-	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIDeviceOrientation, downEdge: OrientationDownEdge) {
-		// Only show toast if iOS system-wide orientation lock is *preventing* rotation.
-		// There isn't an official API to know the CC lock state, but the app's autorotation
-		// is blocked if UIApplication.shared.windows.first?.windowScene?.interfaceOrientation == .portrait
-		// while device reports landscape. Use your app's best detection; here we assume portrait lock active.
+	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIInterfaceOrientationMask, downEdge: OrientationDownEdge) {
 		guard UserSettings.isPortraitLockBuddyEnabled else {
 			self.hideRotateToast()
 			return
 		}
 
-//		// Decide if we should show the toast: show only for landscape attempts.
-//		switch deviceOrientation {
-//		case .landscapeLeft:
-//			self.showRotateToast(for: deviceOrientation, downEdge: downEdge)
-//		case .landscapeRight:
-//			self.showRotateToast(for: deviceOrientation, downEdge: downEdge)
-//		default:
-//			self.hideRotateToast()
-//		}
+		guard !self.isApplyingRotation else { return }
 
 		let sysOrientation = view.window?.windowScene?.interfaceOrientation ?? .portrait
-		if deviceOrientation.isLandscape, sysOrientation.isPortrait {
-			// user tilting while lock is active → show "Rotate" button
-			self.showRotateToast(for: deviceOrientation, downEdge: downEdge)
-		} else if deviceOrientation.isPortrait, self.isViewerForcedLandscape {
-			// user tilted back to portrait while viewer is rotated
-			self.showRotateToast(for: deviceOrientation, downEdge: downEdge)
-		} else {
+		let sysMask = self.mask(for: sysOrientation)
+
+		// If system orientation matches device, autorotation is working — no button needed
+		if self.orientationsAreAligned(deviceOrientation, sysMask) {
+			self.effectiveViewerOrientation = sysMask
 			self.hideRotateToast()
+			return
+		}
+
+		// System lock is preventing autorotation.
+		// Compare against our effective viewer orientation (survives timing gaps after forced rotation).
+		if self.orientationsAreAligned(deviceOrientation, self.effectiveViewerOrientation) {
+			self.hideRotateToast()
+			return
+		}
+
+		// Device differs from viewer while lock is active — show button
+		self.showRotateToast(for: deviceOrientation, downEdge: downEdge)
+	}
+
+	private func mask(for orientation: UIInterfaceOrientation) -> UIInterfaceOrientationMask {
+		switch orientation {
+		case .portrait: return .portrait
+		case .landscapeLeft: return .landscapeLeft
+		case .landscapeRight: return .landscapeRight
+		case .portraitUpsideDown: return .portraitUpsideDown
+		default: return .portrait
 		}
 	}
 
-	private func showRotateToast(for deviceOrientation: UIDeviceOrientation, downEdge: OrientationDownEdge) {
-		// If already visible, don't re-add
+	private func orientationsAreAligned(_ a: UIInterfaceOrientationMask, _ b: UIInterfaceOrientationMask) -> Bool {
+		if a == b { return true }
+		let isALandscape = (a == .landscapeLeft || a == .landscapeRight)
+		let isBLandscape = (b == .landscapeLeft || b == .landscapeRight)
+		return isALandscape && isBLandscape
+	}
+}
+
+// MARK: - Rotate Toast
+extension MediaAlbumViewController {
+	private func showRotateToast(for deviceOrientation: UIInterfaceOrientationMask, downEdge: OrientationDownEdge) {
 		if self.rotateToastButton != nil { return }
 
 		var configuration = UIButton.Configuration.plain()
 		configuration.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
 		configuration.title = "Tap to Rotate"
 		configuration.image = UIImage(systemName: "lock.open.rotation")
-		configuration.imageColorTransformer = UIConfigurationColorTransformer { _ in
-			.label
-		}
+		configuration.imageColorTransformer = UIConfigurationColorTransformer { _ in .label }
 		configuration.imagePlacement = .leading
 		configuration.imagePadding = 8
 		configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
@@ -360,13 +477,15 @@ extension MediaAlbumViewController: OrientationManagerDelegate {
 		tapToRotateButton.translatesAutoresizingMaskIntoConstraints = false
 		tapToRotateButton.addBlurEffect()
 
-		tapToRotateButton.addTarget(self, action: #selector(self.handleRotateTapped), for: .touchUpInside)
+		tapToRotateButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.applyForcedRotation(deviceOrientation)
+		}, for: .touchUpInside)
 		tapToRotateButton.alpha = 0
 
 		view.addSubview(tapToRotateButton)
 		self.rotateToastButton = tapToRotateButton
 
-		// Remove old constraints if any
 		NSLayoutConstraint.deactivate(self.rotateToastConstraints)
 		self.rotateToastConstraints.removeAll()
 
@@ -396,7 +515,6 @@ extension MediaAlbumViewController: OrientationManagerDelegate {
 
 		NSLayoutConstraint.activate(self.rotateToastConstraints)
 
-		// Determine rotation angle so the label is upright in device orientation
 		let angle: CGFloat
 		switch deviceOrientation {
 		case .landscapeLeft:
@@ -409,16 +527,14 @@ extension MediaAlbumViewController: OrientationManagerDelegate {
 			angle = 0
 		}
 
-		// initial offset for slide-in depending on edge
 		let initialTransform: CGAffineTransform
 		switch downEdge {
 		case .bottom: initialTransform = CGAffineTransform(translationX: 0, y: 8)
-		case .top: initialTransform = CGAffineTransform(translationX: 0, y: 8)
-		case .left: initialTransform = CGAffineTransform(translationX: 0, y: 8)
-		case .right: initialTransform = CGAffineTransform(translationX: 0, y: 8)
+		case .top: initialTransform = CGAffineTransform(translationX: 0, y: -8)
+		case .left: initialTransform = CGAffineTransform(translationX: -8, y: 0)
+		case .right: initialTransform = CGAffineTransform(translationX: 8, y: 0)
 		}
 
-		// apply angle so text reads correctly relative to device
 		tapToRotateButton.transform = initialTransform.concatenating(CGAffineTransform(rotationAngle: angle))
 
 		UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseOut]) {
@@ -429,68 +545,59 @@ extension MediaAlbumViewController: OrientationManagerDelegate {
 
 	private func hideRotateToast() {
 		guard let btn = self.rotateToastButton else { return }
+		self.rotateToastButton = nil
+		NSLayoutConstraint.deactivate(self.rotateToastConstraints)
+		self.rotateToastConstraints.removeAll()
+
 		UIView.animate(withDuration: 0.22, animations: {
 			btn.alpha = 0
 			btn.transform = .identity
 		}, completion: { _ in
 			btn.removeFromSuperview()
-			self.rotateToastButton = nil
-			NSLayoutConstraint.deactivate(self.rotateToastConstraints)
-			self.rotateToastConstraints.removeAll()
 		})
 	}
+}
 
-	@objc private func handleRotateTapped() {
-		let orientation = self.orientationManager.lastDetectedOrientation
-		self.applyRotation(orientation)
-		self.hideRotateToast()
-	}
+// MARK: - Forced Rotation
+extension MediaAlbumViewController {
+	private func applyForcedRotation(_ orientation: UIInterfaceOrientationMask) {
+		guard !self.isApplyingRotation else { return }
+		self.isApplyingRotation = true
 
-	private func applyRotation(_ orientation: UIDeviceOrientation) {
-		// If the media view contains a scroll view that is zoomable, reset zoom first.
-		if let scroll = findFirstScrollView(in: self.view), scroll.zoomScale > 1.0 {
-			scroll.setZoomScale(1.0, animated: true)
-			// Wait for zoom animation to finish before rotating (slightly longer than zoom animation)
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
-				self.performRotation(on: self.view, orientation: orientation)
-			}
+		// Sync effective orientation immediately — before next OM callback
+		self.effectiveViewerOrientation = orientation
+
+		// Clear force when returning to portrait to restore auto-rotation
+		if orientation == .portrait {
+			self.currentForcedOrientation = nil
 		} else {
-			self.performRotation(on: self.view, orientation: orientation)
+			self.currentForcedOrientation = orientation
 		}
 
-		self.view.bounds = UIScreen.main.bounds
-		self.view.setNeedsLayout()
-	}
+		self.hideRotateToast()
 
-	private func performRotation(on viewToRotate: UIView, orientation: UIDeviceOrientation) {
-		let sysOrientation = view.window?.windowScene?.interfaceOrientation ?? .portrait
-
-		let angle: CGFloat
-		switch orientation {
-		case .landscapeLeft:
-			angle = CGFloat.pi / 2.0
-			self.isViewerForcedLandscape = sysOrientation != .landscapeLeft
-		case .landscapeRight:
-			angle = -CGFloat.pi / 2.0
-			self.isViewerForcedLandscape = sysOrientation != .landscapeRight
-		case .portraitUpsideDown:
-			angle = CGFloat.pi
-			self.isViewerForcedLandscape = sysOrientation != .portraitUpsideDown
-		default:
-			angle = 0
-			self.isViewerForcedLandscape = sysOrientation != .portrait
+		guard let windowScene = view.window?.windowScene else {
+			self.isApplyingRotation = false
+			return
 		}
 
-		UIView.animate(withDuration: 0.30, delay: 0, options: [.curveEaseInOut], animations: {
-			viewToRotate.transform = CGAffineTransform(rotationAngle: angle)
-		}, completion: nil)
-	}
+		if #available(iOS 16.0, *) {
+			self.setNeedsUpdateOfSupportedInterfaceOrientations()
 
-	private func findFirstScrollView(in view: UIView) -> UIScrollView? {
-		if let sv = view as? UIScrollView { return sv }
-		for sub in view.subviews {
-			if let found = findFirstScrollView(in: sub) { return found }
+			let geometryUpdate = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: orientation)
+
+			windowScene.requestGeometryUpdate(geometryUpdate) { [weak self] error in
+				guard let self else { return }
+				// Revert to actual system orientation on failure
+				let actualMask = self.mask(for: windowScene.interfaceOrientation)
+				self.effectiveViewerOrientation = actualMask
+				self.currentForcedOrientation = (actualMask == .portrait) ? nil : actualMask
+				self.isApplyingRotation = false
+			}
 		}
-		return nil
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+			self?.isApplyingRotation = false
+		}
 	}
 }

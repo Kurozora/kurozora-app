@@ -14,14 +14,14 @@ enum OrientationDownEdge {
 }
 
 protocol OrientationManagerDelegate: AnyObject {
-	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIDeviceOrientation, downEdge: OrientationDownEdge)
+	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIInterfaceOrientationMask, downEdge: OrientationDownEdge)
 }
 
 final class OrientationManager: NSObject {
 	weak var delegate: OrientationManagerDelegate?
 
 	private let motion = CMMotionManager()
-	private(set) var lastDetectedOrientation: UIDeviceOrientation = .portrait
+	private(set) var lastDetectedOrientation: UIInterfaceOrientationMask = .portrait
 	private(set) var lastDownEdge: OrientationDownEdge = .bottom
 
 	func startMonitoring(updateInterval: TimeInterval = 0.18) {
@@ -34,14 +34,19 @@ final class OrientationManager: NSObject {
 			let gx = grav.x
 			let gy = grav.y
 
+			// Ignore flat-device noise (e.g. lying on a table)
+			guard max(abs(gx), abs(gy)) > 0.3 else { return }
+
 			// Determine which axis is dominant
 			if abs(gx) > abs(gy) {
 				// gravity mostly along device X -> landscape
 				if gx > 0 {
-					self.lastDetectedOrientation = .landscapeRight
+					// Right side down, top points left → landscapeLeft
+					self.lastDetectedOrientation = .landscapeLeft
 					self.lastDownEdge = .right
 				} else {
-					self.lastDetectedOrientation = .landscapeLeft
+					// Left side down, top points right → landscapeRight
+					self.lastDetectedOrientation = .landscapeRight
 					self.lastDownEdge = .left
 				}
 			} else {
