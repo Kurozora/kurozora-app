@@ -95,7 +95,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
 		print("----- Scene entered background.")
-		KurozoraDelegate.shared.userShouldAuthenticate()
+		AuthenticationManager.shared.sceneDidEnterBackground()
 //		WorkflowController.shared.scheduleNotification("Sessionne", body: "Gol gara signed in from saboon.")
 		self.authenticationCount = 0
 	}
@@ -116,11 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneDidBecomeActive(_ scene: UIScene) {
 		print("----- Scene became active.")
 		if self.authenticationCount < 1 {
-			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
-				DispatchQueue.main.async {
-					KurozoraDelegate.shared.prepareForAuthentication()
-				}
-			}
+			AuthenticationManager.shared.sceneDidBecomeActiveIfNeeded()
 		}
 
 		self.authenticationCount += 1
