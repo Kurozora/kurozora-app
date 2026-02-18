@@ -417,7 +417,7 @@ extension StudioDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		let badgeViewController = BadgeViewController.instantiate()
+		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 		badgeViewController.popoverPresentationController?.sourceView = button
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
