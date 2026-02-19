@@ -99,6 +99,20 @@ extension UIView {
 		}
 	}
 
+	/// Shakes the view horizontally.
+	///
+	/// - Parameters:
+	///   - duration: The duration of the shake animation (default is `0.1` seconds).
+	func animateShake(duration: TimeInterval = 0.1) {
+		UIView.animate(withDuration: duration, delay: 0, options: [.curveLinear, .allowUserInteraction], animations: { [weak self] in
+			guard let self = self else { return }
+			self.transform = CGAffineTransform(translationX: -5, y: 0)
+		}) { [weak self] _ in
+			guard let self = self else { return }
+			self.transform = .identity
+		}
+	}
+
 	/// Give the view a nice shadow.
 	///
 	/// - Parameters:

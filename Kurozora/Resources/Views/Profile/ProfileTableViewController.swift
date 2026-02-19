@@ -990,7 +990,10 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 			let feedMessage = self.feedMessages[indexPath.row]
 
 			guard let feedMessageUser = feedMessage.relationships.users.data.first else { return }
-			guard feedMessageUser != self.user else { return }
+			guard feedMessageUser != self.user else {
+				self.view.animateShake()
+				return
+			}
 
 			feedMessage.visitOriginalPosterProfile(from: self)
 		}
@@ -1012,7 +1015,15 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.row].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
+			let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first
+
+			guard let feedMessageUser = feedMessage?.relationships.users.data.first else { return }
+			guard feedMessageUser != self.user else {
+				self.view.animateShake()
+				return
+			}
+
+			feedMessage?.visitOriginalPosterProfile(from: self)
 		}
 	}
 
