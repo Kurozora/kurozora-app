@@ -45,6 +45,7 @@ extension StudioDetailsCollectionViewController {
 				switch itemKind {
 				case .studio(let studio, _):
 					studioHeaderCollectionViewCell?.configure(using: studio)
+					studioHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
 				return studioHeaderCollectionViewCell

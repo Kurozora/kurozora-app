@@ -45,8 +45,8 @@
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="nameLabel" destination="HXg-sm-d6B" id="WDv-6D-E1J"/>
-                <outlet property="personImageView" destination="zoa-uD-ZSx" id="XDy-DJ-u3w"/>
+                <outlet property="primaryImageView" destination="zoa-uD-ZSx" id="rab-2b-6aV"/>
+                <outlet property="primaryLabel" destination="HXg-sm-d6B" id="cDa-Az-riy"/>
             </connections>
             <point key="canvasLocation" x="99" y="153"/>
         </collectionViewCell>

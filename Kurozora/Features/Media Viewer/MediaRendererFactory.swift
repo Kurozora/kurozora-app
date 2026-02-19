@@ -9,7 +9,7 @@
 import UIKit
 
 enum MediaRendererFactory {
-	static func makeRenderer(for item: MediaItemV2) -> UIViewController & MediaRenderable {
+	static func makeRenderer(for item: MediaItem) -> UIViewController & MediaRenderable {
 		switch item.type {
 		case .image:
 			return ImageRendererViewController(mediaItem: item)

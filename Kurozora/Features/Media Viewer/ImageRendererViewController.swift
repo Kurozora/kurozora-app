@@ -9,11 +9,11 @@
 import UIKit
 
 final class ImageRendererViewController: UIViewController, MediaRenderable, UIScrollViewDelegate {
-	let mediaItem: MediaItemV2
+	let mediaItem: MediaItem
 	private let scrollView = UIScrollView()
 	let imageView = UIImageView()
 
-	init(mediaItem: MediaItemV2) {
+	init(mediaItem: MediaItem) {
 		self.mediaItem = mediaItem
 		super.init(nibName: nil, bundle: nil)
 	}

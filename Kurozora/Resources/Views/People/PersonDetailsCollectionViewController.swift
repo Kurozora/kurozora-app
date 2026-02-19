@@ -432,6 +432,49 @@ extension PersonDetailsCollectionViewController: TitleHeaderCollectionReusableVi
 	}
 }
 
+// MARK: - MediaTransitionDelegate
+extension PersonDetailsCollectionViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? StudioHeaderCollectionViewCell else {
+			return nil
+		}
+		return cell.primaryImageView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {
+		// Scroll the collection view to make sure the cell at the given index is visible.
+		let indexPath = IndexPath(item: index, section: 0)
+		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	}
+}
+
+// MARK: - MediaViewerCellViewDelegate
+extension PersonDetailsCollectionViewController: MediaViewerViewDelegate {
+	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
+		let profileURL = URL(string: self.person.attributes.profile?.url ?? "")
+		var items: [MediaItem] = []
+
+		if let profileURL = profileURL {
+			items.append(MediaItem(
+				url: profileURL,
+				type: .image,
+				title: self.person.attributes.fullName,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+
+		guard items.indices.contains(index) else { return }
+        let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		albumVC.transitionDelegateForThumbnail = self
+
+		self.present(albumVC, animated: true)
+	}
+}
+
 // MARK: - ReviewCollectionViewCellDelegate
 extension PersonDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {

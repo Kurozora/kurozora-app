@@ -771,32 +771,31 @@ extension GameDetailsCollectionViewController: ReviewTextEditorViewControllerDel
 	}
 }
 
+// MARK: - MediaTransitionDelegate
 extension GameDetailsCollectionViewController: MediaTransitionDelegate {
 	func imageViewForMedia(at index: Int) -> UIImageView? {
-		// Find the visible cell for the index and return its thumbnail UIImageView.
-		// Example (collectionView):
-		guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? BaseDetailHeaderCollectionViewCell else {
 			return nil
 		}
-		return cell.posterImageView
+		return index == 0 ? cell.posterImageView : cell.bannerImageView
 	}
 
 	func scrollThumbnailIntoView(for index: Int) {
 		// Scroll the collection view to make sure the cell at the given index is visible.
 		let indexPath = IndexPath(item: index, section: 0)
-		collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 	}
 }
 
-// MARK: - BaseDetailHeaderCollectionViewCellDelegate
-extension GameDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
-	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int) {
+// MARK: - MediaViewerCellViewDelegate
+extension GameDetailsCollectionViewController: MediaViewerViewDelegate {
+	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
 		let posterURL = URL(string: self.game.attributes.poster?.url ?? "")
 		let bannerURL = URL(string: self.game.attributes.banner?.url ?? "")
-		var items: [MediaItemV2] = []
+		var items: [MediaItem] = []
 
 		if let posterURL = posterURL {
-			items.append(MediaItemV2(
+			items.append(MediaItem(
 				url: posterURL,
 				type: .image,
 				title: self.game.attributes.title,
@@ -808,7 +807,7 @@ extension GameDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			))
 		}
 		if let bannerURL = bannerURL {
-			items.append(MediaItemV2(
+			items.append(MediaItem(
 				url: bannerURL,
 				type: .image,
 				title: self.game.attributes.title,
@@ -820,12 +819,16 @@ extension GameDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			))
 		}
 
+		guard items.indices.contains(index) else { return }
 		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
 		albumVC.transitionDelegateForThumbnail = self
 
-		present(albumVC, animated: true)
+		self.present(albumVC, animated: true)
 	}
+}
 
+// MARK: - BaseDetailHeaderCollectionViewCellDelegate
+extension GameDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
 		let oldLibraryStatus = cell.libraryStatus

@@ -29,8 +29,8 @@ final class MediaDismissAnimator: NSObject, UIViewControllerAnimatedTransitionin
 		self.transitionDelegate?.scrollThumbnailIntoView(for: currentIndex)
 
 		guard
-			let targetThumb = transitionDelegate?.imageViewForMedia(at: currentIndex),
-			let mediaView = fromVC.currentMediaView() as? UIImageView,
+			let targetThumb = self.transitionDelegate?.imageViewForMedia(at: currentIndex),
+			let mediaView = fromVC.currentMedia?.mediaView as? UIImageView,
 			let snapshot = makeSnapshot(from: mediaView)
 		else {
 			self.fallbackFade(ctx: ctx, fromVC: fromVC)

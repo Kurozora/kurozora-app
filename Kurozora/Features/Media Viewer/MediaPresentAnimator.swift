@@ -33,7 +33,7 @@ final class MediaPresentAnimator: NSObject, UIViewControllerAnimatedTransitionin
 		toVC.view.layoutIfNeeded()
 
 		// Hide the actual media view until animation completes
-		let mediaView = toVC.currentMediaView()
+		let mediaView = toVC.currentMedia?.mediaView
 		mediaView?.isHidden = true
 		toVC.view.backgroundColor = .clear
 		toVC.view.alpha = 1

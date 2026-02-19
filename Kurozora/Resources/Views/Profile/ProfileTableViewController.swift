@@ -70,6 +70,8 @@ class ProfileTableViewController: KTableViewController {
 
 	var feedMessages: [FeedMessage] = []
 
+	weak var mediaViewerDelegate: MediaViewerViewDelegate?
+
 	// Styling
 	var countValueAttributes: [NSAttributedString.Key: Any] {
 		let centerAlign = NSMutableParagraphStyle()
@@ -235,11 +237,17 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Configure the views.
 	private func configureViews() {
+		self.mediaViewerDelegate = self
+
 		// Banner image view
 		self.bannerImageView.translatesAutoresizingMaskIntoConstraints = false
+		self.bannerImageView.tag = 1
 		self.bannerImageView.contentMode = .scaleAspectFill
 		self.bannerImageView.clipsToBounds = true
 		self.bannerImageView.backgroundColor = .kurozora
+		self.bannerImageView.isUserInteractionEnabled = true
+		let bannerImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+		self.bannerImageView.addGestureRecognizer(bannerImageViewTapGesture)
 
 		// Profile photo wrapper
 		self.profilePhotoWrapperView.translatesAutoresizingMaskIntoConstraints = false
@@ -250,6 +258,10 @@ class ProfileTableViewController: KTableViewController {
 
 		// Profile image view
 		self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
+		self.profileImageView.tag = 0
+		self.profileImageView.isUserInteractionEnabled = true
+		let profileImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+		self.profileImageView.addGestureRecognizer(profileImageViewTapGesture)
 
 		// Online indicator container
 		self.onlineIndicatorContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -529,6 +541,12 @@ class ProfileTableViewController: KTableViewController {
 	fileprivate func configureNavigationItems() {
 		self.configureMoreBarButtonItem()
 		self.configurePostMessageBarButtonItem()
+	}
+
+	/// Handles the profile image view press.
+	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
+		guard let view = sender.view as? UIImageView else { return }
+		self.mediaViewerDelegate?.mediaViewerViewDelegate(self.view, didTapImage: view, at: view.tag)
 	}
 
 	/// Update the attributed text.
@@ -889,6 +907,61 @@ extension ProfileTableViewController {
 			FeedMessageCell.self,
 			FeedMessageReShareCell.self
 		]
+	}
+}
+
+// MARK: - MediaTransitionDelegate
+extension ProfileTableViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		return index == 0 ? self.profileImageView : self.bannerImageView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {
+		// Scroll the collection view to make sure the cell at the given index is visible.
+//		let indexPath = IndexPath(item: index, section: 0)
+//		self.tableView.safeScrollToRow(at: indexPath, at: .middle, animated: true)
+	}
+}
+
+// MARK: - MediaViewerCellViewDelegate
+extension ProfileTableViewController: MediaViewerViewDelegate {
+	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
+		guard let user = self.user else { return }
+
+		let profileURL = URL(string: user.attributes.profile?.url ?? "")
+		let bannerURL = URL(string: user.attributes.banner?.url ?? "")
+		var items: [MediaItem] = []
+
+		if let profileURL = profileURL {
+			items.append(MediaItem(
+				url: profileURL,
+				type: .image,
+				title: user.attributes.username,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+		if let bannerURL = bannerURL {
+			items.append(MediaItem(
+				url: bannerURL,
+				type: .image,
+				title: user.attributes.username,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+
+		guard items.indices.contains(index) else { return }
+		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		albumVC.transitionDelegateForThumbnail = self
+
+		self.present(albumVC, animated: true)
 	}
 }
 

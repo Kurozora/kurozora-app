@@ -86,8 +86,8 @@
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="albumImageView" destination="Q0I-12-fgP" id="vXC-la-lCz"/>
-                <outlet property="playButton" destination="fXU-Vw-tcL" id="Cmu-ra-8wL"/>
+                <outlet property="primaryButton" destination="fXU-Vw-tcL" id="nuT-Y3-9eK"/>
+                <outlet property="primaryImageView" destination="Q0I-12-fgP" id="nxJ-XY-45c"/>
                 <outlet property="primaryLabel" destination="3OV-E9-jsQ" id="Gt5-Wi-0Ml"/>
                 <outlet property="secondaryLabel" destination="fCF-FR-u3F" id="yM9-TE-2b6"/>
             </connections>

@@ -2001,6 +2001,15 @@ struct Trans {
 	/// - Tag: Trans-studio
 	static let studio: String = String(localized: "Studio",
 									   comment: "The string for the word 'studio'.")
+	/// The string for the word 'Founded on [date]'.
+	///
+	/// - Tag: Trans-Founded on
+	static func foundedOn(date: String) -> String {
+		String(
+			localized: "Founded on \(date)",
+			comment: "The string for the word 'Founded on [date]'."
+		)
+	}
 	/// The string for the word 'successor'.
 	///
 	/// - Tag: Trans-successor

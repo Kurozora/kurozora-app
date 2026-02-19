@@ -9,6 +9,6 @@
 import UIKit
 
 protocol MediaRenderable where Self: UIViewController {
-	var mediaItem: MediaItemV2 { get }
+	var mediaItem: MediaItem { get }
 	var mediaView: UIView { get } // used for transitions (imageView/videoView)
 }

@@ -45,8 +45,8 @@
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="characterImageView" destination="RlP-ms-OHh" id="P72-6n-Rv8"/>
-                <outlet property="nameLabel" destination="YPf-Hs-GWD" id="YDC-ft-f8V"/>
+                <outlet property="primaryImageView" destination="RlP-ms-OHh" id="IXY-r8-y39"/>
+                <outlet property="primaryLabel" destination="YPf-Hs-GWD" id="uAD-gS-eW1"/>
             </connections>
             <point key="canvasLocation" x="99" y="154"/>
         </collectionViewCell>

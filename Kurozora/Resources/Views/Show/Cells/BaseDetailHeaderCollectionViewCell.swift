@@ -9,14 +9,13 @@
 import UIKit
 
 protocol BaseDetailHeaderCollectionViewCellDelegate: AnyObject {
-	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int)
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async
 }
 
 class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlet
-	@IBOutlet weak var bannerImageView: UIImageView!
-	@IBOutlet weak var visualEffectView: KVisualEffectView!
+	@IBOutlet var bannerImageView: UIImageView!
+	@IBOutlet var visualEffectView: KVisualEffectView!
 
 	// Quick details view
 	@IBOutlet weak var quickDetailsView: UIView!
@@ -26,7 +25,9 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: PosterImageView!
 
+	// MARK: - Properties
 	weak var delegate: BaseDetailHeaderCollectionViewCellDelegate?
+	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
 	// MARK: - Functions
 	override func awakeFromNib() {
@@ -39,26 +40,21 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure poster
+		self.posterImageView.tag = 0
 		self.posterImageView.isUserInteractionEnabled = true
-		let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapPoster))
+		let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
 		self.posterImageView.addGestureRecognizer(posterTap)
 
 		// Configure banner
+		self.bannerImageView.tag = 1
 		self.bannerImageView.isUserInteractionEnabled = true
-		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapBanner))
+		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
 		self.bannerImageView.addGestureRecognizer(bannerTap)
 	}
 
-	@objc private func didTapBanner(_ sender: UIImageView) {
-		#if DEBUG
-		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 1)
-		#endif
-	}
-
-	@objc private func didTapPoster(_ sender: UIImageView) {
-		#if DEBUG
-		self.delegate?.baseDetailHeaderCollectionViewCell(self, didTapImage: sender, at: 0)
-		#endif
+	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
+		guard let view = sender.view as? UIImageView else { return }
+		self.mediaViewerDelegate?.mediaViewerViewDelegate(self, didTapImage: view, at: view.tag)
 	}
 
 	// MARK: - IBActions

@@ -345,6 +345,49 @@ extension CharacterDetailsCollectionViewController: TitleHeaderCollectionReusabl
 	}
 }
 
+// MARK: - MediaTransitionDelegate
+extension CharacterDetailsCollectionViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? StudioHeaderCollectionViewCell else {
+			return nil
+		}
+		return cell.primaryImageView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {
+		// Scroll the collection view to make sure the cell at the given index is visible.
+		let indexPath = IndexPath(item: index, section: 0)
+		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	}
+}
+
+// MARK: - MediaViewerCellViewDelegate
+extension CharacterDetailsCollectionViewController: MediaViewerViewDelegate {
+	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
+		let profileURL = URL(string: self.character.attributes.profile?.url ?? "")
+		var items: [MediaItem] = []
+
+		if let profileURL = profileURL {
+			items.append(MediaItem(
+				url: profileURL,
+				type: .image,
+				title: self.character.attributes.name,
+				description: nil,
+				author: nil,
+				provider: nil,
+				embedHTML: nil,
+				extraInfo: nil
+			))
+		}
+
+		guard items.indices.contains(index) else { return }
+        let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		albumVC.transitionDelegateForThumbnail = self
+
+		self.present(albumVC, animated: true)
+	}
+}
+
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {

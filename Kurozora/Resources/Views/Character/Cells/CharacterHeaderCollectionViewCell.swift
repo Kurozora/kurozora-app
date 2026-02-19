@@ -6,25 +6,38 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class CharacterHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var characterImageView: CharacterImageView!
-	@IBOutlet weak var nameLabel: KLabel!
+	@IBOutlet weak var primaryImageView: CharacterImageView!
+	@IBOutlet weak var primaryLabel: KLabel!
 
 	// MARK: - Properties
-	var character: Character! {
-		didSet {
-			configureCell()
-		}
+	weak var mediaViewerDelegate: MediaViewerViewDelegate?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		// Configure image view
+		self.primaryImageView.isUserInteractionEnabled = true
+		let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+		self.primaryImageView.addGestureRecognizer(posterTap)
 	}
 
-	// MARK: - Functions
-	/// Configure the cell with the given details.
-	func configureCell() {
-		self.nameLabel.text = self.character.attributes.name
-		self.characterImageView.setImage(with: self.character.attributes.profile?.url ?? "", placeholder: self.character.attributes.placeholderImage)
+	// MARK: - functions
+	/// Configure the cell with the given character object.
+	///
+	/// - Parameter character: The `Character` object used to configure the cell.
+	func configure(using character: Character) {
+		self.primaryLabel.text = character.attributes.name
+		self.primaryImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)
+	}
+
+	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
+		guard let view = sender.view as? UIImageView else { return }
+		self.mediaViewerDelegate?.mediaViewerViewDelegate(self, didTapImage: view, at: view.tag)
 	}
 }

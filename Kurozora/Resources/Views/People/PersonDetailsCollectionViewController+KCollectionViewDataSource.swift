@@ -42,7 +42,8 @@ extension PersonDetailsCollectionViewController {
 				let personHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .person(let person, _):
-					personHeaderCollectionViewCell?.person = person
+					personHeaderCollectionViewCell?.configure(using: person)
+					personHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
 				return personHeaderCollectionViewCell

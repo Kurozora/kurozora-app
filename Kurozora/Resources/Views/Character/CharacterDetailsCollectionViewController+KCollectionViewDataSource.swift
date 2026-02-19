@@ -42,7 +42,8 @@ extension CharacterDetailsCollectionViewController {
 				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .character(let character, _):
-					characterHeaderCollectionViewCell?.character = character
+					characterHeaderCollectionViewCell?.configure(using: character)
+					characterHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
 				return characterHeaderCollectionViewCell

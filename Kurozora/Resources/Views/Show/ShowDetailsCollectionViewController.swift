@@ -842,14 +842,13 @@ extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDele
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
 }
 
+// MARK: - MediaTransitionDelegate
 extension ShowDetailsCollectionViewController: MediaTransitionDelegate {
 	func imageViewForMedia(at index: Int) -> UIImageView? {
-		// Find the visible cell for the index and return its thumbnail UIImageView.
-		// Example (collectionView):
-		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ShowDetailHeaderCollectionViewCell else {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? BaseDetailHeaderCollectionViewCell else {
 			return nil
 		}
-		return cell.posterImageView
+		return index == 0 ? cell.posterImageView : cell.bannerImageView
 	}
 
 	func scrollThumbnailIntoView(for index: Int) {
@@ -859,14 +858,15 @@ extension ShowDetailsCollectionViewController: MediaTransitionDelegate {
 	}
 }
 
-extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
-	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didTapImage imageView: UIImageView, at index: Int) {
+// MARK: - MediaViewerCellViewDelegate
+extension ShowDetailsCollectionViewController: MediaViewerViewDelegate {
+	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
 		let posterURL = URL(string: self.show.attributes.poster?.url ?? "")
 		let bannerURL = URL(string: self.show.attributes.banner?.url ?? "")
-		var items: [MediaItemV2] = []
+		var items: [MediaItem] = []
 
 		if let posterURL = posterURL {
-			items.append(MediaItemV2(
+			items.append(MediaItem(
 				url: posterURL,
 				type: .image,
 				title: self.show.attributes.title,
@@ -878,7 +878,7 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			))
 		}
 		if let bannerURL = bannerURL {
-			items.append(MediaItemV2(
+			items.append(MediaItem(
 				url: bannerURL,
 				type: .image,
 				title: self.show.attributes.title,
@@ -890,12 +890,16 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			))
 		}
 
-		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
+		guard items.indices.contains(index) else { return }
+        let albumVC = MediaAlbumViewController(items: items, startIndex: index)
 		albumVC.transitionDelegateForThumbnail = self
 
 		self.present(albumVC, animated: true)
 	}
+}
 
+// MARK: - BaseDetailHeaderCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn(), let cell = cell as? ShowDetailHeaderCollectionViewCell else { return }
 		let oldLibraryStatus = cell.libraryStatus

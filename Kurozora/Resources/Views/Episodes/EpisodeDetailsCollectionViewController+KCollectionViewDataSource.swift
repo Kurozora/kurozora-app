@@ -43,6 +43,7 @@ extension EpisodeDetailsCollectionViewController {
 			case .header:
 				let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeDetailHeaderCollectionViewCell.self, for: indexPath)
 				episodeDetailHeaderCollectionViewCell?.delegate = self
+				episodeDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
 
 				switch itemKind {
 				case .episode(let episode, _):

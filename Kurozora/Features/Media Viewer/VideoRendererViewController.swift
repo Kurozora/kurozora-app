@@ -9,13 +9,13 @@
 import AVKit
 
 final class VideoRendererViewController: UIViewController, MediaRenderable, UIScrollViewDelegate {
-	let mediaItem: MediaItemV2
+	let mediaItem: MediaItem
 	private var player: AVPlayer!
 	private let playerView = UIView()
 	private let rotationContainer = UIView()
 	private let scrollView = UIScrollView()
 
-	init(mediaItem: MediaItemV2) {
+	init(mediaItem: MediaItem) {
 		self.mediaItem = mediaItem
 		super.init(nibName: nil, bundle: nil)
 	}

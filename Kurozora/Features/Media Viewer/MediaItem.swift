@@ -1,5 +1,5 @@
 //
-//  MediaItemV2.swift
+//  MediaItem.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/09/2025.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol MediaRepresentableV2 {
+protocol MediaRepresentable {
 	var url: URL { get }
-	var type: MediaTypeV2 { get }
+	var type: MediaType { get }
 	var title: String? { get }
 	var description: String? { get }
 	var author: String? { get }
@@ -21,9 +21,9 @@ protocol MediaRepresentableV2 {
 	var extraInfo: [String: Any]? { get }
 }
 
-struct MediaItemV2: MediaRepresentableV2 {
+struct MediaItem: MediaRepresentable {
 	let url: URL
-	let type: MediaTypeV2
+	let type: MediaType
 	let title: String?
 	let description: String?
 	let author: String?
@@ -33,7 +33,7 @@ struct MediaItemV2: MediaRepresentableV2 {
 	let extraInfo: [String: Any]?
 }
 
-enum MediaTypeV2 {
+enum MediaType {
 	case image
 	case video
 	case audio

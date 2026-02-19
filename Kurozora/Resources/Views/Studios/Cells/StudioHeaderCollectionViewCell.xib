@@ -55,9 +55,9 @@
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="foundedLabel" destination="6PK-Il-AYf" id="4nj-wW-5mb"/>
-                <outlet property="logoImageView" destination="BYr-OW-GiF" id="jSW-ph-xRL"/>
-                <outlet property="nameLabel" destination="JB2-MU-P9Z" id="hZ7-Pf-2iK"/>
+                <outlet property="primaryImageView" destination="BYr-OW-GiF" id="bMq-Xw-Svy"/>
+                <outlet property="primaryLabel" destination="JB2-MU-P9Z" id="wHL-CH-R8d"/>
+                <outlet property="secondaryLabel" destination="6PK-Il-AYf" id="Zdn-eo-ARR"/>
             </connections>
             <point key="canvasLocation" x="99" y="154"/>
         </collectionViewCell>

@@ -49,6 +49,7 @@ extension ShowDetailsCollectionViewController {
 			case .header:
 				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
 				showDetailHeaderCollectionViewCell?.delegate = self
+				showDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
 				switch itemKind {
 				case .show(let show, _):
 					showDetailHeaderCollectionViewCell?.configure(using: show)

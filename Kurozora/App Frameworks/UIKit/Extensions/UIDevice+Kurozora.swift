@@ -245,4 +245,23 @@ extension UIDevice {
 
 		return .none
 	}()
+
+	/// Returns true if the current device supports portrait upside-down orientation.
+	///
+	/// This property checks for the presence of a notch by examining the safe area insets of the main window. If the bottom safe area inset is greater than 0, it indicates the presence of a home indicator, and thus portrait upside-down orientation is not supported.
+	///
+	/// - Note: On iPhones with a notch (iPhone X and later), portrait upside-down orientation is not supported.
+	/// On iPads, portrait upside-down orientation is always supported, since they lack a notch.
+	var isPortraitUpsideDownSupported: Bool {
+		if UIDevice.isPad { return true }
+
+		// Check for the "notch" via safe area insets
+		let scenes = UIApplication.shared.connectedScenes
+		let windowScene = scenes.first as? UIWindowScene
+		let window = windowScene?.windows.first
+
+		// Notched iPhones have a bottom safe area > 0 (for the home indicator)
+		// Apple officially disables upside-down on these devices
+		return (window?.safeAreaInsets.bottom ?? 0) == 0
+	}
 }

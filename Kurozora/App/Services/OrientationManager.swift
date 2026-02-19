@@ -9,21 +9,18 @@
 import CoreMotion
 import UIKit
 
-enum OrientationDownEdge {
-	case top, bottom, left, right
-}
-
 protocol OrientationManagerDelegate: AnyObject {
-	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIInterfaceOrientationMask, downEdge: OrientationDownEdge)
+	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIInterfaceOrientationMask)
 }
 
 final class OrientationManager: NSObject {
+	// MARK: - Properties
 	weak var delegate: OrientationManagerDelegate?
 
 	private let motion = CMMotionManager()
-	private(set) var lastDetectedOrientation: UIInterfaceOrientationMask = .portrait
-	private(set) var lastDownEdge: OrientationDownEdge = .bottom
+	private var lastDetectedOrientation: UIInterfaceOrientationMask = .portrait
 
+	// MARK: - Functions
 	func startMonitoring(updateInterval: TimeInterval = 0.18) {
 		guard UserSettings.isPortraitLockBuddyEnabled else { return }
 		guard self.motion.isDeviceMotionAvailable else { return }
@@ -31,6 +28,7 @@ final class OrientationManager: NSObject {
 		self.motion.deviceMotionUpdateInterval = updateInterval
 		self.motion.startDeviceMotionUpdates(to: .main) { [weak self] motionData, _ in
 			guard let self = self, let grav = motionData?.gravity else { return }
+			let newOrientation: UIInterfaceOrientationMask
 			let gx = grav.x
 			let gy = grav.y
 
@@ -41,26 +39,26 @@ final class OrientationManager: NSObject {
 			if abs(gx) > abs(gy) {
 				// gravity mostly along device X -> landscape
 				if gx > 0 {
-					// Right side down, top points left → landscapeLeft
-					self.lastDetectedOrientation = .landscapeLeft
-					self.lastDownEdge = .right
+					// Right side down, top points left → interface landscapeLeft
+					newOrientation = .landscapeLeft
 				} else {
-					// Left side down, top points right → landscapeRight
-					self.lastDetectedOrientation = .landscapeRight
-					self.lastDownEdge = .left
+					// Left side down, top points right → interface landscapeRight
+					newOrientation = .landscapeRight
 				}
 			} else {
 				// gravity mostly along device Y -> portrait/upsideDown
 				if gy > 0 {
-					self.lastDetectedOrientation = .portraitUpsideDown
-					self.lastDownEdge = .top
+					newOrientation = .portraitUpsideDown
 				} else {
-					self.lastDetectedOrientation = .portrait
-					self.lastDownEdge = .bottom
+					newOrientation = .portrait
 				}
 			}
 
-			self.delegate?.orientationManager(self, didDetect: self.lastDetectedOrientation, downEdge: self.lastDownEdge)
+			if self.lastDetectedOrientation != newOrientation {
+				self.lastDetectedOrientation = newOrientation
+
+				self.delegate?.orientationManager(self, didDetect: newOrientation)
+			}
 		}
 	}
 

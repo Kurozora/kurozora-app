@@ -6,11 +6,10 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
+import Combine
 import KurozoraKit
 import MusicKit
-import SwiftyJSON
-import Combine
+import UIKit
 
 protocol SongHeaderCollectionViewCellDelegate: AnyObject {
 	func playStateChanged(_ song: MKSong?)
@@ -18,10 +17,10 @@ protocol SongHeaderCollectionViewCellDelegate: AnyObject {
 
 class SongHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var albumImageView: AlbumImageView!
+	@IBOutlet weak var primaryImageView: AlbumImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
-	@IBOutlet weak var playButton: KTintedButton!
+	@IBOutlet weak var primaryButton: KTintedButton!
 
 	// MARK: - Properties
 	private var subscriptions = Set<AnyCancellable>()
@@ -69,22 +68,23 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 
 	/// Updates the play button status.
 	func updatePlayButton() {
-		let title = if MusicManager.shared.authorizationState == .authorized && MusicManager.shared.hasAMSubscription {
+		let title = if MusicManager.shared.authorizationState == .authorized, MusicManager.shared.hasAMSubscription {
 			Trans.play
 		} else {
 			Trans.preview
 		}
 
-		if MusicManager.shared.currentSong == self.song && MusicManager.shared.isPlaying {
-			self.playButton.setTitle(title, for: .normal)
-			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+		if MusicManager.shared.currentSong == self.song, MusicManager.shared.isPlaying {
+			self.primaryButton.setTitle(title, for: .normal)
+			self.primaryButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
-			self.playButton.setTitle(title, for: .normal)
-			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+			self.primaryButton.setTitle(title, for: .normal)
+			self.primaryButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		}
 	}
 
 	/// Updates the album image view.
+	@MainActor
 	func updateArtwork() {
 		guard let song = self.song else {
 			self.resetArtwork()
@@ -92,26 +92,22 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		}
 		guard let artworkURL = song.song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.playButton.isHidden = false
-			if let posterBackgroundColor = song.song.artwork?.backgroundColor {
-				self.albumImageView?.backgroundColor = UIColor(cgColor: posterBackgroundColor)
-			}
-			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+		self.primaryButton.isHidden = false
+
+		if let posterBackgroundColor = song.song.artwork?.backgroundColor {
+			self.primaryImageView?.backgroundColor = UIColor(cgColor: posterBackgroundColor)
 		}
+
+		self.primaryImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 	}
 
 	/// Resets the music artwork to its initial state.
+	@MainActor
 	private func resetArtwork() {
 		self.song = nil
-
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.playButton.isHidden = true
-			self.albumImageView?.backgroundColor = .clear
-			self.albumImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
-		}
+		self.primaryButton.isHidden = true
+		self.primaryImageView?.backgroundColor = .clear
+		self.primaryImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
 	}
 
 	// MARK: - IBActions
