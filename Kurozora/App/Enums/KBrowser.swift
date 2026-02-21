@@ -18,7 +18,6 @@ enum KBrowser: Int, CaseIterable {
 	case googleChrome
 	case brave
 	case opera
-	case dolphin
 
 	// MARK: - Properties
 	/// The string value of the browser.
@@ -30,8 +29,6 @@ enum KBrowser: Int, CaseIterable {
 			return "Safari"
 		case .brave:
 			return "Brave"
-		case .dolphin:
-			return "Dolphin"
 		case .duckduckgo:
 			return "DuckDuckGo"
 		case .firefox:
@@ -64,8 +61,6 @@ enum KBrowser: Int, CaseIterable {
             return .Browsers.safari
 		case .brave:
             return .Browsers.brave
-		case .dolphin:
-            return .Browsers.dolphin
 		case .duckduckgo:
             return .Browsers.duckDuckGo
 		case .firefox:
@@ -93,8 +88,6 @@ enum KBrowser: Int, CaseIterable {
 			return ""
 		case .brave:
 			return "brave://"
-		case .dolphin:
-			return "dolphin://"
 		case .duckduckgo:
 			return "ddgQuickLink://"
 		case .firefox:
@@ -125,8 +118,6 @@ enum KBrowser: Int, CaseIterable {
 			return ""
 		case .brave:
 			return "brave://"
-		case .dolphin:
-			return "dolphin://"
 		case .duckduckgo:
 			return "ddgQuickLink://"
 		case .firefox:
