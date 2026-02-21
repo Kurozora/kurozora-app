@@ -40,23 +40,6 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// A storage for the `leftBarButtonItems` of `navigationItem`.
-	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
-	/// Set to `false` to hide the left navigation bar.
-	var leftNavigationBarButtonIsHidden: Bool = false {
-		didSet {
-			if self.leftNavigationBarButtonIsHidden {
-				let leftBarButtonItems = self.navigationItem.leftBarButtonItems
-				if leftBarButtonItems != nil {
-					self._leftBarButtonItems = self.navigationItem.leftBarButtonItems
-					self.navigationItem.leftBarButtonItems = nil
-				}
-			} else {
-				self.navigationItem.leftBarButtonItems = self._leftBarButtonItems
-			}
-		}
-	}
-
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -190,11 +173,13 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 
 	/// Configures the close bar button item.
 	private func configureCloseBarButtonItem() {
-		self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.dismiss(animated: true, completion: nil)
-		})
-		self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+		if self.navigationController?.viewControllers.first == self && self.presentingViewController != nil {
+			self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.dismiss(animated: true, completion: nil)
+			})
+			self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+		}
 	}
 
 	/// Configures the navigation items.

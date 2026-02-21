@@ -179,14 +179,9 @@ class SettingsTableViewController: KTableViewController {
 		     .browserSegue, .displaySegue, .iconSegue,
 		     .librarySegue, .motionSegue, .themeSegue,
 		     .notificationSegue, .soundSegue,
-		     .biometricsSegue, .privacySegue:
+		     .biometricsSegue, .privacySegue,
+		     .subscriptionSegue, .tipJarSegue:
 			return
-		case .subscriptionSegue:
-			let kNavigationController = destination as? KNavigationController
-			(kNavigationController?.viewControllers.first as? SubscriptionCollectionViewController)?.leftNavigationBarButtonIsHidden = true
-		case .tipJarSegue:
-			let kNavigationController = destination as? KNavigationController
-			(kNavigationController?.viewControllers.first as? TipJarCollectionViewController)?.leftNavigationBarButtonIsHidden = true
 		}
 	}
 }

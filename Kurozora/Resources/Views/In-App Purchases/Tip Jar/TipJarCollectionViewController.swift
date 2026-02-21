@@ -33,23 +33,6 @@ class TipJarCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// A storage for the `leftBarButtonItems` of `navigationItem`.
-	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
-	/// Set to `false` to hide the left navigation bar.
-	var leftNavigationBarButtonIsHidden: Bool = false {
-		didSet {
-			if self.leftNavigationBarButtonIsHidden {
-				let leftBarButtonItems = navigationItem.leftBarButtonItems
-				if leftBarButtonItems != nil {
-					self._leftBarButtonItems = navigationItem.leftBarButtonItems
-					navigationItem.leftBarButtonItems = nil
-				}
-			} else {
-				navigationItem.leftBarButtonItems = self._leftBarButtonItems
-			}
-		}
-	}
-
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -105,11 +88,13 @@ class TipJarCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// Configures the close bar button item.
 	private func configureCloseBarButtonItem() {
-		self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.dismiss(animated: true, completion: nil)
-		})
-		self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+		if self.navigationController?.viewControllers.first == self && self.presentingViewController != nil {
+			self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.dismiss(animated: true, completion: nil)
+			})
+			self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+		}
 	}
 
 	/// Configures the navigation items.
