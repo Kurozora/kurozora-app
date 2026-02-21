@@ -34,5 +34,7 @@ class KTintedButton: KButton {
 
 			self.layerCornerRadius = self.layerCornerRadius == .zero ? 10 : self.layerCornerRadius
 		}
+
+		self.configuration?.imagePadding = 4
 	}
 }

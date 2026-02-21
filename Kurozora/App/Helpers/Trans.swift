@@ -1916,16 +1916,20 @@ struct Trans {
 	/// - Tag: Trans-preview
 	static let preview: String = String(localized: "Preview",
 										comment: "The string for the word 'preview'.")
-	/// The string for the word 'play'.
+	/// The string for the word 'Play'.
 	///
 	/// - Tag: Trans-play
-	static let play: String = String(localized: "Play",
-									 comment: "The string for the word 'play'.")
-	/// The string for the word 'pauze'.
+	static let play: String = String(
+		localized: "Play",
+		comment: "The string for the word 'Play'."
+	)
+	/// The string for the word 'pause'.
 	///
-	/// - Tag: Trans-pauze
-	static let pauze: String = String(localized: "Pauze",
-									  comment: "The string for the word 'pauze'.")
+	/// - Tag: Trans-pause
+	static let pause: String = String(
+		localized: "Pause",
+		comment: "The string for the word 'Pause'."
+	)
 	/// The string for the word 'stop'.
 	///
 	/// - Tag: Trans-stop

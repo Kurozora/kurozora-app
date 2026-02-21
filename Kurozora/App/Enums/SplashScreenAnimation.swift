@@ -8,22 +8,19 @@
 
 import Foundation
 
-/// The set of available animation types.
-///
-/// - `none`: No animation.
-/// - `default`: The default animation.
-/// - `spin`: The spin animation.
-/// - `bounce`: The bounce animation.
-/// - `fadeAndScale`: The fade and scale animation.
+/// The set of available splash screen animation types.
 enum SplashScreenAnimation: Int {
 	case none = 0
 	case `default` = 1
-	case bounce = 60
-	case fadeAndScale = 75
+	case shake = 44
+	case scale = 50
+	case anvil = 57
 	case spin = 58
+	case bounce = 60
+	case heartbeat = 80
 
 	/// A collection of all values of this type.
-	static let allCases: [SplashScreenAnimation] = [.default, .bounce, .fadeAndScale, .spin]
+	static let allCases: [SplashScreenAnimation] = [.default, .anvil, .bounce, .heartbeat, .scale, .shake, .spin]
 
 	// MARK: Functions
 	/// The title of the animation.
@@ -32,13 +29,19 @@ enum SplashScreenAnimation: Int {
 		case .none:
 			return "Disabled"
 		case .default:
-			return "Default"
+			return Trans.default
+		case .shake:
+			return "Shake"
+		case .scale:
+			return "Scale"
+		case .anvil:
+			return "Anvil"
 		case .spin:
 			return "Spin"
+		case .heartbeat:
+			return "Heartbeat"
 		case .bounce:
 			return "Bounce"
-		case .fadeAndScale:
-			return "Fade & Scale"
 		}
 	}
 }
