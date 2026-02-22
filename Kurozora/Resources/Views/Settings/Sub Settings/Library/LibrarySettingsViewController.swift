@@ -63,6 +63,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		button.titleLabel?.numberOfLines = 0
 		button.contentHorizontalAlignment = .trailing
 		button.showsMenuAsPrimaryAction = true
+		button.changesSelectionAsPrimaryAction = true
 		self.populateSortActions(button, status: status)
 	}
 
