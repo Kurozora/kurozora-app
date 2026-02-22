@@ -77,23 +77,30 @@ extension ManageActiveSessionsController {
 
 	// MARK: - Responding to Row Actions
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] _, _, completionHandler in
-			guard
-				let self = self,
-				let session = self.cache[indexPath] as? Session
-			else { return }
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return nil }
 
-			Task {
-				await session.signOutOfSession(at: indexPath)
-				completionHandler(true)
+		switch sectionIdentifier {
+		case .current:
+			return nil
+		case .other:
+			let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] _, _, completionHandler in
+				guard
+					let self = self,
+					let session = self.cache[indexPath] as? Session
+				else { return }
+
+				Task {
+					await session.signOutOfSession(at: indexPath)
+					completionHandler(true)
+				}
 			}
-		}
-		signOutOfSessionAction.backgroundColor = .kLightRed
-		signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
+			signOutOfSessionAction.backgroundColor = .kLightRed
+			signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
 
-		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [signOutOfSessionAction])
-		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
-		return swipeActionsConfiguration
+			let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [signOutOfSessionAction])
+			swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
+			return swipeActionsConfiguration
+		}
 	}
 
 	// MARK: - Managing Context Menus
