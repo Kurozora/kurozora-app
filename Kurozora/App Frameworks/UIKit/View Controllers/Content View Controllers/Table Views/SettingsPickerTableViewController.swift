@@ -65,6 +65,11 @@ class SettingsPickerTableViewController: KTableViewController {
 		self.configureSearchController()
 		self.configureDataSource()
 		self.applySnapshot(animating: false)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+			guard let self = self else { return }
+			self.scrollToCurrentSelection()
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -85,9 +90,21 @@ class SettingsPickerTableViewController: KTableViewController {
 	private func configureSearchController() {
 		self.searchController.searchResultsUpdater = self
 		self.searchController.obscuresBackgroundDuringPresentation = false
-		self.searchController.searchBar.placeholder = "Search"
-		navigationItem.searchController = self.searchController
-		definesPresentationContext = true
+		self.searchController.searchBar.placeholder = Trans.search
+		self.navigationItem.searchController = self.searchController
+		self.definesPresentationContext = true
+	}
+
+	private func scrollToCurrentSelection() {
+		guard
+			let selectedKey = self.selectedKey,
+			let selectedIndex = self.filteredItems.firstIndex(where: { $0.key == selectedKey })
+		else {
+			return
+		}
+
+		let indexPath = IndexPath(item: selectedIndex, section: 0)
+		self.tableView.safeScrollToRow(at: indexPath, at: .middle, animated: false)
 	}
 
 	// MARK: - Data
@@ -121,7 +138,7 @@ extension SettingsPickerTableViewController {
 	func getConfiguredSelectableSettingsCell() -> UITableView.CellRegistration<SelectableSettingsCell, ItemKind> {
 		return UITableView.CellRegistration<SelectableSettingsCell, ItemKind>(cellNib: SelectableSettingsCell.nib) { [weak self] selectableSettingsCell, _, itemKind in
 			guard let self else { return }
-			selectableSettingsCell.primaryLabel?.text = itemKind.value
+			selectableSettingsCell.configure(title: itemKind.value)
 			selectableSettingsCell.setSelected(itemKind.key == self.selectedKey)
 		}
 	}
