@@ -11,10 +11,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="1Ik-iL-nUa" customClass="SongHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gom-U6-7E9">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q0I-12-fgP" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
@@ -73,7 +73,7 @@
                     <constraint firstItem="Q0I-12-fgP" firstAttribute="centerX" secondItem="gom-U6-7E9" secondAttribute="centerX" id="Ha2-NB-5AW"/>
                     <constraint firstItem="qji-7f-QMR" firstAttribute="top" secondItem="fCF-FR-u3F" secondAttribute="bottom" constant="8" symbolic="YES" id="OFB-2W-npE"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Q0I-12-fgP" secondAttribute="trailing" id="Ozi-Wn-X4C"/>
-                    <constraint firstAttribute="bottom" secondItem="qji-7f-QMR" secondAttribute="bottom" id="QMb-LI-glR"/>
+                    <constraint firstAttribute="bottom" secondItem="qji-7f-QMR" secondAttribute="bottom" constant="20" symbolic="YES" id="QMb-LI-glR"/>
                     <constraint firstItem="3OV-E9-jsQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leadingMargin" id="V5j-rf-bRN"/>
                     <constraint firstItem="3OV-E9-jsQ" firstAttribute="top" secondItem="Q0I-12-fgP" secondAttribute="bottom" constant="8" symbolic="YES" id="X1a-o4-QAj"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="fCF-FR-u3F" secondAttribute="trailing" id="awS-T2-t8K"/>
