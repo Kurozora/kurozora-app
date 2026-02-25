@@ -42,7 +42,7 @@ class GenreLockupCollectionViewCell: KCollectionViewCell {
 		self.secondaryLabel.text = genre.attributes.description?.uppercased()
 		self.secondaryLabel.textColor = UIColor(hexString: genre.attributes.textColor2)
 
-		self.symbolImageView.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: UIImage())
+		genre.attributes.symbolImage(imageView: self.symbolImageView)
 
 		self.contentView.layerCornerRadius = 10.0
 	}
@@ -70,7 +70,7 @@ class GenreLockupCollectionViewCell: KCollectionViewCell {
 		self.secondaryLabel.text = theme.attributes.description?.uppercased()
 		self.secondaryLabel.textColor = UIColor(hexString: theme.attributes.textColor2)
 
-		self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: UIImage())
+		theme.attributes.symbolImage(imageView: self.symbolImageView)
 
 		self.contentView.layerCornerRadius = 10.0
 	}

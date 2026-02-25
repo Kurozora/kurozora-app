@@ -10,13 +10,12 @@ import KurozoraKit
 import UIKit
 
 extension Season.Attributes {
-	// MARK: - Properties
-	/// Returns a `UIImage` with the poster.
+	/// Set the genre's poster image.
 	///
-	/// If the show has no poster image, then a placeholder show poster image is returned.
-	var posterImage: UIImage? {
-		let posterImageView = UIImageView()
-		posterImageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
-		return posterImageView.image?.withRenderingMode(.alwaysOriginal)
+	/// If the genre has no poster image set, then a placeholder image is applied.
+	///
+	/// - Parameter imageView: The image view on which to set the banner image.
+	func posterImage(imageView: UIImageView) {
+		imageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
 	}
 }

@@ -91,8 +91,8 @@ extension Person {
 		activityItems.append(self.webpageURLString)
 		activityItems.append("Check out \"\(self.attributes.fullName)\" via @KurozoraApp")
 
-		if let personalImage = self.attributes.personalImage.image {
-			activityItems.append(personalImage)
+		if let profileImage = self.attributes.profileImage.image {
+			activityItems.append(profileImage)
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])

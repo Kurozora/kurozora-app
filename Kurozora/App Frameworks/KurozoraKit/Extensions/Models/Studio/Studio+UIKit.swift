@@ -94,8 +94,8 @@ extension Studio {
 		activityItems.append(self.webpageURLString)
 		activityItems.append("Check out shows made by \"\(self.attributes.name)\" via @KurozoraApp")
 
-		if let personalImage = self.attributes.profileImageView.image {
-			activityItems.append(personalImage)
+		if let profileImage = self.attributes.profileImageView.image {
+			activityItems.append(profileImage)
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])

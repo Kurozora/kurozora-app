@@ -44,13 +44,13 @@ class CastCollectionViewCell: KCollectionViewCell {
 		// Configure person
 		if let person = cast.relationships.people?.data.first {
 			self.personNameLabel.text = person.attributes.fullName
-			self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
+			person.attributes.profileImage(imageView: self.personImageView)
 		}
 
 		// Configure character
 		if let character = cast.relationships.characters.data.first {
 			self.characterNameLabel.text = "as \(character.attributes.name)"
-			self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)
+			character.attributes.profileImage(imageView: self.characterImageView)
 		}
 		self.characterRoleLabel.text = cast.attributes.role.name
 	}

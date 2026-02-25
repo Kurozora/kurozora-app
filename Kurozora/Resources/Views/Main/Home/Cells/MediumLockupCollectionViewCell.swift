@@ -38,7 +38,7 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 			UIColor(hexString: genre.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
 		]
 
-        self.symbolImageView.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)
+		genre.attributes.symbolImage(imageView: self.symbolImageView)
 	}
 
 	/// Configures the cell with the given `Theme` obejct.
@@ -62,7 +62,7 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
 		]
 
-        self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: .kurozoraIcon)
+		theme.attributes.symbolImage(imageView: self.symbolImageView)
 	}
 
 	func configureRank(_ rank: Int?) {

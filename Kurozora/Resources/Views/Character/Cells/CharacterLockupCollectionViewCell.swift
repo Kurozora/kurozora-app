@@ -47,6 +47,6 @@ class CharacterLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure image view
-		self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)
+		character.attributes.profileImage(imageView: self.characterImageView)
 	}
 }

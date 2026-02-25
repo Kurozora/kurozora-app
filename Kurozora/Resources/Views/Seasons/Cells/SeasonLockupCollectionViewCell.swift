@@ -35,7 +35,7 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		// Configure poster
-		self.posterImageView.setImage(with: season.attributes.poster?.url ?? "", placeholder: .Placeholders.showPoster)
+		season.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure season number
 		self.countLabel.text = "Season \(season.attributes.number)"

@@ -42,7 +42,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.scoreView.rating = review.attributes.score
 
 		// Configure poster
-		character.attributes.personalImage(imageView: self.posterImageView)
+		character.attributes.profileImage(imageView: self.posterImageView)
 		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
@@ -121,7 +121,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.scoreView.rating = review.attributes.score
 
 		// Configure poster
-		person.attributes.personalImage(imageView: self.posterImageView)
+		person.attributes.profileImage(imageView: self.posterImageView)
 		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}

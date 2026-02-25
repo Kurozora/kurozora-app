@@ -47,6 +47,6 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure image view
-		self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
+		person.attributes.profileImage(imageView: self.personImageView)
 	}
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension Studio.Attributes {
 	// MARK: - Properties
@@ -48,26 +48,26 @@ extension Studio.Attributes {
 	///
 	/// - Returns: a placeholder `UIImage` for the studio's profile using the studio's initials if available, otherwise a placeholder profile image is returned.
 	var profilePlaceholderImage: UIImage {
-		let studioameInitials = self.name.initials
-        return studioameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: .Placeholders.studioProfile)
+		let studioNameInitials = self.name.initials
+		return studioNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: .Placeholders.studioProfile)
 	}
 
 	/// Returns a placeholder `UIImage` for the studio's banner.
 	///
 	/// - Returns: a placeholder `UIImage` studio's banner.
 	var bannerPlaceholderImage: UIImage {
-        return .Placeholders.studioProfile
+		return .Placeholders.studioProfile
 	}
 
 	/// Returns a placeholder `UIImage` for the studio's logo.
 	///
 	/// - Returns: a placeholder `UIImage` studio's logo.
 	var logoPlaceholderImage: UIImage {
-        return .Placeholders.studioProfile
+		return .Placeholders.studioProfile
 	}
 
 	// MARK: - Functions
-	/// Set the current signed in studio's profile image.
+	/// Set the studio's profile image.
 	///
 	/// If the studio has no profile image set, then a placeholder image is applied.
 	///
@@ -76,7 +76,7 @@ extension Studio.Attributes {
 		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
 	}
 
-	/// Set the current signed in studio's banner image.
+	/// Set the studio's banner image.
 	///
 	/// If the studio has no banner image set, then a placeholder image is applied.
 	///
@@ -86,7 +86,7 @@ extension Studio.Attributes {
 		imageView.setImage(with: imageURL, placeholder: self.bannerPlaceholderImage)
 	}
 
-	/// Set the current signed in studio's banner image.
+	/// Set the studio's banner image.
 	///
 	/// If the studio has no banner image set, then a placeholder image is applied.
 	///

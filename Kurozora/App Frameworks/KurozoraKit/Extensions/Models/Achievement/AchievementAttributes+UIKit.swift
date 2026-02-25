@@ -1,15 +1,15 @@
 //
-//  GenreAttributes+UIImage.swift
+//  Achievement+UIKit.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 14/08/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 26/02/2026.
+//  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 import UIKit
 
-extension Genre.Attributes {
+extension Achievement.Attributes {
 	/// Set the genre's symbol image.
 	///
 	/// If the genre has no symbol image set, then a placeholder image is applied.
