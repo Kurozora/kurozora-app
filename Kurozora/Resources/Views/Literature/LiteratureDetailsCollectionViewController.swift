@@ -44,6 +44,9 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	var literature: Literature! {
 		didSet {
 			self.title = self.literature.attributes.title
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.navigationTitleLabel.text = self.literature.attributes.title
 			self.literatureIdentity = LiteratureIdentity(id: self.literature.id)
 

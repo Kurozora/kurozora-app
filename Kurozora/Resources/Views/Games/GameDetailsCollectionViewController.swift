@@ -44,6 +44,9 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var game: Game! {
 		didSet {
 			self.title = self.game.attributes.title
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.navigationTitleLabel.text = self.game.attributes.title
 			self.gameIdentity = GameIdentity(id: self.game.id)
 

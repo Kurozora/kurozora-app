@@ -28,6 +28,9 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	var person: Person! {
 		didSet {
 			self.title = self.person.attributes.fullName
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.personIdentity = PersonIdentity(id: self.person.id)
 
 			self._prefersActivityIndicatorHidden = true

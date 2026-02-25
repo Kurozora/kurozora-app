@@ -27,6 +27,9 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 	var studio: Studio! {
 		didSet {
 			self.title = self.studio.attributes.name
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.studioIdentity = StudioIdentity(id: self.studio.id)
 
 			self._prefersActivityIndicatorHidden = true

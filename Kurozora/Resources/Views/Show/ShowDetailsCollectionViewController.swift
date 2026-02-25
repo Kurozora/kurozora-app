@@ -48,6 +48,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var show: Show! {
 		didSet {
 			self.title = self.show.attributes.title
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.navigationTitleLabel.text = self.show.attributes.title
 			self.showIdentity = ShowIdentity(id: self.show.id)
 

@@ -37,6 +37,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.navigationItem.largeTitle = ""
+			}
 			self.navigationTitleLabel.text = self.episode.attributes.title
 			self.episodeIdentity = EpisodeIdentity(id: self.episode.id)
 
