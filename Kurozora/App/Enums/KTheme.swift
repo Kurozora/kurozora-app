@@ -121,17 +121,17 @@ enum KTheme {
 	var imageValues: [UIImage] {
 		switch self {
 		case .kurozora:
-			return [#imageLiteral(resourceName: "Themes/Default/Screenshot_1"), #imageLiteral(resourceName: "Themes/Default/Screenshot_2"), #imageLiteral(resourceName: "Themes/Default/Screenshot_3")]
+			return [.Themes.Default.screenshot1, .Themes.Default.screenshot2, .Themes.Default.screenshot3]
 		case .day:
-			return [#imageLiteral(resourceName: "Themes/Day/Screenshot_1"), #imageLiteral(resourceName: "Themes/Day/Screenshot_2"), #imageLiteral(resourceName: "Themes/Day/Screenshot_3")]
+			return [.Themes.Day.screenshot1, .Themes.Day.screenshot2, .Themes.Day.screenshot3]
 		case .night:
-			return [#imageLiteral(resourceName: "Themes/Night/Screenshot_1"), #imageLiteral(resourceName: "Themes/Night/Screenshot_2"), #imageLiteral(resourceName: "Themes/Night/Screenshot_3")]
+			return [.Themes.Night.screenshot1, .Themes.Night.screenshot2, .Themes.Night.screenshot3]
 		case .grass:
-			return [#imageLiteral(resourceName: "Themes/Grass/Screenshot_1"), #imageLiteral(resourceName: "Themes/Grass/Screenshot_2"), #imageLiteral(resourceName: "Themes/Grass/Screenshot_3")]
+			return [.Themes.Grass.screenshot1, .Themes.Grass.screenshot2, .Themes.Grass.screenshot3]
 		case .sky:
-			return [#imageLiteral(resourceName: "Themes/Sky/Screenshot_1"), #imageLiteral(resourceName: "Themes/Sky/Screenshot_2"), #imageLiteral(resourceName: "Themes/Sky/Screenshot_3")]
+			return [.Themes.Sky.screenshot1, .Themes.Sky.screenshot2, .Themes.Sky.screenshot3]
 		case .sakura:
-			return [#imageLiteral(resourceName: "Themes/Sakura/Screenshot_1"), #imageLiteral(resourceName: "Themes/Sakura/Screenshot_2"), #imageLiteral(resourceName: "Themes/Sakura/Screenshot_3")]
+			return [.Themes.Sakura.screenshot1, .Themes.Sakura.screenshot2, .Themes.Sakura.screenshot3]
 		case .other:
 			return []
 		}

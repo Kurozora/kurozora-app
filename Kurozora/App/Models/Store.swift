@@ -324,7 +324,7 @@ final class Store: NSObject, ObservableObject {
 	/// - Returns: The product's image.
 	func image(for productId: String) -> UIImage? {
 		let product = self.title(for: productId)
-		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: #imageLiteral(resourceName: "Icons/Tip Jar"))
+		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.tipJar)
 	}
 
 	/// How much money the user saves between subscription tiers.

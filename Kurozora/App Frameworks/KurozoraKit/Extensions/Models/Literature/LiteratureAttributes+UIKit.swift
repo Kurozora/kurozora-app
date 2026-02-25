@@ -95,8 +95,7 @@ extension Literature.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
-        let placeholderImage = UIImage.Placeholders.showPoster
-		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
+		imageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
 	}
 
 	/// Set the banner.
@@ -105,7 +104,6 @@ extension Literature.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
-        let placeholderImage = UIImage.Placeholders.showBanner
-		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
+		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: .Placeholders.showBanner)
 	}
 }

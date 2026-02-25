@@ -17,7 +17,6 @@ extension Song.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the artwork image.
 	func artworkImage(imageView: UIImageView) {
-        let placeholderImage = UIImage.Placeholders.musicAlbum
-		imageView.setImage(with: self.artwork?.url ?? "", placeholder: placeholderImage)
+		imageView.setImage(with: self.artwork?.url ?? "", placeholder: .Placeholders.musicAlbum)
 	}
 }

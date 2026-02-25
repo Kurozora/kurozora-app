@@ -198,7 +198,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			if let backgroundColor = song.song.artwork?.backgroundColor {
 				self.albumImageView?.backgroundColor = UIColor(cgColor: backgroundColor)
 			}
-			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+			self.albumImageView?.setImage(with: artworkURL, placeholder: .Placeholders.musicAlbum)
 		}
 	}
 
@@ -210,7 +210,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			guard let self = self else { return }
 			self.playButton.isHidden = true
 			self.albumImageView?.backgroundColor = .clear
-			self.albumImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
+			self.albumImageView?.image = .Placeholders.musicAlbum
 		}
 	}
 

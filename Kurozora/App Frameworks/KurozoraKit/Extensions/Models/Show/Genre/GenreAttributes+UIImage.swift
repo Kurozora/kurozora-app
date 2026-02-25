@@ -16,8 +16,7 @@ extension Genre.Attributes {
 	/// If the show has no symbol image, then a placeholder genre symbol image is returned.
 	var symbolImage: UIImage? {
 		let symbolImageView = UIImageView()
-        let placeholderImage = UIImage.kurozoraIcon
-		symbolImageView.setImage(with: self.symbol?.url ?? "", placeholder: placeholderImage)
+		symbolImageView.setImage(with: self.symbol?.url ?? "", placeholder: .kurozoraIcon)
 		return symbolImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 }

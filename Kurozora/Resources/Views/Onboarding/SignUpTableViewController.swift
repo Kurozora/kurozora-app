@@ -304,7 +304,7 @@ extension SignUpTableViewController: ImagePickerManagerDataSource {
 // MARK: - ImagePickerManagerDelegate
 extension SignUpTableViewController: ImagePickerManagerDelegate {
 	func placeholderImage() -> UIImage {
-		#imageLiteral(resourceName: "Placeholders/User Profile")
+		.Placeholders.userProfile
 	}
 
 	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {

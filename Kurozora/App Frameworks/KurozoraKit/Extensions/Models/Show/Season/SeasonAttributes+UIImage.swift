@@ -16,8 +16,7 @@ extension Season.Attributes {
 	/// If the show has no poster image, then a placeholder show poster image is returned.
 	var posterImage: UIImage? {
 		let posterImageView = UIImageView()
-		let placeholderImage = UIImage.Placeholders.showPoster
-		posterImageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
+		posterImageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
 		return posterImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 }

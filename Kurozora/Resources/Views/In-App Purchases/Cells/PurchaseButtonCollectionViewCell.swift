@@ -41,7 +41,7 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 			self.purchaseButton.setTitle(product.displayPrice, for: .normal)
 		case .autoRenewable, .nonRenewable:
 			self.primaryLabel.text = product.displayName
-			self.productImageView.image = #imageLiteral(resourceName: "Promotional/In App Purchases/Subscriptions/\(Store.shared.title(for: product.id))")
+			self.productImageView.image = UIImage(named: "Promotional/In App Purchases/Subscriptions/\(Store.shared.title(for: product.id))")
 			self.secondaryLabel.text = Store.shared.saving(for: product)
 			if let subscription = product.subscription {
 				self.updateSubscriptionPurchaseButton(for: product, withSubscription: subscription, isPurchased: isPurchased)

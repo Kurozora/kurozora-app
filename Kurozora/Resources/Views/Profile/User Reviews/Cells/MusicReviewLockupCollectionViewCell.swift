@@ -86,7 +86,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			if let posterBackgroundColor = song.song.artwork?.backgroundColor {
 				self.posterImageView.backgroundColor = UIColor(cgColor: posterBackgroundColor)
 			}
-			self.posterImageView.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+			self.posterImageView.setImage(with: artworkURL, placeholder: .Placeholders.musicAlbum)
 		}
 	}
 
@@ -98,7 +98,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			guard let self = self else { return }
 			self.playButton.isHidden = true
 			self.posterImageView.backgroundColor = .clear
-			self.posterImageView.image = #imageLiteral(resourceName: "Placeholders/Music Album")
+			self.posterImageView.image = .Placeholders.musicAlbum
 		}
 	}
 

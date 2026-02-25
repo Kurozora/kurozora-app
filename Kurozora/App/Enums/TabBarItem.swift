@@ -115,7 +115,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .home:
 			return UIImage(systemName: "house.fill")!
 		case .schedule:
-			return #imageLiteral(resourceName: "Symbols/calendar.fill")
+			return .Symbols.calendarFill
 		case .library:
 			return UIImage(systemName: "rectangle.stack.fill")!
 		case .feed:

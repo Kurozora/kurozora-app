@@ -98,7 +98,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 			self.primaryImageView?.backgroundColor = UIColor(cgColor: posterBackgroundColor)
 		}
 
-		self.primaryImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+		self.primaryImageView?.setImage(with: artworkURL, placeholder: .Placeholders.musicAlbum)
 	}
 
 	/// Resets the music artwork to its initial state.
@@ -107,7 +107,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		self.song = nil
 		self.primaryButton.isHidden = true
 		self.primaryImageView?.backgroundColor = .clear
-		self.primaryImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
+		self.primaryImageView?.image = .Placeholders.musicAlbum
 	}
 
 	// MARK: - IBActions

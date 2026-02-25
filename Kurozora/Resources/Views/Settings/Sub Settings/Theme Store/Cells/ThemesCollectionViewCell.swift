@@ -74,7 +74,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				}
 				let screenshotView = self.screenshotViews[index]
 				screenshotView.screenshotImageView.backgroundColor = UIColor(hexString: screenshot.backgroundColor ?? "#333333")
-				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: #imageLiteral(resourceName: "Empty/Themes"))
+				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: .Empty.themes)
 
 					// Stop after 3 screenshots
 				if index == 2 { break }

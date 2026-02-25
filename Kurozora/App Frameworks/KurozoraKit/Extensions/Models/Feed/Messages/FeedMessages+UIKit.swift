@@ -127,7 +127,7 @@ extension FeedMessage {
 					}
 				}
 			}
-			let replyAction = UIAction(title: Trans.reply, image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
+			let replyAction = UIAction(title: Trans.reply, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.replyToMessage(via: viewController, userInfo: userInfo)
@@ -170,7 +170,7 @@ extension FeedMessage {
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: Trans.showReplies, image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
+		let showRepliesAction = UIAction(title: Trans.showReplies, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
 			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
