@@ -26,9 +26,6 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		self.titleLabel.text = self.show.attributes.title
 
-		if let backgroundColor = self.show.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-		}
 		self.show.attributes.posterImage(imageView: self.posterImageView)
 	}
 }

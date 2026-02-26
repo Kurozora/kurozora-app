@@ -82,6 +82,14 @@ extension Studio.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.banner?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		let imageURL = self.banner?.url ?? self.profile?.url ?? self.logo?.url ?? ""
 		imageView.setImage(with: imageURL, placeholder: self.bannerPlaceholderImage)
 	}
@@ -92,6 +100,14 @@ extension Studio.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func logoImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.profile?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		imageView.setImage(with: self.logo?.url ?? "", placeholder: self.logoPlaceholderImage)
 	}
 }

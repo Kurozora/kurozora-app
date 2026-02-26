@@ -60,9 +60,6 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = show.attributes.title
 
 		// Configure poster
-		if let backgroundColor = show.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-		}
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(10.0)
@@ -83,9 +80,6 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = literature.attributes.title
 
 		// Configure poster
-		if let backgroundColor = literature.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-		}
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(0.0)
@@ -106,9 +100,6 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = game.attributes.title
 
 		// Configure poster
-		if let backgroundColor = game.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-		}
 		game.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(18.0)

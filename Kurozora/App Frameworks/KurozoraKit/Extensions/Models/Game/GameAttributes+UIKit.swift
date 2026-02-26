@@ -95,6 +95,14 @@ extension Game.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.poster?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
 	}
 
@@ -104,6 +112,14 @@ extension Game.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.banner?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: .Placeholders.showBanner)
 	}
 }

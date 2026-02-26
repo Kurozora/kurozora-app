@@ -33,19 +33,35 @@ extension Episode.Attributes {
 	// MARK: - Functions
 	/// Set the poster.
 	///
-	/// If the episode has no poster image, then a placeholder episode poster image is ysed.
+	/// If the episode has no poster image, then a placeholder episode poster image is used.
 	///
 	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.profile?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: .Placeholders.showPoster)
 	}
 
 	/// Set the banner.
 	///
-	/// If the episode has no banner image, then a placeholder episode banner image is ysed.
+	/// If the episode has no banner image, then a placeholder episode banner image is used.
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
+		imageView.image = nil
+
+		if let backgroundColor = self.banner?.backgroundColor {
+			imageView.backgroundColor = UIColor(hexString: backgroundColor)
+		} else {
+			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: .Placeholders.episodeBanner)
 	}
 }
