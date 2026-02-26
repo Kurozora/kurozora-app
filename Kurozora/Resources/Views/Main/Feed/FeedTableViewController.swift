@@ -252,10 +252,16 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	}
 
 	/// Performs segue to the settings view.
-	func segueToSettings() {
+	@objc func segueToSettings() {
 		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		self.present(settingsSplitViewController, animated: true)
+	}
+
+	@objc func segueToProfile() {
+		Task {
+			await self.segueToProfile()
+		}
 	}
 
 	/// Configures the view with the user's details.
@@ -264,7 +270,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	}
 
 	/// Shows the text editor for posting a new message.
-	func postNewMessage() {
+	@objc func postNewMessage() {
 		Task { [weak self] in
 			guard let self = self else { return }
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
