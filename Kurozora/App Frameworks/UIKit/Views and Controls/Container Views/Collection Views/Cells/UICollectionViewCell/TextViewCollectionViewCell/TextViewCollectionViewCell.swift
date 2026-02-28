@@ -48,7 +48,6 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 // MARK: - NSLayoutManagerDelegate
 extension TextViewCollectionViewCell: NSLayoutManagerDelegate {
 	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
-		// Synopsis background
 		self.moreButtonView?.isHidden = !(self.textView.layoutManager.numberOfLines > self.textViewCollectionViewCellType.maximumNumberOfLinesValue)
 	}
 }

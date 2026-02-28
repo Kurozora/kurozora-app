@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -237,7 +237,7 @@
                 <constraints>
                     <constraint firstItem="8Be-02-Of9" firstAttribute="top" secondItem="75j-gT-c0Y" secondAttribute="top" id="Bg3-Pg-U0u"/>
                     <constraint firstItem="RrF-Ij-FBp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="75j-gT-c0Y" secondAttribute="leading" id="Ex5-TC-Bh2"/>
-                    <constraint firstAttribute="bottom" secondItem="RrF-Ij-FBp" secondAttribute="bottom" id="Vsl-MQ-YCg"/>
+                    <constraint firstAttribute="bottom" secondItem="RrF-Ij-FBp" secondAttribute="bottom" priority="999" id="Vsl-MQ-YCg"/>
                     <constraint firstAttribute="trailing" secondItem="8Be-02-Of9" secondAttribute="trailing" id="bQx-3z-bRX"/>
                     <constraint firstItem="8Be-02-Of9" firstAttribute="leading" secondItem="75j-gT-c0Y" secondAttribute="leading" id="mwl-Tn-IOy"/>
                     <constraint firstItem="RrF-Ij-FBp" firstAttribute="top" secondItem="8Be-02-Of9" secondAttribute="bottom" constant="2" id="rr4-6d-aGN"/>

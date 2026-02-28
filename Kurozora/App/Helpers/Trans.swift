@@ -1866,6 +1866,34 @@ struct Trans {
 	/// - Tag: Trans-share
 	static let share: String = String(localized: "Share",
 									  comment: "The string for the word 'share'.")
+	/// The string for the word 'copy'.
+	///
+	/// - Tag: Trans-copy
+	static let copy: String = String(
+		localized: "Copy",
+		comment: "The string for the word 'copy'."
+	)
+	/// The string for the word 'Copy Review'.
+	///
+	/// - Tag: Trans-copyReview
+	static let copyReview: String = String(
+		localized: "Copy Review",
+		comment: "The string for the word 'Copy Review'."
+	)
+	/// The string for the word 'Copy Title'.
+	///
+	/// - Tag: Trans-copyTitle
+	static let copyTitle: String = String(
+		localized: "Copy Title",
+		comment: "The string for the word 'Copy Title'."
+	)
+	/// The string for the word 'Copy Link'.
+	///
+	/// - Tag: Trans-copyLink
+	static let copyLink: String = String(
+		localized: "Copy Link",
+		comment: "The string for the word 'Copy Link'."
+	)
 	/// The string for the word 'update'.
 	///
 	/// - Tag: Trans-update

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,6 +45,9 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nH-tN-JrJ" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="60" y="28" width="306" height="39.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="40" id="ZmG-qj-jfz"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="textSize">
@@ -60,28 +63,61 @@
                     </view>
                     <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T9c-i1-chK" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="60" y="75.5" width="306" height="38"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                     </textView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-Ev-6jb">
+                        <rect key="frame" x="248" y="90.5" width="118" height="23"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_right" translatesAutoresizingMaskIntoConstraints="NO" id="uye-JM-SgL">
+                                <rect key="frame" x="0.0" y="0.0" width="118" height="23"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOi-dG-PVY" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="118" height="23"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="70" minY="0.0" maxX="8" maxY="2"/>
+                                <state key="normal" title="more">
+                                    <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="moreButtonPressed:" destination="SfZ-Ad-xLi" eventType="touchUpInside" id="AkB-E4-hhK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="hOi-dG-PVY" firstAttribute="leading" secondItem="uye-JM-SgL" secondAttribute="leading" id="1Xu-1Y-rYV"/>
+                            <constraint firstItem="uye-JM-SgL" firstAttribute="leading" secondItem="K1m-Ev-6jb" secondAttribute="leading" id="1lR-ql-Yav"/>
+                            <constraint firstAttribute="bottom" secondItem="uye-JM-SgL" secondAttribute="bottom" id="BPT-yx-Gb7"/>
+                            <constraint firstAttribute="trailing" secondItem="uye-JM-SgL" secondAttribute="trailing" id="Qs1-H1-Gbz"/>
+                            <constraint firstItem="uye-JM-SgL" firstAttribute="top" secondItem="K1m-Ev-6jb" secondAttribute="top" id="fSp-AD-GY6"/>
+                            <constraint firstItem="hOi-dG-PVY" firstAttribute="trailing" secondItem="uye-JM-SgL" secondAttribute="trailing" id="h9l-5k-QQ0"/>
+                            <constraint firstItem="hOi-dG-PVY" firstAttribute="top" secondItem="uye-JM-SgL" secondAttribute="top" id="hIP-nk-nN4"/>
+                            <constraint firstItem="hOi-dG-PVY" firstAttribute="bottom" secondItem="uye-JM-SgL" secondAttribute="bottom" id="lW4-L2-Rrm"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="vcF-nr-S1D" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="2" id="2kD-iK-kMW"/>
+                    <constraint firstItem="K1m-Ev-6jb" firstAttribute="bottom" secondItem="T9c-i1-chK" secondAttribute="bottom" id="3my-Do-wmO"/>
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="10" id="6TC-NT-VaQ"/>
                     <constraint firstItem="zF2-lp-0cu" firstAttribute="leading" secondItem="SgI-sl-Z8o" secondAttribute="leading" constant="8" id="A2S-Ps-Cgf"/>
                     <constraint firstItem="jXb-8G-Omv" firstAttribute="leading" secondItem="zF2-lp-0cu" secondAttribute="trailing" constant="8" symbolic="YES" id="AqN-SV-ELa"/>
                     <constraint firstItem="zF2-lp-0cu" firstAttribute="top" secondItem="SgI-sl-Z8o" secondAttribute="top" constant="8" id="Bb0-yA-ffX"/>
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="leading" secondItem="vcF-nr-S1D" secondAttribute="trailing" constant="8" symbolic="YES" id="Bdp-sq-kvC"/>
+                    <constraint firstItem="K1m-Ev-6jb" firstAttribute="trailing" secondItem="T9c-i1-chK" secondAttribute="trailing" id="Cpx-nP-CKQ"/>
                     <constraint firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" constant="8" id="EVr-tU-x1f"/>
                     <constraint firstItem="6nH-tN-JrJ" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="leading" id="Eqd-7c-8WF"/>
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="centerY" secondItem="jXb-8G-Omv" secondAttribute="centerY" id="Ex0-Lc-x0y"/>
                     <constraint firstItem="zF2-lp-0cu" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="FSU-Yn-mUh"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" id="FV3-NT-ste"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="T9c-i1-chK" secondAttribute="bottom" constant="8" id="LfM-mP-GzB"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="leading" id="Q9h-DB-ftj"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zF2-lp-0cu" secondAttribute="bottom" constant="8" id="QWo-sJ-3hc"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="top" secondItem="6nH-tN-JrJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Wfl-sI-Zaf"/>
-                    <constraint firstAttribute="bottom" secondItem="T9c-i1-chK" secondAttribute="bottom" constant="8" id="bxC-Jb-2Tl"/>
                     <constraint firstItem="vcF-nr-S1D" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="dmS-P1-wSV"/>
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="pjv-da-61N"/>
                     <constraint firstItem="vcF-nr-S1D" firstAttribute="bottom" secondItem="jXb-8G-Omv" secondAttribute="bottom" id="puk-GD-wgz"/>
@@ -95,6 +131,9 @@
                 <outlet property="contentTextView" destination="T9c-i1-chK" id="AwM-yz-ClD"/>
                 <outlet property="cosmosView" destination="6nH-tN-JrJ" id="qKM-ia-c9H"/>
                 <outlet property="dateTimeLabel" destination="WKI-z6-jsJ" id="zg8-ww-DON"/>
+                <outlet property="moreButton" destination="hOi-dG-PVY" id="fwu-Mt-yLg"/>
+                <outlet property="moreButtonView" destination="K1m-Ev-6jb" id="aWq-Ur-03N"/>
+                <outlet property="moreImageView" destination="uye-JM-SgL" id="CBm-Ac-f89"/>
                 <outlet property="profileBadgeStackView" destination="vcF-nr-S1D" id="H4j-uF-ZUm"/>
                 <outlet property="profileImageView" destination="zF2-lp-0cu" id="1wL-Ax-pnt"/>
                 <outlet property="usernameLabel" destination="jXb-8G-Omv" id="OaY-tA-aQU"/>
@@ -102,9 +141,7 @@
             <point key="canvasLocation" x="-259.4202898550725" y="-86.383928571428569"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="6nH-tN-JrJ">
-            <size key="intrinsicContentSize" width="92" height="16"/>
-        </designable>
-    </designables>
+    <resources>
+        <image name="shadow_right" width="30" height="6"/>
+    </resources>
 </document>

@@ -26,6 +26,7 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 		case showDetailsSegue
 		case literatureDetailsSegue
 		case gameDetailsSegue
+		case reviewDetailSegue
 	}
 
 	// MARK: - Properties
@@ -244,6 +245,9 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
 		case .gameDetailsSegue: return GameDetailsCollectionViewController()
+		case .reviewDetailSegue:
+			let navController = KNavigationController(rootViewController: ReviewDetailCollectionViewController())
+			return navController
 		}
 	}
 
@@ -263,6 +267,12 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
+		case .reviewDetailSegue:
+			guard let navController = destination as? KNavigationController,
+				  let reviewDetailVC = navController.viewControllers.first as? ReviewDetailCollectionViewController,
+				  let review = sender as? Review else { return }
+			navController.modalPresentationStyle = .formSheet
+			reviewDetailVC.review = review
 		}
 	}
 }
@@ -281,6 +291,12 @@ extension ReviewsCollectionViewController: ReviewCollectionViewCellDelegate {
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		let review = self.reviews[indexPath.item]
+		self.present(SegueIdentifiers.reviewDetailSegue, sender: review)
 	}
 }
 

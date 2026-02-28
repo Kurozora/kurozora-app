@@ -9,7 +9,14 @@
 import UIKit
 
 extension ReviewsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailSegue, sender: review)
+		default: break
+		}
+	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if indexPath.item == self.reviews.count - 20, self.nextPageURL != nil {

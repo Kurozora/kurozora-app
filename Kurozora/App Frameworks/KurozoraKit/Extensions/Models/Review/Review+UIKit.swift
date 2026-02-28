@@ -54,17 +54,8 @@ extension Review {
 			userMenuElements.append(userAction)
 		}
 
-		// Create "share" element
-		let shareAction = UIAction(title: Trans.shareReview, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
-		}
-		userMenuElements.append(shareAction)
-
-		// Append user menu
-		menuElements.append(UIMenu(title: "", options: .displayInline, children: userMenuElements))
-
+		// Delete
 		if User.isSignedIn {
-			// Report review action
 			let reviewUserID = self.relationships?.users?.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
@@ -76,10 +67,38 @@ extension Review {
 				}
 				deleteMenuElements.append(deleteAction)
 
-				// Append report menu
 				menuElements.append(UIMenu(title: Trans.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
 			}
+		}
 
+		// Append user menu
+		menuElements.append(UIMenu(title: "", options: .displayInline, children: userMenuElements))
+
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+
+		// Create "copy" action
+		let copyAction = UIAction(title: Trans.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
+			UIPasteboard.general.string = self.attributes.description
+		}
+
+		// Create "share" action
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
+		}
+		shareMenuChildren.append(copyAction)
+		shareMenuChildren.append(shareAction)
+
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
+
+		// Create "helpfulness" menu
+//		let helpfulAction = UIAction(title: "Helpful", image: UIImage(systemName: "hand.thumbsup")) { _ in }
+//		let notHelpfulAction = UIAction(title: "Not Helpful", image: UIImage(systemName: "hand.thumbsdown")) { _ in }
+//		let helpfulMenu = UIMenu(title: "", options: .displayInline, children: [helpfulAction, notHelpfulAction])
+//		menuElements.append(helpfulMenu)
+
+		if User.isSignedIn {
 			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
 			let reportAction = UIAction(title: Trans.reportReview, attributes: .destructive) { _ in

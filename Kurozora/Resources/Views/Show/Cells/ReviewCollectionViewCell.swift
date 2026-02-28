@@ -6,12 +6,13 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol ReviewCollectionViewCellDelegate: AnyObject {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject)
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge)
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton)
 }
 
 class ReviewCollectionViewCell: KCollectionViewCell {
@@ -22,35 +23,47 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
 	@IBOutlet weak var contentTextView: KTextView!
+	@IBOutlet weak var moreButton: KButton!
+	@IBOutlet weak var moreImageView: UIImageView!
+	@IBOutlet weak var moreButtonView: UIView!
 
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
 
-	// MARK: - Initializers
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		self.sharedInit()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.sharedInit()
-	}
-
-	// MARK: - Functions
-	/// The shared settings used to initialize the cell.
-	fileprivate func sharedInit() {
-		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		self.layerCornerRadius = 8
-	}
-
 	/// Configure the cell with the given person details.
-	func configureCell(using review: Review?) {
+	///
+	/// - Parameters:
+	///    - review: The review details to configure the cell with.
+	///    - showsFullReview: Whether to show the full review text without truncation.
+	func configureCell(using review: Review?, showsFullReview: Bool = false) {
 		guard let review = review else {
 			self.showSkeleton()
 			return
 		}
 		self.hideSkeleton()
+
+		if showsFullReview {
+			// Configure view
+			self.layerCornerRadius = 0
+			self.contentView.theme_backgroundColor = nil
+			self.contentView.backgroundColor = .clear
+
+			// Configure body
+			self.contentTextView.textContainer.maximumNumberOfLines = 0
+			self.contentTextView.isSelectable = true
+
+			// Configure more view
+			self.moreButtonView.isHidden = true
+		} else {
+			// Configure view
+			self.layerCornerRadius = 8
+			self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			// Configure body
+			self.contentTextView.textContainer.maximumNumberOfLines = 6
+			self.contentTextView.textContainer.lineBreakMode = .byWordWrapping
+			self.contentTextView.isSelectable = false
+		}
 
 		if let user = review.relationships?.users?.data.first {
 			self.usernameLabel.text = user.attributes.username
@@ -71,9 +84,14 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		// Configure body
 		self.contentTextView.setAttributedText(review.attributes.description?.markdownAttributedString())
 		self.contentTextView.delegate = self
+		self.contentTextView.layoutManager.delegate = self
 
 		// Configure date time
 		self.dateTimeLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
+		
+		// Configure more view
+		self.moreImageView?.theme_tintColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
 	}
 
 	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
@@ -103,6 +121,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	@objc func usernameLabelPressed(_ sender: AnyObject) {
 		self.delegate?.reviewCollectionViewCell(self, didPressUserName: sender)
 	}
+
+	@IBAction func moreButtonPressed(_ sender: UIButton) {
+		self.delegate?.reviewCollectionViewCell(self, didPressMoreButton: sender)
+	}
 }
 
 // MARK: - UITextViewDelegate
@@ -124,6 +146,14 @@ extension ReviewCollectionViewCell: UITextViewDelegate {
 		}
 
 		return true
+	}
+}
+
+// MARK: - NSLayoutManagerDelegate
+extension ReviewCollectionViewCell: NSLayoutManagerDelegate {
+	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
+		guard self.contentTextView.textContainer.maximumNumberOfLines != 0 else { return }
+		self.moreButtonView?.isHidden = !(self.contentTextView.layoutManager.numberOfLines > 6)
 	}
 }
 
