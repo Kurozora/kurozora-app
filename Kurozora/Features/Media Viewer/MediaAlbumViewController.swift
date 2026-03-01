@@ -215,7 +215,7 @@ final class MediaAlbumViewController: UIPageViewController {
 		var options: [UIAction] = []
 
 		if self.onCopy != nil {
-			options.append(UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
+			options.append(UIAction(title: Trans.copy, image: UIImage(systemName: "doc.on.doc")) { _ in
 				self.onCopy?(item)
 			})
 		}

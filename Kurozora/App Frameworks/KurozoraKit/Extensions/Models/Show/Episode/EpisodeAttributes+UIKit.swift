@@ -39,7 +39,7 @@ extension Episode.Attributes {
 	func posterImage(imageView: UIImageView) {
 		imageView.image = nil
 
-		if let backgroundColor = self.profile?.backgroundColor {
+		if let backgroundColor = self.poster?.backgroundColor {
 			imageView.backgroundColor = UIColor(hexString: backgroundColor)
 		} else {
 			imageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
