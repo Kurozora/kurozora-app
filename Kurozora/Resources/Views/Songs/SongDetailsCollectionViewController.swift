@@ -13,8 +13,9 @@ import MusicKit
 class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
-		case reviewsSegue
+		case reviewsListSegue
 		case showDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Views
@@ -224,8 +225,9 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -233,14 +235,24 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
+		case .reviewsListSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .song(self.song)
 		case .showDetailsSegue:
+			// Segue to show details
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
+		case .reviewDetailsSegue:
+			// Segue to review details
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -385,6 +397,14 @@ extension SongDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+	}
 }
 
 // MARK: - TapToRateCollectionViewCellDelegate
@@ -484,7 +504,7 @@ extension SongDetailsCollectionViewController {
 			case .header, .lyrics, .rateAndReview, .reviews, .shows, .sosumi:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			}
 		}
 	}

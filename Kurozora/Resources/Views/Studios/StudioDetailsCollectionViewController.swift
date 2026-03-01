@@ -12,7 +12,7 @@ import KurozoraKit
 class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
-		case reviewsSegue
+		case reviewsListSegue
 		case showDetailsSegue
 		case showsListSegue
 		case literatureDetailsSegue
@@ -20,6 +20,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 		case gameDetailsSegue
 		case gamesListSegue
 		case studioDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Properties
@@ -232,7 +233,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .showsListSegue: return ShowsListCollectionViewController()
 		case .literaturesListSegue: return LiteraturesListCollectionViewController()
 		case .gamesListSegue: return GamesListCollectionViewController()
@@ -240,6 +241,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
 		case .gameDetailsSegue: return GameDetailsCollectionViewController()
 		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -247,9 +249,8 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
-			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+		case .reviewsListSegue:
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .studio(self.studio)
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
@@ -275,8 +276,15 @@ class StudioDetailsCollectionViewController: KCollectionViewController, RatingAl
 			guard let gamesListCollectionViewController = destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.studioIdentity = self.studioIdentity
 			gamesListCollectionViewController.gamesListFetchType = .studio
-		case .studioDetailsSegue:
-			return
+		case .studioDetailsSegue: return
+		case .reviewDetailsSegue:
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -484,6 +492,14 @@ extension StudioDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+	}
 }
 
 // MARK: - TapToRateCollectionViewCellDelegate
@@ -598,7 +614,7 @@ extension StudioDetailsCollectionViewController {
 			case .header, .badges, .about, .rateAndReview, .reviews, .information:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			case .shows:
 				return .showsListSegue
 			case .literatures:

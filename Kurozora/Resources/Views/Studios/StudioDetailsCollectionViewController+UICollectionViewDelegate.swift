@@ -41,6 +41,9 @@ extension StudioDetailsCollectionViewController {
 		case .games:
 			guard let game = self.cache[indexPath] as? Game else { return }
 			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

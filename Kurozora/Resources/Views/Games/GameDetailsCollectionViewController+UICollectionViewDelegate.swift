@@ -66,6 +66,9 @@ extension GameDetailsCollectionViewController {
 		case .relatedLiteratures:
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
 			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: return
 		}
 	}

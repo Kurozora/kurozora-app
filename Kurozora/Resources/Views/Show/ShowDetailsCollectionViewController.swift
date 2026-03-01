@@ -15,7 +15,7 @@ import UIKit
 class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
-		case reviewsSegue
+		case reviewsListSegue
 		case seasonsListSegue
 		case castListSegue
 		case songsListSegue
@@ -31,6 +31,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case personDetailsSegue
 		case episodesListSegue
 		case songDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Views
@@ -444,7 +445,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .seasonsListSegue: return SeasonsListCollectionViewController()
 		case .castListSegue: return CastListCollectionViewController()
 		case .songsListSegue: return ShowSongsListCollectionViewController()
@@ -460,6 +461,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .episodesListSegue: return EpisodesListCollectionViewController()
 		case .songDetailsSegue: return SongDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -467,9 +469,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
+		case .reviewsListSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .show(self.show)
 		case .seasonsListSegue:
 			// Segue to seasons list
@@ -567,6 +569,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 			guard let songDetailsCollectionViewController = destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
 			songDetailsCollectionViewController.song = song
+		case .reviewDetailsSegue:
+			// Segue to review details
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -791,6 +802,14 @@ extension ShowDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 	}
 }
 
@@ -1102,7 +1121,7 @@ extension ShowDetailsCollectionViewController {
 			case .header, .badges, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			case .seasons:
 				return .seasonsListSegue
 			case .cast:

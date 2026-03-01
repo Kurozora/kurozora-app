@@ -15,6 +15,9 @@ extension SongDetailsCollectionViewController {
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
 			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

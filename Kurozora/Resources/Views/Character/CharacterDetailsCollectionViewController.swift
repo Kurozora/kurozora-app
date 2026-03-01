@@ -12,7 +12,7 @@ import UIKit
 class CharacterDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
-		case reviewsSegue
+		case reviewsListSegue
 		case showsListSegue
 		case showDetailsSegue
 		case literaturesListSegue
@@ -21,6 +21,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		case gameDetailsSegue
 		case peopleListSegue
 		case personDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Properties
@@ -258,7 +259,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .showsListSegue: return ShowsListCollectionViewController()
 		case .literaturesListSegue: return LiteraturesListCollectionViewController()
 		case .gamesListSegue: return GamesListCollectionViewController()
@@ -268,6 +269,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		case .peopleListSegue:
 			return PeopleListCollectionViewController()
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -275,9 +277,9 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
+		case .reviewsListSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .character(self.character)
 		case .showsListSegue:
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
@@ -311,6 +313,14 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 			guard let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
+		case .reviewDetailsSegue:
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -504,6 +514,14 @@ extension CharacterDetailsCollectionViewController: ReviewCollectionViewCellDele
 
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+	}
 }
 
 // MARK: - TapToRateCollectionViewCellDelegate
@@ -601,7 +619,7 @@ extension CharacterDetailsCollectionViewController {
 			case .header, .about, .rateAndReview, .reviews, .information:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			case .people:
 				return .peopleListSegue
 			case .shows:

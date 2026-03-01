@@ -45,6 +45,9 @@ extension EpisodeDetailsCollectionViewController {
 		case .suggestedEpisodes:
 			let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
 			self.show(SegueIdentifiers.episodeDetailsSegue, sender: suggestedEpisode)
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: return
 		}
 	}

@@ -13,13 +13,14 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case castListSegue
-		case reviewsSegue
+		case reviewsListSegue
 		case showDetailsSegue
 		case seasonsListSegue
 		case episodeDetailsSegue
 		case episodesListSegue
 		case personDetailsSegue
 		case characterDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Views
@@ -307,7 +308,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .seasonsListSegue: return SeasonsListCollectionViewController()
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
@@ -316,6 +317,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .personDetailsSegue:
 			return PersonDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -323,9 +325,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
+		case .reviewsListSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .episode(self.episode)
 		case .showDetailsSegue:
 			// Segue to show details
@@ -352,8 +354,15 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 			episodesListCollectionViewController.episodesListFetchType = .season
 		case .castListSegue: break
 		case .characterDetailsSegue: break
-		case .personDetailsSegue:
-			break
+		case .personDetailsSegue: break
+		case .reviewDetailsSegue:
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -507,6 +516,14 @@ extension EpisodeDetailsCollectionViewController: ReviewCollectionViewCellDelega
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 	}
 }
 
@@ -671,7 +688,7 @@ extension EpisodeDetailsCollectionViewController {
 			case .header, .badge, .synopsis, .rateAndReview, .reviews, .information, .suggestedEpisodes, .sosumi:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			case .cast:
 				return .castListSegue
 			}

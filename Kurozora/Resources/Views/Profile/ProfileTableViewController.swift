@@ -15,7 +15,7 @@ class ProfileTableViewController: KTableViewController {
 		case achievementsSegue
 		case followingSegue
 		case followersSegue
-		case reviewsSegue
+		case userReviewsListSegue
 		case feedMessageDetailsSegue
 		case editProfileSegue
 	}
@@ -398,7 +398,7 @@ class ProfileTableViewController: KTableViewController {
 		case .followersSegue: return UsersListCollectionViewController()
 		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
 		case .editProfileSegue: return KNavigationController(rootViewController: EditProfileViewController(user: self.user))
-		case .reviewsSegue: return ReviewsListCollectionViewController()
+		case .userReviewsListSegue: return UserReviewsListCollectionViewController()
 		}
 	}
 
@@ -426,8 +426,8 @@ class ProfileTableViewController: KTableViewController {
 			else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessage.id
 			fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
-		case .reviewsSegue:
-			guard let reviewsListCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
+		case .userReviewsListSegue:
+			guard let reviewsListCollectionViewController = destination as? UserReviewsListCollectionViewController else { return }
 			reviewsListCollectionViewController.user = self.user
 		case .editProfileSegue:
 			break
@@ -673,7 +673,7 @@ extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReviewsButton button: UIButton) {
-		self.show(SegueIdentifiers.reviewsSegue, sender: self)
+		self.show(SegueIdentifiers.userReviewsListSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressBadge profileBadge: ProfileBadge, from button: UIButton) {

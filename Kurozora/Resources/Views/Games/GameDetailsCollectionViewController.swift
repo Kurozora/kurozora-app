@@ -15,7 +15,7 @@ import UIKit
 class GameDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
-		case reviewsSegue
+		case reviewsListSegue
 		case castListSegue
 		case gamesListSegue
 		case showsListSegue
@@ -27,6 +27,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case studioDetailsSegue
 		case personDetailsSegue
 		case characterDetailsSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Views
@@ -402,7 +403,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .reviewsSegue: return ReviewsCollectionViewController()
+		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .castListSegue: return CastListCollectionViewController()
 		case .showsListSegue: return ShowsListCollectionViewController()
 		case .literaturesListSegue: return LiteraturesListCollectionViewController()
@@ -414,6 +415,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -421,9 +423,9 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .reviewsSegue:
+		case .reviewsListSegue:
 			// Segue to reviews list
-			guard let reviewsCollectionViewController = destination as? ReviewsCollectionViewController else { return }
+			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .game(self.game)
 		case .castListSegue:
 			// Segue to cast list
@@ -501,6 +503,14 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 				let person = cast.relationships.people?.data.first
 			else { return }
 			personDetailsCollectionViewController.person = person
+		case .reviewDetailsSegue:
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
@@ -725,6 +735,14 @@ extension GameDetailsCollectionViewController: ReviewCollectionViewCellDelegate 
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 	}
 }
 
@@ -995,7 +1013,7 @@ extension GameDetailsCollectionViewController {
 			case .header, .badge, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
 				return nil
 			case .rating:
-				return .reviewsSegue
+				return .reviewsListSegue
 			case .cast:
 				return .castListSegue
 			case .studios:

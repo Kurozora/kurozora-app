@@ -24,6 +24,9 @@ extension PersonDetailsCollectionViewController {
 		case .characters:
 			guard let character = self.cache[indexPath] as? Character else { return }
 			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+		case .reviews:
+			guard let review = self.reviews[safe: indexPath.item] else { return }
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}
