@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,13 +17,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="As0-2d-X7c" userLabel="Content View">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="daF-G8-yJ2" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
-                            <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="lgn-AK-pbX"/>
-                            </constraints>
-                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kqi-V0-Mbk">
                             <rect key="frame" x="361" y="10" width="53" height="33"/>
                             <subviews>
@@ -54,17 +46,14 @@
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="BPG-X0-YJI" firstAttribute="leading" secondItem="daF-G8-yJ2" secondAttribute="leading" id="0Zv-ML-wpp"/>
                         <constraint firstItem="BPG-X0-YJI" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" constant="10" id="2m1-l8-vyd"/>
                         <constraint firstAttribute="bottom" secondItem="1da-OZ-n7O" secondAttribute="bottom" constant="10" id="3ac-In-cCW"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kqi-V0-Mbk" secondAttribute="bottom" constant="10" id="Acl-OM-A4u"/>
-                        <constraint firstAttribute="trailing" secondItem="daF-G8-yJ2" secondAttribute="trailing" id="KG4-vm-YZq"/>
-                        <constraint firstItem="daF-G8-yJ2" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="KR8-Ic-YIW"/>
+                        <constraint firstItem="BPG-X0-YJI" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="POS-nT-RWW"/>
                         <constraint firstItem="1da-OZ-n7O" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="Pme-69-Jef"/>
                         <constraint firstItem="kqi-V0-Mbk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1da-OZ-n7O" secondAttribute="trailing" constant="8" symbolic="YES" id="cEY-pp-xBY"/>
                         <constraint firstItem="BPG-X0-YJI" firstAttribute="firstBaseline" secondItem="kqi-V0-Mbk" secondAttribute="firstBaseline" symbolic="YES" id="dYq-Dx-zSW"/>
                         <constraint firstItem="kqi-V0-Mbk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BPG-X0-YJI" secondAttribute="trailing" constant="8" symbolic="YES" id="i6h-Bf-Sgv"/>
-                        <constraint firstItem="daF-G8-yJ2" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" id="lBB-3l-0UZ"/>
                         <constraint firstItem="1da-OZ-n7O" firstAttribute="top" secondItem="BPG-X0-YJI" secondAttribute="bottom" constant="4" id="ntb-pQ-udY"/>
                         <constraint firstAttribute="trailing" secondItem="kqi-V0-Mbk" secondAttribute="trailing" id="r9n-Sa-xNw"/>
                         <constraint firstItem="kqi-V0-Mbk" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" constant="10" id="zGc-tJ-IAk"/>
@@ -81,16 +70,10 @@
             </constraints>
             <connections>
                 <outlet property="headerButton" destination="IAa-4j-FQj" id="w7J-Mr-ZFE"/>
-                <outlet property="separatorView" destination="daF-G8-yJ2" id="PgJ-6a-r9Y"/>
                 <outlet property="subTitleHeader" destination="1da-OZ-n7O" id="Jxm-eZ-sxr"/>
                 <outlet property="titleLabel" destination="BPG-X0-YJI" id="Bti-Qa-cP8"/>
             </connections>
             <point key="canvasLocation" x="-404.34782608695656" y="155.69196428571428"/>
         </collectionReusableView>
     </objects>
-    <resources>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

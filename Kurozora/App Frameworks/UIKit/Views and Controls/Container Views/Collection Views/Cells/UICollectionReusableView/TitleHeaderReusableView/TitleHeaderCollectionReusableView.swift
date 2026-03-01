@@ -17,7 +17,6 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var subTitleHeader: KSecondaryLabel!
 	@IBOutlet weak var headerButton: HeaderButton!
-	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
 	static let reuseIdentifier = "TitleHeaderCollectionReusableView"
@@ -49,9 +48,6 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 
 		// Show or hide see all button
 		self.headerButton.isHidden = segueID == nil
-
-		// Show or hide separator
-		self.separatorView.isHidden = separatorIsHidden
 	}
 
 	// MARK: - IBActions
