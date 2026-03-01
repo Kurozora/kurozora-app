@@ -1,5 +1,5 @@
 //
-//  ReviewsCollectionViewController+KCollectionViewDataSource.swift
+//  ReviewsListCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/04/2025.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension ReviewsCollectionViewController {
+extension ReviewsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
 			RatingCollectionViewCell.self,

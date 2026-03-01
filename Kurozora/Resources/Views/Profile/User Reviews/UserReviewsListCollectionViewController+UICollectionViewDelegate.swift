@@ -1,5 +1,5 @@
 //
-//  ReviewsListCollectionViewController+UICollectionViewDelegate.swift
+//  UserReviewsListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 19/03/2024.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ReviewsListCollectionViewController {
+extension UserReviewsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let review = self.dataSource.itemIdentifier(for: indexPath) else { return }
 

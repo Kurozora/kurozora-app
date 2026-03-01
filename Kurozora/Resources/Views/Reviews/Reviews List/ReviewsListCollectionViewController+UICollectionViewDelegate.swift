@@ -1,5 +1,5 @@
 //
-//  ReviewsCollectionViewController+UICollectionViewDelegate.swift
+//  ReviewsListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/04/2025.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-extension ReviewsCollectionViewController {
+extension ReviewsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailSegue, sender: review)
+			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

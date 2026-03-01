@@ -1,5 +1,5 @@
 //
-//  ReviewsCollectionViewController.swift
+//  ReviewsListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/04/2025.
@@ -20,13 +20,13 @@ enum ReviewsListType {
 	case episode(_ episode: Episode)
 }
 
-class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class ReviewsListCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
 		case literatureDetailsSegue
 		case gameDetailsSegue
-		case reviewDetailSegue
+		case reviewDetailsSegue
 	}
 
 	// MARK: - Properties
@@ -245,9 +245,7 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
 		case .gameDetailsSegue: return GameDetailsCollectionViewController()
-		case .reviewDetailSegue:
-			let navController = KNavigationController(rootViewController: ReviewDetailCollectionViewController())
-			return navController
+		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
 
@@ -267,21 +265,26 @@ class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPre
 			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
 			gameDetailCollectionViewController.game = game
-		case .reviewDetailSegue:
-			guard let navController = destination as? KNavigationController,
-				  let reviewDetailVC = navController.viewControllers.first as? ReviewDetailCollectionViewController,
-				  let review = sender as? Review else { return }
-			navController.modalPresentationStyle = .formSheet
-			reviewDetailVC.review = review
+		case .reviewDetailsSegue:
+			guard
+				let navigationController = destination as? KNavigationController,
+				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
+				let review = sender as? Review
+			else { return }
+			navigationController.modalPresentationStyle = .formSheet
+			reviewDetailsCollectionViewController.review = review
 		}
 	}
 }
 
 // MARK: - ReviewCollectionViewCellDelegate
-extension ReviewsCollectionViewController: ReviewCollectionViewCellDelegate {
+extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		review.visitOriginalPosterProfile(from: self)
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
@@ -294,14 +297,16 @@ extension ReviewsCollectionViewController: ReviewCollectionViewCellDelegate {
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		let review = self.reviews[indexPath.item]
-		self.present(SegueIdentifiers.reviewDetailSegue, sender: review)
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
 	}
 }
 
 // MARK: - TapToRateCollectionViewCellDelegate
-extension ReviewsCollectionViewController: TapToRateCollectionViewCellDelegate {
+extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -343,7 +348,7 @@ extension ReviewsCollectionViewController: TapToRateCollectionViewCellDelegate {
 }
 
 // MARK: - WriteAReviewCollectionViewCellDelegate
-extension ReviewsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
@@ -388,14 +393,14 @@ extension ReviewsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 }
 
 // MARK: - ReviewTextEditorViewControllerDelegate
-extension ReviewsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+extension ReviewsListCollectionViewController: ReviewTextEditorViewControllerDelegate {
 	func reviewTextEditorViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
 	}
 }
 
 // MARK: - SectionLayoutKind
-extension ReviewsCollectionViewController {
+extension ReviewsListCollectionViewController {
 	/// List of  review section layout kind.
 	enum SectionLayoutKind: Int, CaseIterable {
 		case rating = 0

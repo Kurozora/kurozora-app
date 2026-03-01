@@ -1,5 +1,5 @@
 //
-//  ReviewsCollectionViewController+KCollectionViewDelegateLayout.swift
+//  ReviewsListCollectionViewController+KCollectionViewDelegateLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/04/2025.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ReviewsCollectionViewController {
+extension ReviewsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = 1

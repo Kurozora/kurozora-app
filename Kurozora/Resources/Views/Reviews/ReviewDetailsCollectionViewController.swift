@@ -1,5 +1,5 @@
 //
-//  ReviewDetailCollectionViewController.swift
+//  ReviewDetailsCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/04/2026.
@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class ReviewDetailCollectionViewController: KCollectionViewController {
+class ReviewDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var review: Review?
 
@@ -77,7 +77,7 @@ class ReviewDetailCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - KCollectionViewDataSource
-extension ReviewDetailCollectionViewController {
+extension ReviewDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
 			ReviewCollectionViewCell.self
@@ -109,7 +109,7 @@ extension ReviewDetailCollectionViewController {
 }
 
 // MARK: - KCollectionViewDelegateLayout
-extension ReviewDetailCollectionViewController {
+extension ReviewDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		return 1
 	}
@@ -124,7 +124,7 @@ extension ReviewDetailCollectionViewController {
 }
 
 // MARK: - ReviewCollectionViewCellDelegate
-extension ReviewDetailCollectionViewController: ReviewCollectionViewCellDelegate {
+extension ReviewDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
 		self.review?.visitOriginalPosterProfile(from: self)
 	}
@@ -142,7 +142,7 @@ extension ReviewDetailCollectionViewController: ReviewCollectionViewCellDelegate
 }
 
 // MARK: - SectionLayoutKind
-extension ReviewDetailCollectionViewController {
+extension ReviewDetailsCollectionViewController {
 	/// List of review detail section layout kind.
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0

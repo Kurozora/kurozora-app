@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension ReviewsListCollectionViewController {
+extension UserReviewsListCollectionViewController {
 	override func configureDataSource() {
 		let episodeReviewCell = self.getConfiguredEpisodeReviewCell()
 		let gameReviewCell = self.getConfiguredGameReviewCell()
@@ -95,7 +95,7 @@ extension ReviewsListCollectionViewController {
 	}
 }
 
-extension ReviewsListCollectionViewController {
+extension UserReviewsListCollectionViewController {
 	func getConfiguredGameReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
 		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: GameReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }

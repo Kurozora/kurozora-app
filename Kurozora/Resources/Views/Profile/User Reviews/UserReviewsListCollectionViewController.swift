@@ -1,5 +1,5 @@
 //
-//  ReviewsListCollectionViewController.swift
+//  UserReviewsListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 19/03/2024.
@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import AVFoundation
 
-class ReviewsListCollectionViewController: KCollectionViewController {
+class UserReviewsListCollectionViewController: KCollectionViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue
@@ -256,7 +256,7 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension ReviewsListCollectionViewController {
+extension UserReviewsListCollectionViewController {
 	/// List of section layout kind.
 	///
 	/// ```swift
