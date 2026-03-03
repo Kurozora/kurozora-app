@@ -9,6 +9,10 @@
 import KurozoraKit
 import UIKit
 
+protocol UsersListMentionSelectionDelegate: AnyObject {
+	func usersListCollectionViewController(_ controller: UsersListCollectionViewController, didSelectUserForMention user: User)
+}
+
 enum UsersListFetchType {
 	case follow
 	case search
@@ -39,6 +43,13 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
 
+	// Mention search
+	weak var mentionSelectionDelegate: UsersListMentionSelectionDelegate?
+
+	private var mentionSearchController: UISearchController?
+	private var mentionSearchTask: Task<Void, Never>?
+	var isDismissingMentionSearch = false
+
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -61,11 +72,21 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		return self._prefersActivityIndicatorHidden
 	}
 
-	// MARK: - Views
+	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
 
 		self.handleRefreshControl()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if self.mentionSelectionDelegate != nil, let searchBar = self.mentionSearchController?.searchBar {
+			DispatchQueue.main.async {
+				searchBar.becomeFirstResponder()
+			}
+		}
 	}
 
 	override func viewDidLoad() {
@@ -79,6 +100,10 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		if self.mentionSelectionDelegate != nil {
+			self._prefersRefreshControlDisabled = true
+		}
+
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
@@ -89,16 +114,22 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		}
 		#endif
 
+		if self.mentionSelectionDelegate != nil {
+			self.configureMentionSearchController()
+		}
+
 		self.configureDataSource()
 
 		// Fetch follow list.
 		if !self.userIdentities.isEmpty {
 			self.endFetch()
-		} else {
+		} else if self.mentionSelectionDelegate == nil || !self.searchQuery.isEmpty {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchUsers()
 			}
+		} else {
+			self._prefersActivityIndicatorHidden = true
 		}
 	}
 
@@ -292,6 +323,62 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 	}
 }
 
+// MARK: - Mention Search
+extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBarDelegate {
+	func configureMentionSearchController() {
+		let searchController = UISearchController(searchResultsController: nil)
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.text = self.searchQuery
+		searchController.searchBar.delegate = self
+		self.navigationItem.searchController = searchController
+		self.navigationItem.hidesSearchBarWhenScrolling = false
+		self.definesPresentationContext = true
+		self.mentionSearchController = searchController
+	}
+
+	func updateSearchResults(for searchController: UISearchController) {
+		let query = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+		guard query != self.searchQuery else { return }
+		self.searchQuery = query
+
+		self.mentionSearchTask?.cancel()
+
+		guard !query.isEmpty else {
+			self.nextPageURL = nil
+			self.cache = [:]
+			self.userIdentities = []
+			var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+			snapshot.appendSections([.main])
+			self.dataSource.apply(snapshot)
+			self._prefersActivityIndicatorHidden = true
+			return
+		}
+
+		self.mentionSearchTask = Task { [weak self] in
+			// Debounce 300ms to avoid excessive API calls while typing
+			do {
+				try await Task.sleep(nanoseconds: 300_000_000)
+			} catch { return }
+
+			guard let self = self, !Task.isCancelled else { return }
+
+			self.nextPageURL = nil
+			self.cache = [:]
+			await self.fetchUsers()
+		}
+	}
+
+	func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+		return self.isDismissingMentionSearch
+	}
+
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		self.isDismissingMentionSearch = true
+		self.navigationController?.dismiss(animated: true)
+	}
+}
+
 // MARK: - UserLockupCollectionViewCellDelegate
 extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegate {
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
@@ -366,8 +453,12 @@ extension UsersListCollectionViewController {
 					}
 				}
 
-				userLockupCollectionViewCell.delegate = self
-				userLockupCollectionViewCell.configure(using: user)
+				if self.mentionSelectionDelegate != nil {
+					userLockupCollectionViewCell.configureForMention(using: user)
+				} else {
+					userLockupCollectionViewCell.delegate = self
+					userLockupCollectionViewCell.configure(using: user)
+				}
 			}
 		}
 	}

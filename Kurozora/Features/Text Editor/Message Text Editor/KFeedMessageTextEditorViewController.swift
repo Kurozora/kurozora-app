@@ -122,6 +122,20 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	private let markdownFormatter = MarkdownTextFormatter()
 	private var isUpdatingFormatting = false
+	private var isEndingEditing = false
+
+	private(set) lazy var mentionAutocompleteController: MentionAutocompleteController = {
+		let controller = MentionAutocompleteController(
+			collectionView: self.textEditorView.mentionCollectionView,
+			collapsedConstraint: self.textEditorView.mentionCollapsedConstraint,
+			expandedConstraint: self.textEditorView.mentionExpandedConstraint
+		)
+		controller.delegate = self
+		return controller
+	}()
+
+	/// The active mention range when "Find" search is invoked, used to insert the result.
+	private var pendingMentionRange: NSRange?
 
 	// MARK: - View
 	override func loadView() {
@@ -143,6 +157,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeChange), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
 		self.configureNavigationItemsIfNeeded()
 		self.configureCommentTextView()
@@ -184,6 +199,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 		if let opFeedMessage = self.opFeedMessage {
 			self.configureOPViews(with: opFeedMessage)
 		}
+
+		// Initialize mention autocomplete controller to trigger lazy init
+		_ = self.mentionAutocompleteController
 
 		self.commentTextView.becomeFirstResponder()
 	}
@@ -253,6 +271,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 			// Discard action.
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
+				self.isEndingEditing = true
 				self.dismiss(animated: true, completion: nil)
 			})
 		}
@@ -274,6 +293,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		// Post is within the allowed character limit.
 		if let characterCountString = self.characterCountLabel.text, let characterCount = Int(characterCountString), characterCount >= 0 {
 			// Disable editing to hide the keyboard.
+			self.isEndingEditing = true
 			self.view.endEditing(true)
 
 			// Perform feed message request.
@@ -398,6 +418,10 @@ class KFeedMessageTextEditorViewController: KViewController {
 		self.applyMarkdownFormatting(to: self.commentTextView)
 	}
 
+	@objc private func handleKeyboardWillHide() {
+		self.mentionAutocompleteController.update(for: nil)
+	}
+
 	// MARK: - IBActions
 	@objc func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		if self.hasChanges {
@@ -405,6 +429,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.confirmCancel(showingSend: false)
 		} else {
 			// There are no unsaved changes. Dismiss immediately.
+			self.isEndingEditing = true
 			self.dismiss(animated: true, completion: nil)
 		}
 	}
@@ -459,6 +484,21 @@ extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
 		let labelsAdded = self.isSpoiler || self.isNSFW
 		self.configureLabelsButton(title: labelsAdded ? "Labels Added" : "Labels", imageName: labelsAdded ? "checkmark" : "shield")
 	}
+
+	private func configureLabelsButton(title: String, imageName: String) {
+		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+
+		if var configuration = self.labelsButton.configuration {
+			configuration.title = title
+			configuration.image = UIImage(systemName: imageName)
+			configuration.imagePlacement = .leading
+			configuration.imagePadding = 6
+			self.labelsButton.configuration = configuration
+		}
+
+		self.labelsButton.setTitle(title, for: .normal)
+		self.labelsButton.setImage(UIImage(systemName: imageName), for: .normal)
+	}
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
@@ -472,10 +512,20 @@ extension KFeedMessageTextEditorViewController: UIAdaptivePresentationController
 
 // MARK: - UITextViewDelegate
 extension KFeedMessageTextEditorViewController: UITextViewDelegate {
+	func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+		return self.isEndingEditing ||
+			self.presentedViewController != nil ||
+			self.isBeingDismissed ||
+			self.navigationController?.isBeingDismissed == true
+	}
+
 	func textViewDidChange(_ textView: UITextView) {
 		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit - textView.text.count)"
 		self.editedText = textView.text
 		self.applyMarkdownFormatting(to: textView)
+
+		let mentionContext = MentionTracker.activeMention(in: textView)
+		self.mentionAutocompleteController.update(for: mentionContext)
 	}
 }
 
@@ -486,19 +536,56 @@ extension KFeedMessageTextEditorViewController: UIToolbarDelegate {
 	}
 }
 
-private extension KFeedMessageTextEditorViewController {
-	func configureLabelsButton(title: String, imageName: String) {
-		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+// MARK: - MentionAutocompleteControllerDelegate
+extension KFeedMessageTextEditorViewController: MentionAutocompleteControllerDelegate {
+	func mentionAutocompleteController(_ controller: MentionAutocompleteController, didSelectUser user: User, forMentionIn range: NSRange) {
+		self.insertMention(slug: user.attributes.slug, replacingRange: range)
+	}
 
-		if var configuration = self.labelsButton.configuration {
-			configuration.title = title
-			configuration.image = UIImage(systemName: imageName)
-			configuration.imagePlacement = .leading
-			configuration.imagePadding = 6
-			self.labelsButton.configuration = configuration
+	func mentionAutocompleteControllerDidSelectSearch(_ controller: MentionAutocompleteController, query: String, userIdentities: [UserIdentity], cache: [IndexPath: KurozoraItem]) {
+		self.pendingMentionRange = MentionTracker.activeMention(in: self.commentTextView)?.range
+
+		let usersListVC = UsersListCollectionViewController()
+		usersListVC.usersListFetchType = .search
+		usersListVC.mentionSelectionDelegate = self
+
+		if !query.isEmpty {
+			usersListVC.searchQuery = query
+			usersListVC.userIdentities = userIdentities
+			usersListVC.cache = cache
 		}
 
-		self.labelsButton.setTitle(title, for: .normal)
-		self.labelsButton.setImage(UIImage(systemName: imageName), for: .normal)
+		let navigationController = KNavigationController(rootViewController: usersListVC)
+		self.present(navigationController, animated: true)
+	}
+
+	func mentionAutocompleteController(_ controller: MentionAutocompleteController, didUpdateVisibility isVisible: Bool) {}
+
+	private func insertMention(slug: String, replacingRange range: NSRange) {
+		let replacement = "@\(slug) "
+		guard
+			let textView = self.commentTextView as UITextView?,
+			let textRange = Range(range, in: textView.text)
+		else { return }
+
+		var newText = textView.text ?? ""
+		newText.replaceSubrange(textRange, with: replacement)
+		textView.text = newText
+
+		// Move cursor after the inserted mention
+		let newCursorPosition = range.location + (replacement as NSString).length
+		textView.selectedRange = NSRange(location: newCursorPosition, length: 0)
+
+		// Update character count
+		self.textViewDidChange(textView)
+	}
+}
+
+// MARK: - UsersListMentionSelectionDelegate
+extension KFeedMessageTextEditorViewController: UsersListMentionSelectionDelegate {
+	func usersListCollectionViewController(_ controller: UsersListCollectionViewController, didSelectUserForMention user: User) {
+		let range = self.pendingMentionRange ?? NSRange(location: self.commentTextView.selectedRange.location, length: 0)
+		self.insertMention(slug: user.attributes.slug, replacingRange: range)
+		self.pendingMentionRange = nil
 	}
 }

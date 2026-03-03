@@ -12,7 +12,15 @@ import UIKit
 extension UsersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let user = self.cache[indexPath] as? User else { return }
-		self.show(SegueIdentifiers.userDetailsSegue, sender: user)
+
+		if let mentionDelegate = self.mentionSelectionDelegate {
+			guard !self.isDismissingMentionSearch else { return }
+			self.isDismissingMentionSearch = true
+			mentionDelegate.usersListCollectionViewController(self, didSelectUserForMention: user)
+			self.navigationController?.dismiss(animated: true)
+		} else {
+			self.show(SegueIdentifiers.userDetailsSegue, sender: user)
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

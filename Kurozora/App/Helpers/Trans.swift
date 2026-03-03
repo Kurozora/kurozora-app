@@ -621,6 +621,22 @@ struct Trans {
 	static let characterLimitReachedSubheadline: String = String(localized: "You have exceeded the character limit for a message.",
 																 table: "Feed",
 																 comment: "The subheadline string for the character limit reached error pop-up")
+	/// The title string for the search pop-up when trying to tag a user in a message or reply.
+	///
+	/// - Tag: Trans-findWhoYouAreLookingFor
+	static let findWhoYouAreLookingFor: String = String(
+		localized: "Find who you're looking for",
+		table: "Feed",
+		comment: "The title string for the search pop-up when trying to tag a user in a message or reply."
+	)
+	/// The subtitle string for the search pop-up when trying to tag a user in a message or reply.
+	///
+	/// - Tag: Trans-searchForThePersonYouWantToMention
+	static let searchForThePersonYouWantToMention: String = String(
+		localized: "Search for the person you want to mention",
+		table: "Feed",
+		comment: "The subtitle string for the search pop-up when trying to tag a user in a message or reply."
+	)
 	/// The headline string for the pin message pop-up.
 	///
 	/// - Tag: Trans-pinMessageHeadline

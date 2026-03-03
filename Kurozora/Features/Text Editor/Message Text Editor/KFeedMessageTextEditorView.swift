@@ -17,6 +17,11 @@ final class KFeedMessageTextEditorView: KView {
 	let commentPreviewContainer = UIView()
 	let labelsButton = KButton()
 	let footerStackView = UIStackView()
+	let mentionCollectionView: UICollectionView = {
+		let layout = UICollectionViewFlowLayout()
+		layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+		return UICollectionView(frame: .zero, collectionViewLayout: layout)
+	}()
 
 	private(set) var opProfileImageView: ProfileImageView?
 	private(set) var opUsernameLabel: KLabel?
@@ -30,9 +35,12 @@ final class KFeedMessageTextEditorView: KView {
 	private let footerSeparatorView = SecondarySeparatorView()
 	private let footerSpacerView = UIView()
 	private var separatorView: SecondarySeparatorView?
+	private let mentionSeparatorView = SecondarySeparatorView()
 
 	// MARK: - Properties
 	let layout: FeedMessageEditorLayout
+	private(set) var mentionCollapsedConstraint: NSLayoutConstraint!
+	private(set) var mentionExpandedConstraint: NSLayoutConstraint!
 
 	// MARK: - Initializers
 	init(layout: FeedMessageEditorLayout = .standard) {
@@ -46,6 +54,11 @@ final class KFeedMessageTextEditorView: KView {
 		super.init(coder: coder)
 		self.configure()
 	}
+
+	// MARK: - Functions
+	func setMentionSeparatorHidden(_ hidden: Bool) {
+		self.mentionSeparatorView.isHidden = hidden
+	}
 }
 
 // MARK: - Configuration
@@ -53,6 +66,8 @@ private extension KFeedMessageTextEditorView {
 	func configure() {
 		self.configureView()
 		self.configureScrollView()
+		self.configureMentionCollectionView()
+		self.configureMentionSeparatorView()
 
 		if self.layout == .reply {
 			self.configureOPPreviewContainer()
@@ -81,6 +96,7 @@ private extension KFeedMessageTextEditorView {
 		self.configureFooterSeparatorView()
 		self.configureFooterStackView()
 		self.configureLabelsButton()
+
 		self.configureViewHierarchy()
 		self.configureConstraints()
 	}
@@ -93,7 +109,19 @@ private extension KFeedMessageTextEditorView {
 		self.scrollView.translatesAutoresizingMaskIntoConstraints = false
 		self.scrollView.showsHorizontalScrollIndicator = false
 		self.scrollView.alwaysBounceVertical = true
+		self.scrollView.keyboardDismissMode = .none
 		self.scrollContentView.translatesAutoresizingMaskIntoConstraints = false
+	}
+
+	func configureMentionCollectionView() {
+		self.mentionCollectionView.translatesAutoresizingMaskIntoConstraints = false
+		self.mentionCollectionView.isHidden = true
+		self.mentionCollectionView.backgroundColor = .clear
+	}
+
+	func configureMentionSeparatorView() {
+		self.mentionSeparatorView.translatesAutoresizingMaskIntoConstraints = false
+		self.mentionSeparatorView.isHidden = true
 	}
 
 	func configureCommentPreviewContainer() {
@@ -247,6 +275,8 @@ private extension KFeedMessageTextEditorView {
 	// MARK: - View Hierarchy
 	func configureViewHierarchy() {
 		self.addSubview(self.scrollView)
+		self.addSubview(self.mentionSeparatorView)
+		self.addSubview(self.mentionCollectionView)
 		self.addSubview(self.footerView)
 
 		self.scrollView.addSubview(self.scrollContentView)
@@ -310,12 +340,16 @@ private extension KFeedMessageTextEditorView {
 
 	// MARK: - Constraints
 	func configureConstraints() {
-		// Shared scroll view + footer constraints
+		self.mentionCollapsedConstraint = self.mentionCollectionView.heightAnchor.constraint(equalToConstant: 0)
+		self.mentionExpandedConstraint = self.mentionCollectionView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
+		self.mentionExpandedConstraint.isActive = false
+
 		NSLayoutConstraint.activate([
+			// Scroll view
 			self.scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
 			self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			self.scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+			self.scrollView.bottomAnchor.constraint(equalTo: self.mentionSeparatorView.topAnchor),
 
 			self.scrollContentView.topAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.topAnchor),
 			self.scrollContentView.leadingAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.leadingAnchor),
@@ -323,6 +357,19 @@ private extension KFeedMessageTextEditorView {
 			self.scrollContentView.bottomAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.bottomAnchor),
 			self.scrollContentView.widthAnchor.constraint(equalTo: self.scrollView.frameLayoutGuide.widthAnchor),
 
+			// Mention separator
+			self.mentionSeparatorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			self.mentionSeparatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			self.mentionSeparatorView.bottomAnchor.constraint(equalTo: self.mentionCollectionView.topAnchor),
+			self.mentionSeparatorView.heightAnchor.constraint(equalToConstant: 1),
+
+			// Mention collection view
+			self.mentionCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			self.mentionCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			self.mentionCollectionView.bottomAnchor.constraint(equalTo: self.footerView.topAnchor),
+			self.mentionCollapsedConstraint,
+
+			// Footer view
 			self.footerView.leadingAnchor.constraint(equalTo: self.keyboardLayoutGuide.leadingAnchor),
 			self.footerView.trailingAnchor.constraint(equalTo: self.keyboardLayoutGuide.trailingAnchor),
 			self.footerView.bottomAnchor.constraint(equalTo: self.keyboardLayoutGuide.topAnchor),

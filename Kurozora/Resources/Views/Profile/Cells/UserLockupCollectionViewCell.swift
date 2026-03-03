@@ -17,6 +17,7 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var followStatusLabel: KSecondaryLabel!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: KTintedButton!
 
@@ -94,6 +95,45 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		} else {
 			self.secondaryLabel.text = ""
 		}
+	}
+
+	/// Configures the cell for display in a mention autocomplete panel.
+	func configureForMention(using user: User?) {
+		guard let user = user else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.primaryLabel.text = user.attributes.username
+		self.secondaryLabel.text = "@\(user.attributes.slug)"
+		user.attributes.profileImage(imageView: self.profileImageView)
+
+		self.followButton.isHidden = true
+		self.followButton.isUserInteractionEnabled = false
+
+		switch user.attributes.followStatus {
+		case .followed:
+			self.followStatusLabel.isHidden = false
+			let textColor = KThemePicker.subTextColor.colorValue
+			let attachment = NSTextAttachment()
+			attachment.image = UIImage(systemName: "person.fill")?.withTintColor(textColor, renderingMode: .alwaysOriginal)
+			let attributedString = NSMutableAttributedString(attachment: attachment)
+			attributedString.append(NSAttributedString(string: " Following", attributes: [
+				.foregroundColor: textColor,
+				.font: UIFont.preferredFont(forTextStyle: .caption1)
+			]))
+			self.followStatusLabel.attributedText = attributedString
+		case .notFollowed, .disabled:
+			self.followStatusLabel.isHidden = true
+		}
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.followStatusLabel.isHidden = true
+		self.followButton.isHidden = false
+		self.followButton.isUserInteractionEnabled = true
 	}
 
 	// MARK: - IBActions
