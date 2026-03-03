@@ -1,5 +1,6 @@
 # Xcode
 *.entitlements
+*.mlmodelkey
 
 # Xcode scripts
 cpd-output.xml

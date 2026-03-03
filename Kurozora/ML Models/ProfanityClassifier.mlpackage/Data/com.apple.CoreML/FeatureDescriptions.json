@@ -1,0 +1,18 @@
+{
+  "Inputs" : {
+    "text" : {
+      "MLFeatureShortDescription" : "Input text"
+    }
+  },
+  "Outputs" : {
+    "label" : {
+      "MLFeatureShortDescription" : "Text label"
+    }
+  },
+  "TrainingInputs" : {
+
+  },
+  "States" : {
+
+  }
+}

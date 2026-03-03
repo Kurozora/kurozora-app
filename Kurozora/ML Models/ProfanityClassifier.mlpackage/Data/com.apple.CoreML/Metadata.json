@@ -1,0 +1,6 @@
+{
+  "MLModelVersionStringKey" : "1.0",
+  "MLModelDescriptionKey" : "Binary text classifier for profanity detection on short monogram inputs (1-3 characters).",
+  "MLModelAuthorKey" : "Khoren Katklian",
+  "MLModelLicenseKey" : "MIT"
+}
