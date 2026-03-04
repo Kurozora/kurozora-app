@@ -9,13 +9,13 @@
 import Foundation
 
 /// Defines the layout variant for the feed message text editor.
-enum FeedMessageEditorLayout {
+enum FeedMessageEditorLayout: Int {
 	/// Indicates a standard new message.
-	case standard
+	case standard = 0
 
 	/// Indicates the layout of a reply message.
-	case reply
+	case reply = 1
 
 	/// Indicates the layout of a re-share message.
-	case reShare
+	case reShare = 2
 }

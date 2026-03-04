@@ -12,6 +12,25 @@ import UIKit
 protocol KFeedMessageTextEditorViewDelegate: AnyObject {
 	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage])
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
+	func kFeedMessageTextEditorView(openDraftInNewComposer draft: FeedMessageDraft)
+}
+
+extension KFeedMessageTextEditorViewDelegate where Self: UIViewController {
+	func kFeedMessageTextEditorView(openDraftInNewComposer draft: FeedMessageDraft) {
+		let editor = KFeedMessageTextEditorViewController()
+		editor.editorLayout = draft.editorLayout
+		editor.pendingDraft = draft
+		editor.delegate = self as (any KFeedMessageTextEditorViewDelegate)
+
+		let kurozoraNavigationController = KNavigationController(rootViewController: editor)
+		kurozoraNavigationController.presentationController?.delegate = editor
+		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+		self.present(kurozoraNavigationController, animated: true)
+	}
 }
 
 class KFeedMessageTextEditorViewController: KViewController {
@@ -124,6 +143,27 @@ class KFeedMessageTextEditorViewController: KViewController {
 	private var isUpdatingFormatting = false
 	private var isEndingEditing = false
 
+	/// A draft to load automatically after the view loads.
+	/// Set before presentation when reopening a composer for a layout-mismatched draft.
+	var pendingDraft: FeedMessageDraft?
+
+	/// The parent message ID from a draft's snapshot, used as a fallback
+	/// when `opFeedMessage` is nil (i.e., draft loaded without a live FeedMessage).
+	private var draftParentMessageID: String?
+
+	/// The UUID of the draft currently loaded in the editor, if any.
+	private var activeDraftUUID: UUID?
+
+	/// Bar button item for accessing saved drafts.
+	private lazy var draftsBarButtonItem: UIBarButtonItem = {
+		return UIBarButtonItem(
+			image: UIImage(systemName: "archivebox"),
+			style: .plain,
+			target: self,
+			action: #selector(self.draftsButtonPressed(_:))
+		)
+	}()
+
 	private(set) lazy var mentionAutocompleteController: MentionAutocompleteController = {
 		let controller = MentionAutocompleteController(
 			collectionView: self.textEditorView.mentionCollectionView,
@@ -203,6 +243,12 @@ class KFeedMessageTextEditorViewController: KViewController {
 		// Initialize mention autocomplete controller to trigger lazy init
 		_ = self.mentionAutocompleteController
 
+		// Load pending draft
+		if let draft = self.pendingDraft {
+			self.pendingDraft = nil
+			self.loadDraft(draft)
+		}
+
 		self.commentTextView.becomeFirstResponder()
 	}
 
@@ -237,6 +283,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 				action: #selector(self.sendButtonPressed(_:))
 			)
 		}
+
+		self.updateDraftsButtonVisibility()
 	}
 
 	private func configureOPViews(with opFeedMessage: FeedMessage) {
@@ -268,6 +316,13 @@ class KFeedMessageTextEditorViewController: KViewController {
 					}
 				})
 			}
+
+			// Save Draft action.
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.saveDraft, style: .default) { _ in
+				self.saveDraft()
+				self.isEndingEditing = true
+				self.dismiss(animated: true, completion: nil)
+			})
 
 			// Discard action.
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
@@ -322,6 +377,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
 				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+				self.deleteDraftIfActive()
 				self.dismiss(animated: true, completion: nil)
 			} catch {
 				print("-----", error.localizedDescription)
@@ -339,21 +395,24 @@ class KFeedMessageTextEditorViewController: KViewController {
 					print("-----", error.localizedDescription)
 				}
 
+				self.deleteDraftIfActive()
 				self.dismiss(animated: true, completion: nil)
 
 			case .reply:
 				do {
-					let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage!.id)
+					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
+					let parentFeedMessageIdentity = FeedMessageIdentity(id: parentID)
 					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: true, isReShare: false, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 					let feedMessages = feedMessagesResponse.data
 
-					if self.segueToOPFeedDetails {
-						self.delegate?.segueToOPFeedDetails(self.opFeedMessage!)
+					if self.segueToOPFeedDetails, let opFeedMessage = self.opFeedMessage {
+						self.delegate?.segueToOPFeedDetails(opFeedMessage)
 					} else {
 						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 					}
 
+					self.deleteDraftIfActive()
 					self.dismiss(animated: true, completion: nil)
 				} catch {
 					print("-----", error.localizedDescription)
@@ -361,8 +420,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 			case .reShare:
 				do {
-					let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage!.id)
-					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: false, isReShare: true, isNSFW: self.opFeedMessage!.attributes.isNSFW, isSpoiler: self.opFeedMessage!.attributes.isSpoiler)
+					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
+					let parentFeedMessageIdentity = FeedMessageIdentity(id: parentID)
+					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: false, isReShare: true, isNSFW: self.opFeedMessage?.attributes.isNSFW ?? self.isNSFW, isSpoiler: self.opFeedMessage?.attributes.isSpoiler ?? self.isSpoiler)
 					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 					let feedMessages = feedMessagesResponse.data
 
@@ -372,6 +432,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 					}
 
+					self.deleteDraftIfActive()
 					self.dismiss(animated: true, completion: nil)
 				} catch {
 					print("-----", error.localizedDescription)
@@ -422,6 +483,108 @@ class KFeedMessageTextEditorViewController: KViewController {
 		self.mentionAutocompleteController.update(for: nil)
 	}
 
+	// MARK: - Drafts
+	/// Updates the visibility of the drafts bar button item.
+	///
+	/// The button is shown in the right bar button items when:
+	/// - The composer text is empty
+	/// - There are saved drafts for the current account
+	private func updateDraftsButtonVisibility() {
+		guard let slug = User.current?.attributes.slug else { return }
+		let hasDrafts = DraftStore.shared.draftCount(forUserSlug: slug) > 0
+		let shouldShow = self.editedText.isEmpty && hasDrafts
+		let isShowing = self.navigationItem.rightBarButtonItems?.contains(self.draftsBarButtonItem) == true
+
+		if shouldShow, !isShowing {
+			self.navigationItem.rightBarButtonItems = [
+				self.sendButton,
+				self.draftsBarButtonItem
+			]
+		} else if !shouldShow, isShowing {
+			self.navigationItem.rightBarButtonItems = [self.sendButton]
+		}
+	}
+
+	/// Saves the current editor state as a draft.
+	private func saveDraft() {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		if let existingUUID = self.activeDraftUUID {
+			DraftStore.shared.updateDraft(
+				uuid: existingUUID,
+				content: self.editedText,
+				isNSFW: self.isNSFW,
+				isSpoiler: self.isSpoiler
+			)
+		} else {
+			let request = DraftRequest(
+				userSlug: slug,
+				content: self.editedText,
+				layout: self.editorLayout,
+				isNSFW: self.isNSFW,
+				isSpoiler: self.isSpoiler,
+				parentMessage: self.opFeedMessage,
+				editingMessageID: self.editingFeedMessage.map { String(describing: $0.id) }
+			)
+			self.activeDraftUUID = DraftStore.shared.saveDraft(request)
+		}
+	}
+
+	/// Deletes the active draft after a successful post.
+	private func deleteDraftIfActive() {
+		guard let uuid = self.activeDraftUUID else { return }
+		DraftStore.shared.deleteDraft(uuid: uuid)
+		self.activeDraftUUID = nil
+	}
+
+	/// Populates the composer with the contents of a draft.
+	///
+	/// - Parameter draft: The draft to load.
+	private func loadDraft(_ draft: FeedMessageDraft) {
+		self.activeDraftUUID = draft.uuid
+		self.commentTextView.text = draft.content
+		self.editedText = draft.content
+		self.originalText = draft.content
+
+		// Restore labels
+		let nsfw = draft.isNSFW
+		let spoiler = draft.isSpoiler
+		self.isNSFW = nsfw
+		self.isSpoiler = spoiler
+
+		if nsfw && spoiler {
+			self.selectedOptionChanged(.both)
+		} else if nsfw {
+			self.selectedOptionChanged(.nsfw)
+		} else if spoiler {
+			self.selectedOptionChanged(.spoiler)
+		} else {
+			self.selectedOptionChanged(nil)
+		}
+
+		// Restore parent context from snapshot if applicable
+		if let snapshot = draft.parentSnapshot {
+			self.draftParentMessageID = snapshot.messageID
+			self.configureOPViews(with: snapshot)
+		}
+
+		self.applyMarkdownFormatting(to: self.commentTextView)
+		self.textViewDidChange(self.commentTextView)
+	}
+
+	/// Configures the OP preview views using a persisted snapshot.
+	///
+	/// - Parameter snapshot: The parent message snapshot.
+	private func configureOPViews(with snapshot: FeedMessageSnapshot) {
+		self.textEditorView.opUsernameLabel?.text = snapshot.authorUsername
+		self.textEditorView.opMessageTextView?.setAttributedText(snapshot.contentMarkdown.markdownAttributedString())
+		self.textEditorView.opDateLabel?.text = snapshot.createdAt.relativeToNow
+
+		if let urlString = snapshot.authorProfileImageURL, let opImageView = self.textEditorView.opProfileImageView {
+			opImageView.setImage(with: urlString, placeholder: .Placeholders.userProfile)
+		}
+	}
+
 	// MARK: - IBActions
 	@objc func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		if self.hasChanges {
@@ -432,6 +595,23 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.isEndingEditing = true
 			self.dismiss(animated: true, completion: nil)
 		}
+	}
+
+	@objc private func draftsButtonPressed(_ sender: UIBarButtonItem) {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		let draftsVC = FeedMessageDraftsTableViewController()
+		draftsVC.userSlug = slug
+		draftsVC.delegate = self
+
+		let navigationController = KNavigationController(rootViewController: draftsVC)
+		navigationController.navigationBar.prefersLargeTitles = false
+		if let sheet = navigationController.sheetPresentationController {
+			sheet.detents = [.large()]
+			sheet.prefersGrabberVisible = true
+		}
+
+		self.present(navigationController, animated: true)
 	}
 
 	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
@@ -526,6 +706,8 @@ extension KFeedMessageTextEditorViewController: UITextViewDelegate {
 
 		let mentionContext = MentionTracker.activeMention(in: textView)
 		self.mentionAutocompleteController.update(for: mentionContext)
+
+		self.updateDraftsButtonVisibility()
 	}
 }
 
@@ -587,5 +769,27 @@ extension KFeedMessageTextEditorViewController: UsersListMentionSelectionDelegat
 		let range = self.pendingMentionRange ?? NSRange(location: self.commentTextView.selectedRange.location, length: 0)
 		self.insertMention(slug: user.attributes.slug, replacingRange: range)
 		self.pendingMentionRange = nil
+	}
+}
+
+// MARK: - FeedMessageDraftsTableViewControllerDelegate
+extension KFeedMessageTextEditorViewController: FeedMessageDraftsTableViewControllerDelegate {
+	func draftListViewController(_ controller: FeedMessageDraftsTableViewController, didSelectDraft draft: FeedMessageDraft) {
+		if draft.editorLayout == self.editorLayout {
+			// Load in current view since it's the same layout.
+			controller.dismiss(animated: true) { [weak self] in
+				guard let self = self else { return }
+				self.loadDraft(draft)
+			}
+		} else {
+			// Dismiss view and reopen with the correct layout.
+			controller.dismiss(animated: true) { [weak self] in
+				guard let self = self else { return }
+				self.isEndingEditing = true
+				self.dismiss(animated: true) {
+					self.delegate?.kFeedMessageTextEditorView(openDraftInNewComposer: draft)
+				}
+			}
+		}
 	}
 }

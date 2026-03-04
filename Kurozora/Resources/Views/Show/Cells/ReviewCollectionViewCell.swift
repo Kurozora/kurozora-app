@@ -88,7 +88,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 		// Configure date time
 		self.dateTimeLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		
+
 		// Configure more view
 		self.moreImageView?.theme_tintColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 

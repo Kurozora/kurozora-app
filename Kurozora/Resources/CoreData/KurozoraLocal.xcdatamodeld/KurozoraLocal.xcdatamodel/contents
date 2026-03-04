@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="25E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO">
+    <entity name="FeedMessageDraft" representedClassName="FeedMessageDraft" syncable="YES">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="editorLayoutRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="editingMessageID" optional="YES" attributeType="String"/>
+        <attribute name="isNSFW" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isSpoiler" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="parentMessageData" optional="YES" attributeType="Binary"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userSlug" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <fetchIndex name="byUserSlugUpdatedAt">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="updatedAt" type="Binary" order="descending"/>
+        </fetchIndex>
+    </entity>
+</model>

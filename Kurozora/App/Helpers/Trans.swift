@@ -1857,6 +1857,41 @@ struct Trans {
 	/// - Tag: Trans-send
 	static let send: String = String(localized: "Send",
 									 comment: "The string for the word 'send'.")
+	/// The string for the phrase 'save draft'.
+	///
+	/// - Tag: Trans-saveDraft
+	static let saveDraft: String = String(
+		localized: "Save Draft",
+		comment: "The string for the phrase 'save draft'."
+	)
+	/// The string for the word 'drafts'.
+	///
+	/// - Tag: Trans-drafts
+	static let drafts: String = String(
+		localized: "Drafts",
+		comment: "The string for the word 'drafts'."
+	)
+	/// The string for the 'no drafts' empty state title.
+	///
+	/// - Tag: Trans-noDraftsTitle
+	static let noDraftsTitle: String = String(
+		localized: "No Drafts",
+		comment: "The string for the 'no drafts' empty state title."
+	)
+	/// The string for the 'no drafts' empty state detail.
+	///
+	/// - Tag: Trans-noDraftsDetail
+	static let noDraftsDetail: String = String(
+		localized: "Your saved drafts will appear here.",
+		comment: "The string for the 'no drafts' empty state detail."
+	)
+	/// The string for the 'empty draft' placeholder.
+	///
+	/// - Tag: Trans-emptyDraft
+	static let emptyDraft: String = String(
+		localized: "Empty draft",
+		comment: "The string for the 'empty draft' placeholder."
+	)
 	/// The string for the word 'discard'.
 	///
 	/// - Tag: Trans-discard

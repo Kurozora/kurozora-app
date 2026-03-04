@@ -44,6 +44,9 @@ final class KurozoraDelegate {
 			return false
 		}
 
+		// Initialize the local Core Data store
+		_ = PersistenceController.shared
+
 		// Migrate legacy keychain entries to the new account storage
 		AccountManager.shared.migrateIfNeeded()
 
