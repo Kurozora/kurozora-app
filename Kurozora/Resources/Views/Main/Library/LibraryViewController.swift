@@ -13,7 +13,7 @@ import UIKit
 
 class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem?
 	private var sortTypeBarButtonItem = UIBarButtonItem()
 	private var moreBarButtonItem = UIBarButtonItem()
 
@@ -105,7 +105,10 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 				await self.segueToProfile()
 			}
 		})
-		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItems?.insert(profileBarButtonItem, at: 0)
+		}
 
 		self.configureUserDetails()
 	}
@@ -171,7 +174,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	private func configureViewHierarchy() {
@@ -234,10 +237,12 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		} else {
 			self.toolbar.isHidden = false
 
-			self.navigationItem.rightBarButtonItems = [
-				self.profileBarButtonItem,
-				self.moreBarButtonItem
-			]
+			var rightItems: [UIBarButtonItem] = []
+			if let profileBarButtonItem = self.profileBarButtonItem {
+				rightItems.append(profileBarButtonItem)
+			}
+			rightItems.append(self.moreBarButtonItem)
+			self.navigationItem.rightBarButtonItems = rightItems
 
 			self.navigationItem.leftItemsSupplementBackButton = true
 			self.navigationItem.leftBarButtonItems = [
@@ -251,8 +256,8 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	/// - Parameters:
 	///    - index: The index of the selected view.
 	fileprivate func updateLayoutMenuAction(for index: Int?) {
-		guard let index = index else { return }
-		self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
+		guard let index = index, let viewedUser = self.viewedUser else { return }
+		self.moreBarButtonItem.menu = viewedUser.makeLibraryContextMenu(in: self, userInfo: [
 			"includeUser": self.user != nil,
 			"index": index,
 		], sourceView: nil, barButtonItem: self.moreBarButtonItem)

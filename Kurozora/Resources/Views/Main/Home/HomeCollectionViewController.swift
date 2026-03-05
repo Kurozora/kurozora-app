@@ -40,7 +40,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem?
 	#if DEBUG
 	var apiBarButtonItem: UIBarButtonItem!
 	#endif
@@ -196,7 +196,10 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 				await self.segueToProfile()
 			}
 		})
-		self.navigationItem.rightBarButtonItem = self.profileBarButtonItem
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItem = profileBarButtonItem
+		}
 
 		self.configureUserDetails()
 	}
@@ -312,7 +315,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Handles the episode watch status update notification.

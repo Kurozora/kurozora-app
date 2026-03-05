@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,6 +30,7 @@
                                                 <rect key="frame" x="32" y="1" width="12" height="9.5"/>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" secondItem="qpY-dj-DcU" secondAttribute="height" multiplier="1:1" id="J4I-s6-4Ec"/>
                                                     <constraint firstAttribute="width" secondItem="qpY-dj-DcU" secondAttribute="height" multiplier="1:1" id="OKA-7u-7ME"/>
                                                     <constraint firstAttribute="width" constant="12" id="OLc-1R-hkH"/>
                                                 </constraints>
@@ -40,7 +41,6 @@
                                             <constraint firstAttribute="trailing" secondItem="qpY-dj-DcU" secondAttribute="trailing" id="4qO-7c-7B6"/>
                                             <constraint firstAttribute="width" constant="44" id="DhE-Z7-zHm"/>
                                             <constraint firstAttribute="bottom" secondItem="qpY-dj-DcU" secondAttribute="bottom" id="G3e-Sk-Eci"/>
-                                            <constraint firstItem="qpY-dj-DcU" firstAttribute="width" secondItem="qpY-dj-DcU" secondAttribute="height" multiplier="1:1" id="J4I-s6-4Ec"/>
                                             <constraint firstItem="qpY-dj-DcU" firstAttribute="top" secondItem="J8A-Iv-nGp" secondAttribute="top" id="Oj7-MO-vEx"/>
                                             <constraint firstItem="qpY-dj-DcU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J8A-Iv-nGp" secondAttribute="leading" id="oRy-GO-9NZ"/>
                                         </constraints>
@@ -191,7 +191,7 @@
                                                     </button>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="Eme-G6-yHt"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="125" id="Eme-G6-yHt"/>
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwd-nA-Q7Q" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">

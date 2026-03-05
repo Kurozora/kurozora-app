@@ -19,7 +19,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	// MARK: - Views
 	private var settingsBarButtonItem: UIBarButtonItem!
 	private var postMessageButtonBarButtonItem: UIBarButtonItem!
-	var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem?
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
@@ -122,7 +122,10 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 				await self.segueToProfile()
 			}
 		})
-		self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItems?.insert(profileBarButtonItem, at: 0)
+		}
 
 		self.configureUserDetails()
 	}
@@ -266,7 +269,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Shows the text editor for posting a new message.

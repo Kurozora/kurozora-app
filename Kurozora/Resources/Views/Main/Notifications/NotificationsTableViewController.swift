@@ -19,7 +19,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 	}
 
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem?
 	private var markAllBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -178,7 +178,10 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 				await self.segueToProfile()
 			}
 		})
-		self.navigationItem.rightBarButtonItem = self.profileBarButtonItem
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItem = profileBarButtonItem
+		}
 
 		self.configureUserDetails()
 	}
@@ -229,7 +232,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.toggleEmptyDataView()
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
 		#endif
 		self.updateTabBarBadge()
 	}
@@ -242,14 +245,18 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
 		if User.isSignedIn {
-			self.navigationItem.rightBarButtonItems = [
-				self.profileBarButtonItem,
-				self.markAllBarButtonItem
-			]
+			var rightItems: [UIBarButtonItem] = []
+			if let profileBarButtonItem = self.profileBarButtonItem {
+				rightItems.append(profileBarButtonItem)
+			}
+			rightItems.append(self.markAllBarButtonItem)
+			self.navigationItem.rightBarButtonItems = rightItems
 		} else {
-			self.navigationItem.rightBarButtonItems = [
-				self.profileBarButtonItem
-			]
+			var rightItems: [UIBarButtonItem] = []
+			if let profileBarButtonItem = self.profileBarButtonItem {
+				rightItems.append(profileBarButtonItem)
+			}
+			self.navigationItem.rightBarButtonItems = rightItems
 		}
 
 		#if !targetEnvironment(macCatalyst)
@@ -293,7 +300,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Updates the tab bar badge value according to the number of unread notifications.

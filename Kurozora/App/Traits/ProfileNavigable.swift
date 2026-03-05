@@ -15,7 +15,7 @@ protocol ProfileNavigable: UIViewController, UINavigationControllerDelegate {
 
 	/// The profile bar button item that initiates the segue to the profile view when tapped.
 	/// This is used to update the state of the button when the profile view is presented or dismissed.
-	var profileBarButtonItem: ProfileBarButtonItem! { get set }
+	var profileBarButtonItem: ProfileBarButtonItem? { get set }
 }
 
 extension ProfileNavigable {

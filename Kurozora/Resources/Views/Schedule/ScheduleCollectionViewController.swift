@@ -19,7 +19,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 
 	// MARK: - Views
-	var profileBarButtonItem: ProfileBarButtonItem!
+	var profileBarButtonItem: ProfileBarButtonItem?
 	var todayBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -120,8 +120,9 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 				await self.segueToProfile()
 			}
 		})
-		if !UIDevice.isPhone {
-			self.navigationItem.rightBarButtonItems?.insert(self.profileBarButtonItem, at: 0)
+
+		if !UIDevice.isPhone, let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItems?.insert(profileBarButtonItem, at: 0)
 		}
 
 		self.configureUserDetails()
@@ -245,7 +246,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 
 	/// Scroll to today's schedule section.
