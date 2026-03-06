@@ -24,8 +24,6 @@ class KLinkView: LPLinkView {
 
 	override init(metadata: LPLinkMetadata) {
 		super.init(metadata: metadata)
-
-		self.sharedInit()
 	}
 
 	// MARK: - Views
@@ -38,11 +36,6 @@ class KLinkView: LPLinkView {
 	}
 
 	// MARK: - Functions
-	/// The shared settings used to initialize the link view.
-	private func sharedInit() {
-		self.recursivelyChangeBackgroundColor(in: self)
-	}
-
 	/// Recursively changes the background color of the subviews to the desired color.
 	///
 	/// - Parameters:

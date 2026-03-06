@@ -17,7 +17,7 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didLoadGIF sender: AnyObject)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
@@ -51,6 +51,8 @@ class BaseFeedMessageCell: KTableViewCell {
 	var warningIsHidden: Bool = false
 	var liveReplyEnabled = false
 	var liveReShareEnabled = false
+	private var richLinkTask: Task<Void, Never>?
+	private weak var richLinkPlaceholder: UIView?
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -59,6 +61,16 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.warningIsHidden = false
 		self.statusStackView.isHidden = true
 		self.postTextViewContainer?.isHidden = false
+
+		self.richLinkTask?.cancel()
+		self.richLinkTask = nil
+		self.richLinkPlaceholder = nil
+		self.richLinkStackView.arrangedSubviews.forEach { subview in
+			if subview != self.postTextViewContainer {
+				self.richLinkStackView.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
+		}
 	}
 
 	// MARK: - Functions
@@ -112,24 +124,36 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.postTextView.text = ""
 		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 
+		// Cancel any in-flight fetch and clean up stale rich content
+		self.richLinkTask?.cancel()
+		self.richLinkTask = nil
+		self.richLinkPlaceholder = nil
 		self.richLinkStackView.arrangedSubviews.forEach { subview in
 			if subview != self.postTextViewContainer {
 				self.richLinkStackView.removeArrangedSubview(subview)
 				subview.removeFromSuperview()
 			}
 		}
+
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
 				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
 			} else {
-				Task(priority: .background) {
-					if let metadata = await RichLink.shared.fetchMetadata(for: url) {
-						DispatchQueue.main.async {
-							self.displayMetadata(metadata)
-							self.configurePostTextView(for: feedMessage, byRemovingURL: url)
-						}
-					}
+				// Reserve space with a placeholder while fetching
+				let placeholder = self.makeRichLinkPlaceholder()
+				self.richLinkStackView.addArrangedSubview(placeholder)
+				self.richLinkPlaceholder = placeholder
+
+				self.richLinkTask = Task { [weak self] in
+					guard let metadata = await RichLink.shared.fetchMetadata(for: url) else { return }
+					guard !Task.isCancelled else { return }
+					guard let self else { return }
+					self.richLinkPlaceholder?.removeFromSuperview()
+					self.richLinkPlaceholder = nil
+					self.displayMetadata(metadata)
+					self.configurePostTextView(for: feedMessage, byRemovingURL: url)
+					self.delegate?.baseFeedMessageCell(self, didUpdateContentLayout: self)
 				}
 			}
 		}
@@ -165,6 +189,15 @@ class BaseFeedMessageCell: KTableViewCell {
 		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
 		self.postTextView.setAttributedText(contentMarkdown.markdownAttributedString())
 		self.postTextViewContainer?.isHidden = contentMarkdown.isEmpty
+	}
+
+	/// Creates a placeholder view that reserves space for an incoming rich link preview.
+	private func makeRichLinkPlaceholder() -> UIView {
+		let placeholder = UIView()
+		placeholder.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
+		placeholder.layerCornerRadius = 10.0
+		placeholder.heightAnchor.constraint(equalToConstant: 120).isActive = true
+		return placeholder
 	}
 
 	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
@@ -338,6 +371,6 @@ extension BaseFeedMessageCell: GIFViewDelegate {
 		self.richLinkStackView.setNeedsLayout()
 		self.richLinkStackView.layoutIfNeeded()
 
-		self.delegate?.baseFeedMessageCell(self, didLoadGIF: gifView)
+		self.delegate?.baseFeedMessageCell(self, didUpdateContentLayout: gifView)
 	}
 }

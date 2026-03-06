@@ -577,7 +577,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		self.present(badgeViewController, animated: true, completion: nil)
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didLoadGIF sender: AnyObject) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject) {
 		self.tableView.beginUpdates()
 		self.tableView.endUpdates()
 	}

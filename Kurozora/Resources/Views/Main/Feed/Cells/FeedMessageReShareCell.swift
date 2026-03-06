@@ -21,11 +21,25 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@IBOutlet weak var opProfileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var opRichLinkStackView: UIStackView!
 
+	// MARK: - Properties
+	private var opRichLinkTask: Task<Void, Never>?
+	private weak var opRichLinkPlaceholder: UIView?
+
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
 		self.opPostTextViewContainer?.isHidden = false
+
+		self.opRichLinkTask?.cancel()
+		self.opRichLinkTask = nil
+		self.opRichLinkPlaceholder = nil
+		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
+			if subview != self.opPostTextViewContainer {
+				self.opRichLinkStackView.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
+		}
 	}
 
 	// MARK: - Functions
@@ -73,6 +87,11 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 		// Configure body
 		self.opPostTextView.text = ""
+
+		// Cancel any in-flight OP fetch and clean up stale rich content
+		self.opRichLinkTask?.cancel()
+		self.opRichLinkTask = nil
+		self.opRichLinkPlaceholder = nil
 		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
 			if subview != self.opPostTextViewContainer {
 				self.opRichLinkStackView.removeArrangedSubview(subview)
@@ -85,18 +104,34 @@ class FeedMessageReShareCell: FeedMessageCell {
 				self.displayMetadata(metadata)
 				self.configurePostTextView(for: opMessage, byRemovingURL: url)
 			} else {
-				Task(priority: .background) {
-					if let metadata = await RichLink.shared.fetchMetadata(for: url) {
-						DispatchQueue.main.async {
-							self.displayMetadata(metadata)
-							self.configurePostTextView(for: opMessage, byRemovingURL: url)
-						}
-					}
+				// Reserve space with a placeholder while fetching
+				let placeholder = self.makeOPRichLinkPlaceholder()
+				self.opRichLinkStackView.addArrangedSubview(placeholder)
+				self.opRichLinkPlaceholder = placeholder
+
+				self.opRichLinkTask = Task { [weak self] in
+					guard let metadata = await RichLink.shared.fetchMetadata(for: url) else { return }
+					guard !Task.isCancelled else { return }
+					guard let self else { return }
+					self.opRichLinkPlaceholder?.removeFromSuperview()
+					self.opRichLinkPlaceholder = nil
+					self.displayMetadata(metadata)
+					self.configurePostTextView(for: opMessage, byRemovingURL: url)
+					self.delegate?.baseFeedMessageCell(self, didUpdateContentLayout: self)
 				}
 			}
 		} else {
 			self.opPostTextView.setAttributedText(opMessage.attributes.contentMarkdown.markdownAttributedString())
 		}
+	}
+
+	/// Creates a placeholder view that reserves space for an incoming OP rich link preview.
+	private func makeOPRichLinkPlaceholder() -> UIView {
+		let placeholder = UIView()
+		placeholder.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
+		placeholder.layerCornerRadius = 10.0
+		placeholder.heightAnchor.constraint(equalToConstant: 120).isActive = true
+		return placeholder
 	}
 
 	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {

@@ -9,18 +9,28 @@
 import CryptoKit
 import LinkPresentation
 
+@MainActor
 class RichLink {
 	// MARK: - Properties
 	/// The shared instance of `RichLink`.
-	public static let shared = RichLink()
+	static let shared = RichLink()
+
+	/// In-memory cache for fast lookup during scrolling.
+	private let memoryCache = NSCache<NSString, LPLinkMetadata>()
+
+	/// Time-to-live for cached metadata. Defaults to 7 days.
+	var cacheTTL: TimeInterval = 7 * 24 * 60 * 60
+
+	/// The subdirectory name used to isolate rich link cache files.
+	private let cacheSubdirectory = "richlink-cache"
 
 	// MARK: - Initializers
 	private init() {
 		let notifications: [(Notification.Name, Selector)]
 		#if !os(macOS) && !os(watchOS)
 		notifications = [
-			(UIApplication.didReceiveMemoryWarningNotification, #selector(self.clearCache)),
-			(UIApplication.willTerminateNotification, #selector(self.clearCache)),
+			(UIApplication.didReceiveMemoryWarningNotification, #selector(self.clearMemoryCache)),
+			(UIApplication.willTerminateNotification, #selector(self.cleanExpiredCache)),
 			(UIApplication.didEnterBackgroundNotification, #selector(self.backgroundCleanExpiredDiskCache))
 		]
 		#elseif os(macOS)
@@ -45,20 +55,16 @@ class RichLink {
 	///
 	/// - Returns: The cached `LPLinkMetadata` object.
 	func fetchMetadata(for url: URL) async -> LPLinkMetadata? {
-		// Check if the metadata is already cached
 		if let cachedMetadata = cachedMetadata(for: url) {
 			return cachedMetadata
 		}
 
-		// Fetch metadata from the network
 		let provider = LPMetadataProvider()
 		do {
 			let metadata = try await provider.startFetchingMetadata(for: url)
-			// Cache the fetched metadata
 			self.cache(metadata, for: url)
 			return metadata
 		} catch {
-			// Handle error
 			print("Failed to fetch metadata for URL: \(url.absoluteString), error: \(error.localizedDescription)")
 			return nil
 		}
@@ -66,138 +72,217 @@ class RichLink {
 
 	/// Returns the cached `LPLinkMetadata` object for the given URL if available.
 	///
+	/// Checks the in-memory cache first, then falls back to disk. Validates TTL
+	/// on disk hits and evicts stale entries.
+	///
 	/// - Parameters:
 	///    - url: The URL for which to retrieve the `LPLinkMetadata` object.
 	func cachedMetadata(for url: URL) -> LPLinkMetadata? {
-		// Load cached metadata from disk if available
-		if let cacheURL = cacheFileURL(for: url),
-		   FileManager.default.fileExists(atPath: cacheURL.path),
-		   let data = try? Data(contentsOf: cacheURL),
-		   let metadata = try? NSKeyedUnarchiver.unarchivedObject(ofClass: LPLinkMetadata.self, from: data) {
+		let key = url.absoluteString as NSString
+
+		// L1: in-memory cache
+		if let metadata = memoryCache.object(forKey: key) {
 			return metadata
 		}
-		return nil
+
+		// L2: disk cache with TTL validation
+		guard let cacheURL = cacheFileURL(for: url) else { return nil }
+		let metaURL = cacheURL.deletingPathExtension().appendingPathExtension("meta")
+
+		guard FileManager.default.fileExists(atPath: cacheURL.path) else { return nil }
+
+		// Validate TTL via sidecar
+		guard let timestamp = readTimestamp(from: metaURL) else {
+			// Orphaned .cache file without .meta — treat as miss, clean up
+			try? FileManager.default.removeItem(at: cacheURL)
+			return nil
+		}
+
+		if Date().timeIntervalSince1970 - timestamp > cacheTTL {
+			// Expired — evict both files
+			try? FileManager.default.removeItem(at: cacheURL)
+			try? FileManager.default.removeItem(at: metaURL)
+			return nil
+		}
+
+		// Decode and promote to L1
+		guard let data = try? Data(contentsOf: cacheURL),
+			  let metadata = try? NSKeyedUnarchiver.unarchivedObject(ofClass: LPLinkMetadata.self, from: data) else {
+			// Corrupted — clean up
+			try? FileManager.default.removeItem(at: cacheURL)
+			try? FileManager.default.removeItem(at: metaURL)
+			return nil
+		}
+
+		memoryCache.setObject(metadata, forKey: key)
+		return metadata
 	}
 
-	/// Caches an `LPLinkMetadata` object to disk.
+	/// Caches an `LPLinkMetadata` object to disk and in-memory.
 	///
 	/// - Parameters:
 	///   - metadata: An `LPLinkMetadata` object to cache.
+	///   - url: The URL associated with the metadata.
 	private func cache(_ metadata: LPLinkMetadata, for url: URL) {
-		// Archive metadata and save it to disk
-		if let cacheURL = cacheFileURL(for: url),
-		   let data = try? NSKeyedArchiver.archivedData(withRootObject: metadata, requiringSecureCoding: false) {
-			do {
-				try data.write(to: cacheURL)
-			} catch {
-				print("Failed to write cached metadata to disk: \(error.localizedDescription)")
-			}
+		let key = url.absoluteString as NSString
+
+		// L1: in-memory
+		memoryCache.setObject(metadata, forKey: key)
+
+		// L2: disk
+		guard let cacheURL = cacheFileURL(for: url) else { return }
+		guard let data = try? NSKeyedArchiver.archivedData(withRootObject: metadata, requiringSecureCoding: false) else { return }
+
+		do {
+			try data.write(to: cacheURL)
+			// Write timestamp sidecar after .cache succeeds
+			let metaURL = cacheURL.deletingPathExtension().appendingPathExtension("meta")
+			writeTimestamp(Date().timeIntervalSince1970, to: metaURL)
+		} catch {
+			print("Failed to write cached metadata to disk: \(error.localizedDescription)")
 		}
 	}
 
-	/// Returns the local file URL of the cached metadata for the given URL.
-	///
-	/// - Parameters:
-	///    - url: The URL of the metadata.
-	///
-	/// - Returns: The file URL of the cached metadata.
-	private func cacheFileURL(for url: URL) -> URL? {
-		// Get the URL for the application's private data directory
-		guard let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
-			return nil
-		}
-
-		// Generate a unique file URL based on the URL string
-		guard let data = url.absoluteString.data(using: .utf8) else {
-			return nil
-		}
-
-		let hash = SHA256.hash(data: data)
-		let fileName = hash.compactMap { digest in
-			return String(format: "%02x", digest)
-		}.joined()
-		return cacheDirectory.appendingPathComponent(fileName)
-	}
-
-	/// Returns the total size of cached files in the app's cache directory in bytes.
-	func cacheSize() -> UInt {
-		guard let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
-			return 0
-		}
+	/// Returns the total size of cached rich link files in bytes.
+	nonisolated func cacheSize() -> UInt {
+		guard let cacheDirectory = self.cacheDirectoryURL() else { return 0 }
+		guard FileManager.default.fileExists(atPath: cacheDirectory.path) else { return 0 }
 
 		let enumerator = FileManager.default.enumerator(at: cacheDirectory, includingPropertiesForKeys: [.fileSizeKey])
 		var totalSize: UInt = 0
 
 		while let fileURL = enumerator?.nextObject() as? URL {
-			let fileSize: UInt = UInt((try? fileURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
+			let fileSize = UInt((try? fileURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
 			totalSize += fileSize
 		}
 
 		return totalSize
 	}
 
-	/// Clear the cache by removing all files in the cache directory.
-	@objc func clearCache() {
-		guard let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
-			return
-		}
+	/// Clears all rich link cached files from disk and in-memory.
+	func clearCache() {
+		memoryCache.removeAllObjects()
+
+		guard let cacheDirectory = self.cacheDirectoryURL() else { return }
+		try? FileManager.default.removeItem(at: cacheDirectory)
+	}
+
+	/// Clears only the in-memory cache. Disk cache is preserved.
+	@objc private func clearMemoryCache() {
+		memoryCache.removeAllObjects()
+	}
+
+	/// Cleans expired files from the disk cache based on TTL, then enforces the size ceiling.
+	@objc func cleanExpiredCache() {
+		guard let cacheDirectory = self.cacheDirectoryURL() else { return }
+		guard FileManager.default.fileExists(atPath: cacheDirectory.path) else { return }
 
 		let fileManager = FileManager.default
-		if let files = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil) {
-			for file in files {
-				try? fileManager.removeItem(at: file)
+		guard let files = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: [.contentModificationDateKey, .fileSizeKey]) else { return }
+
+		let now = Date().timeIntervalSince1970
+
+		// Pass 1: TTL eviction
+		let cacheFiles = files.filter { $0.pathExtension == "cache" }
+		for cacheFile in cacheFiles {
+			let metaFile = cacheFile.deletingPathExtension().appendingPathExtension("meta")
+
+			guard let timestamp = readTimestamp(from: metaFile) else {
+				// Orphaned .cache — remove
+				try? fileManager.removeItem(at: cacheFile)
+				continue
 			}
+
+			if now - timestamp > cacheTTL {
+				try? fileManager.removeItem(at: cacheFile)
+				try? fileManager.removeItem(at: metaFile)
+			}
+		}
+
+		// Pass 2: Size ceiling (50 MB)
+		let maxCacheSize: UInt = 50 * 1024 * 1024
+		let currentSize = cacheSize()
+
+		guard currentSize > maxCacheSize else { return }
+
+		// Re-enumerate after TTL pass
+		guard let remainingFiles = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: [.fileSizeKey]) else { return }
+
+		// Sort .meta files by timestamp (oldest first) to evict oldest entries
+		let metaFiles = remainingFiles.filter { $0.pathExtension == "meta" }
+		let sortedByAge = metaFiles.compactMap { metaFile -> (meta: URL, cache: URL, timestamp: TimeInterval)? in
+			guard let timestamp = readTimestamp(from: metaFile) else { return nil }
+			let cacheFile = metaFile.deletingPathExtension().appendingPathExtension("cache")
+			return (metaFile, cacheFile, timestamp)
+		}.sorted { $0.timestamp < $1.timestamp }
+
+		var sizeFreed: UInt = 0
+		for entry in sortedByAge {
+			if currentSize - sizeFreed <= maxCacheSize { break }
+			let fileSize = UInt((try? entry.cache.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
+			try? fileManager.removeItem(at: entry.cache)
+			try? fileManager.removeItem(at: entry.meta)
+			sizeFreed += fileSize
 		}
 	}
 
-	/// Cleans the expired files from the disk cache.
-	@objc private func cleanExpiredCache() {
-		let maxCacheSize: UInt = 50 * 1024 * 1024
-		let currentCacheSize = self.cacheSize()
+	// MARK: - Private Helpers
 
-		if currentCacheSize > maxCacheSize {
-			guard let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
-				return
-			}
-
-			let fileManager = FileManager.default
-			if let files = try? fileManager.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: [.contentModificationDateKey]) {
-				let sortedFiles = files.sorted { file1, file2 in
-					let date1 = (try? file1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? Date.distantPast
-					let date2 = (try? file2.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? Date.distantPast
-					return date1 < date2
-				}
-
-				var sizeFreed: UInt = 0
-				for file in sortedFiles {
-					if currentCacheSize - sizeFreed <= maxCacheSize {
-						break
-					}
-					let fileSize = UInt((try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
-					try? fileManager.removeItem(at: file)
-					sizeFreed += fileSize
-				}
-			}
+	/// Returns the isolated cache directory URL, creating it if needed.
+	///
+	/// This is `nonisolated` so it can be used from `cacheSize()`.
+	private nonisolated func cacheDirectoryURL() -> URL? {
+		guard let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
+			return nil
 		}
+
+		let directory = cachesDirectory.appendingPathComponent(cacheSubdirectory)
+		try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+		return directory
+	}
+
+	/// Returns the local file URL of the cached metadata for the given URL.
+	private nonisolated func cacheFileURL(for url: URL) -> URL? {
+		guard let cacheDirectory = self.cacheDirectoryURL() else { return nil }
+
+		guard let data = url.absoluteString.data(using: .utf8) else { return nil }
+
+		let hash = SHA256.hash(data: data)
+		let fileName = hash.compactMap { digest in
+			return String(format: "%02x", digest)
+		}.joined()
+		return cacheDirectory.appendingPathComponent(fileName).appendingPathExtension("cache")
+	}
+
+	/// Writes a timestamp to a sidecar file.
+	private nonisolated func writeTimestamp(_ timestamp: TimeInterval, to url: URL) {
+		var value = timestamp
+		let data = Data(bytes: &value, count: MemoryLayout<TimeInterval>.size)
+		try? data.write(to: url)
+	}
+
+	/// Reads a timestamp from a sidecar file.
+	private nonisolated func readTimestamp(from url: URL) -> TimeInterval? {
+		guard let data = try? Data(contentsOf: url),
+			  data.count == MemoryLayout<TimeInterval>.size else { return nil }
+		return data.withUnsafeBytes { $0.load(as: TimeInterval.self) }
 	}
 
 	#if !os(macOS) && !os(watchOS)
-	/// Clears the expired caches from disk storage when the app is in the background.
+	/// Cleans expired caches from disk storage when the app is in the background.
 	@objc private func backgroundCleanExpiredDiskCache() {
 		let sharedApplication = UIApplication.shared
-
-		func endBackgroundTask(_ task: inout UIBackgroundTaskIdentifier) {
-			sharedApplication.endBackgroundTask(task)
-			task = UIBackgroundTaskIdentifier.invalid
-		}
-
-		var backgroundTask: UIBackgroundTaskIdentifier!
+		var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 		backgroundTask = sharedApplication.beginBackgroundTask(withName: "Kurozora:backgroundCleanExpiredCache") {
-			endBackgroundTask(&backgroundTask!)
+			sharedApplication.endBackgroundTask(backgroundTask)
+			backgroundTask = .invalid
 		}
 
-		self.cleanExpiredCache()
-		endBackgroundTask(&backgroundTask!)
+		Task.detached(priority: .utility) { [weak self] in
+			await self?.cleanExpiredCache()
+			sharedApplication.endBackgroundTask(backgroundTask)
+			backgroundTask = .invalid
+		}
 	}
 	#endif
 }
