@@ -35,13 +35,7 @@ extension KFeedMessageTextEditorViewDelegate where Self: UIViewController {
 
 class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - Views
-	private var textEditorView: KFeedMessageTextEditorView {
-		guard let textEditorView = self.view as? KFeedMessageTextEditorView else {
-			fatalError("Expected a KFeedMessageTextEditorView")
-		}
-
-		return textEditorView
-	}
+	private lazy var textEditorView = KFeedMessageTextEditorView(layout: self.editorLayout)
 
 	var profileImageView: ProfileImageView {
 		return self.textEditorView.profileImageView
@@ -63,13 +57,14 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return self.textEditorView.labelsButton
 	}
 
-	var sendButton: UIBarButtonItem {
-		guard let sendButton = self.navigationItem.rightBarButtonItem else {
-			fatalError("Missing send button")
-		}
-
-		return sendButton
-	}
+	private(set) lazy var postButton: UIBarButtonItem = {
+		return UIBarButtonItem(
+			title: Trans.post,
+			style: .done,
+			target: self,
+			action: #selector(self.postButtonPressed(_:))
+		)
+	}()
 
 	// MARK: - Properties
 	var editorLayout: FeedMessageEditorLayout = .standard
@@ -184,7 +179,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	// MARK: - View
 	override func loadView() {
-		self.view = KFeedMessageTextEditorView(layout: self.editorLayout)
+		self.view = self.textEditorView
 		self.commentTextView.delegate = self
 		self.labelsButton.addTarget(self, action: #selector(self.labelsButtonPressed(_:)), for: .touchUpInside)
 	}
@@ -293,12 +288,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 
 		if self.navigationItem.rightBarButtonItem == nil {
-			self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-				title: Trans.send,
-				style: .done,
-				target: self,
-				action: #selector(self.sendButtonPressed(_:))
-			)
+			self.navigationItem.rightBarButtonItem = self.postButton
 		}
 
 		self.updateDraftsButtonVisibility()
@@ -327,7 +317,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingSend {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.send, style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.post, style: .default) { _ in
 					Task {
 						await self.sendMessage()
 					}
@@ -360,7 +350,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	/// Send the feed message and dismiss this controller.
 	func sendMessage() async {
-		self.sendButton.isEnabled = false
+		self.postButton.isEnabled = false
 
 		// Post is within the allowed character limit.
 		if let characterCountString = self.characterCountLabel.text, let characterCount = Int(characterCountString), characterCount >= 0 {
@@ -375,7 +365,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.presentAlertController(title: Trans.characterLimitReachedHeadline, message: Trans.characterLimitReachedSubheadline)
 		}
 
-		self.sendButton.isEnabled = true
+		self.postButton.isEnabled = true
 	}
 
 	/// Performs the request to post the feed message.
@@ -524,11 +514,11 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		if shouldShow, !isShowing {
 			self.navigationItem.rightBarButtonItems = [
-				self.sendButton,
+				self.postButton,
 				self.draftsBarButtonItem
 			]
 		} else if !shouldShow, isShowing {
-			self.navigationItem.rightBarButtonItems = [self.sendButton]
+			self.navigationItem.rightBarButtonItems = [self.postButton]
 		}
 	}
 
@@ -667,7 +657,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		self.present(navigationController, animated: true)
 	}
 
-	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
+	@objc func postButtonPressed(_ sender: UIBarButtonItem) {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.sendMessage()
@@ -856,6 +846,7 @@ extension KFeedMessageTextEditorViewController: SwitchAccountsTableViewControlle
 		self.composerAccount = account
 		self.activeDraftUUID = nil
 		self.updateHeaderForComposerAccount()
+		self.updateDraftsButtonVisibility()
 		controller.dismiss(animated: true)
 	}
 }

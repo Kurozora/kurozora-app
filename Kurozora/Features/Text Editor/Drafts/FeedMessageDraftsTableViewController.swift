@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 // MARK: - Data Source
@@ -119,6 +120,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 		self.drafts = DraftStore.shared.drafts(forUserSlug: self.userSlug)
 		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
 		self.toggleEmptyDataView()
 
 		#if !targetEnvironment(macCatalyst)
@@ -191,5 +193,37 @@ extension FeedMessageDraftsTableViewController {
 		let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
 		configuration.performsFirstActionWithFullSwipe = true
 		return configuration
+	}
+}
+
+// MARK: - FeedMessageDraftsTableViewControllerDelegate
+extension FeedMessageDraftsTableViewControllerDelegate where Self: KFeedMessageTextEditorViewDelegate & UIViewController {
+	func draftListViewController(_ controller: FeedMessageDraftsTableViewController, didSelectDraft draft: FeedMessageDraft) {
+		controller.dismiss(animated: true) { [weak self] in
+			self?.kFeedMessageTextEditorView(openDraftInNewComposer: draft)
+		}
+	}
+}
+
+// MARK: - KFeedMessageTextEditorViewDelegate
+extension KFeedMessageTextEditorViewDelegate where Self: FeedMessageDraftsTableViewControllerDelegate & UIViewController {
+	func makeDraftsMenu() -> UIMenu {
+		let draftsAction = UIAction(title: Trans.drafts, image: UIImage(systemName: "archivebox")) { [weak self] _ in
+			guard let self = self,
+				  let slug = User.current?.attributes.slug else { return }
+
+			let draftsVC = FeedMessageDraftsTableViewController()
+			draftsVC.userSlug = slug
+			draftsVC.delegate = self
+
+			let nav = KNavigationController(rootViewController: draftsVC)
+			nav.navigationBar.prefersLargeTitles = false
+			if let sheet = nav.sheetPresentationController {
+				sheet.detents = [.medium(), .large()]
+				sheet.prefersGrabberVisible = true
+			}
+			self.present(nav, animated: true)
+		}
+		return UIMenu(children: [draftsAction])
 	}
 }

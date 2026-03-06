@@ -107,10 +107,15 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Configures the post message bar button item.
 	private func configurePostMessageBarButtonItem() {
-		self.postMessageButtonBarButtonItem = UIBarButtonItem(title: Trans.postMessage, image: UIImage(systemName: "pencil.circle"), primaryAction: UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.postNewMessage()
-		})
+		self.postMessageButtonBarButtonItem = UIBarButtonItem(
+			title: Trans.postMessage,
+			image: UIImage(systemName: "pencil.circle"),
+			primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.postNewMessage()
+			},
+			menu: self.makeDraftsMenu()
+		)
 		self.navigationItem.rightBarButtonItem = self.postMessageButtonBarButtonItem
 	}
 
@@ -430,6 +435,9 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
+
+// MARK: - FeedMessageDraftsTableViewControllerDelegate
+extension FeedTableViewController: FeedMessageDraftsTableViewControllerDelegate {}
 
 // MARK: - FMDetailsTableViewControllerDelegate
 extension FeedTableViewController: FMDetailsTableViewControllerDelegate {
