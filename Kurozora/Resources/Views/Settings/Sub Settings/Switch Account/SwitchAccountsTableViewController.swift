@@ -9,12 +9,24 @@
 import KurozoraKit
 import UIKit
 
+protocol SwitchAccountsTableViewControllerDelegate: AnyObject {
+	func switchAccountsTableViewController(
+		_ controller: SwitchAccountsTableViewController,
+		didSelect account: StoredAccount
+	)
+}
+
 /// The table view controller responsible for adding, deleting and listing of user's accounts.
 class SwitchAccountsTableViewController: SubSettingsViewController {
 	// MARK: - Views
 	private var addAccountBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
+	weak var delegate: SwitchAccountsTableViewControllerDelegate?
+
+	/// The slug to highlight as selected. When nil, falls back to `UserSettings.selectedAccount`.
+	var selectedSlug: String?
+
 	/// All user accounts.
 	var accounts: [StoredAccount] {
 		return AccountManager.shared.allAccounts()
@@ -59,6 +71,8 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	}
 
 	private func configureAddAccountBarButtonItem() {
+		guard self.delegate == nil else { return }
+
 		self.addAccountBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.addAccountBarButtonItemPressed()
@@ -84,12 +98,14 @@ extension SwitchAccountsTableViewController {
 			fatalError("Cannot dequeue reusable cell with identifier \(SelectableAccountSettingsCell.self)")
 		}
 		let account = self.accounts[indexPath.item]
-		let isSelected = account.slug == UserSettings.selectedAccount
+		let effectiveSlug = self.selectedSlug ?? UserSettings.selectedAccount
+		let isSelected = account.slug == effectiveSlug
 		selectableAccountSettingsCell.configure(using: account, isSelected: isSelected)
 		return selectableAccountSettingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		guard self.delegate == nil else { return false }
 		let account = self.accounts[indexPath.item]
 		return account.slug != UserSettings.selectedAccount
 	}
@@ -99,6 +115,11 @@ extension SwitchAccountsTableViewController {
 extension SwitchAccountsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let account = self.accounts[indexPath.item]
+
+		if let delegate = self.delegate {
+			delegate.switchAccountsTableViewController(self, didSelect: account)
+			return
+		}
 
 		// Update user settings for selected account.
 		UserSettings.set(account.slug, forKey: .selectedAccount)

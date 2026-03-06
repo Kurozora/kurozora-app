@@ -174,6 +174,11 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return controller
 	}()
 
+	/// The account selected for this composer session.
+	///
+	/// When `nil`, defaults to the globally signed-in user (`User.current`).
+	private var composerAccount: StoredAccount?
+
 	/// The active mention range when "Find" search is invoked, used to insert the result.
 	private var pendingMentionRange: NSRange?
 
@@ -206,6 +211,18 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.currentUsernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
 			self.isNSFW = user.attributes.preferredTVRating ?? 4 > 4
+		}
+
+		if AccountManager.shared.allAccounts().count > 1 {
+			let profileImageTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleAccountSwitcherTapGesture))
+			self.profileImageView.isUserInteractionEnabled = true
+			self.profileImageView.accessibilityTraits.insert(.button)
+			self.profileImageView.addGestureRecognizer(profileImageTapGesture)
+
+			let usernameTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleAccountSwitcherTapGesture))
+			self.currentUsernameLabel.isUserInteractionEnabled = true
+			self.currentUsernameLabel.accessibilityTraits.insert(.button)
+			self.currentUsernameLabel.addGestureRecognizer(usernameTapGesture)
 		}
 
 		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit)"
@@ -363,6 +380,16 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	/// Performs the request to post the feed message.
 	func performFeedMessageRequest() async {
+		let originalAuthKey = KService.authenticationKey
+		if let composerAccount = self.composerAccount {
+			KService.authenticationKey = composerAccount.authenticationToken
+		}
+		defer {
+			if self.composerAccount != nil {
+				KService.authenticationKey = originalAuthKey
+			}
+		}
+
 		if let feedMessage = self.editingFeedMessage {
 			do {
 				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
@@ -490,7 +517,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	/// - The composer text is empty
 	/// - There are saved drafts for the current account
 	private func updateDraftsButtonVisibility() {
-		guard let slug = User.current?.attributes.slug else { return }
+		guard let slug = self.effectiveSlug else { return }
 		let hasDrafts = DraftStore.shared.draftCount(forUserSlug: slug) > 0
 		let shouldShow = self.editedText.isEmpty && hasDrafts
 		let isShowing = self.navigationItem.rightBarButtonItems?.contains(self.draftsBarButtonItem) == true
@@ -507,7 +534,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	/// Saves the current editor state as a draft.
 	private func saveDraft() {
-		guard let slug = User.current?.attributes.slug else { return }
+		guard let slug = self.effectiveSlug else { return }
 
 		if let existingUUID = self.activeDraftUUID {
 			DraftStore.shared.updateDraft(
@@ -585,6 +612,32 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 	}
 
+	/// The slug of the account currently active in this composer session.
+	private var effectiveSlug: String? {
+		return self.composerAccount?.slug ?? User.current?.attributes.slug
+	}
+
+	@objc private func handleAccountSwitcherTapGesture() {
+		let switchAccountsVC = SwitchAccountsTableViewController()
+		switchAccountsVC.delegate = self
+		switchAccountsVC.selectedSlug = self.composerAccount?.slug ?? User.current?.attributes.slug
+
+		let nav = KNavigationController(rootViewController: switchAccountsVC)
+		nav.navigationBar.prefersLargeTitles = false
+		if let sheet = nav.sheetPresentationController {
+			sheet.detents = [.medium(), .large()]
+			sheet.prefersGrabberVisible = true
+		}
+		self.present(nav, animated: true)
+	}
+
+	private func updateHeaderForComposerAccount() {
+		guard let account = self.composerAccount else { return }
+		self.currentUsernameLabel.text = account.username ?? account.slug
+		let placeholder = (account.username ?? account.slug).profilePlaceholderImage
+		self.profileImageView.setImage(with: account.profileImageURL ?? "", placeholder: placeholder)
+	}
+
 	// MARK: - IBActions
 	@objc func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		if self.hasChanges {
@@ -598,7 +651,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	@objc private func draftsButtonPressed(_ sender: UIBarButtonItem) {
-		guard let slug = User.current?.attributes.slug else { return }
+		guard let slug = self.effectiveSlug else { return }
 
 		let draftsVC = FeedMessageDraftsTableViewController()
 		draftsVC.userSlug = slug
@@ -791,5 +844,18 @@ extension KFeedMessageTextEditorViewController: FeedMessageDraftsTableViewContro
 				}
 			}
 		}
+	}
+}
+
+// MARK: - SwitchAccountsTableViewControllerDelegate
+extension KFeedMessageTextEditorViewController: SwitchAccountsTableViewControllerDelegate {
+	func switchAccountsTableViewController(
+		_ controller: SwitchAccountsTableViewController,
+		didSelect account: StoredAccount
+	) {
+		self.composerAccount = account
+		self.activeDraftUUID = nil
+		self.updateHeaderForComposerAccount()
+		controller.dismiss(animated: true)
 	}
 }
