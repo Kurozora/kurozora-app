@@ -9,12 +9,18 @@
 import UIKit
 
 extension ProfileTableViewController {
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return self.heightCache[indexPath] ?? 200
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return }
 		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		self.heightCache[indexPath] = cell.bounds.height
+
 		let feedMessages = self.feedMessages.count - 1
 		var itemsCount = feedMessages / 4 / 2
 		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15

@@ -18,6 +18,7 @@ class ProfileBadgeStackView: UIStackView {
 	// MARK: - Properties
 	/// The array of user's profile badges.
 	private var profileBadges: [ProfileBadge] = []
+	private var badgeSignature: String = ""
 	weak var delegate: ProfileBadgeStackViewDelegate?
 
 	// MARK: - Initializers
@@ -41,7 +42,11 @@ class ProfileBadgeStackView: UIStackView {
 	///
 	/// - Parameter user: The `User` object used to configure the stack view.
 	func configure(for user: User) {
-		self.profileBadges = self.getProfileBadges(for: user)
+		let newBadges = self.getProfileBadges(for: user)
+		let newSignature = newBadges.map { $0.title }.joined(separator: ",")
+		guard newSignature != self.badgeSignature else { return }
+		self.badgeSignature = newSignature
+		self.profileBadges = newBadges
 
 		for view in self.arrangedSubviews {
 			view.removeFromSuperview()

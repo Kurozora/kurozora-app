@@ -20,7 +20,6 @@ extension UIImageView {
 		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
 			KF.url(imageURL)
                 .transition(.fade(0.2))
-				.loadDiskFileSynchronously()
 				.lowDataModeSource(.network(imageURL))
 				.onProgress { _, _ in } // receivedSize, totalSize
 				.onSuccess { _ in } // result

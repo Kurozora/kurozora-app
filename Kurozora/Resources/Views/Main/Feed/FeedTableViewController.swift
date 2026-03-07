@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import Kingfisher
 import KurozoraKit
 import UIKit
 
@@ -24,6 +25,8 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]?
 	var feedMessages: [FeedMessage] = []
+	private var pendingLayoutUpdate: DispatchWorkItem?
+	var heightCache: [IndexPath: CGFloat] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -89,6 +92,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
+		self.heightCache.removeAll()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -368,6 +372,21 @@ extension FeedTableViewController {
 	}
 }
 
+// MARK: - UITableViewDataSourcePrefetching
+extension FeedTableViewController {
+	override func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+		var imageURLs: [URL] = []
+
+		for indexPath in indexPaths {
+			self.feedMessages[safe: indexPath.row]?.collectPrefetchURLs(into: &imageURLs)
+		}
+
+		if !imageURLs.isEmpty {
+			ImagePrefetcher(urls: imageURLs).start()
+		}
+	}
+}
+
 // MARK: - BaseFeedMessageCellDelegate
 extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async {
@@ -404,8 +423,13 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject) {
-		self.tableView.beginUpdates()
-		self.tableView.endUpdates()
+		self.pendingLayoutUpdate?.cancel()
+		let work = DispatchWorkItem { [weak self] in
+			guard let self else { return }
+			self.tableView.performBatchUpdates(nil)
+		}
+		self.pendingLayoutUpdate = work
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: work)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

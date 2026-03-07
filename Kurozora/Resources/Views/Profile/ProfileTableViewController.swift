@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Kingfisher
 import KurozoraKit
 import UIKit
 
@@ -29,6 +30,8 @@ class ProfileTableViewController: KTableViewController {
 	var sidebarBottomProfileView: KSidebarBottomProfileView?
 
 	// MARK: - Properties
+	private var pendingLayoutUpdate: DispatchWorkItem?
+	var heightCache: [IndexPath: CGFloat] = [:]
 	var userIdentity: UserIdentity?
 	var user: User! = User.current {
 		didSet {
@@ -171,6 +174,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
+		self.heightCache.removeAll()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -534,6 +538,21 @@ extension ProfileTableViewController: MediaViewerViewDelegate {
 	}
 }
 
+// MARK: - UITableViewDataSourcePrefetching
+extension ProfileTableViewController {
+	override func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+		var imageURLs: [URL] = []
+
+		for indexPath in indexPaths {
+			self.feedMessages[safe: indexPath.row]?.collectPrefetchURLs(into: &imageURLs)
+		}
+
+		if !imageURLs.isEmpty {
+			ImagePrefetcher(urls: imageURLs).start()
+		}
+	}
+}
+
 // MARK: - BaseFeedMessageCellDelegate
 extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async {
@@ -578,8 +597,13 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject) {
-		self.tableView.beginUpdates()
-		self.tableView.endUpdates()
+		self.pendingLayoutUpdate?.cancel()
+		let work = DispatchWorkItem { [weak self] in
+			guard let self else { return }
+			self.tableView.performBatchUpdates(nil)
+		}
+		self.pendingLayoutUpdate = work
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: work)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

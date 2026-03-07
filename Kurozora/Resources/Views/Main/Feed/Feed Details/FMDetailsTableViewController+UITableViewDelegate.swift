@@ -9,6 +9,10 @@
 import UIKit
 
 extension FMDetailsTableViewController {
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return self.heightCache[indexPath] ?? 200
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch indexPath.section {
 		case 0: break
@@ -19,6 +23,8 @@ extension FMDetailsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		self.heightCache[indexPath] = cell.bounds.height
+
 		let feedMessageReplies = self.feedMessageReplies.count - 1
 		var itemsCount = feedMessageReplies / 4 / 2
 		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15

@@ -465,4 +465,38 @@ extension FeedMessage {
 		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
 	}
+
+	/// Collects image URLs for Kingfisher prefetching and triggers background RichLink metadata fetches.
+	///
+	/// - Parameter imageURLs: Array to append profile image URLs to for batch prefetching.
+	@MainActor
+	func collectPrefetchURLs(into imageURLs: inout [URL]) {
+		if let user = self.relationships.users.data.first,
+		   let urlString = user.attributes.profile?.url,
+		   !urlString.isEmpty,
+		   let url = URL(string: urlString) {
+			imageURLs.append(url)
+		}
+
+		if let url = self.attributes.content.extractURLs().last, url.isWebURL {
+			if RichLink.shared.cachedMetadata(for: url) == nil {
+				Task { _ = await RichLink.shared.fetchMetadata(for: url) }
+			}
+		}
+
+		if let opMessage = self.relationships.parent?.data.first {
+			if let opUser = opMessage.relationships.users.data.first,
+			   let urlString = opUser.attributes.profile?.url,
+			   !urlString.isEmpty,
+			   let url = URL(string: urlString) {
+				imageURLs.append(url)
+			}
+
+			if let url = opMessage.attributes.content.extractURLs().last, url.isWebURL {
+				if RichLink.shared.cachedMetadata(for: url) == nil {
+					Task { _ = await RichLink.shared.fetchMetadata(for: url) }
+				}
+			}
+		}
+	}
 }

@@ -96,10 +96,16 @@ class KTextView: UITextView {
 	///
 	/// - Parameter text: The string to set.
 	func setAttributedText(_ attributedText: NSAttributedString?) {
-		self.attributedText = attributedText?.applying(attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.font: self.font ?? UIFont.preferredFont(forTextStyle: .body)
-		], toOccurrencesOf: attributedText?.string ?? "")
+		guard let attributedText else {
+			self.attributedText = nil
+			return
+		}
+		let mutable = NSMutableAttributedString(attributedString: attributedText)
+		mutable.addAttributes([
+			.foregroundColor: KThemePicker.textColor.colorValue,
+			.font: self.font ?? UIFont.preferredFont(forTextStyle: .body)
+		], range: NSRange(location: 0, length: mutable.length))
+		self.attributedText = mutable
 	}
 
 	/// Update the attributed text.

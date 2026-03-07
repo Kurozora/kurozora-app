@@ -120,27 +120,14 @@ class BaseFeedMessageCell: KTableViewCell {
 			self.profileBadgeStackView.configure(for: user)
 		}
 
-		// Configure body
-		self.postTextView.text = ""
-		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
-
-		// Cancel any in-flight fetch and clean up stale rich content
-		self.richLinkTask?.cancel()
-		self.richLinkTask = nil
-		self.richLinkPlaceholder = nil
-		self.richLinkStackView.arrangedSubviews.forEach { subview in
-			if subview != self.postTextViewContainer {
-				self.richLinkStackView.removeArrangedSubview(subview)
-				subview.removeFromSuperview()
-			}
-		}
-
+		// Configure body and rich link
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
+			// Strip URL from text upfront so the text height is stable
+			self.configurePostTextView(for: feedMessage, byRemovingURL: url)
+
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
-				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
-			} else {
-				// Reserve space with a placeholder while fetching
+			} else if url.isImageURL {
 				let placeholder = self.makeRichLinkPlaceholder()
 				self.richLinkStackView.addArrangedSubview(placeholder)
 				self.richLinkPlaceholder = placeholder
@@ -152,10 +139,20 @@ class BaseFeedMessageCell: KTableViewCell {
 					self.richLinkPlaceholder?.removeFromSuperview()
 					self.richLinkPlaceholder = nil
 					self.displayMetadata(metadata)
-					self.configurePostTextView(for: feedMessage, byRemovingURL: url)
 					self.delegate?.baseFeedMessageCell(self, didUpdateContentLayout: self)
 				}
+			} else {
+				let linkView = KRichLinkView(url: url)
+				self.richLinkStackView.addArrangedSubview(linkView)
+
+				self.richLinkTask = Task {
+					guard let metadata = await RichLink.shared.fetchMetadata(for: url) else { return }
+					guard !Task.isCancelled else { return }
+					linkView.update(with: metadata)
+				}
 			}
+		} else {
+			self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 		}
 		self.postTextView.delegate = self
 
@@ -206,7 +203,7 @@ class BaseFeedMessageCell: KTableViewCell {
 			gifView.delegate = self
 			self.richLinkStackView.addArrangedSubview(gifView)
 		} else {
-			let linkView = KLinkView(metadata: metadata)
+			let linkView = KRichLinkView(metadata: metadata)
 			self.richLinkStackView.addArrangedSubview(linkView)
 		}
 	}

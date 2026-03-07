@@ -8,6 +8,12 @@
 
 import UIKit
 
+/// Shared storage for text parsing caches used by `String` convenience methods.
+private enum TextParsingCache {
+	static let markdown = NSCache<NSString, NSAttributedString>()
+	static let urlDetector: NSDataDetector? = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+}
+
 extension String {
 	// MARK: - Properties
 	/// Returns the initial characters of the string.
@@ -89,16 +95,22 @@ extension String {
 		], toOccurrencesOf: self)
 	}
 
-	/// Returns Markdown string as `NSAttributedString`.
+	/// Returns Markdown string as `NSAttributedString`, cached for repeated access.
 	func markdownAttributedString() -> NSAttributedString? {
-		return try? NSAttributedString(markdown: self, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+		let key = self as NSString
+		if let cached = TextParsingCache.markdown.object(forKey: key) {
+			return cached
+		}
+		guard let result = try? NSAttributedString(markdown: self, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)) else {
+			return nil
+		}
+		TextParsingCache.markdown.setObject(result, forKey: key)
+		return result
 	}
 
 	/// Returns an array of URLs found in the string.
 	func extractURLs() -> [URL] {
-		let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-		let matches = detector?.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
-
+		let matches = TextParsingCache.urlDetector?.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
 		return matches?.compactMap { $0.url } ?? []
 	}
 

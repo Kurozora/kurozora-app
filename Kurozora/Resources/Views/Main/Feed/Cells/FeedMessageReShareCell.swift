@@ -85,26 +85,13 @@ class FeedMessageReShareCell: FeedMessageCell {
 			self.opView?.addGestureRecognizer(tapGestureRecognizer)
 		}
 
-		// Configure body
-		self.opPostTextView.text = ""
-
-		// Cancel any in-flight OP fetch and clean up stale rich content
-		self.opRichLinkTask?.cancel()
-		self.opRichLinkTask = nil
-		self.opRichLinkPlaceholder = nil
-		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
-			if subview != self.opPostTextViewContainer {
-				self.opRichLinkStackView.removeArrangedSubview(subview)
-				subview.removeFromSuperview()
-			}
-		}
-
 		if let url = opMessage.attributes.content.extractURLs().last, url.isWebURL {
+			// Strip URL from text upfront so the text height is stable
+			self.configurePostTextView(for: opMessage, byRemovingURL: url)
+
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
-				self.configurePostTextView(for: opMessage, byRemovingURL: url)
-			} else {
-				// Reserve space with a placeholder while fetching
+			} else if url.isImageURL {
 				let placeholder = self.makeOPRichLinkPlaceholder()
 				self.opRichLinkStackView.addArrangedSubview(placeholder)
 				self.opRichLinkPlaceholder = placeholder
@@ -116,8 +103,16 @@ class FeedMessageReShareCell: FeedMessageCell {
 					self.opRichLinkPlaceholder?.removeFromSuperview()
 					self.opRichLinkPlaceholder = nil
 					self.displayMetadata(metadata)
-					self.configurePostTextView(for: opMessage, byRemovingURL: url)
 					self.delegate?.baseFeedMessageCell(self, didUpdateContentLayout: self)
+				}
+			} else {
+				let linkView = KRichLinkView(url: url)
+				self.opRichLinkStackView.addArrangedSubview(linkView)
+
+				self.opRichLinkTask = Task {
+					guard let metadata = await RichLink.shared.fetchMetadata(for: url) else { return }
+					guard !Task.isCancelled else { return }
+					linkView.update(with: metadata)
 				}
 			}
 		} else {
@@ -145,7 +140,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 			let gifView = GIFView(url: gifURL, in: self.opRichLinkStackView)
 			self.opRichLinkStackView.addArrangedSubview(gifView)
 		} else {
-			let linkView = KLinkView(metadata: metadata)
+			let linkView = KRichLinkView(metadata: metadata)
 			self.opRichLinkStackView.addArrangedSubview(linkView)
 		}
 	}
