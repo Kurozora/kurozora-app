@@ -110,7 +110,7 @@ extension SectionFetchable {
 				let response: I = try await KService.getDetails(for: identitiesToFetch).value
 
 				// Preserve order relative to the chunk
-				let orderLookup = Dictionary(uniqueKeysWithValues: identitiesToFetch.enumerated().map { ($1.id, $0) })
+				let orderLookup = Dictionary(identitiesToFetch.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })
 				let sorted = response.data.sorted {
 					guard
 						let lhsIndex = orderLookup[$0.id],
@@ -120,10 +120,12 @@ extension SectionFetchable {
 				}
 
 				// Cache results at their correct global index paths
-				for (localIdx, model) in sorted.enumerated() {
-					let originalIndex = chunk[localIdx].index
-					let ip = IndexPath(item: originalIndex, section: indexPath.section)
-					self.cache[ip] = model
+				let chunkLookup = Dictionary(chunk.map { ($0.identity.id, $0.index) }, uniquingKeysWith: { first, _ in first })
+				for model in sorted {
+					if let originalIndex = chunkLookup[model.id] {
+						let ip = IndexPath(item: originalIndex, section: indexPath.section)
+						self.cache[ip] = model
+					}
 				}
 			}
 
