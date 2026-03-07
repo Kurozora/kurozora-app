@@ -162,7 +162,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			}
 			.store(in: &self.subscriptions)
 
-		Task { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {

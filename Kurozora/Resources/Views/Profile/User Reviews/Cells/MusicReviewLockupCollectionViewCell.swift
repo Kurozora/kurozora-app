@@ -51,7 +51,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
-		Task { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {
