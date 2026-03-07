@@ -13,6 +13,7 @@ import UIKit
 class SignInTableViewController: AccountOnboardingTableViewController {
 	// MARK: - Properties
 	var onSignIn: (() -> Void)?
+	var onDismiss: (() -> Void)?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -87,6 +88,12 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	}
 
 	// MARK: - Actions
+	override func cancelButtonPressed(sender: UIBarButtonItem) {
+		self.dismiss(animated: true) {
+			self.onDismiss?()
+		}
+	}
+
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
@@ -235,5 +242,12 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 extension SignInTableViewController: ASAuthorizationControllerPresentationContextProviding {
 	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
 		return view.window ?? UIWindow()
+	}
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension SignInTableViewController: UIAdaptivePresentationControllerDelegate {
+	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+		self.onDismiss?()
 	}
 }

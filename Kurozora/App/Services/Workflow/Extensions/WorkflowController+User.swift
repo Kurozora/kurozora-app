@@ -21,9 +21,21 @@ extension WorkflowController {
 			return true
 		} else {
 			return await withCheckedContinuation { continuation in
-				self.presentSignInView(on: viewController).onSignIn = {
+				var didResume = false
+				let signInVC = self.presentSignInView(on: viewController)
+
+				signInVC.onSignIn = {
+					guard !didResume else { return }
+					didResume = true
 					continuation.resume(returning: true)
 				}
+				signInVC.onDismiss = {
+					guard !didResume else { return }
+					didResume = true
+					continuation.resume(returning: false)
+				}
+
+				signInVC.navigationController?.presentationController?.delegate = signInVC
 			}
 		}
 	}
