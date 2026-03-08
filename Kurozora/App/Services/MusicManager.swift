@@ -38,6 +38,9 @@ final class MusicManager: NSObject {
 	/// The country code of Apple Music.
 	private(set) var countryCode: String = "us"
 
+	/// Cache of fetched songs keyed by Apple Music ID.
+	private var songCache: [Int: MKSong] = [:]
+
 	/// The current playing song.
 	@Published private(set) var currentSong: MKSong?
 
@@ -89,12 +92,24 @@ final class MusicManager: NSObject {
 	///
 	/// - Returns: The fetched `MusicKit.Song` object.
 	func getSong(for appleMusicID: Int) async -> MKSong? {
+		if let cached = self.songCache[appleMusicID] {
+			return cached
+		}
+
+		let song: MKSong?
+
 		switch (self.authorizationState, self.hasAMSubscription) {
 		case (.authorized, true):
-			return await MusicManager.shared.authorizedMusicRequest(for: appleMusicID)
+			song = await MusicManager.shared.authorizedMusicRequest(for: appleMusicID)
 		default:
-			return await MusicManager.shared.unauthorizedMusicRequest(for: appleMusicID)
+			song = await MusicManager.shared.unauthorizedMusicRequest(for: appleMusicID)
 		}
+
+		if let song = song {
+			self.songCache[appleMusicID] = song
+		}
+
+		return song
 	}
 
 	/// Sends a request to Apple Music when the user authorized the app to use MusicKit.

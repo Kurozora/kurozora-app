@@ -43,6 +43,19 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var typeButton: UIButton!
 
 	private var subscriptions = Set<AnyCancellable>()
+	private var artworkTask: Task<Void, Never>?
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.artworkTask?.cancel()
+		self.artworkTask = nil
+		self.subscriptions.removeAll()
+		self.song = nil
+		self.playButton.isHidden = true
+		self.albumImageView?.backgroundColor = .clear
+		self.albumImageView?.image = .Placeholders.musicAlbum
+	}
 
 	// MARK: - Properties
 	/// The index path of the cell within the parent collection view.
@@ -162,7 +175,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			}
 			.store(in: &self.subscriptions)
 
-		Task { @MainActor [weak self] in
+		self.artworkTask = Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {

@@ -17,11 +17,24 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	@IBOutlet weak var playButton: KButton!
 
 	// MARK: - Properties
+	private var artworkTask: Task<Void, Never>?
+
 	/// A single music item.
 	var song: MKSong?
 
 	/// The Kurozora song model used for context menu actions.
 	var kkSong: KKSong?
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.artworkTask?.cancel()
+		self.artworkTask = nil
+		self.song = nil
+		self.playButton.isHidden = true
+		self.posterImageView.backgroundColor = .clear
+		self.posterImageView.image = .Placeholders.musicAlbum
+	}
 
 	// MARK: - Functions
 	override func configure(using review: Review?, for song: KKSong?) {
@@ -51,7 +64,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
-		Task { @MainActor [weak self] in
+		self.artworkTask = Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {
