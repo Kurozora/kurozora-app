@@ -293,20 +293,22 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 	}
 
 	@IBAction func labelsButtonPressed(_ sender: UIButton) {
-		let bottomSheet = SelfLabelViewController.instantiate()
-		bottomSheet.selectedOption = self.selectedSelfLabel
-		bottomSheet.delegate = self
-		bottomSheet.modalPresentationStyle = .popover
+		guard (self.navigationController?.visibleViewController as? UIAlertController) == nil else { return }
+
+		let selfLabelViewController = SelfLabelViewController()
+		selfLabelViewController.selectedOption = self.selectedSelfLabel
+		selfLabelViewController.delegate = self
+		selfLabelViewController.modalPresentationStyle = .popover
 
 		// Present the controller
-		if let popoverController = bottomSheet.popoverPresentationController {
+		if let popoverController = selfLabelViewController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds
+			popoverController.adaptiveSheetPresentationController.prefersGrabberVisible = true
+			popoverController.adaptiveSheetPresentationController.widthFollowsPreferredContentSizeWhenEdgeAttached = true
 		}
 
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(bottomSheet, animated: true, completion: nil)
-		}
+		self.present(selfLabelViewController, animated: true, completion: nil)
 	}
 }
 

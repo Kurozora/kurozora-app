@@ -37,11 +37,10 @@ class SelfLabelViewController: KViewController {
 	private var titleLabel: KLabel!
 	private var subtitleLabel: KLabel!
 	private var labelSegmentedControl: DeselectableSegmentedControl!
-	private var spacerView: UIView!
 	private var primaryButton: KTintedButton!
-	private var viewWidthConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
+	private let viewWidth: CGFloat = 400.0
 	let options: [SelfLabel] = SelfLabel.allCases
 	var selectedOption: SelfLabel? {
 		didSet {
@@ -52,18 +51,10 @@ class SelfLabelViewController: KViewController {
 
 	weak var delegate: SelfLabelViewDelegate?
 
-//	override var modalPresentationStyle: UIModalPresentationStyle {
-//		get {
-//			return UIDevice.isPhone ? .pageSheet : .popover
-//		}
-//		set {
-//			super.modalPresentationStyle = newValue
-//		}
-//	}
-
 	override var preferredContentSize: CGSize {
 		get {
-			return self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+			let contentSize = self.contentStackView.systemLayoutSizeFitting(CGSize(width: self.viewWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+			return CGSize(width: self.viewWidth, height: contentSize.height + 40)
 		}
 		set {
 			super.preferredContentSize = newValue
@@ -71,25 +62,6 @@ class SelfLabelViewController: KViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		if UIDevice.isPhone {
-			if #available(iOS 16.0, *) {
-				self.sheetPresentationController?.detents = [
-					.custom { [weak self] _ in
-						guard let self = self else { return nil }
-						return self.preferredContentSize.height - self.view.safeAreaInsets.bottom
-					}
-				]
-			} else {
-				self.sheetPresentationController?.detents = [.medium()]
-			}
-
-			self.sheetPresentationController?.prefersGrabberVisible = true
-		}
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -103,45 +75,38 @@ class SelfLabelViewController: KViewController {
 
 		self.updateSelectedOption()
 		self.labelSegmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
-
-		self.updateWidthConstraint()
-	}
-
-	// MARK: Trait
-	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		super.traitCollectionDidChange(previousTraitCollection)
-
-		self.updateWidthConstraint()
-	}
-
-	private func updateWidthConstraint() {
-		if let presentingViewController = self.presentingViewController, presentingViewController.view.bounds.width == self.view.bounds.width {
-			self.viewWidthConstraint.constant = self.view.bounds.width
-		} else {
-			// iPad seems to subtract 60 points from the specified width.
-			// By adding 60 points before we calculate the width,
-			// the total width ends up being 300 points just like on
-			// Macs.
-			self.viewWidthConstraint.constant = UIDevice.isPad ? 360.0 : 300.0
-		}
 	}
 
 	// MARK: Functions
 	private func configureView() {
+		self.configureSheetPresentation()
 		self.configureViews()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
 	}
 
-	private func configureViews() {
-		self.presentationController?.delegate = self
+	func configureSheetPresentation() {
+		guard let sheet = self.popoverPresentationController?.adaptiveSheetPresentationController ?? self.sheetPresentationController else { return }
 
+		if #available(iOS 16.0, *) {
+			sheet.detents = [
+				.custom { [weak self] _ in
+					guard let self = self else { return 300 }
+					return self.preferredContentSize.height
+				}
+			]
+			sheet.invalidateDetents()
+		} else {
+			sheet.detents = [.medium()]
+		}
+	}
+
+	private func configureViews() {
 		self.configureContentView()
 		self.configureContentStackView()
 		self.configureTitleLabel()
 		self.configureSubtitleLabel()
 		self.configureLabelSegmentedControl()
-		self.configureSpacerView()
 		self.configurePrimaryButton()
 	}
 
@@ -162,6 +127,7 @@ class SelfLabelViewController: KViewController {
 		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		self.titleLabel.font = .preferredFont(forTextStyle: .headline)
 		self.titleLabel.numberOfLines = 0
+		self.titleLabel.setContentHuggingPriority(.required, for: .vertical)
 	}
 
 	private func configureSubtitleLabel() {
@@ -169,6 +135,7 @@ class SelfLabelViewController: KViewController {
 		self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 		self.subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
 		self.subtitleLabel.numberOfLines = 0
+		self.subtitleLabel.setContentHuggingPriority(.required, for: .vertical)
 	}
 
 	private func configureLabelSegmentedControl() {
@@ -178,13 +145,6 @@ class SelfLabelViewController: KViewController {
 			guard let self = self else { return }
 			self.segmentedControlChanged()
 		}, for: .valueChanged)
-	}
-
-	private func configureSpacerView() {
-		self.spacerView = UIView()
-		self.spacerView.translatesAutoresizingMaskIntoConstraints = false
-		self.spacerView.setContentHuggingPriority(.defaultLow, for: .vertical)
-		self.spacerView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 	}
 
 	private func configurePrimaryButton() {
@@ -211,7 +171,6 @@ class SelfLabelViewController: KViewController {
 		infoStackView.setCustomSpacing(16, after: self.subtitleLabel)
 
 		self.contentStackView.addArrangedSubview(infoStackView)
-		self.contentStackView.addArrangedSubview(self.spacerView)
 		self.contentStackView.addArrangedSubview(self.primaryButton)
 
 		self.containerView.addSubview(self.contentStackView)
@@ -219,19 +178,28 @@ class SelfLabelViewController: KViewController {
 	}
 
 	private func configureViewConstraints() {
-		self.viewWidthConstraint = self.containerView.widthAnchor.constraint(equalToConstant: 300)
+		let viewWidthConstraint = self.containerView.widthAnchor.constraint(equalToConstant: self.viewWidth)
+		viewWidthConstraint.priority = UILayoutPriority(999)
+
+		// Set the bottom constraint with a slightly lower priority, since
+		// the sheet is initially presented with a smaller height. This
+		// prevents Auto Layout warnings about unsatisfiable constraints when
+		// the sheet is first presented, while still allowing the content to
+		// expand as needed when the sheet resizes.
+		let bottomConstraint = self.contentStackView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -20)
+		bottomConstraint.priority = UILayoutPriority(999)
 
 		NSLayoutConstraint.activate([
 			self.containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
 			self.containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
 			self.containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
 			self.containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-			self.viewWidthConstraint,
+			viewWidthConstraint,
 
 			self.contentStackView.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 20),
 			self.contentStackView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
 			self.contentStackView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
-			self.contentStackView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -20),
+			bottomConstraint,
 
 			self.primaryButton.heightAnchor.constraint(equalToConstant: 40)
 		])
@@ -256,16 +224,5 @@ class SelfLabelViewController: KViewController {
 
 	private func primaryButtonPressed() {
 		self.dismiss(animated: true, completion: nil)
-	}
-}
-
-// MARK: - UIAdaptivePresentationControllerDelegate
-extension SelfLabelViewController: UIAdaptivePresentationControllerDelegate {
-	func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-		if traitCollection.horizontalSizeClass == .compact {
-			return .pageSheet
-		} else {
-			return .popover
-		}
 	}
 }
