@@ -119,7 +119,7 @@ extension ManageActiveSessionsController {
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: tableViewCell, parameters: parameters)
@@ -128,7 +128,7 @@ extension ManageActiveSessionsController {
 	}
 
 	override func tableView(_ tableView: UITableView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: tableViewCell, parameters: parameters)

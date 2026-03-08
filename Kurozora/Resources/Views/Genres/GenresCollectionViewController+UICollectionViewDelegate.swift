@@ -22,7 +22,7 @@ extension GenresCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let genreLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let genreLockupCollectionViewCell = collectionView.cellForItem(at: indexPath), genreLockupCollectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: genreLockupCollectionViewCell, parameters: parameters)
@@ -31,7 +31,7 @@ extension GenresCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let genreLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let genreLockupCollectionViewCell = collectionView.cellForItem(at: indexPath), genreLockupCollectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: genreLockupCollectionViewCell, parameters: parameters)

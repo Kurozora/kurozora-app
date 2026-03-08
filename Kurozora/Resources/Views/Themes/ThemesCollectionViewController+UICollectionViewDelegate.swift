@@ -22,7 +22,7 @@ extension ThemesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let themeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let themeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath), themeLockupCollectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: themeLockupCollectionViewCell, parameters: parameters)
@@ -31,7 +31,7 @@ extension ThemesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let themeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let themeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath), themeLockupCollectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: themeLockupCollectionViewCell, parameters: parameters)

@@ -197,7 +197,7 @@ extension KCollectionViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - UICollectionViewDelegate
 extension KCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let collectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let collectionViewCell = collectionView.cellForItem(at: indexPath), collectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: collectionViewCell, parameters: parameters)
@@ -206,7 +206,7 @@ extension KCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let collectionViewCell = collectionView.cellForItem(at: indexPath) {
+		if let indexPath = configuration.identifier as? IndexPath, let collectionViewCell = collectionView.cellForItem(at: indexPath), collectionViewCell.window != nil {
 			let parameters = UIPreviewParameters()
 			parameters.backgroundColor = .clear
 			return UITargetedPreview(view: collectionViewCell, parameters: parameters)
