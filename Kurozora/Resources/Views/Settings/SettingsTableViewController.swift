@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Kingfisher
 import KurozoraKit
 import UIKit
 
@@ -27,6 +26,7 @@ class SettingsTableViewController: KTableViewController {
 		case biometricsSegue
 		case privacySegue
 		case subscriptionSegue
+		case cacheSegue
 		case tipJarSegue
 	}
 
@@ -156,6 +156,7 @@ class SettingsTableViewController: KTableViewController {
 		case .accountSegue: return AccountTableViewController()
 		case .switchAccountSegue: return SwitchAccountsTableViewController()
 		case .keysSegue: return DebugSettingsTableViewController()
+		case .cacheSegue: return CacheSettingsTableViewController()
 		case .browserSegue: return BrowserSettingsTableViewController()
 		case .displaySegue: return DisplaySettingsTableViewController()
 		case .iconSegue: return ManageIconTableViewController()
@@ -182,6 +183,12 @@ class SettingsTableViewController: KTableViewController {
 		     .biometricsSegue, .privacySegue,
 		     .subscriptionSegue, .tipJarSegue:
 			return
+		case .cacheSegue:
+			guard let cacheSettingsTableViewController = destination as? CacheSettingsTableViewController else { return }
+			cacheSettingsTableViewController.onCacheCleared = { [weak self] in
+				guard let self = self else { return }
+				self.tableView.reloadData()
+			}
 		}
 	}
 }
@@ -329,23 +336,7 @@ extension SettingsTableViewController {
 			self.showSecondary(SegueIdentifiers.browserSegue, sender: nil)
 			return
 		case .cache:
-			let alertController = self.presentAlertController(title: Trans.clearAllCache, message: Trans.clearAllCacheMessage, defaultActionButtonTitle: Trans.cancel)
-			alertController.addAction(UIAlertAction(title: Trans.clearCacheAction, style: .destructive) { _ in
-				// Clear RichLink cache right away.
-				RichLink.shared.clearCache()
-
-				// Clear memory cache right away.
-				KingfisherManager.shared.cache.clearMemoryCache()
-
-				// Clear disk cache. This is an async operation.
-				KingfisherManager.shared.cache.clearDiskCache()
-
-				// Clean expired or size exceeded disk cache. This is an async operation.
-				KingfisherManager.shared.cache.cleanExpiredDiskCache()
-
-				// Refresh cacheSizeLabel
-				tableView.reloadData()
-			})
+			self.showSecondary(SegueIdentifiers.cacheSegue, sender: nil)
 			return
 		case .displayBlindness:
 			self.showSecondary(SegueIdentifiers.displaySegue, sender: nil)

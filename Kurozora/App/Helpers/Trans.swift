@@ -1204,21 +1204,35 @@ struct Trans {
 	/// The title string for the 'Clear all Cache?' alert.
 	///
 	/// - Tag: Trans-clearAllCache
-	static let clearAllCache: String = String(localized: "Clear all Cache?",
-											  table: "Settings",
-											  comment: "The title string for the 'Clear all Cache?' alert.")
-	/// The message string for the clear cache alert.
+	static let clearAllCache: String = String(
+		localized: "Clear all Cache?",
+		table: "Settings",
+		comment: "The title string for the 'Clear all Cache?' alert."
+	)
+	/// The message string for the cache section footer.
 	///
-	/// - Tag: Trans-clearAllCacheMessage
-	static let clearAllCacheMessage: String = String(localized: "The number you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.",
-													 table: "Settings",
-													 comment: "The message string for the clear cache alert explaining cache behavior.")
-	/// The title string for the 'Clear' destructive button in the cache alert.
+	/// - Tag: Trans-clearCacheFooterMessage
+	static let clearCacheFooterMessage: String = String(
+		localized: "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.",
+		table: "Settings",
+		comment: "The message string for the cache section footer."
+	)
+	/// The title string for the 'Clear All' destructive button.
 	///
-	/// - Tag: Trans-clearCacheAction
-	static let clearCacheAction: String = String(localized: "Clear 🗑",
-												 table: "Settings",
-												 comment: "The title string for the destructive 'Clear' button in the cache alert.")
+	/// - Tag: Trans-clearAll
+	static let clearAll: String = String(
+		localized: "Clear All",
+		table: "Settings",
+		comment: "The title string for the 'Clear All' destructive button."
+	)
+	/// A short description for the cache settings header.
+	///
+	/// - Tag: Trans-cacheHeaderDescription
+	static let cacheHeaderDescription: String = String(
+		localized: "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing.",
+		table: "Settings",
+		comment: "A short description for the cache settings header."
+	)
 
 	// MARK: - Motion Settings
 	/// The string for the 'Animations' settings header.
@@ -1785,6 +1799,16 @@ struct Trans {
 	/// - Tag: Trans-cache
 	static let cache: String = String(localized: "Cache",
 									  comment: "The string for the word 'cache'.")
+	/// The string for the word 'images'.
+	///
+	/// - Tag: Trans-images
+	static let images: String = String(localized: "Images",
+									   comment: "The string for the word 'images'.")
+	/// The string for the phrase 'rich links'.
+	///
+	/// - Tag: Trans-richLinks
+	static let richLinks: String = String(localized: "Rich Links",
+										  comment: "The string for the phrase 'rich links'.")
 	/// The string for the word 'privacy'.
 	///
 	/// - Tag: Trans-privacy

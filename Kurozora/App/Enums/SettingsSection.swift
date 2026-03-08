@@ -310,7 +310,7 @@ extension SettingsTableViewController {
 			case .browser:
 				return .labelAndChevron
 			case .cache:
-				return .label
+				return .labelAndChevron
 			case .displayBlindness:
 				return .chevron
 			case .icon:

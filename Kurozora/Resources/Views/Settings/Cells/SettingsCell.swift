@@ -56,12 +56,10 @@ class SettingsCell: KTableViewCell {
 		case .browser:
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppBrowser), name: .KSAppBrowserDidChange, object: nil)
 		case .cache:
-			self.calculateCache(withSuccess: { [weak self] cacheSize in
+			Task { [weak self] in
 				guard let self = self else { return }
-				DispatchQueue.main.async {
-					self.secondaryLabel?.text = cacheSize
-				}
-			})
+				self.secondaryLabel?.text = await self.calculateCache()
+			}
 		case .icon:
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppIcon), name: .KSAppIconDidChange, object: nil)
 		case .theme:
@@ -90,28 +88,24 @@ class SettingsCell: KTableViewCell {
 		}
 	}
 
-	/// Calculate the amount of data that is cached by the app.
-	///
-	/// - Parameters:
-	///    - successHandler: A closure that returns a string representing the amount of data that is cached by the app.
-	///    - cacheString: The string representing the amount of data that is cached by the app.
-	fileprivate func calculateCache(withSuccess successHandler: @escaping (_ cacheString: String) -> Void) {
-		ImageCache.default.calculateDiskStorageSize { result in
-			let rickLinkCacheSize = RichLink.shared.cacheSize()
-			let totalCacheSize: UInt
+	/// Calculates the total cache size across all components and returns a formatted string.
+	fileprivate func calculateCache() async -> String {
+		let richLink = RichLink.shared
+		let richLinkBytes = await Task.detached(priority: .userInitiated) {
+			richLink.cacheSize()
+		}.value
 
-			switch result {
-			case .success(let imageCacheSize):
-				totalCacheSize = rickLinkCacheSize + imageCacheSize
-			case .failure(let error):
-				print("----- Cache size calculation error: \(error)")
-				totalCacheSize = rickLinkCacheSize
-			}
-
-			// Convert from bytes to mebibytes (2^20)
-			let sizeInMiB = Double(totalCacheSize) / 1024 / 1024
-			successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
+		let imageCacheBytes: UInt
+		do {
+			imageCacheBytes = try await ImageCache.default.diskStorageSize
+		} catch {
+			print("----- Cache size calculation error: \(error)")
+			imageCacheBytes = 0
 		}
+
+		let totalBytes = richLinkBytes + imageCacheBytes
+		let sizeInMiB = Double(totalBytes) / 1024 / 1024
+		return String(format: "%.2f", sizeInMiB) + "MiB"
 	}
 
 	/// Updates the app browser text with the one selected by the user.
