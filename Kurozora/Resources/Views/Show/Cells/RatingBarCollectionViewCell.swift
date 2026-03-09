@@ -13,11 +13,11 @@ class RatingBarCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet var symbolImageViews: [UIImageView]!
 	@IBOutlet weak var primaryLabel: KSecondaryLabel!
-	@IBOutlet weak var progressView1: UIProgressView!
-	@IBOutlet weak var progressView2: UIProgressView!
-	@IBOutlet weak var progressView3: UIProgressView!
-	@IBOutlet weak var progressView4: UIProgressView!
-	@IBOutlet weak var progressView5: UIProgressView!
+	@IBOutlet weak var progressView1: KProgressView!
+	@IBOutlet weak var progressView2: KProgressView!
+	@IBOutlet weak var progressView3: KProgressView!
+	@IBOutlet weak var progressView4: KProgressView!
+	@IBOutlet weak var progressView5: KProgressView!
 
 	// MARK: - Functions
 	/// Configure the cell with the given `MediaStat` object.
@@ -47,29 +47,20 @@ class RatingBarCollectionViewCell: UICollectionViewCell {
 
 		self.primaryLabel.text = "\(stats.ratingCount.formatted(.number)) Ratings"
 
-		self.progressView1.theme_progressTintColor = KThemePicker.textColor.rawValue
-		self.progressView1.theme_trackTintColor = KThemePicker.subTextColor.rawValue
-		self.progressView1.setProgress(rating1Percentage / 100, animated: true)
-		self.progressView1.addInteraction(rating1TooltipInteraction)
+		let progressViews = [
+			(self.progressView1, rating1Percentage, rating1TooltipInteraction),
+			(self.progressView2, rating2Percentage, rating2TooltipInteraction),
+			(self.progressView3, rating3Percentage, rating3TooltipInteraction),
+			(self.progressView4, rating4Percentage, rating4TooltipInteraction),
+			(self.progressView5, rating5Percentage, rating5TooltipInteraction)
+		]
 
-		self.progressView2.theme_progressTintColor = KThemePicker.textColor.rawValue
-		self.progressView2.theme_trackTintColor = KThemePicker.subTextColor.rawValue
-		self.progressView2.setProgress(rating2Percentage / 100, animated: true)
-		self.progressView2.addInteraction(rating2TooltipInteraction)
-
-		self.progressView3.theme_progressTintColor = KThemePicker.textColor.rawValue
-		self.progressView3.theme_trackTintColor = KThemePicker.subTextColor.rawValue
-		self.progressView3.setProgress(rating3Percentage / 100, animated: true)
-		self.progressView3.addInteraction(rating3TooltipInteraction)
-
-		self.progressView4.theme_progressTintColor = KThemePicker.textColor.rawValue
-		self.progressView4.theme_trackTintColor = KThemePicker.subTextColor.rawValue
-		self.progressView4.setProgress(rating4Percentage / 100, animated: true)
-		self.progressView4.addInteraction(rating4TooltipInteraction)
-
-		self.progressView5.theme_progressTintColor = KThemePicker.textColor.rawValue
-		self.progressView5.theme_trackTintColor = KThemePicker.subTextColor.rawValue
-		self.progressView5.setProgress(rating5Percentage / 100, animated: true)
-		self.progressView5.addInteraction(rating5TooltipInteraction)
+		for (progressView, percentage, tooltip) in progressViews {
+			progressView?.theme_progressTintColor = KThemePicker.textColor.rawValue
+			progressView?.theme_trackTintColor = KThemePicker.subTextColor.rawValue
+			progressView?.accessibilityValue = tooltip.defaultToolTip
+			progressView?.setProgress(percentage / 100, animated: true)
+			progressView?.addInteraction(tooltip)
+		}
 	}
 }

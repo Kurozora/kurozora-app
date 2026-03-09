@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -53,15 +53,16 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zpv-Re-WFQ">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oc3-yS-BoD" customClass="KProgressView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="66" y="3" width="156" height="4"/>
-                                        <color key="progressTintColor" systemColor="labelColor"/>
-                                        <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
-                                    </progressView>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="oIc-bE-hG8"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="Yga-h4-5jg"/>
-                                    <constraint firstItem="Zpv-Re-WFQ" firstAttribute="centerY" secondItem="dB3-zH-yKr" secondAttribute="centerY" id="yIU-AH-OEC"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gc5-ZB-3TO">
@@ -95,15 +96,14 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nwt-wZ-lg2">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wV9-oq-sBB" customClass="KProgressView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="66" y="3" width="156" height="4"/>
-                                        <color key="progressTintColor" systemColor="labelColor"/>
-                                        <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
-                                    </progressView>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="twv-g5-nkT"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="nwt-wZ-lg2" firstAttribute="centerY" secondItem="NjB-j4-4F6" secondAttribute="centerY" id="58Q-ti-ucf"/>
-                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ucW-eS-Swf">
                                 <rect key="frame" x="0.0" y="24" width="222" height="10"/>
@@ -136,15 +136,14 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hlk-wV-qIl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60S-7h-tW4" customClass="KProgressView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="66" y="3" width="156" height="4"/>
-                                        <color key="progressTintColor" systemColor="labelColor"/>
-                                        <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
-                                    </progressView>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="Ahs-nr-Ijr"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="hlk-wV-qIl" firstAttribute="centerY" secondItem="Z0L-qy-ePK" secondAttribute="centerY" id="Dd4-oh-cWF"/>
-                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rqI-tA-XVb">
                                 <rect key="frame" x="0.0" y="36" width="222" height="10"/>
@@ -177,15 +176,14 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DzP-mL-sJQ">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTZ-U6-PQy" customClass="KProgressView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="66" y="3" width="156" height="4"/>
-                                        <color key="progressTintColor" systemColor="labelColor"/>
-                                        <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
-                                    </progressView>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="ixr-6B-qqV"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="DzP-mL-sJQ" firstAttribute="centerY" secondItem="Ccn-J8-hbI" secondAttribute="centerY" id="kq2-LZ-bKf"/>
-                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hHy-Qt-Hp7">
                                 <rect key="frame" x="0.0" y="48" width="222" height="10"/>
@@ -218,15 +216,14 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J9N-0i-HyA">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFq-fc-DAR" customClass="KProgressView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="66" y="3" width="156" height="4"/>
-                                        <color key="progressTintColor" systemColor="labelColor"/>
-                                        <color key="trackTintColor" systemColor="quaternaryLabelColor"/>
-                                    </progressView>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="Hm9-Mu-lhg"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="J9N-0i-HyA" firstAttribute="centerY" secondItem="UeD-Qg-q26" secondAttribute="centerY" id="dtT-s2-HFe"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                     </stackView>
@@ -251,11 +248,11 @@
             <size key="customSize" width="222" height="87"/>
             <connections>
                 <outlet property="primaryLabel" destination="RrF-Ij-FBp" id="mlT-KP-NLn"/>
-                <outlet property="progressView1" destination="Zpv-Re-WFQ" id="XgW-sT-uRG"/>
-                <outlet property="progressView2" destination="nwt-wZ-lg2" id="Bee-9p-FHR"/>
-                <outlet property="progressView3" destination="hlk-wV-qIl" id="mib-50-hJb"/>
-                <outlet property="progressView4" destination="DzP-mL-sJQ" id="dLe-rt-H1q"/>
-                <outlet property="progressView5" destination="J9N-0i-HyA" id="NcP-PR-Tlx"/>
+                <outlet property="progressView1" destination="Oc3-yS-BoD" id="j0d-Sw-auD"/>
+                <outlet property="progressView2" destination="wV9-oq-sBB" id="gl6-s6-WIf"/>
+                <outlet property="progressView3" destination="60S-7h-tW4" id="AZa-nw-1bd"/>
+                <outlet property="progressView4" destination="eTZ-U6-PQy" id="cMk-K0-8Vu"/>
+                <outlet property="progressView5" destination="mFq-fc-DAR" id="OWo-KW-jUP"/>
                 <outletCollection property="symbolImageViews" destination="13f-Yx-Sxs" collectionClass="NSMutableArray" id="x4e-xP-xnR"/>
                 <outletCollection property="symbolImageViews" destination="ECt-Ta-NCh" collectionClass="NSMutableArray" id="TWq-75-Fvi"/>
                 <outletCollection property="symbolImageViews" destination="qQy-Qv-60a" collectionClass="NSMutableArray" id="doX-TP-8U9"/>
@@ -280,11 +277,11 @@
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="quaternaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.1764705882" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
