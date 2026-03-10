@@ -24,6 +24,9 @@ class AuthenticationSettingsViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+		self.headerImage = UIDevice.supportedBiometric.imageValue
+		self.headerTitle = UIDevice.supportedBiometric.localizedSettingsName
+		self.headerDescription = Trans.authenticationHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -34,8 +37,6 @@ class AuthenticationSettingsViewController: SubSettingsViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		self.title = UIDevice.supportedBiometric.localizedSettingsName
 
 		self.configureView()
 	}
@@ -122,7 +123,7 @@ class AuthenticationSettingsViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension AuthenticationSettingsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [
+		return super.registerCells(for: tableView) + [
 			SwitchSettingsCell.self,
 			SettingsCell.self
 		]
@@ -132,15 +133,21 @@ extension AuthenticationSettingsViewController {
 // MARK: - UITableViewDataSource
 extension AuthenticationSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return self.visibleSections.count
+		return self.visibleSections.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.visibleSections[section].rows.count
+		guard let contentSection = self.contentSection(for: section) else { return 1 }
+		return self.visibleSections[contentSection].rows.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let row = self.visibleSections[indexPath.section].rows[indexPath.row]
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
+		guard let contentSection = self.contentSection(for: indexPath.section) else { return UITableViewCell() }
+		let row = self.visibleSections[contentSection].rows[indexPath.row]
 
 		switch row {
 		case .toggleAuthentication:
@@ -159,19 +166,28 @@ extension AuthenticationSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		switch self.visibleSections[section] {
+		guard let contentSection = self.contentSection(for: section) else { return nil }
+
+		switch self.visibleSections[contentSection] {
 		case .authentication:
 			return UIDevice.supportedBiometric.localizedAuthenticationSettingsDescription
 		case .options:
 			return UserSettings.authenticationInterval.footerStringValue
 		}
 	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
+	}
 }
 
 // MARK: - UITableViewDelegate
 extension AuthenticationSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		switch self.visibleSections[indexPath.section].rows[indexPath.row] {
+		guard let contentSection = self.contentSection(for: indexPath.section) else { return }
+
+		switch self.visibleSections[contentSection].rows[indexPath.row] {
 		case .toggleAuthentication: break
 		case .requireAuthentication:
 			self.show(SegueIdentifiers.authenticationOptionsSegue, sender: nil)

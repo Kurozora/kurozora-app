@@ -9,10 +9,6 @@
 import UIKit
 
 class DebugSettingsTableViewController: SubSettingsViewController {
-	// MARK: - Views
-	private var tableHeaderView: UIView!
-	private var warningLabel: KLabel!
-
 	// MARK: - Properties
 	private var sectionItems: [Section: [(key: String, value: String)]] = [:]
 
@@ -23,28 +19,24 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+		self.headerImage = .Icons.kDefaults
+		self.headerTitle = Trans.keysManager
+		self.headerDescription = Trans.keysManagerHeaderDescription
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.keysManager
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 
 		self.reloadSections()
 		self.toggleEmptyDataView()
-		self.configureView()
-	}
-
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-
-		self.tableView.updateHeaderViewFrame()
 	}
 
 	// MARK: - Functions
@@ -85,71 +77,30 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 			return (key: key, value: value)
 		}
 	}
-
-	// Add text to table view header
-	private func configureView() {
-		self.configureTableHeaderView()
-		self.configureWarningLabel()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-	}
-
-	private func configureTableHeaderView() {
-		self.tableHeaderView = UIView()
-		self.tableHeaderView.translatesAutoresizingMaskIntoConstraints = false
-		self.tableHeaderView.backgroundColor = .clear
-	}
-
-	private func configureWarningLabel() {
-		self.warningLabel = KLabel()
-		self.warningLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.warningLabel.text = "Warning: Modifying these values may break your app! Proceed with caution."
-		self.warningLabel.numberOfLines = 0
-		self.warningLabel.textAlignment = .center
-		self.warningLabel.font = .preferredFont(forTextStyle: .footnote)
-	}
-
-	private func configureViewHierarchy() {
-		self.tableHeaderView.addSubview(self.warningLabel)
-		self.tableView.tableHeaderView = self.tableHeaderView
-	}
-
-	private func configureViewConstraints() {
-		guard let tableHeaderView = self.tableView.tableHeaderView else { return }
-
-		NSLayoutConstraint.activate([
-			self.tableHeaderView.leadingAnchor.constraint(equalTo: self.tableView.layoutMarginsGuide.leadingAnchor),
-			self.tableHeaderView.trailingAnchor.constraint(equalTo: self.tableView.layoutMarginsGuide.trailingAnchor),
-			self.tableHeaderView.topAnchor.constraint(equalTo: self.tableView.topAnchor),
-
-			self.warningLabel.leadingAnchor.constraint(equalTo: tableHeaderView.layoutMarginsGuide.leadingAnchor, constant: 16),
-			self.warningLabel.trailingAnchor.constraint(equalTo: tableHeaderView.layoutMarginsGuide.trailingAnchor, constant: -16),
-			self.warningLabel.topAnchor.constraint(equalTo: tableHeaderView.topAnchor, constant: 12),
-			self.warningLabel.bottomAnchor.constraint(equalTo: tableHeaderView.bottomAnchor, constant: -24)
-		])
-
-		self.tableView.updateHeaderViewFrame()
-	}
 }
 
 // MARK: - UITableViewDataSource
 extension DebugSettingsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count
+		return Section.allCases.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let section = Section(rawValue: section) else { return 0 }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return 1 }
 		return self.sectionItems[section]?.count ?? 0
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard let section = Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return nil }
 		return section.title
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		guard let section = Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return nil }
+
 		switch section {
 		case .accounts:
 			return "Values are JSON-encoded. Invalid edits will make accounts unreadable."
@@ -159,10 +110,15 @@ extension DebugSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
 		guard let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: KDefaultsCell.self, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(KDefaultsCell.reuseID)")
 		}
-		guard let section = Section(rawValue: indexPath.section) else { return kDefaultsCell }
+		guard let contentSection = self.contentSection(for: indexPath.section),
+			  let section = Section(rawValue: contentSection) else { return kDefaultsCell }
 		let items = self.sectionItems[section] ?? []
 		let item = items[indexPath.row]
 
@@ -181,7 +137,9 @@ extension DebugSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		guard editingStyle == .delete, let section = Section(rawValue: indexPath.section) else { return }
+		guard editingStyle == .delete,
+			  let contentSection = self.contentSection(for: indexPath.section),
+			  let section = Section(rawValue: contentSection) else { return }
 		let items = self.sectionItems[section] ?? []
 		let key = items[indexPath.row].key
 
@@ -196,12 +154,19 @@ extension DebugSettingsTableViewController {
 		self.tableView.deleteRows(at: [indexPath], with: .automatic)
 		self.toggleEmptyDataView()
 	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
+	}
 }
 
 // MARK: - KTableViewDataSource
 extension DebugSettingsTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [KDefaultsCell.self]
+		return super.registerCells(for: tableView) + [
+			KDefaultsCell.self
+		]
 	}
 }
 

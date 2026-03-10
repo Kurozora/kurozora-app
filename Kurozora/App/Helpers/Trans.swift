@@ -1233,6 +1233,70 @@ struct Trans {
 		table: "Settings",
 		comment: "A short description for the cache settings header."
 	)
+	/// A short description for the keys manager settings header.
+	///
+	/// - Tag: Trans-keysManagerHeaderDescription
+	static let keysManagerHeaderDescription: String = String(
+		localized: "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.",
+		table: "Settings",
+		comment: "A short description for the keys manager settings header."
+	)
+	/// A short description for the browser settings header.
+	///
+	/// - Tag: Trans-browserHeaderDescription
+	static let browserHeaderDescription: String = String(
+		localized: "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback.",
+		table: "Settings",
+		comment: "A short description for the browser settings header."
+	)
+	/// A short description for the library settings header.
+	///
+	/// - Tag: Trans-libraryHeaderDescription
+	static let libraryHeaderDescription: String = String(
+		localized: "Customize how your library is organized by setting the default sort order for each tracking status and media type.",
+		table: "Settings",
+		comment: "A short description for the library settings header."
+	)
+	/// A short description for the motion settings header.
+	///
+	/// - Tag: Trans-motionHeaderDescription
+	static let motionHeaderDescription: String = String(
+		localized: "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences.",
+		table: "Settings",
+		comment: "A short description for the motion settings header."
+	)
+	/// A short description for the notifications settings header.
+	///
+	/// - Tag: Trans-notificationsHeaderDescription
+	static let notificationsHeaderDescription: String = String(
+		localized: "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together.",
+		table: "Settings",
+		comment: "A short description for the notifications settings header."
+	)
+	/// A short description for the sounds and haptics settings header.
+	///
+	/// - Tag: Trans-soundHeaderDescription
+	static let soundHeaderDescription: String = String(
+		localized: "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels.",
+		table: "Settings",
+		comment: "A short description for the sounds and haptics settings header."
+	)
+	/// A short description for the authentication settings header.
+	///
+	/// - Tag: Trans-authenticationHeaderDescription
+	static let authenticationHeaderDescription: String = String(
+		localized: "Require authentication to unlock the app and choose how frequently you need to verify your identity.",
+		table: "Settings",
+		comment: "A short description for the authentication settings header."
+	)
+	/// A short description for the privacy settings header.
+	///
+	/// - Tag: Trans-privacyHeaderDescription
+	static let privacyHeaderDescription: String = String(
+		localized: "Review your privacy settings, manage app permissions in the Settings app, and access legal information.",
+		table: "Settings",
+		comment: "A short description for the privacy settings header."
+	)
 
 	// MARK: - Motion Settings
 	/// The string for the 'Animations' settings header.

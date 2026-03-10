@@ -16,6 +16,9 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+		self.headerImage = .Icons.library
+		self.headerTitle = Trans.library
+		self.headerDescription = Trans.libraryHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -27,13 +30,6 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.library
-
-		self.configureView()
-	}
-
-	// MARK: - Functions
-	private func configureView() {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 
@@ -169,7 +165,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension LibrarySettingsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [
+		return super.registerCells(for: tableView) + [
 			SegmentedControlSettingsCell.self,
 			MenuSettingsCell.self
 		]
@@ -179,17 +175,23 @@ extension LibrarySettingsViewController {
 // MARK: - UITableViewDataSource
 extension LibrarySettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count
+		return Section.allCases.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let section = Section(rawValue: section) else { return 0 }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return 1 }
 		return section.rows.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
 		guard
-			let section = Section(rawValue: indexPath.section),
+			let contentSection = self.contentSection(for: indexPath.section),
+			let section = Section(rawValue: contentSection),
 			let row = section.rows[safe: indexPath.row]
 		else {
 			return UITableViewCell()
@@ -220,12 +222,18 @@ extension LibrarySettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard let section = Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return nil }
 
 		switch section {
 		case .sorting:
 			return Trans.sorting
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
 	}
 }
 

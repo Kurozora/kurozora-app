@@ -17,6 +17,14 @@ class SoundSettingsViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+
+		self.headerImage = .Icons.sound
+		#if targetEnvironment(macCatalyst)
+		self.headerTitle = Trans.sound
+		#else
+		self.headerTitle = Trans.soundsAndHaptics
+		#endif
+		self.headerDescription = Trans.soundHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -27,17 +35,7 @@ class SoundSettingsViewController: SubSettingsViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		#if targetEnvironment(macCatalyst)
-		self.title = Trans.sound
-		#else
-		self.title = Trans.soundsAndHaptics
-		#endif
 
-		self.configureView()
-	}
-
-	// MARK: - Functions
-	private func configureView() {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 
@@ -91,7 +89,7 @@ class SoundSettingsViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension SoundSettingsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [
+		return super.registerCells(for: tableView) + [
 			SwitchSettingsCell.self,
 			SettingsCell.self
 		]
@@ -101,14 +99,19 @@ extension SoundSettingsViewController {
 // MARK: - UITableViewDataSource
 extension SoundSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Sound.Section.allCases.count
+		return Sound.Section.allCases.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard self.contentSection(for: section) != nil else { return 1 }
 		return Sound.Row.settingsCases.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
 		switch Sound.Row.settingsCases[indexPath.row] {
 		case .selectChime:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
@@ -139,24 +142,35 @@ extension SoundSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch Sound.Section.allCases[section] {
+		guard let contentSection = self.contentSection(for: section) else { return nil }
+
+		switch Sound.Section.allCases[contentSection] {
 		case .main:
 			return Trans.chimeAndSoundEffects
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		switch Sound.Section.allCases[section] {
+		guard let contentSection = self.contentSection(for: section) else { return nil }
+
+		switch Sound.Section.allCases[contentSection] {
 		case .main:
 			return Sound.Row.settingsCases.contains(.toggleHaptics) ? Trans.hapticsFooter : nil
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension SoundSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		switch Sound.Row.settingsCases[indexPath.section] {
+		guard let contentSection = self.contentSection(for: indexPath.section) else { return }
+
+		switch Sound.Row.settingsCases[indexPath.row] {
 		case .selectChime:
 			let optionsViewController = SoundOptionsViewController()
 			self.show(optionsViewController, sender: nil)

@@ -54,8 +54,7 @@ struct MentionTracker {
 				}
 
 				if let precedingScalar = Unicode.Scalar(text.character(at: searchIndex - 1)),
-				   CharacterSet.whitespacesAndNewlines.contains(precedingScalar)
-				{
+				   CharacterSet.whitespacesAndNewlines.contains(precedingScalar) {
 					let mentionRange = NSRange(location: searchIndex, length: cursorLocation - searchIndex)
 					let query = text.substring(with: NSRange(location: searchIndex + 1, length: cursorLocation - searchIndex - 1))
 					return MentionContext(range: mentionRange, query: query)

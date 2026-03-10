@@ -13,8 +13,6 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Properties
 	private var imageCacheSize: String = "—"
 	private var richLinkCacheSize: String = "—"
-	/// The title label's bottom edge in the table view's content coordinate space. Computed once, constant thereafter.
-	private var titleLabelBottomInContent: CGFloat?
 
 	/// Callback to notify the parent settings table to refresh the cache size label.
 	var onCacheCleared: (() -> Void)?
@@ -22,6 +20,9 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+		self.headerImage = .Icons.clearCache
+		self.headerTitle = Trans.cache
+		self.headerDescription = Trans.cacheHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -57,7 +58,7 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 			self.imageCacheSize = "—"
 		}
 
-		self.tableView.reloadSections(IndexSet(integer: Section.cacheComponents.rawValue), with: .none)
+		self.tableView.reloadSections(IndexSet(integer: Section.cacheComponents.rawValue + self.headerSectionOffset), with: .none)
 	}
 
 	/// Formats a byte count into a human-readable MiB string.
@@ -92,8 +93,7 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension CacheSettingsTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [
-			SettingsHeaderCell.self,
+		return super.registerCells(for: tableView) + [
 			SettingsCell.self,
 			DestructiveSettingsCell.self
 		]
@@ -103,15 +103,14 @@ extension CacheSettingsTableViewController {
 // MARK: - UITableViewDataSource
 extension CacheSettingsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count
+		return Section.allCases.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let section = Section(rawValue: section) else { return 0 }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return 1 }
 
 		switch section {
-		case .header:
-			return 1
 		case .cacheComponents:
 			return CacheComponent.allCases.count
 		case .actions:
@@ -120,15 +119,14 @@ extension CacheSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let section = Section(rawValue: indexPath.section) else { return UITableViewCell() }
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
+		guard let contentSection = self.contentSection(for: indexPath.section),
+			  let section = Section(rawValue: contentSection) else { return UITableViewCell() }
 
 		switch section {
-		case .header:
-			guard let headerCell = tableView.dequeueReusableCell(withIdentifier: SettingsHeaderCell.self, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(SettingsHeaderCell.reuseID)")
-			}
-			headerCell.configure(image: .Icons.clearCache, title: Trans.cache, description: Trans.cacheHeaderDescription)
-			return headerCell
 		case .cacheComponents:
 			guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
@@ -161,12 +159,13 @@ extension CacheSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		guard let section = Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Section(rawValue: contentSection) else { return nil }
 
 		switch section {
 		case .cacheComponents:
 			return Trans.clearCacheFooterMessage
-		case .header, .actions:
+		case .actions:
 			return nil
 		}
 	}
@@ -175,25 +174,20 @@ extension CacheSettingsTableViewController {
 // MARK: - UITableViewDelegate
 extension CacheSettingsTableViewController {
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let section = Section(rawValue: section) else {
-			return super.tableView(tableView, heightForHeaderInSection: section)
-		}
-
-		switch section {
-		case .header:
+		guard let contentSection = self.contentSection(for: section) else {
 			return .leastNormalMagnitude
-		case .cacheComponents, .actions:
-			return super.tableView(tableView, heightForHeaderInSection: section.rawValue)
 		}
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 
-		guard let section = Section(rawValue: indexPath.section) else { return }
+		guard let contentSection = self.contentSection(for: indexPath.section),
+			  let section = Section(rawValue: contentSection) else { return }
 
 		switch section {
-		case .header, .cacheComponents:
+		case .cacheComponents:
 			return
 		case .actions:
 			let alertController = self.presentAlertController(title: Trans.clearAllCache, message: nil, defaultActionButtonTitle: Trans.cancel)
@@ -207,7 +201,8 @@ extension CacheSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		guard Section(rawValue: indexPath.section) == .cacheComponents else { return nil }
+		guard let contentSection = self.contentSection(for: indexPath.section),
+			  Section(rawValue: contentSection) == .cacheComponents else { return nil }
 
 		let component = CacheComponent.allCases[indexPath.row]
 		let clearAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completionHandler in
@@ -232,38 +227,14 @@ extension CacheSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return Section(rawValue: indexPath.section) == .cacheComponents
-	}
-
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		// Lazily compute the threshold once the header cell is visible, laid out, and in a window.
-		if self.titleLabelBottomInContent == nil,
-		   let headerCell = tableView.cellForRow(at: IndexPath(row: 0, section: Section.header.rawValue)) as? SettingsHeaderCell,
-		   headerCell.primaryLabel.bounds.height > 0,
-		   headerCell.window != nil {
-			let labelFrame = headerCell.primaryLabel.convert(headerCell.primaryLabel.bounds, to: self.tableView)
-			self.titleLabelBottomInContent = labelFrame.maxY
-		}
-
-		guard let threshold = self.titleLabelBottomInContent else { return }
-
-		// The content-space Y of the top visible edge, accounting for the nav bar inset.
-		let visibleTop = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
-		let isScrolledPast = visibleTop >= threshold
-		let shouldShowTitle = isScrolledPast
-
-		if shouldShowTitle, self.title == nil {
-			self.title = Trans.cache
-		} else if !shouldShowTitle, self.title != nil {
-			self.title = nil
-		}
+		guard let contentSection = self.contentSection(for: indexPath.section) else { return false }
+		return Section(rawValue: contentSection) == .cacheComponents
 	}
 }
 
 // MARK: - Enums
 private extension CacheSettingsTableViewController {
 	enum Section: Int, CaseIterable {
-		case header
 		case cacheComponents
 		case actions
 	}

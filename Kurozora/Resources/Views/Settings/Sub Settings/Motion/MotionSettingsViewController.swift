@@ -17,6 +17,9 @@ class MotionSettingsViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
+		self.headerImage = .Icons.motion
+		self.headerTitle = Trans.motion
+		self.headerDescription = Trans.motionHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -32,19 +35,12 @@ class MotionSettingsViewController: SubSettingsViewController {
 			guard let self = self else { return }
 			let section = Motion.Section.reduceMotion
 			guard let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) else { return }
-			let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+			let indexPath = IndexPath(row: rowIndex, section: section.rawValue + self.headerSectionOffset)
 			guard let reduceMotionSyncSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else { return }
 
 			self.switchTapped(reduceMotionSyncSwitchSettingsCell.toggleSwitch)
 		}
 
-		self.title = Trans.motion
-
-		self.configureView()
-	}
-
-	// MARK: - Functions
-	private func configureView() {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 
@@ -71,7 +67,7 @@ class MotionSettingsViewController: SubSettingsViewController {
 				UserSettings.set(false, forKey: .isReduceMotionSyncEnabled)
 				let section = Motion.Section.reduceMotion
 				let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) ?? 0
-				let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+				let indexPath = IndexPath(row: rowIndex, section: section.rawValue + self.headerSectionOffset)
 				guard let switchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else {
 					sender.isOn = !isOn
 					return
@@ -86,7 +82,7 @@ class MotionSettingsViewController: SubSettingsViewController {
 			let isAccessibilityReduceMotionEnabled = UIAccessibility.isReduceMotionEnabled
 			let section = Motion.Section.reduceMotion
 			let rowIndex = section.rows.firstIndex(of: .toggleReduceMotion) ?? 0
-			let indexPath = IndexPath(row: rowIndex, section: section.rawValue)
+			let indexPath = IndexPath(row: rowIndex, section: section.rawValue + self.headerSectionOffset)
 
 			if let reduceMotionSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell {
 				if sender.isOn {
@@ -128,7 +124,7 @@ class MotionSettingsViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension MotionSettingsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [
+		return super.registerCells(for: tableView) + [
 			SwitchSettingsCell.self,
 			SettingsCell.self
 		]
@@ -138,15 +134,21 @@ extension MotionSettingsViewController {
 // MARK: - UITableViewDataSource
 extension MotionSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Motion.Section.allCases.count
+		return Motion.Section.allCases.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return Motion.Section.allCases[section].rows.count
+		guard let contentSection = self.contentSection(for: section) else { return 1 }
+		return Motion.Section.allCases[contentSection].rows.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let section = Motion.Section.allCases[indexPath.section]
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
+		guard let contentSection = self.contentSection(for: indexPath.section) else { return UITableViewCell() }
+		let section = Motion.Section.allCases[contentSection]
 
 		switch section {
 		case .animations:
@@ -176,7 +178,8 @@ extension MotionSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard let section = Motion.Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Motion.Section(rawValue: contentSection) else { return nil }
 
 		switch section {
 		case .animations:
@@ -187,7 +190,8 @@ extension MotionSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		guard let section = Motion.Section(rawValue: section) else { return nil }
+		guard let contentSection = self.contentSection(for: section),
+			  let section = Motion.Section(rawValue: contentSection) else { return nil }
 
 		switch section {
 		case .animations:
@@ -196,13 +200,19 @@ extension MotionSettingsViewController {
 			return Trans.reduceMotionFooter
 		}
 	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
+	}
 }
 
 // MARK: - UITableViewDelegate
 extension MotionSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard
-			let section = Motion.Section(rawValue: indexPath.section),
+			let contentSection = self.contentSection(for: indexPath.section),
+			let section = Motion.Section(rawValue: contentSection),
 			let row = section.rows[safe: indexPath.row]
 		else { return }
 

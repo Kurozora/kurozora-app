@@ -12,39 +12,49 @@ class BrowserSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.sharedInit()
+		self.headerImage = .Icons.browser
+		self.headerTitle = Trans.browser
+		self.headerDescription = Trans.browserHeaderDescription
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.sharedInit()
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.browser
-	}
-
-	// MARK: - Functions
-	/// The shared settings used to initialize the table view
-	private func sharedInit() {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension BrowserSettingsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return super.registerCells(for: tableView) + [
+			IconTableViewCell.self
+		]
 	}
 }
 
 // MARK: - UITableViewDataSource
 extension BrowserSettingsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
+		return 1 + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return section == 0 ? 0 : KBrowser.allCases.count
+		guard self.contentSection(for: section) != nil else { return 1 }
+		return KBrowser.allCases.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let headerCell = self.settingsHeaderCell(for: tableView, at: indexPath) {
+			return headerCell
+		}
+
 		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(IconTableViewCell.reuseID)")
 		}
@@ -56,26 +66,23 @@ extension BrowserSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		if section == 0 {
-			return "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback."
-		}
-
-		return nil
+		guard self.contentSection(for: section) != nil else { return nil }
+		return "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback."
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension BrowserSettingsTableViewController {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
+		return super.tableView(tableView, heightForHeaderInSection: contentSection)
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard self.contentSection(for: indexPath.section) != nil else { return }
+
 		UserSettings.set(indexPath.item, forKey: .defaultBrowser)
 		NotificationCenter.default.post(name: .KSAppBrowserDidChange, object: nil)
 		tableView.reloadData()
-	}
-}
-
-// MARK: - KTableViewDataSource
-extension BrowserSettingsTableViewController {
-	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [IconTableViewCell.self]
 	}
 }
