@@ -131,8 +131,8 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
 		])
 	}
 
