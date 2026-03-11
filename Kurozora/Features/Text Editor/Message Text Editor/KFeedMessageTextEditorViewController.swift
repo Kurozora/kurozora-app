@@ -9,17 +9,56 @@
 import KurozoraKit
 import UIKit
 
-class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantiable {
-	static var storyboardName: String = "TextEditor"
+protocol KFeedMessageTextEditorViewDelegate: AnyObject {
+	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage])
+	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
+}
 
-	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var currentUsernameLabel: KLabel!
-	@IBOutlet weak var characterCountLabel: KSecondaryLabel!
-	@IBOutlet weak var commentTextView: KTextView!
-	@IBOutlet weak var commentPreviewContainer: UIView!
-	@IBOutlet weak var sendButton: UIBarButtonItem!
-	@IBOutlet weak var labelsButton: KButton!
+protocol KFeedMessageTextEditorViewProviding where Self: UIView {
+	var profileImageView: ProfileImageView { get }
+	var currentUsernameLabel: KLabel { get }
+	var characterCountLabel: KSecondaryLabel { get }
+	var commentTextView: KTextView { get }
+	var labelsButton: KButton { get }
+}
+
+class KFeedMessageTextEditorViewController: KViewController {
+	// MARK: - Views
+	var profileImageView: ProfileImageView {
+		return self.textEditorView.profileImageView
+	}
+
+	var currentUsernameLabel: KLabel {
+		return self.textEditorView.currentUsernameLabel
+	}
+
+	var characterCountLabel: KSecondaryLabel {
+		return self.textEditorView.characterCountLabel
+	}
+
+	var commentTextView: KTextView {
+		return self.textEditorView.commentTextView
+	}
+
+	var labelsButton: KButton {
+		return self.textEditorView.labelsButton
+	}
+
+	var sendButton: UIBarButtonItem {
+		guard let sendButton = self.navigationItem.rightBarButtonItem else {
+			fatalError("Missing send button")
+		}
+
+		return sendButton
+	}
+
+	private var textEditorView: any KFeedMessageTextEditorViewProviding {
+		guard let textEditorView = self.view as? any KFeedMessageTextEditorViewProviding else {
+			fatalError("Expected a programmatic text editor view")
+		}
+
+		return textEditorView
+	}
 
 	// MARK: - Properties
 	var placeholderText: String {
@@ -84,6 +123,12 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 	private var isUpdatingFormatting = false
 
 	// MARK: - View
+	override func loadView() {
+		self.view = KFeedMessageTextEditorView()
+		self.commentTextView.delegate = self
+		self.labelsButton.addTarget(self, action: #selector(self.labelsButtonPressed(_:)), for: .touchUpInside)
+	}
+
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 
@@ -98,6 +143,7 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeChange), name: .ThemeUpdateNotification, object: nil)
 
+		self.configureNavigationItemsIfNeeded()
 		self.configureCommentTextView()
 
 		if let user = User.current {
@@ -148,6 +194,25 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 		self.commentTextView.text = nil
 		self.commentTextView.placeholder = self.placeholderText
 		self.commentTextView.managedFormattingMode = true
+	}
+
+	private func configureNavigationItemsIfNeeded() {
+		if self.navigationItem.leftBarButtonItem == nil {
+			self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+				barButtonSystemItem: .cancel,
+				target: self,
+				action: #selector(self.dismissButtonPressed(_:))
+			)
+		}
+
+		if self.navigationItem.rightBarButtonItem == nil {
+			self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+				title: Trans.send,
+				style: .done,
+				target: self,
+				action: #selector(self.sendButtonPressed(_:))
+			)
+		}
 	}
 
 	/// Confirm whether to cancel the message.
@@ -275,7 +340,7 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 	}
 
 	// MARK: - IBActions
-	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
+	@objc func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		if self.hasChanges {
 			// The user tapped Cancel with unsaved changes. Confirm that it's OK to lose the changes.
 			self.confirmCancel(showingSend: false)
@@ -285,14 +350,14 @@ class KFeedMessageTextEditorViewController: KViewController, StoryboardInstantia
 		}
 	}
 
-	@IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
+	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.sendMessage()
 		}
 	}
 
-	@IBAction func labelsButtonPressed(_ sender: UIButton) {
+	@objc func labelsButtonPressed(_ sender: UIButton) {
 		guard (self.navigationController?.visibleViewController as? UIAlertController) == nil else { return }
 
 		let selfLabelViewController = SelfLabelViewController()
@@ -332,15 +397,8 @@ extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
 			self.isNSFW = false
 		}
 
-		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
-
-		if self.isSpoiler || self.isNSFW {
-			self.labelsButton.setTitle("Labels Added", for: .normal)
-			self.labelsButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-		} else {
-			self.labelsButton.setTitle("Labels", for: .normal)
-			self.labelsButton.setImage(UIImage(systemName: "shield"), for: .normal)
-		}
+		let labelsAdded = self.isSpoiler || self.isNSFW
+		self.configureLabelsButton(title: labelsAdded ? "Labels Added" : "Labels", imageName: labelsAdded ? "checkmark" : "shield")
 	}
 }
 
@@ -366,5 +424,22 @@ extension KFeedMessageTextEditorViewController: UITextViewDelegate {
 extension KFeedMessageTextEditorViewController: UIToolbarDelegate {
 	func position(for bar: any UIBarPositioning) -> UIBarPosition {
 		return .bottom
+	}
+}
+
+private extension KFeedMessageTextEditorViewController {
+	func configureLabelsButton(title: String, imageName: String) {
+		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+
+		if var configuration = self.labelsButton.configuration {
+			configuration.title = title
+			configuration.image = UIImage(systemName: imageName)
+			configuration.imagePlacement = .leading
+			configuration.imagePadding = 6
+			self.labelsButton.configuration = configuration
+		}
+
+		self.labelsButton.setTitle(title, for: .normal)
+		self.labelsButton.setImage(UIImage(systemName: imageName), for: .normal)
 	}
 }

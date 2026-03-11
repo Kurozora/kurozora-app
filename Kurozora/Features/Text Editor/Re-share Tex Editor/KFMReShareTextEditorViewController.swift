@@ -6,20 +6,34 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var dateLabel: KSecondaryLabel!
-	@IBOutlet weak var opCommentPreviewContainer: UIView! {
-		didSet {
-			self.opCommentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+	// MARK: - Views
+	private var reShareTextEditorView: KFMReShareTextEditorView {
+		guard let reShareTextEditorView = self.view as? KFMReShareTextEditorView else {
+			fatalError("Expected a re-share text editor view")
 		}
+
+		return reShareTextEditorView
 	}
-	@IBOutlet weak var opProfileImageView: ProfileImageView!
-	@IBOutlet weak var opUsernameLabel: KLabel!
-	@IBOutlet weak var opMessageTextView: KSelectableTextView!
+
+	private var dateLabel: KSecondaryLabel {
+		return self.reShareTextEditorView.dateLabel
+	}
+
+	private var opProfileImageView: ProfileImageView {
+		return self.reShareTextEditorView.opProfileImageView
+	}
+
+	private var opUsernameLabel: KLabel {
+		return self.reShareTextEditorView.opUsernameLabel
+	}
+
+	private var opMessageTextView: KSelectableTextView {
+		return self.reShareTextEditorView.opMessageTextView
+	}
 
 	// MARK: - Properties
 	override var placeholderText: String {
@@ -29,6 +43,12 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 	var segueToOPFeedDetails: Bool = false
 
 	// MARK: - View
+	override func loadView() {
+		self.view = KFMReShareTextEditorView()
+		self.commentTextView.delegate = self
+		self.labelsButton.addTarget(self, action: #selector(self.labelsButtonPressed(_:)), for: .touchUpInside)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 

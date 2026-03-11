@@ -6,16 +6,34 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var opProfileImageView: ProfileImageView!
-	@IBOutlet weak var opUsernameLabel: KLabel!
-	@IBOutlet weak var opMessageTextView: KSelectableTextView!
-	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
-	@IBOutlet weak var opMessagePreviewContainer: UIView!
+	// MARK: - Views
+	private var replyTextEditorView: KFMReplyTextEditorView {
+		guard let replyTextEditorView = self.view as? KFMReplyTextEditorView else {
+			fatalError("Expected a reply text editor view")
+		}
+
+		return replyTextEditorView
+	}
+
+	private var opProfileImageView: ProfileImageView {
+		return self.replyTextEditorView.opProfileImageView
+	}
+
+	private var opUsernameLabel: KLabel {
+		return self.replyTextEditorView.opUsernameLabel
+	}
+
+	private var opMessageTextView: KSelectableTextView {
+		return self.replyTextEditorView.opMessageTextView
+	}
+
+	private var opDateTimeLabel: KSecondaryLabel {
+		return self.replyTextEditorView.opDateTimeLabel
+	}
 
 	// MARK: - Properties
 	override var placeholderText: String {
@@ -25,6 +43,12 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 	var segueToOPFeedDetails: Bool = false
 
 	// MARK: - View
+	override func loadView() {
+		self.view = KFMReplyTextEditorView()
+		self.commentTextView.delegate = self
+		self.labelsButton.addTarget(self, action: #selector(self.labelsButtonPressed(_:)), for: .touchUpInside)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
