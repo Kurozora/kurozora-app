@@ -20,7 +20,7 @@ class IconNotificationCell: BasicNotificationCell {
 		self.titleLabel.text = userNotification.attributes.payload.username
 
 		if let profileImageURL = userNotification.attributes.payload.profileImageURL {
-			if let usernameInitials = userNotification.attributes.payload.username?.initials {
+			if let usernameInitials = userNotification.attributes.payload.username?.initials.capitalized {
 				let placeholderImage = usernameInitials.toImage(placeholder: .Placeholders.userProfile)
 				self.profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
 			}
