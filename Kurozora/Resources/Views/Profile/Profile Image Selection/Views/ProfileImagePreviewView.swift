@@ -235,6 +235,17 @@ class ProfileImagePreviewView: UIView {
 		self.emojiTextField.alpha = 0
 	}
 
+	// MARK: - Animations
+	/// Plays a horizontal shake animation on the preview image to indicate rejected input.
+	private func shakePreviewImage() {
+		let animation = CAKeyframeAnimation(keyPath: "position.x")
+		animation.values = [0, -10, 10, -10, 10, -5, 5, 0]
+		animation.keyTimes = [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1]
+		animation.duration = 0.4
+		animation.isAdditive = true
+		self.previewImageView.layer.add(animation, forKey: "shake")
+	}
+
 	// MARK: - Actions
 	@objc private func previewTapped() {
 		switch self.activePreviewSource {
@@ -271,6 +282,11 @@ extension ProfileImagePreviewView: UITextFieldDelegate {
 		let updatedText = currentText.replacingCharacters(in: stringRange, with: string.uppercased())
 
 		if updatedText.count <= 3 {
+			if ProfanityFilter.shared.containsProfanity(updatedText) {
+				self.shakePreviewImage()
+				return false
+			}
+
 			textField.text = updatedText
 			self.monogramInitials = updatedText
 
