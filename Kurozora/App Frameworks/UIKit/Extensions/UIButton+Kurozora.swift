@@ -10,6 +10,51 @@ import UIKit
 import Kingfisher
 
 extension UIButton {
+	/// Creates a pill-shaped button with a system symbol icon.
+	///
+	/// - Parameters:
+	///    - systemName: The SF Symbol name for the button icon.
+	///    - accessibilityLabel: The accessibility label for the button.
+	///    - target: The target object for the button action.
+	///    - action: The selector to invoke when the button is tapped.
+	///
+	/// - Returns: A configured pill button.
+	static func makePillButton(systemName: String, accessibilityLabel: String, target: Any?, action: Selector) -> UIButton {
+		let button = UIButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		let config = UIImage.SymbolConfiguration(textStyle: .callout).applying(UIImage.SymbolConfiguration(weight: .medium))
+		button.setImage(UIImage(systemName: systemName, withConfiguration: config), for: .normal)
+		button.theme_tintColor = KThemePicker.textColor.rawValue
+		button.accessibilityLabel = accessibilityLabel
+		button.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		button.layerCornerRadius = 22
+		button.addTarget(target, action: action, for: .touchUpInside)
+		return button
+	}
+
+	/// Creates a pill-shaped button with a text title.
+	///
+	/// - Parameters:
+	///    - title: The text title for the button.
+	///    - accessibilityLabel: The accessibility label for the button.
+	///    - target: The target object for the button action.
+	///    - action: The selector to invoke when the button is tapped.
+	///
+	/// - Returns: A configured pill button.
+	static func makePillButton(title: String, accessibilityLabel: String, target: Any?, action: Selector) -> UIButton {
+		let button = UIButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setTitle(title, for: .normal)
+		button.titleLabel?.font = UIFontMetrics(forTextStyle: .footnote).scaledFont(for: .systemFont(ofSize: 14, weight: .semibold))
+		button.titleLabel?.adjustsFontForContentSizeCategory = true
+		button.theme_tintColor = KThemePicker.textColor.rawValue
+		button.accessibilityLabel = accessibilityLabel
+		button.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		button.layerCornerRadius = 22
+		button.addTarget(target, action: action, for: .touchUpInside)
+		return button
+	}
+
 	/// Sets up the image view of the button with the given image url and placeholder. The downloaded image is also saved in the cache storage, so subsequent requests will load from the cache if the image is found.
 	///
 	/// - Parameters:

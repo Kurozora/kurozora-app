@@ -20,10 +20,10 @@ final class MediaActionBar: UIView {
 	private(set) var stackView = UIStackView()
 
 	// MARK: - Properties
-	private let copyButton = CircularButton()
-	let shareButton = CircularButton()
-	private let saveButton = CircularButton()
-	let moreButton = CircularButton()
+	private let copyButton = AdaptiveCornerButton()
+	let shareButton = AdaptiveCornerButton()
+	private let saveButton = AdaptiveCornerButton()
+	let moreButton = AdaptiveCornerButton()
 
 	var onAction: ((MediaAction) -> Void)?
 

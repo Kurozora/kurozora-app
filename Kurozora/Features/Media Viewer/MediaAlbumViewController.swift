@@ -11,8 +11,8 @@ import UIKit
 final class MediaAlbumViewController: UIPageViewController {
 	// MARK: - Views
 	private let actionBar = MediaActionBar()
-	private let closeButton = CircularButton()
-	private let indexButton = CircularButton()
+	private let closeButton = AdaptiveCornerButton()
+	private let indexButton = AdaptiveCornerButton()
 
 	// MARK: - Properties
 	// Orientation
@@ -252,7 +252,7 @@ final class MediaAlbumViewController: UIPageViewController {
 	}
 
 	private func createToast() -> UIButton {
-		let button = CircularButton()
+		let button = AdaptiveCornerButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.configuration?.imagePlacement = .leading
 		button.configuration?.imagePadding = 8
@@ -570,7 +570,7 @@ extension MediaAlbumViewController {
 	private func showRotateToast(for deviceOrientation: UIInterfaceOrientationMask) {
 		if self.rotateToastButton != nil { return }
 
-		let tapToRotateButton = CircularButton()
+		let tapToRotateButton = AdaptiveCornerButton()
 		tapToRotateButton.translatesAutoresizingMaskIntoConstraints = false
 		tapToRotateButton.configuration?.title = "Tap to Rotate"
 		tapToRotateButton.configuration?.image = UIImage(systemName: "lock.open.rotation")

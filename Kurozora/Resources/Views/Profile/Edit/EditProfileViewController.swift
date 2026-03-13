@@ -243,8 +243,14 @@ class EditProfileViewController: KViewController {
 		let profileImageRequest: ProfileUpdateImageRequest?
 		var profileImageURL: URL? = URL(string: "kurozora://profileimage")
 		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
-			profileImageURL = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? nil : self.editedProfileImageURL
-			profileImageRequest = profileImageURL == nil ? .delete : .update(url: profileImageURL)
+			if indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) {
+				profileImageRequest = .delete
+			} else if let originalImageURL = self.editedProfileImageURL {
+				profileImageURL = originalImageURL.saveImageToTemporaryFile(maxWidth: 400, maxHeight: 400, compressionQuality: 0.8)
+				profileImageRequest = profileImageURL == nil ? .delete : .update(url: profileImageURL)
+			} else {
+				profileImageRequest = nil
+			}
 		} else {
 			profileImageRequest = nil
 		}
@@ -255,8 +261,14 @@ class EditProfileViewController: KViewController {
 		let bannerImageRequest: ProfileUpdateImageRequest?
 		var bannerImageURL: URL? = URL(string: "kurozora://bannerimage")
 		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
-			bannerImageURL = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? nil : self.editedBannerImageURL
-			bannerImageRequest = bannerImageURL == nil ? .delete : .update(url: bannerImageURL)
+			if indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) {
+				bannerImageRequest = .delete
+			} else if let originalBannerURL = self.editedBannerImageURL {
+				bannerImageURL = originalBannerURL.saveImageToTemporaryFile(maxWidth: 1500, maxHeight: 500, compressionQuality: 0.8)
+				bannerImageRequest = bannerImageURL == nil ? .delete : .update(url: bannerImageURL)
+			} else {
+				bannerImageRequest = nil
+			}
 		} else {
 			bannerImageRequest = nil
 		}
@@ -300,12 +312,44 @@ class EditProfileViewController: KViewController {
 
 	private func selectProfileImageButtonPressed(_ sender: UIButton) {
 		self.imageEditKind = .profile
-		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
+		self.presentProfileImageSelection()
 	}
 
 	private func selectBannerImageButtonPressed(_ sender: UIButton) {
 		self.imageEditKind = .banner
-		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedBannerImage.isEqual(to: self.placeholderImage()))
+		self.presentBannerImageSelection()
+	}
+
+	private func presentBannerImageSelection() {
+		let bannerImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedBannerImage, imageKind: .banner)
+		bannerImageSelectionVC.delegate = self
+
+		let navController = KNavigationController(rootViewController: bannerImageSelectionVC)
+		navController.modalPresentationStyle = .pageSheet
+
+		if let sheet = navController.sheetPresentationController {
+			sheet.detents = [.large()]
+			sheet.prefersGrabberVisible = true
+			sheet.prefersEdgeAttachedInCompactHeight = true
+		}
+
+		self.present(navController, animated: true)
+	}
+
+	private func presentProfileImageSelection() {
+		let profileImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedProfileImage)
+		profileImageSelectionVC.delegate = self
+
+		let navController = KNavigationController(rootViewController: profileImageSelectionVC)
+		navController.modalPresentationStyle = .pageSheet
+
+		if let sheet = navController.sheetPresentationController {
+			sheet.detents = [.large()]
+			sheet.prefersGrabberVisible = true
+			sheet.prefersEdgeAttachedInCompactHeight = true
+		}
+
+		self.present(navController, animated: true)
 	}
 }
 
@@ -809,5 +853,27 @@ extension EditProfileViewController: ProfileBadgeStackViewDelegate {
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+}
+
+// MARK: - ProfileImageSelectionViewControllerDelegate
+extension EditProfileViewController: ProfileImageSelectionViewControllerDelegate {
+	func profileImageSelectionViewController(_ viewController: ProfileImageSelectionViewController, didSelectImage image: UIImage, imageURL: URL?) {
+		switch self.imageEditKind {
+		case .profile:
+			self.editedProfileImage = image
+			self.profileImageView.image = image
+			self.editedProfileImageURL = imageURL
+		case .banner:
+			self.editedBannerImage = image
+			self.bannerImageView.image = image
+			self.editedBannerImageURL = imageURL
+		case .none:
+			break
+		}
+	}
+
+	func profileImageSelectionViewControllerDidCancel(_ viewController: ProfileImageSelectionViewController) {
+		// No action needed - user cancelled
 	}
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import PDFKit
+import UIKit
 
 extension UIImage {
 	// MARK: - Functions
@@ -57,5 +57,52 @@ extension UIImage {
 		pdfDocument.insert(pdfPage, at: 0)
 
 		return pdfDocument.dataRepresentation()
+	}
+
+	/// Saves the image to a temporary file with the specified maximum dimensions and compression quality.
+	///
+	/// - Parameters:
+	///    - maxWidth: The maximum width allowed.
+	///    - maxHeight: The maximum height allowed.
+	///    - compressionQuality: The compression quality for JPEG encoding (0.0 to 1.0).
+	///
+	/// - Returns: The URL of the saved file, or `nil` if saving failed.
+	func saveToTemporaryFile(maxWidth: CGFloat, maxHeight: CGFloat, compressionQuality: CGFloat = 0.8) -> URL? {
+		let resizedImage = self.resized(maxWidth: maxWidth, maxHeight: maxHeight)
+
+		guard let data = resizedImage.jpegData(compressionQuality: compressionQuality) else {
+			return nil
+		}
+
+		let imageName = UUID().uuidString + ".jpg"
+		let imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(imageName)
+
+		do {
+			try data.write(to: imageURL, options: [.atomic])
+			return imageURL
+		} catch {
+			print("Failed to save image: \(error)")
+			return nil
+		}
+	}
+}
+
+extension URL {
+	/// Loads the image from this URL, resizes it to the specified dimensions, and saves to a temporary file.
+	///
+	/// - Parameters:
+	///    - maxWidth: The maximum width allowed.
+	///    - maxHeight: The maximum height allowed.
+	///    - compressionQuality: The compression quality for JPEG encoding (0.0 to 1.0).
+	///
+	/// - Returns: The URL of the resized image file, or `nil` if loading/resizing failed.
+	func saveImageToTemporaryFile(maxWidth: CGFloat, maxHeight: CGFloat, compressionQuality: CGFloat = 0.8) -> URL? {
+		guard let imageData = try? Data(contentsOf: self),
+		      let image = UIImage(data: imageData)
+		else {
+			return nil
+		}
+
+		return image.saveToTemporaryFile(maxWidth: maxWidth, maxHeight: maxHeight, compressionQuality: compressionQuality)
 	}
 }

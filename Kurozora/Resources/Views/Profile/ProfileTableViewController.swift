@@ -790,7 +790,7 @@ class ProfileTableViewController: KTableViewController {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
+			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController()
 			kFeedMessageTextEditorViewController.delegate = self
 			kFeedMessageTextEditorViewController.dmToUser = self.user
 

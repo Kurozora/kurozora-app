@@ -113,7 +113,10 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 			// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
-			let profileImageURL = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImageURL
+			var profileImageURL: URL?
+			if !self.originalProfileImage.isEqual(to: self.editedProfileImage) {
+				profileImageURL = self.editedProfileImageURL?.saveImageToTemporaryFile(maxWidth: 400, maxHeight: 400, compressionQuality: 0.8)
+			}
 			let profileImageRequest: ProfileUpdateImageRequest? = profileImageURL == nil ? nil : .update(url: profileImageURL)
 
 			// Disable user interaction.

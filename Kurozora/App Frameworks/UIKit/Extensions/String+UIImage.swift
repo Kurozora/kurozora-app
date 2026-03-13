@@ -12,16 +12,16 @@ extension String {
 	// MARK: - Properties
 	/// An array of colors used as background colors for the placeholder images generated from strings. The same string will always return the same color based on its hash value.
 	static let placeholderPalette: [UIColor] = [
-		UIColor(red: 66, green: 135, blue: 245)!, // Blue
-		UIColor(red: 52, green: 199, blue: 89)!, // Green
-		UIColor(red: 255, green: 149, blue: 0)!, // Orange
-		UIColor(red: 88, green: 86, blue: 214)!, // Purple
-		UIColor(red: 255, green: 59, blue: 48)!, // Red
-		UIColor(red: 0, green: 199, blue: 190)!, // Teal
-		UIColor(red: 175, green: 82, blue: 222)!, // Pink
-		UIColor(red: 48, green: 176, blue: 199)!, // Cyan
-		UIColor(red: 254, green: 204, blue: 2)!, // Yellow
-		UIColor(red: 162, green: 132, blue: 94)! // Brown
+		.systemBlue,
+		.systemGreen,
+		.systemOrange,
+		.systemPurple,
+		.systemRed,
+		.systemTeal,
+		.systemPink,
+		.systemCyan,
+		.systemYellow,
+		.systemBrown
 	]
 
 	/// Returns a color based on the string's hash value. The same string will always return the same color.
@@ -67,5 +67,28 @@ extension String {
 			return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal) ?? placeholderImage
 		}
 		return placeholderImage
+	}
+
+	/// Returns a UIImage from the string using the specified text style. If no image can be created then nil is returned.
+	///
+	/// - Parameters:
+	///    - style: The text style to use for the font. Default is `.body`.
+	///
+	/// - Returns: A UIImage from the string or nil if no image can be created.
+	func image(forTextStyle style: UIFont.TextStyle) -> UIImage? {
+		let font = UIFont.systemFont(ofSize: 200)
+		let attributes: [NSAttributedString.Key: Any] = [.font: font]
+		let textSize = self.size(withAttributes: attributes)
+		let canvasSize = max(textSize.width, textSize.height)
+		let squareSize = CGSize(width: canvasSize, height: canvasSize)
+		let renderer = UIGraphicsImageRenderer(size: squareSize)
+
+		return renderer.image { _ in
+			let drawOrigin = CGPoint(
+				x: (canvasSize - textSize.width) / 2,
+				y: (canvasSize - textSize.height) / 2
+			)
+			self.draw(at: drawOrigin, withAttributes: attributes)
+		}
 	}
 }

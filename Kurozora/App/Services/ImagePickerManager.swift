@@ -75,11 +75,9 @@ final class ImagePickerManager: NSObject {
 			}))
 
 			if #available(iOS 18.1, macOS 15.1, visionOS 2.4, *) {
-				if ImagePlaygroundViewController.isAvailable {
-					actionSheetAlertController.addAction(UIAlertAction(title: "Image Playground ✨", style: .default, handler: { _ in
-						self.openImagePlayground()
-					}))
-				}
+				actionSheetAlertController.addAction(UIAlertAction(title: "Image Playground ✨", style: .default, handler: { _ in
+					self.openImagePlayground()
+				}))
 			}
 
 			if showingRemoveAction {
