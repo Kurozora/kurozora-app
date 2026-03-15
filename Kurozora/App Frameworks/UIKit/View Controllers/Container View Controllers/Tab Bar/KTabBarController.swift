@@ -11,6 +11,7 @@ import KurozoraKit
 import UIKit
 #if DEBUG
 import FLEX
+import SwiftTheme
 #endif
 
 class KTabBarController: UITabBarController {
@@ -140,9 +141,16 @@ class KTabBarController: UITabBarController {
 			#endif
 		} else {
 			self.tabBar.isTranslucent = true
-			self.tabBar.itemPositioning = .centered
-			self.tabBar.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			self.tabBar.backgroundColor = .clear
 			self.tabBar.barStyle = .default
+			self.tabBar.itemPositioning = .centered
+			self.tabBar.theme_tintColor = KThemePicker.tintColor.rawValue
+
+			let appearance = UITabBarAppearance()
+			appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
+
+			self.tabBar.theme_standardAppearance = ThemeTabBarAppearancePicker(appearances: appearance)
+			self.tabBar.theme_compactAppearance = ThemeTabBarAppearancePicker(appearances: appearance)
 
 			#if DEBUG
 			self.tabBar.addGestureRecognizer(showFlexLongPressGestureRecognizer)
