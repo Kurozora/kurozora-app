@@ -129,12 +129,14 @@ class BadgeViewController: KViewController {
 		self.primaryLabel = KLabel()
 		self.primaryLabel.translatesAutoresizingMaskIntoConstraints = false
 		self.primaryLabel.font = .preferredFont(forTextStyle: .headline)
+		self.primaryLabel.numberOfLines = 0
 	}
 
 	private func configureSecondaryLabel() {
 		self.secondaryLabel = KSecondaryLabel()
 		self.secondaryLabel.translatesAutoresizingMaskIntoConstraints = false
 		self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+		self.secondaryLabel.numberOfLines = 0
 	}
 
 	private func configureSymbolImageViewContainer() {
@@ -193,7 +195,7 @@ class BadgeViewController: KViewController {
 		NSLayoutConstraint.activate([
 			self.view.widthAnchor.constraint(equalToConstant: widthConstant),
 
-			self.containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			self.containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8.0),
 			self.containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
 			self.containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
 			self.containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
