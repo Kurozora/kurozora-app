@@ -28,6 +28,8 @@ class KTintedButton: KButton {
 			self.configuration = .prominentGlass()
 			self.configuration?.background.cornerRadius = cornerRadius == .zero ? 10 : cornerRadius
 		} else {
+			self.configuration = .plain()
+
 			self.theme_tintColor = KThemePicker.tintedButtonTextColor.rawValue
 			self.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			self.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
