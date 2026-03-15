@@ -209,7 +209,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		// MARK: Refactor
+		// TODO: Refactor for proper centering
 		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 		var detailString: String
 
@@ -279,6 +279,7 @@ class ProfileTableViewController: KTableViewController {
 		self.followButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
 		self.followButton.setTitle(Trans.follow, for: .normal)
 		self.followButton.highlightBackgroundColorEnabled = true
+		self.followButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
 		self.followButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.followButtonPressed()
@@ -291,6 +292,7 @@ class ProfileTableViewController: KTableViewController {
 		self.editProfileButton.setTitle(Trans.edit, for: .normal)
 		self.editProfileButton.layerCornerRadius = 12
 		self.editProfileButton.highlightBackgroundColorEnabled = true
+		self.editProfileButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
 		self.editProfileButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.present(SegueIdentifiers.editProfileSegue, sender: self)
