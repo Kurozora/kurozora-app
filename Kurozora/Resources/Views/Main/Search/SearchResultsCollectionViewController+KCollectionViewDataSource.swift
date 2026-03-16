@@ -6,8 +6,8 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension SearchResultsCollectionViewController {
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
@@ -166,7 +166,7 @@ extension SearchResultsCollectionViewController {
 				case .shows:
 					if !self.showIdentities.isEmpty {
 						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
-							return .showIdentity(showIdentity)
+							.showIdentity(showIdentity)
 						}
 
 						snapshot.appendSections([.shows])
@@ -175,7 +175,7 @@ extension SearchResultsCollectionViewController {
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
 						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
-							return .literatureIdentity(literatureIdentity)
+							.literatureIdentity(literatureIdentity)
 						}
 
 						snapshot.appendSections([.literatures])
@@ -184,7 +184,7 @@ extension SearchResultsCollectionViewController {
 				case .games:
 					if !self.gameIdentities.isEmpty {
 						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
-							return .gameIdentity(gameIdentity)
+							.gameIdentity(gameIdentity)
 						}
 
 						snapshot.appendSections([.games])
@@ -193,7 +193,7 @@ extension SearchResultsCollectionViewController {
 				case .episodes:
 					if !self.episodeIdentities.isEmpty {
 						let episodeItems: [SearchResults.Item] = self.episodeIdentities.map { episodeIdentity in
-							return .episodeIdentity(episodeIdentity)
+							.episodeIdentity(episodeIdentity)
 						}
 
 						snapshot.appendSections([.episodes])
@@ -202,7 +202,7 @@ extension SearchResultsCollectionViewController {
 				case .characters:
 					if !self.characterIdentities.isEmpty {
 						let characterItems: [SearchResults.Item] = self.characterIdentities.map { characterIdentity in
-							return .characterIdentity(characterIdentity)
+							.characterIdentity(characterIdentity)
 						}
 
 						snapshot.appendSections([.characters])
@@ -211,7 +211,7 @@ extension SearchResultsCollectionViewController {
 				case .people:
 					if !self.personIdentities.isEmpty {
 						let peopleItems: [SearchResults.Item] = self.personIdentities.map { personIdentity in
-							return .personIdentity(personIdentity)
+							.personIdentity(personIdentity)
 						}
 
 						snapshot.appendSections([.people])
@@ -220,7 +220,7 @@ extension SearchResultsCollectionViewController {
 				case .songs:
 					if !self.songIdentities.isEmpty {
 						let songItems: [SearchResults.Item] = self.songIdentities.map { songIdentity in
-							return .songIdentity(songIdentity)
+							.songIdentity(songIdentity)
 						}
 
 						snapshot.appendSections([.songs])
@@ -229,7 +229,7 @@ extension SearchResultsCollectionViewController {
 				case .studios:
 					if !self.studioIdentities.isEmpty {
 						let studioItems: [SearchResults.Item] = self.studioIdentities.map { studioIdentity in
-							return .studioIdentity(studioIdentity)
+							.studioIdentity(studioIdentity)
 						}
 
 						snapshot.appendSections([.studios])
@@ -238,7 +238,7 @@ extension SearchResultsCollectionViewController {
 				case .users:
 					if !self.userIdentities.isEmpty {
 						let userItems: [SearchResults.Item] = self.userIdentities.map { userIdentity in
-							return .userIdentity(userIdentity)
+							.userIdentity(userIdentity)
 						}
 
 						snapshot.appendSections([.users])
@@ -250,7 +250,7 @@ extension SearchResultsCollectionViewController {
 				case .shows:
 					if !self.showIdentities.isEmpty {
 						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
-							return .showIdentity(showIdentity)
+							.showIdentity(showIdentity)
 						}
 
 						snapshot.appendSections([.shows])
@@ -259,7 +259,7 @@ extension SearchResultsCollectionViewController {
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
 						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
-							return .literatureIdentity(literatureIdentity)
+							.literatureIdentity(literatureIdentity)
 						}
 
 						snapshot.appendSections([.literatures])
@@ -268,7 +268,7 @@ extension SearchResultsCollectionViewController {
 				case .games:
 					if !self.gameIdentities.isEmpty {
 						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
-							return .gameIdentity(gameIdentity)
+							.gameIdentity(gameIdentity)
 						}
 
 						snapshot.appendSections([.games])
@@ -286,7 +286,7 @@ extension SearchResultsCollectionViewController {
 			if snapshot.numberOfSections == 0 {
 				if self.discoverSuggestions.count != 0 {
 					let discoverSuggestionItems: [SearchResults.Item] = self.discoverSuggestions.map { discoverSuggestion in
-						return .discoverSuggestion(discoverSuggestion)
+						.discoverSuggestion(discoverSuggestion)
 					}
 					snapshot.appendSections([.discover])
 					snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
@@ -294,7 +294,7 @@ extension SearchResultsCollectionViewController {
 
 				if self.browseCategories.count != 0 {
 					let browseCategoryItems: [SearchResults.Item] = self.browseCategories.map { browseCategory in
-						return .browseCategory(browseCategory)
+						.browseCategory(browseCategory)
 					}
 					snapshot.appendSections([.browse])
 					snapshot.appendItems(browseCategoryItems, toSection: .browse)
@@ -388,6 +388,7 @@ extension SearchResultsCollectionViewController {
 			}
 		}
 	}
+
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
@@ -544,13 +545,15 @@ extension SearchResultsCollectionViewController {
 	}
 
 	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
 			case .discoverSuggestion(let quickLink):
 				actionLinkExploreCollectionViewCell.delegate = self
-				actionLinkExploreCollectionViewCell.separatorIsHidden = self.discoverSuggestions.last == quickLink
+				let totalCount = self.discoverSuggestions.count
+				let columns = self.collectionView.columnCount(inSection: indexPath.section)
+				actionLinkExploreCollectionViewCell.separatorIsHidden = indexPath.item + columns >= totalCount
 				actionLinkExploreCollectionViewCell.configure(using: quickLink)
 			default: break
 			}

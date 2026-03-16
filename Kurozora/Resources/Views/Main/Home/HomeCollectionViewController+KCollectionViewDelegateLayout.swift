@@ -114,6 +114,17 @@ extension HomeCollectionViewController {
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .quickLinks:
 				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout?.visibleItemsInvalidationHandler = { [weak self] visibleItems, _, _ in
+					guard let self = self else { return }
+					let totalCount = self.quickLinks.count
+					guard totalCount > 1 else { return }
+					let columns = self.collectionView.columnCount(inSection: section)
+
+					for item in visibleItems {
+						guard let cell = self.collectionView.cellForItem(at: item.indexPath) as? ActionLinkExploreCollectionViewCell else { continue }
+						cell.separatorView?.isHidden = item.indexPath.item + columns >= totalCount
+					}
+				}
 			case .quickActions:
 				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment, collectionView: self.collectionView)
 				return sectionLayout

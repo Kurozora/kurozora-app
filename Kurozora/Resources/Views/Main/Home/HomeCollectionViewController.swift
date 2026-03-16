@@ -935,15 +935,15 @@ extension HomeCollectionViewController {
 // MARK: - Cell Configuration
 extension HomeCollectionViewController {
 	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
 			case .quickLink(let quickLink, _):
 				actionLinkExploreCollectionViewCell.delegate = self
-				#if !targetEnvironment(macCatalyst)
-				actionLinkExploreCollectionViewCell.separatorIsHidden = self.quickLinks.last == quickLink
-				#endif
+				let totalCount = self.quickLinks.count
+				let columns = self.collectionView.columnCount(inSection: indexPath.section)
+				actionLinkExploreCollectionViewCell.separatorIsHidden = indexPath.item + columns >= totalCount
 				actionLinkExploreCollectionViewCell.configure(using: quickLink)
 			default: break
 			}
