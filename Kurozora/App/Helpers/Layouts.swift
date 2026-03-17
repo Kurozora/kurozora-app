@@ -520,6 +520,7 @@ enum Layouts {
 	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, collectionView: UICollectionView) -> NSCollectionLayoutSection {
 		let leadingInset = collectionView.directionalLayoutMargins.leading
 		let trailingInset = collectionView.directionalLayoutMargins.trailing
+		let maxInset = max(leadingInset, trailingInset)
 
 		// Add layout item.
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
@@ -533,7 +534,7 @@ enum Layouts {
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 40.0, trailing: trailingInset)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: maxInset, bottom: 40.0, trailing: maxInset)
 		return layoutSection
 	}
 
