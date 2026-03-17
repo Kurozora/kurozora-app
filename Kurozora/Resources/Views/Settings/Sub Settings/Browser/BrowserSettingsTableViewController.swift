@@ -20,6 +20,13 @@ class BrowserSettingsTableViewController: SubSettingsViewController {
 		self.sharedInit()
 	}
 
+	// MARK: - View
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		self.title = Trans.browser
+	}
+
 	// MARK: - Functions
 	/// The shared settings used to initialize the table view
 	private func sharedInit() {
