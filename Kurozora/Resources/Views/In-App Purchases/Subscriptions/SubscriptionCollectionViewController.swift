@@ -173,7 +173,11 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 
 	/// Configures the close bar button item.
 	private func configureCloseBarButtonItem() {
-		if self.navigationController?.viewControllers.first == self && self.presentingViewController != nil {
+		let isRootInNavigation = self.navigationController?.viewControllers.first == self
+		let isInsideSplitView = self.splitViewController != nil
+		let hasPresenter = self.presentingViewController != nil
+
+		if isRootInNavigation, hasPresenter, !isInsideSplitView {
 			self.closeBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
 				guard let self = self else { return }
 				self.dismiss(animated: true, completion: nil)
