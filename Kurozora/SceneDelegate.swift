@@ -174,6 +174,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)
 		splitViewController.primaryBackgroundStyle = .sidebar
+		splitViewController.preferredSplitBehavior = .tile
 		splitViewController.preferredDisplayMode = .oneBesideSecondary
 		#if targetEnvironment(macCatalyst)
 		splitViewController.extendedLayoutIncludesOpaqueBars = true
