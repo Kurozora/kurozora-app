@@ -320,13 +320,13 @@ extension SettingsTableViewController {
 			self.authAndSegue(to: segueID)
 			return
 		case .switchAccount:
-			self.showDetailViewController(SegueIdentifiers.switchAccountSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.switchAccountSegue, sender: nil)
 			return
 		case .keychain:
-			self.showDetailViewController(SegueIdentifiers.keysSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.keysSegue, sender: nil)
 			return
 		case .browser:
-			self.showDetailViewController(SegueIdentifiers.browserSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.browserSegue, sender: nil)
 			return
 		case .cache:
 			let alertController = self.presentAlertController(title: Trans.clearAllCache, message: Trans.clearAllCacheMessage, defaultActionButtonTitle: Trans.cancel)
@@ -348,19 +348,19 @@ extension SettingsTableViewController {
 			})
 			return
 		case .displayBlindness:
-			self.showDetailViewController(SegueIdentifiers.displaySegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.displaySegue, sender: nil)
 			return
 		case .icon:
-			self.showDetailViewController(SegueIdentifiers.iconSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.iconSegue, sender: nil)
 			return
 		case .library:
-			self.showDetailViewController(SegueIdentifiers.librarySegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.librarySegue, sender: nil)
 			return
 		case .motion:
-			self.showDetailViewController(SegueIdentifiers.motionSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.motionSegue, sender: nil)
 			return
 		case .theme:
-			self.showDetailViewController(SegueIdentifiers.themeSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.themeSegue, sender: nil)
 			return
 		case .notifications:
 			guard let segueID = sectionRow.segueIdentifier else { return }
@@ -372,7 +372,7 @@ extension SettingsTableViewController {
 			}
 			return
 		case .soundsAndHaptics:
-			self.showDetailViewController(SegueIdentifiers.soundSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.soundSegue, sender: nil)
 			return
 		case .signalSticker:
 			if let signalStickerURL = URL.signalStickerURL {
@@ -385,16 +385,16 @@ extension SettingsTableViewController {
 			}
 			return
 		case .biometrics:
-			self.showDetailViewController(SegueIdentifiers.biometricsSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.biometricsSegue, sender: nil)
 			return
 		case .privacy:
-			self.showDetailViewController(SegueIdentifiers.privacySegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.privacySegue, sender: nil)
 			return
 		case .unlockFeatures:
-			self.showDetailViewController(SegueIdentifiers.subscriptionSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.subscriptionSegue, sender: nil)
 			return
 		case .tipjar:
-			self.showDetailViewController(SegueIdentifiers.tipJarSegue, sender: nil)
+			self.showSecondary(SegueIdentifiers.tipJarSegue, sender: nil)
 			return
 		case .manageSubscriptions:
 			Task { [weak self] in
@@ -436,7 +436,7 @@ extension SettingsTableViewController {
 		Task {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
-			self.showDetailViewController(identifier, sender: nil)
+			self.showSecondary(identifier, sender: nil)
 		}
 	}
 }

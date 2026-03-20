@@ -85,4 +85,17 @@ extension KViewController: SeguePerforming {
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.present(destination, animated: true)
 	}
+
+	func showSecondary(_ identifier: SegueIdentifier, sender: Any?) {
+		guard let destination = makeDestination(for: identifier) else { return }
+		self.prepare(for: identifier, destination: destination, sender: sender)
+
+		guard let splitViewController = self.splitViewController else {
+			self.show(destination, sender: sender)
+			return
+		}
+
+		splitViewController.setViewController(KNavigationController(rootViewController: destination), for: .secondary)
+		splitViewController.show(.secondary)
+	}
 }

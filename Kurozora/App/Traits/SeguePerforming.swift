@@ -41,6 +41,13 @@ protocol SeguePerforming where Self: UIViewController {
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue.
 	func present(_ identifier: SegueIdentifier, sender: Any?)
+
+	/// Replaces the secondary column's view controller in a split view, or falls back to `show`.
+	///
+	/// - Parameters:
+	///    - identifier: The object that identifies the triggered segue.
+	///    - sender: The object to use as the sender of the segue.
+	func showSecondary(_ identifier: SegueIdentifier, sender: Any?)
 }
 
 /// A protocol that defines a type capable of handling segues identified by an associated type.
