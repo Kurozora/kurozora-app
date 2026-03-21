@@ -22,6 +22,29 @@ extension UICollectionView {
 		return itemsCount
 	}
 
+	/// Returns the number of columns in a section by counting items that share the same row as the first item.
+	///
+	/// - Parameter section: The section index to inspect.
+	///
+	/// - Returns: The number of columns, derived from actual layout attributes.
+	func columnCount(inSection section: Int) -> Int {
+		let totalCount = self.numberOfItems(inSection: section)
+		guard totalCount > 1,
+			  let firstItemMinY = self.layoutAttributesForItem(at: IndexPath(item: 0, section: section))?.frame.minY
+		else { return 1 }
+
+		var columns = 1
+		for i in 1..<totalCount {
+			guard let attrs = self.layoutAttributesForItem(at: IndexPath(item: i, section: section)) else { break }
+			if abs(attrs.frame.minY - firstItemMinY) < 1.0 {
+				columns += 1
+			} else {
+				break
+			}
+		}
+		return columns
+	}
+
 	/// Safely scrolls the collection view contents until the specified item is visible.
 	///
 	/// - Parameters:
