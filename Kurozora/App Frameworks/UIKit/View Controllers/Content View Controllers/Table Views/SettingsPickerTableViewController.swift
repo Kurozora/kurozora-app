@@ -88,11 +88,12 @@ class SettingsPickerTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	private func configureSearchController() {
+		self.searchController.searchBar.placeholder = Trans.search
 		self.searchController.searchResultsUpdater = self
 		self.searchController.obscuresBackgroundDuringPresentation = false
-		self.searchController.searchBar.placeholder = Trans.search
+
 		self.navigationItem.searchController = self.searchController
-		self.definesPresentationContext = true
+		self.navigationItem.hidesSearchBarWhenScrolling = false
 	}
 
 	private func scrollToCurrentSelection() {
