@@ -6,11 +6,12 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 enum ProfileBadge {
 	// MARK: - Cases
-	case newUser(username: String, isCurrentUser: Bool)
+	case newUser(user: User, isCurrentUser: Bool)
 	case developer(username: String)
 	case earlySupporter(username: String)
 	case staff(username: String)
@@ -42,8 +43,8 @@ enum ProfileBadge {
 	/// The description value of a profile badge.
 	var description: String {
 		switch self {
-		case .newUser(let username, let isCurrentUser):
-			return isCurrentUser ? "Welcome to Kurozora! Introduce youself to get started (^_^)/" : "\(username) is new to Kurozora. Say hi to them (^o^)/"
+		case .newUser(let user, let isCurrentUser):
+			return isCurrentUser ? "Welcome to Kurozora! Introduce yourself to get started (^_^)/" : "\(user.attributes.username) is new to Kurozora. Say hi to them (^o^)/"
 		case .developer(let username):
 			return "\(username) is an active developer."
 		case .earlySupporter(let username):

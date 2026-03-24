@@ -6,6 +6,7 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 class BadgeViewController: KViewController {
@@ -255,17 +256,32 @@ class BadgeViewController: KViewController {
 		}
 	}
 
-	private func goToMentionUser(username: String) {
+	private func goToMentionUser(_ user: User) {
 		self.dismiss(animated: true) {
-			print("----- Mentioning", username)
+			Task { @MainActor in
+				let signedIn = await WorkflowController.shared.isSignedIn()
+				guard signedIn else { return }
+
+				let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController()
+				kFeedMessageTextEditorViewController.dmToUser = user
+
+				let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
+				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+				UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
+			}
 		}
 	}
 
 	// MARK: - IBActions
 	private func primaryButtonPressed() {
 		switch self.profileBadge {
-		case .newUser(let username, _):
-			self.goToMentionUser(username: username)
+		case .newUser(let user, _):
+			self.goToMentionUser(user)
 		case .developer:
 			self.goToGitHub()
 		case .earlySupporter: break

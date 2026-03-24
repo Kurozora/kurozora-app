@@ -71,7 +71,7 @@ class ProfileBadgeStackView: UIStackView {
 
 		let calendar = Calendar.current
 		if calendar.isDate(user.attributes.joinedAt, equalTo: Date(), toGranularity: .weekOfYear) { // in current week
-			profileBadges.append(.newUser(username: user.attributes.username, isCurrentUser: User.current == user))
+			profileBadges.append(.newUser(user: user, isCurrentUser: User.current == user))
 		}
 
 		if user.attributes.isVerified {
