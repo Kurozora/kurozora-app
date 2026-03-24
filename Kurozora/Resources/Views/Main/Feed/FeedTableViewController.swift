@@ -276,7 +276,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn else { return }
 
-			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
+			let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController()
 			kFeedMessageTextEditorViewController.delegate = self
 
 			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)

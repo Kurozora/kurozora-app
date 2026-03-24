@@ -14,16 +14,16 @@ protocol KFeedMessageTextEditorViewDelegate: AnyObject {
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
 }
 
-protocol KFeedMessageTextEditorViewProviding where Self: UIView {
-	var profileImageView: ProfileImageView { get }
-	var currentUsernameLabel: KLabel { get }
-	var characterCountLabel: KSecondaryLabel { get }
-	var commentTextView: KTextView { get }
-	var labelsButton: KButton { get }
-}
-
 class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - Views
+	private var textEditorView: KFeedMessageTextEditorView {
+		guard let textEditorView = self.view as? KFeedMessageTextEditorView else {
+			fatalError("Expected a KFeedMessageTextEditorView")
+		}
+
+		return textEditorView
+	}
+
 	var profileImageView: ProfileImageView {
 		return self.textEditorView.profileImageView
 	}
@@ -52,17 +52,16 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return sendButton
 	}
 
-	private var textEditorView: any KFeedMessageTextEditorViewProviding {
-		guard let textEditorView = self.view as? any KFeedMessageTextEditorViewProviding else {
-			fatalError("Expected a programmatic text editor view")
-		}
-
-		return textEditorView
-	}
-
 	// MARK: - Properties
+	var editorLayout: FeedMessageEditorLayout = .standard
+
 	var placeholderText: String {
-		return Trans.whatsOnYourMind
+		switch self.editorLayout {
+		case .standard, .reply:
+			return Trans.whatsOnYourMind
+		case .reShare:
+			return Trans.writeAComment
+		}
 	}
 
 	var originalText = "" {
@@ -110,8 +109,10 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	var editingFeedMessage: FeedMessage?
+	var opFeedMessage: FeedMessage?
 	var dmToUser: User?
 	var userInfo: [AnyHashable: Any] = [:]
+	var segueToOPFeedDetails: Bool = false
 
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
@@ -124,7 +125,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	// MARK: - View
 	override func loadView() {
-		self.view = KFeedMessageTextEditorView()
+		self.view = KFeedMessageTextEditorView(layout: self.editorLayout)
 		self.commentTextView.delegate = self
 		self.labelsButton.addTarget(self, action: #selector(self.labelsButtonPressed(_:)), for: .touchUpInside)
 	}
@@ -179,6 +180,11 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.applyMarkdownFormatting(to: self.commentTextView)
 		}
 
+		// Populate OP views if applicable
+		if let opFeedMessage = self.opFeedMessage {
+			self.configureOPViews(with: opFeedMessage)
+		}
+
 		self.commentTextView.becomeFirstResponder()
 	}
 
@@ -213,6 +219,19 @@ class KFeedMessageTextEditorViewController: KViewController {
 				action: #selector(self.sendButtonPressed(_:))
 			)
 		}
+	}
+
+	private func configureOPViews(with opFeedMessage: FeedMessage) {
+		if let opUser = opFeedMessage.relationships.users.data.first {
+			self.textEditorView.opUsernameLabel?.text = opUser.attributes.username
+
+			if let opImageView = self.textEditorView.opProfileImageView {
+				opUser.attributes.profileImage(imageView: opImageView)
+			}
+		}
+
+		self.textEditorView.opMessageTextView?.setAttributedText(opFeedMessage.attributes.contentMarkdown.markdownAttributedString())
+		self.textEditorView.opDateLabel?.text = opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
 	/// Confirm whether to cancel the message.
@@ -283,22 +302,62 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
 				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+				self.dismiss(animated: true, completion: nil)
 			} catch {
 				print("-----", error.localizedDescription)
 			}
 		} else {
-			do {
-				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
-				let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
-				let feedMessages = feedMessagesResponse.data
+			switch self.editorLayout {
+			case .standard:
+				do {
+					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
+					let feedMessages = feedMessagesResponse.data
 
-				self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-			} catch {
-				print("-----", error.localizedDescription)
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+				} catch {
+					print("-----", error.localizedDescription)
+				}
+
+				self.dismiss(animated: true, completion: nil)
+
+			case .reply:
+				do {
+					let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage!.id)
+					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: true, isReShare: false, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
+					let feedMessages = feedMessagesResponse.data
+
+					if self.segueToOPFeedDetails {
+						self.delegate?.segueToOPFeedDetails(self.opFeedMessage!)
+					} else {
+						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+					}
+
+					self.dismiss(animated: true, completion: nil)
+				} catch {
+					print("-----", error.localizedDescription)
+				}
+
+			case .reShare:
+				do {
+					let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage!.id)
+					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: false, isReShare: true, isNSFW: self.opFeedMessage!.attributes.isNSFW, isSpoiler: self.opFeedMessage!.attributes.isSpoiler)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
+					let feedMessages = feedMessagesResponse.data
+
+					if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {
+						self.delegate?.segueToOPFeedDetails(feedMessage)
+					} else {
+						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+					}
+
+					self.dismiss(animated: true, completion: nil)
+				} catch {
+					print("-----", error.localizedDescription)
+				}
 			}
 		}
-
-		self.dismiss(animated: true, completion: nil)
 	}
 
 	/// Applies live markdown formatting to the text view while preserving cursor position.

@@ -285,7 +285,7 @@ extension FeedMessage {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
+		self.openTextEditor(layout: .reply, via: viewController, userInfo: userInfo, isEditingMessage: false)
 	}
 
 	/// Presents the re-share view for the current message.
@@ -299,84 +299,44 @@ extension FeedMessage {
 		guard signedIn else { return }
 
 		if !self.attributes.isReShared {
-			self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
+			self.openTextEditor(layout: .reShare, via: viewController, userInfo: userInfo, isEditingMessage: false)
 		} else {
 			let viewController = viewController ?? UIApplication.topViewController
 			viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
 		}
 	}
 
-	/// Presents the reply text editor on the given view controller. Otherwise the view is presented on the top most view controller.
+	/// Presents the text editor on the given view controller with the specified layout.
 	///
 	/// - Parameters:
+	///    - layout: The editor layout to use (standard, reply, or reShare).
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
-	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		let kfmReplyTextEditorViewController = KFMReplyTextEditorViewController.instantiate()
-		kfmReplyTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
+	func openTextEditor(layout: FeedMessageEditorLayout, via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
+		let editor = KFeedMessageTextEditorViewController()
+		editor.delegate = viewController as? KFeedMessageTextEditorViewDelegate
+		editor.editorLayout = layout
+
 		if isEditingMessage {
-			kfmReplyTextEditorViewController.editingFeedMessage = self
-			kfmReplyTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-			kfmReplyTextEditorViewController.userInfo = userInfo ?? [:]
+			editor.editingFeedMessage = self
+			editor.opFeedMessage = self.relationships.parent?.data.first
+			editor.userInfo = userInfo ?? [:]
 		} else {
-			kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
-			kfmReplyTextEditorViewController.opFeedMessage = self
+			switch layout {
+			case .reply:
+				editor.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
+				editor.opFeedMessage = self
+			case .reShare:
+				editor.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
+				editor.opFeedMessage = self
+			case .standard:
+				break
+			}
 		}
 
-		let kurozoraNavigationController = KNavigationController(rootViewController: kfmReplyTextEditorViewController)
-		kurozoraNavigationController.presentationController?.delegate = kfmReplyTextEditorViewController
-		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-		viewController?.present(kurozoraNavigationController, animated: true)
-	}
-
-	/// Presents the re-share text editor on the given view controller. Otherwise the view is presented on the top most view controller.
-	///
-	/// - Parameters:
-	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any information passed by the user.
-	///    - isEditingMessage: Whether the user is editing a message.
-	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		let kfmReShareTextEditorViewController = KFMReShareTextEditorViewController.instantiate()
-		kfmReShareTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
-		if isEditingMessage {
-			kfmReShareTextEditorViewController.editingFeedMessage = self
-			kfmReShareTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-			kfmReShareTextEditorViewController.userInfo = userInfo ?? [:]
-		} else {
-			kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
-			kfmReShareTextEditorViewController.opFeedMessage = self
-		}
-
-		let kurozoraNavigationController = KNavigationController(rootViewController: kfmReShareTextEditorViewController)
-		kurozoraNavigationController.presentationController?.delegate = kfmReShareTextEditorViewController
-		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
-		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
-		kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
-		kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-		viewController?.present(kurozoraNavigationController, animated: true)
-	}
-
-	/// Presents the default text editor on the given view controller. Otherwise the view is presented on the top most view controller.
-	///
-	/// - Parameters:
-	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any information passed by the user.
-	///    - isEditingMessage: Whether the user is editing a message.
-	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
-		let kFeedMessageTextEditorViewController = KFeedMessageTextEditorViewController.instantiate()
-		if isEditingMessage {
-			kFeedMessageTextEditorViewController.editingFeedMessage = self
-			kFeedMessageTextEditorViewController.userInfo = userInfo ?? [:]
-		}
-
-		let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
-		kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+		let kurozoraNavigationController = KNavigationController(rootViewController: editor)
+		kurozoraNavigationController.presentationController?.delegate = editor
 		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 		kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
 		kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
@@ -392,11 +352,11 @@ extension FeedMessage {
 	///    - userInfo: Any information passed by the user.
 	func editMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		if self.attributes.isReply {
-			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
+			self.openTextEditor(layout: .reply, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		} else if self.attributes.isReShare {
-			self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
+			self.openTextEditor(layout: .reShare, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		} else {
-			self.openDefaultTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
+			self.openTextEditor(layout: .standard, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		}
 	}
 
