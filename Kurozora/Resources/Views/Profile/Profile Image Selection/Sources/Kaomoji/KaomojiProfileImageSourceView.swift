@@ -174,10 +174,12 @@ class KaomojiProfileImageSourceView: UIView {
 				context.fill(CGRect(origin: .zero, size: size))
 			}
 
+			let textColor: UIColor = backgroundColor?.isLight == true ? .black : .white
+
 			// Find the largest font size that fits within the padded area
 			var fontSize: CGFloat = 80
 			let attributes: () -> [NSAttributedString.Key: Any] = {
-				[.font: UIFont.systemFont(ofSize: fontSize), .foregroundColor: UIColor.white]
+				[.font: UIFont.systemFont(ofSize: fontSize), .foregroundColor: textColor]
 			}
 			var textSize = kaomoji.size(withAttributes: attributes())
 

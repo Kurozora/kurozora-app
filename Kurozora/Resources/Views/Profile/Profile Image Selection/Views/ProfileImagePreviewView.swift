@@ -161,6 +161,8 @@ class ProfileImagePreviewView: UIView {
 
 	// MARK: - Monogram Preview
 	func showMonogramTextField() {
+		let textColor: UIColor = self.monogramBackgroundColor.isLight ? .black : .white
+
 		if self.activePreviewSource != .monogram {
 			self.previewImageView.image = nil
 			self.previewImageView.backgroundColor = self.monogramBackgroundColor
@@ -168,6 +170,7 @@ class ProfileImagePreviewView: UIView {
 			let displayInitials = String(self.monogramInitials.prefix(3)).uppercased()
 			self.monogramInitialsLabel.text = displayInitials
 			self.monogramInitialsLabel.font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
+			self.monogramInitialsLabel.textColor = textColor
 			self.monogramInitialsLabel.isHidden = false
 
 			self.activePreviewSource = .monogram
@@ -178,6 +181,7 @@ class ProfileImagePreviewView: UIView {
 		}
 
 		self.monogramTextField.font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
+		self.monogramTextField.textColor = textColor
 		self.monogramTextField.text = self.monogramInitials
 		self.monogramTextField.isHidden = false
 		self.monogramTextField.alpha = 1
@@ -195,13 +199,17 @@ class ProfileImagePreviewView: UIView {
 		self.isUpdatingMonogramPreview = true
 		defer { self.isUpdatingMonogramPreview = false }
 
+		let textColor: UIColor = self.monogramBackgroundColor.isLight ? .black : .white
+
 		self.activePreviewSource = .monogram
 		self.monogramInitialsLabel.isHidden = false
 
 		self.monogramTextField.font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
+		self.monogramTextField.textColor = textColor
 
 		let displayInitials = String(self.monogramInitials.prefix(3)).uppercased()
 		self.monogramInitialsLabel.text = displayInitials
+		self.monogramInitialsLabel.textColor = textColor
 
 		let font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
 		self.monogramInitialsLabel.font = font

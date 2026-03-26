@@ -150,6 +150,7 @@ class AvatarCollectionViewCell: UICollectionViewCell {
 	func configure(with initials: String, backgroundColor: UIColor, font: UIFont) {
 		self.initialsLabel.text = initials
 		self.initialsLabel.font = font
+		self.initialsLabel.textColor = backgroundColor.isLight ? .black : .white
 		self.initialsLabel.isHidden = false
 		self.characterImageView.isHidden = true
 		self.placeholderImageView.isHidden = true

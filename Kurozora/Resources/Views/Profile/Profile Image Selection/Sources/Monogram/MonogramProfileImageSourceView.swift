@@ -194,7 +194,7 @@ class MonogramProfileImageSourceView: UIView {
 
 			let attributes: [NSAttributedString.Key: Any] = [
 				.font: font,
-				.foregroundColor: UIColor.white
+				.foregroundColor: self.selectedBackgroundColor.isLight ? UIColor.black : UIColor.white
 			]
 
 			let textSize = text.size(withAttributes: attributes)
