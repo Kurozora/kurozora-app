@@ -90,6 +90,21 @@ final class AccountManager {
 		self.save(account)
 	}
 
+	/// Returns all raw keychain items for debug inspection.
+	func allRawItems() -> [[String: Any]] {
+		return self.keychain.allItems()
+	}
+
+	/// Sets a raw string value for a key in the accounts keychain.
+	func setRawValue(_ value: String, forKey key: String) {
+		try? self.keychain.set(value, key: key)
+	}
+
+	/// Removes a raw key from the accounts keychain.
+	func removeRawValue(forKey key: String) {
+		try? self.keychain.remove(key)
+	}
+
 	/// One-time migration from the legacy flat slug to token keychain format.
 	func migrateIfNeeded() {
 		guard !UserSettings.accountStorageMigrationCompleted else { return }
