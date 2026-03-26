@@ -10,10 +10,23 @@ import UIKit
 
 extension String {
 	// MARK: - Properties
-	/// Returns the initial characters (up to 2 characters) of the string separated by a whitespace or a dot. For example "John Appleseed" and "John.Appleseed" returns "JA". Returned value is case insensitive which means "john appleseed" will return "ja".
+	/// Returns the initial characters of the string.
+	///
+	/// This separated by a whitespace, dot, or hyphen,
+	/// and prefers the first letter in each component,
+	/// falling back to the first character of the string
+	/// when no letters exist.
 	var initials: String {
-		let stringSeparatedByWhiteSpace = self.components(separatedBy: [".", " ", "-"])
-		return stringSeparatedByWhiteSpace.reduce("") { ($0 == "" ? "" : "\($0.first ?? " ")") + "\($1.first ?? " ")" }
+		let components = self.components(separatedBy: [".", " ", "-"])
+		let letterInitials = components.lazy
+			.compactMap { component in component.first(where: \.isLetter) }
+			.prefix(2)
+
+		if letterInitials.isEmpty {
+			return self.first.map(String.init) ?? ""
+		}
+
+		return String(letterInitials)
 	}
 
 	/// Returns a copy of the sequence with the first element capitalized.
