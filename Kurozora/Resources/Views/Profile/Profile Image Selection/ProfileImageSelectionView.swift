@@ -515,16 +515,32 @@ extension ProfileImageSelectionView: ProfileImageActionBarViewDelegate {
 			self.previewView.emojiBackgroundColor = color
 			self.previewView.previewImageView.backgroundColor = color
 			self.emojiProfileImageSourceView.imageBackgroundColor = color
-			if let emoji = self.previewView.selectedEmoji {
+			let emoji = self.previewView.selectedEmoji ?? self.emojiProfileImageSourceView.firstEmoji
+			if let emoji = emoji {
+				self.previewView.selectedEmoji = emoji
+				self.previewView.activePreviewSource = .emoji
+				self.previewView.monogramInitialsLabel.isHidden = true
+				self.emojiProfileImageSourceView.selectedEmoji = emoji
 				let generatedImage = self.emojiProfileImageSourceView.generateEmojiImage(emoji)
+				let previewImage = self.emojiProfileImageSourceView.generateEmojiImage(emoji, backgroundColor: nil)
+				self.previewView.previewImageView.image = previewImage
+				self.previewView.updateDeleteButtonVisibility()
 				self.delegate?.profileImageSelectionView(self, didSelectImage: generatedImage)
 			}
 		case .kaomoji:
 			self.previewView.kaomojiBackgroundColor = color
-			self.previewView.previewImageView.backgroundColor = color
 			self.kaomojiProfileImageSourceView.imageBackgroundColor = color
-			if let kaomoji = self.previewView.selectedKaomoji {
+			let kaomoji = self.previewView.selectedKaomoji ?? KaomojiProfileImageSourceView.allKaomojis.first
+			if let kaomoji = kaomoji {
+				self.previewView.selectedKaomoji = kaomoji
+				self.previewView.activePreviewSource = .kaomoji
+				self.previewView.monogramInitialsLabel.isHidden = true
+				self.kaomojiProfileImageSourceView.selectedKaomoji = kaomoji
 				let generatedImage = self.kaomojiProfileImageSourceView.generateKaomojiImage(kaomoji)
+				let previewImage = self.kaomojiProfileImageSourceView.kaomojiPreviewImage(kaomoji)
+				self.previewView.previewImageView.image = previewImage
+				self.previewView.previewImageView.backgroundColor = color
+				self.previewView.updateDeleteButtonVisibility()
 				self.delegate?.profileImageSelectionView(self, didSelectImage: generatedImage)
 			}
 		case .monogram:

@@ -19,6 +19,10 @@ class EmojiProfileImageSourceView: UIView {
 	var imageBackgroundColor: UIColor?
 	var selectedEmoji: String?
 
+	var firstEmoji: String? {
+		return self.emojis.first
+	}
+
 	private let emojis: [String] = [
 		"😊", "🥰", "😎", "🤩", "🥳", "😈", "🤖", "👾",
 		"🦊", "🐱", "🐶", "🐰", "🐼", "🦁", "🐸", "🦋",
