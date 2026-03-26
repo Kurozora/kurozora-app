@@ -250,14 +250,9 @@ class ProfileImageActionBarView: UIView {
 		colorPicker.selectedColor = self.currentColorForPicker
 		colorPicker.supportsAlpha = false
 		colorPicker.delegate = self
-		colorPicker.modalPresentationStyle = .formSheet
+		colorPicker.modalPresentationStyle = .popover
 		colorPicker.presentationController?.delegate = self
-
-		if let sheet = colorPicker.sheetPresentationController {
-			sheet.detents = [.medium()]
-			sheet.prefersGrabberVisible = true
-			sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-		}
+		colorPicker.popoverPresentationController?.sourceView = self.colorButton
 
 		parentViewController.present(colorPicker, animated: true)
 	}
