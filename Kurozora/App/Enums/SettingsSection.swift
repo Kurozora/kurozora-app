@@ -210,7 +210,7 @@ extension SettingsTableViewController {
 
 		/// An array containing all account section settings rows.
 		static var allAccount: [Row] {
-			if User.isSignedIn || !SharedDelegate.shared.keychain.allKeys().isEmpty {
+			if User.isSignedIn || !AccountManager.shared.allAccounts().isEmpty {
 				return [.account, .switchAccount]
 			}
 

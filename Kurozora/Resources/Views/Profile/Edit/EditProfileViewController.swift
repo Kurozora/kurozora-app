@@ -290,6 +290,34 @@ class EditProfileViewController: KViewController {
 				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
 				User.current?.attributes.update(using: userUpdateResponse.data)
 
+				// Sync keychain with updated profile metadata.
+				let oldSlug = self.originalUsernameText?.isEmpty == false ? self.originalUsernameText! : UserSettings.selectedAccount
+
+				if let username, !username.isEmpty, username != oldSlug {
+					// Slug changed — migrate keychain entry.
+					if let oldAccount = AccountManager.shared.account(forSlug: oldSlug) {
+						let newAccount = StoredAccount(
+							slug: username,
+							username: User.current?.attributes.username,
+							profileImageURL: User.current?.attributes.profile?.url,
+							authenticationToken: oldAccount.authenticationToken
+						)
+						AccountManager.shared.save(newAccount)
+						AccountManager.shared.remove(slug: oldSlug)
+						UserSettings.set(username, forKey: .selectedAccount)
+						WatchSessionManager.shared.sendAuthState(slug: username, token: oldAccount.authenticationToken)
+					}
+				} else {
+					// Slug unchanged — update metadata in place.
+					if var account = AccountManager.shared.account(forSlug: oldSlug) {
+						account.username = User.current?.attributes.username
+						account.profileImageURL = User.current?.attributes.profile?.url
+						AccountManager.shared.save(account)
+					}
+				}
+
+				NotificationCenter.default.post(name: .KUserProfileDidUpdate, object: nil)
+
 				self.dismiss(animated: true)
 			} catch let error as KKAPIError {
 				self.presentAlertController(title: "Error Updating Profile", message: error.message)

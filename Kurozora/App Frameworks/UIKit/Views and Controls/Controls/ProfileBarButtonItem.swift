@@ -6,6 +6,7 @@
 //  Copyright © 2025 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 /// A specialized profile button for placement on a toolbar, navigation bar, or shortcuts bar.
@@ -46,6 +47,10 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+
 	// MARK: - Functions
 	/// Configures the bar button item.
 	private func configureView() {
@@ -66,5 +71,11 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 			self.button.widthAnchor.constraint(equalToConstant: buttonSize),
 			self.button.heightAnchor.constraint(equalToConstant: buttonSize)
 		])
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshProfileImage), name: .KUserProfileDidUpdate, object: nil)
+	}
+
+	@objc private func refreshProfileImage() {
+		self.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
 	}
 }

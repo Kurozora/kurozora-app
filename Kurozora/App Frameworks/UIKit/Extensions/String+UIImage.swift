@@ -35,6 +35,16 @@ extension String {
 		return Self.placeholderPalette[index]
 	}
 
+	/// Returns an initials-based profile placeholder image derived from the string.
+	var profilePlaceholderImage: UIImage {
+		let initials = self.initials.capitalized
+		return initials.toImage(
+			withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300),
+			backgroundColor: initials.placeholderColor,
+			placeholder: .Placeholders.userProfile
+		)
+	}
+
 	// MARK: - Functions
 	/// Returns a UIImage from the string. If no image can be created then the specified placeholder is returned.
 	///

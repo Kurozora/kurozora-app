@@ -8,6 +8,14 @@
 
 import Foundation
 
+// MARK: - User Profile
+extension Notification.Name {
+	/// A notification posted when the current user's profile metadata (slug, display name, or profile image) changes.
+	static var KUserProfileDidUpdate: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Subscription
 extension Notification.Name {
 	/// A notification posted when the user's subscription status changes.

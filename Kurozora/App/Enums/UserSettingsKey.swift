@@ -13,6 +13,8 @@ enum UserSettingsKey: String {
 	// Account keys
 	/// The key to the selected account.
 	case selectedAccount
+	/// The key indicating whether account storage migration has completed.
+	case accountStorageMigrationCompleted
 
 	// API keys
 	/// The key to the selected API endpoint.

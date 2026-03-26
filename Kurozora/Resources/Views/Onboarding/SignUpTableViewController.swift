@@ -60,7 +60,13 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			// Save user in keychain.
 			if let slug = User.current?.attributes.slug {
-				try? SharedDelegate.shared.keychain.set(KService.authenticationKey, key: slug)
+				let account = StoredAccount(
+					slug: slug,
+					username: User.current?.attributes.username,
+					profileImageURL: User.current?.attributes.profile?.url,
+					authenticationToken: KService.authenticationKey
+				)
+				AccountManager.shared.save(account)
 				UserSettings.set(slug, forKey: .selectedAccount)
 			}
 		} catch {

@@ -44,6 +44,9 @@ final class KurozoraDelegate {
 			return false
 		}
 
+		// Migrate legacy keychain entries to the new account storage
+		AccountManager.shared.migrateIfNeeded()
+
 		// Get settings to enable extra functionality
 		await WorkflowController.shared.getSettings()
 

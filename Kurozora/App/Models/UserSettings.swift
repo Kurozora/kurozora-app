@@ -39,8 +39,13 @@ class UserSettings: UserDefaults {
 extension UserSettings {
 	/// Returns a string of the currently selected account
 	static var selectedAccount: String {
-		guard let selectedAccount = shared.string(forKey: #function) else { return "" }
+		guard let selectedAccount = self.shared.string(forKey: #function) else { return "" }
 		return selectedAccount
+	}
+
+	/// Returns a boolean indicating whether account storage migration has completed.
+	static var accountStorageMigrationCompleted: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 }
 
@@ -49,7 +54,7 @@ extension UserSettings {
 	/// Returns a `KurozoraAPI` type indicating the preferred API endpoint.
 	static var apiEndpoint: KurozoraAPI? {
 		#if DEBUG
-		guard let baseURL = shared.string(forKey: #function) else { return nil }
+		guard let baseURL = self.shared.string(forKey: #function) else { return nil }
 		return KurozoraAPI.allCases.first { apiEndpoint in
 			apiEndpoint.baseURL == baseURL
 		} ?? .custom(baseURL)
@@ -71,26 +76,26 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns a string indicating the currently used splash screen animation.
 	static var currentSplashScreenAnimation: SplashScreenAnimation {
-		guard let currentAnimation = SplashScreenAnimation(rawValue: shared.integer(forKey: #function)) else { return .default }
+		guard let currentAnimation = SplashScreenAnimation(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return currentAnimation
 	}
 
 	/// Returns a string indicating the currently used theme.
 	static var currentTheme: String {
-		guard let currentTheme = shared.string(forKey: #function) else { return "" }
+		guard let currentTheme = self.shared.string(forKey: #function) else { return "" }
 		return currentTheme
 	}
 
 	/// Returns a string indicating the currently used theme's name.
 	static var currentThemeName: String {
-		guard let currentThemeName = shared.string(forKey: #function) else { return "" }
+		guard let currentThemeName = self.shared.string(forKey: #function) else { return "" }
 		return currentThemeName
 	}
 
 	/// Returns a string indicating the currently used app icon.
 	static var appIcon: String {
 		let primaryIcon = "Kurozora"
-		guard var appIcon = shared.string(forKey: #function) else { return primaryIcon }
+		guard var appIcon = self.shared.string(forKey: #function) else { return primaryIcon }
 
 		if #available(iOS 18.0, *) {
 			appIcon += " Preview"
@@ -101,7 +106,7 @@ extension UserSettings {
 
 	/// Returns a `KBrowser` type indicating the preferred default browser.
 	static var defaultBrowser: KBrowser {
-		guard let defaultBrowser = KBrowser(rawValue: shared.integer(forKey: #function)) else { return .kurozora }
+		guard let defaultBrowser = KBrowser(rawValue: self.shared.integer(forKey: #function)) else { return .kurozora }
 		return defaultBrowser
 	}
 

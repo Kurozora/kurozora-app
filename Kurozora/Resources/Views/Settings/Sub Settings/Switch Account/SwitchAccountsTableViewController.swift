@@ -16,8 +16,8 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 
 	// MARK: - Properties
 	/// All user accounts.
-	var accounts: [String] {
-		return SharedDelegate.shared.keychain.allKeys()
+	var accounts: [StoredAccount] {
+		return AccountManager.shared.allAccounts()
 	}
 
 	// MARK: - Initializers
@@ -80,49 +80,47 @@ extension SwitchAccountsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: "\(SelectableSettingsCell.self)", for: indexPath) as? SelectableSettingsCell else {
-			fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.self)")
+		guard let selectableAccountSettingsCell = tableView.dequeueReusableCell(withIdentifier: "\(SelectableAccountSettingsCell.self)", for: indexPath) as? SelectableAccountSettingsCell else {
+			fatalError("Cannot dequeue reusable cell with identifier \(SelectableAccountSettingsCell.self)")
 		}
-		let accountKey = self.accounts[indexPath.item]
-		selectableSettingsCell.configure(title: accountKey)
-		selectableSettingsCell.setSelected(accountKey == UserSettings.selectedAccount)
-		return selectableSettingsCell
+		let account = self.accounts[indexPath.item]
+		let isSelected = account.slug == UserSettings.selectedAccount
+		selectableAccountSettingsCell.configure(using: account, isSelected: isSelected)
+		return selectableAccountSettingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		let accountKey = self.accounts[indexPath.item]
-		return !(accountKey == UserSettings.selectedAccount)
+		let account = self.accounts[indexPath.item]
+		return account.slug != UserSettings.selectedAccount
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension SwitchAccountsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let accountKey = self.accounts[indexPath.item]
+		let account = self.accounts[indexPath.item]
+
 		// Update user settings for selected account.
-		UserSettings.set(accountKey, forKey: .selectedAccount)
+		UserSettings.set(account.slug, forKey: .selectedAccount)
 
-		// Retrieve selected user's session.
-		if let authenticationKey = SharedDelegate.shared.keychain[accountKey] {
-			// Start using the selected user's authentication key.
-			KService.authenticationKey = authenticationKey
+		// Start using the selected user's authentication key.
+		KService.authenticationKey = account.authenticationToken
 
-			// Restore the user's session.
-			Task {
-				if await WorkflowController.shared.restoreCurrentUserSession() {
-					// Notify views the user has changed.
-					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-				}
+		// Restore the user's session.
+		Task {
+			if await WorkflowController.shared.restoreCurrentUserSession() {
+				// Notify views the user has changed.
+				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			}
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let removeAction = UIContextualAction(style: .destructive, title: "Sign out", handler: { _, _, completion in
-			let accountKey = self.accounts[indexPath.item]
+		let removeAction = UIContextualAction(style: .destructive, title: Trans.signOut, handler: { _, _, completion in
+			let account = self.accounts[indexPath.item]
 
-			// Remove user's authentication key from keychain and update tableView.
-			try? SharedDelegate.shared.keychain.remove(accountKey)
+			// Remove user's account from keychain and update tableView.
+			AccountManager.shared.remove(slug: account.slug)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 			completion(true)
 		})
@@ -134,6 +132,6 @@ extension SwitchAccountsTableViewController {
 // MARK: - KTableViewDataSource
 extension SwitchAccountsTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [SelectableSettingsCell.self]
+		return [SelectableAccountSettingsCell.self]
 	}
 }

@@ -84,6 +84,7 @@ final class KSidebarBottomProfileView: UIControl {
 
 	private func configureNotifications() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshUser), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshUser), name: .KUserProfileDidUpdate, object: nil)
 	}
 
 	// MARK: - User handling

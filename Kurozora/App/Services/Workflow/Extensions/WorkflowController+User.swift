@@ -103,11 +103,19 @@ extension WorkflowController {
 	@discardableResult
 	func restoreCurrentUserSession() async -> Bool {
 		let accountKey = UserSettings.selectedAccount
-		if let authenticationKey = SharedDelegate.shared.keychain[accountKey] {
-			KService.authenticationKey = authenticationKey
+		if let account = AccountManager.shared.account(forSlug: accountKey) {
+			KService.authenticationKey = account.authenticationToken
 
 			do {
 				_ = try await KService.getProfileDetails()
+
+				// Refresh stored metadata with latest profile data
+				AccountManager.shared.updateMetadata(
+					forSlug: accountKey,
+					username: User.current?.attributes.username,
+					profileImageURL: User.current?.attributes.profile?.url
+				)
+
 				return true
 			} catch {
 				print("-----", error.localizedDescription)
@@ -154,11 +162,11 @@ extension WorkflowController {
 	/// Signs out the user and removes all data from the keychain.
 	func signOut() async {
 		guard User.isSignedIn else { return }
-		let slug = User.current?.attributes.slug ?? ""
+		let slug = User.current?.attributes.slug ?? UserSettings.selectedAccount
 
 		do {
 			_ = try await KService.signOut()
-			try? SharedDelegate.shared.keychain.remove(slug)
+			AccountManager.shared.remove(slug: slug)
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
 			print("-----", error.message)
@@ -175,11 +183,11 @@ extension WorkflowController {
 	/// - Returns: a boolean indicating whether the deletion is successful.
 	func deleteUser(password: String) async -> Bool {
 		guard User.isSignedIn else { return false }
-		let slug = User.current?.attributes.slug ?? ""
+		let slug = User.current?.attributes.slug ?? UserSettings.selectedAccount
 
 		do {
 			_ = try await KService.deleteUser(password: password)
-			try? SharedDelegate.shared.keychain.remove(slug)
+			AccountManager.shared.remove(slug: slug)
 			return true
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)

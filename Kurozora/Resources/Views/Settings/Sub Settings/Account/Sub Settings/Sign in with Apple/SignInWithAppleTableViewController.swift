@@ -102,7 +102,13 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 					case .signIn:
 						// Save user in keychain.
 						if let slug = User.current?.attributes.slug {
-							try? SharedDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: slug)
+							let account = StoredAccount(
+								slug: slug,
+								username: User.current?.attributes.username,
+								profileImageURL: User.current?.attributes.profile?.url,
+								authenticationToken: oAuthResponse.authenticationToken
+							)
+							AccountManager.shared.save(account)
 							UserSettings.set(slug, forKey: .selectedAccount)
 						}
 
