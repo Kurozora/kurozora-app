@@ -62,9 +62,9 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 
 		let buttonSize: CGFloat
 		#if targetEnvironment(macCatalyst)
-			buttonSize = 28
+		buttonSize = 28
 		#else
-			buttonSize = 36
+		buttonSize = 36
 		#endif
 
 		NSLayoutConstraint.activate([
@@ -75,7 +75,11 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshProfileImage), name: .KUserProfileDidUpdate, object: nil)
 	}
 
-	@objc private func refreshProfileImage() {
-		self.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+	@objc private func refreshProfileImage(_ notification: Notification) {
+		if let image = notification.userInfo?["profileImage"] as? UIImage {
+			self.image = image
+		} else {
+			self.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		}
 	}
 }

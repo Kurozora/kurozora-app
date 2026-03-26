@@ -27,8 +27,7 @@ extension User.Attributes {
 	///
 	/// - Returns: a placeholder `UIImage` for the user's profile using the user's initials if available, otherwise a placeholder profile image is returned.
 	var profilePlaceholderImage: UIImage {
-		let usernameInitials = self.username.initials.capitalized
-		return usernameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), backgroundColor: usernameInitials.placeholderColor, placeholder: .Placeholders.userProfile)
+		return self.username.profilePlaceholderImage
 	}
 
 	/// Returns a placeholder `UIImage` for the user's banner using `UIColor.kurozora` color.

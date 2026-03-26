@@ -84,7 +84,7 @@ final class KSidebarBottomProfileView: UIControl {
 
 	private func configureNotifications() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshUser), name: .KUserIsSignedInDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshUser), name: .KUserProfileDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
 	}
 
 	// MARK: - User handling
@@ -100,6 +100,21 @@ final class KSidebarBottomProfileView: UIControl {
 				self.nameLabel.text = Trans.guest
 			}
 
+			self.setNeedsLayout()
+		}
+	}
+
+	@objc private func handleProfileDidUpdate(_ notification: Notification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self else { return }
+
+			if let image = notification.userInfo?["profileImage"] as? UIImage {
+				self.profileImageView.image = image
+			} else if let user = User.current {
+				user.attributes.profileImage(imageView: self.profileImageView)
+			}
+
+			self.nameLabel.text = User.current?.attributes.username ?? Trans.guest
 			self.setNeedsLayout()
 		}
 	}

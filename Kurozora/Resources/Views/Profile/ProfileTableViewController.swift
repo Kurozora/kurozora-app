@@ -57,13 +57,13 @@ class ProfileTableViewController: KTableViewController {
 
 			self._prefersActivityIndicatorHidden = true
 			#if targetEnvironment(macCatalyst)
-            self.touchBar = nil
+			self.touchBar = nil
 			#endif
 
 			#if DEBUG
-            #if !targetEnvironment(macCatalyst)
-            self.refreshControl?.endRefreshing()
-            #endif
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
 			#endif
 		}
 	}
@@ -155,10 +155,11 @@ class ProfileTableViewController: KTableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateAttributedText), name: .ThemeUpdateNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 
 		if self.userIdentity == nil {
@@ -192,9 +193,24 @@ class ProfileTableViewController: KTableViewController {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KUserProfileDidUpdate, object: nil)
 
 		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
 			self.sidebarBottomProfileView?.isSelected = false
+		}
+	}
+
+	@objc private func handleProfileDidUpdate(_ notification: Notification) {
+		guard self.user.id == User.current?.id else { return }
+		self.user = User.current
+		self.configureProfile()
+
+		// Overwrite after configureProfile's Kingfisher calls to avoid placeholder flash
+		if let profileImage = notification.userInfo?["profileImage"] as? UIImage {
+			self.profileImageView.image = profileImage
+		}
+		if let bannerImage = notification.userInfo?["bannerImage"] as? UIImage {
+			self.bannerImageView.image = bannerImage
 		}
 	}
 
@@ -600,7 +616,7 @@ class ProfileTableViewController: KTableViewController {
 		guard let userIdentity = self.userIdentity else { return }
 
 		#if !targetEnvironment(macCatalyst)
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
 		#endif
 
 		do {
@@ -626,8 +642,8 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		#if !targetEnvironment(macCatalyst)
-        self.refreshControl?.endRefreshing()
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 	}
 

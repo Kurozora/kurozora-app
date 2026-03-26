@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 /// TextFieldTag is used to identify the text fields in the EditProfileViewController.
 enum TextFieldTag: Int {
@@ -75,6 +75,7 @@ class EditProfileViewController: KViewController {
 			self.editedUsernameText = self.originalUsernameText
 		}
 	}
+
 	var editedUsernameText: String?
 
 	var originalNicknameText: String? {
@@ -82,6 +83,7 @@ class EditProfileViewController: KViewController {
 			self.editedNicknameText = self.originalNicknameText
 		}
 	}
+
 	var editedNicknameText: String?
 
 	var originalBioText: String? {
@@ -89,6 +91,7 @@ class EditProfileViewController: KViewController {
 			self.editedBioText = self.originalBioText
 		}
 	}
+
 	var editedBioText: String?
 
 	var originalProfileImage: UIImage! = UIImage() {
@@ -96,6 +99,7 @@ class EditProfileViewController: KViewController {
 			self.editedProfileImage = self.originalProfileImage
 		}
 	}
+
 	var editedProfileImage: UIImage! = UIImage()
 	var editedProfileImageURL: URL?
 
@@ -104,19 +108,22 @@ class EditProfileViewController: KViewController {
 			self.editedBannerImage = self.originalBannerImage
 		}
 	}
+
 	var editedBannerImage: UIImage! = UIImage()
 	var editedBannerImageURL: URL?
 
 	var hasChanges: Bool {
 		return self.originalUsernameText != self.editedUsernameText
-		|| self.originalNicknameText != self.editedNicknameText
-		|| self.originalBioText != self.editedBioText
-		|| self.profileImageHasChanges
-		|| self.bannerImageHasChanges
+			|| self.originalNicknameText != self.editedNicknameText
+			|| self.originalBioText != self.editedBioText
+			|| self.profileImageHasChanges
+			|| self.bannerImageHasChanges
 	}
+
 	var profileImageHasChanges: Bool {
 		return !self.originalProfileImage.isEqual(to: self.editedProfileImage)
 	}
+
 	var bannerImageHasChanges: Bool {
 		return !self.originalBannerImage.isEqual(to: self.editedBannerImage)
 	}
@@ -316,7 +323,14 @@ class EditProfileViewController: KViewController {
 					}
 				}
 
-				NotificationCenter.default.post(name: .KUserProfileDidUpdate, object: nil)
+				NotificationCenter.default.post(
+					name: .KUserProfileDidUpdate,
+					object: nil,
+					userInfo: [
+						"profileImage": self.editedProfileImage as Any,
+						"bannerImage": self.editedBannerImage as Any
+					]
+				)
 
 				self.dismiss(animated: true)
 			} catch let error as KKAPIError {
