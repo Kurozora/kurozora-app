@@ -115,9 +115,19 @@ class KaomojiProfileImageSourceView: UIView {
 		self.updateDataSource()
 	}
 
+	private static let suggestedKaomojis: [String] = [
+		"(◕‿◕)", "(≧◡≦)", "(✧ω✧)", "٩(◕‿◕)۶", "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧", "(✯◡✯)", "(●'◡'●)", "(^▽^)",
+		"(˘³˘)♥", "(♡‿♡)", "(✿ ♡‿♡)", "(づ￣³￣)づ", "(♡˙︶˙♡)", "(*˘︶˘*).｡.:*♡", "(◕‿◕)♡", "(♡°▽°♡)",
+		"ʕ•ᴥ•ʔ", "ʕ´•ᴥ•ʔ", "₍ᐢ._.ᐢ₎", "ᓚᘏᗢ", "(=^･ω･^=)", "(=^･ｪ･^=)", "V●ᴥ●V", "∪･ω･∪",
+		"(⌐■■)", "( ͡° ͜ʖ ͡°)", "¯\\(ツ)_/¯", "(•̀ᴗ•́)و", "(¬‿¬)", "ᕙ(⇀‸↼‶)ᕗ", "(ง'̀-'́)ง", "(☞ﾟヮﾟ)☞",
+		"(ꈍᴗꈍ)", "(◕ᴗ◕✿)", "(◡‿◡✿)", "(灬º‿º灬)♡", "(〃▽〃)", "(〃 ω 〃)", "(/▽＼)", "(#^.^#)",
+		"ヽ(>∀<☆)ノ", "╰(°▽°)╯", "⸜(｡˃ᵕ˂)⸝", "(⑅˃◡˂⑅)", "₍₍◝(°꒳°)◜₎₎", "(ᵔ◡ᵔ)", "(*＾▽＾)／", "(☆▽☆)",
+		"(╯°□°)╯︵┻━┻", "┬─┬ノ(ಠ_ಠノ)", "(ノಠ益ಠ)ノ", "orz", "m(_ _)m", "(-_-)zzz", "(－ω－) zzZ", "(∪｡∪)｡｡｡zzz"
+	]
+
 	private func generatePresets() {
 		let shuffledColors = self.kaomojiBackgroundColors.shuffled()
-		self.presets = Self.allKaomojis.enumerated().map { index, kaomoji in
+		self.presets = Self.suggestedKaomojis.enumerated().map { index, kaomoji in
 			KaomojiPreset(
 				id: index,
 				kaomoji: kaomoji,
