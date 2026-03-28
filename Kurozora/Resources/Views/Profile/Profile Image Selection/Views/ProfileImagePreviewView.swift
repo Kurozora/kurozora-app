@@ -16,6 +16,7 @@ protocol ProfileImagePreviewViewDelegate: AnyObject {
 	func profileImagePreviewViewDidRequestEditMonogram(_ view: ProfileImagePreviewView)
 	func profileImagePreviewViewDidRequestEditEmoji(_ view: ProfileImagePreviewView)
 	func profileImagePreviewViewDidRequestEditKaomoji(_ view: ProfileImagePreviewView)
+	func profileImagePreviewViewDidRequestDelete(_ view: ProfileImagePreviewView)
 }
 
 class ProfileImagePreviewView: UIView {
@@ -23,6 +24,8 @@ class ProfileImagePreviewView: UIView {
 	private let imageKind: ImageKind
 
 	weak var delegate: ProfileImagePreviewViewDelegate?
+
+	var placeholderImage: UIImage?
 
 	var monogramInitials: String = "AB"
 	var monogramBackgroundColor: UIColor = .kurozora
@@ -85,6 +88,39 @@ class ProfileImagePreviewView: UIView {
 		return textField
 	}()
 
+	private(set) lazy var deleteButton: UIButton = {
+		let button = UIButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.isHidden = true
+		button.alpha = 0
+		button.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+		button.accessibilityLabel = String(localized: "Remove image")
+
+		if #available(iOS 26.0, *) {
+			var config = UIButton.Configuration.glass()
+			config.image = UIImage(systemName: "xmark")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
+			config.cornerStyle = .capsule
+			button.configuration = config
+		} else {
+			button.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
+			button.tintColor = UIColor(white: 0.5, alpha: 1.0)
+			button.configuration = {
+				var config = UIButton.Configuration.plain()
+				config.image = UIImage(systemName: "xmark")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
+				return config
+			}()
+			button.layerCornerRadius = 12
+		}
+
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 24),
+			button.heightAnchor.constraint(equalToConstant: 24)
+		])
+
+		button.addTarget(self, action: #selector(self.deleteButtonTapped), for: .touchUpInside)
+		return button
+	}()
+
 	private(set) lazy var emojiTextField: UITextField = {
 		let textField = EmojiTextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
@@ -132,6 +168,7 @@ class ProfileImagePreviewView: UIView {
 		self.addSubview(self.monogramInitialsLabel)
 		self.addSubview(self.monogramTextField)
 		self.addSubview(self.emojiTextField)
+		self.addSubview(self.deleteButton)
 
 		NSLayoutConstraint.activate([
 			self.previewImageView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -155,7 +192,10 @@ class ProfileImagePreviewView: UIView {
 			self.emojiTextField.topAnchor.constraint(equalTo: self.previewImageView.topAnchor),
 			self.emojiTextField.leadingAnchor.constraint(equalTo: self.previewImageView.leadingAnchor),
 			self.emojiTextField.trailingAnchor.constraint(equalTo: self.previewImageView.trailingAnchor),
-			self.emojiTextField.bottomAnchor.constraint(equalTo: self.previewImageView.bottomAnchor)
+			self.emojiTextField.bottomAnchor.constraint(equalTo: self.previewImageView.bottomAnchor),
+
+			self.deleteButton.topAnchor.constraint(equalTo: self.previewImageView.topAnchor, constant: -4),
+			self.deleteButton.trailingAnchor.constraint(equalTo: self.previewImageView.trailingAnchor, constant: 4)
 		])
 	}
 
@@ -243,6 +283,50 @@ class ProfileImagePreviewView: UIView {
 		self.emojiTextField.alpha = 0
 	}
 
+	// MARK: - Delete Button
+	func updateDeleteButtonVisibility(animated: Bool = true) {
+		let hasCustomImage: Bool
+		if self.activePreviewSource != nil {
+			hasCustomImage = true
+		} else if let currentImage = self.previewImageView.image, let placeholder = self.placeholderImage {
+			hasCustomImage = !currentImage.isEqual(to: placeholder)
+		} else {
+			hasCustomImage = self.previewImageView.image != nil && self.placeholderImage != nil
+		}
+		self.setDeleteButtonVisible(hasCustomImage, animated: animated)
+	}
+
+	private func setDeleteButtonVisible(_ visible: Bool, animated: Bool) {
+		if visible == !self.deleteButton.isHidden && self.deleteButton.alpha == (visible ? 1 : 0) {
+			return
+		}
+
+		if visible {
+			self.deleteButton.isHidden = false
+		}
+
+		if animated {
+			UIView.animate(
+				withDuration: 0.45,
+				delay: 0,
+				usingSpringWithDamping: 0.6,
+				initialSpringVelocity: 0.8,
+				options: [.curveEaseInOut]
+			) {
+				self.deleteButton.alpha = visible ? 1 : 0
+				self.deleteButton.transform = visible ? .identity : CGAffineTransform(scaleX: 0.01, y: 0.01)
+			} completion: { _ in
+				if !visible {
+					self.deleteButton.isHidden = true
+				}
+			}
+		} else {
+			self.deleteButton.alpha = visible ? 1 : 0
+			self.deleteButton.transform = visible ? .identity : CGAffineTransform(scaleX: 0.01, y: 0.01)
+			self.deleteButton.isHidden = !visible
+		}
+	}
+
 	// MARK: - Animations
 	/// Plays a horizontal shake animation on the preview image to indicate rejected input.
 	private func shakePreviewImage() {
@@ -255,6 +339,10 @@ class ProfileImagePreviewView: UIView {
 	}
 
 	// MARK: - Actions
+	@objc private func deleteButtonTapped() {
+		self.delegate?.profileImagePreviewViewDidRequestDelete(self)
+	}
+
 	@objc private func previewTapped() {
 		switch self.activePreviewSource {
 		case .monogram:

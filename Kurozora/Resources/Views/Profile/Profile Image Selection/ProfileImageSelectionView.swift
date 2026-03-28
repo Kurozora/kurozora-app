@@ -42,6 +42,7 @@ class ProfileImageSelectionView: UIView {
 	}
 
 	var originalSelectedImage: UIImage?
+	var placeholderImage: UIImage?
 	var selectedSource: ProfileImageSource = .monogram
 	private var isConfigured = false
 
@@ -153,12 +154,17 @@ class ProfileImageSelectionView: UIView {
 	}
 
 	// MARK: - Configuration
-	func configure(with image: UIImage?) {
+	func configure(with image: UIImage?, placeholderImage: UIImage? = nil) {
+		if let placeholderImage = placeholderImage {
+			self.placeholderImage = placeholderImage
+			self.previewView.placeholderImage = placeholderImage
+		}
 		self.previewView.previewImageView.image = image
 		if image != nil {
 			self.previewView.monogramInitialsLabel.isHidden = true
 			self.previewView.previewImageView.backgroundColor = .clear
 		}
+		self.previewView.updateDeleteButtonVisibility(animated: false)
 	}
 
 	func reloadPhotos() {
@@ -485,6 +491,14 @@ extension ProfileImageSelectionView: ProfileImagePreviewViewDelegate {
 		guard self.selectedSource == .kaomoji else { return }
 		self.presentKaomojiPicker(sourceView: self.previewView.previewImageView)
 	}
+
+	func profileImagePreviewViewDidRequestDelete(_ view: ProfileImagePreviewView) {
+		self.previewView.resetToPlaceholder()
+		self.originalSelectedImage = nil
+		if let placeholderImage = self.placeholderImage {
+			self.delegate?.profileImageSelectionView(self, didSelectImage: placeholderImage)
+		}
+	}
 }
 
 // MARK: - ProfileImageActionBarViewDelegate
@@ -582,6 +596,7 @@ extension ProfileImageSelectionView: PhotosProfileImageSourceViewDelegate {
 		self.previewView.previewImageView.backgroundColor = .clear
 		self.previewView.previewImageView.image = image
 		self.originalSelectedImage = image
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}
 
@@ -617,6 +632,7 @@ extension ProfileImageSelectionView: MonogramProfileImageSourceViewDelegate {
 
 		self.previewView.previewImageView.backgroundColor = view.selectedBackgroundColor
 		self.previewView.previewImageView.image = nil
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
 		self.syncMonogramState()
@@ -633,6 +649,7 @@ extension ProfileImageSelectionView: EmojiProfileImageSourceViewDelegate {
 		self.previewView.emojiBackgroundColor = view.imageBackgroundColor ?? self.previewView.emojiBackgroundColor
 		self.previewView.previewImageView.image = previewImage
 		self.previewView.previewImageView.backgroundColor = self.previewView.emojiBackgroundColor
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
 		self.syncColorForPicker()
@@ -648,6 +665,7 @@ extension ProfileImageSelectionView: KaomojiProfileImageSourceViewDelegate {
 		self.previewView.kaomojiBackgroundColor = view.imageBackgroundColor ?? self.previewView.kaomojiBackgroundColor
 		self.previewView.previewImageView.image = previewImage
 		self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
 		self.syncColorForPicker()
@@ -662,6 +680,7 @@ extension ProfileImageSelectionView: CharacterProfileImageSourceViewDelegate {
 		self.previewView.previewImageView.backgroundColor = .clear
 		self.previewView.previewImageView.image = image
 		self.originalSelectedImage = image
+		self.previewView.updateDeleteButtonVisibility()
 		self.actionBarView.setPhotosButtonStackHidden(false)
 		self.actionBarView.setCropButtonHidden(false)
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
@@ -680,6 +699,7 @@ extension ProfileImageSelectionView: KaomojiPickerViewControllerDelegate {
 		let previewImage = self.kaomojiProfileImageSourceView.kaomojiPreviewImage(kaomoji)
 		self.previewView.previewImageView.image = previewImage
 		self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}
 

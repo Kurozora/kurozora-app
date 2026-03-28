@@ -363,7 +363,7 @@ class EditProfileViewController: KViewController {
 	}
 
 	private func presentBannerImageSelection() {
-		let bannerImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedBannerImage, imageKind: .banner)
+		let bannerImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedBannerImage, placeholderImage: self.user.attributes.bannerPlaceholderImage, imageKind: .banner)
 		bannerImageSelectionVC.delegate = self
 
 		let navController = KNavigationController(rootViewController: bannerImageSelectionVC)
@@ -379,7 +379,7 @@ class EditProfileViewController: KViewController {
 	}
 
 	private func presentProfileImageSelection() {
-		let profileImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedProfileImage)
+		let profileImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedProfileImage, placeholderImage: self.user.attributes.profilePlaceholderImage)
 		profileImageSelectionVC.delegate = self
 
 		let navController = KNavigationController(rootViewController: profileImageSelectionVC)
@@ -452,14 +452,21 @@ private extension EditProfileViewController {
 		self.bannerEditIndicatorButton = UIButton(type: .system)
 		self.bannerEditIndicatorButton.translatesAutoresizingMaskIntoConstraints = false
 		self.bannerEditIndicatorButton.isUserInteractionEnabled = false
-		self.bannerEditIndicatorButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
-		self.bannerEditIndicatorButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
-		self.bannerEditIndicatorButton.configuration = {
-			var config = UIButton.Configuration.plain()
+		if #available(iOS 26.0, *) {
+			var config = UIButton.Configuration.glass()
 			config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .medium))
-			return config
-		}()
-		self.bannerEditIndicatorButton.layerCornerRadius = 12
+			config.cornerStyle = .capsule
+			self.bannerEditIndicatorButton.configuration = config
+		} else {
+			self.bannerEditIndicatorButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
+			self.bannerEditIndicatorButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
+			self.bannerEditIndicatorButton.configuration = {
+				var config = UIButton.Configuration.plain()
+				config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .medium))
+				return config
+			}()
+			self.bannerEditIndicatorButton.layerCornerRadius = 12
+		}
 		self.bannerContainerView.addSubview(self.bannerEditIndicatorButton)
 
 		self.bannerTapButton = UIButton(type: .custom)
@@ -503,14 +510,21 @@ private extension EditProfileViewController {
 		self.placeholderProfileImageEditButton = UIButton(type: .system)
 		self.placeholderProfileImageEditButton.translatesAutoresizingMaskIntoConstraints = false
 		self.placeholderProfileImageEditButton.isUserInteractionEnabled = false
-		self.placeholderProfileImageEditButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
-		self.placeholderProfileImageEditButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
-		self.placeholderProfileImageEditButton.configuration = {
-			var config = UIButton.Configuration.plain()
+		if #available(iOS 26.0, *) {
+			var config = UIButton.Configuration.glass()
 			config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
-			return config
-		}()
-		self.placeholderProfileImageEditButton.layerCornerRadius = 12
+			config.cornerStyle = .capsule
+			self.placeholderProfileImageEditButton.configuration = config
+		} else {
+			self.placeholderProfileImageEditButton.backgroundColor = UIColor(white: 0.333, alpha: 1.0)
+			self.placeholderProfileImageEditButton.tintColor = UIColor(white: 0.5, alpha: 1.0)
+			self.placeholderProfileImageEditButton.configuration = {
+				var config = UIButton.Configuration.plain()
+				config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
+				return config
+			}()
+			self.placeholderProfileImageEditButton.layerCornerRadius = 12
+		}
 		self.profilePhotoWrapperView.addSubview(self.placeholderProfileImageEditButton)
 
 		// Username label

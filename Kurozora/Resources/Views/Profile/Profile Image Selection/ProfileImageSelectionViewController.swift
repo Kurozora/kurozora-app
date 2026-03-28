@@ -27,14 +27,16 @@ class ProfileImageSelectionViewController: KViewController {
 	// MARK: - Properties
 	private let imageKind: ImageKind
 	private var currentImage: UIImage?
+	private var placeholderImage: UIImage?
 	private var selectedImage: UIImage?
 	private var selectedImageURL: URL?
 
 	weak var delegate: ProfileImageSelectionViewControllerDelegate?
 
 	// MARK: - Initializers
-	init(currentImage: UIImage?, imageKind: ImageKind = .profile) {
+	init(currentImage: UIImage?, placeholderImage: UIImage? = nil, imageKind: ImageKind = .profile) {
 		self.currentImage = currentImage
+		self.placeholderImage = placeholderImage
 		self.imageKind = imageKind
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -74,7 +76,7 @@ class ProfileImageSelectionViewController: KViewController {
 
 		self.selectionView.delegate = self
 		self.selectionView.parentViewController = self
-		self.selectionView.configure(with: self.currentImage)
+		self.selectionView.configure(with: self.currentImage, placeholderImage: self.placeholderImage)
 
 		self.view.addSubview(self.selectionView)
 
