@@ -455,7 +455,9 @@ class ProfileImageSelectionView: UIView {
 // MARK: - ProfileImagePreviewViewDelegate
 extension ProfileImageSelectionView: ProfileImagePreviewViewDelegate {
 	func profileImagePreviewView(_ view: ProfileImagePreviewView, didUpdateMonogramInitials initials: String, generatedImage: UIImage) {
+		self.isProcessingActionBarUpdate = true
 		self.monogramProfileImageSourceView.initials = initials
+		self.isProcessingActionBarUpdate = false
 		let image = self.monogramProfileImageSourceView.generateMonogramImage()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}
