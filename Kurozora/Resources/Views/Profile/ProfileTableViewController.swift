@@ -24,27 +24,7 @@ class ProfileTableViewController: KTableViewController {
 	private var postMessageButton: UIBarButtonItem!
 	private var moreBarButtonItem: UIBarButtonItem!
 
-	private let headerView = UIView()
-	private let bannerImageView = UIImageView()
-	private let userDetailsHeaderView = UIView()
-	private let profilePhotoWrapperView = UIView()
-	private let circularView = CircularView()
-	private let profileImageView = ProfileImageView(frame: .zero)
-	private let onlineIndicatorContainerView = UIView()
-	private let onlineIndicatorView = UIView()
-	private let profileBadgeStackView = ProfileBadgeStackView()
-	private let followButton = KTintedButton()
-	private let editProfileButton = KTintedButton()
-	private let displayNameLabel = KLabel()
-	private let usernameLabel = KSecondaryLabel()
-	private let userDetailsBodyView = UIView()
-	private let bioTextView = KTextView()
-	private let buttonsStackView = UIStackView()
-	private let achievementsButton = KButton()
-	private let followingButton = KButton()
-	private let followersButton = KButton()
-	private let reviewsButton = KButton()
-	private let separatorView: SeparatorView = SeparatorView()
+	private let profileHeaderView = ProfileTableHeaderView()
 
 	var sidebarBottomProfileView: KSidebarBottomProfileView?
 
@@ -71,28 +51,6 @@ class ProfileTableViewController: KTableViewController {
 	var feedMessages: [FeedMessage] = []
 
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
-
-	// Styling
-	var countValueAttributes: [NSAttributedString.Key: Any] {
-		let centerAlign = NSMutableParagraphStyle()
-		centerAlign.alignment = .center
-
-		return [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		]
-	}
-
-	var countTitleAttributes: [NSAttributedString.Key: Any] {
-		let centerAlign = NSMutableParagraphStyle()
-		centerAlign.alignment = .center
-
-		return [
-			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign,
-			NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2).bold
-		]
-	}
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -152,7 +110,6 @@ class ProfileTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateAttributedText), name: .ThemeUpdateNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
@@ -166,10 +123,10 @@ class ProfileTableViewController: KTableViewController {
 			self.userIdentity = UserIdentity(id: self.user.id)
 		}
 
-		self.configureViews()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-		self.tableView.setTableHeaderView(headerView: self.headerView)
+		self.mediaViewerDelegate = self
+		self.profileHeaderView.delegate = self
+		self.profileHeaderView.bioTextViewDelegate = self
+		self.tableView.setTableHeaderView(headerView: self.profileHeaderView)
 
 		self.configureNavigationItems()
 
@@ -183,7 +140,7 @@ class ProfileTableViewController: KTableViewController {
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 
-		DispatchQueue.main.async { [weak self] in
+		coordinator.animate(alongsideTransition: nil) { [weak self] _ in
 			guard let self = self else { return }
 			self.tableView.updateHeaderViewFrame()
 		}
@@ -205,13 +162,10 @@ class ProfileTableViewController: KTableViewController {
 		self.user = User.current
 		self.configureProfile()
 
-		// Overwrite after configureProfile's Kingfisher calls to avoid placeholder flash
-		if let profileImage = notification.userInfo?["profileImage"] as? UIImage {
-			self.profileImageView.image = profileImage
-		}
-		if let bannerImage = notification.userInfo?["bannerImage"] as? UIImage {
-			self.bannerImageView.image = bannerImage
-		}
+		self.profileHeaderView.overrideImages(
+			profileImage: notification.userInfo?["profileImage"] as? UIImage,
+			bannerImage: notification.userInfo?["bannerImage"] as? UIImage
+		)
 	}
 
 	// MARK: - Functions
@@ -251,295 +205,6 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/// Configure the views.
-	private func configureViews() {
-		self.mediaViewerDelegate = self
-
-		// Banner image view
-		self.bannerImageView.translatesAutoresizingMaskIntoConstraints = false
-		self.bannerImageView.tag = 1
-		self.bannerImageView.contentMode = .scaleAspectFill
-		self.bannerImageView.clipsToBounds = true
-		self.bannerImageView.backgroundColor = .kurozora
-		self.bannerImageView.isUserInteractionEnabled = true
-		let bannerImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
-		self.bannerImageView.addGestureRecognizer(bannerImageViewTapGesture)
-
-		// Profile photo wrapper
-		self.profilePhotoWrapperView.translatesAutoresizingMaskIntoConstraints = false
-
-		// Circular view
-		self.circularView.translatesAutoresizingMaskIntoConstraints = false
-		self.circularView.clipsToBounds = true
-
-		// Profile image view
-		self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
-		self.profileImageView.tag = 0
-		self.profileImageView.isUserInteractionEnabled = true
-		let profileImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
-		self.profileImageView.addGestureRecognizer(profileImageViewTapGesture)
-
-		// Online indicator container
-		self.onlineIndicatorContainerView.translatesAutoresizingMaskIntoConstraints = false
-
-		// Online indicator
-		self.onlineIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-
-		// Profile badge stack view
-		self.profileBadgeStackView.translatesAutoresizingMaskIntoConstraints = false
-		self.profileBadgeStackView.spacing = 4
-
-		// Follow button
-		self.followButton.translatesAutoresizingMaskIntoConstraints = false
-		self.followButton.isHidden = true
-		self.followButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-		self.followButton.setTitle(Trans.follow, for: .normal)
-		self.followButton.highlightBackgroundColorEnabled = true
-		self.followButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-		self.followButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.followButtonPressed()
-		}, for: .touchUpInside)
-
-		// Edit profile button
-		self.editProfileButton.translatesAutoresizingMaskIntoConstraints = false
-		self.editProfileButton.isHidden = true
-		self.editProfileButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-		self.editProfileButton.setTitle(Trans.edit, for: .normal)
-		self.editProfileButton.layerCornerRadius = 12
-		self.editProfileButton.highlightBackgroundColorEnabled = true
-		self.editProfileButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-		self.editProfileButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.present(SegueIdentifiers.editProfileSegue, sender: self)
-		}, for: .touchUpInside)
-
-		// Display name label
-		self.displayNameLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.displayNameLabel.font = .preferredFont(forTextStyle: .headline)
-		self.displayNameLabel.numberOfLines = 2
-		self.displayNameLabel.isHidden = true
-		self.displayNameLabel.setContentCompressionResistancePriority(.defaultHigh - 2, for: .horizontal)
-
-		// Username label
-		self.usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.usernameLabel.font = .preferredFont(forTextStyle: .subheadline)
-		self.usernameLabel.isHidden = true
-		self.usernameLabel.setContentCompressionResistancePriority(.defaultHigh - 2, for: .horizontal)
-
-		// Bio text view
-		self.bioTextView.translatesAutoresizingMaskIntoConstraints = false
-		self.bioTextView.isEditable = false
-		self.bioTextView.isScrollEnabled = false
-		self.bioTextView.dataDetectorTypes = [.link, .address, .calendarEvent, .lookupSuggestion]
-		self.bioTextView.delegate = self
-
-		// Achievements button
-		self.achievementsButton.translatesAutoresizingMaskIntoConstraints = false
-		self.achievementsButton.isHidden = true
-		self.achievementsButton.titleLabel?.lineBreakMode = .byCharWrapping
-		self.achievementsButton.titleLabel?.numberOfLines = 0
-		self.achievementsButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.show(SegueIdentifiers.achievementsSegue, sender: self)
-		}, for: .touchUpInside)
-
-		// Following button
-		self.followingButton.translatesAutoresizingMaskIntoConstraints = false
-		self.followingButton.isHidden = true
-		self.followingButton.titleLabel?.lineBreakMode = .byCharWrapping
-		self.followingButton.titleLabel?.numberOfLines = 0
-		self.followingButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.show(SegueIdentifiers.followingSegue, sender: self)
-		}, for: .touchUpInside)
-
-		// Followers button
-		self.followersButton.translatesAutoresizingMaskIntoConstraints = false
-		self.followersButton.isHidden = true
-		self.followersButton.titleLabel?.lineBreakMode = .byCharWrapping
-		self.followersButton.titleLabel?.numberOfLines = 0
-		self.followersButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.show(SegueIdentifiers.followersSegue, sender: self)
-		}, for: .touchUpInside)
-
-		// Reviews button
-		self.reviewsButton.translatesAutoresizingMaskIntoConstraints = false
-		self.reviewsButton.isHidden = true
-		self.reviewsButton.titleLabel?.lineBreakMode = .byCharWrapping
-		self.reviewsButton.titleLabel?.numberOfLines = 0
-		self.reviewsButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.show(SegueIdentifiers.reviewsSegue, sender: self)
-		}, for: .touchUpInside)
-
-		// Buttons stack view
-		self.buttonsStackView.addArrangedSubview(self.achievementsButton)
-		self.buttonsStackView.addArrangedSubview(self.followingButton)
-		self.buttonsStackView.addArrangedSubview(self.followersButton)
-		self.buttonsStackView.addArrangedSubview(self.reviewsButton)
-
-		self.buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
-		self.buttonsStackView.distribution = .fillEqually
-		self.buttonsStackView.spacing = 5
-
-		// Separator view
-		self.separatorView.translatesAutoresizingMaskIntoConstraints = false
-
-		// Header view
-		self.headerView.translatesAutoresizingMaskIntoConstraints = false
-		self.headerView.backgroundColor = .clear
-
-		// User details header view
-		self.userDetailsHeaderView.translatesAutoresizingMaskIntoConstraints = false
-		self.userDetailsHeaderView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-
-		// User details body view
-		self.userDetailsBodyView.translatesAutoresizingMaskIntoConstraints = false
-		self.userDetailsBodyView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-	}
-
-	/// Configure the view hierarchy.
-	private func configureViewHierarchy() {
-		// Profile photo wrapper contents
-		self.circularView.addSubview(self.profileImageView)
-		self.profilePhotoWrapperView.addSubview(self.circularView)
-		self.profilePhotoWrapperView.addSubview(self.onlineIndicatorContainerView)
-		self.profilePhotoWrapperView.addSubview(self.onlineIndicatorView)
-
-		// User details header contents
-		self.userDetailsHeaderView.addSubview(self.profilePhotoWrapperView)
-		self.userDetailsHeaderView.addSubview(self.profileBadgeStackView)
-		self.userDetailsHeaderView.addSubview(self.followButton)
-		self.userDetailsHeaderView.addSubview(self.editProfileButton)
-		self.userDetailsHeaderView.addSubview(self.displayNameLabel)
-		self.userDetailsHeaderView.addSubview(self.usernameLabel)
-
-		// User details body contents
-		self.userDetailsBodyView.addSubview(self.bioTextView)
-		self.userDetailsBodyView.addSubview(self.buttonsStackView)
-		self.userDetailsBodyView.addSubview(self.separatorView)
-
-		// Header view contents
-		self.headerView.addSubview(self.bannerImageView)
-		self.headerView.addSubview(self.userDetailsHeaderView)
-		self.headerView.addSubview(self.userDetailsBodyView)
-	}
-
-	/// Configure the view constraints.
-	private func configureViewConstraints() {
-		let badgeWidthConstraint = self.profileBadgeStackView.widthAnchor.constraint(equalToConstant: 100)
-		badgeWidthConstraint.priority = UILayoutPriority(1)
-		self.headerView.preservesSuperviewLayoutMargins = true
-
-		NSLayoutConstraint.activate([
-			// Banner image view
-			self.bannerImageView.topAnchor.constraint(equalTo: self.headerView.topAnchor),
-			self.bannerImageView.leadingAnchor.constraint(equalTo: self.headerView.leadingAnchor),
-			self.bannerImageView.trailingAnchor.constraint(equalTo: self.headerView.trailingAnchor),
-			self.bannerImageView.heightAnchor.constraint(equalToConstant: 150),
-
-			// User details header view
-			self.userDetailsHeaderView.leadingAnchor.constraint(equalTo: self.headerView.readableContentGuide.leadingAnchor),
-			self.userDetailsHeaderView.trailingAnchor.constraint(equalTo: self.headerView.readableContentGuide.trailingAnchor),
-
-			// Profile photo wrapper
-			self.profilePhotoWrapperView.topAnchor.constraint(equalTo: self.userDetailsHeaderView.topAnchor),
-			self.profilePhotoWrapperView.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
-			self.profilePhotoWrapperView.centerYAnchor.constraint(equalTo: self.bannerImageView.bottomAnchor, constant: 8),
-
-			// Circular view
-			self.circularView.topAnchor.constraint(equalTo: self.profilePhotoWrapperView.topAnchor),
-			self.circularView.leadingAnchor.constraint(equalTo: self.profilePhotoWrapperView.leadingAnchor),
-			self.circularView.trailingAnchor.constraint(equalTo: self.profilePhotoWrapperView.trailingAnchor),
-			self.circularView.bottomAnchor.constraint(equalTo: self.profilePhotoWrapperView.bottomAnchor),
-			self.circularView.heightAnchor.constraint(equalToConstant: 72),
-			self.circularView.widthAnchor.constraint(equalTo: self.circularView.heightAnchor),
-
-			// Profile image view
-			self.profileImageView.topAnchor.constraint(equalTo: self.circularView.topAnchor),
-			self.profileImageView.leadingAnchor.constraint(equalTo: self.circularView.leadingAnchor),
-			self.profileImageView.trailingAnchor.constraint(equalTo: self.circularView.trailingAnchor),
-			self.profileImageView.bottomAnchor.constraint(equalTo: self.circularView.bottomAnchor),
-
-			// Online indicator container
-			self.onlineIndicatorContainerView.trailingAnchor.constraint(equalTo: self.profilePhotoWrapperView.trailingAnchor),
-			self.onlineIndicatorContainerView.bottomAnchor.constraint(equalTo: self.profilePhotoWrapperView.bottomAnchor),
-			self.onlineIndicatorContainerView.widthAnchor.constraint(equalToConstant: 25),
-			self.onlineIndicatorContainerView.heightAnchor.constraint(equalTo: self.onlineIndicatorContainerView.widthAnchor),
-
-			// Online indicator
-			self.onlineIndicatorView.centerXAnchor.constraint(equalTo: self.onlineIndicatorContainerView.centerXAnchor),
-			self.onlineIndicatorView.centerYAnchor.constraint(equalTo: self.onlineIndicatorContainerView.centerYAnchor),
-			self.onlineIndicatorView.widthAnchor.constraint(equalToConstant: 15),
-			self.onlineIndicatorView.heightAnchor.constraint(equalTo: self.onlineIndicatorView.widthAnchor),
-
-			// Profile badge stack view
-			self.profileBadgeStackView.leadingAnchor.constraint(equalTo: self.profilePhotoWrapperView.trailingAnchor, constant: 8),
-			self.profileBadgeStackView.centerYAnchor.constraint(equalTo: self.followButton.centerYAnchor),
-			self.profileBadgeStackView.heightAnchor.constraint(equalToConstant: 20),
-			badgeWidthConstraint,
-
-			// Follow button
-			self.followButton.topAnchor.constraint(equalTo: self.bannerImageView.bottomAnchor, constant: 8),
-			self.followButton.leadingAnchor.constraint(greaterThanOrEqualTo: self.profileBadgeStackView.trailingAnchor, constant: 8),
-			self.followButton.heightAnchor.constraint(equalToConstant: 32),
-			self.userDetailsHeaderView.bottomAnchor.constraint(greaterThanOrEqualTo: self.followButton.bottomAnchor, constant: 8),
-
-			// Edit profile button
-			self.editProfileButton.topAnchor.constraint(equalTo: self.followButton.topAnchor),
-			self.editProfileButton.centerYAnchor.constraint(equalTo: self.followButton.centerYAnchor),
-			self.editProfileButton.trailingAnchor.constraint(equalTo: self.followButton.trailingAnchor),
-			self.editProfileButton.leadingAnchor.constraint(greaterThanOrEqualTo: self.profileBadgeStackView.trailingAnchor, constant: 8),
-			self.editProfileButton.trailingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.trailingAnchor),
-			self.editProfileButton.heightAnchor.constraint(equalToConstant: 32),
-
-			// Follow button trailing (same as edit)
-			self.followButton.trailingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.trailingAnchor),
-
-			// Display name label
-			self.displayNameLabel.topAnchor.constraint(equalTo: self.profilePhotoWrapperView.bottomAnchor, constant: 8),
-			self.displayNameLabel.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
-			self.userDetailsHeaderView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.displayNameLabel.trailingAnchor),
-
-			// Username label
-			self.usernameLabel.topAnchor.constraint(equalTo: self.displayNameLabel.bottomAnchor),
-			self.usernameLabel.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
-			self.userDetailsHeaderView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.usernameLabel.trailingAnchor),
-			self.userDetailsHeaderView.bottomAnchor.constraint(equalTo: self.usernameLabel.bottomAnchor),
-
-			// Badge stack top
-			self.profileBadgeStackView.topAnchor.constraint(greaterThanOrEqualTo: self.bannerImageView.bottomAnchor, constant: 8),
-
-			// User details body view
-			self.userDetailsBodyView.topAnchor.constraint(equalTo: self.userDetailsHeaderView.bottomAnchor, constant: 8),
-			self.userDetailsBodyView.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.leadingAnchor),
-			self.userDetailsBodyView.trailingAnchor.constraint(equalTo: self.userDetailsHeaderView.trailingAnchor),
-
-			// Bio text view
-			self.bioTextView.topAnchor.constraint(equalTo: self.userDetailsBodyView.topAnchor),
-			self.bioTextView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.bioTextView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
-
-			// Buttons stack view
-			self.buttonsStackView.topAnchor.constraint(equalTo: self.bioTextView.bottomAnchor, constant: 4),
-			self.buttonsStackView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.buttonsStackView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
-			self.buttonsStackView.heightAnchor.constraint(equalToConstant: 40),
-
-			// Separator view
-			self.separatorView.topAnchor.constraint(equalTo: self.buttonsStackView.bottomAnchor, constant: 10),
-			self.separatorView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.separatorView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
-			self.separatorView.heightAnchor.constraint(equalToConstant: 1),
-			self.userDetailsBodyView.bottomAnchor.constraint(equalTo: self.separatorView.bottomAnchor),
-
-			// Header view bottom
-			self.headerView.bottomAnchor.constraint(equalTo: self.userDetailsBodyView.bottomAnchor, constant: 20),
-		])
-	}
-
 	/// Configures the more bar button item.
 	private func configureMoreBarButtonItem() {
 		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
@@ -559,20 +224,6 @@ class ProfileTableViewController: KTableViewController {
 	fileprivate func configureNavigationItems() {
 		self.configureMoreBarButtonItem()
 		self.configurePostMessageBarButtonItem()
-	}
-
-	/// Handles the profile image view press.
-	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
-		guard let view = sender.view as? UIImageView else { return }
-		self.mediaViewerDelegate?.mediaViewerViewDelegate(self.view, didTapImage: view, at: view.tag)
-	}
-
-	/// Update the attributed text.
-	@objc private func updateAttributedText() {
-		Task { @MainActor [weak self] in
-			guard let self = self else { return }
-			self.configureCountButtons()
-		}
 	}
 
 	/// Updates the feed message with the received information.
@@ -678,102 +329,11 @@ class ProfileTableViewController: KTableViewController {
 		self.endFetch()
 	}
 
-	fileprivate func configureCountButtons() {
-		guard let user = self.user else { return }
-
-		// Configure achievements button
-		var achievementsCount = 0
-		if let achievements = user.relationships?.achievements?.data {
-			achievementsCount = achievements.count
-		}
-
-		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: self.countValueAttributes)
-		let achievementsTitleString = NSAttributedString(string: "\n\(Trans.achievements)", attributes: self.countTitleAttributes)
-		let achievementsButtonTitle = NSMutableAttributedString()
-		achievementsButtonTitle.append(achievementsCountString)
-		achievementsButtonTitle.append(achievementsTitleString)
-
-		self.achievementsButton.setAttributedTitle(achievementsButtonTitle, for: .normal)
-		self.achievementsButton.isHidden = false
-
-		// Configure following & followers count
-		let followingCount = user.attributes.followingCount
-		let followingCountString = NSAttributedString(string: followingCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: self.countTitleAttributes)
-		let followingButtonTitle = NSMutableAttributedString()
-		followingButtonTitle.append(followingCountString)
-		followingButtonTitle.append(followingTitleString)
-
-		self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
-		self.followingButton.isHidden = false
-
-		let followerCount = user.attributes.followerCount
-		let followerCountString = NSAttributedString(string: followerCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: self.countTitleAttributes)
-		let followersButtonTitle = NSMutableAttributedString()
-		followersButtonTitle.append(followerCountString)
-		followersButtonTitle.append(followerTitleString)
-
-		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
-		self.followersButton.isHidden = false
-
-		// Configure reviews count
-		let reviewsCount = user.attributes.ratingsCount
-		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let reviewsTitleString = NSAttributedString(string: "\nReviews", attributes: self.countTitleAttributes)
-		let reviewsButtonTitle = NSMutableAttributedString()
-		reviewsButtonTitle.append(reviewsCountString)
-		reviewsButtonTitle.append(reviewsTitleString)
-
-		self.reviewsButton.setAttributedTitle(reviewsButtonTitle, for: .normal)
-		self.reviewsButton.isHidden = false
-	}
-
 	/// Configure the profile view with the details of the user whose page is being viewed.
 	private func configureProfile() {
 		guard let user = self.user else { return }
 		self.configureNavBarButtons()
-
-		// Configure display name
-		self.displayNameLabel.text = user.attributes.username
-		self.displayNameLabel.isHidden = false
-
-		// Configure username
-		self.usernameLabel.text = "@\(user.attributes.slug)"
-		self.usernameLabel.isHidden = false
-
-		// Configure online status
-		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.frame.size.height / 2
-
-		self.onlineIndicatorView.backgroundColor = user.attributes.activityStatus.colorValue
-		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.frame.size.height / 2
-
-		self.onlineIndicatorContainerView.isHidden = false
-		self.onlineIndicatorView.isHidden = false
-
-		// Configure profile image
-		user.attributes.profileImage(imageView: self.profileImageView)
-
-		// Configure banner image
-		self.bannerImageView.theme_backgroundColor = KThemePicker.tintColor.rawValue
-		user.attributes.bannerImage(imageView: self.bannerImageView)
-
-		// Configure user bio
-		self.bioTextView.setAttributedText(user.attributes.biographyMarkdown?.markdownAttributedString())
-
-		// Configure count buttons
-		self.configureCountButtons()
-
-		// Configure edit button
-		self.editProfileButton.isHidden = !(user.id == User.current?.id)
-
-		// Configure follow button
-		self.updateFollowButton()
-
-		// Badges
-		self.profileBadgeStackView.delegate = self
-		self.profileBadgeStackView.configure(for: user)
+		self.profileHeaderView.configure(with: user)
 
 		// Configure AutoLayout
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
@@ -784,21 +344,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Updated the `followButton` with the follow status of the user.
 	fileprivate func updateFollowButton() {
-		let followStatus = self.user?.attributes.followStatus ?? .disabled
-		switch followStatus {
-		case .followed:
-			self.followButton.setTitle(Trans.following, for: .normal)
-			self.followButton.isHidden = false
-			self.followButton.isUserInteractionEnabled = true
-		case .notFollowed:
-			self.followButton.setTitle(Trans.follow, for: .normal)
-			self.followButton.isHidden = false
-			self.followButton.isUserInteractionEnabled = true
-		case .disabled:
-			self.followButton.setTitle(Trans.follow, for: .normal)
-			self.followButton.isHidden = true
-			self.followButton.isUserInteractionEnabled = false
-		}
+		self.profileHeaderView.updateFollowButton(for: self.user)
 	}
 
 	/// Shows the text editor for posting a new message.
@@ -931,7 +477,7 @@ extension ProfileTableViewController {
 // MARK: - MediaTransitionDelegate
 extension ProfileTableViewController: MediaTransitionDelegate {
 	func imageViewForMedia(at index: Int) -> UIImageView? {
-		return index == 0 ? self.profileImageView : self.bannerImageView
+		return index == 0 ? self.profileHeaderView.profileImageView : self.profileHeaderView.bannerImageView
 	}
 
 	func scrollThumbnailIntoView(for index: Int) {
@@ -1100,9 +646,37 @@ extension ProfileTableViewController: UITextViewDelegate {
 	}
 }
 
-// MARK: - ProfileBadgeStackViewDelegate
-extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
-	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
+// MARK: - ProfileTableHeaderViewDelegate
+extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didTapImageView imageView: UIImageView, at index: Int) {
+		self.mediaViewerDelegate?.mediaViewerViewDelegate(self.view, didTapImage: imageView, at: index)
+	}
+
+	func profileTableHeaderViewDidPressFollowButton(_ headerView: ProfileTableHeaderView) {
+		self.followButtonPressed()
+	}
+
+	func profileTableHeaderViewDidPressEditProfile(_ headerView: ProfileTableHeaderView) {
+		self.present(SegueIdentifiers.editProfileSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressAchievementsButton button: UIButton) {
+		self.show(SegueIdentifiers.achievementsSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowingButton button: UIButton) {
+		self.show(SegueIdentifiers.followingSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowersButton button: UIButton) {
+		self.show(SegueIdentifiers.followersSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReviewsButton button: UIButton) {
+		self.show(SegueIdentifiers.reviewsSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressBadge profileBadge: ProfileBadge, from button: UIButton) {
 		let badgeViewController = BadgeViewController()
 		badgeViewController.profileBadge = profileBadge
 

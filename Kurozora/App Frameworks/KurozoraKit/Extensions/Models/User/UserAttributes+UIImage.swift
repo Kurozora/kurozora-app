@@ -48,6 +48,11 @@ extension User.Attributes {
 		return UIImage(cgImage: image)
 	}
 
+	/// Returns the placeholder color for the user's banner, derived from the user's initials.
+	var bannerPlaceholderColor: UIColor {
+		return self.username.initials.capitalized.placeholderColor
+	}
+
 	// MARK: - Functions
 	/// Set the current signed in user's profile image.
 	///

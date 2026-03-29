@@ -639,7 +639,7 @@ private extension EditProfileViewController {
 			self.bannerContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
 			self.bannerContainerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
 			self.bannerContainerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-			self.bannerContainerView.heightAnchor.constraint(equalToConstant: 150),
+			self.bannerContainerView.heightAnchor.constraint(equalTo: self.bannerContainerView.widthAnchor, multiplier: 1 / 3),
 
 			// Banner image view
 			self.bannerImageView.topAnchor.constraint(equalTo: self.bannerContainerView.topAnchor),
