@@ -113,7 +113,12 @@ class ProfileImageSelectionViewController: KViewController {
 	}
 
 	private func usePhotoButtonPressed() {
-		if let image = self.selectedImage {
+		if var image = self.selectedImage {
+			if let original = self.selectionView.originalSelectedImage,
+			   image === original {
+				image = self.autoCroppedImage(image)
+				self.selectedImageURL = self.saveImageToTemporaryFile(image)
+			}
 			self.delegate?.profileImageSelectionViewController(self, didSelectImage: image, imageURL: self.selectedImageURL)
 		}
 		if self.presentingViewController != nil {
@@ -178,6 +183,55 @@ class ProfileImageSelectionViewController: KViewController {
 		let navController = KNavigationController(rootViewController: cropVC)
 		navController.modalPresentationStyle = .fullScreen
 		self.present(navController, animated: true)
+	}
+
+	private static func normalizeOrientation(_ image: UIImage) -> UIImage {
+		guard image.imageOrientation != .up else { return image }
+
+		let format = UIGraphicsImageRendererFormat()
+		format.scale = image.scale
+		let renderer = UIGraphicsImageRenderer(size: image.size, format: format)
+		return renderer.image { _ in
+			image.draw(at: .zero)
+		}
+	}
+
+	private func autoCroppedImage(_ image: UIImage) -> UIImage {
+		let normalized = Self.normalizeOrientation(image)
+		guard let cgImage = normalized.cgImage else { return image }
+
+		let sourceWidth = CGFloat(cgImage.width)
+		let sourceHeight = CGFloat(cgImage.height)
+		let targetSize = self.imageKind.targetOutputSize
+		let targetAspect = targetSize.width / targetSize.height
+
+		let cropWidth: CGFloat
+		let cropHeight: CGFloat
+
+		if sourceWidth / sourceHeight > targetAspect {
+			cropHeight = sourceHeight
+			cropWidth = cropHeight * targetAspect
+		} else {
+			cropWidth = sourceWidth
+			cropHeight = cropWidth / targetAspect
+		}
+
+		let cropRect = CGRect(
+			x: (sourceWidth - cropWidth) / 2.0,
+			y: (sourceHeight - cropHeight) / 2.0,
+			width: cropWidth,
+			height: cropHeight
+		)
+
+		guard let croppedCG = cgImage.cropping(to: cropRect) else { return image }
+
+		let format = UIGraphicsImageRendererFormat()
+		format.scale = 1.0
+		format.opaque = true
+		let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
+		return renderer.image { _ in
+			UIImage(cgImage: croppedCG).draw(in: CGRect(origin: .zero, size: targetSize))
+		}
 	}
 
 	private func saveImageToTemporaryFile(_ image: UIImage) -> URL? {
