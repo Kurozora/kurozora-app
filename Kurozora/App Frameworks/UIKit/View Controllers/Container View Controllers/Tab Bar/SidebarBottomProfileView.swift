@@ -126,8 +126,10 @@ final class KSidebarBottomProfileView: UIControl {
 
 	private func updateSelectionState() {
 		if self.isSelected {
+			self.nameLabel.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 			self.selectedBackgroundView.theme_backgroundColor = KThemePicker.tintColor.rawValue
 		} else {
+			self.nameLabel.theme_textColor = KThemePicker.textColor.rawValue
 			self.selectedBackgroundView.backgroundColor = .clear
 		}
 	}
