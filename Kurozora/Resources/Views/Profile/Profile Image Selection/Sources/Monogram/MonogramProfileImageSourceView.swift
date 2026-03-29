@@ -26,6 +26,7 @@ class MonogramProfileImageSourceView: UIView {
 
 	var selectedBackgroundColor: UIColor = .kurozora {
 		didSet {
+			guard !self.isBatchingUpdates else { return }
 			self.generateAndNotifyMonogramImage()
 		}
 	}
@@ -33,6 +34,7 @@ class MonogramProfileImageSourceView: UIView {
 	var selectedFontStyle: MonogramFontStyle = .defaultStyle {
 		didSet {
 			self.updateCollectionView()
+			guard !self.isBatchingUpdates else { return }
 			self.generateAndNotifyMonogramImage()
 		}
 	}
@@ -40,9 +42,12 @@ class MonogramProfileImageSourceView: UIView {
 	var fontWeightValue: CGFloat = UIFont.Weight.bold.rawValue {
 		didSet {
 			self.updateCollectionView()
+			guard !self.isBatchingUpdates else { return }
 			self.generateAndNotifyMonogramImage()
 		}
 	}
+
+	private var isBatchingUpdates = false
 
 	private var presets: [MonogramPreset] = []
 
@@ -217,9 +222,11 @@ extension MonogramProfileImageSourceView: UICollectionViewDelegate {
 		switch itemKind {
 		case .preset(let preset):
 			self.selectedPresetIndex = indexPath.item
+			self.isBatchingUpdates = true
 			self.selectedBackgroundColor = preset.backgroundColor
 			self.selectedFontStyle = preset.fontStyle
 			self.fontWeightValue = preset.fontWeight.rawValue
+			self.isBatchingUpdates = false
 			self.generateAndNotifyMonogramImage()
 		}
 	}
