@@ -45,6 +45,7 @@ class ProfileImageSelectionView: UIView {
 	var placeholderImage: UIImage?
 	var selectedSource: ProfileImageSource = .monogram
 	private var isConfigured = false
+	private var isProcessingActionBarUpdate = false
 
 	// MARK: - Views
 	private lazy var previewView: ProfileImagePreviewView = {
@@ -98,11 +99,15 @@ class ProfileImageSelectionView: UIView {
 		return view
 	}()
 
+	/// Detached image view used by the photos source to stage loaded images
+	/// without directly mutating the main preview during transitions.
+	private let photosStagingImageView = UIImageView()
+
 	private lazy var photosProfileImageSourceView: PhotosProfileImageSourceView = {
 		let view = PhotosProfileImageSourceView(imageKind: self.imageKind)
 		view.translatesAutoresizingMaskIntoConstraints = false
 		view.delegate = self
-		view.previewImageView = self.previewView.previewImageView
+		view.previewImageView = self.photosStagingImageView
 		return view
 	}()
 
@@ -132,11 +137,15 @@ class ProfileImageSelectionView: UIView {
 		return view
 	}()
 
+	/// Detached image view used by the character source to stage loaded images
+	/// without directly mutating the main preview during transitions.
+	private let characterStagingImageView = UIImageView()
+
 	private lazy var characterProfileImageSourceView: CharacterProfileImageSourceView = {
 		let view = CharacterProfileImageSourceView(imageKind: self.imageKind)
 		view.translatesAutoresizingMaskIntoConstraints = false
 		view.delegate = self
-		view.previewImageView = self.previewView.previewImageView
+		view.previewImageView = self.characterStagingImageView
 		view.isHidden = true
 		return view
 	}()
@@ -457,8 +466,11 @@ extension ProfileImageSelectionView: ProfileImagePreviewViewDelegate {
 		self.emojiProfileImageSourceView.imageBackgroundColor = self.previewView.emojiBackgroundColor
 		let image = self.emojiProfileImageSourceView.generateEmojiImage(emoji)
 		let previewImage = self.emojiProfileImageSourceView.generateEmojiImage(emoji, backgroundColor: nil)
-		self.previewView.previewImageView.image = previewImage
-		self.previewView.previewImageView.backgroundColor = self.previewView.emojiBackgroundColor
+		self.previewView.performReplaceTransition {
+			self.previewView.previewImageView.image = previewImage
+			self.previewView.previewImageView.backgroundColor = self.previewView.emojiBackgroundColor
+		}
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}
 
@@ -468,8 +480,11 @@ extension ProfileImageSelectionView: ProfileImagePreviewViewDelegate {
 		self.kaomojiProfileImageSourceView.imageBackgroundColor = self.previewView.kaomojiBackgroundColor
 		let image = self.kaomojiProfileImageSourceView.generateKaomojiImage(kaomoji)
 		let previewImage = self.kaomojiProfileImageSourceView.kaomojiPreviewImage(kaomoji)
-		self.previewView.previewImageView.image = previewImage
-		self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		self.previewView.performReplaceTransition {
+			self.previewView.previewImageView.image = previewImage
+			self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		}
+		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}
 
@@ -559,7 +574,9 @@ extension ProfileImageSelectionView: ProfileImageActionBarViewDelegate {
 			}
 		case .monogram:
 			self.previewView.monogramBackgroundColor = color
+			self.isProcessingActionBarUpdate = true
 			self.monogramProfileImageSourceView.selectedBackgroundColor = color
+			self.isProcessingActionBarUpdate = false
 			self.previewView.updateMonogramPreview()
 			self.syncMonogramState()
 		default:
@@ -570,8 +587,10 @@ extension ProfileImageSelectionView: ProfileImageActionBarViewDelegate {
 	func profileImageActionBarView(_ view: ProfileImageActionBarView, didSelectFontStyle fontStyle: MonogramFontStyle, weightValue: CGFloat) {
 		self.previewView.monogramFontStyle = fontStyle
 		self.previewView.monogramFontWeightValue = weightValue
+		self.isProcessingActionBarUpdate = true
 		self.monogramProfileImageSourceView.selectedFontStyle = fontStyle
 		self.monogramProfileImageSourceView.fontWeightValue = weightValue
+		self.isProcessingActionBarUpdate = false
 		let font = UIFont.monogramFont(style: fontStyle, size: 50, weight: UIFont.Weight(rawValue: weightValue))
 		self.previewView.monogramInitialsLabel.font = font
 		self.previewView.updateMonogramPreview()
@@ -580,8 +599,10 @@ extension ProfileImageSelectionView: ProfileImageActionBarViewDelegate {
 
 	func profileImageActionBarViewDidDismissPresentation(_ view: ProfileImageActionBarView) {
 		if self.selectedSource == .monogram {
+			self.isProcessingActionBarUpdate = true
 			self.monogramProfileImageSourceView.selectedFontStyle = self.previewView.monogramFontStyle
 			self.monogramProfileImageSourceView.fontWeightValue = self.previewView.monogramFontWeightValue
+			self.isProcessingActionBarUpdate = false
 			self.previewView.updateMonogramPreview()
 			self.syncMonogramState()
 		}
@@ -591,10 +612,12 @@ extension ProfileImageSelectionView: ProfileImageActionBarViewDelegate {
 // MARK: - PhotosProfileImageSourceViewDelegate
 extension ProfileImageSelectionView: PhotosProfileImageSourceViewDelegate {
 	func photosProfileImageSourceView(_ view: PhotosProfileImageSourceView, didSelectImage image: UIImage) {
-		self.previewView.activePreviewSource = .photos
-		self.previewView.monogramInitialsLabel.isHidden = true
-		self.previewView.previewImageView.backgroundColor = .clear
-		self.previewView.previewImageView.image = image
+		self.previewView.performReplaceTransition {
+			self.previewView.activePreviewSource = .photos
+			self.previewView.monogramInitialsLabel.isHidden = true
+			self.previewView.previewImageView.backgroundColor = .clear
+			self.previewView.previewImageView.image = image
+		}
 		self.originalSelectedImage = image
 		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
@@ -617,8 +640,6 @@ extension ProfileImageSelectionView: PhotosProfileImageSourceViewDelegate {
 extension ProfileImageSelectionView: MonogramProfileImageSourceViewDelegate {
 	func monogramProfileImageSourceView(_ view: MonogramProfileImageSourceView, didSelectImage image: UIImage) {
 		guard self.isConfigured else { return }
-		self.previewView.activePreviewSource = .monogram
-		self.previewView.monogramInitialsLabel.isHidden = false
 
 		if !self.previewView.isUpdatingMonogramPreview {
 			self.previewView.monogramBackgroundColor = view.selectedBackgroundColor
@@ -627,11 +648,23 @@ extension ProfileImageSelectionView: MonogramProfileImageSourceViewDelegate {
 		}
 
 		let displayInitials = String(view.initials.prefix(3)).uppercased()
-		self.previewView.monogramInitialsLabel.text = displayInitials
-		self.previewView.monogramInitialsLabel.font = UIFont.monogramFont(style: view.selectedFontStyle, size: 50, weight: UIFont.Weight(rawValue: view.fontWeightValue))
+		let textColor: UIColor = view.selectedBackgroundColor.isLight ? .black : .white
 
-		self.previewView.previewImageView.backgroundColor = view.selectedBackgroundColor
-		self.previewView.previewImageView.image = nil
+		let applyChanges = {
+			self.previewView.activePreviewSource = .monogram
+			self.previewView.monogramInitialsLabel.isHidden = false
+			self.previewView.monogramInitialsLabel.text = displayInitials
+			self.previewView.monogramInitialsLabel.font = UIFont.monogramFont(style: view.selectedFontStyle, size: 50, weight: UIFont.Weight(rawValue: view.fontWeightValue))
+			self.previewView.monogramInitialsLabel.textColor = textColor
+			self.previewView.previewImageView.backgroundColor = view.selectedBackgroundColor
+			self.previewView.previewImageView.image = nil
+		}
+
+		if self.previewView.activePreviewSource == .monogram && self.isProcessingActionBarUpdate {
+			applyChanges()
+		} else {
+			self.previewView.performReplaceTransition(changes: applyChanges)
+		}
 		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
@@ -643,12 +676,14 @@ extension ProfileImageSelectionView: MonogramProfileImageSourceViewDelegate {
 // MARK: - EmojiProfileImageSourceViewDelegate
 extension ProfileImageSelectionView: EmojiProfileImageSourceViewDelegate {
 	func emojiProfileImageSourceView(_ view: EmojiProfileImageSourceView, didSelectImage image: UIImage, previewImage: UIImage?) {
-		self.previewView.activePreviewSource = .emoji
-		self.previewView.monogramInitialsLabel.isHidden = true
 		self.previewView.selectedEmoji = view.selectedEmoji
 		self.previewView.emojiBackgroundColor = view.imageBackgroundColor ?? self.previewView.emojiBackgroundColor
-		self.previewView.previewImageView.image = previewImage
-		self.previewView.previewImageView.backgroundColor = self.previewView.emojiBackgroundColor
+		self.previewView.performReplaceTransition {
+			self.previewView.activePreviewSource = .emoji
+			self.previewView.monogramInitialsLabel.isHidden = true
+			self.previewView.previewImageView.image = previewImage
+			self.previewView.previewImageView.backgroundColor = self.previewView.emojiBackgroundColor
+		}
 		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
@@ -659,12 +694,14 @@ extension ProfileImageSelectionView: EmojiProfileImageSourceViewDelegate {
 // MARK: - KaomojiProfileImageSourceViewDelegate
 extension ProfileImageSelectionView: KaomojiProfileImageSourceViewDelegate {
 	func kaomojiProfileImageSourceView(_ view: KaomojiProfileImageSourceView, didSelectImage image: UIImage, previewImage: UIImage?) {
-		self.previewView.activePreviewSource = .kaomoji
-		self.previewView.monogramInitialsLabel.isHidden = true
 		self.previewView.selectedKaomoji = view.selectedKaomoji
 		self.previewView.kaomojiBackgroundColor = view.imageBackgroundColor ?? self.previewView.kaomojiBackgroundColor
-		self.previewView.previewImageView.image = previewImage
-		self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		self.previewView.performReplaceTransition {
+			self.previewView.activePreviewSource = .kaomoji
+			self.previewView.monogramInitialsLabel.isHidden = true
+			self.previewView.previewImageView.image = previewImage
+			self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		}
 		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 		self.actionBarView.setCropButtonHidden(true)
@@ -675,10 +712,12 @@ extension ProfileImageSelectionView: KaomojiProfileImageSourceViewDelegate {
 // MARK: - CharacterProfileImageSourceViewDelegate
 extension ProfileImageSelectionView: CharacterProfileImageSourceViewDelegate {
 	func characterProfileImageSourceView(_ view: CharacterProfileImageSourceView, didSelectImage image: UIImage) {
-		self.previewView.activePreviewSource = .characters
-		self.previewView.monogramInitialsLabel.isHidden = true
-		self.previewView.previewImageView.backgroundColor = .clear
-		self.previewView.previewImageView.image = image
+		self.previewView.performReplaceTransition {
+			self.previewView.activePreviewSource = .characters
+			self.previewView.monogramInitialsLabel.isHidden = true
+			self.previewView.previewImageView.backgroundColor = .clear
+			self.previewView.previewImageView.image = image
+		}
 		self.originalSelectedImage = image
 		self.previewView.updateDeleteButtonVisibility()
 		self.actionBarView.setPhotosButtonStackHidden(false)
@@ -690,15 +729,17 @@ extension ProfileImageSelectionView: CharacterProfileImageSourceViewDelegate {
 // MARK: - KaomojiPickerViewControllerDelegate
 extension ProfileImageSelectionView: KaomojiPickerViewControllerDelegate {
 	func kaomojiPickerViewController(_ viewController: KaomojiPickerViewController, didSelectKaomoji kaomoji: String) {
-		self.previewView.activePreviewSource = .kaomoji
-		self.previewView.monogramInitialsLabel.isHidden = true
 		self.previewView.selectedKaomoji = kaomoji
 		self.kaomojiProfileImageSourceView.selectedKaomoji = kaomoji
 		self.kaomojiProfileImageSourceView.imageBackgroundColor = self.previewView.kaomojiBackgroundColor
 		let image = self.kaomojiProfileImageSourceView.generateKaomojiImage(kaomoji)
 		let previewImage = self.kaomojiProfileImageSourceView.kaomojiPreviewImage(kaomoji)
-		self.previewView.previewImageView.image = previewImage
-		self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		self.previewView.performReplaceTransition {
+			self.previewView.activePreviewSource = .kaomoji
+			self.previewView.monogramInitialsLabel.isHidden = true
+			self.previewView.previewImageView.image = previewImage
+			self.previewView.previewImageView.backgroundColor = self.previewView.kaomojiBackgroundColor
+		}
 		self.previewView.updateDeleteButtonVisibility()
 		self.delegate?.profileImageSelectionView(self, didSelectImage: image)
 	}

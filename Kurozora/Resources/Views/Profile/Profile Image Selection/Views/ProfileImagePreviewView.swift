@@ -297,7 +297,7 @@ class ProfileImagePreviewView: UIView {
 	}
 
 	private func setDeleteButtonVisible(_ visible: Bool, animated: Bool) {
-		if visible == !self.deleteButton.isHidden && self.deleteButton.alpha == (visible ? 1 : 0) {
+		if visible == !self.deleteButton.isHidden, self.deleteButton.alpha == (visible ? 1 : 0) {
 			return
 		}
 
@@ -327,7 +327,224 @@ class ProfileImagePreviewView: UIView {
 		}
 	}
 
+	func resetToPlaceholder() {
+		self.performReplaceTransition {
+			self.previewImageView.image = self.placeholderImage
+			self.previewImageView.backgroundColor = .clear
+			self.monogramInitialsLabel.isHidden = true
+		}
+		self.activePreviewSource = nil
+		self.updateDeleteButtonVisibility(animated: true)
+	}
+
 	// MARK: - Animations
+	/// Tracks in-flight snapshot views so rapid taps can interrupt a previous transition.
+	private var activeTransitionSnapshots: [UIView] = []
+
+	/// Performs a blur replace content transition on the preview area.
+	///
+	/// The outgoing content blurs out while the incoming content deblurs in,
+	/// both layered with a subtle scale animation for depth. On earlier versions, the
+	/// transition falls back to a simple scale + alpha fade.
+	func performReplaceTransition(changes: @escaping () -> Void) {
+		// Remove any in-flight snapshots from a previous interrupted transition
+		self.activeTransitionSnapshots.forEach { $0.removeFromSuperview() }
+		self.activeTransitionSnapshots.removeAll()
+
+		// Reset any residual transform/alpha from a previous interrupted animation
+		self.previewImageView.layer.removeAllAnimations()
+		self.monogramInitialsLabel.layer.removeAllAnimations()
+		self.previewImageView.transform = .identity
+		self.previewImageView.alpha = 1
+		self.monogramInitialsLabel.transform = .identity
+		self.monogramInitialsLabel.alpha = 1
+
+		// Snapshot the current image view
+		let imageSnapshot = UIView(frame: self.previewImageView.frame)
+		imageSnapshot.clipsToBounds = true
+		imageSnapshot.layer.cornerRadius = self.previewImageView.layer.cornerRadius
+		imageSnapshot.backgroundColor = self.previewImageView.backgroundColor
+
+		if let image = self.previewImageView.image {
+			let imageView = UIImageView(image: image)
+			imageView.frame = imageSnapshot.bounds
+			imageView.contentMode = .scaleAspectFill
+			imageView.clipsToBounds = true
+			imageSnapshot.addSubview(imageView)
+		}
+
+		self.insertSubview(imageSnapshot, belowSubview: self.deleteButton)
+		self.activeTransitionSnapshots.append(imageSnapshot)
+
+		// Snapshot the monogram label if visible
+		var labelSnapshot: UIView?
+		if !self.monogramInitialsLabel.isHidden {
+			let snapshot = UILabel()
+			snapshot.frame = self.monogramInitialsLabel.frame
+			snapshot.text = self.monogramInitialsLabel.text
+			snapshot.font = self.monogramInitialsLabel.font
+			snapshot.textColor = self.monogramInitialsLabel.textColor
+			snapshot.textAlignment = .center
+			snapshot.adjustsFontSizeToFitWidth = true
+			snapshot.minimumScaleFactor = 0.5
+			self.insertSubview(snapshot, belowSubview: self.deleteButton)
+			self.activeTransitionSnapshots.append(snapshot)
+			labelSnapshot = snapshot
+		}
+
+		// Capture pixel-accurate outgoing image for blur generation before content swap
+		let outgoingImage: UIImage = self.capturePreviewSnapshot()
+
+		// Apply the content changes immediately (underneath the snapshots)
+		changes()
+
+		self.performBlurReplaceTransition(
+			imageSnapshot: imageSnapshot,
+			labelSnapshot: labelSnapshot,
+			outgoingImage: outgoingImage
+		)
+	}
+
+	/// Blur-based replace transition using pre-rendered `CIGaussianBlur`
+	/// snapshots for a pure pixel blur with zero tint and smooth keyframe timing.
+	private func performBlurReplaceTransition(imageSnapshot: UIView, labelSnapshot: UIView?, outgoingImage: UIImage) {
+		let blurRadius: CGFloat = 20
+		let duration: TimeInterval = 0.65
+		let scaleDown = CGAffineTransform(scaleX: 0.90, y: 0.90)
+
+		// Outgoing blur from pre-captured old content
+		let outgoingBlurred = self.blurredImage(outgoingImage, radius: blurRadius)
+
+		let outgoingBlurView = UIImageView(image: outgoingBlurred)
+		outgoingBlurView.frame = self.previewImageView.frame
+		outgoingBlurView.contentMode = .scaleAspectFill
+		outgoingBlurView.clipsToBounds = true
+		outgoingBlurView.layer.cornerRadius = self.previewImageView.layer.cornerRadius
+		outgoingBlurView.alpha = 0
+
+		// Capture incoming content snapshots
+		let incomingSharpImage = self.capturePreviewSnapshot()
+		let incomingBlurred = self.blurredImage(incomingSharpImage, radius: blurRadius)
+
+		let incomingSharpView = UIImageView(image: incomingSharpImage)
+		incomingSharpView.frame = self.previewImageView.frame
+		incomingSharpView.contentMode = .scaleAspectFill
+		incomingSharpView.clipsToBounds = true
+		incomingSharpView.layer.cornerRadius = self.previewImageView.layer.cornerRadius
+		incomingSharpView.alpha = 0
+		incomingSharpView.transform = scaleDown
+
+		let incomingBlurView = UIImageView(image: incomingBlurred)
+		incomingBlurView.frame = self.previewImageView.frame
+		incomingBlurView.contentMode = .scaleAspectFill
+		incomingBlurView.clipsToBounds = true
+		incomingBlurView.layer.cornerRadius = self.previewImageView.layer.cornerRadius
+		incomingBlurView.alpha = 0
+		incomingBlurView.transform = scaleDown
+
+		// Hide real content
+		self.previewImageView.alpha = 0
+		self.monogramInitialsLabel.alpha = 0
+
+		// Z-order (bottom to top): incoming sharp -> incoming blur -> outgoing sharp -> outgoing blur -> deleteButton
+		self.insertSubview(incomingSharpView, belowSubview: self.deleteButton)
+		self.insertSubview(incomingBlurView, aboveSubview: incomingSharpView)
+		self.insertSubview(imageSnapshot, aboveSubview: incomingBlurView)
+		self.insertSubview(outgoingBlurView, aboveSubview: imageSnapshot)
+
+		self.activeTransitionSnapshots.append(contentsOf: [outgoingBlurView, incomingBlurView, incomingSharpView])
+
+		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic]) {
+			// Outgoing sharp snapshot: fade out in first 40%
+			UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.40) {
+				imageSnapshot.alpha = 0
+				labelSnapshot?.alpha = 0
+			}
+
+			// Outgoing blur: fade in first 45%, then out remaining 55%
+			UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45) {
+				outgoingBlurView.alpha = 1
+			}
+			UIView.addKeyframe(withRelativeStartTime: 0.45, relativeDuration: 0.55) {
+				outgoingBlurView.alpha = 0
+			}
+
+			// Outgoing scale: shrink over full duration
+			UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
+				imageSnapshot.transform = scaleDown
+				labelSnapshot?.transform = scaleDown
+				outgoingBlurView.transform = scaleDown
+			}
+
+			// Incoming blur: fade in during first half, then out
+			UIView.addKeyframe(withRelativeStartTime: 0.30, relativeDuration: 0.25) {
+				incomingBlurView.alpha = 1
+			}
+			UIView.addKeyframe(withRelativeStartTime: 0.55, relativeDuration: 0.45) {
+				incomingBlurView.alpha = 0
+			}
+
+			// Incoming sharp: fade in during second half
+			UIView.addKeyframe(withRelativeStartTime: 0.45, relativeDuration: 0.55) {
+				incomingSharpView.alpha = 1
+			}
+
+			// Incoming scale: grow to identity over full duration
+			UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
+				incomingBlurView.transform = .identity
+				incomingSharpView.transform = .identity
+			}
+		} completion: { [weak self] _ in
+			guard let self else { return }
+			// Restore real content visibility
+			self.previewImageView.alpha = 1
+			self.monogramInitialsLabel.alpha = 1
+			self.previewImageView.transform = .identity
+			self.monogramInitialsLabel.transform = .identity
+
+			imageSnapshot.removeFromSuperview()
+			labelSnapshot?.removeFromSuperview()
+			outgoingBlurView.removeFromSuperview()
+			incomingBlurView.removeFromSuperview()
+			incomingSharpView.removeFromSuperview()
+			self.activeTransitionSnapshots.removeAll {
+				$0 === imageSnapshot || $0 === labelSnapshot || $0 === outgoingBlurView || $0 === incomingBlurView || $0 === incomingSharpView
+			}
+		}
+	}
+
+	/// Renders the current preview content (image + monogram) to a UIImage.
+	private func capturePreviewSnapshot() -> UIImage {
+		let bounds = self.previewImageView.bounds
+		let origin = self.previewImageView.frame.origin
+		let renderer = UIGraphicsImageRenderer(bounds: bounds)
+		return renderer.image { context in
+			self.previewImageView.layer.render(in: context.cgContext)
+			if !self.monogramInitialsLabel.isHidden {
+				context.cgContext.saveGState()
+				context.cgContext.translateBy(
+					x: self.monogramInitialsLabel.frame.origin.x - origin.x,
+					y: self.monogramInitialsLabel.frame.origin.y - origin.y
+				)
+				self.monogramInitialsLabel.layer.render(in: context.cgContext)
+				context.cgContext.restoreGState()
+			}
+		}
+	}
+
+	/// Applies a Gaussian blur to the image. Returns the original if blurring fails.
+	private func blurredImage(_ image: UIImage, radius: CGFloat) -> UIImage {
+		guard let ciImage = CIImage(image: image),
+		      let filter = CIFilter(name: "CIGaussianBlur") else { return image }
+		filter.setValue(ciImage, forKey: kCIInputImageKey)
+		filter.setValue(radius, forKey: kCIInputRadiusKey)
+		guard let output = filter.outputImage else { return image }
+		let cropped = output.cropped(to: ciImage.extent)
+		let context = CIContext(options: [.useSoftwareRenderer: false])
+		guard let cgImage = context.createCGImage(cropped, from: cropped.extent) else { return image }
+		return UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
+	}
+
 	/// Plays a horizontal shake animation on the preview image to indicate rejected input.
 	private func shakePreviewImage() {
 		let animation = CAKeyframeAnimation(keyPath: "position.x")
