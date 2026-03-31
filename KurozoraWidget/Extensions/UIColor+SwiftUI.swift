@@ -20,27 +20,18 @@ extension Color {
 	// MARK: - font colors
 	/// This color is either black or white, whichever is more accessible when viewed against the current color.
 	var accessibleFontColor: Color {
-		var red: CGFloat = 0
-		var green: CGFloat = 0
-		var blue: CGFloat = 0
-		UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: nil)
-		return self.isLightColor(red: red, green: green, blue: blue) ? .black : .white
-	}
+		var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0
+		guard UIColor(self).getRed(&r, green: &g, blue: &b, alpha: nil) else {
+			return .white
+		}
 
-	/// Determine whether the given red, green, and blue values represent a light color.
-	///
-	/// - Parameters:
-	///    - red: The red value.
-	///    - green: The green value.
-	///    - blue: The blue value.
-	///
-	/// - Returns: `true` if the color is light, `false` otherwise.
-	private func isLightColor(red: CGFloat, green: CGFloat, blue: CGFloat) -> Bool {
-		let lightRed = red > 0.65
-		let lightGreen = green > 0.65
-		let lightBlue = blue > 0.65
+		@inline(__always)
+		func linearize(_ c: CGFloat) -> CGFloat {
+			let c = min(max(c, 0), 1)
+			return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
+		}
 
-		let lightness = [lightRed, lightGreen, lightBlue].reduce(0) { $1 ? $0 + 1 : $0 }
-		return lightness >= 2
+		let luminance = 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b)
+		return luminance > 0.5 ? .black : .white
 	}
 }

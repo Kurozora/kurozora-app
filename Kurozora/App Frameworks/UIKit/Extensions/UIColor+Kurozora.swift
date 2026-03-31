@@ -73,33 +73,26 @@ extension UIColor {
 	static let dropped: UIColor = #colorLiteral(red: 0.3921568627, green: 0.3921568627, blue: 0.3921568627, alpha: 1)
 
 	// MARK: - Properties
-	/// RGB components for a Color (between 0 and 255).
+	/// Whether the color is perceptually light, based on WCAG 2.0 relative luminance.
 	///
-	///     UIColor.red.rgbComponents.red -> 255
-	///     NSColor.green.rgbComponents.green -> 255
-	///     UIColor.blue.rgbComponents.blue -> 255
-	///
-	var rgbComponents: (red: Int, green: Int, blue: Int) {
-		let components: [CGFloat] = {
-			let comps: [CGFloat] = cgColor.components!
-			guard comps.count != 4 else { return comps }
-			return [comps[0], comps[0], comps[0], comps[1]]
-		}()
-		let red = components[0]
-		let green = components[1]
-		let blue = components[2]
-		return (red: Int(red * 255.0), green: Int(green * 255.0), blue: Int(blue * 255.0))
-	}
-
-	/// Whether the color contrast is light or dark.
-	///
-	/// This uses the algorithm proposed by [W3](https://www.w3.org/WAI/ER/WD-AERT/#color-contrast)
-	///
-	/// Returns: a boolean indicating whether the color contrast is light or dark.
+	/// Uses sRGB linearization and BT.709 luminance coefficients. The threshold
+	/// (L = 0.5) is a perceptual midpoint that keeps white text on vibrant colors
+	/// and switches to black text only on genuinely bright backgrounds like yellow.
+	/// Assumes an opaque color; alpha is ignored.
 	var isLight: Bool {
-		let (red, green, blue) = self.rgbComponents
-		let colorContrast = ((red * 299) + (green * 587) + (blue * 114)) / 1000
-		return colorContrast > 125
+		var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0
+		guard self.getRed(&r, green: &g, blue: &b, alpha: nil) else {
+			return false // Non-RGB color (e.g. pattern) — default to dark
+		}
+
+		@inline(__always)
+		func linearize(_ c: CGFloat) -> CGFloat {
+			let c = min(max(c, 0), 1)
+			return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
+		}
+
+		let luminance = 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b)
+		return luminance > 0.5
 	}
 
 	// MARK: - Initializers
