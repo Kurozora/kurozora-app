@@ -57,9 +57,14 @@ enum Layouts {
 	static func gridSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = .fractionalWidth(1.0)
 		let bottomInset: CGFloat = 20.0
+		let heightDimension: NSCollectionLayoutDimension = if #available(iOS 17.0, *) {
+			.uniformAcrossSiblings(estimate: 140.0)
+		} else {
+			.estimated(140.0)
+		}
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimension)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
