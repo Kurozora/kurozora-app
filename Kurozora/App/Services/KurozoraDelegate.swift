@@ -47,6 +47,9 @@ final class KurozoraDelegate {
 		// Initialize the local Core Data store
 		_ = PersistenceController.shared
 
+		// Migrate UserDefaults to shared App Group suite for widget access
+		UserSettings.migrateToSharedSuiteIfNeeded()
+
 		// Migrate legacy keychain entries to the new account storage
 		AccountManager.shared.migrateIfNeeded()
 

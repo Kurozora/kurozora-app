@@ -10,11 +10,13 @@ import KurozoraKit
 import UIKit
 
 class UserSettings: UserDefaults {
-	/// The base `UserDefaults` suit of the Kurozora apps.
+	/// The App Group suite name shared between the main app and extensions.
+	static let suiteName = "group.settings.app.kurozora.tracker"
+
+	/// The base `UserDefaults` suite of the Kurozora apps, backed by the shared App Group container.
 	static var shared: UserDefaults {
-		let combined = UserDefaults.standard
-		combined.addSuite(named: "group.settings.app.kurozora.anime")
-		combined.register(defaults: [
+		let shared = UserDefaults(suiteName: suiteName) ?? .standard
+		shared.register(defaults: [
 			UserSettingsKey.notificationsAllowed.rawValue: true,
 			UserSettingsKey.notificationsSound.rawValue: true,
 			UserSettingsKey.notificationsBadge.rawValue: true,
@@ -26,12 +28,26 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
 			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
 		])
-		return combined
+		return shared
 	}
 
 	/// Set value for key in shared `UserDefaults`.
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
 		self.shared.set(value, forKey: key.rawValue)
+	}
+
+	/// One-time migration of existing settings from `.standard` to the shared App Group suite.
+	static func migrateToSharedSuiteIfNeeded() {
+		let shared = UserDefaults(suiteName: suiteName) ?? .standard
+		guard !shared.bool(forKey: "sharedSuiteMigrationCompleted") else { return }
+
+		let standard = UserDefaults.standard
+		for key in UserSettingsKey.allCases {
+			if let value = standard.object(forKey: key.rawValue) {
+				shared.set(value, forKey: key.rawValue)
+			}
+		}
+		shared.set(true, forKey: "sharedSuiteMigrationCompleted")
 	}
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 
 /// The set of available user settings keys.
-enum UserSettingsKey: String {
+enum UserSettingsKey: String, CaseIterable {
 	// Account keys
 	/// The key to the selected account.
 	case selectedAccount
