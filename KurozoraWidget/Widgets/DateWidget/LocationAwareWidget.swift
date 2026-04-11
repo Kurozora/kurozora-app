@@ -1,5 +1,5 @@
 //
-//  PhoneWidgetLocating.swift
+//  LocationAwareWidget.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/09/2025.

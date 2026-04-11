@@ -1,5 +1,5 @@
 //
-//  UIColor+SwiftUI.swift
+//  UIColor+KurozoraWidget.swift
 //  KurozoraWidgetExtension
 //
 //  Created by Khoren Katklian on 07/04/2024.
