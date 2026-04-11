@@ -149,16 +149,7 @@ final class AuthenticationManager {
 					completion(true)
 				} else {
 					DispatchQueue.main.async {
-						guard let error = evaluateError else { return }
-
-						switch error._code {
-						case LAError.userFallback.rawValue:
-							print("fallback chosen")
-						case LAError.userCancel.rawValue:
-							completion(false)
-						default:
-							break
-						}
+						completion(false)
 					}
 				}
 			}
