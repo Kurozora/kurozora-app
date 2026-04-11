@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import AVFoundation
 
-class UserReviewsListCollectionViewController: KCollectionViewController {
+class UserReviewsListCollectionViewController: KCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue
@@ -25,16 +25,15 @@ class UserReviewsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var user: User?
-	var characters: [IndexPath: Character] = [:]
-	var episodes: [IndexPath: Episode] = [:]
-	var games: [IndexPath: Game] = [:]
-	var literatures: [IndexPath: Literature] = [:]
-	var people: [IndexPath: Person] = [:]
-	var shows: [IndexPath: Show] = [:]
-	var songs: [IndexPath: Song] = [:]
-	var studios: [IndexPath: Studio] = [:]
 	var reviews: [Review] = []
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Review>! = nil
+
+	var cache: [IndexPath: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
+	var isFetchingType: Set<String> = []
+	var fetchGeneration: Int = 0
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?
@@ -114,6 +113,10 @@ class UserReviewsListCollectionViewController: KCollectionViewController {
 	override func handleRefreshControl() {
 		if self.user != nil {
 			self.nextPageURL = nil
+			self.cache.removeAll()
+			self.isFetchingType.removeAll()
+			self.fetchGeneration += 1
+
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchReviews()
@@ -255,6 +258,93 @@ class UserReviewsListCollectionViewController: KCollectionViewController {
 	}
 }
 
+// MARK: - SectionFetchable
+extension UserReviewsListCollectionViewController {
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .review(let review):
+			if let identity = review.relationships?.shows?.data.first { return identity as? Element }
+			if let identity = review.relationships?.games?.data.first { return identity as? Element }
+			if let identity = review.relationships?.literatures?.data.first { return identity as? Element }
+			if let identity = review.relationships?.episodes?.data.first { return identity as? Element }
+			if let identity = review.relationships?.songs?.data.first { return identity as? Element }
+			if let identity = review.relationships?.characters?.data.first { return identity as? Element }
+			if let identity = review.relationships?.people?.data.first { return identity as? Element }
+			if let identity = review.relationships?.studios?.data.first { return identity as? Element }
+			return nil
+		}
+	}
+
+	/// Fetches details for all uncached identities of a specific type across the section.
+	///
+	/// Unlike `fetchSectionIfNeeded`, this method preserves global index paths for
+	/// heterogeneous sections where items reference different identity types.
+	/// Uses `isFetchingType` (per-type) instead of `isFetchingSection` (per-section).
+	func fetchReviewSectionIfNeeded<I: KurozoraRequestable, Identity: KurozoraItem>(_ response: I.Type, _ identityType: Identity.Type, at indexPath: IndexPath, itemKind: ItemKind) async {
+		guard self.cache[indexPath] == nil else { return }
+
+		let typeKey = String(describing: Identity.self)
+		guard !self.isFetchingType.contains(typeKey) else { return }
+		self.isFetchingType.insert(typeKey)
+		defer { self.isFetchingType.remove(typeKey) }
+
+		let generation = self.fetchGeneration
+
+		// Enumerate all items preserving global index
+		let allItems = self.snapshot.itemIdentifiers(inSection: .main)
+		let uncached: [(globalIndex: Int, identity: Identity)] = allItems
+			.enumerated()
+			.compactMap { globalIndex, item -> (Int, Identity)? in
+				guard let identity: Identity = self.extractIdentity(from: item) else { return nil }
+				let ip = IndexPath(item: globalIndex, section: indexPath.section)
+				guard self.cache[ip] == nil else { return nil }
+				return (globalIndex, identity)
+			}
+
+		guard !uncached.isEmpty else { return }
+
+		let chunkSize = 25
+		let chunks = uncached.chunked(into: chunkSize)
+
+		do {
+			for chunk in chunks {
+				let identitiesToFetch = chunk.map { $0.identity }
+				let fetchedResponse: I = try await KService.getDetails(for: identitiesToFetch).value
+
+				// Bail if the snapshot was rebuilt (e.g., pull-to-refresh)
+				guard generation == self.fetchGeneration else { return }
+
+				let orderLookup = Dictionary(
+					identitiesToFetch.enumerated().map { ($1.id, $0) },
+					uniquingKeysWith: { first, _ in first }
+				)
+				let sorted = fetchedResponse.data.sorted {
+					guard let l = orderLookup[$0.id], let r = orderLookup[$1.id] else { return false }
+					return l < r
+				}
+
+				// Build lookup mapping identity ID to all global indexes (handles
+				// duplicate reviews for the same model)
+				var chunkLookup: [KurozoraItemID: [Int]] = [:]
+				for entry in chunk {
+					chunkLookup[entry.identity.id, default: []].append(entry.globalIndex)
+				}
+				for model in sorted {
+					if let globalIndexes = chunkLookup[model.id] {
+						for globalIndex in globalIndexes {
+							self.cache[IndexPath(item: globalIndex, section: indexPath.section)] = model
+						}
+					}
+				}
+
+				self.setSectionNeedsUpdate(.main)
+			}
+		} catch {
+			print("----- Fetch error for \(typeKey): \(error)")
+		}
+	}
+}
+
 // MARK: - SectionLayoutKind
 extension UserReviewsListCollectionViewController {
 	/// List of section layout kind.
@@ -264,5 +354,30 @@ extension UserReviewsListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension UserReviewsListCollectionViewController {
+	/// List of item layout kind.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .review(let review):
+				hasher.combine(review)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.review(let review1), .review(let review2)):
+				return review1 == review2
+			}
+		}
 	}
 }

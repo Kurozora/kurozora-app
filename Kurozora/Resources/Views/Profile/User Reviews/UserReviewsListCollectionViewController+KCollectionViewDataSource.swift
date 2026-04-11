@@ -17,101 +17,55 @@ extension UserReviewsListCollectionViewController {
 		let personReviewCell = self.getConfiguredPersonReviewCell()
 		let baseReviewCell = self.getConfiguredBaseReviewCell()
 
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Review>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, reviewIdentity: Review) -> UICollectionViewCell? in
-			if reviewIdentity.relationships?.literatures != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.characters != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.people != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.episodes != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: episodeReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.games != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: gameReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.shows != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.songs != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: musicReviewCell, for: indexPath, item: reviewIdentity)
-			} else if reviewIdentity.relationships?.studios != nil {
-				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: reviewIdentity)
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			guard case .review(let review) = itemKind else { return nil }
+
+			if review.relationships?.literatures != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.characters != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.people != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.episodes != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: episodeReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.games != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: gameReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.shows != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.songs != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: musicReviewCell, for: indexPath, item: itemKind)
+			} else if review.relationships?.studios != nil {
+				return collectionView.dequeueConfiguredReusableCell(using: personReviewCell, for: indexPath, item: itemKind)
 			}
 
-			return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: reviewIdentity)
+			return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: itemKind)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Review>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.reviews, toSection: .main)
-		self.dataSource.apply(snapshot)
-	}
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
 
-	func fetchCharacter(at indexPath: IndexPath) -> Character? {
-		guard let character = self.characters[indexPath] else { return nil }
-		return character
-	}
+		let reviewItems: [ItemKind] = self.reviews.map { review in
+			.review(review)
+		}
+		self.snapshot.appendItems(reviewItems, toSection: .main)
 
-	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
-		guard let episode = self.episodes[indexPath] else { return nil }
-		return episode
-	}
-
-	func fetchGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.games[indexPath] else { return nil }
-		return game
-	}
-
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
-
-	func fetchPerson(at indexPath: IndexPath) -> Person? {
-		guard let person = self.people[indexPath] else { return nil }
-		return person
-	}
-
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
-	}
-
-	func fetchSong(at indexPath: IndexPath) -> Song? {
-		guard let song = self.songs[indexPath] else { return nil }
-		return song
-	}
-
-	func fetchStudio(at indexPath: IndexPath) -> Studio? {
-		guard let studio = self.studios[indexPath] else { return nil }
-		return studio
-	}
-
-	func setUserNeedsUpdate(_ review: Review) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(review) != nil else { return }
-		snapshot.reconfigureItems([review])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(self.snapshot)
 	}
 }
 
 extension UserReviewsListCollectionViewController {
-	func getConfiguredGameReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: GameReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredGameReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: GameReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			let gameIdentity = review.relationships?.games?.data.first
-			let game = self.fetchGame(at: indexPath)
+			guard case .review(let review) = itemKind else { return }
 
-			if game == nil, let gameIdentity = gameIdentity {
+			let game: Game? = self.fetchModel(at: indexPath)
+
+			if game == nil {
 				Task {
-					do {
-						let reviewResponse = try await KService.getDetails(forGame: gameIdentity).value
-
-						self.games[indexPath] = reviewResponse.data.first
-						self.setUserNeedsUpdate(review)
-					} catch {
-						print(error.localizedDescription)
-					}
+					await self.fetchReviewSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 				}
 			}
 
@@ -119,40 +73,27 @@ extension UserReviewsListCollectionViewController {
 		}
 	}
 
-	func getConfiguredBaseReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: BaseReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredBaseReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: BaseReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
+			guard case .review(let review) = itemKind else { return }
 
-			if let showIdentity = review.relationships?.shows?.data.first {
-				let show = self.fetchShow(at: indexPath)
+			if review.relationships?.shows != nil {
+				let show: Show? = self.fetchModel(at: indexPath)
 
 				if show == nil {
 					Task {
-						do {
-							let reviewResponse = try await KService.getDetails(forShow: showIdentity).value
-
-							self.shows[indexPath] = reviewResponse.data.first
-							self.setUserNeedsUpdate(review)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchReviewSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
 				baseReviewLockupCollectionViewCell.configure(using: review, for: show)
-			} else if let literatureIdentity = review.relationships?.literatures?.data.first {
-				let literature = self.fetchLiterature(at: indexPath)
+			} else if review.relationships?.literatures != nil {
+				let literature: Literature? = self.fetchModel(at: indexPath)
 
 				if literature == nil {
 					Task {
-						do {
-							let reviewResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
-
-							self.literatures[indexPath] = reviewResponse.data.first
-							self.setUserNeedsUpdate(review)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchReviewSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -161,22 +102,16 @@ extension UserReviewsListCollectionViewController {
 		}
 	}
 
-	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review>(cellNib: MusicReviewLockupCollectionViewCell.nib) { [weak self] musicReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, ItemKind>(cellNib: MusicReviewLockupCollectionViewCell.nib) { [weak self] musicReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			let songIdentity = review.relationships?.songs?.data.first
-			let song = self.fetchSong(at: indexPath)
+			guard case .review(let review) = itemKind else { return }
 
-			if song == nil, let songIdentity = songIdentity {
+			let song: Song? = self.fetchModel(at: indexPath)
+
+			if song == nil {
 				Task {
-					do {
-						let reviewResponse = try await KService.getDetails(forSong: songIdentity).value
-
-						self.songs[indexPath] = reviewResponse.data.first
-						self.setUserNeedsUpdate(review)
-					} catch {
-						print(error.localizedDescription)
-					}
+					await self.fetchReviewSectionIfNeeded(SongResponse.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
 				}
 			}
 
@@ -184,22 +119,16 @@ extension UserReviewsListCollectionViewController {
 		}
 	}
 
-	func getConfiguredEpisodeReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: EpisodeReviewLockupCollectionViewCell.nib) { [weak self] episodeReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredEpisodeReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: EpisodeReviewLockupCollectionViewCell.nib) { [weak self] episodeReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			let episodeIdentity = review.relationships?.episodes?.data.first
-			let episode = self.fetchEpisode(at: indexPath)
+			guard case .review(let review) = itemKind else { return }
 
-			if episode == nil, let episodeIdentity = episodeIdentity {
+			let episode: Episode? = self.fetchModel(at: indexPath)
+
+			if episode == nil {
 				Task {
-					do {
-						let reviewResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
-
-						self.episodes[indexPath] = reviewResponse.data.first
-						self.setUserNeedsUpdate(review)
-					} catch {
-						print(error.localizedDescription)
-					}
+					await self.fetchReviewSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
 				}
 			}
 
@@ -207,57 +136,37 @@ extension UserReviewsListCollectionViewController {
 		}
 	}
 
-	func getConfiguredPersonReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: PersonReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredPersonReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: PersonReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
+			guard case .review(let review) = itemKind else { return }
 
-			if let characterIdentity = review.relationships?.characters?.data.first {
-				let character = self.fetchCharacter(at: indexPath)
+			if review.relationships?.characters != nil {
+				let character: Character? = self.fetchModel(at: indexPath)
 
 				if character == nil {
 					Task {
-						do {
-							let reviewResponse = try await KService.getDetails(forCharacter: characterIdentity).value
-
-							self.characters[indexPath] = reviewResponse.data.first
-							self.setUserNeedsUpdate(review)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchReviewSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
 				baseReviewLockupCollectionViewCell.configure(using: review, for: character)
-			} else if let personIdentity = review.relationships?.people?.data.first {
-				let person = self.fetchPerson(at: indexPath)
+			} else if review.relationships?.people != nil {
+				let person: Person? = self.fetchModel(at: indexPath)
 
 				if person == nil {
 					Task {
-						do {
-							let reviewResponse = try await KService.getDetails(forPerson: personIdentity).value
-
-							self.people[indexPath] = reviewResponse.data.first
-							self.setUserNeedsUpdate(review)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchReviewSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
 				baseReviewLockupCollectionViewCell.configure(using: review, for: person)
-			} else if let studioIdentity = review.relationships?.studios?.data.first {
-				let studio = self.fetchStudio(at: indexPath)
+			} else if review.relationships?.studios != nil {
+				let studio: Studio? = self.fetchModel(at: indexPath)
 
 				if studio == nil {
 					Task {
-						do {
-							let reviewResponse = try await KService.getDetails(forStudio: studioIdentity).value
-
-							self.studios[indexPath] = reviewResponse.data.first
-							self.setUserNeedsUpdate(review)
-						} catch {
-							print(error.localizedDescription)
-						}
+						await self.fetchReviewSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

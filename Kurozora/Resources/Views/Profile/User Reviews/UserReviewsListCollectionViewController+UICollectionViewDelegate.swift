@@ -7,34 +7,36 @@
 //
 
 import UIKit
+import KurozoraKit
 
 extension UserReviewsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let review = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath),
+			  case .review(let review) = itemKind else { return }
 
 		if review.relationships?.literatures != nil {
-			guard let literature = self.fetchLiterature(at: indexPath) else { return }
+			guard let literature: Literature = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
 		} else if review.relationships?.characters != nil {
-			guard let character = self.fetchCharacter(at: indexPath) else { return }
+			guard let character: Character = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
 		} else if review.relationships?.people != nil {
-			guard let person = self.fetchPerson(at: indexPath) else { return }
+			guard let person: Person = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.personDetailsSegue, sender: person)
 		} else if review.relationships?.episodes != nil {
-			guard let episode = self.fetchEpisode(at: indexPath) else { return }
+			guard let episode: Episode = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.episodeDetailsSegue, sender: episode)
 		} else if review.relationships?.games != nil {
-			guard let game = self.fetchGame(at: indexPath) else { return }
+			guard let game: Game = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
 		} else if review.relationships?.shows != nil {
-			guard let show = self.fetchShow(at: indexPath) else { return }
+			guard let show: Show = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
 		} else if review.relationships?.songs != nil {
-			guard let song = self.fetchSong(at: indexPath) else { return }
+			guard let song: Song = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
 		} else if review.relationships?.studios != nil {
-			guard let studio = self.fetchStudio(at: indexPath) else { return }
+			guard let studio: Studio = self.fetchModel(at: indexPath) else { return }
 			self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
 		}
 	}
@@ -56,7 +58,8 @@ extension UserReviewsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let review = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath),
+			  case .review(let review) = itemKind else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
