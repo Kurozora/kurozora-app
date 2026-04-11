@@ -133,43 +133,189 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Default</string>
+					<string>SF Pro</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>M1kFxx</string>
 					<key>INEnumValueIndex</key>
 					<integer>1</integer>
 					<key>INEnumValueName</key>
-					<string>system</string>
+					<string>defaultStyle</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Book</string>
+					<string>Rounded</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>YeBmSY</string>
 					<key>INEnumValueIndex</key>
 					<integer>2</integer>
 					<key>INEnumValueName</key>
-					<string>book</string>
+					<string>rounded</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Engraved</string>
+					<string>Serif</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>5MoWBB</string>
 					<key>INEnumValueIndex</key>
 					<integer>3</integer>
 					<key>INEnumValueName</key>
-					<string>engraved</string>
+					<string>serif</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Typewriter</string>
+					<string>Compressed</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>1tztvh</string>
 					<key>INEnumValueIndex</key>
 					<integer>4</integer>
 					<key>INEnumValueName</key>
-					<string>typewriter</string>
+					<string>compressed</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INEnumDisplayName</key>
+			<string>Intent Font Weight</string>
+			<key>INEnumDisplayNameID</key>
+			<string>Fw8k2P</string>
+			<key>INEnumGeneratesHeader</key>
+			<true/>
+			<key>INEnumName</key>
+			<string>IntentFontWeight</string>
+			<key>INEnumType</key>
+			<string>Regular</string>
+			<key>INEnumValues</key>
+			<array>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>unknown</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Rw9x1K</string>
+					<key>INEnumValueName</key>
+					<string>unknown</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Regular</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Vt3n7Q</string>
+					<key>INEnumValueIndex</key>
+					<integer>1</integer>
+					<key>INEnumValueName</key>
+					<string>regular</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Medium</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Jm4p8R</string>
+					<key>INEnumValueIndex</key>
+					<integer>2</integer>
+					<key>INEnumValueName</key>
+					<string>medium</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Semibold</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Kn5q9S</string>
+					<key>INEnumValueIndex</key>
+					<integer>3</integer>
+					<key>INEnumValueName</key>
+					<string>semibold</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bold</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Lo6r0T</string>
+					<key>INEnumValueIndex</key>
+					<integer>4</integer>
+					<key>INEnumValueName</key>
+					<string>bold</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Heavy</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Mp7s1U</string>
+					<key>INEnumValueIndex</key>
+					<integer>5</integer>
+					<key>INEnumValueName</key>
+					<string>heavy</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Black</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Nq8t2V</string>
+					<key>INEnumValueIndex</key>
+					<integer>6</integer>
+					<key>INEnumValueName</key>
+					<string>black</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INEnumDisplayName</key>
+			<string>Intent Font Width</string>
+			<key>INEnumDisplayNameID</key>
+			<string>Gx9u3W</string>
+			<key>INEnumGeneratesHeader</key>
+			<true/>
+			<key>INEnumName</key>
+			<string>IntentFontWidth</string>
+			<key>INEnumType</key>
+			<string>Regular</string>
+			<key>INEnumValues</key>
+			<array>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>unknown</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Hy0v4X</string>
+					<key>INEnumValueName</key>
+					<string>unknown</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Compressed</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Iz1w5Y</string>
+					<key>INEnumValueIndex</key>
+					<integer>1</integer>
+					<key>INEnumValueName</key>
+					<string>compressed</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Condensed</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Ja2x6Z</string>
+					<key>INEnumValueIndex</key>
+					<integer>2</integer>
+					<key>INEnumValueName</key>
+					<string>condensed</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Standard</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Kb3y7A</string>
+					<key>INEnumValueIndex</key>
+					<integer>3</integer>
+					<key>INEnumValueName</key>
+					<string>standard</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Expanded</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Lc4z8B</string>
+					<key>INEnumValueIndex</key>
+					<integer>4</integer>
+					<key>INEnumValueName</key>
+					<string>expanded</string>
 				</dict>
 			</array>
 		</dict>
@@ -198,7 +344,7 @@
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>16</integer>
+			<integer>18</integer>
 			<key>INIntentName</key>
 			<string>ToggleDate</string>
 			<key>INIntentParameters</key>
@@ -241,7 +387,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${kind}’.</string>
+							<string>There are ${count} options matching '${kind}'.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>yrREEd</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -251,7 +397,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${kind}’?</string>
+							<string>Just to confirm, you wanted '${kind}'?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>yh9lkk</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -301,7 +447,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${collection}’.</string>
+							<string>There are ${count} options matching '${collection}'.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>CmJaIE</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -311,7 +457,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${collection}’?</string>
+							<string>Just to confirm, you wanted '${collection}'?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>eSObVV</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -469,7 +615,7 @@
 					<key>INIntentParameterMetadata</key>
 					<dict>
 						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>system</string>
+						<string>defaultStyle</string>
 					</dict>
 					<key>INIntentParameterName</key>
 					<string>font</string>
@@ -491,7 +637,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${font}’.</string>
+							<string>There are ${count} options matching '${font}'.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>Whwk4T</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -501,7 +647,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${font}’?</string>
+							<string>Just to confirm, you wanted '${font}'?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>NMM91F</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -510,6 +656,126 @@
 					</array>
 					<key>INIntentParameterTag</key>
 					<integer>12</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Font Weight</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>Md5a9C</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>7</integer>
+					<key>INIntentParameterEnumType</key>
+					<string>IntentFontWeight</string>
+					<key>INIntentParameterEnumTypeNamespace</key>
+					<string>eDUA72</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>bold</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>fontWeight</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching '${fontWeight}'.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Ne6b0D</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted '${fontWeight}'?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Of7c1E</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>17</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Font Width</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>Pg8d2F</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>8</integer>
+					<key>INIntentParameterEnumType</key>
+					<string>IntentFontWidth</string>
+					<key>INIntentParameterEnumTypeNamespace</key>
+					<string>eDUA72</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>standard</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>fontWidth</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching '${fontWidth}'.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Qh9e3G</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted '${fontWidth}'?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Ri0f4H</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>18</integer>
 					<key>INIntentParameterType</key>
 					<string>Integer</string>
 				</dict>

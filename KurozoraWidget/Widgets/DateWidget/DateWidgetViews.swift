@@ -133,8 +133,8 @@ struct DateWidgetEntryContentView: View {
 
 	func weekDayView(isAdaptive: Bool) -> some View {
 		Text(self.entry.date, format: .dateTime.weekday(.wide))
-			.font(self.entry.fontStyle.toFontStyle(.caption).weight(.black))
-			.fontWeight(.black)
+			.font(self.entry.fontStyle.toFont(.caption))
+			.modifier(self.fontTraitsModifier)
 			.foregroundStyle(.white)
 //			.stroke(.black, lineWidth: isAdaptive ? 1 : 0)
 			.shadow(color: .black.opacity(0.35), radius: 2)
@@ -142,11 +142,19 @@ struct DateWidgetEntryContentView: View {
 
 	func dayView(isAdaptive: Bool) -> some View {
 		Text(self.entry.date, format: .dateTime.day())
-			.font(self.entry.fontStyle.toFontStyle(.title).weight(.black))
-			.fontWeight(.black)
+			.font(self.entry.fontStyle.toFont(.title))
+			.modifier(self.fontTraitsModifier)
 			.foregroundStyle(.white)
 //			.stroke(.black, lineWidth: isAdaptive ? 1 : 0)
 			.shadow(color: .black.opacity(0.35), radius: 2)
+	}
+
+	private var fontTraitsModifier: FontTraitsModifier {
+		FontTraitsModifier(
+			fontStyle: self.entry.fontStyle,
+			fontWeight: self.entry.fontWeight,
+			fontWidth: self.entry.fontWidth
+		)
 	}
 
 	func imageView(geometry: GeometryProxy) -> Image {
@@ -175,7 +183,9 @@ struct DateWidgetEntryContentView: View {
 		isDimmed: false,
 		isAdaptive: false,
 		isDateShown: true,
-		fontStyle: .system
+		fontStyle: .defaultStyle,
+		fontWeight: .bold,
+		fontWidth: .standard
 	)
 }
 
@@ -194,7 +204,9 @@ struct DateWidgetEntryContentView: View {
 		isDimmed: false,
 		isAdaptive: false,
 		isDateShown: false,
-		fontStyle: .system
+		fontStyle: .defaultStyle,
+		fontWeight: .bold,
+		fontWidth: .standard
 	)
 }
 #endif

@@ -25,7 +25,9 @@ struct Provider: IntentTimelineProvider {
 			isDimmed: true,
 			isAdaptive: true,
 			isDateShown: true,
-			fontStyle: .system
+			fontStyle: .defaultStyle,
+			fontWeight: .bold,
+			fontWidth: .standard
 		)
 	}
 
@@ -52,7 +54,9 @@ struct Provider: IntentTimelineProvider {
 					isDimmed: configuration.isDimmed == true,
 					isAdaptive: configuration.isAdaptive == true,
 					isDateShown: configuration.isDateShown == true,
-					fontStyle: configuration.font
+					fontStyle: configuration.font,
+					fontWeight: configuration.fontWeight,
+					fontWidth: configuration.fontWidth
 				)
 			}
 
@@ -86,7 +90,9 @@ struct Provider: IntentTimelineProvider {
 						isDimmed: configuration.isDimmed == true,
 						isAdaptive: configuration.isAdaptive == true,
 						isDateShown: configuration.isDateShown == true,
-						fontStyle: configuration.font
+						fontStyle: configuration.font,
+						fontWeight: configuration.fontWeight,
+						fontWidth: configuration.fontWidth
 					)
 				)
 			}
@@ -113,8 +119,14 @@ struct DateEntry: TimelineEntry {
 	/// Specifies whether to show the date.
 	let isDateShown: Bool
 
-	/// Specify font style
+	/// The font style.
 	let fontStyle: IntentFont
+
+	/// The font weight.
+	let fontWeight: IntentFontWeight
+
+	/// The font width.
+	let fontWidth: IntentFontWidth
 }
 
 struct Banner {
