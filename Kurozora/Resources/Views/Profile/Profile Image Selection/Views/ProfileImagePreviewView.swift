@@ -38,6 +38,7 @@ class ProfileImagePreviewView: UIView {
 	var kaomojiBackgroundColor: UIColor = .kurozora
 	var selectedKaomoji: String?
 
+	var selectedSource: ProfileImageSource?
 	var activePreviewSource: ProfileImageSource?
 	private(set) var isUpdatingMonogramPreview: Bool = false
 
@@ -70,19 +71,19 @@ class ProfileImagePreviewView: UIView {
 		return label
 	}()
 
-	private lazy var monogramTextField: UITextField = {
-		let textField = UITextField()
+	private lazy var monogramTextField: MonogramTextField = {
+		let textField = MonogramTextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.isHidden = true
-		textField.alpha = 0
+		textField.clipsToBounds = true
 		textField.font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
 		textField.textAlignment = .center
 		textField.adjustsFontSizeToFitWidth = true
 		textField.minimumFontSize = 25
 		textField.delegate = self
 		textField.backgroundColor = .clear
-		textField.textColor = .white
-		textField.keyboardType = .asciiCapable
+		textField.textColor = .clear
+		textField.tintColor = .clear
+		textField.keyboardType = .default
 		textField.autocapitalizationType = .allCharacters
 		textField.returnKeyType = .done
 		return textField
@@ -124,8 +125,7 @@ class ProfileImagePreviewView: UIView {
 	private(set) lazy var emojiTextField: UITextField = {
 		let textField = EmojiTextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.isHidden = true
-		textField.alpha = 0
+		textField.clipsToBounds = true
 		textField.delegate = self
 		textField.backgroundColor = .clear
 		textField.textColor = .clear
@@ -184,15 +184,15 @@ class ProfileImagePreviewView: UIView {
 			self.monogramInitialsLabel.topAnchor.constraint(greaterThanOrEqualTo: self.previewImageView.topAnchor, constant: 4),
 			self.monogramInitialsLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.previewImageView.bottomAnchor, constant: -4),
 
-			self.monogramTextField.topAnchor.constraint(equalTo: self.previewImageView.topAnchor),
-			self.monogramTextField.leadingAnchor.constraint(equalTo: self.previewImageView.leadingAnchor),
-			self.monogramTextField.trailingAnchor.constraint(equalTo: self.previewImageView.trailingAnchor),
-			self.monogramTextField.bottomAnchor.constraint(equalTo: self.previewImageView.bottomAnchor),
+			self.monogramTextField.widthAnchor.constraint(equalToConstant: 0),
+			self.monogramTextField.heightAnchor.constraint(equalToConstant: 0),
+			self.monogramTextField.centerXAnchor.constraint(equalTo: self.previewImageView.centerXAnchor),
+			self.monogramTextField.centerYAnchor.constraint(equalTo: self.previewImageView.centerYAnchor),
 
-			self.emojiTextField.topAnchor.constraint(equalTo: self.previewImageView.topAnchor),
-			self.emojiTextField.leadingAnchor.constraint(equalTo: self.previewImageView.leadingAnchor),
-			self.emojiTextField.trailingAnchor.constraint(equalTo: self.previewImageView.trailingAnchor),
-			self.emojiTextField.bottomAnchor.constraint(equalTo: self.previewImageView.bottomAnchor),
+			self.emojiTextField.widthAnchor.constraint(equalToConstant: 0),
+			self.emojiTextField.heightAnchor.constraint(equalToConstant: 0),
+			self.emojiTextField.centerXAnchor.constraint(equalTo: self.previewImageView.centerXAnchor),
+			self.emojiTextField.centerYAnchor.constraint(equalTo: self.previewImageView.centerYAnchor),
 
 			self.deleteButton.topAnchor.constraint(equalTo: self.previewImageView.topAnchor, constant: -4),
 			self.deleteButton.trailingAnchor.constraint(equalTo: self.previewImageView.trailingAnchor, constant: 4)
@@ -221,18 +221,12 @@ class ProfileImagePreviewView: UIView {
 		}
 
 		self.monogramTextField.font = UIFont.monogramFont(style: self.monogramFontStyle, size: 50, weight: UIFont.Weight(rawValue: self.monogramFontWeightValue))
-		self.monogramTextField.textColor = textColor
 		self.monogramTextField.text = self.monogramInitials
-		self.monogramTextField.isHidden = false
-		self.monogramTextField.alpha = 1
-		self.monogramInitialsLabel.isHidden = true
 		self.monogramTextField.becomeFirstResponder()
 	}
 
 	func hideMonogramTextField() {
 		self.monogramTextField.resignFirstResponder()
-		self.monogramTextField.isHidden = true
-		self.monogramTextField.alpha = 0
 	}
 
 	func updateMonogramPreview() {
@@ -271,16 +265,12 @@ class ProfileImagePreviewView: UIView {
 			self.activePreviewSource = .emoji
 		}
 
-		self.emojiTextField.isHidden = false
-		self.emojiTextField.alpha = 1
 		self.emojiTextField.text = ""
 		self.emojiTextField.becomeFirstResponder()
 	}
 
 	func hideEmojiTextField() {
 		self.emojiTextField.resignFirstResponder()
-		self.emojiTextField.isHidden = true
-		self.emojiTextField.alpha = 0
 	}
 
 	// MARK: - Delete Button
@@ -561,7 +551,7 @@ class ProfileImagePreviewView: UIView {
 	}
 
 	@objc private func previewTapped() {
-		switch self.activePreviewSource {
+		switch self.selectedSource {
 		case .monogram:
 			self.delegate?.profileImagePreviewViewDidRequestEditMonogram(self)
 		case .emoji:
@@ -602,6 +592,7 @@ extension ProfileImagePreviewView: UITextFieldDelegate {
 
 			textField.text = updatedText
 			self.monogramInitials = updatedText
+			self.monogramInitialsLabel.text = updatedText
 
 			// Delegate notifies orchestrator, which syncs to source view and generates image
 			if let image = self.generateMonogramImage?() {

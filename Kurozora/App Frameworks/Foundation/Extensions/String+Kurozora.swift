@@ -16,13 +16,30 @@ private enum TextParsingCache {
 
 extension String {
 	// MARK: - Properties
-	/// Returns the initial characters of the string.
+	/// Returns the initial characters of the string using locale-aware name parsing.
 	///
-	/// This separated by a whitespace, dot, or hyphen,
-	/// and prefers the first letter in each component,
-	/// falling back to the first character of the string
-	/// when no letters exist.
+	/// Uses `PersonNameComponentsFormatter` with the `.abbreviated` style to produce
+	/// locale-correct initials for natural names (e.g. "Hayao Miyazaki" -> "HM").
+	/// Falls back to `splitInitials` for unparseable input.
 	var initials: String {
+		let formatter = PersonNameComponentsFormatter()
+
+		if let components = formatter.personNameComponents(from: self) {
+			let abbreviated = PersonNameComponentsFormatter.localizedString(from: components, style: .abbreviated, options: [])
+			let lettersOnly = abbreviated.filter(\.isLetter)
+
+			if !lettersOnly.isEmpty {
+				return lettersOnly
+			}
+		}
+
+		return self.splitInitials
+	}
+
+	/// Returns initials by splitting on whitespace, dots, and hyphens.
+	///
+	/// This method is not locale-aware.
+	private var splitInitials: String {
 		let components = self.components(separatedBy: [".", " ", "-"])
 		let letterInitials = components.lazy
 			.compactMap { component in component.first(where: \.isLetter) }

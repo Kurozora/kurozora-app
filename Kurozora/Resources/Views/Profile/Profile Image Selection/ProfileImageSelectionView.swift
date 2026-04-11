@@ -393,6 +393,7 @@ class ProfileImageSelectionView: UIView {
 		self.monogramProfileImageSourceView.isHidden = true
 		self.characterProfileImageSourceView.isHidden = true
 
+		self.previewView.selectedSource = source
 		self.previewView.hideMonogramTextField()
 		self.previewView.hideEmojiTextField()
 		self.previewView.monogramInitialsLabel.isHidden = self.previewView.activePreviewSource != .monogram
@@ -512,6 +513,7 @@ extension ProfileImageSelectionView: ProfileImagePreviewViewDelegate {
 	func profileImagePreviewViewDidRequestDelete(_ view: ProfileImagePreviewView) {
 		self.previewView.resetToPlaceholder()
 		self.originalSelectedImage = nil
+		self.configureMonogram()
 		if let placeholderImage = self.placeholderImage {
 			self.delegate?.profileImageSelectionView(self, didSelectImage: placeholderImage)
 		}

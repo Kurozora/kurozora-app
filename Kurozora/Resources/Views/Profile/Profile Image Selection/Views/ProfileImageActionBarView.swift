@@ -33,7 +33,7 @@ class ProfileImageActionBarView: UIView {
 
 	// MARK: - Views
 	private lazy var monogramEditInitialsButton: UIButton = .makePillButton(
-		systemName: "pencil",
+		systemName: "character.cursor.ibeam",
 		accessibilityLabel: "Edit Initials",
 		target: self,
 		action: #selector(self.monogramEditInitialsButtonTapped)
