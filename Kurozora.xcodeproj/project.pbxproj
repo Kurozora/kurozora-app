@@ -119,7 +119,7 @@
 		6615A2FC2DA20A5A005DBB96 /* Exceptions for "KurozoraWidget" folder in "Kurozora" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Widgets/LaunchAppControl.swift,
+				Widgets/LaunchApp/LaunchAppControl.swift,
 			);
 			target = 66647B4F2084995500CF624F /* Kurozora */;
 		};
@@ -325,9 +325,9 @@
 			buildPhases = (
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
+				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				66647B4E2084995500CF624F /* Resources */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
-				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
 				6691885F2F7BCEAA000B1272 /* Embed Watch Content */,
@@ -541,11 +541,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(CONTENTS_FOLDER_PATH)/Settings.bundle/Root.plist",
+				"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "version=\"${MARKETING_VERSION}\"\ncurrent=$(/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"Print PreferenceSpecifiers:2:DefaultValue\" 2>/dev/null)\n\n if [ \"$version\" != \"$current\" ]; then\n     /usr/libexec/PlistBuddy \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n fi\n";
+			shellScript = "version=\"${MARKETING_VERSION}\"\ncurrent=$(/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"Print PreferenceSpecifiers:2:DefaultValue\" 2>/dev/null)\n\nif [ \"$version\" != \"$current\" ]; then\n    /usr/libexec/PlistBuddy \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -558,6 +558,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		66647B4C2084995500CF624F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6691884D2F7BCEA8000B1272 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -607,13 +614,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KuroChan/KuroChan.entitlements;
-				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KuroChan/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
 				INFOPLIST_KEY_NSStickerSharingLevel = OS;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = "app.kurozora.tracker.stickers-kuro-chan";
@@ -633,13 +638,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KuroChan/KuroChan.entitlements;
-				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KuroChan/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
 				INFOPLIST_KEY_NSStickerSharingLevel = OS;
 				PRODUCT_BUNDLE_IDENTIFIER = "app.kurozora.tracker.stickers-kuro-chan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -660,10 +663,6 @@
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -676,8 +675,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -716,10 +713,6 @@
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -732,8 +725,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -823,7 +814,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2018-present Kurozora Kurozora. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
@@ -832,7 +825,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-sdk /^sdk -scanner-prefix-map-toolchain /toolchain";
+				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-toolchain /toolchain";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -903,7 +896,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Kurozora. All rights reserved.";
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2018-present Kurozora Kurozora. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LLVM_LTO = YES_THIN;
@@ -912,7 +907,7 @@
 				MARKETING_VERSION = 1.13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-sdk /^sdk -scanner-prefix-map-toolchain /toolchain";
+				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-toolchain /toolchain";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -938,6 +933,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readonly;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -948,7 +944,6 @@
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -969,6 +964,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readonly;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -979,7 +975,6 @@
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
