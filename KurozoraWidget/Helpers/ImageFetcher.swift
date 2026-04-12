@@ -86,6 +86,30 @@ struct ImageFetcher {
 		return image
 	}
 
+	/// Fetch raw image data from the network or cache without decoding.
+	///
+	/// - Parameters:
+	///    - url: The URL of the image.
+	///
+	/// - Returns: The raw image data if successful, otherwise `nil`.
+	func fetchImageData(from url: URL?) async throws -> Data? {
+		guard let url = url else { return nil }
+
+		if let cachedData = self.cachedImage(for: url) {
+			return cachedData
+		}
+
+		let session = URLSession(configuration: .ephemeral)
+		let (imageData, _) = try await session.data(from: url)
+
+		Task {
+			try? await self.cache(imageData, for: url)
+			self.cleanupCache(olderThan: self.cacheLifetime)
+		}
+
+		return imageData
+	}
+
 	/// Fetch a random cached image.
 	func fetchRandomImage() -> UIImage? {
 		let fileManager = FileManager.default

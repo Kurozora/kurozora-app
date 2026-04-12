@@ -8,6 +8,7 @@
 
 import KurozoraKit
 import UIKit
+import WidgetKit
 
 extension Season {
 	/// The webpage URL of the season.
@@ -113,6 +114,7 @@ extension Season {
 			self.attributes = self.attributes.updated(using: watchStatus)
 
 			NotificationCenter.default.post(name: .KSeasonWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 		} catch {
 			print(error.localizedDescription)
 		}

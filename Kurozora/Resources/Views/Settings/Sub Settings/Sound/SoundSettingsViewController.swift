@@ -168,8 +168,6 @@ extension SoundSettingsViewController {
 // MARK: - UITableViewDelegate
 extension SoundSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let contentSection = self.contentSection(for: indexPath.section) else { return }
-
 		switch Sound.Row.settingsCases[indexPath.row] {
 		case .selectChime:
 			let optionsViewController = SoundOptionsViewController()

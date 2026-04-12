@@ -8,6 +8,7 @@
 
 import KurozoraKit
 import UIKit
+import WidgetKit
 
 extension Episode {
 	/// The webpage URL of the episode.
@@ -115,6 +116,7 @@ extension Episode {
 			self.attributes = self.attributes.updated(using: watchStatus)
 
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: error.message)
 			print("----- Update episode watch status failed", error.message)

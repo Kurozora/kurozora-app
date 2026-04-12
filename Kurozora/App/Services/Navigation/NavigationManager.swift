@@ -80,6 +80,11 @@ final class NavigationManager: NSObject {
 			let showID = KurozoraItemID(lastPathComponent)
 			let showDetailsCollectionViewController = ShowDetailsCollectionViewController()(with: showID)
 			context.show(showDetailsCollectionViewController)
+		case .episode, .episodes:
+			guard !lastPathComponent.isEmpty else { return }
+			let episodeID = KurozoraItemID(lastPathComponent)
+			let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController()(with: episodeID)
+			context.show(episodeDetailsCollectionViewController)
 		case .game, .games:
 			guard !lastPathComponent.isEmpty else { return }
 			let gameID = KurozoraItemID(lastPathComponent)

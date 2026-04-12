@@ -144,7 +144,7 @@ final class AuthenticationManager {
 		#endif
 
 		if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
-			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, evaluateError in
+			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, _ in
 				if success {
 					completion(true)
 				} else {

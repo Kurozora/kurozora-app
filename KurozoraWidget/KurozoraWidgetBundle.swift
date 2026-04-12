@@ -24,6 +24,7 @@ struct iOS16WidgetBundle: WidgetBundle {
 	@WidgetBundleBuilder
 	var body: some Widget {
 		DateWidget()
+		UpNextWidget()
 
 		if #available(iOS 17.0, *) {
 			LaunchAppAccessory()
@@ -35,6 +36,7 @@ struct iOS18WidgetBundle: WidgetBundle {
 	@WidgetBundleBuilder
 	var body: some Widget {
 		DateWidget()
+		UpNextWidget()
 
 		if #available(iOS 17.0, *) {
 			LaunchAppAccessory()

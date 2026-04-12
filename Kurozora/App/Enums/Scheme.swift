@@ -12,6 +12,7 @@ import Foundation
 ///
 /// ```
 /// case anime, show, shows
+/// case episode, episodes
 /// case game, games
 /// case manga, literature, literatures
 /// case profile, user
@@ -25,6 +26,7 @@ import Foundation
 enum Scheme: String, CaseIterable {
 	// MARK: - Cases
 	case anime, show, shows
+	case episode, episodes
 	case game, games
 	case manga, literature, literatures
 	case profile, user
