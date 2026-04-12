@@ -70,7 +70,11 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.seasonButton.theme_setTitleColor(KThemePicker.subTextColor.rawValue, forState: .normal)
 		self.seasonButton.theme_tintColor = KThemePicker.subTextColor.rawValue
 		self.seasonButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
-		self.seasonButton.setTitle("S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))", for: .normal)
+		var seasonEpisodeLabel = "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number)"
+		if episode.attributes.numberTotal != episode.attributes.number {
+			seasonEpisodeLabel += " (E\(episode.attributes.numberTotal))"
+		}
+		self.seasonButton.setTitle(seasonEpisodeLabel, for: .normal)
 
 		// Configure watch button
 		let watchStatusButtonTitle = episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
