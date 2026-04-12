@@ -179,6 +179,7 @@ extension WorkflowController {
 		do {
 			_ = try await KService.signOut()
 			AccountManager.shared.remove(slug: slug)
+			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
 			print("-----", error.message)

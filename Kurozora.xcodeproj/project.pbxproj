@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660B9DC42F7D575D000FCB8A /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 660B9DC32F7D575D000FCB8A /* Pulse */; };
+		660B9DC62F7D575D000FCB8A /* PulseProxy in Frameworks */ = {isa = PBXBuildFile; productRef = 660B9DC52F7D575D000FCB8A /* PulseProxy */; };
+		660B9DC82F7D575D000FCB8A /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 660B9DC72F7D575D000FCB8A /* PulseUI */; };
 		662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 662A3D302C92433B006F6EDD /* KuroChan.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6691885B2F7BCEAA000B1272 /* Kurozora.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 669188512F7BCEA8000B1272 /* Kurozora.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		66A1B0012F7C000000000001 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66A1B0032F7C000000000003 /* KurozoraKit */; };
+		66A1B0022F7C000000000002 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 66A1B0042F7C000000000004 /* KeychainAccess */; };
 		66CB0EA12E90A0BE00104283 /* WhatsNew in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB0EA02E90A0BE00104283 /* WhatsNew */; };
 		66CB161C2E90AA4800104283 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB161B2E90AA4800104283 /* SwiftyJSON */; };
 		66CBDB1E2E8F215A00104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBDB1D2E8F215A00104283 /* KurozoraKit */; };
@@ -44,6 +50,13 @@
 			remoteGlobalIDString = 6647B72F2BC0A6DD006BC91C;
 			remoteInfo = BannerWidgetExtension;
 		};
+		669188592F7BCEAA000B1272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66647B482084995500CF624F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 669188502F7BCEA8000B1272;
+			remoteInfo = "Kurozora Watch Watch App";
+		};
 		66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -66,15 +79,43 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6691885F2F7BCEAA000B1272 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				6691885B2F7BCEAA000B1272 /* Kurozora.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		662A3D302C92433B006F6EDD /* KuroChan.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KuroChan.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KurozoraWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		669188512F7BCEA8000B1272 /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		660B44F52F7C3331000FCB8A /* Exceptions for "KurozoraWatchApp" folder in "KurozoraWatchApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Supporting Files/Info.plist",
+			);
+			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
+		};
+		660B7BF72F7D2E83000FCB8A /* Exceptions for "Kurozora" folder in "KurozoraWatchApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Supporting Files/AppIcon Staging.icon",
+				"Supporting Files/AppIcon.icon",
+				"Supporting Files/Assets.xcassets",
+			);
+			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
+		};
 		6615A2FC2DA20A5A005DBB96 /* Exceptions for "KurozoraWidget" folder in "Kurozora" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -119,7 +160,9 @@
 				"App/Extensions/UIStatusBarStyle+Theme.swift",
 				App/Helpers/Trans.swift,
 				App/Intents/LaunchAppIntent.swift,
+				App/Models/StoredAccount.swift,
 				App/Models/UserSettings.swift,
+				App/Services/AccountManager.swift,
 				Features/Animation/Animation.swift,
 				SharedDelegate.swift,
 				"Supporting Files/Assets.xcassets",
@@ -151,8 +194,17 @@
 			exceptions = (
 				6615BF0B2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "Kurozora" target */,
 				6615BF0C2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "KurozoraWidgetExtension" target */,
+				660B7BF72F7D2E83000FCB8A /* Exceptions for "Kurozora" folder in "KurozoraWatchApp" target */,
 			);
 			path = Kurozora;
+			sourceTree = "<group>";
+		};
+		669188522F7BCEA8000B1272 /* KurozoraWatchApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				660B44F52F7C3331000FCB8A /* Exceptions for "KurozoraWatchApp" folder in "KurozoraWatchApp" target */,
+			);
+			path = KurozoraWatchApp;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -190,6 +242,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6691884E2F7BCEA8000B1272 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				660B9DC42F7D575D000FCB8A /* Pulse in Frameworks */,
+				660B9DC82F7D575D000FCB8A /* PulseUI in Frameworks */,
+				660B9DC62F7D575D000FCB8A /* PulseProxy in Frameworks */,
+				66A1B0012F7C000000000001 /* KurozoraKit in Frameworks */,
+				66A1B0022F7C000000000002 /* KeychainAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -199,6 +263,7 @@
 				6615BC102DA296B2005DBB96 /* Kurozora */,
 				6615A2EE2DA20A5A005DBB96 /* KurozoraWidget */,
 				6615A3012DA20A61005DBB96 /* KuroChan */,
+				669188522F7BCEA8000B1272 /* KurozoraWatchApp */,
 				66647B512084995500CF624F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -210,6 +275,7 @@
 				66647B502084995500CF624F /* Kurozora.app */,
 				6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */,
 				662A3D302C92433B006F6EDD /* KuroChan.appex */,
+				669188512F7BCEA8000B1272 /* Kurozora.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -264,6 +330,7 @@
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
+				6691885F2F7BCEAA000B1272 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
@@ -273,6 +340,7 @@
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 				6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */,
 				662A3D362C92433F006F6EDD /* PBXTargetDependency */,
+				6691885A2F7BCEAA000B1272 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6615BC102DA296B2005DBB96 /* Kurozora */,
@@ -282,6 +350,33 @@
 			productReference = 66647B502084995500CF624F /* Kurozora.app */;
 			productType = "com.apple.product-type.application";
 		};
+		669188502F7BCEA8000B1272 /* KurozoraWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6691885C2F7BCEAA000B1272 /* Build configuration list for PBXNativeTarget "KurozoraWatchApp" */;
+			buildPhases = (
+				6691884D2F7BCEA8000B1272 /* Sources */,
+				6691884E2F7BCEA8000B1272 /* Frameworks */,
+				6691884F2F7BCEA8000B1272 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				669188522F7BCEA8000B1272 /* KurozoraWatchApp */,
+			);
+			name = KurozoraWatchApp;
+			packageProductDependencies = (
+				66A1B0032F7C000000000003 /* KurozoraKit */,
+				66A1B0042F7C000000000004 /* KeychainAccess */,
+				660B9DC32F7D575D000FCB8A /* Pulse */,
+				660B9DC52F7D575D000FCB8A /* PulseProxy */,
+				660B9DC72F7D575D000FCB8A /* PulseUI */,
+			);
+			productName = "Kurozora Watch Watch App";
+			productReference = 669188512F7BCEA8000B1272 /* Kurozora.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -289,8 +384,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 2610;
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2650;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
 					662A3D2F2C92433B006F6EDD = {
@@ -316,6 +411,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					669188502F7BCEA8000B1272 = {
+						CreatedOnToolsVersion = 26.3;
 					};
 				};
 			};
@@ -343,6 +441,7 @@
 				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
 				66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */,
 				66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -352,6 +451,7 @@
 				66647B4F2084995500CF624F /* Kurozora */,
 				6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */,
 				662A3D2F2C92433B006F6EDD /* KuroChan */,
+				669188502F7BCEA8000B1272 /* KurozoraWatchApp */,
 			);
 		};
 /* End PBXProject section */
@@ -372,6 +472,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		66647B4E2084995500CF624F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6691884F2F7BCEA8000B1272 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -473,6 +580,11 @@
 			isa = PBXTargetDependency;
 			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
 			targetProxy = 6647B73E2BC0A6E2006BC91C /* PBXContainerItemProxy */;
+		};
+		6691885A2F7BCEAA000B1272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
+			targetProxy = 669188592F7BCEAA000B1272 /* PBXContainerItemProxy */;
 		};
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -732,8 +844,8 @@
 				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
@@ -814,8 +926,8 @@
 				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
@@ -881,6 +993,65 @@
 			};
 			name = Release;
 		};
+		6691885D2F7BCEAA000B1272 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = KurozoraWatchApp/KurozoraWatchApp.entitlements;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "KurozoraWatchApp/Supporting Files/Info.plist";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = app.kurozora.tracker;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watch;
+				PRODUCT_NAME = Kurozora;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		6691885E2F7BCEAA000B1272 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = KurozoraWatchApp/KurozoraWatchApp.entitlements;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "KurozoraWatchApp/Supporting Files/Info.plist";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = app.kurozora.tracker;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watch;
+				PRODUCT_NAME = Kurozora;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -920,6 +1091,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6691885C2F7BCEAA000B1272 /* Build configuration list for PBXNativeTarget "KurozoraWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6691885D2F7BCEAA000B1272 /* Debug */,
+				6691885E2F7BCEAA000B1272 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -929,6 +1109,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.27.1;
+			};
+		};
+		660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Pulse";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.4;
 			};
 		};
 		6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */ = {
@@ -1058,6 +1246,30 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */;
 			productName = "plugin:LicensePlistBuildTool";
+		};
+		660B9DC32F7D575D000FCB8A /* Pulse */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = Pulse;
+		};
+		660B9DC52F7D575D000FCB8A /* PulseProxy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = PulseProxy;
+		};
+		660B9DC72F7D575D000FCB8A /* PulseUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = PulseUI;
+		};
+		66A1B0032F7C000000000003 /* KurozoraKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KurozoraKit;
+		};
+		66A1B0042F7C000000000004 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66CBDB1F2E8F221600104283 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		66CB0EA02E90A0BE00104283 /* WhatsNew */ = {
 			isa = XCSwiftPackageProductDependency;

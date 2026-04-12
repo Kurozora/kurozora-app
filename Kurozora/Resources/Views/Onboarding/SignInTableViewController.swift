@@ -68,6 +68,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 				)
 				AccountManager.shared.save(account)
 				UserSettings.set(slug, forKey: .selectedAccount)
+				WatchSessionManager.shared.sendAuthState(slug: slug, token: authenticationToken)
 			}
 
 			// Dismiss the view and register user for push notifications.
@@ -176,6 +177,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							)
 							AccountManager.shared.save(account)
 							UserSettings.set(slug, forKey: .selectedAccount)
+							WatchSessionManager.shared.sendAuthState(slug: slug, token: oAuthResponse.authenticationToken)
 						}
 
 						// Dismiss the view and register user for push notifications.

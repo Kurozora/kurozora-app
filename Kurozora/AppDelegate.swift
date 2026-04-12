@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set UNUserNotificationCenterDelegate
 		UNUserNotificationCenter.current().delegate = WorkflowController.shared
 
+		// Activate WatchConnectivity
+		WatchSessionManager.shared.activate()
+
 		// Observer notifications
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 

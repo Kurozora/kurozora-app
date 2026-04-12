@@ -68,6 +68,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 				)
 				AccountManager.shared.save(account)
 				UserSettings.set(slug, forKey: .selectedAccount)
+				WatchSessionManager.shared.sendAuthState(slug: slug, token: KService.authenticationKey)
 			}
 		} catch {
 			print("-----", error.localizedDescription)

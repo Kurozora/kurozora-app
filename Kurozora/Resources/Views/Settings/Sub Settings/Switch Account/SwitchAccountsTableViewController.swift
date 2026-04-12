@@ -127,6 +127,9 @@ extension SwitchAccountsTableViewController {
 		// Start using the selected user's authentication key.
 		KService.authenticationKey = account.authenticationToken
 
+		// Push auth state to Watch.
+		WatchSessionManager.shared.sendAuthState(slug: account.slug, token: account.authenticationToken)
+
 		// Restore the user's session.
 		Task {
 			if await WorkflowController.shared.restoreCurrentUserSession() {

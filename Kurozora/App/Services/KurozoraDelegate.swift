@@ -64,6 +64,12 @@ final class KurozoraDelegate {
 		// Restore current user session
 		await WorkflowController.shared.restoreCurrentUserSession()
 
+		// Push auth state to Watch if signed in
+		let accountKey = UserSettings.selectedAccount
+		if let account = AccountManager.shared.account(forSlug: accountKey) {
+			WatchSessionManager.shared.sendAuthState(slug: accountKey, token: account.authenticationToken)
+		}
+
 		// Done pre-init
 		return true
 	}

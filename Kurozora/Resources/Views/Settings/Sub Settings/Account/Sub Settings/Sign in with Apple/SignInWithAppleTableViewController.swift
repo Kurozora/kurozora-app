@@ -110,6 +110,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 							)
 							AccountManager.shared.save(account)
 							UserSettings.set(slug, forKey: .selectedAccount)
+							WatchSessionManager.shared.sendAuthState(slug: slug, token: oAuthResponse.authenticationToken)
 						}
 
 						// Update the user's authentication key in KurozoraKit.
