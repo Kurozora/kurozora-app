@@ -47,6 +47,9 @@ extension URL {
 	/// Log Horizon — Database website URL.
 	static let livingInTheDatabase = URL(string: "https://database.kurozora.app")
 
+	/// The Community Guidelines page URL of Kurozora.
+	static let communityGuidelinesURL = URL(string: "https://kurozora.app/kb/guidelines")
+
 	/// The root domain of the URL or domain name.
 	var rootDomain: String? {
 		return self.host?.replacingOccurrences(of: "www.", with: "")

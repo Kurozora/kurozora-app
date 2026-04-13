@@ -735,6 +735,38 @@ struct Trans {
 	static let deleteMessage: String = String(localized: "Delete Message",
 											  table: "Feed",
 											  comment: "The string for the 'Delete Message' context menu option.")
+	/// The headline string for the off-topic content warning pop-up.
+	///
+	/// - Tag: Trans-offTopicWarningHeadline
+	static let offTopicWarningHeadline: String = String(
+		localized: "Is this a 'where to watch' question?",
+		table: "Feed",
+		comment: "The headline string for the off-topic content warning pop-up."
+	)
+	/// The subheadline string for the off-topic content warning pop-up.
+	///
+	/// - Tag: Trans-offTopicWarningSubheadline
+	static let offTopicWarningSubheadline: String = String(
+		localized: "Kurozora is for tracking your progress, it doesn't stream or host content. Posts asking where to watch or read often go unanswered. You can still post if you'd like.",
+		table: "Feed",
+		comment: "The subheadline string for the off-topic content warning pop-up."
+	)
+	/// The action string for opening the community guidelines from the off-topic warning.
+	///
+	/// - Tag: Trans-offTopicViewGuidelines
+	static let offTopicViewGuidelines: String = String(
+		localized: "View Guidelines",
+		table: "Feed",
+		comment: "The action string for opening the community guidelines from the off-topic warning."
+	)
+	/// The destructive action string for proceeding with an off-topic post anyway.
+	///
+	/// - Tag: Trans-offTopicPostAnyway
+	static let offTopicPostAnyway: String = String(
+		localized: "Post Anyway",
+		table: "Feed",
+		comment: "The destructive action string for proceeding with an off-topic post anyway."
+	)
 	/// The string for the 'Show Replies' context menu option.
 	///
 	/// - Tag: Trans-showReplies

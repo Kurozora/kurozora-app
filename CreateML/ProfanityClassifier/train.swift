@@ -1,16 +1,18 @@
 #!/usr/bin/env swift
 //
-//  ProfanityModelTrainer.swift
-//  Kurozora Tools
+//  train.swift
+//  Kurozora CreateML — ProfanityClassifier
 //
 //  Created by Khoren Katklian on 14/03/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 //  Developer tool
-//  Trains a Core ML text classifier for profanity detection on short (1-3 char) inputs.
+//  Trains a Core ML text classifier for profanity detection on short (1-3 char)
+//  inputs. Uses character n-gram features (max-entropy algorithm) — appropriate
+//  for the very short, often obfuscated strings this classifier sees.
 //
 //  Usage:
-//    swift ProfanityModelTrainer.swift
+//    swift train.swift
 //
 //  Requires macOS 12+ with Xcode / Create ML frameworks available.
 
@@ -19,11 +21,14 @@ import Foundation
 
 // MARK: - Configuration
 let scriptDir = URL(fileURLWithPath: #file).deletingLastPathComponent()
-let trainingDataURL = scriptDir.appendingPathComponent("profanity_training_data.json")
+let trainingDataURL = scriptDir.appendingPathComponent("training_data.json")
+// CreateML/<Classifier>/ -> CreateML/ -> repo root -> Kurozora/ML Models/
 let outputDir = scriptDir.deletingLastPathComponent()
+	.deletingLastPathComponent()
 	.appendingPathComponent("Kurozora")
 	.appendingPathComponent("ML Models")
-let outputModelURL = outputDir.appendingPathComponent("ProfanityClassifier.mlmodel")
+// Use the `.mlpackage` bundle format to match the existing tracked artifact.
+let outputModelURL = outputDir.appendingPathComponent("ProfanityClassifier.mlpackage")
 
 // MARK: - Training
 print("Loading training data from: \(trainingDataURL.path)")

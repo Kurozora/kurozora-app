@@ -1,0 +1,6 @@
+{
+  "MLModelVersionStringKey" : "1.0",
+  "MLModelDescriptionKey" : "Detects whether text reads as a 'where to watch\/read' request that is off-topic for a media-tracking app. Multilingual.",
+  "MLModelAuthorKey" : "Kiritokatklian",
+  "MLModelLicenseKey" : "MIT"
+}

@@ -93,6 +93,13 @@ final class ReviewTextEditorViewController: KViewController {
         #endif
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// Preload the off-topic classifier
+		OffTopicContentFilter.shared.prewarm()
+	}
+
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 
@@ -120,8 +127,48 @@ final class ReviewTextEditorViewController: KViewController {
 	}
 
 	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
+		// Off-topic nudge: if the review reads as a "where to watch/read" request,
+		// surface a soft warning before submitting. The user can still proceed.
+		// The classifier is async (may call the on-device LLM), so disable the
+		// Send button up front to prevent double-taps while it runs.
+		let reviewText = (self.interactor as? ReviewTextEditorDataStore)?.review ?? ""
 		sender.isEnabled = false
-		self.doSubmit()
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			if await OffTopicContentFilter.shared.isOffTopicSourceSeeking(reviewText) {
+				self.sendBarButtonItem.isEnabled = true
+				self.presentOffTopicWarning()
+				return
+			}
+			self.doSubmit()
+		}
+	}
+
+	/// Presents the off-topic content warning.
+	///
+	/// Cancel returns the user to the editor; "View Guidelines" opens the community
+	/// guidelines page and keeps the editor open; "Post Anyway" dispatches the
+	/// existing submission path unchanged.
+	private func presentOffTopicWarning() {
+		let alertController = UIAlertController.alert(
+			title: Trans.offTopicWarningHeadline,
+			message: Trans.offTopicWarningSubheadline,
+			defaultActionButtonTitle: Trans.cancel
+		) { alertController in
+			alertController.addAction(UIAlertAction(title: Trans.offTopicViewGuidelines, style: .default) { _ in
+				UIApplication.shared.kOpen(.communityGuidelinesURL)
+			})
+
+			alertController.addAction(UIAlertAction(title: Trans.offTopicPostAnyway, style: .destructive) { [weak self] _ in
+				guard let self = self else { return }
+				self.sendBarButtonItem.isEnabled = false
+				self.doSubmit()
+			})
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(alertController, animated: true, completion: nil)
+		}
 	}
 }
 

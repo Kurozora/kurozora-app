@@ -39,10 +39,10 @@ final class OrientationManager: NSObject {
 			if abs(gx) > abs(gy) {
 				// gravity mostly along device X -> landscape
 				if gx > 0 {
-					// Right side down, top points left → interface landscapeLeft
+					// Right side down, top points left -> interface landscapeLeft
 					newOrientation = .landscapeLeft
 				} else {
-					// Left side down, top points right → interface landscapeRight
+					// Left side down, top points right -> interface landscapeRight
 					newOrientation = .landscapeRight
 				}
 			} else {

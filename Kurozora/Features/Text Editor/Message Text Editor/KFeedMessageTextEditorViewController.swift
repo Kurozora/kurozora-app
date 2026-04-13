@@ -262,6 +262,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 
 		self.commentTextView.becomeFirstResponder()
+
+		// Preload the off-topic classifier
+		OffTopicContentFilter.shared.prewarm()
 	}
 
 	// MARK: - Functions
@@ -354,6 +357,14 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		// Post is within the allowed character limit.
 		if let characterCountString = self.characterCountLabel.text, let characterCount = Int(characterCountString), characterCount >= 0 {
+			// Off-topic nudge: if the post reads as a "where to watch/read" request,
+			// surface a soft warning before submitting. The user can still proceed.
+			let result = await OffTopicContentFilter.shared.isOffTopicSourceSeeking(self.editedText)
+			if result {
+				self.presentOffTopicWarning()
+				return
+			}
+
 			// Disable editing to hide the keyboard.
 			self.isEndingEditing = true
 			self.view.endEditing(true)
@@ -366,6 +377,44 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 
 		self.postButton.isEnabled = true
+	}
+
+	/// Presents the off-topic content warning.
+	///
+	/// Cancel returns the user to the editor; "View Guidelines" opens the community
+	/// guidelines page and keeps the editor open; "Post Anyway" dispatches the
+	/// existing submission path unchanged.
+	private func presentOffTopicWarning() {
+		let alertController = UIAlertController.alert(
+			title: Trans.offTopicWarningHeadline,
+			message: Trans.offTopicWarningSubheadline,
+			defaultActionButtonTitle: Trans.cancel,
+			handler: { [weak self] _ in
+				self?.postButton.isEnabled = true
+			}
+		) { [weak self] alertController in
+			guard let self = self else { return }
+
+			alertController.addAction(UIAlertAction(title: Trans.offTopicViewGuidelines, style: .default) { [weak self] _ in
+				UIApplication.shared.kOpen(.communityGuidelinesURL)
+				self?.postButton.isEnabled = true
+			})
+
+			alertController.addAction(UIAlertAction(title: Trans.offTopicPostAnyway, style: .destructive) { [weak self] _ in
+				guard let self = self else { return }
+				self.isEndingEditing = true
+				self.view.endEditing(true)
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.performFeedMessageRequest()
+					self.postButton.isEnabled = true
+				}
+			})
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(alertController, animated: true, completion: nil)
+		}
 	}
 
 	/// Performs the request to post the feed message.

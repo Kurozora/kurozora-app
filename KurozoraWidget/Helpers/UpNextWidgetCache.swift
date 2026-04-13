@@ -91,11 +91,11 @@ enum UpNextWidgetCache {
 	/// Computes the next-reload interval for the given consecutive failure count.
 	///
 	/// Schedule (capped at 4 hours):
-	/// - 1 failure   → 10 minutes
-	/// - 2 failures  → 30 minutes
-	/// - 3 failures  → 1 hour
-	/// - 4 failures  → 2 hours
-	/// - 5+ failures → 4 hours
+	/// - 1 failure   -> 10 minutes
+	/// - 2 failures  -> 30 minutes
+	/// - 3 failures  -> 1 hour
+	/// - 4 failures  -> 2 hours
+	/// - 5+ failures -> 4 hours
 	static func backoffInterval(forFailures failures: Int) -> TimeInterval {
 		switch failures {
 		case ..<1: return 60 * 60 // Defensive: treat 0 as a normal 1h refresh.
