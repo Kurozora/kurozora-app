@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-/// Displays a banner image on top with episode metadata below.
 struct UpNextBannerCardView: View {
 	@Environment(\.widgetFamily) var widgetFamily
 
@@ -16,6 +15,7 @@ struct UpNextBannerCardView: View {
 	var bannerCornerRadius: CGFloat = 0
 	var bannerHeight: CGFloat?
 	var usesFadeMask: Bool = false
+	var hidesContent: Bool = false
 
 	var contentPadding: CGFloat {
 		switch self.widgetFamily {
@@ -55,7 +55,7 @@ struct UpNextBannerCardView: View {
 				}
 			}
 			.overlay(alignment: .bottomLeading) {
-				if self.widgetFamily == .systemMedium {
+				if self.widgetFamily == .systemMedium && !self.hidesContent {
 					Text(self.episode.seasonEpisodeLabel)
 						.font(.caption2)
 						.fontWeight(.medium)
@@ -71,37 +71,39 @@ struct UpNextBannerCardView: View {
 			.clipShape(RoundedRectangle(cornerRadius: self.bannerCornerRadius, style: .continuous))
 			.layoutPriority(1)
 
-			HStack(alignment: .center) {
-				VStack(alignment: .leading, spacing: 2) {
-					Text(self.episode.showTitle)
-						.font(.caption2)
-						.fontWeight(.medium)
-						.foregroundStyle(.secondary)
-						.lineLimit(1)
-
-					Text(self.episode.title)
-						.font(.footnote)
-						.fontWeight(.bold)
-						.foregroundStyle(.primary)
-						.lineLimit(1)
-
-					if self.widgetFamily == .systemSmall {
-						Text(self.episode.seasonEpisodeLabel)
+			if !self.hidesContent {
+				HStack(alignment: .center) {
+					VStack(alignment: .leading, spacing: 2) {
+						Text(self.episode.showTitle)
 							.font(.caption2)
-							.foregroundStyle(.tertiary)
+							.fontWeight(.medium)
+							.foregroundStyle(.secondary)
 							.lineLimit(1)
+
+						Text(self.episode.title)
+							.font(.footnote)
+							.fontWeight(.bold)
+							.foregroundStyle(.primary)
+							.lineLimit(1)
+
+						if self.widgetFamily == .systemSmall {
+							Text(self.episode.seasonEpisodeLabel)
+								.font(.caption2)
+								.foregroundStyle(.tertiary)
+								.lineLimit(1)
+						}
+					}
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.padding(.trailing, 8)
+
+					if #available(iOS 17.0, macOS 14.0, *) {
+						UpNextCheckmarkButton(episodeID: self.episode.id)
 					}
 				}
-				.frame(maxWidth: .infinity, alignment: .leading)
-				.padding(.trailing, 8)
-
-				if #available(iOS 17.0, macOS 14.0, *) {
-					UpNextCheckmarkButton(episodeID: self.episode.id)
-				}
+				.padding(.horizontal, self.contentPadding)
+				.padding(.top, 6)
+				.padding(.bottom, 12)
 			}
-			.padding(.horizontal, self.contentPadding)
-			.padding(.top, 6)
-			.padding(.bottom, 12)
 		}
 	}
 

@@ -69,13 +69,17 @@ struct Provider: IntentTimelineProvider {
 			// Fetch a random anime images from server
 			let limit = 3
 			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection, limit: limit).value else {
-				let date = Date()
-				let nextUpdate = Calendar.current.date(byAdding: DateComponents(hour: 1), to: date)!
+				let failures = UpNextWidgetCache.recordDateFailure()
+				let backoff = UpNextWidgetCache.backoffInterval(forFailures: failures)
+				let nextUpdate = Date().addingTimeInterval(backoff)
 				let entry = self.placeholder(in: context)
 				let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
 				completion(timeline)
 				return
 			}
+
+			UpNextWidgetCache.recordDateSuccess()
+
 			let date = Date()
 			var entries: [DateEntry] = []
 			let calendar = Calendar.current

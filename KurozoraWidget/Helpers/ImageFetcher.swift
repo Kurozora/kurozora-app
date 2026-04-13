@@ -72,8 +72,7 @@ struct ImageFetcher {
 		}
 
 		// Download image from URL
-		let session = URLSession(configuration: .ephemeral)
-		let (imageData, _) = try await session.data(from: url)
+		let (imageData, _) = try await WidgetURLSession.shared.data(from: url)
 
 		guard let image = UIImage(data: imageData) else { return nil }
 
@@ -99,8 +98,7 @@ struct ImageFetcher {
 			return cachedData
 		}
 
-		let session = URLSession(configuration: .ephemeral)
-		let (imageData, _) = try await session.data(from: url)
+		let (imageData, _) = try await WidgetURLSession.shared.data(from: url)
 
 		Task {
 			try? await self.cache(imageData, for: url)

@@ -39,11 +39,17 @@ struct UpNextBannerImage: View {
 // MARK: - Checkmark Button
 @available(iOS 17.0, macOS 14.0, *)
 struct UpNextCheckmarkButton: View {
+	@Environment(\.redactionReasons) private var redactionReasons
+
 	let episodeID: String
 	var font: Font = .body
 
 	var body: some View {
-		if PendingWatchedStore.isPending(self.episodeID) {
+		if self.redactionReasons.contains(.placeholder) {
+			Circle()
+				.fill(Color(.accent).opacity(0.3))
+				.frame(width: self.glyphDiameter, height: self.glyphDiameter)
+		} else if PendingWatchedStore.isPending(self.episodeID) {
 			Image(systemName: "checkmark.circle.fill")
 				.font(self.font)
 				.foregroundStyle(Color(.accent).opacity(0.3))
@@ -55,6 +61,16 @@ struct UpNextCheckmarkButton: View {
 			}
 			.buttonStyle(.plain)
 			.mask(Circle())
+		}
+	}
+
+	/// Approximate glyph diameter for the SF Symbol at the current font, used to size the circular placeholder, so it matches the live button's visible footprint.
+	private var glyphDiameter: CGFloat {
+		switch self.font {
+		case .title3: return 22
+		case .title2: return 26
+		case .title: return 30
+		default: return 18
 		}
 	}
 }
