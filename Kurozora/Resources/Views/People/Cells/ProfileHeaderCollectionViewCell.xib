@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="PHC-00-001" customClass="ProfileHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PHC-00-002">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-010" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-020" customClass="CircularImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="143" y="128" width="128" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="PHC-00-020" secondAttribute="height" multiplier="1:1" id="PHC-00-021"/>
+                            <constraint firstAttribute="width" constant="128" id="PHC-00-022"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-030">
+                        <rect key="frame" x="20" y="304.66666666666669" width="69.333333333333329" height="59.333333333333314"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-031" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="69.333333333333329" height="33.666666666666664"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-032" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="37.666666666666629" width="69.333333333333329" height="21.666666666666671"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PHC-00-010" firstAttribute="leading" secondItem="PHC-00-002" secondAttribute="leading" id="PHC-00-101"/>
+                    <constraint firstItem="PHC-00-010" firstAttribute="top" secondItem="PHC-00-002" secondAttribute="top" id="PHC-00-102"/>
+                    <constraint firstAttribute="trailing" secondItem="PHC-00-010" secondAttribute="trailing" id="PHC-00-103"/>
+                    <constraint firstAttribute="bottom" secondItem="PHC-00-010" secondAttribute="bottom" id="PHC-00-104"/>
+                    <constraint firstItem="PHC-00-020" firstAttribute="centerX" secondItem="PHC-00-002" secondAttribute="centerX" id="PHC-00-110"/>
+                    <constraint firstItem="PHC-00-020" firstAttribute="centerY" secondItem="PHC-00-002" secondAttribute="centerY" id="PHC-00-111"/>
+                    <constraint firstItem="PHC-00-020" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PHC-00-002" secondAttribute="top" constant="20" id="PHC-00-112"/>
+                    <constraint firstItem="PHC-00-020" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PHC-00-002" secondAttribute="leadingMargin" id="PHC-00-113"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="PHC-00-020" secondAttribute="trailing" id="PHC-00-114"/>
+                    <constraint firstItem="PHC-00-030" firstAttribute="leading" secondItem="PHC-00-002" secondAttribute="leadingMargin" id="PHC-00-120"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="PHC-00-030" secondAttribute="trailing" id="PHC-00-121"/>
+                    <constraint firstAttribute="bottom" secondItem="PHC-00-030" secondAttribute="bottom" constant="20" id="PHC-00-122"/>
+                    <constraint firstItem="PHC-00-030" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PHC-00-020" secondAttribute="bottom" constant="8" symbolic="YES" id="PHC-00-123"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="bannerImageView" destination="PHC-00-010" id="PHC-90-001"/>
+                <outlet property="labelStackView" destination="PHC-00-030" id="PHC-90-002"/>
+                <outlet property="primaryImageView" destination="PHC-00-020" id="PHC-90-003"/>
+                <outlet property="primaryLabel" destination="PHC-00-031" id="PHC-90-004"/>
+                <outlet property="secondaryLabel" destination="PHC-00-032" id="PHC-90-005"/>
+            </connections>
+            <point key="canvasLocation" x="97.709923664122144" y="153.52112676056339"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
+    </resources>
+</document>

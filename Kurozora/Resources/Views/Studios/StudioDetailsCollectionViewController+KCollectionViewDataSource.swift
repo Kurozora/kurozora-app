@@ -12,7 +12,7 @@ import UIKit
 extension StudioDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			StudioHeaderCollectionViewCell.self,
+			ProfileHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
@@ -41,14 +41,14 @@ extension StudioDetailsCollectionViewController {
 
 			switch studioDetailSection {
 			case .header:
-				let studioHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StudioHeaderCollectionViewCell.self, for: indexPath)
+				let profileHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .studio(let studio, _):
-					studioHeaderCollectionViewCell?.configure(using: studio)
-					studioHeaderCollectionViewCell?.mediaViewerDelegate = self
+					profileHeaderCollectionViewCell?.configure(using: studio)
+					profileHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
-				return studioHeaderCollectionViewCell
+				return profileHeaderCollectionViewCell
 			case .badges:
 				let studioDetailBadge = StudioDetail.Badge(rawValue: indexPath.item) ?? .tvRating
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell

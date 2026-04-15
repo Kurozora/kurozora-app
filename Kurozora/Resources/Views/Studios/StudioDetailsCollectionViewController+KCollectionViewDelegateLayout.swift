@@ -79,8 +79,8 @@ extension StudioDetailsCollectionViewController {
 
 			switch studioDetailSection {
 			case .header:
-				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let headerSection = Layouts.profileHeaderSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = headerSection
 			case .badges:
 				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection

@@ -12,7 +12,7 @@ import UIKit
 extension PersonDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			PersonHeaderCollectionViewCell.self,
+			ProfileHeaderCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
@@ -39,14 +39,14 @@ extension PersonDetailsCollectionViewController {
 
 			switch personDetailSection {
 			case .header:
-				let personHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonHeaderCollectionViewCell.self, for: indexPath)
+				let profileHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .person(let person, _):
-					personHeaderCollectionViewCell?.configure(using: person)
-					personHeaderCollectionViewCell?.mediaViewerDelegate = self
+					profileHeaderCollectionViewCell?.configure(using: person)
+					profileHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
-				return personHeaderCollectionViewCell
+				return profileHeaderCollectionViewCell
 			case .about:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self

@@ -78,8 +78,8 @@ extension PersonDetailsCollectionViewController {
 
 			switch personDetailSection {
 			case .header:
-				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let headerSection = Layouts.profileHeaderSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = headerSection
 			case .about:
 				if let about = self.person.attributes.about, !about.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

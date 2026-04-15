@@ -78,8 +78,8 @@ extension CharacterDetailsCollectionViewController {
 
 			switch characterDetailSection {
 			case .header:
-				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let headerSection = Layouts.profileHeaderSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = headerSection
 			case .about:
 				if let about = self.character.attributes.about, !about.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

@@ -12,7 +12,7 @@ import UIKit
 extension CharacterDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			CharacterHeaderCollectionViewCell.self,
+			ProfileHeaderCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
@@ -39,14 +39,14 @@ extension CharacterDetailsCollectionViewController {
 
 			switch characterDetailSection {
 			case .header:
-				let characterHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterHeaderCollectionViewCell.self, for: indexPath)
+				let profileHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileHeaderCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .character(let character, _):
-					characterHeaderCollectionViewCell?.configure(using: character)
-					characterHeaderCollectionViewCell?.mediaViewerDelegate = self
+					profileHeaderCollectionViewCell?.configure(using: character)
+					profileHeaderCollectionViewCell?.mediaViewerDelegate = self
 				default: break
 				}
-				return characterHeaderCollectionViewCell
+				return profileHeaderCollectionViewCell
 			case .about:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self

@@ -12,9 +12,7 @@ import UIKit
 class GradientView: UIView {
 	// MARK: - Properties
 	/// The gradient layer used to render the gradient background.
-	lazy var gradientLayer: CAGradientLayer? = {
-		return self.layer as? CAGradientLayer
-	}()
+	lazy var gradientLayer: CAGradientLayer? = self.layer as? CAGradientLayer
 
 	/// Overrides the default layer class to use CAGradientLayer.
 	override open class var layerClass: AnyClass {

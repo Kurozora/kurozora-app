@@ -448,7 +448,7 @@ extension PersonDetailsCollectionViewController: TitleHeaderCollectionReusableVi
 // MARK: - MediaTransitionDelegate
 extension PersonDetailsCollectionViewController: MediaTransitionDelegate {
 	func imageViewForMedia(at index: Int) -> UIImageView? {
-		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? StudioHeaderCollectionViewCell else {
+		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ProfileHeaderCollectionViewCell else {
 			return nil
 		}
 		return cell.primaryImageView
