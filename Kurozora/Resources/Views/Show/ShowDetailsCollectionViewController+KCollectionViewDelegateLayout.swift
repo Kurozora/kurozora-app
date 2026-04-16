@@ -103,7 +103,7 @@ extension ShowDetailsCollectionViewController {
 
 			switch showDetailSection {
 			case .header:
-				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
+				let headerSection = Layouts.headerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
 			case .badges:
 				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -200,18 +200,5 @@ extension ShowDetailsCollectionViewController {
 		}
 		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
 		return layout
-	}
-
-	func headerSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.65))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
 	}
 }

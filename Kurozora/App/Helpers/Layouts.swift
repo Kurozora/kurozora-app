@@ -53,6 +53,24 @@ enum Layouts {
 		return layoutSection
 	}
 
+	static func headerSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = .fractionalWidth(1.0)
+		let bottomInset: CGFloat = 20.0
+
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .fractionalHeight(0.65))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: bottomInset, trailing: 0)
+		return layoutSection
+	}
+
 	static func fullSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = .fractionalWidth(1.0)
 		let bottomInset: CGFloat = 20.0
