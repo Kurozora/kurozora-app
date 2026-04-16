@@ -113,7 +113,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let themeResponse = try await KService.getThemes().value
+			let themeResponse = try await KService.getThemes()
 			self.themes = themeResponse.data
 			self.updateDataSource()
 		} catch {

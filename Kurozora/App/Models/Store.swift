@@ -187,7 +187,7 @@ final class Store: NSObject, ObservableObject {
 				let receiptString = receiptData.base64EncodedString(options: [])
 				print("🧾 Receipt string:", receiptString)
 
-				let verifyResponse = try await KService.verifyReceipt(receiptString).value
+				let verifyResponse = try await KService.verifyReceipt(receiptString)
 
 				NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
 

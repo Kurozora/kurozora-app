@@ -45,7 +45,7 @@ class LegalViewController: KViewController {
 	/// Makes an API request to fetch the relevant data for the view.
 	func fetchData() async {
 		do {
-			let legalResponse = try await KService.getPrivacyPolicy().value
+			let legalResponse = try await KService.getPrivacyPolicy()
 			self.setPrivacyPolicy(legalResponse.data.attributes.text.htmlAttributedString())
 		} catch {
 			print(error.localizedDescription)

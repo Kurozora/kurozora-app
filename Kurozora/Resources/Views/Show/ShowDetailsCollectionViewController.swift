@@ -291,7 +291,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 		if self.show == nil {
 			do {
-				let showResponse = try await KService.getDetails(forShow: showIdentity).value
+				let showResponse = try await KService.getDetails(forShow: showIdentity)
 				self.show = showResponse.data.first
 
 				// Donate suggestion to Siri
@@ -310,7 +310,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forShow: showIdentity, next: nil, limit: 10).value
+			let reviewIdentityResponse = try await KService.getReviews(forShow: showIdentity, next: nil, limit: 10)
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -318,7 +318,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10).value
+			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10)
 			self.seasonIdentities = seasonIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -326,7 +326,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10).value
+			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10)
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -334,7 +334,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10).value
+			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10)
 			self.showSongs = showSongResponse.data
 			self.updateDataSource()
 		} catch {
@@ -342,7 +342,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10).value
+			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10)
 			self.studioIdentities = studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -350,7 +350,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10).value
+			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10)
 			self.studioShowIdentities = showIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -358,7 +358,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10).value
+			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10)
 			self.relatedShows = relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
@@ -366,7 +366,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, limit: 10).value
+			let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, limit: 10)
 			self.relatedLiteratures = relatedLiteraturesResponse.data
 			self.updateDataSource()
 		} catch {
@@ -374,7 +374,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, limit: 10).value
+			let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, limit: 10)
 			self.relatedGames = relatedGamesResponse.data
 			self.updateDataSource()
 		} catch {
@@ -718,7 +718,7 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -750,7 +750,7 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:
@@ -943,7 +943,7 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			if oldLibraryStatus != value {
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -983,7 +983,7 @@ extension ShowDetailsCollectionViewController: BaseDetailHeaderCollectionViewCel
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:

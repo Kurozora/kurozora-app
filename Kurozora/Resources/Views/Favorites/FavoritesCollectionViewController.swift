@@ -214,7 +214,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: userID)
 
 		do {
-			let favoriteLibraryResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let favoriteLibraryResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

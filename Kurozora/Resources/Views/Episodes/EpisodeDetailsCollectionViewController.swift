@@ -237,7 +237,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 		if self.episode == nil {
 			do {
-				let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+				let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity)
 				self.episode = episodeResponse.data.first
 			} catch {
 				print("-----", error.localizedDescription)
@@ -250,7 +250,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forEpisode: episodeIdentity, next: nil, limit: 10).value
+			let reviewIdentityResponse = try await KService.getReviews(forEpisode: episodeIdentity, next: nil, limit: 10)
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -258,7 +258,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		}
 
 		do {
-			let episodeResponse = try await KService.getSuggestions(forEpisode: episodeIdentity).value
+			let episodeResponse = try await KService.getSuggestions(forEpisode: episodeIdentity)
 			self.suggestedEpisodes = episodeResponse.data
 			self.updateDataSource()
 		} catch {

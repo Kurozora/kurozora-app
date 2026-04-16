@@ -119,7 +119,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	@MainActor
 	func fetchAppThemes() async {
 		do {
-			let appThemeResponse = try await KService.getThemeStore().value
+			let appThemeResponse = try await KService.getThemeStore()
 			self.appThemes = appThemeResponse.data
 		} catch {
 			self._prefersActivityIndicatorHidden = true

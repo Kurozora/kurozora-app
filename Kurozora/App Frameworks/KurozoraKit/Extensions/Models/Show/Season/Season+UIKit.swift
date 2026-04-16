@@ -107,7 +107,7 @@ extension Season {
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
 		do {
 			let seasonIdentity = SeasonIdentity(id: self.id)
-			let seasonUpdateResponse = try await KService.updateSeasonWatchStatus(seasonIdentity).value
+			let seasonUpdateResponse = try await KService.updateSeasonWatchStatus(seasonIdentity)
 			let watchStatus = seasonUpdateResponse.data.watchStatus
 
 			// Update watch status

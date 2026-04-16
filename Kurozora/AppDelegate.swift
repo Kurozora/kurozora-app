@@ -101,7 +101,7 @@ extension AppDelegate {
 
 		if User.isSignedIn {
 			Task {
-				_ = try await KService.updateAccessToken(withAPNToken: apnDeviceToken).value
+				_ = try await KService.updateAccessToken(withAPNToken: apnDeviceToken)
 			}
 		}
 	}

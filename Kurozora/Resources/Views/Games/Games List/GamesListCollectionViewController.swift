@@ -153,7 +153,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 			switch self.gamesListFetchType {
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -167,7 +167,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedGames.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let relatedGamesResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -181,7 +181,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedGames.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -194,7 +194,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -206,7 +206,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
 				self.gameIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -220,7 +220,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let gameIdentityResponse = try await KService.getMoreByStudio(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let gameIdentityResponse = try await KService.getMoreByStudio(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -233,7 +233,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.removeDuplicates()
 			case .relatedGame:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let relatedGamesResponse = try await KService.getRelatedGames(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -247,7 +247,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.relatedGames.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let gameIdentityResponse = try await KService.getGames(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -259,7 +259,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
 				self.gameIdentities.removeDuplicates()
 			case .upcoming:
-				let gameIdentityResponse = try await KService.getUpcomingGames(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let gameIdentityResponse = try await KService.getUpcomingGames(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -272,7 +272,7 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 				self.gameIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -333,7 +333,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.games, withLibraryStatus: value, modelID: game.id).value
+					let libraryUpdateResponse = try await KService.addToLibrary(.games, withLibraryStatus: value, modelID: game.id)
 
 					game.attributes.library?.update(using: libraryUpdateResponse.data)
 
@@ -357,7 +357,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: game.id).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: game.id)
 
 						game.attributes.library?.update(using: libraryUpdateResponse.data)
 

@@ -6,7 +6,6 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import Alamofire
 import AVFoundation
 import KurozoraKit
 import Tabman
@@ -233,7 +232,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 	func fetchMonths() async {
 		do {
-			let recapResponse = try await KService.getRecaps().value
+			let recapResponse = try await KService.getRecaps()
 			self.recaps = recapResponse.data
 			self.reloadView()
 		} catch {
@@ -247,7 +246,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		}
 
 		do {
-			let recapResponse = try await KService.getRecap(for: "\(self.year)", month: "\(self.month)").value
+			let recapResponse = try await KService.getRecap(for: "\(self.year)", month: "\(self.month)")
 			self.recapItems = recapResponse.data
 			self.updateDataSource()
 		} catch {
@@ -395,7 +394,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -429,7 +428,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:

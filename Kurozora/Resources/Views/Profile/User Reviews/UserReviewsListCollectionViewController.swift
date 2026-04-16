@@ -177,7 +177,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		let userIdentity = UserIdentity(id: user.id)
 
 		do {
-			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -309,7 +309,7 @@ extension UserReviewsListCollectionViewController {
 		do {
 			for chunk in chunks {
 				let identitiesToFetch = chunk.map { $0.identity }
-				let fetchedResponse: I = try await KService.getDetails(for: identitiesToFetch).value
+				let fetchedResponse: I = try await KService.getDetails(for: identitiesToFetch)
 
 				// Bail if the snapshot was rebuilt (e.g., pull-to-refresh)
 				guard generation == self.fetchGeneration else { return }

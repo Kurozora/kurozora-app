@@ -139,7 +139,7 @@ class AccountTableViewController: SubSettingsViewController {
 			)
 
 			// Perform update request.
-			let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+			let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest)
 			User.current?.attributes.update(using: userUpdateResponse.data)
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		} catch {

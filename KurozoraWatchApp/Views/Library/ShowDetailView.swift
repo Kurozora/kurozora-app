@@ -8,7 +8,6 @@
 
 import KurozoraKit
 import SwiftUI
-import TRON
 
 struct ShowDetailView: View {
 	// MARK: - Properties
@@ -99,7 +98,7 @@ struct ShowDetailView: View {
 		defer { isUpdatingStatus = false }
 
 		do {
-			let response = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.show.id).value
+			let response = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.show.id)
 			self.libraryStatus = response.data.status
 		} catch {
 			NSLog("Library status update failed: %@", error.localizedDescription)

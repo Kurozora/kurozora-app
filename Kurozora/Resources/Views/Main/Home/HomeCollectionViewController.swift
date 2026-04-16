@@ -6,10 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Alamofire
 import KurozoraKit
 import SPConfetti
-import TRON
 import UIKit
 import WhatsNew
 
@@ -277,7 +275,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() async {
 		do {
-			let exploreCategoryResponse = try await KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id).value
+			let exploreCategoryResponse = try await KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id)
 			let exploreCategories = exploreCategoryResponse.data
 
 			// Remove any empty sections
@@ -344,7 +342,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		let exploreCategoryIdentity = ExploreCategoryIdentity(id: upNextCategory.id)
 
 		do {
-			let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, limit: 10).value
+			let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, limit: 10)
 
 			// Save next page url and append new data
 			guard let episodeResponse = upNextResponse.data.first(where: { exploreCategory in
@@ -559,7 +557,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -593,7 +591,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:

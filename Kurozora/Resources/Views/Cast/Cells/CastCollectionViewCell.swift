@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 protocol CastCollectionViewCellDelegate: AnyObject {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton)

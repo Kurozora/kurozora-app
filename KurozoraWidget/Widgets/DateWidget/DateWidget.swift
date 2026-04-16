@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
 		Task {
 			// Fetch a random anime image from server
 			let date = Date()
-			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection).value else {
+			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection) else {
 				completion(self.placeholder(in: context))
 				return
 			}
@@ -68,7 +68,7 @@ struct Provider: IntentTimelineProvider {
 		Task {
 			// Fetch a random anime images from server
 			let limit = 3
-			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection, limit: limit).value else {
+			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection, limit: limit) else {
 				let failures = UpNextWidgetCache.recordDateFailure()
 				let backoff = UpNextWidgetCache.backoffInterval(forFailures: failures)
 				let nextUpdate = Date().addingTimeInterval(backoff)

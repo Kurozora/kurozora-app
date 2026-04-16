@@ -403,7 +403,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		do {
 			// Perform library search request.
-			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: next != nil ? 100 : 25, filter: filter).value
+			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: next != nil ? 100 : 25, filter: filter)
 
 			if types.count > 1 {
 				self.searchResults = searchResponse.data
@@ -601,7 +601,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		do {
 			let alphabet = "abcdefghijklmnopqrstuvwxyz"
 			let suggestionString = String(alphabet.randomElement() ?? "o")
-			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionString).value
+			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionString)
 			self.discoverSuggestions = searchSuggestionResponse.data.map { searchSuggestion in
 				QuickLink(title: searchSuggestion, image: UIImage(systemName: "magnifyingglass"), url: "")
 			}
@@ -947,7 +947,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -978,7 +978,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:
@@ -1032,7 +1032,7 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 		Task {
 			do {
 				let userIdentity = UserIdentity(id: user.id)
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
 				user.attributes.update(using: followUpdateResponse.data)
 				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
 			} catch {

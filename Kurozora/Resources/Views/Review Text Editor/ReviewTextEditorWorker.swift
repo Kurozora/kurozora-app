@@ -20,7 +20,7 @@ protocol ReviewTextEditorWorkerLogic {
 final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 	func rateShow(_ showIdentity: ShowIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateShow(showIdentity, with: rating, description: review).value
+			_ = try await KService.rateShow(showIdentity, with: rating, description: review)
 			return (isSuccess: true, message: nil)
 		} catch let error as KKAPIError {
 			print("-----", error.message)
@@ -33,7 +33,7 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateLiterature(_ literatureIdentity: LiteratureIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateLiterature(literatureIdentity, with: rating, description: review).value
+			_ = try await KService.rateLiterature(literatureIdentity, with: rating, description: review)
 			return (isSuccess: true, message: nil)
 		} catch let error as KKAPIError {
 			print("-----", error.message)
@@ -46,7 +46,7 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateGame(_ gameIdentity: GameIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateGame(gameIdentity, with: rating, description: review).value
+			_ = try await KService.rateGame(gameIdentity, with: rating, description: review)
 			return (isSuccess: true, message: nil)
 		} catch let error as KKAPIError {
 			print("-----", error.message)
@@ -59,7 +59,7 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateEpisode(_ episodeIdentity: EpisodeIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: review).value
+			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: review)
 			return (isSuccess: true, message: nil)
 		} catch let error as KKAPIError {
 			print("-----", error.message)

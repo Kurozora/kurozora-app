@@ -149,7 +149,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 		do {
 			guard let showIdentity = self.showIdentity else { return }
-			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

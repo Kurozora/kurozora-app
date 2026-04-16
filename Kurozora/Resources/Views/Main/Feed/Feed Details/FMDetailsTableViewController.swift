@@ -198,7 +198,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 		do {
 			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
-			let feedMessageResponse = try await KService.getDetails(forFeedMessage: feedMessageIdentity).value
+			let feedMessageResponse = try await KService.getDetails(forFeedMessage: feedMessageIdentity)
 
 			self.feedMessage = feedMessageResponse.data.first
 		} catch {
@@ -215,7 +215,7 @@ class FMDetailsTableViewController: KTableViewController {
 	func fetchFeedReplies() async {
 		do {
 			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
-			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

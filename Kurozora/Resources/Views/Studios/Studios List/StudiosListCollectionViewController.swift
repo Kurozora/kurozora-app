@@ -154,7 +154,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 		case .game:
 			guard let gameIdentity = self.gameIdentity else { return }
 			do {
-				let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
@@ -170,7 +170,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 		case .literature:
 			guard let literatureIdentity = self.literatureIdentity else { return }
 			do {
-				let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
@@ -186,7 +186,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 		case .show:
 			guard let showIdentity = self.showIdentity else { return }
 			do {
-				let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
@@ -201,7 +201,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

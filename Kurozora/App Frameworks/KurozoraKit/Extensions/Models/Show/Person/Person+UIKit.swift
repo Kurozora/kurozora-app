@@ -120,7 +120,7 @@ extension Person {
 		let personIdentity = PersonIdentity(id: self.id)
 
 		do {
-			_ = try await KService.ratePerson(personIdentity, with: rating, description: description).value
+			_ = try await KService.ratePerson(personIdentity, with: rating, description: description)
 
 			// Update current crating for the user.
 			self.attributes.givenRating = rating

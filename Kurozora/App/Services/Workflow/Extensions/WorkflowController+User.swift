@@ -100,7 +100,7 @@ extension WorkflowController {
 	/// Get the settings used to enable additional functionality in the app.
 	func getSettings() async {
 		do {
-			let settingsResponse = try await KService.getSettings().value
+			let settingsResponse = try await KService.getSettings()
 			KSettings = settingsResponse.data
 		} catch {
 			print("-----", error.localizedDescription)

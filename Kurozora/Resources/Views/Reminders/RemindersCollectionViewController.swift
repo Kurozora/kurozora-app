@@ -123,7 +123,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let reminderLibraryResponse = try await KService.getReminders(for: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let reminderLibraryResponse = try await KService.getReminders(for: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

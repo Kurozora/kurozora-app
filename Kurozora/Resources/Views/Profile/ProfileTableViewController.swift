@@ -280,7 +280,7 @@ class ProfileTableViewController: KTableViewController {
 		#endif
 
 		do {
-			let userResponse = try await KService.getDetails(forUser: userIdentity).value
+			let userResponse = try await KService.getDetails(forUser: userIdentity)
 
 			self.user = userResponse.data.first
 			self.configureProfile()
@@ -321,7 +321,7 @@ class ProfileTableViewController: KTableViewController {
 		self.isRequestInProgress = true
 
 		do {
-			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -388,7 +388,7 @@ class ProfileTableViewController: KTableViewController {
 			guard signedIn else { return }
 
 			do {
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
 				self.user?.attributes.update(using: followUpdateResponse.data)
 				self.updateFollowButton()
 			} catch {
@@ -650,7 +650,7 @@ extension ProfileTableViewController: FeedMessageDraftsTableViewControllerDelega
 extension ProfileTableViewController: UITextViewDelegate {
 	func getUserIdentity(username: String) async -> UserIdentity? {
 		do {
-			let userIdentityResponse = try await KService.searchUsers(for: username).value
+			let userIdentityResponse = try await KService.searchUsers(for: username)
 			return userIdentityResponse.data.first
 		} catch {
 			print("-----", error.localizedDescription)

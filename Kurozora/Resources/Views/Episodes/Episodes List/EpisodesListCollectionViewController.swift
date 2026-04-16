@@ -252,7 +252,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 	func fetchSeason() async {
 		do {
 			guard let seasonIdentity = self.seasonIdentity else { return }
-			let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity).value
+			let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity)
 
 			self.season = seasonResponse.data.first
 		} catch {
@@ -279,7 +279,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case .season:
 			do {
 				guard let seasonIdentity = self.seasonIdentity else { return }
-				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -295,7 +295,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -312,7 +312,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case .upNext(let exploreCategory):
 			do {
 				let exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
-				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

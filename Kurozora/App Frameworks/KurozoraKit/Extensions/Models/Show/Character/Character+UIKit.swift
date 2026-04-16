@@ -120,7 +120,7 @@ extension Character {
 		let characterIdentity = CharacterIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateCharacter(characterIdentity, with: rating, description: description).value
+			_ = try await KService.rateCharacter(characterIdentity, with: rating, description: description)
 
 			// Update current crating for the user.
 			self.attributes.givenRating = rating

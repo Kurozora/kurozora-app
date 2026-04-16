@@ -204,7 +204,7 @@ extension KKSong {
 		let songIdentity = SongIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateSong(songIdentity, with: rating, description: description).value
+			_ = try await KService.rateSong(songIdentity, with: rating, description: description)
 
 			// Update current rating for the user.
 			self.attributes.library?.rating = rating

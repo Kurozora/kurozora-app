@@ -142,7 +142,7 @@ extension User {
 		guard signedIn else { return }
 
 		do {
-			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
 			self.attributes.update(using: followUpdateResponse.data)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -156,7 +156,7 @@ extension User {
 		guard signedIn else { return }
 
 		do {
-			let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity).value
+			let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity)
 			self.attributes.update(using: blockUpdateResponse.data)
 		} catch {
 			print("-----", error.localizedDescription)

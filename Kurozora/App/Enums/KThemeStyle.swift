@@ -305,18 +305,19 @@ extension KThemeStyle {
 		}
 
 		let sessionConfig = URLSessionConfiguration.default
-		sessionConfig.headers = [
-			.authorization(bearerToken: KService.authenticationKey),
-			.init(name: "X-API-Key", value: KService.apiKey),
-			.defaultUserAgent,
+		sessionConfig.httpAdditionalHeaders = [
+			"Authorization": "Bearer \(KService.authenticationKey)",
+			"X-API-Key": KService.apiKey
 		]
 		let session = URLSession(configuration: sessionConfig)
-		guard let request = try? URLRequest(url: urlString, method: .get) else {
+		guard let url = URL(string: urlString) else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}
 			return
 		}
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET"
 
 		let task = session.downloadTask(with: request) { tempLocalURL, response, error in
 			if let tempLocalURL = tempLocalURL, error == nil {

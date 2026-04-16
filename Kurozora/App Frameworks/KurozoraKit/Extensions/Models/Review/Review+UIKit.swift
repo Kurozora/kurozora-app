@@ -176,7 +176,7 @@ extension Review {
 		let reviewIdentity = ReviewIdentity(id: self.id)
 
 		do {
-			_ = try await KService.delete(reviewIdentity).value
+			_ = try await KService.delete(reviewIdentity)
 
 			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["indexPath": indexPath])
 		} catch {

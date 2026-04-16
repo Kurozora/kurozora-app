@@ -107,7 +107,7 @@ extension SectionFetchable {
 		do {
 			for chunk in chunks {
 				let identitiesToFetch = chunk.map { $0.identity }
-				let response: I = try await KService.getDetails(for: identitiesToFetch).value
+				let response: I = try await KService.getDetails(for: identitiesToFetch)
 
 				// Preserve order relative to the chunk
 				let orderLookup = Dictionary(identitiesToFetch.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })

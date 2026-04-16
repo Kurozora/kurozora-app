@@ -9,7 +9,6 @@
 import Foundation
 import KurozoraKit
 import Observation
-import TRON
 
 @MainActor @Observable
 final class LibraryViewModel {
@@ -42,7 +41,7 @@ final class LibraryViewModel {
 				withSortType: .none,
 				withSortOption: .none,
 				limit: 25
-			).value
+			)
 			self.shows = response.data.shows ?? []
 			self.loadState = .loaded
 		} catch {

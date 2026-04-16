@@ -62,7 +62,7 @@ extension Session {
 	func signOutOfSession(at indexPath: IndexPath) async {
 		do {
 			let sessionIdentity = SessionIdentity(id: self.id)
-			_ = try await KService.deleteSession(sessionIdentity).value
+			_ = try await KService.deleteSession(sessionIdentity)
 			NotificationCenter.default.post(name: .KSSessionIsDeleted, object: nil, userInfo: ["indexPath": indexPath])
 		} catch {
 			print(error.localizedDescription)

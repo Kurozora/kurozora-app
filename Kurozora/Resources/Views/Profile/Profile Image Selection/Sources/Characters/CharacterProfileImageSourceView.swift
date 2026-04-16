@@ -156,7 +156,7 @@ class CharacterProfileImageSourceView: UIView {
 		do {
 			for chunk in chunks {
 				let identitiesToFetch = chunk.map { $0.identity }
-				let response: CharacterResponse = try await KService.getDetails(for: identitiesToFetch).value
+				let response: CharacterResponse = try await KService.getDetails(for: identitiesToFetch)
 
 				let orderLookup = Dictionary(uniqueKeysWithValues: identitiesToFetch.enumerated().map { ($1.id, $0) })
 				let sorted = response.data.sorted {
@@ -184,7 +184,7 @@ class CharacterProfileImageSourceView: UIView {
 
 		Task {
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: "", next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: "", next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				if self.nextPageURL == nil {
 					self.characterIdentities = []
@@ -206,7 +206,7 @@ class CharacterProfileImageSourceView: UIView {
 	private func fetchAndSelectCharacter(_ characterIdentity: CharacterIdentity) {
 		Task {
 			do {
-				let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+				let characterResponse = try await KService.getDetails(forCharacter: characterIdentity)
 				guard let character = characterResponse.data.first, let previewImageView = self.previewImageView else { return }
 				character.attributes.profileImage(imageView: previewImageView)
 				if let image = previewImageView.image {

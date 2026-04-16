@@ -216,7 +216,7 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		guard signedIn else { return }
 
 		do {
-			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
 			DispatchQueue.main.async {
 				self.user?.attributes.update(using: followUpdateResponse.data)
 				self.handleRefreshControl()
@@ -250,7 +250,7 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 			let userIdentity = UserIdentity(id: user.id)
 
 			do {
-				let userIdentityResponse = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let userIdentityResponse = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -266,7 +266,7 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -390,7 +390,7 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 
 		Task {
 			do {
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
 				user.attributes.update(using: followUpdateResponse.data)
 				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
 			} catch {

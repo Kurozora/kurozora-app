@@ -177,7 +177,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 
 		if self.person == nil {
 			do {
-				let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+				let personResponse = try await KService.getDetails(forPerson: personIdentity)
 				self.person = personResponse.data.first
 			} catch {
 				print(error.localizedDescription)
@@ -187,7 +187,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forPerson: personIdentity, next: nil, limit: 10).value
+			let reviewIdentityResponse = try await KService.getReviews(forPerson: personIdentity, next: nil, limit: 10)
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -195,28 +195,28 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		}
 
 		do {
-			let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, limit: 10).value
+			let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, limit: 10)
 			self.characterIdentities = characterIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, limit: 10).value
+			let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, limit: 10)
 			self.showIdentities = showIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let literatureIdentityResponse = try await KService.getLiteratures(forPerson: personIdentity, limit: 10).value
+			let literatureIdentityResponse = try await KService.getLiteratures(forPerson: personIdentity, limit: 10)
 			self.literatureIdentities = literatureIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, limit: 10).value
+			let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, limit: 10)
 			self.gameIdentities = gameIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
@@ -340,7 +340,7 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -374,7 +374,7 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:

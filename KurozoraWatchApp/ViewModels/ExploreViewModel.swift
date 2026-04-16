@@ -9,7 +9,6 @@
 import Foundation
 import KurozoraKit
 import Observation
-import TRON
 
 @MainActor @Observable
 final class ExploreViewModel {
@@ -40,7 +39,7 @@ final class ExploreViewModel {
 
 		do {
 			// Phase 1: Fetch category identities
-			let response = try await KService.getExplore().value
+			let response = try await KService.getExplore()
 			let fetchedCategories = response.data.filter { category in
 				guard let showIdentities = category.relationships.shows?.data else { return false }
 				return !showIdentities.isEmpty
@@ -79,7 +78,7 @@ final class ExploreViewModel {
 		let limited = Array(showIdentities.prefix(10))
 
 		do {
-			let showResponse = try await KService.getDetails(forShows: limited).value
+			let showResponse = try await KService.getDetails(forShows: limited)
 			self.showsByCategory[category.id.description] = showResponse.data
 		} catch {
 			NSLog("Failed to fetch shows for category %@: %@", category.attributes.title, error.localizedDescription)

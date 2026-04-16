@@ -318,7 +318,7 @@ extension SearchResultsCollectionViewController {
 				if character == nil {
 					Task {
 						do {
-							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity)
 
 							self.characters[indexPath] = characterResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -345,7 +345,7 @@ extension SearchResultsCollectionViewController {
 				if episode == nil {
 					Task {
 						do {
-							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity, including: ["show", "season"]).value
+							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity, including: ["show", "season"])
 							self.episodes[indexPath] = episodeResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						} catch {
@@ -372,7 +372,7 @@ extension SearchResultsCollectionViewController {
 				if game == nil {
 					Task {
 						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+							let gameResponse = try await KService.getDetails(forGame: gameIdentity)
 
 							self.games[indexPath] = gameResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -400,7 +400,7 @@ extension SearchResultsCollectionViewController {
 				if person == nil {
 					Task {
 						do {
-							let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+							let personResponse = try await KService.getDetails(forPerson: personIdentity)
 
 							self.people[indexPath] = personResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -427,7 +427,7 @@ extension SearchResultsCollectionViewController {
 				if song == nil {
 					Task {
 						do {
-							let songResponse = try await KService.getDetails(forSong: songIdentity).value
+							let songResponse = try await KService.getDetails(forSong: songIdentity)
 
 							self.songs[indexPath] = songResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -455,7 +455,7 @@ extension SearchResultsCollectionViewController {
 				if show == nil {
 					Task {
 						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+							let showResponse = try await KService.getDetails(forShow: showIdentity)
 
 							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -473,7 +473,7 @@ extension SearchResultsCollectionViewController {
 				if literature == nil {
 					Task {
 						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
+							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity)
 
 							self.literatures[indexPath] = literatureResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
@@ -501,7 +501,7 @@ extension SearchResultsCollectionViewController {
 				if studio == nil {
 					Task {
 						do {
-							let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
+							let studioResponse = try await KService.getDetails(forStudio: studioIdentity)
 							self.studios[indexPath] = studioResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						} catch {
@@ -527,7 +527,7 @@ extension SearchResultsCollectionViewController {
 				if user == nil {
 					Task {
 						do {
-							let userResponse = try await KService.getDetails(forUser: userIdentity).value
+							let userResponse = try await KService.getDetails(forUser: userIdentity)
 
 							self.users[indexPath] = userResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)

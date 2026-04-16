@@ -113,7 +113,7 @@ class GenresCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let genreResponse = try await KService.getGenres().value
+			let genreResponse = try await KService.getGenres()
 			self.genres = genreResponse.data
 			self.updateDataSource()
 		} catch {

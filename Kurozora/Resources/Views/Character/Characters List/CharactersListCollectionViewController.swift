@@ -153,7 +153,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 		case .person:
 			do {
 				guard let personIdentity = self.personIdentity else { return }
-				let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -170,7 +170,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 		case .explore:
 			do {
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -186,7 +186,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

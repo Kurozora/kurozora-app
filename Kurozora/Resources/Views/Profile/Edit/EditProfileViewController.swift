@@ -294,7 +294,7 @@ class EditProfileViewController: KViewController {
 				)
 
 				// Perform update request.
-				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest)
 				User.current?.attributes.update(using: userUpdateResponse.data)
 
 				// Sync keychain with updated profile metadata.
@@ -871,7 +871,7 @@ extension EditProfileViewController: UITextViewDelegate {
 
 	func getUserIdentity(username: String) async -> UserIdentity? {
 		do {
-			let userIdentityResponse = try await KService.searchUsers(for: username).value
+			let userIdentityResponse = try await KService.searchUsers(for: username)
 			return userIdentityResponse.data.first
 		} catch {
 			print("-----", error.localizedDescription)

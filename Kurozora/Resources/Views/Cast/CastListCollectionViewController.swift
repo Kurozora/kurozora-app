@@ -166,7 +166,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .show:
 			do {
 				guard let showIdentity = self.showIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -183,7 +183,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .literature:
 			do {
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
@@ -200,7 +200,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		case .game:
 			do {
 				guard let gameIdentity = self.gameIdentity else { return }
-				let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25).value
+				let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

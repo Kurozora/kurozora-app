@@ -176,7 +176,7 @@ extension Show {
 
 	fileprivate func addToLibrary(status: KKLibrary.Status) async {
 		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.id).value
+			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.id)
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -196,7 +196,7 @@ extension Show {
 
 	func removeFromLibrary() async {
 		do {
-			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: self.id).value
+			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: self.id)
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -218,7 +218,7 @@ extension Show {
 		guard signedIn else { return }
 
 		do {
-			let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: self.id).value
+			let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: self.id)
 
 			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
@@ -246,7 +246,7 @@ extension Show {
 					await self.addToLibrary(status: .planning)
 				}
 
-				let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: self.id).value
+				let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: self.id)
 
 				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
@@ -274,7 +274,7 @@ extension Show {
 		let showIdentity = ShowIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateShow(showIdentity, with: rating, description: description).value
+			_ = try await KService.rateShow(showIdentity, with: rating, description: description)
 
 			// Update current rating for the user.
 			self.attributes.library?.rating = rating
@@ -302,7 +302,7 @@ extension Show {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
-			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: nil, isHidden: hidden).value
+			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: nil, isHidden: hidden)
 
 			// Update current rating for the user.
 			self.attributes.library?.isHidden = hidden
@@ -319,7 +319,7 @@ extension Show {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
-			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: count, isHidden: nil).value
+			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: count, isHidden: nil)
 
 			// Update current rating for the user.
 			self.attributes.library?.rewatchCount = count

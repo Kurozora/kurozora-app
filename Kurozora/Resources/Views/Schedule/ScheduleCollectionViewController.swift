@@ -236,7 +236,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	func fetchDetails() async {
 		do {
-			let scheduleResponse = try await KService.getSchedule(for: .shows, in: Date.now).value
+			let scheduleResponse = try await KService.getSchedule(for: .shows, in: Date.now)
 			self.schedules = scheduleResponse.data
 			self.updateDataSource()
 		} catch {
@@ -360,7 +360,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
 
 					switch cell.libraryKind {
 					case .shows:
@@ -394,7 +394,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
 
 						switch cell.libraryKind {
 						case .shows:

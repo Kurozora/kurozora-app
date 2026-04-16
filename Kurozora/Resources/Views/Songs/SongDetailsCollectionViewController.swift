@@ -165,7 +165,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 		if self.song == nil {
 			do {
-				let songResponse = try await KService.getDetails(forSong: songIdentity).value
+				let songResponse = try await KService.getDetails(forSong: songIdentity)
 				self.song = songResponse.data.first
 			} catch {
 				print(error.localizedDescription)
@@ -177,14 +177,14 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		self.configureNavBarButtons()
 
 		do {
-			let showIdentityResponse = try await KService.getShows(forSong: songIdentity, limit: 10).value
+			let showIdentityResponse = try await KService.getShows(forSong: songIdentity, limit: 10)
 			self.showIdentities = showIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10).value
+			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10)
 			self.reviews = reviewIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
@@ -302,7 +302,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: show.id).value
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: show.id)
 
 					show.attributes.library?.update(using: libraryUpdateResponse.data)
 
@@ -326,7 +326,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: show.id).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: show.id)
 
 						show.attributes.library?.update(using: libraryUpdateResponse.data)
 

@@ -148,7 +148,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 	func fetchShowSongs() async {
 		do {
 			guard let showIdentity = self.showIdentity else { return }
-			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1).value
+			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1)
 			self.showSongs = showSongResponse.data
 			self.groupShowSongs()
 			self.updateDataSource()

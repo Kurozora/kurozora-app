@@ -77,7 +77,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?) async {
 		do {
-			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage).value
+			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage)
 
 			self.presentAlertController(title: Trans.Onboarding.signUpAlertHeadline, message: Trans.Onboarding.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
 				guard let self = self else { return }
@@ -134,7 +134,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImageRequest: profileImageRequest, bannerImageRequest: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 					// Perform information update request.
-					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest)
 					User.current?.attributes.update(using: userUpdateResponse.data)
 
 					// Get user details after completing account setup.

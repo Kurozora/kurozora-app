@@ -109,7 +109,7 @@ extension Episode {
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
 		do {
 			let episodeIdentity = EpisodeIdentity(id: self.id)
-			let episodeUpdateResponse = try await KService.updateEpisodeWatchStatus(episodeIdentity).value
+			let episodeUpdateResponse = try await KService.updateEpisodeWatchStatus(episodeIdentity)
 			let watchStatus = episodeUpdateResponse.data.watchStatus
 
 			// Update watch status
@@ -172,7 +172,7 @@ extension Episode {
 		let episodeIdentity = EpisodeIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: description).value
+			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: description)
 
 			// Update current rating for the user.
 			self.attributes.givenRating = rating

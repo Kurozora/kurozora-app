@@ -10,7 +10,6 @@ import Foundation
 import KeychainAccess
 import KurozoraKit
 import Observation
-import TRON
 
 @Observable
 final class AuthenticationManager {
@@ -42,7 +41,7 @@ final class AuthenticationManager {
 			}
 		}
 
-		// 2. Legacy fallback: flat slug→token in "Kurozora" keychain
+		// 2. Legacy fallback: flat slug to token in "Kurozora" keychain
 		if let slug = selectedSlug,
 		   let token = try? WatchShared.keychain.get(slug)
 		{
