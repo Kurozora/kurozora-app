@@ -39,6 +39,7 @@ extension SongDetailsCollectionViewController {
 			case .header:
 				let songHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SongHeaderCollectionViewCell.self, for: indexPath)
 				songHeaderCollectionViewCell?.delegate = self
+				songHeaderCollectionViewCell?.mediaViewerDelegate = self
 				switch itemKind {
 				case .song(let song, _):
 					songHeaderCollectionViewCell?.configure(using: song)

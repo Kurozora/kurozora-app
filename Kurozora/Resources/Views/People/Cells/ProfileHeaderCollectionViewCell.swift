@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class ProfileHeaderCollectionViewCell: UICollectionViewCell {
+class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var bannerImageView: BannerImageView!
 	@IBOutlet weak var primaryImageView: CircularImageView!
@@ -33,7 +33,7 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell {
 		self.bannerImageView.tag = 1
 		self.bannerImageView.isUserInteractionEnabled = true
 		self.bannerImageView.layer.borderWidth = 0
-		self.bannerImageView.layerCornerRadius = 0
+		self.bannerImageView.applyCornerRadius(0)
 		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
 		self.bannerImageView.addGestureRecognizer(bannerTap)
 
@@ -112,5 +112,35 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell {
 	@objc private func imageViewPressed(_ sender: UITapGestureRecognizer) {
 		guard let view = sender.view as? UIImageView else { return }
 		self.mediaViewerDelegate?.mediaViewerViewDelegate(self, didTapImage: view, at: view.tag)
+	}
+
+	// MARK: - MediaViewerHeaderCell
+	func imageView(at index: Int) -> UIImageView? {
+		switch index {
+		case 0: return self.primaryImageView
+		case 1: return self.bannerImageView
+		default: return nil
+		}
+	}
+
+	// MARK: - Navigation appearance
+	/// Configures a navigation item so its nav bar is transparent (background
+	/// hidden, title text clear) when the scroll edge is at the top, and falls
+	/// back to the inherited themed `standardAppearance` as the user scrolls.
+	///
+	/// Call from `viewDidLoad` of a controller that hosts a
+	/// `ProfileHeaderCollectionViewCell` as the first visible cell.
+	///
+	/// - Parameter navigationItem: The navigation item to configure.
+	static func configureTransparentNavigationAppearance(on navigationItem: UINavigationItem) {
+		let appearance = UINavigationBarAppearance()
+		appearance.configureWithTransparentBackground()
+		// Explicitly suppress the background effect. `configureWithTransparentBackground`
+		// on iOS 26 still lights up the Liquid Glass material at the scroll
+		// edge; nulling the effect keeps the nav bar truly invisible at top.
+		appearance.backgroundEffect = nil
+		appearance.titleTextAttributes = [.foregroundColor: UIColor.clear]
+		navigationItem.scrollEdgeAppearance = appearance
+		navigationItem.largeTitleDisplayMode = .never
 	}
 }

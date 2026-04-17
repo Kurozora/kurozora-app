@@ -15,7 +15,7 @@ protocol SongHeaderCollectionViewCellDelegate: AnyObject {
 	func playStateChanged(_ song: MKSong?)
 }
 
-class SongHeaderCollectionViewCell: UICollectionViewCell {
+class SongHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryImageView: AlbumImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
@@ -33,6 +33,28 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 
 	/// The `SongHeaderCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: SongHeaderCollectionViewCellDelegate?
+
+	weak var mediaViewerDelegate: MediaViewerViewDelegate?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.primaryImageView.tag = 0
+		self.primaryImageView.isUserInteractionEnabled = true
+		let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+		self.primaryImageView.addGestureRecognizer(primaryTap)
+	}
+
+	// MARK: - MediaViewerHeaderCell
+	func imageView(at index: Int) -> UIImageView? {
+		index == 0 ? self.primaryImageView : nil
+	}
+
+	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
+		guard let view = sender.view as? UIImageView else { return }
+		self.mediaViewerDelegate?.mediaViewerViewDelegate(self, didTapImage: view, at: view.tag)
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given song object.

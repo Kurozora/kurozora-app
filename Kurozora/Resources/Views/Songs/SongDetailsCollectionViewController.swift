@@ -10,16 +10,13 @@ import UIKit
 import KurozoraKit
 import MusicKit
 
-class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
+class SongDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsListSegue
 		case showDetailsSegue
 		case reviewDetailsSegue
 	}
-
-	// MARK: - Views
-	private var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var songIdentity: SongIdentity?
@@ -29,6 +26,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 				self.navigationItem.largeTitle = ""
 			}
+			self.navigationTitleLabel.text = self.song.attributes.title
 			self.songIdentity = SongIdentity(id: self.song.id)
 
 			self._prefersActivityIndicatorHidden = true
@@ -41,11 +39,7 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
-	// Show properties
 	var showIdentities: [ShowIdentity] = []
-
-	// Review properties.
-	var reviews: [Review] = []
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -53,53 +47,29 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
+	// MARK: - Overridden Properties
+	override var emptyStateImage: UIImage { .Empty.cast }
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+	override var emptyStateDetail: String { "This song doesn't have details yet. Please check back again later." }
+
+	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
+
+	override var mediaItems: [MediaItem] {
+		guard let song = self.song,
+		      let artworkURL = URL(string: song.attributes.artwork?.url ?? "") else { return [] }
+		return [MediaItem(url: artworkURL, type: .image, title: song.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil)]
 	}
 
 	// MARK: - Initializers
-	/// Initialize a new instance of SongDetailsCollectionViewController with the given song id.
-	///
-	/// - Parameter songID: The song id to use when initializing the view.
-	///
-	/// - Returns: an initialized instance of SongDetailsCollectionViewController.
 	func callAsFunction(with songID: KurozoraItemID) -> SongDetailsCollectionViewController {
 		let songDetailsCollectionViewController = SongDetailsCollectionViewController()
 		songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
 		return songDetailsCollectionViewController
 	}
 
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
+	// MARK: - View Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
 
 		self.configureDataSource()
 		self.configureNavigationItems()
@@ -110,57 +80,8 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
-	}
-
-	override func viewDidDisappear(_ animated: Bool) {
-		super.viewDidDisappear(animated)
-		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
-	}
-
 	// MARK: - Functions
-	override func handleRefreshControl() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchDetails()
-		}
-	}
-
-	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.cast)
-		emptyBackgroundView.configureLabels(title: "No Details", detail: "This song doesn't have details yet. Please check back again later.")
-
-		collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	/// Configures the more bar button item.
-	private func configureMoreBarButtonItem() {
-		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
-		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
-	}
-
-	/// Configures the navigation items.
-	fileprivate func configureNavigationItems() {
-		self.configureMoreBarButtonItem()
-	}
-
-	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
-	}
-
-	/// Fetches the currently viewed song's details.
-	func fetchDetails() async {
+	override func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
 
 		if self.song == nil {
@@ -193,23 +114,31 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 		self.updateDataSource()
 	}
 
-	/// Deletes the review with the received information.
-	///
-	/// - Parameter notification: An object containing information broadcast to registered observers.
-	@objc func deleteReview(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
+	override func makeMoreMenu() -> UIMenu? {
+		return self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+	}
 
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				// Start delete process
-				self.reviews.remove(at: indexPath.item)
-			}
+	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+		guard let song = self.song else { return nil }
+		return try await song.rate(using: rating, description: description)
+	}
 
-			self.song.attributes.library?.rating = nil
-			self.song.attributes.library?.review = nil
+	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+		guard let song = self.song else { return nil }
+		return (.song(song), song.attributes.library?.rating, song.attributes.library?.review)
+	}
 
-			self.updateDataSource()
-		}
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+		return self.cache[indexPath] as? any Libraryable
+	}
+
+	override func reminderTarget(at indexPath: IndexPath) -> Show? {
+		return self.cache[indexPath] as? Show
+	}
+
+	override func didDeleteReview(at indexPath: IndexPath?) {
+		self.song?.attributes.library?.rating = nil
+		self.song?.attributes.library?.review = nil
 	}
 
 	// MARK: - SectionFetchable
@@ -236,16 +165,13 @@ class SongDetailsCollectionViewController: KCollectionViewController, RatingAler
 
 		switch identifier {
 		case .reviewsListSegue:
-			// Segue to reviews list
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .song(self.song)
 		case .showDetailsSegue:
-			// Segue to show details
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case .reviewDetailsSegue:
-			// Segue to review details
 			guard
 				let navigationController = destination as? KNavigationController,
 				let reviewDetailsCollectionViewController = navigationController.viewControllers.first as? ReviewDetailsCollectionViewController,
@@ -282,87 +208,6 @@ extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 	}
 }
 
-// MARK: - TitleHeaderCollectionReusableViewDelegate
-extension SongDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		guard let segueID = reusableView.segueID else { return }
-		self.show(segueID, sender: reusableView.indexPath)
-	}
-}
-
-// MARK: - BaseLockupCollectionViewCellDelegate
-extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
-		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.cache[indexPath] as? Show else { return }
-
-		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
-			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: show.id)
-
-					show.attributes.library?.update(using: libraryUpdateResponse.data)
-
-					// Update entry in library
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-
-					// Request review
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
-					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-					print("----- Add to library failed", error.message)
-				}
-			}
-		})
-
-		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
-				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: show.id)
-
-						show.attributes.library?.update(using: libraryUpdateResponse.data)
-
-						// Update entry in library
-						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
-
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
-						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
-				}
-			})
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
-	}
-
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.cache[indexPath] as? Show else { return }
-		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
-	}
-}
-
 // MARK: - SongHeaderCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDelegate {
 	func playStateChanged(_ song: MKSong?) {
@@ -382,99 +227,28 @@ extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDeleg
 	}
 }
 
-// MARK: - ReviewCollectionViewCellDelegate
-extension SongDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		let badgeViewController = BadgeViewController()
-		badgeViewController.profileBadge = profileBadge
-		badgeViewController.popoverPresentationController?.sourceView = button
-		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
-
-		self.present(badgeViewController, animated: true, completion: nil)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
-		guard
-			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
-		else { return }
-		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
-	}
-}
-
-// MARK: - TapToRateCollectionViewCellDelegate
-extension SongDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
-	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
-		Task { [weak self] in
-			guard let self = self else { return }
-
-			do throws(KKAPIError) {
-				let rating = try await self.song.rate(using: rating, description: nil)
-				cell.configure(using: rating)
-
-				if rating != nil {
-					self.showRatingSuccessAlert()
-				}
-			} catch {
-				print(error.localizedDescription)
-				self.showRatingFailureAlert(message: error.message)
-			}
-		}
-	}
-}
-
-// MARK: - WriteAReviewCollectionViewCellDelegate
-extension SongDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
-		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.delegate = self
-		reviewTextEditorViewController.router?.dataStore?.kind = .song(self.song)
-		reviewTextEditorViewController.router?.dataStore?.rating = self.song.attributes.library?.rating
-		reviewTextEditorViewController.router?.dataStore?.review = self.song.attributes.library?.review
-
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
-	}
-}
-
-// MARK: - ReviewTextEditorViewControllerDelegate
-extension SongDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
-	func reviewTextEditorViewControllerDidSubmitReview() {
-		self.showRatingSuccessAlert()
-	}
-}
-
 extension SongDetailsCollectionViewController {
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
-		/// Indicates a header section layout type.
+		/// A header section layout type.
 		case header = 0
 
-		/// Indicates a lyrics section layout type.
+		/// A lyrics section layout type.
 		case lyrics
 
-		/// Indicates a rating section layout type.
+		/// A rating section layout type.
 		case rating
 
-		/// Indicates a rate and review section layout type.
+		/// A rate and review section layout type.
 		case rateAndReview
 
-		/// Indicates a reviews section layout type.
+		/// A reviews section layout type.
 		case reviews
 
-		/// Indicates shows section layout type.
+		/// A shows section layout type.
 		case shows
 
-		/// Indicates a copyright section layout type.
+		/// A copyright section layout type.
 		case sosumi
 
 		// MARK: - Properties
@@ -509,16 +283,16 @@ extension SongDetailsCollectionViewController {
 		}
 	}
 
-	/// List of available Item Kind types.
+	/// List of available item kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a `Song` object.
+		/// An item kind that contains a `KKSong` object.
 		case song(_: KKSong, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Review` object.
+		/// An item kind that contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `ShowIdentity` object.
+		/// An item kind that contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
 		// MARK: - Functions

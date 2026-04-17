@@ -12,7 +12,7 @@ protocol BaseDetailHeaderCollectionViewCellDelegate: AnyObject {
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async
 }
 
-class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
+class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell {
 	// MARK: - IBOutlet
 	@IBOutlet var bannerImageView: UIImageView!
 	@IBOutlet var visualEffectView: KVisualEffectView!
@@ -55,6 +55,15 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
 		guard let view = sender.view as? UIImageView else { return }
 		self.mediaViewerDelegate?.mediaViewerViewDelegate(self, didTapImage: view, at: view.tag)
+	}
+
+	// MARK: - MediaViewerHeaderCell
+	func imageView(at index: Int) -> UIImageView? {
+		switch index {
+		case 0: return self.posterImageView
+		case 1: return self.bannerImageView
+		default: return nil
+		}
 	}
 
 	// MARK: - IBActions

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class PersonDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable, SectionFetchable {
+class PersonDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsListSegue
@@ -32,7 +32,9 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 				self.navigationItem.largeTitle = ""
 			}
+			self.navigationTitleLabel.text = self.person.attributes.fullName
 			self.personIdentity = PersonIdentity(id: self.person.id)
+			self.configureNavBarButtons()
 
 			self._prefersActivityIndicatorHidden = true
 			#if targetEnvironment(macCatalyst)
@@ -47,19 +49,9 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		}
 	}
 
-	// Review properties.
-	var reviews: [Review] = []
-
-	// Character properties.
 	var characterIdentities: [CharacterIdentity] = []
-
-	// Related Show properties.
 	var showIdentities: [ShowIdentity] = []
-
-	// Related Literature properties.
 	var literatureIdentities: [LiteratureIdentity] = []
-
-	// Related Game properties.
 	var gameIdentities: [GameIdentity] = []
 
 	var cache: [IndexPath: KurozoraItem] = [:]
@@ -68,111 +60,56 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
+	// MARK: - Overridden Properties
+	override var emptyStateImage: UIImage { .Empty.cast }
 
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
+	override var emptyStateDetail: String { "This person doesn't have details yet. Please check back again later." }
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
+	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
+	override var mediaItems: [MediaItem] {
+		guard let person = self.person,
+		      let profileURL = URL(string: person.attributes.profile?.url ?? "") else { return [] }
+		return [MediaItem(
+			url: profileURL,
+			type: .image,
+			title: person.attributes.fullName,
+			description: nil,
+			author: nil,
+			provider: nil,
+			embedHTML: nil,
+			extraInfo: nil
+		)]
 	}
 
 	// MARK: - Initializers
-	/// Initialize a new instance of PersonDetailsCollectionViewController with the given person id.
-	///
-	/// - Parameter personID: The person id to use when initializing the view.
-	///
-	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
 	func callAsFunction(with personID: KurozoraItemID) -> PersonDetailsCollectionViewController {
 		let personDetailsCollectionViewController = PersonDetailsCollectionViewController()
 		personDetailsCollectionViewController.personIdentity = PersonIdentity(id: personID)
 		return personDetailsCollectionViewController
 	}
 
-	/// Initialize a new instance of PersonDetailsCollectionViewController with the given person object.
-	///
-	/// - Parameter show: The `Show` object to use when initializing the view controller.
-	///
-	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
 	func callAsFunction(with person: Person) -> PersonDetailsCollectionViewController {
 		let personDetailsCollectionViewController = PersonDetailsCollectionViewController()
 		personDetailsCollectionViewController.person = person
 		return personDetailsCollectionViewController
 	}
 
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
+	// MARK: - View Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
 		self.configureDataSource()
+		self.configureNavigationItems()
 
-		// Fetch person details
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
-	}
-
-	override func viewDidDisappear(_ animated: Bool) {
-		super.viewDidDisappear(animated)
-		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 	}
 
 	// MARK: - Functions
-	override func handleRefreshControl() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchDetails()
-		}
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
-		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This character doesn't have details yet. Please check back again later.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func fetchDetails() async {
+	override func fetchDetails() async {
 		guard let personIdentity = self.personIdentity else { return }
 
 		if self.person == nil {
@@ -182,8 +119,6 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 			} catch {
 				print(error.localizedDescription)
 			}
-		} else {
-			self.updateDataSource()
 		}
 
 		do {
@@ -197,6 +132,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		do {
 			let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, limit: 10)
 			self.characterIdentities = characterIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -204,6 +140,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		do {
 			let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, limit: 10)
 			self.showIdentities = showIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -211,6 +148,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		do {
 			let literatureIdentityResponse = try await KService.getLiteratures(forPerson: personIdentity, limit: 10)
 			self.literatureIdentities = literatureIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -218,41 +156,37 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 		do {
 			let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, limit: 10)
 			self.gameIdentities = gameIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
-	/// Deletes the review with the received information.
-	///
-	/// - Parameter notification: An object containing information broadcast to registered observers.
-	@objc func deleteReview(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				// Start delete process
-				self.reviews.remove(at: indexPath.item)
-			}
-
-			self.person.attributes.givenRating = nil
-			self.person.attributes.givenReview = nil
-
-			self.updateDataSource()
-		}
+	override func makeMoreMenu() -> UIMenu? {
+		return self.person?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	// MARK: - SectionFetchable
-	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
-		switch item {
-		case .gameIdentity(let id, _): return id as? Element
-		case .literatureIdentity(let id, _): return id as? Element
-		case .showIdentity(let id, _): return id as? Element
-		case .characterIdentity(let id, _): return id as? Element
-		default: return nil
-		}
+	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+		guard let person = self.person else { return nil }
+		return try await person.rate(using: rating, description: description)
+	}
+
+	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+		guard let person = self.person else { return nil }
+		return (.person(person), person.attributes.givenRating, nil)
+	}
+
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+		return self.cache[indexPath] as? any Libraryable
+	}
+
+	override func reminderTarget(at indexPath: IndexPath) -> Show? {
+		return self.cache[indexPath] as? Show
+	}
+
+	override func didDeleteReview(at indexPath: IndexPath?) {
+		self.person?.attributes.givenRating = nil
+		self.person?.attributes.givenReview = nil
 	}
 
 	// MARK: - Segue
@@ -278,7 +212,6 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 
 		switch identifier {
 		case .reviewsListSegue:
-			// Segue to reviews list
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .person(self.person)
 		case .showsListSegue:
@@ -325,104 +258,6 @@ class PersonDetailsCollectionViewController: KCollectionViewController, RatingAl
 	}
 }
 
-// MARK: - BaseLockupCollectionViewCellDelegate
-extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
-		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let model = self.cache[indexPath]
-		else { return }
-		let modelID: KurozoraItemID = model.id
-
-		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
-			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
-
-					switch cell.libraryKind {
-					case .shows:
-						guard let show = self.cache[indexPath] as? Show else { return }
-						show.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .literatures:
-						guard let literature = self.cache[indexPath] as? Literature else { return }
-						literature.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .games:
-						guard let game = self.cache[indexPath] as? Game else { return }
-						game.attributes.library?.update(using: libraryUpdateResponse.data)
-					}
-
-					// Update entry in library
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-
-					// Request review
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
-					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-					print("----- Add to library failed", error.message)
-				}
-			}
-		})
-
-		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
-				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
-
-						switch cell.libraryKind {
-						case .shows:
-							guard let show = self.cache[indexPath] as? Show else { return }
-							show.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .literatures:
-							guard let literature = self.cache[indexPath] as? Literature else { return }
-							literature.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .games:
-							guard let game = self.cache[indexPath] as? Game else { return }
-							game.attributes.library?.update(using: libraryUpdateResponse.data)
-						}
-
-						// Update entry in library
-						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
-
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
-						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
-				}
-			})
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
-	}
-
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let show = self.cache[indexPath] as? Show
-		else { return }
-		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
-	}
-}
-
 // MARK: - TextViewCollectionViewCellDelegate
 extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
@@ -434,256 +269,6 @@ extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDeleg
 		kNavigationController.modalPresentationStyle = .formSheet
 
 		self.present(kNavigationController, animated: true)
-	}
-}
-
-// MARK: - TitleHeaderCollectionReusableViewDelegate
-extension PersonDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		guard let segueID = reusableView.segueID else { return }
-		self.show(segueID, sender: reusableView.indexPath)
-	}
-}
-
-// MARK: - MediaTransitionDelegate
-extension PersonDetailsCollectionViewController: MediaTransitionDelegate {
-	func imageViewForMedia(at index: Int) -> UIImageView? {
-		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ProfileHeaderCollectionViewCell else {
-			return nil
-		}
-		return cell.primaryImageView
-	}
-
-	func scrollThumbnailIntoView(for index: Int) {
-		// Scroll the collection view to make sure the cell at the given index is visible.
-		let indexPath = IndexPath(item: index, section: 0)
-		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-	}
-}
-
-// MARK: - MediaViewerCellViewDelegate
-extension PersonDetailsCollectionViewController: MediaViewerViewDelegate {
-	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
-		let profileURL = URL(string: self.person.attributes.profile?.url ?? "")
-		var items: [MediaItem] = []
-
-		if let profileURL = profileURL {
-			items.append(MediaItem(
-				url: profileURL,
-				type: .image,
-				title: self.person.attributes.fullName,
-				description: nil,
-				author: nil,
-				provider: nil,
-				embedHTML: nil,
-				extraInfo: nil
-			))
-		}
-
-		guard items.indices.contains(index) else { return }
-        let albumVC = MediaAlbumViewController(items: items, startIndex: index)
-		albumVC.transitionDelegateForThumbnail = self
-
-		self.present(albumVC, animated: true)
-	}
-}
-
-// MARK: - ReviewCollectionViewCellDelegate
-extension PersonDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		let badgeViewController = BadgeViewController()
-		badgeViewController.profileBadge = profileBadge
-		badgeViewController.popoverPresentationController?.sourceView = button
-		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
-
-		self.present(badgeViewController, animated: true, completion: nil)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
-		guard
-			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
-		else { return }
-		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
-	}
-}
-
-// MARK: - TapToRateCollectionViewCellDelegate
-extension PersonDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
-	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
-		Task { [weak self] in
-			guard let self = self else { return }
-
-			do throws(KKAPIError) {
-				let rating = try await self.person.rate(using: rating, description: nil)
-				cell.configure(using: rating)
-
-				if rating != nil {
-					self.showRatingSuccessAlert()
-				}
-			} catch {
-				print(error.localizedDescription)
-				self.showRatingFailureAlert(message: error.message)
-			}
-		}
-	}
-}
-
-// MARK: - WriteAReviewCollectionViewCellDelegate
-extension PersonDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
-		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.delegate = self
-		reviewTextEditorViewController.router?.dataStore?.kind = .person(self.person)
-		reviewTextEditorViewController.router?.dataStore?.rating = self.person.attributes.givenRating
-		reviewTextEditorViewController.router?.dataStore?.review = nil
-
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
-	}
-}
-
-// MARK: - ReviewTextEditorViewControllerDelegate
-extension PersonDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
-	func reviewTextEditorViewControllerDidSubmitReview() {
-		self.showRatingSuccessAlert()
-	}
-}
-
-// MARK: - Enums
-extension PersonDetailsCollectionViewController {
-	/// List of person section layout kind.
-	enum SectionLayoutKind: Int, CaseIterable {
-		// MARK: - Cases
-		case header = 0
-		case about
-		case rating
-		case rateAndReview
-		case reviews
-		case information
-		case characters
-		case shows
-		case literatures
-		case games
-
-		// MARK: - Properties
-		/// The string value of a character section type.
-		var stringValue: String {
-			switch self {
-			case .header:
-				return Trans.header
-			case .about:
-				return Trans.about
-			case .rating:
-				return Trans.ratingsAndReviews
-			case .rateAndReview:
-				return ""
-			case .reviews:
-				return ""
-			case .information:
-				return Trans.information
-			case .characters:
-				return Trans.characters
-			case .shows:
-				return Trans.shows
-			case .literatures:
-				return Trans.literatures
-			case .games:
-				return Trans.games
-			}
-		}
-
-		/// The string value of a character section type segue identifier.
-		var segueIdentifier: SegueIdentifiers? {
-			switch self {
-			case .header, .about, .rateAndReview, .reviews, .information:
-				return nil
-			case .rating:
-				return .reviewsListSegue
-			case .characters:
-				return .charactersListSegue
-			case .shows:
-				return .showsListSegue
-			case .literatures:
-				return .literaturesListSegue
-			case .games:
-				return .gamesListSegue
-			}
-		}
-	}
-
-	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `Person` object.
-		case person(_: Person, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `Review` object.
-		case review(_: Review, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .person(let person, let id):
-				hasher.combine(person)
-				hasher.combine(id)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .characterIdentity(let characterIdentity, let id):
-				hasher.combine(characterIdentity)
-				hasher.combine(id)
-			case .showIdentity(let showIdentity, let id):
-				hasher.combine(showIdentity)
-				hasher.combine(id)
-			case .literatureIdentity(let literatureIdentity, let id):
-				hasher.combine(literatureIdentity)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
-				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.person(let person1, let id1), .person(let person2, let id2)):
-				return person1 == person2 && id1 == id2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
-				return characterIdentity1 == characterIdentity2 && id1 == id2
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
-				return literatureIdentity1 == literatureIdentity2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			default:
-				return false
-			}
-		}
 	}
 }
 

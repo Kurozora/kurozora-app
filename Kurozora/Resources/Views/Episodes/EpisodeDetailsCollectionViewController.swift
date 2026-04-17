@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case castListSegue
@@ -22,16 +22,6 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		case characterDetailsSegue
 		case reviewDetailsSegue
 	}
-
-	// MARK: - Views
-	private var moreBarButtonItem: UIBarButtonItem!
-	private var navigationTitleView: UIView!
-	private var navigationTitleLabel: KLabel = {
-		let label = KLabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.alpha = 0
-		return label
-	}()
 
 	// MARK: - Properties
 	var episodeIdentity: EpisodeIdentity?
@@ -59,82 +49,49 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 	var indexPath = IndexPath()
 
-	// Review
-	var reviews: [Review] = []
-
-	// Cast
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = []
 
-	// Suggested episodes
 	var suggestedEpisodes: [Episode] = []
-
-	/// The first cell's size.
-	private var firstCellSize: CGSize = .zero
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
+	// MARK: - Overridden Properties
+	override var emptyStateImage: UIImage { .Empty.episodes }
+
+	override var emptyStateDetail: String { "This episode doesn't have details yet. Please check back again later." }
+
+	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
+
+	override var mediaItems: [MediaItem] {
+		guard let episode = self.episode else { return [] }
+		var items: [MediaItem] = []
+		if let posterURL = URL(string: episode.attributes.poster?.url ?? "") {
+			items.append(MediaItem(url: posterURL, type: .image, title: episode.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
-	}
-
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
+		if let bannerURL = URL(string: episode.attributes.banner?.url ?? "") {
+			items.append(MediaItem(url: bannerURL, type: .image, title: episode.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
+		return items
 	}
 
 	// MARK: - Initializers
-	/// Initialize a new instance of EpisodeDetailsCollectionViewController with the given episode id.
-	///
-	/// - Parameter episodeID: The episode id to use when initializing the view.
-	///
-	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
 	func callAsFunction(with episodeID: KurozoraItemID) -> EpisodeDetailsCollectionViewController {
 		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController()
 		episodeDetailsCollectionViewController.episodeIdentity = EpisodeIdentity(id: episodeID)
 		return episodeDetailsCollectionViewController
 	}
 
-	/// Initialize a new instance of EpisodeDetailsCollectionViewController with the given episode object.
-	///
-	/// - Parameter episode: The `Episode` object to use when initializing the view controller.
-	///
-	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
 	func callAsFunction(with episode: Episode) -> EpisodeDetailsCollectionViewController {
 		let episodeDetailsCollectionViewController = EpisodeDetailsCollectionViewController()
 		episodeDetailsCollectionViewController.episode = episode
 		return episodeDetailsCollectionViewController
 	}
 
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
+	// MARK: - View Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
 
 		self.configureDataSource()
 		self.configureNavigationItems()
@@ -148,91 +105,15 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
-	}
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-
-		// Add bottom content inset to account for tab bar
-		let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
-		self.collectionView.contentInset.bottom = tabBarHeight
-
-		// Store the first cell size
-		if let firstCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ShowDetailHeaderCollectionViewCell, self.firstCellSize.width != firstCell.frame.size.width {
-			self.firstCellSize = firstCell.frame.size
-		}
 	}
 
 	// MARK: - Functions
-	override func handleRefreshControl() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchDetails()
-		}
-	}
-
-	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.episodes)
-		emptyBackgroundView.configureLabels(title: "No Details", detail: "This episode doesn't have details yet. Please check back again later.")
-
-		collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfSections == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	/// Configures the navigation title view.
-	private func configureNavigationTitleView() {
-		self.navigationTitleView = UIView()
-
-		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
-			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
-		}
-
-		// Layout
-		self.navigationItem.titleView = self.navigationTitleView
-		self.navigationTitleView.addSubview(self.navigationTitleLabel)
-
-		NSLayoutConstraint.activate([
-			self.navigationTitleLabel.topAnchor.constraint(equalTo: self.navigationTitleView.topAnchor),
-			self.navigationTitleLabel.bottomAnchor.constraint(equalTo: self.navigationTitleView.bottomAnchor),
-			self.navigationTitleLabel.leadingAnchor.constraint(equalTo: self.navigationTitleView.leadingAnchor),
-			self.navigationTitleLabel.trailingAnchor.constraint(equalTo: self.navigationTitleView.trailingAnchor),
-			self.navigationTitleLabel.centerXAnchor.constraint(equalTo: self.navigationTitleView.centerXAnchor),
-			self.navigationTitleLabel.centerYAnchor.constraint(equalTo: self.navigationTitleView.centerYAnchor)
-		])
-	}
-
-	/// Configures the more bar button item.
-	private func configureMoreBarButtonItem() {
-		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
-		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
-	}
-
-	/// Configures the navigation items.
-	fileprivate func configureNavigationItems() {
-		self.configureNavigationTitleView()
-		self.configureMoreBarButtonItem()
-	}
-
-	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.episode?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
-	}
-
-	func fetchDetails() async {
+	override func fetchDetails() async {
 		guard let episodeIdentity = self.episodeIdentity else { return }
 
 		if self.episode == nil {
@@ -266,10 +147,28 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		}
 	}
 
-	/// Handles the episode watch status update notification.
-	///
-	/// - Parameters:
-	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
+	override func makeMoreMenu() -> UIMenu? {
+		return self.episode?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+	}
+
+	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+		guard let episode = self.episode else { return nil }
+		return try await episode.rate(using: rating, description: description)
+	}
+
+	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+		guard let episode = self.episode else { return nil }
+		return (.episode(episode), episode.attributes.givenRating, nil)
+	}
+
+	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
+		guard await WorkflowController.shared.isSignedIn() else { return }
+
+		button.isEnabled = false
+		await self.episode?.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
+		button.isEnabled = true
+	}
+
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
@@ -286,21 +185,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		}
 	}
 
-	/// Deletes the review with the received information.
-	///
-	/// - Parameter notification: An object containing information broadcast to registered observers.
-	@objc func deleteReview(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				// Start delete process
-				self.reviews.remove(at: indexPath.item)
-			}
-
-			self.episode.attributes.givenRating = nil
-			self.episode.attributes.givenReview = nil
-		}
+	override func didDeleteReview(at indexPath: IndexPath?) {
+		self.episode?.attributes.givenRating = nil
+		self.episode?.attributes.givenReview = nil
 	}
 
 	// MARK: - Segue
@@ -315,8 +202,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		case .episodesListSegue: return EpisodesListCollectionViewController()
 		case .castListSegue: return CastListCollectionViewController()
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
-		case .personDetailsSegue:
-			return PersonDetailsCollectionViewController()
+		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
@@ -326,11 +212,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 		switch identifier {
 		case .reviewsListSegue:
-			// Segue to reviews list
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .episode(self.episode)
 		case .showDetailsSegue:
-			// Segue to show details
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {
 				showDetailsCollectionViewController.showIdentity = showIdentity
@@ -338,16 +222,13 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 				showDetailsCollectionViewController.show = show
 			}
 		case .seasonsListSegue:
-			// Segue to seasons list
 			guard let seasonsListCollectionViewController = destination as? SeasonsListCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			seasonsListCollectionViewController.showIdentity = ShowIdentity(id: show.id)
 		case .episodeDetailsSegue:
-			// Segue to episode details
 			guard let episodeDetailsCollectionViewController = destination as? EpisodeDetailsCollectionViewController else { return }
 			episodeDetailsCollectionViewController.episode = sender as? Episode
 		case .episodesListSegue:
-			// Segue to episode details
 			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
 			guard let seasonIdentity = sender as? SeasonIdentity else { return }
 			episodesListCollectionViewController.seasonIdentity = seasonIdentity
@@ -390,7 +271,6 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 		await suggestedEpisode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		cell.watchStatusButton.isEnabled = true
 
-		// Update the nav bar buttons if the suggested episode is the same as the current episode.
 		if suggestedEpisode.id == self.episode.id {
 			self.configureNavBarButtons()
 		}
@@ -425,225 +305,9 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 	}
 }
 
-// MARK: - TitleHeaderCollectionReusableViewDelegate
-extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		guard let segueID = reusableView.segueID else { return }
-		self.show(segueID, sender: reusableView.indexPath)
-	}
-}
-
-// MARK: - UIScrollViewDelegate
-extension EpisodeDetailsCollectionViewController {
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let navigationBar = self.navigationController?.navigationBar
-		let firstCell = self.collectionView.cellForItem(at: [0, 0])
-		let offset = scrollView.contentOffset.y
-
-		// Fade in/out the navigation title label when the first cell is fully under the navigation bar
-		if let firstCellAttributes = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0)) {
-			let firstCellBottomY = firstCellAttributes.frame.maxY
-			let navBarBottomY = (navigationBar?.frame.maxY ?? 0) +
-				(navigationBar?.superview?.frame.origin.y ?? 0)
-
-			if offset + navBarBottomY >= firstCellBottomY {
-				if self.navigationTitleLabel.alpha == 0 {
-					UIView.animate(withDuration: 0.25) {
-						self.navigationTitleLabel.alpha = 1
-					}
-				}
-			} else {
-				if self.navigationTitleLabel.alpha == 1 {
-					UIView.animate(withDuration: 0.25) {
-						self.navigationTitleLabel.alpha = 0
-					}
-				}
-			}
-		}
-
-		// Stretch the first cell when pulled down
-		if let episodeHeaderCell = firstCell as? EpisodeDetailHeaderCollectionViewCell {
-			var newFrame = episodeHeaderCell.frame
-
-			if self.firstCellSize.width != episodeHeaderCell.frame.size.width {
-				self.firstCellSize = episodeHeaderCell.frame.size
-			}
-
-			if offset < 0 {
-				newFrame.origin.y = offset
-				newFrame.size.height = self.firstCellSize.height - offset
-				episodeHeaderCell.frame = newFrame
-			} else {
-				newFrame.origin.y = 0
-				newFrame.size.height = self.firstCellSize.height
-				episodeHeaderCell.frame = newFrame
-			}
-		}
-
-		// Adjust the section background decoration view height when scrolled to bottom
-		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout, let attributes = layout.layoutAttributesForElements(in: self.collectionView.bounds) {
-			for attribute in attributes where attribute.representedElementKind == SectionBackgroundDecorationView.elementKindSectionBackground {
-				var newFrame = attribute.frame
-
-				let section = attribute.indexPath.section
-				let numberOfItemsInSection = self.collectionView.numberOfItems(inSection: section)
-				let lastItemIndexPath = IndexPath(item: numberOfItemsInSection - 1, section: section)
-				let lastItemAttributes = self.collectionView.layoutAttributesForItem(at: lastItemIndexPath)
-
-				if let lastItemAttributes, offset + scrollView.frame.size.height > (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height) {
-					let difference = (offset + scrollView.frame.size.height) - (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height)
-					newFrame.size.height += difference
-					attribute.frame = newFrame
-				} else {
-					attribute.frame = newFrame
-				}
-			}
-		}
-	}
-}
-
-// MARK: - ReviewCollectionViewCellDelegate
-extension EpisodeDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
-		let badgeViewController = BadgeViewController()
-		badgeViewController.profileBadge = profileBadge
-		badgeViewController.popoverPresentationController?.sourceView = button
-		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
-
-		self.present(badgeViewController, animated: true, completion: nil)
-	}
-
-	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
-		guard
-			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
-		else { return }
-		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
-	}
-}
-
-// MARK: - TapToRateCollectionViewCellDelegate
-extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
-	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
-		Task { [weak self] in
-			guard let self = self else { return }
-
-			do throws(KKAPIError) {
-				let rating = try await self.episode.rate(using: rating, description: nil)
-				cell.configure(using: rating)
-
-				if rating != nil {
-					self.showRatingSuccessAlert()
-				}
-			} catch {
-				cell.configure(using: nil)
-				self.showRatingFailureAlert(message: error.message)
-			}
-		}
-	}
-}
-
-// MARK: - WriteAReviewCollectionViewCellDelegate
-extension EpisodeDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
-		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
-
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.delegate = self
-		reviewTextEditorViewController.router?.dataStore?.kind = .episode(self.episode)
-		reviewTextEditorViewController.router?.dataStore?.rating = self.episode.attributes.givenRating
-		reviewTextEditorViewController.router?.dataStore?.review = nil
-
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
-	}
-}
-
-// MARK: - ReviewTextEditorViewControllerDelegate
-extension EpisodeDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
-	func reviewTextEditorViewControllerDidSubmitReview() {
-		self.showRatingSuccessAlert()
-	}
-}
-
-// MARK: - MediaTransitionDelegate
-extension EpisodeDetailsCollectionViewController: MediaTransitionDelegate {
-	func imageViewForMedia(at index: Int) -> UIImageView? {
-		guard let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? BaseDetailHeaderCollectionViewCell else {
-			return nil
-		}
-		return index == 0 ? cell.posterImageView : cell.bannerImageView
-	}
-
-	func scrollThumbnailIntoView(for index: Int) {
-		// Scroll the collection view to make sure the cell at the given index is visible.
-		let indexPath = IndexPath(item: index, section: 0)
-		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-	}
-}
-
-// MARK: - MediaViewerCellViewDelegate
-extension EpisodeDetailsCollectionViewController: MediaViewerViewDelegate {
-	func mediaViewerViewDelegate(_ view: UIView, didTapImage imageView: UIImageView, at index: Int) {
-		let posterURL = URL(string: self.episode.attributes.poster?.url ?? "")
-		let bannerURL = URL(string: self.episode.attributes.banner?.url ?? "")
-		var items: [MediaItem] = []
-
-		if let posterURL = posterURL {
-			items.append(MediaItem(
-				url: posterURL,
-				type: .image,
-				title: self.episode.attributes.title,
-				description: nil,
-				author: nil,
-				provider: nil,
-				embedHTML: nil,
-				extraInfo: nil
-			))
-		}
-		if let bannerURL = bannerURL {
-			items.append(MediaItem(
-				url: bannerURL,
-				type: .image,
-				title: self.episode.attributes.title,
-				description: nil,
-				author: nil,
-				provider: nil,
-				embedHTML: nil,
-				extraInfo: nil
-			))
-		}
-
-		guard items.indices.contains(index) else { return }
-		let albumVC = MediaAlbumViewController(items: items, startIndex: index)
-		albumVC.transitionDelegateForThumbnail = self
-
-		self.present(albumVC, animated: true)
-	}
-}
-
-// MARK: - BaseDetailHeaderCollectionViewCellDelegate
-extension EpisodeDetailsCollectionViewController: BaseDetailHeaderCollectionViewCellDelegate {
-	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
-		guard await WorkflowController.shared.isSignedIn() else { return }
-
-		button.isEnabled = false
-		await self.episode?.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
-		button.isEnabled = true
-	}
-}
-
 extension EpisodeDetailsCollectionViewController {
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
-		/// Indicates a header section layout type.
 		case header = 0
 		case badge
 		case synopsis
@@ -695,16 +359,16 @@ extension EpisodeDetailsCollectionViewController {
 		}
 	}
 
-	/// List of available Item Kind types.
+	/// List of available item kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a `Episode` object.
+		/// An item kind that contains an `Episode` object.
 		case episode(_: Episode, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Review` object.
+		/// An item kind that contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `CastIdentity` object.
+		/// An item kind that contains a `CastIdentity` object.
 		case castIdentity(_: CastIdentity, id: UUID = UUID())
 
 		// MARK: - Functions
