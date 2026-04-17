@@ -13,6 +13,18 @@ import StoreKit
 import SwiftyJSON
 import UIKit
 
+private actor SongCache {
+	private var storage: [Int: MKSong] = [:]
+
+	func song(for appleMusicID: Int) -> MKSong? {
+		return self.storage[appleMusicID]
+	}
+
+	func store(_ song: MKSong, for appleMusicID: Int) {
+		self.storage[appleMusicID] = song
+	}
+}
+
 final class MusicManager: NSObject {
 	// MARK: - Properties
 	/// The shared instance of `MusicManager`.
@@ -39,7 +51,7 @@ final class MusicManager: NSObject {
 	private(set) var countryCode: String = "us"
 
 	/// Cache of fetched songs keyed by Apple Music ID.
-	private var songCache: [Int: MKSong] = [:]
+	private let songCache = SongCache()
 
 	/// The current playing song.
 	@Published private(set) var currentSong: MKSong?
@@ -92,7 +104,7 @@ final class MusicManager: NSObject {
 	///
 	/// - Returns: The fetched `MusicKit.Song` object.
 	func getSong(for appleMusicID: Int) async -> MKSong? {
-		if let cached = self.songCache[appleMusicID] {
+		if let cached = await self.songCache.song(for: appleMusicID) {
 			return cached
 		}
 
@@ -106,7 +118,7 @@ final class MusicManager: NSObject {
 		}
 
 		if let song = song {
-			self.songCache[appleMusicID] = song
+			await self.songCache.store(song, for: appleMusicID)
 		}
 
 		return song
