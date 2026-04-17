@@ -18,49 +18,52 @@
                 <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="OxI-dX-Wyq" customClass="PersonImageView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cO5-OA-WDj"/>
-                            <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cTu-HU-lcA"/>
-                        </constraints>
-                    </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hxu-5a-vaP">
-                        <rect key="frame" x="0.0" y="136" width="128" height="56"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pSV-Ou-ter">
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHh-oM-q4O" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="53" y="0.0" width="22.5" height="19"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9es-S6-YO9" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="44" y="19" width="40.5" height="19"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTw-TR-rNC" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="46" y="38" width="36.5" height="17.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="OxI-dX-Wyq" customClass="PersonImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cO5-OA-WDj"/>
+                                    <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cTu-HU-lcA"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hxu-5a-vaP">
+                                <rect key="frame" x="0.0" y="136" width="128" height="56"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHh-oM-q4O" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="53" y="0.0" width="22.5" height="19"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9es-S6-YO9" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="44" y="19" width="40.5" height="19"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTw-TR-rNC" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="46" y="38" width="36.5" height="17.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="leading" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="DPU-HT-SLD"/>
-                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="trailing" secondItem="5AR-HQ-YxU" secondAttribute="trailing" id="JRB-2P-eSR"/>
-                    <constraint firstItem="hxu-5a-vaP" firstAttribute="leading" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="MYu-LV-LNa"/>
-                    <constraint firstAttribute="bottom" secondItem="hxu-5a-vaP" secondAttribute="bottom" id="cSg-ob-Aux"/>
-                    <constraint firstAttribute="trailing" secondItem="hxu-5a-vaP" secondAttribute="trailing" id="cWo-pX-4Nq"/>
-                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="top" secondItem="5AR-HQ-YxU" secondAttribute="top" id="e4D-go-fbn"/>
-                    <constraint firstItem="hxu-5a-vaP" firstAttribute="top" secondItem="OxI-dX-Wyq" secondAttribute="bottom" constant="8" symbolic="YES" id="upz-9j-7RU"/>
+                    <constraint firstItem="pSV-Ou-ter" firstAttribute="top" secondItem="5AR-HQ-YxU" secondAttribute="top" id="p1-os-top"/>
+                    <constraint firstItem="pSV-Ou-ter" firstAttribute="leading" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="p2-os-lea"/>
+                    <constraint firstAttribute="trailing" secondItem="pSV-Ou-ter" secondAttribute="trailing" id="p3-os-tra"/>
+                    <constraint firstAttribute="bottom" secondItem="pSV-Ou-ter" secondAttribute="bottom" id="p4-os-bot"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="labelsStackView" destination="hxu-5a-vaP" id="pLs-oT-con"/>
                 <outlet property="personImageView" destination="OxI-dX-Wyq" id="p4T-zQ-tzU"/>
                 <outlet property="primaryLabel" destination="9es-S6-YO9" id="UNR-0i-stN"/>
                 <outlet property="rankLabel" destination="DHh-oM-q4O" id="f2K-xO-H8U"/>

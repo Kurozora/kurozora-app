@@ -6,12 +6,13 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 class PersonLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var personImageView: PersonImageView!
+	@IBOutlet weak var labelsStackView: UIStackView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var rankLabel: KLabel!
@@ -23,7 +24,10 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 	///    - person: The person object used to configure the cell.
 	///    - role: The role of the person in the series.
 	///    - rank: The rank of the person in a ranked list.
-	func configure(using person: Person?, role: StaffRole? = nil, rank: Int? = nil) {
+	///    - showsTitle: Whether to show the primary labe.
+	///    - showsSubtitle: Whether to show the secondary label.
+	///    - showsRank: Whether to show the rank label.
+	func configure(using person: Person?, role: StaffRole? = nil, rank: Int? = nil, showsTitle: Bool = true, showsSubtitle: Bool = true, showsRank: Bool = true) {
 		guard let person = person else {
 			self.showSkeleton()
 			return
@@ -32,6 +36,7 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure primary label
 		self.primaryLabel.text = person.attributes.fullName
+		self.primaryLabel.isHidden = !showsTitle
 
 		// Configure secondary label
 		self.secondaryLabel.text = role?.name
@@ -45,6 +50,9 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLabel.text = nil
 			self.rankLabel.isHidden = true
 		}
+
+		// Configure labels stack view visibility
+		self.labelsStackView.isHidden = self.primaryLabel.isHidden && self.secondaryLabel.isHidden && self.rankLabel.isHidden
 
 		// Configure image view
 		person.attributes.profileImage(imageView: self.personImageView)
