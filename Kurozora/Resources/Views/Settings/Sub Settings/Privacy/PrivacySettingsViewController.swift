@@ -18,8 +18,8 @@ class PrivacySettingsViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.privacy
-		self.headerTitle = Trans.privacy
-		self.headerDescription = Trans.privacyHeaderDescription
+		self.headerTitle = L10n.privacy
+		self.headerDescription = L10n.privacyHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -85,13 +85,13 @@ extension PrivacySettingsViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
-			cell.configure(title: Trans.openInSettingsApp)
+			cell.configure(title: L10n.openInSettingsApp)
 			return cell
 		case .privacy:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
-			cell.configure(title: Trans.privacy)
+			cell.configure(title: L10n.privacy)
 			return cell
 		}
 	}

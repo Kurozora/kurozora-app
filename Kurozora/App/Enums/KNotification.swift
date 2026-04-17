@@ -54,11 +54,11 @@ extension KNotification {
 		var stringValue: String {
 			switch self {
 			case .automatic:
-				return Trans.automatic
+				return L10n.automatic
 			case .byType:
-				return Trans.byType
+				return L10n.byType
 			case .off:
-				return Trans.off
+				return L10n.off
 			}
 		}
 	}

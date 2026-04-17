@@ -28,19 +28,19 @@ extension ShowDetail {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.rank
+				return L10n.rank
 			case .tvRating:
-				return Trans.tvRating
+				return L10n.tvRating
 			case .studio:
-				return Trans.studio
+				return L10n.studio
 			case .country:
-				return Trans.country
+				return L10n.country
 			case .language:
-				return Trans.language
+				return L10n.language
 			}
 		}
 
@@ -91,15 +91,15 @@ extension ShowDetail {
 				let ratingCount = show?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.chart // e.g. Thriller — show.attributes.popularity.genre
+				return L10n.chart // e.g. Thriller — show.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
-				return Trans.studio
+				return L10n.studio
 			case .country:
-				return Trans.country
+				return L10n.country
 			case .language:
 				let languages = show?.attributes.languages ?? []
 				switch languages.count - 1 {
@@ -225,15 +225,15 @@ extension ShowDetail {
 			case .themes:
 				return "Themes"
 			case .episodes:
-				return Trans.episodes
+				return L10n.episodes
 			case .duration:
-				return Trans.duration
+				return L10n.duration
 			case .broadcast:
 				return "Broadcast"
 			case .airDates:
-				return Trans.aired
+				return L10n.aired
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .countryOfOrigin:
 				return "Country of Origin"
 			case .languages:
@@ -404,7 +404,7 @@ extension ShowDetail {
 				return nil
 			case .episodes:
 				let seasonCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"
-				let seasonString = show.attributes.seasonCount > 1 ? Trans.seasons : Trans.season
+				let seasonString = show.attributes.seasonCount > 1 ? L10n.seasons : L10n.season
 				return "Across \(seasonCount) \(seasonString.lowercased())."
 			case .duration:
 				return "With a total of \(show.attributes.durationTotal)."

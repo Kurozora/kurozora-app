@@ -38,7 +38,7 @@ class DisplaySettingsTableViewController: SubSettingsViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleAutomaticDarkThemeDidChange), name: .KSAutomaticDarkThemeDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppAppearanceDidChange(_:)), name: .KSAppAppearanceDidChange, object: nil)
 
-		self.title = Trans.displayBlindness
+		self.title = L10n.displayBlindness
 
 		self.configureView()
 	}
@@ -191,7 +191,7 @@ extension DisplaySettingsTableViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.automatic, isOn: UserSettings.automaticDarkTheme, switchType: .automaticDarkTheme)
+			self.configureSwitchCell(cell, title: L10n.automatic, isOn: UserSettings.automaticDarkTheme, switchType: .automaticDarkTheme)
 			return cell
 		case .automaticDarkThemeOptions:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {

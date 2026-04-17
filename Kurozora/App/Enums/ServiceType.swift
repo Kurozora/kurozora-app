@@ -38,13 +38,13 @@ enum ServiceType {
 	var headlineStringValue: String {
 		switch self {
 		case .libraryDelete:
-			return Trans.libraryDeleteHeadline
+			return L10n.libraryDeleteHeadline
 		case .libraryImport:
-			return Trans.libraryImportHeadline
+			return L10n.libraryImportHeadline
 		case .redeem:
-			return Trans.redeemHeadline
+			return L10n.redeemHeadline
 		case .signInWithApple:
-			return Trans.signInWithAppleHeadline
+			return L10n.signInWithAppleHeadline
 		default:
 			return ""
 		}
@@ -54,13 +54,13 @@ enum ServiceType {
 	var subheadStringValue: String {
 		switch self {
 		case .libraryDelete:
-			return Trans.libraryDeleteSubheadline
+			return L10n.libraryDeleteSubheadline
 		case .libraryImport:
-			return Trans.libraryImportSubheadline
+			return L10n.libraryImportSubheadline
 		case .redeem:
-			return Trans.redeemSubheadline
+			return L10n.redeemSubheadline
 		case .signInWithApple:
-			return Trans.signInWithAppleSubheadline
+			return L10n.signInWithAppleSubheadline
 		default:
 			return ""
 		}
@@ -70,17 +70,17 @@ enum ServiceType {
 	var footerStringValue: String {
 		switch self {
 		case .libraryDelete:
-			return Trans.libraryDeleteFooter
+			return L10n.libraryDeleteFooter
 		case .libraryImport:
-			return Trans.libraryImportFooter
+			return L10n.libraryImportFooter
 		case .redeem:
-			return Trans.redeemFooter
+			return L10n.redeemFooter
 		case .signInWithApple:
-			return Trans.signInWithAppleFooter
+			return L10n.signInWithAppleFooter
 		case .subscription:
-			return Trans.subscriptionFooter
+			return L10n.subscriptionFooter
 		case .tipJar:
-			return Trans.tipJarFooter
+			return L10n.tipJarFooter
 		default:
 			return ""
 		}
@@ -90,7 +90,7 @@ enum ServiceType {
 	var attributedFooterStringValue: ThemeAttributedStringPicker {
 		switch self {
 		case .visitPrivacyPolicy:
-			return Trans.visitPrivacyPolicy
+			return L10n.visitPrivacyPolicy
 		default:
 			return ThemeAttributedStringPicker([])
 		}

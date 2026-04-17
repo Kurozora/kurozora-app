@@ -72,7 +72,7 @@ extension UIAlertController {
 	///    - actionSheetAlertController: The instantiated alert controller instance.
 	///
 	/// - Returns: an action sheet with the default style and a default action button.
-	static func actionSheet(title: String?, message: String?, defaultActionButtonTitle: String = Trans.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: (_ actionSheetAlertController: UIAlertController) -> Void) -> UIAlertController {
+	static func actionSheet(title: String?, message: String?, defaultActionButtonTitle: String = L10n.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: (_ actionSheetAlertController: UIAlertController) -> Void) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
 		alertController.view.tintColor = .label
 
@@ -97,7 +97,7 @@ extension UIAlertController {
 	///    - actionSheetAlertController: The instantiated alert controller instance.
 	///
 	/// - Returns: an alert with the default style and a default action button.
-	static func alert(title: String?, message: String?, defaultActionButtonTitle: String = Trans.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: (_ actionSheetAlertController: UIAlertController) -> Void) -> UIAlertController {
+	static func alert(title: String?, message: String?, defaultActionButtonTitle: String = L10n.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: (_ actionSheetAlertController: UIAlertController) -> Void) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
 		// Add user specified actions

@@ -47,7 +47,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.myReminders
+		self.title = L10n.myReminders
 
 		// Observe NotificationCenter for an update.
 		NotificationCenter.default.addObserver(self, selector: #selector(self.fetchRemindersList), name: .KReminderModelsListDidChange, object: nil)
@@ -64,7 +64,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh reminders list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReminders)
 		#endif
 	}
 
@@ -118,7 +118,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing reminders list...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingReminders)
 			#endif
 		}
 
@@ -160,7 +160,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh reminders list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReminders)
 		#endif
 
 		self.fetchInProgress = false

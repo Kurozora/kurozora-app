@@ -23,7 +23,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh themes list!")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshThemesList)
 			#endif
 			#endif
 		}
@@ -58,13 +58,13 @@ class ThemesCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.browseThemes
+		self.title = L10n.browseThemes
 
 		#if DEBUG
 		// Setup refresh control
 		self._prefersRefreshControlDisabled = false
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh themes list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshThemesList)
 		#endif
 		#else
 		self._prefersRefreshControlDisabled = true
@@ -107,7 +107,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing themes list...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingThemesList)
 			#endif
 			#endif
 		}

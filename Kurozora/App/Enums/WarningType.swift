@@ -11,13 +11,13 @@ import UIKit
 /// Set of available warning types.
 enum WarningType {
 	// MARK: - Cases
-	/// Indiates the app requires an update to be used.
+	/// Indicates the app requires an update to be used.
 	case forceUpdate
 
-	/// Indiates the API is in maintenance mode.
+	/// Indicates the API is in maintenance mode.
 	case maintenance
 
-	/// Indiates the app cannot connect to the internet.
+	/// Indicates the app cannot connect to the internet.
 	case noSignal
 
 	// MARK: - Properties
@@ -25,11 +25,11 @@ enum WarningType {
 	var title: String {
 		switch self {
 		case .forceUpdate:
-			return Trans.forceUpdateTitle
+			return L10n.forceUpdateTitle
 		case .maintenance:
-			return Trans.maintenanceModeTitle
+			return L10n.maintenanceModeTitle
 		case .noSignal:
-			return Trans.noSignalTitle
+			return L10n.noSignalTitle
 		}
 	}
 
@@ -37,11 +37,11 @@ enum WarningType {
 	var message: String {
 		switch self {
 		case .forceUpdate:
-			return Trans.forceUpdateMessage
+			return L10n.forceUpdateMessage
 		case .maintenance:
-			return Trans.maintenanceModeMessage
+			return L10n.maintenanceModeMessage
 		case .noSignal:
-			return Trans.noSignalMessage
+			return L10n.noSignalMessage
 		}
 	}
 
@@ -49,11 +49,11 @@ enum WarningType {
 	var buttonTitle: String {
 		switch self {
 		case .forceUpdate:
-			return Trans.update
+			return L10n.update
 		case .maintenance:
-			return Trans.openTwitter
+			return L10n.openTwitter
 		case .noSignal:
-			return Trans.reconnect
+			return L10n.reconnect
 		}
 	}
 

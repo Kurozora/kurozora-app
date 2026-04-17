@@ -119,7 +119,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshProfileDetails)
 		#endif
 
 		if self.userIdentity == nil {
@@ -211,14 +211,14 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Configures the more bar button item.
 	private func configureMoreBarButtonItem() {
-		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.moreBarButtonItem = UIBarButtonItem(title: L10n.more, image: UIImage(systemName: "ellipsis.circle"))
 		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
 	}
 
 	/// Configures the post message bar button item.
 	private func configurePostMessageBarButtonItem() {
 		self.postMessageButton = UIBarButtonItem(
-			title: Trans.postMessage,
+			title: L10n.postMessage,
 			image: UIImage(systemName: "pencil.circle"),
 			primaryAction: UIAction { [weak self] _ in
 				guard let self = self else { return }
@@ -276,7 +276,7 @@ class ProfileTableViewController: KTableViewController {
 		guard let userIdentity = self.userIdentity else { return }
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingProfileDetails)
 		#endif
 
 		do {
@@ -303,7 +303,7 @@ class ProfileTableViewController: KTableViewController {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshProfileDetails)
 		#endif
 	}
 

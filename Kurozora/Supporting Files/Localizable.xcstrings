@@ -10,9 +10,6 @@
     "Account" : {
       "comment" : "The string for the word 'account'."
     },
-    "Account created successfully! Please check your email for confirmation." : {
-      "comment" : "The subheadline string for sign up alert."
-    },
     "Achievements" : {
       "comment" : "The string for the word 'achievements'."
     },
@@ -73,9 +70,6 @@
     "Can’t delete library 😔" : {
       "comment" : "The string for the sentence 'Can’t delete library 😔'."
     },
-    "Can't Sign Up 😔" : {
-      "comment" : "The headline string for sign up alert."
-    },
     "Cancel" : {
       "comment" : "The string for the word 'cancel'."
     },
@@ -94,14 +88,26 @@
     "Chart" : {
       "comment" : "The string for the word 'chart'."
     },
-    "Click to Rate:" : {
-      "comment" : "The string for the word 'click to rate'."
+    "Choose Photo" : {
+
     },
     "Coming Soon" : {
       "comment" : "The string for the word 'coming soon'."
     },
     "Continue" : {
       "comment" : "The string for the word 'Continue'."
+    },
+    "Copy" : {
+      "comment" : "The string for the word 'copy'."
+    },
+    "Copy Link" : {
+      "comment" : "The string for the word 'Copy Link'."
+    },
+    "Copy Review" : {
+      "comment" : "The string for the word 'Copy Review'."
+    },
+    "Copy Title" : {
+      "comment" : "The string for the word 'Copy Title'."
     },
     "Copyright" : {
       "comment" : "The string for the word 'copyright'."
@@ -136,14 +142,23 @@
     "Download" : {
       "comment" : "The string for the word 'download'."
     },
+    "Drafts" : {
+      "comment" : "The string for the word 'drafts'."
+    },
     "Duration" : {
       "comment" : "The string for the word 'duration'."
+    },
+    "Emoji" : {
+
+    },
+    "Empty draft" : {
+      "comment" : "The string for the 'empty draft' placeholder."
     },
     "Episodes" : {
       "comment" : "The string for the word 'episodes'."
     },
-    "Errr..." : {
-      "comment" : "The headline string for resetting password alert."
+    "Error" : {
+      "comment" : "The string for the word 'Error'."
     },
     "Expected" : {
       "comment" : "The string for the word 'expected'."
@@ -197,11 +212,17 @@
     "Founded" : {
       "comment" : "The string for the word 'founded'."
     },
+    "Founded on %@" : {
+      "comment" : "The string for the word 'Founded on [date]'."
+    },
     "Games" : {
       "comment" : "The string for the word 'games'."
     },
     "General" : {
       "comment" : "The string for the word 'general'."
+    },
+    "Guest" : {
+      "comment" : "The string for the word 'Guest'."
     },
     "Header" : {
       "comment" : "The string for the word 'header'."
@@ -221,8 +242,11 @@
     "Icon" : {
       "comment" : "The string for the word 'icon'."
     },
-    "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly." : {
-      "comment" : "The subheadline string for resetting password alert."
+    "Image Playground" : {
+
+    },
+    "Images" : {
+      "comment" : "The string for the word 'images'."
     },
     "Information" : {
       "comment" : "The string for the word 'information'."
@@ -230,14 +254,11 @@
     "Just to confirm, you wanted ‘%@’?" : {
 
     },
-    "Kurozora" : {
+    "Kaomoji" : {
 
     },
-    "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter." : {
-      "comment" : "The string for the maintenance warning message."
-    },
-    "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store." : {
-      "comment" : "The string for the force update warning message."
+    "Kurozora" : {
+
     },
     "Kurozora’s Screens" : {
 
@@ -259,6 +280,9 @@
     },
     "Lyrics" : {
       "comment" : "The string for the word 'Lyrics'."
+    },
+    "Manage" : {
+
     },
     "Mark all" : {
       "comment" : "The string for the phrase 'Mark all'."
@@ -296,6 +320,9 @@
     "Milestones" : {
       "comment" : "The string for the word 'Milestones'."
     },
+    "Monogram" : {
+
+    },
     "More" : {
       "comment" : "The string for the word 'more'."
     },
@@ -311,14 +338,14 @@
     "My Reminders" : {
       "comment" : "The string for the word 'My Reminders'"
     },
-    "Network Unavailable" : {
-      "comment" : "The string for the no signal warning title."
-    },
     "New" : {
       "comment" : "The string for the word 'new'."
     },
     "Next" : {
       "comment" : "The string for the word 'next'."
+    },
+    "No Drafts" : {
+      "comment" : "The string for the 'no drafts' empty state title."
     },
     "Notifications" : {
       "comment" : "The string for the word 'notifications'."
@@ -350,17 +377,17 @@
     "Password" : {
       "comment" : "The string for the word 'password'."
     },
-    "Pauze" : {
-      "comment" : "The string for the word 'pauze'."
+    "Pause" : {
+      "comment" : "The string for the word 'Pause'."
     },
     "People" : {
       "comment" : "The string for the word 'people'."
     },
-    "Play" : {
-      "comment" : "The string for the word 'play'."
+    "Photos" : {
+
     },
-    "Please type a valid Kurozora Account 😣" : {
-      "comment" : "The subheadline string for resetting password alert."
+    "Play" : {
+      "comment" : "The string for the word 'Play'."
     },
     "Premium" : {
       "comment" : "The string for the word 'Premium'."
@@ -388,12 +415,6 @@
     },
     "Rating" : {
       "comment" : "The string for the word 'rating'."
-    },
-    "Ratings" : {
-      "comment" : "The string for the word 'ratings'."
-    },
-    "Ratings & Reviews" : {
-      "comment" : "The string for the word 'ratings & reviews'."
     },
     "Re:CAP" : {
       "comment" : "The string for the word 'Re:CAP'."
@@ -425,20 +446,29 @@
     "Remove from Library" : {
       "comment" : "The string for the word 'remove from library'."
     },
+    "Remove image" : {
+
+    },
     "Reset" : {
       "comment" : "The string for the word 'reset'."
     },
     "Reviews" : {
       "comment" : "The string for the word 'reviews'."
     },
+    "Rich Links" : {
+      "comment" : "The string for the phrase 'rich links'."
+    },
+    "Save Draft" : {
+      "comment" : "The string for the phrase 'save draft'."
+    },
     "Schedule" : {
       "comment" : "The string for the word 'schedule'."
     },
-    "Scheduled Maintenance" : {
-      "comment" : "The string for the maintenance warning title."
-    },
     "Search" : {
       "comment" : "The string for the word 'search'."
+    },
+    "Search characters" : {
+
     },
     "Search for %@ in %@" : {
       "localizations" : {
@@ -525,9 +555,6 @@
     "Subscribe" : {
       "comment" : "The string for the word 'subscribe'."
     },
-    "Success!" : {
-      "comment" : "The headline string for resetting password alert."
-    },
     "Successor" : {
       "comment" : "The string for the word 'successor'."
     },
@@ -536,9 +563,6 @@
     },
     "Synopsis" : {
       "comment" : "The string for the word 'synopsis'."
-    },
-    "Tap to Rate:" : {
-      "comment" : "The string for the word 'tap to rate'."
     },
     "TBA" : {
       "comment" : "The string for the word 'tba'."
@@ -567,9 +591,6 @@
     },
     "TV Rating" : {
       "comment" : "The string for the word 'TV rating'."
-    },
-    "Update Available" : {
-      "comment" : "The string for the force update warning title."
     },
     "Update Library Status" : {
       "comment" : "The string for the word 'update library status'."
@@ -610,14 +631,11 @@
     "What’s New in Kurozora" : {
       "comment" : "The string for the word 'What’s New'."
     },
-    "Write a Review" : {
-      "comment" : "The string for the word 'write a review'."
-    },
-    "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora." : {
-      "comment" : "The string for the no signal warning message."
-    },
     "Your Library" : {
       "comment" : "The string for the word 'your library'."
+    },
+    "Your saved drafts will appear here." : {
+      "comment" : "The string for the 'no drafts' empty state detail."
     }
   },
   "version" : "1.1"

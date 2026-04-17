@@ -61,11 +61,11 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		super.viewDidLoad()
 
 		if self.viewedUser == User.current {
-			self.title = Trans.myFavorites
+			self.title = L10n.myFavorites
 		} else if let user = self.viewedUser {
-			self.title = "\(user.attributes.username)’s \(Trans.favorites)"
+			self.title = "\(user.attributes.username)’s \(L10n.favorites)"
 		} else {
-			self.title = Trans.favorites
+			self.title = L10n.favorites
 		}
 
 		// Observe NotificationCenter for an update.
@@ -83,7 +83,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshFavorites)
 		#endif
 	}
 
@@ -206,7 +206,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing favorites list...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingFavorites)
 			#endif
 		}
 
@@ -252,7 +252,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshFavorites)
 		#endif
 
 		self.fetchInProgress = false

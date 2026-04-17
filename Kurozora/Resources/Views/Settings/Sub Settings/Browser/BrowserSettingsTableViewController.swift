@@ -13,8 +13,8 @@ class BrowserSettingsTableViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.browser
-		self.headerTitle = Trans.browser
-		self.headerDescription = Trans.browserHeaderDescription
+		self.headerTitle = L10n.browser
+		self.headerDescription = L10n.browserHeaderDescription
 	}
 
 	@available(*, unavailable)

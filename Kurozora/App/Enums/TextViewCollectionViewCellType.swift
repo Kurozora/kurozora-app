@@ -23,11 +23,11 @@ enum TextViewCollectionViewCellType {
 	var stringValue: String {
 		switch self {
 		case .synopsis:
-			return Trans.synopsis
+			return L10n.synopsis
 		case .about:
-			return Trans.about
+			return L10n.about
 		case .lyrics:
-			return Trans.lyrics
+			return L10n.lyrics
 		}
 	}
 

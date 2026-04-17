@@ -33,7 +33,7 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.reviews
+		self.title = L10n.reviews
 
 		self.configureNavigationItems()
 		self.configureDataSource()

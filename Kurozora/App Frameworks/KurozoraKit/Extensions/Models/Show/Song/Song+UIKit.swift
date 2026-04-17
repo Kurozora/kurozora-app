@@ -87,7 +87,7 @@ extension KKSong {
 		var viewOnElements: [UIMenuElement] = []
 		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
-			let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: .Symbols.musicSmileCircleFill) { _ in
+			let amazonMusicAction = UIAction(title: L10n.viewOnAmazonMusic, image: .Symbols.musicSmileCircleFill) { _ in
 				UIApplication.shared.kOpen(amazonMusicLink)
 			}
 			viewOnElements.append(amazonMusicAction)
@@ -96,7 +96,7 @@ extension KKSong {
 		// Create "View on Apple Music" element
 		if let song = userInfo?["song"] as? MKSong,
 		   let appleMusicLink = song.song.url {
-			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
+			let amAction = UIAction(title: L10n.viewOnAppleMusic, image: .Symbols.musicNoteCircleFill) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}
 			viewOnElements.append(amAction)
@@ -104,7 +104,7 @@ extension KKSong {
 
 		// Create "View on Deezer" element
 		if let deezerID = self.attributes.deezerID, let deezerLink = URL.deezerURL(deezerID: deezerID) {
-			let deezerAction = UIAction(title: Trans.viewOnDeezer, image: .Symbols.musicWaveformCircleFill) { _ in
+			let deezerAction = UIAction(title: L10n.viewOnDeezer, image: .Symbols.musicWaveformCircleFill) { _ in
 				UIApplication.shared.kOpen(deezerLink)
 			}
 			viewOnElements.append(deezerAction)
@@ -112,7 +112,7 @@ extension KKSong {
 
 		// Create "View on Spotify" element
 		if let spotifyID = self.attributes.spotifyID, let spotifyLink = URL.spotifyURL(spotifyID: spotifyID) {
-			let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: .Symbols.wave3UpCircleFill) { _ in
+			let spotifyAction = UIAction(title: L10n.viewOnSpotify, image: .Symbols.wave3UpCircleFill) { _ in
 				UIApplication.shared.kOpen(spotifyLink)
 			}
 			viewOnElements.append(spotifyAction)
@@ -120,7 +120,7 @@ extension KKSong {
 
 		// Create "View on YouTube Music" element
 		if let youtubeID = self.attributes.youtubeID, let youtubeLink = URL.youtubeURL(youtubeID: youtubeID) {
-			let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: .Symbols.playCircleCircleFill) { _ in
+			let spotifyAction = UIAction(title: L10n.viewOnYouTube, image: .Symbols.playCircleCircleFill) { _ in
 				UIApplication.shared.kOpen(youtubeLink)
 			}
 			viewOnElements.append(spotifyAction)
@@ -131,18 +131,18 @@ extension KKSong {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: Trans.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: Trans.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.webpageURLString
 		}
-		let copyMenu = UIMenu(title: Trans.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
+		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -241,7 +241,7 @@ extension KKSong {
 		var actions: [UIAlertAction] = []
 
 		// Add "Open Apple Music Library" action
-		actions.append(UIAlertAction(title: "Open Apple Music Library", style: .default, handler: { _ in
+		actions.append(UIAlertAction(title: L10n.openAppleMusicLibrary, style: .default, handler: { _ in
 			guard let url = URL(string: "music://music.apple.com/library") else { return }
 			UIApplication.shared.kOpen(nil, deepLink: url)
 		}))

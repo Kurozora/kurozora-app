@@ -79,14 +79,14 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		do {
 			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage)
 
-			self.presentAlertController(title: Trans.Onboarding.signUpAlertHeadline, message: Trans.Onboarding.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
+			self.presentAlertController(title: L10n.Onboarding.signUpAlertHeadline, message: L10n.Onboarding.signUpAlertSubheadline, defaultActionButtonTitle: L10n.done) { [weak self] _ in
 				guard let self = self else { return }
 				self.dismiss(animated: true) {
 					self.onSignUp?()
 				}
 			}
 		} catch let error as KKAPIError {
-			self.presentAlertController(title: Trans.Onboarding.signUpErrorAlertHeadline, message: error.message)
+			self.presentAlertController(title: L10n.Onboarding.signUpErrorAlertHeadline, message: error.message)
 			print(error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -141,7 +141,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					await self.getProfileDetails()
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: Trans.done) { [weak self] _ in
+					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: L10n.done) { [weak self] _ in
 						guard let self = self else { return }
 						self.dismiss(animated: true) {
 							self.onSignUp?()
@@ -199,14 +199,14 @@ private extension SignUpTableViewController {
 
 	func configureTitleLabel() {
 		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.titleLabel.text = Trans.Onboarding.signUpHeadline
+		self.titleLabel.text = L10n.Onboarding.signUpHeadline
 		self.titleLabel.font = .preferredFont(forTextStyle: .title1)
 		self.titleLabel.textAlignment = .center
 	}
 
 	func configureSubtitleLabel() {
 		self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.subtitleLabel.text = Trans.Onboarding.signUpSubheadline
+		self.subtitleLabel.text = L10n.Onboarding.signUpSubheadline
 		self.subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
 		self.subtitleLabel.textAlignment = .center
 		self.subtitleLabel.numberOfLines = 0

@@ -68,11 +68,11 @@ extension PersonDetail {
 		var stringValue: String {
 			switch self {
 			case .aliases:
-				return Trans.aliases
+				return L10n.aliases
 			case .age:
-				return Trans.age
+				return L10n.age
 			case .websites:
-				return Trans.websites
+				return L10n.websites
 			}
 		}
 

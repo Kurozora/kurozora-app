@@ -48,7 +48,7 @@ class SessionLockupCell: KTableViewCell {
 		self.configureCell(using: platform)
 
 		// Configure other attributes
-		self.secondaryLabel.text = "\(accessToken.attributes.ipAddress) on \(Trans.thisDevice)"
+		self.secondaryLabel.text = "\(accessToken.attributes.ipAddress) on \(L10n.thisDevice)"
 	}
 
 	private func configureCell(using platform: Platform?) {

@@ -73,19 +73,19 @@ enum TabBarItem: Int, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .home:
-			return Trans.explore
+			return L10n.explore
 		case .schedule:
-			return Trans.schedule
+			return L10n.schedule
 		case .library:
-			return Trans.library
+			return L10n.library
 		case .feed:
-			return Trans.feed
+			return L10n.feed
 		case .notifications:
-			return Trans.notifications
+			return L10n.notifications
 		case .search:
-			return Trans.search
+			return L10n.search
 		case .settings:
-			return Trans.settings
+			return L10n.settings
 		}
 	}
 

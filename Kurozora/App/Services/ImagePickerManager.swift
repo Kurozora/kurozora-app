@@ -66,22 +66,22 @@ final class ImagePickerManager: NSObject {
 		let subtitle = self.dataSource?.imagePickerManagerSubtitle()
 		let actionSheetAlertController = UIAlertController.actionSheet(title: title, message: subtitle) { [weak self] actionSheetAlertController in
 			guard let self = self else { return }
-			actionSheetAlertController.addAction(UIAlertAction(title: "Take Photo 📷", style: .default, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.takePhoto, style: .default, handler: { _ in
 				self.openCamera()
 			}))
 
-			actionSheetAlertController.addAction(UIAlertAction(title: "Photo Library 🏛", style: .default, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.photoLibrary, style: .default, handler: { _ in
 				self.openPhotoLibrary()
 			}))
 
 			if #available(iOS 18.1, macOS 15.1, visionOS 2.4, *) {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Image Playground ✨", style: .default, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: L10n.imagePlayground, style: .default, handler: { _ in
 					self.openImagePlayground()
 				}))
 			}
 
 			if showingRemoveAction {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: L10n.remove, style: .destructive, handler: { _ in
 					self.delegate?.imagePickerManagerDidRemovePickedImage()
 				}))
 			}

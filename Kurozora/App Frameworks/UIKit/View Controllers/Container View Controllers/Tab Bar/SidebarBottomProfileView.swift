@@ -97,7 +97,7 @@ final class KSidebarBottomProfileView: UIControl {
 				self.nameLabel.text = user.attributes.username
 			} else {
 				self.profileImageView.image = .Placeholders.userProfile
-				self.nameLabel.text = Trans.guest
+				self.nameLabel.text = L10n.guest
 			}
 
 			self.setNeedsLayout()
@@ -114,7 +114,7 @@ final class KSidebarBottomProfileView: UIControl {
 				user.attributes.profileImage(imageView: self.profileImageView)
 			}
 
-			self.nameLabel.text = User.current?.attributes.username ?? Trans.guest
+			self.nameLabel.text = User.current?.attributes.username ?? L10n.guest
 			self.setNeedsLayout()
 		}
 	}

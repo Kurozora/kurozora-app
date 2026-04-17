@@ -161,7 +161,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? Trans.explore
+		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? L10n.explore
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -253,13 +253,13 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		let title: String
 
 		if User.current?.attributes.isSubscribed ?? false {
-			title = Trans.viewSubscription
+			title = L10n.viewSubscription
 		} else {
-			title = Trans.becomeASubscriber
+			title = L10n.becomeASubscriber
 		}
 
 		self.quickActions = [
-			QuickAction(title: Trans.redeem, segueID: SegueIdentifiers.redeemSegue),
+			QuickAction(title: L10n.redeem, segueID: SegueIdentifiers.redeemSegue),
 			QuickAction(title: title, segueID: SegueIdentifiers.subscriptionSegue),
 		]
 	}
@@ -267,7 +267,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
 		if WhatsNew.shouldPresent(with: .majorVersion) {
-			let whatsNew = WhatsNewViewController(titleText: Trans.whatsNew, buttonText: Trans.continue, items: KWhatsNew.current)
+			let whatsNew = WhatsNewViewController(titleText: L10n.whatsNew, buttonText: L10n.continue, items: KWhatsNew.current)
 			self.present(whatsNew, animated: true)
 		}
 	}
@@ -588,7 +588,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		})
 
 		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
@@ -607,7 +607,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						// Update entry in library
 						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
+						button.setTitle(L10n.add.uppercased(), for: .normal)
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

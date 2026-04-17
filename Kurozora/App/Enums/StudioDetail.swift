@@ -25,13 +25,13 @@ extension StudioDetail {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .rank:
-				return Trans.rank
+				return L10n.rank
 			case .tvRating:
-				return Trans.tvRating
+				return L10n.tvRating
 			case .successor:
-				return Trans.successor
+				return L10n.successor
 			}
 		}
 
@@ -76,11 +76,11 @@ extension StudioDetail {
 				let ratingCount = studio?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .rank:
-				return Trans.chart
+				return L10n.chart
 			case .tvRating:
 				return "Rated"
 			case .successor:
-				return Trans.successor
+				return L10n.successor
 			}
 		}
 
@@ -181,19 +181,19 @@ extension StudioDetail {
 		var stringValue: String {
 			switch self {
 			case .aliases:
-				return Trans.aliases
+				return L10n.aliases
 			case .founded:
-				return Trans.founded
+				return L10n.founded
 			case .defunct:
-				return Trans.defunct
+				return L10n.defunct
 			case .headquarters:
-				return Trans.headquarters
+				return L10n.headquarters
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .socials:
-				return Trans.socials
+				return L10n.socials
 			case .websites:
-				return Trans.websites
+				return L10n.websites
 			}
 		}
 

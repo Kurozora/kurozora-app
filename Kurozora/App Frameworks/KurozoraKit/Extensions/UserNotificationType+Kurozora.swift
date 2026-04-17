@@ -15,17 +15,17 @@ extension UserNotificationType {
 	var stringValue: String {
 		switch self {
 		case .session:
-			return Trans.newSession
+			return L10n.newSession
 		case .follower:
-			return Trans.follower
+			return L10n.follower
 		case .feedMessageReply, .feedMessageReShare:
-			return Trans.message
+			return L10n.message
 		case .libraryImportFinished:
-			return Trans.libraryImport
+			return L10n.libraryImport
 		case .subscriptionStatus:
-			return Trans.subscriptionUpdate
+			return L10n.subscriptionUpdate
 		case .other:
-			return Trans.other
+			return L10n.other
 		}
 	}
 

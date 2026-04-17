@@ -26,7 +26,7 @@ class AuthenticationSettingsViewController: SubSettingsViewController {
 		super.init(style: .insetGrouped)
 		self.headerImage = UIDevice.supportedBiometric.imageValue
 		self.headerTitle = UIDevice.supportedBiometric.localizedSettingsName
-		self.headerDescription = Trans.authenticationHeaderDescription
+		self.headerDescription = L10n.authenticationHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -160,7 +160,7 @@ extension AuthenticationSettingsViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
-			cell.configure(title: Trans.requireAuthentication, detail: UserSettings.authenticationInterval.stringValue)
+			cell.configure(title: L10n.requireAuthentication, detail: UserSettings.authenticationInterval.stringValue)
 			return cell
 		}
 	}

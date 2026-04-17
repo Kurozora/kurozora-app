@@ -256,19 +256,19 @@ extension SongDetailsCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return Trans.header
+				return L10n.header
 			case .lyrics:
-				return Trans.lyrics
+				return L10n.lyrics
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
 			case .shows:
-				return Trans.asHeardOn
+				return L10n.asHeardOn
 			case .sosumi:
-				return Trans.copyright
+				return L10n.copyright
 			}
 		}
 

@@ -29,13 +29,13 @@ extension KStoreObserver {
 		var message: String {
 			switch self {
 			case .setProductIDs:
-				return Trans.productIDsNotSet
+				return L10n.productIDsNotSet
 			case .disabled:
-				return Trans.iapDisabled
+				return L10n.iapDisabled
 			case .restoreFailed:
-				return Trans.iapRestoreFailed
+				return L10n.iapRestoreFailed
 			case .restoreSucceeded:
-				return Trans.iapRestoreSucceeded
+				return L10n.iapRestoreSucceeded
 			}
 		}
 	}

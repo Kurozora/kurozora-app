@@ -45,10 +45,10 @@ enum HomeScreenShortcutItem: String, CaseIterable {
 	/// The title for the shortcut item.
 	var title: String {
 		switch self {
-		case .search: return Trans.search
-		case .library: return Trans.library
-		case .profile: return Trans.profile
-		case .notifications: return Trans.notifications
+		case .search: return L10n.search
+		case .library: return L10n.library
+		case .profile: return L10n.profile
+		case .notifications: return L10n.notifications
 		}
 	}
 

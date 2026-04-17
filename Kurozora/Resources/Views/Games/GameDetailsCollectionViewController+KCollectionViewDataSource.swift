@@ -146,7 +146,7 @@ extension GameDetailsCollectionViewController {
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
 			let gameDetailSection = self.snapshot.sectionIdentifiers[indexPath.section]
-			let sectionTitle = gameDetailSection != .moreByStudio ? gameDetailSection.stringValue : "\(gameDetailSection.stringValue) \(self.game.attributes.studio ?? Trans.studio)"
+			let sectionTitle = gameDetailSection != .moreByStudio ? gameDetailSection.stringValue : "\(gameDetailSection.stringValue) \(self.game.attributes.studio ?? L10n.studio)"
 
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			titleHeaderCollectionReusableView.delegate = self

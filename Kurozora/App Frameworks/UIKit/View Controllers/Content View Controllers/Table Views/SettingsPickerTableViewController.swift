@@ -88,7 +88,7 @@ class SettingsPickerTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	private func configureSearchController() {
-		self.searchController.searchBar.placeholder = Trans.search
+		self.searchController.searchBar.placeholder = L10n.search
 		self.searchController.searchResultsUpdater = self
 		self.searchController.obscuresBackgroundDuringPresentation = false
 

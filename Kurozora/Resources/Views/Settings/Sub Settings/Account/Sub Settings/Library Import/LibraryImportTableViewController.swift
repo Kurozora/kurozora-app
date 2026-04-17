@@ -132,14 +132,14 @@ extension LibraryImportTableViewController {
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: SelectTableViewCell.self, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(SelectTableViewCell.reuseID)")
 				}
-				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? Trans.selectService) ▾", buttonTag: indexPath.row)
+				selectTableViewCell.configureCell(using: "\(self.selectedImportService?.stringValue ?? L10n.selectService) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			case .behavior:
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: SelectTableViewCell.self, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(SelectTableViewCell.reuseID)")
 				}
-				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? Trans.selectBehavior) ▾", buttonTag: indexPath.row)
+				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? L10n.selectBehavior) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			default:
@@ -147,7 +147,7 @@ extension LibraryImportTableViewController {
 					fatalError("Cannot dequeue reusable cell with identifier \(ActionButtonTableViewCell.reuseID)")
 				}
 				actionButtonTableViewCell.delegate = self
-				actionButtonTableViewCell.actionButton.setTitle(Trans.selectFile, for: .normal)
+				actionButtonTableViewCell.actionButton.setTitle(L10n.selectFile, for: .normal)
 				actionButtonTableViewCell.actionTextField.tag = indexPath.row
 				actionButtonTableViewCell.actionTextField.delegate = self
 				actionButtonTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -156,7 +156,7 @@ extension LibraryImportTableViewController {
 				if let selectedImportService = self.selectedImportService {
 					actionButtonTableViewCell.actionTextField.placeholder = "\(selectedImportService.stringValue).xml"
 				} else {
-					actionButtonTableViewCell.actionTextField.placeholder = Trans.libraryXML
+					actionButtonTableViewCell.actionTextField.placeholder = L10n.libraryXML
 				}
 
 				if self.selectedFileURL != nil {

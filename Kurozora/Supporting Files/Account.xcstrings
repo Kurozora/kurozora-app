@@ -1,0 +1,461 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%d was successfully redeemed 🤩" : {
+      "comment" : "The subheadline string for the redeem success pop-up."
+    },
+    "1 Minute" : {
+      "comment" : "The string for authenticating after 1 minute."
+    },
+    "2 Minutes" : {
+      "comment" : "The string for authenticating after 2 minutes."
+    },
+    "3 Minutes" : {
+      "comment" : "The string for authenticating after 3 minutes."
+    },
+    "4 Minutes" : {
+      "comment" : "The string for authenticating after 4 minutes."
+    },
+    "5 Minutes" : {
+      "comment" : "The string for authenticating after 5 minutes."
+    },
+    "30 Seconds" : {
+      "comment" : "The string for authenticating after 30 seconds."
+    },
+    "All purchases have been restored.\nPlease remember that only previously bought non-consumable products and auto-renewable subscriptions can be restored." : {
+      "comment" : "The message string for restoring IAP has succeeded."
+    },
+    "Authentication is required every time you return to the app." : {
+      "comment" : "The string for requiring authentication immediately."
+    },
+    "Authentication is required if the app remains in the background for more than %@." : {
+      "comment" : "The string for the 'Authentication Interval' settings description."
+    },
+    "Current Session" : {
+      "comment" : "The string for the 'current session' section."
+    },
+    "Error Redeeming Code" : {
+      "comment" : "The headline string for the redeem error pop-up."
+    },
+    "For more information, please visit our " : {
+      "comment" : "The footer string to visit privacy policy."
+    },
+    "Found a Kurozora code in the wild? This is the place to redeem it!" : {
+      "comment" : "The subheadline string for the Redeem view."
+    },
+    "Immediately" : {
+      "comment" : "The string for authenticating immediately."
+    },
+    "Kurozora & Privacy" : {
+      "comment" : "The string for the phrase 'Kurozora & Privacy'."
+    },
+    "Kurozora offers Sign in with Apple for users who want the extra peace of mind when it comes to security and privacy. Sign in with Apple is a convenient way to sign in to apps and sites while having more control over the information you share. Kurozora is restricted to asking only for your name and email address, and Apple won’t track your app activity or build a profile of you." : {
+      "comment" : "The footer string for the Sign in with Apple view."
+    },
+    "Manage Subscriptions" : {
+      "comment" : "The string for the 'manage subscriptions' settings option."
+    },
+    "onboarding.appleAuthenticationFailedMessage" : {
+      "comment" : "Error message shown when Apple authentication fails.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Authentication failed by Apple. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.appleAuthenticationNotHandledMessage" : {
+      "comment" : "Error message shown when Apple authentication was not handled properly.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "An error occurred and the authentication was not handled by Apple. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.appleInvalidResponseMessage" : {
+      "comment" : "Error message shown when Apple returns an invalid authentication response.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "The app received an invalid response from Apple. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordAlertHeadline" : {
+      "comment" : "The headline string for resetting password alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Success!"
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordAlertSubheadline" : {
+      "comment" : "The subheadline string for resetting password alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly."
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordButton" : {
+      "comment" : "The button string for resetting password.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Send ✨"
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordErrorAlertHeadline" : {
+      "comment" : "The headline string for resetting password alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Errr..."
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordErrorAlertSubheadline" : {
+      "comment" : "The subheadline string for resetting password alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Please type a valid Kurozora Account 😣"
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordHeadline" : {
+      "comment" : "The headline string for resetting password.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Forgot Password?"
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordOptionsButton" : {
+      "comment" : "The button string for the forgot password option on the sign in screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Forgot your password? Let's reset 📧"
+          }
+        }
+      }
+    },
+    "onboarding.forgotPasswordSubheadline" : {
+      "comment" : "The subheadline string for resetting password.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enter your Kurozora Account to continue."
+          }
+        }
+      }
+    },
+    "onboarding.genericSignInErrorMessage" : {
+      "comment" : "Generic error message shown when sign-in fails for an unknown reason.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "An error occurred while trying to sign in. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.onboardingDescription" : {
+      "comment" : "The description string shown below onboarding options.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your Kurozora Account lets you access your library, favorites, reminders, reviews, and more on your devices, automatically."
+          }
+        }
+      }
+    },
+    "onboarding.onboardingOrSeparator" : {
+      "comment" : "The separator string between onboarding options.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "━━━━━━ or ━━━━━━"
+          }
+        }
+      }
+    },
+    "onboarding.registerOptionsButton" : {
+      "comment" : "The button string for the register option on the sign in screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "New to Kurozora? Join us 🔥"
+          }
+        }
+      }
+    },
+    "onboarding.signInButton" : {
+      "comment" : "The button string for signing in.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open sesame 👐"
+          }
+        }
+      }
+    },
+    "onboarding.signInErrorTitle" : {
+      "comment" : "Alert title shown when the user cannot sign in.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Can't Sign In 😔"
+          }
+        }
+      }
+    },
+    "onboarding.signInHeadline" : {
+      "comment" : "The headline string for signing in.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Kurozora Account"
+          }
+        }
+      }
+    },
+    "onboarding.signInSubheadline" : {
+      "comment" : "The subheadline string for signing in.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sign in with your Kurozora Account to use the library and other Kurozora services."
+          }
+        }
+      }
+    },
+    "onboarding.signInWithAppleTitle" : {
+      "comment" : "Title for the button or screen that allows the user to sign in with Apple.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sign in with Apple"
+          }
+        }
+      }
+    },
+    "onboarding.signUpAlertHeadline" : {
+      "comment" : "The headline string for sign up alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hooray!"
+          }
+        }
+      }
+    },
+    "onboarding.signUpAlertSubheadline" : {
+      "comment" : "The subheadline string for sign up alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Account created successfully! Please check your email for confirmation."
+          }
+        }
+      }
+    },
+    "onboarding.signUpButton" : {
+      "comment" : "The button string for signing up.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Join 🤗"
+          }
+        }
+      }
+    },
+    "onboarding.signUpErrorAlertHeadline" : {
+      "comment" : "The headline string for sign up alert.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Can't Sign Up 😔"
+          }
+        }
+      }
+    },
+    "onboarding.signUpHeadline" : {
+      "comment" : "The headline string for signing up.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "New to Kurozora?"
+          }
+        }
+      }
+    },
+    "onboarding.signUpSubheadline" : {
+      "comment" : "The subheadline string for signing up.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Create an account and join the community."
+          }
+        }
+      }
+    },
+    "onboarding.siwaButton" : {
+      "comment" : "The button string for sign in with Apple.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Join 🤗"
+          }
+        }
+      }
+    },
+    "onboarding.siwaHeadline" : {
+      "comment" : "The headline string for Sign in with Apple.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Setup Account"
+          }
+        }
+      }
+    },
+    "onboarding.siwaSubheadline" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finish setting up your account and join the community."
+          }
+        }
+      }
+    },
+    "Open in Settings app" : {
+      "comment" : "The string for the phrase 'Open in Settings app'."
+    },
+    "Other Sessions" : {
+      "comment" : "The string for the 'other sessions' section."
+    },
+    "Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase." : {
+      "comment" : "The footer string for the Subscription view."
+    },
+    "Payment will be charged to your Apple ID account at the confirmation of purchase. Unlike Kurozora+ subscription, tips are a one time purchase. Your account will be charged only once every time you tip." : {
+      "comment" : "The footer string for the Tip Jar view."
+    },
+    "Privacy Policy" : {
+      "comment" : "The string for the word privacy policy."
+    },
+    "Processing redeem code." : {
+      "comment" : "The headline string for the redeem processing pop-up."
+    },
+    "Product ids not set, call setProductIDs method!" : {
+      "comment" : "The message string for the product not found."
+    },
+    "Redeem your code using the camera on your device." : {
+      "comment" : "The headline string for the Redeem view."
+    },
+    "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use." : {
+      "comment" : "The footer string for the Redeem view."
+    },
+    "Require Authentication" : {
+      "comment" : "The string for 'Require Authentication' settings."
+    },
+    "Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have." : {
+      "comment" : "The subheadline string for the Sign in with Apple view."
+    },
+    "Start using Sign in with Apple" : {
+      "comment" : "The headline string for the Sign in with Apple view."
+    },
+    "Terms of Use" : {
+      "comment" : "The string for the word terms of use."
+    },
+    "The code entered is not valid." : {
+      "comment" : "The subheadline string for the redeem error pop-up."
+    },
+    "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored." : {
+      "comment" : "The message string for restoring IAP has failed."
+    },
+    "This device" : {
+      "comment" : "The string for 'this device'."
+    },
+    "You are not authorized to make payments. In-App Purchases may be restricted on your device." : {
+      "comment" : "The message string for IAP is disabled."
+    },
+    "Zoop, badoop, fruitloop!" : {
+      "comment" : "The headline string for the redeem success pop-up."
+    }
+  },
+  "version" : "1.0"
+}

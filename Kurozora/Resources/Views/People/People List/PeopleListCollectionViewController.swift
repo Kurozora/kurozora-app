@@ -72,7 +72,7 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.people
+		self.title = L10n.people
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -82,7 +82,7 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
 		#endif
 
 		self.configureDataSource()
@@ -145,7 +145,7 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing people...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingPeople)
 		#endif
 
 		switch self.peopleListFetchType {
@@ -205,7 +205,7 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
 		#endif
 	}
 

@@ -54,7 +54,7 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.switchAccount
+		self.title = L10n.switchAccount
 
 		self.configureView()
 	}
@@ -140,7 +140,7 @@ extension SwitchAccountsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let removeAction = UIContextualAction(style: .destructive, title: Trans.signOut, handler: { _, _, completion in
+		let removeAction = UIContextualAction(style: .destructive, title: L10n.signOut, handler: { _, _, completion in
 			let account = self.accounts[indexPath.item]
 
 			// Remove user's account from keychain and update tableView.

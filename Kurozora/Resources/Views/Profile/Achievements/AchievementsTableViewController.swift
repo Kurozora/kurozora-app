@@ -57,7 +57,7 @@ class AchievementsTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.achievements
+		self.title = L10n.achievements
 
 		self._prefersRefreshControlDisabled = true
 

@@ -99,7 +99,7 @@ class MotionAnimationPreviewCell: KTableViewCell {
 	}
 
 	private func updatePauseResumeButtonTitle() {
-		let title = self.isPaused ? Trans.play : Trans.pause
+		let title = self.isPaused ? L10n.play : L10n.pause
 		let imageName = self.isPaused ? "play.fill" : "pause.fill"
 
 		self.primaryButton.setTitle(title, for: .normal)

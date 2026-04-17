@@ -21,8 +21,8 @@ protocol RatingAlertPresentable where Self: UIViewController {
 extension RatingAlertPresentable {
 	func showRatingSuccessAlert() {
 		let alertController = self.presentAlertController(
-			title: Trans.submitted,
-			message: Trans.thankYouForRating
+			title: L10n.submitted,
+			message: L10n.thankYouForRating
 		)
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
 			alertController.dismiss(animated: true, completion: nil)
@@ -31,7 +31,7 @@ extension RatingAlertPresentable {
 
 	func showRatingFailureAlert(message: String) {
 		let alertController = self.presentAlertController(
-			title: Trans.ratingFailed,
+			title: L10n.ratingFailed,
 			message: message
 		)
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {

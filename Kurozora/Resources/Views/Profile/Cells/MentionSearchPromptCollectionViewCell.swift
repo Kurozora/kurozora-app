@@ -31,7 +31,7 @@ class MentionSearchPromptCollectionViewCell: KCollectionViewCell {
 		let label = KLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = .preferredFont(forTextStyle: .body)
-		label.text = Trans.findWhoYouAreLookingFor
+		label.text = L10n.findWhoYouAreLookingFor
 		return label
 	}()
 
@@ -39,7 +39,7 @@ class MentionSearchPromptCollectionViewCell: KCollectionViewCell {
 		let label = KSecondaryLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = .preferredFont(forTextStyle: .footnote)
-		label.text = Trans.searchForThePersonYouWantToMention
+		label.text = L10n.searchForThePersonYouWantToMention
 		return label
 	}()
 

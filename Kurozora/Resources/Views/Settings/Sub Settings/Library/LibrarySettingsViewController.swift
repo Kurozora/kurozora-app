@@ -17,8 +17,8 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.library
-		self.headerTitle = Trans.library
-		self.headerDescription = Trans.libraryHeaderDescription
+		self.headerTitle = L10n.library
+		self.headerDescription = L10n.libraryHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -91,7 +91,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		let currentSortTypeAndOption = UserSettings.librarySortTypes[kind]?[status]
 
 		// Create default action
-		let defaultSortingAction = UIAction(title: Trans.default) { [weak self] _ in
+		let defaultSortingAction = UIAction(title: L10n.default) { [weak self] _ in
 			guard let self = self else { return }
 
 			var updated = UserSettings.librarySortTypes
@@ -209,7 +209,7 @@ extension LibrarySettingsViewController {
 				else { return }
 				self.libraryKindSegmentedControlDidChange(segmentedControl)
 			}
-			cell.configure(title: Trans.libraryType, segmentTitles: KKLibrary.Kind.allString, selectedSegmentIndex: self.libraryKind.rawValue, action: action)
+			cell.configure(title: L10n.libraryType, segmentTitles: KKLibrary.Kind.allString, selectedSegmentIndex: self.libraryKind.rawValue, action: action)
 			return cell
 		case .status(let status):
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuSettingsCell.self, for: indexPath) else {
@@ -227,7 +227,7 @@ extension LibrarySettingsViewController {
 
 		switch section {
 		case .sorting:
-			return Trans.sorting
+			return L10n.sorting
 		}
 	}
 

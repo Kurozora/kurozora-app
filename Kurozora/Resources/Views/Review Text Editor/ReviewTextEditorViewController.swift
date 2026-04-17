@@ -73,7 +73,7 @@ final class ReviewTextEditorViewController: KViewController {
 		super.viewDidLoad()
 		self.sceneView.delegate = self
 
-		self.title = Trans.writeAReview
+		self.title = L10n.writeAReview
 
 		self.navigationController?.navigationBar.prefersLargeTitles = false
 		self.sheetPresentationController?.detents = [.medium(), .large()]
@@ -116,7 +116,7 @@ final class ReviewTextEditorViewController: KViewController {
 	// MARK: - Functions
 	func setupNavigationItems() {
 		self.cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonPressed(_:)))
-		self.sendBarButtonItem = UIBarButtonItem(title: Trans.send, style: .done, target: self, action: #selector(self.sendButtonPressed(_:)))
+		self.sendBarButtonItem = UIBarButtonItem(title: L10n.send, style: .done, target: self, action: #selector(self.sendButtonPressed(_:)))
 
 		self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
 		self.navigationItem.rightBarButtonItem = self.sendBarButtonItem
@@ -151,15 +151,15 @@ final class ReviewTextEditorViewController: KViewController {
 	/// existing submission path unchanged.
 	private func presentOffTopicWarning() {
 		let alertController = UIAlertController.alert(
-			title: Trans.offTopicWarningHeadline,
-			message: Trans.offTopicWarningSubheadline,
-			defaultActionButtonTitle: Trans.cancel
+			title: L10n.offTopicWarningHeadline,
+			message: L10n.offTopicWarningSubheadline,
+			defaultActionButtonTitle: L10n.cancel
 		) { alertController in
-			alertController.addAction(UIAlertAction(title: Trans.offTopicViewGuidelines, style: .default) { _ in
+			alertController.addAction(UIAlertAction(title: L10n.offTopicViewGuidelines, style: .default) { _ in
 				UIApplication.shared.kOpen(.communityGuidelinesURL)
 			})
 
-			alertController.addAction(UIAlertAction(title: Trans.offTopicPostAnyway, style: .destructive) { [weak self] _ in
+			alertController.addAction(UIAlertAction(title: L10n.offTopicPostAnyway, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.sendBarButtonItem.isEnabled = false
 				self.doSubmit()
@@ -251,13 +251,13 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if viewModel.showingSend {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.send, style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: L10n.send, style: .default) { _ in
 					self.doSubmit()
 				})
 			}
 
 			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.discard, style: .destructive) { _ in
 				self.doCancel(forceCancel: true)
 			})
 		}
@@ -281,7 +281,7 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 	}
 
 	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel) {
-		self.presentAlertController(title: Trans.cantSaveReview, message: viewModel.message)
+		self.presentAlertController(title: L10n.cantSaveReview, message: viewModel.message)
 	}
 }
 

@@ -69,13 +69,13 @@ extension CharacterDetail {
 		var stringValue: String {
 			switch self {
 			case .debut:
-				return Trans.debut
+				return L10n.debut
 			case .age:
-				return Trans.age
+				return L10n.age
 			case .measurements:
-				return Trans.measurements
+				return L10n.measurements
 			case .characteristics:
-				return Trans.characteristics
+				return L10n.characteristics
 			}
 		}
 

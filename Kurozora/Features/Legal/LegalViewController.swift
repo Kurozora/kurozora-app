@@ -66,7 +66,7 @@ class LegalViewController: KViewController {
 		self.navigationTitleView = UIView()
 		self.navigationTitleView.alpha = 0
 
-		self.navigationTitleLabel.text = Trans.kurozoraAndPrivacy
+		self.navigationTitleLabel.text = L10n.kurozoraAndPrivacy
 		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
 			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
 		}
@@ -129,7 +129,7 @@ class LegalViewController: KViewController {
 	private func configureTitleLabel() {
 		self.titleLabel = KLabel()
 		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.titleLabel.text = Trans.kurozoraAndPrivacy
+		self.titleLabel.text = L10n.kurozoraAndPrivacy
 		self.titleLabel.font = .preferredFont(forTextStyle: .largeTitle)
 		self.titleLabel.textAlignment = .center
 	}

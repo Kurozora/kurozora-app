@@ -73,22 +73,22 @@ enum KTheme {
 	var descriptionValue: String {
 		switch self {
 		case .kurozora:
-			return Trans.defaultThemeDescription
+			return L10n.defaultThemeDescription
 		case .day:
-			return Trans.dayThemeDescription
+			return L10n.dayThemeDescription
 		case .night:
-			return Trans.nightThemeDescription
+			return L10n.nightThemeDescription
 		case .grass:
-			return Trans.grassThemeDescription
+			return L10n.grassThemeDescription
 		case .sky:
-			return Trans.skyThemeDescription
+			return L10n.skyThemeDescription
 		case .sakura:
-			return Trans.sakuraThemeDescription
+			return L10n.sakuraThemeDescription
 		case .other(let theme):
 			let downloadCount = theme.attributes.downloadCount
 			switch downloadCount {
 			case 0:
-				return Trans.new
+				return L10n.new
 			case 1:
 				return "\(downloadCount) Download"
 			default:

@@ -47,25 +47,25 @@ extension StudioDetailsCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return Trans.header
+				return L10n.header
 			case .badges:
-				return Trans.badges
+				return L10n.badges
 			case .about:
-				return Trans.about
+				return L10n.about
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
 			case .information:
-				return Trans.information
+				return L10n.information
 			case .shows:
-				return Trans.shows
+				return L10n.shows
 			case .literatures:
-				return Trans.literatures
+				return L10n.literatures
 			case .games:
-				return Trans.games
+				return L10n.games
 			}
 		}
 

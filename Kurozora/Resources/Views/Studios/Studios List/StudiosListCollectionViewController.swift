@@ -74,7 +74,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.studios
+		self.title = L10n.studios
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -84,7 +84,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the studios.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
 		#endif
 
 		self.configureDataSource()
@@ -147,7 +147,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing studios...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingStudios)
 		#endif
 
 		switch self.studiosListFetchType {
@@ -221,7 +221,7 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the studios.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
 		#endif
 	}
 

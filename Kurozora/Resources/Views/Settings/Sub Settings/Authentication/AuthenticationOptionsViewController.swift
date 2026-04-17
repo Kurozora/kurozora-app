@@ -33,7 +33,7 @@ class AuthenticationOptionsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.requireAuthentication
+		self.title = L10n.requireAuthentication
 
 		self.configureView()
 	}

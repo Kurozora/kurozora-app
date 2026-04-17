@@ -56,7 +56,7 @@ extension TipJarCollectionViewController {
 			case .footer:
 				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PurchaseFooterCollectionViewCell.self, for: indexPath)
 				purchaseFooterCollectionViewCell?.delegate = self
-				purchaseFooterCollectionViewCell?.configureCell(using: Trans.subscriptionFooter, termsOfUseButtonText: Trans.termsOfUse, privacyButtonText: Trans.privacyPolicy, restorePurchaseButtonText: Trans.restorePurchase)
+				purchaseFooterCollectionViewCell?.configureCell(using: L10n.subscriptionFooter, termsOfUseButtonText: L10n.termsOfUse, privacyButtonText: L10n.privacyPolicy, restorePurchaseButtonText: L10n.restorePurchase)
 				return purchaseFooterCollectionViewCell
 			}
 		}

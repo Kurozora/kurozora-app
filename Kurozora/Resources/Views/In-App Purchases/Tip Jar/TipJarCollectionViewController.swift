@@ -59,7 +59,7 @@ class TipJarCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.tipJar
+		self.title = L10n.tipJar
 
 		// Disable refresh control
 		self._prefersRefreshControlDisabled = true

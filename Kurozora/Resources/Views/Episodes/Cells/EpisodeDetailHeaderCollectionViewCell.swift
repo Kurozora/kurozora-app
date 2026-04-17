@@ -73,7 +73,7 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 	///
 	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
-		let watchStatusButtonTitle = self.episode?.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
+		let watchStatusButtonTitle = self.episode?.attributes.watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 	}
 }

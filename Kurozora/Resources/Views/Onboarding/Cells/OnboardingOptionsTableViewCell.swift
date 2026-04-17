@@ -40,10 +40,10 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		self.forgotPasswordButton.setTitle(Trans.Onboarding.forgotPasswordOptionsButton, for: .normal)
-		self.orLabel.text = Trans.Onboarding.onboardingOrSeparator
-		self.registerPasswordButton.setTitle(Trans.Onboarding.registerOptionsButton, for: .normal)
-		self.descriptionLabel?.text = Trans.Onboarding.onboardingDescription
+		self.forgotPasswordButton.setTitle(L10n.Onboarding.forgotPasswordOptionsButton, for: .normal)
+		self.orLabel.text = L10n.Onboarding.onboardingOrSeparator
+		self.registerPasswordButton.setTitle(L10n.Onboarding.registerOptionsButton, for: .normal)
+		self.descriptionLabel?.text = L10n.Onboarding.onboardingDescription
 		self.setupProviderSignInView()
 	}
 
@@ -51,7 +51,7 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	func setupProviderSignInView() {
 		// Create a new 'or label' separator.
 		let orLabel = KSecondaryLabel()
-		orLabel.text = Trans.Onboarding.onboardingOrSeparator
+		orLabel.text = L10n.Onboarding.onboardingOrSeparator
 		orLabel.font = .preferredFont(forTextStyle: .subheadline)
 
 		// Create and setup Apple ID authorization button

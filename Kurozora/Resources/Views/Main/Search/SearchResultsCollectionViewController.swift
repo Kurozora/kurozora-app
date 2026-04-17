@@ -72,15 +72,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
-		BrowseCategory(title: Trans.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
-		BrowseCategory(title: Trans.shows, image: .Browse.shows, searchType: .shows),
-		BrowseCategory(title: Trans.literatures, image: .Browse.literatures, searchType: .literatures),
-		BrowseCategory(title: Trans.games, image: .Browse.games, searchType: .games),
-		BrowseCategory(title: Trans.songs, image: .Browse.songs, searchType: .songs),
-		BrowseCategory(title: Trans.episodes, image: .Browse.episodes, searchType: .episodes),
-		BrowseCategory(title: Trans.characters, image: .Browse.characters, searchType: .characters),
-		BrowseCategory(title: Trans.people, image: .Browse.people, searchType: .people),
-		BrowseCategory(title: Trans.studio, image: .Browse.studios, searchType: .studios),
+		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
+		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
+		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),
+		BrowseCategory(title: L10n.games, image: .Browse.games, searchType: .games),
+		BrowseCategory(title: L10n.songs, image: .Browse.songs, searchType: .songs),
+		BrowseCategory(title: L10n.episodes, image: .Browse.episodes, searchType: .episodes),
+		BrowseCategory(title: L10n.characters, image: .Browse.characters, searchType: .characters),
+		BrowseCategory(title: L10n.people, image: .Browse.people, searchType: .people),
+		BrowseCategory(title: L10n.studio, image: .Browse.studios, searchType: .studios),
 	]
 
 	/// The collection of search types in the current search request
@@ -170,7 +170,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.search
+		self.title = L10n.search
 
 		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
@@ -975,7 +975,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 		})
 
 		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
@@ -991,7 +991,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						// Update entry in library
 						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
+						button.setTitle(L10n.add.uppercased(), for: .normal)
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

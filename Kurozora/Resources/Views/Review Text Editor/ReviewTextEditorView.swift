@@ -53,7 +53,7 @@ private extension ReviewTextEditorView {
 	func configureView() {}
 
 	func configurePrimaryLabel() {
-		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? Trans.tapToRate : Trans.clickToRate
+		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? L10n.tapToRate : L10n.clickToRate
 	}
 
 	func configureCosmosView() {
@@ -67,7 +67,7 @@ private extension ReviewTextEditorView {
 	}
 
 	func configureTextView() {
-		self.textView.placeholder = Trans.whatsOnYourMind
+		self.textView.placeholder = L10n.whatsOnYourMind
 		self.textView.delegate = self
 	}
 }

@@ -57,10 +57,10 @@ extension FeedMessage {
 
 				switch user.attributes.followStatus {
 				case .followed:
-					followActionTitle = Trans.unfollow
+					followActionTitle = L10n.unfollow
 					followActionImage = UIImage(systemName: "person.badge.minus")
 				case .notFollowed, .disabled:
-					followActionTitle = Trans.follow
+					followActionTitle = L10n.follow
 					followActionImage = UIImage(systemName: "person.badge.plus")
 				}
 
@@ -74,7 +74,7 @@ extension FeedMessage {
 			}
 
 			// Show profile action
-			let showProfileAction = UIAction(title: Trans.showProfile, image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
+			let showProfileAction = UIAction(title: L10n.showProfile, image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
 				guard let self = self else { return }
 				self.visitOriginalPosterProfile(from: viewController)
 			}
@@ -82,7 +82,7 @@ extension FeedMessage {
 
 			// Block action
 			if User.isSignedIn, user != User.current {
-				let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+				let blockAction = UIAction(title: L10n.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
 					guard let self = self else { return }
 					self.relationships.users.data.first?.confirmBlock(via: viewController, userInfo: userInfo)
 				}
@@ -95,12 +95,12 @@ extension FeedMessage {
 				// Pin
 				var pinAction: UIAction
 				if self.attributes.isPinned {
-					pinAction = UIAction(title: Trans.unpin, image: UIImage(systemName: "pin.slash")) { [weak self] _ in
+					pinAction = UIAction(title: L10n.unpin, image: UIImage(systemName: "pin.slash")) { [weak self] _ in
 						guard let self = self else { return }
 						self.pinMessage(via: viewController, userInfo: userInfo)
 					}
 				} else {
-					pinAction = UIAction(title: Trans.pin, image: UIImage(systemName: "pin")) { [weak self] _ in
+					pinAction = UIAction(title: L10n.pin, image: UIImage(systemName: "pin")) { [weak self] _ in
 						guard let self = self else { return }
 						self.pinMessage(via: viewController, userInfo: userInfo)
 					}
@@ -113,27 +113,27 @@ extension FeedMessage {
 			// Heart, reply and reshare
 			var heartAction: UIAction
 			if self.attributes.isHearted ?? false {
-				heartAction = UIAction(title: Trans.unlike, image: UIImage(systemName: "heart.slash")) { [weak self] _ in
+				heartAction = UIAction(title: L10n.unlike, image: UIImage(systemName: "heart.slash")) { [weak self] _ in
 					guard let self = self else { return }
 					Task {
 						await self.heartMessage(via: viewController, userInfo: userInfo)
 					}
 				}
 			} else {
-				heartAction = UIAction(title: Trans.like, image: UIImage(systemName: "heart")) { [weak self] _ in
+				heartAction = UIAction(title: L10n.like, image: UIImage(systemName: "heart")) { [weak self] _ in
 					guard let self = self else { return }
 					Task {
 						await self.heartMessage(via: viewController, userInfo: userInfo)
 					}
 				}
 			}
-			let replyAction = UIAction(title: Trans.reply, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
+			let replyAction = UIAction(title: L10n.reply, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.replyToMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let reShareAction = UIAction(title: Trans.reshare, image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
+			let reShareAction = UIAction(title: L10n.reshare, image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.reShareMessage(via: viewController, userInfo: userInfo)
@@ -150,7 +150,7 @@ extension FeedMessage {
 				User.current?.attributes.role == .admin ||
 				User.current?.id == messageUserID {
 				// Edit action
-				let editAction = UIAction(title: Trans.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
+				let editAction = UIAction(title: L10n.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }
 					self.editMessage(via: viewController, userInfo: userInfo)
 				}
@@ -158,26 +158,26 @@ extension FeedMessage {
 
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
-				let deleteAction = UIAction(title: Trans.deleteMessage, attributes: .destructive) { [weak self] _ in
+				let deleteAction = UIAction(title: L10n.deleteMessage, attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 					self.confirmDelete(via: viewController, userInfo: userInfo)
 				}
 				deleteMenuElements.append(deleteAction)
 
-				menuElements.append(UIMenu(title: Trans.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
+				menuElements.append(UIMenu(title: L10n.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
 			}
 		}
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: Trans.showReplies, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
+		let showRepliesAction = UIAction(title: L10n.showReplies, image: .Symbols.messageLeftAndMessageRight) { [weak self] _ in
 			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
 		userMenuElements.append(showRepliesAction)
 
 		// Create "share" element
-		let shareAction = UIAction(title: Trans.shareMessage, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.shareMessage, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -189,7 +189,7 @@ extension FeedMessage {
 		if User.isSignedIn {
 			// Report message action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: Trans.reportMessage, attributes: .destructive) { [weak self] _ in
+			let reportAction = UIAction(title: L10n.reportMessage, attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.reportMessage()
@@ -198,7 +198,7 @@ extension FeedMessage {
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: Trans.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
+			menuElements.append(UIMenu(title: L10n.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
@@ -235,14 +235,14 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	func pinMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		let title = self.attributes.isPinned ? Trans.unpinMessageHeadline : Trans.pinMessageHeadline
-		let message = self.attributes.isPinned ? Trans.unpinMessageSubheadline : Trans.pinMessageSubheadline
+		let title = self.attributes.isPinned ? L10n.unpinMessageHeadline : L10n.pinMessageHeadline
+		let message = self.attributes.isPinned ? L10n.unpinMessageSubheadline : L10n.pinMessageSubheadline
 		let primaryActionStyle: UIAlertAction.Style = self.attributes.isPinned ? .destructive : .default
 
 		let actionSheetAlertController = UIAlertController.alert(title: title, message: message) { [weak self] alertController in
 			guard let self = self else { return }
 
-			let pinAction = UIAlertAction(title: self.attributes.isPinned ? Trans.unpin : Trans.pin, style: primaryActionStyle) { _ in
+			let pinAction = UIAlertAction(title: self.attributes.isPinned ? L10n.unpin : L10n.pin, style: primaryActionStyle) { _ in
 				Task {
 					do {
 						let messageIdentity = FeedMessageIdentity(id: self.id)
@@ -302,7 +302,7 @@ extension FeedMessage {
 			self.openTextEditor(layout: .reShare, via: viewController, userInfo: userInfo, isEditingMessage: false)
 		} else {
 			let viewController = viewController ?? UIApplication.topViewController
-			viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
+			viewController?.presentAlertController(title: L10n.reshareMessageErrorHeadline, message: L10n.reshareMessageErrorSubheadline)
 		}
 	}
 
@@ -376,10 +376,10 @@ extension FeedMessage {
 
 	/// Confirm if the user wants to delete the message.
 	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteMessageSubheadline) { [weak self] alertController in
+		let actionSheetAlertController = UIAlertController.alert(title: nil, message: L10n.deleteMessageSubheadline) { [weak self] alertController in
 			guard let self = self else { return }
 
-			let deleteAction = UIAlertAction(title: Trans.deleteMessage, style: .destructive) { _ in
+			let deleteAction = UIAlertAction(title: L10n.deleteMessage, style: .destructive) { _ in
 				if let indexPath = userInfo?["indexPath"] as? IndexPath {
 					Task {
 						await self.remove(at: indexPath)
@@ -463,7 +463,7 @@ extension FeedMessage {
 		guard signedIn else { return }
 
 		let viewController = viewController ?? UIApplication.topViewController
-		viewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
+		viewController?.presentAlertController(title: L10n.messageReportedHeadline, message: L10n.messageReportedSubheadline)
 	}
 
 	/// Collects image URLs for Kingfisher prefetching and triggers background RichLink metadata fetches.

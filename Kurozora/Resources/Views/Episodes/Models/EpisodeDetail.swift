@@ -28,17 +28,17 @@ extension EpisodeDetail {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.rank
+				return L10n.rank
 			case .previousEpisode:
-				return Trans.previous
+				return L10n.previous
 			case .nextEpisode:
-				return Trans.next
+				return L10n.next
 			case .show:
-				return Trans.anime
+				return L10n.anime
 			}
 		}
 
@@ -87,15 +87,15 @@ extension EpisodeDetail {
 				let ratingCount = episode?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.chart
+				return L10n.chart
 			case .nextEpisode:
-				return Trans.next
+				return L10n.next
 			case .previousEpisode:
-				return Trans.previous
+				return L10n.previous
 			case .show:
-				return Trans.anime
+				return L10n.anime
 			}
 		}
 
@@ -185,11 +185,11 @@ extension EpisodeDetail {
 		var stringValue: String {
 			switch self {
 			case .number:
-				return Trans.number
+				return L10n.number
 			case .duration:
-				return Trans.duration
+				return L10n.duration
 			case .airDate:
-				return Trans.aired
+				return L10n.aired
 			}
 		}
 
@@ -218,7 +218,7 @@ extension EpisodeDetail {
 			case .duration:
 				return episode.attributes.duration
 			case .airDate:
-				return episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? Trans.tba
+				return episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? L10n.tba
 			}
 		}
 

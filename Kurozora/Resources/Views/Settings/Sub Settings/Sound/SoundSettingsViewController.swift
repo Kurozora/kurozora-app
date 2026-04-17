@@ -20,11 +20,11 @@ class SoundSettingsViewController: SubSettingsViewController {
 
 		self.headerImage = .Icons.sound
 		#if targetEnvironment(macCatalyst)
-		self.headerTitle = Trans.sound
+		self.headerTitle = L10n.sound
 		#else
-		self.headerTitle = Trans.soundsAndHaptics
+		self.headerTitle = L10n.soundsAndHaptics
 		#endif
-		self.headerDescription = Trans.soundHeaderDescription
+		self.headerDescription = L10n.soundHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -118,25 +118,25 @@ extension SoundSettingsViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
 
-			cell.configure(title: Trans.chimeSound, detail: UserSettings.selectedChime)
+			cell.configure(title: L10n.chimeSound, detail: UserSettings.selectedChime)
 			return cell
 		case .toggleChime:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.chimeOnStartup, isOn: UserSettings.startupSoundAllowed, tag: .toggleChime)
+			self.configureSwitchCell(cell, title: L10n.chimeOnStartup, isOn: UserSettings.startupSoundAllowed, tag: .toggleChime)
 			return cell
 		case .toggleUISounds:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.uiSounds, isOn: UserSettings.uiSoundsAllowed, tag: .toggleUISounds)
+			self.configureSwitchCell(cell, title: L10n.uiSounds, isOn: UserSettings.uiSoundsAllowed, tag: .toggleUISounds)
 			return cell
 		case .toggleHaptics:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.haptics, isOn: UserSettings.hapticsAllowed, tag: .toggleHaptics)
+			self.configureSwitchCell(cell, title: L10n.haptics, isOn: UserSettings.hapticsAllowed, tag: .toggleHaptics)
 			return cell
 		}
 	}
@@ -146,7 +146,7 @@ extension SoundSettingsViewController {
 
 		switch Sound.Section.allCases[contentSection] {
 		case .main:
-			return Trans.chimeAndSoundEffects
+			return L10n.chimeAndSoundEffects
 		}
 	}
 
@@ -155,7 +155,7 @@ extension SoundSettingsViewController {
 
 		switch Sound.Section.allCases[contentSection] {
 		case .main:
-			return Sound.Row.settingsCases.contains(.toggleHaptics) ? Trans.hapticsFooter : nil
+			return Sound.Row.settingsCases.contains(.toggleHaptics) ? L10n.hapticsFooter : nil
 		}
 	}
 

@@ -38,25 +38,25 @@ enum BrowseType: Int {
 	var stringValue: String {
 		switch self {
 		case .topAnime:
-			return Trans.topAnime
+			return L10n.topAnime
 		case .topAiring:
-			return Trans.topAiring
+			return L10n.topAiring
 		case .topUpcoming:
-			return Trans.topUpcoming
+			return L10n.topUpcoming
 		case .topTVSeries:
-			return Trans.topTVSeries
+			return L10n.topTVSeries
 		case .topMovies:
-			return Trans.topMovies
+			return L10n.topMovies
 		case .topOVA:
-			return Trans.topOVA
+			return L10n.topOVA
 		case .topSpecials:
-			return Trans.topSpecials
+			return L10n.topSpecials
 		case .justAdded:
-			return Trans.justAdded
+			return L10n.justAdded
 		case .mostPopular:
-			return Trans.mostPopular
+			return L10n.mostPopular
 		case .advancedSearch:
-			return Trans.advancedSearch
+			return L10n.advancedSearch
 		}
 	}
 }

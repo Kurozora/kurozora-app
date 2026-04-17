@@ -191,7 +191,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			libraryStatusString = self.libraryStatus.gameStringValue
 		}
 
-		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : Trans.add.uppercased(), for: .normal)
+		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : L10n.add.uppercased(), for: .normal)
 	}
 
 	func configureReminderButton(for reminderStatus: ReminderStatus?) {
@@ -202,7 +202,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			self.reminderButton?.setImage(UIImage(systemName: "checkmark"), for: .normal)
 			self.reminderButton?.isEnabled = false
 		case .notReminded, .disabled:
-			self.reminderButton?.setTitle(Trans.remindMe, for: .normal)
+			self.reminderButton?.setTitle(L10n.remindMe, for: .normal)
 			self.reminderButton?.setImage(nil, for: .normal)
 			self.reminderButton?.isEnabled = true
 		}

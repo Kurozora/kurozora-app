@@ -84,7 +84,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.cast
+		self.title = L10n.cast
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -94,7 +94,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the cast.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCast)
 		#endif
 
 		self.configureDataSource()
@@ -144,7 +144,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the cast.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCast)
 		#endif
 		#endif
 	}
@@ -159,7 +159,7 @@ class CastListCollectionViewController: KCollectionViewController, SectionFetcha
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing cast...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingCast)
 		#endif
 
 		switch self.castKind {

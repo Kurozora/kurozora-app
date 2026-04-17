@@ -57,7 +57,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.reviews
+		self.title = L10n.reviews
 
 		self.collectionView.contentInset.top = 20
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
@@ -71,7 +71,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh reviews!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReviews)
 		#endif
 	}
 
@@ -128,7 +128,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing reviews...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingReviews)
 			#endif
 		}
 
@@ -187,7 +187,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh reviews!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReviews)
 		#endif
 
 		self.fetchInProgress = false
@@ -412,7 +412,7 @@ extension ReviewsListCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:

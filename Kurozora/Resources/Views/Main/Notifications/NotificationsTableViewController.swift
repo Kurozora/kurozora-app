@@ -84,11 +84,11 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateNotifications(_:)), name: .KUNDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.removeNotification(_:)), name: .KUNDidDelete, object: nil)
 
-		self.title = Trans.notifications
+		self.title = L10n.notifications
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshNotifications)
 		#endif
 
 		self.configureNavigationItems()
@@ -150,8 +150,8 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Configure the mark all bar button item.
 	private func configureMarkAllBarButtonItem() {
-		self.markAllBarButtonItem = UIBarButtonItem(title: Trans.markAll, menu: UIMenu(children: [
-			UIAction(title: Trans.markAllAsRead, image: UIImage(systemName: "circlebadge"), handler: { [weak self] _ in
+		self.markAllBarButtonItem = UIBarButtonItem(title: L10n.markAll, menu: UIMenu(children: [
+			UIAction(title: L10n.markAllAsRead, image: UIImage(systemName: "circlebadge"), handler: { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					let readStatus = await self.updateNotification("all", withStatus: .read)
@@ -159,7 +159,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 					self.updateUserNotifications(userNotifications, withStatus: readStatus)
 				}
 			}),
-			UIAction(title: Trans.markAllAsUnread, image: UIImage(systemName: "circlebadge.fill"), handler: { [weak self] _ in
+			UIAction(title: L10n.markAllAsUnread, image: UIImage(systemName: "circlebadge.fill"), handler: { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					let readStatus = await self.updateNotification("all", withStatus: .unread)
@@ -232,7 +232,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.toggleEmptyDataView()
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshNotifications)
 		#endif
 		self.updateTabBarBadge()
 	}
@@ -274,7 +274,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingNotifications)
 		#endif
 
 		if User.isSignedIn {
@@ -356,7 +356,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 			self.updateUserNotifications(userNotifications, withStatus: readStatus)
 		}
 
-		sender.setTitle(readStatus == .unread ? Trans.markAsRead : Trans.markAsUnread, for: .normal)
+		sender.setTitle(readStatus == .unread ? L10n.markAsRead : L10n.markAsUnread, for: .normal)
 	}
 
 	func updateNotification(_ notificationID: String, withStatus readStatus: ReadStatus) async -> ReadStatus {

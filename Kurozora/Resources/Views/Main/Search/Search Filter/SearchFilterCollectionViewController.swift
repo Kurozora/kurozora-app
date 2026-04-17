@@ -88,7 +88,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
-		self.title = Trans.filters
+		self.title = L10n.filters
 	}
 
 	private func configureCollectionView() {
@@ -105,7 +105,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	}
 
 	private func configureRestBarButtonItem() {
-		self.resetBarButtonItem = UIBarButtonItem(title: Trans.reset, primaryAction: UIAction { [weak self] _ in
+		self.resetBarButtonItem = UIBarButtonItem(title: L10n.reset, primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.resetButtonPressed()
 		})
@@ -128,7 +128,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	private func configureApplyButton() {
 		self.applyButton = KTintedButton()
 		self.applyButton.translatesAutoresizingMaskIntoConstraints = false
-		self.applyButton.setTitle(Trans.apply, for: .normal)
+		self.applyButton.setTitle(L10n.apply, for: .normal)
 		self.applyButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.applyButtonPressed()

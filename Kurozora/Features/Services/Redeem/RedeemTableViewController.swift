@@ -25,7 +25,7 @@ class RedeemTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.redeem
+		self.title = L10n.redeem
 
 		// Configure properties
         self.previewImage = .Promotional.redeemCode
@@ -110,11 +110,11 @@ class RedeemTableViewController: ServiceTableViewController {
 	/// - Parameter redeemCode: The string to show on the alert view.
 	func showSuccess(for redeemCode: String?) {
 		guard let redeemCode = redeemCode else {
-			self.presentAlertController(title: Trans.redeemErrorHeadline, message: Trans.redeemErrorSubheadline)
+			self.presentAlertController(title: L10n.redeemErrorHeadline, message: L10n.redeemErrorSubheadline)
 			return
 		}
 
-		self.presentAlertController(title: Trans.redeemSuccessHeadline, message: "\(redeemCode) was successfully redeemed 🤩")
+		self.presentAlertController(title: L10n.redeemSuccessHeadline, message: "\(redeemCode) was successfully redeemed 🤩")
 	}
 
 	/// Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
@@ -233,7 +233,7 @@ extension RedeemTableViewController: ActionButtonTableViewCellDelegate {
 // MARK: - VNDocumentCameraViewControllerDelegate
 extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 	func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-		let alertController = self.presentActivityAlertController(title: Trans.redeemProcessingHeadline, message: nil)
+		let alertController = self.presentActivityAlertController(title: L10n.redeemProcessingHeadline, message: nil)
 
 		controller.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {
@@ -256,7 +256,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 // MARK: - UIImagePickerControllerDelegate
 extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		let alertController = self.presentActivityAlertController(title: Trans.redeemProcessingHeadline, message: nil)
+		let alertController = self.presentActivityAlertController(title: L10n.redeemProcessingHeadline, message: nil)
 
 		picker.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {

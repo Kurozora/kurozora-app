@@ -51,27 +51,27 @@ extension User {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Library" element
-		let libraryAction = UIAction(title: Trans.library, image: UIImage(systemName: "rectangle.stack")) { _ in
+		let libraryAction = UIAction(title: L10n.library, image: UIImage(systemName: "rectangle.stack")) { _ in
 			self.openLibrary(on: viewController)
 		}
 		menuElements.append(libraryAction)
 
 		// Create "Favorites" element
 		let includeUser = userInfo?["includeUser"] as? Bool ?? true
-		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) { _ in
+		let favoritesAction = UIAction(title: L10n.favorites, image: UIImage(systemName: "heart.circle")) { _ in
 			self.openFavorites(on: viewController, includeUser: includeUser)
 		}
 		menuElements.append(favoritesAction)
 
 		if User.current?.id == self.id {
 			// Create "Reminders" element
-			let remindersAction = UIAction(title: Trans.reminders, image: UIImage(systemName: "bell.circle")) { _ in
+			let remindersAction = UIAction(title: L10n.reminders, image: UIImage(systemName: "bell.circle")) { _ in
 				self.openReminders(on: viewController)
 			}
 			menuElements.append(remindersAction)
 
 			// Create "Settings" element
-			let settingsAction = UIAction(title: Trans.settings, image: UIImage(systemName: "gear")) { _ in
+			let settingsAction = UIAction(title: L10n.settings, image: UIImage(systemName: "gear")) { _ in
 				self.openSettings(on: viewController)
 			}
 			menuElements.append(settingsAction)
@@ -79,7 +79,7 @@ extension User {
 
 		// Block action
 		if User.isSignedIn, User.current?.id != self.id {
-			let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+			let blockAction = UIAction(title: L10n.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
 				guard let self = self else { return }
 				self.confirmBlock(via: viewController, userInfo: userInfo)
 			}
@@ -87,7 +87,7 @@ extension User {
 		}
 
 		// Create "Share" element
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			var activityItems: [Any] = []
 			activityItems.append(self.webpageURLString)
@@ -165,8 +165,8 @@ extension User {
 
 	/// Confirm if the user wants to block the message.
 	func confirmBlock(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) {
-		let actionSheetAlertController = UIAlertController.alert(title: "Block @\(self.attributes.username)", message: Trans.blockMessageSubheadline) { alertController in
-			let blockAction = UIAlertAction(title: Trans.block, style: .destructive) { [weak self] _ in
+		let actionSheetAlertController = UIAlertController.alert(title: "Block @\(self.attributes.username)", message: L10n.blockMessageSubheadline) { alertController in
+			let blockAction = UIAlertAction(title: L10n.block, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.block(on: viewController)
@@ -263,7 +263,7 @@ extension User {
 
 		// Create "Favorites" element
 		let includeUser = userInfo?["includeUser"] as? Bool ?? true
-		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) {  [weak self] _ in
+		let favoritesAction = UIAction(title: L10n.favorites, image: UIImage(systemName: "heart.circle")) {  [weak self] _ in
 			guard let self = self else { return }
 			self.openFavorites(on: viewController, includeUser: includeUser)
 		}
@@ -271,7 +271,7 @@ extension User {
 
 		if User.current?.id == self.id {
 			// Create "Reminders" element
-			let remindersAction = UIAction(title: Trans.reminders, image: UIImage(systemName: "bell.circle")) {  [weak self] _ in
+			let remindersAction = UIAction(title: L10n.reminders, image: UIImage(systemName: "bell.circle")) {  [weak self] _ in
 				guard let self = self else { return }
 				self.openReminders(on: viewController)
 			}
@@ -279,7 +279,7 @@ extension User {
 		}
 
 		// Create "Share" element
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			var activityItems: [Any] = []
 			activityItems.append("https://kurozora.app/profile/\(self.attributes.slug)/\(UserSettings.libraryKind.urlPathName)")

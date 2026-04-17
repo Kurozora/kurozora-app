@@ -25,8 +25,8 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.notifications
-		self.headerTitle = Trans.notifications
-		self.headerDescription = Trans.notificationsHeaderDescription
+		self.headerTitle = L10n.notifications
+		self.headerDescription = L10n.notificationsHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -143,19 +143,19 @@ extension NotificationsSettingsViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.allowNotifications, isOn: UserSettings.notificationsAllowed, tag: row)
+			self.configureSwitchCell(cell, title: L10n.allowNotifications, isOn: UserSettings.notificationsAllowed, tag: row)
 			return cell
 		case .sounds:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.sounds, isOn: UserSettings.notificationsSound, tag: row)
+			self.configureSwitchCell(cell, title: L10n.sounds, isOn: UserSettings.notificationsSound, tag: row)
 			return cell
 		case .badges:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: Trans.badges, isOn: UserSettings.notificationsBadge, tag: row)
+			self.configureSwitchCell(cell, title: L10n.badges, isOn: UserSettings.notificationsBadge, tag: row)
 			return cell
 		case .grouping:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
@@ -163,7 +163,7 @@ extension NotificationsSettingsViewController {
 			}
 			let notificationGroupingValue = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)
 
-			cell.configure(title: Trans.notificationGrouping, detail: notificationGroupingValue?.stringValue)
+			cell.configure(title: L10n.notificationGrouping, detail: notificationGroupingValue?.stringValue)
 			return cell
 		}
 	}

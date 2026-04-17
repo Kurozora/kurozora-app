@@ -34,15 +34,15 @@ struct DraftCellViewModel {
 		switch draft.editorLayout {
 		case .reply:
 			if let username = draft.parentSnapshot?.authorUsername, !username.isEmpty {
-				self.layoutBadge = "\(Trans.reply) · @\(username)"
+				self.layoutBadge = "\(L10n.reply) · @\(username)"
 			} else {
-				self.layoutBadge = Trans.reply
+				self.layoutBadge = L10n.reply
 			}
 		case .reShare:
 			if let username = draft.parentSnapshot?.authorUsername, !username.isEmpty {
-				self.layoutBadge = "\(Trans.reshare) · @\(username)"
+				self.layoutBadge = "\(L10n.reshare) · @\(username)"
 			} else {
-				self.layoutBadge = Trans.reshare
+				self.layoutBadge = L10n.reshare
 			}
 		default:
 			self.layoutBadge = nil
@@ -117,7 +117,7 @@ final class FeedMessageDraftTableViewCell: KTableViewCell {
 	///
 	/// - Parameter viewModel: The view model containing display data.
 	func configure(using viewModel: DraftCellViewModel) {
-		self.contentPreviewLabel.text = viewModel.content.isEmpty ? Trans.emptyDraft : viewModel.content
+		self.contentPreviewLabel.text = viewModel.content.isEmpty ? L10n.emptyDraft : viewModel.content
 		self.contentPreviewLabel.alpha = viewModel.content.isEmpty ? 0.5 : 1.0
 		self.dateLabel.text = viewModel.relativeDate
 

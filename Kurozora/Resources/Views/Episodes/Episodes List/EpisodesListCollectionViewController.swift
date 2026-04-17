@@ -126,7 +126,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshEpisodes)
 		#endif
 
 		// Configure title
@@ -136,7 +136,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		case .search:
 			self.title = self.searchQuery
 		case .upNext:
-			self.title = Trans.upNext
+			self.title = L10n.upNext
 		}
 
 		self.configureDataSource()
@@ -199,19 +199,19 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 	/// Configures the more bar button item.
 	private func configureMoreBarButtonItem() {
-		self.moreBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+		self.moreBarButtonItem = UIBarButtonItem(title: L10n.more, image: UIImage(systemName: "ellipsis.circle"))
 		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
 	}
 
 	/// Configures the filler bar button item.
 	private func configureFillerBarButtonItem() {
-		self.fillerBarButtonItem = UIBarButtonItem(title: Trans.filters, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
+		self.fillerBarButtonItem = UIBarButtonItem(title: L10n.filters, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
 		self.navigationItem.rightBarButtonItems?.append(self.fillerBarButtonItem)
 	}
 
 	/// Configures the filler bar button item.
 	private func configureGoToBarButtonItem() {
-		self.goToBarButtonItem = UIBarButtonItem(title: Trans.goTo, image: UIImage(systemName: "chevron.down.circle"))
+		self.goToBarButtonItem = UIBarButtonItem(title: L10n.goTo, image: UIImage(systemName: "chevron.down.circle"))
 		self.navigationItem.rightBarButtonItems?.append(self.goToBarButtonItem)
 	}
 
@@ -272,7 +272,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing episodes...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingEpisodes)
 		#endif
 
 		switch self.episodesListFetchType {
@@ -336,7 +336,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshEpisodes)
 		#endif
 	}
 
@@ -418,14 +418,14 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 
 		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
 			// Go to first episode
-			let goToFirstEpisode = UIAction(title: Trans.goToFirstEpisode, image: nil) { [weak self] _ in
+			let goToFirstEpisode = UIAction(title: L10n.goToFirstEpisode, image: nil) { [weak self] _ in
 				guard let self = self else { return }
 				self.goToFirstEpisode()
 			}
 			menuElements.append(goToFirstEpisode)
 		} else {
 			// Go to last episode
-			let goToLastEpisode = UIAction(title: Trans.goToLastEpisode, image: nil) { [weak self] _ in
+			let goToLastEpisode = UIAction(title: L10n.goToLastEpisode, image: nil) { [weak self] _ in
 				guard let self = self else { return }
 				self.goToLastEpisode()
 			}
@@ -433,7 +433,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		}
 
 		// Go to last watched episode
-		let goToLastWatchedEpisode = UIAction(title: Trans.goToLastWatchedEpisode, image: nil) { [weak self] _ in
+		let goToLastWatchedEpisode = UIAction(title: L10n.goToLastWatchedEpisode, image: nil) { [weak self] _ in
 			guard let self = self else { return }
 			self.goToLastWatchedEpisode()
 		}
@@ -448,7 +448,7 @@ class EpisodesListCollectionViewController: KCollectionViewController, SectionFe
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Show fillers" element
-		let title = self.shouldHideFillers ? Trans.showFillers : Trans.hideFillers
+		let title = self.shouldHideFillers ? L10n.showFillers : L10n.hideFillers
 		let toggleFillers = UIAction(title: title, image: nil) { [weak self] _ in
 			guard let self = self else { return }
 			self.shouldHideFillers = !self.shouldHideFillers

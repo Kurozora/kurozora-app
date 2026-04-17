@@ -62,12 +62,12 @@ extension Review {
 				User.current?.id == reviewUserID {
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
-				let deleteAction = UIAction(title: Trans.deleteReview, attributes: .destructive) { _ in
+				let deleteAction = UIAction(title: L10n.deleteReview, attributes: .destructive) { _ in
 					self.confirmDelete(via: viewController, userInfo: userInfo)
 				}
 				deleteMenuElements.append(deleteAction)
 
-				menuElements.append(UIMenu(title: Trans.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
+				menuElements.append(UIMenu(title: L10n.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
 			}
 		}
 
@@ -78,12 +78,12 @@ extension Review {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyAction = UIAction(title: Trans.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
+		let copyAction = UIAction(title: L10n.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.description
 		}
 
 		// Create "share" action
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyAction)
@@ -101,7 +101,7 @@ extension Review {
 		if User.isSignedIn {
 			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: Trans.reportReview, attributes: .destructive) { _ in
+			let reportAction = UIAction(title: L10n.reportReview, attributes: .destructive) { _ in
 				Task {
 					await self.reportReview(on: viewController)
 				}
@@ -109,7 +109,7 @@ extension Review {
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: Trans.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
+			menuElements.append(UIMenu(title: L10n.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
@@ -166,7 +166,7 @@ extension Review {
 		guard signedIn else { return }
 
 		let viewController = viewController ?? UIApplication.topViewController
-		viewController?.presentAlertController(title: Trans.reviewReportedHeadline, message: Trans.reviewReportedSubheadline)
+		viewController?.presentAlertController(title: L10n.reviewReportedHeadline, message: L10n.reviewReportedSubheadline)
 	}
 
 	/// Remove the review.
@@ -186,8 +186,8 @@ extension Review {
 
 	/// Confirm if the user wants to delete the review.
 	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteReviewSubheadline) { alertController in
-			let deleteAction = UIAlertAction(title: Trans.deleteReview, style: .destructive) { _ in
+		let actionSheetAlertController = UIAlertController.alert(title: nil, message: L10n.deleteReviewSubheadline) { alertController in
+			let deleteAction = UIAlertAction(title: L10n.deleteReview, style: .destructive) { _ in
 				if let indexPath = userInfo?["indexPath"] as? IndexPath {
 					Task {
 						await self.remove(at: indexPath)

@@ -1,0 +1,246 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Advanced Search" : {
+      "comment" : "The string for the 'advanced search' browse option."
+    },
+    "Are you sure?" : {
+      "comment" : "The subheadline string for the unpin message pop-up"
+    },
+    "Block" : {
+      "comment" : "The string for the word 'block'."
+    },
+    "Can't Re-Share" : {
+      "comment" : "The headline string for the reshare message error pop-up"
+    },
+    "Can’t Save Review 😔" : {
+      "comment" : "The string for can't save review description."
+    },
+    "Click to Rate:" : {
+      "comment" : "The string for the word 'click to rate'."
+    },
+    "Delete" : {
+      "comment" : "The string for the word 'delete'."
+    },
+    "Delete Library" : {
+      "comment" : "The headline string for the Library Delete view"
+    },
+    "Delete Message" : {
+      "comment" : "The string for the 'Delete Message' context menu option."
+    },
+    "Delete Review" : {
+      "comment" : "The string for the 'Delete Review' context menu option."
+    },
+    "Edit" : {
+      "comment" : "The string for the word 'edit'."
+    },
+    "Find who you're looking for" : {
+      "comment" : "The title string for the search pop-up when trying to tag a user in a message or reply."
+    },
+    "Go To" : {
+      "comment" : "The string for the 'Go To' context menu option."
+    },
+    "Go to first episode" : {
+      "comment" : "The string for the 'Go to first episode' context menu option."
+    },
+    "Go to last episode" : {
+      "comment" : "The string for the 'Go to last episode' context menu option."
+    },
+    "Go to last watched episode" : {
+      "comment" : "The string for the 'Go to last watched episode' context menu option."
+    },
+    "Hide fillers" : {
+      "comment" : "The string for the 'Hide fillers' context menu option."
+    },
+    "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below." : {
+      "comment" : "The subheadline string for the Library Import view."
+    },
+    "Is this a 'where to watch' question?" : {
+      "comment" : "The headline string for the off-topic content warning pop-up."
+    },
+    "Just Added" : {
+      "comment" : "The string for the 'just added' browse option."
+    },
+    "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file." : {
+      "comment" : "The footer string for the Library Import view."
+    },
+    "Kurozora is for tracking your progress, it doesn't stream or host content. Posts asking where to watch or read often go unanswered. You can still post if you'd like." : {
+      "comment" : "The subheadline string for the off-topic content warning pop-up."
+    },
+    "Library.xml" : {
+      "comment" : "The placeholder string for the library xml file name."
+    },
+    "Like" : {
+      "comment" : "The string for the word 'like'."
+    },
+    "Limit Reached" : {
+      "comment" : "The headline string for the character limit reached error pop-up"
+    },
+    "Message Reported" : {
+      "comment" : "The headline string for the report message pop-up"
+    },
+    "Message will be deleted permanently." : {
+      "comment" : "The subheadline string for the delete message pop-up"
+    },
+    "Most Popular" : {
+      "comment" : "The string for the 'most popular' browse option."
+    },
+    "Move From Another Service" : {
+      "comment" : "The headline string for the Library Import view"
+    },
+    "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion." : {
+      "comment" : "The footer string for the Library Delete view."
+    },
+    "Permanently delete your library." : {
+      "comment" : "The subheadline string for the Library Delete view."
+    },
+    "Pin" : {
+      "comment" : "The string for the word 'pin'."
+    },
+    "Pin this message" : {
+      "comment" : "The headline string for the pin message pop-up"
+    },
+    "Post" : {
+      "comment" : "The string for the 'Post' context menu option."
+    },
+    "Post Anyway" : {
+      "comment" : "The destructive action string for proceeding with an off-topic post anyway."
+    },
+    "Post Message" : {
+      "comment" : "The string for the 'Post Message' context menu option."
+    },
+    "Rating" : {
+      "comment" : "The string for the word 'rating'."
+    },
+    "Rating Failed" : {
+      "comment" : "The string for the 'rating failed' section."
+    },
+    "Ratings" : {
+      "comment" : "The string for the word 'ratings'."
+    },
+    "Ratings & Reviews" : {
+      "comment" : "The string for the word 'ratings & reviews'."
+    },
+    "Re-share" : {
+      "comment" : "The string for the 'Re-share' context menu option."
+    },
+    "Reply" : {
+      "comment" : "The string for the 'Reply' context menu option."
+    },
+    "Report" : {
+      "comment" : "The string for the word 'report'."
+    },
+    "Report Message" : {
+      "comment" : "The string for the 'Report Message' context menu option."
+    },
+    "Report Review" : {
+      "comment" : "The string for the 'Report Review' context menu option."
+    },
+    "Review Reported" : {
+      "comment" : "The headline string for the report review pop-up"
+    },
+    "Review will be deleted permanently." : {
+      "comment" : "The subheadline string for the delete review pop-up"
+    },
+    "Search for the person you want to mention" : {
+      "comment" : "The subtitle string for the search pop-up when trying to tag a user in a message or reply."
+    },
+    "See Also" : {
+      "comment" : "The string for the 'see also' section."
+    },
+    "Select behavior" : {
+      "comment" : "The placeholder string for selecting the import behavior."
+    },
+    "Select File" : {
+      "comment" : "The button string for selecting a file to import."
+    },
+    "Select service" : {
+      "comment" : "The placeholder string for selecting the import service."
+    },
+    "Share Message" : {
+      "comment" : "The string for the 'Share Message' context menu option."
+    },
+    "Share Review" : {
+      "comment" : "The string for the 'Share Review' context menu option."
+    },
+    "Show fillers" : {
+      "comment" : "The string for the 'Show fillers' context menu option."
+    },
+    "Show Profile" : {
+      "comment" : "The string for the 'Show Profile' context menu option."
+    },
+    "Show Replies" : {
+      "comment" : "The string for the 'Show Replies' context menu option."
+    },
+    "Tap to Rate:" : {
+      "comment" : "The string for the word 'tap to rate'."
+    },
+    "Thank you for helping keep the community safe." : {
+      "comment" : "The subheadline string for the report message pop-up\nThe subheadline string for the report review pop-up"
+    },
+    "Thank you for rating." : {
+      "comment" : "The string for the rating submitted description."
+    },
+    "They will be able to see your public messages, but will no longer be able to engange with them. They will also not be able to follow or message you, and you wil not see notifications from them." : {
+      "comment" : "The subheadline string for the blocing a user"
+    },
+    "This will appear at the top of your profile and replace any previously pinned message. Are you sure?" : {
+      "comment" : "The subheadline string for the pin message pop-up"
+    },
+    "Top Airing" : {
+      "comment" : "The string for the 'top airing' browse option."
+    },
+    "Top Anime" : {
+      "comment" : "The string for the 'top anime' browse option."
+    },
+    "Top Movies" : {
+      "comment" : "The string for the 'top movies' browse option."
+    },
+    "Top OVA" : {
+      "comment" : "The string for the 'top ova' browse option."
+    },
+    "Top Specials" : {
+      "comment" : "The string for the 'top specials' browse option."
+    },
+    "Top TV Series" : {
+      "comment" : "The string for the 'top tv series' browse option."
+    },
+    "Top Upcoming" : {
+      "comment" : "The string for the 'top upcoming' browse option."
+    },
+    "Unfollow" : {
+      "comment" : "The string for the word 'unfollow'."
+    },
+    "Unlike" : {
+      "comment" : "The string for the word 'unlike'."
+    },
+    "Unpin" : {
+      "comment" : "The string for the word 'unpin'."
+    },
+    "Unpin from your profile" : {
+      "comment" : "The headline string for the unpin message pop-up"
+    },
+    "Up Next" : {
+      "comment" : "The string for the 'Up Next' view title."
+    },
+    "View Guidelines" : {
+      "comment" : "The action string for opening the community guidelines from the off-topic warning."
+    },
+    "What’s on your mind?" : {
+      "comment" : "The placeholder string for creating a new feed message."
+    },
+    "Write a comment..." : {
+      "comment" : "The placeholder string for creating a new comment."
+    },
+    "Write a Review" : {
+      "comment" : "The string for the word 'write a review'."
+    },
+    "You are not allowed to re-share a message more than once." : {
+      "comment" : "The subheadline string for the reshare message error pop-up"
+    },
+    "You have exceeded the character limit for a message." : {
+      "comment" : "The subheadline string for the character limit reached error pop-up"
+    }
+  },
+  "version" : "1.0"
+}

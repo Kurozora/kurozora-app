@@ -92,23 +92,23 @@ extension SettingsTableViewController {
 		var stringValue: String {
 			switch self {
 			case .account:
-				return Trans.account
+				return L10n.account
 			case .debug:
-				return Trans.debug
+				return L10n.debug
 			case .alerts:
-				return Trans.alerts
+				return L10n.alerts
 			case .general:
-				return Trans.general
+				return L10n.general
 			case .stickers:
-				return Trans.stickers
+				return L10n.stickers
 			case .security:
-				return Trans.security
+				return L10n.security
 			case .support:
-				return Trans.supportUs
+				return L10n.supportUs
 			case .social:
-				return Trans.social
+				return L10n.social
 			case .about:
-				return Trans.about
+				return L10n.about
 			}
 		}
 	}
@@ -364,65 +364,65 @@ extension SettingsTableViewController {
 		var primaryStringValue: String {
 			switch self {
 			case .account:
-				return User.current?.attributes.username ?? Trans.accountHeadline
+				return User.current?.attributes.username ?? L10n.accountHeadline
 			case .switchAccount:
-				return Trans.switchAccount
+				return L10n.switchAccount
 			case .keychain:
-				return Trans.keysManager
+				return L10n.keysManager
 			case .browser:
-				return Trans.browser
+				return L10n.browser
 			case .cache:
-				return Trans.cache
+				return L10n.cache
 			case .displayBlindness:
-				return Trans.displayBlindness
+				return L10n.displayBlindness
 			case .icon:
-				return Trans.icon
+				return L10n.icon
 			case .library:
-				return Trans.library
+				return L10n.library
 			case .motion:
-				return Trans.motion
+				return L10n.motion
 			case .theme:
-				return Trans.theme
+				return L10n.theme
 			case .notifications:
-				return Trans.notifications
+				return L10n.notifications
 			case .reminder:
-				return Trans.subscribeToReminders
+				return L10n.subscribeToReminders
 			case .soundsAndHaptics:
 				#if targetEnvironment(macCatalyst)
-				return Trans.sound
+				return L10n.sound
 				#else
-				return Trans.soundsAndHaptics
+				return L10n.soundsAndHaptics
 				#endif
 			case .signalSticker:
-				return Trans.addStickerToSignal
+				return L10n.addStickerToSignal
 			case .telegramSticker:
-				return Trans.addStickerToTelegram
+				return L10n.addStickerToTelegram
 //			case .whatsAppStickers:
 //				return "Add Sticker to WhatsApp"
 			case .biometrics:
 				return UIDevice.supportedBiometric.localizedSettingsName
 			case .privacy:
-				return Trans.privacy
+				return L10n.privacy
 			case .unlockFeatures:
-				return Trans.unlockFeatures
+				return L10n.unlockFeatures
 			case .tipjar:
-				return Trans.tipJar
+				return L10n.tipJar
 			case .manageSubscriptions:
-				return Trans.manageSubscriptions
+				return L10n.manageSubscriptions
 			case .restoreFeatures:
-				return Trans.restorePurchase
+				return L10n.restorePurchase
 //			case .requestRefund:
-//				return Trans.RequestRefund
+//				return L10n.RequestRefund
 			case .rate:
-				return Trans.rateAppStore
+				return L10n.rateAppStore
 			case .joinDiscord:
-				return Trans.joinDiscord
+				return L10n.joinDiscord
 			case .followGitHub:
-				return Trans.followGitHub
+				return L10n.followGitHub
 			case .followMastodon:
-				return Trans.followMastodon
+				return L10n.followMastodon
 			case .followTwitter:
-				return Trans.followTwitter
+				return L10n.followTwitter
 			}
 		}
 
@@ -430,7 +430,7 @@ extension SettingsTableViewController {
 		var secondaryStringValue: String {
 			switch self {
 			case .account:
-				return User.isSignedIn ? Trans.accountSignedInSubheadline : Trans.accountSubheadline
+				return User.isSignedIn ? L10n.accountSignedInSubheadline : L10n.accountSubheadline
 			case .browser:
 				return UserSettings.defaultBrowser.shortStringValue
 			case .icon:

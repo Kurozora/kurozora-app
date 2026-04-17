@@ -68,7 +68,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.seasons
+		self.title = L10n.seasons
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -78,7 +78,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
 		#endif
 
 		self.configureDataSource()
@@ -129,7 +129,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
 		#endif
 		#endif
 	}
@@ -144,7 +144,7 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing seasons...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingSeasons)
 		#endif
 
 		do {

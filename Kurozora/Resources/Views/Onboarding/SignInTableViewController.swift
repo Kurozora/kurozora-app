@@ -80,11 +80,11 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 		} catch let error as KKAPIError {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
-			self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
+			self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)
 		} catch {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
-			self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
+			self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: L10n.Onboarding.genericSignInErrorMessage)
 		}
 	}
 
@@ -200,11 +200,11 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 				} catch let error as KKAPIError {
 					// Re-enable user interaction.
 					self.disableUserInteraction(false)
-					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
+					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)
 				} catch {
 					// Re-enable user interaction.
 					self.disableUserInteraction(false)
-					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
+					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: L10n.Onboarding.genericSignInErrorMessage)
 				}
 			}
 		case let passwordCredential as ASPasswordCredential:
@@ -225,17 +225,17 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				message = Trans.Onboarding.appleAuthenticationFailedMessage
+				message = L10n.Onboarding.appleAuthenticationFailedMessage
 			case .invalidResponse:
-				message = Trans.Onboarding.appleInvalidResponseMessage
+				message = L10n.Onboarding.appleInvalidResponseMessage
 			case .notHandled:
-				message = Trans.Onboarding.appleAuthenticationNotHandledMessage
+				message = L10n.Onboarding.appleAuthenticationNotHandledMessage
 			default: break
 			}
 		}
 
 		if !message.isEmpty {
-			self.presentAlertController(title: Trans.error, message: message)
+			self.presentAlertController(title: L10n.error, message: message)
 		}
 	}
 }

@@ -57,13 +57,13 @@ extension Person {
 		let copyTitleAction = UIAction(title: "Name", image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.fullName
 		}
-		let copyLinkAction = UIAction(title: Trans.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.webpageURLString
 		}
-		let copyMenu = UIMenu(title: Trans.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
+		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyMenu)

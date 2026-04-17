@@ -83,7 +83,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.schedule
+		self.title = L10n.schedule
 
 		// Add refresh control
 		#if DEBUG
@@ -148,7 +148,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 
 	func configureNavBarButtons() {
-		self.todayBarButtonItem = UIBarButtonItem(title: Trans.today, style: .plain, target: self, action: #selector(self.handleTodayButtonPressed))
+		self.todayBarButtonItem = UIBarButtonItem(title: L10n.today, style: .plain, target: self, action: #selector(self.handleTodayButtonPressed))
 		self.navigationItem.rightBarButtonItem = self.todayBarButtonItem
 	}
 
@@ -391,7 +391,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 		})
 
 		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
@@ -410,7 +410,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 
 						// Update entry in library
 						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
+						button.setTitle(L10n.add.uppercased(), for: .normal)
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

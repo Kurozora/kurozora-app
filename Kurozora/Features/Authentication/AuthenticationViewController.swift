@@ -77,7 +77,7 @@ class AuthenticationViewController: KViewController {
 		self.unlockButton = KTintedButton()
 		self.unlockButton.translatesAutoresizingMaskIntoConstraints = false
 		self.unlockButton.highlightBackgroundColorEnabled = true
-		self.unlockButton.setTitle("Unlock Kurozora", for: .normal)
+		self.unlockButton.setTitle(L10n.unlockKurozora, for: .normal)
 		self.unlockButton.addAction(UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.unlockButtonPressed()

@@ -66,9 +66,9 @@ extension ManageActiveSessionsController {
 
 		switch sectionIdentifier {
 		case .current:
-			titleHeaderTableReusableView?.configure(withTitle: Trans.currentSession)
+			titleHeaderTableReusableView?.configure(withTitle: L10n.currentSession)
 		case .other:
-			titleHeaderTableReusableView?.configure(withTitle: Trans.otherSessions)
+			titleHeaderTableReusableView?.configure(withTitle: L10n.otherSessions)
 		}
 
 		titleHeaderTableReusableView?.headerButton.isHidden = true

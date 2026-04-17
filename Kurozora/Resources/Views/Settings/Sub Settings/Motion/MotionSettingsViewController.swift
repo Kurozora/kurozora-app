@@ -18,8 +18,8 @@ class MotionSettingsViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.motion
-		self.headerTitle = Trans.motion
-		self.headerDescription = Trans.motionHeaderDescription
+		self.headerTitle = L10n.motion
+		self.headerDescription = L10n.motionHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -157,7 +157,7 @@ extension MotionSettingsViewController {
 			}
 			let currentSplashScreenAnimation = UserSettings.currentSplashScreenAnimation
 
-			cell.configure(title: Trans.splashScreen, detail: currentSplashScreenAnimation.titleValue)
+			cell.configure(title: L10n.splashScreen, detail: currentSplashScreenAnimation.titleValue)
 			return cell
 		case .reduceMotion:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
@@ -168,9 +168,9 @@ extension MotionSettingsViewController {
 			switch row {
 			case .splashScreen: break
 			case .toggleReduceMotion:
-				self.configureSwitchCell(cell, title: Trans.reduceMotion, isOn: UserSettings.isReduceMotionEnabled, tag: .toggleReduceMotion)
+				self.configureSwitchCell(cell, title: L10n.reduceMotion, isOn: UserSettings.isReduceMotionEnabled, tag: .toggleReduceMotion)
 			case .toggleReduceMotionSync:
-				self.configureSwitchCell(cell, title: Trans.syncWithDeviceSettings, isOn: UserSettings.isReduceMotionSyncEnabled, tag: .toggleReduceMotionSync)
+				self.configureSwitchCell(cell, title: L10n.syncWithDeviceSettings, isOn: UserSettings.isReduceMotionSyncEnabled, tag: .toggleReduceMotionSync)
 			}
 
 			return cell
@@ -183,9 +183,9 @@ extension MotionSettingsViewController {
 
 		switch section {
 		case .animations:
-			return Trans.animations
+			return L10n.animations
 		case .reduceMotion:
-			return Trans.reduceMotion
+			return L10n.reduceMotion
 		}
 	}
 
@@ -197,7 +197,7 @@ extension MotionSettingsViewController {
 		case .animations:
 			return nil
 		case .reduceMotion:
-			return Trans.reduceMotionFooter
+			return L10n.reduceMotionFooter
 		}
 	}
 

@@ -59,7 +59,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	private(set) lazy var postButton: UIBarButtonItem = {
 		return UIBarButtonItem(
-			title: Trans.post,
+			title: L10n.post,
 			style: .done,
 			target: self,
 			action: #selector(self.postButtonPressed(_:))
@@ -72,9 +72,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 	var placeholderText: String {
 		switch self.editorLayout {
 		case .standard, .reply:
-			return Trans.whatsOnYourMind
+			return L10n.whatsOnYourMind
 		case .reShare:
-			return Trans.writeAComment
+			return L10n.writeAComment
 		}
 	}
 
@@ -320,7 +320,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingSend {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.post, style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: L10n.post, style: .default) { _ in
 					Task {
 						await self.sendMessage()
 					}
@@ -328,14 +328,14 @@ class KFeedMessageTextEditorViewController: KViewController {
 			}
 
 			// Save Draft action.
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.saveDraft, style: .default) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.saveDraft, style: .default) { _ in
 				self.saveDraft()
 				self.isEndingEditing = true
 				self.dismiss(animated: true, completion: nil)
 			})
 
 			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.discard, style: .destructive) { _ in
 				self.isEndingEditing = true
 				self.dismiss(animated: true, completion: nil)
 			})
@@ -373,7 +373,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			await self.performFeedMessageRequest()
 		} else {
 			// Character limit reached. Present an alert to the user.
-			self.presentAlertController(title: Trans.characterLimitReachedHeadline, message: Trans.characterLimitReachedSubheadline)
+			self.presentAlertController(title: L10n.characterLimitReachedHeadline, message: L10n.characterLimitReachedSubheadline)
 		}
 
 		self.postButton.isEnabled = true
@@ -386,21 +386,21 @@ class KFeedMessageTextEditorViewController: KViewController {
 	/// existing submission path unchanged.
 	private func presentOffTopicWarning() {
 		let alertController = UIAlertController.alert(
-			title: Trans.offTopicWarningHeadline,
-			message: Trans.offTopicWarningSubheadline,
-			defaultActionButtonTitle: Trans.cancel,
+			title: L10n.offTopicWarningHeadline,
+			message: L10n.offTopicWarningSubheadline,
+			defaultActionButtonTitle: L10n.cancel,
 			handler: { [weak self] _ in
 				self?.postButton.isEnabled = true
 			}
 		) { [weak self] alertController in
 			guard let self = self else { return }
 
-			alertController.addAction(UIAlertAction(title: Trans.offTopicViewGuidelines, style: .default) { [weak self] _ in
+			alertController.addAction(UIAlertAction(title: L10n.offTopicViewGuidelines, style: .default) { [weak self] _ in
 				UIApplication.shared.kOpen(.communityGuidelinesURL)
 				self?.postButton.isEnabled = true
 			})
 
-			alertController.addAction(UIAlertAction(title: Trans.offTopicPostAnyway, style: .destructive) { [weak self] _ in
+			alertController.addAction(UIAlertAction(title: L10n.offTopicPostAnyway, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.isEndingEditing = true
 				self.view.endEditing(true)

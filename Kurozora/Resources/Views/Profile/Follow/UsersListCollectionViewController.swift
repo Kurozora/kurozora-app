@@ -108,9 +108,9 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the \(self.usersListType.stringValue).")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the users.")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 		}
 		#endif
 
@@ -238,9 +238,9 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(self.usersListType.stringValue.lowercased())...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.stringValue.lowercased()))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing users...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
 		}
 		#endif
 
@@ -288,9 +288,9 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the \(self.usersListType.stringValue.lowercased()).")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue.lowercased()))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the users.")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 		}
 		#endif
 	}

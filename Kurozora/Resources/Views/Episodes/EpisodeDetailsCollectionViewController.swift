@@ -324,25 +324,25 @@ extension EpisodeDetailsCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return Trans.header
+				return L10n.header
 			case .badge:
-				return Trans.badges
+				return L10n.badges
 			case .synopsis:
-				return Trans.synopsis
+				return L10n.synopsis
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
 			case .information:
-				return Trans.information
+				return L10n.information
 			case .cast:
-				return Trans.cast
+				return L10n.cast
 			case .suggestedEpisodes:
-				return Trans.seeAlso
+				return L10n.seeAlso
 			case .sosumi:
-				return Trans.copyright
+				return L10n.copyright
 			}
 		}
 

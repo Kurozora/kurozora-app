@@ -19,9 +19,9 @@ enum Motion {
 		var titleValue: String {
 			switch self {
 			case .animations:
-				return Trans.animations
+				return L10n.animations
 			case .reduceMotion:
-				return Trans.reduceMotion
+				return L10n.reduceMotion
 			}
 		}
 
@@ -46,11 +46,11 @@ enum Motion {
 		var titleValue: String {
 			switch self {
 			case .splashScreen:
-				return Trans.splashScreen
+				return L10n.splashScreen
 			case .toggleReduceMotion:
-				return Trans.reduceMotion
+				return L10n.reduceMotion
 			case .toggleReduceMotionSync:
-				return Trans.syncWithDeviceSettings
+				return L10n.syncWithDeviceSettings
 			}
 		}
 	}

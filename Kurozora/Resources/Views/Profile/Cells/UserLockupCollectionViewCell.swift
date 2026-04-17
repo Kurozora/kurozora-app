@@ -49,15 +49,15 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	func updateFollowButton(using followStatus: FollowStatus) {
 		switch followStatus {
 		case .followed:
-			self.followButton.setTitle("✓ Following", for: .normal)
+			self.followButton.setTitle(L10n.followingButton, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .notFollowed:
-			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.setTitle(L10n.followButton, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .disabled:
-			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.setTitle(L10n.followButton, for: .normal)
 			self.followButton.isHidden = true
 			self.followButton.isUserInteractionEnabled = false
 		}

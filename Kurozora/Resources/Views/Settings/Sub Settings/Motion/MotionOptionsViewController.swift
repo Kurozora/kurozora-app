@@ -57,7 +57,7 @@ class MotionOptionsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.splashScreen
+		self.title = L10n.splashScreen
 
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 
@@ -168,7 +168,7 @@ extension MotionOptionsViewController {
 		case .preview:
 			return "Preview"
 		case .options:
-			return Trans.animations
+			return L10n.animations
 		}
 	}
 }

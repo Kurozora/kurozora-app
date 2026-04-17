@@ -1,0 +1,24 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter." : {
+      "comment" : "The string for the maintenance warning message."
+    },
+    "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store." : {
+      "comment" : "The string for the force update warning message."
+    },
+    "Network Unavailable" : {
+      "comment" : "The string for the no signal warning title."
+    },
+    "Scheduled Maintenance" : {
+      "comment" : "The string for the maintenance warning title."
+    },
+    "Update Available" : {
+      "comment" : "The string for the force update warning title."
+    },
+    "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora." : {
+      "comment" : "The string for the no signal warning message."
+    }
+  },
+  "version" : "1.0"
+}

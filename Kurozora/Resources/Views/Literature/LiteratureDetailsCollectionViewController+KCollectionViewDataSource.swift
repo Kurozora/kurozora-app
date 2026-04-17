@@ -146,7 +146,7 @@ extension LiteratureDetailsCollectionViewController {
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
 			let literatureDetailSection = self.snapshot.sectionIdentifiers[indexPath.section]
-			let sectionTitle = literatureDetailSection != .moreByStudio ? literatureDetailSection.stringValue : "\(literatureDetailSection.stringValue) \(self.literature.attributes.studio ?? Trans.studio)"
+			let sectionTitle = literatureDetailSection != .moreByStudio ? literatureDetailSection.stringValue : "\(literatureDetailSection.stringValue) \(self.literature.attributes.studio ?? L10n.studio)"
 
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			titleHeaderCollectionReusableView.delegate = self

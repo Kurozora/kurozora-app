@@ -50,7 +50,7 @@ extension WorkflowController {
 			return true
 		}
 
-		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
+		let subscribeAction = UIAlertAction(title: L10n.subscribe, style: .default) { [weak self] _ in
 			guard let self = self else { return }
 			self.presentSubscribeView(on: viewController)
 		}
@@ -67,12 +67,12 @@ extension WorkflowController {
 			return true
 		}
 
-		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
+		let subscribeAction = UIAlertAction(title: L10n.subscribe, style: .default) { [weak self] _ in
 			guard let self = self else { return }
 			self.presentSubscribeView(on: viewController)
 		}
 
-		let proAction = UIAlertAction(title: Trans.pro, style: .default) { [weak self] _ in
+		let proAction = UIAlertAction(title: L10n.pro, style: .default) { [weak self] _ in
 			guard let self = self else { return }
 			self.presentTipJarView(on: viewController)
 		}

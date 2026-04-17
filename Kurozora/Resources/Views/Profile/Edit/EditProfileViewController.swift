@@ -213,13 +213,13 @@ class EditProfileViewController: KViewController {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingUpdate {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.update, style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: L10n.update, style: .default) { _ in
 					self.updateProfileDetails()
 				})
 			}
 
 			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.discard, style: .destructive) { _ in
 				self.cancelProfileEdit()
 			})
 		}

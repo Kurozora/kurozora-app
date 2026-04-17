@@ -66,7 +66,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.becomeASubscriber
+		self.title = L10n.becomeASubscriber
 
 		// Disable refresh control
 		self._prefersRefreshControlDisabled = true

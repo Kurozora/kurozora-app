@@ -21,7 +21,7 @@ class SynopsisViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.synopsis
+		self.title = L10n.synopsis
 
 		self.configureView()
 

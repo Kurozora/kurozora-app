@@ -40,12 +40,12 @@ class KSearchController: UISearchController {
 		if let viewController = self.viewController {
 			switch viewController.searchViewKind {
 			case .single:
-				self.searchBar.placeholder = Trans.search
+				self.searchBar.placeholder = L10n.search
 				self.searchBar.showsScopeBar = false
 				self.searchBar.scopeButtonTitles = [KKSearchScope.kurozora.stringValue]
 			case .multiple:
 				#if targetEnvironment(macCatalyst)
-				self.searchBar.placeholder = Trans.search
+				self.searchBar.placeholder = L10n.search
 				#else
 				self.searchBar.placeholder = "Anime, Manga, Games and More"
 				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)

@@ -94,7 +94,7 @@ class SettingsTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.settings
+		self.title = L10n.settings
 
 		// Stop activity indicator and disable refresh control
 		self._prefersActivityIndicatorHidden = true

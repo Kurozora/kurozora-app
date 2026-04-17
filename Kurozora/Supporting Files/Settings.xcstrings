@@ -1,0 +1,222 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Add Sticker to Signal" : {
+      "comment" : "The string for the 'Add Sticker to Signal' settings option."
+    },
+    "Add Sticker to Telegram" : {
+      "comment" : "The string for the 'Add Sticker to Telegram' settings option."
+    },
+    "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels." : {
+      "comment" : "A short description for the sounds and haptics settings header."
+    },
+    "Allow Notifications" : {
+      "comment" : "The title string for the 'Allow Notifications' settings."
+    },
+    "Animations" : {
+      "comment" : "The string for the 'Animations' settings header."
+    },
+    "App Icon" : {
+      "comment" : "The title string for the 'App Icon' settings."
+    },
+    "Chime & Sound Effects" : {
+      "comment" : "The string for the 'Chime & Sound Effects' settings option."
+    },
+    "Chime on Startup" : {
+      "comment" : "The string for the 'Chime on Startup' settings option."
+    },
+    "Chime Sound" : {
+      "comment" : "The string for the 'Chime Sound' settings option."
+    },
+    "Clear All" : {
+      "comment" : "The title string for the 'Clear All' destructive button."
+    },
+    "Clear all Cache?" : {
+      "comment" : "The title string for the 'Clear all Cache?' alert."
+    },
+    "Cloudless." : {
+      "comment" : "The string for sky theme description."
+    },
+    "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences." : {
+      "comment" : "A short description for the motion settings header."
+    },
+    "Customize how your library is organized by setting the default sort order for each tracking status and media type." : {
+      "comment" : "A short description for the library settings header."
+    },
+    "Delete Account" : {
+      "comment" : "The title string for the 'Delete Account' settings button."
+    },
+    "Delete Library" : {
+      "comment" : "The title string for the 'Delete Library' settings."
+    },
+    "Display & Blindness" : {
+      "comment" : "The string for the 'Display & Blindness' settings option."
+    },
+    "Easy on the eyes." : {
+      "comment" : "The string for night theme description."
+    },
+    "Face ID & Passcode" : {
+      "comment" : "The string for the 'Face ID & Passcode' settings option."
+    },
+    "Follow us on GitHub" : {
+      "comment" : "The string for the 'Follow us on GitHub' settings option."
+    },
+    "Follow us on Mastodon" : {
+      "comment" : "The string for the 'Follow us on Mastodon' settings option."
+    },
+    "Follow us on Twitter" : {
+      "comment" : "The string for the 'Follow us on Twitter' settings option."
+    },
+    "Get off my lawn!" : {
+      "comment" : "The string for grass theme description."
+    },
+    "Haptics" : {
+      "comment" : "The string for the 'Haptics' settings option."
+    },
+    "Import Library" : {
+      "comment" : "The title string for the 'Import Library' settings."
+    },
+    "In full bloom." : {
+      "comment" : "The string for sakura theme description."
+    },
+    "Join our Discord Community" : {
+      "comment" : "The string for the 'Join our Discord Community' settings option."
+    },
+    "Keys Manager" : {
+      "comment" : "The string for the 'Keys Manager' settings option."
+    },
+    "Kurozora Account, Sign in with Apple & Library Import" : {
+      "comment" : "The sub-headline string for the account settings option when signed in."
+    },
+    "Library Import" : {
+      "comment" : "The string for the 'library import' notification type"
+    },
+    "Manage Active Sessions" : {
+      "comment" : "The title string for the 'Manage Active Sessions' settings."
+    },
+    "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together." : {
+      "comment" : "A short description for the notifications settings header."
+    },
+    "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing." : {
+      "comment" : "A short description for the cache settings header."
+    },
+    "New Session" : {
+      "comment" : "The string for the 'new session' notification type"
+    },
+    "Notification Grouping" : {
+      "comment" : "The title string for the 'Notification Grouping' settings."
+    },
+    "Optic ID & Passcode" : {
+      "comment" : "The string for the 'Optic ID & Passcode' settings option."
+    },
+    "Rate us on App Store" : {
+      "comment" : "The string for the 'Rate us on App Store' settings option."
+    },
+    "Reduce Motion" : {
+      "comment" : "The string for the 'Reduce Motion' settings option."
+    },
+    "Reduce the intensity of animations, and motion effects throughout Kurozora." : {
+      "comment" : "The footer string for the 'Reduce Motion' settings option."
+    },
+    "Request Refund" : {
+      "comment" : "The string for the 'Request Refund' settings option."
+    },
+    "Require authentication to unlock the app and choose how frequently you need to verify your identity." : {
+      "comment" : "A short description for the authentication settings header."
+    },
+    "Restore Purchase" : {
+      "comment" : "The string for the 'Restore Purchase' settings option."
+    },
+    "Review your privacy settings, manage app permissions in the Settings app, and access legal information." : {
+      "comment" : "A short description for the privacy settings header."
+    },
+    "Rise and shine." : {
+      "comment" : "The string for day theme description."
+    },
+    "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback." : {
+      "comment" : "A short description for the browser settings header."
+    },
+    "Setup Kurozora Account and more." : {
+      "comment" : "The sub-headline string for the account settings option when not signed in."
+    },
+    "Sign in to your Kurozora account" : {
+      "comment" : "The headline string for the account settings option."
+    },
+    "Sign in with Apple" : {
+      "comment" : "The title string for the 'Sign in with Apple' settings."
+    },
+    "Sign Out" : {
+      "comment" : "The title string for the 'Sign Out' settings button."
+    },
+    "Sound" : {
+      "comment" : "The string for the 'Sound' settings option."
+    },
+    "Sounds" : {
+      "comment" : "The string for the 'Sounds' settings option."
+    },
+    "Sounds & Haptics" : {
+      "comment" : "The string for the 'Sounds & Haptics' settings option."
+    },
+    "Splash Screen" : {
+      "comment" : "The string for the 'Splash Screen' settings option."
+    },
+    "Subscribe to Reminders" : {
+      "comment" : "The string for the 'Subscribe to Reminders' settings option."
+    },
+    "Subscription Update" : {
+      "comment" : "The string for the 'subscription update' notification type"
+    },
+    "Switch Account" : {
+      "comment" : "The string for the 'Switch Account' settings option."
+    },
+    "Sync With Device Settings" : {
+      "comment" : "The string for the 'Sync With Device Settings' settings option."
+    },
+    "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again." : {
+      "comment" : "The message string for the cache section footer."
+    },
+    "The official Kurozora theme." : {
+      "comment" : "The string for default theme description."
+    },
+    "Theme Store" : {
+      "comment" : "The title string for the 'Theme Store Grouping' settings."
+    },
+    "Timezone" : {
+      "comment" : "The title string for the 'Timezone' settings."
+    },
+    "Tip Jar" : {
+      "comment" : "The string for the 'Tip Jar' settings option."
+    },
+    "Touch ID & Passcode" : {
+      "comment" : "The string for the 'Touch ID & Passcode' settings option."
+    },
+    "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app." : {
+      "comment" : "The footer string for the haptics settings option."
+    },
+    "Unlock Features" : {
+      "comment" : "The string for the 'Unlock Features' settings option."
+    },
+    "User Interface Sounds" : {
+      "comment" : "The string for the 'User Interface Sounds' settings option."
+    },
+    "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions." : {
+      "comment" : "A short description for the keys manager settings header."
+    },
+    "View Message Re-share" : {
+      "comment" : "The string for the 'view message re-share' notification action."
+    },
+    "View Message Reply" : {
+      "comment" : "The string for the 'view message reply' notification action."
+    },
+    "View Profile" : {
+      "comment" : "The string for the 'view profile' notification action."
+    },
+    "View Sessions" : {
+      "comment" : "The string for the 'view sessions' notification action."
+    },
+    "View Show Details" : {
+      "comment" : "The string for the 'view show details' notification action."
+    }
+  },
+  "version" : "1.0"
+}

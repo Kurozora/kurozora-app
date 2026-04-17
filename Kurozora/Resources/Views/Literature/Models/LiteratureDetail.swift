@@ -28,19 +28,19 @@ extension LiteratureDetail {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.rank
+				return L10n.rank
 			case .tvRating:
-				return Trans.tvRating
+				return L10n.tvRating
 			case .studio:
-				return Trans.studio
+				return L10n.studio
 			case .country:
-				return Trans.country
+				return L10n.country
 			case .language:
-				return Trans.language
+				return L10n.language
 			}
 		}
 
@@ -91,20 +91,20 @@ extension LiteratureDetail {
 				let ratingCount = literature?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .season:
-				return Trans.season
+				return L10n.season
 			case .rank:
-				return Trans.chart // e.g. Thriller — literature.attributes.popularity.genre
+				return L10n.chart // e.g. Thriller — literature.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
-				return Trans.studio
+				return L10n.studio
 			case .country:
-				return Trans.country
+				return L10n.country
 			case .language:
 				let languages = literature?.attributes.languages ?? []
 				switch languages.count - 1 {
 				case 0:
-					return Trans.language
+					return L10n.language
 				case 1:
 					return "+1 More Language"
 				default:
@@ -233,7 +233,7 @@ extension LiteratureDetail {
 			case .publicationDates:
 				return "Published"
 			case .rating:
-				return Trans.rating
+				return L10n.rating
 			case .countryOfOrigin:
 				return "Country of Origin"
 			case .languages:

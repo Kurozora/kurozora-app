@@ -14,23 +14,23 @@ extension KKSearchType {
 	var stringValue: String {
 		switch self {
 		case .characters:
-			return Trans.characters
+			return L10n.characters
 		case .episodes:
-			return Trans.episodes
+			return L10n.episodes
 		case .games:
-			return Trans.games
+			return L10n.games
 		case .literatures:
-			return Trans.literatures
+			return L10n.literatures
 		case .people:
-			return Trans.people
+			return L10n.people
 		case .shows:
-			return Trans.anime
+			return L10n.anime
 		case .songs:
-			return Trans.songs
+			return L10n.songs
 		case .studios:
-			return Trans.studios
+			return L10n.studios
 		case .users:
-			return Trans.users
+			return L10n.users
 		}
 	}
 
@@ -198,8 +198,8 @@ extension KKSearchType {
 				(key: .countryOfOrigin, value: FilterableAttribute(name: "Country of Origin", type: .singleSelection, options: CountryOfOrigin.allCases.map { countryOfOrigin in
 					return (countryOfOrigin.name, countryOfOrigin.rawValue)
 				})),
-				(key: .seasonCount, value: FilterableAttribute(name: Trans.seasons, type: .stepper, options: nil)),
-				(key: .episodeCount, value: FilterableAttribute(name: Trans.episodes, type: .stepper, options: nil)),
+				(key: .seasonCount, value: FilterableAttribute(name: L10n.seasons, type: .stepper, options: nil)),
+				(key: .episodeCount, value: FilterableAttribute(name: L10n.episodes, type: .stepper, options: nil)),
 				(key: .airDay, value: FilterableAttribute(name: "Air Day", type: .singleSelection, options: DayOfWeek.allCases.map { dayOfWeek in
 					return (dayOfWeek.name, dayOfWeek.rawValue)
 				})),

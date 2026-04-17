@@ -95,7 +95,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		self.title = "\(Trans.reCAP)’\(self.year % 100)"
+		self.title = "\(L10n.reCAP)’\(self.year % 100)"
 
 		self.configureView()
 		self.configureDataSource()
@@ -425,7 +425,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		})
 
 		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
@@ -444,7 +444,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						// Update entry in library
 						cell.libraryStatus = .none
-						button.setTitle(Trans.add.uppercased(), for: .normal)
+						button.setTitle(L10n.add.uppercased(), for: .normal)
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

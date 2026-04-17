@@ -173,15 +173,15 @@ class ProfileTableHeaderView: UIView {
 		let followStatus = user?.attributes.followStatus ?? .disabled
 		switch followStatus {
 		case .followed:
-			self.followButton.setTitle(Trans.following, for: .normal)
+			self.followButton.setTitle(L10n.following, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .notFollowed:
-			self.followButton.setTitle(Trans.follow, for: .normal)
+			self.followButton.setTitle(L10n.follow, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .disabled:
-			self.followButton.setTitle(Trans.follow, for: .normal)
+			self.followButton.setTitle(L10n.follow, for: .normal)
 			self.followButton.isHidden = true
 			self.followButton.isUserInteractionEnabled = false
 		}
@@ -243,7 +243,7 @@ class ProfileTableHeaderView: UIView {
 		self.followButton.translatesAutoresizingMaskIntoConstraints = false
 		self.followButton.isHidden = true
 		self.followButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-		self.followButton.setTitle(Trans.follow, for: .normal)
+		self.followButton.setTitle(L10n.follow, for: .normal)
 		self.followButton.highlightBackgroundColorEnabled = true
 		self.followButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
 		self.followButton.addAction(UIAction { [weak self] _ in
@@ -255,7 +255,7 @@ class ProfileTableHeaderView: UIView {
 		self.editProfileButton.translatesAutoresizingMaskIntoConstraints = false
 		self.editProfileButton.isHidden = true
 		self.editProfileButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
-		self.editProfileButton.setTitle(Trans.edit, for: .normal)
+		self.editProfileButton.setTitle(L10n.edit, for: .normal)
 		self.editProfileButton.layerCornerRadius = 12
 		self.editProfileButton.highlightBackgroundColorEnabled = true
 		self.editProfileButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
@@ -617,7 +617,7 @@ class ProfileTableHeaderView: UIView {
 		}
 
 		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: self.countValueAttributes)
-		let achievementsTitleString = NSAttributedString(string: "\n\(Trans.achievements)", attributes: self.countTitleAttributes)
+		let achievementsTitleString = NSAttributedString(string: "\n\(L10n.achievements)", attributes: self.countTitleAttributes)
 		let achievementsButtonTitle = NSMutableAttributedString()
 		achievementsButtonTitle.append(achievementsCountString)
 		achievementsButtonTitle.append(achievementsTitleString)
@@ -628,7 +628,7 @@ class ProfileTableHeaderView: UIView {
 		// Configure following & followers count
 		let followingCount = user.attributes.followingCount
 		let followingCountString = NSAttributedString(string: followingCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: self.countTitleAttributes)
+		let followingTitleString = NSAttributedString(string: L10n.profileFollowingLabel, attributes: self.countTitleAttributes)
 		let followingButtonTitle = NSMutableAttributedString()
 		followingButtonTitle.append(followingCountString)
 		followingButtonTitle.append(followingTitleString)
@@ -638,7 +638,7 @@ class ProfileTableHeaderView: UIView {
 
 		let followerCount = user.attributes.followerCount
 		let followerCountString = NSAttributedString(string: followerCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: self.countTitleAttributes)
+		let followerTitleString = NSAttributedString(string: L10n.profileFollowersLabel, attributes: self.countTitleAttributes)
 		let followersButtonTitle = NSMutableAttributedString()
 		followersButtonTitle.append(followerCountString)
 		followersButtonTitle.append(followerTitleString)
@@ -649,7 +649,7 @@ class ProfileTableHeaderView: UIView {
 		// Configure reviews count
 		let reviewsCount = user.attributes.ratingsCount
 		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
-		let reviewsTitleString = NSAttributedString(string: "\nReviews", attributes: self.countTitleAttributes)
+		let reviewsTitleString = NSAttributedString(string: L10n.profileReviewsLabel, attributes: self.countTitleAttributes)
 		let reviewsButtonTitle = NSMutableAttributedString()
 		reviewsButtonTitle.append(reviewsCountString)
 		reviewsButtonTitle.append(reviewsTitleString)

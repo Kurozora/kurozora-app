@@ -27,7 +27,7 @@ class ManageIconTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.appIcon
+		self.title = L10n.appIcon
 
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true

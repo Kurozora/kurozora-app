@@ -60,7 +60,7 @@ extension Episode {
 			let watchStatus = self.attributes.watchStatus
 
 			if watchStatus != .disabled {
-				let updateWatchStatusTitle = watchStatus == .watched ? Trans.markAsUnwatched : Trans.markAsWatched
+				let updateWatchStatusTitle = watchStatus == .watched ? L10n.markAsUnwatched : L10n.markAsWatched
 				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
 				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 
@@ -78,18 +78,18 @@ extension Episode {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: Trans.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: Trans.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.webpageURLString
 		}
-		let copyMenu = UIMenu(title: Trans.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
+		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -118,7 +118,7 @@ extension Episode {
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
 			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 		} catch let error as KKAPIError {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: error.message)
+			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: error.message)
 			print("----- Update episode watch status failed", error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -194,7 +194,7 @@ extension Episode {
 
 	private func validateIsWatched() async -> Bool {
 		if self.attributes.watchStatus == nil {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: "Please watch \(self.attributes.title) first.")
+			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please watch \(self.attributes.title) first.")
 
 			return false
 		}

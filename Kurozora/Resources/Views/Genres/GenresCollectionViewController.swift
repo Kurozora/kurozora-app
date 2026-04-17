@@ -23,7 +23,7 @@ class GenresCollectionViewController: KCollectionViewController {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh genres list!")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshGenres)
 			#endif
 			#endif
 		}
@@ -58,13 +58,13 @@ class GenresCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.browseGenres
+		self.title = L10n.browseGenres
 
 		#if DEBUG
 		// Setup refresh control
 		self._prefersRefreshControlDisabled = false
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh genres list!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshGenres)
 		#endif
 		#else
 		self._prefersRefreshControlDisabled = true
@@ -107,7 +107,7 @@ class GenresCollectionViewController: KCollectionViewController {
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing genres list...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingGenres)
 			#endif
 			#endif
 		}

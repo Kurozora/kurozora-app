@@ -30,15 +30,15 @@ extension LABiometryType {
 	var localizedSettingsName: String {
 		switch self {
 		case .faceID:
-			return Trans.faceIDPasscode
+			return L10n.faceIDPasscode
 		case .touchID:
-			return Trans.touchIDPasscode
+			return L10n.touchIDPasscode
 		case .opticID:
-			return Trans.opticIDPasscode
+			return L10n.opticIDPasscode
 		case .none:
-			return Trans.passcode
+			return L10n.passcode
 		@unknown default:
-			return Trans.passcode
+			return L10n.passcode
 		}
 	}
 

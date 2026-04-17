@@ -77,24 +77,24 @@ extension ShowDetailsCollectionViewController {
 			guard let indexPath = sender as? IndexPath else { return }
 
 			if self.snapshot.sectionIdentifiers[indexPath.section] == .moreByStudio {
-				showsListCollectionViewController.title = "\(Trans.moreBy) \(self.show.attributes.studio ?? Trans.studio)"
+				showsListCollectionViewController.title = "\(L10n.moreBy) \(self.show.attributes.studio ?? L10n.studio)"
 				showsListCollectionViewController.showIdentity = self.showIdentity
 				showsListCollectionViewController.showsListFetchType = .moreByStudio
 			} else {
-				showsListCollectionViewController.title = Trans.relatedShows
+				showsListCollectionViewController.title = L10n.relatedShows
 				showsListCollectionViewController.showIdentity = self.showIdentity
 				showsListCollectionViewController.showsListFetchType = .relatedShow
 			}
 		case .literaturesListSegue:
 			// Segue to literatures list
 			guard let literatureListCollectionViewController = destination as? LiteraturesListCollectionViewController else { return }
-			literatureListCollectionViewController.title = Trans.relatedLiteratures
+			literatureListCollectionViewController.title = L10n.relatedLiteratures
 			literatureListCollectionViewController.showIdentity = self.showIdentity
 			literatureListCollectionViewController.literaturesListFetchType = .show
 		case .gamesListSegue:
 			// Segue to games list
 			guard let gameListCollectionViewController = destination as? GamesListCollectionViewController else { return }
-			gameListCollectionViewController.title = Trans.relatedGames
+			gameListCollectionViewController.title = L10n.relatedGames
 			gameListCollectionViewController.showIdentity = self.showIdentity
 			gameListCollectionViewController.gamesListFetchType = .show
 		case .studiosListSegue:

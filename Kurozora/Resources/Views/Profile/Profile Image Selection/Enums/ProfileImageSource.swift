@@ -41,7 +41,7 @@ enum ProfileImageSource: Int, CaseIterable {
 		case .monogram:
 			return String(localized: "Monogram")
 		case .characters:
-			return Trans.characters
+			return L10n.characters
 		}
 	}
 }

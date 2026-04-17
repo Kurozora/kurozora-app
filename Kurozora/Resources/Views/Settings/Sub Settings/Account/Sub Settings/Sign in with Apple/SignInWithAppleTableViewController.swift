@@ -24,7 +24,7 @@ class SignInWithAppleTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.signInWithApple
+		self.title = L10n.signInWithApple
 
 		// Configure properties
 		self.previewImage = .Promotional.signInWithApple
@@ -122,10 +122,10 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 					}
 				} catch let error as KKAPIError {
 					self.view.endEditing(true)
-					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: error.message)
+					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)
 				} catch {
 					self.view.endEditing(true)
-					self.presentAlertController(title: Trans.Onboarding.signInErrorTitle, message: Trans.Onboarding.genericSignInErrorMessage)
+					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: L10n.Onboarding.genericSignInErrorMessage)
 				}
 			}
 
@@ -140,17 +140,17 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				message = Trans.Onboarding.appleAuthenticationFailedMessage
+				message = L10n.Onboarding.appleAuthenticationFailedMessage
 			case .invalidResponse:
-				message = Trans.Onboarding.appleInvalidResponseMessage
+				message = L10n.Onboarding.appleInvalidResponseMessage
 			case .notHandled:
-				message = Trans.Onboarding.appleAuthenticationNotHandledMessage
+				message = L10n.Onboarding.appleAuthenticationNotHandledMessage
 			default: break
 			}
 		}
 
 		if !message.isEmpty {
-			self.presentAlertController(title: Trans.error, message: message)
+			self.presentAlertController(title: L10n.error, message: message)
 		}
 	}
 }

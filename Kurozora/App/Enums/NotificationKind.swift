@@ -84,15 +84,15 @@ extension NotificationKind {
 		var titleValue: String {
 			switch self {
 			case .viewSessionDetails:
-				return Trans.viewSessions
+				return L10n.viewSessions
 			case .viewShowDetails:
-				return Trans.viewShowDetails
+				return L10n.viewShowDetails
 			case .viewProfileDetails:
-				return Trans.viewProfile
+				return L10n.viewProfile
 			case .viewFeedMessageReply:
-				return Trans.viewMessageReply
+				return L10n.viewMessageReply
 			case .viewFeedMessageReShare:
-				return Trans.viewMessageReShare
+				return L10n.viewMessageReShare
 			}
 		}
 

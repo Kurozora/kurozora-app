@@ -52,7 +52,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.navigationItem.title = Trans.library
+		self.navigationItem.title = L10n.library
 
 		// Configurations
 		self.configureView()
@@ -87,13 +87,13 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 
 	/// Configures the sort type bar button item.
 	private func configureSortTypeBarButtonItem() {
-		self.sortTypeBarButtonItem.title = Trans.sort
+		self.sortTypeBarButtonItem.title = L10n.sort
 		self.sortTypeBarButtonItem.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
 	}
 
 	/// Configures the more bar button item.
 	private func configureMoreBarButtonItem() {
-		self.moreBarButtonItem.title = Trans.more
+		self.moreBarButtonItem.title = L10n.more
 		self.moreBarButtonItem.image = UIImage(systemName: "ellipsis.circle")
 	}
 
@@ -402,7 +402,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 9.0, *) {
 			self.navigationItem.subtitle = totalCount > 0 ? "\(totalCount) Items" : nil
 		} else {
-			self.navigationItem.title = "\(Trans.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+			self.navigationItem.title = "\(L10n.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
 		}
 	}
 }

@@ -26,7 +26,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		return label
 	}()
 
-	var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Trans.more, image: UIImage(systemName: "ellipsis.circle"))
+	var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: L10n.more, image: UIImage(systemName: "ellipsis.circle"))
 
 	#if targetEnvironment(macCatalyst)
 	/// The Touch Bar item that toggles the active model's favorite status.
@@ -363,7 +363,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 			},
 			didRemove: { [weak cell, weak button] _ in
 				cell?.libraryStatus = .none
-				button?.setTitle(Trans.add.uppercased(), for: .normal)
+				button?.setTitle(L10n.add.uppercased(), for: .normal)
 			}
 		)
 	}
@@ -602,7 +602,7 @@ extension DetailsCollectionViewController {
 		)
 
 		if oldLibraryStatus != .none {
-			actionSheet.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+			actionSheet.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {

@@ -33,13 +33,13 @@ enum Sound {
 		var titleValue: String {
 			switch self {
 			case .selectChime:
-				return Trans.chimeSound
+				return L10n.chimeSound
 			case .toggleChime:
-				return Trans.chimeOnStartup
+				return L10n.chimeOnStartup
 			case .toggleUISounds:
-				return Trans.uiSounds
+				return L10n.uiSounds
 			case .toggleHaptics:
-				return Trans.haptics
+				return L10n.haptics
 			}
 		}
 	}

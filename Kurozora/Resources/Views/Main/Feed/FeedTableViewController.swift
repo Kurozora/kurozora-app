@@ -61,10 +61,10 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshExploreFeed)
 		#endif
 
-		self.title = Trans.feed
+		self.title = L10n.feed
 
 		// Configure navigation bar items
 		self.configureNavigationItems()
@@ -102,7 +102,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Configures the settings bar button item.
 	private func configureSettingsBarButtonItem() {
-		self.settingsBarButtonItem = UIBarButtonItem(title: Trans.settings, image: UIImage(systemName: "gear"), primaryAction: UIAction { [weak self] _ in
+		self.settingsBarButtonItem = UIBarButtonItem(title: L10n.settings, image: UIImage(systemName: "gear"), primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.segueToSettings()
 		})
@@ -112,7 +112,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	/// Configures the post message bar button item.
 	private func configurePostMessageBarButtonItem() {
 		self.postMessageButtonBarButtonItem = UIBarButtonItem(
-			title: Trans.postMessage,
+			title: L10n.postMessage,
 			image: UIImage(systemName: "pencil.circle"),
 			primaryAction: UIAction { [weak self] _ in
 				guard let self = self else { return }
@@ -208,7 +208,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshExploreFeed)
 		#endif
 	}
 
@@ -223,7 +223,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingExploreFeed)
 		#endif
 
 		do {

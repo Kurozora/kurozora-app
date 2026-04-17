@@ -221,46 +221,46 @@ class AccountTableViewController: SubSettingsViewController {
 		case .language:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.language,
+				title: L10n.language,
 				detail: self.selectedLanguage.value,
 				icon: .Icons.language
 			)
 		case .tvRating:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.tvRating,
+				title: L10n.tvRating,
 				detail: self.selectedTVRating.value.replacingOccurrences(of: " - .*", with: "", options: .regularExpression),
 				icon: .Icons.tvRating
 			)
 		case .timezone:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.timezone,
+				title: L10n.timezone,
 				detail: self.selectedTimezone.value.replacingOccurrences(of: ".*\\/|\\s*\\(.*\\)", with: "", options: .regularExpression),
 				icon: .Icons.globe
 			)
 		case .importLibrary:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.importLibrary,
+				title: L10n.importLibrary,
 				icon: .Icons.Brands.myAnimeList
 			)
 		case .deleteLibrary:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.deleteLibrary,
+				title: L10n.deleteLibrary,
 				icon: .Icons.libraryTrash
 			)
 		case .signInWithApple:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.signInWithAppleHeadline,
+				title: L10n.signInWithAppleHeadline,
 				icon: .Icons.Brands.apple
 			)
 		case .activeSessions:
 			self.configureSettingsCell(
 				cell,
-				title: Trans.manageActiveSessions,
+				title: L10n.manageActiveSessions,
 				icon: .Icons.session
 			)
 		case .signOut, .deleteAccount:
@@ -299,7 +299,7 @@ extension AccountTableViewController {
 			guard let destructiveSettingsCell = tableView.dequeueReusableCell(withIdentifier: DestructiveSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(DestructiveSettingsCell.reuseID)")
 			}
-			let title = row == .signOut ? Trans.signOut : Trans.deleteAccount
+			let title = row == .signOut ? L10n.signOut : L10n.deleteAccount
 			destructiveSettingsCell.configure(title: title)
 			return destructiveSettingsCell
 		default:
@@ -353,7 +353,7 @@ extension AccountTableViewController {
 			self.show(viewController, sender: nil)
 		case .signOut:
 			let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😅")
-			alertController.addAction(UIAlertAction(title: "Yes, sign me out 🤨", style: .destructive) { [weak self] _ in
+			alertController.addAction(UIAlertAction(title: L10n.signOutConfirm, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 
 				Task {
@@ -362,12 +362,12 @@ extension AccountTableViewController {
 				}
 			})
 		case .deleteAccount:
-			let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.", defaultActionButtonTitle: Trans.cancel)
+			let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.", defaultActionButtonTitle: L10n.cancel)
 			alertController.addTextField { textField in
 				textField.textType = .password
-				textField.placeholder = Trans.password
+				textField.placeholder = L10n.password
 			}
-			alertController.addAction(UIAlertAction(title: Trans.deletePermanently, style: .destructive) { [weak self] _ in
+			alertController.addAction(UIAlertAction(title: L10n.deletePermanently, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				guard let passwordTextField = alertController.textFields?.first else { return }
 				guard let password = passwordTextField.text else { return }

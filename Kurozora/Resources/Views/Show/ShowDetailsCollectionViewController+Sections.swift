@@ -65,37 +65,37 @@ extension ShowDetailsCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return Trans.header
+				return L10n.header
 			case .badges:
-				return Trans.badges
+				return L10n.badges
 			case .synopsis:
-				return Trans.synopsis
+				return L10n.synopsis
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
 			case .information:
-				return Trans.information
+				return L10n.information
 			case .seasons:
-				return Trans.seasons
+				return L10n.seasons
 			case .cast:
-				return Trans.cast
+				return L10n.cast
 			case .songs:
-				return Trans.songs
+				return L10n.songs
 			case .studios:
-				return Trans.studios
+				return L10n.studios
 			case .moreByStudio:
-				return Trans.moreBy
+				return L10n.moreBy
 			case .relatedShows:
-				return Trans.relatedShows
+				return L10n.relatedShows
 			case .relatedLiteratures:
-				return Trans.relatedLiteratures
+				return L10n.relatedLiteratures
 			case .relatedGames:
-				return Trans.relatedGames
+				return L10n.relatedGames
 			case .sosumi:
-				return Trans.copyright
+				return L10n.copyright
 			}
 		}
 

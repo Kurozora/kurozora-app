@@ -23,7 +23,7 @@ class NotificationsOptionsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.notificationGrouping
+		self.title = L10n.notificationGrouping
 
 		self.configureView()
 	}

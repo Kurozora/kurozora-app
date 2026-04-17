@@ -72,7 +72,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.characters
+		self.title = L10n.characters
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -82,7 +82,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
 		#endif
 
 		self.configureDataSource()
@@ -132,7 +132,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
 		#endif
 		#endif
 	}
@@ -146,7 +146,7 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing characters...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingCharacters)
 		#endif
 
 		switch self.charactersListFetchType {

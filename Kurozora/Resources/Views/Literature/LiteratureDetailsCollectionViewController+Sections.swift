@@ -33,33 +33,33 @@ extension LiteratureDetailsCollectionViewController {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return Trans.header
+				return L10n.header
 			case .badge:
-				return Trans.badges
+				return L10n.badges
 			case .synopsis:
-				return Trans.synopsis
+				return L10n.synopsis
 			case .rating:
-				return Trans.ratingsAndReviews
+				return L10n.ratingsAndReviews
 			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
 			case .information:
-				return Trans.information
+				return L10n.information
 			case .cast:
-				return Trans.cast
+				return L10n.cast
 			case .studios:
-				return Trans.studios
+				return L10n.studios
 			case .moreByStudio:
-				return Trans.moreBy
+				return L10n.moreBy
 			case .relatedLiteratures:
-				return Trans.relatedLiteratures
+				return L10n.relatedLiteratures
 			case .relatedShows:
-				return Trans.relatedShows
+				return L10n.relatedShows
 			case .relatedGames:
-				return Trans.relatedGames
+				return L10n.relatedGames
 			case .sosumi:
-				return Trans.copyright
+				return L10n.copyright
 			}
 		}
 

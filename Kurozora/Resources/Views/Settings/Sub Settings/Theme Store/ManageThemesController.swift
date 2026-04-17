@@ -77,7 +77,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.themeStore
+		self.title = L10n.themeStore
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -169,7 +169,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 				if User.isPro || User.isSubscribed {
 					// Add redownload action
-					let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default) { _ in
+					let redownloadAction = UIAlertAction(title: L10n.redownloadTheme, style: .default) { _ in
 						self.handleRedownloadTheme(cell)
 					}
 					redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
@@ -178,7 +178,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 				}
 
 				// Add remove action
-				let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive) { _ in
+				let removeAction = UIAlertAction(title: L10n.removeTheme, style: .destructive) { _ in
 					self.handleRemoveTheme(cell)
 					if UserSettings.currentTheme == theme.id.rawValue {
 						KThemeStyle.switchTo(style: .default)
@@ -207,8 +207,8 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		switch cell.kTheme {
 		case .other(let appTheme):
 			guard KThemeStyle.themeExist(for: appTheme) else {
-				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: Trans.cancel)
-				alertController.addAction(UIAlertAction(title: Trans.download, style: .default) { [weak self] _ in
+				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: L10n.cancel)
+				alertController.addAction(UIAlertAction(title: L10n.download, style: .default) { [weak self] _ in
 					guard let self = self else { return }
 					self.handleDownloadTheme(cell)
 				})

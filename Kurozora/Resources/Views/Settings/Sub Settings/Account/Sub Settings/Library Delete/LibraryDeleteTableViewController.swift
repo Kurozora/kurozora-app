@@ -68,17 +68,17 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 		guard let selectedLibraryKind = self.selectedLibraryKind else { return }
 
 		let alertController = self.presentAlertController(
-			title: Trans.libraryDeleteHeadline,
-			message: Trans.libraryDeleteFooter,
-			defaultActionButtonTitle: Trans.cancel
+			title: L10n.libraryDeleteHeadline,
+			message: L10n.libraryDeleteFooter,
+			defaultActionButtonTitle: L10n.cancel
 		)
 
 		alertController.addTextField { textField in
 			textField.textType = .password
-			textField.placeholder = Trans.password
+			textField.placeholder = L10n.password
 		}
 
-		alertController.addAction(UIAlertAction(title: Trans.deletePermanently, style: .destructive) { [weak self] _ in
+		alertController.addAction(UIAlertAction(title: L10n.deletePermanently, style: .destructive) { [weak self] _ in
 			guard let self = self else { return }
 			guard let passwordTextField = alertController.textFields?.first else { return }
 			guard let password = passwordTextField.text else { return }
@@ -90,7 +90,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 					_ = try await KService.clearLibrary(selectedLibraryKind, password: password)
 				} catch let error as KKAPIError {
 					await MainActor.run {
-						self.presentAlertController(title: Trans.cantDeleteLibrary, message: error.message)
+						self.presentAlertController(title: L10n.cantDeleteLibrary, message: error.message)
 						self.rightNavigationBarButton.isEnabled = false
 					}
 

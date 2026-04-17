@@ -78,7 +78,7 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCe
 		self.primaryLabel.text = studio.attributes.name
 
 		if let foundingYear = studio.attributes.foundedAt {
-			self.setSecondaryText(Trans.foundedOn(date: foundingYear.formatted(date: .abbreviated, time: .omitted)))
+			self.setSecondaryText(L10n.foundedOn(date: foundingYear.formatted(date: .abbreviated, time: .omitted)))
 		} else {
 			self.setSecondaryText(nil)
 		}

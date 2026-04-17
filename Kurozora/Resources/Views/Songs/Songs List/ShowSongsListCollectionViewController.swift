@@ -92,7 +92,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.songs
+		self.title = L10n.songs
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false

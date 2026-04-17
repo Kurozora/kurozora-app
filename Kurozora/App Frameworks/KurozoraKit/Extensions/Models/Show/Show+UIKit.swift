@@ -64,7 +64,7 @@ extension Show {
 			let hiddenStatus = self.attributes.library?.hiddenStatus
 
 			if hiddenStatus != .disabled {
-				let updateHiddenStatusTitle = hiddenStatus == .hidden ? Trans.showToPublic : Trans.hideFromPublic
+				let updateHiddenStatusTitle = hiddenStatus == .hidden ? L10n.showToPublic : L10n.hideFromPublic
 				let updateHiddenStatusImage = hiddenStatus == .hidden ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
 
 				let hideAction = UIAction(title: updateHiddenStatusTitle, image: updateHiddenStatusImage) { [weak self] _ in
@@ -83,18 +83,18 @@ extension Show {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: Trans.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: Trans.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.webpageURLString
 		}
-		let copyMenu = UIMenu(title: Trans.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
+		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -107,7 +107,7 @@ extension Show {
 		// Create "remove from library" menu
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: Trans.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
+				let removeFromLibraryAction = UIAction(title: L10n.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 
 					Task {
@@ -154,7 +154,7 @@ extension Show {
 
 	func addToLibrary() -> UIMenu {
 		let libraryStatus = self.attributes.library?.status ?? .none
-		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addToLibrary : Trans.updateLibraryStatus
+		let addToLibraryMenuTitle = libraryStatus == .none ? L10n.addToLibrary : L10n.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
@@ -330,7 +330,7 @@ extension Show {
 
 	private func validateIsInLibrary() async -> Bool {
 		if self.attributes.library?.status == nil {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
+			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}

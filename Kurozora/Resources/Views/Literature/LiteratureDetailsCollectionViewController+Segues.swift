@@ -61,24 +61,24 @@ extension LiteratureDetailsCollectionViewController {
 			guard let indexPath = sender as? IndexPath else { return }
 
 			if self.snapshot.sectionIdentifiers[indexPath.section] == .moreByStudio {
-				literaturesListCollectionViewController.title = "\(Trans.moreBy) \(self.literature.attributes.studio ?? Trans.studio)"
+				literaturesListCollectionViewController.title = "\(L10n.moreBy) \(self.literature.attributes.studio ?? L10n.studio)"
 				literaturesListCollectionViewController.literatureIdentity = self.literatureIdentity
 				literaturesListCollectionViewController.literaturesListFetchType = .moreByStudio
 			} else {
-				literaturesListCollectionViewController.title = Trans.relatedLiteratures
+				literaturesListCollectionViewController.title = L10n.relatedLiteratures
 				literaturesListCollectionViewController.literatureIdentity = self.literatureIdentity
 				literaturesListCollectionViewController.literaturesListFetchType = .relatedLiterature
 			}
 		case .showsListSegue:
 			// Segue to shows list
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
-			showsListCollectionViewController.title = Trans.relatedShows
+			showsListCollectionViewController.title = L10n.relatedShows
 			showsListCollectionViewController.literatureIdentity = self.literatureIdentity
 			showsListCollectionViewController.showsListFetchType = .literature
 		case .gamesListSegue:
 			// Segue to games list
 			guard let gamesListCollectionViewController = destination as? GamesListCollectionViewController else { return }
-			gamesListCollectionViewController.title = Trans.relatedGames
+			gamesListCollectionViewController.title = L10n.relatedGames
 			gamesListCollectionViewController.literatureIdentity = self.literatureIdentity
 			gamesListCollectionViewController.gamesListFetchType = .literature
 		case .studiosListSegue:

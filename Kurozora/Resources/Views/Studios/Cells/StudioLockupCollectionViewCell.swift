@@ -36,7 +36,7 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure secondary label
 		if let foundedDate = studio.attributes.foundedAt?.formatted(date: .abbreviated, time: .omitted) {
-			self.secondaryLabel.text = "\(Trans.founded) \(foundedDate)"
+			self.secondaryLabel.text = "\(L10n.founded) \(foundedDate)"
 		} else {
 			self.secondaryLabel.text = nil
 		}

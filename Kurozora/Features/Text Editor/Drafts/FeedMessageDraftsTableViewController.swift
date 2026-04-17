@@ -76,11 +76,11 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.drafts
+		self.title = L10n.drafts
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your drafts!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshDrafts)
 		#endif
 
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -101,7 +101,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: UIImage(systemName: "archivebox")!)
-		self.emptyBackgroundView.configureLabels(title: Trans.noDraftsTitle, detail: Trans.noDraftsDetail)
+		self.emptyBackgroundView.configureLabels(title: L10n.noDraftsTitle, detail: L10n.noDraftsDetail)
 		self.tableView.backgroundView?.alpha = 0
 	}
 
@@ -115,7 +115,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 	private func loadDrafts() {
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing drafts...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingDrafts)
 		#endif
 
 		self.drafts = DraftStore.shared.drafts(forUserSlug: self.userSlug)
@@ -125,7 +125,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your drafts!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshDrafts)
 		#endif
 	}
 
@@ -172,7 +172,7 @@ extension FeedMessageDraftsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let deleteAction = UIContextualAction(style: .destructive, title: Trans.delete) { [weak self] _, _, completionHandler in
+		let deleteAction = UIContextualAction(style: .destructive, title: L10n.delete) { [weak self] _, _, completionHandler in
 			guard
 				let self = self,
 				let uuid = self.dataSource.itemIdentifier(for: indexPath)
@@ -208,7 +208,7 @@ extension FeedMessageDraftsTableViewControllerDelegate where Self: KFeedMessageT
 // MARK: - KFeedMessageTextEditorViewDelegate
 extension KFeedMessageTextEditorViewDelegate where Self: FeedMessageDraftsTableViewControllerDelegate & UIViewController {
 	func makeDraftsMenu() -> UIMenu {
-		let draftsAction = UIAction(title: Trans.drafts, image: UIImage(systemName: "archivebox")) { [weak self] _ in
+		let draftsAction = UIAction(title: L10n.drafts, image: UIImage(systemName: "archivebox")) { [weak self] _ in
 			guard let self = self,
 				  let slug = User.current?.attributes.slug else { return }
 

@@ -77,7 +77,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = Trans.ratingsAndReviews
+		self.title = L10n.ratingsAndReviews
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -87,7 +87,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the reviews.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUserReviews)
 		#endif
 
 		self.configureDataSource()
@@ -170,7 +170,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing reviews...")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingReviews)
 		#endif
 
 		guard let user = self.user else { return }
@@ -196,7 +196,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the reviews.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUserReviews)
 		#endif
 	}
 

@@ -67,36 +67,36 @@ extension SearchResultsCollectionViewController {
 
 			switch sectionLayoutKind {
 			case .discover:
-				exploreSectionTitleCell.configure(withTitle: Trans.discover, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.discover, indexPath: indexPath, segueID: segueID)
 			case .browse:
-				exploreSectionTitleCell.configure(withTitle: Trans.browse, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.browse, indexPath: indexPath, segueID: segueID)
 			case .characters:
 				segueID = .charactersListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.characters, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.characters, indexPath: indexPath, segueID: segueID)
 			case .episodes:
 				segueID = .episodesListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.episodes, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.episodes, indexPath: indexPath, segueID: segueID)
 			case .games:
 				segueID = .gamesListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.games, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.games, indexPath: indexPath, segueID: segueID)
 			case .literatures:
 				segueID = .literaturesListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.literatures, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.literatures, indexPath: indexPath, segueID: segueID)
 			case .people:
 				segueID = .peopleListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.people, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.people, indexPath: indexPath, segueID: segueID)
 			case .songs:
 				segueID = .songsListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.songs, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.songs, indexPath: indexPath, segueID: segueID)
 			case .shows:
 				segueID = .showsListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.shows, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.shows, indexPath: indexPath, segueID: segueID)
 			case .studios:
 				segueID = .studiosListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.studios, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.studios, indexPath: indexPath, segueID: segueID)
 			case .users:
 				segueID = .usersListSegue
-				exploreSectionTitleCell.configure(withTitle: Trans.users, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: L10n.users, indexPath: indexPath, segueID: segueID)
 			}
 
 			// Return the view.

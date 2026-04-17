@@ -29,7 +29,7 @@ enum SplashScreenAnimation: Int {
 		case .none:
 			return "Disabled"
 		case .default:
-			return Trans.default
+			return L10n.default
 		case .shake:
 			return "Shake"
 		case .scale:

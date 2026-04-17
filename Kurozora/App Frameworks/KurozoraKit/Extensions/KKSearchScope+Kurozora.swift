@@ -24,7 +24,7 @@ extension KKSearchScope {
 		case .kurozora:
 			return "Kurozora"
 		case .library:
-			return Trans.library
+			return L10n.library
 		}
 	}
 }

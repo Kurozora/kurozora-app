@@ -21,8 +21,8 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.clearCache
-		self.headerTitle = Trans.cache
-		self.headerDescription = Trans.cacheHeaderDescription
+		self.headerTitle = L10n.cache
+		self.headerDescription = L10n.cacheHeaderDescription
 	}
 
 	@available(*, unavailable)
@@ -149,7 +149,7 @@ extension CacheSettingsTableViewController {
 			guard let destructiveCell = tableView.dequeueReusableCell(withIdentifier: DestructiveSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(DestructiveSettingsCell.reuseID)")
 			}
-			destructiveCell.configure(title: Trans.clearAll)
+			destructiveCell.configure(title: L10n.clearAll)
 			return destructiveCell
 		}
 	}
@@ -164,7 +164,7 @@ extension CacheSettingsTableViewController {
 
 		switch section {
 		case .cacheComponents:
-			return Trans.clearCacheFooterMessage
+			return L10n.clearCacheFooterMessage
 		case .actions:
 			return nil
 		}
@@ -190,8 +190,8 @@ extension CacheSettingsTableViewController {
 		case .cacheComponents:
 			return
 		case .actions:
-			let alertController = self.presentAlertController(title: Trans.clearAllCache, message: nil, defaultActionButtonTitle: Trans.cancel)
-			alertController.addAction(UIAlertAction(title: Trans.clearAll, style: .destructive) { [weak self] _ in
+			let alertController = self.presentAlertController(title: L10n.clearAllCache, message: nil, defaultActionButtonTitle: L10n.cancel)
+			alertController.addAction(UIAlertAction(title: L10n.clearAll, style: .destructive) { [weak self] _ in
 				Task { @MainActor in
 					guard let self = self else { return }
 					await self.clearAllCaches()
@@ -246,9 +246,9 @@ private extension CacheSettingsTableViewController {
 		var title: String {
 			switch self {
 			case .images:
-				return Trans.images
+				return L10n.images
 			case .richLinks:
-				return Trans.richLinks
+				return L10n.richLinks
 			}
 		}
 	}

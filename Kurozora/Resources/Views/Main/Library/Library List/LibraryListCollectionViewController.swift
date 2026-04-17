@@ -117,7 +117,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(libraryStatus.lowercased()) list.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(libraryStatus.lowercased()))
 		#endif
 
 		// Configure library options
@@ -280,7 +280,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(libraryStatus.lowercased()) list...")
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingLibrary(libraryStatus.lowercased()))
 			#endif
 		}
 
@@ -333,7 +333,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(libraryStatus.lowercased()) list.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(libraryStatus.lowercased()))
 		#endif
 	}
 

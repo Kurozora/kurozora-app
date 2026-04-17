@@ -61,19 +61,19 @@ enum AuthenticationInterval: Int, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .immediately:
-			return Trans.immediately
+			return L10n.immediately
 		case .thirtySeconds:
-			return Trans.thirtySeconds
+			return L10n.thirtySeconds
 		case .oneMinute:
-			return Trans.oneMinute
+			return L10n.oneMinute
 		case .twoMinutes:
-			return Trans.twoMinutes
+			return L10n.twoMinutes
 		case .threeMinutes:
-			return Trans.threeMinutes
+			return L10n.threeMinutes
 		case .fourMinutes:
-			return Trans.fourMinutes
+			return L10n.fourMinutes
 		case .fiveMinutes:
-			return Trans.fiveMinutes
+			return L10n.fiveMinutes
 		}
 	}
 
@@ -81,19 +81,19 @@ enum AuthenticationInterval: Int, CaseIterable {
 	var footerStringValue: String {
 		switch self {
 		case .immediately:
-			return Trans.immediateAuthenticationRequired
+			return L10n.immediateAuthenticationRequired
 		case .thirtySeconds:
-			return Trans.authenticationInterval("30 seconds.")
+			return L10n.authenticationInterval("30 seconds.")
 		case .oneMinute:
-			return Trans.authenticationInterval("1 minute.")
+			return L10n.authenticationInterval("1 minute.")
 		case .twoMinutes:
-			return Trans.authenticationInterval("2 minutes.")
+			return L10n.authenticationInterval("2 minutes.")
 		case .threeMinutes:
-			return Trans.authenticationInterval("3 minutes.")
+			return L10n.authenticationInterval("3 minutes.")
 		case .fourMinutes:
-			return Trans.authenticationInterval("4 minutes.")
+			return L10n.authenticationInterval("4 minutes.")
 		case .fiveMinutes:
-			return Trans.authenticationInterval("5 minutes")
+			return L10n.authenticationInterval("5 minutes")
 		}
 	}
 }

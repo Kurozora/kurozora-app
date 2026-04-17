@@ -28,13 +28,13 @@ enum AccountOnboarding: Int, CaseIterable {
 	var titleValue: String {
 		switch self {
 		case .signUp:
-			return Trans.Onboarding.signInHeadline
+			return L10n.Onboarding.signInHeadline
 		case .siwa:
-			return Trans.Onboarding.siwaHeadline
+			return L10n.Onboarding.siwaHeadline
 		case .signIn:
-			return Trans.Onboarding.signInHeadline
+			return L10n.Onboarding.signInHeadline
 		case .reset:
-			return Trans.Onboarding.forgotPasswordHeadline
+			return L10n.Onboarding.forgotPasswordHeadline
 		}
 	}
 
@@ -42,13 +42,13 @@ enum AccountOnboarding: Int, CaseIterable {
 	var subTextValue: String {
 		switch self {
 		case .signUp:
-			return Trans.Onboarding.signUpSubheadline
+			return L10n.Onboarding.signUpSubheadline
 		case .siwa:
-			return Trans.Onboarding.siwaSubheadline
+			return L10n.Onboarding.siwaSubheadline
 		case .signIn:
-			return Trans.Onboarding.signInSubheadline
+			return L10n.Onboarding.signInSubheadline
 		case .reset:
-			return Trans.Onboarding.forgotPasswordSubheadline
+			return L10n.Onboarding.forgotPasswordSubheadline
 		}
 	}
 
@@ -56,13 +56,13 @@ enum AccountOnboarding: Int, CaseIterable {
 	var navigationBarButtonTitleValue: String {
 		switch self {
 		case .signUp:
-			return Trans.Onboarding.signUpButton
+			return L10n.Onboarding.signUpButton
 		case .siwa:
-			return Trans.Onboarding.siwaButton
+			return L10n.Onboarding.siwaButton
 		case .signIn:
-			return Trans.Onboarding.signInButton
+			return L10n.Onboarding.signInButton
 		case .reset:
-			return Trans.Onboarding.forgotPasswordButton
+			return L10n.Onboarding.forgotPasswordButton
 		}
 	}
 

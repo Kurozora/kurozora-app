@@ -20,8 +20,8 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 	init() {
 		super.init(style: .insetGrouped)
 		self.headerImage = .Icons.kDefaults
-		self.headerTitle = Trans.keysManager
-		self.headerDescription = Trans.keysManagerHeaderDescription
+		self.headerTitle = L10n.keysManager
+		self.headerDescription = L10n.keysManagerHeaderDescription
 	}
 
 	@available(*, unavailable)
