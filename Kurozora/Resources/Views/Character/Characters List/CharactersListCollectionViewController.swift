@@ -9,64 +9,50 @@
 import KurozoraKit
 import UIKit
 
+/// A source of characters for ``CharactersListCollectionViewController``.
 enum CharactersListFetchType {
 	case person
 	case explore
 	case search
 }
 
-class CharactersListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of characters.
+class CharactersListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue
 	}
 
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case characterIdentity(_: CharacterIdentity)
+	}
+
 	// MARK: - Properties
 	var personIdentity: PersonIdentity?
-	var characterIdentities: [CharacterIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
+	var characterIdentities: [CharacterIdentity] = []
 	var searchQuery: String = ""
 	var charactersListFetchType: CharactersListFetchType = .search
 
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateTitle: String { "No Characters" }
+	override var emptyStateDetail: String { "Can't get characters list. Please reload the page or restart the app and check your WiFi connection." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
-
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
+	override var hasLoadedInitialData: Bool {
+		!self.characterIdentities.isEmpty
 	}
 
 	override func viewDidLoad() {
@@ -74,135 +60,65 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 
 		self.title = L10n.characters
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
 		#endif
-
-		self.configureDataSource()
-
-		if !self.characterIdentities.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchCharacters()
-			}
-		}
 	}
 
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		if self.personIdentity != nil {
-			self.nextPageURL = nil
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchCharacters()
-			}
-		}
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
-		self.emptyBackgroundView.configureLabels(title: "No Characters", detail: "Can't get characters list. Please reload the page or restart the app and check your WiFi connection.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
-		#endif
-		#endif
-	}
-
-	func fetchCharacters() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer {
+			self.endFetch()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
+			#endif
+		}
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingCharacters)
 		#endif
 
-		switch self.charactersListFetchType {
-		case .person:
-			do {
+		do {
+			switch self.charactersListFetchType {
+			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.characterIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = characterIdentityResponse.next
-				self.characterIdentities.append(contentsOf: characterIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.characterIdentities.append(contentsOf: response.data)
 				self.characterIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .explore:
-			do {
+			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.characterIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.characters?.next
-				self.characterIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.characters?.data ?? [])
+				self.nextPageURL = response.data.first?.relationships.characters?.next
+				self.characterIdentities.append(contentsOf: response.data.first?.relationships.characters?.data ?? [])
 				self.characterIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .search:
-			do {
+			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.characterIdentities = []
 				}
 
-				// Save next page url and append new data
 				self.nextPageURL = searchResponse.data.characters?.next
 				self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
 				self.characterIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
-
-		self.endFetch()
 	}
 
 	// MARK: - SectionFetchable
@@ -226,53 +142,35 @@ class CharactersListCollectionViewController: KCollectionViewController, Section
 
 		switch identifier {
 		case .characterDetailsSegue:
-			guard let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController else { return }
+			guard let destination = destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
-			characterDetailsCollectionViewController.character = character
+			destination.character = character
 		}
 	}
 }
 
-// MARK: - SectionLayoutKind
+// MARK: - KCollectionViewDataSource
 extension CharactersListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
+	override func configureDataSource() {
+		let characterCellRegistration = self.getConfiguredCharacterCell()
 
-// MARK: - ItemKind
-extension CharactersListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity)
-
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .characterIdentity(let characterIdentity):
-				hasher.combine(characterIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.characterIdentity(let characterIdentity1), .characterIdentity(let characterIdentity2)):
-				return characterIdentity1 == characterIdentity2
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
-}
 
-// MARK: - Cell Configuration
-extension CharactersListCollectionViewController {
-	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		let items: [ItemKind] = self.characterIdentities.map { .characterIdentity($0) }
+		self.snapshot.appendItems(items, toSection: .main)
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -285,8 +183,46 @@ extension CharactersListCollectionViewController {
 					}
 				}
 
-				characterLockupCollectionViewCell.configure(using: character)
+				cell.configure(using: character)
 			}
 		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension CharactersListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int((width / 140.0).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			return Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension CharactersListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let character = self.cache[indexPath] as? Character else { return }
+
+		self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		self.paginateIfNeeded(at: indexPath, totalItems: self.characterIdentities.count)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard let character = self.cache[indexPath] as? Character else { return nil }
+
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		return character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

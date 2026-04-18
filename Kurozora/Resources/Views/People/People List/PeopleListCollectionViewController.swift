@@ -9,64 +9,50 @@
 import KurozoraKit
 import UIKit
 
+/// A source of people for ``PeopleListCollectionViewController``.
 enum PeopleListFetchType {
 	case character
 	case explore
 	case search
 }
 
-class PeopleListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of people (cast / crew).
+class PeopleListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case personDetailsSegue
 	}
 
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case personIdentity(_: PersonIdentity)
+	}
+
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity?
-	var personIdentities: [PersonIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
+	var personIdentities: [PersonIdentity] = []
 	var searchQuery: String = ""
 	var peopleListFetchType: PeopleListFetchType = .search
 
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateTitle: String { "No People" }
+	override var emptyStateDetail: String { "Can't get people list. Please reload the page or restart the app and check your WiFi connection." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
-
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
+	override var hasLoadedInitialData: Bool {
+		!self.personIdentities.isEmpty
 	}
 
 	override func viewDidLoad() {
@@ -74,139 +60,65 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 
 		self.title = L10n.people
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
 		#endif
-
-		self.configureDataSource()
-
-		if !self.personIdentities.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchPeople()
-			}
-		}
 	}
 
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		if self.characterIdentity != nil {
-			self.nextPageURL = nil
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchPeople()
-			}
-		}
-	}
-
-	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.cast)
-		emptyBackgroundView.configureLabels(title: "No People", detail: "Can't get people list. Please reload the page or restart the app and check your WiFi connection.")
-
-		collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
-		#endif
-	}
-
-	func fetchPeople() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer {
+			self.endFetch()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
+			#endif
+		}
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingPeople)
 		#endif
 
-		switch self.peopleListFetchType {
-		case .character:
-			do {
+		do {
+			switch self.peopleListFetchType {
+			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.personIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = personIdentityResponse.next
-				self.personIdentities.append(contentsOf: personIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.personIdentities.append(contentsOf: response.data)
 				self.personIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .explore:
-			do {
+			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.personIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.people?.next
-				self.personIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.people?.data ?? [])
+				self.nextPageURL = response.data.first?.relationships.people?.next
+				self.personIdentities.append(contentsOf: response.data.first?.relationships.people?.data ?? [])
 				self.personIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .search:
-			do {
+			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.people], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.personIdentities = []
 				}
 
-				// Save next page url and append new data
 				self.nextPageURL = searchResponse.data.people?.next
 				self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
 				self.personIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
-
-		self.endFetch()
-
-		// Reset refresh controller title
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
-		#endif
 	}
 
 	// MARK: - SectionFetchable
@@ -230,54 +142,35 @@ class PeopleListCollectionViewController: KCollectionViewController, SectionFetc
 
 		switch identifier {
 		case .personDetailsSegue:
-			guard let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController else { return }
+			guard let destination = destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
-			personDetailsCollectionViewController.person = person
+			destination.person = person
 		}
 	}
 }
 
-// MARK: - SectionLayoutKind
+// MARK: - KCollectionViewDataSource
 extension PeopleListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
+	override func configureDataSource() {
+		let personCellRegistration = self.getConfiguredPersonCell()
 
-// MARK: - ItemKind
-extension PeopleListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .personIdentity(let personIdentity):
-				hasher.combine(personIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.personIdentity(let personIdentity1), .personIdentity(let personIdentity2)):
-				return personIdentity1 == personIdentity2
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: personCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
-}
 
-// MARK: - Cell Configuration
-extension PeopleListCollectionViewController {
-	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		let items: [ItemKind] = self.personIdentities.map { .personIdentity($0) }
+		self.snapshot.appendItems(items, toSection: .main)
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -290,8 +183,46 @@ extension PeopleListCollectionViewController {
 					}
 				}
 
-				smallLockupCollectionViewCell.configure(using: person)
+				cell.configure(using: person)
 			}
 		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension PeopleListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int((width / 140.0).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			return Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension PeopleListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let person = self.cache[indexPath] as? Person else { return }
+
+		self.show(SegueIdentifiers.personDetailsSegue, sender: person)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		self.paginateIfNeeded(at: indexPath, totalItems: self.personIdentities.count)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard let person = self.cache[indexPath] as? Person else { return nil }
+
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

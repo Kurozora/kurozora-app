@@ -9,6 +9,7 @@
 import KurozoraKit
 import UIKit
 
+/// A source of studios for ``StudiosListCollectionViewController``.
 enum StudiosListFetchType {
 	case game
 	case literature
@@ -16,10 +17,21 @@ enum StudiosListFetchType {
 	case search
 }
 
-class StudiosListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of studios.
+class StudiosListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case studioDetailsSegue
+	}
+
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case studioIdentity(_: StudioIdentity)
 	}
 
 	// MARK: - Properties
@@ -30,45 +42,19 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 	var searchQuery: String = ""
 	var studiosListFetchType: StudiosListFetchType = .search
 
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateTitle: String { "No Studios" }
+	override var emptyStateDetail: String { "Can't get studios list. Please reload the page or restart the app and check your WiFi connection." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
-
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
+	override var hasLoadedInitialData: Bool {
+		!self.studioIdentities.isEmpty
 	}
 
 	override func viewDidLoad() {
@@ -76,153 +62,76 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 
 		self.title = L10n.studios
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
 		#endif
-
-		self.configureDataSource()
-
-		if !self.studioIdentities.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchStudios()
-			}
-		}
 	}
 
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		if self.showIdentity != nil || self.literatureIdentity != nil || self.gameIdentity != nil {
-			self.nextPageURL = nil
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchStudios()
-			}
-		}
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
-		self.emptyBackgroundView.configureLabels(title: "No Studios", detail: "Can't get studios list. Please reload the page or restart the app and check your WiFi connection.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
-		#endif
-	}
-
-	func fetchStudios() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer {
+			self.endFetch()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
+			#endif
+		}
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingStudios)
 		#endif
 
-		switch self.studiosListFetchType {
-		case .game:
-			guard let gameIdentity = self.gameIdentity else { return }
-			do {
-				let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
-				// Reset data if necessary
+		do {
+			switch self.studiosListFetchType {
+			case .game:
+				guard let gameIdentity = self.gameIdentity else { return }
+				let response = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = studioIdentityResponse.next
-				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .literature:
-			guard let literatureIdentity = self.literatureIdentity else { return }
-			do {
-				let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
-				// Reset data if necessary
+			case .literature:
+				guard let literatureIdentity = self.literatureIdentity else { return }
+				let response = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = studioIdentityResponse.next
-				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .show:
-			guard let showIdentity = self.showIdentity else { return }
-			do {
-				let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
-				// Reset data if necessary
+			case .show:
+				guard let showIdentity = self.showIdentity else { return }
+				let response = try await KService.getStudios(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = studioIdentityResponse.next
-				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .search:
-			do {
+			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.studioIdentities = []
 				}
 
-				// Save next page url and append new data
 				self.nextPageURL = searchResponse.data.studios?.next
 				self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
 				self.studioIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
-
-		self.endFetch()
-
-		// Reset refresh controller title
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
-		#endif
 	}
 
 	// MARK: - SectionFetchable
@@ -246,54 +155,35 @@ class StudiosListCollectionViewController: KCollectionViewController, SectionFet
 
 		switch identifier {
 		case .studioDetailsSegue:
-			guard let studioDetailsCollectionViewController = destination as? StudioDetailsCollectionViewController else { return }
+			guard let destination = destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
-			studioDetailsCollectionViewController.studio = studio
+			destination.studio = studio
 		}
 	}
 }
 
-// MARK: - SectionLayoutKind
+// MARK: - KCollectionViewDataSource
 extension StudiosListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
+	override func configureDataSource() {
+		let studioCellRegistration = self.getConfiguredStudioCell()
 
-// MARK: - ItemKind
-extension StudiosListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `StudioIdentity` object.
-		case studioIdentity(_: StudioIdentity)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .studioIdentity(let studioIdentity):
-				hasher.combine(studioIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.studioIdentity(let studioIdentity1), .studioIdentity(let studioIdentity2)):
-				return studioIdentity1 == studioIdentity2
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: studioCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
-}
 
-// MARK: - Cell Configuration
-extension StudiosListCollectionViewController {
-	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: StudioLockupCollectionViewCell.nib) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		let items: [ItemKind] = self.studioIdentities.map { .studioIdentity($0) }
+		self.snapshot.appendItems(items, toSection: .main)
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: StudioLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -306,8 +196,46 @@ extension StudiosListCollectionViewController {
 					}
 				}
 
-				studioLockupCollectionViewCell.configure(using: studio)
+				cell.configure(using: studio)
 			}
 		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension StudiosListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int(width >= 414.0 ? (width / 384.0).rounded() : (width / 284.0).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			return Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension StudiosListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let studio = self.cache[indexPath] as? Studio else { return }
+
+		self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		self.paginateIfNeeded(at: indexPath, totalItems: self.studioIdentities.count)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard let studio = self.cache[indexPath] as? Studio else { return nil }
+
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

@@ -9,139 +9,63 @@
 import KurozoraKit
 import UIKit
 
-class SeasonsListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of seasons for a given show.
+class SeasonsListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case episodesListSegue
 	}
 
-	// MARK: - Properties
-	var showIdentity: ShowIdentity?
-	var seasonIdentities: [SeasonIdentity] = [] {
-		didSet {
-			self.updateDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
 	}
 
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case seasonIdentity(_: SeasonIdentity)
+	}
+
+	// MARK: - Properties
+	var showIdentity: ShowIdentity?
+	var seasonIdentities: [SeasonIdentity] = []
+
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.seasons }
+	override var emptyStateTitle: String { "No Seasons" }
+	override var emptyStateDetail: String { "This show doesn't have seasons yet. Please check back again later." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
+	override var hasLoadedInitialData: Bool {
+		!self.seasonIdentities.isEmpty
 	}
 
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		self.title = L10n.seasons
 
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
 		#endif
-
-		self.configureDataSource()
-
-		// Fetch seasons
-		if !self.seasonIdentities.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchSeasons()
-			}
-		}
 	}
 
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		if self.showIdentity != nil {
-			self.nextPageURL = nil
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchSeasons()
-			}
-		}
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.seasons)
-		self.emptyBackgroundView.configureLabels(title: "No Seasons", detail: "This show doesn't have seasons yet. Please check back again later.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
-		#endif
-		#endif
-	}
-
-	/// Fetch seasons for the current show.
-	func fetchSeasons() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer {
+			self.endFetch()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
+			#endif
+		}
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingSeasons)
@@ -149,22 +73,18 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 		do {
 			guard let showIdentity = self.showIdentity else { return }
-			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let response = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-			// Reset data if necessary
 			if self.nextPageURL == nil {
 				self.seasonIdentities = []
 			}
 
-			// Save next page url and append new data
-			self.nextPageURL = seasonIdentityResponse.next
-			self.seasonIdentities.append(contentsOf: seasonIdentityResponse.data)
+			self.nextPageURL = response.next
+			self.seasonIdentities.append(contentsOf: response.data)
 			self.seasonIdentities.removeDuplicates()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.endFetch()
 	}
 
 	// MARK: - SectionFetchable
@@ -188,55 +108,36 @@ class SeasonsListCollectionViewController: KCollectionViewController, SectionFet
 
 		switch identifier {
 		case .episodesListSegue:
-			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
+			guard let destination = destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
-			episodesListCollectionViewController.season = season
-			episodesListCollectionViewController.episodesListFetchType = .season
+			destination.season = season
+			destination.episodesListFetchType = .season
 		}
 	}
 }
 
-// MARK: - SectionLayoutKind
+// MARK: - KCollectionViewDataSource
 extension SeasonsListCollectionViewController {
-	/// List of season section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
-	}
-}
+	override func configureDataSource() {
+		let posterCellRegistration = self.getConfiguredSeasonCell()
 
-// MARK: - ItemKind
-extension SeasonsListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `SeasonIdentity` object.
-		case seasonIdentity(_: SeasonIdentity)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .seasonIdentity(let seasonIdentity):
-				hasher.combine(seasonIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.seasonIdentity(let seasonIdentity1), .seasonIdentity(let seasonIdentity2)):
-				return seasonIdentity1 == seasonIdentity2
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: posterCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
-}
 
-// MARK: - Cell Configuration
-extension SeasonsListCollectionViewController {
-	func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: SeasonLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		let items: [ItemKind] = self.seasonIdentities.map { .seasonIdentity($0) }
+		self.snapshot.appendItems(items, toSection: .main)
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredSeasonCell() -> UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, ItemKind>(cellNib: SeasonLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -249,8 +150,48 @@ extension SeasonsListCollectionViewController {
 					}
 				}
 
-				smallLockupCollectionViewCell.configure(using: season)
+				cell.configure(using: season)
 			}
 		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension SeasonsListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			return Layouts.seasonsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension SeasonsListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let season = self.cache[indexPath] as? Season else { return }
+
+		self.show(SegueIdentifiers.episodesListSegue, sender: season)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		self.paginateIfNeeded(at: indexPath, totalItems: self.seasonIdentities.count)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard
+			let season = self.cache[indexPath] as? Season,
+			let collectionViewCell = collectionView.cellForItem(at: indexPath) as? SeasonLockupCollectionViewCell
+		else { return nil }
+
+		return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell.contentView, barButtonItem: nil)
 	}
 }

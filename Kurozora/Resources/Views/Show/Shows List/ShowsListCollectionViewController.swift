@@ -6,9 +6,10 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
+/// A source of shows for ``ShowsListCollectionViewController``.
 enum ShowsListFetchType {
 	case game
 	case literature
@@ -22,10 +23,22 @@ enum ShowsListFetchType {
 	case upcoming
 }
 
-class ShowsListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of shows (or related shows).
+class ShowsListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
+	}
+
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case showIdentity(_: ShowIdentity)
+		case relatedShow(_: RelatedShow)
 	}
 
 	// MARK: - Properties
@@ -38,255 +51,148 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
 	var showIdentities: [ShowIdentity] = []
-
 	var relatedShows: [RelatedShow] = []
 
 	var searchQuery: String = ""
 	var showsListFetchType: ShowsListFetchType = .search
 
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.animeLibrary }
+	override var emptyStateTitle: String { "No Shows" }
+	override var emptyStateDetail: String { "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
+	override var hasLoadedInitialData: Bool {
+		!self.showIdentities.isEmpty || !self.relatedShows.isEmpty
 	}
 
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Add refresh control
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		self.configureDataSource()
-
-		if !self.showIdentities.isEmpty || !self.relatedShows.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchShows()
-			}
-		}
-	}
-
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		self.nextPageURL = nil
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.animeLibrary)
-		self.emptyBackgroundView.configureLabels(title: "No Shows", detail: "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
-		#endif
-	}
-
-	/// Fetches the characters.
-	func fetchShows() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer { self.endFetch() }
 
 		do {
 			switch self.showsListFetchType {
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedShowsResponse.next
-				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.nextPageURL = response.next
+				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedShowsResponse.next
-				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.nextPageURL = response.next
+				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showIdentityResponse.next
-				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showIdentityResponse.next
-				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
 				self.nextPageURL = searchResponse.data.shows?.next
 				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let showIdentity = self.showIdentity else { return }
-				let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showIdentityResponse.next
-				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .relatedShow:
 				guard let showIdentity = self.showIdentity else { return }
-				let relatedShowsResponse = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedShowsResponse.next
-				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.nextPageURL = response.next
+				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showIdentityResponse.next
-				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .upcoming:
-				let showIdentityResponse = try await KService.getUpcomingShows(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getUpcomingShows(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showIdentityResponse.next
-				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.shows?.next
-				self.showIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.shows?.data ?? [])
+				self.nextPageURL = response.data.first?.relationships.shows?.next
+				self.showIdentities.append(contentsOf: response.data.first?.relationships.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
 			}
-
-			self.endFetch()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -314,9 +220,143 @@ class ShowsListCollectionViewController: KCollectionViewController, SectionFetch
 
 		switch identifier {
 		case .showDetailsSegue:
-			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
+			guard let destination = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.show = show
+			destination.show = show
+		}
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension ShowsListCollectionViewController {
+	override func configureDataSource() {
+		let smallLockupCellRegistration = self.getConfiguredSmallCell()
+		let upcomingLockupCellRegistration = self.getConfiguredUpcomingCell()
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] collectionView, indexPath, itemKind in
+			guard let self = self else { return nil }
+
+			switch self.showsListFetchType {
+			case .upcoming:
+				return collectionView.dequeueConfiguredReusableCell(using: upcomingLockupCellRegistration, for: indexPath, item: itemKind)
+			default:
+				return collectionView.dequeueConfiguredReusableCell(using: smallLockupCellRegistration, for: indexPath, item: itemKind)
+			}
+		}
+	}
+
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		switch self.showsListFetchType {
+		case .relatedShow, .literature, .game:
+			let items: [ItemKind] = self.relatedShows.map { .relatedShow($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		default:
+			let items: [ItemKind] = self.showIdentities.map { .showIdentity($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		}
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				cell.delegate = self
+				cell.configure(using: show)
+			case .relatedShow(let relatedShow):
+				cell.delegate = self
+				cell.configure(using: relatedShow)
+			}
+		}
+	}
+
+	private func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModel(at: indexPath)
+
+				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				cell.delegate = self
+				cell.configure(using: show)
+			default: break
+			}
+		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension ShowsListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			if self.showsListFetchType == .upcoming {
+				return Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			}
+
+			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension ShowsListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let show = self.cache[indexPath] as? Show
+		let relatedShow = self.relatedShows[safe: indexPath.item]?.show
+		guard let show = show ?? relatedShow else { return }
+
+		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		switch self.showsListFetchType {
+		case .relatedShow, .literature, .game:
+			self.paginateIfNeeded(at: indexPath, totalItems: self.relatedShows.count)
+		default:
+			self.paginateIfNeeded(at: indexPath, totalItems: self.showIdentities.count)
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
+		switch self.showsListFetchType {
+		case .relatedShow, .literature, .game:
+			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		default:
+			guard let show = self.cache[indexPath] as? Show else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }
@@ -334,17 +374,14 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: value, modelID: show.id)
-
 					show.attributes.library?.update(using: libraryUpdateResponse.data)
 
-					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
 
 					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
-					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 				} catch let error as KKAPIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
@@ -360,7 +397,6 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: show.id)
 						show.attributes.library?.update(using: libraryUpdateResponse.data)
 
-						// Update entry in library
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(), for: .normal)
 
@@ -374,7 +410,6 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			})
 		}
 
-		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = button
 			popoverController.sourceRect = button.bounds
@@ -388,102 +423,8 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
+
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
-	}
-}
-
-// MARK: - SectionLayoutKind
-extension ShowsListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		// MARK: - Cases
-		/// The main section.
-		case main = 0
-	}
-}
-
-// MARK: - ItemKind
-extension ShowsListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity)
-
-		/// Indicates the item kind contains a `RelatedShow` object.
-		case relatedShow(_: RelatedShow)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .showIdentity(let showIdentity):
-				hasher.combine(showIdentity)
-			case .relatedShow(let relatedShow):
-				hasher.combine(relatedShow)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.showIdentity(let showIdentity1), .showIdentity(let showIdentity2)):
-				return showIdentity1 == showIdentity2
-			case (.relatedShow(let relatedShow1), .relatedShow(let relatedShow2)):
-				return relatedShow1 == relatedShow2
-			default:
-				return false
-			}
-		}
-	}
-}
-
-// MARK: - Cell Configuration
-extension ShowsListCollectionViewController {
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			case .relatedShow(let relatedShow):
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: relatedShow)
-			}
-		}
-	}
-
-	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
 	}
 }

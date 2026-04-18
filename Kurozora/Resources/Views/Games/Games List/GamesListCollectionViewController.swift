@@ -9,6 +9,7 @@
 import KurozoraKit
 import UIKit
 
+/// A source of games for ``GamesListCollectionViewController``.
 enum GamesListFetchType {
 	case show
 	case literature
@@ -22,10 +23,22 @@ enum GamesListFetchType {
 	case upcoming
 }
 
-class GamesListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of games (or related games).
+class GamesListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case gameDetailsSegue
+	}
+
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case gameIdentity(_: GameIdentity)
+		case relatedGame(_: RelatedGame)
 	}
 
 	// MARK: - Properties
@@ -38,255 +51,148 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 	var exploreCategoryIdentity: ExploreCategoryIdentity?
 
 	var gameIdentities: [GameIdentity] = []
-
 	var relatedGames: [RelatedGame] = []
 
 	var searchQuery: String = ""
 	var gamesListFetchType: GamesListFetchType = .search
 
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.gameLibrary }
+	override var emptyStateTitle: String { "No Games" }
+	override var emptyStateDetail: String { "Can't get games list. Please refresh the page or restart the app and check your WiFi connection." }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
+	override var hasLoadedInitialData: Bool {
+		!self.gameIdentities.isEmpty || !self.relatedGames.isEmpty
 	}
 
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Add refresh control
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		self.configureDataSource()
-
-		if !self.gameIdentities.isEmpty || !self.relatedGames.isEmpty {
-			self.endFetch()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchGames()
-			}
-		}
-	}
-
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		self.nextPageURL = nil
-	}
-
-	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.gameLibrary)
-		self.emptyBackgroundView.configureLabels(title: "No Games", detail: "Can't get games list. Please refresh the page or restart the app and check your WiFi connection.")
-
-		self.collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
-		#endif
-	}
-
-	/// Fetches the characters.
-	func fetchGames() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
+	override func fetchItems() async {
+		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
+
+		defer { self.endFetch() }
 
 		do {
 			switch self.gamesListFetchType {
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedGames(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedGames = []
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedGamesResponse.next
-				self.relatedGames.append(contentsOf: relatedGamesResponse.data)
+				self.nextPageURL = response.next
+				self.relatedGames.append(contentsOf: response.data)
 				self.relatedGames.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedGames(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedGames = []
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedGamesResponse.next
-				self.relatedGames.append(contentsOf: relatedGamesResponse.data)
+				self.nextPageURL = response.next
+				self.relatedGames.append(contentsOf: response.data)
 				self.relatedGames.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = gameIdentityResponse.next
-				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.gameIdentities.append(contentsOf: response.data)
 				self.gameIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getGames(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = gameIdentityResponse.next
-				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.gameIdentities.append(contentsOf: response.data)
 				self.gameIdentities.removeDuplicates()
 			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedGames = []
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
 				self.nextPageURL = searchResponse.data.games?.next
 				self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
 				self.gameIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let gameIdentityResponse = try await KService.getMoreByStudio(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getMoreByStudio(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = gameIdentityResponse.next
-				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.gameIdentities.append(contentsOf: response.data)
 				self.gameIdentities.removeDuplicates()
 			case .relatedGame:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let relatedGamesResponse = try await KService.getRelatedGames(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getRelatedGames(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedGames = []
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = relatedGamesResponse.next
-				self.relatedGames.append(contentsOf: relatedGamesResponse.data)
+				self.nextPageURL = response.next
+				self.relatedGames.append(contentsOf: response.data)
 				self.relatedGames.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let gameIdentityResponse = try await KService.getGames(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getGames(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = gameIdentityResponse.next
-				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.gameIdentities.append(contentsOf: response.data)
 				self.gameIdentities.removeDuplicates()
 			case .upcoming:
-				let gameIdentityResponse = try await KService.getUpcomingGames(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getUpcomingGames(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = gameIdentityResponse.next
-				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.nextPageURL = response.next
+				self.gameIdentities.append(contentsOf: response.data)
 				self.gameIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.relatedGames = []
 					self.gameIdentities = []
 				}
 
-				// Save next page url and append new data
-				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.games?.next
-				self.gameIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.games?.data ?? [])
+				self.nextPageURL = response.data.first?.relationships.games?.next
+				self.gameIdentities.append(contentsOf: response.data.first?.relationships.games?.data ?? [])
 				self.gameIdentities.removeDuplicates()
 			}
-
-			self.endFetch()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -314,9 +220,143 @@ class GamesListCollectionViewController: KCollectionViewController, SectionFetch
 
 		switch identifier {
 		case .gameDetailsSegue:
-			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
+			guard let destination = destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
-			gameDetailCollectionViewController.game = game
+			destination.game = game
+		}
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension GamesListCollectionViewController {
+	override func configureDataSource() {
+		let gameLockupCellRegistration = self.getConfiguredGameCell()
+		let upcomingLockupCellRegistration = self.getConfiguredUpcomingCell()
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] collectionView, indexPath, itemKind in
+			guard let self = self else { return nil }
+
+			switch self.gamesListFetchType {
+			case .upcoming:
+				return collectionView.dequeueConfiguredReusableCell(using: upcomingLockupCellRegistration, for: indexPath, item: itemKind)
+			default:
+				return collectionView.dequeueConfiguredReusableCell(using: gameLockupCellRegistration, for: indexPath, item: itemKind)
+			}
+		}
+	}
+
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		switch self.gamesListFetchType {
+		case .relatedGame, .show, .literature:
+			let items: [ItemKind] = self.relatedGames.map { .relatedGame($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		default:
+			let items: [ItemKind] = self.gameIdentities.map { .gameIdentity($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		}
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				cell.delegate = self
+				cell.configure(using: game)
+			case .relatedGame(let relatedGame):
+				cell.delegate = self
+				cell.configure(using: relatedGame)
+			}
+		}
+	}
+
+	private func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity:
+				let game: Game? = self.fetchModel(at: indexPath)
+
+				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				cell.delegate = self
+				cell.configure(using: game)
+			default: break
+			}
+		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension GamesListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			if self.gamesListFetchType == .upcoming {
+				return Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			}
+
+			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension GamesListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let game = self.cache[indexPath] as? Game
+		let relatedGame = self.relatedGames[safe: indexPath.item]?.game
+		guard let game = game ?? relatedGame else { return }
+
+		self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		switch self.gamesListFetchType {
+		case .relatedGame, .show, .literature:
+			self.paginateIfNeeded(at: indexPath, totalItems: self.relatedGames.count)
+		default:
+			self.paginateIfNeeded(at: indexPath, totalItems: self.gameIdentities.count)
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
+		switch self.gamesListFetchType {
+		case .relatedGame, .show, .literature:
+			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		default:
+			guard let game = self.cache[indexPath] as? Game else { return nil }
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }
@@ -334,17 +374,14 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.games, withLibraryStatus: value, modelID: game.id)
-
 					game.attributes.library?.update(using: libraryUpdateResponse.data)
 
-					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
 
 					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
-					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 				} catch let error as KKAPIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
@@ -358,10 +395,8 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: game.id)
-
 						game.attributes.library?.update(using: libraryUpdateResponse.data)
 
-						// Update entry in library
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(), for: .normal)
 
@@ -375,7 +410,6 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			})
 		}
 
-		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = button
 			popoverController.sourceRect = button.bounds
@@ -386,104 +420,5 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		}
 	}
 
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-//		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-//		let game = self.games[indexPath] ?? self.relatedGames[indexPath.item].game
-//		game.toggleReminder()
-	}
-}
-
-// MARK: - SectionLayoutKind
-extension GamesListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		// MARK: - Cases
-		/// The main section.
-		case main = 0
-	}
-}
-
-// MARK: - ItemKind
-extension GamesListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity)
-
-		/// Indicates the item kind contains a `RelatedGame` object.
-		case relatedGame(_: RelatedGame)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .gameIdentity(let gameIdentity):
-				hasher.combine(gameIdentity)
-			case .relatedGame(let relatedGame):
-				hasher.combine(relatedGame)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.gameIdentity(let gameIdentity1), .gameIdentity(let gameIdentity2)):
-				return gameIdentity1 == gameIdentity2
-			case (.relatedGame(let relatedGame1), .relatedGame(let relatedGame2)):
-				return relatedGame1 == relatedGame2
-			default:
-				return false
-			}
-		}
-	}
-}
-
-// MARK: - Cell Configuration
-extension GamesListCollectionViewController {
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity:
-				let game: Game? = self.fetchModel(at: indexPath)
-
-				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game)
-			case .relatedGame(let relatedShow):
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: relatedShow)
-			}
-		}
-	}
-
-	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity:
-				let game: Game? = self.fetchModel(at: indexPath)
-
-				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.configure(using: game)
-			default: break
-			}
-		}
-	}
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {}
 }

@@ -10,139 +10,90 @@ import AVFoundation
 import KurozoraKit
 import UIKit
 
+/// A display mode for ``ShowSongsListCollectionViewController``.
 enum SongsListViewType: Int {
 	case songs = 0
 	case showSongs
 }
 
-class ShowSongsListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A list of songs for a show, grouped by song type.
+class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
 		case songDetailsSegue
 	}
 
+	/// A section layout.
+	enum SectionLayoutKind: Hashable {
+		case header(id: UUID = UUID())
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case song(_: Song, id: UUID = UUID())
+		case showSong(_: ShowSong, id: UUID = UUID())
+	}
+
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
-	var songs: [Song] = [] {
-		didSet {
-			self._prefersActivityIndicatorHidden = true
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
-
-	var showSongs: [ShowSong] = [] {
-		didSet {
-			self._prefersActivityIndicatorHidden = true
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
-
+	var songs: [Song] = []
+	var showSongs: [ShowSong] = []
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
 
+	/// The player that previews songs.
+	var player: AVPlayer?
+
+	/// The index path of the currently-playing song.
+	var currentPlayerIndexPath: IndexPath?
+
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The object that provides the interface to control the player’s transport behavior.
-	var player: AVPlayer?
+	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateTitle: String { "No show songs" }
+	override var emptyStateDetail: String { "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection." }
 
-	/// The index path of the song that's currently playing.
-	var currentPlayerIndexPath: IndexPath?
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
-		}
-	}
-
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
+	override var hasLoadedInitialData: Bool {
+		!self.showSongs.isEmpty || !self.songs.isEmpty
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		self.title = L10n.songs
-
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		self.configureDataSource()
-
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchShowSongs()
-		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-
 		self.player?.pause()
 	}
 
-	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.showIdentity != nil {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchShowSongs(forceFetch: true)
-			}
+		guard self.showIdentity != nil else { return }
+
+		self.nextPageURL = nil
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchShowSongs(forceFetch: true)
 		}
 	}
 
-	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.cast)
-		emptyBackgroundView.configureLabels(title: "No show songs", detail: "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection.")
-
-		collectionView.backgroundView?.alpha = 0
-	}
-
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfItems == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
+	override func fetchItems() async {
+		await self.fetchShowSongs()
 	}
 
 	func fetchShowSongs(forceFetch: Bool = false) async {
+		defer { self.endFetch() }
+
 		if forceFetch || (self.showSongs.isEmpty && self.songs.isEmpty) {
 			guard let showIdentity = self.showIdentity else { return }
+
 			do {
 				let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1)
 				self.showSongs = showSongResponse.data
@@ -157,20 +108,14 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 		_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
 
 		self.groupShowSongs()
-		self.updateDataSource()
-		self.toggleEmptyDataView()
 	}
 
 	func groupShowSongs() {
-		// Group show songs according to their type. (Opening, Ending, etc.)
 		var categorisedShowSongs = Dictionary(grouping: showSongs, by: { $0.attributes.type })
-
-		// Reorder grouped show songs according to the position attribute.
 		categorisedShowSongs.forEach { key, _ in
 			categorisedShowSongs[key]?.sort { $0.attributes.position < $1.attributes.position }
 		}
 
-		// Assign the new grouped show songs
 		self.showSongCategories = categorisedShowSongs
 	}
 
@@ -196,16 +141,152 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 
 		switch identifier {
 		case .showDetailsSegue:
-			// Segue to show details
-			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
+			guard let destination = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.show = show
+			destination.show = show
 		case .songDetailsSegue:
-			// Segue to song details
-			guard let songDetailsCollectionViewController = destination as? SongDetailsCollectionViewController else { return }
+			guard let destination = destination as? SongDetailsCollectionViewController else { return }
 			guard let song = sender as? Song else { return }
-			songDetailsCollectionViewController.song = song
+			destination.song = song
 		}
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension ShowSongsListCollectionViewController {
+	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
+		return [
+			TitleHeaderCollectionReusableView.self
+		]
+	}
+
+	override func configureDataSource() {
+		let musicCellConfiguration = self.getConfiguredMusicCell()
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
+		}
+
+		if self.showIdentity != nil {
+			self.dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+				guard let self = self else { return nil }
+				guard let songType = SongType(rawValue: indexPath.section) else { return nil }
+
+				let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+				exploreSectionTitleCell.delegate = self
+				exploreSectionTitleCell.configure(withTitle: "\(songType.stringValue) (\(self.showSongCategories[songType]?.count ?? 0))")
+
+				return exploreSectionTitleCell
+			}
+		}
+	}
+
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+
+		if self.showIdentity != nil {
+			SongType.allCases.forEach { songType in
+				if self.showSongCategories.index(forKey: songType) != nil {
+					let sectionHeader = SectionLayoutKind.header()
+					self.snapshot.appendSections([sectionHeader])
+
+					if let showSongCategory = self.showSongCategories[songType] {
+						let items: [ItemKind] = showSongCategory.map { .showSong($0) }
+						self.snapshot.appendItems(items, toSection: sectionHeader)
+					}
+				}
+			}
+		} else if !self.showSongs.isEmpty {
+			let sectionHeader = SectionLayoutKind.header()
+			self.snapshot.appendSections([sectionHeader])
+
+			let items: [ItemKind] = self.showSongs.map { .showSong($0) }
+			self.snapshot.appendItems(items, toSection: sectionHeader)
+		} else if !self.songs.isEmpty {
+			let sectionHeader = SectionLayoutKind.header()
+			self.snapshot.appendSections([sectionHeader])
+
+			let items: [ItemKind] = self.songs.map { .song($0) }
+			self.snapshot.appendItems(items, toSection: sectionHeader)
+		}
+
+		self.dataSource.apply(self.snapshot)
+	}
+
+	private func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			cell.delegate = self
+
+			switch itemKind {
+			case .showSong(let showSong, _):
+				let showIDExists = self.showIdentity != nil
+				cell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
+			case .song(let song, _):
+				cell.configure(using: song, at: indexPath)
+			}
+		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension ShowSongsListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int((width / 250.0).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+			let layoutSection = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+
+			if self.showIdentity != nil {
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerFooterSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				layoutSection.boundarySupplementaryItems = [sectionHeader]
+			}
+
+			return layoutSection
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension ShowSongsListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if !self.showSongs.isEmpty {
+			guard let showSong = self.showSongs[safe: indexPath.item] else { return }
+
+			self.show(SegueIdentifiers.songDetailsSegue, sender: showSong.song)
+		} else if !self.songs.isEmpty {
+			guard let song = self.songs[safe: indexPath.item] else { return }
+
+			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+
+		if !self.showSongs.isEmpty {
+			guard
+				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
+				let song = cell.song
+			else { return nil }
+
+			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: [
+				"indexPath": indexPath,
+				"song": song
+			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		} else if !self.songs.isEmpty {
+			return self.songs[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		}
+
+		return nil
 	}
 }
 
@@ -218,85 +299,7 @@ extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableVi
 extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.showSongs[safe: indexPath.item]?.show else { return }
+
 		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
-	}
-}
-
-// MARK: - SectionLayoutKind
-extension ShowSongsListCollectionViewController {
-	/// List of available Section Layout Kind types.
-	enum SectionLayoutKind: Hashable {
-		// MARK: - Cases
-		/// Indicates a header section layout type.
-		case header(id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .header(let id):
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.header(let id1), .header(let id2)):
-				return id1 == id2
-			}
-		}
-	}
-}
-
-// MARK: - ItemKind
-extension ShowSongsListCollectionViewController {
-	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `Song` object.
-		case song(_: Song, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `ShowSong` object.
-		case showSong(_: ShowSong, id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .song(let song, let id):
-				hasher.combine(song)
-				hasher.combine(id)
-			case .showSong(let showSong, let id):
-				hasher.combine(showSong)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.song(let song1, let id1), .song(let song2, let id2)):
-				return song1 == song2 && id1 == id2
-			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
-				return showSong1 == showSong2 && id1 == id2
-			default:
-				return false
-			}
-		}
-	}
-}
-
-// MARK: - Cell Configuration
-extension ShowSongsListCollectionViewController {
-	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-			musicLockupCollectionViewCell.delegate = self
-
-			switch itemKind {
-			case .showSong(let showSong, _):
-				let showIDExists = self.showIdentity != nil
-				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
-			case .song(let song, _):
-				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
-			}
-		}
 	}
 }

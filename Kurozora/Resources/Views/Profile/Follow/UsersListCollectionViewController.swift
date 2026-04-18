@@ -9,19 +9,32 @@
 import KurozoraKit
 import UIKit
 
+/// A delegate that receives the user selected in a mention picker.
 protocol UsersListMentionSelectionDelegate: AnyObject {
 	func usersListCollectionViewController(_ controller: UsersListCollectionViewController, didSelectUserForMention user: User)
 }
 
+/// A source of users for ``UsersListCollectionViewController``.
 enum UsersListFetchType {
 	case follow
 	case search
 }
 
-class UsersListCollectionViewController: KCollectionViewController, SectionFetchable {
+/// A paginated list of users.
+class UsersListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case userDetailsSegue
+	}
+
+	/// The section identifier.
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+
+	/// An item displayed in the list.
+	enum ItemKind: Hashable {
+		case userIdentity(_: UserIdentity)
 	}
 
 	// MARK: - Properties
@@ -31,52 +44,73 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 	var usersListFetchType: UsersListFetchType = .search
 	var usersListType: UsersListType = .followers
 
+	// MARK: - Mention search
+	weak var mentionSelectionDelegate: UsersListMentionSelectionDelegate?
+	private var mentionSearchController: UISearchController?
+	private var mentionSearchTask: Task<Void, Never>?
+	var isDismissingMentionSearch = false
+
+	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
-	var nextPageURL: String?
+	override var emptyStateImage: UIImage { .Empty.follow }
 
-	/// Whether a fetch request is currently in progress.
-	var isRequestInProgress: Bool = false
-
-	// Mention search
-	weak var mentionSelectionDelegate: UsersListMentionSelectionDelegate?
-
-	private var mentionSearchController: UISearchController?
-	private var mentionSearchTask: Task<Void, Never>?
-	var isDismissingMentionSearch = false
-
-	// Refresh control
-	var _prefersRefreshControlDisabled = false {
-		didSet {
-			self.setNeedsRefreshControlAppearanceUpdate()
+	override var emptyStateTitle: String {
+		switch self.usersListFetchType {
+		case .follow: return "No \(self.usersListType.stringValue)"
+		case .search: return "No Users"
 		}
 	}
 
-	override var prefersRefreshControlDisabled: Bool {
-		return self._prefersRefreshControlDisabled
-	}
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
+	override var emptyStateDetail: String {
+		let username = self.user?.attributes.username
+		switch self.usersListFetchType {
+		case .follow:
+			switch self.usersListType {
+			case .followers:
+				if self.user?.id == User.current?.id {
+					return "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
+				} else {
+					return "Be the first to follow \(username ?? "this user")!"
+				}
+			case .following:
+				if self.user?.id == User.current?.id {
+					return "Follow a user and they will show up here!"
+				} else {
+					return "\(username ?? "This user") is not following anyone yet."
+				}
+			}
+		case .search:
+			return "Can't get users list. Please reload the page or restart the app and check your WiFi connection."
 		}
 	}
 
-	override var prefersActivityIndicatorHidden: Bool {
-		return self._prefersActivityIndicatorHidden
+	override var hasLoadedInitialData: Bool {
+		!self.userIdentities.isEmpty
 	}
 
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		self.handleRefreshControl()
+		self.title = self.usersListType.stringValue
+
+		if self.mentionSelectionDelegate != nil {
+			self._prefersRefreshControlDisabled = true
+			self.configureMentionSearchController()
+		}
+
+		#if !targetEnvironment(macCatalyst)
+		switch self.usersListFetchType {
+		case .follow:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue))
+		case .search:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
+		}
+		#endif
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -89,128 +123,90 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		}
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		self.title = self.usersListType.stringValue
-
-		#if DEBUG
-		self._prefersRefreshControlDisabled = false
-		#else
-		self._prefersRefreshControlDisabled = true
-		#endif
-
-		if self.mentionSelectionDelegate != nil {
-			self._prefersRefreshControlDisabled = true
+	override func fetchItems() async {
+		if self.mentionSelectionDelegate != nil, self.searchQuery.isEmpty {
+			self._prefersActivityIndicatorHidden = true
+			return
 		}
 
-		// Add Refresh Control to Collection View
+		if self.usersListFetchType == .follow, self.user == nil {
+			return
+		}
+
+		guard !self.isRequestInProgress else { return }
+		self.isRequestInProgress = true
+
+		defer {
+			self.endFetch()
+
+			#if !targetEnvironment(macCatalyst)
+			switch self.usersListFetchType {
+			case .follow:
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue.lowercased()))
+			case .search:
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
+			}
+			#endif
+		}
+
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.stringValue.lowercased()))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
 		}
 		#endif
 
-		if self.mentionSelectionDelegate != nil {
-			self.configureMentionSearchController()
-		}
+		do {
+			switch self.usersListFetchType {
+			case .follow:
+				guard let user = self.user else { return }
+				let userIdentity = UserIdentity(id: user.id)
+				let response = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
 
-		self.configureDataSource()
+				if self.nextPageURL == nil {
+					self.userIdentities = []
+				}
 
-		// Fetch follow list.
-		if !self.userIdentities.isEmpty {
-			self.endFetch()
-		} else if self.mentionSelectionDelegate == nil || !self.searchQuery.isEmpty {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchUsers()
+				self.nextPageURL = response.next
+				self.userIdentities.append(contentsOf: response.data)
+				self.userIdentities.removeDuplicates()
+			case .search:
+				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+
+				if self.nextPageURL == nil {
+					self.userIdentities = []
+				}
+
+				self.nextPageURL = searchResponse.data.users?.next
+				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+				self.userIdentities.removeDuplicates()
 			}
-		} else {
-			self._prefersActivityIndicatorHidden = true
-		}
-	}
-
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		if self.user != nil {
-			self.nextPageURL = nil
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchUsers()
-			}
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
 	override func configureEmptyDataView() {
-		var titleString: String
-		var detailString: String
-		var buttonTitle: String = ""
-		var buttonAction: (() -> Void)?
+		super.configureEmptyDataView()
 
-		let username = self.user?.attributes.username
-		switch self.usersListFetchType {
-		case .follow:
-			titleString = "No \(self.usersListType.stringValue)"
+		guard self.usersListFetchType == .follow, self.usersListType == .followers,
+			  let user = self.user, user.id != User.current?.id
+		else { return }
 
-			switch self.usersListType {
-			case .followers:
-				if self.user?.id == User.current?.id {
-					detailString = "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
-				} else {
-					detailString = "Be the first to follow \(username ?? "this user")!"
-					buttonTitle = "＋ Follow \(username ?? "User")"
-					buttonAction = {
-						Task {
-							await self.followUser()
-						}
-					}
-				}
-			case .following:
-				if self.user?.id == User.current?.id {
-					detailString = "Follow a user and they will show up here!"
-				} else {
-					detailString = "\(username ?? "This user") is not following anyone yet."
-				}
+		let username = user.attributes.username
+		self.emptyBackgroundView.configureButton(title: "＋ Follow \(username)", handler: { [weak self] in
+			Task { [weak self] in
+				await self?.followUser()
 			}
-		case .search:
-			titleString = "No Users"
-			detailString = "Can't get users list. Please reload the page or restart the app and check your WiFi connection."
-		}
-
-		self.emptyBackgroundView.configureImageView(image: .Empty.follow)
-		self.emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
-		self.emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
-
-		self.collectionView.backgroundView?.alpha = 0
+		})
 	}
 
-	/// Fades in and out the empty data view according to the number of sections.
-	func toggleEmptyDataView() {
-		if self.collectionView.numberOfSections == 0 {
-			self.collectionView.backgroundView?.animateFadeIn()
-		} else {
-			self.collectionView.backgroundView?.animateFadeOut()
-		}
-	}
-
-	func endFetch() {
-		self.isRequestInProgress = false
-		self.updateDataSource()
-		self._prefersActivityIndicatorHidden = true
-		self.toggleEmptyDataView()
-		#if DEBUG
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.endRefreshing()
-		#endif
-		#endif
-	}
-
-	/// Sends a request to follow the user whose followers list is being viewed.
+	/// Follows the user whose followers are displayed by this controller.
 	func followUser() async {
 		guard let userID = self.user?.id else { return }
+
 		let userIdentity = UserIdentity(id: userID)
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
@@ -224,75 +220,6 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 		} catch {
 			print("-----", error.localizedDescription)
 		}
-	}
-
-	/// Fetch the follow list for the currently viewed profile.
-	func fetchUsers() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
-
-		// Set request in progress
-		self.isRequestInProgress = true
-
-		#if !targetEnvironment(macCatalyst)
-		switch self.usersListFetchType {
-		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.stringValue.lowercased()))
-		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
-		}
-		#endif
-
-		switch self.usersListFetchType {
-		case .follow:
-			guard let user = self.user else { return }
-			let userIdentity = UserIdentity(id: user.id)
-
-			do {
-				let userIdentityResponse = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
-
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.userIdentities = []
-				}
-
-				// Save next page url and append new data
-				self.nextPageURL = userIdentityResponse.next
-				self.userIdentities.append(contentsOf: userIdentityResponse.data)
-				self.userIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .search:
-			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
-
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.userIdentities = []
-				}
-
-				// Save next page url and append new data
-				self.nextPageURL = searchResponse.data.users?.next
-				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
-				self.userIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		}
-
-		self.endFetch()
-
-		// Reset refresh controller title
-		#if !targetEnvironment(macCatalyst)
-		switch self.usersListFetchType {
-		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue.lowercased()))
-		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
-		}
-		#endif
 	}
 
 	// MARK: - SectionFetchable
@@ -316,9 +243,9 @@ class UsersListCollectionViewController: KCollectionViewController, SectionFetch
 
 		switch identifier {
 		case .userDetailsSegue:
-			guard let profileTableViewController = destination as? ProfileTableViewController else { return }
+			guard let destination = destination as? ProfileTableViewController else { return }
 			guard let user = sender as? User else { return }
-			profileTableViewController.user = user
+			destination.user = user
 		}
 	}
 }
@@ -340,14 +267,15 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 	func updateSearchResults(for searchController: UISearchController) {
 		let query = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 		guard query != self.searchQuery else { return }
-		self.searchQuery = query
 
+		self.searchQuery = query
 		self.mentionSearchTask?.cancel()
 
 		guard !query.isEmpty else {
 			self.nextPageURL = nil
 			self.cache = [:]
 			self.userIdentities = []
+
 			var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 			snapshot.appendSections([.main])
 			self.dataSource.apply(snapshot)
@@ -356,7 +284,6 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 		}
 
 		self.mentionSearchTask = Task { [weak self] in
-			// Debounce 300ms to avoid excessive API calls while typing
 			do {
 				try await Task.sleep(nanoseconds: 300_000_000)
 			} catch { return }
@@ -365,7 +292,7 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 
 			self.nextPageURL = nil
 			self.cache = [:]
-			await self.fetchUsers()
+			await self.fetchItems()
 		}
 	}
 
@@ -379,68 +306,28 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 	}
 }
 
-// MARK: - UserLockupCollectionViewCellDelegate
-extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegate {
-	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let user = self.cache[indexPath] as? User
-		else { return }
-		let userIdentity = UserIdentity(id: user.id)
+// MARK: - KCollectionViewDataSource
+extension UsersListCollectionViewController {
+	override func configureDataSource() {
+		let userLockupCellRegistration = self.getConfiguredUserCell()
 
-		Task {
-			do {
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
-				user.attributes.update(using: followUpdateResponse.data)
-				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
-			} catch {
-				print("-----", error.localizedDescription)
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			return collectionView.dequeueConfiguredReusableCell(using: userLockupCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
-}
 
-// MARK: - SectionLayoutKind
-extension UsersListCollectionViewController {
-	/// List of section layout kind.
-	///
-	/// ```swift
-	/// case main = 0
-	/// ```
-	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
+	override func updateDataSource() {
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.snapshot.appendSections([.main])
+
+		let items: [ItemKind] = self.userIdentities.map { .userIdentity($0) }
+		self.snapshot.appendItems(items, toSection: .main)
+
+		self.dataSource.apply(self.snapshot)
 	}
-}
 
-// MARK: - ItemKind
-extension UsersListCollectionViewController {
-	/// List of item layout kind.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `UserIdentity` object.
-		case userIdentity(_: UserIdentity)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .userIdentity(let userIdentity):
-				hasher.combine(userIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.userIdentity(let userIdentity1), .userIdentity(let userIdentity2)):
-				return userIdentity1 == userIdentity2
-			}
-		}
-	}
-}
-
-// MARK: - Cell Configuration
-extension UsersListCollectionViewController {
-	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
+	private func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -454,11 +341,79 @@ extension UsersListCollectionViewController {
 				}
 
 				if self.mentionSelectionDelegate != nil {
-					userLockupCollectionViewCell.configureForMention(using: user)
+					cell.configureForMention(using: user)
 				} else {
-					userLockupCollectionViewCell.delegate = self
-					userLockupCollectionViewCell.configure(using: user)
+					cell.delegate = self
+					cell.configure(using: user)
 				}
+			}
+		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension UsersListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = Int(width >= 414.0 ? (width / 384.0).rounded() : (width / 284.0).rounded())
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func createLayout() -> UICollectionViewLayout? {
+		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
+			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			return Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+		}
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension UsersListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let user = self.cache[indexPath] as? User else { return }
+
+		if let mentionDelegate = self.mentionSelectionDelegate {
+			guard !self.isDismissingMentionSearch else { return }
+
+			self.isDismissingMentionSearch = true
+			mentionDelegate.usersListCollectionViewController(self, didSelectUserForMention: user)
+			self.navigationController?.dismiss(animated: true)
+		} else {
+			self.show(SegueIdentifiers.userDetailsSegue, sender: user)
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		self.paginateIfNeeded(at: indexPath, totalItems: self.userIdentities.count)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard let user = self.cache[indexPath] as? User else { return nil }
+
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		return user.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+	}
+}
+
+// MARK: - UserLockupCollectionViewCellDelegate
+extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegate {
+	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let user = self.cache[indexPath] as? User
+		else { return }
+
+		let userIdentity = UserIdentity(id: user.id)
+
+		Task {
+			do {
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+				user.attributes.update(using: followUpdateResponse.data)
+				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
 	}
