@@ -141,182 +141,144 @@ extension HomeCollectionViewController {
 	}
 
 	override func updateDataSource() {
+		let previousSnapshot = self.dataSource?.snapshot() ?? NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		var previousItemsByKey: [PreviousItemKey: ItemKind] = [:]
+
+		for section in previousSnapshot.sectionIdentifiers {
+			for item in previousSnapshot.itemIdentifiers(inSection: section) {
+				guard let id = self.identityID(from: item) else { continue }
+				previousItemsByKey[PreviousItemKey(section: section, identityID: id)] = item
+			}
+		}
+
+		var previousModelsByIdentityID: [KurozoraItemID: KurozoraItem] = [:]
+
+		for model in self.cache.values {
+			previousModelsByIdentityID[model.id] = model
+		}
+
 		self.cache = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
-		// Add explore categories
-		self.exploreCategories.forEach { exploreCategory in
-			var sectionHeader: SectionLayoutKind
-			var itemKinds: [ItemKind] = []
-
-			switch exploreCategory.attributes.exploreCategoryType {
-			case .mostPopularShows, .mostPopularLiteratures, .mostPopularGames:
-				sectionHeader = .banner(exploreCategory)
-				if let shows = exploreCategory.relationships.shows?.data {
-					itemKinds = shows.map { showIdentity in
-						return .showIdentity(showIdentity)
-					}
-				} else if let literatures = exploreCategory.relationships.literatures?.data {
-					itemKinds = literatures.map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity)
-					}
-				} else if let games = exploreCategory.relationships.games?.data {
-					itemKinds = games.map { gameIdentity in
-						return .gameIdentity(gameIdentity)
-					}
-				}
-			case .upcomingShows, .upcomingLiteratures, .upcomingGames:
-				sectionHeader = .upcoming(exploreCategory)
-				if let shows = exploreCategory.relationships.shows?.data {
-					itemKinds = shows.prefix(10).map { showIdentity in
-						return .showIdentity(showIdentity)
-					}
-				} else if let literatures = exploreCategory.relationships.literatures?.data {
-					itemKinds = literatures.prefix(10).map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity)
-					}
-				} else if let games = exploreCategory.relationships.games?.data {
-					itemKinds = games.prefix(10).map { gameIdentity in
-						return .gameIdentity(gameIdentity)
-					}
-				}
-			case .shows, .newShows:
-				switch exploreCategory.attributes.exploreCategorySize {
-				case .banner:
-					sectionHeader = .banner(exploreCategory)
-				case .large:
-					sectionHeader = .large(exploreCategory)
-				case .medium:
-					sectionHeader = .medium(exploreCategory)
-				case .small:
-					sectionHeader = .small(exploreCategory)
-				case .upcoming:
-					sectionHeader = .upcoming(exploreCategory)
-				case .video:
-					sectionHeader = .video(exploreCategory)
-				}
-				if let shows = exploreCategory.relationships.shows?.data {
-					itemKinds = shows.prefix(10).map { showIdentity in
-						return .showIdentity(showIdentity)
-					}
-				}
-			case .literatures, .newLiteratures:
-				switch exploreCategory.attributes.exploreCategorySize {
-				case .banner:
-					sectionHeader = .banner(exploreCategory)
-				case .large:
-					sectionHeader = .large(exploreCategory)
-				case .medium:
-					sectionHeader = .medium(exploreCategory)
-				case .small:
-					sectionHeader = .small(exploreCategory)
-				case .upcoming:
-					sectionHeader = .upcoming(exploreCategory)
-				case .video:
-					sectionHeader = .video(exploreCategory)
-				}
-				if let literature = exploreCategory.relationships.literatures?.data {
-					itemKinds = literature.prefix(10).map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity)
-					}
-				}
-			case .games, .newGames:
-				switch exploreCategory.attributes.exploreCategorySize {
-				case .banner:
-					sectionHeader = .banner(exploreCategory)
-				case .large:
-					sectionHeader = .large(exploreCategory)
-				case .medium:
-					sectionHeader = .medium(exploreCategory)
-				case .small:
-					sectionHeader = .small(exploreCategory)
-				case .upcoming:
-					sectionHeader = .upcoming(exploreCategory)
-				case .video:
-					sectionHeader = .video(exploreCategory)
-				}
-				if let games = exploreCategory.relationships.games?.data {
-					itemKinds = games.prefix(10).map { gameIdentity in
-						return .gameIdentity(gameIdentity)
-					}
-				}
-			case .episodes, .upNextEpisodes:
-				sectionHeader = .episode(exploreCategory)
-				if let episodes = exploreCategory.relationships.episodes?.data {
-					itemKinds = episodes.prefix(10).map { episodeIdentity in
-						return .episodeIdentity(episodeIdentity)
-					}
-				}
-			case .songs:
-				sectionHeader = .music(exploreCategory)
-				if let showSongs = exploreCategory.relationships.showSongs?.data {
-					itemKinds = showSongs.prefix(10).map { showSong in
-						return .showSong(showSong)
-					}
-				}
-			case .characters:
-				sectionHeader = .profile(exploreCategory)
-				if let characters = exploreCategory.relationships.characters?.data {
-					itemKinds = characters.prefix(10).map { character in
-						return .characterIdentity(character)
-					}
-				}
-			case .people:
-				sectionHeader = .profile(exploreCategory)
-				if let people = exploreCategory.relationships.people?.data {
-					itemKinds = people.prefix(10).map { person in
-						return .personIdentity(person)
-					}
-				}
-			case .genres:
-				sectionHeader = .medium(exploreCategory)
-				if let genres = exploreCategory.relationships.genres?.data {
-					itemKinds = genres.prefix(10).map { genre in
-						return .genreIdentity(genre)
-					}
-				}
-			case .themes:
-				sectionHeader = .medium(exploreCategory)
-				if let themes = exploreCategory.relationships.themes?.data {
-					itemKinds = themes.prefix(10).map { theme in
-						return .themeIdentity(theme)
-					}
-				}
-			case .recap:
-				sectionHeader = .small(exploreCategory)
-				if let recaps = exploreCategory.relationships.recaps?.data {
-					itemKinds = recaps.prefix(10).map { recap in
-						return .recap(recap)
-					}
-				}
+		for exploreCategory in self.exploreCategories {
+			let section = self.sectionHeader(for: exploreCategory)
+			let freshItems = self.items(for: exploreCategory)
+			let stableItems: [ItemKind] = freshItems.map { fresh in
+				guard let id = self.identityID(from: fresh) else { return fresh }
+				return previousItemsByKey[PreviousItemKey(section: section, identityID: id)] ?? fresh
 			}
 
-			self.snapshot.appendSections([sectionHeader])
-			self.snapshot.appendItems(itemKinds, toSection: sectionHeader)
+			self.snapshot.appendSections([section])
+			self.snapshot.appendItems(stableItems, toSection: section)
 		}
 
-		// Add quick links
-		let quickLinksSectionHeader = SectionLayoutKind.quickLinks()
-		let quickLinkItemKinds: [ItemKind] = self.quickLinks.map { quickLink in
-			return .quickLink(quickLink)
-		}
-		self.snapshot.appendSections([quickLinksSectionHeader])
-		self.snapshot.appendItems(quickLinkItemKinds, toSection: quickLinksSectionHeader)
+		self.appendQuickLinksSection()
+		self.appendQuickActionsSection()
+		self.appendLegalSection()
 
-		// Add quick actions
-		let quickActionsSectionHeader = SectionLayoutKind.quickActions()
-		let quickActionItemKinds: [ItemKind] = self.quickActions.map { quickAction in
-			return .quickAction(quickAction)
+		for (sectionIndex, section) in self.snapshot.sectionIdentifiers.enumerated() {
+			for (itemIndex, item) in self.snapshot.itemIdentifiers(inSection: section).enumerated() {
+				guard
+					let id = self.identityID(from: item),
+					let model = previousModelsByIdentityID[id]
+				else { continue }
+				self.cache[IndexPath(item: itemIndex, section: sectionIndex)] = model
+			}
 		}
-		self.snapshot.appendSections([quickActionsSectionHeader])
-		self.snapshot.appendItems(quickActionItemKinds, toSection: quickActionsSectionHeader)
-
-		// Add legal section
-		let legalSectionHeader = SectionLayoutKind.legal()
-		self.snapshot.appendSections([legalSectionHeader])
-		self.snapshot.appendItems([.legal()], toSection: legalSectionHeader)
 
 		self.dataSource.apply(self.snapshot)
+	}
+
+	/// Composite key pairing a section with an identity id, used to carry forward ``ItemKind`` UUIDs across rebuilds.
+	private struct PreviousItemKey: Hashable {
+		let section: SectionLayoutKind
+		let identityID: KurozoraItemID
+	}
+
+	/// Returns the section layout kind for the given explore category, honoring its configured display size.
+	///
+	/// - Parameter category: The explore category whose section header is being resolved.
+	///
+	/// - Returns: The matching ``SectionLayoutKind`` case embedding `category`.
+	private func sectionHeader(for category: ExploreCategory) -> SectionLayoutKind {
+		switch category.attributes.exploreCategoryType {
+		case .mostPopularShows, .mostPopularLiteratures, .mostPopularGames:
+			return .banner(category)
+		case .upcomingShows, .upcomingLiteratures, .upcomingGames:
+			return .upcoming(category)
+		case .shows, .newShows, .literatures, .newLiteratures, .games, .newGames:
+			switch category.attributes.exploreCategorySize {
+			case .banner: return .banner(category)
+			case .large: return .large(category)
+			case .medium: return .medium(category)
+			case .small: return .small(category)
+			case .upcoming: return .upcoming(category)
+			case .video: return .video(category)
+			}
+		case .episodes, .upNextEpisodes: return .episode(category)
+		case .songs: return .music(category)
+		case .characters, .people: return .profile(category)
+		case .genres, .themes: return .medium(category)
+		case .recap: return .small(category)
+		}
+	}
+
+	/// Returns the item kinds for the given explore category, respecting the per-category item limit.
+	///
+	/// - Parameter category: The explore category whose items are being resolved.
+	///
+	/// - Returns: The array of ``ItemKind`` values to append to the category's section.
+	private func items(for category: ExploreCategory) -> [ItemKind] {
+		switch category.attributes.exploreCategoryType {
+		case .mostPopularShows:
+			return (category.relationships.shows?.data ?? []).map { .showIdentity($0) }
+		case .mostPopularLiteratures:
+			return (category.relationships.literatures?.data ?? []).map { .literatureIdentity($0) }
+		case .mostPopularGames:
+			return (category.relationships.games?.data ?? []).map { .gameIdentity($0) }
+		case .upcomingShows, .shows, .newShows:
+			return (category.relationships.shows?.data ?? []).prefix(10).map { .showIdentity($0) }
+		case .upcomingLiteratures, .literatures, .newLiteratures:
+			return (category.relationships.literatures?.data ?? []).prefix(10).map { .literatureIdentity($0) }
+		case .upcomingGames, .games, .newGames:
+			return (category.relationships.games?.data ?? []).prefix(10).map { .gameIdentity($0) }
+		case .episodes, .upNextEpisodes:
+			return (category.relationships.episodes?.data ?? []).prefix(10).map { .episodeIdentity($0) }
+		case .songs:
+			return (category.relationships.showSongs?.data ?? []).prefix(10).map { .showSong($0) }
+		case .characters:
+			return (category.relationships.characters?.data ?? []).prefix(10).map { .characterIdentity($0) }
+		case .people:
+			return (category.relationships.people?.data ?? []).prefix(10).map { .personIdentity($0) }
+		case .genres:
+			return (category.relationships.genres?.data ?? []).prefix(10).map { .genreIdentity($0) }
+		case .themes:
+			return (category.relationships.themes?.data ?? []).prefix(10).map { .themeIdentity($0) }
+		case .recap:
+			return (category.relationships.recaps?.data ?? []).prefix(10).map { .recap($0) }
+		}
+	}
+
+	/// Appends the quick links section and its items to the current snapshot.
+	private func appendQuickLinksSection() {
+		let section = SectionLayoutKind.quickLinks(id: self.quickLinksSectionID)
+		self.snapshot.appendSections([section])
+		self.snapshot.appendItems(self.quickLinkItemKinds, toSection: section)
+	}
+
+	/// Appends the quick actions section and its items to the current snapshot.
+	private func appendQuickActionsSection() {
+		let section = SectionLayoutKind.quickActions(id: self.quickActionsSectionID)
+		let items: [ItemKind] = self.quickActions.map { .quickAction($0) }
+		self.snapshot.appendSections([section])
+		self.snapshot.appendItems(items, toSection: section)
+	}
+
+	/// Appends the legal section to the current snapshot.
+	private func appendLegalSection() {
+		let section = SectionLayoutKind.legal(id: self.legalSectionID)
+		self.snapshot.appendSections([section])
+		self.snapshot.appendItems([.legal(id: self.legalItemID)], toSection: section)
 	}
 
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
@@ -326,8 +288,163 @@ extension HomeCollectionViewController {
 	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
 		var snapshot = self.dataSource.snapshot()
 		guard snapshot.indexOfSection(section) != nil else { return }
-        let itemsInSection = snapshot.itemIdentifiers(inSection: section)
-        snapshot.reconfigureItems(itemsInSection)
+		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
+		snapshot.reconfigureItems(itemsInSection)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
+	}
+}
+
+// MARK: - Cell Configuration
+extension HomeCollectionViewController {
+	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .quickLink(let quickLink, _) = itemKind else { return }
+			let totalCount = self.quickLinks.count
+			let columns = self.collectionView.columnCount(inSection: indexPath.section)
+
+			cell.delegate = self
+			cell.separatorIsHidden = indexPath.item + columns >= totalCount
+			cell.configure(using: quickLink)
+		}
+	}
+
+	func getConfiguredActionButtonCell() -> UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind>(cellNib: ActionButtonExploreCollectionViewCell.nib) { [weak self] cell, _, itemKind in
+			guard let self = self, case .quickAction(let quickAction, _) = itemKind else { return }
+
+			cell.delegate = self
+			cell.configure(using: quickAction)
+		}
+	}
+
+	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: BannerLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .showIdentity = itemKind else { return }
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: show)
+		}
+	}
+
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity:
+				let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+				cell.delegate = self
+				cell.configure(using: show)
+			case .literatureIdentity:
+				let literature: Literature? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: LiteratureResponse.self, identity: LiteratureIdentity.self)
+				cell.delegate = self
+				cell.configure(using: literature)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .episodeIdentity = itemKind else { return }
+			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: EpisodeResponse.self, identity: EpisodeIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: episode)
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .gameIdentity = itemKind else { return }
+			let game: Game? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: GameResponse.self, identity: GameIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: game)
+		}
+	}
+
+	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: MediumLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .genreIdentity:
+				let genre: Genre? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: GenreResponse.self, identity: GenreIdentity.self)
+				cell.configure(using: genre)
+			case .themeIdentity:
+				let theme: Theme? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ThemeResponse.self, identity: ThemeIdentity.self)
+				cell.configure(using: theme)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredLargeCell() -> UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind>(cellNib: LargeLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .showIdentity = itemKind else { return }
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: show)
+		}
+	}
+
+	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .showIdentity = itemKind else { return }
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: show)
+		}
+	}
+
+	func getConfiguredVideoCell() -> UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind>(cellNib: VideoLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .showIdentity = itemKind else { return }
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+
+			cell.delegate = self
+			cell.configure(using: show)
+		}
+	}
+
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .showSong(let showSong, _) = itemKind else { return }
+			self.cache[indexPath] = showSong
+
+			cell.delegate = self
+			cell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
+		}
+	}
+
+	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .personIdentity = itemKind else { return }
+			let person: Person? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: PersonResponse.self, identity: PersonIdentity.self)
+
+			cell.configure(using: person)
+		}
+	}
+
+	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .characterIdentity = itemKind else { return }
+			let character: Character? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: CharacterResponse.self, identity: CharacterIdentity.self)
+
+			cell.configure(using: character)
+		}
+	}
+
+	func getConfiguredRecapCell() -> UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind>(cellNib: RecapLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self, case .recap(let recap, _) = itemKind else { return }
+			self.cache[indexPath] = recap
+
+			cell.configure(using: recap)
+		}
 	}
 }

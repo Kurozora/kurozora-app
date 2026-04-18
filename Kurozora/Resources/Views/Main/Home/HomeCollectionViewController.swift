@@ -56,7 +56,9 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
-			self.updateDataSource()
+			if !self.suppressDataSourceUpdate {
+				self.updateDataSource()
+			}
 			self._prefersActivityIndicatorHidden = true
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
@@ -65,6 +67,24 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			#endif
 		}
 	}
+
+	/// When `true`, mutations of ``exploreCategories`` skip the full ``updateDataSource()`` rebuild.
+	private var suppressDataSourceUpdate = false
+
+	/// Stable identifier for the Quick Links section so it persists across snapshot rebuilds.
+	let quickLinksSectionID = UUID()
+
+	/// Stable identifier for the Quick Actions section so it persists across snapshot rebuilds.
+	let quickActionsSectionID = UUID()
+
+	/// Stable identifier for the Legal section so it persists across snapshot rebuilds.
+	let legalSectionID = UUID()
+
+	/// Stable identifier for the singleton Legal item so it persists across snapshot rebuilds.
+	let legalItemID = UUID()
+
+	/// The static ``ItemKind`` values for the Quick Links section, built once so their UUIDs stay stable.
+	lazy var quickLinkItemKinds: [ItemKind] = self.quickLinks.map { .quickLink($0) }
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -329,15 +349,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
-			guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
-			self.prepareUpNextRefresh(indexPath)
 			await self.fetchEpisodes()
 		}
-	}
-
-	/// Prepares for the Up Next list refresh by removing already watched episodes.
-	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
-		self.cache.removeValue(forKey: indexPath)
 	}
 
 	fileprivate func fetchEpisodes() async {
@@ -350,12 +363,50 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		do {
 			let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, limit: 10)
 
-			// Save next page url and append new data
 			guard let episodeResponse = upNextResponse.data.first(where: { exploreCategory in
 				exploreCategory.relationships.episodes != nil
 			}) else { return }
 
+			self.suppressDataSourceUpdate = true
 			self.exploreCategories[index] = episodeResponse
+			self.suppressDataSourceUpdate = false
+			self.upNextCategory = episodeResponse
+
+			var snapshot = self.dataSource.snapshot()
+			guard index < snapshot.sectionIdentifiers.count else { return }
+
+			let sectionIdentifier = snapshot.sectionIdentifiers[index]
+			let oldItems = snapshot.itemIdentifiers(inSection: sectionIdentifier)
+			var oldItemsByIdentityID: [KurozoraItemID: ItemKind] = [:]
+
+			for item in oldItems {
+				guard let id = self.identityID(from: item) else { continue }
+				oldItemsByIdentityID[id] = item
+			}
+
+			let newItems: [ItemKind] = (episodeResponse.relationships.episodes?.data.prefix(10) ?? []).map { identity in
+				oldItemsByIdentityID[identity.id] ?? .episodeIdentity(identity)
+			}
+			var oldModelsByIdentityID: [KurozoraItemID: KurozoraItem] = [:]
+
+			for (indexPath, model) in self.cache where indexPath.section == index {
+				oldModelsByIdentityID[model.id] = model
+			}
+
+			self.cache = self.cache.filter { $0.key.section != index }
+
+			for (itemIndex, item) in newItems.enumerated() {
+				guard
+					let id = self.identityID(from: item),
+					let model = oldModelsByIdentityID[id]
+				else { continue }
+				self.cache[IndexPath(item: itemIndex, section: index)] = model
+			}
+
+			snapshot.deleteItems(oldItems)
+			snapshot.appendItems(newItems, toSection: sectionIdentifier)
+			self.snapshot = snapshot
+			await self.dataSource.apply(snapshot, animatingDifferences: true)
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -373,6 +424,27 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		case .genreIdentity(let id, _): return id as? Element
 		case .themeIdentity(let id, _): return id as? Element
 		default: return nil
+		}
+	}
+
+	/// Returns the identity id carried by the given ``ItemKind``, or `nil` for static cases that don't represent a resource.
+	///
+	/// - Parameter itemKind: The item kind to inspect.
+	///
+	/// - Returns: The ``KurozoraItemID`` of the underlying resource, or `nil` for quick links, quick actions, and legal items.
+	func identityID(from itemKind: ItemKind) -> KurozoraItemID? {
+		switch itemKind {
+		case .showIdentity(let identity, _): return identity.id
+		case .literatureIdentity(let identity, _): return identity.id
+		case .gameIdentity(let identity, _): return identity.id
+		case .episodeIdentity(let identity, _): return identity.id
+		case .characterIdentity(let identity, _): return identity.id
+		case .personIdentity(let identity, _): return identity.id
+		case .genreIdentity(let identity, _): return identity.id
+		case .themeIdentity(let identity, _): return identity.id
+		case .showSong(let showSong, _): return showSong.id
+		case .recap(let recap, _): return recap.id
+		case .quickLink, .quickAction, .legal: return nil
 		}
 	}
 
@@ -530,698 +602,27 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 }
 
-// MARK: - TitleHeaderCollectionReusableViewDelegate
-extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
-		guard let segueID = reusableView.segueID as? SegueIdentifiers else { return }
-		self.show(segueID, sender: reusableView.indexPath)
+// MARK: - NSTouchBarDelegate
+#if targetEnvironment(macCatalyst)
+extension HomeCollectionViewController: NSTouchBarDelegate {
+	override func makeTouchBar() -> NSTouchBar? {
+		let touchBar = NSTouchBar()
+		touchBar.delegate = self
+		touchBar.defaultItemIdentifiers = [
+			.fixedSpaceSmall,
+			.fixedSpaceSmall
+		]
+		return touchBar
+	}
+
+	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+		let touchBarItem: NSTouchBarItem?
+
+		switch identifier {
+		default:
+			touchBarItem = nil
+		}
+		return touchBarItem
 	}
 }
-
-// MARK: - BaseLockupCollectionViewCellDelegate
-extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn()
-		guard isSignedIn else { return }
-
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let modelID: KurozoraItemID
-
-		switch cell.libraryKind {
-		case .shows:
-			guard let show = self.cache[indexPath] else { return }
-			modelID = show.id
-		case .literatures:
-			guard let literature = self.cache[indexPath] else { return }
-			modelID = literature.id
-		case .games:
-			guard let game = self.cache[indexPath] else { return }
-			modelID = game.id
-		}
-
-		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
-			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
-
-					switch cell.libraryKind {
-					case .shows:
-						let show = self.cache[indexPath] as? Show
-						show?.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .literatures:
-						let literature = self.cache[indexPath] as? Literature
-						literature?.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .games:
-						let game = self.cache[indexPath] as? Game
-						game?.attributes.library?.update(using: libraryUpdateResponse.data)
-					}
-
-					// Update entry in library
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-
-					// Request review
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
-					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-					print("----- Add to library failed", error.message)
-				}
-			}
-		})
-
-		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
-				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
-
-						switch cell.libraryKind {
-						case .shows:
-							let show = self.cache[indexPath] as? Show
-							show?.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .literatures:
-							let literature = self.cache[indexPath] as? Literature
-							literature?.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .games:
-							let game = self.cache[indexPath] as? Game
-							game?.attributes.library?.update(using: libraryUpdateResponse.data)
-						}
-
-						// Update entry in library
-						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(), for: .normal)
-
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
-						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
-				}
-			}))
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
-	}
-
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.cache[indexPath] as? Show else { return }
-		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
-	}
-}
-
-// MARK: - EpisodeLockupCollectionViewCellDelegate
-extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async {
-		let isSignedIn = await WorkflowController.shared.isSignedIn()
-		guard isSignedIn else { return }
-
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode
-		else { return }
-		cell.watchStatusButton.isEnabled = false
-		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-		cell.watchStatusButton.isEnabled = true
-	}
-
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
-			let showIdentity = episode.relationships?.shows?.data.first
-		else { return }
-
-		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
-	}
-
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
-		guard
-			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
-			let seasonIdentity = episode.relationships?.seasons?.data.first
-		else { return }
-
-		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
-	}
-}
-
-// MARK: - MusicLockupCollectionViewCellDelegate
-extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
-	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
-		guard let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show else { return }
-		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
-	}
-}
-
-// MARK: - ActionBaseExploreCollectionViewCellDelegate
-extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDelegate {
-	func actionButtonPressed(_ sender: UIButton, cell: ActionBaseExploreCollectionViewCell) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-
-		switch cell.self {
-		case is ActionLinkExploreCollectionViewCell:
-			let quickLink = self.quickLinks[indexPath.item]
-
-			let kWebViewController = KWebViewController()
-			kWebViewController.title = quickLink.title
-			kWebViewController.url = quickLink.url
-
-			let kNavigationController = KNavigationController(rootViewController: kWebViewController)
-			kNavigationController.modalPresentationStyle = .custom
-
-			self.present(kNavigationController, animated: true)
-		case is ActionButtonExploreCollectionViewCell:
-			let quickAction = self.quickActions[indexPath.item]
-			self.present(quickAction.segueID, sender: nil)
-		default: break
-		}
-	}
-}
-
-// MARK: - SectionLayoutKind
-extension HomeCollectionViewController {
-	/// List of available Section Layout Kind types.
-	enum SectionLayoutKind: Hashable {
-		// MARK: - Cases
-		/// Indicates a banner section layout type.
-		case banner(_: ExploreCategory)
-
-		/// Indicates a small section layout type.
-		case small(_: ExploreCategory)
-
-		/// Indicates a medium section layout type.
-		case medium(_: ExploreCategory)
-
-		/// Indicates a large section layout type.
-		case large(_: ExploreCategory)
-
-		/// Indicates a video section layout type.
-		case video(_: ExploreCategory)
-
-		/// Indicates a upcoming section layout type.
-		case upcoming(_: ExploreCategory)
-
-		/// Indicates a genre section layout type.
-		case profile(_: ExploreCategory)
-
-		/// Indicates a episode section layout type.
-		case episode(_: ExploreCategory)
-
-		/// Indicates a music section layout type.
-		case music(_: ExploreCategory)
-
-		/// Indicates a quick links section layout type.
-		case quickLinks(id: UUID = UUID())
-
-		/// Indicates a quick actions section layout type.
-		case quickActions(id: UUID = UUID())
-
-		/// Indicates a legal section layout type.
-		case legal(id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .banner(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .small(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .medium(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .large(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .video(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .upcoming(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .profile(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .episode(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .music(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .quickLinks(let id):
-				hasher.combine(id)
-			case .quickActions(let id):
-				hasher.combine(id)
-			case .legal(let id):
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.banner(let exploreCategory1), .banner(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.small(let exploreCategory1), .small(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.medium(let exploreCategory1), .medium(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.large(let exploreCategory1), .large(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.video(let exploreCategory1), .video(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.upcoming(let exploreCategory1), .upcoming(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.profile(let exploreCategory1), .profile(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.episode(let exploreCategory1), .episode(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.music(let exploreCategory1), .music(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.quickLinks(let id1), .quickLinks(let id2)):
-				return id1 == id2
-			case (.quickActions(let id1), .quickActions(let id2)):
-				return id1 == id2
-			case (.legal(let id1), .legal(let id2)):
-				return id1 == id2
-			default: return false
-			}
-		}
-	}
-}
-
-// MARK: - ItemKind
-extension HomeCollectionViewController {
-	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `EpisodeIdentity` object.
-		case episodeIdentity(_: EpisodeIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `ShowSong` object.
-		case showSong(_: ShowSong, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `GenreIdentity` object.
-		case genreIdentity(_: GenreIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `ThemeIdentity` object.
-		case themeIdentity(_: ThemeIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `Recap` object.
-		case recap(_: Recap, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `QuickLink` object.
-		case quickLink(_: QuickLink, id: UUID = UUID())
-
-		/// Indicates the item kind contains a `QuickAction` object.
-		case quickAction(_: QuickAction, id: UUID = UUID())
-
-		/// Indicates a legal section layout type.
-		case legal(id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .showIdentity(let showIdentity, let id):
-				hasher.combine(showIdentity)
-				hasher.combine(id)
-			case .literatureIdentity(let literatureIdentity, let id):
-				hasher.combine(literatureIdentity)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
-				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			case .episodeIdentity(let episodeIdentity, let id):
-				hasher.combine(episodeIdentity)
-				hasher.combine(id)
-			case .showSong(let showSong, let id):
-				hasher.combine(showSong)
-				hasher.combine(id)
-			case .genreIdentity(let genreIdentity, let id):
-				hasher.combine(genreIdentity)
-				hasher.combine(id)
-			case .themeIdentity(let themeIdentity, let id):
-				hasher.combine(themeIdentity)
-				hasher.combine(id)
-			case .characterIdentity(let characterIdentity, let id):
-				hasher.combine(characterIdentity)
-				hasher.combine(id)
-			case .personIdentity(let personIdentity, let id):
-				hasher.combine(personIdentity)
-				hasher.combine(id)
-			case .recap(let recap, let id):
-				hasher.combine(recap)
-				hasher.combine(id)
-			case .quickLink(let quickLink, let id):
-				hasher.combine(quickLink)
-				hasher.combine(id)
-			case .quickAction(let quickAction, let id):
-				hasher.combine(quickAction)
-				hasher.combine(id)
-			case .legal(let id):
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
-				return literatureIdentity1 == literatureIdentity2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			case (.episodeIdentity(let episodeIdentity1, let id1), .episodeIdentity(let episodeIdentity2, let id2)):
-				return episodeIdentity1 == episodeIdentity2 && id1 == id2
-			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
-				return showSong1 == showSong2 && id1 == id2
-			case (.genreIdentity(let genreIdentity1, let id1), .genreIdentity(let genreIdentity2, let id2)):
-				return genreIdentity1 == genreIdentity2 && id1 == id2
-			case (.themeIdentity(let themeIdentity1, let id1), .themeIdentity(let themeIdentity2, let id2)):
-				return themeIdentity1 == themeIdentity2 && id1 == id2
-			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
-				return characterIdentity1 == characterIdentity2 && id1 == id2
-			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1 == personIdentity2 && id1 == id2
-			case (.recap(let recap1, let id1), .recap(let recap2, let id2)):
-				return recap1 == recap2 && id1 == id2
-			case (.quickLink(let quickLink1, let id1), .quickLink(let quickLink2, let id2)):
-				return quickLink1 == quickLink2 && id1 == id2
-			case (.quickAction(let quickAction1, let id1), .quickAction(let quickAction2, let id2)):
-				return quickAction1 == quickAction2 && id1 == id2
-			case (.legal(let id1), .legal(let id2)):
-				return id1 == id2
-			default:
-				return false
-			}
-		}
-	}
-}
-
-// MARK: - Cell Configuration
-extension HomeCollectionViewController {
-	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: ActionLinkExploreCollectionViewCell.nib) { [weak self] actionLinkExploreCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .quickLink(let quickLink, _):
-				actionLinkExploreCollectionViewCell.delegate = self
-				let totalCount = self.quickLinks.count
-				let columns = self.collectionView.columnCount(inSection: indexPath.section)
-				actionLinkExploreCollectionViewCell.separatorIsHidden = indexPath.item + columns >= totalCount
-				actionLinkExploreCollectionViewCell.configure(using: quickLink)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredActionButtonCell() -> UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ActionButtonExploreCollectionViewCell, ItemKind>(cellNib: ActionButtonExploreCollectionViewCell.nib) { [weak self] actionButtonExploreCollectionViewCell, _, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .quickAction(let quickAction, _):
-				actionButtonExploreCollectionViewCell.delegate = self
-				actionButtonExploreCollectionViewCell.configure(using: quickAction)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: BannerLockupCollectionViewCell.nib) { [weak self] bannerLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				bannerLockupCollectionViewCell.delegate = self
-				bannerLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			case .literatureIdentity:
-				let literature: Literature? = self.fetchModel(at: indexPath)
-
-				if literature == nil {
-					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .episodeIdentity:
-				let episode: Episode? = self.fetchModel(at: indexPath)
-
-				if episode == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				episodeLockupCollectionViewCell.delegate = self
-				episodeLockupCollectionViewCell.configure(using: episode)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .gameIdentity:
-				let game: Game? = self.fetchModel(at: indexPath)
-
-				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: MediumLockupCollectionViewCell.nib) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .genreIdentity:
-				let genre: Genre? = self.fetchModel(at: indexPath)
-
-				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(GenreResponse.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				mediumLockupCollectionViewCell.configure(using: genre)
-			case .themeIdentity:
-				let theme: Theme? = self.fetchModel(at: indexPath)
-
-				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ThemeResponse.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				mediumLockupCollectionViewCell.configure(using: theme)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredLargeCell() -> UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind>(cellNib: LargeLockupCollectionViewCell.nib) { [weak self] largeLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				largeLockupCollectionViewCell.delegate = self
-				largeLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredVideoCell() -> UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind>(cellNib: VideoLockupCollectionViewCell.nib) { [weak self] videoLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showIdentity:
-				let show: Show? = self.fetchModel(at: indexPath)
-
-				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				videoLockupCollectionViewCell.delegate = self
-				videoLockupCollectionViewCell.configure(using: show)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .showSong(let showSong, _):
-				self.cache[indexPath] = showSong
-				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
-			default: break
-			}
-		}
-	}
-
-	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .personIdentity:
-				let person: Person? = self.fetchModel(at: indexPath)
-
-				if person == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				personLockupCollectionViewCell.configure(using: person)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .characterIdentity:
-				let character: Character? = self.fetchModel(at: indexPath)
-
-				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
-					Task {
-						await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
-					}
-				}
-
-				characterLockupCollectionViewCell.configure(using: character)
-			default: return
-			}
-		}
-	}
-
-	func getConfiguredRecapCell() -> UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind>(cellNib: RecapLockupCollectionViewCell.nib) { [weak self] recapLockupCollectionViewCell, indexPath, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .recap(let recap, _):
-				self.cache[indexPath] = recap
-				recapLockupCollectionViewCell.configure(using: recap)
-			default: return
-			}
-		}
-	}
-}
+#endif
