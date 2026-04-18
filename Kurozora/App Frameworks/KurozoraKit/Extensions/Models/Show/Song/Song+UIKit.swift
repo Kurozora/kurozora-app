@@ -224,6 +224,15 @@ extension KKSong {
 		}
 	}
 
+	/// Delete the user's rating and review for this song.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for songs.
+		print("deleteRating placeholder — Song endpoint not yet available")
+		return false
+	}
+
 	/// Add song to Apple Music Library.
 	///
 	/// - Parameters:

@@ -308,6 +308,11 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 // MARK: - TapToRateCollectionViewCellDelegate
 extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
+		if rating == 0 {
+			self.handleTapToRateDeletion(on: cell)
+			return
+		}
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			let newRating: Double?
@@ -343,6 +348,62 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 				print(error.localizedDescription)
 				self.showRatingFailureAlert(message: error.message)
 			}
+		}
+	}
+
+	private func handleTapToRateDeletion(on cell: TapToRateCollectionViewCell) {
+		guard let kind = self.currentReviewKind() else {
+			cell.configure(using: nil)
+			return
+		}
+		let previousRating = self.currentGivenRating()
+
+		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
+			guard let self = self, let cell = cell else { return }
+			Task {
+				do throws(KKAPIError) {
+					let didDelete = try await kind.deleteRating()
+					if didDelete {
+						cell.configure(using: nil)
+					} else {
+						cell.configure(using: previousRating)
+						self.presentAlertController(title: L10n.ratingFailed, message: "Not available yet for this type.")
+					}
+				} catch {
+					cell.configure(using: previousRating)
+					self.showRatingFailureAlert(message: error.message)
+				}
+			}
+		}, onCancel: { [weak cell] in
+			cell?.configure(using: previousRating)
+		})
+	}
+
+	private func currentReviewKind() -> ReviewTextEditor.Kind? {
+		switch self.listType {
+		case .character(let character): return .character(character)
+		case .episode(let episode): return .episode(episode)
+		case .game(let game): return .game(game)
+		case .literature(let literature): return .literature(literature)
+		case .person(let person): return .person(person)
+		case .show(let show): return .show(show)
+		case .song(let song): return .song(song)
+		case .studio(let studio): return .studio(studio)
+		case .none: return nil
+		}
+	}
+
+	private func currentGivenRating() -> Double? {
+		switch self.listType {
+		case .character(let character): return character.attributes.givenRating
+		case .episode(let episode): return episode.attributes.givenRating
+		case .game(let game): return game.attributes.library?.rating
+		case .literature(let literature): return literature.attributes.library?.rating
+		case .person(let person): return person.attributes.givenRating
+		case .show(let show): return show.attributes.library?.rating
+		case .song(let song): return song.attributes.library?.rating
+		case .studio(let studio): return studio.attributes.library?.rating
+		case .none: return nil
 		}
 	}
 }
@@ -396,6 +457,10 @@ extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDel
 extension ReviewsListCollectionViewController: ReviewTextEditorViewControllerDelegate {
 	func reviewTextEditorViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
+	}
+
+	func reviewTextEditorViewControllerDidDeleteReview() {
+		self.collectionView.reloadData()
 	}
 }
 

@@ -39,7 +39,7 @@ class KCosmosView: CosmosView {
 		self.settings.emptyBorderWidth = 1.0
 		self.settings.filledBorderWidth = 1.0
 		self.settings.fillMode = self.settings.updateOnTouch ? .half : .precise
-		self.settings.minTouchRating = 0.5
+		self.settings.minTouchRating = 0.0
 
 		self.configureTheme()
 	}

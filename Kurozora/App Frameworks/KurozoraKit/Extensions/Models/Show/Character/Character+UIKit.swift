@@ -139,4 +139,26 @@ extension Character {
 			return nil
 		}
 	}
+
+	/// Delete the user's rating and review for this character.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		let characterIdentity = CharacterIdentity(id: self.id)
+
+		do {
+			_ = try await KService.deleteRating(characterIdentity)
+
+			self.attributes.givenRating = nil
+			self.attributes.givenReview = nil
+
+			return true
+		} catch let error as KKAPIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return false
+		}
+	}
 }

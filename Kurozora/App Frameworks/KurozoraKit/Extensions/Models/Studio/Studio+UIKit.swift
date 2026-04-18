@@ -142,4 +142,13 @@ extension Studio {
 			return nil
 		}
 	}
+
+	/// Delete the user's rating and review for this studio.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for studios.
+		print("deleteRating placeholder — Studio endpoint not yet available")
+		return false
+	}
 }

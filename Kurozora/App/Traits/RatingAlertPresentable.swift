@@ -20,13 +20,7 @@ protocol RatingAlertPresentable where Self: UIViewController {
 
 extension RatingAlertPresentable {
 	func showRatingSuccessAlert() {
-		let alertController = self.presentAlertController(
-			title: L10n.submitted,
-			message: L10n.thankYouForRating
-		)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-			alertController.dismiss(animated: true, completion: nil)
-		}
+		KAlert.show(image: UIImage(systemName: "star.fill"), title: L10n.rated, from: self.view)
 	}
 
 	func showRatingFailureAlert(message: String) {

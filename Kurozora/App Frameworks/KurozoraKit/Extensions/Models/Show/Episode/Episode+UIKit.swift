@@ -192,6 +192,15 @@ extension Episode {
 		}
 	}
 
+	/// Delete the user's rating and review for this episode.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for episodes.
+		print("deleteRating placeholder — Episode endpoint not yet available")
+		return false
+	}
+
 	private func validateIsWatched() async -> Bool {
 		if self.attributes.watchStatus == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please watch \(self.attributes.title) first.")

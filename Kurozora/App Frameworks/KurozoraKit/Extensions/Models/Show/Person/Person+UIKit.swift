@@ -139,4 +139,13 @@ extension Person {
 			return nil
 		}
 	}
+
+	/// Delete the user's rating and review for this person.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for people.
+		print("deleteRating placeholder — Person endpoint not yet available")
+		return false
+	}
 }

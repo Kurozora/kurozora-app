@@ -414,6 +414,11 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 // MARK: - TapToRateCollectionViewCellDelegate
 extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
+		if rating == 0 {
+			self.handleTapToRateDeletion(on: cell)
+			return
+		}
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			do throws(KKAPIError) {
@@ -427,6 +432,37 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 				self.showRatingFailureAlert(message: error.message)
 			}
 		}
+	}
+
+	private func handleTapToRateDeletion(on cell: TapToRateCollectionViewCell) {
+		guard let context = self.writeAReviewContext() else {
+			// No context means no existing rating to clear; snap the cell back to empty.
+			cell.configure(using: nil)
+			return
+		}
+		let previousRating = context.rating
+		let kind = context.kind
+
+		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
+			guard let self = self, let cell = cell else { return }
+			Task {
+				do throws(KKAPIError) {
+					let didDelete = try await kind.deleteRating()
+					if didDelete {
+						cell.configure(using: nil)
+						self.didDeleteReview(at: nil)
+					} else {
+						cell.configure(using: previousRating)
+						self.presentAlertController(title: L10n.ratingFailed, message: "Not available yet for this type.")
+					}
+				} catch {
+					cell.configure(using: previousRating)
+					self.showRatingFailureAlert(message: error.message)
+				}
+			}
+		}, onCancel: { [weak cell] in
+			cell?.configure(using: previousRating)
+		})
 	}
 }
 
@@ -452,6 +488,10 @@ extension DetailsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 extension DetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
 	func reviewTextEditorViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
+	}
+
+	func reviewTextEditorViewControllerDidDeleteReview() {
+		self.didDeleteReview(at: nil)
 	}
 }
 

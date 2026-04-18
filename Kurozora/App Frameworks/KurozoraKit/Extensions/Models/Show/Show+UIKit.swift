@@ -294,6 +294,15 @@ extension Show {
 		}
 	}
 
+	/// Delete the user's rating and review for this show.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for shows.
+		print("deleteRating placeholder — Show endpoint not yet available")
+		return false
+	}
+
 	/// Update the hidden status of the show.
 	///
 	/// - Parameters:

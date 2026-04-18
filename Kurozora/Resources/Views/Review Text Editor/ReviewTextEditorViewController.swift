@@ -9,6 +9,7 @@
 #if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
 #endif
+import KurozoraKit
 import UIKit
 
 protocol ReviewTextEditorDisplayLogic: AnyObject {
@@ -25,6 +26,11 @@ protocol ReviewTextEditorDisplayLogic: AnyObject {
 
 protocol ReviewTextEditorViewControllerDelegate: AnyObject {
 	func reviewTextEditorViewControllerDidSubmitReview()
+	func reviewTextEditorViewControllerDidDeleteReview()
+}
+
+extension ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidDeleteReview() {}
 }
 
 final class ReviewTextEditorViewController: KViewController {
@@ -37,6 +43,7 @@ final class ReviewTextEditorViewController: KViewController {
 
 	var cancelBarButtonItem: UIBarButtonItem!
 	var sendBarButtonItem: UIBarButtonItem!
+	var deleteBarButtonItem: UIBarButtonItem!
 
 	weak var delegate: ReviewTextEditorViewControllerDelegate?
 
@@ -88,9 +95,10 @@ final class ReviewTextEditorViewController: KViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-        #if !targetEnvironment(macCatalyst)
+
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = false
-        #endif
+		#endif
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -108,22 +116,78 @@ final class ReviewTextEditorViewController: KViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-        #if !targetEnvironment(macCatalyst)
+
+		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
-        #endif
+		#endif
 	}
 
 	// MARK: - Functions
 	func setupNavigationItems() {
 		self.cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonPressed(_:)))
 		self.sendBarButtonItem = UIBarButtonItem(title: L10n.send, style: .done, target: self, action: #selector(self.sendButtonPressed(_:)))
+		self.deleteBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(self.deleteButtonPressed(_:)))
+		self.deleteBarButtonItem.tintColor = .systemRed
 
-		self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
+		let existingRating = self.router?.dataStore?.rating ?? 0
+
+		if existingRating > 0 {
+			self.navigationItem.leftBarButtonItems = [self.cancelBarButtonItem, self.deleteBarButtonItem]
+		} else {
+			self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
+		}
+
 		self.navigationItem.rightBarButtonItem = self.sendBarButtonItem
 	}
 
 	@objc func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.doCancel(forceCancel: false)
+	}
+
+	@objc func deleteButtonPressed(_ sender: UIBarButtonItem) {
+		self.presentDeleteRatingConfirmation(restoringOnCancel: false)
+	}
+
+	/// Present the shared delete-rating confirmation dialog.
+	///
+	/// - Parameter restoringOnCancel: When `true`, cosmos view snaps back to the previously stored rating on cancel.
+	private func presentDeleteRatingConfirmation(restoringOnCancel: Bool) {
+		let previousRating = self.router?.dataStore?.rating
+		let previousReview = self.router?.dataStore?.review
+
+		self.confirmDeleteRating(onConfirm: { [weak self] in
+			guard let self = self else { return }
+			self.performDeleteRating()
+		}, onCancel: { [weak self] in
+			guard let self = self else { return }
+
+			if restoringOnCancel {
+				let rating = (previousRating ?? 0) > 0 ? (previousRating ?? 0) : 1.0
+				self.sceneView.configure(using: ReviewTextEditor.Configure.ViewModel(rating: rating, review: previousReview))
+			}
+		})
+	}
+
+	private func performDeleteRating() {
+		guard let kind = self.router?.dataStore?.kind else { return }
+
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			do throws(KKAPIError) {
+				let didDelete = try await kind.deleteRating()
+
+				guard didDelete else {
+					self.presentAlertController(title: L10n.ratingFailed, message: "Not available yet for this type.")
+					return
+				}
+
+				self.delegate?.reviewTextEditorViewControllerDidDeleteReview()
+				self.dismiss(animated: true)
+			} catch {
+				self.presentAlertController(title: L10n.ratingFailed, message: error.message)
+			}
+		}
 	}
 
 	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
@@ -235,7 +299,7 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 	}
 
 	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel) {
-		if !viewModel.forceCancel && viewModel.hasChanges {
+		if !viewModel.forceCancel, viewModel.hasChanges {
 			// The user tapped Cancel with unsaved changes. Confirm that it's OK to lose the changes.
 			self.doConfirmCancel(showingSend: viewModel.hasChanges)
 		} else {
@@ -288,6 +352,11 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 // MARK: - ViewDelegate
 extension ReviewTextEditorViewController: ReviewTextEditorViewDelegate {
 	func reviewTextEditorView(_ view: ReviewTextEditorView, rateWith rating: Double) {
+		if rating == 0 {
+			self.presentDeleteRatingConfirmation(restoringOnCancel: true)
+			return
+		}
+
 		self.doSaveRating(rating)
 	}
 

@@ -6,12 +6,12 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 enum ReviewTextEditor {
 	enum Configure {
-		struct Request { }
+		struct Request {}
 
 		struct Response {
 			let rating: Double
@@ -118,5 +118,21 @@ extension ReviewTextEditor {
 		case show(_ show: Show)
 		case song(_ song: Song)
 		case studio(_ studio: Studio)
+
+		/// Delete the user's rating and review for the wrapped model.
+		///
+		/// - Returns: `true` when the deletion succeeds.
+		func deleteRating() async throws(KKAPIError) -> Bool {
+			switch self {
+			case .character(let character): return try await character.deleteRating()
+			case .episode(let episode): return try await episode.deleteRating()
+			case .game(let game): return try await game.deleteRating()
+			case .literature(let literature): return try await literature.deleteRating()
+			case .person(let person): return try await person.deleteRating()
+			case .show(let show): return try await show.deleteRating()
+			case .song(let song): return try await song.deleteRating()
+			case .studio(let studio): return try await studio.deleteRating()
+			}
+		}
 	}
 }

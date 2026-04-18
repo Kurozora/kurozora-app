@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import AVKit
+import UIKit
 
 // MARK: - View
 extension UIViewController {
@@ -18,7 +18,7 @@ extension UIViewController {
 	///
 	/// - Tag: UIViewController-viewWillReload
 	@objc @MainActor
-	func viewWillReload() { }
+	func viewWillReload() {}
 
 	/// Notifies the view controller that the app's theme is about to be reloaded.
 	///
@@ -26,7 +26,7 @@ extension UIViewController {
 	///
 	/// - Tag: UIViewController-themeWillReload
 	@objc @MainActor
-	func themeWillReload() { }
+	func themeWillReload() {}
 }
 
 // MARK: - Present
@@ -98,7 +98,7 @@ extension UIViewController {
 		let xConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: alertController.view, attribute: .centerX, multiplier: 1, constant: 0)
 		let yConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: alertController.view, attribute: .centerY, multiplier: 1.6, constant: 0)
 
-		NSLayoutConstraint.activate([ xConstraint, yConstraint])
+		NSLayoutConstraint.activate([xConstraint, yConstraint])
 		activityIndicator.isUserInteractionEnabled = false
 		activityIndicator.startAnimating()
 
@@ -111,5 +111,31 @@ extension UIViewController {
 
 		self.present(alertController, animated: true, completion: nil)
 		return alertController
+	}
+}
+
+// MARK: - RatingDelete
+extension UIViewController {
+	/// Present a destructive confirmation alert for deleting the user's rating/review.
+	///
+	/// - Parameters:
+	///    - onConfirm: Called when the user taps the destructive action.
+	///    - onCancel: Called when the user dismisses the alert.
+	@MainActor
+	func confirmDeleteRating(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {
+		let alertController = UIAlertController.alert(
+			title: L10n.deleteRatingConfirmationTitle,
+			message: L10n.deleteRatingConfirmationMessage,
+			handler: { _ in onCancel() }
+		) { alertController in
+			let deleteAction = UIAlertAction(title: L10n.deleteReview, style: .destructive) { _ in
+				onConfirm()
+			}
+			alertController.addAction(deleteAction)
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(alertController, animated: true, completion: nil)
+		}
 	}
 }

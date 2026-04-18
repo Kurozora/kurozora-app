@@ -276,6 +276,15 @@ extension Game {
 		}
 	}
 
+	/// Delete the user's rating and review for this game.
+	///
+	/// - Returns: `true` if the backend accepted the deletion.
+	func deleteRating() async throws(KKAPIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for games.
+		print("deleteRating placeholder — Game endpoint not yet available")
+		return false
+	}
+
 	private func validateIsInLibrary() async -> Bool {
 		if self.attributes.library?.status == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")

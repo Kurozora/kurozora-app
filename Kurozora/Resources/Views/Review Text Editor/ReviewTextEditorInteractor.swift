@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol ReviewTextEditorBusinessLogic {
 	func doConfigure(request: ReviewTextEditor.Configure.Request)
@@ -39,7 +39,8 @@ final class ReviewTextEditorInteractor: ReviewTextEditorDataStore {
 // MARK: - BusinessLogic
 extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 	func doConfigure(request: ReviewTextEditor.Configure.Request) {
-		let rating = max(self.rating ?? 1.0, 1.0)
+		let existing = self.rating ?? 0.0
+		let rating = existing > 0 ? existing : 1.0
 		let response = ReviewTextEditor.Configure.Response(rating: rating, review: self.review)
 		self.presenter?.presentConfigure(response: response)
 	}
@@ -76,7 +77,8 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 	}
 
 	func doSubmit(request: ReviewTextEditor.Submit.Request) async {
-		let rating = max(self.rating ?? 1.0, 1.0)
+		let existing = self.rating ?? 0.0
+		let rating = existing > 0 ? existing : 1.0
 		var isSuccess: Bool = false
 		var message: String?
 
@@ -119,7 +121,7 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 		if isSuccess == true {
 			let response = ReviewTextEditor.Submit.Response()
 			Task { @MainActor [weak self] in
-			    guard let self = self else { return }
+				guard let self = self else { return }
 				self.presenter?.presentSubmit(response: response)
 			}
 		} else {
