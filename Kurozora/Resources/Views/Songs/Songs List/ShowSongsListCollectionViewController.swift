@@ -102,14 +102,9 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 
 		self.configureDataSource()
 
-		if !self.showSongs.isEmpty || !self.songs.isEmpty {
-			self.updateDataSource()
-			self.toggleEmptyDataView()
-		} else {
-			Task { [weak self] in
-				guard let self = self else { return }
-				await self.fetchShowSongs()
-			}
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchShowSongs()
 		}
 	}
 
@@ -124,7 +119,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 		if self.showIdentity != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
-				await self.fetchShowSongs()
+				await self.fetchShowSongs(forceFetch: true)
 			}
 		}
 	}
@@ -145,17 +140,25 @@ class ShowSongsListCollectionViewController: KCollectionViewController, SectionF
 		}
 	}
 
-	func fetchShowSongs() async {
-		do {
+	func fetchShowSongs(forceFetch: Bool = false) async {
+		if forceFetch || (self.showSongs.isEmpty && self.songs.isEmpty) {
 			guard let showIdentity = self.showIdentity else { return }
-			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1)
-			self.showSongs = showSongResponse.data
-			self.groupShowSongs()
-			self.updateDataSource()
-			self.toggleEmptyDataView()
-		} catch {
-			print(error.localizedDescription)
+			do {
+				let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1)
+				self.showSongs = showSongResponse.data
+			} catch {
+				print(error.localizedDescription)
+				return
+			}
 		}
+
+		let appleMusicIDs = self.showSongs.compactMap { $0.song.attributes.amID }
+			+ self.songs.compactMap { $0.attributes.amID }
+		_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
+
+		self.groupShowSongs()
+		self.updateDataSource()
+		self.toggleEmptyDataView()
 	}
 
 	func groupShowSongs() {

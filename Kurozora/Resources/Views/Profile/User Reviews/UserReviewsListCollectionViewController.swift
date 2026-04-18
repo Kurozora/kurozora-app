@@ -337,6 +337,11 @@ extension UserReviewsListCollectionViewController {
 					}
 				}
 
+				let appleMusicIDs = sorted.compactMap { ($0 as? Song)?.attributes.amID }
+				if !appleMusicIDs.isEmpty {
+					_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
+				}
+
 				self.setSectionNeedsUpdate(.main)
 			}
 		} catch {

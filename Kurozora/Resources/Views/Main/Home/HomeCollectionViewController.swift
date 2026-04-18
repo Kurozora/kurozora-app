@@ -306,6 +306,12 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 					return !(exploreCategory.relationships.recaps?.data.isEmpty ?? false)
 				}
 			}
+
+			let appleMusicIDs = self.exploreCategories.flatMap { exploreCategory -> [Int] in
+				guard exploreCategory.attributes.exploreCategoryType == .songs else { return [] }
+				return exploreCategory.relationships.showSongs?.data.prefix(10).compactMap { $0.song.attributes.amID } ?? []
+			}
+			_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
 		} catch {
 			print("----- Error fetchExplore:", String(describing: error))
 		}

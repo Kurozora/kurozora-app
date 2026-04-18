@@ -473,6 +473,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 			// Update data source.
 			self.updateDataSource()
+
+			await self.prefetchSongsIfNeeded()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -481,6 +483,51 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		// Hide activity indicator.
 		self._prefersActivityIndicatorHidden = true
+	}
+
+	fileprivate func prefetchSongsIfNeeded() async {
+		let snapshot = self.dataSource.snapshot()
+		guard let songsSectionIndex = snapshot.indexOfSection(.songs) else { return }
+		let items = snapshot.itemIdentifiers(inSection: .songs)
+
+		var uncachedItems: [SearchResults.Item] = []
+		var uncachedIdentities: [SongIdentity] = []
+		var uncachedIndexPaths: [IndexPath] = []
+
+		for (offset, item) in items.enumerated() {
+			guard case .songIdentity(let songIdentity) = item else { continue }
+			let indexPath = IndexPath(item: offset, section: songsSectionIndex)
+			if self.songs[indexPath] == nil {
+				uncachedItems.append(item)
+				uncachedIdentities.append(songIdentity)
+				uncachedIndexPaths.append(indexPath)
+			}
+		}
+
+		guard !uncachedIdentities.isEmpty else { return }
+
+		do {
+			let songResponse: SongResponse = try await KService.getDetails(for: uncachedIdentities)
+			var byID: [KurozoraItemID: Song] = [:]
+			for song in songResponse.data {
+				byID[song.id] = song
+			}
+
+			for (index, identity) in uncachedIdentities.enumerated() {
+				self.songs[uncachedIndexPaths[index]] = byID[identity.id]
+			}
+
+			let appleMusicIDs = songResponse.data.compactMap { $0.attributes.amID }
+			if !appleMusicIDs.isEmpty {
+				_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
+			}
+
+			var reconfigured = self.dataSource.snapshot()
+			reconfigured.reconfigureItems(uncachedItems)
+			await self.dataSource.apply(reconfigured, animatingDifferences: true)
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 	fileprivate func determineResultTypes() -> [KKSearchType] {

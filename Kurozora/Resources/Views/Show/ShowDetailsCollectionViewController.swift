@@ -167,6 +167,10 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		do {
 			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10)
 			self.showSongs = showSongResponse.data
+
+			let appleMusicIDs = self.showSongs.compactMap { $0.song.attributes.amID }
+			_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
+
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
