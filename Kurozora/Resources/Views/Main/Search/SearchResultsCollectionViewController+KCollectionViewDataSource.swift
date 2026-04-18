@@ -104,60 +104,29 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func fetchCharacter(at indexPath: IndexPath) -> Character? {
-		guard let character = self.characters[indexPath] else { return nil }
-		return character
-	}
-
-	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
-		guard let episode = self.episodes[indexPath] else { return nil }
-		return episode
-	}
-
-	func fetchGame(at indexPath: IndexPath) -> Game? {
-		guard let game = self.games[indexPath] else { return nil }
-		return game
-	}
-
-	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
-		guard let literature = self.literatures[indexPath] else { return nil }
-		return literature
-	}
-
-	func fetchPerson(at indexPath: IndexPath) -> Person? {
-		guard let person = self.people[indexPath] else { return nil }
-		return person
-	}
-
-	func fetchShow(at indexPath: IndexPath) -> Show? {
-		guard let show = self.shows[indexPath] else { return nil }
-		return show
-	}
-
-	func fetchSong(at indexPath: IndexPath) -> Song? {
-		guard let showSongs = self.songs[indexPath] else { return nil }
-		return showSongs
-	}
-
-	func fetchStudio(at indexPath: IndexPath) -> Studio? {
-		guard let studio = self.studios[indexPath] else { return nil }
-		return studio
-	}
-
-	func fetchUser(at indexPath: IndexPath) -> User? {
-		guard let user = self.users[indexPath] else { return nil }
-		return user
-	}
-
-	func setItemKindNeedsUpdate(_ itemKind: SearchResults.Item) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+	/// Returns the identity contained in the given item.
+	///
+	/// - Parameter item: The item to inspect.
+	///
+	/// - Returns: The identity of type `Element`, or `nil` if the item does not contain one.
+	func extractIdentity<Element: KurozoraItem>(from item: SearchResults.Item) -> Element? {
+		switch item {
+		case .characterIdentity(let identity):  return identity as? Element
+		case .episodeIdentity(let identity):    return identity as? Element
+		case .gameIdentity(let identity):       return identity as? Element
+		case .literatureIdentity(let identity): return identity as? Element
+		case .personIdentity(let identity):     return identity as? Element
+		case .showIdentity(let identity):       return identity as? Element
+		case .songIdentity(let identity):       return identity as? Element
+		case .studioIdentity(let identity):     return identity as? Element
+		case .userIdentity(let identity):       return identity as? Element
+		case .discoverSuggestion, .browseCategory, .show, .literature, .game:
+			return nil
+		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>()
+		self.snapshot = NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>()
 
 		if !self.searchTypes.isEmpty {
 			switch self.currentScope {
@@ -169,8 +138,8 @@ extension SearchResultsCollectionViewController {
 							.showIdentity(showIdentity)
 						}
 
-						snapshot.appendSections([.shows])
-						snapshot.appendItems(showItems, toSection: .shows)
+						self.snapshot.appendSections([.shows])
+						self.snapshot.appendItems(showItems, toSection: .shows)
 					}
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
@@ -178,8 +147,8 @@ extension SearchResultsCollectionViewController {
 							.literatureIdentity(literatureIdentity)
 						}
 
-						snapshot.appendSections([.literatures])
-						snapshot.appendItems(literatureItems, toSection: .literatures)
+						self.snapshot.appendSections([.literatures])
+						self.snapshot.appendItems(literatureItems, toSection: .literatures)
 					}
 				case .games:
 					if !self.gameIdentities.isEmpty {
@@ -187,8 +156,8 @@ extension SearchResultsCollectionViewController {
 							.gameIdentity(gameIdentity)
 						}
 
-						snapshot.appendSections([.games])
-						snapshot.appendItems(gameItems, toSection: .games)
+						self.snapshot.appendSections([.games])
+						self.snapshot.appendItems(gameItems, toSection: .games)
 					}
 				case .episodes:
 					if !self.episodeIdentities.isEmpty {
@@ -196,8 +165,8 @@ extension SearchResultsCollectionViewController {
 							.episodeIdentity(episodeIdentity)
 						}
 
-						snapshot.appendSections([.episodes])
-						snapshot.appendItems(episodeItems, toSection: .episodes)
+						self.snapshot.appendSections([.episodes])
+						self.snapshot.appendItems(episodeItems, toSection: .episodes)
 					}
 				case .characters:
 					if !self.characterIdentities.isEmpty {
@@ -205,8 +174,8 @@ extension SearchResultsCollectionViewController {
 							.characterIdentity(characterIdentity)
 						}
 
-						snapshot.appendSections([.characters])
-						snapshot.appendItems(characterItems, toSection: .characters)
+						self.snapshot.appendSections([.characters])
+						self.snapshot.appendItems(characterItems, toSection: .characters)
 					}
 				case .people:
 					if !self.personIdentities.isEmpty {
@@ -214,8 +183,8 @@ extension SearchResultsCollectionViewController {
 							.personIdentity(personIdentity)
 						}
 
-						snapshot.appendSections([.people])
-						snapshot.appendItems(peopleItems, toSection: .people)
+						self.snapshot.appendSections([.people])
+						self.snapshot.appendItems(peopleItems, toSection: .people)
 					}
 				case .songs:
 					if !self.songIdentities.isEmpty {
@@ -223,8 +192,8 @@ extension SearchResultsCollectionViewController {
 							.songIdentity(songIdentity)
 						}
 
-						snapshot.appendSections([.songs])
-						snapshot.appendItems(songItems, toSection: .songs)
+						self.snapshot.appendSections([.songs])
+						self.snapshot.appendItems(songItems, toSection: .songs)
 					}
 				case .studios:
 					if !self.studioIdentities.isEmpty {
@@ -232,8 +201,8 @@ extension SearchResultsCollectionViewController {
 							.studioIdentity(studioIdentity)
 						}
 
-						snapshot.appendSections([.studios])
-						snapshot.appendItems(studioItems, toSection: .studios)
+						self.snapshot.appendSections([.studios])
+						self.snapshot.appendItems(studioItems, toSection: .studios)
 					}
 				case .users:
 					if !self.userIdentities.isEmpty {
@@ -241,8 +210,8 @@ extension SearchResultsCollectionViewController {
 							.userIdentity(userIdentity)
 						}
 
-						snapshot.appendSections([.users])
-						snapshot.appendItems(userItems, toSection: .users)
+						self.snapshot.appendSections([.users])
+						self.snapshot.appendItems(userItems, toSection: .users)
 					}
 				}
 			case .library:
@@ -253,8 +222,8 @@ extension SearchResultsCollectionViewController {
 							.showIdentity(showIdentity)
 						}
 
-						snapshot.appendSections([.shows])
-						snapshot.appendItems(showItems, toSection: .shows)
+						self.snapshot.appendSections([.shows])
+						self.snapshot.appendItems(showItems, toSection: .shows)
 					}
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
@@ -262,8 +231,8 @@ extension SearchResultsCollectionViewController {
 							.literatureIdentity(literatureIdentity)
 						}
 
-						snapshot.appendSections([.literatures])
-						snapshot.appendItems(literatureItems, toSection: .literatures)
+						self.snapshot.appendSections([.literatures])
+						self.snapshot.appendItems(literatureItems, toSection: .literatures)
 					}
 				case .games:
 					if !self.gameIdentities.isEmpty {
@@ -271,8 +240,8 @@ extension SearchResultsCollectionViewController {
 							.gameIdentity(gameIdentity)
 						}
 
-						snapshot.appendSections([.games])
-						snapshot.appendItems(gameItems, toSection: .games)
+						self.snapshot.appendSections([.games])
+						self.snapshot.appendItems(gameItems, toSection: .games)
 					}
 				default: break
 				}
@@ -283,26 +252,26 @@ extension SearchResultsCollectionViewController {
 		case .single:
 			break
 		case .multiple:
-			if snapshot.numberOfSections == 0 {
+			if self.snapshot.numberOfSections == 0 {
 				if self.discoverSuggestions.count != 0 {
 					let discoverSuggestionItems: [SearchResults.Item] = self.discoverSuggestions.map { discoverSuggestion in
 						.discoverSuggestion(discoverSuggestion)
 					}
-					snapshot.appendSections([.discover])
-					snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
+					self.snapshot.appendSections([.discover])
+					self.snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
 				}
 
 				if self.browseCategories.count != 0 {
 					let browseCategoryItems: [SearchResults.Item] = self.browseCategories.map { browseCategory in
 						.browseCategory(browseCategory)
 					}
-					snapshot.appendSections([.browse])
-					snapshot.appendItems(browseCategoryItems, toSection: .browse)
+					self.snapshot.appendSections([.browse])
+					self.snapshot.appendItems(browseCategoryItems, toSection: .browse)
 				}
 			}
 		}
 
-		self.dataSource.apply(snapshot)
+		self.dataSource.apply(self.snapshot)
 	}
 }
 
@@ -310,25 +279,9 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .characterIdentity(let characterIdentity):
-				let character = self.fetchCharacter(at: indexPath)
-
-				if character == nil {
-					Task {
-						do {
-							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity)
-
-							self.characters[indexPath] = characterResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				characterLockupCollectionViewCell.configure(using: character)
+			case .characterIdentity:
+				characterLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Character?)
 			default: return
 			}
 		}
@@ -337,25 +290,10 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .episodeIdentity(let episodeIdentity):
-				let episode = self.fetchEpisode(at: indexPath)
-
-				if episode == nil {
-					Task {
-						do {
-							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity, including: ["show", "season"])
-							self.episodes[indexPath] = episodeResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+			case .episodeIdentity:
 				episodeLockupCollectionViewCell.delegate = self
-				episodeLockupCollectionViewCell.configure(using: episode)
+				episodeLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Episode?)
 			default: return
 			}
 		}
@@ -364,26 +302,10 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .gameIdentity(let gameIdentity):
-				let game = self.fetchGame(at: indexPath)
-
-				if game == nil {
-					Task {
-						do {
-							let gameResponse = try await KService.getDetails(forGame: gameIdentity)
-
-							self.games[indexPath] = gameResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+			case .gameIdentity:
 				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: game)
+				gameLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Game?)
 			default: break
 			}
 		}
@@ -392,25 +314,9 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .personIdentity(let personIdentity):
-				let person = self.fetchPerson(at: indexPath)
-
-				if person == nil {
-					Task {
-						do {
-							let personResponse = try await KService.getDetails(forPerson: personIdentity)
-
-							self.people[indexPath] = personResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				personLockupCollectionViewCell.configure(using: person)
+			case .personIdentity:
+				personLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Person?)
 			default: return
 			}
 		}
@@ -419,26 +325,10 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .songIdentity(let songIdentity):
-				let song = self.fetchSong(at: indexPath)
-
-				if song == nil {
-					Task {
-						do {
-							let songResponse = try await KService.getDetails(forSong: songIdentity)
-
-							self.songs[indexPath] = songResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+			case .songIdentity:
 				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
+				musicLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Song?, at: indexPath)
 			default: break
 			}
 		}
@@ -447,44 +337,13 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .showIdentity(let showIdentity):
-				let show = self.fetchShow(at: indexPath)
-
-				if show == nil {
-					Task {
-						do {
-							let showResponse = try await KService.getDetails(forShow: showIdentity)
-
-							self.shows[indexPath] = showResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+			case .showIdentity:
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: show)
-			case .literatureIdentity(let literatureIdentity):
-				let literature = self.fetchLiterature(at: indexPath)
-
-				if literature == nil {
-					Task {
-						do {
-							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity)
-
-							self.literatures[indexPath] = literatureResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+				smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Show?)
+			case .literatureIdentity:
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: literature)
+				smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Literature?)
 			default: break
 			}
 		}
@@ -493,24 +352,9 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item>(cellNib: StudioLockupCollectionViewCell.nib) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .studioIdentity(let studioIdentity):
-				let studio = self.fetchStudio(at: indexPath)
-
-				if studio == nil {
-					Task {
-						do {
-							let studioResponse = try await KService.getDetails(forStudio: studioIdentity)
-							self.studios[indexPath] = studioResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
-				studioLockupCollectionViewCell.configure(using: studio)
+			case .studioIdentity:
+				studioLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Studio?)
 			default: break
 			}
 		}
@@ -519,26 +363,10 @@ extension SearchResultsCollectionViewController {
 	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item> {
 		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-
 			switch itemKind {
-			case .userIdentity(let userIdentity):
-				let user = self.fetchUser(at: indexPath)
-
-				if user == nil {
-					Task {
-						do {
-							let userResponse = try await KService.getDetails(forUser: userIdentity)
-
-							self.users[indexPath] = userResponse.data.first
-							self.setItemKindNeedsUpdate(itemKind)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-
+			case .userIdentity:
 				userLockupCollectionViewCell.delegate = self
-				userLockupCollectionViewCell.configure(using: user)
+				userLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as User?)
 			default: break
 			}
 		}
