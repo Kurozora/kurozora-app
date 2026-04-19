@@ -16,6 +16,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 	@IBOutlet weak var selectionImageOverlayView: UIImageView!
+	@IBOutlet weak var posterAspectRatioConstraint: NSLayoutConstraint?
 
 	// MARK: - Properties
 	lazy var literatureMask: UIImageView = {
@@ -73,6 +74,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		// Configure poster
 		show.attributes.posterImage(imageView: self.posterImageView)
 
+		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
 		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
@@ -93,6 +95,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		// Configure poster
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
+		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
 		self.posterImageView?.applyCornerRadius(0.0)
 		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 		self.posterImageView?.mask = self.literatureMask
@@ -114,6 +117,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		// Configure poster
 		game.attributes.posterImage(imageView: self.posterImageView)
 
+		self.applyPosterAspectRatio(widthToHeight: 1.0)
 		self.posterImageView?.applyCornerRadius(18.0)
 		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
@@ -122,5 +126,32 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	fileprivate func syncLiteratureMaskFrame() {
 		guard self.posterImageView?.mask === self.literatureMask else { return }
 		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
+	}
+
+	/// Replaces the poster container's aspect-ratio constraint with one using the supplied width-to-height multiplier.
+	///
+	/// - Parameter widthToHeight: The aspect-ratio to apply to the poster.
+	private func applyPosterAspectRatio(widthToHeight: CGFloat) {
+		guard
+			let current = self.posterAspectRatioConstraint,
+			let firstItem = current.firstItem,
+			abs(current.multiplier - widthToHeight) > .ulpOfOne
+		else { return }
+
+		let replacement = NSLayoutConstraint(
+			item: firstItem,
+			attribute: current.firstAttribute,
+			relatedBy: current.relation,
+			toItem: current.secondItem,
+			attribute: current.secondAttribute,
+			multiplier: widthToHeight,
+			constant: current.constant
+		)
+		replacement.priority = current.priority
+		replacement.identifier = current.identifier
+
+		current.isActive = false
+		replacement.isActive = true
+		self.posterAspectRatioConstraint = replacement
 	}
 }

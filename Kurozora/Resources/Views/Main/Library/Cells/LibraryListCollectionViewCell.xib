@@ -99,6 +99,7 @@
             <connections>
                 <outlet property="estimatedAiringLabel" destination="VEj-W3-uSN" id="Fs0-gO-gtL"/>
                 <outlet property="informationLabel" destination="Xdo-7G-nrn" id="YPT-GS-TOH"/>
+                <outlet property="posterAspectRatioConstraint" destination="LYg-84-TvH" id="L2B-cO-8aG"/>
                 <outlet property="posterImageOverlayView" destination="yQV-eW-YpY" id="mpc-JQ-MCJ"/>
                 <outlet property="posterImageView" destination="Awe-wF-sDX" id="H0D-1r-Vpd"/>
                 <outlet property="primaryLabel" destination="zPj-2x-dtt" id="oxB-2I-h7q"/>

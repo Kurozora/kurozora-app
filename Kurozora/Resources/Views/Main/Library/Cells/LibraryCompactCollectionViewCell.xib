@@ -45,7 +45,7 @@
                             <constraint firstItem="U2D-Se-MKs" firstAttribute="top" secondItem="BNr-PS-fzK" secondAttribute="top" id="QdE-TC-jyI"/>
                             <constraint firstItem="Fev-PL-Z7E" firstAttribute="top" secondItem="xb2-ym-eOU" secondAttribute="top" constant="8" id="VX1-mW-GSO"/>
                             <constraint firstItem="U2D-Se-MKs" firstAttribute="bottom" secondItem="BNr-PS-fzK" secondAttribute="bottom" id="aL0-s9-9nb"/>
-                            <constraint firstAttribute="height" constant="200" id="fkG-Eq-HRG"/>
+                            <constraint firstAttribute="width" constant="133" id="fkG-Eq-HRG"/>
                             <constraint firstAttribute="width" secondItem="xb2-ym-eOU" secondAttribute="height" multiplier="2:3" id="hpf-xo-wcI"/>
                             <constraint firstItem="BNr-PS-fzK" firstAttribute="top" secondItem="xb2-ym-eOU" secondAttribute="top" id="lLC-ox-0Qi"/>
                         </constraints>
@@ -70,6 +70,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="posterAspectRatioConstraint" destination="hpf-xo-wcI" id="L1B-cO-8aF"/>
                 <outlet property="posterImageOverlayView" destination="U2D-Se-MKs" id="NBd-q3-jky"/>
                 <outlet property="posterImageView" destination="BNr-PS-fzK" id="QaX-be-XxI"/>
                 <outlet property="primaryLabel" destination="JCy-de-qsT" id="H8W-UN-lHZ"/>

@@ -109,6 +109,7 @@
             <connections>
                 <outlet property="bannerContainerView" destination="16r-iS-7bZ" id="oav-G8-DQy"/>
                 <outlet property="episodeImageView" destination="CIv-rz-kh7" id="9bP-Sr-AY3"/>
+                <outlet property="posterAspectRatioConstraint" destination="hv0-QG-mkZ" id="L3B-cO-8aH"/>
                 <outlet property="posterImageOverlayView" destination="yHC-Pl-VIJ" id="RBL-cr-ENx"/>
                 <outlet property="posterImageView" destination="Ewv-Ls-PDt" id="mqb-Ho-MFk"/>
                 <outlet property="posterShadowView" destination="ena-Bt-caq" id="sNR-Os-PIl"/>
