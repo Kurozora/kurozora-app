@@ -226,7 +226,7 @@ extension UserSettings {
 		return self.shared.integer(forKey: #function)
 	}
 
-	/// Returns an array of library sections with the user's preferred cell style for each section.
+	/// Returns the stored map of the user's preferred cell style for each library kind and status.
 	static var libraryCellStyles: [String: Int] {
 		guard let libraryLayouts = shared.dictionary(forKey: #function) as? [String: Int] else { return [:] }
 		return libraryLayouts

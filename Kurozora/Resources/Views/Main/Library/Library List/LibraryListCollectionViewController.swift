@@ -437,6 +437,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
 		let (sortType, sortOption) = UserSettings.librarySortTypes[libraryKind]?[self.libraryStatus] ?? (KKLibrary.SortType.none, KKLibrary.SortType.Option.none)
 
+		self.libraryCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: self.libraryStatus)
 		self.sortLibrary(by: sortType, option: sortOption)
 		self.configureEmptyDataView()
 	}

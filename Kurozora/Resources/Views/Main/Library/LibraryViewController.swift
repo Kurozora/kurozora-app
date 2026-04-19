@@ -260,6 +260,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		self.moreBarButtonItem.menu = viewedUser.makeLibraryContextMenu(in: self, userInfo: [
 			"includeUser": self.user != nil,
 			"index": index,
+			"libraryKind": self.libraryKind.rawValue,
 		], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
@@ -283,9 +284,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
 
 		// Save cell style change to UserSettings
-		var libraryLayouts = UserSettings.libraryCellStyles
-		libraryLayouts[currentSection.libraryStatus.sectionValue] = libraryCellStyle.rawValue
-		UserSettings.set(libraryLayouts, forKey: .libraryCellStyles)
+		UserSettings.setLibraryCellStyle(libraryCellStyle, for: self.libraryKind, status: currentSection.libraryStatus)
 
 		// Update menu
 		self.updateLayoutMenuAction(for: self.currentIndex)
@@ -417,11 +416,7 @@ extension LibraryViewController {
 			let libraryStatus = KKLibrary.Status.all[index]
 
 			// Get the user's preferred library layout
-			let libraryLayouts = UserSettings.libraryCellStyles
-			let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
-			if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
-				libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
-			}
+			libraryListCollectionViewController.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: libraryStatus)
 
 			libraryListCollectionViewController.libraryStatus = libraryStatus
 			libraryListCollectionViewController.sectionIndex = index

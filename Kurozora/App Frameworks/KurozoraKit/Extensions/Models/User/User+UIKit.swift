@@ -251,9 +251,11 @@ extension User {
 		// Create "Layout" element
 		let index = userInfo?["index"] as? Int ?? 0
 		let libraryStatus = KKLibrary.Status.all[index]
-		let libraryCellStyles = UserSettings.libraryCellStyles[libraryStatus.sectionValue] ?? 0
+		let libraryKindRaw = userInfo?["libraryKind"] as? Int ?? UserSettings.libraryKind.rawValue
+		let libraryKind = KKLibrary.Kind(rawValue: libraryKindRaw) ?? UserSettings.libraryKind
+		let activeCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: libraryStatus)
 		let layoutActions = KKLibrary.CellStyle.all.map { style in
-			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style.rawValue == libraryCellStyles ? .on : .off) { _ in
+			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style == activeCellStyle ? .on : .off) { _ in
 				viewController.changeLayout(to: style)
 			}
 			return action
