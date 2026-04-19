@@ -6,6 +6,7 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
+import Foundation
 import KurozoraKit
 
 extension KKLibrary.Kind {
@@ -53,6 +54,63 @@ extension UserSettings {
 	///
 	/// - Returns: A string of the form `"{libraryKind.urlPathName}.{status.sectionValue}"`.
 	private static func libraryCellStyleKey(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> String {
+		return "\(libraryKind.urlPathName).\(status.sectionValue)"
+	}
+
+	/// Returns the user's column preferences for the given library kind and status.
+	///
+	/// Falls back to ``KKLibrary/ColumnPreferences/defaultShared`` when nothing has been
+	/// persisted or decoding fails.
+	///
+	/// - Parameters:
+	///    - libraryKind: The library kind whose column preferences to look up.
+	///    - status: The library status whose column preferences to look up.
+	/// - Returns: The stored ``KKLibrary/ColumnPreferences``, or the default.
+	static func libraryColumnPreferences(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> KKLibrary.ColumnPreferences {
+		let key = self.libraryColumnPreferencesKey(for: libraryKind, status: status)
+
+		guard
+			let blob = self.libraryColumnPreferencesMap[key],
+			let decoded = try? JSONDecoder().decode(KKLibrary.ColumnPreferences.self, from: blob)
+		else {
+			return .defaultShared
+		}
+
+		return decoded
+	}
+
+	/// Persists the user's column preferences for the given library kind and status.
+	///
+	/// - Parameters:
+	///    - preferences: The column preferences to persist.
+	///    - libraryKind: The library kind the preferences apply to.
+	///    - status: The library status the preferences apply to.
+	static func setLibraryColumnPreferences(_ preferences: KKLibrary.ColumnPreferences, for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) {
+		guard let encoded = try? JSONEncoder().encode(preferences) else {
+			return
+		}
+
+		var map = self.libraryColumnPreferencesMap
+		map[self.libraryColumnPreferencesKey(for: libraryKind, status: status)] = encoded
+		self.set(map, forKey: .libraryColumnPreferences)
+	}
+
+	/// The stored map of per-`(kind, status)` column preferences, encoded as JSON blobs.
+	private static var libraryColumnPreferencesMap: [String: Data] {
+		guard let stored = self.shared.dictionary(forKey: UserSettingsKey.libraryColumnPreferences.rawValue) as? [String: Data] else {
+			return [:]
+		}
+
+		return stored
+	}
+
+	/// Returns the composite storage key used by the column-preferences map.
+	///
+	/// - Parameters:
+	///    - libraryKind: The library kind to encode into the key.
+	///    - status: The library status to encode into the key.
+	/// - Returns: A string of the form `{libraryKind.urlPathName}.{status.sectionValue}`.
+	private static func libraryColumnPreferencesKey(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> String {
 		return "\(libraryKind.urlPathName).\(status.sectionValue)"
 	}
 }

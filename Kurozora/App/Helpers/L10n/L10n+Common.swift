@@ -41,6 +41,143 @@ extension L10n {
 		comment: "The destructive confirmation button for the sign-out alert."
 	)
 
+	// MARK: - Library
+	/// The string for the phrase 'View Options', used as a submenu title in the library table layout.
+	///
+	/// - Tag: L10n-viewOptions
+	static let viewOptions: String = String(
+		localized: "View Options",
+		comment: "The submenu title for toggling view options in the library table layout."
+	)
+	/// The string for the phrase 'Show Poster', used as a view option in the library table layout.
+	///
+	/// - Tag: L10n-showPoster
+	static let showPoster: String = String(
+		localized: "Show Poster",
+		comment: "The view option that toggles whether the title cell shows a poster."
+	)
+	/// The string for the phrase 'Reset to Default', used inside the library table's View Options menu.
+	///
+	/// - Tag: L10n-resetToDefault
+	static let resetToDefault: String = String(
+		localized: "Reset to Default",
+		comment: "The destructive action that restores the default set of library table view options."
+	)
+	/// The string for the word 'Title', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnTitle
+	static let columnTitle: String = String(
+		localized: "Title",
+		comment: "The column header for the item's title in the library table layout."
+	)
+	/// The string for the word 'Type', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnType
+	static let columnType: String = String(
+		localized: "Type",
+		comment: "The column header for the item's media type in the library table layout."
+	)
+	/// The string for the word 'Status', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnStatus
+	static let columnStatus: String = String(
+		localized: "Status",
+		comment: "The column header for the item's airing or publishing status in the library table layout."
+	)
+	/// The string for the word 'Genres', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnGenres
+	static let columnGenres: String = String(
+		localized: "Genres",
+		comment: "The column header for the item's genres in the library table layout."
+	)
+	/// The string for the word 'Year', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnYear
+	static let columnYear: String = String(
+		localized: "Year",
+		comment: "The column header for the item's release year in the library table layout."
+	)
+	/// The string for the phrase 'Date Added', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnDateAdded
+	static let columnDateAdded: String = String(
+		localized: "Date Added",
+		comment: "The column header for the date the item was added to the library."
+	)
+	/// The string for the word 'Progress', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnProgress
+	static let columnProgress: String = String(
+		localized: "Progress",
+		comment: "The column header for the item's progress indicator in the library table layout."
+	)
+	/// The string for the word 'Chapters', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnChapters
+	static let columnChapters: String = String(
+		localized: "Chapters",
+		comment: "The column header for the literature item's chapter count in the library table layout."
+	)
+	/// The string for the word 'Volumes', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnVolumes
+	static let columnVolumes: String = String(
+		localized: "Volumes",
+		comment: "The column header for the literature item's volume count in the library table layout."
+	)
+	/// The string for the word 'Editions', used as a column header in the library table layout.
+	///
+	/// - Tag: L10n-columnEditions
+	static let columnEditions: String = String(
+		localized: "Editions",
+		comment: "The column header for the game item's edition count in the library table layout."
+	)
+
+	// MARK: - Library Table Accessibility
+	/// The string for the word 'Favorite', used as an accessibility label for the library table's favorite control.
+	///
+	/// - Tag: L10n-favorite
+	static let favorite: String = String(
+		localized: "Favorite",
+		comment: "The accessibility label for the favorite column or control in the library table layout."
+	)
+	/// The string for the word 'Reminder', used as an accessibility label for the library table's reminder control.
+	///
+	/// - Tag: L10n-reminder
+	static let reminder: String = String(
+		localized: "Reminder",
+		comment: "The accessibility label for the reminder column or control in the library table layout."
+	)
+	/// The string for the phrase 'Remove from favorites', used as an accessibility label when a library item is favorited.
+	///
+	/// - Tag: L10n-removeFromFavorites
+	static let removeFromFavorites: String = String(
+		localized: "Remove from favorites",
+		comment: "The accessibility label for the favorite button when the item is already favorited."
+	)
+	/// The string for the phrase 'Add to favorites', used as an accessibility label when a library item is not favorited.
+	///
+	/// - Tag: L10n-addToFavorites
+	static let addToFavorites: String = String(
+		localized: "Add to favorites",
+		comment: "The accessibility label for the favorite button when the item is not favorited."
+	)
+	/// The string for the phrase 'Remove reminder', used as an accessibility label when a library item has a reminder set.
+	///
+	/// - Tag: L10n-removeReminder
+	static let removeReminder: String = String(
+		localized: "Remove reminder",
+		comment: "The accessibility label for the reminder button when a reminder is set."
+	)
+	/// The string for the phrase 'Add reminder', used as an accessibility label when a library item has no reminder.
+	///
+	/// - Tag: L10n-addReminder
+	static let addReminder: String = String(
+		localized: "Add reminder",
+		comment: "The accessibility label for the reminder button when no reminder is set."
+	)
+
 	// MARK: - Misc
 	/// The string for the word 'Error'.
 	///

@@ -16,6 +16,7 @@ extension KKLibrary {
 	/// case detailed = 0
 	/// case compact = 1
 	/// case list = 2
+	/// case table = 3
 	/// ```
 	enum CellStyle: Int {
 		// MARK: - Cases
@@ -28,9 +29,12 @@ extension KKLibrary {
 		/// Indicates that the cell has the `list` style.
 		case list = 2
 
+		/// Indicates that the cell has the `table` style.
+		case table = 3
+
 		// MARK: - Properties
 		/// An array containing all library cell styles.
-		static let all: [CellStyle] = [.compact, .detailed, .list]
+		static let all: [CellStyle] = [.compact, .detailed, .list, .table]
 
 		/// The string value of a library cell style.
 		var stringValue: String {
@@ -41,6 +45,8 @@ extension KKLibrary {
 				return "Compact"
 			case .list:
 				return "List"
+			case .table:
+				return "Table"
 			}
 		}
 
@@ -53,6 +59,8 @@ extension KKLibrary {
 				return LibraryCompactCollectionViewCell.reuseID
 			case .list:
 				return LibraryListCollectionViewCell.reuseID
+			case .table:
+				return LibraryTableCollectionViewCell.reuseID
 			}
 		}
 
@@ -65,6 +73,8 @@ extension KKLibrary {
 				return UIImage(systemName: "rectangle.grid.3x2.fill")!
 			case .list:
 				return UIImage(systemName: "rectangle.grid.1x2.fill")!
+			case .table:
+				return UIImage(systemName: "tablecells.fill")!
 			}
 		}
 	}

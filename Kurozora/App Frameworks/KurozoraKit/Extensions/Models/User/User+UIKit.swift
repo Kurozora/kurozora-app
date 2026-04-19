@@ -263,13 +263,31 @@ extension User {
 		let subMenu = UIMenu(title: "", options: .displayInline, children: layoutActions)
 		menuElements.append(subMenu)
 
+		// Create "View Options" element
+		if activeCellStyle == .table, let currentSection = viewController.currentViewController as? LibraryListCollectionViewController {
+			let currentStatus = currentSection.libraryStatus
+			let viewOptionsMenu = LibraryColumnMenuBuilder.makeMenu(
+				kind: libraryKind,
+				fetch: {
+					UserSettings.libraryColumnPreferences(for: libraryKind, status: currentStatus)
+				},
+				apply: { [weak viewController] updated in
+					viewController?.applyColumnPreferencesToCurrentSection(updated)
+				}
+			)
+
+			let iconViewOptions = UIMenu(title: L10n.viewOptions, image: UIImage(systemName: "slider.horizontal.3"), children: viewOptionsMenu.children)
+			menuElements.append(iconViewOptions)
+		}
+
+		var otherMenuElements: [UIMenuElement] = []
 		// Create "Favorites" element
 		let includeUser = userInfo?["includeUser"] as? Bool ?? true
 		let favoritesAction = UIAction(title: L10n.favorites, image: UIImage(systemName: "heart.circle")) {  [weak self] _ in
 			guard let self = self else { return }
 			self.openFavorites(on: viewController, includeUser: includeUser)
 		}
-		menuElements.append(favoritesAction)
+		otherMenuElements.append(favoritesAction)
 
 		if User.current?.id == self.id {
 			// Create "Reminders" element
@@ -277,7 +295,7 @@ extension User {
 				guard let self = self else { return }
 				self.openReminders(on: viewController)
 			}
-			menuElements.append(remindersAction)
+			otherMenuElements.append(remindersAction)
 		}
 
 		// Create "Share" element
@@ -289,9 +307,10 @@ extension User {
 
 			self.openShareSheet(activityItems: activityItems, on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
-		menuElements.append(shareAction)
+		otherMenuElements.append(shareAction)
 
-		// Create and return a UIMenu with the share action
+		// Create and return a UIMenu
+		menuElements.append(UIMenu(title: "", options: .displayInline, children: otherMenuElements))
 		return UIMenu(title: "", children: menuElements)
 	}
 }
