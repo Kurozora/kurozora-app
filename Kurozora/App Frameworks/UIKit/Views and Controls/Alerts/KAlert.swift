@@ -185,14 +185,18 @@ private extension KAlert {
 		private static let verticalInset: CGFloat = 14
 
 		private static let targetEffect: UIVisualEffect = {
-			if #available(iOS 26.0, *) {
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 				return UIGlassEffect(style: .regular)
 			}
+
 			return UIBlurEffect(style: .systemMaterial)
 		}()
 
 		static var usesGlassEffect: Bool {
-			if #available(iOS 26.0, *) { return true }
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				return true
+			}
+
 			return false
 		}
 
@@ -206,7 +210,15 @@ private extension KAlert {
 			self.translatesAutoresizingMaskIntoConstraints = false
 			self.layer.cornerRadius = 20
 			self.layer.cornerCurve = .continuous
-			self.clipsToBounds = true
+
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.clipsToBounds = false
+				self.blurView.layer.cornerRadius = 20
+				self.blurView.layer.cornerCurve = .continuous
+				self.blurView.clipsToBounds = true
+			} else {
+				self.clipsToBounds = true
+			}
 
 			self.blurView.translatesAutoresizingMaskIntoConstraints = false
 			self.addSubview(self.blurView)
