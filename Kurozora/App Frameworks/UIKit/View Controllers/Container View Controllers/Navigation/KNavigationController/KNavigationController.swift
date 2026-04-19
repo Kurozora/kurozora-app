@@ -18,6 +18,15 @@ class KNavigationController: UINavigationController {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updatePrefersLargeTitles(_:)), name: .KSPrefersLargeTitlesDidChange, object: nil)
 
 		self.sharedInit()
+
+		if #available(iOS 17.0, macCatalyst 17.0, *) {
+			self.registerForTraitChanges([UITraitHorizontalSizeClass.self], action: #selector(self.handleHorizontalSizeClassChange))
+		}
+	}
+
+	override func didMove(toParent parent: UIViewController?) {
+		super.didMove(toParent: parent)
+		self.configureRootNavigationItemStyle()
 	}
 
 	// MARK: - Functions
@@ -28,11 +37,33 @@ class KNavigationController: UINavigationController {
 		self.configureToolbarStyle()
 	}
 
+	/// Configures the root navigation item style based on the current horizontal size class and user preferences.
+	private func configureRootNavigationItemStyle() {
+		guard
+			#available(iOS 18.0, macCatalyst 18.0, *),
+			self.tabBarController != nil,
+			let rootNavigationItem = self.viewControllers.first?.navigationItem
+		else { return }
+
+		if self.traitCollection.horizontalSizeClass == .regular {
+			rootNavigationItem.style = .browser
+			rootNavigationItem.largeTitleDisplayMode = UserSettings.largeTitlesEnabled ? .always : .automatic
+		} else {
+			rootNavigationItem.style = .navigator
+			rootNavigationItem.largeTitleDisplayMode = .automatic
+		}
+	}
+
+	@objc private func handleHorizontalSizeClassChange() {
+		self.configureRootNavigationItemStyle()
+	}
+
 	/// Used to update the large title preference.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updatePrefersLargeTitles(_ notification: NSNotification) {
 		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
+		self.configureRootNavigationItemStyle()
 	}
 
 	/// Used to update the theme of the view.
