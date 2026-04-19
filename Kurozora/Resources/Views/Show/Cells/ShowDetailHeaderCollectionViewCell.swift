@@ -42,6 +42,8 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
+
+		self.posterImageOverlayView.isUserInteractionEnabled = false
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
 		}
