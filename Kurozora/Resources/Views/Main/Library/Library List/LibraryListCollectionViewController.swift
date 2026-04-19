@@ -158,7 +158,16 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 
 		if self.libraryKind != UserSettings.libraryKind {
-			// Fetch library if user is signed in
+			// The displayed kind is stale — drop the old kind's data before the async refetch so the previous
+			// items never flash while the new fetch is in flight.
+			self.libraryKind = UserSettings.libraryKind
+			self.nextPageURL = nil
+			self.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: self.libraryStatus)
+			self.shows = []
+			self.literatures = []
+			self.games = []
+			self.updateDataSource()
+
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchLibrary()
@@ -437,6 +446,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
 		let (sortType, sortOption) = UserSettings.librarySortTypes[libraryKind]?[self.libraryStatus] ?? (KKLibrary.SortType.none, KKLibrary.SortType.Option.none)
 
+		self.libraryKind = libraryKind
 		self.libraryCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: self.libraryStatus)
 		self.sortLibrary(by: sortType, option: sortOption)
 		self.configureEmptyDataView()
