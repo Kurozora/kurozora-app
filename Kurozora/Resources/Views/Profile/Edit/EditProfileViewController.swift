@@ -452,7 +452,8 @@ private extension EditProfileViewController {
 		self.bannerEditIndicatorButton = UIButton(type: .system)
 		self.bannerEditIndicatorButton.translatesAutoresizingMaskIntoConstraints = false
 		self.bannerEditIndicatorButton.isUserInteractionEnabled = false
-		if #available(iOS 26.0, *) {
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			var config = UIButton.Configuration.glass()
 			config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .medium))
 			config.cornerStyle = .capsule
@@ -467,6 +468,7 @@ private extension EditProfileViewController {
 			}()
 			self.bannerEditIndicatorButton.layerCornerRadius = 12
 		}
+
 		self.bannerContainerView.addSubview(self.bannerEditIndicatorButton)
 
 		self.bannerTapButton = UIButton(type: .custom)
@@ -510,7 +512,8 @@ private extension EditProfileViewController {
 		self.placeholderProfileImageEditButton = UIButton(type: .system)
 		self.placeholderProfileImageEditButton.translatesAutoresizingMaskIntoConstraints = false
 		self.placeholderProfileImageEditButton.isUserInteractionEnabled = false
-		if #available(iOS 26.0, *) {
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			var config = UIButton.Configuration.glass()
 			config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
 			config.cornerStyle = .capsule
@@ -525,6 +528,7 @@ private extension EditProfileViewController {
 			}()
 			self.placeholderProfileImageEditButton.layerCornerRadius = 12
 		}
+
 		self.profilePhotoWrapperView.addSubview(self.placeholderProfileImageEditButton)
 
 		// Username label

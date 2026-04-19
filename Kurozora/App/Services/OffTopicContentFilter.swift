@@ -68,7 +68,7 @@ final class OffTopicContentFilter {
 	/// Cheap when preloading isn't available — safe to call from
 	/// `viewDidAppear` on the composer view controllers.
 	func prewarm() {
-		if #available(iOS 26.0, macOS 26.0, *) {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			OffTopicLLMClassifier.shared.prewarm()
 		}
 	}
@@ -89,8 +89,9 @@ final class OffTopicContentFilter {
 		let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
 		guard trimmed.count >= self.minimumCharacters else { return false }
 
-		if #available(iOS 26.0, macOS 26.0, *) {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			let llm = OffTopicLLMClassifier.shared
+
 			if llm.isAvailable {
 				return await llm.isOffTopicSourceSeeking(trimmed)
 			}

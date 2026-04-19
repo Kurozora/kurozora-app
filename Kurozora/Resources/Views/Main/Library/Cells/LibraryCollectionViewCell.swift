@@ -18,12 +18,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var selectionImageOverlayView: UIImageView!
 
 	// MARK: - Properties
-	lazy var literatureMask: CALayer = {
-		let literatureMask = CALayer()
-		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
-		literatureMask.frame = self.posterImageView.bounds
-		return literatureMask
+	lazy var literatureMask: UIImageView = {
+		let maskView = UIImageView(image: UIImage(named: "book_mask"))
+		return maskView
 	}()
+
+	private var posterBoundsObservation: NSKeyValueObservation?
 
 	/// Determines whether to show selection icon.
 	var showSelectionIcon: Bool = false
@@ -35,6 +35,13 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+			self?.syncLiteratureMaskFrame()
+		}
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -42,8 +49,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	override func layoutSubviews() {
+		super.layoutSubviews()
+
 		self.selectionImageOverlayView.isHidden = !self.showSelectionIcon
 		self.selectionImageOverlayView.image = self.isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
+
+		self.syncLiteratureMaskFrame()
 	}
 
 	// MARK: - Functions
@@ -63,7 +74,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(10.0)
-		self.posterImageView?.layer.mask = nil
+		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
 	}
 
@@ -83,7 +94,8 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(0.0)
-		self.posterImageView?.layer.mask = self.literatureMask
+		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
+		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
 	}
 
@@ -103,7 +115,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		game.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.applyCornerRadius(18.0)
-		self.posterImageView?.layer.mask = nil
+		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
+	}
+
+	fileprivate func syncLiteratureMaskFrame() {
+		guard self.posterImageView?.mask === self.literatureMask else { return }
+		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 	}
 }

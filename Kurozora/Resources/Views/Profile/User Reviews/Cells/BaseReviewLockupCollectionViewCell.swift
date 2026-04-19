@@ -20,12 +20,25 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var posterImageOverlayView: UIImageView?
 
 	// MARK: - Properties
-	lazy var literatureMask: CALayer = {
-		let literatureMask = CALayer()
-		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
-		literatureMask.frame = self.posterImageView.bounds
-		return literatureMask
+	lazy var literatureMask: UIImageView = {
+		let maskView = UIImageView(image: UIImage(named: "book_mask"))
+		return maskView
 	}()
+
+	private var posterBoundsObservation: NSKeyValueObservation?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+			self?.syncLiteratureMaskFrame()
+		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.syncLiteratureMaskFrame()
+	}
 
 	// MARK: - Functions
 	func configure(using review: Review?, for character: Character?) {
@@ -43,7 +56,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		character.attributes.profileImage(imageView: self.posterImageView)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -63,7 +76,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure banner
 		episode.attributes.bannerImage(imageView: self.posterImageView)
 		self.posterImageView.applyCornerRadius(10.0)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -83,7 +96,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		game.attributes.posterImage(imageView: self.posterImageView)
 		self.posterImageView.applyCornerRadius(18.0)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -103,7 +116,8 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		literature.attributes.posterImage(imageView: self.posterImageView)
 		self.posterImageView.applyCornerRadius(0.0)
-		self.posterImageView.layer.mask = self.literatureMask
+		self.literatureMask.frame = self.posterImageView.bounds
+		self.posterImageView.mask = self.literatureMask
 		self.posterImageOverlayView?.isHidden = false
 	}
 
@@ -122,7 +136,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		person.attributes.profileImage(imageView: self.posterImageView)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -142,7 +156,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		show.attributes.posterImage(imageView: self.posterImageView)
 		self.posterImageView.applyCornerRadius(10.0)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -161,7 +175,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure artwork
 		song.attributes.artworkImage(imageView: self.posterImageView)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
 
@@ -180,7 +194,12 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		studio.attributes.profileImage(imageView: self.posterImageView)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
+	}
+
+	fileprivate func syncLiteratureMaskFrame() {
+		guard self.posterImageView?.mask === self.literatureMask else { return }
+		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 	}
 }

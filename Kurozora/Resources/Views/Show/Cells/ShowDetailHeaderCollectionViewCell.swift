@@ -28,16 +28,29 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	var libraryStatus: KKLibrary.Status = .none
 	var libraryKind: KKLibrary.Kind = .shows
 
-	lazy var literatureMask: CALayer = {
-		let literatureMask = CALayer()
-		literatureMask.contents = UIImage(named: "book_mask")?.cgImage
-		literatureMask.frame = self.posterImageView.bounds
-		return literatureMask
+	lazy var literatureMask: UIImageView = {
+		let maskView = UIImageView(image: UIImage(named: "book_mask"))
+		return maskView
 	}()
+
+	private var posterBoundsObservation: NSKeyValueObservation?
 
 	var show: Show?
 	var literature: Literature?
 	var game: Game?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+			self?.syncLiteratureMaskFrame()
+		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.syncLiteratureMaskFrame()
+	}
 }
 
 // MARK: - Functions
@@ -91,7 +104,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView.applyCornerRadius(10.0)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView.isHidden = true
 
 		// Configure banner view
@@ -141,7 +154,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView.applyCornerRadius(0.0)
-		self.posterImageView.layer.mask = self.literatureMask
+		self.literatureMask.frame = self.posterImageView.bounds
+		self.posterImageView.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
 
 		// Configure banner view
@@ -191,7 +205,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		game.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView.applyCornerRadius(18.0)
-		self.posterImageView.layer.mask = nil
+		self.posterImageView.mask = nil
 		self.posterImageOverlayView.isHidden = true
 
 		// Configure banner view
@@ -315,6 +329,11 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.updateLibraryStatus(game.attributes.library?.status)
 		self.updateFavoriteStatus(game.attributes.library?.favoriteStatus, animated: animated)
 		self.updateReminderStatus(game.attributes.library?.reminderStatus, animated: animated)
+	}
+
+	fileprivate func syncLiteratureMaskFrame() {
+    	guard self.posterImageView?.mask === self.literatureMask else { return }
+    	self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 	}
 }
 

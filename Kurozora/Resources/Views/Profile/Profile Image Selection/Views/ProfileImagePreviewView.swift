@@ -97,7 +97,7 @@ class ProfileImagePreviewView: UIView {
 		button.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
 		button.accessibilityLabel = String(localized: "Remove image")
 
-		if #available(iOS 26.0, *) {
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			var config = UIButton.Configuration.glass()
 			config.image = UIImage(systemName: "xmark")?.withConfiguration(UIImage.SymbolConfiguration(scale: .small))
 			config.cornerStyle = .capsule

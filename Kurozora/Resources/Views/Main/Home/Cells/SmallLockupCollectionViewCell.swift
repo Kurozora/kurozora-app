@@ -18,20 +18,33 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var posterImageOverlay: UIImageView!
 
 	// MARK: - Properties
-	lazy var literatureMask: CALayer = {
-		let literatureMask = CALayer()
-		literatureMask.contents = UIImage(named: "book_mask")?.cgImage
-		literatureMask.frame = self.posterImageView?.bounds ?? .zero
-		return literatureMask
+	lazy var literatureMask: UIImageView = {
+		let maskView = UIImageView(image: UIImage(named: "book_mask"))
+		return maskView
 	}()
 
+	private var posterBoundsObservation: NSKeyValueObservation?
+
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+			self?.syncLiteratureMaskFrame()
+		}
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
 		self.timeLabel.text = ""
 		self.broadcastLabel.stopCountdown()
 		self.broadcastLabel.text = ""
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.syncLiteratureMaskFrame()
 	}
 
 	// MARK: - Functions
@@ -49,7 +62,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		self.posterImageView?.applyCornerRadius(10.0)
-		self.posterImageView?.layer.mask = nil
+		self.posterImageView?.mask = nil
 		self.posterImageOverlay.isHidden = true
 
 		// Configure time label
@@ -81,7 +94,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure poster image
 		self.posterImageView?.applyCornerRadius(0.0)
-		self.posterImageView?.layer.mask = self.literatureMask
+		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
+		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
 
 		// Configure time label
@@ -108,7 +122,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure poster image
 		self.posterImageView?.applyCornerRadius(10.0)
-		self.posterImageView?.layer.mask = nil
+		self.posterImageView?.mask = nil
 		self.posterImageOverlay.isHidden = true
 
 		// Configure broadcast label
@@ -126,10 +140,19 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure poster image
 		self.posterImageView?.applyCornerRadius(0.0)
-		self.posterImageView?.layer.mask = self.literatureMask
+		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
+		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
 
 		// Configure broadcast label
 		self.broadcastLabel.text = nil
+	}
+
+	fileprivate func syncLiteratureMaskFrame() {
+		guard
+			let posterImageView = self.posterImageView,
+			posterImageView.mask === self.literatureMask
+		else { return }
+		self.literatureMask.frame = posterImageView.bounds
 	}
 }
