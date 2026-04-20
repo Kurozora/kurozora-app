@@ -83,6 +83,10 @@ enum UserSettingsKey: String, CaseIterable {
 	case libraryKind
 	/// The key to the default library sort types.
 	case librarySortTypes
+	/// The key to the user's column preferences for the table layout.
+	case libraryColumnPreferences
+	/// The key to the user's compact-layout title visibility preferences.
+	case libraryCompactTitleVisibilities
 
 	// Motion settings keys
 	/// The key to the selected reduce motion option.

@@ -35,13 +35,26 @@ extension LibraryListCollectionViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(effectiveStyle.identifierString)")
 			}
 
-			switch item {
-			case .show(let show):
-				libraryBaseCollectionViewCell.configure(using: show, showSelectionIcon: self.isEditing)
-			case .literature(let literature):
-				libraryBaseCollectionViewCell.configure(using: literature, showSelectionIcon: self.isEditing)
-			case .game(let game):
-				libraryBaseCollectionViewCell.configure(using: game, showSelectionIcon: self.isEditing)
+			if let compact = libraryBaseCollectionViewCell as? LibraryCompactCollectionViewCell {
+				let titleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
+
+				switch item {
+				case .show(let show):
+					compact.configure(using: show, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
+				case .literature(let literature):
+					compact.configure(using: literature, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
+				case .game(let game):
+					compact.configure(using: game, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
+				}
+			} else {
+				switch item {
+				case .show(let show):
+					libraryBaseCollectionViewCell.configure(using: show, showSelectionIcon: self.isEditing)
+				case .literature(let literature):
+					libraryBaseCollectionViewCell.configure(using: literature, showSelectionIcon: self.isEditing)
+				case .game(let game):
+					libraryBaseCollectionViewCell.configure(using: game, showSelectionIcon: self.isEditing)
+				}
 			}
 
 			return libraryBaseCollectionViewCell

@@ -113,4 +113,48 @@ extension UserSettings {
 	private static func libraryColumnPreferencesKey(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> String {
 		return "\(libraryKind.urlPathName).\(status.sectionValue)"
 	}
+
+	/// Returns the user's preferred compact-layout title visibility for the given library kind and status.
+	///
+	/// - Parameters:
+	///    - libraryKind: The library kind whose preferred title visibility to look up.
+	///    - status: The library status whose preferred title visibility to look up.
+	///
+	/// - Returns: The stored ``KKLibrary/CompactTitleVisibility`` for the given kind and status, or `.always` if none has been persisted.
+	static func libraryCompactTitleVisibility(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> KKLibrary.CompactTitleVisibility {
+		let rawValue = self.libraryCompactTitleVisibilities[self.libraryCompactTitleVisibilityKey(for: libraryKind, status: status)] ?? 0
+		return KKLibrary.CompactTitleVisibility(rawValue: rawValue) ?? .always
+	}
+
+	/// Persists the user's preferred compact-layout title visibility for the given library kind and status.
+	///
+	/// - Parameters:
+	///    - visibility: The compact title visibility to persist.
+	///    - libraryKind: The library kind the visibility applies to.
+	///    - status: The library status the visibility applies to.
+	static func setLibraryCompactTitleVisibility(_ visibility: KKLibrary.CompactTitleVisibility, for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) {
+		var visibilities = self.libraryCompactTitleVisibilities
+		visibilities[self.libraryCompactTitleVisibilityKey(for: libraryKind, status: status)] = visibility.rawValue
+		self.set(visibilities, forKey: .libraryCompactTitleVisibilities)
+	}
+
+	/// The stored map of per-`(kind, status)` compact-layout title visibility preferences.
+	private static var libraryCompactTitleVisibilities: [String: Int] {
+		guard let stored = self.shared.dictionary(forKey: UserSettingsKey.libraryCompactTitleVisibilities.rawValue) as? [String: Int] else {
+			return [:]
+		}
+
+		return stored
+	}
+
+	/// Returns the composite storage key used by the compact title-visibility preference map.
+	///
+	/// - Parameters:
+	///    - libraryKind: The library kind to encode into the key.
+	///    - status: The library status to encode into the key.
+	///
+	/// - Returns: A string of the form `"{libraryKind.urlPathName}.{status.sectionValue}"`.
+	private static func libraryCompactTitleVisibilityKey(for libraryKind: KKLibrary.Kind, status: KKLibrary.Status) -> String {
+		return "\(libraryKind.urlPathName).\(status.sectionValue)"
+	}
 }

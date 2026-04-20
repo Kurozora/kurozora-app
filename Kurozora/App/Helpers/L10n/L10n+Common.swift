@@ -56,6 +56,34 @@ extension L10n {
 		localized: "Show Poster",
 		comment: "The view option that toggles whether the title cell shows a poster."
 	)
+	/// The string for the phrase 'Always Show Title', used as a view option in the library compact layout.
+	///
+	/// - Tag: L10n-compactTitleAlways
+	static let compactTitleAlways: String = String(
+		localized: "Always Show Title",
+		comment: "The view option that always shows the series title beneath the poster in the library compact layout."
+	)
+	/// The string for the phrase 'Hide Title', used as a view option in the library compact layout.
+	///
+	/// - Tag: L10n-compactTitleNever
+	static let compactTitleNever: String = String(
+		localized: "Hide Title",
+		comment: "The view option that hides the series title in the library compact layout."
+	)
+	/// The string for the word 'Smart', used as a view option in the library compact layout.
+	///
+	/// - Tag: L10n-compactTitleSmart
+	static let compactTitleSmart: String = String(
+		localized: "Smart",
+		comment: "The view option that hides the series title when real poster art is available in the library compact layout."
+	)
+	/// The string for the subtitle accompanying the 'Smart' compact title-visibility option.
+	///
+	/// - Tag: L10n-compactTitleSmartSubtitle
+	static let compactTitleSmartSubtitle: String = String(
+		localized: "Shows title only when poster art isn't available",
+		comment: "The subtitle explaining the 'Smart' compact title-visibility option."
+	)
 	/// The string for the phrase 'Reset to Default', used inside the library table's View Options menu.
 	///
 	/// - Tag: L10n-resetToDefault

@@ -93,6 +93,17 @@ extension LibraryViewController {
 		currentSection.applyColumnPreferences(preferences, reloadVisibleRows: true)
 	}
 
+	/// Pushes the given compact-layout title visibility into the currently visible library status page.
+	///
+	/// - Parameter visibility: The updated compact-layout title visibility to apply and persist.
+	func applyCompactTitleVisibilityToCurrentSection(_ visibility: KKLibrary.CompactTitleVisibility) {
+		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else {
+			return
+		}
+
+		currentSection.applyCompactTitleVisibility(visibility)
+	}
+
 	/// Rebuilds the more-button's menu so its checkmarks reflect the latest column preferences.
 	func refreshMoreButtonMenu() {
 		self.updateLayoutMenuAction(for: self.currentIndex)

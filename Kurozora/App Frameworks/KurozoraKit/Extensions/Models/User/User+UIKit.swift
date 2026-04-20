@@ -278,6 +278,19 @@ extension User {
 
 			let iconViewOptions = UIMenu(title: L10n.viewOptions, image: UIImage(systemName: "slider.horizontal.3"), children: viewOptionsMenu.children)
 			menuElements.append(iconViewOptions)
+		} else if activeCellStyle == .compact, let currentSection = viewController.currentViewController as? LibraryListCollectionViewController {
+			let currentStatus = currentSection.libraryStatus
+			let compactOptionsMenu = LibraryCompactViewOptionsBuilder.makeMenu(
+				fetch: {
+					UserSettings.libraryCompactTitleVisibility(for: libraryKind, status: currentStatus)
+				},
+				apply: { [weak viewController] visibility in
+					viewController?.applyCompactTitleVisibilityToCurrentSection(visibility)
+				}
+			)
+
+			let iconViewOptions = UIMenu(title: L10n.viewOptions, image: UIImage(systemName: "slider.horizontal.3"), options: .singleSelection, children: compactOptionsMenu.children)
+			menuElements.append(iconViewOptions)
 		}
 
 		var otherMenuElements: [UIMenuElement] = []

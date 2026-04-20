@@ -1,5 +1,5 @@
 //
-//  LibraryListCollectionViewController+Table.swift
+//  LibraryListCollectionViewController+CellLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 19/04/2026.
@@ -9,6 +9,22 @@
 import KurozoraKit
 import UIKit
 
+// MARK: - Compact Layout Title Visibility
+extension LibraryListCollectionViewController {
+	/// Persists the given compact-layout title visibility, 
+	///
+	/// - Parameter visibility: The newly selected compact-layout title visibility.
+	func applyCompactTitleVisibility(_ visibility: KKLibrary.CompactTitleVisibility) {
+		UserSettings.setLibraryCompactTitleVisibility(visibility, for: self.libraryKind, status: self.libraryStatus)
+		self.reconfigureAllSnapshotItems()
+		
+		if let tabmanParent = self.tabmanParent as? LibraryViewController {
+			tabmanParent.refreshMoreButtonMenu()
+		}
+	}
+}
+
+// MARK: - LibraryTableCollectionViewCellDelegate
 extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDelegate {
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleFavoriteAt indexPath: IndexPath) {
 		Task { [weak self] in
@@ -150,7 +166,7 @@ extension LibraryListCollectionViewController {
 	}
 
 	/// Reconfigures every item in the current snapshot without animating a reload.
-	fileprivate func reconfigureAllSnapshotItems() {
+	func reconfigureAllSnapshotItems() {
 		guard self.dataSource != nil else {
 			return
 		}
