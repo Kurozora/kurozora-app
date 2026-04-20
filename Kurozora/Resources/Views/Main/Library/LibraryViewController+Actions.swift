@@ -53,8 +53,25 @@ extension LibraryViewController {
 
 			self.navigationItem.leftItemsSupplementBackButton = true
 			self.navigationItem.leftBarButtonItems = [
-				self.sortTypeBarButtonItem
+				self.sortTypeBarButtonItem,
+				self.searchBarButtonItem
 			]
+		}
+	}
+
+	/// Presents a search screen locked to the library scope as a sheet.
+	func presentLibrarySearch() {
+		Task { [weak self] in
+			guard let self = self else { return }
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn else { return }
+
+			let searchResultsCollectionViewController = SearchResultsCollectionViewController()
+			searchResultsCollectionViewController.searchViewKind = .library
+
+			let kNavigationController = KNavigationController(rootViewController: searchResultsCollectionViewController)
+			kNavigationController.modalPresentationStyle = .pageSheet
+			self.present(kNavigationController, animated: true)
 		}
 	}
 

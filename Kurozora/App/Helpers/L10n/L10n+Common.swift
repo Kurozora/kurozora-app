@@ -914,6 +914,13 @@ extension L10n {
 		localized: "Search",
 		comment: "The string for the word 'search'."
 	)
+	/// The string for the phrase 'Search Library'.
+	///
+	/// - Tag: L10n-searchLibrary
+	static let searchLibrary: String = String(
+		localized: "Search Library",
+		comment: "The title and placeholder for the library search screen."
+	)
 	/// The string for the word 'sort'.
 	///
 	/// - Tag: L10n-sort

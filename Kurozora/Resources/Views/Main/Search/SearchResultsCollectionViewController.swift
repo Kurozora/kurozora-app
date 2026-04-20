@@ -17,6 +17,7 @@ import UIKit
 enum SearchViewKind {
 	case single(_ type: KKSearchType)
 	case multiple
+	case library
 }
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
@@ -191,6 +192,19 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			#if targetEnvironment(macCatalyst)
 			self.configureFilterBarButtonItem()
 			#endif
+		case .library:
+			self.kSearchController.hidesNavigationBarDuringPresentation = false
+			self.currentScope = .library
+			#if targetEnvironment(macCatalyst)
+			self.configureFilterBarButtonItem()
+			#endif
+			self.title = L10n.searchLibrary
+
+			if self.presentingViewController != nil || self.navigationController?.presentingViewController != nil {
+				self.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+					self?.dismiss(animated: true)
+				})
+			}
 		}
 		self.configureView()
 		self.configureDataSource()
@@ -209,6 +223,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 			// Update data source
 			self.updateDataSource()
+		case .library:
+			self.updateDataSource()
 		}
 	}
 
@@ -221,6 +237,17 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		if self.isDeepLinked {
 			self.isDeepLinked = false
 			self.performSearch(with: self.searchQuery, in: self.currentScope, for: self.currentTypes, with: nil, next: nil)
+		}
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if case .library = self.searchViewKind {
+			self.kSearchController.isActive = true
+			DispatchQueue.main.async { [weak self] in
+				self?.kSearchController.searchBar.becomeFirstResponder()
+			}
 		}
 	}
 
@@ -346,6 +373,12 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - next: The URL string of the next page in the paginated response. Use nil to get first page.
 	///    - resettingResults: Whether to reset the results.
 	func performSearch(with query: String, in searchScope: KKSearchScope, for types: [KKSearchType], with filter: KKSearchFilter?, next: String?, resettingResults: Bool = true) {
+		var searchScope = searchScope
+
+		if case .library = self.searchViewKind {
+			searchScope = .library
+		}
+
 		// Prepare view for search
 		self.currentScope = searchScope
 
@@ -370,6 +403,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 					self.searchTypes = searchTypes
 				case .multiple:
 					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+				case .library:
+					return
 				}
 
 				await self.search(scope: searchScope, types: searchTypes, query: query, next: next, filter: filter)
@@ -902,6 +937,13 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			searchBar.showsBookmarkButton = false
 			#endif
 			self.setShowToolbar(false)
+		case .library:
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = []
+			#else
+			searchBar.showsBookmarkButton = false
+			#endif
+			self.setShowToolbar(false)
 		}
 	}
 
@@ -915,6 +957,13 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			case .single:
 				break
 			case .multiple:
+				#if targetEnvironment(macCatalyst)
+				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+				#else
+				searchBar.showsBookmarkButton = true
+				#endif
+				self.setShowToolbar(true)
+			case .library:
 				#if targetEnvironment(macCatalyst)
 				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
 				#else
@@ -961,6 +1010,14 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		case .single(let type):
 			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? KKSearchFilter, next: nil)
 		case .multiple:
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = []
+			#else
+			searchBar.showsBookmarkButton = false
+			#endif
+			self.setShowToolbar(false)
+			self.resetSearchResults(for: nil)
+		case .library:
 			#if targetEnvironment(macCatalyst)
 			self.navigationItem.rightBarButtonItems = []
 			#else

@@ -34,6 +34,17 @@ extension LibraryViewController {
 		self.sortTypeBarButtonItem.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
 	}
 
+	/// Configures the search bar button item that presents library-scoped search.
+	private func configureSearchBarButtonItem() {
+		self.searchBarButtonItem.title = L10n.searchLibrary
+		self.searchBarButtonItem.image = UIImage(systemName: "magnifyingglass")
+		self.searchBarButtonItem.accessibilityLabel = L10n.searchLibrary
+		self.searchBarButtonItem.primaryAction = UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.presentLibrarySearch()
+		}
+	}
+
 	/// Configures the more bar button item.
 	private func configureMoreBarButtonItem() {
 		self.moreBarButtonItem.title = L10n.more
@@ -60,6 +71,7 @@ extension LibraryViewController {
 	/// Configures the navigation items hosted by the view's navigation bar.
 	fileprivate func configureNavigationItems() {
 		self.configureSortTypeBarButtonItem()
+		self.configureSearchBarButtonItem()
 		self.configureMoreBarButtonItem()
 		self.configureProfileBarButtonItem()
 	}

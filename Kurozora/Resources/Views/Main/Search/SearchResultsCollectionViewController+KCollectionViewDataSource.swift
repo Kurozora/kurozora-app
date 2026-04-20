@@ -249,7 +249,7 @@ extension SearchResultsCollectionViewController {
 		}
 
 		switch self.searchViewKind {
-		case .single:
+		case .single, .library:
 			break
 		case .multiple:
 			if self.snapshot.numberOfSections == 0 {

@@ -15,6 +15,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	// MARK: - Views
 	var profileBarButtonItem: ProfileBarButtonItem?
 	var sortTypeBarButtonItem = UIBarButtonItem()
+	var searchBarButtonItem = UIBarButtonItem()
 	var moreBarButtonItem = UIBarButtonItem()
 
 	var toolbar = UIToolbar()

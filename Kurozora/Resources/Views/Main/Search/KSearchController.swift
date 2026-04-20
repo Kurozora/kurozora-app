@@ -51,6 +51,14 @@ class KSearchController: UISearchController {
 				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
 				#endif
 				self.searchBar.scopeButtonTitles = KKSearchScope.allString
+			case .library:
+				self.searchBar.placeholder = L10n.searchLibrary
+				self.searchBar.showsScopeBar = false
+				self.searchBar.scopeButtonTitles = [KKSearchScope.library.stringValue]
+				self.searchScope = .library
+				#if !targetEnvironment(macCatalyst)
+				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+				#endif
 			}
 		}
 
@@ -86,6 +94,13 @@ extension KSearchController: UISearchControllerDelegate {
 				#endif
 			} else {
 				self.automaticallyShowsScopeBar = true
+			}
+		case .library:
+			if #available(iOS 16.0, *) {
+				self.scopeBarActivation = .manual
+				self.searchBar.showsScopeBar = false
+			} else {
+				self.automaticallyShowsScopeBar = false
 			}
 		}
 	}
