@@ -22,7 +22,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
-	@IBOutlet weak var contentTextView: KTextView!
+	@IBOutlet weak var contentTextView: KSelectableTextView!
 	@IBOutlet weak var moreButton: KButton!
 	@IBOutlet weak var moreImageView: UIImageView!
 	@IBOutlet weak var moreButtonView: UIView!
@@ -51,6 +51,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			// Configure body
 			self.contentTextView.textContainer.maximumNumberOfLines = 0
 			self.contentTextView.isSelectable = true
+			self.contentTextView.allowsFullTextInteraction = true
 
 			// Configure more view
 			self.moreButtonView.isHidden = true
@@ -63,6 +64,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			self.contentTextView.textContainer.maximumNumberOfLines = 6
 			self.contentTextView.textContainer.lineBreakMode = .byWordWrapping
 			self.contentTextView.isSelectable = false
+			self.contentTextView.allowsFullTextInteraction = false
 		}
 
 		if let user = review.relationships?.users?.data.first {
