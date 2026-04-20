@@ -12,7 +12,7 @@ extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard !self.isEditing else { return }
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			guard let show = self.shows[safe: indexPath.item] else { return }
 			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
@@ -26,7 +26,7 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
 				Task { [weak self] in
@@ -87,7 +87,7 @@ extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
             return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures:

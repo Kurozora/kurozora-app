@@ -36,7 +36,7 @@ extension LibraryListCollectionViewController {
 			}
 
 			if let compact = libraryBaseCollectionViewCell as? LibraryCompactCollectionViewCell {
-				let titleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
+				let titleVisibility = self.libraryCompactTitleVisibility
 
 				switch item {
 				case .show(let show):
@@ -79,7 +79,7 @@ extension LibraryListCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		self.snapshot.appendSections([.main])
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			let shows: [ItemKind] = self.shows.map { show in
 				.show(show)

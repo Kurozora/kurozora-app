@@ -29,6 +29,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
 	var libraryColumnPreferences: KKLibrary.ColumnPreferences = .defaultShared
+	var libraryCompactTitleVisibility: KKLibrary.CompactTitleVisibility = .always
 
 	private var lastEffectiveCellStyle: KKLibrary.CellStyle?
 
@@ -98,7 +99,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		#if !targetEnvironment(macCatalyst)
 		let libraryStatus: String
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			libraryStatus = self.libraryStatus.showStringValue
 		case .literatures:
@@ -116,6 +117,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 
 		self.libraryColumnPreferences = UserSettings.libraryColumnPreferences(for: self.libraryKind, status: self.libraryStatus)
+		self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
 
 		self.configureDataSource()
 
@@ -129,7 +131,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		UserSettings.set(self.sectionIndex, forKey: .libraryPage)
+		if self.user == nil {
+			UserSettings.set(self.sectionIndex, forKey: .libraryPage)
+		}
 
 		self.configureEmptyDataView()
 		self.toggleEmptyDataView()
@@ -144,11 +148,12 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
 		self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 
-		if self.libraryKind != UserSettings.libraryKind {
+		if self.user == nil, self.libraryKind != UserSettings.libraryKind {
 			self.libraryKind = UserSettings.libraryKind
 			self.nextPageURL = nil
 			self.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: self.libraryStatus)
 			self.libraryColumnPreferences = UserSettings.libraryColumnPreferences(for: self.libraryKind, status: self.libraryStatus)
+			self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
 			self.shows = []
 			self.literatures = []
 			self.games = []

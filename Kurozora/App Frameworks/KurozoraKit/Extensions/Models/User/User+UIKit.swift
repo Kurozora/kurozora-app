@@ -253,7 +253,8 @@ extension User {
 		let libraryStatus = KKLibrary.Status.all[index]
 		let libraryKindRaw = userInfo?["libraryKind"] as? Int ?? UserSettings.libraryKind.rawValue
 		let libraryKind = KKLibrary.Kind(rawValue: libraryKindRaw) ?? UserSettings.libraryKind
-		let activeCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: libraryStatus)
+		let currentSection = viewController.currentViewController as? LibraryListCollectionViewController
+		let activeCellStyle = currentSection?.libraryCellStyle ?? UserSettings.libraryCellStyle(for: libraryKind, status: libraryStatus)
 		let layoutActions = KKLibrary.CellStyle.all.map { style in
 			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style == activeCellStyle ? .on : .off) { _ in
 				viewController.changeLayout(to: style)
@@ -264,12 +265,11 @@ extension User {
 		menuElements.append(subMenu)
 
 		// Create "View Options" element
-		if activeCellStyle == .table, let currentSection = viewController.currentViewController as? LibraryListCollectionViewController {
-			let currentStatus = currentSection.libraryStatus
+		if activeCellStyle == .table, let currentSection {
 			let viewOptionsMenu = LibraryColumnMenuBuilder.makeMenu(
 				kind: libraryKind,
-				fetch: {
-					UserSettings.libraryColumnPreferences(for: libraryKind, status: currentStatus)
+				fetch: { [weak currentSection] in
+					currentSection?.libraryColumnPreferences ?? .defaultShared
 				},
 				apply: { [weak viewController] updated in
 					viewController?.applyColumnPreferencesToCurrentSection(updated)
@@ -278,11 +278,10 @@ extension User {
 
 			let iconViewOptions = UIMenu(title: L10n.viewOptions, image: UIImage(systemName: "slider.horizontal.3"), children: viewOptionsMenu.children)
 			menuElements.append(iconViewOptions)
-		} else if activeCellStyle == .compact, let currentSection = viewController.currentViewController as? LibraryListCollectionViewController {
-			let currentStatus = currentSection.libraryStatus
+		} else if activeCellStyle == .compact, let currentSection {
 			let compactOptionsMenu = LibraryCompactViewOptionsBuilder.makeMenu(
-				fetch: {
-					UserSettings.libraryCompactTitleVisibility(for: libraryKind, status: currentStatus)
+				fetch: { [weak currentSection] in
+					currentSection?.libraryCompactTitleVisibility ?? .always
 				},
 				apply: { [weak viewController] visibility in
 					viewController?.applyCompactTitleVisibilityToCurrentSection(visibility)

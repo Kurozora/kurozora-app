@@ -19,6 +19,7 @@ extension LibraryViewController {
 		self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
 			"includeUser": self.user != nil,
 			"index": index,
+			"libraryKind": self.libraryKind.rawValue,
 		], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 		self.populateSortActions()
 
@@ -115,11 +116,13 @@ extension LibraryViewController {
 	func changeLayout(to libraryCellStyle: KKLibrary.CellStyle) {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
 
-		UserSettings.setLibraryCellStyle(libraryCellStyle, for: self.libraryKind, status: currentSection.libraryStatus)
+		currentSection.libraryCellStyle = libraryCellStyle
+
+		if self.user == nil {
+			UserSettings.setLibraryCellStyle(libraryCellStyle, for: self.libraryKind, status: currentSection.libraryStatus)
+		}
 
 		self.updateLayoutMenuAction(for: self.currentIndex)
-
-		currentSection.libraryCellStyle = libraryCellStyle
 
 		UIView.animate(withDuration: 0.2) {
 			currentSection.collectionView.reloadData()
@@ -187,7 +190,9 @@ extension LibraryViewController {
 		self.libraryKind = libraryKind
 		self.bar.reloadData(at: 0 ... KKLibrary.Status.all.count - 1, context: .full)
 
-		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
+		if self.user == nil {
+			UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
+		}
 
 		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
 

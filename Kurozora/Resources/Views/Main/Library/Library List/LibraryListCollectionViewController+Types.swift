@@ -118,6 +118,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		self.libraryKind = libraryKind
 		self.libraryCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: self.libraryStatus)
 		self.libraryColumnPreferences = UserSettings.libraryColumnPreferences(for: libraryKind, status: self.libraryStatus)
+		self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: libraryKind, status: self.libraryStatus)
 
 		// Reset data and refetch
 		self.nextPageURL = nil

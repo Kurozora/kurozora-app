@@ -28,7 +28,7 @@ extension LibraryListCollectionViewController {
 
 		let libraryStatus: String
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			libraryStatus = self.libraryStatus.showStringValue
 		case .literatures:
@@ -54,7 +54,7 @@ extension LibraryListCollectionViewController {
 		do {
 			let libraryResponse = try await KService.getLibrary(
 				forUser: userIdentity,
-				libraryKind: UserSettings.libraryKind,
+				libraryKind: self.libraryKind,
 				withLibraryStatus: self.libraryStatus,
 				withSortType: self.librarySortType,
 				withSortOption: self.librarySortTypeOption,
@@ -66,7 +66,7 @@ extension LibraryListCollectionViewController {
 			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 
 			if self.nextPageURL == nil {
-				switch UserSettings.libraryKind {
+				switch self.libraryKind {
 				case .shows:
 					self.shows = []
 				case .literatures:
@@ -149,7 +149,7 @@ extension LibraryListCollectionViewController {
 		let buttonAction: (() -> Void)?
 		let libraryStatus: String
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			libraryStatus = self.libraryStatus.showStringValue
 			titleString = "No Shows"

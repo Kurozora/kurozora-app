@@ -24,7 +24,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 		var userActivity: NSUserActivity
 		var localObject: Any?
 
-		switch UserSettings.libraryKind {
+		switch self.libraryKind {
 		case .shows:
 			guard let selectedShow = self.shows[safe: indexPath.row] else { return [] }
 			userActivity = selectedShow.openDetailUserActivity

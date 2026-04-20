@@ -15,9 +15,14 @@ extension LibraryListCollectionViewController {
 	///
 	/// - Parameter visibility: The newly selected compact-layout title visibility.
 	func applyCompactTitleVisibility(_ visibility: KKLibrary.CompactTitleVisibility) {
-		UserSettings.setLibraryCompactTitleVisibility(visibility, for: self.libraryKind, status: self.libraryStatus)
+		self.libraryCompactTitleVisibility = visibility
+
+		if self.user == nil {
+			UserSettings.setLibraryCompactTitleVisibility(visibility, for: self.libraryKind, status: self.libraryStatus)
+		}
+
 		self.reconfigureAllSnapshotItems()
-		
+
 		if let tabmanParent = self.tabmanParent as? LibraryViewController {
 			tabmanParent.refreshMoreButtonMenu()
 		}
@@ -138,7 +143,10 @@ extension LibraryListCollectionViewController {
 		let showPosterChanged = preferences.showPoster != self.libraryColumnPreferences.showPoster
 
 		self.libraryColumnPreferences = preferences
-		UserSettings.setLibraryColumnPreferences(preferences, for: self.libraryKind, status: self.libraryStatus)
+
+		if self.user == nil {
+			UserSettings.setLibraryColumnPreferences(preferences, for: self.libraryKind, status: self.libraryStatus)
+		}
 
 		let styleAfter = self.effectiveCellStyleForCurrentEnvironment()
 		let cellClassChanged = styleBefore != styleAfter
