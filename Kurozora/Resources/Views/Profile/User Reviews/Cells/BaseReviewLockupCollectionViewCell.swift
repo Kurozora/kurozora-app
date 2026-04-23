@@ -16,7 +16,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var tertiaryLabel: KLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
-	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView?
 
 	// MARK: - Properties
@@ -75,7 +75,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure banner
 		episode.attributes.bannerImage(imageView: self.posterImageView)
-		self.posterImageView.applyCornerRadius(10.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(10.0)
 		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
@@ -95,7 +95,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		game.attributes.posterImage(imageView: self.posterImageView)
-		self.posterImageView.applyCornerRadius(18.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(18.0)
 		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
@@ -115,7 +115,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		literature.attributes.posterImage(imageView: self.posterImageView)
-		self.posterImageView.applyCornerRadius(0.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(0.0)
 		self.literatureMask.frame = self.posterImageView.bounds
 		self.posterImageView.mask = self.literatureMask
 		self.posterImageOverlayView?.isHidden = false
@@ -155,7 +155,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		show.attributes.posterImage(imageView: self.posterImageView)
-		self.posterImageView.applyCornerRadius(10.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(10.0)
 		self.posterImageView.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}
