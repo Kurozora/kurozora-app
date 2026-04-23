@@ -143,7 +143,7 @@ final class KurozoraDelegate {
 		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return false }
 
 		do {
-			let metaResponse = try await KService.getInfo()
+			let metaResponse = try await KService.info().response()
 			let meta = metaResponse.meta
 			let topViewController = UIApplication.topViewController
 			let warningViewController = WarningViewController()

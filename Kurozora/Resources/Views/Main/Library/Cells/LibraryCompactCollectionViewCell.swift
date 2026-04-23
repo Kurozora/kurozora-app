@@ -29,7 +29,7 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	///    - show: The show to configure the cell with.
 	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
 	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using show: Show, showSelectionIcon: Bool, titleVisibility: KKLibrary.CompactTitleVisibility) {
+	func configure(using show: Show, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
 		super.configure(using: show, showSelectionIcon: showSelectionIcon)
 
 		let hasRealPoster = !(show.attributes.poster?.url.isEmpty ?? true)
@@ -42,7 +42,7 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	///    - literature: The literature to configure the cell with.
 	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
 	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using literature: Literature, showSelectionIcon: Bool, titleVisibility: KKLibrary.CompactTitleVisibility) {
+	func configure(using literature: Literature, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
 		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
 
 		let hasRealPoster = !(literature.attributes.poster?.url.isEmpty ?? true)
@@ -55,7 +55,7 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	///    - game: The game to configure the cell with.
 	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
 	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using game: Game, showSelectionIcon: Bool, titleVisibility: KKLibrary.CompactTitleVisibility) {
+	func configure(using game: Game, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
 		super.configure(using: game, showSelectionIcon: showSelectionIcon)
 
 		let hasRealPoster = !(game.attributes.poster?.url.isEmpty ?? true)
@@ -70,7 +70,7 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	///    - visibility: The effective title visibility to apply.
 	///    - hasRealPoster: Whether the configured item has non-placeholder poster art.
 	///    - title: The series title used for accessibility and hover recovery when the label is hidden.
-	private func applyTitleVisibility(_ visibility: KKLibrary.CompactTitleVisibility, hasRealPoster: Bool, title: String?) {
+	private func applyTitleVisibility(_ visibility: LibraryCompactTitleVisibility, hasRealPoster: Bool, title: String?) {
 		let shouldHide = (visibility == .never) || (visibility == .smart && hasRealPoster)
 
 		self.primaryLabel.isHidden = shouldHide

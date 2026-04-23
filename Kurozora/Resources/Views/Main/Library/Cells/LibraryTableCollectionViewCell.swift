@@ -41,9 +41,9 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private let selectionImageOverlayView = UIImageView()
 	private let rowDivider = UIView()
 
-	private var columnOrder: [KKLibrary.Column] = []
-	private var columnContainers: [KKLibrary.Column: UIView] = [:]
-	private var columnWidthConstraints: [KKLibrary.Column: NSLayoutConstraint] = [:]
+	private var columnOrder: [LibraryColumn] = []
+	private var columnContainers: [LibraryColumn: UIView] = [:]
+	private var columnWidthConstraints: [LibraryColumn: NSLayoutConstraint] = [:]
 
 	private weak var titleLabel: UILabel?
 	private weak var posterImageView: PosterImageView?
@@ -61,7 +61,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private var posterBoundsObservation: NSKeyValueObservation?
 
 	private var lastShowPoster: Bool?
-	private var lastKind: KKLibrary.Kind?
+	private var lastKind: LibraryKind?
 
 	// MARK: - Properties
 	private static let primaryLabelTag = 1
@@ -135,8 +135,8 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	///    - delegate: The object that receives favorite, reminder, and rating callbacks.
 	func configure(
 		using item: LibraryListCollectionViewController.ItemKind,
-		kind: KKLibrary.Kind,
-		columns: [(column: KKLibrary.Column, width: CGFloat)],
+		kind: LibraryKind,
+		columns: [(column: LibraryColumn, width: CGFloat)],
 		showPoster: Bool,
 		showSelectionIcon: Bool,
 		isLastRow: Bool,
@@ -175,7 +175,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	/// - Parameter column: The column whose content width to measure.
 	///
 	/// - Returns: The content width in points, including horizontal padding.
-	func contentWidth(for column: KKLibrary.Column) -> CGFloat {
+	func contentWidth(for column: LibraryColumn) -> CGFloat {
 		switch column {
 		case .favorite, .reminder:
 			return column.defaultWidth
@@ -237,7 +237,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		])
 	}
 
-	private func rebuildColumnContainers(for columns: [KKLibrary.Column], showPoster: Bool, kind: KKLibrary.Kind) {
+	private func rebuildColumnContainers(for columns: [LibraryColumn], showPoster: Bool, kind: LibraryKind) {
 		self.stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 		self.columnContainers.removeAll()
 		self.columnWidthConstraints.removeAll()
@@ -281,13 +281,13 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func applyWidths(_ columns: [(column: KKLibrary.Column, width: CGFloat)]) {
+	private func applyWidths(_ columns: [(column: LibraryColumn, width: CGFloat)]) {
 		for pair in columns {
 			self.columnWidthConstraints[pair.column]?.constant = pair.width
 		}
 	}
 
-	private func makeContainer(for column: KKLibrary.Column, showPoster: Bool, kind: KKLibrary.Kind) -> UIView {
+	private func makeContainer(for column: LibraryColumn, showPoster: Bool, kind: LibraryKind) -> UIView {
 		switch column {
 		case .title:
 			return showPoster ? self.makeRichTitleContainer(for: kind) : self.makePlainTitleContainer()
@@ -323,7 +323,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		return container
 	}
 
-	private func makeRichTitleContainer(for kind: KKLibrary.Kind) -> UIView {
+	private func makeRichTitleContainer(for kind: LibraryKind) -> UIView {
 		let container = UIView()
 
 		let posterImageView = PosterImageView()
@@ -369,7 +369,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		let favoriteButton = self.makeTintButton(action: #selector(self.didTapFavoriteInline), accessibilityLabel: L10n.favorite, symbolPointSize: 14)
 		let reminderButton = self.makeTintButton(action: #selector(self.didTapReminderInline), accessibilityLabel: L10n.reminder, symbolPointSize: 14)
 
-		reminderButton.isHidden = !KKLibrary.Column.reminder.isApplicable(to: kind)
+		reminderButton.isHidden = !LibraryColumn.reminder.isApplicable(to: kind)
 
 		let iconRow = UIStackView(arrangedSubviews: [favoriteButton, reminderButton, UIView()])
 		iconRow.axis = .horizontal
@@ -519,7 +519,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	/// - Parameter kind: The library kind whose poster height to resolve.
 	///
 	/// - Returns: The poster height in points.
-	private func posterHeight(for kind: KKLibrary.Kind) -> CGFloat {
+	private func posterHeight(for kind: LibraryKind) -> CGFloat {
 		switch kind {
 		case .games: return Self.posterWidth
 		default: return Self.posterWidth * 3.0 / 2.0
@@ -537,7 +537,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.posterAspectRatioConstraint = constraint
 	}
 
-	private func applyPosterChrome(for kind: KKLibrary.Kind) {
+	private func applyPosterChrome(for kind: LibraryKind) {
 		guard let posterImageView = self.posterImageView else { return }
 
 		switch kind {
@@ -564,7 +564,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.literatureMask.frame = posterImageView.bounds
 	}
 
-	private func populate(item: LibraryListCollectionViewController.ItemKind, kind: KKLibrary.Kind, columns: [KKLibrary.Column], showPoster: Bool) {
+	private func populate(item: LibraryListCollectionViewController.ItemKind, kind: LibraryKind, columns: [LibraryColumn], showPoster: Bool) {
 		for column in columns {
 			guard let container = self.columnContainers[column] else {
 				continue
@@ -697,7 +697,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: KKLibrary.Column, item: LibraryListCollectionViewController.ItemKind) -> String {
+	private func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
 		switch item {
 		case .show(let show):
 			return self.text(for: column, show: show)
@@ -708,7 +708,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: KKLibrary.Column, show: Show) -> String {
+	private func text(for column: LibraryColumn, show: Show) -> String {
 		let attributes = show.attributes
 		switch column {
 		case .title: return attributes.title
@@ -724,7 +724,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: KKLibrary.Column, literature: Literature) -> String {
+	private func text(for column: LibraryColumn, literature: Literature) -> String {
 		let attributes = literature.attributes
 		switch column {
 		case .title: return attributes.title
@@ -741,7 +741,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: KKLibrary.Column, game: Game) -> String {
+	private func text(for column: LibraryColumn, game: Game) -> String {
 		let attributes = game.attributes
 		switch column {
 		case .title: return attributes.title

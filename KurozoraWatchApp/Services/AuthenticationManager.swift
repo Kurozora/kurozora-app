@@ -79,8 +79,8 @@ final class AuthenticationManager {
 		guard self.isSignedIn else { return }
 
 		do {
-			_ = try await KService.getProfileDetails()
-		} catch let error as KKAPIError where error.response?.statusCode == 401 || error.response?.statusCode == 403 {
+			_ = try await KService.profileDetails().response()
+		} catch let error as APIError where error.response?.statusCode == 401 || error.response?.statusCode == 403 {
 			NSLog("Session revalidation: token rejected (%d), signing out.", error.response?.statusCode ?? 0)
 			self.signOut()
 		} catch {
@@ -109,7 +109,7 @@ final class AuthenticationManager {
 		KService.authenticationKey = token
 
 		do {
-			_ = try await KService.getProfileDetails()
+			_ = try await KService.profileDetails().response()
 			self.isSignedIn = true
 		} catch {
 			NSLog("Watch auth restore failed: %@", error.localizedDescription)

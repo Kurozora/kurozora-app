@@ -91,8 +91,8 @@ class LibraryImportTableViewController: ServiceTableViewController {
 			guard let self = self else { return }
 
 			do {
-				_ = try await KService.importToLibrary(.shows, importService: .mal, importBehavior: .overwrite, filePath: filePath)
-			} catch let error as KKAPIError {
+				_ = try await KService.importLibrary(.shows, service: .mal, behavior: .overwrite, filePath: filePath).response()
+			} catch let error as APIError {
 				_ = await MainActor.run {
 					self.presentAlertController(title: "Can't Import To Library 😔", message: error.message)
 				}

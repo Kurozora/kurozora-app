@@ -232,7 +232,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 	func fetchMonths() async {
 		do {
-			let recapResponse = try await KService.getRecaps()
+			let recapResponse = try await KService.recaps().response()
 			self.recaps = recapResponse.data
 			self.reloadView()
 		} catch {
@@ -246,7 +246,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		}
 
 		do {
-			let recapResponse = try await KService.getRecap(for: "\(self.year)", month: "\(self.month)")
+			let recapResponse = try await KService.recap(year: "\(self.year)", month: "\(self.month)").response()
 			self.recapItems = recapResponse.data
 			self.updateDataSource()
 		} catch {
@@ -391,10 +391,10 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		let modelID: KurozoraItemID = model.id
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemID: modelID).response()
 
 					switch cell.libraryKind {
 					case .shows:
@@ -417,7 +417,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -428,7 +428,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemID: modelID).response()
 
 						switch cell.libraryKind {
 						case .shows:
@@ -448,7 +448,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}
@@ -653,7 +653,7 @@ extension ReCapCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -664,7 +664,7 @@ extension ReCapCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -705,7 +705,7 @@ extension ReCapCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -726,7 +726,7 @@ extension ReCapCollectionViewController {
 
 				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(GenreResponse.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Genre>.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -736,7 +736,7 @@ extension ReCapCollectionViewController {
 
 				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ThemeResponse.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Theme>.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

@@ -26,21 +26,21 @@ extension RemindersCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		switch self.libraryKind {
 		case .shows:
-			if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
+			if indexPath.item == self.shows.count - 20 && self.nextPageCursor != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchRemindersList()
 				}
 			}
 		case .literatures:
-			if indexPath.item == self.literatures.count - 20 && self.nextPageURL != nil {
+			if indexPath.item == self.literatures.count - 20 && self.nextPageCursor != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchRemindersList()
 				}
 			}
 		case .games:
-			if indexPath.item == self.games.count - 20 && self.nextPageURL != nil {
+			if indexPath.item == self.games.count - 20 && self.nextPageCursor != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchRemindersList()

@@ -152,13 +152,13 @@ final class NavigationManager: NSObject {
 	) {
 		let queryString = parameters["q"] ?? ""
 		let scopeString = Int(parameters["scope"] ?? "0")
-		let typeString = parameters["type"] ?? KKSearchType.shows.rawValue
-		let scope: KKSearchScope = if let scopeString = scopeString {
-			KKSearchScope(rawValue: scopeString) ?? .kurozora
+		let typeString = parameters["type"] ?? SearchType.shows.rawValue
+		let scope: SearchScope = if let scopeString = scopeString {
+			SearchScope(rawValue: scopeString) ?? .kurozora
 		} else {
 			.kurozora
 		}
-		let type: KKSearchType = KKSearchType(rawValue: typeString) ?? .shows
+		let type: SearchType = SearchType(rawValue: typeString) ?? .shows
 
 		if parameters.isEmpty {
 			searchController.searchBar.searchTextField.becomeFirstResponder()

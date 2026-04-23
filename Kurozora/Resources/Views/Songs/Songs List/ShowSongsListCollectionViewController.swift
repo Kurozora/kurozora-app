@@ -76,7 +76,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	override func handleRefreshControl() {
 		guard self.showIdentity != nil else { return }
 
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -95,7 +95,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 			guard let showIdentity = self.showIdentity else { return }
 
 			do {
-				let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1)
+				let showSongResponse = try await KService.songs(for: showIdentity).limit(-1).response()
 				self.showSongs = showSongResponse.data
 			} catch {
 				print(error.localizedDescription)

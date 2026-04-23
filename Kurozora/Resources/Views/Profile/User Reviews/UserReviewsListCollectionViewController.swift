@@ -42,7 +42,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	var currentPlayerIndexPath: IndexPath?
 
 	/// The next page url of the pagination.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -112,7 +112,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		if self.user != nil {
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.cache.removeAll()
 			self.isFetchingType.removeAll()
 			self.fetchGeneration += 1
@@ -177,15 +177,15 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		let userIdentity = UserIdentity(id: user.id)
 
 		do {
-			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let reviewResponse = try await KService.reviews(forUser: userIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.reviews = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = reviewResponse.next
+			self.nextPageCursor = reviewResponse.nextCursor
 			self.reviews.append(contentsOf: reviewResponse.data)
 			self.reviews.removeDuplicates()
 		} catch {
@@ -280,7 +280,7 @@ extension UserReviewsListCollectionViewController {
 	/// Unlike `fetchSectionIfNeeded`, this method preserves global index paths for
 	/// heterogeneous sections where items reference different identity types.
 	/// Uses `isFetchingType` (per-type) instead of `isFetchingSection` (per-section).
-	func fetchReviewSectionIfNeeded<I: KurozoraRequestable, Identity: KurozoraItem>(_ response: I.Type, _ identityType: Identity.Type, at indexPath: IndexPath, itemKind: ItemKind) async {
+	func fetchReviewSectionIfNeeded<I: KurozoraRequestable, Identity: Fetchable>(_ response: I.Type, _ identityType: Identity.Type, at indexPath: IndexPath, itemKind: ItemKind) async where Identity.Response == I {
 		guard self.cache[indexPath] == nil else { return }
 
 		let typeKey = String(describing: Identity.self)
@@ -309,9 +309,9 @@ extension UserReviewsListCollectionViewController {
 		do {
 			for chunk in chunks {
 				let identitiesToFetch = chunk.map { $0.identity }
-				let fetchedResponse: I = try await KService.getDetails(for: identitiesToFetch)
+				let fetchedResponse: I = try await KService.details(identitiesToFetch).response()
 
-				// Bail if the snapshot was rebuilt (e.g., pull-to-refresh)
+				// Bail if the snapshot was rebuilt
 				guard generation == self.fetchGeneration else { return }
 
 				let orderLookup = Dictionary(

@@ -200,11 +200,11 @@ extension KKSong {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the song if rated successfully.
-	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		let songIdentity = SongIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateSong(songIdentity, with: rating, description: description)
+			_ = try await KService.rate(songIdentity, score: rating).description(description).response()
 
 			// Update current rating for the user.
 			self.attributes.library?.rating = rating
@@ -215,7 +215,7 @@ extension KKSong {
 			}
 
 			return rating
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print(error.localizedDescription)
 			throw error
 		} catch {
@@ -227,7 +227,7 @@ extension KKSong {
 	/// Delete the user's rating and review for this song.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
-	func deleteRating() async throws(KKAPIError) -> Bool {
+	func deleteRating() async throws(APIError) -> Bool {
 		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for songs.
 		print("deleteRating placeholder — Song endpoint not yet available")
 		return false

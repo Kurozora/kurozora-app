@@ -100,7 +100,7 @@ extension WorkflowController {
 	/// Get the settings used to enable additional functionality in the app.
 	func getSettings() async {
 		do {
-			let settingsResponse = try await KService.getSettings()
+			let settingsResponse = try await KService.settings().response()
 			KSettings = settingsResponse.data
 		} catch {
 			print("-----", error.localizedDescription)
@@ -119,7 +119,7 @@ extension WorkflowController {
 			KService.authenticationKey = account.authenticationToken
 
 			do {
-				_ = try await KService.getProfileDetails()
+				_ = try await KService.profileDetails().response()
 
 				// Refresh stored metadata with latest profile data
 				AccountManager.shared.updateMetadata(
@@ -180,7 +180,7 @@ extension WorkflowController {
 			_ = try await KService.signOut()
 			AccountManager.shared.remove(slug: slug)
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
 			print("-----", error.message)
 		} catch {
@@ -199,10 +199,10 @@ extension WorkflowController {
 		let slug = User.current?.attributes.slug ?? UserSettings.selectedAccount
 
 		do {
-			_ = try await KService.deleteUser(password: password)
+			_ = try await KService.deleteAccount(password: password).response()
 			AccountManager.shared.remove(slug: slug)
 			return true
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)
 			print("-----", error.message)
 		} catch {

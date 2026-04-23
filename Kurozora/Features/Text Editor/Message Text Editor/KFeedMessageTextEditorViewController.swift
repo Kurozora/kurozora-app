@@ -438,7 +438,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 					isNSFW: self.isNSFW,
 					isSpoiler: self.isSpoiler
 				)
-				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest)
+				let feedMessageUpdateResponse = try await KService.updateFeedMessage(feedMessageUpdateRequest).response()
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
 				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
@@ -453,7 +453,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			case .standard:
 				do {
 					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
-					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).response()
 					let feedMessages = feedMessagesResponse.data
 
 					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
@@ -469,7 +469,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
 					let parentFeedMessageIdentity = FeedMessageIdentity(id: parentID)
 					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: true, isReShare: false, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
-					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).response()
 					let feedMessages = feedMessagesResponse.data
 
 					if self.segueToOPFeedDetails, let opFeedMessage = self.opFeedMessage {
@@ -489,7 +489,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
 					let parentFeedMessageIdentity = FeedMessageIdentity(id: parentID)
 					let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: false, isReShare: true, isNSFW: self.opFeedMessage?.attributes.isNSFW ?? self.isNSFW, isSpoiler: self.opFeedMessage?.attributes.isSpoiler ?? self.isSpoiler)
-					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest)
+					let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).response()
 					let feedMessages = feedMessagesResponse.data
 
 					if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {

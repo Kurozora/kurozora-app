@@ -25,8 +25,8 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 
 	// MARK: - Properties
-	var libraryStatus: KKLibrary.Status = .none
-	var libraryKind: KKLibrary.Kind = .shows
+	var libraryStatus: LibraryStatus = .none
+	var libraryKind: LibraryKind = .shows
 
 	lazy var literatureMask: UIImageView = {
 		let maskView = UIImageView(image: UIImage(named: "book_mask"))
@@ -220,7 +220,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.quickDetailsView.isHidden = false
 	}
 
-	func updateLibraryStatus(_ libraryStatus: KKLibrary.Status?) {
+	func updateLibraryStatus(_ libraryStatus: LibraryStatus?) {
 		let libraryStatus = libraryStatus ?? .none
 		self.libraryStatus = libraryStatus
 

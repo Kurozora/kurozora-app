@@ -35,7 +35,7 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 
 	func resetPassword(for email: String) async {
 		do {
-			_ = try await KService.resetPassword(withEmailAddress: email)
+			_ = try await KService.resetPassword(emailAddress: email).response()
 
 			self.presentAlertController(title: L10n.Onboarding.forgotPasswordAlertHeadline, message: L10n.Onboarding.forgotPasswordAlertSubheadline, defaultActionButtonTitle: L10n.done) { _ in
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)

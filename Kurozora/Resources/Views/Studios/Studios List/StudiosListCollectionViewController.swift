@@ -87,45 +87,45 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 			switch self.studiosListFetchType {
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let response = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.studios(for: gameIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.studioIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let response = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.studios(for: literatureIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.studioIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
-				let response = try await KService.getStudios(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.studios(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.studioIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.studioIdentities.append(contentsOf: response.data)
 				self.studioIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.studios], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.studioIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.studios?.next
+				self.nextPageCursor = searchResponse.data.studios?.nextCursor
 				self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
 				self.studioIdentities.removeDuplicates()
 			}
@@ -192,7 +192,7 @@ extension StudiosListCollectionViewController {
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

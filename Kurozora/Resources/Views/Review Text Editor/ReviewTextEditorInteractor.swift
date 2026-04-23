@@ -82,7 +82,7 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 		var isSuccess: Bool = false
 		var message: String?
 
-		do throws(KKAPIError) {
+		do throws(APIError) {
 			switch self.kind {
 			case .character(let character):
 				let rating = try await character.rate(using: rating, description: self.review)

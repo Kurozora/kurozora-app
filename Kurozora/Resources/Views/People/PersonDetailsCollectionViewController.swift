@@ -114,7 +114,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 
 		if self.person == nil {
 			do {
-				let personResponse = try await KService.getDetails(forPerson: personIdentity)
+				let personResponse = try await KService.detail(personIdentity).response()
 				self.person = personResponse.data.first
 			} catch {
 				print(error.localizedDescription)
@@ -122,7 +122,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forPerson: personIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: personIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -130,7 +130,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, limit: 10)
+			let characterIdentityResponse = try await KService.characters(for: personIdentity).limit(10).response()
 			self.characterIdentities = characterIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -138,7 +138,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, limit: 10)
+			let showIdentityResponse = try await KService.shows(for: personIdentity).limit(10).response()
 			self.showIdentities = showIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -146,7 +146,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let literatureIdentityResponse = try await KService.getLiteratures(forPerson: personIdentity, limit: 10)
+			let literatureIdentityResponse = try await KService.literatures(for: personIdentity).limit(10).response()
 			self.literatureIdentities = literatureIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -154,7 +154,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, limit: 10)
+			let gameIdentityResponse = try await KService.games(for: personIdentity).limit(10).response()
 			self.gameIdentities = gameIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -166,7 +166,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return self.person?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let person = self.person else { return nil }
 		return try await person.rate(using: rating, description: description)
 	}
@@ -176,7 +176,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return (.person(person), person.attributes.givenRating, nil)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		return self.cache[indexPath] as? any Libraryable
 	}
 
@@ -284,7 +284,7 @@ extension PersonDetailsCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -295,7 +295,7 @@ extension PersonDetailsCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -316,7 +316,7 @@ extension PersonDetailsCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -337,7 +337,7 @@ extension PersonDetailsCollectionViewController {
 
 				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

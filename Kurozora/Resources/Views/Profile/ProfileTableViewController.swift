@@ -56,7 +56,7 @@ class ProfileTableViewController: KTableViewController {
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
 	/// The next page url of the pagination.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -173,7 +173,7 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		self.heightCache.removeAll()
 
 		Task { [weak self] in
@@ -280,7 +280,7 @@ class ProfileTableViewController: KTableViewController {
 		#endif
 
 		do {
-			let userResponse = try await KService.getDetails(forUser: userIdentity)
+			let userResponse = try await KService.detail(userIdentity).response()
 
 			self.user = userResponse.data.first
 			self.configureProfile()
@@ -321,15 +321,15 @@ class ProfileTableViewController: KTableViewController {
 		self.isRequestInProgress = true
 
 		do {
-			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let feedMessageResponse = try await KService.feedMessages(forUser: userIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.feedMessages = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = feedMessageResponse.next
+			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessages.append(contentsOf: feedMessageResponse.data)
 		} catch {
 			print(error.localizedDescription)
@@ -388,7 +388,7 @@ class ProfileTableViewController: KTableViewController {
 			guard signedIn else { return }
 
 			do {
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+				let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 				self.user?.attributes.update(using: followUpdateResponse.data)
 				self.updateFollowButton()
 			} catch {
@@ -650,7 +650,7 @@ extension ProfileTableViewController: FeedMessageDraftsTableViewControllerDelega
 extension ProfileTableViewController: UITextViewDelegate {
 	func getUserIdentity(username: String) async -> UserIdentity? {
 		do {
-			let userIdentityResponse = try await KService.searchUsers(for: username)
+			let userIdentityResponse = try await KService.searchUsers(username).response()
 			return userIdentityResponse.data.first
 		} catch {
 			print("-----", error.localizedDescription)

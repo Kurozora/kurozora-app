@@ -105,7 +105,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 
 		if self.literature == nil {
 			do {
-				let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity)
+				let literatureResponse = try await KService.detail(literatureIdentity).response()
 				self.literature = literatureResponse.data.first
 
 				// Donate suggestion to Siri.
@@ -124,7 +124,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forLiterature: literatureIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: literatureIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -132,7 +132,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, limit: 10)
+			let castIdentityResponse = try await KService.cast(for: literatureIdentity).limit(10).response()
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -140,7 +140,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, limit: 10)
+			let studioIdentityResponse = try await KService.studios(for: literatureIdentity).limit(10).response()
 			self.studioIdentities = studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -148,7 +148,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let literatureIdentityResponse = try await KService.getMoreByStudio(forLiterature: literatureIdentity, limit: 10)
+			let literatureIdentityResponse = try await KService.moreByStudio(for: literatureIdentity).limit(10).response()
 			self.studioLiteratureIdentities = literatureIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -156,7 +156,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let relatedLiteratureResponse = try await KService.getRelatedLiteratures(forLiterature: literatureIdentity, limit: 10)
+			let relatedLiteratureResponse = try await KService.relatedLiteratures(for: literatureIdentity).limit(10).response()
 			self.relatedLiteratures = relatedLiteratureResponse.data
 			self.updateDataSource()
 		} catch {
@@ -164,7 +164,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let relatedShowResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, limit: 10)
+			let relatedShowResponse = try await KService.relatedShows(for: literatureIdentity).limit(10).response()
 			self.relatedShows = relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
@@ -172,7 +172,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
-			let relatedGameResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, limit: 10)
+			let relatedGameResponse = try await KService.relatedGames(for: literatureIdentity).limit(10).response()
 			self.relatedGames = relatedGameResponse.data
 			self.updateDataSource()
 		} catch {
@@ -184,7 +184,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		return self.literature?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let literature = self.literature else { return nil }
 		return try await literature.rate(using: rating, description: description)
 	}
@@ -194,7 +194,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		return (.literature(literature), literature.attributes.library?.rating, nil)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		switch kind {
 		case .shows:
 			return self.relatedShows[safe: indexPath.item]?.show
@@ -263,7 +263,7 @@ extension LiteratureDetailsCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -283,7 +283,7 @@ extension LiteratureDetailsCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -304,7 +304,7 @@ extension LiteratureDetailsCollectionViewController {
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

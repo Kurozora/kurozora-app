@@ -35,7 +35,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	/// The next page url of the pagination.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -142,7 +142,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	}
 
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchSessions()
@@ -178,15 +178,15 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		#endif
 
 		do {
-			let sessionResponse = try await KService.getSessions(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let sessionResponse = try await KService.sessions().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.sessionIdentities = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = sessionResponse.next
+			self.nextPageCursor = sessionResponse.nextCursor
 			self.sessionIdentities.append(contentsOf: sessionResponse.data)
 			self.sessionIdentities.removeDuplicates()
 
@@ -377,7 +377,7 @@ extension ManageActiveSessionsController {
 
 				if session == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(SessionResponse.self, SessionIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Session>.self, SessionIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

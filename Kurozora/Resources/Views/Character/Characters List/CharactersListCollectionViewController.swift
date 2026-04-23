@@ -85,34 +85,34 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 			switch self.charactersListFetchType {
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let response = try await KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.characters(for: personIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.characterIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.characterIdentities.append(contentsOf: response.data)
 				self.characterIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.exploreCategory(exploreCategoryIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.characterIdentities = []
 				}
 
-				self.nextPageURL = response.data.first?.relationships.characters?.next
+				self.nextPageCursor = response.data.first?.relationships.characters?.nextCursor
 				self.characterIdentities.append(contentsOf: response.data.first?.relationships.characters?.data ?? [])
 				self.characterIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.characters], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.characterIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.characters?.next
+				self.nextPageCursor = searchResponse.data.characters?.nextCursor
 				self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
 				self.characterIdentities.removeDuplicates()
 			}
@@ -179,7 +179,7 @@ extension CharactersListCollectionViewController {
 
 				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

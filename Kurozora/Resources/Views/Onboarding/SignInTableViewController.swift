@@ -55,7 +55,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
 		do {
-			let signInResponse = try await KService.signIn(email, password)
+			let signInResponse = try await KService.signIn(email: email, password: password).response()
 			let authenticationToken = signInResponse.authenticationToken
 
 			// Save user in keychain.
@@ -77,7 +77,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 				WorkflowController.shared.registerForPushNotifications()
 				self.onSignIn?()
 			}
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
 			self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)
@@ -163,7 +163,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 
 			Task {
 				do {
-					let oAuthResponse = try await KService.signIn(withAppleID: identityTokenString)
+					let oAuthResponse = try await KService.signIn(withAppleIDToken: identityTokenString).response()
 
 					switch oAuthResponse.action {
 					case .signIn:
@@ -197,7 +197,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							self.disableUserInteraction(false)
 						}
 					}
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					// Re-enable user interaction.
 					self.disableUserInteraction(false)
 					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)

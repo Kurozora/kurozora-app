@@ -35,13 +35,10 @@ final class LibraryViewModel {
 		self.loadState = .loading
 
 		do {
-			let response = try await KService.getLibrary(
-				.shows,
-				withLibraryStatus: .inProgress,
-				withSortType: .none,
-				withSortOption: .none,
-				limit: 25
-			)
+			let response = try await KService
+				.library(.shows, status: .inProgress)
+				.limit(25)
+				.response()
 			self.shows = response.data.shows ?? []
 			self.loadState = .loaded
 		} catch {

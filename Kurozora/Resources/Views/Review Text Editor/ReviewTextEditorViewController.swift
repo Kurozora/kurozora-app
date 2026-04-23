@@ -174,7 +174,7 @@ final class ReviewTextEditorViewController: KViewController {
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do throws(KKAPIError) {
+			do throws(APIError) {
 				let didDelete = try await kind.deleteRating()
 
 				guard didDelete else {

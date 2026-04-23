@@ -1,5 +1,5 @@
 //
-//  KKSearchScopeAppEnum.swift
+//  SearchScopeAppEnum.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/02/2024.
@@ -11,7 +11,7 @@ import AppIntents
 import KurozoraKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-enum KKSearchScopeAppEnum: String, AppEnum {
+enum SearchScopeAppEnum: String, AppEnum {
     case kurozora
     case library
 
@@ -21,8 +21,8 @@ enum KKSearchScopeAppEnum: String, AppEnum {
         .library: "Library"
     ]
 
-	/// The `KKSearchScope` value of a `KKSearchScopeAppEnum` type.
-	var kkSearchScopeValue: KKSearchScope {
+	/// The `SearchScope` value of a `SearchScopeAppEnum` type.
+	var searchScopeValue: SearchScope {
 		switch self {
 		case .kurozora:
 			return .kurozora

@@ -108,7 +108,7 @@ class MentionAutocompleteController: NSObject, SectionFetchable {
 			guard let self = self, !Task.isCancelled else { return }
 
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: context.query, next: nil, limit: 10, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.users], query: context.query).cursor(nil).limit(10).filter(nil).response()
 				guard !Task.isCancelled else { return }
 
 				await MainActor.run {
@@ -184,7 +184,7 @@ class MentionAutocompleteController: NSObject, SectionFetchable {
 
 				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(UserResponse.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

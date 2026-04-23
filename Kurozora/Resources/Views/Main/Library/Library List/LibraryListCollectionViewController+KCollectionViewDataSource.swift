@@ -103,11 +103,11 @@ extension LibraryListCollectionViewController {
 	// MARK: - Helpers
 	/// Returns the cell style that drives rendering for the current trait collection.
 	///
-	/// Falls back from ``KKLibrary/CellStyle/table`` to ``KKLibrary/CellStyle/list`` only when
+	/// Falls back from ``LibraryCellStyle/table`` to ``LibraryCellStyle/list`` only when
 	/// the horizontal size class is compact.
 	///
 	/// - Returns: The effective cell style for the current environment.
-	func effectiveCellStyleForCurrentEnvironment() -> KKLibrary.CellStyle {
+	func effectiveCellStyleForCurrentEnvironment() -> LibraryCellStyle {
 		guard self.libraryCellStyle == .table else {
 			return self.libraryCellStyle
 		}
@@ -122,7 +122,7 @@ extension LibraryListCollectionViewController {
 	/// Returns the `(column, width)` pairs to render in the table layout for the current library kind.
 	///
 	/// - Returns: The visible columns paired with their resolved widths, in left-to-right order.
-	func visibleColumnsWithWidths() -> [(column: KKLibrary.Column, width: CGFloat)] {
+	func visibleColumnsWithWidths() -> [(column: LibraryColumn, width: CGFloat)] {
 		return self.libraryColumnPreferences.visibleColumns(for: self.libraryKind).map { column in
 			(column: column, width: self.libraryColumnPreferences.width(for: column))
 		}

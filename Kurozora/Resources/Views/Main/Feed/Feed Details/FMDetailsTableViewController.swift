@@ -40,7 +40,7 @@ class FMDetailsTableViewController: KTableViewController {
 	weak var fmDetailsTableViewControllerDelegate: FMDetailsTableViewControllerDelegate?
 
 	/// The next page url of the pagination.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -112,7 +112,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		self.heightCache.removeAll()
 
 		Task { [weak self] in
@@ -198,7 +198,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 		do {
 			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
-			let feedMessageResponse = try await KService.getDetails(forFeedMessage: feedMessageIdentity)
+			let feedMessageResponse = try await KService.feedMessageDetail(feedMessageIdentity).response()
 
 			self.feedMessage = feedMessageResponse.data.first
 		} catch {
@@ -215,15 +215,15 @@ class FMDetailsTableViewController: KTableViewController {
 	func fetchFeedReplies() async {
 		do {
 			let feedMessageIdentity = FeedMessageIdentity(id: self.feedMessageID)
-			let feedMessageResponse = try await KService.getReplies(forFeedMessage: feedMessageIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let feedMessageResponse = try await KService.replies(forFeedMessage: feedMessageIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.feedMessageReplies = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = feedMessageResponse.next
+			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
 		} catch {
 			print(error.localizedDescription)

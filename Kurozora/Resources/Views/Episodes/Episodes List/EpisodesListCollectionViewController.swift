@@ -173,7 +173,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		do {
 			guard let seasonIdentity = self.seasonIdentity else { return }
 
-			let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity)
+			let seasonResponse = try await KService.detail(seasonIdentity).response()
 			self.season = seasonResponse.data.first
 		} catch {
 			print(error.localizedDescription)
@@ -202,37 +202,37 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			switch self.episodesListFetchType {
 			case .season:
 				guard let seasonIdentity = self.seasonIdentity else { return }
-				let response = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.episodes(for: seasonIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.episodeIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.episodeIdentities.append(contentsOf: response.data)
 				self.episodeIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.episodes], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.episodeIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.episodes?.next
+				self.nextPageCursor = searchResponse.data.episodes?.nextCursor
 				self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
 				self.episodeIdentities.removeDuplicates()
 			case .upNext(let exploreCategory):
 				let exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
-				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let upNextResponse = try await KService.exploreCategory(exploreCategoryIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.episodeIdentities = []
 				}
 
 				let episodeResponse = upNextResponse.data.first { exploreCategory in
 					exploreCategory.relationships.episodes != nil
 				}
-				self.nextPageURL = episodeResponse?.relationships.episodes?.next
+				self.nextPageCursor = episodeResponse?.relationships.episodes?.nextCursor
 				self.episodeIdentities.append(contentsOf: episodeResponse?.relationships.episodes?.data ?? [])
 				self.episodeIdentities.removeDuplicates()
 			}
@@ -433,7 +433,7 @@ extension EpisodesListCollectionViewController {
 
 				if episode == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

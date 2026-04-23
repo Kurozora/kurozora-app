@@ -64,7 +64,7 @@ extension LibraryListCollectionViewController {
 	/// - Parameter layoutEnvironment: The layout environment supplied by the compositional layout.
 	///
 	/// - Returns: The effective cell style for the environment.
-	func effectiveCellStyle(for layoutEnvironment: NSCollectionLayoutEnvironment) -> KKLibrary.CellStyle {
+	func effectiveCellStyle(for layoutEnvironment: NSCollectionLayoutEnvironment) -> LibraryCellStyle {
 		guard self.libraryCellStyle == .table else {
 			return self.libraryCellStyle
 		}

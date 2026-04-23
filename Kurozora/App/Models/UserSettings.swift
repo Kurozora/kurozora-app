@@ -233,13 +233,13 @@ extension UserSettings {
 	}
 
 	/// Returns a library kind indicating the library kind the user was on last.
-	static var libraryKind: KKLibrary.Kind {
-		guard let libraryKind = KKLibrary.Kind(rawValue: shared.integer(forKey: #function)) else { return .shows }
+	static var libraryKind: LibraryKind {
+		guard let libraryKind = LibraryKind(rawValue: shared.integer(forKey: #function)) else { return .shows }
 		return libraryKind
 	}
 
 	/// Returns the default library sort types for each library kind and status.
-	static var librarySortTypes: [KKLibrary.Kind: [KKLibrary.Status: (sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option)]] {
+	static var librarySortTypes: [LibraryKind: [LibraryStatus: (sortType: LibrarySortType, sortOption: LibrarySortOption)]] {
 		let decoder = PropertyListDecoder()
 
 		guard
@@ -249,22 +249,22 @@ extension UserSettings {
 			return [:]
 		}
 
-		var librarySortTypes: [KKLibrary.Kind: [KKLibrary.Status: (KKLibrary.SortType, KKLibrary.SortType.Option)]] = [:]
+		var librarySortTypes: [LibraryKind: [LibraryStatus: (LibrarySortType, LibrarySortOption)]] = [:]
 
 		for (kindRaw, statusMap) in rawLibrarySortTypes {
-			guard let kind = KKLibrary.Kind(rawValue: kindRaw) else { continue }
+			guard let kind = LibraryKind(rawValue: kindRaw) else { continue }
 
-			var statusDict: [KKLibrary.Status: (KKLibrary.SortType, KKLibrary.SortType.Option)] = [:]
+			var statusDict: [LibraryStatus: (LibrarySortType, LibrarySortOption)] = [:]
 
 			for (statusRaw, encodedValue) in statusMap {
-				guard let status = KKLibrary.Status(rawValue: statusRaw) else { continue }
+				guard let status = LibraryStatus(rawValue: statusRaw) else { continue }
 
 				let sortTypeRaw = encodedValue >> 8
 				let optionRaw = encodedValue & 0xFF
 
 				guard
-					let sortType = KKLibrary.SortType(rawValue: sortTypeRaw),
-					let option = KKLibrary.SortType.Option(rawValue: optionRaw)
+					let sortType = LibrarySortType(rawValue: sortTypeRaw),
+					let option = LibrarySortOption(rawValue: optionRaw)
 				else { continue }
 
 				statusDict[status] = (sortType, option)

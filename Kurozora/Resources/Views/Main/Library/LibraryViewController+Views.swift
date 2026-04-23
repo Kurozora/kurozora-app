@@ -96,9 +96,9 @@ extension LibraryViewController {
 		}
 	}
 
-	/// Configures the library-kind segmented control with one segment per ``KKLibrary/Kind``.
+	/// Configures the library-kind segmented control with one segment per ``LibraryKind``.
 	private func configureLibraryKindSegmentedControl() {
-		let items = KKLibrary.Kind.allCases.map { libraryKind in
+		let items = LibraryKind.allCases.map { libraryKind in
 			UIAction(title: libraryKind.stringValue) { [weak self] _ in
 				guard let self = self else { return }
 				self.libraryKindSegmentedControlDidChange(to: libraryKind)

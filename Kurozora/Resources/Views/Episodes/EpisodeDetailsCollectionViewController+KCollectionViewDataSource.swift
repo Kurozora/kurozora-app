@@ -246,7 +246,7 @@ extension EpisodeDetailsCollectionViewController {
 				if cast == nil {
 					Task {
 						do {
-							let castResponse = try await KService.getDetails(forGameCast: castIdentitiy)
+							let castResponse = try await KService.detail(castIdentitiy).response()
 							self.cast[indexPath] = castResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						} catch {

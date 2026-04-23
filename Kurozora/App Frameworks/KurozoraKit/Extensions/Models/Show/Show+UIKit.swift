@@ -158,7 +158,7 @@ extension Show {
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
-		KKLibrary.Status.all.forEach { [weak self] actionLibraryStatus in
+		LibraryStatus.all.forEach { [weak self] actionLibraryStatus in
 			guard let self = self else { return }
 			let selectedLibraryStatus = libraryStatus == actionLibraryStatus
 
@@ -174,9 +174,9 @@ extension Show {
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
-	fileprivate func addToLibrary(status: KKLibrary.Status) async {
+	fileprivate func addToLibrary(status: LibraryStatus) async {
 		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.id)
+			let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: status, itemID: self.id).response()
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -186,7 +186,7 @@ extension Show {
 
 			// Request review
 			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			//			self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 			print("----- Add to library failed:", error.message)
 		} catch {
@@ -196,7 +196,7 @@ extension Show {
 
 	func removeFromLibrary() async {
 		do {
-			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: self.id)
+			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemID: self.id).response()
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -205,7 +205,7 @@ extension Show {
 				let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 				NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 			}
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print("----- Remove from library failed", error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -218,13 +218,13 @@ extension Show {
 		guard signedIn else { return }
 
 		do {
-			let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: self.id)
+			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .shows, itemID: self.id).response()
 
 			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
 				"favoriteStatus": favoriteResponse.data.favoriteStatus
 			])
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			viewController?.presentAlertController(title: "Can't Favorite", message: error.message)
 			print("----- Toggle favorite failed:", error.message)
 		} catch {
@@ -246,13 +246,13 @@ extension Show {
 					await self.addToLibrary(status: .planning)
 				}
 
-				let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: self.id)
+				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .shows, itemID: self.id).response()
 
 				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
 					"reminderStatus": updateReminderResponse.data.reminderStatus
 				])
-			} catch let error as KKAPIError {
+			} catch let error as APIError {
 				viewController?.presentAlertController(title: "Can't Add Reminder", message: error.message)
 				print("----- Toggle reminder failed:", error.message)
 			} catch {
@@ -269,12 +269,12 @@ extension Show {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the show if rated successfully.
-	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
 		let showIdentity = ShowIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateShow(showIdentity, with: rating, description: description)
+			_ = try await KService.rate(showIdentity, score: rating).description(description).response()
 
 			// Update current rating for the user.
 			self.attributes.library?.rating = rating
@@ -285,7 +285,7 @@ extension Show {
 			}
 
 			return rating
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print(error.localizedDescription)
 			throw error
 		} catch {
@@ -297,7 +297,7 @@ extension Show {
 	/// Delete the user's rating and review for this show.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
-	func deleteRating() async throws(KKAPIError) -> Bool {
+	func deleteRating() async throws(APIError) -> Bool {
 		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for shows.
 		print("deleteRating placeholder — Show endpoint not yet available")
 		return false
@@ -311,7 +311,7 @@ extension Show {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
-			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: nil, isHidden: hidden)
+			_ = try await KService.updateInLibrary(.shows, itemID: self.id).hidden(hidden).response()
 
 			// Update current rating for the user.
 			self.attributes.library?.isHidden = hidden
@@ -328,7 +328,7 @@ extension Show {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
-			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: count, isHidden: nil)
+			_ = try await KService.updateInLibrary(.shows, itemID: self.id).rewatchCount(count).response()
 
 			// Update current rating for the user.
 			self.attributes.library?.rewatchCount = count

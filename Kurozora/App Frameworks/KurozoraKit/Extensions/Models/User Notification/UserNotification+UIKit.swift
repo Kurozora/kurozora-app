@@ -98,7 +98,7 @@ extension UserNotification {
 	///    - readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	func update(at indexPath: IndexPath, withReadStatus readStatus: ReadStatus) async {
 		do {
-			let userNotificationUpdateResponse = try await KService.updateNotification(self.id.rawValue, withReadStatus: readStatus)
+			let userNotificationUpdateResponse = try await KService.updateNotification(self.id.rawValue, readStatus: readStatus).response()
 			self.attributes.readStatus = userNotificationUpdateResponse.data.readStatus
 
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: self, userInfo: nil)

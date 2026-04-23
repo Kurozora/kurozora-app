@@ -25,8 +25,8 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	var shows: [Show] = []
 	var literatures: [Literature] = []
 	var games: [Game] = []
-	var nextPageURL: String?
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	var nextPageCursor: PageCursor?
+	var libraryKind: LibraryKind = UserSettings.libraryKind
 	var user: User?
 	private var viewedUser: User? {
 		return self.user ?? User.current
@@ -109,7 +109,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	func configureLibraryKindSegmentedControl() {
-		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
+		self.libraryKindSegmentedControl.segmentTitles = LibraryKind.allString
 		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 		self.libraryKindSegmentedControl.addTarget(self, action: #selector(self.libraryKindSegmentedControlDidChange(_:)), for: .valueChanged)
 	}
@@ -138,7 +138,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 	@objc
 	func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
-		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
+		guard let libraryKind = LibraryKind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 
 		Task { [weak self] in
@@ -214,17 +214,17 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: userID)
 
 		do {
-			let favoriteLibraryResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let favoriteLibraryResponse = try await KService.favorites(forUser: userIdentity, kind: self.libraryKind).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.shows = []
 				self.literatures = []
 				self.games = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = favoriteLibraryResponse.next
+			self.nextPageCursor = favoriteLibraryResponse.nextCursor
 			if let shows = favoriteLibraryResponse.data.shows {
 				self.shows.append(contentsOf: shows)
 			}

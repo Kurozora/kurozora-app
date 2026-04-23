@@ -86,7 +86,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		if self.song == nil {
 			do {
-				let songResponse = try await KService.getDetails(forSong: songIdentity)
+				let songResponse = try await KService.detail(songIdentity).response()
 				self.song = songResponse.data.first
 			} catch {
 				print(error.localizedDescription)
@@ -98,14 +98,14 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		self.configureNavBarButtons()
 
 		do {
-			let showIdentityResponse = try await KService.getShows(forSong: songIdentity, limit: 10)
+			let showIdentityResponse = try await KService.shows(for: songIdentity).limit(10).response()
 			self.showIdentities = showIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: songIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 		} catch {
 			print(error.localizedDescription)
@@ -118,7 +118,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return self.song?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let song = self.song else { return nil }
 		return try await song.rate(using: rating, description: description)
 	}
@@ -128,7 +128,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return (.song(song), song.attributes.library?.rating, song.attributes.library?.review)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		return self.cache[indexPath] as? any Libraryable
 	}
 
@@ -337,7 +337,7 @@ extension SongDetailsCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

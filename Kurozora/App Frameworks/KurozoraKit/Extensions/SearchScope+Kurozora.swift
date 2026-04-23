@@ -1,5 +1,5 @@
 //
-//  KKSearchScope+Kurozora.swift
+//  SearchScope+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/03/2019.
@@ -9,7 +9,7 @@
 import Foundation
 import KurozoraKit
 
-extension KKSearchScope {
+extension SearchScope {
 	// MARK: - Properties
 	/// An array containing the string value of all search scopes.
 	static var allString: [String] {

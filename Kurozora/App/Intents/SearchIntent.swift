@@ -18,10 +18,10 @@ struct SearchIntent: AppIntent, CustomIntentMigratedAppIntent, PredictableIntent
 	static var description = IntentDescription("Search for anime, manga, games, and more in Kurozora")
 
 	@Parameter(title: "Search in", default: .kurozora)
-	var scope: KKSearchScopeAppEnum
+	var scope: SearchScopeAppEnum
 
 	@Parameter(title: "For", default: .shows)
-	var type: KKSearchTypeAppEnum
+	var type: SearchTypeAppEnum
 
 	@Parameter(title: "Title")
 	var title: String
@@ -52,7 +52,7 @@ struct SearchIntent: AppIntent, CustomIntentMigratedAppIntent, PredictableIntent
 	}
 
 	func perform() async throws -> some IntentResult {
-		guard let url = URL(string: "kurozora://search?q=\(self.title)&scope=\(self.scope.kkSearchScopeValue.rawValue)&type=\(self.type.kkSearchTypeValue.rawValue)"),
+		guard let url = URL(string: "kurozora://search?q=\(self.title)&scope=\(self.scope.searchScopeValue.rawValue)&type=\(self.type.searchTypeValue.rawValue)"),
 		      let scene = await UIApplication.sharedKeyWindow?.windowScene?.session.scene
 		else {
 			return .result()

@@ -205,7 +205,7 @@ struct UpNextProvider: TimelineProvider {
 		}
 
 		do {
-			let identityResponse = try await KService.getUpNextEpisodes(limit: limit)
+			let identityResponse = try await KService.upNextEpisodes().limit(limit).response()
 			let identities = Array(identityResponse.data.prefix(limit))
 
 			guard !identities.isEmpty else {
@@ -273,7 +273,7 @@ struct UpNextProvider: TimelineProvider {
 
 	/// Fetches details + banner image for a single episode. Returns `nil` on any failure.
 	private func fetchSingleEpisode(identity: EpisodeIdentity, index: Int, family: WidgetFamily, displaySize: CGSize) async -> (Int, UpNextEpisodeItem)? {
-		guard let episode = try? await KService.getDetails(forEpisode: identity, including: ["shows"]).data.first else {
+		guard let episode = try? await KService.detail(identity, including: [.shows]).response().data.first else {
 			return nil
 		}
 
@@ -363,7 +363,7 @@ struct UpNextProvider: TimelineProvider {
 	///
 	/// - Returns: An `UpNextFetchResult` containing the fallback entry and the recommended reload interval.
 	private func fetchUnauthenticatedResult(limit: Int) async -> UpNextFetchResult {
-		guard let mediaResponse = try? await KService.getRandomImages(of: .shows, from: .banner, limit: limit) else {
+		guard let mediaResponse = try? await KService.randomImages(of: .shows, from: .banner).limit(limit).response() else {
 			let failures = UpNextWidgetCache.recordUpNextFailure()
 			return UpNextFetchResult(
 				entry: UpNextEntry(date: Date(), episodes: [.placeholder], state: .unauthenticated, isPlaceholder: false),

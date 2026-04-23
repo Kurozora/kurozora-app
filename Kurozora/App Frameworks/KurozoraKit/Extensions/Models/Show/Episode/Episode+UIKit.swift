@@ -109,7 +109,7 @@ extension Episode {
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
 		do {
 			let episodeIdentity = EpisodeIdentity(id: self.id)
-			let episodeUpdateResponse = try await KService.updateEpisodeWatchStatus(episodeIdentity)
+			let episodeUpdateResponse = try await KService.updateWatchStatus(forEpisode: episodeIdentity).response()
 			let watchStatus = episodeUpdateResponse.data.watchStatus
 
 			// Update watch status
@@ -117,7 +117,7 @@ extension Episode {
 
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
 			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: error.message)
 			print("----- Update episode watch status failed", error.message)
 		} catch {
@@ -167,12 +167,12 @@ extension Episode {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the episode if rated successfully.
-	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard await self.validateIsWatched() else { return nil }
 		let episodeIdentity = EpisodeIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: description)
+			_ = try await KService.rate(episodeIdentity, score: rating).description(description).response()
 
 			// Update current rating for the user.
 			self.attributes.givenRating = rating
@@ -183,7 +183,7 @@ extension Episode {
 			}
 
 			return rating
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print(error.localizedDescription)
 			throw error
 		} catch {
@@ -195,7 +195,7 @@ extension Episode {
 	/// Delete the user's rating and review for this episode.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
-	func deleteRating() async throws(KKAPIError) -> Bool {
+	func deleteRating() async throws(APIError) -> Bool {
 		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for episodes.
 		print("deleteRating placeholder — Episode endpoint not yet available")
 		return false

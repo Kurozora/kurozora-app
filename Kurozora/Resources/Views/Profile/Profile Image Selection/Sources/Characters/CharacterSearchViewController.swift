@@ -29,7 +29,7 @@ class CharacterSearchViewController: KCollectionViewController {
 	private var characterIdentities: [CharacterIdentity] = []
 	private var characterCache: [IndexPath: Character] = [:]
 	private var isFetchingSection = false
-	private var nextPageURL: String?
+	private var nextPageCursor: PageCursor?
 	private var isRequestInProgress: Bool = false
 	private var currentQuery: String = ""
 
@@ -162,7 +162,7 @@ class CharacterSearchViewController: KCollectionViewController {
 		do {
 			for chunk in chunks {
 				let identitiesToFetch = chunk.map { $0.identity }
-				let response: CharacterResponse = try await KService.getDetails(for: identitiesToFetch)
+				let response: ResourceCollection<Character> = try await KService.details(identitiesToFetch).response()
 
 				let orderLookup = Dictionary(uniqueKeysWithValues: identitiesToFetch.enumerated().map { ($1.id, $0) })
 				let sorted = response.data.sorted {
@@ -184,7 +184,7 @@ class CharacterSearchViewController: KCollectionViewController {
 	}
 
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchCharacters(query: self.currentQuery)
@@ -216,14 +216,14 @@ class CharacterSearchViewController: KCollectionViewController {
 		self.isRequestInProgress = true
 
 		do {
-			let searchResponse = try await KService.search(.kurozora, of: [.characters], for: query, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+			let searchResponse = try await KService.search(.kurozora, types: [.characters], query: query).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.characterIdentities = []
 				self.characterCache = [:]
 			}
 
-			self.nextPageURL = searchResponse.data.characters?.next
+			self.nextPageCursor = searchResponse.data.characters?.nextCursor
 			self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
 			self.characterIdentities.removeDuplicates()
 		} catch {
@@ -245,7 +245,7 @@ class CharacterSearchViewController: KCollectionViewController {
 	private func fetchAndSelectCharacter(_ characterIdentity: CharacterIdentity) {
 		Task {
 			do {
-				let characterResponse = try await KService.getDetails(forCharacter: characterIdentity)
+				let characterResponse = try await KService.detail(characterIdentity).response()
 				guard let character = characterResponse.data.first else { return }
 
 				let imageView = UIImageView()
@@ -296,7 +296,7 @@ extension CharacterSearchViewController {
 		itemsCount = characterIdentitiesCount - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount
 
-		if indexPath.item >= itemsCount, self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageCursor != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchCharacters(query: self.currentQuery)
@@ -313,7 +313,7 @@ extension CharacterSearchViewController: UISearchBarDelegate {
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.currentQuery = searchBar.text ?? ""
 			await self.fetchCharacters(query: self.currentQuery)
 		}
@@ -323,7 +323,7 @@ extension CharacterSearchViewController: UISearchBarDelegate {
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.currentQuery = ""
 			await self.fetchCharacters(query: "")
 		}

@@ -86,35 +86,35 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 			switch self.castKind {
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
-				let response = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.cast(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.castIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.castIdentities.append(contentsOf: response.data)
 				self.castIdentities.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let response = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.cast(for: literatureIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.castIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.castIdentities.append(contentsOf: response.data)
 				self.castIdentities.removeDuplicates()
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let response = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.cast(for: gameIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.castIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.castIdentities.append(contentsOf: response.data)
 				self.castIdentities.removeDuplicates()
 			}
@@ -194,7 +194,7 @@ extension CastListCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -214,7 +214,7 @@ extension CastListCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

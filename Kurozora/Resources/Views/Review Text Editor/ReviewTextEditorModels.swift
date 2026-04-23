@@ -122,7 +122,7 @@ extension ReviewTextEditor {
 		/// Delete the user's rating and review for the wrapped model.
 		///
 		/// - Returns: `true` when the deletion succeeds.
-		func deleteRating() async throws(KKAPIError) -> Bool {
+		func deleteRating() async throws(APIError) -> Bool {
 			switch self {
 			case .character(let character): return try await character.deleteRating()
 			case .episode(let episode): return try await episode.deleteRating()

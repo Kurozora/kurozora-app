@@ -122,7 +122,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		if self.show == nil {
 			do {
-				let showResponse = try await KService.getDetails(forShow: showIdentity)
+				let showResponse = try await KService.detail(showIdentity).response()
 				self.show = showResponse.data.first
 
 				// Donate suggestion to Siri.
@@ -141,7 +141,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forShow: showIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: showIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -149,7 +149,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10)
+			let seasonIdentityResponse = try await KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10).response()
 			self.seasonIdentities = seasonIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -157,7 +157,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10)
+			let castIdentityResponse = try await KService.cast(for: showIdentity).limit(10).response()
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -165,7 +165,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10)
+			let showSongResponse = try await KService.songs(for: showIdentity).limit(10).response()
 			self.showSongs = showSongResponse.data
 
 			let appleMusicIDs = self.showSongs.compactMap { $0.song.attributes.amID }
@@ -177,7 +177,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10)
+			let studioIdentityResponse = try await KService.studios(for: showIdentity).limit(10).response()
 			self.studioIdentities = studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -185,7 +185,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10)
+			let showIdentityResponse = try await KService.moreByStudio(for: showIdentity).limit(10).response()
 			self.studioShowIdentities = showIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -193,7 +193,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10)
+			let relatedShowResponse = try await KService.relatedShows(for: showIdentity).limit(10).response()
 			self.relatedShows = relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
@@ -201,7 +201,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, limit: 10)
+			let relatedLiteraturesResponse = try await KService.relatedLiteratures(for: showIdentity).limit(10).response()
 			self.relatedLiteratures = relatedLiteraturesResponse.data
 			self.updateDataSource()
 		} catch {
@@ -209,7 +209,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, limit: 10)
+			let relatedGamesResponse = try await KService.relatedGames(for: showIdentity).limit(10).response()
 			self.relatedGames = relatedGamesResponse.data
 			self.updateDataSource()
 		} catch {
@@ -221,7 +221,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return self.show?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let show = self.show else { return nil }
 		return try await show.rate(using: rating, description: description)
 	}
@@ -231,7 +231,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return (.show(show), show.attributes.library?.rating, show.attributes.library?.review)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		switch kind {
 		case .shows:
 			switch self.dataSource.sectionIdentifier(for: indexPath.section) {

@@ -295,7 +295,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() async {
 		do {
-			let exploreCategoryResponse = try await KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id)
+			let exploreCategoryResponse = try await KService.explore().genre(self.genre?.id).theme(self.theme?.id).response()
 			let exploreCategories = exploreCategoryResponse.data
 
 			// Remove any empty sections
@@ -361,7 +361,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		let exploreCategoryIdentity = ExploreCategoryIdentity(id: upNextCategory.id)
 
 		do {
-			let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, limit: 10)
+			let upNextResponse = try await KService.exploreCategory(exploreCategoryIdentity).limit(10).response()
 
 			guard let episodeResponse = upNextResponse.data.first(where: { exploreCategory in
 				exploreCategory.relationships.episodes != nil

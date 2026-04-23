@@ -28,8 +28,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - Properties
 	var showDetailsCollectionViewController: ShowDetailsCollectionViewController?
-	var libraryStatus: KKLibrary.Status = .none
-	var libraryKind: KKLibrary.Kind = .shows
+	var libraryStatus: LibraryStatus = .none
+	var libraryKind: LibraryKind = .shows
 	weak var delegate: BaseLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
@@ -178,7 +178,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
-	func configureLibraryStatus(with libraryStatus: KKLibrary.Status?) {
+	func configureLibraryStatus(with libraryStatus: LibraryStatus?) {
 		self.libraryStatus = libraryStatus ?? .none
 
 		var libraryStatusString: String

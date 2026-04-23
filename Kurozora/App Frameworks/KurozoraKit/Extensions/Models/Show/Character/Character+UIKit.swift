@@ -116,11 +116,11 @@ extension Character {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the character if rated successfully.
-	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		let characterIdentity = CharacterIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateCharacter(characterIdentity, with: rating, description: description)
+			_ = try await KService.rate(characterIdentity, score: rating).description(description).response()
 
 			// Update current crating for the user.
 			self.attributes.givenRating = rating
@@ -131,7 +131,7 @@ extension Character {
 			}
 
 			return rating
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print(error.localizedDescription)
 			throw error
 		} catch {
@@ -143,22 +143,9 @@ extension Character {
 	/// Delete the user's rating and review for this character.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
-	func deleteRating() async throws(KKAPIError) -> Bool {
-		let characterIdentity = CharacterIdentity(id: self.id)
-
-		do {
-			_ = try await KService.deleteRating(characterIdentity)
-
-			self.attributes.givenRating = nil
-			self.attributes.givenReview = nil
-
-			return true
-		} catch let error as KKAPIError {
-			print(error.localizedDescription)
-			throw error
-		} catch {
-			print(error.localizedDescription)
-			return false
-		}
+	func deleteRating() async throws(APIError) -> Bool {
+		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for characters.
+		print("deleteRating placeholder — Character endpoint not yet available")
+		return false
 	}
 }

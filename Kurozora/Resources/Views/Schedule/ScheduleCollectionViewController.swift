@@ -236,7 +236,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	func fetchDetails() async {
 		do {
-			let scheduleResponse = try await KService.getSchedule(for: .shows, in: Date.now)
+			let scheduleResponse = try await KService.schedule(for: .shows, in: Date.now).response()
 			self.schedules = scheduleResponse.data
 			self.updateDataSource()
 		} catch {
@@ -357,10 +357,10 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemID: modelID).response()
 
 					switch cell.libraryKind {
 					case .shows:
@@ -383,7 +383,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -394,7 +394,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemID: modelID).response()
 
 						switch cell.libraryKind {
 						case .shows:
@@ -414,7 +414,7 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}

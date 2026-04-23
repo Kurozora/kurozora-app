@@ -19,7 +19,7 @@ enum LibraryColumnMenuBuilder {
 	///    - apply: A closure invoked with the updated preferences after each interaction.
 	///
 	/// - Returns: A `UIMenu` suitable for assignment to a `UIBarButtonItem` or return from a context menu provider.
-	static func makeMenu(kind: KKLibrary.Kind, fetch: @escaping () -> KKLibrary.ColumnPreferences, apply: @escaping (KKLibrary.ColumnPreferences) -> Void) -> UIMenu {
+	static func makeMenu(kind: LibraryKind, fetch: @escaping () -> LibraryColumnPreferences, apply: @escaping (LibraryColumnPreferences) -> Void) -> UIMenu {
 		return UIMenu(title: L10n.viewOptions, children: Self.makeMenuItems(kind: kind, fetch: fetch, apply: apply))
 	}
 
@@ -31,7 +31,7 @@ enum LibraryColumnMenuBuilder {
 	///    - apply: A closure invoked with the updated preferences after each interaction.
 	///
 	/// - Returns: The menu elements in display order.
-	static func makeMenuItems(kind: KKLibrary.Kind, fetch: @escaping () -> KKLibrary.ColumnPreferences, apply: @escaping (KKLibrary.ColumnPreferences) -> Void) -> [UIMenuElement] {
+	static func makeMenuItems(kind: LibraryKind, fetch: @escaping () -> LibraryColumnPreferences, apply: @escaping (LibraryColumnPreferences) -> Void) -> [UIMenuElement] {
 		let current = fetch()
 
 		let posterAction = UIAction(title: L10n.showPoster, image: UIImage(systemName: "photo"), state: current.showPoster ? .on : .off) { _ in
@@ -41,7 +41,7 @@ enum LibraryColumnMenuBuilder {
 		}
 		let posterMenu = UIMenu(title: "", options: .displayInline, children: [posterAction])
 
-		let toggleActions = KKLibrary.Column.allCases
+		let toggleActions = LibraryColumn.allCases
 			.filter { !$0.isAlwaysVisible }
 			.filter { $0.hasBackingData }
 			.filter { $0.isApplicable(to: kind) }
@@ -59,7 +59,7 @@ enum LibraryColumnMenuBuilder {
 	}
 
 	// MARK: - Helpers
-	private static func makeToggleAction(for column: KKLibrary.Column, initialVisible: Bool, fetch: @escaping () -> KKLibrary.ColumnPreferences, apply: @escaping (KKLibrary.ColumnPreferences) -> Void) -> UIAction {
+	private static func makeToggleAction(for column: LibraryColumn, initialVisible: Bool, fetch: @escaping () -> LibraryColumnPreferences, apply: @escaping (LibraryColumnPreferences) -> Void) -> UIAction {
 		let state: UIMenuElement.State = initialVisible ? .on : .off
 		let title = column.title.isEmpty ? column.rawValue.capitalized : column.title
 

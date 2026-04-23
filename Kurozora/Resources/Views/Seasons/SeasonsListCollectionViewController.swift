@@ -73,13 +73,13 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 
 		do {
 			guard let showIdentity = self.showIdentity else { return }
-			let response = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let response = try await KService.seasons(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.seasonIdentities = []
 			}
 
-			self.nextPageURL = response.next
+			self.nextPageCursor = response.nextCursor
 			self.seasonIdentities.append(contentsOf: response.data)
 			self.seasonIdentities.removeDuplicates()
 		} catch {
@@ -146,7 +146,7 @@ extension SeasonsListCollectionViewController {
 
 				if season == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(SeasonResponse.self, SeasonIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Season>.self, SeasonIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

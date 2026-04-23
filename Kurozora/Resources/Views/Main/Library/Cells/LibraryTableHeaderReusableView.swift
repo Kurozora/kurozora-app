@@ -17,14 +17,14 @@ protocol LibraryTableHeaderReusableViewDelegate: AnyObject {
 	///    - header: The header view that emitted the event.
 	///    - column: The column whose width changed.
 	///    - width: The new width for the column, in points.
-	func tableHeader(_ header: LibraryTableHeaderReusableView, didResize column: KKLibrary.Column, to width: CGFloat)
+	func tableHeader(_ header: LibraryTableHeaderReusableView, didResize column: LibraryColumn, to width: CGFloat)
 
 	/// Tells the delegate that the user dropped a dragged column at a new position.
 	///
 	/// - Parameters:
 	///    - header: The header view that emitted the event.
 	///    - columnOrder: The updated left-to-right order of visible columns.
-	func tableHeader(_ header: LibraryTableHeaderReusableView, didReorderColumnsTo columnOrder: [KKLibrary.Column])
+	func tableHeader(_ header: LibraryTableHeaderReusableView, didReorderColumnsTo columnOrder: [LibraryColumn])
 
 	/// Asks the delegate for a width that fits the widest content currently visible for a column.
 	///
@@ -33,7 +33,7 @@ protocol LibraryTableHeaderReusableViewDelegate: AnyObject {
 	///    - column: The column to measure.
 	///
 	/// - Returns: The fitted width in points, or `nil` to fall back to the column's default width.
-	func tableHeader(_ header: LibraryTableHeaderReusableView, autoFitWidthFor column: KKLibrary.Column) -> CGFloat?
+	func tableHeader(_ header: LibraryTableHeaderReusableView, autoFitWidthFor column: LibraryColumn) -> CGFloat?
 }
 
 class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
@@ -41,13 +41,13 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 	private let stackView = UIStackView()
 	private let bottomSeparator = UIView()
 
-	private var columnLabels: [KKLibrary.Column: UILabel] = [:]
-	private var columnContainers: [KKLibrary.Column: UIView] = [:]
-	private var columnWidthConstraints: [KKLibrary.Column: NSLayoutConstraint] = [:]
-	private var separatorHandles: [KKLibrary.Column: ResizeHandleView] = [:]
+	private var columnLabels: [LibraryColumn: UILabel] = [:]
+	private var columnContainers: [LibraryColumn: UIView] = [:]
+	private var columnWidthConstraints: [LibraryColumn: NSLayoutConstraint] = [:]
+	private var separatorHandles: [LibraryColumn: ResizeHandleView] = [:]
 
 	/// The columns currently laid out by the header, in left-to-right order.
-	private(set) var columns: [(column: KKLibrary.Column, width: CGFloat)] = []
+	private(set) var columns: [(column: LibraryColumn, width: CGFloat)] = []
 
 	/// The object to notify about column-resize and reorder events.
 	weak var delegate: LibraryTableHeaderReusableViewDelegate?
@@ -69,7 +69,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 	/// Configures the header with one label per column and applies the supplied widths.
 	///
 	/// - Parameter columns: The visible columns paired with their current widths.
-	func configure(columns: [(column: KKLibrary.Column, width: CGFloat)]) {
+	func configure(columns: [(column: LibraryColumn, width: CGFloat)]) {
 		let incomingIdentities = columns.map(\.column)
 		let currentIdentities = self.columns.map(\.column)
 
@@ -109,7 +109,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		])
 	}
 
-	private func rebuildLabels(for columns: [KKLibrary.Column]) {
+	private func rebuildLabels(for columns: [LibraryColumn]) {
 		self.stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 		self.separatorHandles.values.forEach { $0.removeFromSuperview() }
 
@@ -144,13 +144,13 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		}
 	}
 
-	private func applyWidths(_ columns: [(column: KKLibrary.Column, width: CGFloat)]) {
+	private func applyWidths(_ columns: [(column: LibraryColumn, width: CGFloat)]) {
 		for pair in columns {
 			self.columnWidthConstraints[pair.column]?.constant = pair.width
 		}
 	}
 
-	private func makeLabelContainer(for column: KKLibrary.Column) -> UIView {
+	private func makeLabelContainer(for column: LibraryColumn) -> UIView {
 		let container = UIView()
 		container.backgroundColor = .clear
 		container.isAccessibilityElement = true
@@ -200,7 +200,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		return container
 	}
 
-	private func installResizeHandle(after container: UIView, for column: KKLibrary.Column) {
+	private func installResizeHandle(after container: UIView, for column: LibraryColumn) {
 		let handle = ResizeHandleView(column: column)
 		handle.translatesAutoresizingMaskIntoConstraints = false
 		self.addSubview(handle)
@@ -260,7 +260,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 	}
 
 	// MARK: - Drag-to-reorder
-	private func attachReorderGesture(to container: UIView, for column: KKLibrary.Column) {
+	private func attachReorderGesture(to container: UIView, for column: LibraryColumn) {
 		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleReorderDrag(_:)))
 		longPressGestureRecognizer.minimumPressDuration = 0.2
 		longPressGestureRecognizer.allowableMovement = .greatestFiniteMagnitude
@@ -301,7 +301,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 	/// - Parameters:
 	///    - sourceColumn: The column currently being dragged.
 	///    - fingerX: The current finger x-coordinate in the stack view's coordinate space.
-	private func swapIfPastNeighborMidpoint(from sourceColumn: KKLibrary.Column, fingerX: CGFloat) {
+	private func swapIfPastNeighborMidpoint(from sourceColumn: LibraryColumn, fingerX: CGFloat) {
 		guard let sourceIndex = self.columns.firstIndex(where: { $0.column == sourceColumn }) else { return }
 
 		if sourceIndex < self.columns.count - 1 {
@@ -320,7 +320,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		}
 	}
 
-	private func swapColumn(_ source: KKLibrary.Column, with target: KKLibrary.Column) {
+	private func swapColumn(_ source: LibraryColumn, with target: LibraryColumn) {
 		guard let sourceIndex = self.columns.firstIndex(where: { $0.column == source }) else { return }
 		guard let targetIndex = self.columns.firstIndex(where: { $0.column == target }) else { return }
 
@@ -377,7 +377,7 @@ private extension LibraryTableHeaderReusableView {
 	/// The column currently being dragged during a reorder gesture.
 	struct DragState {
 		/// The column being dragged.
-		let column: KKLibrary.Column
+		let column: LibraryColumn
 	}
 }
 
@@ -386,7 +386,7 @@ private extension LibraryTableHeaderReusableView {
 private final class ResizeHandleView: UIView {
 	// MARK: - Properties
 	/// The column the handle resizes.
-	let column: KKLibrary.Column
+	let column: LibraryColumn
 
 	/// The column's width when the current pan gesture began.
 	var initialWidth: CGFloat = 0
@@ -395,7 +395,7 @@ private final class ResizeHandleView: UIView {
 	private let visibleLine = UIView()
 
 	// MARK: - Initialization
-	init(column: KKLibrary.Column) {
+	init(column: LibraryColumn) {
 		self.column = column
 		super.init(frame: .zero)
 		self.configureView()

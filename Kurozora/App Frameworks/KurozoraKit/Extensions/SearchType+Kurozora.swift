@@ -1,5 +1,5 @@
 //
-//  KKSearchType+Kurozora.swift
+//  SearchType+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 07/06/2022.
@@ -9,7 +9,7 @@
 import Foundation
 import KurozoraKit
 
-extension KKSearchType {
+extension SearchType {
 	/// The string value of a search type.
 	var stringValue: String {
 		switch self {

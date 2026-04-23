@@ -296,7 +296,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	fileprivate func getUserIdentity(username: String) async -> UserIdentity? {
 		do {
-			let userIdentityResponse = try await KService.searchUsers(for: username)
+			let userIdentityResponse = try await KService.searchUsers(username).response()
 			return userIdentityResponse.data.first
 		} catch {
 			print("-----", error.localizedDescription)

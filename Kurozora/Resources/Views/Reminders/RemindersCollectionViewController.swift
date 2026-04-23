@@ -21,8 +21,8 @@ class RemindersCollectionViewController: KCollectionViewController {
 	var shows: [Show] = []
 	var literatures: [Literature] = []
 	var games: [Game] = []
-	var nextPageURL: String?
-	var libraryKind: KKLibrary.Kind = .shows
+	var nextPageCursor: PageCursor?
+	var libraryKind: LibraryKind = .shows
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -123,17 +123,17 @@ class RemindersCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let reminderLibraryResponse = try await KService.getReminders(for: self.libraryKind, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let reminderLibraryResponse = try await KService.myReminders(self.libraryKind).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.shows = []
 				self.literatures = []
 				self.games = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = reminderLibraryResponse.next
+			self.nextPageCursor = reminderLibraryResponse.nextCursor
 			if let shows = reminderLibraryResponse.data.shows {
 				self.shows.append(contentsOf: shows)
 			}

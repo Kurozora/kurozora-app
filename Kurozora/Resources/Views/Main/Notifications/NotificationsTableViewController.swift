@@ -279,7 +279,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 		if User.isSignedIn {
 			do {
-				let notificationResponse = try await KService.getNotifications()
+				let notificationResponse = try await KService.notifications().response()
 
 				switch self.grouping {
 				case .automatic, .byType:
@@ -361,7 +361,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 	func updateNotification(_ notificationID: String, withStatus readStatus: ReadStatus) async -> ReadStatus {
 		do {
-			let userNotificationUpdateResponse = try await KService.updateNotification(notificationID, withReadStatus: readStatus)
+			let userNotificationUpdateResponse = try await KService.updateNotification(notificationID, readStatus: readStatus).response()
 			return userNotificationUpdateResponse.data.readStatus
 		} catch {
 			print(error.localizedDescription)

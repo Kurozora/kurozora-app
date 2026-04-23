@@ -11,7 +11,7 @@ import UIKit
 
 class LibrarySettingsViewController: SubSettingsViewController {
 	// MARK: - Properties
-	private var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	private var libraryKind: LibraryKind = UserSettings.libraryKind
 
 	// MARK: - Initializers
 	init() {
@@ -33,7 +33,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 	}
 
-	private func statusTitle(for status: KKLibrary.Status) -> String {
+	private func statusTitle(for status: LibraryStatus) -> String {
 		switch status {
 		case .inProgress:
 			switch self.libraryKind {
@@ -55,7 +55,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		}
 	}
 
-	private func configureSortTypeButton(_ button: UIButton, status: KKLibrary.Status) {
+	private func configureSortTypeButton(_ button: UIButton, status: LibraryStatus) {
 		button.titleLabel?.numberOfLines = 0
 		button.contentHorizontalAlignment = .trailing
 		button.showsMenuAsPrimaryAction = true
@@ -84,7 +84,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	}
 
 	/// Builds and presents the sort types in an action sheet.
-	fileprivate func populateSortActions(_ button: UIButton, status: KKLibrary.Status) {
+	fileprivate func populateSortActions(_ button: UIButton, status: LibraryStatus) {
 		var menuItems: [UIMenuElement] = []
 
 		let kind = self.libraryKind
@@ -116,7 +116,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 		menuItems.append(defaultSortingMenu)
 
 		// Create sorting action
-		KKLibrary.SortType.allCases.forEach { [weak self] sortType in
+		LibrarySortType.allCases.forEach { [weak self] sortType in
 			guard let self = self else { return }
 			var subMenuItems: [UIAction] = []
 			let sortTypeSelected = currentSortTypeAndOption?.sortType == sortType
@@ -155,7 +155,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	}
 
 	@objc private func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
-		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
+		guard let libraryKind = LibraryKind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 
 		self.tableView.reloadData()
@@ -209,7 +209,7 @@ extension LibrarySettingsViewController {
 				else { return }
 				self.libraryKindSegmentedControlDidChange(segmentedControl)
 			}
-			cell.configure(title: L10n.libraryType, segmentTitles: KKLibrary.Kind.allString, selectedSegmentIndex: self.libraryKind.rawValue, action: action)
+			cell.configure(title: L10n.libraryType, segmentTitles: LibraryKind.allString, selectedSegmentIndex: self.libraryKind.rawValue, action: action)
 			return cell
 		case .status(let status):
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuSettingsCell.self, for: indexPath) else {
@@ -261,6 +261,6 @@ private extension LibrarySettingsViewController {
 
 	enum Row {
 		case libraryKind
-		case status(KKLibrary.Status)
+		case status(LibraryStatus)
 	}
 }

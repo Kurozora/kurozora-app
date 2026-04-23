@@ -13,10 +13,10 @@ struct ShowDetailView: View {
 	// MARK: - Properties
 	let show: Show
 
-	@State private var libraryStatus: KKLibrary.Status?
+	@State private var libraryStatus: LibraryStatus?
 	@State private var isUpdatingStatus = false
 
-	private let statuses = KKLibrary.Status.all
+	private let statuses = LibraryStatus.all
 
 	// MARK: - Body
 	var body: some View {
@@ -66,7 +66,7 @@ struct ShowDetailView: View {
 						.font(.caption.bold())
 
 					Picker("Status", selection: self.$libraryStatus) {
-						Text("None").tag(KKLibrary.Status?.none)
+						Text("None").tag(LibraryStatus?.none)
 						ForEach(self.statuses, id: \.rawValue) { status in
 							Text(status.stringValue).tag(Optional(status))
 						}
@@ -93,12 +93,12 @@ struct ShowDetailView: View {
 	}
 
 	// MARK: - Functions
-	private func updateLibraryStatus(to status: KKLibrary.Status) async {
+	private func updateLibraryStatus(to status: LibraryStatus) async {
 		self.isUpdatingStatus = true
 		defer { isUpdatingStatus = false }
 
 		do {
-			let response = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: self.show.id)
+			let response = try await KService.addToLibrary(.shows, status: status, itemID: self.show.id).response()
 			self.libraryStatus = response.data.status
 		} catch {
 			NSLog("Library status update failed: %@", error.localizedDescription)

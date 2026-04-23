@@ -81,115 +81,115 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 			switch self.showsListFetchType {
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let response = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedShows(for: gameIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let response = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedShows(for: literatureIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let response = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.shows(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let response = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.shows(for: personIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.shows], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.shows?.next
+				self.nextPageCursor = searchResponse.data.shows?.nextCursor
 				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let showIdentity = self.showIdentity else { return }
-				let response = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.moreByStudio(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .relatedShow:
 				guard let showIdentity = self.showIdentity else { return }
-				let response = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedShows(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedShows.append(contentsOf: response.data)
 				self.relatedShows.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let response = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.shows(for: studioIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .upcoming:
-				let response = try await KService.getUpcomingShows(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.upcomingShows().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.showIdentities.append(contentsOf: response.data)
 				self.showIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.exploreCategory(exploreCategoryIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedShows = []
 					self.showIdentities = []
 				}
 
-				self.nextPageURL = response.data.first?.relationships.shows?.next
+				self.nextPageCursor = response.data.first?.relationships.shows?.nextCursor
 				self.showIdentities.append(contentsOf: response.data.first?.relationships.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
 			}
@@ -271,7 +271,7 @@ extension ShowsListCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -294,7 +294,7 @@ extension ShowsListCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -370,10 +370,10 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: value, modelID: show.id)
+					let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: value, itemID: show.id).response()
 					show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 					cell.libraryStatus = value
@@ -383,7 +383,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -394,7 +394,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: show.id)
+						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemID: show.id).response()
 						show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						cell.libraryStatus = .none
@@ -402,7 +402,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}

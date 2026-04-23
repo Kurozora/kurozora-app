@@ -18,9 +18,9 @@ enum LibraryCompactViewOptionsBuilder {
 	///    - apply: A closure invoked with the newly selected visibility.
 	///
 	/// - Returns: A `UIMenu` configured with `.singleSelection`, suitable for embedding inside a context menu.
-	static func makeMenu(fetch: @escaping () -> KKLibrary.CompactTitleVisibility, apply: @escaping (KKLibrary.CompactTitleVisibility) -> Void) -> UIMenu {
+	static func makeMenu(fetch: @escaping () -> LibraryCompactTitleVisibility, apply: @escaping (LibraryCompactTitleVisibility) -> Void) -> UIMenu {
 		let current = fetch()
-		let actions = KKLibrary.CompactTitleVisibility.allCases.map { visibility in
+		let actions = LibraryCompactTitleVisibility.allCases.map { visibility in
 			Self.makeAction(for: visibility, isSelected: visibility == current, apply: apply)
 		}
 
@@ -28,7 +28,7 @@ enum LibraryCompactViewOptionsBuilder {
 	}
 
 	// MARK: - Helpers
-	private static func makeAction(for visibility: KKLibrary.CompactTitleVisibility, isSelected: Bool, apply: @escaping (KKLibrary.CompactTitleVisibility) -> Void) -> UIAction {
+	private static func makeAction(for visibility: LibraryCompactTitleVisibility, isSelected: Bool, apply: @escaping (LibraryCompactTitleVisibility) -> Void) -> UIAction {
 		let action = UIAction(title: visibility.title, image: visibility.image, state: isSelected ? .on : .off) { _ in
 			apply(visibility)
 		}

@@ -13,14 +13,14 @@ struct BrowseCategory: Hashable {
 	// MARK: - Properties
 	let title: String
 	let image: UIImage?
-	let searchType: KKSearchType?
+	let searchType: SearchType?
 	let segueIdentifier: (any SegueIdentifier)?
 
 	// MARK: - Initializers
 	init(
 		title: String,
 		image: UIImage?,
-		searchType: KKSearchType? = nil,
+		searchType: SearchType? = nil,
 		segueIdentifier: (any SegueIdentifier)? = nil
 	) {
 		self.title = title

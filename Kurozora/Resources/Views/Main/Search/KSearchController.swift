@@ -12,7 +12,7 @@ import KurozoraKit
 class KSearchController: UISearchController {
 	// MARK: - Properties
 	weak var viewController: SearchResultsCollectionViewController?
-	var searchScope: KKSearchScope = .kurozora
+	var searchScope: SearchScope = .kurozora
 	var forceShowsCancelButton: Bool = true
 
 	// MARK: - Initializers
@@ -42,7 +42,7 @@ class KSearchController: UISearchController {
 			case .single:
 				self.searchBar.placeholder = L10n.search
 				self.searchBar.showsScopeBar = false
-				self.searchBar.scopeButtonTitles = [KKSearchScope.kurozora.stringValue]
+				self.searchBar.scopeButtonTitles = [SearchScope.kurozora.stringValue]
 			case .multiple:
 				#if targetEnvironment(macCatalyst)
 				self.searchBar.placeholder = L10n.search
@@ -50,11 +50,11 @@ class KSearchController: UISearchController {
 				self.searchBar.placeholder = "Anime, Manga, Games and More"
 				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
 				#endif
-				self.searchBar.scopeButtonTitles = KKSearchScope.allString
+				self.searchBar.scopeButtonTitles = SearchScope.allString
 			case .library:
 				self.searchBar.placeholder = L10n.searchLibrary
 				self.searchBar.showsScopeBar = false
-				self.searchBar.scopeButtonTitles = [KKSearchScope.library.stringValue]
+				self.searchBar.scopeButtonTitles = [SearchScope.library.stringValue]
 				self.searchScope = .library
 				#if !targetEnvironment(macCatalyst)
 				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)

@@ -31,7 +31,7 @@ extension FMDetailsTableViewController {
 		itemsCount = feedMessageReplies - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
-		if indexPath.item >= itemsCount, self.nextPageURL != nil {
+		if indexPath.item >= itemsCount, self.nextPageCursor != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchFeedReplies()

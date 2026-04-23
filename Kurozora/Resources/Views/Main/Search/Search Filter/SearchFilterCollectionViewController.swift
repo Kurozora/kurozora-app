@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 
 protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
-	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: KKSearchFilter)
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: SearchFilter)
 	func searchFilterCollectionViewControllerDidReset(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 }
@@ -23,12 +23,12 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	private var applyButton: KTintedButton!
 
 	// MARK: - Properties
-	var searchType: KKSearchType?
+	var searchType: SearchType?
 	var filterableAttributes: [(key: FilterKey, value: FilterableAttribute)] = []
-	var filter: KKSearchFilter?
+	var filter: SearchFilter?
 
-	var dataSource: UICollectionViewDiffableDataSource<SearchFilter.Section, SearchFilter.ItemKind>!
-	var snapshot: NSDiffableDataSourceSnapshot<SearchFilter.Section, SearchFilter.ItemKind>!
+	var dataSource: UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>!
+	var snapshot: NSDiffableDataSourceSnapshot<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>!
 
 	var delegate: SearchFilterCollectionViewControllerDelegate?
 
@@ -154,7 +154,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	}
 
 	private func applyButtonPressed() {
-		var newSearchFilter: KKSearchFilter?
+		var newSearchFilter: SearchFilter?
 
 		if let oldSearchFilter = self.filter {
 			switch oldSearchFilter {
@@ -210,7 +210,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	private func getNewSearchFilter(merging searchFilter: Any?) -> KKSearchFilter? {
+	private func getNewSearchFilter(merging searchFilter: Any?) -> SearchFilter? {
 		if let characterFilter = searchFilter as? CharacterFilter {
 			var age: Int? = characterFilter.age
 			var astrologicalSign: Int? = characterFilter.astrologicalSign

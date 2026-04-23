@@ -24,7 +24,7 @@ protocol LibraryListViewControllerDelegate: AnyObject {
 	/// - Parameters:
 	///    - sortType: The sort type the list is now sorted by.
 	///    - sortOption: The sort option that refines the sort type, such as ascending or descending.
-	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option)
+	func libraryListViewController(updateSortWith sortType: LibrarySortType, sortOption: LibrarySortOption)
 
 	/// Tells the delegate that the total number of items in the library has changed.
 	///
@@ -89,15 +89,15 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController: LibraryViewControllerDataSource {
 	/// The sort type currently applied to the library list.
 	///
-	/// - Returns: The ``KKLibrary/SortType`` in effect for this status page.
-	func sortValue() -> KKLibrary.SortType {
+	/// - Returns: The ``LibrarySortType`` in effect for this status page.
+	func sortValue() -> LibrarySortType {
 		return self.librarySortType
 	}
 
 	/// The sort option currently refining the sort type.
 	///
-	/// - Returns: The ``KKLibrary/SortType/Option`` in effect for this status page.
-	func sortOptionValue() -> KKLibrary.SortType.Option {
+	/// - Returns: The ``LibrarySortOption`` in effect for this status page.
+	func sortOptionValue() -> LibrarySortOption {
 		return self.librarySortTypeOption
 	}
 }
@@ -112,8 +112,8 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	/// - Parameters:
 	///    - view: The ``LibraryViewController`` that initiated the change.
 	///    - libraryKind: The newly selected library kind.
-	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
-		let (sortType, sortOption) = UserSettings.librarySortTypes[libraryKind]?[self.libraryStatus] ?? (KKLibrary.SortType.none, KKLibrary.SortType.Option.none)
+	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: LibraryKind) {
+		let (sortType, sortOption) = UserSettings.librarySortTypes[libraryKind]?[self.libraryStatus] ?? (LibrarySortType.none, LibrarySortOption.none)
 
 		self.libraryKind = libraryKind
 		self.libraryCellStyle = UserSettings.libraryCellStyle(for: libraryKind, status: self.libraryStatus)
@@ -121,7 +121,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: libraryKind, status: self.libraryStatus)
 
 		// Reset data and refetch
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		self.shows = []
 		self.literatures = []
 		self.games = []
@@ -140,7 +140,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	/// - Parameters:
 	///    - sortType: The new sort type to apply.
 	///    - option: The new sort option that refines the sort type.
-	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Option) {
+	func sortLibrary(by sortType: LibrarySortType, option: LibrarySortOption) {
 		self.librarySortType = sortType
 		self.librarySortTypeOption = option
 

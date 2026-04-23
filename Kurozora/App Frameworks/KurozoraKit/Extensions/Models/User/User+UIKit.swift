@@ -142,7 +142,7 @@ extension User {
 		guard signedIn else { return }
 
 		do {
-			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+			let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 			self.attributes.update(using: followUpdateResponse.data)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -156,7 +156,7 @@ extension User {
 		guard signedIn else { return }
 
 		do {
-			let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity)
+			let blockUpdateResponse = try await KService.toggleBlock(userIdentity).response()
 			self.attributes.update(using: blockUpdateResponse.data)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -250,12 +250,12 @@ extension User {
 
 		// Create "Layout" element
 		let index = userInfo?["index"] as? Int ?? 0
-		let libraryStatus = KKLibrary.Status.all[index]
+		let libraryStatus = LibraryStatus.all[index]
 		let libraryKindRaw = userInfo?["libraryKind"] as? Int ?? UserSettings.libraryKind.rawValue
-		let libraryKind = KKLibrary.Kind(rawValue: libraryKindRaw) ?? UserSettings.libraryKind
+		let libraryKind = LibraryKind(rawValue: libraryKindRaw) ?? UserSettings.libraryKind
 		let currentSection = viewController.currentViewController as? LibraryListCollectionViewController
 		let activeCellStyle = currentSection?.libraryCellStyle ?? UserSettings.libraryCellStyle(for: libraryKind, status: libraryStatus)
-		let layoutActions = KKLibrary.CellStyle.all.map { style in
+		let layoutActions = LibraryCellStyle.all.map { style in
 			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style == activeCellStyle ? .on : .off) { _ in
 				viewController.changeLayout(to: style)
 			}

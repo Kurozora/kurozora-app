@@ -113,8 +113,9 @@ class GenresCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let genreResponse = try await KService.getGenres()
-			self.genres = genreResponse.data
+			let identityResponse = try await KService.genres().response()
+			let detailedResponse = try await KService.details(identityResponse.data).response()
+			self.genres = detailedResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)

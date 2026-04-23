@@ -85,34 +85,34 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 			switch self.peopleListFetchType {
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let response = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.people(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.personIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.personIdentities.append(contentsOf: response.data)
 				self.personIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.exploreCategory(exploreCategoryIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.personIdentities = []
 				}
 
-				self.nextPageURL = response.data.first?.relationships.people?.next
+				self.nextPageCursor = response.data.first?.relationships.people?.nextCursor
 				self.personIdentities.append(contentsOf: response.data.first?.relationships.people?.data ?? [])
 				self.personIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.people], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.people], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.personIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.people?.next
+				self.nextPageCursor = searchResponse.data.people?.nextCursor
 				self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
 				self.personIdentities.removeDuplicates()
 			}
@@ -179,7 +179,7 @@ extension PeopleListCollectionViewController {
 
 				if person == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

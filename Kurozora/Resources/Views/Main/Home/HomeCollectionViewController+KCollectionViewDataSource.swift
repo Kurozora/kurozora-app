@@ -320,7 +320,7 @@ extension HomeCollectionViewController {
 	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: BannerLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .showIdentity = itemKind else { return }
-			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: show)
@@ -333,11 +333,11 @@ extension HomeCollectionViewController {
 
 			switch itemKind {
 			case .showIdentity:
-				let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+				let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 				cell.delegate = self
 				cell.configure(using: show)
 			case .literatureIdentity:
-				let literature: Literature? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: LiteratureResponse.self, identity: LiteratureIdentity.self)
+				let literature: Literature? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Literature>.self, identity: LiteratureIdentity.self)
 				cell.delegate = self
 				cell.configure(using: literature)
 			default: break
@@ -348,7 +348,7 @@ extension HomeCollectionViewController {
 	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .episodeIdentity = itemKind else { return }
-			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: EpisodeResponse.self, identity: EpisodeIdentity.self)
+			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: episode)
@@ -358,7 +358,7 @@ extension HomeCollectionViewController {
 	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .gameIdentity = itemKind else { return }
-			let game: Game? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: GameResponse.self, identity: GameIdentity.self)
+			let game: Game? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Game>.self, identity: GameIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: game)
@@ -371,10 +371,10 @@ extension HomeCollectionViewController {
 
 			switch itemKind {
 			case .genreIdentity:
-				let genre: Genre? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: GenreResponse.self, identity: GenreIdentity.self)
+				let genre: Genre? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Genre>.self, identity: GenreIdentity.self)
 				cell.configure(using: genre)
 			case .themeIdentity:
-				let theme: Theme? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ThemeResponse.self, identity: ThemeIdentity.self)
+				let theme: Theme? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Theme>.self, identity: ThemeIdentity.self)
 				cell.configure(using: theme)
 			default: break
 			}
@@ -384,7 +384,7 @@ extension HomeCollectionViewController {
 	func getConfiguredLargeCell() -> UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind>(cellNib: LargeLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .showIdentity = itemKind else { return }
-			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: show)
@@ -394,7 +394,7 @@ extension HomeCollectionViewController {
 	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UpcomingLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .showIdentity = itemKind else { return }
-			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: show)
@@ -404,7 +404,7 @@ extension HomeCollectionViewController {
 	func getConfiguredVideoCell() -> UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind>(cellNib: VideoLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .showIdentity = itemKind else { return }
-			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ShowResponse.self, identity: ShowIdentity.self)
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 
 			cell.delegate = self
 			cell.configure(using: show)
@@ -424,7 +424,7 @@ extension HomeCollectionViewController {
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .personIdentity = itemKind else { return }
-			let person: Person? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: PersonResponse.self, identity: PersonIdentity.self)
+			let person: Person? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Person>.self, identity: PersonIdentity.self)
 
 			cell.configure(using: person)
 		}
@@ -433,7 +433,7 @@ extension HomeCollectionViewController {
 	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .characterIdentity = itemKind else { return }
-			let character: Character? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: CharacterResponse.self, identity: CharacterIdentity.self)
+			let character: Character? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Character>.self, identity: CharacterIdentity.self)
 
 			cell.configure(using: character)
 		}

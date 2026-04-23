@@ -32,7 +32,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	// MARK: - Properties
 	var listType: ReviewsListType?
 	var reviews: [Review] = []
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -133,42 +133,42 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		do {
-			let reviewsResponse: ReviewResponse
+			let reviewsResponse: ResourceCollection<Review>
 
 			switch listType {
 			case .character(let character):
 				let identity = CharacterIdentity(id: character.id)
-				reviewsResponse = try await KService.getReviews(forCharacter: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .episode(let episode):
 				let identity = EpisodeIdentity(id: episode.id)
-				reviewsResponse = try await KService.getReviews(forEpisode: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .game(let game):
 				let identity = GameIdentity(id: game.id)
-				reviewsResponse = try await KService.getReviews(forGame: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .literature(let literature):
 				let identity = LiteratureIdentity(id: literature.id)
-				reviewsResponse = try await KService.getReviews(forLiterature: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .person(let person):
 				let identity = PersonIdentity(id: person.id)
-				reviewsResponse = try await KService.getReviews(forPerson: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .show(let show):
 				let identity = ShowIdentity(id: show.id)
-				reviewsResponse = try await KService.getReviews(forShow: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .song(let song):
 				let identity = SongIdentity(id: song.id)
-				reviewsResponse = try await KService.getReviews(forSong: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			case .studio(let studio):
 				let identity = StudioIdentity(id: studio.id)
-				reviewsResponse = try await KService.getReviews(forStudio: identity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				reviewsResponse = try await KService.reviews(for: identity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 			}
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.reviews = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = reviewsResponse.next
+			self.nextPageCursor = reviewsResponse.nextCursor
 			self.reviews.append(contentsOf: reviewsResponse.data)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -317,7 +317,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 			guard let self = self else { return }
 			let newRating: Double?
 
-			do throws(KKAPIError) {
+			do throws(APIError) {
 				switch self.listType {
 				case .character(let character):
 					newRating = try await character.rate(using: rating, description: nil)
@@ -361,7 +361,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
 			guard let self = self, let cell = cell else { return }
 			Task {
-				do throws(KKAPIError) {
+				do throws(APIError) {
 					let didDelete = try await kind.deleteRating()
 					if didDelete {
 						cell.configure(using: nil)

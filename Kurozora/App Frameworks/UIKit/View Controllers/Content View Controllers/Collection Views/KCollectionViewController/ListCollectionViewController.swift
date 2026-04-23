@@ -6,13 +6,14 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 /// A base collection view controller for paginated, identity-backed lists.
 class ListCollectionViewController: KCollectionViewController {
 	// MARK: - Pagination
 	/// The URL of the next page of results, or `nil` when the list is exhausted.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// A Boolean value that indicates whether a fetch request is in progress.
 	var isRequestInProgress: Bool = false
@@ -87,7 +88,7 @@ class ListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Refresh
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -139,7 +140,7 @@ class ListCollectionViewController: KCollectionViewController {
 	///   - indexPath: The index path about to be displayed.
 	///   - totalItems: The number of items currently loaded.
 	func paginateIfNeeded(at indexPath: IndexPath, totalItems: Int) {
-		guard totalItems > 0, self.nextPageURL != nil else { return }
+		guard totalItems > 0, self.nextPageCursor != nil else { return }
 
 		let lastIndex = totalItems - 1
 		var threshold = lastIndex / 8

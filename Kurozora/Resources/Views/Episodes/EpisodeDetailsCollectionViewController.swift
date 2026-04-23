@@ -118,7 +118,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 
 		if self.episode == nil {
 			do {
-				let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity)
+				let episodeResponse = try await KService.detail(episodeIdentity).response()
 				self.episode = episodeResponse.data.first
 			} catch {
 				print("-----", error.localizedDescription)
@@ -131,7 +131,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forEpisode: episodeIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: episodeIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -139,8 +139,10 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 		}
 
 		do {
-			let episodeResponse = try await KService.getSuggestions(forEpisode: episodeIdentity)
-			self.suggestedEpisodes = episodeResponse.data
+			let episodeResponse = try await KService.suggestions(for: episodeIdentity).response()
+			let suggestedIdentities = episodeResponse.data
+			let detailedResponse = try await KService.details(suggestedIdentities).response()
+			self.suggestedEpisodes = detailedResponse.data
 			self.updateDataSource()
 		} catch {
 			print("-----", error.localizedDescription)
@@ -151,7 +153,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 		return self.episode?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let episode = self.episode else { return nil }
 		return try await episode.rate(using: rating, description: description)
 	}

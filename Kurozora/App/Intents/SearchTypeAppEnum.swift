@@ -1,5 +1,5 @@
 //
-//  KKSearchTypeAppEnum.swift
+//  SearchTypeAppEnum.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/02/2024.
@@ -11,7 +11,7 @@ import AppIntents
 import KurozoraKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
-enum KKSearchTypeAppEnum: String, AppEnum {
+enum SearchTypeAppEnum: String, AppEnum {
     case characters
     case episodes
     case games
@@ -35,8 +35,8 @@ enum KKSearchTypeAppEnum: String, AppEnum {
         .users: "Users"
     ]
 
-	/// The `KKSearchType` value of a `KKSearchTypeAppEnum` type.
-	var kkSearchTypeValue: KKSearchType {
+	/// The `SearchType` value of a `SearchTypeAppEnum` type.
+	var searchTypeValue: SearchType {
 		switch self {
 		case .characters:
 			return .characters

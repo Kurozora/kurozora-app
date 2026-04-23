@@ -21,7 +21,7 @@ extension SearchFilterCollectionViewController {
 		let textCellRegistration = self.textCellRegistration()
 		let stepperCellRegistration = self.stepperCellRegistration()
 
-		self.dataSource = UICollectionViewDiffableDataSource<SearchFilter.Section, SearchFilter.ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, item in
+		self.dataSource = UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				switch attribute.type {
@@ -49,7 +49,7 @@ extension SearchFilterCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var itemKind: [SearchFilter.ItemKind] = []
+		var itemKind: [SearchFilterDataSource.ItemKind] = []
 
 		switch self.filter {
 		case .character(let characterFilter):
@@ -400,7 +400,7 @@ extension SearchFilterCollectionViewController {
 			}
 		}
 
-		var snapshot = NSDiffableDataSourceSnapshot<SearchFilter.Section, SearchFilter.ItemKind>()
+		var snapshot = NSDiffableDataSourceSnapshot<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(itemKind, toSection: .main)
 
@@ -410,8 +410,8 @@ extension SearchFilterCollectionViewController {
 
 extension SearchFilterCollectionViewController {
 	func dateCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilter.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilter.ItemKind>(cellNib: SearchFilterDateCollectionViewCell.nib) { searchFilterDateCollectionViewCell, _, item in
+	UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterDateCollectionViewCell.nib) { searchFilterDateCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				searchFilterDateCollectionViewCell.delegate = self
@@ -431,8 +431,8 @@ extension SearchFilterCollectionViewController {
 	}
 
 	func selectCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilter.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilter.ItemKind>(cellNib: SearchFilterSelectCollectionViewCell.nib) { searchFilterSelectCollectionViewCell, _, item in
+	UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSelectCollectionViewCell.nib) { searchFilterSelectCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				guard let options = attribute.options?.map({ key, _ in
@@ -449,8 +449,8 @@ extension SearchFilterCollectionViewController {
 	}
 
 	func switchCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilter.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilter.ItemKind>(cellNib: SearchFilterSwitchCollectionViewCell.nib) { searchFilterSwitchCollectionViewCell, _, item in
+	UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSwitchCollectionViewCell.nib) { searchFilterSwitchCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				searchFilterSwitchCollectionViewCell.delegate = self
@@ -460,8 +460,8 @@ extension SearchFilterCollectionViewController {
 	}
 
 	func textCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilter.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilter.ItemKind>(cellNib: SearchFilterTextCollectionViewCell.nib) { searchFilterTextCollectionViewCell, _, item in
+	UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterTextCollectionViewCell.nib) { searchFilterTextCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				searchFilterTextCollectionViewCell.delegate = self
@@ -471,8 +471,8 @@ extension SearchFilterCollectionViewController {
 	}
 
 	func stepperCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilter.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilter.ItemKind>(cellNib: SearchFilterStepperCollectionViewCell.nib) { searchFilterStepperCollectionViewCell, _, item in
+	UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterStepperCollectionViewCell.nib) { searchFilterStepperCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let attribute, _):
 				searchFilterStepperCollectionViewCell.delegate = self

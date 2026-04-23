@@ -96,7 +96,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 
 			Task {
 				do {
-					let oAuthResponse = try await KService.signIn(withAppleID: identityTokenString)
+					let oAuthResponse = try await KService.signIn(withAppleIDToken: identityTokenString).response()
 
 					switch oAuthResponse.action {
 					case .signIn:
@@ -120,7 +120,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 						self.dismiss(animated: true, completion: nil)
 					default: break
 					}
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.view.endEditing(true)
 					self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: error.message)
 				} catch {

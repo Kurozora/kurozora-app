@@ -120,7 +120,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 
 		if self.studio == nil {
 			do {
-				let studioResponse = try await KService.getDetails(forStudio: studioIdentity)
+				let studioResponse = try await KService.detail(studioIdentity).response()
 				self.studio = studioResponse.data.first
 			} catch {
 				print(error.localizedDescription)
@@ -128,7 +128,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forStudio: studioIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: studioIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -136,7 +136,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, limit: 10)
+			let showIdentityResponse = try await KService.shows(for: studioIdentity).limit(10).response()
 			self.showIdentities = showIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -144,7 +144,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let literatureIdentityResponse = try await KService.getLiteratures(forStudio: studioIdentity, limit: 10)
+			let literatureIdentityResponse = try await KService.literatures(for: studioIdentity).limit(10).response()
 			self.literatureIdentities = literatureIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -152,7 +152,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.getGames(forStudio: studioIdentity, limit: 10)
+			let gameIdentityResponse = try await KService.games(for: studioIdentity).limit(10).response()
 			self.gameIdentities = gameIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -164,7 +164,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return self.studio?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let studio = self.studio else { return nil }
 		return try await studio.rate(using: rating, description: description)
 	}
@@ -174,7 +174,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return (.studio(studio), studio.attributes.library?.rating, studio.attributes.library?.review)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		return self.cache[indexPath] as? any Libraryable
 	}
 
@@ -285,7 +285,7 @@ extension StudioDetailsCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -296,7 +296,7 @@ extension StudioDetailsCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -317,7 +317,7 @@ extension StudioDetailsCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

@@ -135,10 +135,10 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemID: modelID).response()
 
 					switch cell.libraryKind {
 					case .shows:
@@ -161,7 +161,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -172,7 +172,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID)
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemID: modelID).response()
 
 						switch cell.libraryKind {
 						case .shows:
@@ -192,7 +192,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}

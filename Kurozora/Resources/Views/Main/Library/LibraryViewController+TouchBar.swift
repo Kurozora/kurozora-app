@@ -35,7 +35,7 @@ extension LibraryViewController: NSTouchBarDelegate {
 
 		switch identifier {
 		case .listTabBar:
-			let labels: [String] = KKLibrary.Status.all.map { libraryStatus in
+			let labels: [String] = LibraryStatus.all.map { libraryStatus in
 				switch self.libraryKind {
 				case .shows:
 					return libraryStatus.showStringValue

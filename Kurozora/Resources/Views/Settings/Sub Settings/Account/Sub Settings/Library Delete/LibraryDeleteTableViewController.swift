@@ -23,7 +23,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	}
 
 	// MARK: - Properties
-	var selectedLibraryKind: KKLibrary.Kind? {
+	var selectedLibraryKind: LibraryKind? {
 		didSet {
 			self.tableView.reloadData()
 		}
@@ -88,7 +88,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 			Task {
 				do {
 					_ = try await KService.clearLibrary(selectedLibraryKind, password: password)
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					await MainActor.run {
 						self.presentAlertController(title: L10n.cantDeleteLibrary, message: error.message)
 						self.rightNavigationBarButton.isEnabled = false
@@ -146,7 +146,7 @@ extension LibraryDeleteTableViewController: SelectTableViewCellDelegate {
 	func selectTableViewCell(_ cell: SelectTableViewCell, didPressButton selectButton: UIButton) {
 		switch Row(rawValue: selectButton.tag) {
 		case .library:
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Kind.alertControllerItems, currentSelection: self.selectedLibraryKind, action: { [weak self] _, value in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryKind.alertControllerItems, currentSelection: self.selectedLibraryKind, action: { [weak self] _, value in
 				guard let self = self else { return }
 				self.selectedLibraryKind = value
 				self.rightNavigationBarButton.isEnabled = true

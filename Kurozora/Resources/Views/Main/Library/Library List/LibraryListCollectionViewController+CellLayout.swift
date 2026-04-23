@@ -14,7 +14,7 @@ extension LibraryListCollectionViewController {
 	/// Persists the given compact-layout title visibility, 
 	///
 	/// - Parameter visibility: The newly selected compact-layout title visibility.
-	func applyCompactTitleVisibility(_ visibility: KKLibrary.CompactTitleVisibility) {
+	func applyCompactTitleVisibility(_ visibility: LibraryCompactTitleVisibility) {
 		self.libraryCompactTitleVisibility = visibility
 
 		if self.user == nil {
@@ -90,14 +90,14 @@ extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDel
 
 // MARK: - LibraryTableHeaderReusableViewDelegate
 extension LibraryListCollectionViewController: LibraryTableHeaderReusableViewDelegate {
-	func tableHeader(_ header: LibraryTableHeaderReusableView, didResize column: KKLibrary.Column, to width: CGFloat) {
+	func tableHeader(_ header: LibraryTableHeaderReusableView, didResize column: LibraryColumn, to width: CGFloat) {
 		var updated = self.libraryColumnPreferences
 		updated.widths[column] = width
 
 		self.applyColumnPreferences(updated, reloadVisibleRows: true)
 	}
 
-	func tableHeader(_ header: LibraryTableHeaderReusableView, didReorderColumnsTo columnOrder: [KKLibrary.Column]) {
+	func tableHeader(_ header: LibraryTableHeaderReusableView, didReorderColumnsTo columnOrder: [LibraryColumn]) {
 		var updated = self.libraryColumnPreferences
 
 		let visibleSet = Set(columnOrder)
@@ -115,7 +115,7 @@ extension LibraryListCollectionViewController: LibraryTableHeaderReusableViewDel
 		self.applyColumnPreferences(updated, reloadVisibleRows: true)
 	}
 
-	func tableHeader(_ header: LibraryTableHeaderReusableView, autoFitWidthFor column: KKLibrary.Column) -> CGFloat? {
+	func tableHeader(_ header: LibraryTableHeaderReusableView, autoFitWidthFor column: LibraryColumn) -> CGFloat? {
 		let visibleCells = self.collectionView.visibleCells.compactMap { $0 as? LibraryTableCollectionViewCell }
 
 		guard !visibleCells.isEmpty else { return nil }
@@ -138,7 +138,7 @@ extension LibraryListCollectionViewController {
 	///    - preferences: The new preferences to persist for the current `(kind, status)` pair.
 	///    - reloadVisibleRows: A boolean that indicates whether visible rows should be reconfigured to pick up changes to the column set or widths.
 	///                         Pass `false` to skip the row refresh when only non-rendering state changed.
-	func applyColumnPreferences(_ preferences: KKLibrary.ColumnPreferences, reloadVisibleRows: Bool) {
+	func applyColumnPreferences(_ preferences: LibraryColumnPreferences, reloadVisibleRows: Bool) {
 		let styleBefore = self.effectiveCellStyleForCurrentEnvironment()
 		let showPosterChanged = preferences.showPoster != self.libraryColumnPreferences.showPoster
 

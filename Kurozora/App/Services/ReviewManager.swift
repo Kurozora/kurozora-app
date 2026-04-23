@@ -86,7 +86,7 @@ final class ReviewManager {
 // MARK: - ReviewAction
 /// The set of actions that can trigger the review request.
 enum ReviewAction {
-	case itemAddedToLibrary(status: KKLibrary.Status)
+	case itemAddedToLibrary(status: LibraryStatus)
 }
 
 // MARK: - EngagementLevel

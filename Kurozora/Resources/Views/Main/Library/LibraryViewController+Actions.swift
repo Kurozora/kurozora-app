@@ -93,7 +93,7 @@ extension LibraryViewController {
 	/// - Parameters:
 	///    - sortType: The sort type currently in effect.
 	///    - option: The sort option that refines the sort type.
-	func updateSortTypeBarButtonItem(sortType: KKLibrary.SortType, option: KKLibrary.SortType.Option) {
+	func updateSortTypeBarButtonItem(sortType: LibrarySortType, option: LibrarySortOption) {
 		self.sortTypeBarButtonItem.title = "Sorting by \(sortType.stringValue) (\(option.stringValue))"
 		self.sortTypeBarButtonItem.image = sortType == .none
 			? UIImage(systemName: "line.3.horizontal.decrease.circle")
@@ -103,7 +103,7 @@ extension LibraryViewController {
 	/// Pushes the given column preferences into the currently visible library status page.
 	///
 	/// - Parameter preferences: The updated column preferences to apply and persist.
-	func applyColumnPreferencesToCurrentSection(_ preferences: KKLibrary.ColumnPreferences) {
+	func applyColumnPreferencesToCurrentSection(_ preferences: LibraryColumnPreferences) {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else {
 			return
 		}
@@ -114,7 +114,7 @@ extension LibraryViewController {
 	/// Pushes the given compact-layout title visibility into the currently visible library status page.
 	///
 	/// - Parameter visibility: The updated compact-layout title visibility to apply and persist.
-	func applyCompactTitleVisibilityToCurrentSection(_ visibility: KKLibrary.CompactTitleVisibility) {
+	func applyCompactTitleVisibilityToCurrentSection(_ visibility: LibraryCompactTitleVisibility) {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else {
 			return
 		}
@@ -129,8 +129,8 @@ extension LibraryViewController {
 
 	/// Changes the layout of the currently visible library status page.
 	///
-	/// - Parameter libraryCellStyle: The newly selected ``KKLibrary/CellStyle``.
-	func changeLayout(to libraryCellStyle: KKLibrary.CellStyle) {
+	/// - Parameter libraryCellStyle: The newly selected ``LibraryCellStyle``.
+	func changeLayout(to libraryCellStyle: LibraryCellStyle) {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
 
 		currentSection.libraryCellStyle = libraryCellStyle
@@ -150,7 +150,7 @@ extension LibraryViewController {
 	func populateSortActions() {
 		var menuItems: [UIMenuElement] = []
 
-		KKLibrary.SortType.allCases.forEach { [weak self] sortType in
+		LibrarySortType.allCases.forEach { [weak self] sortType in
 			guard let self = self else {
 				return
 			}
@@ -203,9 +203,9 @@ extension LibraryViewController {
 	/// Handles selection changes in the library-kind segmented control.
 	///
 	/// - Parameter libraryKind: The newly selected library kind.
-	func libraryKindSegmentedControlDidChange(to libraryKind: KKLibrary.Kind) {
+	func libraryKindSegmentedControlDidChange(to libraryKind: LibraryKind) {
 		self.libraryKind = libraryKind
-		self.bar.reloadData(at: 0 ... KKLibrary.Status.all.count - 1, context: .full)
+		self.bar.reloadData(at: 0 ... LibraryStatus.all.count - 1, context: .full)
 
 		if self.user == nil {
 			UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
@@ -224,7 +224,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 		self.updateLayoutMenuAction(for: index)
 	}
 
-	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option) {
+	func libraryListViewController(updateSortWith sortType: LibrarySortType, sortOption: LibrarySortOption) {
 		self.updateSortTypeBarButtonItem(sortType: sortType, option: sortOption)
 	}
 
@@ -244,7 +244,7 @@ extension LibraryViewController {
 
 		for index in 0 ..< count {
 			let libraryListCollectionViewController = LibraryListCollectionViewController()
-			let libraryStatus = KKLibrary.Status.all[index]
+			let libraryStatus = LibraryStatus.all[index]
 
 			libraryListCollectionViewController.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: libraryStatus)
 

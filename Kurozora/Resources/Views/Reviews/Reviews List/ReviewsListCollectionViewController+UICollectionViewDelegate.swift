@@ -19,7 +19,7 @@ extension ReviewsListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.reviews.count - 20, self.nextPageURL != nil {
+		if indexPath.item == self.reviews.count - 20, self.nextPageCursor != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchReviews()

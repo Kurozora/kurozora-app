@@ -1,5 +1,5 @@
 //
-//  KKLibrarySortType+Kurozora.swift
+//  LibrarySortType+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 07/04/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension KKLibrary.SortType {
+extension LibrarySortType {
 	/// The image value of a sort type.
 	var imageValue: UIImage {
 		switch self {

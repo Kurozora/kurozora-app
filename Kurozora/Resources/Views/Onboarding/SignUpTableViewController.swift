@@ -56,7 +56,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	/// Fetches the user's profile details.
 	func getProfileDetails() async {
 		do {
-			_ = try await KService.getProfileDetails()
+			_ = try await KService.profileDetails().response()
 
 			// Save user in keychain.
 			if let slug = User.current?.attributes.slug {
@@ -77,7 +77,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?) async {
 		do {
-			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage)
+			_ = try await KService.signUp(username: username, emailAddress: emailAddress, password: password, profileImage: profileImage).response()
 
 			self.presentAlertController(title: L10n.Onboarding.signUpAlertHeadline, message: L10n.Onboarding.signUpAlertSubheadline, defaultActionButtonTitle: L10n.done) { [weak self] _ in
 				guard let self = self else { return }
@@ -85,7 +85,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					self.onSignUp?()
 				}
 			}
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			self.presentAlertController(title: L10n.Onboarding.signUpErrorAlertHeadline, message: error.message)
 			print(error.message)
 		} catch {
@@ -134,7 +134,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImageRequest: profileImageRequest, bannerImageRequest: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 					// Perform information update request.
-					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest)
+					let userUpdateResponse = try await KService.updateProfile(profileUpdateRequest).response()
 					User.current?.attributes.update(using: userUpdateResponse.data)
 
 					// Get user details after completing account setup.

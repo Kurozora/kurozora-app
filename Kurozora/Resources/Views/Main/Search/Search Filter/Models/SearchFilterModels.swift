@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SearchFilter {
+enum SearchFilterDataSource {
 	enum Section {
 		case main
 	}
@@ -25,7 +25,7 @@ enum SearchFilter {
 			}
 		}
 
-		static func == (lhs: SearchFilter.ItemKind, rhs: SearchFilter.ItemKind) -> Bool {
+		static func == (lhs: SearchFilterDataSource.ItemKind, rhs: SearchFilterDataSource.ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.searchFilter(let attribute1, let selectedValue1), .searchFilter(let attribute2, let selectedValue2)):
 				return attribute1.name == attribute2.name && selectedValue1 == selectedValue2

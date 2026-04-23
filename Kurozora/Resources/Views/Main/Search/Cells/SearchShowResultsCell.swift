@@ -25,11 +25,11 @@ class SearchShowResultsCell: KCollectionViewCell {
 	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
-	var libraryKind: KKLibrary.Kind = .shows
-	var libraryStatus: KKLibrary.Status = .none
+	var libraryKind: LibraryKind = .shows
+	var libraryStatus: LibraryStatus = .none
 
 	// MARK: - Functions
-	func configure(using show: Show?, libraryStatus: KKLibrary.Status = .none, libraryKind: KKLibrary.Kind) {
+	func configure(using show: Show?, libraryStatus: LibraryStatus = .none, libraryKind: LibraryKind) {
 		guard let show = show else {
 			showSkeleton()
 			return

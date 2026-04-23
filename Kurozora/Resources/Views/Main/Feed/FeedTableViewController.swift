@@ -29,7 +29,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	var heightCache: [IndexPath: CGFloat] = [:]
 
 	/// The next page url of the pagination.
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -91,7 +91,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 		self.heightCache.removeAll()
 
 		Task { [weak self] in
@@ -227,15 +227,15 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 		#endif
 
 		do {
-			let feedMessageResponse = try await KService.getFeedExplore(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+			let feedMessageResponse = try await KService.feedExplore().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
-			if self.nextPageURL == nil {
+			if self.nextPageCursor == nil {
 				self.feedMessages = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = feedMessageResponse.next
+			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessages.append(contentsOf: feedMessageResponse.data)
 		} catch {
 			print(error.localizedDescription)

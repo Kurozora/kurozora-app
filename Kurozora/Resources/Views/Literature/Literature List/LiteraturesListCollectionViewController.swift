@@ -81,115 +81,115 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 			switch self.literaturesListFetchType {
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
-				let response = try await KService.getRelatedLiteratures(forShow: showIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedLiteratures(for: showIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedLiteratures = []
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedLiteratures.append(contentsOf: response.data)
 				self.relatedLiteratures.removeDuplicates()
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
-				let response = try await KService.getRelatedLiteratures(forGame: gameIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedLiteratures(for: gameIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedLiteratures = []
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedLiteratures.append(contentsOf: response.data)
 				self.relatedLiteratures.removeDuplicates()
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
-				let response = try await KService.getLiteratures(forCharacter: characterIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.literatures(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data)
 				self.literatureIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
-				let response = try await KService.getLiteratures(forPerson: personIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.literatures(for: personIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data)
 				self.literatureIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.literatures], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.literatures], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedLiteratures = []
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.literatures?.next
+				self.nextPageCursor = searchResponse.data.literatures?.nextCursor
 				self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
 				self.literatureIdentities.removeDuplicates()
 			case .moreByStudio:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let response = try await KService.getMoreByStudio(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.moreByStudio(for: literatureIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data)
 				self.literatureIdentities.removeDuplicates()
 			case .relatedLiterature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				let response = try await KService.getRelatedLiteratures(forLiterature: literatureIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.relatedLiteratures(for: literatureIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedLiteratures = []
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.relatedLiteratures.append(contentsOf: response.data)
 				self.relatedLiteratures.removeDuplicates()
 			case .studio:
 				guard let studioIdentity = self.studioIdentity else { return }
-				let response = try await KService.getLiteratures(forStudio: studioIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.literatures(for: studioIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data)
 				self.literatureIdentities.removeDuplicates()
 			case .upcoming:
-				let response = try await KService.getUpcomingLiteratures(next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.upcomingLiteratures().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data)
 				self.literatureIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
-				let response = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.exploreCategory(exploreCategoryIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.relatedLiteratures = []
 					self.literatureIdentities = []
 				}
 
-				self.nextPageURL = response.data.first?.relationships.literatures?.next
+				self.nextPageCursor = response.data.first?.relationships.literatures?.nextCursor
 				self.literatureIdentities.append(contentsOf: response.data.first?.relationships.literatures?.data ?? [])
 				self.literatureIdentities.removeDuplicates()
 			}
@@ -271,7 +271,7 @@ extension LiteraturesListCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -294,7 +294,7 @@ extension LiteraturesListCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -370,10 +370,10 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 		let literature = (self.cache[indexPath] as? Literature) ?? self.relatedLiteratures[indexPath.item].literature
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.literatures, withLibraryStatus: value, modelID: literature.id)
+					let libraryUpdateResponse = try await KService.addToLibrary(.literatures, status: value, itemID: literature.id).response()
 					literature.attributes.library?.update(using: libraryUpdateResponse.data)
 
 					cell.libraryStatus = value
@@ -383,7 +383,7 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -394,7 +394,7 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, modelID: literature.id)
+						let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, itemID: literature.id).response()
 						literature.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						cell.libraryStatus = .none
@@ -402,7 +402,7 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}

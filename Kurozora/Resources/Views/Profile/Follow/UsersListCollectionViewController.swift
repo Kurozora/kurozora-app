@@ -163,23 +163,23 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			case .follow:
 				guard let user = self.user else { return }
 				let userIdentity = UserIdentity(id: user.id)
-				let response = try await KService.getFollowList(forUser: userIdentity, self.usersListType, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25)
+				let response = try await KService.followList(forUser: userIdentity, self.usersListType).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.userIdentities = []
 				}
 
-				self.nextPageURL = response.next
+				self.nextPageCursor = response.nextCursor
 				self.userIdentities.append(contentsOf: response.data)
 				self.userIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: self.nextPageURL != nil ? 100 : 25, filter: nil)
+				let searchResponse = try await KService.search(.kurozora, types: [.users], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
-				if self.nextPageURL == nil {
+				if self.nextPageCursor == nil {
 					self.userIdentities = []
 				}
 
-				self.nextPageURL = searchResponse.data.users?.next
+				self.nextPageCursor = searchResponse.data.users?.nextCursor
 				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
 				self.userIdentities.removeDuplicates()
 			}
@@ -212,7 +212,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		guard signedIn else { return }
 
 		do {
-			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+			let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 			DispatchQueue.main.async {
 				self.user?.attributes.update(using: followUpdateResponse.data)
 				self.handleRefreshControl()
@@ -272,7 +272,7 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 		self.mentionSearchTask?.cancel()
 
 		guard !query.isEmpty else {
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.cache = [:]
 			self.userIdentities = []
 
@@ -290,7 +290,7 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 
 			guard let self = self, !Task.isCancelled else { return }
 
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.cache = [:]
 			await self.fetchItems()
 		}
@@ -336,7 +336,7 @@ extension UsersListCollectionViewController {
 
 				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(UserResponse.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -409,7 +409,7 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 
 		Task {
 			do {
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+				let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 				user.attributes.update(using: followUpdateResponse.data)
 				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
 			} catch {

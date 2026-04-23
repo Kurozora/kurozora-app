@@ -105,7 +105,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		if self.game == nil {
 			do {
-				let gameResponse = try await KService.getDetails(forGame: gameIdentity)
+				let gameResponse = try await KService.detail(gameIdentity).response()
 				self.game = gameResponse.data.first
 
 				// Donate suggestion to Siri.
@@ -124,7 +124,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviews(forGame: gameIdentity, next: nil, limit: 10)
+			let reviewIdentityResponse = try await KService.reviews(for: gameIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -132,7 +132,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, limit: 10)
+			let castIdentityResponse = try await KService.cast(for: gameIdentity).limit(10).response()
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -140,7 +140,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, limit: 10)
+			let studioIdentityResponse = try await KService.studios(for: gameIdentity).limit(10).response()
 			self.studioIdentities = studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -148,7 +148,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.getMoreByStudio(forGame: gameIdentity, limit: 10)
+			let gameIdentityResponse = try await KService.moreByStudio(for: gameIdentity).limit(10).response()
 			self.studioGameIdentities = gameIdentityResponse.data
 			self.updateDataSource()
 		} catch {
@@ -156,7 +156,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedGameResponse = try await KService.getRelatedGames(forGame: gameIdentity, limit: 10)
+			let relatedGameResponse = try await KService.relatedGames(for: gameIdentity).limit(10).response()
 			self.relatedGames = relatedGameResponse.data
 			self.updateDataSource()
 		} catch {
@@ -164,7 +164,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedShowResponse = try await KService.getRelatedShows(forGame: gameIdentity, limit: 10)
+			let relatedShowResponse = try await KService.relatedShows(for: gameIdentity).limit(10).response()
 			self.relatedShows = relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
@@ -172,7 +172,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let relatedLiteratureResponse = try await KService.getRelatedLiteratures(forGame: gameIdentity, limit: 10)
+			let relatedLiteratureResponse = try await KService.relatedLiteratures(for: gameIdentity).limit(10).response()
 			self.relatedLiteratures = relatedLiteratureResponse.data
 			self.updateDataSource()
 		} catch {
@@ -184,7 +184,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return self.game?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
-	override func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard let game = self.game else { return nil }
 		return try await game.rate(using: rating, description: description)
 	}
@@ -194,7 +194,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return (.game(game), game.attributes.library?.rating, nil)
 	}
 
-	override func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		switch kind {
 		case .shows:
 			return self.relatedShows[safe: indexPath.item]?.show
@@ -263,7 +263,7 @@ extension GameDetailsCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(CastResponse.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -284,7 +284,7 @@ extension GameDetailsCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 
@@ -305,7 +305,7 @@ extension GameDetailsCollectionViewController {
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
 					}
 				}
 

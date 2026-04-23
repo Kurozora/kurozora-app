@@ -20,9 +20,9 @@ protocol ReviewTextEditorWorkerLogic {
 final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 	func rateShow(_ showIdentity: ShowIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateShow(showIdentity, with: rating, description: review)
+			_ = try await KService.rate(showIdentity, score: rating).description(review).response()
 			return (isSuccess: true, message: nil)
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print("-----", error.message)
 			return (isSuccess: false, message: error.message)
 		} catch {
@@ -33,9 +33,9 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateLiterature(_ literatureIdentity: LiteratureIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateLiterature(literatureIdentity, with: rating, description: review)
+			_ = try await KService.rate(literatureIdentity, score: rating).description(review).response()
 			return (isSuccess: true, message: nil)
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print("-----", error.message)
 			return (isSuccess: false, message: error.message)
 		} catch {
@@ -46,9 +46,9 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateGame(_ gameIdentity: GameIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateGame(gameIdentity, with: rating, description: review)
+			_ = try await KService.rate(gameIdentity, score: rating).description(review).response()
 			return (isSuccess: true, message: nil)
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print("-----", error.message)
 			return (isSuccess: false, message: error.message)
 		} catch {
@@ -59,9 +59,9 @@ final class ReviewTextEditorWorker: ReviewTextEditorWorkerLogic {
 
 	func rateEpisode(_ episodeIdentity: EpisodeIdentity, rating: Double, review: String?) async -> (isSuccess: Bool, message: String?) {
 		do {
-			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: review)
+			_ = try await KService.rate(episodeIdentity, score: rating).description(review).response()
 			return (isSuccess: true, message: nil)
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print("-----", error.message)
 			return (isSuccess: false, message: error.message)
 		} catch {

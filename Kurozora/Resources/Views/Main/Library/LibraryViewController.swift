@@ -26,7 +26,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	var scrollViewContentView = UIView()
 
 	// MARK: - Properties
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	var libraryKind: LibraryKind = UserSettings.libraryKind
 	var user: User?
 	var viewedUser: User? {
 		return self.user ?? User.current
@@ -91,11 +91,11 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 
 		switch self.libraryKind {
 		case .shows:
-			sectionTitle = KKLibrary.Status.all[index].showStringValue
+			sectionTitle = LibraryStatus.all[index].showStringValue
 		case .literatures:
-			sectionTitle = KKLibrary.Status.all[index].literatureStringValue
+			sectionTitle = LibraryStatus.all[index].literatureStringValue
 		case .games:
-			sectionTitle = KKLibrary.Status.all[index].gameStringValue
+			sectionTitle = LibraryStatus.all[index].gameStringValue
 		}
 
 		return TMBarItem(title: sectionTitle)
@@ -111,7 +111,7 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 
 	// MARK: - PageboyViewControllerDataSource
 	override func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		return self.viewedUser != nil ? KKLibrary.Status.all.count : 1
+		return self.viewedUser != nil ? LibraryStatus.all.count : 1
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

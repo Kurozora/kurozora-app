@@ -15,7 +15,7 @@ import UIKit
 
 /// The list of available search view types.
 enum SearchViewKind {
-	case single(_ type: KKSearchType)
+	case single(_ type: SearchType)
 	case multiple
 	case library
 }
@@ -60,10 +60,10 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	var searchResults: Search?
 
 	/// The current scope of the search.
-	var currentScope: KKSearchScope = .kurozora
+	var currentScope: SearchScope = .kurozora
 
 	/// The current types of the search.
-	var currentTypes: [KKSearchType] = []
+	var currentTypes: [SearchType] = []
 
 	/// The search query that is performed.
 	var searchQuery: String = ""
@@ -85,14 +85,14 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	]
 
 	/// The collection of search types in the current search request
-	var searchTypes: [KKSearchType] = [] {
+	var searchTypes: [SearchType] = [] {
 		didSet {
 			self.reloadView()
 		}
 	}
 
 	/// The search filters applied to the respective search type
-	var searchFilters: [KKSearchType: KKSearchFilter?] = [:]
+	var searchFilters: [SearchType: SearchFilter?] = [:]
 
 	/// The hydrated models keyed by index path.
 	var cache: [IndexPath: KurozoraItem] = [:]
@@ -212,7 +212,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		switch self.searchViewKind {
 		case .single(let type):
 			// Fetch index
-			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? KKSearchFilter, next: nil)
+			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? SearchFilter, next: nil)
 		case .multiple:
 			// Fetch discover elements
 			Task { [weak self] in
@@ -372,7 +372,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - filter: The filter applied to the search request.
 	///    - next: The URL string of the next page in the paginated response. Use nil to get first page.
 	///    - resettingResults: Whether to reset the results.
-	func performSearch(with query: String, in searchScope: KKSearchScope, for types: [KKSearchType], with filter: KKSearchFilter?, next: String?, resettingResults: Bool = true) {
+	func performSearch(with query: String, in searchScope: SearchScope, for types: [SearchType], with filter: SearchFilter?, next: PageCursor?, resettingResults: Bool = true) {
 		var searchScope = searchScope
 
 		if case .library = self.searchViewKind {
@@ -421,7 +421,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		}
 	}
 
-	fileprivate func search(scope: KKSearchScope, types: [KKSearchType], query: String, next: String?, filter: KKSearchFilter?) async {
+	fileprivate func search(scope: SearchScope, types: [SearchType], query: String, next: PageCursor?, filter: SearchFilter?) async {
 		guard !self.isRequestInProgress else {
 			return
 		}
@@ -580,9 +580,9 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		}
 	}
 
-	fileprivate func determineResultTypes() -> [KKSearchType] {
+	fileprivate func determineResultTypes() -> [SearchType] {
 		guard let searchResults = self.searchResults else { return [] }
-		var resultTypes: [KKSearchType] = []
+		var resultTypes: [SearchType] = []
 
 		if !(searchResults.shows?.data.isEmpty ?? true) {
 			resultTypes.append(.shows)
@@ -618,7 +618,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// Clears the identities, pagination cursor, and cached models for the given type.
 	///
 	/// - Parameter type: The search type to reset, or `nil` to reset every type.
-	fileprivate func resetSearchResults(for type: KKSearchType?) {
+	fileprivate func resetSearchResults(for type: SearchType?) {
 		if let type = type {
 			switch type {
 			case .characters:
@@ -975,8 +975,8 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-		guard let searchScope = KKSearchScope(rawValue: selectedScope) else { return }
 		guard let query = searchBar.text, !query.isEmpty else { return }
+		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 
 		switch searchScope {
 		case .kurozora:
@@ -1000,7 +1000,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		guard let searchScope = KKSearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
+		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let query = searchBar.text else { return }
 		self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
 	}
@@ -1008,7 +1008,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		switch self.searchViewKind {
 		case .single(let type):
-			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? KKSearchFilter, next: nil)
+			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? SearchFilter, next: nil)
 		case .multiple:
 			#if targetEnvironment(macCatalyst)
 			self.navigationItem.rightBarButtonItems = []
@@ -1052,7 +1052,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID)
@@ -1075,7 +1075,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as KKAPIError {
+				} catch let error as APIError {
 					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 					print("----- Add to library failed", error.message)
 				}
@@ -1103,7 +1103,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}
@@ -1209,8 +1209,8 @@ extension SearchResultsCollectionViewController: UIToolbarDelegate {
 
 // MARK: - SearchFilterCollectionViewControllerDelegate
 extension SearchResultsCollectionViewController: SearchFilterCollectionViewControllerDelegate {
-	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: KKSearchFilter) {
-		guard let searchScope = KKSearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: SearchFilter) {
+		guard let searchScope = SearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
 		self.searchFilters[searchType] = filter

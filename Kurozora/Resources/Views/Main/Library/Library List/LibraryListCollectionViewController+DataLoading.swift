@@ -51,21 +51,20 @@ extension LibraryListCollectionViewController {
 
 		let userIdentity = UserIdentity(id: user.id)
 
+		let isFirstPage = self.nextPageCursor == nil
+
 		do {
-			let libraryResponse = try await KService.getLibrary(
-				forUser: userIdentity,
-				libraryKind: self.libraryKind,
-				withLibraryStatus: self.libraryStatus,
-				withSortType: self.librarySortType,
-				withSortOption: self.librarySortTypeOption,
-				next: self.nextPageURL,
-				limit: self.nextPageURL != nil ? 100 : 25
-			)
+			let libraryResponse = try await KService
+				.library(forUser: userIdentity, kind: self.libraryKind, status: self.libraryStatus)
+				.sorted(by: self.librarySortType, self.librarySortTypeOption)
+				.cursor(self.nextPageCursor)
+				.limit(isFirstPage ? 25 : 100)
+				.response()
 
 			self.totalLibraryItemsCount = libraryResponse.total ?? 0
 			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 
-			if self.nextPageURL == nil {
+			if isFirstPage {
 				switch self.libraryKind {
 				case .shows:
 					self.shows = []
@@ -76,7 +75,7 @@ extension LibraryListCollectionViewController {
 				}
 			}
 
-			self.nextPageURL = libraryResponse.next
+			self.nextPageCursor = libraryResponse.nextCursor
 			if let shows = libraryResponse.data.shows {
 				self.shows.appendDistinct(contentsOf: shows)
 			}

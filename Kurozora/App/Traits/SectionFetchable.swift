@@ -61,7 +61,7 @@ extension SectionFetchable {
 	///    - identity: The identity type extracted from each item in the section.
 	///
 	/// - Returns: The cached model of type `Model`, or `nil` if no model is cached yet.
-	func fetchModelOrTriggerSectionFetch<Model: KurozoraItem, Response: KurozoraRequestable, Identity: KurozoraItem>(at indexPath: IndexPath, itemKind: ItemKind, response: Response.Type, identity: Identity.Type) -> Model? {
+	func fetchModelOrTriggerSectionFetch<Model: KurozoraItem, Response: KurozoraRequestable, Identity: Fetchable>(at indexPath: IndexPath, itemKind: ItemKind, response: Response.Type, identity: Identity.Type) -> Model? where Identity.Response == Response {
 		let model: Model? = self.fetchModel(at: indexPath)
 
 		if model == nil,
@@ -96,7 +96,7 @@ extension SectionFetchable {
 	///    - item: The identity type extracted from each item in the section.
 	///    - indexPath: An index path within the section to fetch.
 	///    - itemKind: The item at the given index path.
-	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: KurozoraItem>(_ response: I.Type, _ item: Element.Type, at indexPath: IndexPath, itemKind: ItemKind) async {
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: Fetchable>(_ response: I.Type, _ item: Element.Type, at indexPath: IndexPath, itemKind: ItemKind) async where Element.Response == I {
 		guard
 			self.cache[indexPath] == nil,
 			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
@@ -126,7 +126,7 @@ extension SectionFetchable {
 
 				let chunk = Array(uncached.prefix(chunkSize))
 				let identitiesToFetch = chunk.map { $0.identity }
-				let response: I = try await KService.getDetails(for: identitiesToFetch)
+				let response: I = try await KService.details(identitiesToFetch).response()
 
 				let orderLookup = Dictionary(identitiesToFetch.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })
 				let sorted = response.data.sorted {

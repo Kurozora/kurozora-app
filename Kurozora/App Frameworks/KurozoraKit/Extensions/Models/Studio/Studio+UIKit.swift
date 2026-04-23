@@ -119,11 +119,11 @@ extension Studio {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the studio if rated successfully.
-	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		let studioIdentity = StudioIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateStudio(studioIdentity, with: rating, description: description)
+			_ = try await KService.rate(studioIdentity, score: rating).description(description).response()
 
 			// Update current rating for the user.
 			self.attributes.library?.rating = rating
@@ -134,7 +134,7 @@ extension Studio {
 			}
 
 			return rating
-		} catch let error as KKAPIError {
+		} catch let error as APIError {
 			print(error.localizedDescription)
 			throw error
 		} catch {
@@ -146,7 +146,7 @@ extension Studio {
 	/// Delete the user's rating and review for this studio.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
-	func deleteRating() async throws(KKAPIError) -> Bool {
+	func deleteRating() async throws(APIError) -> Bool {
 		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for studios.
 		print("deleteRating placeholder — Studio endpoint not yet available")
 		return false

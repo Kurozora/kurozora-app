@@ -217,7 +217,7 @@ extension FeedMessage {
 
 		do {
 			let messageIdentity = FeedMessageIdentity(id: self.id)
-			let feedMessageUpdateResponse = try await KService.heartMessage(messageIdentity)
+			let feedMessageUpdateResponse = try await KService.heartFeedMessage(messageIdentity).response()
 
 			self.attributes.update(using: feedMessageUpdateResponse.data)
 
@@ -246,7 +246,7 @@ extension FeedMessage {
 				Task {
 					do {
 						let messageIdentity = FeedMessageIdentity(id: self.id)
-						let feedMessageUpdateResponse = try await KService.pinMessage(messageIdentity)
+						let feedMessageUpdateResponse = try await KService.pinFeedMessage(messageIdentity).response()
 
 						self.attributes.update(using: feedMessageUpdateResponse.data)
 
@@ -366,7 +366,7 @@ extension FeedMessage {
 	private func remove(at indexPath: IndexPath) async {
 		do {
 			let messageIdentity = FeedMessageIdentity(id: self.id)
-			_ = try await KService.deleteMessage(messageIdentity)
+			_ = try await KService.deleteFeedMessage(messageIdentity).response()
 
 			NotificationCenter.default.post(name: .KFMDidDelete, object: nil, userInfo: ["indexPath": indexPath])
 		} catch {

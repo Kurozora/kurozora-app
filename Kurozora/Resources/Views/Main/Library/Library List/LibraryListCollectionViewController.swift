@@ -14,24 +14,24 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var shows: [Show] = []
 	var literatures: [Literature] = []
 	var games: [Game] = []
-	var nextPageURL: String?
+	var nextPageCursor: PageCursor?
 	var sectionIndex: Int?
 	var totalLibraryItemsCount: Int = 0
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
-	var libraryStatus: KKLibrary.Status = .none
-	var librarySortType: KKLibrary.SortType = .none
-	var librarySortTypeOption: KKLibrary.SortType.Option = .none {
+	var libraryKind: LibraryKind = UserSettings.libraryKind
+	var libraryStatus: LibraryStatus = .none
+	var librarySortType: LibrarySortType = .none
+	var librarySortTypeOption: LibrarySortOption = .none {
 		didSet {
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
 		}
 	}
 
-	var libraryCellStyle: KKLibrary.CellStyle = .detailed
-	var libraryColumnPreferences: KKLibrary.ColumnPreferences = .defaultShared
-	var libraryCompactTitleVisibility: KKLibrary.CompactTitleVisibility = .always
+	var libraryCellStyle: LibraryCellStyle = .detailed
+	var libraryColumnPreferences: LibraryColumnPreferences = .defaultShared
+	var libraryCompactTitleVisibility: LibraryCompactTitleVisibility = .always
 
-	private var lastEffectiveCellStyle: KKLibrary.CellStyle?
+	private var lastEffectiveCellStyle: LibraryCellStyle?
 
 	weak var delegate: LibraryListViewControllerDelegate?
 
@@ -150,7 +150,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		if self.user == nil, self.libraryKind != UserSettings.libraryKind {
 			self.libraryKind = UserSettings.libraryKind
-			self.nextPageURL = nil
+			self.nextPageCursor = nil
 			self.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: self.libraryStatus)
 			self.libraryColumnPreferences = UserSettings.libraryColumnPreferences(for: self.libraryKind, status: self.libraryStatus)
 			self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
@@ -190,7 +190,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
+		self.nextPageCursor = nil
 
 		Task { [weak self] in
 			guard let self = self else { return }

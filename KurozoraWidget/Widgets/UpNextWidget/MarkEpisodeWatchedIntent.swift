@@ -105,7 +105,7 @@ struct MarkEpisodeWatchedIntent: AppIntent {
 
 		do {
 			let identity = EpisodeIdentity(id: KurozoraItemID(self.episodeID))
-			_ = try await KService.updateEpisodeWatchStatus(identity)
+			_ = try await KService.updateWatchStatus(forEpisode: identity).response()
 		} catch {
 			// Unlock on failure so the user can retry
 			PendingWatchedStore.unlock(self.episodeID)

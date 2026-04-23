@@ -293,7 +293,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	///   - rating: The rating applied by the user.
 	///   - description: The review text, or `nil`.
 	/// - Returns: The rating recorded on the server, or `nil` if the rating failed.
-	func rateItem(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
+	func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		#if DEBUG
 		fatalError("\(type(of: self)) must override rateItem(using:description:)")
 		#else
@@ -320,7 +320,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	///   - indexPath: The index path of the lockup cell.
 	///   - kind: The library kind of the lockup cell.
 	/// - Returns: The model whose library state the cell represents, or `nil`.
-	func libraryStatusTarget(at indexPath: IndexPath, kind: KKLibrary.Kind) -> (any Libraryable)? {
+	func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
 		return nil
 	}
 
@@ -421,7 +421,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 
 		Task { [weak self] in
 			guard let self = self else { return }
-			do throws(KKAPIError) {
+			do throws(APIError) {
 				let newRating = try await self.rateItem(using: rating, description: nil)
 				cell.configure(using: newRating)
 				if newRating != nil {
@@ -446,7 +446,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
 			guard let self = self, let cell = cell else { return }
 			Task {
-				do throws(KKAPIError) {
+				do throws(APIError) {
 					let didDelete = try await kind.deleteRating()
 					if didDelete {
 						cell.configure(using: nil)
@@ -610,30 +610,30 @@ extension DetailsCollectionViewController {
 	///   - didAdd: Invoked on successful add with the new status and the action title.
 	///   - didRemove: Invoked on successful remove with the previous status.
 	fileprivate func presentLibraryActionSheet(
-		libraryKind: KKLibrary.Kind,
-		currentStatus: KKLibrary.Status,
+		libraryKind: LibraryKind,
+		currentStatus: LibraryStatus,
 		button: UIButton,
 		target: any Libraryable,
-		didAdd: @escaping @MainActor (_ newStatus: KKLibrary.Status, _ title: String) -> Void,
-		didRemove: @escaping @MainActor (_ previousStatus: KKLibrary.Status) -> Void
+		didAdd: @escaping @MainActor (_ newStatus: LibraryStatus, _ title: String) -> Void,
+		didRemove: @escaping @MainActor (_ previousStatus: LibraryStatus) -> Void
 	) {
 		let oldLibraryStatus = currentStatus
 		let modelID = target.id
 
 		let actionSheet = UIAlertController.actionSheetWithItems(
-			items: KKLibrary.Status.alertControllerItems(for: libraryKind),
+			items: LibraryStatus.alertControllerItems(for: libraryKind),
 			currentSelection: oldLibraryStatus,
 			action: { title, value in
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {
-						let response = try await KService.addToLibrary(libraryKind, withLibraryStatus: value, modelID: modelID)
+						let response = try await KService.addToLibrary(libraryKind, status: value, itemID: modelID).response()
 						target.updateLibrary(using: response.data)
 						didAdd(value, title)
 						NotificationCenter.default.post(name: Notification.Name("AddTo\(value.sectionValue)Section"), object: nil)
 						self.configureNavBarButtons()
 						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 						print("----- Add to library failed", error.message)
 					}
@@ -646,12 +646,12 @@ extension DetailsCollectionViewController {
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {
-						let response = try await KService.removeFromLibrary(libraryKind, modelID: modelID)
+						let response = try await KService.removeFromLibrary(libraryKind, itemID: modelID).response()
 						target.updateLibrary(using: response.data)
 						didRemove(oldLibraryStatus)
 						NotificationCenter.default.post(name: Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section"), object: nil)
 						self.configureNavBarButtons()
-					} catch let error as KKAPIError {
+					} catch let error as APIError {
 						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 						print("----- Remove from library failed", error.message)
 					}

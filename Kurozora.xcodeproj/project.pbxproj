@@ -444,9 +444,9 @@
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
 				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
-				66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */,
 				66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */,
+				66E721AE2F9F7066002627AB /* XCRemoteSwiftPackageReference "KurozoraKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -1223,20 +1223,20 @@
 				revision = 651a6a51c695c5819eb51ba2f98d0b64094315b9;
 			};
 		};
-		66E55AF82EE3C3D7009E12A3 /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.22.2;
-			};
-		};
 		66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.62.2;
+			};
+		};
+		66E721AE2F9F7066002627AB /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1264,6 +1264,7 @@
 		};
 		66A1B0032F7C000000000003 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 66E721AE2F9F7066002627AB /* XCRemoteSwiftPackageReference "KurozoraKit" */;
 			productName = KurozoraKit;
 		};
 		66A1B0042F7C000000000004 /* KeychainAccess */ = {
@@ -1282,6 +1283,7 @@
 		};
 		66CBDB1D2E8F215A00104283 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 66E721AE2F9F7066002627AB /* XCRemoteSwiftPackageReference "KurozoraKit" */;
 			productName = KurozoraKit;
 		};
 		66CBDB202E8F221600104283 /* KeychainAccess */ = {
@@ -1346,6 +1348,7 @@
 		};
 		66CBFFCB2E9045E700104283 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 66E721AE2F9F7066002627AB /* XCRemoteSwiftPackageReference "KurozoraKit" */;
 			productName = KurozoraKit;
 		};
 		66CBFFD32E904AF500104283 /* Kingfisher */ = {
