@@ -262,6 +262,11 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		self.collectionView.backgroundColor = isScreenshotting ? KThemePicker.backgroundColor.colorValue : nil
 		self.collectionView.showsVerticalScrollIndicator = !isScreenshotting
 		self.setShowToolbar(!isScreenshotting)
+
+		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+			self.collectionView.topEdgeEffect.isHidden = isScreenshotting
+			self.collectionView.bottomEdgeEffect.isHidden = isScreenshotting
+		}
 	}
 
 	// MARK: - IBActions
@@ -481,12 +486,31 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 	func screenshotServiceGeneratePDFRepresentation(_ screenshotService: UIScreenshotService) async -> (Data?, Int, CGRect) {
 		self.toggleScreenshotState(isScreenshotting: true)
-		let data = self.collectionView.screenshot(fullScreen: true, format: .pdf)
-		self.toggleScreenshotState(isScreenshotting: false)
+		defer { self.toggleScreenshotState(isScreenshotting: false) }
 
-		let y = self.collectionView.contentSize.height - self.collectionView.contentOffset.y - self.collectionView.frame.height
+		let savedContentOffset = self.collectionView.contentOffset
+		let savedFrame = self.collectionView.frame
+		let contentSize = self.collectionView.contentSize
 
-		return (data, 0, .init(origin: CGPoint(x: 0, y: y), size: self.view.frame.size))
+		self.collectionView.contentOffset = .zero
+		self.collectionView.frame = CGRect(origin: .zero, size: contentSize)
+		self.collectionView.layoutIfNeeded()
+
+		let pdfBounds = CGRect(origin: .zero, size: contentSize)
+		let renderer = UIGraphicsPDFRenderer(bounds: pdfBounds)
+		let data = renderer.pdfData { context in
+			context.beginPage()
+			self.collectionView.drawHierarchy(in: pdfBounds, afterScreenUpdates: true)
+		}
+
+		self.collectionView.frame = savedFrame
+		self.collectionView.contentOffset = savedContentOffset
+
+		let visibleHeight = savedFrame.height
+		let y = contentSize.height - savedContentOffset.y - visibleHeight
+		let visibleRect = CGRect(x: 0, y: y, width: savedFrame.width, height: visibleHeight)
+
+		return (data, 0, visibleRect)
 	}
 }
 
