@@ -627,7 +627,7 @@ extension DetailsCollectionViewController {
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {
-						let response = try await KService.addToLibrary(libraryKind, status: value, itemID: modelID).response()
+						let response = try await KService.addToLibrary(libraryKind, status: value, itemIDs: [modelID]).response()
 						target.updateLibrary(using: response.data)
 						didAdd(value, title)
 						NotificationCenter.default.post(name: Notification.Name("AddTo\(value.sectionValue)Section"), object: nil)
@@ -646,7 +646,7 @@ extension DetailsCollectionViewController {
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {
-						let response = try await KService.removeFromLibrary(libraryKind, itemID: modelID).response()
+						let response = try await KService.removeFromLibrary(libraryKind, itemIDs: [modelID]).response()
 						target.updateLibrary(using: response.data)
 						didRemove(oldLibraryStatus)
 						NotificationCenter.default.post(name: Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section"), object: nil)

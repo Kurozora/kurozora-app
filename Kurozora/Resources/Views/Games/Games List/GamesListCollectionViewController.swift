@@ -373,7 +373,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.games, status: value, itemID: game.id).response()
+					let libraryUpdateResponse = try await KService.addToLibrary(.games, status: value, itemIDs: [game.id]).response()
 					game.attributes.library?.update(using: libraryUpdateResponse.data)
 
 					cell.libraryStatus = value
@@ -394,7 +394,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.games, itemID: game.id).response()
+						let libraryUpdateResponse = try await KService.removeFromLibrary(.games, itemIDs: [game.id]).response()
 						game.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						cell.libraryStatus = .none

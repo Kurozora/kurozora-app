@@ -1428,4 +1428,90 @@ extension L10n {
 			comment: "The string for the word '%@ total series'."
 		)
 	}
+
+	// MARK: - Library Batch Edit
+	/// The string for the word 'Hide'.
+	static let hide: String = String(
+		localized: "Hide",
+		comment: "The string for the word 'Hide'."
+	)
+	/// The string for the word 'Show'.
+	static let show: String = String(
+		localized: "Show",
+		comment: "The string for the word 'Show' as the verb opposite of Hide."
+	)
+	/// The string for the word 'Unfavorite'.
+	static let unfavorite: String = String(
+		localized: "Unfavorite",
+		comment: "The string for the word 'Unfavorite'."
+	)
+	/// The string for the phrase 'Stop Reminding'.
+	static let stopReminding: String = String(
+		localized: "Stop Reminding",
+		comment: "The string for the phrase 'Stop Reminding'."
+	)
+	/// The string for the phrase 'Could Not Update Reminders'.
+	static let couldNotUpdateReminders: String = String(
+		localized: "Could Not Update Reminders",
+		comment: "The error alert title when a reminders batch update fails."
+	)
+	/// The string for the phrase 'Move to'.
+	static let moveTo: String = String(
+		localized: "Move to",
+		comment: "The string for the menu title that lets the user pick a target library status."
+	)
+	/// The string for the phrase 'Select All'.
+	static let selectAll: String = String(
+		localized: "Select All",
+		comment: "The leading nav-bar action that selects every loaded library item in batch-edit mode."
+	)
+	/// The string for the phrase 'Deselect All'.
+	static let deselectAll: String = String(
+		localized: "Deselect All",
+		comment: "The leading nav-bar action that deselects every selected library item in batch-edit mode."
+	)
+	/// The string for the phrase 'Select Items'.
+	static let selectItems: String = String(
+		localized: "Select Items",
+		comment: "The label shown in the bottom batch-edit toolbar when no items are selected."
+	)
+	/// The string for the phrase 'Delete Item'.
+	static let deleteItem: String = String(
+		localized: "Delete Item",
+		comment: "The destructive button shown in the delete confirmation alert when one item is selected."
+	)
+	/// The string for the phrase 'Could Not Update Library'.
+	static let couldNotUpdateLibrary: String = String(
+		localized: "Could Not Update Library",
+		comment: "The error alert title when a library batch update fails."
+	)
+	/// The string for the phrase 'Could Not Update Favorites'.
+	static let couldNotUpdateFavorites: String = String(
+		localized: "Could Not Update Favorites",
+		comment: "The error alert title when a favorites batch update fails."
+	)
+	/// The string for the phrase 'This item will be deleted from your library.'.
+	static let deleteSingleItemConfirmation: String = String(
+		localized: "This item will be deleted from your library.",
+		comment: "The confirmation alert message shown when removing a single item from the library."
+	)
+	/// The string for the phrase 'These items will be deleted from your library.'.
+	static let deleteMultipleItemsConfirmation: String = String(
+		localized: "These items will be deleted from your library.",
+		comment: "The confirmation alert message shown when removing multiple items from the library."
+	)
+	/// The string for the phrase '%d Selected'.
+	static func itemsSelected(_ count: Int) -> String {
+		return String(
+			localized: "\(count) Selected",
+			comment: "The label showing how many items are selected in batch-edit mode."
+		)
+	}
+	/// The destructive button shown in the delete confirmation alert when multiple items are selected.
+	static func deleteItems(_ count: Int) -> String {
+		return String(
+			localized: "Delete \(count) Items",
+			comment: "The destructive button shown in the delete confirmation alert when multiple items are selected."
+		)
+	}
 }

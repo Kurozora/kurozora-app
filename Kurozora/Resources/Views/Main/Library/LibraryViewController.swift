@@ -25,6 +25,37 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 	var scrollView: UIScrollView = UIScrollView()
 	var scrollViewContentView = UIView()
 
+	// MARK: - Edit-mode chrome
+	/// The bar button item that exits batch-edit mode.
+	var cancelEditingBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that toggles between selecting and deselecting every loaded item.
+	var selectAllBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that hosts the favorite, reminder and hide overflow menu.
+	var batchOverflowBarButtonItem = UIBarButtonItem()
+
+	/// The label that displays the selected-item count in the bottom toolbar.
+	var selectionCountLabel = UILabel()
+
+	/// The bar button item that hosts the move-to-status menu.
+	var statusBatchBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that hosts the destructive delete confirmation menu.
+	var deleteBatchBarButtonItem = UIBarButtonItem()
+
+	/// The right bar button items captured before entering batch-edit mode.
+	var savedRightBarButtonItems: [UIBarButtonItem]?
+
+	/// The left bar button items captured before entering batch-edit mode.
+	var savedLeftBarButtonItems: [UIBarButtonItem]?
+
+	/// A Boolean value that indicates whether batch-edit chrome is currently displayed.
+	var batchEditChromeIsActive: Bool = false
+
+	/// A Boolean value that indicates whether this controller hid the tab bar to enter edit mode.
+	var didHideTabBarForEdit: Bool = false
+
 	// MARK: - Properties
 	var libraryKind: LibraryKind = UserSettings.libraryKind
 	var user: User?
@@ -66,6 +97,15 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		self.navigationController?.navigationBar.standardAppearance.shadowColor = .clear
 		self.navigationController?.navigationBar.compactAppearance?.shadowColor = .clear
 		self.navigationController?.navigationItem.leftItemsSupplementBackButton = true
+	}
+
+	override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+
+		coordinator.animate(alongsideTransition: { [weak self] _ in
+			guard let self = self, self.batchEditChromeIsActive else { return }
+			self.toolbarItems = self.makeBatchToolbarItems()
+		})
 	}
 
 	// MARK: - Functions

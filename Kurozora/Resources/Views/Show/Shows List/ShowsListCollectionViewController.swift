@@ -373,7 +373,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: value, itemID: show.id).response()
+					let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: value, itemIDs: [show.id]).response()
 					show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 					cell.libraryStatus = value
@@ -394,7 +394,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemID: show.id).response()
+						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemIDs: [show.id]).response()
 						show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						cell.libraryStatus = .none

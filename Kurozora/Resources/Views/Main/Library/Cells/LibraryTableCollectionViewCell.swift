@@ -41,6 +41,8 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private let selectionImageOverlayView = UIImageView()
 	private let rowDivider = UIView()
 
+	private var stackLeadingConstraint: NSLayoutConstraint?
+
 	private var columnOrder: [LibraryColumn] = []
 	private var columnContainers: [LibraryColumn: UIView] = [:]
 	private var columnWidthConstraints: [LibraryColumn: NSLayoutConstraint] = [:]
@@ -75,6 +77,9 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	/// The rendered width of the inline poster, uniform across library kinds.
 	private static let posterWidth: CGFloat = 80
 
+	/// The horizontal space reserved for the leading selection indicator.
+	private static let selectionIconReservedWidth: CGFloat = 38
+
 	/// The index path the cell currently represents.
 	private(set) var indexPath: IndexPath?
 
@@ -82,7 +87,13 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	weak var delegate: LibraryTableCollectionViewCellDelegate?
 
 	/// A Boolean value that indicates whether the cell renders its selection indicator.
-	var showSelectionIcon: Bool = false
+	var showSelectionIcon: Bool = false {
+		didSet {
+			guard oldValue != self.showSelectionIcon else { return }
+			self.stackLeadingConstraint?.constant = self.showSelectionIcon ? Self.selectionIconReservedWidth : 0
+			self.setNeedsLayout()
+		}
+	}
 
 	override var isSelected: Bool {
 		didSet {
@@ -220,13 +231,16 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.rowDivider.translatesAutoresizingMaskIntoConstraints = false
 		self.contentView.addSubview(self.rowDivider)
 
+		let stackLeading = self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
+		self.stackLeadingConstraint = stackLeading
+
 		NSLayoutConstraint.activate([
-			self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			stackLeading,
 			self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
 			self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
 			self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
-			self.selectionImageOverlayView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8),
+			self.selectionImageOverlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
 			self.selectionImageOverlayView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
 			self.selectionImageOverlayView.widthAnchor.constraint(equalToConstant: 22),
 			self.selectionImageOverlayView.heightAnchor.constraint(equalToConstant: 22),

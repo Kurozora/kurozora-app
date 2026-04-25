@@ -62,7 +62,10 @@ extension LibraryListCollectionViewController {
 				.response()
 
 			self.totalLibraryItemsCount = libraryResponse.total ?? 0
-			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
+
+			if self.isPageVisible {
+				self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
+			}
 
 			if isFirstPage {
 				switch self.libraryKind {

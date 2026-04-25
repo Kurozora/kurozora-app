@@ -30,6 +30,13 @@ protocol LibraryListViewControllerDelegate: AnyObject {
 	///
 	/// - Parameter totalCount: The updated total item count for the current status page.
 	func libraryListViewController(updateTotalCount totalCount: Int)
+
+	/// Tells the delegate that the user's selection in the library list has changed.
+	///
+	/// - Parameters:
+	///    - viewController: The list whose selection changed.
+	///    - selectedIndexPaths: The set of currently-selected index paths.
+	func libraryListViewController(_ viewController: LibraryListCollectionViewController, didUpdateSelection selectedIndexPaths: [IndexPath])
 }
 
 // MARK: - SectionLayoutKind

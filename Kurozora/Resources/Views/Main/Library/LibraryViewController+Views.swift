@@ -26,6 +26,8 @@ extension LibraryViewController {
 		self.configureLibraryKindSegmentedControl()
 		self.configureLibraryKindBarButtonItem()
 		self.configureToolbar()
+		self.configureBatchEditBarButtonItems()
+		self.configureBottomActionContainer()
 	}
 
 	/// Configures the sort type bar button item.
@@ -85,6 +87,37 @@ extension LibraryViewController {
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
+	/// Configures the bar-button items that participate in batch-edit chrome.
+	private func configureBatchEditBarButtonItems() {
+		self.cancelEditingBarButtonItem.image = UIImage(systemName: "xmark")
+		self.cancelEditingBarButtonItem.style = .plain
+		self.cancelEditingBarButtonItem.accessibilityLabel = L10n.cancel
+		self.cancelEditingBarButtonItem.primaryAction = UIAction(image: UIImage(systemName: "xmark")) { [weak self] _ in
+			self?.setEditing(false, animated: true)
+		}
+
+		self.selectAllBarButtonItem.title = L10n.selectAll
+		self.selectAllBarButtonItem.style = .plain
+
+		self.batchOverflowBarButtonItem.image = UIImage(systemName: "ellipsis.circle")
+		self.batchOverflowBarButtonItem.accessibilityLabel = L10n.more
+	}
+
+	/// Configures the selection count label and the batch action items shown in the bottom toolbar.
+	private func configureBottomActionContainer() {
+		self.selectionCountLabel.font = .preferredFont(forTextStyle: .subheadline).bold
+		self.selectionCountLabel.textAlignment = .center
+		self.selectionCountLabel.theme_textColor = KThemePicker.textColor.rawValue
+		self.selectionCountLabel.text = L10n.selectItems
+
+		self.statusBatchBarButtonItem.title = L10n.moveTo
+		self.statusBatchBarButtonItem.image = UIImage(systemName: "folder")
+
+		self.deleteBatchBarButtonItem.title = L10n.delete
+		self.deleteBatchBarButtonItem.image = UIImage(systemName: "trash")
+		self.deleteBatchBarButtonItem.tintColor = .systemRed
 	}
 
 	/// Configures the bar button item that hosts the library-kind segmented control.

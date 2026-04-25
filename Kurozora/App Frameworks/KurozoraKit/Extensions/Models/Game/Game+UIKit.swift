@@ -159,7 +159,7 @@ extension Game {
 
 	fileprivate func addToLibrary(status: LibraryStatus) async {
 		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(.games, status: status, itemID: self.id).response()
+			let libraryUpdateResponse = try await KService.addToLibrary(.games, status: status, itemIDs: [self.id]).response()
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -179,7 +179,7 @@ extension Game {
 
 	func removeFromLibrary() async {
 		do {
-			let libraryUpdateResponse = try await KService.removeFromLibrary(.games, itemID: self.id).response()
+			let libraryUpdateResponse = try await KService.removeFromLibrary(.games, itemIDs: [self.id]).response()
 
 			// Update entry in library
 			self.attributes.library?.update(using: libraryUpdateResponse.data)
@@ -201,7 +201,7 @@ extension Game {
 		guard signedIn else { return }
 
 		do {
-			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .games, itemID: self.id).response()
+			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .games, itemIDs: [self.id]).response()
 
 			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
@@ -228,7 +228,7 @@ extension Game {
 					await self.addToLibrary(status: .planning)
 				}
 
-				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .games, itemID: self.id).response()
+				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .games, itemIDs: [self.id]).response()
 
 				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [

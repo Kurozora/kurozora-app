@@ -6,11 +6,15 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard !self.isEditing else { return }
+		guard !self.isEditing else {
+			self.delegate?.libraryListViewController(self, didUpdateSelection: collectionView.indexPathsForSelectedItems ?? [])
+			return
+		}
 
 		switch self.libraryKind {
 		case .shows:
@@ -25,7 +29,14 @@ extension LibraryListCollectionViewController {
 		}
 	}
 
+	override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+		guard self.isEditing else { return }
+		self.delegate?.libraryListViewController(self, didUpdateSelection: collectionView.indexPathsForSelectedItems ?? [])
+	}
+
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		guard !self.isEditing else { return }
+
 		switch self.libraryKind {
 		case .shows:
 			if indexPath.item == self.shows.count - 20 && self.nextPageCursor != nil {
@@ -53,8 +64,10 @@ extension LibraryListCollectionViewController {
 
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		guard self.isEditing != editing else { return }
+
 		super.setEditing(editing, animated: animated)
 		self.collectionView.isEditing = editing
+		self.clearsSelectionOnViewWillAppear = !editing
 
 		// Reload visible items to make sure our collection view cells show their selection indicators.
 		var snapshot = self.dataSource.snapshot()
@@ -67,29 +80,27 @@ extension LibraryListCollectionViewController {
 				self.collectionView.deselectItem(at: indexPath, animated: animated)
 			}
 		}
-
-//		self.updateNavigationBar()
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
-		return false // true
+		return self.viewedUser?.id == User.current?.id
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
-		self.setEditing(true, animated: true)
+		(self.tabmanParent as? LibraryViewController)?.setEditing(true, animated: true)
 	}
 
-	override func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
-		print("\(#function)")
-	}
+	override func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		guard !self.isEditing else { return nil }
+
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch self.libraryKind {
 		case .shows:
-            return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures:
 			return self.literatures[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games:

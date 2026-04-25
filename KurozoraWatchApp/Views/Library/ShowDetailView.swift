@@ -98,7 +98,7 @@ struct ShowDetailView: View {
 		defer { isUpdatingStatus = false }
 
 		do {
-			let response = try await KService.addToLibrary(.shows, status: status, itemID: self.show.id).response()
+			let response = try await KService.addToLibrary(.shows, status: status, itemIDs: [self.show.id]).response()
 			self.libraryStatus = response.data.status
 		} catch {
 			NSLog("Library status update failed: %@", error.localizedDescription)

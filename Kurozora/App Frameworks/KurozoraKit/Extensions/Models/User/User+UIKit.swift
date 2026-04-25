@@ -248,6 +248,29 @@ extension User {
 	func makeLibraryContextMenu(in viewController: LibraryViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
+		// Create "Edit" element — deferred so its visibility reflects the live item count
+		// of the currently visible page each time the menu opens, rather than the count at
+		// menu-build time (which is typically before items have loaded).
+		let userID = self.id
+		let editDeferred = UIDeferredMenuElement.uncached { [weak viewController] completion in
+			guard
+				let viewController = viewController,
+				User.current?.id == userID,
+				let currentSection = viewController.currentViewController as? LibraryListCollectionViewController,
+				currentSection.totalLibraryItemsCount > 0
+			else {
+				completion([])
+				return
+			}
+
+			let editAction = UIAction(title: L10n.edit, image: UIImage(systemName: "checkmark.circle")) { [weak viewController] _ in
+				viewController?.setEditing(true, animated: true)
+			}
+			completion([editAction])
+		}
+		let editMenu = UIMenu(title: "", options: .displayInline, children: [editDeferred])
+		menuElements.append(editMenu)
+
 		// Create "Layout" element
 		let index = userInfo?["index"] as? Int ?? 0
 		let libraryStatus = LibraryStatus.all[index]

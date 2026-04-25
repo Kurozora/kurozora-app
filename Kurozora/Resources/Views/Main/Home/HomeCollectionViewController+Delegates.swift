@@ -138,7 +138,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
 				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemID: modelID).response()
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemIDs: [modelID]).response()
 
 					switch cell.libraryKind {
 					case .shows:
@@ -172,7 +172,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemID: modelID).response()
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemIDs: [modelID]).response()
 
 						switch cell.libraryKind {
 						case .shows:

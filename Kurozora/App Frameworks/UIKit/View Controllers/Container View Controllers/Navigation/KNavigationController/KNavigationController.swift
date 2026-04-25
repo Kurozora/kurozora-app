@@ -112,16 +112,16 @@ class KNavigationController: UINavigationController {
 
 	/// Configure the toolbar style with the currently used theme.
 	func configureToolbarStyle() {
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			self.toolbar.isTranslucent = false
-			self.toolbar.theme_barTintColor = KThemePicker.textColor.rawValue
-		} else {
-			self.toolbar.isTranslucent = true
-			self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+			// Let the system render the default variable-blur backdrop.
+			return
 		}
 
+		self.toolbar.isTranslucent = true
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.toolbar.backgroundColor = .clear
 		self.toolbar.barStyle = .default
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
 	}
 }
