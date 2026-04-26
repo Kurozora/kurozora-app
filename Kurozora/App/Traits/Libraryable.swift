@@ -31,6 +31,11 @@ protocol Libraryable: AnyObject {
 	///
 	/// - Parameter viewController: The view controller used to present alerts, or `nil` to fall back to the top view controller.
 	func toggleReminder(on viewController: UIViewController?) async
+
+	/// Toggles the public-visibility status of the model.
+	///
+	/// - Parameter viewController: The view controller used to present alerts, or `nil` to fall back to the top view controller.
+	func toggleVisibility(on viewController: UIViewController?) async
 }
 
 extension Show: Libraryable {

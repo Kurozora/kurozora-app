@@ -26,6 +26,13 @@ protocol LibraryTableCollectionViewCellDelegate: AnyObject {
 	///    - indexPath: The index path of the row whose reminder state should toggle.
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleReminderAt indexPath: IndexPath)
 
+	/// Tells the delegate that the user tapped the cell's visibility affordance.
+	///
+	/// - Parameters:
+	///    - cell: The cell that emitted the event.
+	///    - indexPath: The index path of the row whose visibility state should toggle.
+	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleVisibilityAt indexPath: IndexPath)
+
 	/// Tells the delegate that the user finished rating the cell's item.
 	///
 	/// - Parameters:
@@ -54,6 +61,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private weak var inlineCosmosView: KCosmosView?
 	private weak var inlineFavoriteButton: UIButton?
 	private weak var inlineReminderButton: UIButton?
+	private weak var inlineVisibilityButton: UIButton?
 	private var rowDividerLeadingConstraint: NSLayoutConstraint?
 
 	private lazy var literatureMask: UIImageView = {
@@ -188,7 +196,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	/// - Returns: The content width in points, including horizontal padding.
 	func contentWidth(for column: LibraryColumn) -> CGFloat {
 		switch column {
-		case .favorite, .reminder:
+		case .favorite, .reminder, .visibility:
 			return column.defaultWidth
 		case .rating:
 			return column.defaultWidth
@@ -263,6 +271,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.inlineCosmosView = nil
 		self.inlineFavoriteButton = nil
 		self.inlineReminderButton = nil
+		self.inlineVisibilityButton = nil
 		self.posterBoundsObservation = nil
 		self.rowDividerLeadingConstraint?.isActive = false
 		self.rowDividerLeadingConstraint = nil
@@ -309,6 +318,8 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			return self.makeTintButtonContainer(action: #selector(self.didTapFavoriteStandalone), accessibilityLabel: L10n.favorite)
 		case .reminder:
 			return self.makeTintButtonContainer(action: #selector(self.didTapReminderStandalone), accessibilityLabel: L10n.reminder)
+		case .visibility:
+			return self.makeTintButtonContainer(action: #selector(self.didTapVisibilityStandalone), accessibilityLabel: L10n.visibility)
 		case .rating:
 			return self.makeRatingColumnContainer()
 		default:
@@ -382,10 +393,11 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 		let favoriteButton = self.makeTintButton(action: #selector(self.didTapFavoriteInline), accessibilityLabel: L10n.favorite, symbolPointSize: 14)
 		let reminderButton = self.makeTintButton(action: #selector(self.didTapReminderInline), accessibilityLabel: L10n.reminder, symbolPointSize: 14)
+		let visibilityButton = self.makeTintButton(action: #selector(self.didTapVisibilityInline), accessibilityLabel: L10n.visibility, symbolPointSize: 14)
 
 		reminderButton.isHidden = !LibraryColumn.reminder.isApplicable(to: kind)
 
-		let iconRow = UIStackView(arrangedSubviews: [favoriteButton, reminderButton, UIView()])
+		let iconRow = UIStackView(arrangedSubviews: [favoriteButton, reminderButton, visibilityButton, UIView()])
 		iconRow.axis = .horizontal
 		iconRow.alignment = .center
 		iconRow.spacing = 6
@@ -415,6 +427,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.inlineCosmosView = cosmosView
 		self.inlineFavoriteButton = favoriteButton
 		self.inlineReminderButton = reminderButton
+		self.inlineVisibilityButton = visibilityButton
 
 		NSLayoutConstraint.activate([
 			posterImageView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
@@ -591,6 +604,8 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 				self.populateFavoriteColumn(container: container, item: item)
 			case .reminder:
 				self.populateReminderColumn(container: container, item: item)
+			case .visibility:
+				self.populateVisibilityColumn(container: container, item: item)
 			case .rating:
 				self.populateRatingColumn(container: container, item: item)
 			default:
@@ -625,6 +640,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 		self.applyFavoriteState(button: self.inlineFavoriteButton, item: item)
 		self.applyReminderState(button: self.inlineReminderButton, item: item)
+		self.applyVisibilityState(button: self.inlineVisibilityButton, item: item)
 	}
 
 	private func populateFavoriteColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
@@ -635,6 +651,11 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private func populateReminderColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
 		guard let button = container.viewWithTag(Self.buttonValueTag) as? UIButton else { return }
 		self.applyReminderState(button: button, item: item)
+	}
+
+	private func populateVisibilityColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
+		guard let button = container.viewWithTag(Self.buttonValueTag) as? UIButton else { return }
+		self.applyVisibilityState(button: button, item: item)
 	}
 
 	private func populateRatingColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
@@ -654,6 +675,19 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		let hasReminder = self.hasReminder(item)
 		button.setImage(UIImage(systemName: hasReminder ? "bell.fill" : "bell"), for: .normal)
 		button.accessibilityLabel = hasReminder ? L10n.removeReminder : L10n.addReminder
+	}
+
+	private func applyVisibilityState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
+		guard let button = button else { return }
+		let hiddenStatus = self.hiddenStatus(for: item)
+		let isDisabled = hiddenStatus == .disabled
+
+		button.isHidden = isDisabled
+		button.isEnabled = !isDisabled
+
+		let isHidden = hiddenStatus == .hidden
+		button.setImage(UIImage(systemName: isHidden ? "eye.slash.fill" : "eye.fill"), for: .normal)
+		button.accessibilityLabel = isHidden ? L10n.showToPublic : L10n.hideFromPublic
 	}
 
 	// MARK: - Actions
@@ -677,6 +711,16 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.delegate?.libraryTableCell(self, didToggleReminderAt: indexPath)
 	}
 
+	@objc private func didTapVisibilityInline() {
+		guard let indexPath = self.indexPath else { return }
+		self.delegate?.libraryTableCell(self, didToggleVisibilityAt: indexPath)
+	}
+
+	@objc private func didTapVisibilityStandalone() {
+		guard let indexPath = self.indexPath else { return }
+		self.delegate?.libraryTableCell(self, didToggleVisibilityAt: indexPath)
+	}
+
 	// MARK: - Model accessors
 	private func isFavorited(_ item: LibraryListCollectionViewController.ItemKind) -> Bool {
 		switch item {
@@ -697,6 +741,17 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			return literature.attributes.library?.reminderStatus == .reminded
 		case .game(let game):
 			return game.attributes.library?.reminderStatus == .reminded
+		}
+	}
+
+	private func hiddenStatus(for item: LibraryListCollectionViewController.ItemKind) -> HiddenStatus {
+		switch item {
+		case .show(let show):
+			return show.attributes.library?.hiddenStatus ?? .notHidden
+		case .literature(let literature):
+			return literature.attributes.library?.hiddenStatus ?? .notHidden
+		case .game(let game):
+			return game.attributes.library?.hiddenStatus ?? .notHidden
 		}
 	}
 
@@ -734,7 +789,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		case .tvRating: return attributes.tvRating.name
 		case .episodes: return "\(attributes.episodeCount)"
 		case .dateAdded, .progress: return "" // TODO: Add support in API response
-		case .rating, .favorite, .reminder, .chapters, .volumes, .editions: return ""
+		case .rating, .favorite, .reminder, .visibility, .chapters, .volumes, .editions: return ""
 		}
 	}
 
@@ -751,7 +806,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		case .chapters: return "\(attributes.chapterCount)"
 		case .volumes: return "\(attributes.volumeCount)"
 		case .dateAdded, .progress: return ""
-		case .rating, .favorite, .reminder, .episodes, .editions: return ""
+		case .rating, .favorite, .reminder, .visibility, .episodes, .editions: return ""
 		}
 	}
 
@@ -767,7 +822,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		case .tvRating: return attributes.tvRating.name
 		case .editions: return "\(attributes.editionCount)"
 		case .dateAdded, .progress: return ""
-		case .rating, .favorite, .reminder, .episodes, .chapters, .volumes: return ""
+		case .rating, .favorite, .reminder, .visibility, .episodes, .chapters, .volumes: return ""
 		}
 	}
 

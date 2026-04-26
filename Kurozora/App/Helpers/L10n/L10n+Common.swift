@@ -205,6 +205,13 @@ extension L10n {
 		localized: "Add reminder",
 		comment: "The accessibility label for the reminder button when no reminder is set."
 	)
+	/// The string for the word 'Visibility', used as an accessibility label for the library table's public-visibility control.
+	///
+	/// - Tag: L10n-visibility
+	static let visibility: String = String(
+		localized: "Visibility",
+		comment: "The accessibility label for the visibility column or control in the library table layout."
+	)
 
 	// MARK: - Misc
 	/// The string for the word 'Error'.

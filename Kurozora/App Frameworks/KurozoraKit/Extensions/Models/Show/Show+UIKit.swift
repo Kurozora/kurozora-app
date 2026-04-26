@@ -313,11 +313,21 @@ extension Show {
 		do {
 			_ = try await KService.updateInLibrary(.shows, itemIDs: [self.id]).hidden(hidden).response()
 
-			// Update current rating for the user.
 			self.attributes.library?.isHidden = hidden
+			self.attributes.library?.hiddenStatus = HiddenStatus(hidden)
 		} catch {
 			print(error.localizedDescription)
 		}
+	}
+
+	@MainActor
+	func toggleVisibility(on viewController: UIViewController? = nil) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		guard self.attributes.library?.hiddenStatus != .disabled else { return }
+		let isHidden = self.attributes.library?.isHidden ?? false
+		await self.markAsHidden(!isHidden)
 	}
 
 	/// Update the rewatch count of the show.

@@ -282,6 +282,33 @@ extension Literature {
 		return false
 	}
 
+	/// Update the hidden status of the literature.
+	///
+	/// - Parameters:
+	///    - hidden: The boolean value determining whether to hide the literature in the user's library.
+	func markAsHidden(_ hidden: Bool) async {
+		guard await self.validateIsInLibrary() else { return }
+
+		do {
+			_ = try await KService.updateInLibrary(.literatures, itemIDs: [self.id]).hidden(hidden).response()
+
+			self.attributes.library?.isHidden = hidden
+			self.attributes.library?.hiddenStatus = HiddenStatus(hidden)
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	@MainActor
+	func toggleVisibility(on viewController: UIViewController? = nil) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		guard self.attributes.library?.hiddenStatus != .disabled else { return }
+		let isHidden = self.attributes.library?.isHidden ?? false
+		await self.markAsHidden(!isHidden)
+	}
+
 	private func validateIsInLibrary() async -> Bool {
 		if self.attributes.library?.status == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")

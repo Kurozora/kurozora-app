@@ -39,6 +39,11 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 	/// Hidden when the poster is shown inside the title cell.
 	case reminder
 
+	/// A boolean that indicates whether the item is publicly visible in the user's library.
+	///
+	/// Hidden when the poster is shown inside the title cell.
+	case visibility
+
 	/// A comma-separated list of the item's genres.
 	case genres
 
@@ -79,6 +84,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 		case .rating: return ""
 		case .favorite: return ""
 		case .reminder: return ""
+		case .visibility: return ""
 		case .genres: return L10n.columnGenres
 		case .year: return L10n.columnYear
 		case .studio: return L10n.studio
@@ -98,6 +104,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 		case .rating: return "star.fill"
 		case .favorite: return "heart.fill"
 		case .reminder: return "bell.fill"
+		case .visibility: return "eye.fill"
 		default: return nil
 		}
 	}
@@ -108,6 +115,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 		case .rating: return L10n.rating
 		case .favorite: return L10n.favorite
 		case .reminder: return L10n.reminder
+		case .visibility: return L10n.visibility
 		default: return self.title
 		}
 	}
@@ -121,6 +129,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 		case .rating: return 96
 		case .favorite: return 52
 		case .reminder: return 52
+		case .visibility: return 52
 		case .genres: return 200
 		case .year: return 72
 		case .studio: return 140
@@ -138,7 +147,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 	var minWidth: CGFloat {
 		switch self {
 		case .title: return 180
-		case .favorite, .reminder: return 48
+		case .favorite, .reminder, .visibility: return 48
 		default: return 56
 		}
 	}
@@ -151,7 +160,7 @@ enum LibraryColumn: String, Codable, CaseIterable, Hashable {
 	/// A boolean that indicates whether the column is subsumed by the title cell's inline chrome when the poster is shown.
 	var isSubsumedByTitleWhenPosterShown: Bool {
 		switch self {
-		case .rating, .favorite, .reminder: return true
+		case .rating, .favorite, .reminder, .visibility: return true
 		default: return false
 		}
 	}
@@ -203,7 +212,7 @@ struct LibraryColumnPreferences: Codable, Hashable {
 
 	/// The shared default preferences.
 	static let defaultShared: LibraryColumnPreferences = .init(
-		order: [.title, .type, .status, .rating, .favorite, .reminder, .genres,
+		order: [.title, .type, .status, .rating, .favorite, .reminder, .visibility, .genres,
 		        .year, .studio, .dateAdded, .progress, .tvRating,
 		        .episodes, .chapters, .volumes, .editions],
 		widths: [:],

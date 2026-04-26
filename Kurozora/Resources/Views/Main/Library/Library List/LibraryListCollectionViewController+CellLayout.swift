@@ -49,6 +49,15 @@ extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDel
 		}
 	}
 
+	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleVisibilityAt indexPath: IndexPath) {
+		Task { [weak self] in
+			guard let self = self, let item = self.libraryItem(at: indexPath) else { return }
+
+			await item.toggleVisibility(on: self)
+			self.reconfigureAllSnapshotItems()
+		}
+	}
+
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didUpdateRating rating: Double, at indexPath: IndexPath) {
 		Task { [weak self] in
 			guard let self = self else { return }
