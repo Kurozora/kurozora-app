@@ -24,6 +24,9 @@ extension UITextField {
 		/// UITextField is used to enter passwords.
 		case password
 
+		/// UITextField is used to enter one-time codes.
+		case oneTimeCode
+
 		/// UITextField is used to enter generic text.
 		case generic
 	}
@@ -58,6 +61,13 @@ extension UITextField {
 				autocapitalizationType = .none
 				isSecureTextEntry = true
 				placeholder = "Password"
+			case .oneTimeCode:
+				keyboardType = .numberPad
+				autocorrectionType = .no
+				autocapitalizationType = .none
+				isSecureTextEntry = false
+				placeholder = "000 000"
+				return
 			case .generic:
 				isSecureTextEntry = false
 			}

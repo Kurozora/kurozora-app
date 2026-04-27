@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 class AccountOnboardingTableViewController: KTableViewController {
@@ -68,9 +69,28 @@ class AccountOnboardingTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/// Disables or enables the user interaction on the current view. Also shows a loading indicator.
+	/// Persists the authenticated user as a stored account.
 	///
-	/// - Parameter disable: Indicates whether to disable the interaction.
+	/// Call this method after every successful authentication path.
+	///
+	/// - Parameter authToken: The authentication token returned by the API.
+	func persistSignedInAccount(authToken: String) {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		let account = StoredAccount(
+			slug: slug,
+			username: User.current?.attributes.username,
+			profileImageURL: User.current?.attributes.profile?.url,
+			authenticationToken: authToken
+		)
+		AccountManager.shared.save(account)
+		UserSettings.set(slug, forKey: .selectedAccount)
+		WatchSessionManager.shared.sendAuthState(slug: slug, token: authToken)
+	}
+
+	/// Disables or enables user interaction and toggles the activity indicator.
+	///
+	/// - Parameter disable: A boolean value indicating whether to disable user interaction.
 	func disableUserInteraction(_ disable: Bool) {
 		if disable {
 			self.view.endEditing(true)
@@ -174,6 +194,8 @@ extension AccountOnboardingTableViewController: UITextFieldDelegate {
 			textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .go : .next
 		case .reset:
 			textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .send : .next
+		case .twoFactor:
+			textField.returnKeyType = .go
 		}
 	}
 

@@ -40,6 +40,9 @@ extension AccountOnboarding {
 		/// An array containing only reset password cell types.
 		static let resetCases: [TextField] = [.email]
 
+		/// An array containing only two-factor cell types.
+		static let twoFactorCases: [TextField] = [.oneTimeCode]
+
 		/// The text type of a text field type.
 		var textType: UITextField.TextType {
 			switch self {
@@ -50,7 +53,7 @@ extension AccountOnboarding {
 			case .password, .newPassword:
 				return .password
 			case .oneTimeCode:
-				return .generic
+				return .oneTimeCode
 			}
 		}
 

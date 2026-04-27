@@ -55,27 +55,15 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
 		do {
-			let signInResponse = try await KService.signIn(email: email, password: password).response()
-			let authenticationToken = signInResponse.authenticationToken
+			let result = try await KService.signIn(email: email, password: password).response()
 
-			// Save user in keychain.
-			if let slug = User.current?.attributes.slug {
-				let account = StoredAccount(
-					slug: slug,
-					username: User.current?.attributes.username,
-					profileImageURL: User.current?.attributes.profile?.url,
-					authenticationToken: authenticationToken
-				)
-				AccountManager.shared.save(account)
-				UserSettings.set(slug, forKey: .selectedAccount)
-				WatchSessionManager.shared.sendAuthState(slug: slug, token: authenticationToken)
-			}
-
-			// Dismiss the view and register user for push notifications.
-			self.dismiss(animated: true) {
-				UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-				WorkflowController.shared.registerForPushNotifications()
-				self.onSignIn?()
+			switch result {
+			case .signedIn(let signInResponse):
+				self.completeSignIn(authToken: signInResponse.authenticationToken)
+			case .requiresTwoFactor(let challengeToken):
+				self.disableUserInteraction(false)
+				let twoFactorViewController = TwoFactorChallengeViewController(challengeToken: challengeToken, delegate: self)
+				self.show(twoFactorViewController, sender: nil)
 			}
 		} catch let error as APIError {
 			// Re-enable user interaction.
@@ -85,6 +73,19 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 			// Re-enable user interaction.
 			self.disableUserInteraction(false)
 			self.presentAlertController(title: L10n.Onboarding.signInErrorTitle, message: L10n.Onboarding.genericSignInErrorMessage)
+		}
+	}
+
+	/// Finishes a successful sign-in.
+	///
+	/// - Parameter authToken: The Sanctum token from the successful sign-in.
+	func completeSignIn(authToken: String) {
+		self.persistSignedInAccount(authToken: authToken)
+
+		self.dismiss(animated: true) {
+			UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+			WorkflowController.shared.registerForPushNotifications()
+			self.onSignIn?()
 		}
 	}
 
@@ -167,25 +168,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 
 					switch oAuthResponse.action {
 					case .signIn:
-						// Save user in keychain.
-						if let slug = User.current?.attributes.slug {
-							let account = StoredAccount(
-								slug: slug,
-								username: User.current?.attributes.username,
-								profileImageURL: User.current?.attributes.profile?.url,
-								authenticationToken: oAuthResponse.authenticationToken
-							)
-							AccountManager.shared.save(account)
-							UserSettings.set(slug, forKey: .selectedAccount)
-							WatchSessionManager.shared.sendAuthState(slug: slug, token: oAuthResponse.authenticationToken)
-						}
-
-						// Dismiss the view and register user for push notifications.
-						self.dismiss(animated: true) {
-							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-							WorkflowController.shared.registerForPushNotifications()
-							self.onSignIn?()
-						}
+						self.completeSignIn(authToken: oAuthResponse.authenticationToken)
 					case .setupAccount:
 						let signUpTableViewController = SignUpTableViewController()
 						signUpTableViewController.isSIWA = true
@@ -251,5 +234,20 @@ extension SignInTableViewController: ASAuthorizationControllerPresentationContex
 extension SignInTableViewController: UIAdaptivePresentationControllerDelegate {
 	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
 		self.onDismiss?()
+	}
+}
+
+// MARK: - TwoFactorChallengeDelegate
+extension SignInTableViewController: TwoFactorChallengeDelegate {
+	func twoFactorChallengeDidSucceed(authToken: String) {
+		self.completeSignIn(authToken: authToken)
+	}
+
+	func twoFactorChallengeDidExpire() {
+		self.navigationController?.popViewController(animated: true)
+		self.presentAlertController(
+			title: L10n.Onboarding.twoFactorExpiredTitle,
+			message: L10n.Onboarding.twoFactorExpiredMessage
+		)
 	}
 }

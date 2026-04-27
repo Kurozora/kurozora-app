@@ -23,6 +23,9 @@ enum AccountOnboarding: Int, CaseIterable {
 	/// Reset password onboarding.
 	case reset
 
+	/// Two-factor authentication onboarding.
+	case twoFactor
+
 	// MARK: - Properties
 	/// The title value of an account onboarding type.
 	var titleValue: String {
@@ -35,6 +38,8 @@ enum AccountOnboarding: Int, CaseIterable {
 			return L10n.Onboarding.signInHeadline
 		case .reset:
 			return L10n.Onboarding.forgotPasswordHeadline
+		case .twoFactor:
+			return L10n.Onboarding.twoFactorHeadline
 		}
 	}
 
@@ -49,6 +54,8 @@ enum AccountOnboarding: Int, CaseIterable {
 			return L10n.Onboarding.signInSubheadline
 		case .reset:
 			return L10n.Onboarding.forgotPasswordSubheadline
+		case .twoFactor:
+			return L10n.Onboarding.twoFactorSubheadlineTOTP
 		}
 	}
 
@@ -63,6 +70,8 @@ enum AccountOnboarding: Int, CaseIterable {
 			return L10n.Onboarding.signInButton
 		case .reset:
 			return L10n.Onboarding.forgotPasswordButton
+		case .twoFactor:
+			return L10n.Onboarding.twoFactorVerifyButton
 		}
 	}
 
@@ -77,6 +86,8 @@ enum AccountOnboarding: Int, CaseIterable {
 			return AccountOnboarding.Sections.signInCases
 		case .reset:
 			return AccountOnboarding.Sections.resetCases
+		case .twoFactor:
+			return AccountOnboarding.Sections.twoFactorCases
 		}
 	}
 
@@ -91,6 +102,8 @@ enum AccountOnboarding: Int, CaseIterable {
 			return AccountOnboarding.TextField.signInCases
 		case .reset:
 			return AccountOnboarding.TextField.resetCases
+		case .twoFactor:
+			return AccountOnboarding.TextField.twoFactorCases
 		}
 	}
 
@@ -121,5 +134,8 @@ enum AccountOnboarding: Int, CaseIterable {
 
 		/// An array containing only reset password section types.
 		static let resetCases: [Sections] = [.header, .textFields]
+
+		/// An array containing only two-factor section types.
+		static let twoFactorCases: [Sections] = [.header, .textFields, .options]
 	}
 }

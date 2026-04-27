@@ -57,19 +57,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	func getProfileDetails() async {
 		do {
 			_ = try await KService.profileDetails().response()
-
-			// Save user in keychain.
-			if let slug = User.current?.attributes.slug {
-				let account = StoredAccount(
-					slug: slug,
-					username: User.current?.attributes.username,
-					profileImageURL: User.current?.attributes.profile?.url,
-					authenticationToken: KService.authenticationKey
-				)
-				AccountManager.shared.save(account)
-				UserSettings.set(slug, forKey: .selectedAccount)
-				WatchSessionManager.shared.sendAuthState(slug: slug, token: KService.authenticationKey)
-			}
+			self.persistSignedInAccount(authToken: KService.authenticationKey)
 		} catch {
 			print("-----", error.localizedDescription)
 		}

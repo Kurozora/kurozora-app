@@ -269,6 +269,136 @@ extension L10n {
 			comment: "Generic error message shown when sign-in fails for an unknown reason."
 		)
 
+		/// Headline shown on the two-factor challenge screen.
+		///
+		/// - Tag: L10n-twoFactorHeadline
+		static let twoFactorHeadline: String = String(
+			localized: "onboarding.twoFactorHeadline",
+			defaultValue: "Two-Factor Authentication",
+			table: "Account",
+			comment: "Headline shown on the two-factor authentication challenge screen."
+		)
+
+		/// Subheadline shown on the two-factor challenge screen when prompting for a TOTP code.
+		///
+		/// - Tag: L10n-twoFactorSubheadlineTOTP
+		static let twoFactorSubheadlineTOTP: String = String(
+			localized: "onboarding.twoFactorSubheadlineTOTP",
+			defaultValue: "Enter the 6-digit code from your authenticator app.",
+			table: "Account",
+			comment: "Subheadline shown when the two-factor challenge expects a 6-digit TOTP code."
+		)
+
+		/// Subheadline shown on the two-factor challenge screen when prompting for a recovery code.
+		///
+		/// - Tag: L10n-twoFactorSubheadlineRecovery
+		static let twoFactorSubheadlineRecovery: String = String(
+			localized: "onboarding.twoFactorSubheadlineRecovery",
+			defaultValue: "Enter one of your recovery codes.",
+			table: "Account",
+			comment: "Subheadline shown when the two-factor challenge expects a recovery code."
+		)
+
+		/// Placeholder shown in the TOTP entry field.
+		///
+		/// - Tag: L10n-twoFactorTOTPPlaceholder
+		static let twoFactorTOTPPlaceholder: String = String(
+			localized: "onboarding.twoFactorTOTPPlaceholder",
+			defaultValue: "000 000",
+			table: "Account",
+			comment: "Placeholder shown in the TOTP entry field of the two-factor challenge screen."
+		)
+
+		/// Placeholder shown in the recovery code entry field.
+		///
+		/// - Tag: L10n-twoFactorRecoveryPlaceholder
+		static let twoFactorRecoveryPlaceholder: String = String(
+			localized: "onboarding.twoFactorRecoveryPlaceholder",
+			defaultValue: "XXXXXXXXXX-XXXXXXXXXX",
+			table: "Account",
+			comment: "Placeholder showing the format of a recovery code on the two-factor challenge screen."
+		)
+
+		/// Toggle button title to switch from TOTP entry to recovery code entry.
+		///
+		/// - Tag: L10n-twoFactorUseRecoveryCode
+		static let twoFactorUseRecoveryCode: String = String(
+			localized: "onboarding.twoFactorUseRecoveryCode",
+			defaultValue: "Use a recovery code instead",
+			table: "Account",
+			comment: "Toggle button title that switches the two-factor challenge screen from TOTP to recovery code entry."
+		)
+
+		/// Toggle button title to switch from recovery code entry to TOTP entry.
+		///
+		/// - Tag: L10n-twoFactorUseTOTP
+		static let twoFactorUseTOTP: String = String(
+			localized: "onboarding.twoFactorUseTOTP",
+			defaultValue: "Use authenticator code instead",
+			table: "Account",
+			comment: "Toggle button title that switches the two-factor challenge screen from recovery code to TOTP entry."
+		)
+
+		/// Title for the verify button on the two-factor challenge screen.
+		///
+		/// - Tag: L10n-twoFactorVerifyButton
+		static let twoFactorVerifyButton: String = String(
+			localized: "onboarding.twoFactorVerifyButton",
+			defaultValue: "Verify ✅",
+			table: "Account",
+			comment: "Title for the navigation bar verify button on the two-factor challenge screen."
+		)
+
+		/// Alert title shown when the two-factor challenge token has expired.
+		///
+		/// - Tag: L10n-twoFactorExpiredTitle
+		static let twoFactorExpiredTitle: String = String(
+			localized: "onboarding.twoFactorExpiredTitle",
+			defaultValue: "Session Expired",
+			table: "Account",
+			comment: "Alert title shown when the two-factor authentication challenge expires."
+		)
+
+		/// Alert message shown when the two-factor challenge token has expired.
+		///
+		/// - Tag: L10n-twoFactorExpiredMessage
+		static let twoFactorExpiredMessage: String = String(
+			localized: "onboarding.twoFactorExpiredMessage",
+			defaultValue: "Your verification session has expired. Please sign in again.",
+			table: "Account",
+			comment: "Alert message shown when the two-factor authentication challenge expires."
+		)
+
+		/// Inline error shown when the entered TOTP or recovery code is wrong.
+		///
+		/// - Tag: L10n-twoFactorInvalidCode
+		static let twoFactorInvalidCode: String = String(
+			localized: "onboarding.twoFactorInvalidCode",
+			defaultValue: "Incorrect code. Please try again.",
+			table: "Account",
+			comment: "Inline error shown beneath the input field when the two-factor code is incorrect."
+		)
+
+		/// Inline error shown when the recovery code does not match the expected format.
+		///
+		/// - Tag: L10n-twoFactorInvalidFormat
+		static let twoFactorInvalidFormat: String = String(
+			localized: "onboarding.twoFactorInvalidFormat",
+			defaultValue: "Recovery codes use the format XXXXXXXXXX-XXXXXXXXXX.",
+			table: "Account",
+			comment: "Inline error shown when the recovery code is not in the expected format."
+		)
+
+		/// Inline error shown when the network request fails on the two-factor screen.
+		///
+		/// - Tag: L10n-twoFactorNetworkError
+		static let twoFactorNetworkError: String = String(
+			localized: "onboarding.twoFactorNetworkError",
+			defaultValue: "Network error. Check your connection and try again.",
+			table: "Account",
+			comment: "Inline error shown on the two-factor screen when the verification request fails due to a network error."
+		)
+
 		/// Error message when Apple authentication fails.
 		static let appleAuthenticationFailedMessage: String = String(
 			localized: "onboarding.appleAuthenticationFailedMessage",

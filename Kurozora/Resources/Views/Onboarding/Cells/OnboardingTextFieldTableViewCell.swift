@@ -16,6 +16,9 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 	override func configureCell() {
 		super.configureCell()
 
+		self.textField.textAlignment = .natural
+		self.textField.font = .preferredFont(forTextStyle: .body)
+
 		switch self.accountOnboardingType {
 		case .signUp:
 			switch self.textField.textType {
@@ -47,6 +50,9 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 				self.textField.placeholder = "Your email address to the rescue 💌"
 			default: break
 			}
+		case .twoFactor:
+			self.textField.textAlignment = .center
+			self.textField.font = .monospacedSystemFont(ofSize: 24, weight: .semibold)
 		}
 	}
 }
