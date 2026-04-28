@@ -11,81 +11,123 @@ import UIKit
 
 /// A delegate that receives the user selected in a mention picker.
 protocol UsersListMentionSelectionDelegate: AnyObject {
+	/// Tells the delegate that the user picked a result from the mention search.
+	///
+	/// - Parameters:
+	///    - controller: The controller hosting the mention search.
+	///    - user: The user the mention should resolve to.
 	func usersListCollectionViewController(_ controller: UsersListCollectionViewController, didSelectUserForMention user: User)
 }
 
-/// A source of users for ``UsersListCollectionViewController``.
+/// The data source the ``UsersListCollectionViewController`` should fetch from.
 enum UsersListFetchType {
+	/// A user's followers or following list.
 	case follow
+
+	/// Free-text user search.
 	case search
+
+	/// The global reputation leaderboard.
+	case reputation
 }
 
-/// A paginated list of users.
 class UsersListCollectionViewController: ListCollectionViewController, SectionFetchable {
 	// MARK: - Enums
+	/// The segues that this controller can perform.
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case userDetailsSegue
 	}
 
-	/// The section identifier.
+	/// The sections that the diffable data source can render.
+	///
+	/// In reputation mode the snapshot has both `.podium` and `.main`. In other modes only
+	/// `.main` is appended, so a non-reputation snapshot continues to behave as before.
 	enum SectionLayoutKind: Int, CaseIterable {
-		case main = 0
+		case podium = 0
+		case main = 1
 	}
 
 	/// An item displayed in the list.
 	enum ItemKind: Hashable {
+		/// A user identity rendered as a row in the main section.
 		case userIdentity(_: UserIdentity)
+
+		/// A user identity rendered as a podium tile in the leaderboard's podium section,
+		/// carrying its 1-based display rank for label rendering.
+		case podiumUserIdentity(_: UserIdentity, rank: Int)
 	}
 
 	// MARK: - Properties
+	/// The user whose follow list is being displayed. Unused in `.search` and `.reputation` modes.
 	var user: User?
+
+	/// The user identities currently loaded into the list.
 	var userIdentities: [UserIdentity] = []
+
+	/// The current search query, or empty when not searching.
 	var searchQuery: String = ""
+
+	/// The data source the controller fetches from.
 	var usersListFetchType: UsersListFetchType = .search
+
+	/// The follow list variant when ``usersListFetchType`` is ``UsersListFetchType/follow``.
 	var usersListType: UsersListType = .followers
 
-	// MARK: - Mention search
+	// MARK: Mention search
+	/// The delegate notified when the user picks a result while running as a mention picker.
 	weak var mentionSelectionDelegate: UsersListMentionSelectionDelegate?
+
 	private var mentionSearchController: UISearchController?
 	private var mentionSearchTask: Task<Void, Never>?
+
+	/// `true` while the mention picker is animating away, used to suppress search-bar interactions.
 	var isDismissingMentionSearch = false
 
-	// MARK: - SectionFetchable
+	// MARK: SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
+	// MARK: Empty state
 	override var emptyStateImage: UIImage { .Empty.follow }
 
 	override var emptyStateTitle: String {
 		switch self.usersListFetchType {
-		case .follow: return "No \(self.usersListType.stringValue)"
-		case .search: return "No Users"
+		case .follow:
+			switch self.usersListType {
+			case .followers: return L10n.usersListFollowersEmptyTitle
+			case .following: return L10n.usersListFollowingEmptyTitle
+			}
+		case .search, .reputation:
+			return L10n.usersListEmptyTitle
 		}
 	}
 
 	override var emptyStateDetail: String {
 		let username = self.user?.attributes.username
+
 		switch self.usersListFetchType {
 		case .follow:
 			switch self.usersListType {
 			case .followers:
 				if self.user?.id == User.current?.id {
-					return "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
+					return L10n.followersEmptyDetailSelf
 				} else {
-					return "Be the first to follow \(username ?? "this user")!"
+					return L10n.followersEmptyDetailOther(username ?? L10n.thisUserLowercase)
 				}
 			case .following:
 				if self.user?.id == User.current?.id {
-					return "Follow a user and they will show up here!"
+					return L10n.followingEmptyDetailSelf
 				} else {
-					return "\(username ?? "This user") is not following anyone yet."
+					return L10n.followingEmptyDetailOther(username ?? L10n.thisUserCapitalized)
 				}
 			}
 		case .search:
-			return "Can't get users list. Please reload the page or restart the app and check your WiFi connection."
+			return L10n.usersListSearchEmptyDetail
+		case .reputation:
+			return L10n.leaderboardEmptyDetail
 		}
 	}
 
@@ -93,10 +135,16 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		!self.userIdentities.isEmpty
 	}
 
+	// MARK: - View Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = self.usersListType.stringValue
+		switch self.usersListFetchType {
+		case .reputation:
+			self.title = L10n.reputationLeaderboardTitle
+		case .follow, .search:
+			self.title = self.usersListType.localizedTitle
+		}
 
 		if self.mentionSelectionDelegate != nil {
 			self._prefersRefreshControlDisabled = true
@@ -106,9 +154,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.localizedTitleLowercase))
 		case .search:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
+		case .reputation:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLeaderboard)
 		}
 		#endif
 	}
@@ -123,6 +173,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		}
 	}
 
+	// MARK: - Fetching
 	override func fetchItems() async {
 		if self.mentionSelectionDelegate != nil, self.searchQuery.isEmpty {
 			self._prefersActivityIndicatorHidden = true
@@ -142,9 +193,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			#if !targetEnvironment(macCatalyst)
 			switch self.usersListFetchType {
 			case .follow:
-				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.stringValue.lowercased()))
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.localizedTitleLowercase))
 			case .search:
 				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
+			case .reputation:
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLeaderboard)
 			}
 			#endif
 		}
@@ -152,9 +205,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
 		case .follow:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.stringValue.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.localizedTitleLowercase))
 		case .search:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
+		case .reputation:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingLeaderboard)
 		}
 		#endif
 
@@ -163,7 +218,10 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			case .follow:
 				guard let user = self.user else { return }
 				let userIdentity = UserIdentity(id: user.id)
-				let response = try await KService.followList(forUser: userIdentity, self.usersListType).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+				let response = try await KService.followList(forUser: userIdentity, self.usersListType)
+					.cursor(self.nextPageCursor)
+					.limit(self.nextPageCursor != nil ? 100 : 25)
+					.response()
 
 				if self.nextPageCursor == nil {
 					self.userIdentities = []
@@ -173,7 +231,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 				self.userIdentities.append(contentsOf: response.data)
 				self.userIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, types: [.users], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
+				let searchResponse = try await KService.search(.kurozora, types: [.users], query: self.searchQuery)
+					.cursor(self.nextPageCursor)
+					.limit(self.nextPageCursor != nil ? 100 : 25)
+					.filter(nil)
+					.response()
 
 				if self.nextPageCursor == nil {
 					self.userIdentities = []
@@ -181,6 +243,20 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 
 				self.nextPageCursor = searchResponse.data.users?.nextCursor
 				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+				self.userIdentities.removeDuplicates()
+			case .reputation:
+				let response = try await KService.userIndex()
+					.sort("reputation", direction: "most")
+					.cursor(self.nextPageCursor)
+					.limit(self.nextPageCursor != nil ? 100 : 25)
+					.response()
+
+				if self.nextPageCursor == nil {
+					self.userIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.userIdentities.append(contentsOf: response.data)
 				self.userIdentities.removeDuplicates()
 			}
 		} catch {
@@ -196,7 +272,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		else { return }
 
 		let username = user.attributes.username
-		self.emptyBackgroundView.configureButton(title: "＋ Follow \(username)", handler: { [weak self] in
+		self.emptyBackgroundView.configureButton(title: L10n.followUserButton(username), handler: { [weak self] in
 			Task { [weak self] in
 				await self?.followUser()
 			}
@@ -226,6 +302,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
 		case .userIdentity(let id): return id as? Element
+		case .podiumUserIdentity(let id, _): return id as? Element
 		}
 	}
 
@@ -258,9 +335,11 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.text = self.searchQuery
 		searchController.searchBar.delegate = self
+
 		self.navigationItem.searchController = searchController
 		self.navigationItem.hidesSearchBarWhenScrolling = false
 		self.definesPresentationContext = true
+
 		self.mentionSearchController = searchController
 	}
 
@@ -310,22 +389,65 @@ extension UsersListCollectionViewController: UISearchResultsUpdating, UISearchBa
 extension UsersListCollectionViewController {
 	override func configureDataSource() {
 		let userLockupCellRegistration = self.getConfiguredUserCell()
+		let podiumLockupCellRegistration = self.getConfiguredPodiumCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
-			return collectionView.dequeueConfiguredReusableCell(using: userLockupCellRegistration, for: indexPath, item: itemKind)
+			switch itemKind {
+			case .userIdentity:
+				return collectionView.dequeueConfiguredReusableCell(using: userLockupCellRegistration, for: indexPath, item: itemKind)
+			case .podiumUserIdentity:
+				return collectionView.dequeueConfiguredReusableCell(using: podiumLockupCellRegistration, for: indexPath, item: itemKind)
+			}
 		}
 	}
 
 	override func updateDataSource() {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		self.snapshot.appendSections([.main])
 
-		let items: [ItemKind] = self.userIdentities.map { .userIdentity($0) }
-		self.snapshot.appendItems(items, toSection: .main)
+		switch self.usersListFetchType {
+		case .reputation:
+			let topThree = Array(self.userIdentities.prefix(3))
+
+			if !topThree.isEmpty {
+				self.snapshot.appendSections([.podium])
+
+				// Display order is `[rank 2 (left), rank 1 (center), rank 3 (right)]`
+				// so the layout's item provider can map indices directly to columns.
+				// Each item still carries its true rank for label rendering.
+				var podiumItems: [ItemKind] = []
+
+				if topThree.indices.contains(1) {
+					podiumItems.append(.podiumUserIdentity(topThree[1], rank: 2))
+				}
+
+				if topThree.indices.contains(0) {
+					podiumItems.append(.podiumUserIdentity(topThree[0], rank: 1))
+				}
+
+				if topThree.indices.contains(2) {
+					podiumItems.append(.podiumUserIdentity(topThree[2], rank: 3))
+				}
+
+				self.snapshot.appendItems(podiumItems, toSection: .podium)
+			}
+
+			let remaining = self.userIdentities.count > 3 ? Array(self.userIdentities[3...]) : []
+
+			if !remaining.isEmpty {
+				self.snapshot.appendSections([.main])
+				let items: [ItemKind] = remaining.map { .userIdentity($0) }
+				self.snapshot.appendItems(items, toSection: .main)
+			}
+		case .follow, .search:
+			self.snapshot.appendSections([.main])
+			let items: [ItemKind] = self.userIdentities.map { .userIdentity($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		}
 
 		self.dataSource.apply(self.snapshot)
 	}
 
+	/// Returns the cell registration that renders standard user rows for the main section.
 	private func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UserLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self else { return }
@@ -340,12 +462,39 @@ extension UsersListCollectionViewController {
 					}
 				}
 
-				if self.mentionSelectionDelegate != nil {
+				if self.usersListFetchType == .reputation {
+					// The main section starts at the 4th user, so the visual rank is `indexPath.item + 4`.
+					cell.configureForLeaderboard(using: user, rank: indexPath.item + 4)
+				} else if self.mentionSelectionDelegate != nil {
 					cell.configureForMention(using: user)
 				} else {
 					cell.delegate = self
 					cell.configure(using: user)
 				}
+			case .podiumUserIdentity:
+				break
+			}
+		}
+	}
+
+	/// Returns the cell registration that renders the podium tiles for the leaderboard.
+	private func getConfiguredPodiumCell() -> UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .podiumUserIdentity(_, let rank):
+				let user: User? = self.fetchModel(at: indexPath)
+
+				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				cell.configure(using: user, rank: rank, showsReputation: true)
+			case .userIdentity:
+				break
 			}
 		}
 	}
@@ -362,8 +511,14 @@ extension UsersListCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
 			guard let self = self else { return nil }
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 
+			if self.usersListFetchType == .reputation,
+			   let kind = self.snapshot?.sectionIdentifiers[safe: section],
+			   kind == .podium {
+				return Layouts.podiumSection(section, layoutEnvironment: layoutEnvironment)
+			}
+
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			return Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 	}
@@ -386,7 +541,15 @@ extension UsersListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		self.paginateIfNeeded(at: indexPath, totalItems: self.userIdentities.count)
+		// In reputation mode the first three users live in the podium section, so the
+		// main section's local `indexPath.item` is offset by 3 from `userIdentities`.
+		if self.usersListFetchType == .reputation,
+		   let kind = self.snapshot?.sectionIdentifiers[safe: indexPath.section],
+		   kind == .main {
+			self.paginateIfNeeded(at: indexPath, totalItems: max(self.userIdentities.count - 3, 0))
+		} else {
+			self.paginateIfNeeded(at: indexPath, totalItems: self.userIdentities.count)
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {

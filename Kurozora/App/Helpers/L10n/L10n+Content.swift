@@ -644,6 +644,22 @@ extension L10n {
 		table: "Content",
 		comment: "The 'Reviews' label shown under the reviews count in the profile header (newline prefix reserved for two-line stacked layout)."
 	)
+	/// The 'Reputation' label shown under the reputation count in the profile header.
+	///
+	/// - Tag: L10n-profileReputationLabel
+	static let profileReputationLabel: String = String(
+		localized: "\nReputation",
+		table: "Content",
+		comment: "The 'Reputation' label shown under the reputation count in the profile header (newline prefix reserved for two-line stacked layout)."
+	)
+	/// The title shown on the reputation leaderboard screen.
+	///
+	/// - Tag: L10n-reputationLeaderboardTitle
+	static let reputationLeaderboardTitle: String = String(
+		localized: "Leaderboard",
+		table: "Content",
+		comment: "The title shown on the reputation leaderboard screen."
+	)
 
 	// MARK: - Follow Button
 	/// The user-cell follow button title when the current user is following the target user.
@@ -661,6 +677,200 @@ extension L10n {
 		localized: "＋ Follow",
 		table: "Content",
 		comment: "The user-cell follow button title when the current user is not yet following the target user."
+	)
+	/// The empty-state action button shown on another user's empty followers list.
+	///
+	/// - Tag: L10n-followUserButton
+	static func followUserButton(_ username: String) -> String {
+		String(
+			localized: "＋ Follow \(username)",
+			table: "Content",
+			comment: "The empty-state action button shown on another user's empty followers list. '%@' is the target user's display name."
+		)
+	}
+
+	// MARK: - User Cell Subtitles
+	/// The follow-status badge text shown after a person icon in the mention picker.
+	///
+	/// - Tag: L10n-userMentionFollowingBadge
+	static let userMentionFollowingBadge: String = String(
+		localized: "Following",
+		table: "Content",
+		comment: "The follow-status badge text shown after a person icon in the mention picker."
+	)
+	/// The user-cell secondary line for your own profile when you have no followers yet.
+	///
+	/// - Tag: L10n-userFollowersSelfNone
+	static let userFollowersSelfNone: String = String(
+		localized: "You, followed by you!",
+		table: "Content",
+		comment: "The user-cell secondary line for your own profile when you have no followers yet."
+	)
+	/// The user-cell secondary line for another user when nobody follows them yet.
+	///
+	/// - Tag: L10n-userFollowersBeFirst
+	static let userFollowersBeFirst: String = String(
+		localized: "Be the first to follow!",
+		table: "Content",
+		comment: "The user-cell secondary line for another user when nobody follows them yet."
+	)
+	/// The user-cell secondary line for your own profile when you have exactly one follower.
+	///
+	/// - Tag: L10n-userFollowersSelfOne
+	static let userFollowersSelfOne: String = String(
+		localized: "Followed by you... and one fan!",
+		table: "Content",
+		comment: "The user-cell secondary line for your own profile when you have exactly one follower."
+	)
+	/// The user-cell secondary line for another user that you already follow when their only follower is you.
+	///
+	/// - Tag: L10n-userFollowedByYouOnly
+	static let userFollowedByYouOnly: String = String(
+		localized: "Followed by you.",
+		table: "Content",
+		comment: "The user-cell secondary line for another user that you already follow when their only follower is you."
+	)
+	/// The user-cell secondary line for another user that you don't follow when they have exactly one follower.
+	///
+	/// - Tag: L10n-userFollowedByOneUser
+	static let userFollowedByOneUser: String = String(
+		localized: "Followed by one user.",
+		table: "Content",
+		comment: "The user-cell secondary line for another user that you don't follow when they have exactly one follower."
+	)
+	/// The user-cell secondary line for your own profile with a small (2–999) follower count.
+	///
+	/// - Tag: L10n-userFollowersSelfSmall
+	static func userFollowersSelfSmall(_ count: String) -> String {
+		String(
+			localized: "Followed by you and \(count) fans.",
+			table: "Content",
+			comment: "The user-cell secondary line for your own profile with a small (2–999) follower count. '%@' is the follower count."
+		)
+	}
+	/// The user-cell secondary line for your own profile with a large (1000+) follower count.
+	///
+	/// - Tag: L10n-userFollowersSelfLarge
+	static func userFollowersSelfLarge(_ count: String) -> String {
+		String(
+			localized: "Followed by \(count) fans.",
+			table: "Content",
+			comment: "The user-cell secondary line for your own profile with a large (1000+) follower count. '%@' is the abbreviated follower count, e.g. '1.2K'."
+		)
+	}
+	/// The user-cell secondary line for another user that you already follow, with the count of other followers.
+	///
+	/// - Tag: L10n-userFollowedByYouAndOthers
+	static func userFollowedByYouAndOthers(_ count: String) -> String {
+		String(
+			localized: "Followed by you and \(count) users.",
+			table: "Content",
+			comment: "The user-cell secondary line for another user that you already follow. '%@' is the formatted count of other followers (excluding the current user)."
+		)
+	}
+	/// The user-cell secondary line for another user that you don't follow, with the total follower count.
+	///
+	/// - Tag: L10n-userFollowedByOthers
+	static func userFollowedByOthers(_ count: String) -> String {
+		String(
+			localized: "Followed by \(count) users.",
+			table: "Content",
+			comment: "The user-cell secondary line for another user that you don't follow. '%@' is the formatted total follower count."
+		)
+	}
+
+	// MARK: - Users List Empty State
+	/// The empty-state title for the followers list.
+	///
+	/// - Tag: L10n-usersListFollowersEmptyTitle
+	static let usersListFollowersEmptyTitle: String = String(
+		localized: "No Followers",
+		table: "Content",
+		comment: "The empty-state title for the followers list."
+	)
+	/// The empty-state title for the following list.
+	///
+	/// - Tag: L10n-usersListFollowingEmptyTitle
+	static let usersListFollowingEmptyTitle: String = String(
+		localized: "No Following",
+		table: "Content",
+		comment: "The empty-state title for the following list."
+	)
+	/// The empty-state title for a generic users list (search / leaderboard).
+	///
+	/// - Tag: L10n-usersListEmptyTitle
+	static let usersListEmptyTitle: String = String(
+		localized: "No Users",
+		table: "Content",
+		comment: "The empty-state title for a generic users list (search / leaderboard)."
+	)
+	/// The empty-state detail shown on your own followers list when you have none.
+	///
+	/// - Tag: L10n-followersEmptyDetailSelf
+	static let followersEmptyDetailSelf: String = String(
+		localized: "Follow other users so they will follow you back. Who knows, you might meet your next BFF!",
+		table: "Content",
+		comment: "The empty-state detail shown on your own followers list when you have none."
+	)
+	/// The empty-state detail shown on another user's followers list when nobody follows them yet.
+	///
+	/// - Tag: L10n-followersEmptyDetailOther
+	static func followersEmptyDetailOther(_ username: String) -> String {
+		String(
+			localized: "Be the first to follow \(username)!",
+			table: "Content",
+			comment: "The empty-state detail shown on another user's followers list when nobody follows them yet. '%@' is the target user's display name."
+		)
+	}
+	/// The empty-state detail shown on your own following list when you don't follow anyone yet.
+	///
+	/// - Tag: L10n-followingEmptyDetailSelf
+	static let followingEmptyDetailSelf: String = String(
+		localized: "Follow a user and they will show up here!",
+		table: "Content",
+		comment: "The empty-state detail shown on your own following list when you don't follow anyone yet."
+	)
+	/// The empty-state detail shown on another user's following list when they don't follow anyone yet.
+	///
+	/// - Tag: L10n-followingEmptyDetailOther
+	static func followingEmptyDetailOther(_ username: String) -> String {
+		String(
+			localized: "\(username) is not following anyone yet.",
+			table: "Content",
+			comment: "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
+		)
+	}
+	/// The empty-state detail shown when the users search returns no results or fails to load.
+	///
+	/// - Tag: L10n-usersListSearchEmptyDetail
+	static let usersListSearchEmptyDetail: String = String(
+		localized: "Can't get users list. Please reload the page or restart the app and check your WiFi connection.",
+		table: "Content",
+		comment: "The empty-state detail shown when the users search returns no results or fails to load."
+	)
+	/// The empty-state detail shown when the reputation leaderboard has no entries.
+	///
+	/// - Tag: L10n-leaderboardEmptyDetail
+	static let leaderboardEmptyDetail: String = String(
+		localized: "The leaderboard is empty. Pull to refresh or check back later.",
+		table: "Content",
+		comment: "The empty-state detail shown when the reputation leaderboard has no entries."
+	)
+	/// The fallback word used in place of a user's display name when one is unavailable, lowercase form (mid-sentence).
+	///
+	/// - Tag: L10n-thisUserLowercase
+	static let thisUserLowercase: String = String(
+		localized: "this user",
+		table: "Content",
+		comment: "The fallback word used in place of a user's display name when one is unavailable, lowercase form (mid-sentence)."
+	)
+	/// The fallback word used in place of a user's display name when one is unavailable, sentence-case form.
+	///
+	/// - Tag: L10n-thisUserCapitalized
+	static let thisUserCapitalized: String = String(
+		localized: "This user",
+		table: "Content",
+		comment: "The fallback word used in place of a user's display name when one is unavailable, sentence-case form."
 	)
 
 	// MARK: - Refresh Control Titles
@@ -775,6 +985,22 @@ extension L10n {
 		localized: "Refreshing users...",
 		table: "Content",
 		comment: "Refresh-in-progress title for the users list."
+	)
+	/// Pull-to-refresh title for the reputation leaderboard.
+	///
+	/// - Tag: L10n-pullToRefreshLeaderboard
+	static let pullToRefreshLeaderboard: String = String(
+		localized: "Pull to refresh the leaderboard.",
+		table: "Content",
+		comment: "Pull-to-refresh title for the reputation leaderboard."
+	)
+	/// Refresh-in-progress title for the reputation leaderboard.
+	///
+	/// - Tag: L10n-refreshingLeaderboard
+	static let refreshingLeaderboard: String = String(
+		localized: "Refreshing leaderboard...",
+		table: "Content",
+		comment: "Refresh-in-progress title for the reputation leaderboard."
 	)
 	/// Pull-to-refresh title for the profile details screen.
 	///

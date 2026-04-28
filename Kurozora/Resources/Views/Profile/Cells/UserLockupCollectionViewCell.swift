@@ -6,15 +6,22 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
+/// A delegate that responds to interactions inside a ``UserLockupCollectionViewCell``.
 protocol UserLockupCollectionViewCellDelegate: AnyObject {
+	/// Tells the delegate that the user tapped the follow button.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose follow button was tapped.
+	///    - button: The button that was tapped.
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton)
 }
 
 class UserLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var rankLabel: KLabel!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var followStatusLabel: KSecondaryLabel!
@@ -24,28 +31,110 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: UserLockupCollectionViewCellDelegate?
 
-	// MARK: - Functions
+	// MARK: - View Lifecycle
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.setRankVisible(false, rank: nil)
+
+		self.followStatusLabel.isHidden = true
+		self.followButton.isHidden = false
+		self.followButton.isUserInteractionEnabled = true
+	}
+
+	// MARK: - Configuration
+	/// Configures the cell for a follow/followers list row.
+	///
+	/// - Parameter user: The user object used to configure the cell.
 	func configure(using user: User?) {
 		guard let user = user else {
 			self.showSkeleton()
 			return
 		}
+
 		self.hideSkeleton()
+		self.setRankVisible(false, rank: nil)
 
-		// Configure username
 		self.primaryLabel.text = user.attributes.username
-
-		// Configure follow status
 		self.updateFollowStatusLabel(for: user)
 
-		// Configure profile image
 		user.attributes.profileImage(imageView: self.profileImageView)
 
-		// Configure follow button
 		self.updateFollowButton(using: user.attributes.followStatus)
 	}
 
-	/// Updated the `followButton` with the follow status of the user.
+	/// Configures the cell for a mention-autocomplete row.
+	///
+	/// - Parameter user: The user object used to configure the cell.
+	func configureForMention(using user: User?) {
+		guard let user = user else {
+			self.showSkeleton()
+			return
+		}
+
+		self.hideSkeleton()
+		self.setRankVisible(false, rank: nil)
+
+		self.primaryLabel.text = user.attributes.username
+		self.secondaryLabel.text = "@\(user.attributes.slug)"
+
+		user.attributes.profileImage(imageView: self.profileImageView)
+
+		UIView.performWithoutAnimation {
+			self.followButton.isHidden = true
+			self.followButton.isUserInteractionEnabled = false
+		}
+
+		switch user.attributes.followStatus {
+		case .followed:
+			self.followStatusLabel.isHidden = false
+
+			let textColor = KThemePicker.subTextColor.colorValue
+			let attachment = NSTextAttachment()
+			attachment.image = UIImage(systemName: "person.fill")?.withTintColor(textColor, renderingMode: .alwaysOriginal)
+
+			let attributedString = NSMutableAttributedString(attachment: attachment)
+			attributedString.append(NSAttributedString(string: " \(L10n.userMentionFollowingBadge)", attributes: [
+				.foregroundColor: textColor,
+				.font: UIFont.preferredFont(forTextStyle: .caption1)
+			]))
+
+			self.followStatusLabel.attributedText = attributedString
+		case .notFollowed, .disabled:
+			self.followStatusLabel.isHidden = true
+		}
+	}
+
+	/// Configures the cell for a reputation-leaderboard row.
+	///
+	/// - Parameters:
+	///    - user: The user to display.
+	///    - rank: The user's 1-based rank in the leaderboard.
+	func configureForLeaderboard(using user: User?, rank: Int) {
+		guard let user = user else {
+			self.showSkeleton()
+			return
+		}
+
+		self.hideSkeleton()
+		self.setRankVisible(true, rank: rank)
+
+		self.primaryLabel.text = user.attributes.username
+		self.secondaryLabel.text = user.attributes.reputationCount.kkFormatted(precision: 0)
+
+		user.attributes.profileImage(imageView: self.profileImageView)
+
+		self.followStatusLabel.isHidden = true
+
+		UIView.performWithoutAnimation {
+			self.followButton.isHidden = true
+			self.followButton.isUserInteractionEnabled = false
+		}
+	}
+
+	/// Updates the follow button's title and visibility for the given follow status.
+	///
+	/// - Parameter followStatus: The user's current follow status.
 	func updateFollowButton(using followStatus: FollowStatus) {
 		switch followStatus {
 		case .followed:
@@ -63,77 +152,64 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
-	/// Updates the (`secondaryLabel`) follow status label.
-	fileprivate func updateFollowStatusLabel(for user: User) {
-		if let userID = User.current?.id {
-			let followerCount = user.attributes.followerCount
-			var secondaryLabelText = user.id == userID ? "You, followed by you!" : "Be the first to follow!"
-
-			switch followerCount {
-			case 0: break
-			case 1:
-				if user.id == userID {
-					secondaryLabelText = "Followed by you... and one fan!"
-				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you." :  "Followed by one user."
-				}
-			case 2...999:
-				if user.id == userID {
-					secondaryLabelText = "Followed by you and \(followerCount) fans."
-				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and \(followerCount) users." :  "Followed by \(followerCount) users."
-				}
-			default:
-				if user.id == userID {
-					secondaryLabelText = "Followed by \(followerCount.kkFormatted(precision: 0)) fans."
-				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and \((followerCount - 1).kkFormatted(precision: 0)) users." : "Followed by \(followerCount.kkFormatted(precision: 0)) users."
-				}
-			}
-
-			self.secondaryLabel.text = secondaryLabelText
+	// MARK: - Private
+	/// Shows or hides the rank label.
+	///
+	/// - Parameters:
+	///    - visible: `true` to show the rank label, `false` to hide it.
+	///    - rank: The rank value to display when `visible` is `true`. Ignored otherwise.
+	private func setRankVisible(_ visible: Bool, rank: Int?) {
+		if visible, let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
 		} else {
-			self.secondaryLabel.text = ""
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 		}
 	}
 
-	/// Configures the cell for display in a mention autocomplete panel.
-	func configureForMention(using user: User?) {
-		guard let user = user else {
-			self.showSkeleton()
+	/// Composes a sentence describing the follower count and writes it to ``secondaryLabel``.
+	///
+	/// - Parameter user: The user whose follower count is being summarized.
+	private func updateFollowStatusLabel(for user: User) {
+		guard let userID = User.current?.id else {
+			self.secondaryLabel.text = ""
 			return
 		}
-		self.hideSkeleton()
 
-		self.primaryLabel.text = user.attributes.username
-		self.secondaryLabel.text = "@\(user.attributes.slug)"
-		user.attributes.profileImage(imageView: self.profileImageView)
+		let isCurrentUser = user.id == userID
+		let followerCount = user.attributes.followerCount
+		let isFollowing = user.attributes.followStatus == .followed
+		var secondaryLabelText = isCurrentUser ? L10n.userFollowersSelfNone : L10n.userFollowersBeFirst
 
-		self.followButton.isHidden = true
-		self.followButton.isUserInteractionEnabled = false
-
-		switch user.attributes.followStatus {
-		case .followed:
-			self.followStatusLabel.isHidden = false
-			let textColor = KThemePicker.subTextColor.colorValue
-			let attachment = NSTextAttachment()
-			attachment.image = UIImage(systemName: "person.fill")?.withTintColor(textColor, renderingMode: .alwaysOriginal)
-			let attributedString = NSMutableAttributedString(attachment: attachment)
-			attributedString.append(NSAttributedString(string: " Following", attributes: [
-				.foregroundColor: textColor,
-				.font: UIFont.preferredFont(forTextStyle: .caption1)
-			]))
-			self.followStatusLabel.attributedText = attributedString
-		case .notFollowed, .disabled:
-			self.followStatusLabel.isHidden = true
+		switch followerCount {
+		case 0:
+			break
+		case 1:
+			if isCurrentUser {
+				secondaryLabelText = L10n.userFollowersSelfOne
+			} else {
+				secondaryLabelText = isFollowing ? L10n.userFollowedByYouOnly : L10n.userFollowedByOneUser
+			}
+		case 2 ... 999:
+			if isCurrentUser {
+				secondaryLabelText = L10n.userFollowersSelfSmall("\(followerCount)")
+			} else {
+				secondaryLabelText = isFollowing
+					? L10n.userFollowedByYouAndOthers("\(followerCount)")
+					: L10n.userFollowedByOthers("\(followerCount)")
+			}
+		default:
+			if isCurrentUser {
+				secondaryLabelText = L10n.userFollowersSelfLarge(followerCount.kkFormatted(precision: 0))
+			} else {
+				secondaryLabelText = isFollowing
+					? L10n.userFollowedByYouAndOthers((followerCount - 1).kkFormatted(precision: 0))
+					: L10n.userFollowedByOthers(followerCount.kkFormatted(precision: 0))
+			}
 		}
-	}
 
-	override func prepareForReuse() {
-		super.prepareForReuse()
-		self.followStatusLabel.isHidden = true
-		self.followButton.isHidden = false
-		self.followButton.isUserInteractionEnabled = true
+		self.secondaryLabel.text = secondaryLabelText
 	}
 
 	// MARK: - IBActions

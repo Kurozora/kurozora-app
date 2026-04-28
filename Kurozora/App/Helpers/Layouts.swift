@@ -515,6 +515,80 @@ enum Layouts {
 		return layoutSection
 	}
 
+	static func podiumSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let horizontalInset: CGFloat = 10.0
+		let groupHeight: CGFloat = 240.0
+		let interItemSpacing: CGFloat = 12.0
+
+		// Width fractions of the available space.
+		let rank1WidthFraction: CGFloat = 0.36
+		let rank2WidthFraction: CGFloat = 0.30
+		let rank3WidthFraction: CGFloat = 0.24
+
+		// Maximum widths.
+		let rank1MaxWidth: CGFloat = 140.0
+		let rank2MaxWidth: CGFloat = 110.0
+		let rank3MaxWidth: CGFloat = 95.0
+
+		// Vertical drop applied to side columns.
+		let rank2Elevation: CGFloat = 18.0
+		let rank3Elevation: CGFloat = 36.0
+
+		let availableWidth = max(containerWidth - (horizontalInset * 2), 0)
+		let rank1Width = min(availableWidth * rank1WidthFraction, rank1MaxWidth)
+		let rank2Width = min(availableWidth * rank2WidthFraction, rank2MaxWidth)
+		let rank3Width = min(availableWidth * rank3WidthFraction, rank3MaxWidth)
+
+		// Center the cells horizontally when the available width exceeds the content
+		// width plus the two fixed inter-column gaps.
+		let podiumWidth = rank1Width + rank2Width + rank3Width + (interItemSpacing * 2)
+		let leadingPadding = max((availableWidth - podiumWidth) / 2.0, 0)
+
+		let groupSize = NSCollectionLayoutSize(
+			widthDimension: .fractionalWidth(1.0),
+			heightDimension: .absolute(groupHeight)
+		)
+		let layoutGroup = NSCollectionLayoutGroup.custom(layoutSize: groupSize) { _ in
+			var frames: [NSCollectionLayoutGroupCustomItem] = []
+
+			// Index 0: rank 2
+			let leftFrame = CGRect(
+				x: leadingPadding,
+				y: rank2Elevation,
+				width: rank2Width,
+				height: groupHeight - rank2Elevation
+			)
+			frames.append(NSCollectionLayoutGroupCustomItem(frame: leftFrame))
+
+			// Index 1: rank 1
+			let centerX = leadingPadding + rank2Width + interItemSpacing
+			let centerFrame = CGRect(
+				x: centerX,
+				y: 0,
+				width: rank1Width,
+				height: groupHeight
+			)
+			frames.append(NSCollectionLayoutGroupCustomItem(frame: centerFrame))
+
+			// Index 2: rank 3
+			let rightX = centerX + rank1Width + interItemSpacing
+			let rightFrame = CGRect(
+				x: rightX,
+				y: rank3Elevation,
+				width: rank3Width,
+				height: groupHeight - rank3Elevation
+			)
+			frames.append(NSCollectionLayoutGroupCustomItem(frame: rightFrame))
+
+			return frames
+		}
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: horizontalInset, bottom: 24, trailing: horizontalInset)
+		return layoutSection
+	}
+
 	static func usersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0

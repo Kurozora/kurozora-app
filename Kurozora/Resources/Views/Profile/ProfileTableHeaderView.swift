@@ -14,6 +14,7 @@ protocol ProfileTableHeaderViewDelegate: AnyObject {
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didTapImageView imageView: UIImageView, at index: Int)
 	func profileTableHeaderViewDidPressFollowButton(_ headerView: ProfileTableHeaderView)
 	func profileTableHeaderViewDidPressEditProfile(_ headerView: ProfileTableHeaderView)
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReputationButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressAchievementsButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowingButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowersButton button: UIButton)
@@ -54,6 +55,7 @@ class ProfileTableHeaderView: UIView {
 	private let userDetailsBodyView = UIView()
 	private let bioTextView = KTextView()
 	private let buttonsStackView = UIStackView()
+	private let reputationButton = KButton()
 	private let achievementsButton = KButton()
 	private let followingButton = KButton()
 	private let followersButton = KButton()
@@ -283,6 +285,16 @@ class ProfileTableHeaderView: UIView {
 		self.bioTextView.isScrollEnabled = false
 		self.bioTextView.dataDetectorTypes = [.link, .address, .calendarEvent, .lookupSuggestion]
 
+		// Reputation button
+		self.reputationButton.translatesAutoresizingMaskIntoConstraints = false
+		self.reputationButton.isHidden = true
+		self.reputationButton.titleLabel?.lineBreakMode = .byCharWrapping
+		self.reputationButton.titleLabel?.numberOfLines = 0
+		self.reputationButton.addAction(UIAction { [weak self] _ in
+			guard let self = self else { return }
+			self.delegate?.profileTableHeaderView(self, didPressReputationButton: self.reputationButton)
+		}, for: .touchUpInside)
+
 		// Achievements button
 		self.achievementsButton.translatesAutoresizingMaskIntoConstraints = false
 		self.achievementsButton.isHidden = true
@@ -324,6 +336,7 @@ class ProfileTableHeaderView: UIView {
 		}, for: .touchUpInside)
 
 		// Buttons stack view
+		self.buttonsStackView.addArrangedSubview(self.reputationButton)
 		self.buttonsStackView.addArrangedSubview(self.achievementsButton)
 		self.buttonsStackView.addArrangedSubview(self.followingButton)
 		self.buttonsStackView.addArrangedSubview(self.followersButton)
@@ -610,6 +623,17 @@ class ProfileTableHeaderView: UIView {
 
 	/// Configures the count buttons with the given user's stats.
 	private func configureCountButtons(with user: User) {
+		// Configure reputation button
+		let reputationCount = user.attributes.reputationCount
+		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
+		let reputationTitleString = NSAttributedString(string: L10n.profileReputationLabel, attributes: self.countTitleAttributes)
+		let reputationButtonTitle = NSMutableAttributedString()
+		reputationButtonTitle.append(reputationCountString)
+		reputationButtonTitle.append(reputationTitleString)
+
+		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
+		self.reputationButton.isHidden = false
+
 		// Configure achievements button
 		var achievementsCount = 0
 		if let achievements = user.relationships?.achievements?.data {

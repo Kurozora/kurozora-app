@@ -105,7 +105,7 @@ class CharacterSearchViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func configureDataSource() {
-		let characterCellRegistration = UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+		let characterCellRegistration = UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

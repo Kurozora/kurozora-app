@@ -11,39 +11,38 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="jA4-RP-D4X" customClass="CharacterLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="cQA-Lc-cell" customClass="ProfileLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fxe-Hf-WsG">
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cQA-Lc-cVw">
                 <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ouR-St-Vew">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-oSV">
                         <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="NwE-aG-8uu" customClass="CharacterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-img" customClass="CircularImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="QXa-or-pn9"/>
-                                    <constraint firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="cMr-k6-jP4"/>
+                                    <constraint firstAttribute="width" secondItem="cQA-Lc-img" secondAttribute="height" multiplier="1:1" id="cQA-Lc-asp"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6Gs-ei-RUM">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-iSV">
                                 <rect key="frame" x="0.0" y="136" width="128" height="56"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecp-rF-PVi" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-rnk" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="53" y="0.0" width="22" height="19.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnV-3y-dRY" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-pri" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="44.5" y="19.5" width="39" height="19.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-68-UMF" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-sec" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="46.5" y="39" width="35" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -55,20 +54,20 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ouR-St-Vew" firstAttribute="top" secondItem="fxe-Hf-WsG" secondAttribute="top" id="c1-os-top"/>
-                    <constraint firstItem="ouR-St-Vew" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="c2-os-lea"/>
-                    <constraint firstAttribute="trailing" secondItem="ouR-St-Vew" secondAttribute="trailing" id="c3-os-tra"/>
-                    <constraint firstAttribute="bottom" secondItem="ouR-St-Vew" secondAttribute="bottom" id="c4-os-bot"/>
+                    <constraint firstItem="cQA-Lc-oSV" firstAttribute="top" secondItem="cQA-Lc-cVw" secondAttribute="top" id="cQA-Lc-tp"/>
+                    <constraint firstItem="cQA-Lc-oSV" firstAttribute="leading" secondItem="cQA-Lc-cVw" secondAttribute="leading" id="cQA-Lc-le"/>
+                    <constraint firstAttribute="trailing" secondItem="cQA-Lc-oSV" secondAttribute="trailing" id="cQA-Lc-tr"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="cQA-Lc-oSV" secondAttribute="bottom" id="cQA-Lc-bo"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="128" height="213"/>
             <connections>
-                <outlet property="characterImageView" destination="NwE-aG-8uu" id="XgX-Fa-mX1"/>
-                <outlet property="labelsStackView" destination="6Gs-ei-RUM" id="lSV-oT-con"/>
-                <outlet property="primaryLabel" destination="gnV-3y-dRY" id="9mQ-lc-XrE"/>
-                <outlet property="rankLabel" destination="Ecp-rF-PVi" id="wxv-zw-MZ8"/>
-                <outlet property="secondaryLabel" destination="kOD-68-UMF" id="H4y-ll-Yy1"/>
+                <outlet property="imageView" destination="cQA-Lc-img" id="cQA-Lc-oI"/>
+                <outlet property="labelsStackView" destination="cQA-Lc-iSV" id="cQA-Lc-oL"/>
+                <outlet property="primaryLabel" destination="cQA-Lc-pri" id="cQA-Lc-oP"/>
+                <outlet property="rankLabel" destination="cQA-Lc-rnk" id="cQA-Lc-oR"/>
+                <outlet property="secondaryLabel" destination="cQA-Lc-sec" id="cQA-Lc-oS"/>
             </connections>
             <point key="canvasLocation" x="173.91304347826087" y="174.10714285714286"/>
         </collectionViewCell>

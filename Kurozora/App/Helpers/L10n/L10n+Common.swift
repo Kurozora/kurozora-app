@@ -480,12 +480,33 @@ extension L10n {
 		localized: "Follower",
 		comment: "The string for the word 'follower'."
 	)
+	/// The string for the word 'followers'.
+	///
+	/// - Tag: L10n-followers
+	static let followers: String = String(
+		localized: "Followers",
+		comment: "The plural string for the word 'followers'."
+	)
+	/// The lowercase string for the word 'followers', suitable for inlining mid-sentence.
+	///
+	/// - Tag: L10n-followersLowercase
+	static let followersLowercase: String = String(
+		localized: "followers",
+		comment: "The lowercase plural string for the word 'followers', suitable for inlining mid-sentence."
+	)
 	/// The string for the word 'following'.
 	///
 	/// - Tag: L10n-following
 	static let following: String = String(
 		localized: "Following",
 		comment: "The string for the word 'following'."
+	)
+	/// The lowercase string for the word 'following', suitable for inlining mid-sentence.
+	///
+	/// - Tag: L10n-followingLowercase
+	static let followingLowercase: String = String(
+		localized: "following",
+		comment: "The lowercase string for the word 'following', suitable for inlining mid-sentence."
 	)
 	/// The string for the word 'follow'.
 	///

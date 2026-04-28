@@ -14,6 +14,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case achievementsSegue
+		case reputationLeaderboardSegue
 		case followingSegue
 		case followersSegue
 		case userReviewsListSegue
@@ -403,6 +404,7 @@ class ProfileTableViewController: KTableViewController {
 
 		switch identifier {
 		case .achievementsSegue: return AchievementsTableViewController()
+		case .reputationLeaderboardSegue: return UsersListCollectionViewController()
 		case .followingSegue: return UsersListCollectionViewController()
 		case .followersSegue: return UsersListCollectionViewController()
 		case .feedMessageDetailsSegue: return FMDetailsTableViewController()
@@ -418,6 +420,9 @@ class ProfileTableViewController: KTableViewController {
 		case .achievementsSegue:
 			guard let achievementsTableViewController = destination as? AchievementsTableViewController else { return }
 			achievementsTableViewController.user = self.user
+		case .reputationLeaderboardSegue:
+			guard let leaderboardViewController = destination as? UsersListCollectionViewController else { return }
+			leaderboardViewController.usersListFetchType = .reputation
 		case .followingSegue:
 			guard let followTableViewController = destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
@@ -690,6 +695,10 @@ extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
 
 	func profileTableHeaderViewDidPressEditProfile(_ headerView: ProfileTableHeaderView) {
 		self.present(SegueIdentifiers.editProfileSegue, sender: self)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReputationButton button: UIButton) {
+		self.show(SegueIdentifiers.reputationLeaderboardSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressAchievementsButton button: UIButton) {
