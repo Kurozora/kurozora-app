@@ -53,6 +53,9 @@ class KTextView: UITextView {
 	/// and `KTextView` skips its own `updateAttributedText()` on theme changes.
 	var managedFormattingMode: Bool = false
 
+	/// A closure invoked with the value of a tapped `.kkAction` glyph.
+	var kkActionHandler: ((String) -> Void)?
+
 	override var text: String! {
 		didSet {
 			self.placeholderLabel.isHidden = !self.text.isEmpty
@@ -101,10 +104,19 @@ class KTextView: UITextView {
 			return
 		}
 		let mutable = NSMutableAttributedString(attributedString: attributedText)
+		let length = mutable.length
+		let fullRange = NSRange(location: 0, length: length)
 		mutable.addAttributes([
 			.foregroundColor: KThemePicker.textColor.colorValue,
 			.font: self.font ?? UIFont.preferredFont(forTextStyle: .body)
-		], range: NSRange(location: 0, length: mutable.length))
+		], range: fullRange)
+
+		let accentColor = KThemePicker.tintColor.colorValue
+		mutable.enumerateAttribute(.kkAccentColor, in: fullRange, options: []) { value, range, _ in
+			if value != nil {
+				mutable.addAttribute(.foregroundColor, value: accentColor, range: range)
+			}
+		}
 		self.attributedText = mutable
 	}
 
@@ -145,6 +157,11 @@ class KTextView: UITextView {
 
 		if self.attributedText.attribute(.spoilerHidden, at: index, effectiveRange: &range) != nil {
 			self.revealSpoiler(in: range)
+			return
+		}
+
+		if let action = self.attributedText.attribute(.kkAction, at: index, effectiveRange: &range) as? String {
+			self.kkActionHandler?(action)
 			return
 		}
 
@@ -208,6 +225,10 @@ extension NSAttributedString.Key {
 	static let inlineCode = NSAttributedString.Key("inlineCode")
 	static let spoiler = NSAttributedString.Key("spoiler")
 	static let spoilerHidden = NSAttributedString.Key("spoilerHidden")
+	/// A tappable glyph range whose `String` value is dispatched through `KTextView.kkActionHandler`.
+	static let kkAction = NSAttributedString.Key("kkAction")
+	/// A glyph range that follows `KThemePicker.tintColor`.
+	static let kkAccentColor = NSAttributedString.Key("kkAccentColor")
 }
 
 final class RichTextLayoutManager: NSLayoutManager {

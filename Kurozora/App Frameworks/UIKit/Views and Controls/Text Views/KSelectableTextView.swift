@@ -37,7 +37,12 @@ class KSelectableTextView: KTextView {
 		guard let range = self.tokenizer.rangeEnclosingPosition(pos, with: .character, inDirection: .layout(.left)) else { return false }
 
 		let startIndex = self.offset(from: beginningOfDocument, to: range.start)
-		return self.attributedText.attribute(.link, at: startIndex, effectiveRange: nil) != nil
+
+		if self.attributedText.attribute(.link, at: startIndex, effectiveRange: nil) != nil {
+			return true
+		}
+
+		return self.attributedText.attribute(.kkAction, at: startIndex, effectiveRange: nil) != nil
 	}
 }
 

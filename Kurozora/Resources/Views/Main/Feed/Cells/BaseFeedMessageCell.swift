@@ -18,10 +18,17 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async
+}
+
+extension BaseFeedMessageCellDelegate {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject) {}
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject) {}
 }
 
 class BaseFeedMessageCell: KTableViewCell {
@@ -51,8 +58,31 @@ class BaseFeedMessageCell: KTableViewCell {
 	var warningIsHidden: Bool = false
 	var liveReplyEnabled = false
 	var liveReShareEnabled = false
+	var isExpanded: Bool = false
 	private var richLinkTask: Task<Void, Never>?
 	private weak var richLinkPlaceholder: UIView?
+
+	/// The maximum number of body lines shown before the cell collapses behind a `Show more` affordance.
+	static let bodyLineLimit: Int = 8
+
+	/// The action identifier dispatched when the main body's `Show more` glyph is tapped.
+	static let expandMessageActionID: String = "kk-expand-message"
+
+	/// The action identifier dispatched when the re-shared body's `Show more` glyph is tapped.
+	static let expandOPMessageActionID: String = "kk-expand-op-message"
+
+	/// Cached body text view widths keyed by concrete cell class.
+	fileprivate static var cachedBodyWidths: [ObjectIdentifier: CGFloat] = [:]
+
+	/// The cached body text view width for this cell's concrete class.
+	fileprivate var cachedBodyWidth: CGFloat {
+		return Self.cachedBodyWidths[ObjectIdentifier(type(of: self))] ?? 0
+	}
+
+	/// Records the body text view width observed for this cell's concrete class.
+	fileprivate func recordCachedBodyWidth(_ width: CGFloat) {
+		Self.cachedBodyWidths[ObjectIdentifier(type(of: self))] = width
+	}
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -61,6 +91,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.warningIsHidden = false
 		self.statusStackView.isHidden = true
 		self.postTextViewContainer?.isHidden = false
+		self.isExpanded = false
 
 		self.richLinkTask?.cancel()
 		self.richLinkTask = nil
@@ -73,13 +104,75 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		let width = self.postTextView.bounds.width
+		if width > 0, width != self.cachedBodyWidth {
+			self.recordCachedBodyWidth(width)
+		}
+	}
+
+	/// Sets the body text on `postTextView`, truncating when `isExpanded` is `false`.
+	fileprivate func applyBodyText(_ attributed: NSAttributedString?, isExpanded: Bool) {
+		guard let attributed else {
+			self.postTextView.setAttributedText(nil)
+			return
+		}
+
+		let final = isExpanded ? attributed : Self.truncatedBody(attributed, cachedWidth: self.cachedBodyWidth, fallbackHostBounds: self.bounds.width, actionID: Self.expandMessageActionID, font: self.postTextView.font)
+		self.postTextView.setAttributedText(final)
+	}
+
+	/// Returns `attributed` truncated to `bodyLineLimit` lines with a trailing `Show more` suffix.
+	///
+	/// - Parameters:
+	///   - attributed: The body to truncate.
+	///   - cachedWidth: The previously recorded text view width, or `0` if none.
+	///   - fallbackHostBounds: The host cell's current width, used when `cachedWidth` is `0`.
+	///   - actionID: The suffix's `.kkAction` value, dispatched on tap.
+	///   - font: The body font.
+	///
+	/// - Returns: The truncated string, or `attributed` unchanged when truncation isn't required.
+	static func truncatedBody(_ attributed: NSAttributedString, cachedWidth: CGFloat, fallbackHostBounds: CGFloat, actionID: String, font sourceFont: UIFont?) -> NSAttributedString {
+		let font = sourceFont ?? .preferredFont(forTextStyle: .body)
+		let width: CGFloat
+		if cachedWidth > 0 {
+			width = cachedWidth
+		} else {
+			let host = fallbackHostBounds > 0 ? fallbackHostBounds : UIScreen.main.bounds.width
+			width = max(host - 32, 200)
+		}
+		let suffix = makeShowMoreSuffix(font: font, actionID: actionID)
+		return attributed.kkTruncated(toLines: bodyLineLimit, width: width, font: font, suffix: suffix)
+	}
+
+	/// Returns the trailing `Show more` suffix carrying `.kkAction` and `.kkAccentColor`.
+	///
+	/// - Parameters:
+	///   - font: The body font.
+	///   - actionID: The suffix's `.kkAction` value, dispatched on tap.
+	///
+	/// - Returns: The attributed suffix.
+	static func makeShowMoreSuffix(font: UIFont, actionID: String) -> NSAttributedString {
+		let raw = " " + L10n.showMore
+		let attributes: [NSAttributedString.Key: Any] = [
+			.font: font,
+			.kkAction: actionID,
+			.kkAccentColor: true
+		]
+		return NSAttributedString(string: raw, attributes: attributes)
+	}
+
 	// MARK: - Functions
 	override func sharedInit() {
 		self.separatorInset = .zero
 		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
-	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool) {
+	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false) {
+		self.isExpanded = isExpanded
+
 		guard !self.warningIsHidden else {
 			self.hideSkeleton()
 			return
@@ -123,7 +216,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure body and rich link
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
 			// Strip URL from text upfront so the text height is stable
-			self.configurePostTextView(for: feedMessage, byRemovingURL: url)
+			self.configurePostTextView(for: feedMessage, byRemovingURL: url, isExpanded: isExpanded)
 
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
@@ -152,9 +245,16 @@ class BaseFeedMessageCell: KTableViewCell {
 				}
 			}
 		} else {
-			self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
+			self.applyBodyText(feedMessage.attributes.contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
 		}
 		self.postTextView.delegate = self
+		self.postTextView.kkActionHandler = { [weak self] action in
+			guard let self else { return }
+
+			if action == Self.expandMessageActionID {
+				self.delegate?.baseFeedMessageCell(self, didTapShowMore: self)
+			}
+		}
 
 		// Configure date time
 		self.dateTimeLabel.text = feedMessage.attributes.createdAt.relativeToNow
@@ -182,9 +282,9 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.configureWarnings(for: feedMessage)
 	}
 
-	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
+	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL, isExpanded: Bool) {
 		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
-		self.postTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+		self.applyBodyText(contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
 		self.postTextViewContainer?.isHidden = contentMarkdown.isEmpty
 	}
 

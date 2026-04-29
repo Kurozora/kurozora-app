@@ -22,14 +22,19 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@IBOutlet weak var opRichLinkStackView: UIStackView!
 
 	// MARK: - Properties
+	var isOPExpanded: Bool = false
 	private var opRichLinkTask: Task<Void, Never>?
 	private weak var opRichLinkPlaceholder: UIView?
+
+	/// Cached width of the embedded OP body text view.
+	fileprivate static var cachedOPBodyWidth: CGFloat = 0
 
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
 		self.opPostTextViewContainer?.isHidden = false
+		self.isOPExpanded = false
 
 		self.opRichLinkTask?.cancel()
 		self.opRichLinkTask = nil
@@ -42,9 +47,43 @@ class FeedMessageReShareCell: FeedMessageCell {
 		}
 	}
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		let width = self.opPostTextView.bounds.width
+
+		if width > 0, width != Self.cachedOPBodyWidth {
+			Self.cachedOPBodyWidth = width
+		}
+	}
+
+	/// Sets the body text on `opPostTextView`, truncating when `isOPExpanded` is `false`.
+	fileprivate func applyOPBodyText(_ attributed: NSAttributedString?, isOPExpanded: Bool) {
+		guard let attributed else {
+			self.opPostTextView.setAttributedText(nil)
+			return
+		}
+		let final = isOPExpanded ? attributed : Self.truncatedBody(attributed, cachedWidth: Self.cachedOPBodyWidth, fallbackHostBounds: self.bounds.width, actionID: Self.expandOPMessageActionID, font: self.opPostTextView.font)
+		self.opPostTextView.setAttributedText(final)
+	}
+
 	// MARK: - Functions
-	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool) {
-		super.configureCell(using: feedMessage, isOnProfile: isOnProfile)
+	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false) {
+		self.configureCell(using: feedMessage, isOnProfile: isOnProfile, isExpanded: isExpanded, isOPExpanded: false)
+	}
+
+	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool, isOPExpanded: Bool) {
+		self.isOPExpanded = isOPExpanded
+		self.opPostTextView.delegate = self
+		self.opPostTextView.kkActionHandler = { [weak self] action in
+			guard let self else { return }
+
+			if action == Self.expandOPMessageActionID {
+				self.delegate?.baseFeedMessageCell(self, didTapShowMoreOnOP: self)
+			}
+		}
+
+		super.configureCell(using: feedMessage, isOnProfile: isOnProfile, isExpanded: isExpanded)
 		guard let feedMessage = feedMessage else {
 			return
 		}
@@ -87,7 +126,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 		if let url = opMessage.attributes.content.extractURLs().last, url.isWebURL {
 			// Strip URL from text upfront so the text height is stable
-			self.configurePostTextView(for: opMessage, byRemovingURL: url)
+			self.configurePostTextView(for: opMessage, byRemovingURL: url, isOPExpanded: isOPExpanded)
 
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
@@ -116,7 +155,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 				}
 			}
 		} else {
-			self.opPostTextView.setAttributedText(opMessage.attributes.contentMarkdown.markdownAttributedString())
+			self.applyOPBodyText(opMessage.attributes.contentMarkdown.markdownAttributedString(), isOPExpanded: isOPExpanded)
 		}
 	}
 
@@ -129,9 +168,9 @@ class FeedMessageReShareCell: FeedMessageCell {
 		return placeholder
 	}
 
-	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
+	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL, isOPExpanded: Bool) {
 		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
-		self.opPostTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+		self.applyOPBodyText(contentMarkdown.markdownAttributedString(), isOPExpanded: isOPExpanded)
 		self.opPostTextViewContainer?.isHidden = contentMarkdown.isEmpty
 	}
 

@@ -389,6 +389,13 @@ extension L10n {
 		localized: "More",
 		comment: "The string for the word 'more'."
 	)
+	/// The string for the phrase 'Show more'.
+	///
+	/// - Tag: L10n-showMore
+	static let showMore: String = String(
+		localized: "Show more",
+		comment: "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped."
+	)
 	/// The string for the word 'debut'.
 	///
 	/// - Tag: L10n-debut

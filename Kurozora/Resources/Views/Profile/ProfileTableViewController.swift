@@ -468,7 +468,13 @@ extension ProfileTableViewController {
 		feedMessageCell?.delegate = self
 		feedMessageCell?.liveReplyEnabled = User.current?.id == self.userIdentity?.id
 		feedMessageCell?.liveReShareEnabled = User.current?.id == self.userIdentity?.id
-		feedMessageCell?.configureCell(using: feedMessage, isOnProfile: true)
+
+		if let reShareCell = feedMessageCell as? FeedMessageReShareCell {
+			reShareCell.configureCell(using: feedMessage, isOnProfile: true, isExpanded: true, isOPExpanded: true)
+		} else {
+			feedMessageCell?.configureCell(using: feedMessage, isOnProfile: true, isExpanded: true)
+		}
+
 		feedMessageCell?.moreButton.menu = feedMessage.makeContextMenu(in: self, userInfo: [
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled ?? false,

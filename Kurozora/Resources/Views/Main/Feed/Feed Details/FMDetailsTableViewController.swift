@@ -19,6 +19,9 @@ class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Properties
 	private var pendingLayoutUpdate: DispatchWorkItem?
 	var heightCache: [IndexPath: CGFloat] = [:]
+	private var expandedMessageIDs: Set<KurozoraItemID> = []
+	private var expandedOPIDs: Set<KurozoraItemID> = []
+
 	var feedMessageID: KurozoraItemID = ""
 	var feedMessage: FeedMessage! {
 		didSet {
@@ -114,6 +117,8 @@ class FMDetailsTableViewController: KTableViewController {
 	override func handleRefreshControl() {
 		self.nextPageCursor = nil
 		self.heightCache.removeAll()
+		self.expandedMessageIDs.removeAll()
+		self.expandedOPIDs.removeAll()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -284,7 +289,15 @@ extension FMDetailsTableViewController {
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = true
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.configureCell(using: self.feedMessage, isOnProfile: false)
+
+			if let reShareCell = feedMessageCell as? FeedMessageReShareCell {
+				let parentID = self.feedMessage.relationships.parent?.data.first?.id
+				let isOPExpanded = parentID.map { self.expandedOPIDs.contains($0) } ?? false
+				reShareCell.configureCell(using: self.feedMessage, isOnProfile: false, isExpanded: true, isOPExpanded: isOPExpanded)
+			} else {
+				feedMessageCell.configureCell(using: self.feedMessage, isOnProfile: false, isExpanded: true)
+			}
+
 			feedMessageCell.moreButton.menu = self.feedMessage.makeContextMenu(in: self, userInfo: [
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
@@ -295,11 +308,12 @@ extension FMDetailsTableViewController {
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(FeedMessageCell.reuseID)")
 			}
+			let reply = self.feedMessageReplies[indexPath.row]
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.configureCell(using: self.feedMessageReplies[indexPath.row], isOnProfile: false)
-			feedMessageCell.moreButton.menu = self.feedMessageReplies[indexPath.row].makeContextMenu(in: self, userInfo: [
+			feedMessageCell.configureCell(using: reply, isOnProfile: false, isExpanded: self.expandedMessageIDs.contains(reply.id))
+			feedMessageCell.moreButton.menu = reply.makeContextMenu(in: self, userInfo: [
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
 				"liveReShareEnabled": feedMessageCell.liveReShareEnabled
@@ -402,6 +416,33 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 		self.pendingLayoutUpdate = work
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: work)
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard indexPath.section == 1 else { return }
+
+		let id = self.feedMessageReplies[indexPath.row].id
+		self.expandedMessageIDs.insert(id)
+		self.heightCache.removeValue(forKey: indexPath)
+		self.tableView.reloadRows(at: [indexPath], with: .none)
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		let parentID: KurozoraItemID?
+
+		switch indexPath.section {
+		case 0:
+			parentID = self.feedMessage.relationships.parent?.data.first?.id
+		default:
+			parentID = self.feedMessageReplies[indexPath.row].relationships.parent?.data.first?.id
+		}
+
+		guard let parentID = parentID else { return }
+		self.expandedOPIDs.insert(parentID)
+		self.heightCache.removeValue(forKey: indexPath)
+		self.tableView.reloadRows(at: [indexPath], with: .none)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

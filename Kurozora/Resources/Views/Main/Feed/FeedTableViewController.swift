@@ -27,6 +27,8 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	var feedMessages: [FeedMessage] = []
 	private var pendingLayoutUpdate: DispatchWorkItem?
 	var heightCache: [IndexPath: CGFloat] = [:]
+	private var expandedMessageIDs: Set<KurozoraItemID> = []
+	private var expandedOPIDs: Set<KurozoraItemID> = []
 
 	/// The next page url of the pagination.
 	var nextPageCursor: PageCursor?
@@ -93,6 +95,8 @@ class FeedTableViewController: KTableViewController, ProfileNavigable {
 	override func handleRefreshControl() {
 		self.nextPageCursor = nil
 		self.heightCache.removeAll()
+		self.expandedMessageIDs.removeAll()
+		self.expandedOPIDs.removeAll()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -342,6 +346,7 @@ extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell?
 		let feedMessage = self.feedMessages[indexPath.row]
+		let isExpanded = self.expandedMessageIDs.contains(feedMessage.id)
 
 		if feedMessage.attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageReShareCell.self, for: indexPath)
@@ -352,7 +357,15 @@ extension FeedTableViewController {
 		feedMessageCell?.delegate = self
 		feedMessageCell?.liveReplyEnabled = false
 		feedMessageCell?.liveReShareEnabled = true
-		feedMessageCell?.configureCell(using: feedMessage, isOnProfile: false)
+
+		if let reShareCell = feedMessageCell as? FeedMessageReShareCell {
+			let parentID = feedMessage.relationships.parent?.data.first?.id
+			let isOPExpanded = parentID.map { self.expandedOPIDs.contains($0) } ?? false
+			reShareCell.configureCell(using: feedMessage, isOnProfile: false, isExpanded: isExpanded, isOPExpanded: isOPExpanded)
+		} else {
+			feedMessageCell?.configureCell(using: feedMessage, isOnProfile: false, isExpanded: isExpanded)
+		}
+
 		feedMessageCell?.moreButton.menu = feedMessage.makeContextMenu(in: self, userInfo: [
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled ?? false,
@@ -430,6 +443,22 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 		}
 		self.pendingLayoutUpdate = work
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: work)
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		let id = self.feedMessages[indexPath.row].id
+		self.expandedMessageIDs.insert(id)
+		self.heightCache.removeValue(forKey: indexPath)
+		self.tableView.reloadRows(at: [indexPath], with: .none)
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard let parentID = self.feedMessages[indexPath.row].relationships.parent?.data.first?.id else { return }
+		self.expandedOPIDs.insert(parentID)
+		self.heightCache.removeValue(forKey: indexPath)
+		self.tableView.reloadRows(at: [indexPath], with: .none)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
