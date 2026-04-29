@@ -50,6 +50,13 @@ final class KurozoraDelegate {
 		// Migrate UserDefaults to shared App Group suite for widget access
 		UserSettings.migrateToSharedSuiteIfNeeded()
 
+		// Restore selected API endpoint
+		#if DEBUG
+		if let savedEndpoint = UserSettings.apiEndpoint, let endpoint = APIEndpoints.first { $0.baseURL == savedEndpoint.baseURL } ?? APIEndpoints.first {
+            KService.apiEndpoint(endpoint)
+		}
+		#endif
+
 		// Migrate legacy keychain entries to the new account storage
 		AccountManager.shared.migrateIfNeeded()
 
