@@ -14,12 +14,12 @@ extension LibraryListCollectionViewController {
 		[
 			LibraryDetailedCollectionViewCell.self,
 			LibraryCompactCollectionViewCell.self,
-			LibraryListCollectionViewCell.self
+			LibraryListCollectionViewCell.self,
+			LibraryTableCollectionViewCell.self
 		]
 	}
 
 	override func configureDataSource() {
-		self.collectionView.register(LibraryTableCollectionViewCell.self, forCellWithReuseIdentifier: LibraryTableCollectionViewCell.reuseID)
 		self.collectionView.register(LibraryTableHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LibraryTableHeaderReusableView.reuseID)
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in

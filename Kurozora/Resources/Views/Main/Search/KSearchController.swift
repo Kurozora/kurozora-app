@@ -13,7 +13,6 @@ class KSearchController: UISearchController {
 	// MARK: - Properties
 	weak var viewController: SearchResultsCollectionViewController?
 	var searchScope: SearchScope = .kurozora
-	var forceShowsCancelButton: Bool = true
 
 	// MARK: - Initializers
 	override init(searchResultsController: UIViewController?) {
@@ -38,6 +37,10 @@ class KSearchController: UISearchController {
 		self.searchBar.delegate = self.viewController
 
 		if let viewController = self.viewController {
+			if #available(iOS 16.0, *) {
+				self.searchResultsUpdater = viewController
+			}
+
 			switch viewController.searchViewKind {
 			case .single:
 				self.searchBar.placeholder = L10n.search
@@ -64,16 +67,17 @@ class KSearchController: UISearchController {
 
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
 		self.searchBar.searchTextField.theme_textColor = KThemePicker.textColor.rawValue
+		self.searchBar.searchTextField.theme_tokenBackgroundColor = KThemePicker.tintedBackgroundColor.rawValue
+
+		if #available(iOS 16.0, *) {
+			self.obscuresBackgroundDuringPresentation = false
+		}
 	}
 }
 
 // MARK: - UISearchControllerDelegate
 extension KSearchController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
-		if self.forceShowsCancelButton {
-			self.searchBar.showsCancelButton = true
-		}
-
 		guard let viewController = self.viewController else { return }
 
 		switch viewController.searchViewKind {
@@ -106,10 +110,6 @@ extension KSearchController: UISearchControllerDelegate {
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
-		if self.forceShowsCancelButton {
-			self.searchBar.showsCancelButton = false
-		}
-
 		#if targetEnvironment(macCatalyst)
 		self.searchBar.showsScopeBar = false
 		#endif

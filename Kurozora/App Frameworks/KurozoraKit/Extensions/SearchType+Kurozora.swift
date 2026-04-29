@@ -24,13 +24,37 @@ extension SearchType {
 		case .people:
 			return L10n.people
 		case .shows:
-			return L10n.anime
+			return L10n.shows
 		case .songs:
 			return L10n.songs
 		case .studios:
 			return L10n.studios
 		case .users:
 			return L10n.users
+		}
+	}
+
+	/// Lowercased synonyms used to match a typed keyword to this search type.
+	var tokenKeywords: [String] {
+		switch self {
+		case .shows:
+			return ["anime", "show", "shows", "tv"]
+		case .literatures:
+			return ["manga", "literature", "literatures", "novel"]
+		case .games:
+			return ["game", "games"]
+		case .characters:
+			return ["character", "characters"]
+		case .episodes:
+			return ["episode", "episodes"]
+		case .people:
+			return ["person", "people"]
+		case .songs:
+			return ["song", "songs", "music"]
+		case .studios:
+			return ["studio", "studios"]
+		case .users:
+			return ["user", "users"]
 		}
 	}
 

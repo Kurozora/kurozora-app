@@ -128,6 +128,9 @@ extension SectionFetchable {
 				let identitiesToFetch = chunk.map { $0.identity }
 				let response: I = try await KService.details(identitiesToFetch).response()
 
+				// If the section is no longer in the snapshot, abandon this fetch.
+				guard self.dataSource.snapshot().indexOfSection(section) != nil else { break }
+
 				let orderLookup = Dictionary(identitiesToFetch.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })
 				let sorted = response.data.sorted {
 					guard

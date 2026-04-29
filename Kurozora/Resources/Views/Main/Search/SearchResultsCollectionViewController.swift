@@ -94,8 +94,20 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// The search filters applied to the respective search type
 	var searchFilters: [SearchType: SearchFilter?] = [:]
 
+	/// Per-search-type model caches.
+	private var cachesByType: [SearchType: [IndexPath: KurozoraItem]] = [:]
+
 	/// The hydrated models keyed by index path.
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [IndexPath: KurozoraItem] {
+		get {
+			guard let type = self.searchTypes[safe: self.currentIndex] else { return [:] }
+			return self.cachesByType[type] ?? [:]
+		}
+		set {
+			guard let type = self.searchTypes[safe: self.currentIndex] else { return }
+			self.cachesByType[type] = newValue
+		}
+	}
 
 	/// The sections with an in-flight details request.
 	var isFetchingSection: Set<SearchResults.Section> = []
@@ -110,15 +122,15 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	var studioIdentities: [StudioIdentity] = []
 	var userIdentities: [UserIdentity] = []
 
-	var characterNextPageURL: String?
-	var episodeNextPageURL: String?
-	var personNextPageURL: String?
-	var showNextPageURL: String?
-	var literatureNextPageURL: String?
-	var gameNextPageURL: String?
-	var songNextPageURL: String?
-	var studioNextPageURL: String?
-	var userNextPageURL: String?
+	var characterNextPageCursor: PageCursor?
+	var episodeNextPageCursor: PageCursor?
+	var personNextPageCursor: PageCursor?
+	var showNextPageCursor: PageCursor?
+	var literatureNextPageCursor: PageCursor?
+	var gameNextPageCursor: PageCursor?
+	var songNextPageCursor: PageCursor?
+	var studioNextPageCursor: PageCursor?
+	var userNextPageCursor: PageCursor?
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>!
 	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>!
@@ -126,8 +138,24 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
 
-	/// The object containing the search controller
-	lazy var kSearchController: KSearchController = KSearchController()
+	/// The object containing the search controller.
+	lazy var kSearchController: KSearchController = {
+		if #available(iOS 16.0, *) {
+			let suggestionsViewController = SearchTokenSuggestionsTableViewController()
+			suggestionsViewController.onSelect = { [weak self] type in
+				self?.handleTokenSuggestionSelected(type)
+			}
+			return KSearchController(searchResultsController: suggestionsViewController)
+		}
+
+		return KSearchController(searchResultsController: nil)
+	}()
+
+	/// The token suggestions controller hosted by ``kSearchController`` on iOS 16+.
+	@available(iOS 16.0, *)
+	private var tokenSuggestionsViewController: SearchTokenSuggestionsTableViewController? {
+		return self.kSearchController.searchResultsController as? SearchTokenSuggestionsTableViewController
+	}
 
 	/// Whether to include a search controller in the navigation bar
 	var includesSearchBar = true
@@ -263,6 +291,30 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		self.filterBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(self.handleFilterBarButtonItemPressed(_:)))
 	}
 
+	/// Returns the search types derived from the current tokens in the search field.
+	@available(iOS 16.0, *)
+	func typesFromTokens() -> [SearchType] {
+		let tokens = self.kSearchController.searchBar.searchTextField.tokens
+		return tokens.compactMap { $0.representedObject as? SearchType }
+	}
+
+	/// Returns the list of search types that are valid for the current search surface.
+	func availableTypesForCurrentScope() -> [SearchType] {
+		switch self.searchViewKind {
+		case .single(let type):
+			return [type]
+		case .library:
+			return [.shows, .literatures, .games]
+		case .multiple:
+			switch self.currentScope {
+			case .library:
+				return [.shows, .literatures, .games]
+			case .kurozora:
+				return [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+			}
+		}
+	}
+
 	func configureView() {
 		self.configureTabBarView()
 		self.configureToolbar()
@@ -337,6 +389,11 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		// Set the current view as the view controller of the search
 		self.kSearchController.viewController = self
 
+		// Manual visibility control is required, so the suggestions controller can show with empty text.
+		if #available(iOS 16.0, *) {
+			self.kSearchController.automaticallyShowsSearchResultsController = false
+		}
+
 		// Add search bar to navigation controller
 		self.navigationItem.searchController = self.kSearchController
 		self.navigationItem.hidesSearchBarWhenScrolling = false
@@ -374,6 +431,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - resettingResults: Whether to reset the results.
 	func performSearch(with query: String, in searchScope: SearchScope, for types: [SearchType], with filter: SearchFilter?, next: PageCursor?, resettingResults: Bool = true) {
 		var searchScope = searchScope
+		var types = types
 
 		if case .library = self.searchViewKind {
 			searchScope = .library
@@ -381,6 +439,12 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 		// Prepare view for search
 		self.currentScope = searchScope
+
+		// On iOS 16+, resolve types from tokens when none are explicitly provided.
+		if #available(iOS 16.0, *), types.isEmpty {
+			let tokenTypes = self.typesFromTokens()
+			types = tokenTypes.isEmpty ? self.availableTypesForCurrentScope() : tokenTypes
+		}
 
 		if resettingResults {
 			// Show activity indicator.
@@ -395,14 +459,18 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				let searchTypes: [KKSearchType]
+				let searchTypes: [SearchType]
 
 				switch self.searchViewKind {
 				case .single(let type):
 					searchTypes = [type]
 					self.searchTypes = searchTypes
 				case .multiple:
-					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+					if #available(iOS 16.0, *) {
+						searchTypes = types
+					} else {
+						searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+					}
 				case .library:
 					return
 				}
@@ -415,8 +483,13 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 				guard signedIn else { return }
 
-				let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games]
-				await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
+				let searchTypes: [SearchType]
+				if #available(iOS 16.0, *) {
+					searchTypes = types
+				} else {
+					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games]
+				}
+				await self.search(scope: searchScope, types: searchTypes, query: query, next: next, filter: filter)
 			}
 		}
 	}
@@ -434,20 +507,20 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 		do {
 			// Perform library search request.
-			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: next != nil ? 100 : 25, filter: filter)
+			let searchResponse = try await KService.search(scope, types: types, query: query).cursor(next).limit(next != nil ? 100 : 25).filter(filter).response()
 
 			if types.count > 1 {
 				self.searchResults = searchResponse.data
 
-				self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
-				self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
-				self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
-				self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
-				self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
-				self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
-				self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
-				self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
-				self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
+				self.characterNextPageCursor = searchResponse.data.characters?.nextCursor ?? self.characterNextPageCursor
+				self.episodeNextPageCursor = searchResponse.data.episodes?.nextCursor ?? self.episodeNextPageCursor
+				self.personNextPageCursor = searchResponse.data.people?.nextCursor ?? self.personNextPageCursor
+				self.showNextPageCursor = searchResponse.data.shows?.nextCursor ?? self.showNextPageCursor
+				self.literatureNextPageCursor = searchResponse.data.literatures?.nextCursor ?? self.literatureNextPageCursor
+				self.gameNextPageCursor = searchResponse.data.games?.nextCursor ?? self.gameNextPageCursor
+				self.songNextPageCursor = searchResponse.data.songs?.nextCursor ?? self.songNextPageCursor
+				self.studioNextPageCursor = searchResponse.data.studios?.nextCursor ?? self.studioNextPageCursor
+				self.userNextPageCursor = searchResponse.data.users?.nextCursor ?? self.userNextPageCursor
 
 				self.characterIdentities.appendDistinct(contentsOf: searchResponse.data.characters?.data ?? [])
 				self.episodeIdentities.appendDistinct(contentsOf: searchResponse.data.episodes?.data ?? [])
@@ -473,32 +546,43 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			} else if let searchType = types.first {
 				switch searchType {
 				case .characters:
-					self.characterNextPageURL = searchResponse.data.characters?.next
+					self.characterNextPageCursor = searchResponse.data.characters?.nextCursor
 					self.characterIdentities.appendDistinct(contentsOf: searchResponse.data.characters?.data ?? [])
 				case .episodes:
-					self.episodeNextPageURL = searchResponse.data.episodes?.next
+					self.episodeNextPageCursor = searchResponse.data.episodes?.nextCursor
 					self.episodeIdentities.appendDistinct(contentsOf: searchResponse.data.episodes?.data ?? [])
 				case .games:
-					self.gameNextPageURL = searchResponse.data.games?.next
+					self.gameNextPageCursor = searchResponse.data.games?.nextCursor
 					self.gameIdentities.appendDistinct(contentsOf: searchResponse.data.games?.data ?? [])
 				case .literatures:
-					self.literatureNextPageURL = searchResponse.data.literatures?.next
+					self.literatureNextPageCursor = searchResponse.data.literatures?.nextCursor
 					self.literatureIdentities.appendDistinct(contentsOf: searchResponse.data.literatures?.data ?? [])
 				case .people:
-					self.personNextPageURL = searchResponse.data.people?.next
+					self.personNextPageCursor = searchResponse.data.people?.nextCursor
 					self.personIdentities.appendDistinct(contentsOf: searchResponse.data.people?.data ?? [])
 				case .shows:
-					self.showNextPageURL = searchResponse.data.shows?.next
+					self.showNextPageCursor = searchResponse.data.shows?.nextCursor
 					self.showIdentities.appendDistinct(contentsOf: searchResponse.data.shows?.data ?? [])
 				case .songs:
-					self.songNextPageURL = searchResponse.data.songs?.next
+					self.songNextPageCursor = searchResponse.data.songs?.nextCursor
 					self.songIdentities.appendDistinct(contentsOf: searchResponse.data.songs?.data ?? [])
 				case .studios:
-					self.studioNextPageURL = searchResponse.data.studios?.next
+					self.studioNextPageCursor = searchResponse.data.studios?.nextCursor
 					self.studioIdentities.appendDistinct(contentsOf: searchResponse.data.studios?.data ?? [])
 				case .users:
-					self.userNextPageURL = searchResponse.data.users?.next
+					self.userNextPageCursor = searchResponse.data.users?.nextCursor
 					self.userIdentities.appendDistinct(contentsOf: searchResponse.data.users?.data ?? [])
+				}
+
+				// Reflect a fresh single-type query in the tab bar. Pagination and filter
+				// refreshes target the currently selected tab and must leave the tab set alone.
+				if next == nil, filter == nil {
+					switch self.searchViewKind {
+					case .multiple, .library:
+						self.searchTypes = types
+					case .single:
+						break
+					}
 				}
 			}
 
@@ -539,23 +623,23 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 		switch section {
 		case .characters:
-			await self.fetchSectionIfNeeded(CharacterResponse.self, CharacterIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .episodes:
-			await self.fetchSectionIfNeeded(EpisodeResponse.self, EpisodeIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .games:
-			await self.fetchSectionIfNeeded(GameResponse.self, GameIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .literatures:
-			await self.fetchSectionIfNeeded(LiteratureResponse.self, LiteratureIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .people:
-			await self.fetchSectionIfNeeded(PersonResponse.self, PersonIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .shows:
-			await self.fetchSectionIfNeeded(ShowResponse.self, ShowIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .songs:
 			await self.fetchSongsSection(at: firstIndexPath, itemKind: firstItem, sectionIndex: sectionIndex, itemCount: items.count)
 		case .studios:
-			await self.fetchSectionIfNeeded(StudioResponse.self, StudioIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .users:
-			await self.fetchSectionIfNeeded(UserResponse.self, UserIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: firstIndexPath, itemKind: firstItem)
 		case .discover, .browse:
 			break
 		}
@@ -569,7 +653,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - sectionIndex: The index of the songs section in the snapshot.
 	///    - itemCount: The number of items in the songs section.
 	fileprivate func fetchSongsSection(at indexPath: IndexPath, itemKind: SearchResults.Item, sectionIndex: Int, itemCount: Int) async {
-		await self.fetchSectionIfNeeded(SongResponse.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
+		await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
 
 		let appleMusicIDs: [Int] = (0 ..< itemCount).compactMap { offset in
 			let ip = IndexPath(item: offset, section: sectionIndex)
@@ -623,32 +707,34 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			switch type {
 			case .characters:
 				self.characterIdentities = []
-				self.characterNextPageURL = nil
+				self.characterNextPageCursor = nil
 			case .episodes:
 				self.episodeIdentities = []
-				self.episodeNextPageURL = nil
+				self.episodeNextPageCursor = nil
 			case .games:
 				self.gameIdentities = []
-				self.gameNextPageURL = nil
+				self.gameNextPageCursor = nil
 			case .literatures:
 				self.literatureIdentities = []
-				self.literatureNextPageURL = nil
+				self.literatureNextPageCursor = nil
 			case .people:
 				self.personIdentities = []
-				self.personNextPageURL = nil
+				self.personNextPageCursor = nil
 			case .shows:
 				self.showIdentities = []
-				self.showNextPageURL = nil
+				self.showNextPageCursor = nil
 			case .songs:
 				self.songIdentities = []
-				self.songNextPageURL = nil
+				self.songNextPageCursor = nil
 			case .studios:
 				self.studioIdentities = []
-				self.studioNextPageURL = nil
+				self.studioNextPageCursor = nil
 			case .users:
 				self.userIdentities = []
-				self.userNextPageURL = nil
+				self.userNextPageCursor = nil
 			}
+
+			self.cachesByType[type] = nil
 		} else {
 			self.currentIndex = 0
 			self.searchResults = nil
@@ -663,18 +749,18 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			self.studioIdentities = []
 			self.userIdentities = []
 
-			self.characterNextPageURL = nil
-			self.episodeNextPageURL = nil
-			self.personNextPageURL = nil
-			self.showNextPageURL = nil
-			self.literatureNextPageURL = nil
-			self.gameNextPageURL = nil
-			self.songNextPageURL = nil
-			self.studioNextPageURL = nil
-			self.userNextPageURL = nil
-		}
+			self.characterNextPageCursor = nil
+			self.episodeNextPageCursor = nil
+			self.personNextPageCursor = nil
+			self.showNextPageCursor = nil
+			self.literatureNextPageCursor = nil
+			self.gameNextPageCursor = nil
+			self.songNextPageCursor = nil
+			self.studioNextPageCursor = nil
+			self.userNextPageCursor = nil
 
-		self.cache.removeAll()
+			self.cachesByType.removeAll()
+		}
 
 		self.updateDataSource()
 	}
@@ -683,7 +769,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		do {
 			let alphabet = "abcdefghijklmnopqrstuvwxyz"
 			let suggestionString = String(alphabet.randomElement() ?? "o")
-			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionString)
+			let searchSuggestionResponse = try await KService.searchSuggestions(.kurozora, types: [.shows], query: suggestionString).response()
 			self.discoverSuggestions = searchSuggestionResponse.data.map { searchSuggestion in
 				QuickLink(title: searchSuggestion, image: UIImage(systemName: "magnifyingglass"), url: "")
 			}
@@ -877,6 +963,10 @@ extension SearchResultsCollectionViewController: TMBarDataSource {
 	func reloadView() {
 		guard self.searchTypes.count > 0 else { return }
 		self.tabBarView.reloadData(at: 0 ... self.searchTypes.count - 1, context: .full)
+		// Keep the bar's visual selection in sync with `currentIndex`. A fresh search resets
+		// `currentIndex` to 0 but the bar would otherwise keep its previous selection,
+		// leaving the highlighted tab and the rendered section out of sync.
+		self.updateBar(to: CGFloat(self.currentIndex), animated: false, direction: .none)
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
@@ -907,6 +997,7 @@ extension SearchResultsCollectionViewController: TMBarDelegate {
 		}
 
 		self.updateDataSource()
+		Task { [weak self] in await self?.prefetchCurrentSections() }
 	}
 }
 
@@ -925,6 +1016,14 @@ extension TMBarUpdateDirection {
 
 // MARK: - UISearchBarDelegate
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
+	func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+		if #available(iOS 16.0, *), self.tokenSuggestionsViewController?.isTrackingSuggestionTap == true {
+			return false
+		}
+
+		return true
+	}
+
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		switch self.searchViewKind {
 		case .single:
@@ -944,6 +1043,20 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			searchBar.showsBookmarkButton = false
 			#endif
 			self.setShowToolbar(false)
+		}
+
+		if #available(iOS 16.0, *) {
+			self.refreshTokenSuggestions()
+		}
+	}
+
+	/// Whether the current surface supports token suggestions.
+	fileprivate var shouldOfferTokenSuggestions: Bool {
+		switch self.searchViewKind {
+		case .multiple, .library:
+			return true
+		case .single:
+			return false
 		}
 	}
 
@@ -975,8 +1088,30 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-		guard let query = searchBar.text, !query.isEmpty else { return }
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
+
+		// Drop tokens whose type is no longer valid for the new scope (iOS 16+).
+		if #available(iOS 16.0, *), searchScope == .library {
+			let allowed: Set<SearchType> = [.shows, .literatures, .games]
+			let textField = searchBar.searchTextField
+			for index in textField.tokens.indices.reversed() {
+				let token = textField.tokens[index]
+				if let type = token.representedObject as? SearchType, !allowed.contains(type) {
+					textField.removeToken(at: index)
+				}
+			}
+		}
+
+		let previousScope = self.currentScope
+		self.currentScope = searchScope
+		self.updateDataSource()
+
+		if #available(iOS 16.0, *) {
+			self.refreshTokenSuggestions()
+		}
+
+		// Composition phase: no network request.
+		guard self.searchResults != nil, let query = searchBar.text, !query.isEmpty else { return }
 
 		switch searchScope {
 		case .kurozora:
@@ -985,10 +1120,13 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			Task { [weak self] in
 				guard let self = self else { return }
 				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-				guard signedIn else { return }
+				guard signedIn else {
+					self.currentScope = previousScope
+					searchBar.selectedScopeButtonIndex = previousScope.rawValue
+					return
+				}
 				self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
 			}
-			searchBar.selectedScopeButtonIndex = self.currentScope.rawValue
 		}
 	}
 
@@ -1002,10 +1140,21 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let query = searchBar.text else { return }
-		self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
+
+		var types: [SearchType] = []
+		if #available(iOS 16.0, *) {
+			types = self.typesFromTokens()
+			self.kSearchController.showsSearchResultsController = false
+		}
+		self.performSearch(with: query, in: searchScope, for: types, with: nil, next: nil)
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		if #available(iOS 16.0, *) {
+			searchBar.searchTextField.tokens.indices.reversed().forEach { searchBar.searchTextField.removeToken(at: $0) }
+			self.kSearchController.showsSearchResultsController = false
+		}
+
 		switch self.searchViewKind {
 		case .single(let type):
 			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? SearchFilter, next: nil)
@@ -1140,7 +1289,7 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 		Task {
 			do {
 				let userIdentity = UserIdentity(id: user.id)
-				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity)
+				let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 				user.attributes.update(using: followUpdateResponse.data)
 				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
 			} catch {
@@ -1230,5 +1379,50 @@ extension SearchResultsCollectionViewController: SearchFilterCollectionViewContr
 
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
 		print("----- search filter did cancel")
+	}
+}
+
+// MARK: - UISearchResultsUpdating
+@available(iOS 16.0, *)
+extension SearchResultsCollectionViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		guard self.shouldOfferTokenSuggestions else {
+			searchController.showsSearchResultsController = false
+			return
+		}
+
+		self.refreshTokenSuggestions()
+	}
+
+	/// Refreshes the token suggestions controller with the types currently applicable to the
+	/// active scope and toggles its visibility.
+	///
+	/// Call this after any change that might shift the result of `tokenSuggestionTypes()`:
+	/// text edits, scope changes, token insertions, etc.
+	func refreshTokenSuggestions() {
+		guard self.shouldOfferTokenSuggestions else {
+			self.kSearchController.showsSearchResultsController = false
+			return
+		}
+
+		self.tokenizeTypedKeywordIfNeeded()
+
+		let types = self.tokenSuggestionTypes()
+		self.tokenSuggestionsViewController?.types = types
+		self.kSearchController.showsSearchResultsController = !types.isEmpty
+	}
+
+	/// Inserts a token representing `type` and refreshes the suggestion list.
+	///
+	/// - Parameter type: The search type to convert into a token.
+	func handleTokenSuggestionSelected(_ type: SearchType) {
+		let searchTextField = self.kSearchController.searchBar.searchTextField
+		self.removeCurrentTypedWord()
+
+		let token = UISearchToken(icon: nil, text: type.stringValue)
+		token.representedObject = type
+		searchTextField.insertToken(token, at: searchTextField.tokens.count)
+
+		self.refreshTokenSuggestions()
 	}
 }

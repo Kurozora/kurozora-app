@@ -88,7 +88,6 @@ class SidebarViewController: KCollectionViewController {
 
 		// Configure search bar
 		self.kSearchController.viewController = self.searchResultsCollectionViewController
-		self.kSearchController.forceShowsCancelButton = false
 		self.kSearchController.obscuresBackgroundDuringPresentation = false
 		self.kSearchController.automaticallyShowsCancelButton = false
 		self.kSearchController.searchResultsUpdater = self

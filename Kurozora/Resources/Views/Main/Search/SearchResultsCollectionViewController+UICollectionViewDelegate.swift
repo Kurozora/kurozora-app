@@ -54,8 +54,8 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 		var identitiesCount: Int = 0
-		var type: KKSearchType = .shows
-		var nextPageURL: String?
+		var type: SearchType = .shows
+		var nextPageCursor: PageCursor?
 
 		switch itemKind {
 		case .discoverSuggestion: break
@@ -63,38 +63,38 @@ extension SearchResultsCollectionViewController {
 		case .characterIdentity:
 			identitiesCount = self.characterIdentities.count
 			type = .characters
-			nextPageURL = self.characterNextPageURL
+			nextPageCursor = self.characterNextPageCursor
 		case .episodeIdentity:
 			identitiesCount = self.episodeIdentities.count
 			type = .episodes
-			nextPageURL = self.episodeNextPageURL
+			nextPageCursor = self.episodeNextPageCursor
 		case .personIdentity:
 			identitiesCount = self.personIdentities.count
-			nextPageURL = self.personNextPageURL
+			nextPageCursor = self.personNextPageCursor
 			type = .people
 		case .showIdentity:
 			identitiesCount = self.showIdentities.count
-			nextPageURL = self.showNextPageURL
+			nextPageCursor = self.showNextPageCursor
 			type = .shows
 		case .literatureIdentity:
 			identitiesCount = self.literatureIdentities.count
-			nextPageURL = self.literatureNextPageURL
+			nextPageCursor = self.literatureNextPageCursor
 			type = .literatures
 		case .gameIdentity:
 			identitiesCount = self.gameIdentities.count
-			nextPageURL = self.gameNextPageURL
+			nextPageCursor = self.gameNextPageCursor
 			type = .games
 		case .songIdentity:
 			identitiesCount = self.songIdentities.count
 			type = .songs
-			nextPageURL = self.songNextPageURL
+			nextPageCursor = self.songNextPageCursor
 		case .studioIdentity:
 			identitiesCount = self.studioIdentities.count
-			nextPageURL = self.studioNextPageURL
+			nextPageCursor = self.studioNextPageCursor
 			type = .studios
 		case .userIdentity:
 			identitiesCount = self.userIdentities.count
-			nextPageURL = self.userNextPageURL
+			nextPageCursor = self.userNextPageCursor
 			type = .users
 		case .show: break
 		case .literature: break
@@ -104,8 +104,8 @@ extension SearchResultsCollectionViewController {
 		if identitiesCount != 0 {
 			let itemsCount = identitiesCount - 1
 
-			if indexPath.item == itemsCount, nextPageURL != nil, !self.isRequestInProgress {
-				self.performSearch(with: self.searchQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
+			if indexPath.item == itemsCount, nextPageCursor != nil, !self.isRequestInProgress {
+				self.performSearch(with: self.searchQuery, in: self.currentScope, for: [type], with: nil, next: nextPageCursor, resettingResults: false)
 			}
 		}
 	}

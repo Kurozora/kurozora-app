@@ -169,7 +169,12 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	fileprivate func registerCells() {
 		for cell in self.registerCells(for: self.collectionView) {
 			let identifier = String(describing: cell)
-			self.collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
+
+			if Bundle.main.path(forResource: identifier, ofType: "nib") != nil {
+				self.collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
+			} else {
+				self.collectionView.register(cell, forCellWithReuseIdentifier: identifier)
+			}
 		}
 	}
 

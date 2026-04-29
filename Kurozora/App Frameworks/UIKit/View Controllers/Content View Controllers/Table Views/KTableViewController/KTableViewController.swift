@@ -142,7 +142,12 @@ class KTableViewController: UITableViewController, SegueHandler {
 	fileprivate func registerCells() {
 		for cell in registerCells(for: self.tableView) {
 			let identifier = String(describing: cell)
-			self.tableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
+
+			if Bundle.main.path(forResource: identifier, ofType: "nib") != nil {
+				self.tableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
+			} else {
+				self.tableView.register(cell, forCellReuseIdentifier: identifier)
+			}
 		}
 	}
 

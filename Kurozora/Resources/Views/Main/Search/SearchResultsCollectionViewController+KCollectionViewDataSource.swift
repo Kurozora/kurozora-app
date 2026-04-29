@@ -129,123 +129,7 @@ extension SearchResultsCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>()
 
 		if !self.searchTypes.isEmpty {
-			switch self.currentScope {
-			case .kurozora:
-				switch self.searchTypes[safe: self.currentIndex] ?? .shows {
-				case .shows:
-					if !self.showIdentities.isEmpty {
-						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
-							.showIdentity(showIdentity)
-						}
-
-						self.snapshot.appendSections([.shows])
-						self.snapshot.appendItems(showItems, toSection: .shows)
-					}
-				case .literatures:
-					if !self.literatureIdentities.isEmpty {
-						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
-							.literatureIdentity(literatureIdentity)
-						}
-
-						self.snapshot.appendSections([.literatures])
-						self.snapshot.appendItems(literatureItems, toSection: .literatures)
-					}
-				case .games:
-					if !self.gameIdentities.isEmpty {
-						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
-							.gameIdentity(gameIdentity)
-						}
-
-						self.snapshot.appendSections([.games])
-						self.snapshot.appendItems(gameItems, toSection: .games)
-					}
-				case .episodes:
-					if !self.episodeIdentities.isEmpty {
-						let episodeItems: [SearchResults.Item] = self.episodeIdentities.map { episodeIdentity in
-							.episodeIdentity(episodeIdentity)
-						}
-
-						self.snapshot.appendSections([.episodes])
-						self.snapshot.appendItems(episodeItems, toSection: .episodes)
-					}
-				case .characters:
-					if !self.characterIdentities.isEmpty {
-						let characterItems: [SearchResults.Item] = self.characterIdentities.map { characterIdentity in
-							.characterIdentity(characterIdentity)
-						}
-
-						self.snapshot.appendSections([.characters])
-						self.snapshot.appendItems(characterItems, toSection: .characters)
-					}
-				case .people:
-					if !self.personIdentities.isEmpty {
-						let peopleItems: [SearchResults.Item] = self.personIdentities.map { personIdentity in
-							.personIdentity(personIdentity)
-						}
-
-						self.snapshot.appendSections([.people])
-						self.snapshot.appendItems(peopleItems, toSection: .people)
-					}
-				case .songs:
-					if !self.songIdentities.isEmpty {
-						let songItems: [SearchResults.Item] = self.songIdentities.map { songIdentity in
-							.songIdentity(songIdentity)
-						}
-
-						self.snapshot.appendSections([.songs])
-						self.snapshot.appendItems(songItems, toSection: .songs)
-					}
-				case .studios:
-					if !self.studioIdentities.isEmpty {
-						let studioItems: [SearchResults.Item] = self.studioIdentities.map { studioIdentity in
-							.studioIdentity(studioIdentity)
-						}
-
-						self.snapshot.appendSections([.studios])
-						self.snapshot.appendItems(studioItems, toSection: .studios)
-					}
-				case .users:
-					if !self.userIdentities.isEmpty {
-						let userItems: [SearchResults.Item] = self.userIdentities.map { userIdentity in
-							.userIdentity(userIdentity)
-						}
-
-						self.snapshot.appendSections([.users])
-						self.snapshot.appendItems(userItems, toSection: .users)
-					}
-				}
-			case .library:
-				switch self.searchTypes[safe: self.currentIndex] ?? .shows {
-				case .shows:
-					if !self.showIdentities.isEmpty {
-						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
-							.showIdentity(showIdentity)
-						}
-
-						self.snapshot.appendSections([.shows])
-						self.snapshot.appendItems(showItems, toSection: .shows)
-					}
-				case .literatures:
-					if !self.literatureIdentities.isEmpty {
-						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
-							.literatureIdentity(literatureIdentity)
-						}
-
-						self.snapshot.appendSections([.literatures])
-						self.snapshot.appendItems(literatureItems, toSection: .literatures)
-					}
-				case .games:
-					if !self.gameIdentities.isEmpty {
-						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
-							.gameIdentity(gameIdentity)
-						}
-
-						self.snapshot.appendSections([.games])
-						self.snapshot.appendItems(gameItems, toSection: .games)
-					}
-				default: break
-				}
-			}
+			self.appendCurrentTypeSection()
 		}
 
 		switch self.searchViewKind {
@@ -273,11 +157,66 @@ extension SearchResultsCollectionViewController {
 
 		self.dataSource.apply(self.snapshot)
 	}
+
+	/// Appends only the currently selected type's section.
+	private func appendCurrentTypeSection() {
+		let selectedType: SearchType
+		switch self.currentScope {
+		case .kurozora:
+			selectedType = self.searchTypes[safe: self.currentIndex] ?? .shows
+		case .library:
+			let candidate = self.searchTypes[safe: self.currentIndex] ?? .shows
+			selectedType = [.shows, .literatures, .games].contains(candidate) ? candidate : .shows
+		}
+		self.appendSection(for: selectedType)
+	}
+
+	/// Appends a section containing identities for the given search type, if any are loaded.
+	private func appendSection(for searchType: SearchType) {
+		switch searchType {
+		case .shows:
+			guard !self.showIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.shows])
+			self.snapshot.appendItems(self.showIdentities.map { .showIdentity($0) }, toSection: .shows)
+		case .literatures:
+			guard !self.literatureIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.literatures])
+			self.snapshot.appendItems(self.literatureIdentities.map { .literatureIdentity($0) }, toSection: .literatures)
+		case .games:
+			guard !self.gameIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.games])
+			self.snapshot.appendItems(self.gameIdentities.map { .gameIdentity($0) }, toSection: .games)
+		case .episodes:
+			guard !self.episodeIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.episodes])
+			self.snapshot.appendItems(self.episodeIdentities.map { .episodeIdentity($0) }, toSection: .episodes)
+		case .characters:
+			guard !self.characterIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.characters])
+			self.snapshot.appendItems(self.characterIdentities.map { .characterIdentity($0) }, toSection: .characters)
+		case .people:
+			guard !self.personIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.people])
+			self.snapshot.appendItems(self.personIdentities.map { .personIdentity($0) }, toSection: .people)
+		case .songs:
+			guard !self.songIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.songs])
+			self.snapshot.appendItems(self.songIdentities.map { .songIdentity($0) }, toSection: .songs)
+		case .studios:
+			guard !self.studioIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.studios])
+			self.snapshot.appendItems(self.studioIdentities.map { .studioIdentity($0) }, toSection: .studios)
+		case .users:
+			guard !self.userIdentities.isEmpty else { return }
+			self.snapshot.appendSections([.users])
+			self.snapshot.appendItems(self.userIdentities.map { .userIdentity($0) }, toSection: .users)
+		}
+	}
 }
 
 extension SearchResultsCollectionViewController {
-	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item>(cellNib: CharacterLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, SearchResults.Item>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			switch itemKind {
 			case .characterIdentity:
@@ -311,8 +250,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item> {
-		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: PersonLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, SearchResults.Item>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			switch itemKind {
 			case .personIdentity:
