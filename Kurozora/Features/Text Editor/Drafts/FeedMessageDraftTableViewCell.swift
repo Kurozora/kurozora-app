@@ -38,11 +38,11 @@ struct DraftCellViewModel {
 			} else {
 				self.layoutBadge = L10n.reply
 			}
-		case .reShare:
+		case .quote:
 			if let username = draft.parentSnapshot?.authorUsername, !username.isEmpty {
-				self.layoutBadge = "\(L10n.reshare) · @\(username)"
+				self.layoutBadge = "\(L10n.quote) · @\(username)"
 			} else {
-				self.layoutBadge = L10n.reshare
+				self.layoutBadge = L10n.quote
 			}
 		default:
 			self.layoutBadge = nil

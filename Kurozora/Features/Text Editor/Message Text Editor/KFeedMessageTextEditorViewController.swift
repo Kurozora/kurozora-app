@@ -73,7 +73,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		switch self.editorLayout {
 		case .standard, .reply:
 			return L10n.whatsOnYourMind
-		case .reShare:
+		case .quote:
 			return L10n.writeAComment
 		}
 	}
@@ -420,9 +420,11 @@ class KFeedMessageTextEditorViewController: KViewController {
 	/// Performs the request to post the feed message.
 	func performFeedMessageRequest() async {
 		let originalAuthKey = KService.authenticationKey
+
 		if let composerAccount = self.composerAccount {
 			KService.authenticationKey = composerAccount.authenticationToken
 		}
+
 		defer {
 			if self.composerAccount != nil {
 				KService.authenticationKey = originalAuthKey
@@ -469,7 +471,6 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 				self.deleteDraftIfActive()
 				self.dismiss(animated: true, completion: nil)
-
 			case .reply:
 				do {
 					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
@@ -492,8 +493,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 				} catch {
 					print("-----", error.localizedDescription)
 				}
-
-			case .reShare:
+			case .quote:
 				do {
 					guard let parentID = self.opFeedMessage?.id ?? self.draftParentMessageID.map({ KurozoraItemID(rawValue: $0) }) else { return }
 					let parentFeedMessageIdentity = FeedMessageIdentity(id: parentID)
@@ -900,10 +900,7 @@ extension KFeedMessageTextEditorViewController: FeedMessageDraftsTableViewContro
 
 // MARK: - SwitchAccountsTableViewControllerDelegate
 extension KFeedMessageTextEditorViewController: SwitchAccountsTableViewControllerDelegate {
-	func switchAccountsTableViewController(
-		_ controller: SwitchAccountsTableViewController,
-		didSelect account: StoredAccount
-	) {
+	func switchAccountsTableViewController(_ controller: SwitchAccountsTableViewController, didSelect account: StoredAccount) {
 		self.composerAccount = account
 		self.activeDraftUUID = nil
 		self.updateHeaderForComposerAccount()

@@ -84,7 +84,7 @@ private extension KFeedMessageTextEditorView {
 		self.configureCharacterCountLabel()
 		self.configureCommentTextView()
 
-		if self.layout == .reShare {
+		if self.layout == .quote {
 			self.configureOPPreviewContainer()
 			self.configureOPProfileImageView()
 			self.configureOPUsernameLabel()
@@ -133,7 +133,7 @@ private extension KFeedMessageTextEditorView {
 		case .reply:
 			self.commentPreviewContainer.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8)
 			self.commentPreviewContainer.layerCornerRadius = 10
-		case .reShare:
+		case .quote:
 			self.commentPreviewContainer.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 			self.commentPreviewContainer.layerCornerRadius = 10
 		}
@@ -179,7 +179,7 @@ private extension KFeedMessageTextEditorView {
 		switch self.layout {
 		case .reply:
 			container.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8)
-		case .reShare:
+		case .quote:
 			container.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 			container.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		case .standard:
@@ -196,7 +196,7 @@ private extension KFeedMessageTextEditorView {
 		switch self.layout {
 		case .reply:
 			imageView.contentMode = .scaleAspectFill
-		case .reShare:
+		case .quote:
 			imageView.contentMode = .scaleAspectFit
 		case .standard:
 			break
@@ -310,7 +310,7 @@ private extension KFeedMessageTextEditorView {
 			self.commentPreviewContainer.addSubview(self.currentUsernameLabel)
 			self.commentPreviewContainer.addSubview(self.characterCountLabel)
 			self.commentPreviewContainer.addSubview(self.commentTextView)
-		case .reShare:
+		case .quote:
 			guard let opPreviewContainer = self.opPreviewContainer,
 			      let opProfileImageView = self.opProfileImageView,
 			      let opUsernameLabel = self.opUsernameLabel,
@@ -391,7 +391,7 @@ private extension KFeedMessageTextEditorView {
 			self.configureStandardConstraints()
 		case .reply:
 			self.configureReplyConstraints()
-		case .reShare:
+		case .quote:
 			self.configureReShareConstraints()
 		}
 	}

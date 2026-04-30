@@ -109,14 +109,32 @@
     "Optic ID & Passcode" : {
       "comment" : "The string for the 'Optic ID & Passcode' settings option."
     },
+    "Pull to refresh themes list!" : {
+      "comment" : "Pull-to-refresh title for the themes list in the Theme Store."
+    },
+    "Pull to refresh your notifications!" : {
+      "comment" : "Pull-to-refresh title for the notifications list."
+    },
     "Rate us on App Store" : {
       "comment" : "The string for the 'Rate us on App Store' settings option."
+    },
+    "Redownload Theme" : {
+      "comment" : "The action sheet button for redownloading an already-purchased theme."
     },
     "Reduce Motion" : {
       "comment" : "The string for the 'Reduce Motion' settings option."
     },
     "Reduce the intensity of animations, and motion effects throughout Kurozora." : {
       "comment" : "The footer string for the 'Reduce Motion' settings option."
+    },
+    "Refreshing notifications..." : {
+      "comment" : "Refresh-in-progress title for the notifications list."
+    },
+    "Refreshing themes list..." : {
+      "comment" : "Refresh-in-progress title for the themes list in the Theme Store."
+    },
+    "Remove Theme" : {
+      "comment" : "The destructive action sheet button for removing a downloaded theme."
     },
     "Request Refund" : {
       "comment" : "The string for the 'Request Refund' settings option."
@@ -127,7 +145,7 @@
     "Restore Purchase" : {
       "comment" : "The string for the 'Restore Purchase' settings option."
     },
-    "Review your privacy settings, manage app permissions in the Settings app, and access legal information." : {
+    "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information." : {
       "comment" : "A short description for the privacy settings header."
     },
     "Rise and shine." : {

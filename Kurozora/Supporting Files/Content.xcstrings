@@ -1,17 +1,71 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "\nFollowers" : {
+      "comment" : "The 'Followers' label shown under the follower count in the profile header (newline prefix reserved for two-line stacked layout)."
+    },
+    "\nFollowing" : {
+      "comment" : "The 'Following' label shown under the following count in the profile header (newline prefix reserved for two-line stacked layout)."
+    },
+    "\nReputation" : {
+      "comment" : "The 'Reputation' label shown under the reputation count in the profile header (newline prefix reserved for two-line stacked layout)."
+    },
+    "\nReviews" : {
+      "comment" : "The 'Reviews' label shown under the reviews count in the profile header (newline prefix reserved for two-line stacked layout)."
+    },
+    "%@ has blocked you" : {
+      "comment" : "The headline shown when the auth user has been blocked by another user. The argument is the @username of the blocking user."
+    },
+    "%@ is blocked" : {
+      "comment" : "The headline shown when the auth user has blocked the profile's user. The argument is the @username of the blocked user."
+    },
+    "%@ is not following anyone yet." : {
+      "comment" : "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
+    },
+    "＋ Follow" : {
+      "comment" : "The user-cell follow button title when the current user is not yet following the target user."
+    },
+    "＋ Follow %@" : {
+      "comment" : "The empty-state action button shown on another user's empty followers list. '%@' is the target user's display name."
+    },
+    "✓ Following" : {
+      "comment" : "The user-cell follow button title when the current user is following the target user."
+    },
+    "Add your take when sharing someone else's post and it'll show up here." : {
+      "comment" : "The empty-state subheadline for the Quotes tab on the post activity screen."
+    },
     "Advanced Search" : {
       "comment" : "The string for the 'advanced search' browse option."
+    },
+    "Amplify posts you like" : {
+      "comment" : "The empty-state headline for the Re-shares tab on the post activity screen."
+    },
+    "Are you sure you want to view these posts? Viewing posts won’t unblock %@." : {
+      "comment" : "Subheadline prompting the auth user to opt in to viewing a blocked user's posts. The argument is the @username of the blocked user."
     },
     "Are you sure?" : {
       "comment" : "The subheadline string for the unpin message pop-up"
     },
+    "Be the first to follow %@!" : {
+      "comment" : "The empty-state detail shown on another user's followers list when nobody follows them yet. '%@' is the target user's display name."
+    },
+    "Be the first to follow!" : {
+      "comment" : "The user-cell secondary line for another user when nobody follows them yet."
+    },
     "Block" : {
       "comment" : "The string for the word 'block'."
     },
-    "Can't Re-Share" : {
-      "comment" : "The headline string for the reshare message error pop-up"
+    "Block %@" : {
+      "comment" : "The title prompting the user to block another user. The argument is the @username of the target user."
+    },
+    "Blocked" : {
+      "comment" : "The label shown on the button when the user has blocked another user"
+    },
+    "Blocked Users" : {
+      "comment" : "The label for the Settings entry that opens the blocked users list"
+    },
+    "Can't get users list. Please reload the page or restart the app and check your WiFi connection." : {
+      "comment" : "The empty-state detail shown when the users search returns no results or fails to load."
     },
     "Can’t Save Review 😔" : {
       "comment" : "The string for can't save review description."
@@ -28,6 +82,9 @@
     "Delete Message" : {
       "comment" : "The string for the 'Delete Message' context menu option."
     },
+    "Delete Rating?" : {
+      "comment" : "The title string for the confirmation dialog when the user clears their rating or deletes their review."
+    },
     "Delete Review" : {
       "comment" : "The string for the 'Delete Review' context menu option."
     },
@@ -36,6 +93,36 @@
     },
     "Find who you're looking for" : {
       "comment" : "The title string for the search pop-up when trying to tag a user in a message or reply."
+    },
+    "Follow a user and they will show up here!" : {
+      "comment" : "The empty-state detail shown on your own following list when you don't follow anyone yet."
+    },
+    "Follow other users so they will follow you back. Who knows, you might meet your next BFF!" : {
+      "comment" : "The empty-state detail shown on your own followers list when you have none."
+    },
+    "Followed by %@ fans." : {
+      "comment" : "The user-cell secondary line for your own profile with a large (1000+) follower count. '%@' is the abbreviated follower count, e.g. '1.2K'."
+    },
+    "Followed by %@ users." : {
+      "comment" : "The user-cell secondary line for another user that you don't follow. '%@' is the formatted total follower count."
+    },
+    "Followed by one user." : {
+      "comment" : "The user-cell secondary line for another user that you don't follow when they have exactly one follower."
+    },
+    "Followed by you and %@ fans." : {
+      "comment" : "The user-cell secondary line for your own profile with a small (2–999) follower count. '%@' is the follower count."
+    },
+    "Followed by you and %@ users." : {
+      "comment" : "The user-cell secondary line for another user that you already follow. '%@' is the formatted count of other followers (excluding the current user)."
+    },
+    "Followed by you." : {
+      "comment" : "The user-cell secondary line for another user that you already follow when their only follower is you."
+    },
+    "Followed by you... and one fan!" : {
+      "comment" : "The user-cell secondary line for your own profile when you have exactly one follower."
+    },
+    "Following" : {
+      "comment" : "The follow-status badge text shown after a person icon in the mention picker."
     },
     "Go To" : {
       "comment" : "The string for the 'Go To' context menu option."
@@ -67,6 +154,9 @@
     "Kurozora is for tracking your progress, it doesn't stream or host content. Posts asking where to watch or read often go unanswered. You can still post if you'd like." : {
       "comment" : "The subheadline string for the off-topic content warning pop-up."
     },
+    "Leaderboard" : {
+      "comment" : "The title shown on the reputation leaderboard screen."
+    },
     "Library.xml" : {
       "comment" : "The placeholder string for the library xml file name."
     },
@@ -88,8 +178,23 @@
     "Move From Another Service" : {
       "comment" : "The headline string for the Library Import view"
     },
+    "No Followers" : {
+      "comment" : "The empty-state title for the followers list."
+    },
+    "No Following" : {
+      "comment" : "The empty-state title for the following list."
+    },
+    "No Quotes" : {
+      "comment" : "The empty-state headline for the Quotes tab on the post activity screen."
+    },
+    "No Users" : {
+      "comment" : "The empty-state title for a generic users list (search / leaderboard)."
+    },
     "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion." : {
       "comment" : "The footer string for the Library Delete view."
+    },
+    "Open Apple Music Library" : {
+      "comment" : "The alert button that deep-links to the user's Apple Music library."
     },
     "Permanently delete your library." : {
       "comment" : "The subheadline string for the Library Delete view."
@@ -103,11 +208,77 @@
     "Post" : {
       "comment" : "The string for the 'Post' context menu option."
     },
+    "Post activity" : {
+      "comment" : "The navigation title for the post activity screen."
+    },
     "Post Anyway" : {
       "comment" : "The destructive action string for proceeding with an off-topic post anyway."
     },
     "Post Message" : {
       "comment" : "The string for the 'Post Message' context menu option."
+    },
+    "Pull to refresh %@ list." : {
+      "comment" : "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
+    },
+    "Pull to refresh favorites list!" : {
+      "comment" : "Pull-to-refresh title for the favorites list."
+    },
+    "Pull to refresh genres list!" : {
+      "comment" : "Pull-to-refresh title for the genres list."
+    },
+    "Pull to refresh message details and replies!" : {
+      "comment" : "Pull-to-refresh title for the feed message details screen (thread view)."
+    },
+    "Pull to refresh profile details!" : {
+      "comment" : "Pull-to-refresh title for the profile details screen."
+    },
+    "Pull to refresh reminders list!" : {
+      "comment" : "Pull-to-refresh title for the reminders list."
+    },
+    "Pull to refresh reviews!" : {
+      "comment" : "Pull-to-refresh title for the global reviews list on a media item."
+    },
+    "Pull to refresh the %@." : {
+      "comment" : "Pull-to-refresh title for a user list variant. '%@' is the list kind, e.g. 'followers', 'following'."
+    },
+    "Pull to refresh the cast." : {
+      "comment" : "Pull-to-refresh title for the cast list."
+    },
+    "Pull to refresh the characters." : {
+      "comment" : "Pull-to-refresh title for the characters list."
+    },
+    "Pull to refresh the episodes." : {
+      "comment" : "Pull-to-refresh title for the episodes list."
+    },
+    "Pull to refresh the leaderboard." : {
+      "comment" : "Pull-to-refresh title for the reputation leaderboard."
+    },
+    "Pull to refresh the people." : {
+      "comment" : "Pull-to-refresh title for the people list."
+    },
+    "Pull to refresh the reviews." : {
+      "comment" : "Pull-to-refresh title for a user's reviews list."
+    },
+    "Pull to refresh the seasons." : {
+      "comment" : "Pull-to-refresh title for the seasons list."
+    },
+    "Pull to refresh the studios." : {
+      "comment" : "Pull-to-refresh title for the studios list."
+    },
+    "Pull to refresh the users." : {
+      "comment" : "Pull-to-refresh title for the users list (follow / followers)."
+    },
+    "Pull to refresh your drafts!" : {
+      "comment" : "Pull-to-refresh title for the feed-message drafts list."
+    },
+    "Pull to refresh your explore feed!" : {
+      "comment" : "Pull-to-refresh title for the explore feed."
+    },
+    "Quote" : {
+      "comment" : "The string for the 'Quote' context menu option."
+    },
+    "Quotes" : {
+      "comment" : "The string for the 'Quotes' tab on the post activity screen."
     },
     "Rating" : {
       "comment" : "The string for the word 'rating'."
@@ -123,6 +294,72 @@
     },
     "Re-share" : {
       "comment" : "The string for the 'Re-share' context menu option."
+    },
+    "Re-shared by %@" : {
+      "comment" : "The string for the re-share attribution row."
+    },
+    "Re-shares" : {
+      "comment" : "The string for the 'Re-shares' tab on the post activity screen."
+    },
+    "Recent" : {
+      "comment" : "The string for the 'Recent' sort option on the post activity screen."
+    },
+    "Refreshing %@ list..." : {
+      "comment" : "Refresh-in-progress title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
+    },
+    "Refreshing %@..." : {
+      "comment" : "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'."
+    },
+    "Refreshing cast..." : {
+      "comment" : "Refresh-in-progress title for the cast list."
+    },
+    "Refreshing characters..." : {
+      "comment" : "Refresh-in-progress title for the characters list."
+    },
+    "Refreshing drafts..." : {
+      "comment" : "Refresh-in-progress title for the feed-message drafts list."
+    },
+    "Refreshing episodes..." : {
+      "comment" : "Refresh-in-progress title for the episodes list."
+    },
+    "Refreshing favorites list..." : {
+      "comment" : "Refresh-in-progress title for the favorites list."
+    },
+    "Refreshing genres list..." : {
+      "comment" : "Refresh-in-progress title for the genres list."
+    },
+    "Refreshing leaderboard..." : {
+      "comment" : "Refresh-in-progress title for the reputation leaderboard."
+    },
+    "Refreshing message details..." : {
+      "comment" : "Refresh-in-progress title for the feed message details top section."
+    },
+    "Refreshing message replies..." : {
+      "comment" : "Refresh-in-progress title for the feed message replies list."
+    },
+    "Refreshing people..." : {
+      "comment" : "Refresh-in-progress title for the people list."
+    },
+    "Refreshing profile details..." : {
+      "comment" : "Refresh-in-progress title for the profile details screen."
+    },
+    "Refreshing reminders list..." : {
+      "comment" : "Refresh-in-progress title for the reminders list."
+    },
+    "Refreshing reviews..." : {
+      "comment" : "Refresh-in-progress title for the reviews list."
+    },
+    "Refreshing seasons..." : {
+      "comment" : "Refresh-in-progress title for the seasons list."
+    },
+    "Refreshing studios..." : {
+      "comment" : "Refresh-in-progress title for the studios list."
+    },
+    "Refreshing users..." : {
+      "comment" : "Refresh-in-progress title for the users list."
+    },
+    "Refreshing your explore feed..." : {
+      "comment" : "Refresh-in-progress title for the explore feed."
     },
     "Reply" : {
       "comment" : "The string for the 'Reply' context menu option."
@@ -163,6 +400,9 @@
     "Share Review" : {
       "comment" : "The string for the 'Share Review' context menu option."
     },
+    "Share someone else's post on your timeline by reposting it. When you do, it'll show up here." : {
+      "comment" : "The empty-state subheadline for the Re-shares tab on the post activity screen."
+    },
     "Show fillers" : {
       "comment" : "The string for the 'Show fillers' context menu option."
     },
@@ -181,11 +421,23 @@
     "Thank you for rating." : {
       "comment" : "The string for the rating submitted description."
     },
-    "They will be able to see your public messages, but will no longer be able to engange with them. They will also not be able to follow or message you, and you wil not see notifications from them." : {
-      "comment" : "The subheadline string for the blocing a user"
+    "The leaderboard is empty. Pull to refresh or check back later." : {
+      "comment" : "The empty-state detail shown when the reputation leaderboard has no entries."
+    },
+    "They will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
+      "comment" : "The subheadline string for the blocking a user"
+    },
+    "this user" : {
+      "comment" : "The fallback word used in place of a user's display name when one is unavailable, lowercase form (mid-sentence)."
+    },
+    "This user" : {
+      "comment" : "The fallback word used in place of a user's display name when one is unavailable, sentence-case form."
     },
     "This will appear at the top of your profile and replace any previously pinned message. Are you sure?" : {
       "comment" : "The subheadline string for the pin message pop-up"
+    },
+    "Top" : {
+      "comment" : "The string for the 'Top' sort option on the post activity screen."
     },
     "Top Airing" : {
       "comment" : "The string for the 'top airing' browse option."
@@ -208,6 +460,15 @@
     "Top Upcoming" : {
       "comment" : "The string for the 'top upcoming' browse option."
     },
+    "Unblock" : {
+      "comment" : "The string for the word 'unblock'."
+    },
+    "Unblock %@" : {
+      "comment" : "The title prompting the user to unblock another user. The argument is the @username of the target user."
+    },
+    "Undo Re-share" : {
+      "comment" : "The string for the 'Undo Re-share' context menu option."
+    },
     "Unfollow" : {
       "comment" : "The string for the word 'unfollow'."
     },
@@ -226,8 +487,17 @@
     "View Guidelines" : {
       "comment" : "The action string for opening the community guidelines from the off-topic warning."
     },
+    "View post activity" : {
+      "comment" : "The string for the 'View post activity' context menu option."
+    },
+    "View posts" : {
+      "comment" : "The label for the opt-in button to view a blocked user's posts"
+    },
     "What’s on your mind?" : {
       "comment" : "The placeholder string for creating a new feed message."
+    },
+    "When you block someone, they will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
+      "comment" : "The intro string shown above the blocked users list"
     },
     "Write a comment..." : {
       "comment" : "The placeholder string for creating a new comment."
@@ -235,11 +505,31 @@
     "Write a Review" : {
       "comment" : "The string for the word 'write a review'."
     },
-    "You are not allowed to re-share a message more than once." : {
-      "comment" : "The subheadline string for the reshare message error pop-up"
+    "Yes, view profile" : {
+      "comment" : "The label for the opt-in button to view a blocked user's profile"
+    },
+    "You can view public posts from %@, but you are blocked from engaging with them. You also cannot follow or message %@." : {
+      "comment" : "Subheadline explaining what is restricted when the auth user has been blocked by another user. Both arguments are the @username of the blocking user.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You can view public posts from %1$@, but you are blocked from engaging with them. You also cannot follow or message %2$@."
+          }
+        }
+      }
     },
     "You have exceeded the character limit for a message." : {
       "comment" : "The subheadline string for the character limit reached error pop-up"
+    },
+    "You re-shared" : {
+      "comment" : "The string for the auth user's re-share attribution row."
+    },
+    "You, followed by you!" : {
+      "comment" : "The user-cell secondary line for your own profile when you have no followers yet."
+    },
+    "Your rating and review will be removed." : {
+      "comment" : "The body string for the confirmation dialog when the user clears their rating or deletes their review."
     }
   },
   "version" : "1.0"

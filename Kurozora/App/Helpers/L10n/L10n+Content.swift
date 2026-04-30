@@ -232,22 +232,6 @@ extension L10n {
 		table: "Content",
 		comment: "The subheadline string for the unpin message pop-up"
 	)
-	/// The headline string for the reshare message error pop-up.
-	///
-	/// - Tag: L10n-reshareMessageErrorHeadline
-	static let reshareMessageErrorHeadline: String = String(
-		localized: "Can't Re-Share",
-		table: "Content",
-		comment: "The headline string for the reshare message error pop-up"
-	)
-	/// The subheadline string for the reshare message error pop-up.
-	///
-	/// - Tag: L10n-reshareMessageErrorSubheadline
-	static let reshareMessageErrorSubheadline: String = String(
-		localized: "You are not allowed to re-share a message more than once.",
-		table: "Content",
-		comment: "The subheadline string for the reshare message error pop-up"
-	)
 	/// The subheadline string for the delete message pop-up.
 	///
 	/// - Tag: L10n-deleteMessageSubheadline
@@ -434,6 +418,120 @@ extension L10n {
 		localized: "Re-share",
 		table: "Content",
 		comment: "The string for the 'Re-share' context menu option."
+	)
+	/// The string for the 'Undo Re-share' context menu option.
+	///
+	/// - Tag: L10n-undoReshare
+	static let undoReshare: String = String(
+		localized: "Undo Re-share",
+		table: "Content",
+		comment: "The string for the 'Undo Re-share' context menu option."
+	)
+	/// The string for the 'Quote' context menu option.
+	///
+	/// - Tag: L10n-quote
+	static let quote: String = String(
+		localized: "Quote",
+		table: "Content",
+		comment: "The string for the 'Quote' context menu option."
+	)
+	/// The string for the 'View post activity' context menu option.
+	///
+	/// - Tag: L10n-viewPostActivity
+	static let viewPostActivity: String = String(
+		localized: "View post activity",
+		table: "Content",
+		comment: "The string for the 'View post activity' context menu option."
+	)
+	/// The string for the 'Post activity' navigation title.
+	///
+	/// - Tag: L10n-postActivity
+	static let postActivity: String = String(
+		localized: "Post activity",
+		table: "Content",
+		comment: "The navigation title for the post activity screen."
+	)
+	/// The string for the 'Quotes' tab.
+	///
+	/// - Tag: L10n-quotes
+	static let quotes: String = String(
+		localized: "Quotes",
+		table: "Content",
+		comment: "The string for the 'Quotes' tab on the post activity screen."
+	)
+	/// The string for the 'Re-shares' tab.
+	///
+	/// - Tag: L10n-reShares
+	static let reShares: String = String(
+		localized: "Re-shares",
+		table: "Content",
+		comment: "The string for the 'Re-shares' tab on the post activity screen."
+	)
+	/// The string for the re-share attribution row.
+	///
+	/// - Tag: L10n-reSharedBy
+	static func reSharedBy(_ user: String) -> String {
+		String(
+			localized: "Re-shared by \(user)",
+			table: "Content",
+			comment: "The string for the re-share attribution row."
+		)
+	}
+	/// The string for the auth user's re-share attribution row.
+	///
+	/// - Tag: L10n-youReShared
+	static let youReShared: String = String(
+		localized: "You re-shared",
+		table: "Content",
+		comment: "The string for the auth user's re-share attribution row."
+	)
+	/// The string for the 'Top' sort option.
+	///
+	/// - Tag: L10n-top
+	static let top: String = String(
+		localized: "Top",
+		table: "Content",
+		comment: "The string for the 'Top' sort option on the post activity screen."
+	)
+	/// The string for the 'Recent' sort option.
+	///
+	/// - Tag: L10n-recent
+	static let recent: String = String(
+		localized: "Recent",
+		table: "Content",
+		comment: "The string for the 'Recent' sort option on the post activity screen."
+	)
+	/// The empty-state headline for the Quotes tab.
+	///
+	/// - Tag: L10n-noQuotesHeadline
+	static let noQuotesHeadline: String = String(
+		localized: "No Quotes",
+		table: "Content",
+		comment: "The empty-state headline for the Quotes tab on the post activity screen."
+	)
+	/// The empty-state subheadline for the Quotes tab.
+	///
+	/// - Tag: L10n-noQuotesSubheadline
+	static let noQuotesSubheadline: String = String(
+		localized: "Add your take when sharing someone else's post and it'll show up here.",
+		table: "Content",
+		comment: "The empty-state subheadline for the Quotes tab on the post activity screen."
+	)
+	/// The empty-state headline for the Re-shares tab.
+	///
+	/// - Tag: L10n-amplifyPostsHeadline
+	static let amplifyPostsHeadline: String = String(
+		localized: "Amplify posts you like",
+		table: "Content",
+		comment: "The empty-state headline for the Re-shares tab on the post activity screen."
+	)
+	/// The empty-state subheadline for the Re-shares tab.
+	///
+	/// - Tag: L10n-amplifyPostsSubheadline
+	static let amplifyPostsSubheadline: String = String(
+		localized: "Share someone else's post on your timeline by reposting it. When you do, it'll show up here.",
+		table: "Content",
+		comment: "The empty-state subheadline for the Re-shares tab on the post activity screen."
 	)
 	/// The string for the 'Post' button.
 	///

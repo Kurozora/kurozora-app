@@ -136,16 +136,19 @@ extension FeedMessage {
 					await self.replyToMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let reShareAction = UIAction(title: L10n.reshare, image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
-				guard let self = self else { return }
-				Task {
-					await self.reShareMessage(via: viewController, userInfo: userInfo)
+			let reShareAction = UIDeferredMenuElement.uncached { [weak self] completion in
+				guard let self = self else {
+					completion([])
+					return
+				}
+				Task { @MainActor in
+					completion(self.reShareMenu(in: viewController, userInfo: userInfo).children)
 				}
 			}
 
 			menuElements.append(heartAction)
 			menuElements.append(replyAction)
-			menuElements.append(reShareAction)
+			menuElements.append(UIMenu(title: L10n.reshare, image: UIImage(systemName: "arrow.2.squarepath"), children: [reShareAction]))
 
 			// Edit and delete
 			let messageUserID = self.relationships.users.data.first?.id
@@ -297,22 +300,133 @@ extension FeedMessage {
 		self.openTextEditor(layout: .reply, via: viewController, userInfo: userInfo, isEditingMessage: false)
 	}
 
-	/// Presents the re-share view for the current message.
+	/// Presents the re-share menu for the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller hosting the menu.
+	///    - userInfo: Any information passed by the user.
+	///
+	/// - Returns: A `UIMenu` containing the re-share actions.
+	@MainActor
+	func reShareMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any]?) -> UIMenu {
+		let isSimpleReShared = self.attributes.isReShared
+
+		let simpleReShareAction = UIAction(
+			title: isSimpleReShared ? L10n.undoReshare : L10n.reshare,
+			image: UIImage(systemName: isSimpleReShared ? "arrow.uturn.backward" : "arrow.2.squarepath")
+		) { [weak self] _ in
+			guard let self = self else { return }
+			Task { @MainActor in
+				if self.attributes.isReShared {
+					await self.undoSimpleReShareMessage(via: viewController, userInfo: userInfo)
+				} else {
+					await self.simpleReShareMessage(via: viewController, userInfo: userInfo)
+				}
+			}
+		}
+
+		let quoteAction = UIAction(title: L10n.quote, image: UIImage(systemName: "quote.bubble")) { [weak self] _ in
+			guard let self = self else { return }
+			Task { @MainActor in
+				await self.quoteMessage(via: viewController, userInfo: userInfo)
+			}
+		}
+
+		let viewActivityAction = UIAction(title: L10n.viewPostActivity, image: UIImage(systemName: "chart.bar")) { [weak self] _ in
+			guard let self = self else { return }
+			self.visitPostActivity(from: viewController)
+		}
+
+		return UIMenu(title: "", children: [simpleReShareAction, quoteAction, viewActivityAction])
+	}
+
+	/// Presents the quote composer for the current message.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	@MainActor
-	func reShareMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+	func quoteMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		if !self.attributes.isReShared {
-			self.openTextEditor(layout: .reShare, via: viewController, userInfo: userInfo, isEditingMessage: false)
-		} else {
-			let viewController = viewController ?? UIApplication.topViewController
-			viewController?.presentAlertController(title: L10n.reshareMessageErrorHeadline, message: L10n.reshareMessageErrorSubheadline)
+		self.openTextEditor(layout: .quote, via: viewController, userInfo: userInfo, isEditingMessage: false)
+	}
+
+	/// Re-shares the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any information passed by the user.
+	@MainActor
+	func simpleReShareMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+		guard !self.attributes.isReShared else { return }
+
+		do {
+			let parentIdentity = FeedMessageIdentity(id: self.id)
+			let request = FeedMessageRequest(
+				content: "",
+				parentIdentity: parentIdentity,
+				isReply: false,
+				isReShare: true,
+				isNSFW: self.attributes.isNSFW,
+				isSpoiler: self.attributes.isSpoiler
+			)
+			let response = try await KService.postFeedMessage(request).response()
+
+			self.attributes.isReShared = true
+			self.attributes.metrics.reShareCount += 1
+			self.attributes.myReShareID = response.data.first?.id
+
+			if let indexPath = userInfo?["indexPath"] as? IndexPath {
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
+			}
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print(error.localizedDescription)
+		} catch {
+			print(error.localizedDescription)
 		}
+	}
+
+	/// Undoes the simple re-share of the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any information passed by the user.
+	@MainActor
+	func undoSimpleReShareMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+		guard let myReShareID = self.attributes.myReShareID else { return }
+
+		do {
+			let messageIdentity = FeedMessageIdentity(id: myReShareID)
+			_ = try await KService.deleteFeedMessage(messageIdentity).response()
+
+			self.attributes.isReShared = false
+			self.attributes.metrics.reShareCount = max(0, self.attributes.metrics.reShareCount - 1)
+			self.attributes.myReShareID = nil
+
+			if let indexPath = userInfo?["indexPath"] as? IndexPath {
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
+			}
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print(error.localizedDescription)
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	/// Presents the post-activity view of the message.
+	///
+	/// - Parameter viewController: The view controller initiating the segue.
+	func visitPostActivity(from viewController: UIViewController? = UIApplication.topViewController) {
+		let activityViewController = FeedMessageActivityViewController(feedMessage: self)
+		viewController?.show(activityViewController, sender: nil)
 	}
 
 	/// Presents the text editor on the given view controller with the specified layout.
@@ -336,7 +450,7 @@ extension FeedMessage {
 			case .reply:
 				editor.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
 				editor.opFeedMessage = self
-			case .reShare:
+			case .quote:
 				editor.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
 				editor.opFeedMessage = self
 			case .standard:
@@ -363,7 +477,8 @@ extension FeedMessage {
 		if self.attributes.isReply {
 			self.openTextEditor(layout: .reply, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		} else if self.attributes.isReShare {
-			self.openTextEditor(layout: .reShare, via: viewController, userInfo: userInfo, isEditingMessage: true)
+			guard !self.attributes.content.isEmpty else { return }
+			self.openTextEditor(layout: .quote, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		} else {
 			self.openTextEditor(layout: .standard, via: viewController, userInfo: userInfo, isEditingMessage: true)
 		}

@@ -79,6 +79,11 @@ extension Notification.Name {
 	static var KFMDidDelete: NSNotification.Name {
 		return NSNotification.Name(#function)
 	}
+
+	/// A notification posted when the feed message activity's sort changes.
+	static var KFMActivitySortDidChange: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
 }
 
 // MARK: - Notifications

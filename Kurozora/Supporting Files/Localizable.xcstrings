@@ -4,6 +4,9 @@
     "%@ total series" : {
       "comment" : "The string for the word '%@ total series'."
     },
+    "%lld Selected" : {
+      "comment" : "The label showing how many items are selected in batch-edit mode."
+    },
     "About" : {
       "comment" : "The string for the word 'about'."
     },
@@ -15,6 +18,12 @@
     },
     "Add" : {
       "comment" : "The string for the word 'add'."
+    },
+    "Add reminder" : {
+      "comment" : "The accessibility label for the reminder button when no reminder is set."
+    },
+    "Add to favorites" : {
+      "comment" : "The accessibility label for the favorite button when the item is not favorited."
     },
     "Add to Library" : {
       "comment" : "The string for the word 'add to library'."
@@ -30,6 +39,9 @@
     },
     "Aliases" : {
       "comment" : "The string for the word 'aliases'."
+    },
+    "Always Show Title" : {
+      "comment" : "The view option that always shows the series title beneath the poster in the library compact layout."
     },
     "Anime" : {
       "comment" : "The string for the word 'anime'."
@@ -79,6 +91,9 @@
     "Catalog" : {
       "comment" : "The string for the word 'catalog'."
     },
+    "Chapters" : {
+      "comment" : "The column header for the literature item's chapter count in the library table layout."
+    },
     "Characteristics" : {
       "comment" : "The string for the word 'characteristics'."
     },
@@ -112,8 +127,20 @@
     "Copyright" : {
       "comment" : "The string for the word 'copyright'."
     },
+    "Could Not Update Favorites" : {
+      "comment" : "The error alert title when a favorites batch update fails."
+    },
+    "Could Not Update Library" : {
+      "comment" : "The error alert title when a library batch update fails."
+    },
+    "Could Not Update Reminders" : {
+      "comment" : "The error alert title when a reminders batch update fails."
+    },
     "Country" : {
       "comment" : "The string for the word 'country'."
+    },
+    "Date Added" : {
+      "comment" : "The column header for the date the item was added to the library."
     },
     "Debug" : {
       "comment" : "The string for the word 'debug'."
@@ -127,8 +154,17 @@
     "Defunct" : {
       "comment" : "The string for the word 'defunct'."
     },
+    "Delete %lld Items" : {
+      "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected."
+    },
+    "Delete Item" : {
+      "comment" : "The destructive button shown in the delete confirmation alert when one item is selected."
+    },
     "Delete Permanently" : {
       "comment" : "The string for the phrase 'Delete Permanently'."
+    },
+    "Deselect All" : {
+      "comment" : "The leading nav-bar action that deselects every selected library item in batch-edit mode."
     },
     "Discard" : {
       "comment" : "The string for the word 'discard'."
@@ -148,6 +184,9 @@
     "Duration" : {
       "comment" : "The string for the word 'duration'."
     },
+    "Editions" : {
+      "comment" : "The column header for the game item's edition count in the library table layout."
+    },
     "Emoji" : {
 
     },
@@ -165,6 +204,9 @@
     },
     "Explore" : {
       "comment" : "The string for the word 'explore'."
+    },
+    "Favorite" : {
+      "comment" : "The accessibility label for the favorite column or control in the library table layout."
     },
     "Favorites" : {
       "comment" : "The string for the word 'Favorites'"
@@ -203,6 +245,15 @@
     "Follower" : {
       "comment" : "The string for the word 'follower'."
     },
+    "followers" : {
+      "comment" : "The lowercase plural string for the word 'followers', suitable for inlining mid-sentence."
+    },
+    "Followers" : {
+      "comment" : "The plural string for the word 'followers'."
+    },
+    "following" : {
+      "comment" : "The lowercase string for the word 'following', suitable for inlining mid-sentence."
+    },
     "Following" : {
       "comment" : "The string for the word 'following'."
     },
@@ -221,6 +272,9 @@
     "General" : {
       "comment" : "The string for the word 'general'."
     },
+    "Genres" : {
+      "comment" : "The column header for the item's genres in the library table layout."
+    },
     "Guest" : {
       "comment" : "The string for the word 'Guest'."
     },
@@ -230,8 +284,14 @@
     "Headquarters" : {
       "comment" : "The string for the word 'headquarters'."
     },
+    "Hide" : {
+      "comment" : "The string for the word 'Hide'."
+    },
     "Hide from Public" : {
       "comment" : "The string for the phrase 'hide from public'."
+    },
+    "Hide Title" : {
+      "comment" : "The view option that hides the series title in the library compact layout."
     },
     "Home" : {
 
@@ -244,6 +304,9 @@
     },
     "Image Playground" : {
 
+    },
+    "Image Playground ✨" : {
+      "comment" : "The action sheet button for generating a new image with Image Playground."
     },
     "Images" : {
       "comment" : "The string for the word 'images'."
@@ -332,6 +395,9 @@
     "Motion" : {
       "comment" : "The string for the word 'motion'."
     },
+    "Move to" : {
+      "comment" : "The string for the menu title that lets the user pick a target library status."
+    },
     "My Favorites" : {
       "comment" : "The string for the word 'My Favorites'"
     },
@@ -383,6 +449,9 @@
     "People" : {
       "comment" : "The string for the word 'people'."
     },
+    "Photo Library 🏛" : {
+      "comment" : "The action sheet button for picking an existing photo from the library."
+    },
     "Photos" : {
 
     },
@@ -407,11 +476,17 @@
     "Profile" : {
       "comment" : "The string for the word 'profile'."
     },
+    "Progress" : {
+      "comment" : "The column header for the item's progress indicator in the library table layout."
+    },
     "Quikly launch the Kurozora app" : {
 
     },
     "Rank" : {
       "comment" : "The string for the word 'rank'."
+    },
+    "Rated" : {
+      "comment" : "The string for the word 'rated'."
     },
     "Rating" : {
       "comment" : "The string for the word 'rating'."
@@ -437,11 +512,17 @@
     "Remind Me" : {
       "comment" : "The string for the word 'Remind Me'"
     },
+    "Reminder" : {
+      "comment" : "The accessibility label for the reminder column or control in the library table layout."
+    },
     "Reminders" : {
       "comment" : "The string for the word 'Reminders'"
     },
     "Remove" : {
       "comment" : "The string for the word 'remove'."
+    },
+    "Remove from favorites" : {
+      "comment" : "The accessibility label for the favorite button when the item is already favorited."
     },
     "Remove from Library" : {
       "comment" : "The string for the word 'remove from library'."
@@ -449,8 +530,14 @@
     "Remove image" : {
 
     },
+    "Remove reminder" : {
+      "comment" : "The accessibility label for the reminder button when a reminder is set."
+    },
     "Reset" : {
       "comment" : "The string for the word 'reset'."
+    },
+    "Reset to Default" : {
+      "comment" : "The destructive action that restores the default set of library table view options."
     },
     "Reviews" : {
       "comment" : "The string for the word 'reviews'."
@@ -492,6 +579,9 @@
     "Search Kind" : {
 
     },
+    "Search Library" : {
+      "comment" : "The title and placeholder for the library search screen."
+    },
     "Search Scope" : {
 
     },
@@ -507,6 +597,12 @@
     "Security" : {
       "comment" : "The string for the word 'security'."
     },
+    "Select All" : {
+      "comment" : "The leading nav-bar action that selects every loaded library item in batch-edit mode."
+    },
+    "Select Items" : {
+      "comment" : "The label shown in the bottom batch-edit toolbar when no items are selected."
+    },
     "Send" : {
       "comment" : "The string for the word 'send'."
     },
@@ -516,11 +612,26 @@
     "Share" : {
       "comment" : "The string for the word 'share'."
     },
+    "Show" : {
+      "comment" : "The string for the word 'Show' as the verb opposite of Hide."
+    },
+    "Show more" : {
+      "comment" : "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped."
+    },
+    "Show Poster" : {
+      "comment" : "The view option that toggles whether the title cell shows a poster."
+    },
     "Show to Public" : {
       "comment" : "The string for the phrase 'show to public'."
     },
     "Shows" : {
       "comment" : "The string for the word 'shows'."
+    },
+    "Shows title only when poster art isn't available" : {
+      "comment" : "The subtitle explaining the 'Smart' compact title-visibility option."
+    },
+    "Smart" : {
+      "comment" : "The view option that hides the series title when real poster art is available in the library compact layout."
     },
     "Social" : {
       "comment" : "The string for the word 'social'."
@@ -537,11 +648,17 @@
     "Sorting" : {
       "comment" : "The string for the word 'Sorting'."
     },
+    "Status" : {
+      "comment" : "The column header for the item's airing or publishing status in the library table layout."
+    },
     "Stickers" : {
       "comment" : "The string for the word 'stickers'."
     },
     "Stop" : {
       "comment" : "The string for the word 'stop'."
+    },
+    "Stop Reminding" : {
+      "comment" : "The string for the phrase 'Stop Reminding'."
     },
     "Studio" : {
       "comment" : "The string for the word 'studio'."
@@ -558,11 +675,17 @@
     "Successor" : {
       "comment" : "The string for the word 'successor'."
     },
+    "Suggestions" : {
+      "comment" : "The string for the word 'suggestions'."
+    },
     "Support Us" : {
       "comment" : "The string for the word 'support us'."
     },
     "Synopsis" : {
       "comment" : "The string for the word 'synopsis'."
+    },
+    "Take Photo 📷" : {
+      "comment" : "The action sheet button for capturing a new photo from the camera."
     },
     "TBA" : {
       "comment" : "The string for the word 'tba'."
@@ -580,8 +703,14 @@
         }
       }
     },
+    "These items will be deleted from your library." : {
+      "comment" : "The confirmation alert message shown when removing multiple items from the library."
+    },
+    "This item will be deleted from your library." : {
+      "comment" : "The confirmation alert message shown when removing a single item from the library."
+    },
     "Title" : {
-
+      "comment" : "The column header for the item's title in the library table layout."
     },
     "Today" : {
       "comment" : "The string for the word 'today'."
@@ -591,6 +720,12 @@
     },
     "TV Rating" : {
       "comment" : "The string for the word 'TV rating'."
+    },
+    "Type" : {
+      "comment" : "The column header for the item's media type in the library table layout."
+    },
+    "Unfavorite" : {
+      "comment" : "The string for the word 'Unfavorite'."
     },
     "Update Library Status" : {
       "comment" : "The string for the word 'update library status'."
@@ -619,8 +754,17 @@
     "View on YouTube" : {
       "comment" : "The string for the word 'View on YouTube'."
     },
+    "View Options" : {
+      "comment" : "The submenu title for toggling view options in the library table layout."
+    },
     "View Subscription" : {
       "comment" : "The string for the word 'View Subscription'."
+    },
+    "Visibility" : {
+      "comment" : "The accessibility label for the visibility column or control in the library table layout."
+    },
+    "Volumes" : {
+      "comment" : "The column header for the literature item's volume count in the library table layout."
     },
     "Watched" : {
       "comment" : "The string for the word 'watched'."
@@ -630,6 +774,12 @@
     },
     "What’s New in Kurozora" : {
       "comment" : "The string for the word 'What’s New'."
+    },
+    "Year" : {
+      "comment" : "The column header for the item's release year in the library table layout."
+    },
+    "Yes, sign me out 🤨" : {
+      "comment" : "The destructive confirmation button for the sign-out alert."
     },
     "Your Library" : {
       "comment" : "The string for the word 'your library'."

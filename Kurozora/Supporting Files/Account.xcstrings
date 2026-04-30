@@ -402,6 +402,162 @@
         }
       }
     },
+    "onboarding.twoFactorExpiredMessage" : {
+      "comment" : "Alert message shown when the two-factor authentication challenge expires.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your verification session has expired. Please sign in again."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorExpiredTitle" : {
+      "comment" : "Alert title shown when the two-factor authentication challenge expires.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Session Expired"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorHeadline" : {
+      "comment" : "Headline shown on the two-factor authentication challenge screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Two-Factor Authentication"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorInvalidCode" : {
+      "comment" : "Inline error shown beneath the input field when the two-factor code is incorrect.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Incorrect code. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorInvalidFormat" : {
+      "comment" : "Inline error shown when the recovery code is not in the expected format.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Recovery codes use the format XXXXXXXXXX-XXXXXXXXXX."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorNetworkError" : {
+      "comment" : "Inline error shown on the two-factor screen when the verification request fails due to a network error.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Network error. Check your connection and try again."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorRecoveryPlaceholder" : {
+      "comment" : "Placeholder showing the format of a recovery code on the two-factor challenge screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "XXXXXXXXXX-XXXXXXXXXX"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorSubheadlineRecovery" : {
+      "comment" : "Subheadline shown when the two-factor challenge expects a recovery code.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enter one of your recovery codes."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorSubheadlineTOTP" : {
+      "comment" : "Subheadline shown when the two-factor challenge expects a 6-digit TOTP code.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enter the 6-digit code from your authenticator app."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorTOTPPlaceholder" : {
+      "comment" : "Placeholder shown in the TOTP entry field of the two-factor challenge screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "000 000"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorUseRecoveryCode" : {
+      "comment" : "Toggle button title that switches the two-factor challenge screen from TOTP to recovery code entry.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Use a recovery code instead"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorUseTOTP" : {
+      "comment" : "Toggle button title that switches the two-factor challenge screen from recovery code to TOTP entry.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Use authenticator code instead"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorVerifyButton" : {
+      "comment" : "Title for the navigation bar verify button on the two-factor challenge screen.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Verify ✅"
+          }
+        }
+      }
+    },
     "Open in Settings app" : {
       "comment" : "The string for the phrase 'Open in Settings app'."
     },
@@ -423,14 +579,23 @@
     "Product ids not set, call setProductIDs method!" : {
       "comment" : "The message string for the product not found."
     },
+    "Pull to refresh your sessions!" : {
+      "comment" : "Pull-to-refresh title for the active sessions list."
+    },
     "Redeem your code using the camera on your device." : {
       "comment" : "The headline string for the Redeem view."
     },
     "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use." : {
       "comment" : "The footer string for the Redeem view."
     },
+    "Refreshing sessions..." : {
+      "comment" : "Refresh-in-progress title for the active sessions list."
+    },
     "Require Authentication" : {
       "comment" : "The string for 'Require Authentication' settings."
+    },
+    "See how your data is managed..." : {
+      "comment" : "The tappable legal footer link shown on the onboarding footer cell."
     },
     "Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have." : {
       "comment" : "The subheadline string for the Sign in with Apple view."
@@ -449,6 +614,9 @@
     },
     "This device" : {
       "comment" : "The string for 'this device'."
+    },
+    "Unlock Kurozora" : {
+      "comment" : "The unlock button title for the biometric-authentication screen."
     },
     "You are not authorized to make payments. In-App Purchases may be restricted on your device." : {
       "comment" : "The message string for IAP is disabled."

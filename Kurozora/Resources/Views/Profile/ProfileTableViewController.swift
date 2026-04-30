@@ -547,8 +547,10 @@ extension ProfileTableViewController {
 
 		let feedMessageCell: BaseFeedMessageCell?
 		let feedMessage = self.feedMessages[indexPath.row]
+		let isSimpleReShare = feedMessage.attributes.isReShare && feedMessage.attributes.content.isEmpty
+		let isQuoteReShare = feedMessage.attributes.isReShare && !feedMessage.attributes.content.isEmpty
 
-		if feedMessage.attributes.isReShare {
+		if isQuoteReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageReShareCell.self, for: indexPath)
 		} else {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath)
@@ -560,6 +562,10 @@ extension ProfileTableViewController {
 
 		if let reShareCell = feedMessageCell as? FeedMessageReShareCell {
 			reShareCell.configureCell(using: feedMessage, isOnProfile: true, isExpanded: true, isOPExpanded: true)
+		} else if isSimpleReShare {
+			let parent = feedMessage.relationships.parent?.data.first ?? feedMessage
+			let resharer = feedMessage.relationships.users.data.first
+			feedMessageCell?.configureCell(using: parent, isOnProfile: true, isExpanded: true, attributedTo: resharer)
 		} else {
 			feedMessageCell?.configureCell(using: feedMessage, isOnProfile: true, isExpanded: true)
 		}
@@ -677,10 +683,21 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async {
-		if let indexPath = self.tableView.indexPath(for: cell) {
-			await self.feedMessages[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
-		}
+	func baseFeedMessageCellReShareMenu(_ cell: BaseFeedMessageCell) -> UIMenu? {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return nil }
+		let feedMessage = self.feedMessages[indexPath.row]
+
+		return feedMessage.reShareMenu(in: self, userInfo: [
+			"indexPath": indexPath,
+			"liveReShareEnabled": cell.liveReShareEnabled
+		])
+	}
+
+	func baseFeedMessageCellDidTapAttribution(_ cell: BaseFeedMessageCell) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard let resharer = self.feedMessages[indexPath.row].relationships.users.data.first else { return }
+		let profileTableViewController = ProfileTableViewController()(with: resharer)
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {

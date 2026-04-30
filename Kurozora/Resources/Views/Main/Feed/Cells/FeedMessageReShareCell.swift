@@ -68,7 +68,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false) {
+	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false, attributedTo: User? = nil) {
 		self.configureCell(using: feedMessage, isOnProfile: isOnProfile, isExpanded: isExpanded, isOPExpanded: false)
 	}
 

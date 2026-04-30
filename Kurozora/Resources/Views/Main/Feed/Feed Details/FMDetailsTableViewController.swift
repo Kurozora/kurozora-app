@@ -281,7 +281,10 @@ extension FMDetailsTableViewController {
 		switch indexPath.section {
 		case 0:
 			let feedMessageCell: BaseFeedMessageCell!
-			if self.feedMessage.attributes.isReShare {
+			let isSimpleReShare = self.feedMessage.attributes.isReShare && self.feedMessage.attributes.content.isEmpty
+			let isQuoteReShare = self.feedMessage.attributes.isReShare && !self.feedMessage.attributes.content.isEmpty
+
+			if isQuoteReShare {
 				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageReShareCell.self, for: indexPath)
 			} else {
 				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: FeedMessageCell.self, for: indexPath)
@@ -294,6 +297,10 @@ extension FMDetailsTableViewController {
 				let parentID = self.feedMessage.relationships.parent?.data.first?.id
 				let isOPExpanded = parentID.map { self.expandedOPIDs.contains($0) } ?? false
 				reShareCell.configureCell(using: self.feedMessage, isOnProfile: false, isExpanded: true, isOPExpanded: isOPExpanded)
+			} else if isSimpleReShare {
+				let parent = self.feedMessage.relationships.parent?.data.first ?? self.feedMessage
+				let resharer = self.feedMessage.relationships.users.data.first
+				feedMessageCell.configureCell(using: parent, isOnProfile: false, isExpanded: true, attributedTo: resharer)
 			} else {
 				feedMessageCell.configureCell(using: self.feedMessage, isOnProfile: false, isExpanded: true)
 			}
@@ -377,15 +384,26 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async {
-		if let indexPath = self.tableView.indexPath(for: cell) {
-			switch indexPath.section {
-			case 0:
-				await self.feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
-			default:
-				await self.feedMessageReplies[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
-			}
-		}
+	func baseFeedMessageCellReShareMenu(_ cell: BaseFeedMessageCell) -> UIMenu? {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return nil }
+		let feedMessage: FeedMessage = indexPath.section == 0
+			? self.feedMessage
+			: self.feedMessageReplies[indexPath.row]
+		return feedMessage.reShareMenu(in: self, userInfo: [
+			"indexPath": indexPath,
+			"liveReShareEnabled": cell.liveReShareEnabled
+		])
+	}
+
+	func baseFeedMessageCellDidTapAttribution(_ cell: BaseFeedMessageCell) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		let envelope: FeedMessage = indexPath.section == 0
+			? self.feedMessage
+			: self.feedMessageReplies[indexPath.row]
+
+		guard let resharer = envelope.relationships.users.data.first else { return }
+		let profileTableViewController = ProfileTableViewController()(with: resharer)
+		self.show(profileTableViewController, sender: nil)
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {

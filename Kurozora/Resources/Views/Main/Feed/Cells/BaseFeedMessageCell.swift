@@ -14,12 +14,13 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	// MARK: Feed Message Base
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) async
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async
+	func baseFeedMessageCellReShareMenu(_ cell: BaseFeedMessageCell) -> UIMenu?
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didUpdateContentLayout sender: AnyObject)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject)
+	func baseFeedMessageCellDidTapAttribution(_ cell: BaseFeedMessageCell)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
@@ -29,6 +30,8 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 extension BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject) {}
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject) {}
+	func baseFeedMessageCellReShareMenu(_ cell: BaseFeedMessageCell) -> UIMenu? { nil }
+	func baseFeedMessageCellDidTapAttribution(_ cell: BaseFeedMessageCell) {}
 }
 
 class BaseFeedMessageCell: KTableViewCell {
@@ -170,7 +173,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
-	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false) {
+	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false, attributedTo: User? = nil) {
 		self.isExpanded = isExpanded
 
 		guard !self.warningIsHidden else {
@@ -190,7 +193,14 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.statusImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
 
 		// Configure status label
-		if isOnProfile, feedMessage.attributes.isPinned {
+		if let resharer = attributedTo {
+			let isCurrentUser = resharer.id == User.current?.id
+
+			self.statusImageView.image = UIImage(systemName: "arrow.2.squarepath")
+			self.statusLabel.text = isCurrentUser ? L10n.youReShared : L10n.reSharedBy("@\(resharer.attributes.slug)")
+			self.statusStackView.isHidden = false
+			self.configureAttributionTapGesture()
+		} else if isOnProfile, feedMessage.attributes.isPinned {
 			self.statusImageView.image = UIImage(systemName: "pin.fill")
 			self.statusLabel.text = "Pinned"
 			self.statusStackView.isHidden = false
@@ -277,6 +287,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure re-share button
 		self.configureReShareButton(for: feedMessage)
+		self.configureReShareMenu()
 
 		// Configure warning messages
 		self.configureWarnings(for: feedMessage)
@@ -328,6 +339,36 @@ class BaseFeedMessageCell: KTableViewCell {
 			self.shareButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 			self.shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
+	}
+
+	/// Configures the attribution row tap gesture.
+	fileprivate func configureAttributionTapGesture() {
+		self.statusStackView.isUserInteractionEnabled = true
+
+		if self.statusStackView.gestureRecognizers?.isEmpty ?? true {
+			let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.attributionTapped(_:)))
+			recognizer.numberOfTouchesRequired = 1
+			recognizer.numberOfTapsRequired = 1
+			self.statusStackView.addGestureRecognizer(recognizer)
+		}
+	}
+
+	@objc private func attributionTapped(_ sender: UITapGestureRecognizer) {
+		self.delegate?.baseFeedMessageCellDidTapAttribution(self)
+	}
+
+	/// Configures the re-share menu.
+	fileprivate func configureReShareMenu() {
+		self.shareButton.showsMenuAsPrimaryAction = true
+		self.shareButton.menu = UIMenu(title: "", children: [
+			UIDeferredMenuElement.uncached { [weak self] completion in
+				guard let self = self, let menu = self.delegate?.baseFeedMessageCellReShareMenu(self) else {
+					completion([])
+					return
+				}
+				completion(menu.children)
+			}
+		])
 	}
 
 	/// Configures the warning messages.
@@ -426,10 +467,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
-		Task {
-			await self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
-			sender.animateBounce()
-		}
+		sender.animateBounce()
 	}
 }
 

@@ -16,6 +16,6 @@ enum FeedMessageEditorLayout: Int {
 	/// Indicates the layout of a reply message.
 	case reply = 1
 
-	/// Indicates the layout of a re-share message.
-	case reShare = 2
+	/// Indicates the layout of a quote message.
+	case quote = 2
 }
