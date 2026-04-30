@@ -12,6 +12,7 @@ class PrivacySettingsViewController: SubSettingsViewController {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case legalSegue
+		case blockedUsersSegue
 	}
 
 	// MARK: - Initializers
@@ -41,6 +42,10 @@ class PrivacySettingsViewController: SubSettingsViewController {
 		switch identifier {
 		case .legalSegue:
 			return LegalViewController()
+		case .blockedUsersSegue:
+			let usersListCollectionViewController = UsersListCollectionViewController()
+			usersListCollectionViewController.usersListFetchType = .blocked
+			return usersListCollectionViewController
 		}
 	}
 
@@ -48,7 +53,7 @@ class PrivacySettingsViewController: SubSettingsViewController {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .legalSegue: break
+		case .legalSegue, .blockedUsersSegue: break
 		}
 	}
 }
@@ -93,6 +98,12 @@ extension PrivacySettingsViewController {
 			}
 			cell.configure(title: L10n.privacy)
 			return cell
+		case .blockedUsers:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
+			}
+			cell.configure(title: L10n.blockedUsers)
+			return cell
 		}
 	}
 
@@ -103,6 +114,8 @@ extension PrivacySettingsViewController {
 		case .inAppPrivacy:
 			return "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions."
 		case .settingsPrivacy:
+			return nil
+		case .accountPrivacy:
 			return nil
 		}
 	}
@@ -129,6 +142,8 @@ extension PrivacySettingsViewController {
 			UIApplication.shared.kOpen(nil, deepLink: settingsUrl)
 		case .privacy:
 			self.show(SegueIdentifiers.legalSegue, sender: nil)
+		case .blockedUsers:
+			self.show(SegueIdentifiers.blockedUsersSegue, sender: nil)
 		}
 	}
 }
@@ -138,12 +153,14 @@ private extension PrivacySettingsViewController {
 	/// List of privacy settings sections.
 	enum Section: Int, CaseIterable {
 		case settingsPrivacy = 0
+		case accountPrivacy
 		case inAppPrivacy
 
 		/// List of rows in the section.
 		var rows: [Row] {
 			switch self {
 			case .settingsPrivacy: return [.openInSettings]
+			case .accountPrivacy: return [.blockedUsers]
 			case .inAppPrivacy: return [.privacy]
 			}
 		}
@@ -152,6 +169,7 @@ private extension PrivacySettingsViewController {
 	/// List of privacy settings rows.
 	enum Row: Int, CaseIterable {
 		case openInSettings = 0
+		case blockedUsers
 		case privacy
 	}
 }

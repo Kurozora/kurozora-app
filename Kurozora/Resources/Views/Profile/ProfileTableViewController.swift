@@ -54,6 +54,28 @@ class ProfileTableViewController: KTableViewController {
 
 	var feedMessages: [FeedMessage] = []
 
+	var revealBlockedPosts: Bool = false
+	var hasCompletedInitialFeedFetch: Bool = false
+	/// Whether the blocked-by banner should currently render above the posts section.
+	///
+	/// Mutually exclusive with the opt-in placeholder: when the auth user has also blocked
+	/// this profile's user, the banner is deferred until the auth user reveals the posts.
+	private var shouldShowBlockedByBanner: Bool {
+		guard self.hasCompletedInitialFeedFetch else { return false }
+		guard self.user?.attributes.isBlockedBy == true else { return false }
+
+		if self.user?.attributes.blockStatus == .blocked, !self.revealBlockedPosts {
+			return false
+		}
+		return true
+	}
+
+	/// Whether the blocked opt-in placeholder should currently render in the posts section.
+	private var shouldShowBlockedOptIn: Bool {
+		guard self.hasCompletedInitialFeedFetch else { return false }
+		return self.user?.attributes.blockStatus == .blocked && !self.revealBlockedPosts
+	}
+
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
 	/// The next page url of the pagination.
@@ -117,6 +139,7 @@ class ProfileTableViewController: KTableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
@@ -155,6 +178,7 @@ class ProfileTableViewController: KTableViewController {
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserProfileDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
 
 		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
 			self.sidebarBottomProfileView?.isSelected = false
@@ -170,6 +194,17 @@ class ProfileTableViewController: KTableViewController {
 			profileImage: notification.userInfo?["profileImage"] as? UIImage,
 			bannerImage: notification.userInfo?["bannerImage"] as? UIImage
 		)
+	}
+
+	@objc private func handleBlockStatusDidChange(_ notification: Notification) {
+		guard let changedUserID = notification.object as? KurozoraItemID,
+			  changedUserID == self.user?.id
+		else { return }
+
+		// Reset opt-in state and rebuild the table to reflect the new block status.
+		self.revealBlockedPosts = false
+		self.profileHeaderView.updateFollowButton(for: self.user)
+		self.tableView.reloadData()
 	}
 
 	// MARK: - Functions
@@ -296,6 +331,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	func endFetch() {
+		self.hasCompletedInitialFeedFetch = true
 		self.tableView.reloadData {
 			self.isRequestInProgress = false
 			self._prefersActivityIndicatorHidden = true
@@ -379,9 +415,21 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
+	func revealBlockedPostsSection(at section: Int) {
+		self.revealBlockedPosts = true
+		self.tableView.reloadData()
+	}
+
 	// MARK: - Actions
 	private func followButtonPressed() {
-		let userIdentity = UserIdentity(id: self.user.id)
+		guard let user = self.user else { return }
+
+		if user.attributes.blockStatus == .blocked {
+			user.confirmBlock(via: self, userInfo: nil)
+			return
+		}
+
+		let userIdentity = UserIdentity(id: user.id)
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -392,6 +440,9 @@ class ProfileTableViewController: KTableViewController {
 				let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 				self.user?.attributes.update(using: followUpdateResponse.data)
 				self.updateFollowButton()
+			} catch let error as APIError {
+				self.presentAlertController(title: nil, message: error.message)
+				print("-----", error.localizedDescription)
 			} catch {
 				print("-----", error.localizedDescription)
 			}
@@ -451,11 +502,49 @@ class ProfileTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		guard self.user != nil else { return 1 }
+
+		var sections = 0
+		if self.shouldShowBlockedByBanner {
+			sections += 1
+		}
+		sections += 1 // posts (or its placeholder)
+		return sections
+	}
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if self.shouldShowBlockedByBanner, section == 0 {
+			return 1
+		}
+
+		if self.shouldShowBlockedOptIn {
+			return 1
+		}
+
 		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if self.shouldShowBlockedByBanner, indexPath.section == 0 {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedByBannerTableViewCell.self, for: indexPath) as? ProfileBlockedByBannerTableViewCell else {
+				return UITableViewCell()
+			}
+
+			cell.configure(with: self.user.attributes.username)
+			return cell
+		}
+
+		if self.shouldShowBlockedOptIn {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedOptInTableViewCell.self, for: indexPath) as? ProfileBlockedOptInTableViewCell else {
+				return UITableViewCell()
+			}
+
+			cell.delegate = self
+			cell.configure(with: self.user.attributes.username)
+			return cell
+		}
+
 		let feedMessageCell: BaseFeedMessageCell?
 		let feedMessage = self.feedMessages[indexPath.row]
 
@@ -489,7 +578,9 @@ extension ProfileTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return [
 			FeedMessageCell.self,
-			FeedMessageReShareCell.self
+			FeedMessageReShareCell.self,
+			ProfileBlockedOptInTableViewCell.self,
+			ProfileBlockedByBannerTableViewCell.self
 		]
 	}
 }
@@ -561,6 +652,14 @@ extension ProfileTableViewController {
 		if !imageURLs.isEmpty {
 			ImagePrefetcher(urls: imageURLs).start()
 		}
+	}
+}
+
+// MARK: - ProfileBlockedOptInTableViewCellDelegate
+extension ProfileTableViewController: ProfileBlockedOptInTableViewCellDelegate {
+	func profileBlockedOptInTableViewCellDidPressViewPosts(_ cell: ProfileBlockedOptInTableViewCell) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		self.revealBlockedPostsSection(at: indexPath.section)
 	}
 }
 

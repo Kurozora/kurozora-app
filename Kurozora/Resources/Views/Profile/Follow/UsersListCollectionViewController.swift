@@ -29,6 +29,9 @@ enum UsersListFetchType {
 
 	/// The global reputation leaderboard.
 	case reputation
+
+	/// The auth user's blocked users list.
+	case blocked
 }
 
 class UsersListCollectionViewController: ListCollectionViewController, SectionFetchable {
@@ -91,7 +94,15 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// MARK: Empty state
-	override var emptyStateImage: UIImage { .Empty.follow }
+	override var emptyStateImage: UIImage {
+		switch self.usersListFetchType {
+		case .blocked:
+			let configuration = UIImage.SymbolConfiguration(pointSize: 96, weight: .regular)
+			return UIImage(systemName: "xmark.shield", withConfiguration: configuration) ?? .Empty.follow
+		case .follow, .search, .reputation:
+			return .Empty.follow
+		}
+	}
 
 	override var emptyStateTitle: String {
 		switch self.usersListFetchType {
@@ -102,6 +113,8 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			}
 		case .search, .reputation:
 			return L10n.usersListEmptyTitle
+		case .blocked:
+			return L10n.blockedUsers
 		}
 	}
 
@@ -128,6 +141,8 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			return L10n.usersListSearchEmptyDetail
 		case .reputation:
 			return L10n.leaderboardEmptyDetail
+		case .blocked:
+			return L10n.blockedUsersIntro
 		}
 	}
 
@@ -144,6 +159,9 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			self.title = L10n.reputationLeaderboardTitle
 		case .follow, .search:
 			self.title = self.usersListType.localizedTitle
+		case .blocked:
+			self.title = L10n.blockedUsers
+			NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
 		}
 
 		if self.mentionSelectionDelegate != nil {
@@ -159,6 +177,8 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 		case .reputation:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLeaderboard)
+		case .blocked:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 		}
 		#endif
 	}
@@ -170,6 +190,26 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			DispatchQueue.main.async {
 				searchBar.becomeFirstResponder()
 			}
+		}
+	}
+
+	deinit {
+		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
+	}
+
+	// MARK: - Notifications
+	/// Reconfigures the row whose user's block status has changed.
+	@objc private func handleBlockStatusDidChange(_ notification: Notification) {
+		guard self.usersListFetchType == .blocked,
+			  let changedUserID = notification.object as? KurozoraItemID
+		else { return }
+
+		for (indexPath, item) in self.cache {
+			guard let user = item as? User, user.id == changedUserID else { continue }
+
+			let cell = self.collectionView.cellForItem(at: indexPath) as? UserLockupCollectionViewCell
+			cell?.updateBlockButton(isBlocked: user.attributes.blockStatus == .blocked)
+			break
 		}
 	}
 
@@ -198,6 +238,8 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 			case .reputation:
 				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLeaderboard)
+			case .blocked:
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsers)
 			}
 			#endif
 		}
@@ -210,6 +252,8 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
 		case .reputation:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingLeaderboard)
+		case .blocked:
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsers)
 		}
 		#endif
 
@@ -247,6 +291,19 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			case .reputation:
 				let response = try await KService.userIndex()
 					.sort("reputation", direction: "most")
+					.cursor(self.nextPageCursor)
+					.limit(self.nextPageCursor != nil ? 100 : 25)
+					.response()
+
+				if self.nextPageCursor == nil {
+					self.userIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.userIdentities.append(contentsOf: response.data)
+				self.userIdentities.removeDuplicates()
+			case .blocked:
+				let response = try await KService.myBlockList()
 					.cursor(self.nextPageCursor)
 					.limit(self.nextPageCursor != nil ? 100 : 25)
 					.response()
@@ -438,7 +495,7 @@ extension UsersListCollectionViewController {
 				let items: [ItemKind] = remaining.map { .userIdentity($0) }
 				self.snapshot.appendItems(items, toSection: .main)
 			}
-		case .follow, .search:
+		case .follow, .search, .blocked:
 			self.snapshot.appendSections([.main])
 			let items: [ItemKind] = self.userIdentities.map { .userIdentity($0) }
 			self.snapshot.appendItems(items, toSection: .main)
@@ -467,6 +524,9 @@ extension UsersListCollectionViewController {
 					cell.configureForLeaderboard(using: user, rank: indexPath.item + 4)
 				} else if self.mentionSelectionDelegate != nil {
 					cell.configureForMention(using: user)
+				} else if self.usersListFetchType == .blocked {
+					cell.delegate = self
+					cell.configureForBlocked(using: user)
 				} else {
 					cell.delegate = self
 					cell.configure(using: user)
@@ -555,6 +615,10 @@ extension UsersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let user = self.cache[indexPath] as? User else { return nil }
 
+		if self.usersListFetchType == .blocked {
+			return user.blockedRowContextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
+
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return user.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
@@ -570,14 +634,29 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 
 		let userIdentity = UserIdentity(id: user.id)
 
-		Task {
+		Task { [weak self] in
 			do {
 				let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 				user.attributes.update(using: followUpdateResponse.data)
 				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
+			} catch let error as APIError {
+				self?.presentAlertController(title: nil, message: error.message)
+				print("-----", error.localizedDescription)
 			} catch {
 				print("-----", error.localizedDescription)
 			}
+		}
+	}
+
+	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressBlockToggle button: UIButton) {
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let user = self.cache[indexPath] as? User
+		else { return }
+
+		Task { [weak self] in
+			await user.block(on: self)
+			cell.updateBlockButton(isBlocked: user.attributes.blockStatus == .blocked)
 		}
 	}
 }

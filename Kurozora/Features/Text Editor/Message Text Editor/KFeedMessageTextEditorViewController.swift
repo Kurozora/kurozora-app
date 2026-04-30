@@ -445,6 +445,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
 				self.deleteDraftIfActive()
 				self.dismiss(animated: true, completion: nil)
+			} catch let error as APIError {
+				self.presentAlertController(title: nil, message: error.message)
+				print("-----", error.localizedDescription)
 			} catch {
 				print("-----", error.localizedDescription)
 			}
@@ -457,6 +460,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 					let feedMessages = feedMessagesResponse.data
 
 					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+				} catch let error as APIError {
+					self.presentAlertController(title: nil, message: error.message)
+					print("-----", error.localizedDescription)
 				} catch {
 					print("-----", error.localizedDescription)
 				}
@@ -480,6 +486,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 					self.deleteDraftIfActive()
 					self.dismiss(animated: true, completion: nil)
+				} catch let error as APIError {
+					self.presentAlertController(title: nil, message: error.message)
+					print("-----", error.localizedDescription)
 				} catch {
 					print("-----", error.localizedDescription)
 				}
@@ -500,6 +509,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 					self.deleteDraftIfActive()
 					self.dismiss(animated: true, completion: nil)
+				} catch let error as APIError {
+					self.presentAlertController(title: nil, message: error.message)
+					print("-----", error.localizedDescription)
 				} catch {
 					print("-----", error.localizedDescription)
 				}

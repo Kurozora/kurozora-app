@@ -82,7 +82,10 @@ extension FeedMessage {
 
 			// Block action
 			if User.isSignedIn, user != User.current {
-				let blockAction = UIAction(title: L10n.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+				let isBlocked = user.attributes.blockStatus == .blocked
+				let title = isBlocked ? L10n.unblock : L10n.block
+				let imageName = isBlocked ? "checkmark.shield" : "xmark.shield"
+				let blockAction = UIAction(title: title, image: UIImage(systemName: imageName)) { [weak self] _ in
 					guard let self = self else { return }
 					self.relationships.users.data.first?.confirmBlock(via: viewController, userInfo: userInfo)
 				}
@@ -224,6 +227,9 @@ extension FeedMessage {
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 			}
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print(error.localizedDescription)
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -253,6 +259,9 @@ extension FeedMessage {
 						if let indexPath = userInfo?["indexPath"] as? IndexPath {
 							NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 						}
+					} catch let error as APIError {
+						await viewController?.presentAlertController(title: nil, message: error.message)
+						print(error.localizedDescription)
 					} catch {
 						print(error.localizedDescription)
 					}

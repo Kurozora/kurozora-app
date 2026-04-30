@@ -1,0 +1,71 @@
+//
+//  ProfileBlockedByBannerTableViewCell.swift
+//  Kurozora
+//
+//  Created by Khoren Katklian on 30/04/2026.
+//  Copyright © 2026 Kurozora. All rights reserved.
+//
+
+import KurozoraKit
+import UIKit
+
+final class ProfileBlockedByBannerTableViewCell: KTableViewCell {
+	// MARK: - Views
+	private let titleLabel: KLabel = {
+		let label = KLabel()
+		label.font = UIFont.preferredFont(forTextStyle: .title2).bold
+		label.numberOfLines = 0
+		label.adjustsFontForContentSizeCategory = true
+		return label
+	}()
+
+	private let detailLabel: KSecondaryLabel = {
+		let label = KSecondaryLabel()
+		label.font = .preferredFont(forTextStyle: .subheadline)
+		label.numberOfLines = 0
+		label.adjustsFontForContentSizeCategory = true
+		return label
+	}()
+
+	private let stackView: UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .vertical
+		stack.alignment = .leading
+		stack.spacing = 8
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		return stack
+	}()
+
+	// MARK: - Properties
+	override var isSkeletonEnabled: Bool { false }
+
+	// MARK: - Initializers
+	override func sharedInit() {
+		super.sharedInit()
+
+		self.selectionStyle = .none
+		self.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		self.contentView.addSubview(self.stackView)
+		self.stackView.addArrangedSubview(self.titleLabel)
+		self.stackView.addArrangedSubview(self.detailLabel)
+
+		NSLayoutConstraint.activate([
+			self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 24),
+			self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+			self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+			self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -24)
+		])
+	}
+
+	// MARK: - Configuration
+	/// Configures the cell with the given username.
+	///
+	/// - Parameter username: The display username of the blocking user.
+	func configure(with username: String) {
+		let mention = "@\(username)"
+		self.titleLabel.text = L10n.usernameHasBlockedYou(mention)
+		self.detailLabel.text = L10n.blockedByDescription(mention)
+	}
+}

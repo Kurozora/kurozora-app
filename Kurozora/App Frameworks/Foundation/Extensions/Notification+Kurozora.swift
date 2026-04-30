@@ -14,6 +14,11 @@ extension Notification.Name {
 	static var KUserProfileDidUpdate: NSNotification.Name {
 		return Notification.Name(#function)
 	}
+
+	/// A notification posted when the auth user's block status for another user changes.
+	static var KUserBlockStatusDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
 }
 
 // MARK: - Subscription

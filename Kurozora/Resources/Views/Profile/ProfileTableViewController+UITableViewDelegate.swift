@@ -13,6 +13,16 @@ extension ProfileTableViewController {
 		return self.heightCache[indexPath] ?? 200
 	}
 
+	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		let cell = tableView.cellForRow(at: indexPath)
+
+		if cell is ProfileBlockedByBannerTableViewCell || cell is ProfileBlockedOptInTableViewCell {
+			return nil
+		}
+
+		return indexPath
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return }
 		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
@@ -33,6 +43,11 @@ extension ProfileTableViewController {
 				await self.fetchFeedMessages()
 			}
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		let cell = tableView.cellForRow(at: indexPath)
+		return !(cell is ProfileBlockedByBannerTableViewCell || cell is ProfileBlockedOptInTableViewCell)
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -58,6 +73,10 @@ extension ProfileTableViewController {
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		let tableViewCell = tableView.cellForRow(at: indexPath)
+
+		if tableViewCell is ProfileBlockedByBannerTableViewCell || tableViewCell is ProfileBlockedOptInTableViewCell {
+			return nil
+		}
 
 		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return nil }
 		return feedMessage.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)

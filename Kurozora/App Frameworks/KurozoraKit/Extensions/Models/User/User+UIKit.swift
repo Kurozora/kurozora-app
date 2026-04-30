@@ -36,6 +36,42 @@ extension User {
 		})
 	}
 
+	/// Create a context menu configuration for a row in the blocked users list.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///
+	/// - Returns: A `UIContextMenuConfiguration` whose only action toggles the user's block state.
+	func blockedRowContextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIContextMenuConfiguration {
+		let identifier = userInfo?["indexPath"] as? NSCopying
+
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] _ in
+			guard let self = self else { return UIMenu(title: "") }
+			return self.makeBlockedRowContextMenu(in: viewController, userInfo: userInfo)
+		}
+	}
+
+	/// Create the menu shown for a row in the blocked users list.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the context menu.
+	///    - userInfo: Additional information about the context menu.
+	///
+	/// - Returns: A `UIMenu` containing the block-toggle action.
+	func makeBlockedRowContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+		let isBlocked = self.attributes.blockStatus == .blocked
+		let title = isBlocked ? L10n.unblock : L10n.block
+		let imageName = isBlocked ? "checkmark.shield" : "xmark.shield"
+
+		let toggleAction = UIAction(title: title, image: UIImage(systemName: imageName)) { [weak self] _ in
+			guard let self = self else { return }
+			self.confirmBlock(via: viewController, userInfo: userInfo)
+		}
+
+		return UIMenu(title: "", children: [toggleAction])
+	}
+
 	/// Create a context menu for the user.
 	///
 	/// - Parameters:
@@ -79,7 +115,10 @@ extension User {
 
 		// Block action
 		if User.isSignedIn, User.current?.id != self.id {
-			let blockAction = UIAction(title: L10n.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+			let isBlocked = self.attributes.blockStatus == .blocked
+			let title = isBlocked ? L10n.unblock : L10n.block
+			let imageName = isBlocked ? "checkmark.shield" : "xmark.shield"
+			let blockAction = UIAction(title: title, image: UIImage(systemName: imageName)) { [weak self] _ in
 				guard let self = self else { return }
 				self.confirmBlock(via: viewController, userInfo: userInfo)
 			}
@@ -144,13 +183,19 @@ extension User {
 		do {
 			let followUpdateResponse = try await KService.toggleFollow(userIdentity).response()
 			self.attributes.update(using: followUpdateResponse.data)
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print("-----", error.localizedDescription)
 		} catch {
 			print("-----", error.localizedDescription)
 		}
 	}
 
+	/// Toggles the block status of the user, posting `KUserBlockStatusDidChange` on success.
+	///
+	/// - Parameter viewController: The view controller presenting the request, used to surface the sign-in flow if needed.
 	@MainActor
-	private func block(on viewController: UIViewController?) async {
+	func block(on viewController: UIViewController?) async {
 		let userIdentity = UserIdentity(id: self.id)
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
@@ -158,6 +203,10 @@ extension User {
 		do {
 			let blockUpdateResponse = try await KService.toggleBlock(userIdentity).response()
 			self.attributes.update(using: blockUpdateResponse.data)
+			NotificationCenter.default.post(name: .KUserBlockStatusDidChange, object: self.id)
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print("-----", error.localizedDescription)
 		} catch {
 			print("-----", error.localizedDescription)
 		}
@@ -165,8 +214,15 @@ extension User {
 
 	/// Confirm if the user wants to block the message.
 	func confirmBlock(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) {
-		let actionSheetAlertController = UIAlertController.alert(title: "Block @\(self.attributes.username)", message: L10n.blockMessageSubheadline) { alertController in
-			let blockAction = UIAlertAction(title: L10n.block, style: .destructive) { [weak self] _ in
+		let isBlocked = self.attributes.blockStatus == .blocked
+		let title = isBlocked
+			? L10n.unblockTitle("@\(self.attributes.username)")
+			: L10n.blockTitle("@\(self.attributes.username)")
+		let actionTitle = isBlocked ? L10n.unblock : L10n.block
+		let actionStyle: UIAlertAction.Style = isBlocked ? .default : .destructive
+
+		let actionSheetAlertController = UIAlertController.alert(title: title, message: L10n.blockMessageSubheadline) { alertController in
+			let blockAction = UIAlertAction(title: actionTitle, style: actionStyle) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
 					await self.block(on: viewController)

@@ -172,6 +172,19 @@ class ProfileTableHeaderView: UIView {
 
 	/// Updates the follow button state for the given user.
 	func updateFollowButton(for user: User?) {
+		if user?.attributes.blockStatus == .blocked {
+			self.followButton.setTitle(L10n.blocked, for: .normal)
+			self.followButton.isHidden = false
+			self.followButton.isUserInteractionEnabled = true
+			return
+		}
+
+		if user?.attributes.isBlockedBy == true {
+			self.followButton.isHidden = true
+			self.followButton.isUserInteractionEnabled = false
+			return
+		}
+
 		let followStatus = user?.attributes.followStatus ?? .disabled
 		switch followStatus {
 		case .followed:

@@ -17,6 +17,17 @@ protocol UserLockupCollectionViewCellDelegate: AnyObject {
 	///    - cell: The cell whose follow button was tapped.
 	///    - button: The button that was tapped.
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton)
+
+	/// Tells the delegate that the user tapped the block-toggle button on a row in the blocked-users list.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose block-toggle button was tapped.
+	///    - button: The button that was tapped.
+	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressBlockToggle button: UIButton)
+}
+
+extension UserLockupCollectionViewCellDelegate {
+	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressBlockToggle button: UIButton) {}
 }
 
 class UserLockupCollectionViewCell: KCollectionViewCell {
@@ -31,6 +42,9 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: UserLockupCollectionViewCellDelegate?
 
+	/// When `true`, the trailing button toggles block state instead of follow state.
+	private var isInBlockedMode: Bool = false
+
 	// MARK: - View Lifecycle
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -40,6 +54,7 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		self.followStatusLabel.isHidden = true
 		self.followButton.isHidden = false
 		self.followButton.isUserInteractionEnabled = true
+		self.isInBlockedMode = false
 	}
 
 	// MARK: - Configuration
@@ -132,6 +147,37 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
+	/// Configures the cell for a row in the blocked-users list.
+	///
+	/// - Parameter user: The user object used to configure the cell.
+	func configureForBlocked(using user: User?) {
+		guard let user = user else {
+			self.showSkeleton()
+			return
+		}
+
+		self.hideSkeleton()
+		self.setRankVisible(false, rank: nil)
+		self.isInBlockedMode = true
+
+		self.primaryLabel.text = user.attributes.username
+		self.secondaryLabel.text = "@\(user.attributes.slug)"
+
+		user.attributes.profileImage(imageView: self.profileImageView)
+
+		self.followStatusLabel.isHidden = true
+		self.updateBlockButton(isBlocked: user.attributes.blockStatus == .blocked)
+	}
+
+	/// Updates the trailing button to reflect the current block state when the cell is in blocked-list mode.
+	///
+	/// - Parameter isBlocked: `true` if the user is currently blocked.
+	func updateBlockButton(isBlocked: Bool) {
+		self.followButton.setTitle(isBlocked ? L10n.blocked : L10n.block, for: .normal)
+		self.followButton.isHidden = false
+		self.followButton.isUserInteractionEnabled = true
+	}
+
 	/// Updates the follow button's title and visibility for the given follow status.
 	///
 	/// - Parameter followStatus: The user's current follow status.
@@ -214,6 +260,10 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		self.delegate?.userLockupCollectionViewCell(self, didPressFollow: sender)
+		if self.isInBlockedMode {
+			self.delegate?.userLockupCollectionViewCell(self, didPressBlockToggle: sender)
+		} else {
+			self.delegate?.userLockupCollectionViewCell(self, didPressFollow: sender)
+		}
 	}
 }

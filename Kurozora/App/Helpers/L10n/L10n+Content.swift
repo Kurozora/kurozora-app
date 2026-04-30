@@ -260,9 +260,140 @@ extension L10n {
 	///
 	/// - Tag: L10n-blockMessageSubheadline
 	static let blockMessageSubheadline: String = String(
-		localized: "They will be able to see your public messages, but will no longer be able to engange with them. They will also not be able to follow or message you, and you wil not see notifications from them.",
+		localized: "They will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them.",
 		table: "Content",
-		comment: "The subheadline string for the blocing a user"
+		comment: "The subheadline string for the blocking a user"
+	)
+	/// The string for the 'Blocked' button label.
+	///
+	/// - Tag: L10n-blocked
+	static let blocked: String = String(
+		localized: "Blocked",
+		table: "Content",
+		comment: "The label shown on the button when the user has blocked another user"
+	)
+	/// Title shown when prompting the user to block another user.
+	///
+	/// - Parameter username: The username (with @) of the user to block.
+	///
+	/// - Tag: L10n-blockTitle
+	static func blockTitle(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "Block %@",
+				table: "Content",
+				comment: "The title prompting the user to block another user. The argument is the @username of the target user."
+			),
+			username
+		)
+	}
+	/// Title shown when prompting the user to unblock another user.
+	///
+	/// - Parameter username: The username (with @) of the user to unblock.
+	///
+	/// - Tag: L10n-unblockTitle
+	static func unblockTitle(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "Unblock %@",
+				table: "Content",
+				comment: "The title prompting the user to unblock another user. The argument is the @username of the target user."
+			),
+			username
+		)
+	}
+	/// The headline shown when the auth user has been blocked by another user.
+	///
+	/// - Parameter username: The username (with @) of the user who blocked them.
+	///
+	/// - Tag: L10n-usernameHasBlockedYou
+	static func usernameHasBlockedYou(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "%@ has blocked you",
+				table: "Content",
+				comment: "The headline shown when the auth user has been blocked by another user. The argument is the @username of the blocking user."
+			),
+			username
+		)
+	}
+	/// The subheadline shown to the auth user when another user has blocked them.
+	///
+	/// - Parameter username: The username (with @) of the user who blocked them.
+	///
+	/// - Tag: L10n-blockedByDescription
+	static func blockedByDescription(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "You can view public posts from %@, but you are blocked from engaging with them. You also cannot follow or message %@.",
+				table: "Content",
+				comment: "Subheadline explaining what is restricted when the auth user has been blocked by another user. Both arguments are the @username of the blocking user."
+			),
+			username,
+			username
+		)
+	}
+	/// The label for the opt-in button to view a blocked user's profile.
+	///
+	/// - Tag: L10n-viewProfileAnyway
+	static let viewProfileAnyway: String = String(
+		localized: "Yes, view profile",
+		table: "Content",
+		comment: "The label for the opt-in button to view a blocked user's profile"
+	)
+	/// The label for the opt-in button to view a blocked user's posts.
+	///
+	/// - Tag: L10n-viewPosts
+	static let viewPosts: String = String(
+		localized: "View posts",
+		table: "Content",
+		comment: "The label for the opt-in button to view a blocked user's posts"
+	)
+	/// The headline shown when the auth user has blocked the profile's user.
+	///
+	/// - Parameter username: The @username of the blocked user.
+	///
+	/// - Tag: L10n-usernameIsBlocked
+	static func usernameIsBlocked(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "%@ is blocked",
+				table: "Content",
+				comment: "The headline shown when the auth user has blocked the profile's user. The argument is the @username of the blocked user."
+			),
+			username
+		)
+	}
+	/// The subheadline prompting the auth user to opt in to viewing a blocked user's posts.
+	///
+	/// - Parameter username: The @username of the blocked user.
+	///
+	/// - Tag: L10n-viewBlockedPostsPrompt
+	static func viewBlockedPostsPrompt(_ username: String) -> String {
+		return String(
+			format: String(
+				localized: "Are you sure you want to view these posts? Viewing posts won’t unblock %@.",
+				table: "Content",
+				comment: "Subheadline prompting the auth user to opt in to viewing a blocked user's posts. The argument is the @username of the blocked user."
+			),
+			username
+		)
+	}
+	/// The label for the Settings entry that opens the blocked users list.
+	///
+	/// - Tag: L10n-blockedUsers
+	static let blockedUsers: String = String(
+		localized: "Blocked Users",
+		table: "Content",
+		comment: "The label for the Settings entry that opens the blocked users list"
+	)
+	/// The intro string shown above the blocked users list.
+	///
+	/// - Tag: L10n-blockedUsersIntro
+	static let blockedUsersIntro: String = String(
+		localized: "When you block someone, they will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them.",
+		table: "Content",
+		comment: "The intro string shown above the blocked users list"
 	)
 	/// The headline string for the report message pop-up.
 	///
@@ -1216,6 +1347,14 @@ extension L10n {
 		localized: "Block",
 		table: "Content",
 		comment: "The string for the word 'block'."
+	)
+	/// The string for the word 'unblock'.
+	///
+	/// - Tag: L10n-unblock
+	static let unblock: String = String(
+		localized: "Unblock",
+		table: "Content",
+		comment: "The string for the word 'unblock'."
 	)
 	/// The string for the word 'unpin'.
 	///

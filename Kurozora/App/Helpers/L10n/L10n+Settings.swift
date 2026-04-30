@@ -498,7 +498,7 @@ extension L10n {
 	///
 	/// - Tag: L10n-privacyHeaderDescription
 	static let privacyHeaderDescription: String = String(
-		localized: "Review your privacy settings, manage app permissions in the Settings app, and access legal information.",
+		localized: "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information.",
 		table: "Settings",
 		comment: "A short description for the privacy settings header."
 	)
