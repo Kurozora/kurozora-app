@@ -202,10 +202,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -243,7 +243,7 @@ extension SettingsTableViewController {
 			if ProcessInfo.processInfo.isiOSAppOnMac {
 				return [.unlockFeatures, .tipjar, .restoreFeatures]
 			} else {
-				return [.unlockFeatures, .tipjar, .restoreFeatures]
+				return [.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures]
 			}
 			#endif
 		}
