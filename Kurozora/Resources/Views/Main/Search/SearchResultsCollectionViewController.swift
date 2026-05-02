@@ -298,6 +298,26 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		return tokens.compactMap { $0.representedObject as? SearchType }
 	}
 
+	/// Returns the filter to forward when re-running a search.
+	///
+	/// - Parameter types: The requested search types, or empty when type resolution is deferred.
+	///
+	/// - Returns: The filter stored for the resolved type, or `nil` when none applies.
+	func reusableFilter(for types: [SearchType]) -> SearchFilter? {
+		let resolvedType: SearchType?
+
+		if types.count == 1 {
+			resolvedType = types.first
+		} else if case let .single(type) = self.searchViewKind {
+			resolvedType = type
+		} else {
+			resolvedType = self.searchTypes[safe: self.currentIndex]
+		}
+
+		guard let type = resolvedType else { return nil }
+		return self.searchFilters[type] ?? nil
+	}
+
 	/// Returns the list of search types that are valid for the current search surface.
 	func availableTypesForCurrentScope() -> [SearchType] {
 		switch self.searchViewKind {
@@ -615,31 +635,33 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - snapshot: The snapshot whose items are inspected.
 	fileprivate func prefetch(section: SearchResults.Section, snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>) async {
 		let items = snapshot.itemIdentifiers(inSection: section)
-		guard
-			let firstItem = items.first,
-			let sectionIndex = snapshot.indexOfSection(section)
-		else { return }
-		let firstIndexPath = IndexPath(item: 0, section: sectionIndex)
+		guard let sectionIndex = snapshot.indexOfSection(section) else { return }
+
+		guard let firstUncachedOffset = items.indices.first(where: { offset in
+			self.cache[IndexPath(item: offset, section: sectionIndex)] == nil
+		}) else { return }
+		let indexPath = IndexPath(item: firstUncachedOffset, section: sectionIndex)
+		let itemKind = items[firstUncachedOffset]
 
 		switch section {
 		case .characters:
-			await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
 		case .episodes:
-			await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
 		case .games:
-			await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
 		case .literatures:
-			await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
 		case .people:
-			await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
 		case .shows:
-			await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
 		case .songs:
-			await self.fetchSongsSection(at: firstIndexPath, itemKind: firstItem, sectionIndex: sectionIndex, itemCount: items.count)
+			await self.fetchSongsSection(at: indexPath, itemKind: itemKind, sectionIndex: sectionIndex, itemCount: items.count)
 		case .studios:
-			await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
 		case .users:
-			await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: firstIndexPath, itemKind: firstItem)
+			await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
 		case .discover, .browse:
 			break
 		}
@@ -1112,10 +1134,11 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 
 		// Composition phase: no network request.
 		guard self.searchResults != nil, let query = searchBar.text, !query.isEmpty else { return }
+		let filter = self.reusableFilter(for: [])
 
 		switch searchScope {
 		case .kurozora:
-			self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
+			self.performSearch(with: query, in: searchScope, for: [], with: filter, next: nil)
 		case .library:
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -1125,7 +1148,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 					searchBar.selectedScopeButtonIndex = previousScope.rawValue
 					return
 				}
-				self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
+				self.performSearch(with: query, in: searchScope, for: [], with: filter, next: nil)
 			}
 		}
 	}
@@ -1146,7 +1169,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			types = self.typesFromTokens()
 			self.kSearchController.showsSearchResultsController = false
 		}
-		self.performSearch(with: query, in: searchScope, for: types, with: nil, next: nil)
+		self.performSearch(with: query, in: searchScope, for: types, with: self.reusableFilter(for: types), next: nil)
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

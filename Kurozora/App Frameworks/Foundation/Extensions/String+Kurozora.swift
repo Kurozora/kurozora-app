@@ -147,6 +147,77 @@ extension String {
 		guard 0 ..< self.count ~= length else { return self }
 		return self[self.startIndex ..< index(self.startIndex, offsetBy: length)] + (trailing ?? "")
 	}
+
+	/// Returns whether `query` approximately matches the receiver, tolerating typos and partial input.
+	///
+	/// The comparison is case and diacritic insensitive. After trimming surrounding whitespace, the query
+	/// is matched against any contiguous substring of the receiver within `maxDistance` Levenshtein edits.
+	///
+	/// - Parameters:
+	///    - query: The text to search for.
+	///    - maxDistance: The maximum edit distance to tolerate. When `nil`, a length-relative default is used.
+	///
+	/// - Returns: `true` if the receiver fuzzily matches `query`.
+	func fuzzyContains(_ query: String, maxDistance: Int? = nil) -> Bool {
+		let normalize: (String) -> String = { $0.lowercased().folding(options: .diacriticInsensitive, locale: .current) }
+		let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+		let normalizedQuery = normalize(trimmedQuery)
+		let normalizedSelf = normalize(self)
+
+		guard !normalizedQuery.isEmpty else {
+			return true
+		}
+
+		if normalizedSelf.contains(normalizedQuery) {
+			return true
+		}
+
+		let threshold = maxDistance ?? Swift.max(1, normalizedQuery.count / 4)
+		return normalizedQuery.minimumEditDistance(toSubstringOf: normalizedSelf) <= threshold
+	}
+
+	/// Returns the minimum number of single-character edits required to transform the receiver
+	/// into any contiguous substring of `text`.
+	///
+	/// Entry and exit anywhere in `text` are free, so the result reflects how closely the
+	/// receiver approximates any window inside `text`.
+	///
+	/// - Parameter text: The string to search within.
+	///
+	/// - Returns: The minimum edit distance to any substring of `text`.
+	private func minimumEditDistance(toSubstringOf text: String) -> Int {
+		let pattern = Array(self)
+		let target = Array(text)
+		let patternLength = pattern.count
+		let targetLength = target.count
+
+		if patternLength == 0 {
+			return 0
+		}
+		if targetLength == 0 {
+			return patternLength
+		}
+
+		var previousRow = Array(repeating: 0, count: targetLength + 1)
+		var currentRow = Array(repeating: 0, count: targetLength + 1)
+
+		for patternIndex in 1 ... patternLength {
+			currentRow[0] = patternIndex
+
+			for targetIndex in 1 ... targetLength {
+				let substitutionCost = pattern[patternIndex - 1] == target[targetIndex - 1] ? 0 : 1
+				currentRow[targetIndex] = Swift.min(
+					currentRow[targetIndex - 1] + 1,
+					previousRow[targetIndex] + 1,
+					previousRow[targetIndex - 1] + substitutionCost
+				)
+			}
+
+			swap(&previousRow, &currentRow)
+		}
+
+		return previousRow.min() ?? patternLength
+	}
 }
 
 extension NSAttributedString {

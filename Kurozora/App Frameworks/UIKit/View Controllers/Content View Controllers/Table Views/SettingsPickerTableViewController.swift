@@ -175,9 +175,8 @@ extension SettingsPickerTableViewController: UISearchResultsUpdating {
 				$0.key.localizedCaseInsensitiveContains(query)
 		}
 
-		// Simple "fuzzy" search fallback
 		if self.filteredItems.isEmpty {
-			self.filteredItems = self.allItems.filter { $0.value.lowercased().contains(query.lowercased().prefix(2)) }
+			self.filteredItems = self.allItems.filter { $0.value.fuzzyContains(query) || $0.key.fuzzyContains(query) }
 		}
 
 		self.applySnapshot()
