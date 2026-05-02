@@ -99,6 +99,12 @@ extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDel
 
 // MARK: - LibraryTableHeaderReusableViewDelegate
 extension LibraryListCollectionViewController: LibraryTableHeaderReusableViewDelegate {
+	func tableHeader(_ header: LibraryTableHeaderReusableView, isResizing column: LibraryColumn, to width: CGFloat) {
+		for cell in self.collectionView.visibleCells.compactMap({ $0 as? LibraryTableCollectionViewCell }) {
+			cell.updateColumnWidth(column, to: width)
+		}
+	}
+
 	func tableHeader(_ header: LibraryTableHeaderReusableView, didResize column: LibraryColumn, to width: CGFloat) {
 		var updated = self.libraryColumnPreferences
 		updated.widths[column] = width
@@ -125,17 +131,46 @@ extension LibraryListCollectionViewController: LibraryTableHeaderReusableViewDel
 	}
 
 	func tableHeader(_ header: LibraryTableHeaderReusableView, autoFitWidthFor column: LibraryColumn) -> CGFloat? {
-		let visibleCells = self.collectionView.visibleCells.compactMap { $0 as? LibraryTableCollectionViewCell }
-
-		guard !visibleCells.isEmpty else { return nil }
-
 		var maxContentWidth: CGFloat = column.minWidth
+		maxContentWidth = max(maxContentWidth, header.headerContentWidth(for: column))
 
-		for cell in visibleCells {
+		switch column {
+		case .favorite, .reminder, .visibility, .rating:
+			return max(maxContentWidth, column.defaultWidth)
+		default:
+			break
+		}
+
+		for cell in self.collectionView.visibleCells.compactMap({ $0 as? LibraryTableCollectionViewCell }) {
 			maxContentWidth = max(maxContentWidth, cell.contentWidth(for: column))
 		}
 
+		// Measure every loaded model
+		let showPoster = self.libraryColumnPreferences.showPoster
+		let count = self.loadedItemCount
+
+		for index in 0 ..< count {
+			guard let item = self.itemKind(at: index) else { continue }
+			let text = LibraryTableCollectionViewCell.text(for: column, item: item)
+			guard !text.isEmpty else { continue }
+			maxContentWidth = max(maxContentWidth, LibraryTableCollectionViewCell.fittedWidth(forText: text, column: column, showPoster: showPoster))
+		}
+
 		return maxContentWidth
+	}
+
+	// MARK: - Helpers
+	/// Returns the loaded item at the given offset, typed as ``LibraryListCollectionViewController/ItemKind``.
+	///
+	/// - Parameter index: The zero-based offset into the active library kind's loaded items.
+	///
+	/// - Returns: The wrapped item, or `nil` if the offset is out of range.
+	fileprivate func itemKind(at index: Int) -> ItemKind? {
+		switch self.libraryKind {
+		case .shows: return self.shows[safe: index].map { .show($0) }
+		case .literatures: return self.literatures[safe: index].map { .literature($0) }
+		case .games: return self.games[safe: index].map { .game($0) }
+		}
 	}
 }
 

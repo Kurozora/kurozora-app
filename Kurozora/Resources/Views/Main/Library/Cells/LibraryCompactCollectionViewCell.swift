@@ -18,7 +18,7 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.posterImageView?.accessibilityLabel = nil
 
 		#if targetEnvironment(macCatalyst)
-		self.posterImageView?.toolTip = nil
+		self.setPosterToolTip(nil)
 		#endif
 	}
 
@@ -77,7 +77,24 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.posterImageView?.accessibilityLabel = shouldHide ? title : nil
 
 		#if targetEnvironment(macCatalyst)
-		self.posterImageView?.toolTip = shouldHide ? title : nil
+		self.setPosterToolTip(shouldHide ? title : nil)
 		#endif
 	}
+
+	#if targetEnvironment(macCatalyst)
+	/// Replaces the poster's tooltip interaction so hover help reflects the latest title.
+	///
+	/// - Parameter toolTip: The tooltip text to display, or `nil` to remove any existing tooltip.
+	private func setPosterToolTip(_ toolTip: String?) {
+		guard let posterImageView = self.posterImageView else { return }
+
+		for interaction in posterImageView.interactions where interaction is UIToolTipInteraction {
+			posterImageView.removeInteraction(interaction)
+		}
+
+		if let toolTip {
+			posterImageView.addInteraction(UIToolTipInteraction(defaultToolTip: toolTip))
+		}
+	}
+	#endif
 }

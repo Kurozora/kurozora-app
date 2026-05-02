@@ -83,7 +83,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	static let rowVerticalPadding: CGFloat = 10
 
 	/// The rendered width of the inline poster, uniform across library kinds.
-	private static let posterWidth: CGFloat = 80
+	static let posterWidth: CGFloat = 80
 
 	/// The horizontal space reserved for the leading selection indicator.
 	private static let selectionIconReservedWidth: CGFloat = 38
@@ -184,7 +184,44 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.setNeedsLayout()
 	}
 
+	// MARK: - Live resize
+	/// Updates the in-flight width of the given column without reapplying the data source snapshot.
+	///
+	/// Used during the column-divider drag so the row mirrors the header in real time.
+	///
+	/// - Parameters:
+	///    - column: The column whose width to update.
+	///    - width: The new width, in points.
+	func updateColumnWidth(_ column: LibraryColumn, to width: CGFloat) {
+		guard let constraint = self.columnWidthConstraints[column] else { return }
+		constraint.constant = width
+	}
+
 	// MARK: - Auto-fit
+	/// Returns the minimum width that fits the supplied text in the given column.
+	///
+	/// - Parameters:
+	///    - text: The rendered string to measure.
+	///    - column: The column the text belongs to.
+	///    - showPoster: A Boolean that indicates whether the title cell renders an inline poster.
+	///
+	/// - Returns: The content width in points, including horizontal padding and any poster gutter.
+	static func fittedWidth(forText text: String, column: LibraryColumn, showPoster: Bool) -> CGFloat {
+		let font: UIFont
+		switch column {
+		case .title: font = UIFont.preferredFont(forTextStyle: .body)
+		default: font = UIFont.preferredFont(forTextStyle: .footnote)
+		}
+
+		let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
+
+		if column == .title, showPoster {
+			// leading padding + poster + spacing + label + trailing padding.
+			return 8 + Self.posterWidth + 12 + ceil(textWidth) + 8
+		}
+		return ceil(textWidth) + 16
+	}
+
 	/// Returns the minimum width that fits the column's content as currently rendered.
 	///
 	/// Measures the underlying label's `intrinsicContentSize` directly rather than asking the
@@ -248,14 +285,14 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
 			self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
-			self.selectionImageOverlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
+			self.selectionImageOverlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8.0),
 			self.selectionImageOverlayView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-			self.selectionImageOverlayView.widthAnchor.constraint(equalToConstant: 22),
-			self.selectionImageOverlayView.heightAnchor.constraint(equalToConstant: 22),
+			self.selectionImageOverlayView.widthAnchor.constraint(equalToConstant: 22.0),
+			self.selectionImageOverlayView.heightAnchor.constraint(equalToConstant: 22.0),
 
 			self.rowDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
 			self.rowDivider.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-			self.rowDivider.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale),
+			self.rowDivider.heightAnchor.constraint(equalToConstant: 1.0),
 		])
 	}
 
@@ -666,14 +703,14 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private func applyFavoriteState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
 		guard let button = button else { return }
 		let isFavorited = self.isFavorited(item)
-		button.setImage(UIImage(systemName: isFavorited ? "heart.fill" : "heart"), for: .normal)
+		self.updateButtonImage(button, systemName: isFavorited ? "heart.fill" : "heart")
 		button.accessibilityLabel = isFavorited ? L10n.removeFromFavorites : L10n.addToFavorites
 	}
 
 	private func applyReminderState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
 		guard let button = button else { return }
 		let hasReminder = self.hasReminder(item)
-		button.setImage(UIImage(systemName: hasReminder ? "bell.fill" : "bell"), for: .normal)
+		self.updateButtonImage(button, systemName: hasReminder ? "bell.fill" : "bell")
 		button.accessibilityLabel = hasReminder ? L10n.removeReminder : L10n.addReminder
 	}
 
@@ -686,8 +723,23 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		button.isEnabled = !isDisabled
 
 		let isHidden = hiddenStatus == .hidden
-		button.setImage(UIImage(systemName: isHidden ? "eye.slash.fill" : "eye.fill"), for: .normal)
+		self.updateButtonImage(button, systemName: isHidden ? "eye.slash.fill" : "eye.fill")
 		button.accessibilityLabel = isHidden ? L10n.showToPublic : L10n.hideFromPublic
+	}
+
+	/// Updates the button's image through its configuration so the system honors the configured
+	/// symbol size and tinting.
+	///
+	/// `UIButton.setImage(_:for:)` quietly disables the button's `UIButton.Configuration` and on
+	/// Mac Catalyst that legacy-fallback path renders no image at all.
+	///
+	/// - Parameters:
+	///    - button: The button whose image to update.
+	///    - systemName: The SF Symbols system name to render.
+	private func updateButtonImage(_ button: UIButton, systemName: String) {
+		var configuration = button.configuration
+		configuration?.image = UIImage(systemName: systemName)
+		button.configuration = configuration
 	}
 
 	// MARK: - Actions
@@ -766,7 +818,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
+	static func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
 		switch item {
 		case .show(let show):
 			return self.text(for: column, show: show)
@@ -777,7 +829,11 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: LibraryColumn, show: Show) -> String {
+	private func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
+		return Self.text(for: column, item: item)
+	}
+
+	private static func text(for column: LibraryColumn, show: Show) -> String {
 		let attributes = show.attributes
 		switch column {
 		case .title: return attributes.title
@@ -793,7 +849,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: LibraryColumn, literature: Literature) -> String {
+	private static func text(for column: LibraryColumn, literature: Literature) -> String {
 		let attributes = literature.attributes
 		switch column {
 		case .title: return attributes.title
@@ -810,7 +866,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	private func text(for column: LibraryColumn, game: Game) -> String {
+	private static func text(for column: LibraryColumn, game: Game) -> String {
 		let attributes = game.attributes
 		switch column {
 		case .title: return attributes.title

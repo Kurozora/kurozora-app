@@ -11,6 +11,17 @@ import SwiftTheme
 import UIKit
 
 protocol LibraryTableHeaderReusableViewDelegate: AnyObject {
+	/// Tells the delegate that the user is actively resizing a column.
+	///
+	/// Fires on every drag update so visible rows can mirror the header width without paying for a
+	/// snapshot reapply.
+	///
+	/// - Parameters:
+	///    - header: The header view that emitted the event.
+	///    - column: The column whose width is changing.
+	///    - width: The proposed new width, in points.
+	func tableHeader(_ header: LibraryTableHeaderReusableView, isResizing column: LibraryColumn, to width: CGFloat)
+
 	/// Tells the delegate that the user finished resizing a column.
 	///
 	/// - Parameters:
@@ -65,6 +76,24 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		self.configureView()
 	}
 
+	// MARK: - Auto-fit
+	/// Returns the minimum width that renders the column's header chrome — its title text or icon
+	/// — without truncation.
+	///
+	/// - Parameter column: The column whose header to measure.
+	///
+	/// - Returns: The fitted header width in points, including horizontal padding.
+	func headerContentWidth(for column: LibraryColumn) -> CGFloat {
+		if column.headerIconSystemName != nil {
+			// Icon-only headers reserve a fixed 18pt symbol plus 8pt padding on each side.
+			return 18 + 16
+		}
+
+		let font = UIFont.preferredFont(forTextStyle: .footnote).bold
+		let textWidth = (column.title as NSString).size(withAttributes: [.font: font]).width
+		return ceil(textWidth) + 16
+	}
+
 	// MARK: - Configuration
 	/// Configures the header with one label per column and applies the supplied widths.
 	///
@@ -105,7 +134,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 			self.bottomSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.bottomSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			self.bottomSeparator.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-			self.bottomSeparator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale),
+			self.bottomSeparator.heightAnchor.constraint(equalToConstant: 1.0),
 		])
 	}
 
@@ -158,7 +187,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		container.accessibilityTraits = .header
 
 		#if targetEnvironment(macCatalyst)
-		container.toolTip = column.accessibilityLabel
+		container.addInteraction(UIToolTipInteraction(defaultToolTip: column.accessibilityLabel))
 		#endif
 
 		if let iconName = column.headerIconSystemName {
@@ -211,7 +240,7 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 			handle.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 		])
 
-		handle.addPanTarget(self, action: #selector(self.handleResizePan(_:)))
+		handle.addPanTarget(self, action: #selector(self.handleResizePan(_:)), delegate: self)
 		handle.addDoubleTapTarget(self, action: #selector(self.handleResetDoubleTap(_:)))
 		self.separatorHandles[column] = handle
 	}
@@ -230,9 +259,11 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 			handle.initialWidth = widthConstraint.constant
 		case .changed:
 			let proposed = handle.initialWidth + translation
-			widthConstraint.constant = max(handle.column.minWidth, proposed)
+			let clamped = max(handle.column.minWidth, proposed)
+			widthConstraint.constant = clamped
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
+			self.delegate?.tableHeader(self, isResizing: handle.column, to: clamped)
 		case .ended, .cancelled, .failed:
 			self.delegate?.tableHeader(self, didResize: handle.column, to: widthConstraint.constant)
 		default:
@@ -261,14 +292,18 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 
 	// MARK: - Drag-to-reorder
 	private func attachReorderGesture(to container: UIView, for column: LibraryColumn) {
-		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleReorderDrag(_:)))
-		longPressGestureRecognizer.minimumPressDuration = 0.2
-		longPressGestureRecognizer.allowableMovement = .greatestFiniteMagnitude
-		container.addGestureRecognizer(longPressGestureRecognizer)
+		// A pan gesture wins the touch on first movement, beating Mac Catalyst's marquee-select
+		// behavior on the enclosing collection view. A long press would idle for its minimum-hold
+		// duration, during which the marquee already activates and starts batch-edit mode.
+		let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handleReorderDrag(_:)))
+		panGestureRecognizer.maximumNumberOfTouches = 1
+		panGestureRecognizer.cancelsTouchesInView = true
+		panGestureRecognizer.delegate = self
+		container.addGestureRecognizer(panGestureRecognizer)
 		container.isUserInteractionEnabled = true
 	}
 
-	@objc private func handleReorderDrag(_ recognizer: UILongPressGestureRecognizer) {
+	@objc private func handleReorderDrag(_ recognizer: UIPanGestureRecognizer) {
 		guard let container = recognizer.view else { return }
 		guard let sourceColumn = self.columnContainers.first(where: { $0.value === container })?.key else { return }
 
@@ -345,16 +380,23 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		}
 	}
 
+	/// Adds a handle for any column that newly needs one and removes the handle of whichever column
+	/// just became the last visible one.
+	///
+	/// Existing handles' constraints are anchored to their owning column container, so columns that
+	/// merely shifted position bring their handles along automatically — no destroy-and-recreate
+	/// pass is needed, which would otherwise animate every handle in from the layout origin.
 	private func reinstallResizeHandles() {
-		self.separatorHandles.values.forEach { $0.removeFromSuperview() }
-		self.separatorHandles.removeAll()
+		let nonLastColumns = self.columns.dropLast().map(\.column)
+		let nonLastSet = Set(nonLastColumns)
 
-		for (index, pair) in self.columns.enumerated() where index < self.columns.count - 1 {
-			guard let container = self.columnContainers[pair.column] else {
-				continue
-			}
+		for column in self.separatorHandles.keys where !nonLastSet.contains(column) {
+			self.separatorHandles.removeValue(forKey: column)?.removeFromSuperview()
+		}
 
-			self.installResizeHandle(after: container, for: pair.column)
+		for column in nonLastColumns where self.separatorHandles[column] == nil {
+			guard let container = self.columnContainers[column] else { continue }
+			self.installResizeHandle(after: container, for: column)
 		}
 	}
 
@@ -378,6 +420,22 @@ private extension LibraryTableHeaderReusableView {
 	struct DragState {
 		/// The column being dragged.
 		let column: LibraryColumn
+	}
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension LibraryTableHeaderReusableView: UIGestureRecognizerDelegate {
+	func gestureRecognizer(
+		_ gestureRecognizer: UIGestureRecognizer,
+		shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer
+	) -> Bool {
+		// Force the enclosing collection view's pan-based gestures (scroll, selection-marquee,
+		// multi-select drag) to wait for our column gesture to fail before they recognize. Once our
+		// pan begins, those gestures are canceled — eliminating the marquee that otherwise appears
+		// over the rows and accidentally enters batch-edit mode.
+		guard otherGestureRecognizer is UIPanGestureRecognizer else { return false }
+		guard otherGestureRecognizer.view is UICollectionView else { return false }
+		return true
 	}
 }
 
@@ -411,8 +469,13 @@ private final class ResizeHandleView: UIView {
 	/// - Parameters:
 	///    - target: The object that receives the pan-gesture messages.
 	///    - action: The selector invoked on each gesture update.
-	func addPanTarget(_ target: Any, action: Selector) {
+	///    - delegate: The delegate that arbitrates conflicts between this gesture and any other
+	///                gestures on enclosing scroll/collection views.
+	func addPanTarget(_ target: Any, action: Selector, delegate: UIGestureRecognizerDelegate?) {
 		let panGestureRecognizer = UIPanGestureRecognizer(target: target, action: action)
+		panGestureRecognizer.maximumNumberOfTouches = 1
+		panGestureRecognizer.cancelsTouchesInView = true
+		panGestureRecognizer.delegate = delegate
 		self.panGestureRecognizer = panGestureRecognizer
 		self.addGestureRecognizer(panGestureRecognizer)
 	}
@@ -440,12 +503,12 @@ private final class ResizeHandleView: UIView {
 		self.addSubview(self.visibleLine)
 
 		NSLayoutConstraint.activate([
-			self.widthAnchor.constraint(equalToConstant: 20),
+			self.widthAnchor.constraint(equalToConstant: 20.0),
 
 			self.visibleLine.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-			self.visibleLine.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
-			self.visibleLine.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6),
-			self.visibleLine.widthAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale),
+			self.visibleLine.topAnchor.constraint(equalTo: self.topAnchor, constant: 6.0),
+			self.visibleLine.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6.0),
+			self.visibleLine.widthAnchor.constraint(equalToConstant: 1.0),
 		])
 
 		#if targetEnvironment(macCatalyst)
@@ -458,7 +521,7 @@ private final class ResizeHandleView: UIView {
 // MARK: - UIPointerInteractionDelegate
 extension ResizeHandleView: UIPointerInteractionDelegate {
 	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
-		return UIPointerStyle(shape: .beam(length: 16, axis: .vertical), constrainedAxes: [])
+		return UIPointerStyle(shape: .verticalBeam(length: 16), constrainedAxes: .horizontal)
 	}
 }
 #endif
