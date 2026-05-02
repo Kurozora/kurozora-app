@@ -91,7 +91,7 @@ extension UserNotification {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Update the read/unread status of the user's notification.
+	/// Updates the read/unread status of the user's notification.
 	///
 	/// - Parameters:
 	///    - indexPath: The index path of the notification.
@@ -107,13 +107,13 @@ extension UserNotification {
 		}
 	}
 
-	/// Remove the notification from the user's notification list.
+	/// Removes the notification from the user's notification list.
 	///
 	/// - Parameter indexPath: The index path of the notification.
 	func remove(at indexPath: IndexPath) async {
 		do {
 			let notificationIdentity = UserNotificationIdentity(id: self.id)
-			_ = try await KService.deleteNotification(notificationIdentity)
+			_ = try await KService.deleteNotification(notificationIdentity).response()
 
 			NotificationCenter.default.post(name: .KUNDidDelete, object: self, userInfo: nil)
 		} catch {

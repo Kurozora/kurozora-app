@@ -1556,4 +1556,47 @@ extension L10n {
 			comment: "The destructive button shown in the delete confirmation alert when multiple items are selected."
 		)
 	}
+
+	/// The string for the word 'Select'.
+	static let select: String = String(
+		localized: "Select",
+		comment: "The leading nav-bar action that enters batch-edit mode in lists such as notifications."
+	)
+	/// The string for the phrase 'Select Notifications'.
+	static let selectNotifications: String = String(
+		localized: "Select Notifications",
+		comment: "The label shown in the bottom batch-edit toolbar when no notifications are selected."
+	)
+	/// The string for the phrase 'Delete Notification'.
+	static let deleteNotification: String = String(
+		localized: "Delete Notification",
+		comment: "The destructive button shown when removing a single notification."
+	)
+	/// The destructive button shown when removing multiple notifications.
+	static func deleteNotifications(_ count: Int) -> String {
+		return String(
+			localized: "Delete \(count) Notifications",
+			comment: "The destructive button shown when removing multiple notifications."
+		)
+	}
+	/// The string for the phrase 'This notification will be removed.'.
+	static let deleteSingleNotificationConfirmation: String = String(
+		localized: "This notification will be removed.",
+		comment: "The confirmation alert message shown when removing a single notification."
+	)
+	/// The string for the phrase 'These notifications will be removed.'.
+	static let deleteMultipleNotificationsConfirmation: String = String(
+		localized: "These notifications will be removed.",
+		comment: "The confirmation alert message shown when removing multiple notifications."
+	)
+	/// The string for the phrase 'Could Not Update Notifications'.
+	static let couldNotUpdateNotifications: String = String(
+		localized: "Could Not Update Notifications",
+		comment: "The error alert title shown when a notifications batch update fails."
+	)
+	/// The string for the phrase 'Could Not Remove Notifications'.
+	static let couldNotRemoveNotifications: String = String(
+		localized: "Could Not Remove Notifications",
+		comment: "The error alert title shown when a notifications batch remove fails."
+	)
 }

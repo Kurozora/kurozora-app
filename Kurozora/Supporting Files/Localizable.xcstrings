@@ -127,11 +127,17 @@
     "Copyright" : {
       "comment" : "The string for the word 'copyright'."
     },
+    "Could Not Remove Notifications" : {
+      "comment" : "The error alert title shown when a notifications batch remove fails."
+    },
     "Could Not Update Favorites" : {
       "comment" : "The error alert title when a favorites batch update fails."
     },
     "Could Not Update Library" : {
       "comment" : "The error alert title when a library batch update fails."
+    },
+    "Could Not Update Notifications" : {
+      "comment" : "The error alert title shown when a notifications batch update fails."
     },
     "Could Not Update Reminders" : {
       "comment" : "The error alert title when a reminders batch update fails."
@@ -157,8 +163,14 @@
     "Delete %lld Items" : {
       "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected."
     },
+    "Delete %lld Notifications" : {
+      "comment" : "The destructive button shown when removing multiple notifications."
+    },
     "Delete Item" : {
       "comment" : "The destructive button shown in the delete confirmation alert when one item is selected."
+    },
+    "Delete Notification" : {
+      "comment" : "The destructive button shown when removing a single notification."
     },
     "Delete Permanently" : {
       "comment" : "The string for the phrase 'Delete Permanently'."
@@ -597,11 +609,17 @@
     "Security" : {
       "comment" : "The string for the word 'security'."
     },
+    "Select" : {
+      "comment" : "The leading nav-bar action that enters batch-edit mode in lists such as notifications."
+    },
     "Select All" : {
       "comment" : "The leading nav-bar action that selects every loaded library item in batch-edit mode."
     },
     "Select Items" : {
       "comment" : "The label shown in the bottom batch-edit toolbar when no items are selected."
+    },
+    "Select Notifications" : {
+      "comment" : "The label shown in the bottom batch-edit toolbar when no notifications are selected."
     },
     "Send" : {
       "comment" : "The string for the word 'send'."
@@ -706,8 +724,14 @@
     "These items will be deleted from your library." : {
       "comment" : "The confirmation alert message shown when removing multiple items from the library."
     },
+    "These notifications will be removed." : {
+      "comment" : "The confirmation alert message shown when removing multiple notifications."
+    },
     "This item will be deleted from your library." : {
       "comment" : "The confirmation alert message shown when removing a single item from the library."
+    },
+    "This notification will be removed." : {
+      "comment" : "The confirmation alert message shown when removing a single notification."
     },
     "Title" : {
       "comment" : "The column header for the item's title in the library table layout."

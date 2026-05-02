@@ -20,19 +20,47 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 	// MARK: - Views
 	var profileBarButtonItem: ProfileBarButtonItem?
-	private var markAllBarButtonItem: UIBarButtonItem!
+
+	/// The bar button item that enters batch-edit mode.
+	var selectBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that exits batch-edit mode.
+	var cancelEditingBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that toggles between selecting and deselecting every loaded notification.
+	var selectAllBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that hosts the mark-as-read/unread menu in batch-edit mode.
+	var statusBatchBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that hosts the destructive delete confirmation menu in batch-edit mode.
+	var deleteBatchBarButtonItem = UIBarButtonItem()
+
+	/// The label that displays the selected-notification count in the bottom toolbar.
+	var selectionCountLabel = UILabel()
 
 	// MARK: - Properties
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int?
-	var userNotifications: [UserNotification] = [] // Grouping type: Off
-	var groupedNotifications: [GroupedNotifications] = [] // Grouping type: Automatic, ByType
+	var userNotifications: [UserNotification] = []
+	var groupedNotifications: [GroupedNotifications] = []
 	var dataSource: NotificationDataSource!
 
-	/// Whether a fetch request is currently in progress.
+	/// A boolean value that indicates whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
 
-	// Refresh control
+	/// The right bar button items captured before entering batch-edit mode.
+	var savedRightBarButtonItems: [UIBarButtonItem]?
+
+	/// The left bar button items captured before entering batch-edit mode.
+	var savedLeftBarButtonItems: [UIBarButtonItem]?
+
+	/// A boolean value that indicates whether batch-edit  is currently displayed.
+	var batchEditIsActive: Bool = false
+
+	/// A boolean value that indicates whether this controller hid the tab bar to enter edit mode.
+	var didHideTabBarForEdit: Bool = false
+
 	var _prefersRefreshControlDisabled = false {
 		didSet {
 			self.setNeedsRefreshControlAppearanceUpdate()
@@ -91,6 +119,8 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshNotifications)
 		#endif
 
+		self.tableView.allowsMultipleSelectionDuringEditing = true
+
 		self.configureNavigationItems()
 		self.enableRefreshControl()
 		self.enableActions()
@@ -135,61 +165,21 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		}
 	}
 
+	override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+
+		coordinator.animate(alongsideTransition: { [weak self] _ in
+			guard let self = self, self.batchEditIsActive else { return }
+			self.toolbarItems = self.makeBatchToolbarItems()
+		})
+	}
+
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchNotifications()
 		}
-	}
-
-	/// The shared settings used to initialize the table view
-	private func sharedInit() {
-		self.tableView.cellLayoutMarginsFollowReadableWidth = true
-	}
-
-	/// Configure the mark all bar button item.
-	private func configureMarkAllBarButtonItem() {
-		self.markAllBarButtonItem = UIBarButtonItem(title: L10n.markAll, menu: UIMenu(children: [
-			UIAction(title: L10n.markAllAsRead, image: UIImage(systemName: "circlebadge"), handler: { [weak self] _ in
-				guard let self = self else { return }
-				Task {
-					let readStatus = await self.updateNotification("all", withStatus: .read)
-					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-				}
-			}),
-			UIAction(title: L10n.markAllAsUnread, image: UIImage(systemName: "circlebadge.fill"), handler: { [weak self] _ in
-				guard let self = self else { return }
-				Task {
-					let readStatus = await self.updateNotification("all", withStatus: .unread)
-					let userNotifications = self.dataSource.snapshot().itemIdentifiers
-					self.updateUserNotifications(userNotifications, withStatus: readStatus)
-				}
-			})
-		]))
-	}
-
-	/// Configures the profile bar button item.
-	private func configureProfileBarButtonItem() {
-		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
-			guard let self = self else { return }
-			Task {
-				await self.segueToProfile()
-			}
-		})
-
-		if let profileBarButtonItem = self.profileBarButtonItem {
-			self.navigationItem.rightBarButtonItem = profileBarButtonItem
-		}
-
-		self.configureUserDetails()
-	}
-
-	/// Configures the navigation items.
-	fileprivate func configureNavigationItems() {
-		self.configureMarkAllBarButtonItem()
-		self.configureProfileBarButtonItem()
 	}
 
 	override func configureEmptyDataView() {
@@ -216,7 +206,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		tableView.backgroundView?.alpha = 0
 	}
 
-	/// Fades in and out the empty data view according to the number of sections.
+	/// Fades the empty data view in or out according to the number of sections.
 	func toggleEmptyDataView() {
 		if self.tableView.numberOfSections == 0 || !User.isSignedIn {
 			self.tableView.backgroundView?.animateFadeIn()
@@ -237,38 +227,9 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.updateTabBarBadge()
 	}
 
-	/// Enables and disables the refresh control according to the user sign in state.
-	private func enableRefreshControl() {
-		self._prefersRefreshControlDisabled = !User.isSignedIn
-	}
-
-	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
-	private func enableActions() {
-		if User.isSignedIn {
-			var rightItems: [UIBarButtonItem] = []
-			if let profileBarButtonItem = self.profileBarButtonItem {
-				rightItems.append(profileBarButtonItem)
-			}
-			rightItems.append(self.markAllBarButtonItem)
-			self.navigationItem.rightBarButtonItems = rightItems
-		} else {
-			var rightItems: [UIBarButtonItem] = []
-			if let profileBarButtonItem = self.profileBarButtonItem {
-				rightItems.append(profileBarButtonItem)
-			}
-			self.navigationItem.rightBarButtonItems = rightItems
-		}
-
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.isEnabled = User.isSignedIn
-		#endif
-	}
-
-	/// Fetch the notifications for the current user.
+	/// Fetches the notifications for the authenticated user.
 	func fetchNotifications() async {
-		guard !self.isRequestInProgress else {
-			return
-		}
+		guard !self.isRequestInProgress else { return }
 
 		// Set request in progress
 		self.isRequestInProgress = true
@@ -335,40 +296,9 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 
 	/// Update notifications status within a specific section.
 	///
-	/// - Parameter sender: The object containing a reference to the button that initiated this action.
-	@objc func updateNotifications(in section: Int, sender: UIButton) {
-		guard let sectionLayoutKind = self.dataSource.sectionIdentifier(for: section) else { return }
-		let userNotifications = self.dataSource.snapshot().itemIdentifiers(inSection: sectionLayoutKind)
-		var readStatus: ReadStatus = .unread
-
-		// Iterate over all the rows of a section
-		let notificationIDs = userNotifications.compactMap { userNotification in
-			if userNotification.attributes.readStatus == .unread, readStatus == .unread {
-				readStatus = .read
-			}
-
-			return userNotification.id.rawValue
-		}.joined(separator: ",")
-
-		Task { [weak self] in
-			guard let self = self else { return }
-			let readStatus = await self.updateNotification(notificationIDs, withStatus: readStatus)
-			self.updateUserNotifications(userNotifications, withStatus: readStatus)
-		}
-
-		sender.setTitle(readStatus == .unread ? L10n.markAsRead : L10n.markAsUnread, for: .normal)
-	}
-
-	func updateNotification(_ notificationID: String, withStatus readStatus: ReadStatus) async -> ReadStatus {
-		do {
-			let userNotificationUpdateResponse = try await KService.updateNotification(notificationID, readStatus: readStatus).response()
-			return userNotificationUpdateResponse.data.readStatus
-		} catch {
-			print(error.localizedDescription)
-			return readStatus
-		}
-	}
-
+	/// - Parameters:
+	///    - userNotifications: The notifications whose read status changed.
+	///    - readStatus: The new read status to apply locally.
 	func updateUserNotifications(_ userNotifications: [UserNotification], withStatus readStatus: ReadStatus) {
 		userNotifications.forEach { userNotification in
 			userNotification.attributes.readStatus = readStatus
@@ -379,6 +309,72 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable {
 		self.dataSource.defaultRowAnimation = .automatic
 		self.dataSource.apply(snapshot)
 		self.updateTabBarBadge()
+	}
+
+	/// The shared settings used to initialize the table view.
+	private func sharedInit() {
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
+	}
+
+	/// Configures the profile bar button item.
+	private func configureProfileBarButtonItem() {
+		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
+			guard let self = self else { return }
+
+			Task {
+				await self.segueToProfile()
+			}
+		})
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			self.navigationItem.rightBarButtonItem = profileBarButtonItem
+		}
+
+		self.configureUserDetails()
+	}
+
+	/// Configures the bar button item that enters batch-edit mode.
+	private func configureSelectBarButtonItem() {
+		self.selectBarButtonItem.title = L10n.select
+		self.selectBarButtonItem.image = UIImage(systemName: "checkmark.circle")
+		self.selectBarButtonItem.style = .plain
+		self.selectBarButtonItem.primaryAction = UIAction(title: L10n.select, image: UIImage(systemName: "checkmark.circle")) { [weak self] _ in
+			self?.setEditing(true, animated: true)
+		}
+	}
+
+	/// Wires the navigation items used both in normal and batch edit mode.
+	fileprivate func configureNavigationItems() {
+		self.configureSelectBarButtonItem()
+		self.configureBatchEditBarButtonItems()
+		self.configureBottomActionContainer()
+		self.configureProfileBarButtonItem()
+	}
+
+	/// Enables and disables the refresh control according to the user's sign-in state.
+	private func enableRefreshControl() {
+		self._prefersRefreshControlDisabled = !User.isSignedIn
+	}
+
+	/// Refreshes the navigation bar items based on the current sign-in state.
+	private func enableActions() {
+		guard !self.batchEditIsActive else { return }
+
+		var rightItems: [UIBarButtonItem] = []
+
+		if let profileBarButtonItem = self.profileBarButtonItem {
+			rightItems.append(profileBarButtonItem)
+		}
+
+		if User.isSignedIn {
+			rightItems.append(self.selectBarButtonItem)
+		}
+
+		self.navigationItem.rightBarButtonItems = rightItems
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.isEnabled = User.isSignedIn
+		#endif
 	}
 }
 
@@ -400,6 +396,7 @@ extension NotificationsTableViewController {
 
 			// Append the grouped elements to the grouped notifications array
 			var groupedNotifications: [GroupedNotifications] = []
+
 			for (key, value) in groupedNotificationsArray {
 				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
@@ -421,6 +418,7 @@ extension NotificationsTableViewController {
 
 			// Append the grouped elements to the grouped notifications array
 			var groupedNotifications: [GroupedNotifications] = []
+
 			for (key, value) in groupedNotificationsArray {
 				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
@@ -465,7 +463,7 @@ extension NotificationsTableViewController {
 		}
 	}
 
-	/// Removes the notification specified by the givne index path.
+	/// Removes the notification at the given index path.
 	///
 	/// - Parameter indexPath: The index path of the notification.
 	func removeNotification(at indexPath: IndexPath) {
@@ -484,13 +482,31 @@ extension NotificationsTableViewController {
 		self.updateDataSource()
 		self.endFetch()
 	}
-}
 
-// MARK: - TitleHeaderTableViewCellDelegate
-extension NotificationsTableViewController: TitleHeaderTableReusableViewDelegate {
-	func titleHeaderTableReusableView(_ reusableView: TitleHeaderTableReusableView, didPress button: UIButton) {
-		guard let section = reusableView.section else { return }
-		self.updateNotifications(in: section, sender: button)
+	/// Removes the given notifications.
+	///
+	/// - Parameter userNotifications: The notifications to remove.
+	func removeNotifications(_ userNotifications: [UserNotification]) {
+		guard !userNotifications.isEmpty else { return }
+		let removedIDs = Set(userNotifications.map { $0.id })
+
+		switch self.grouping {
+		case .automatic, .byType:
+			for index in (0 ..< self.groupedNotifications.count).reversed() {
+				self.groupedNotifications[index].sectionNotifications.removeAll { removedIDs.contains($0.id) }
+
+				if self.groupedNotifications[index].sectionNotifications.isEmpty {
+					self.groupedNotifications.remove(at: index)
+				}
+			}
+		case .off:
+			self.userNotifications.removeAll { removedIDs.contains($0.id) }
+		}
+
+		self.dataSource.defaultRowAnimation = .top
+		self.updateDataSource()
+		self.toggleEmptyDataView()
+		self.updateTabBarBadge()
 	}
 }
 

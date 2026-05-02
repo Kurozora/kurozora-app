@@ -6,11 +6,16 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension NotificationsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard !self.isEditing else {
+			self.didUpdateBatchSelection()
+			return
+		}
+
 		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		if userNotification.attributes.readStatus == .unread {
@@ -34,62 +39,48 @@ extension NotificationsTableViewController {
 		}
 	}
 
+	override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+		guard self.isEditing else { return }
+		self.didUpdateBatchSelection()
+	}
+
+	override func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+		return User.isSignedIn
+	}
+
+	override func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+		self.setEditing(true, animated: true)
+	}
+
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell {
-			baseNotificationCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			(baseNotificationCell as? BasicNotificationCell)?.chevronImageView.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
-			(baseNotificationCell as? IconNotificationCell)?.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-
-			baseNotificationCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			baseNotificationCell.notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			baseNotificationCell.dateLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-		}
+		guard !self.isEditing else { return }
+		(tableView.cellForRow(at: indexPath) as? BaseNotificationCell)?.applyHighlightedAppearance(highlighted: true)
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell {
-			baseNotificationCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			(baseNotificationCell as? BasicNotificationCell)?.chevronImageView.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-			(baseNotificationCell as? IconNotificationCell)?.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-
-			baseNotificationCell.contentLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			baseNotificationCell.notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			baseNotificationCell.dateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
+		guard !self.isEditing else { return }
+		(tableView.cellForRow(at: indexPath) as? BaseNotificationCell)?.applyHighlightedAppearance(highlighted: false)
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let titleHeaderTableReusableView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableReusableView.reuseIdentifier) as? TitleHeaderTableReusableView
-		titleHeaderTableReusableView?.delegate = self
-
 		switch self.grouping {
 		case .automatic, .byType:
+			let titleHeaderTableReusableView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableReusableView.reuseIdentifier) as? TitleHeaderTableReusableView
 			let groupNotification = self.groupedNotifications[section]
-			let allNotificationsRead = groupNotification.sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
-			let title = groupNotification.sectionTitle
-			let buttonTitle = allNotificationsRead ? "Mark as unread" : "Mark as read"
-
-			titleHeaderTableReusableView?.configure(withTitle: title, buttonTitle: buttonTitle, section: section)
+			titleHeaderTableReusableView?.configure(withTitle: groupNotification.sectionTitle, buttonIsHidden: true, section: section)
 			return titleHeaderTableReusableView
-		case .off: break
+		case .off: return nil
 		}
-
-		return nil
 	}
 
-	// MARK: - Responding to Row Actions
 	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard !self.isEditing else { return nil }
 		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
 		let notificationReadStatus = userNotification.attributes.readStatus
-		var readStatus: ReadStatus = .unread
-
-		if notificationReadStatus == .unread {
-			readStatus = .read
-		}
-
+		let readStatus: ReadStatus = notificationReadStatus == .unread ? .read : .unread
 		let isRead = readStatus == .read
+
 		let readUnreadAction = UIContextualAction(style: .normal, title: "") { _, _, completionHandler in
 			Task {
 				await userNotification.update(at: indexPath, withReadStatus: readStatus)
@@ -97,7 +88,7 @@ extension NotificationsTableViewController {
 			}
 		}
 		readUnreadAction.backgroundColor = KThemePicker.tintColor.colorValue
-		readUnreadAction.title = isRead ? "Mark as Read" : "Mark as Unread"
+		readUnreadAction.title = isRead ? L10n.markAsRead : L10n.markAsUnread
 		readUnreadAction.image = isRead ? UIImage(systemName: "circlebadge") : UIImage(systemName: "circlebadge.fill")
 
 		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [readUnreadAction])
@@ -106,6 +97,7 @@ extension NotificationsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard !self.isEditing else { return nil }
 		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
 		let deleteAction = UIContextualAction(style: .destructive, title: L10n.remove) { _, _, completionHandler in
@@ -122,30 +114,31 @@ extension NotificationsTableViewController {
 		return swipeActionsConfiguration
 	}
 
-	// MARK: - Managing Context Menus
+	// MARK: - Context menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		let tableViewCell = tableView.cellForRow(at: indexPath)
+		guard !self.isEditing else { return nil }
 
+		let tableViewCell = tableView.cellForRow(at: indexPath)
 		let userNotification = self.dataSource.itemIdentifier(for: indexPath)
 		return userNotification?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil {
-			let parameters = UIPreviewParameters()
-			parameters.backgroundColor = .clear
-			return UITargetedPreview(view: tableViewCell, parameters: parameters)
-		}
-		return nil
+		guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+		guard let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil else { return nil }
+
+		let parameters = UIPreviewParameters()
+		parameters.backgroundColor = .clear
+		return UITargetedPreview(view: tableViewCell, parameters: parameters)
 	}
 
 	override func tableView(_ tableView: UITableView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-		if let indexPath = configuration.identifier as? IndexPath, let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil {
-			let parameters = UIPreviewParameters()
-			parameters.backgroundColor = .clear
-			return UITargetedPreview(view: tableViewCell, parameters: parameters)
-		}
-		return nil
+		guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+		guard let tableViewCell = tableView.cellForRow(at: indexPath), tableViewCell.window != nil else { return nil }
+
+		let parameters = UIPreviewParameters()
+		parameters.backgroundColor = .clear
+		return UITargetedPreview(view: tableViewCell, parameters: parameters)
 	}
 
 	override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
