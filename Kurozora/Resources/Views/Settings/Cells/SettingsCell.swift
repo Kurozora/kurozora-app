@@ -55,8 +55,10 @@ class SettingsCell: KTableViewCell {
 
 		switch sectionRow {
 		case .motion:
+			self.updateSplashScreenAnimation()
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateSplashScreenAnimation), name: .KSSplashScreenAnimationDidChange, object: nil)
 		case .browser:
+			self.updateAppBrowser()
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppBrowser), name: .KSAppBrowserDidChange, object: nil)
 		case .cache:
 			Task { [weak self] in
@@ -64,8 +66,10 @@ class SettingsCell: KTableViewCell {
 				self.detailLabel?.text = await self.calculateCache()
 			}
 		case .icon:
+			self.updateAppIcon()
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppIcon), name: .KSAppIconDidChange, object: nil)
 		case .theme:
+			self.updateAppTheme()
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppTheme), name: .KSAppAppearanceDidChange, object: nil)
 		default:
 			NotificationCenter.default.removeObserver(self, name: .KSSplashScreenAnimationDidChange, object: nil)
@@ -121,13 +125,15 @@ extension SettingsCell {
 
 	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
+		let appIcon = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
 		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
-		self.detailLabel?.text = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
+		self.detailLabel?.text = appIcon == UserSettings.defaultAppIcon ? "Default" : appIcon
 	}
 
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateAppTheme() {
-		self.detailLabel?.text = UserSettings.currentThemeName
+		let themeName = UserSettings.currentThemeName
+		self.detailLabel?.text = (themeName.isEmpty || themeName == KThemeStyle.default.stringValue) ? "Default" : themeName
 	}
 
 	/// Updates the app theme text with the one selected by the user.

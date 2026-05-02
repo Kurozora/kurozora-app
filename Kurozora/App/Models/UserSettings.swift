@@ -13,6 +13,9 @@ class UserSettings: UserDefaults {
 	/// The App Group suite name shared between the main app and extensions.
 	static let suiteName = "group.settings.app.kurozora.tracker"
 
+	/// The canonical name of the primary app icon.
+	static let defaultAppIcon = "Kurozora"
+
 	/// The base `UserDefaults` suite of the Kurozora apps, backed by the shared App Group container.
 	static var shared: UserDefaults {
 		let shared = UserDefaults(suiteName: suiteName) ?? .standard
@@ -110,14 +113,13 @@ extension UserSettings {
 
 	/// Returns a string indicating the currently used app icon.
 	static var appIcon: String {
-		let primaryIcon = "Kurozora"
-		guard var appIcon = self.shared.string(forKey: #function) else { return primaryIcon }
+		guard var appIcon = self.shared.string(forKey: #function) else { return self.defaultAppIcon }
 
 		if #available(iOS 18.0, *) {
 			appIcon += " Preview"
 		}
 
-		return UIImage(named: appIcon) != nil ? appIcon : primaryIcon
+		return UIImage(named: appIcon) != nil ? appIcon : self.defaultAppIcon
 	}
 
 	/// Returns a `KBrowser` type indicating the preferred default browser.

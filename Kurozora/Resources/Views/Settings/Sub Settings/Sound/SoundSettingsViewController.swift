@@ -118,7 +118,10 @@ extension SoundSettingsViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
 
-			cell.configure(title: L10n.chimeSound, detail: UserSettings.selectedChime)
+			let stored = UserSettings.selectedChime
+			let firstChimeName = Chime.shared.appChimeGroups.first?.chimes.first?.first?.name
+			let detail = (stored == firstChimeName) ? "Default" : stored
+			cell.configure(title: L10n.chimeSound, detail: detail)
 			return cell
 		case .toggleChime:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
@@ -170,8 +173,7 @@ extension SoundSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch Sound.Row.settingsCases[indexPath.row] {
 		case .selectChime:
-			let optionsViewController = SoundOptionsViewController()
-			self.show(optionsViewController, sender: nil)
+			self.show(SegueIdentifiers.soundOptionsSegue, sender: nil)
 		case .toggleChime, .toggleUISounds, .toggleHaptics:
 			break
 		}
