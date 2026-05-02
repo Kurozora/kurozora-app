@@ -61,6 +61,16 @@ class AdaptiveCornerButton: UIButton {
 		}
 	}
 
+	override func setImage(_ image: UIImage?, for state: UIControl.State) {
+		if state == .normal, var configuration = self.configuration {
+			configuration.image = image
+			self.configuration = configuration
+			return
+		}
+
+		super.setImage(image, for: state)
+	}
+
 	// MARK: - Functions
 	/// The shared settings used to initialize the button.
 	private func sharedInit() {

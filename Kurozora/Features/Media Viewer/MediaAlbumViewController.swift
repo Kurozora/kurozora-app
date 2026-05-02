@@ -206,9 +206,40 @@ final class MediaAlbumViewController: UIPageViewController {
 			case .copy: self.onCopy?(item)
 			case .share: self.share(item)
 			case .save: self.save(item)
-			case .more: break
+			case .more(let menu): self.presentMoreMenu(menu, from: self.actionBar.moreButton)
 			}
 		}
+	}
+
+	/// Presents the supplied menu as an action sheet anchored to the given source view.
+	///
+	/// Uses as a fallback on Mac Catalyst running macOS 26, where `UIButton.menu` cannot coexist
+	/// with a `.glass()` configuration.
+	///
+	/// - Parameters:
+	///    - menu: The menu whose actions to display.
+	///    - sourceView: The view from which the popover anchors.
+	private func presentMoreMenu(_ menu: UIMenu, from sourceView: UIView) {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		for child in menu.children {
+			guard let action = child as? UIAction else { continue }
+
+			let dispatcher = UIControl()
+			dispatcher.addAction(action, for: .primaryActionTriggered)
+
+			let style: UIAlertAction.Style = action.attributes.contains(.destructive) ? .destructive : .default
+			alert.addAction(UIAlertAction(title: action.title, style: style) { _ in
+				dispatcher.sendActions(for: .primaryActionTriggered)
+			})
+		}
+
+		alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
+
+		alert.popoverPresentationController?.sourceView = sourceView
+		alert.popoverPresentationController?.permittedArrowDirections = .down
+
+		self.present(alert, animated: true)
 	}
 
 	private func makeMoreMenu(for item: MediaItem) -> UIMenu {

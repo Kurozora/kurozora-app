@@ -57,16 +57,17 @@ class Chime: NSObject {
 	/// - Parameters:
 	///    - chimeFile: The file to play as a chime.
 	func play(_ chimeFile: String? = nil) {
+		let selectedChime = UserSettings.selectedChime
 		let chimeFileName = chimeFile ?? {
-			guard let selectedChime = UserSettings.selectedChime else {
+			if selectedChime.isEmpty {
 				return self.appChimeGroups.first?.chimes.first?.first?.file
+			} else {
+				return self.appChimeGroups
+					.flatMap { $0.chimes }
+					.flatMap { $0 }
+					.first { $0.name == selectedChime }?.file
+					?? self.appChimeGroups.first?.chimes.first?.first?.file
 			}
-
-			return self.appChimeGroups
-				.flatMap { $0.chimes }
-				.flatMap { $0 }
-				.first { $0.name == selectedChime }?.file
-				?? self.appChimeGroups.first?.chimes.first?.first?.file
 		}()
 		guard let chimeFileComponents = chimeFileName?.components(separatedBy: ".") else { return }
 		guard let url = Bundle.main.url(forResource: chimeFileComponents.first, withExtension: chimeFileComponents.last) else { return }

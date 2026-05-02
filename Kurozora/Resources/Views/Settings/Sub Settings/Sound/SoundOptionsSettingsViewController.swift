@@ -37,9 +37,8 @@ class SoundOptionsViewController: SubSettingsViewController {
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true
 
-		self.selectedChime = Chime.shared.appChimeGroups.flatMap { $0.chimes }
-			.flatMap { $0 }
-			.first { $0.name == UserSettings.selectedChime }
+		let allChimes = Chime.shared.appChimeGroups.flatMap { $0.chimes }.flatMap { $0 }
+		self.selectedChime = allChimes.first { $0.name == UserSettings.selectedChime } ?? allChimes.first
 
 		self.configureView()
 	}
@@ -75,8 +74,7 @@ extension SoundOptionsViewController {
 			return chimes.first
 		}() ?? chimes.first
 
-		let selectedChime = UserSettings.selectedChime
-		iconTableViewCell.setSelected(chime?.name == selectedChime)
+		iconTableViewCell.setSelected(chime?.name == self.selectedChime?.name)
 		iconTableViewCell.configureCell(using: chime)
 
 		return iconTableViewCell

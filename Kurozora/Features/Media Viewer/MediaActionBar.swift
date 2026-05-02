@@ -25,7 +25,24 @@ final class MediaActionBar: UIView {
 	private let saveButton = AdaptiveCornerButton()
 	let moreButton = AdaptiveCornerButton()
 
+	private var moreMenu: UIMenu?
+
 	var onAction: ((MediaAction) -> Void)?
+
+	/// A boolean value that indicates whether `UIButton.menu` composes with a `.glass()`
+	/// configuration on the current platform.
+	///
+	/// Mac Catalyst on macOS 26 suppresses `UIButtonMacVisualElement` when a menu is assigned to a
+	/// `.glass()` button, leaving the button invisible. iOS 26 on iPhone/iPad and older Mac
+	/// Catalyst versions are unaffected.
+	private static var canUseNativeUIButtonMenu: Bool {
+		#if targetEnvironment(macCatalyst)
+		if #available(macCatalyst 26.0, *) {
+			return false
+		}
+		#endif
+		return true
+	}
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -39,19 +56,25 @@ final class MediaActionBar: UIView {
 	}
 
 	// MARK: - Functions
+	/// Populates the bar with a button per supplied action.
+	///
+	/// - Parameter actions: The actions to render, in order.
 	func configure(with actions: [MediaAction]) {
-		// Reset stack
 		self.stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
 		for action in actions {
 			switch action {
-			case .copy:
-				self.stackView.addArrangedSubview(self.copyButton)
+			case .copy: self.stackView.addArrangedSubview(self.copyButton)
 			case .share: self.stackView.addArrangedSubview(self.shareButton)
 			case .save: self.stackView.addArrangedSubview(self.saveButton)
 			case .more(let menu):
-				self.moreButton.menu = menu
-				self.moreButton.showsMenuAsPrimaryAction = true
+				self.moreMenu = menu
+
+				if Self.canUseNativeUIButtonMenu {
+					self.moreButton.menu = menu
+					self.moreButton.showsMenuAsPrimaryAction = true
+				}
+
 				self.stackView.addArrangedSubview(self.moreButton)
 			}
 		}
@@ -110,6 +133,10 @@ final class MediaActionBar: UIView {
 	private func configureMoreButton() {
 		self.moreButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
 
+		if !Self.canUseNativeUIButtonMenu {
+			self.moreButton.addTarget(self, action: #selector(self.moreTapped), for: .touchUpInside)
+		}
+
 		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
 			self.moreButton.backgroundColor = .black.withAlphaComponent(0.4)
 		}
@@ -134,8 +161,13 @@ final class MediaActionBar: UIView {
 		])
 	}
 
-	// MARK: - handlers
+	// MARK: - Handlers
 	@objc private func copyTapped() { self.onAction?(.copy) }
 	@objc private func shareTapped() { self.onAction?(.share) }
 	@objc private func saveTapped() { self.onAction?(.save) }
+
+	@objc private func moreTapped() {
+		guard let menu = self.moreMenu else { return }
+		self.onAction?(.more(menu))
+	}
 }
