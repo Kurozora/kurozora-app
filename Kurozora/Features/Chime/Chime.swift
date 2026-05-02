@@ -45,7 +45,6 @@ class Chime: NSObject {
 
 		do {
 			try audioSession.setCategory(.ambient, options: [.duckOthers])
-			try audioSession.setActive(true)
 		} catch {
 			print("---------- Failed to set up chime session: \(error.localizedDescription)")
 		}
@@ -58,21 +57,22 @@ class Chime: NSObject {
 	/// - Parameters:
 	///    - chimeFile: The file to play as a chime.
 	func play(_ chimeFile: String? = nil) {
-		let selectedChime = UserSettings.selectedChime
 		let chimeFileName = chimeFile ?? {
-			if selectedChime.isEmpty {
+			guard let selectedChime = UserSettings.selectedChime else {
 				return self.appChimeGroups.first?.chimes.first?.first?.file
-			} else {
-				return self.appChimeGroups
-					.flatMap { $0.chimes }
-					.flatMap { $0 }
-					.first { $0.name == selectedChime }?.file
 			}
+
+			return self.appChimeGroups
+				.flatMap { $0.chimes }
+				.flatMap { $0 }
+				.first { $0.name == selectedChime }?.file
+				?? self.appChimeGroups.first?.chimes.first?.first?.file
 		}()
 		guard let chimeFileComponents = chimeFileName?.components(separatedBy: ".") else { return }
 		guard let url = Bundle.main.url(forResource: chimeFileComponents.first, withExtension: chimeFileComponents.last) else { return }
 
 		do {
+			try AVAudioSession.sharedInstance().setActive(true)
 			self.player = try AVAudioPlayer(contentsOf: url)
 			self.player?.delegate = self
 			self.player?.prepareToPlay()
@@ -100,7 +100,7 @@ class Chime: NSObject {
 extension Chime: AVAudioPlayerDelegate {
 	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		do {
-			try AVAudioSession.sharedInstance().setActive(false)
+			try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
 		} catch {
 			print("----- Failed to end chime session: \(error.localizedDescription)")
 		}
