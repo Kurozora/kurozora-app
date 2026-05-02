@@ -13,11 +13,16 @@ class MenuSettingsCell: SettingsCell {
 	// MARK: - Functions
 	func configure(title: String?, buttonTitle: String? = nil) {
 		super.configure(title: title)
+
 		self.secondaryLabel?.isHidden = true
+		self.detailLabel?.isHidden = true
+
 		self.chevronImageView?.isHidden = true
+
 		if let buttonTitle {
 			self.menuActionButton.setTitle(buttonTitle, for: .normal)
 		}
+
 		self.menuActionButton.contentHorizontalAlignment = .trailing
 		self.menuActionButton.showsMenuAsPrimaryAction = true
 	}

@@ -101,22 +101,22 @@ extension SubSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			selectableSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
+			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			iconTableViewCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			selectableSettingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			iconTableViewCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			iconTableViewCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			selectableSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
+			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			iconTableViewCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			selectableSettingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			iconTableViewCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			iconTableViewCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 

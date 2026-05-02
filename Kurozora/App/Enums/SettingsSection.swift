@@ -182,8 +182,8 @@ extension SettingsTableViewController {
 		/// The row representing the restore cell.
 		case restoreFeatures
 
-//		/// The row representing the refund request cell.
-//		case requestRefund
+		/// The row representing the refund request cell.
+		case requestRefund
 
 		/// The row representing the rate cell.
 		case rate
@@ -202,10 +202,27 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [
+			.account, .switchAccount,
+			.keychain,
+			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
+			.notifications, .reminder, .soundsAndHaptics,
+			.biometrics, .privacy,
+			.signalSticker, .telegramSticker,
+			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .requestRefund,
+			.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter
+		]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [
+			.account, .switchAccount,
+			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
+			.notifications, .reminder, .soundsAndHaptics,
+			.biometrics, .privacy,
+			.signalSticker, .telegramSticker,
+			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures,
+			.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter
+		]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -237,15 +254,17 @@ extension SettingsTableViewController {
 
 		/// An array containing all support section settings rows.
 		static var allSupport: [Row] {
+			var rows: [Row]
 			#if targetEnvironment(macCatalyst)
-			return [.unlockFeatures, .tipjar, .restoreFeatures]
+			rows = [.unlockFeatures, .tipjar, .restoreFeatures, .requestRefund]
 			#else
 			if ProcessInfo.processInfo.isiOSAppOnMac {
-				return [.unlockFeatures, .tipjar, .restoreFeatures]
+				rows = [.unlockFeatures, .tipjar, .restoreFeatures, .requestRefund]
 			} else {
-				return [.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures]
+				rows = [.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .requestRefund]
 			}
 			#endif
+			return rows
 		}
 
 		/// An array containing all security section settings rows.
@@ -262,7 +281,7 @@ extension SettingsTableViewController {
 			switch self {
 			case .cache, .reminder,
 			     .signalSticker, .telegramSticker, // .whatsAppSticker,
-			     .manageSubscriptions, .restoreFeatures, // .requestRefund,
+			     .manageSubscriptions, .restoreFeatures, .requestRefund,
 			     .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter:
 				return nil
 			case .account:
@@ -345,8 +364,8 @@ extension SettingsTableViewController {
 				return .none
 			case .restoreFeatures:
 				return .none
-//			case .requestRefund:
-//				return .none
+			case .requestRefund:
+				return .chevron
 			case .rate:
 				return .none
 			case .joinDiscord:
@@ -411,8 +430,8 @@ extension SettingsTableViewController {
 				return L10n.manageSubscriptions
 			case .restoreFeatures:
 				return L10n.restorePurchase
-//			case .requestRefund:
-//				return L10n.RequestRefund
+			case .requestRefund:
+				return L10n.requestRefund
 			case .rate:
 				return L10n.rateAppStore
 			case .joinDiscord:
@@ -491,8 +510,8 @@ extension SettingsTableViewController {
                 return .Icons.manageSubscriptions
 			case .restoreFeatures:
                 return .Icons.restore
-//			case .requestRefund:
-//				return .Icons.refund
+			case .requestRefund:
+				return .Icons.refund
 			case .rate:
                 return .Icons.rate
 			case .joinDiscord:

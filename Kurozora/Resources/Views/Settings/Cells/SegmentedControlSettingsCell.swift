@@ -17,7 +17,10 @@ class SegmentedControlSettingsCell: SettingsCell {
 		super.configure(title: title)
 
 		self.secondaryLabel?.isHidden = true
+		self.detailLabel?.isHidden = true
+
 		self.chevronImageView?.isHidden = true
+
 		self.segmentedControl.segmentTitles = segmentTitles
 		self.segmentedControl.selectedSegmentIndex = (0 ..< segmentTitles.count).contains(selectedSegmentIndex) ? selectedSegmentIndex : UISegmentedControl.noSegment
 

@@ -199,7 +199,7 @@ extension DisplaySettingsTableViewController {
 			}
 			cell.configure(title: "Options", detail: self.automaticDarkThemeOptionsValueText())
 			cell.chevronImageView?.isHidden = false
-			cell.secondaryLabel?.isHidden = false
+			cell.detailLabel?.isHidden = false
 			return cell
 		case .trueBlack:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {

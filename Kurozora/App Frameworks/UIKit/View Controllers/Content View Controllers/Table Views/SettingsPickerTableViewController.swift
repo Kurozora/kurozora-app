@@ -121,7 +121,7 @@ class SettingsPickerTableViewController: KTableViewController {
 extension SettingsPickerTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return [
-			SelectableSettingsCell.self,
+			IconTableViewCell.self,
 		]
 	}
 }
@@ -129,18 +129,18 @@ extension SettingsPickerTableViewController {
 // MARK: - KCollectionViewDataSource
 extension SettingsPickerTableViewController {
 	func configureDataSource() {
-		let selectableSettingsCellRegistration = self.getConfiguredSelectableSettingsCell()
+		let iconTableViewCellRegistration = self.getConfiguredIconTableViewCell()
 
 		self.dataSource = UITableViewDiffableDataSource<Section, ItemKind>(tableView: self.tableView) { tableView, indexPath, itemKind in
-			tableView.dequeueConfiguredReusableCell(using: selectableSettingsCellRegistration, for: indexPath, item: itemKind)
+			tableView.dequeueConfiguredReusableCell(using: iconTableViewCellRegistration, for: indexPath, item: itemKind)
 		}
 	}
 
-	func getConfiguredSelectableSettingsCell() -> UITableView.CellRegistration<SelectableSettingsCell, ItemKind> {
-		return UITableView.CellRegistration<SelectableSettingsCell, ItemKind>(cellNib: SelectableSettingsCell.nib) { [weak self] selectableSettingsCell, _, itemKind in
+	func getConfiguredIconTableViewCell() -> UITableView.CellRegistration<IconTableViewCell, ItemKind> {
+		return UITableView.CellRegistration<IconTableViewCell, ItemKind>(cellNib: IconTableViewCell.nib) { [weak self] iconTableViewCell, _, itemKind in
 			guard let self else { return }
-			selectableSettingsCell.configure(title: itemKind.value)
-			selectableSettingsCell.setSelected(itemKind.key == self.selectedKey)
+			iconTableViewCell.configure(title: itemKind.value)
+			iconTableViewCell.setSelected(itemKind.key == self.selectedKey)
 		}
 	}
 }

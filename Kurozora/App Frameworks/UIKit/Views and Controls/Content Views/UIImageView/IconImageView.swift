@@ -13,11 +13,21 @@ import UIKit
 /// `IconImageView` adjusts some options to achieve its design, this includes:
 /// - Applying a border color.
 final class IconImageView: KImageView {
-	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
+	// MARK: - Initializers
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		self.sharedInit()
+	}
 
-		self.layerCornerRadius = 5
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
+	// MARK: - Functions
+	/// The shared settings used to initialize the label.
+	private func sharedInit() {
+		self.layerCornerRadius = 6
 		self.layer.borderWidth = 1
 		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
 	}

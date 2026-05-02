@@ -27,10 +27,14 @@ class SelectableAccountSettingsCell: AccountSettingsCell {
 	///   - isSelected: Whether this account is the currently active account.
 	func configure(using account: StoredAccount, isSelected: Bool) {
 		self.primaryLabel?.text = account.username ?? account.slug
+		self.primaryLabel?.isHidden = false
+
 		self.secondaryLabel?.text = "@\(account.slug)"
+		self.secondaryLabel?.isHidden = false
 
 		let placeholder = (account.username ?? account.slug).profilePlaceholderImage
 		self.iconImageView?.setImage(with: account.profileImageURL ?? "", placeholder: placeholder)
+		self.iconImageView?.isHidden = false
 
 		self.setSelected(isSelected)
 	}

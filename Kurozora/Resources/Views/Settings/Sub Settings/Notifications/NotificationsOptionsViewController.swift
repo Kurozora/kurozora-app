@@ -41,8 +41,8 @@ extension NotificationsOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectableSettingsCell.self, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.reuseID).")
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(IconTableViewCell.reuseID).")
 		}
 		let notificationGrouping = KNotification.GroupStyle(rawValue: indexPath.row) ?? .automatic
 		let selectedNotificationGrouping = UserSettings.notificationsGrouping
@@ -66,6 +66,6 @@ extension NotificationsOptionsViewController {
 // MARK: - KTableViewDataSource
 extension NotificationsOptionsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [SelectableSettingsCell.self]
+		return [IconTableViewCell.self]
 	}
 }

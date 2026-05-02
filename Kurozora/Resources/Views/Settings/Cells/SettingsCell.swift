@@ -12,15 +12,17 @@ import UIKit
 
 class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var iconImageViewContrainer: UIView?
+	@IBOutlet weak var iconImageViewContainer: UIView?
 	@IBOutlet weak var iconImageView: IconImageView?
 	@IBOutlet weak var primaryLabel: KLabel?
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel?
+	@IBOutlet weak var detailLabel: KSecondaryLabel?
 	@IBOutlet weak var selectedView: UIView? {
 		didSet {
 			self.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
+
 	@IBOutlet weak var chevronImageView: UIImageView? {
 		didSet {
 			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
@@ -34,21 +36,22 @@ class SettingsCell: KTableViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given title.
-	func configure(title: String?, detail: String? = nil, icon: UIImage? = nil) {
+	func configure(title: String?, subtitle: String? = nil, detail: String? = nil, icon: UIImage? = nil) {
 		self.primaryLabel?.text = title
-		self.secondaryLabel?.text = detail
 
-		if let icon = icon {
-			self.iconImageView?.image = icon
-			self.iconImageViewContrainer?.isHidden = false
-		} else {
-			self.iconImageViewContrainer?.isHidden = true
-		}
+		self.secondaryLabel?.text = subtitle
+		self.secondaryLabel?.isHidden = subtitle == nil
+
+		self.detailLabel?.text = detail
+		self.detailLabel?.isHidden = detail == nil
+
+		self.iconImageView?.image = icon
+		self.iconImageViewContainer?.isHidden = icon == nil
 	}
 
 	/// Configure the cell with the given details.
 	func configure(using sectionRow: SettingsTableViewController.Row?) {
-		self.configure(title: sectionRow?.primaryStringValue, detail: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue)
+		self.configure(title: sectionRow?.primaryStringValue, subtitle: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue)
 
 		switch sectionRow {
 		case .motion:
@@ -58,7 +61,7 @@ class SettingsCell: KTableViewCell {
 		case .cache:
 			Task { [weak self] in
 				guard let self = self else { return }
-				self.secondaryLabel?.text = await self.calculateCache()
+				self.detailLabel?.text = await self.calculateCache()
 			}
 		case .icon:
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppIcon), name: .KSAppIconDidChange, object: nil)
@@ -74,20 +77,23 @@ class SettingsCell: KTableViewCell {
 		switch sectionRow?.accessoryValue ?? .none {
 		case .none:
 			self.chevronImageView?.isHidden = true
-			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
+			self.detailLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 		case .chevron:
-			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
+			self.detailLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
 		case .label:
 			self.chevronImageView?.isHidden = true
-			self.secondaryLabel?.isHidden = false
+			self.detailLabel?.isHidden = false
 		case .labelAndChevron:
-			self.secondaryLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
+			self.detailLabel?.isHidden = self.reuseIdentifier == SettingsCell.reuseID
 			self.chevronImageView?.isHidden = false
-			self.secondaryLabel?.isHidden = false
+			self.detailLabel?.isHidden = false
 		}
 	}
+}
 
+// MARK: - Helpers
+extension SettingsCell {
 	/// Calculates the total cache size across all components and returns a formatted string.
 	fileprivate func calculateCache() async -> String {
 		let richLink = RichLink.shared
@@ -110,22 +116,22 @@ class SettingsCell: KTableViewCell {
 
 	/// Updates the app browser text with the one selected by the user.
 	@objc func updateAppBrowser() {
-		self.secondaryLabel?.text = UserSettings.defaultBrowser.shortStringValue
+		self.detailLabel?.text = UserSettings.defaultBrowser.shortStringValue
 	}
 
 	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
 		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
-		self.secondaryLabel?.text = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
+		self.detailLabel?.text = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
 	}
 
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateAppTheme() {
-		self.secondaryLabel?.text = UserSettings.currentThemeName
+		self.detailLabel?.text = UserSettings.currentThemeName
 	}
 
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateSplashScreenAnimation() {
-		self.secondaryLabel?.text = UserSettings.currentSplashScreenAnimation.titleValue
+		self.detailLabel?.text = UserSettings.currentSplashScreenAnimation.titleValue
 	}
 }

@@ -84,14 +84,14 @@ extension AppearanceOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 1 {
-			guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: SelectableSettingsCell.self, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.reuseID)")
+			guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(IconTableViewCell.reuseID)")
 			}
 			if let darkThemeOption = DarkThemeOption(rawValue: indexPath.item) {
-				selectableSettingsCell.configure(title: self.automaticOptions[indexPath.row])
-				selectableSettingsCell.setSelected(darkThemeOption.rawValue == UserSettings.darkThemeOption)
+				iconTableViewCell.configure(title: self.automaticOptions[indexPath.row])
+				iconTableViewCell.setSelected(darkThemeOption.rawValue == UserSettings.darkThemeOption)
 			}
-			return selectableSettingsCell
+			return iconTableViewCell
 		} else if self.datePickerIndexPath == indexPath {
 			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: DatePickerSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(DatePickerSettingsCell.reuseID)")
@@ -107,7 +107,7 @@ extension AppearanceOptionsViewController {
 		let indexPathRow = self.datePickerIndexPath != nil && indexPath.row != 0 ? (self.datePickerIndexPath?.row ?? 1) - 1 : indexPath.row
 		settingsCell.configure(title: self.customScheduleOptions[indexPathRow], detail: self.inputDates[indexPathRow].convertToAMPM())
 		settingsCell.chevronImageView?.isHidden = true
-		settingsCell.secondaryLabel?.isHidden = false
+		settingsCell.detailLabel?.isHidden = false
 		return settingsCell
 	}
 
@@ -153,7 +153,7 @@ extension AppearanceOptionsViewController {
 extension AppearanceOptionsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return [
-			SelectableSettingsCell.self,
+			IconTableViewCell.self,
 			DatePickerSettingsCell.self,
 			SettingsCell.self
 		]

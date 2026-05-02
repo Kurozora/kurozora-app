@@ -47,7 +47,7 @@ class AuthenticationOptionsViewController: SubSettingsViewController {
 // MARK: - KTableViewDataSource
 extension AuthenticationOptionsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [SelectableSettingsCell.self]
+		return [IconTableViewCell.self]
 	}
 }
 
@@ -58,15 +58,15 @@ extension AuthenticationOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectableSettingsCell.self, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(SelectableSettingsCell.reuseID)")
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(IconTableViewCell.reuseID)")
 		}
 		let authenticationInterval = self.authenticationIntervals[indexPath.row]
 		let selectedAuthenticationInterval = UserSettings.authenticationInterval
 
-		cell.configure(title: authenticationInterval.stringValue)
-		cell.setSelected(authenticationInterval == selectedAuthenticationInterval)
-		return cell
+		iconTableViewCell.configure(title: authenticationInterval.stringValue)
+		iconTableViewCell.setSelected(authenticationInterval == selectedAuthenticationInterval)
+		return iconTableViewCell
 	}
 }
 

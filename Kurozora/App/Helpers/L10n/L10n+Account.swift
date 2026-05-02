@@ -578,6 +578,85 @@ extension L10n {
 		comment: "The footer string for the Tip Jar view."
 	)
 
+	// MARK: - Request Refund
+	/// The description string for the Request Refund view.
+	///
+	/// - Tag: L10n-requestRefundHeaderDescription
+	static let requestRefundHeaderDescription: String = String(
+		localized: "requestRefund.header.description",
+		defaultValue: "Review your recent purchases and ask Apple to refund any you no longer want. Apple decides each request, so refunds aren't guaranteed.",
+		table: "Account",
+		comment: "The description string for the Request Refund view."
+	)
+	/// The 'purchased' section header on the Request Refund view.
+	///
+	/// - Tag: L10n-purchasedSectionHeader
+	static let purchasedSectionHeader: String = String(
+		localized: "purchased.section",
+		defaultValue: "Purchased",
+		table: "Account",
+		comment: "The 'purchased' section header on the Request Refund view."
+	)
+	/// The 'refunded' section header on the Request Refund view.
+	///
+	/// - Tag: L10n-refundedSectionHeader
+	static let refundedSectionHeader: String = String(
+		localized: "refunded.section",
+		defaultValue: "Refunded",
+		table: "Account",
+		comment: "The 'refunded' section header on the Request Refund view."
+	)
+	/// The empty-state title for the Request Refund view.
+	///
+	/// - Tag: L10n-refundEmptyTitle
+	static let refundEmptyTitle: String = String(
+		localized: "refund.empty.title",
+		defaultValue: "No Purchases",
+		table: "Account",
+		comment: "The empty-state title for the Request Refund view."
+	)
+	/// The empty-state detail for the Request Refund view.
+	///
+	/// - Tag: L10n-refundEmptyDetail
+	static let refundEmptyDetail: String = String(
+		localized: "refund.empty.detail",
+		defaultValue: "There are no purchases on this account that can be refunded.",
+		table: "Account",
+		comment: "The empty-state detail for the Request Refund view."
+	)
+	/// The 'Purchased <date>' subtitle for a consumable transaction.
+	///
+	/// - Tag: L10n-purchasedOn
+	static func purchasedOn(_ date: String) -> String {
+		return String(
+			localized: "refund.purchasedOn",
+			defaultValue: "Purchased \(date)",
+			table: "Account",
+			comment: "The 'Purchased <date>' subtitle for a consumable transaction."
+		)
+	}
+	/// The 'Subscribed <date>' subtitle for a subscription transaction.
+	///
+	/// - Tag: L10n-subscribedOn
+	static func subscribedOn(_ date: String) -> String {
+		return String(
+			localized: "refund.subscribedOn",
+			defaultValue: "Subscribed \(date)",
+			table: "Account",
+			comment: "The 'Subscribed <date>' subtitle for a subscription transaction."
+		)
+	}
+	/// The 'Refunded <date>' subtitle for a revoked transaction.
+	///
+	/// - Tag: L10n-refundedOn
+	static func refundedOn(_ date: String) -> String {
+		return String(
+			localized: "refund.refundedOn",
+			defaultValue: "Refunded \(date)",
+			table: "Account",
+			comment: "The 'Refunded <date>' subtitle for a revoked transaction."
+		)
+	}
 	// MARK: - Privacy Policy
 	/// The string for the phrase 'Kurozora & Privacy'.
 	///

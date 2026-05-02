@@ -582,6 +582,18 @@
     "Pull to refresh your sessions!" : {
       "comment" : "Pull-to-refresh title for the active sessions list."
     },
+    "purchased.section" : {
+      "comment" : "The 'purchased' section header on the Request Refund view.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Purchased"
+          }
+        }
+      }
+    },
     "Redeem your code using the camera on your device." : {
       "comment" : "The headline string for the Redeem view."
     },
@@ -590,6 +602,90 @@
     },
     "Refreshing sessions..." : {
       "comment" : "Refresh-in-progress title for the active sessions list."
+    },
+    "refund.empty.detail" : {
+      "comment" : "The empty-state detail for the Request Refund view.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "There are no purchases on this account that can be refunded."
+          }
+        }
+      }
+    },
+    "refund.empty.title" : {
+      "comment" : "The empty-state title for the Request Refund view.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "No Purchases"
+          }
+        }
+      }
+    },
+    "refund.purchasedOn" : {
+      "comment" : "The 'Purchased <date>' subtitle for a consumable transaction.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Purchased %@"
+          }
+        }
+      }
+    },
+    "refund.refundedOn" : {
+      "comment" : "The 'Refunded <date>' subtitle for a revoked transaction.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Refunded %@"
+          }
+        }
+      }
+    },
+    "refund.subscribedOn" : {
+      "comment" : "The 'Subscribed <date>' subtitle for a subscription transaction.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Subscribed %@"
+          }
+        }
+      }
+    },
+    "refunded.section" : {
+      "comment" : "The 'refunded' section header on the Request Refund view.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Refunded"
+          }
+        }
+      }
+    },
+    "requestRefund.header.description" : {
+      "comment" : "The description string for the Request Refund view.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Review your recent purchases and ask Apple to refund any you no longer want. Apple decides each request, so refunds aren't guaranteed."
+          }
+        }
+      }
     },
     "Require Authentication" : {
       "comment" : "The string for 'Require Authentication' settings."

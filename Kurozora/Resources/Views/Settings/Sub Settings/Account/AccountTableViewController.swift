@@ -268,11 +268,11 @@ class AccountTableViewController: SubSettingsViewController {
 		}
 	}
 
-	private func configureSettingsCell(_ cell: SettingsCell, title: String, detail: String? = nil, icon: UIImage?) {
-		let hasSecondary = !(detail?.isEmpty ?? true)
+	private func configureSettingsCell(_ cell: SettingsCell, title: String, subtitle: String? = nil, detail: String? = nil, icon: UIImage?) {
+		let hasDetail = !(detail?.isEmpty ?? true)
 
-		cell.configure(title: title, detail: detail, icon: icon)
-		cell.secondaryLabel?.isHidden = !hasSecondary
+		cell.configure(title: title, subtitle: subtitle, detail: detail, icon: icon)
+		cell.detailLabel?.isHidden = !hasDetail
 		cell.chevronImageView?.isHidden = false
 	}
 }

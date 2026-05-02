@@ -143,7 +143,7 @@ extension CacheSettingsTableViewController {
 
 			settingsCell.configure(title: component.title, detail: sizeString)
 			settingsCell.chevronImageView?.isHidden = true
-			settingsCell.secondaryLabel?.isHidden = false
+			settingsCell.detailLabel?.isHidden = false
 			return settingsCell
 		case .actions:
 			guard let destructiveCell = tableView.dequeueReusableCell(withIdentifier: DestructiveSettingsCell.self, for: indexPath) else {

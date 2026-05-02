@@ -28,6 +28,7 @@ class SettingsTableViewController: KTableViewController {
 		case subscriptionSegue
 		case cacheSegue
 		case tipJarSegue
+		case requestRefundSegue
 	}
 
 	// MARK: - Views
@@ -169,6 +170,7 @@ class SettingsTableViewController: KTableViewController {
 		case .privacySegue: return PrivacySettingsViewController()
 		case .subscriptionSegue: return SubscriptionCollectionViewController()
 		case .tipJarSegue: return TipJarCollectionViewController()
+		case .requestRefundSegue: return RequestRefundTableViewController()
 		}
 	}
 
@@ -181,7 +183,7 @@ class SettingsTableViewController: KTableViewController {
 		     .librarySegue, .motionSegue, .themeSegue,
 		     .notificationSegue, .soundSegue,
 		     .biometricsSegue, .privacySegue,
-		     .subscriptionSegue, .tipJarSegue:
+			 .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
 			return
 		case .cacheSegue:
 			guard let cacheSettingsTableViewController = destination as? CacheSettingsTableViewController else { return }
@@ -268,13 +270,13 @@ extension SettingsTableViewController {
 			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tintColor.rawValue
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
-				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
+				settingsCell.detailLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 			} else {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 				settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+				settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 			}
 		}
 	}
@@ -290,7 +292,7 @@ extension SettingsTableViewController {
 			}
 
 			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 
@@ -300,7 +302,7 @@ extension SettingsTableViewController {
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
 			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 
@@ -317,7 +319,7 @@ extension SettingsTableViewController {
 			if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tintColor.rawValue
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
-				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
+				settingsCell.detailLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 			}
 		}
 
@@ -399,6 +401,9 @@ extension SettingsTableViewController {
 
 				await Store.shared.restore()
 			}
+			return
+		case .requestRefund:
+			self.showSecondary(SegueIdentifiers.requestRefundSegue, sender: nil)
 			return
 		case .rate:
 			if let rateURL = URL.rateURL {
