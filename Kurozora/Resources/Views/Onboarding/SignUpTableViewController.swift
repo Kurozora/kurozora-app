@@ -19,7 +19,6 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	private let overlayButton = KButton()
 	private let placeholderProfileImageEditButton = UIButton()
 
-	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
 	var originalProfileImage: UIImage! = UIImage() {
 		didSet {
 			self.editedProfileImage = self.originalProfileImage
@@ -147,7 +146,26 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	}
 
 	@objc func chooseImageButtonPressed(_ sender: UIButton) {
-		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
+		self.presentProfileImageSelection()
+	}
+
+	private func presentProfileImageSelection() {
+		let profileImageSelectionVC = ProfileImageSelectionViewController(
+			currentImage: self.editedProfileImage,
+			placeholderImage: self.placeholderImage()
+		)
+		profileImageSelectionVC.delegate = self
+
+		let navController = KNavigationController(rootViewController: profileImageSelectionVC)
+		navController.modalPresentationStyle = .pageSheet
+
+		if let sheet = navController.sheetPresentationController {
+			sheet.detents = [.large()]
+			sheet.prefersGrabberVisible = true
+			sheet.prefersEdgeAttachedInCompactHeight = true
+		}
+
+		self.present(navController, animated: true)
 	}
 }
 
@@ -288,33 +306,20 @@ extension SignUpTableViewController {
 	}
 }
 
-// MARK: - ImagePickerManagerDataSource
-extension SignUpTableViewController: ImagePickerManagerDataSource {
-	func imagePickerManagerTitle() -> String {
-		return "Profile Photo"
-	}
-
-	func imagePickerManagerSubtitle() -> String {
-		return "Choose a photo that represents you!"
-	}
-}
-
-// MARK: - ImagePickerManagerDelegate
-extension SignUpTableViewController: ImagePickerManagerDelegate {
-	func placeholderImage() -> UIImage {
-		.Placeholders.userProfile
-	}
-
-	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {
-		self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: .Placeholders.userProfile)
+// MARK: - ProfileImageSelectionViewControllerDelegate
+extension SignUpTableViewController: ProfileImageSelectionViewControllerDelegate {
+	func profileImageSelectionViewController(_ viewController: ProfileImageSelectionViewController, didSelectImage image: UIImage, imageURL: URL?) {
 		self.editedProfileImage = image
 		self.editedProfileImageURL = imageURL
+		self.profileImageView.image = image
 	}
 
-	func imagePickerManagerDidRemovePickedImage() {
-		if !self.editedProfileImage.isEqual(to: self.placeholderImage()) {
-			self.profileImageView.image = self.placeholderImage()
-			self.editedProfileImage = self.profileImageView.image
-		}
+	func profileImageSelectionViewControllerDidCancel(_ viewController: ProfileImageSelectionViewController) {}
+}
+
+// MARK: - Helpers
+private extension SignUpTableViewController {
+	func placeholderImage() -> UIImage {
+		.Placeholders.userProfile
 	}
 }

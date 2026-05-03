@@ -65,8 +65,6 @@ class EditProfileViewController: KViewController {
 	// MARK: - Properties
 	var user: User! = User.current
 
-	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
-
 	var imageEditKind: ImageEditKind = .none
 	var placeholderText = "Describe yourself!"
 
@@ -770,79 +768,6 @@ private extension EditProfileViewController {
 // MARK: - Associated Keys
 private struct AssociatedKeys {
 	nonisolated(unsafe) static var circularView: UInt8 = 0
-}
-
-// MARK: - ImagePickerManagerDataSource
-extension EditProfileViewController: ImagePickerManagerDataSource {
-	func imagePickerManagerTitle() -> String {
-		switch self.imageEditKind {
-		case .profile:
-			return "Profile Photo"
-		case .banner:
-			return "Banner Photo"
-		case .none:
-			return ""
-		}
-	}
-
-	func imagePickerManagerSubtitle() -> String {
-		switch self.imageEditKind {
-		case .profile:
-			return "Choose a photo that represents you!"
-		case .banner:
-			return "Choose a breathtaking photo!"
-		case .none:
-			return ""
-		}
-	}
-}
-
-// MARK: - ImagePickerManagerDelegate
-extension EditProfileViewController: ImagePickerManagerDelegate {
-	func placeholderImage() -> UIImage {
-		switch self.imageEditKind {
-		case .profile:
-			self.user.attributes.profilePlaceholderImage
-		case .banner:
-			self.user.attributes.bannerPlaceholderImage
-		case .none:
-			UIImage()
-		}
-	}
-
-	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {
-		switch self.imageEditKind {
-		case .profile:
-			self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: self.user.attributes.profilePlaceholderImage)
-			self.editedProfileImageURL = imageURL
-		case .banner:
-			self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: self.user.attributes.bannerPlaceholderImage)
-			self.editedBannerImageURL = imageURL
-		case .none: break
-		}
-
-		// Reset selected image view
-		self.imageEditKind = .none
-	}
-
-	func imagePickerManagerDidRemovePickedImage() {
-		switch self.imageEditKind {
-		case .profile:
-			if !self.editedProfileImage.isEqual(to: self.placeholderImage()) {
-				self.profileImageView.image = self.placeholderImage()
-				self.editedProfileImage = self.profileImageView.image
-			}
-		case .banner:
-			if !self.editedBannerImage.isEqual(to: self.placeholderImage()) {
-				self.bannerImageView.image = self.placeholderImage()
-				self.editedBannerImage = self.bannerImageView.image
-			}
-		case .none: break
-		}
-
-		// Reset selected image view
-		self.imageEditKind = .none
-	}
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
