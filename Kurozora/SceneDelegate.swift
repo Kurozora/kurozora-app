@@ -96,6 +96,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneDidEnterBackground(_ scene: UIScene) {
 		print("----- Scene entered background.")
 		AuthenticationManager.shared.sceneDidEnterBackground()
+		#if DEBUG
+		FaceDetectionService.shared.flushOnBackground()
+		#endif
 //		WorkflowController.shared.scheduleNotification("Sessionne", body: "Gol gara signed in from saboon.")
 		self.authenticationCount = 0
 	}

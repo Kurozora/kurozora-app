@@ -15,20 +15,24 @@ extension Person.Attributes {
 	///
 	/// If the person has no image set, then an image with the initials of the person's full name is returned.
 	/// If no full name is available then a placeholder person image is returned.
-	///
-	/// - Returns: a `UIImage` with the image url of the person.
 	var profileImage: UIImageView {
 		let imageView = UIImageView()
-		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
+		self.profileImage(imageView: imageView)
 		return imageView
 	}
 
 	/// Returns a placeholder `UIImage` for the person using the person's initials if available, otherwise a placeholder person image is returned.
-	///
-	/// - Returns: a placeholder `UIImage` for the person using the person's initials if available, otherwise a placeholder person image is returned.
 	var profilePlaceholderImage: UIImage {
 		let fullNameInitials = self.fullName.initials
 		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: UIImage.Placeholders.userProfile)
+	}
+
+	/// Returns a stored focal point of the person's profile image.
+	private var profileFocalPoint: CGPoint? {
+		guard let focalX = self.profile?.focalX, let focalY = self.profile?.focalY else {
+			return nil
+		}
+		return CGPoint(x: focalX, y: focalY)
 	}
 
 	// MARK: - Functions
@@ -39,6 +43,17 @@ extension Person.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the profile image.
 	func profileImage(imageView: UIImageView) {
-		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
+		let urlString = self.profile?.url ?? ""
+
+		if let mediaURL = URL(string: urlString) {
+			let context = FaceDetectionContext(mediaURL: mediaURL, kind: .person)
+			imageView.setImage(with: urlString, placeholder: self.profilePlaceholderImage, faceDetectionContext: context)
+		} else {
+			imageView.setImage(with: urlString, placeholder: self.profilePlaceholderImage)
+		}
+
+		if let circularImageView = imageView as? CircularImageView {
+			circularImageView.focalPoint = self.profileFocalPoint
+		}
 	}
 }

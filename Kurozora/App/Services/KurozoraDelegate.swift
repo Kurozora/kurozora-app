@@ -44,6 +44,10 @@ final class KurozoraDelegate {
 			return false
 		}
 
+		#if DEBUG
+		FaceDetectionService.shared.activate()
+		#endif
+
 		// Initialize the local Core Data store
 		_ = PersistenceController.shared
 
