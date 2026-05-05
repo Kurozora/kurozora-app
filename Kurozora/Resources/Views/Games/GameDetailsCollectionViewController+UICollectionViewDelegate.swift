@@ -28,8 +28,8 @@ extension GameDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .tvRating:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				guard let gameIdentity = self.gameIdentity else { return }
+				self.show(SegueIdentifiers.parentalGuideSegue, sender: gameIdentity)
 				return
 			case .studio:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.moreByStudio) else { return }

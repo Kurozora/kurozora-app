@@ -153,6 +153,24 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Parental Guide
+extension Notification.Name {
+	/// A notification posted when a parental guide entry is updated.
+	static var KPGEntryDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	/// A notification posted when a parental guide entry is deleted.
+	static var KPGEntryDidDelete: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	/// A notification posted when a parental guide entry has been reported.
+	static var KPGEntryDidReport: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+}
+
 // MARK: - Session settings
 extension Notification.Name {
 	/// A notification posted after a session is deleted.

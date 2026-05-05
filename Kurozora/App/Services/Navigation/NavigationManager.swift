@@ -117,7 +117,36 @@ final class NavigationManager: NSObject {
 					parameters: parameters
 				)
 			}
+		case .parentalGuide:
+			self.handleParentalGuideDeeplink(parameters: parameters, context: context)
 		}
+	}
+
+	/// Handles deeplinking to the parental guide view.
+	///
+	/// Expected query parameters: `type=anime|manga|game` and `id=<id>`.
+	///
+	/// - Parameters:
+	///    - parameters: The parameters parsed from the URL.
+	///    - context: The navigation context to present on.
+	private func handleParentalGuideDeeplink(parameters: [String: String], context: NavigationContext) {
+		guard let typeString = parameters["type"], let idString = parameters["id"] else { return }
+
+		let parentalGuideViewController = ParentalGuideCollectionViewController()
+		let identifier = KurozoraItemID(idString)
+
+		switch typeString.lowercased() {
+		case "anime", "show", "shows":
+			parentalGuideViewController.mediaType = .show(ShowIdentity(id: identifier), title: nil, ratingName: nil, ratingDescription: nil)
+		case "manga", "literature", "literatures":
+			parentalGuideViewController.mediaType = .literature(LiteratureIdentity(id: identifier), title: nil, ratingName: nil, ratingDescription: nil)
+		case "game", "games":
+			parentalGuideViewController.mediaType = .game(GameIdentity(id: identifier), title: nil, ratingName: nil, ratingDescription: nil)
+		default:
+			return
+		}
+
+		context.show(parentalGuideViewController)
 	}
 
 	/// Handles file import for the given URL.

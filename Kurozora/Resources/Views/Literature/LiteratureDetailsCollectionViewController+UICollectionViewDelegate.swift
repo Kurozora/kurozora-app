@@ -28,8 +28,8 @@ extension LiteratureDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .tvRating:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				guard let literatureIdentity = self.literatureIdentity else { return }
+				self.show(SegueIdentifiers.parentalGuideSegue, sender: literatureIdentity)
 				return
 			case .studio:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.moreByStudio) else { return }

@@ -160,6 +160,9 @@
     "Defunct" : {
       "comment" : "The string for the word 'defunct'."
     },
+    "Delete" : {
+
+    },
     "Delete %lld Items" : {
       "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected."
     },
@@ -425,6 +428,9 @@
     "No Drafts" : {
       "comment" : "The string for the 'no drafts' empty state title."
     },
+    "None" : {
+
+    },
     "Notifications" : {
       "comment" : "The string for the word 'notifications'."
     },
@@ -433,6 +439,9 @@
     },
     "Off" : {
       "comment" : "The string for the word 'off'."
+    },
+    "OK" : {
+
     },
     "Open Kurozora" : {
 
@@ -666,6 +675,9 @@
     "Sorting" : {
       "comment" : "The string for the word 'Sorting'."
     },
+    "Spoiler" : {
+
+    },
     "Status" : {
       "comment" : "The column header for the item's airing or publishing status in the library table layout."
     },
@@ -750,6 +762,9 @@
     },
     "Unfavorite" : {
       "comment" : "The string for the word 'Unfavorite'."
+    },
+    "Unknown" : {
+
     },
     "Update Library Status" : {
       "comment" : "The string for the word 'update library status'."

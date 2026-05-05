@@ -24,6 +24,7 @@ extension GameDetailsCollectionViewController {
 		case personDetailsSegue
 		case characterDetailsSegue
 		case reviewDetailsSegue
+		case parentalGuideSegue
 	}
 
 	func makeDestinationVC(for identifier: SegueIdentifiers) -> UIViewController? {
@@ -41,6 +42,7 @@ extension GameDetailsCollectionViewController {
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
+		case .parentalGuideSegue: return ParentalGuideCollectionViewController()
 		}
 	}
 
@@ -134,6 +136,10 @@ extension GameDetailsCollectionViewController {
 			else { return }
 			navigationController.modalPresentationStyle = .formSheet
 			reviewDetailsCollectionViewController.review = review
+		case .parentalGuideSegue:
+			guard let parentalGuideViewController = destination as? ParentalGuideCollectionViewController else { return }
+			guard let gameIdentity = sender as? GameIdentity else { return }
+			parentalGuideViewController.mediaType = .game(gameIdentity, title: self.game?.attributes.title, ratingName: self.game?.attributes.tvRating.name, ratingDescription: self.game?.attributes.tvRating.description, slug: self.game?.attributes.slug)
 		}
 	}
 }

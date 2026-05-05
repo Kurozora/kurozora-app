@@ -22,6 +22,9 @@
     "%@ is not following anyone yet." : {
       "comment" : "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
     },
+    "%1$d of %2$d found this %3$@." : {
+      "comment" : "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase."
+    },
     "＋ Follow" : {
       "comment" : "The user-cell follow button title when the current user is not yet following the target user."
     },
@@ -30,6 +33,9 @@
     },
     "✓ Following" : {
       "comment" : "The user-cell follow button title when the current user is following the target user."
+    },
+    "Add %@" : {
+      "comment" : "Title of the editor when adding a new entry for a category. The argument is the category display name."
     },
     "Add your take when sharing someone else's post and it'll show up here." : {
       "comment" : "The empty-state subheadline for the Quotes tab on the post activity screen."
@@ -45,6 +51,9 @@
     },
     "Are you sure?" : {
       "comment" : "The subheadline string for the unpin message pop-up"
+    },
+    "Be the first to contribute." : {
+      "comment" : "The empty-state body on the Parental Guide screen when no entries exist yet."
     },
     "Be the first to follow %@!" : {
       "comment" : "The empty-state detail shown on another user's followers list when nobody follows them yet. '%@' is the target user's display name."
@@ -88,8 +97,23 @@
     "Delete Review" : {
       "comment" : "The string for the 'Delete Review' context menu option."
     },
+    "Delete this entry" : {
+      "comment" : "Title of the destructive delete row in the Parental Guide editor."
+    },
+    "Delete this entry?" : {
+      "comment" : "Title of the confirmation alert when deleting a Parental Guide entry."
+    },
+    "Depiction" : {
+      "comment" : "Header for the depiction section of the Parental Guide editor."
+    },
+    "Discard changes?" : {
+      "comment" : "Title of the discard-changes alert in the Parental Guide editor."
+    },
     "Edit" : {
       "comment" : "The string for the word 'edit'."
+    },
+    "Edit %@" : {
+      "comment" : "Title of the editor when editing an existing entry for a category. The argument is the category display name."
     },
     "Find who you're looking for" : {
       "comment" : "The title string for the search pop-up when trying to tag a user in a message or reply."
@@ -124,6 +148,9 @@
     "Following" : {
       "comment" : "The follow-status badge text shown after a person icon in the mention picker."
     },
+    "Frequency" : {
+      "comment" : "Header for the frequency section of the Parental Guide editor."
+    },
     "Go To" : {
       "comment" : "The string for the 'Go To' context menu option."
     },
@@ -147,6 +174,9 @@
     },
     "Just Added" : {
       "comment" : "The string for the 'just added' browse option."
+    },
+    "Keep Editing" : {
+      "comment" : "Cancel button on the discard-changes alert."
     },
     "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file." : {
       "comment" : "The footer string for the Library Import view."
@@ -178,11 +208,17 @@
     "Move From Another Service" : {
       "comment" : "The headline string for the Library Import view"
     },
+    "No Entries" : {
+      "comment" : "The empty-state title on a Parental Guide category screen when no entries exist."
+    },
     "No Followers" : {
       "comment" : "The empty-state title for the followers list."
     },
     "No Following" : {
       "comment" : "The empty-state title for the following list."
+    },
+    "No Parental Guide Yet" : {
+      "comment" : "The empty-state title on the Parental Guide screen when no entries exist yet."
     },
     "No Quotes" : {
       "comment" : "The empty-state headline for the Quotes tab on the post activity screen."
@@ -190,11 +226,20 @@
     "No Users" : {
       "comment" : "The empty-state title for a generic users list (search / leaderboard)."
     },
+    "None" : {
+      "comment" : "Placeholder shown for a category with no submissions in the Parental Guide summary."
+    },
+    "OK" : {
+      "comment" : "Generic OK button shown on Parental Guide alerts."
+    },
     "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion." : {
       "comment" : "The footer string for the Library Delete view."
     },
     "Open Apple Music Library" : {
       "comment" : "The alert button that deep-links to the user's Apple Music library."
+    },
+    "Parental Guide" : {
+      "comment" : "The title of the Parental Guide screen."
     },
     "Permanently delete your library." : {
       "comment" : "The subheadline string for the Library Delete view."
@@ -220,6 +265,9 @@
     "Pull to refresh %@ list." : {
       "comment" : "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
     },
+    "Pull to refresh entries." : {
+      "comment" : "The pull-to-refresh prompt on the Parental Guide entries screen."
+    },
     "Pull to refresh favorites list!" : {
       "comment" : "Pull-to-refresh title for the favorites list."
     },
@@ -228,6 +276,9 @@
     },
     "Pull to refresh message details and replies!" : {
       "comment" : "Pull-to-refresh title for the feed message details screen (thread view)."
+    },
+    "Pull to refresh parental guide." : {
+      "comment" : "The pull-to-refresh prompt on the Parental Guide screen."
     },
     "Pull to refresh profile details!" : {
       "comment" : "Pull-to-refresh title for the profile details screen."
@@ -281,7 +332,7 @@
       "comment" : "The string for the 'Quotes' tab on the post activity screen."
     },
     "Rating" : {
-      "comment" : "The string for the word 'rating'."
+      "comment" : "Row label for the rating in the Parental Guide summary.\nThe string for the word 'rating'."
     },
     "Rating Failed" : {
       "comment" : "The string for the 'rating failed' section."
@@ -300,6 +351,9 @@
     },
     "Re-shares" : {
       "comment" : "The string for the 'Re-shares' tab on the post activity screen."
+    },
+    "Reason" : {
+      "comment" : "Header for the reason section of the Parental Guide editor."
     },
     "Recent" : {
       "comment" : "The string for the 'Recent' sort option on the post activity screen."
@@ -394,6 +448,12 @@
     "Select service" : {
       "comment" : "The placeholder string for selecting the import service."
     },
+    "Server returned no entry." : {
+      "comment" : "Error message shown when the server's Parental Guide submission response is empty."
+    },
+    "Severity" : {
+      "comment" : "Header for the severity section of the Parental Guide editor."
+    },
     "Share Message" : {
       "comment" : "The string for the 'Share Message' context menu option."
     },
@@ -412,6 +472,15 @@
     "Show Replies" : {
       "comment" : "The string for the 'Show Replies' context menu option."
     },
+    "Something went wrong" : {
+      "comment" : "Generic error alert title shown when a Parental Guide submission fails."
+    },
+    "Spoiler" : {
+      "comment" : "Label for the spoiler toggle in the Parental Guide editor."
+    },
+    "Summary" : {
+      "comment" : "Header for the Parental Guide summary section."
+    },
     "Tap to Rate:" : {
       "comment" : "The string for the word 'tap to rate'."
     },
@@ -424,8 +493,20 @@
     "The leaderboard is empty. Pull to refresh or check back later." : {
       "comment" : "The empty-state detail shown when the reputation leaderboard has no entries."
     },
+    "There are no entries in this category yet." : {
+      "comment" : "The empty-state body on a Parental Guide category screen when no entries exist."
+    },
     "They will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
       "comment" : "The subheadline string for the blocking a user"
+    },
+    "This action can't be undone." : {
+      "comment" : "Body of the confirmation alert when deleting a Parental Guide entry."
+    },
+    "This reason contains spoilers — click to view" : {
+      "comment" : "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
+    },
+    "This reason contains spoilers — tap to view" : {
+      "comment" : "Spoiler-warning banner overlaid on a parental guide entry on touch platforms."
     },
     "this user" : {
       "comment" : "The fallback word used in place of a user's display name when one is unavailable, lowercase form (mid-sentence)."
@@ -472,6 +553,9 @@
     "Unfollow" : {
       "comment" : "The string for the word 'unfollow'."
     },
+    "Unknown" : {
+      "comment" : "Placeholder shown for an unknown rating in the Parental Guide summary."
+    },
     "Unlike" : {
       "comment" : "The string for the word 'unlike'."
     },
@@ -492,6 +576,9 @@
     },
     "View posts" : {
       "comment" : "The label for the opt-in button to view a blocked user's posts"
+    },
+    "What stands out?" : {
+      "comment" : "Placeholder for the reason text view in the Parental Guide editor."
     },
     "What’s on your mind?" : {
       "comment" : "The placeholder string for creating a new feed message."

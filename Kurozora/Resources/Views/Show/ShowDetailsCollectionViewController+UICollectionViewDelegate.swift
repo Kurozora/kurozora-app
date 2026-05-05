@@ -28,8 +28,8 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .tvRating:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				guard let showIdentity = self.showIdentity else { return }
+				self.show(SegueIdentifiers.parentalGuideSegue, sender: showIdentity)
 				return
 			case .studio:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.moreByStudio) else { return }

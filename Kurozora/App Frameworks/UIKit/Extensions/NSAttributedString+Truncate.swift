@@ -70,4 +70,45 @@ extension NSAttributedString {
 		result.append(suffix)
 		return result
 	}
+
+	/// Returns `attributed` truncated to `lineLimit` lines, with a tappable `Show more` suffix appended.
+	///
+	/// - Parameters:
+	///   - attributed: The body to truncate.
+	///   - lineLimit: The maximum number of lines to retain.
+	///   - cachedWidth: A previously recorded text view width, or `0` if none.
+	///   - fallbackHostBounds: The host view's current width, used when `cachedWidth` is `0`.
+	///   - actionID: The suffix's `.kkAction` value, dispatched on tap.
+	///   - font: The body font, or `nil` to default to `.body`.
+	///
+	/// - Returns: The truncated string, or `attributed` unchanged when truncation isn't required.
+	static func kkTruncatedBody(_ attributed: NSAttributedString, lineLimit: Int, cachedWidth: CGFloat, fallbackHostBounds: CGFloat, actionID: String, font sourceFont: UIFont?) -> NSAttributedString {
+		let font = sourceFont ?? .preferredFont(forTextStyle: .body)
+		let width: CGFloat
+		if cachedWidth > 0 {
+			width = cachedWidth
+		} else {
+			let host = fallbackHostBounds > 0 ? fallbackHostBounds : UIScreen.main.bounds.width
+			width = max(host - 32, 200)
+		}
+		let suffix = kkMakeShowMoreSuffix(font: font, actionID: actionID)
+		return attributed.kkTruncated(toLines: lineLimit, width: width, font: font, suffix: suffix)
+	}
+
+	/// Returns the trailing `Show more` suffix carrying `.kkAction` and `.kkAccentColor` for tap-to-expand affordances.
+	///
+	/// - Parameters:
+	///   - font: The body font.
+	///   - actionID: The suffix's `.kkAction` value, dispatched on tap.
+	///
+	/// - Returns: The attributed suffix.
+	static func kkMakeShowMoreSuffix(font: UIFont, actionID: String) -> NSAttributedString {
+		let raw = " " + L10n.showMore
+		let attributes: [NSAttributedString.Key: Any] = [
+			.font: font,
+			.kkAction: actionID,
+			.kkAccentColor: true
+		]
+		return NSAttributedString(string: raw, attributes: attributes)
+	}
 }

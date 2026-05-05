@@ -1510,4 +1510,407 @@ extension L10n {
 		table: "Content",
 		comment: "The string for the word 'report'."
 	)
+
+	// MARK: - Parental Guide
+	/// Title of the Parental Guide screen.
+	///
+	/// - Tag: L10n-parentalGuide
+	static let parentalGuide: String = String(
+		localized: "Parental Guide",
+		table: "Content",
+		comment: "The title of the Parental Guide screen."
+	)
+	/// The pull-to-refresh prompt on the Parental Guide screen.
+	///
+	/// - Tag: L10n-pullToRefreshParentalGuide
+	static let pullToRefreshParentalGuide: String = String(
+		localized: "Pull to refresh parental guide.",
+		table: "Content",
+		comment: "The pull-to-refresh prompt on the Parental Guide screen."
+	)
+	/// The pull-to-refresh prompt on the Parental Guide entries screen.
+	///
+	/// - Tag: L10n-pullToRefreshParentalGuideEntries
+	static let pullToRefreshParentalGuideEntries: String = String(
+		localized: "Pull to refresh entries.",
+		table: "Content",
+		comment: "The pull-to-refresh prompt on the Parental Guide entries screen."
+	)
+	/// The empty-state title on the Parental Guide screen when no entries exist yet.
+	///
+	/// - Tag: L10n-noParentalGuideYet
+	static let noParentalGuideYet: String = String(
+		localized: "No Parental Guide Yet",
+		table: "Content",
+		comment: "The empty-state title on the Parental Guide screen when no entries exist yet."
+	)
+	/// The empty-state body on the Parental Guide screen when no entries exist yet.
+	///
+	/// - Tag: L10n-beTheFirstToContribute
+	static let beTheFirstToContribute: String = String(
+		localized: "Be the first to contribute.",
+		table: "Content",
+		comment: "The empty-state body on the Parental Guide screen when no entries exist yet."
+	)
+	/// The empty-state title on a Parental Guide category screen when no entries exist.
+	///
+	/// - Tag: L10n-noParentalGuideEntries
+	static let noParentalGuideEntries: String = String(
+		localized: "No Entries",
+		table: "Content",
+		comment: "The empty-state title on a Parental Guide category screen when no entries exist."
+	)
+	/// The empty-state body on a Parental Guide category screen when no entries exist.
+	///
+	/// - Tag: L10n-noParentalGuideEntriesDetail
+	static let noParentalGuideEntriesDetail: String = String(
+		localized: "There are no entries in this category yet.",
+		table: "Content",
+		comment: "The empty-state body on a Parental Guide category screen when no entries exist."
+	)
+	/// Header for the Parental Guide summary section.
+	///
+	/// - Tag: L10n-parentalGuideSummary
+	static let parentalGuideSummary: String = String(
+		localized: "Summary",
+		table: "Content",
+		comment: "Header for the Parental Guide summary section."
+	)
+	/// Row label for the rating in the Parental Guide summary.
+	///
+	/// - Tag: L10n-parentalGuideRating
+	static let parentalGuideRating: String = String(
+		localized: "Rating",
+		table: "Content",
+		comment: "Row label for the rating in the Parental Guide summary."
+	)
+	/// Placeholder shown for an unknown rating in the Parental Guide summary.
+	///
+	/// - Tag: L10n-parentalGuideRatingUnknown
+	static let parentalGuideRatingUnknown: String = String(
+		localized: "Unknown",
+		table: "Content",
+		comment: "Placeholder shown for an unknown rating in the Parental Guide summary."
+	)
+	/// Placeholder shown for a category with no submissions in the Parental Guide summary.
+	///
+	/// - Tag: L10n-parentalGuideNoSubmissions
+	static let parentalGuideNoSubmissions: String = String(
+		localized: "None",
+		table: "Content",
+		comment: "Placeholder shown for a category with no submissions in the Parental Guide summary."
+	)
+	/// Title-line format for sharing a Parental Guide entry.
+	///
+	/// - Parameters:
+	///    - title: The media's title.
+	///    - severity: The severity rating phrase.
+	///    - category: The category name.
+	///
+	/// - Tag: L10n-parentalGuideShareTitleFormat
+	static func parentalGuideShareTitleFormat(_ title: String, _ severity: String, _ category: String) -> String {
+		return String(
+			format: String(
+				localized: "%1$@ is rated %2$@ for %3$@",
+				table: "Content",
+				comment: "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name."
+			),
+			title, severity, category
+		)
+	}
+	/// Sentiment subtitle under each Parental Guide category section header.
+	///
+	/// - Parameters:
+	///    - matching: Number of users who agreed with the average rating.
+	///    - total: Total number of submissions.
+	///    - rating: The average rating phrase, lowercased.
+	///
+	/// - Tag: L10n-parentalGuideSentiment
+	static func parentalGuideSentiment(_ matching: Int, _ total: Int, _ rating: String) -> String {
+		return String(
+			format: String(
+				localized: "%1$d of %2$d found this %3$@.",
+				table: "Content",
+				comment: "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase."
+			),
+			matching,
+			total,
+			rating
+		)
+	}
+	/// Title of the editor when adding a new entry for a category.
+	///
+	/// - Parameter displayName: The category's display name.
+	///
+	/// - Tag: L10n-addParentalGuideCategory
+	static func addParentalGuideCategory(_ displayName: String) -> String {
+		return String(
+			format: String(
+				localized: "Add %@",
+				table: "Content",
+				comment: "Title of the editor when adding a new entry for a category. The argument is the category display name."
+			),
+			displayName
+		)
+	}
+	/// Title of the editor when editing an existing entry for a category.
+	///
+	/// - Parameter displayName: The category's display name.
+	///
+	/// - Tag: L10n-editParentalGuideCategory
+	static func editParentalGuideCategory(_ displayName: String) -> String {
+		return String(
+			format: String(
+				localized: "Edit %@",
+				table: "Content",
+				comment: "Title of the editor when editing an existing entry for a category. The argument is the category display name."
+			),
+			displayName
+		)
+	}
+	/// Header for the severity section of the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideSeverity
+	static let parentalGuideSeverity: String = String(
+		localized: "Severity",
+		table: "Content",
+		comment: "Header for the severity section of the Parental Guide editor."
+	)
+	/// Header for the frequency section of the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideFrequency
+	static let parentalGuideFrequency: String = String(
+		localized: "Frequency",
+		table: "Content",
+		comment: "Header for the frequency section of the Parental Guide editor."
+	)
+	/// Header for the depiction section of the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideDepiction
+	static let parentalGuideDepiction: String = String(
+		localized: "Depiction",
+		table: "Content",
+		comment: "Header for the depiction section of the Parental Guide editor."
+	)
+	/// Header for the reason section of the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideReason
+	static let parentalGuideReason: String = String(
+		localized: "Reason",
+		table: "Content",
+		comment: "Header for the reason section of the Parental Guide editor."
+	)
+	/// Placeholder for the reason text view in the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideReasonPlaceholder
+	static let parentalGuideReasonPlaceholder: String = String(
+		localized: "What stands out?",
+		table: "Content",
+		comment: "Placeholder for the reason text view in the Parental Guide editor."
+	)
+	/// Label for the spoiler toggle in the Parental Guide editor.
+	///
+	/// - Tag: L10n-parentalGuideSpoiler
+	static let parentalGuideSpoiler: String = String(
+		localized: "Spoiler",
+		table: "Content",
+		comment: "Label for the spoiler toggle in the Parental Guide editor."
+	)
+	/// Title of the destructive delete row in the Parental Guide editor.
+	///
+	/// - Tag: L10n-deleteThisParentalGuideEntry
+	static let deleteThisParentalGuideEntry: String = String(
+		localized: "Delete this entry",
+		table: "Content",
+		comment: "Title of the destructive delete row in the Parental Guide editor."
+	)
+	/// Title of the confirmation alert when deleting a Parental Guide entry.
+	///
+	/// - Tag: L10n-deleteParentalGuideEntryConfirmTitle
+	static let deleteParentalGuideEntryConfirmTitle: String = String(
+		localized: "Delete this entry?",
+		table: "Content",
+		comment: "Title of the confirmation alert when deleting a Parental Guide entry."
+	)
+	/// Body of the confirmation alert when deleting a Parental Guide entry.
+	///
+	/// - Tag: L10n-deleteParentalGuideEntryConfirmMessage
+	static let deleteParentalGuideEntryConfirmMessage: String = String(
+		localized: "This action can't be undone.",
+		table: "Content",
+		comment: "Body of the confirmation alert when deleting a Parental Guide entry."
+	)
+	/// Title of the discard-changes alert in the Parental Guide editor.
+	///
+	/// - Tag: L10n-discardParentalGuideChanges
+	static let discardParentalGuideChanges: String = String(
+		localized: "Discard changes?",
+		table: "Content",
+		comment: "Title of the discard-changes alert in the Parental Guide editor."
+	)
+	/// Cancel button on the discard-changes alert.
+	///
+	/// - Tag: L10n-keepEditing
+	static let keepEditing: String = String(
+		localized: "Keep Editing",
+		table: "Content",
+		comment: "Cancel button on the discard-changes alert."
+	)
+	/// Generic error alert title shown when a Parental Guide submission fails.
+	///
+	/// - Tag: L10n-parentalGuideErrorTitle
+	static let parentalGuideErrorTitle: String = String(
+		localized: "Something went wrong",
+		table: "Content",
+		comment: "Generic error alert title shown when a Parental Guide submission fails."
+	)
+	/// Generic OK button shown on Parental Guide alerts.
+	///
+	/// - Tag: L10n-okay
+	static let okay: String = String(
+		localized: "OK",
+		table: "Content",
+		comment: "Generic OK button shown on Parental Guide alerts."
+	)
+	/// Error message shown when the server's Parental Guide submission response is empty.
+	///
+	/// - Tag: L10n-parentalGuideEmptyResponse
+	static let parentalGuideEmptyResponse: String = String(
+		localized: "Server returned no entry.",
+		table: "Content",
+		comment: "Error message shown when the server's Parental Guide submission response is empty."
+	)
+	/// Spoiler-warning banner overlaid on a parental guide entry on touch platforms.
+	///
+	/// - Tag: L10n-parentalGuideReasonSpoilerTap
+	static let parentalGuideReasonSpoilerTap: String = String(
+		localized: "This reason contains spoilers — tap to view",
+		table: "Content",
+		comment: "Spoiler-warning banner overlaid on a parental guide entry on touch platforms."
+	)
+	/// Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst.
+	///
+	/// - Tag: L10n-parentalGuideReasonSpoilerClick
+	static let parentalGuideReasonSpoilerClick: String = String(
+		localized: "This reason contains spoilers — click to view",
+		table: "Content",
+		comment: "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
+	)
+
+	/// Title shown in the navigation bar of the Parental Guide report sheet.
+	///
+	/// - Tag: L10n-reportParentalGuideEntry
+	static let reportParentalGuideEntry: String = String(
+		localized: "Report Entry",
+		table: "Content",
+		comment: "Title shown in the navigation bar of the Parental Guide report sheet."
+	)
+
+	/// Header above the reason picker in the Parental Guide report sheet.
+	///
+	/// - Tag: L10n-reportReasonHeader
+	static let reportReasonHeader: String = String(
+		localized: "Reason",
+		table: "Content",
+		comment: "Header above the reason picker in the Parental Guide report sheet."
+	)
+
+	/// Header above the optional details editor in the Parental Guide report sheet.
+	///
+	/// - Tag: L10n-reportDetailsHeader
+	static let reportDetailsHeader: String = String(
+		localized: "Details",
+		table: "Content",
+		comment: "Header above the details editor in the Parental Guide report sheet."
+	)
+
+	/// Placeholder shown in the optional details editor.
+	///
+	/// - Tag: L10n-reportDetailsPlaceholder
+	static let reportDetailsPlaceholder: String = String(
+		localized: "Tell us more (optional)",
+		table: "Content",
+		comment: "Placeholder shown in the details editor when optional."
+	)
+
+	/// Placeholder shown in the details editor when the reason is `Other` and details are required.
+	///
+	/// - Tag: L10n-reportDetailsPlaceholderRequired
+	static let reportDetailsPlaceholderRequired: String = String(
+		localized: "Tell us more",
+		table: "Content",
+		comment: "Placeholder shown in the details editor when the reason is `Other` and details are required."
+	)
+
+	/// Submit button title in the Parental Guide report sheet.
+	///
+	/// - Tag: L10n-reportSubmit
+	static let reportSubmit: String = String(
+		localized: "Submit",
+		table: "Content",
+		comment: "Submit button title in the Parental Guide report sheet."
+	)
+
+	/// Title of the success alert shown after a Parental Guide entry has been reported.
+	///
+	/// - Tag: L10n-reportSuccessTitle
+	static let reportSuccessTitle: String = String(
+		localized: "Reported",
+		table: "Content",
+		comment: "Title of the success alert shown after a Parental Guide entry has been reported."
+	)
+
+	/// Body of the success alert shown after a Parental Guide entry has been reported.
+	///
+	/// - Tag: L10n-reportSuccessMessage
+	static let reportSuccessMessage: String = String(
+		localized: "Thanks. We'll review this entry shortly.",
+		table: "Content",
+		comment: "Body of the success alert shown after a Parental Guide entry has been reported."
+	)
+
+	/// Display name of the `inaccurate` report reason.
+	///
+	/// - Tag: L10n-reportReasonInaccurate
+	static let reportReasonInaccurate: String = String(
+		localized: "Inaccurate",
+		table: "Content",
+		comment: "Display name of the `inaccurate` Parental Guide report reason."
+	)
+
+	/// Display name of the `spoiler` report reason.
+	///
+	/// - Tag: L10n-reportReasonSpoiler
+	static let reportReasonSpoiler: String = String(
+		localized: "Spoiler",
+		table: "Content",
+		comment: "Display name of the `spoiler` Parental Guide report reason."
+	)
+
+	/// Display name of the `spam` report reason.
+	///
+	/// - Tag: L10n-reportReasonSpam
+	static let reportReasonSpam: String = String(
+		localized: "Spam",
+		table: "Content",
+		comment: "Display name of the `spam` Parental Guide report reason."
+	)
+
+	/// Display name of the `inappropriate` report reason.
+	///
+	/// - Tag: L10n-reportReasonInappropriate
+	static let reportReasonInappropriate: String = String(
+		localized: "Inappropriate",
+		table: "Content",
+		comment: "Display name of the `inappropriate` Parental Guide report reason."
+	)
+
+	/// Display name of the `other` report reason.
+	///
+	/// - Tag: L10n-reportReasonOther
+	static let reportReasonOther: String = String(
+		localized: "Other",
+		table: "Content",
+		comment: "Display name of the `other` Parental Guide report reason."
+	)
 }

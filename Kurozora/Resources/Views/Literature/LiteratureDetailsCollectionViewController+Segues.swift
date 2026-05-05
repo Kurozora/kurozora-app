@@ -24,6 +24,7 @@ extension LiteratureDetailsCollectionViewController {
 		case characterDetailsSegue
 		case personDetailsSegue
 		case reviewDetailsSegue
+		case parentalGuideSegue
 	}
 
 	func makeDestinationVC(for identifier: SegueIdentifiers) -> UIViewController? {
@@ -41,6 +42,7 @@ extension LiteratureDetailsCollectionViewController {
 		case .characterDetailsSegue: return CharacterDetailsCollectionViewController()
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
+		case .parentalGuideSegue: return ParentalGuideCollectionViewController()
 		}
 	}
 
@@ -125,6 +127,10 @@ extension LiteratureDetailsCollectionViewController {
 			else { return }
 			navigationController.modalPresentationStyle = .formSheet
 			reviewDetailsCollectionViewController.review = review
+		case .parentalGuideSegue:
+			guard let parentalGuideViewController = destination as? ParentalGuideCollectionViewController else { return }
+			guard let literatureIdentity = sender as? LiteratureIdentity else { return }
+			parentalGuideViewController.mediaType = .literature(literatureIdentity, title: self.literature?.attributes.title, ratingName: self.literature?.attributes.tvRating.name, ratingDescription: self.literature?.attributes.tvRating.description, slug: self.literature?.attributes.slug)
 		}
 	}
 }
