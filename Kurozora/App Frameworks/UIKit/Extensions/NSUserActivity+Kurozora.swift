@@ -20,6 +20,11 @@ enum ActivityType: String {
 	case openUser = "app.kurozora.tracker.user-activity.openUser"
 }
 
+#if DEBUG
+/// Activity type used to spawn the FLEX globals window on macOS.
+let kFlexDebugSceneActivityType = "app.kurozora.tracker.user-activity.flexDebug"
+#endif
+
 extension NSUserActivity {
 	/// Creates a user activity object with the specified type.
 	///

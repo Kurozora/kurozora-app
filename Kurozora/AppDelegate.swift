@@ -11,6 +11,9 @@ import UIKit
 #if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
 #endif
+#if DEBUG
+import FLEX
+#endif
 
 // MARK: - Kurozora
 @UIApplicationMain
@@ -232,6 +235,52 @@ extension AppDelegate {
 			UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
 		}
 	}
+
+	#if DEBUG
+	/// User chose "Show FLEX Menu" from the Debug menu.
+	@objc func handleShowFlex(_ sender: AnyObject) {
+		#if targetEnvironment(macCatalyst)
+		let existingSession = UIApplication.shared.openSessions.first { session in
+			session.userInfo?["isFlexDebug"] as? Bool == true
+		}
+
+		if let existingSession = existingSession {
+			UIApplication.shared.requestSceneSessionActivation(existingSession, userActivity: nil, options: nil)
+		} else {
+			let activity = NSUserActivity(activityType: kFlexDebugSceneActivityType)
+			UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil)
+		}
+		#else
+		if FLEXManager.shared.isHidden {
+			FLEXManager.shared.showExplorer()
+		} else {
+			FLEXManager.shared.hideExplorer()
+		}
+		#endif
+	}
+
+	/// User chose "Toggle FLEX Overlay" from the Debug menu.
+	@objc func handleToggleFlexOverlay(_ sender: AnyObject) {
+		guard FLEXManager.shared.isHidden else {
+			FLEXManager.shared.hideExplorer()
+			return
+		}
+
+		#if targetEnvironment(macCatalyst)
+		let mainScene = UIApplication.shared.connectedScenes.first { scene in
+			scene.session.userInfo?["isFlexDebug"] as? Bool != true
+		} as? UIWindowScene
+
+		if let mainScene = mainScene {
+			FLEXManager.shared.showExplorer(from: mainScene)
+		} else {
+			FLEXManager.shared.showExplorer()
+		}
+		#else
+		FLEXManager.shared.showExplorer()
+		#endif
+	}
+	#endif
 }
 
 // MARK: - Menu

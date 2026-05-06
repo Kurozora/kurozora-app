@@ -30,6 +30,10 @@ class MenuController {
 			builder.remove(menu: .minimizeAndZoom)
 			builder.insertChild(minimizeAndZoom, atStartOfMenu: .window)
 		}
+
+		#if DEBUG
+		builder.insertSibling(MenuController.debug(), beforeMenu: .window)
+		#endif
 	}
 
 	/// Builds and returns the "Home" menu.
@@ -136,4 +140,15 @@ class MenuController {
 
 		return UIMenu(title: "Account", identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoritesCommand])
 	}
+
+	#if DEBUG
+	/// Builds and returns the "Debug" menu.
+	///
+	/// - Returns: The "Debug" UIMenu object.
+	class func debug() -> UIMenu {
+		let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
+		let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
+		return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
+	}
+	#endif
 }

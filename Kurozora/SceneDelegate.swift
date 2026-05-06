@@ -8,6 +8,9 @@
 
 import KurozoraKit
 import UIKit
+#if DEBUG
+import FLEX
+#endif
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
@@ -17,6 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		print("----- Scene will connect to session.")
 		guard let windowScene = (scene as? UIWindowScene) else { return }
+
+		#if DEBUG && targetEnvironment(macCatalyst)
+		if connectionOptions.userActivities.first?.activityType == kFlexDebugSceneActivityType {
+			self.configureFlexDebugScene(windowScene, session: session)
+			return
+		}
+		#endif
 
 		// Initialize UIWindow
 		self.window = UIWindow(windowScene: windowScene)
@@ -73,6 +83,43 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window?.windowScene?.titlebar?.toolbar = toolbar
 		self.window?.windowScene?.titlebar?.titleVisibility = .hidden
 		self.window?.windowScene?.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
+	}
+	#endif
+
+	#if DEBUG && targetEnvironment(macCatalyst)
+	/// Configures the given window scene to host the FLEX globals list.
+	///
+	/// - Parameters:
+	///    - windowScene: The window scene to configure.
+	///    - session: The scene session to tag for later reactivation.
+	private func configureFlexDebugScene(_ windowScene: UIWindowScene, session: UISceneSession) {
+		if session.userInfo == nil {
+			session.userInfo = [:]
+		}
+		session.userInfo?["isFlexDebug"] = true
+
+		self.window = UIWindow(windowScene: windowScene)
+		self.window?.rootViewController = self.makeFlexGlobalsRootViewController()
+		self.window?.makeKeyAndVisible()
+
+		windowScene.title = "FLEX"
+		windowScene.titlebar?.titleVisibility = .visible
+		windowScene.titlebar?.toolbar = nil
+		windowScene.sizeRestrictions?.minimumSize = CGSize(width: 480, height: 600)
+	}
+
+	/// Returns a navigation controller rooted at FLEX's globals view controller.
+	///
+	/// - Returns: The navigation controller, or a placeholder view controller if `FLEXGlobalsViewController` can't be resolved at runtime.
+	private func makeFlexGlobalsRootViewController() -> UIViewController {
+		guard let globalsClass = NSClassFromString("FLEXGlobalsViewController") as? UIViewController.Type else {
+			let placeholder = UIViewController()
+			placeholder.view.backgroundColor = .systemBackground
+			return placeholder
+		}
+
+		let globalsViewController = globalsClass.init()
+		return FLEXNavigationController(rootViewController: globalsViewController)
 	}
 	#endif
 
