@@ -138,33 +138,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	///
 	/// - Returns: The truncated string, or `attributed` unchanged when truncation isn't required.
 	static func truncatedBody(_ attributed: NSAttributedString, cachedWidth: CGFloat, fallbackHostBounds: CGFloat, actionID: String, font sourceFont: UIFont?) -> NSAttributedString {
-		let font = sourceFont ?? .preferredFont(forTextStyle: .body)
-		let width: CGFloat
-		if cachedWidth > 0 {
-			width = cachedWidth
-		} else {
-			let host = fallbackHostBounds > 0 ? fallbackHostBounds : UIScreen.main.bounds.width
-			width = max(host - 32, 200)
-		}
-		let suffix = makeShowMoreSuffix(font: font, actionID: actionID)
-		return attributed.kkTruncated(toLines: bodyLineLimit, width: width, font: font, suffix: suffix)
-	}
-
-	/// Returns the trailing `Show more` suffix carrying `.kkAction` and `.kkAccentColor`.
-	///
-	/// - Parameters:
-	///   - font: The body font.
-	///   - actionID: The suffix's `.kkAction` value, dispatched on tap.
-	///
-	/// - Returns: The attributed suffix.
-	static func makeShowMoreSuffix(font: UIFont, actionID: String) -> NSAttributedString {
-		let raw = " " + L10n.showMore
-		let attributes: [NSAttributedString.Key: Any] = [
-			.font: font,
-			.kkAction: actionID,
-			.kkAccentColor: true
-		]
-		return NSAttributedString(string: raw, attributes: attributes)
+		return NSAttributedString.kkTruncatedBody(attributed, lineLimit: bodyLineLimit, cachedWidth: cachedWidth, fallbackHostBounds: fallbackHostBounds, actionID: actionID, font: sourceFont)
 	}
 
 	// MARK: - Functions
