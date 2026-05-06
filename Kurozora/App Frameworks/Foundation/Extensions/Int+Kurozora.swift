@@ -29,10 +29,13 @@ extension Int {
 			return "0"
 		}
 
-		// Clamp index to valid range
-		let index = Swift.max(0, Swift.min(StaticData.shortSuffixes.count - 1, Int(log(Double(self)) / log(1000))))
+		let isNegative = self < 0
+		let absoluteValue = Double(self.magnitude)
 
-		let scaledNumber = Double(self) / pow(1000, Double(index))
+		// Clamp index to valid range
+		let index = Swift.max(0, Swift.min(StaticData.shortSuffixes.count - 1, Int(log(absoluteValue) / log(1000))))
+
+		let scaledNumber = absoluteValue / pow(1000, Double(index))
 
 		// Manual rounding
 		let multiplier = pow(10.0, Double(precision))
@@ -64,7 +67,7 @@ extension Int {
 
 		let suffix = StaticData.shortSuffixes[index]
 
-		return numberString + suffix
+		return (isNegative ? "-" : "") + numberString + suffix
 	}
 
 	// Helper for grouping thousands without NumberFormatter
