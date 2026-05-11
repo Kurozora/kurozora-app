@@ -22,6 +22,9 @@
     "%@ is not following anyone yet." : {
       "comment" : "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
     },
+    "%1$@ is rated %2$@ for %3$@" : {
+      "comment" : "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name."
+    },
     "%1$d of %2$d found this %3$@." : {
       "comment" : "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase."
     },
@@ -106,6 +109,9 @@
     "Depiction" : {
       "comment" : "Header for the depiction section of the Parental Guide editor."
     },
+    "Details" : {
+      "comment" : "Header above the details editor in the Parental Guide report sheet."
+    },
     "Discard changes?" : {
       "comment" : "Title of the discard-changes alert in the Parental Guide editor."
     },
@@ -168,6 +174,12 @@
     },
     "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below." : {
       "comment" : "The subheadline string for the Library Import view."
+    },
+    "Inaccurate" : {
+      "comment" : "Display name of the `inaccurate` Parental Guide report reason."
+    },
+    "Inappropriate" : {
+      "comment" : "Display name of the `inappropriate` Parental Guide report reason."
     },
     "Is this a 'where to watch' question?" : {
       "comment" : "The headline string for the off-topic content warning pop-up."
@@ -237,6 +249,9 @@
     },
     "Open Apple Music Library" : {
       "comment" : "The alert button that deep-links to the user's Apple Music library."
+    },
+    "Other" : {
+      "comment" : "Display name of the `other` Parental Guide report reason."
     },
     "Parental Guide" : {
       "comment" : "The title of the Parental Guide screen."
@@ -353,7 +368,7 @@
       "comment" : "The string for the 'Re-shares' tab on the post activity screen."
     },
     "Reason" : {
-      "comment" : "Header for the reason section of the Parental Guide editor."
+      "comment" : "Header above the reason picker in the Parental Guide report sheet.\nHeader for the reason section of the Parental Guide editor."
     },
     "Recent" : {
       "comment" : "The string for the 'Recent' sort option on the post activity screen."
@@ -421,11 +436,17 @@
     "Report" : {
       "comment" : "The string for the word 'report'."
     },
+    "Report Entry" : {
+      "comment" : "Title shown in the navigation bar of the Parental Guide report sheet."
+    },
     "Report Message" : {
       "comment" : "The string for the 'Report Message' context menu option."
     },
     "Report Review" : {
       "comment" : "The string for the 'Report Review' context menu option."
+    },
+    "Reported" : {
+      "comment" : "Title of the success alert shown after a Parental Guide entry has been reported."
     },
     "Review Reported" : {
       "comment" : "The headline string for the report review pop-up"
@@ -475,8 +496,14 @@
     "Something went wrong" : {
       "comment" : "Generic error alert title shown when a Parental Guide submission fails."
     },
+    "Spam" : {
+      "comment" : "Display name of the `spam` Parental Guide report reason."
+    },
     "Spoiler" : {
-      "comment" : "Label for the spoiler toggle in the Parental Guide editor."
+      "comment" : "Display name of the `spoiler` Parental Guide report reason.\nLabel for the spoiler toggle in the Parental Guide editor."
+    },
+    "Submit" : {
+      "comment" : "Submit button title in the Parental Guide report sheet."
     },
     "Summary" : {
       "comment" : "Header for the Parental Guide summary section."
@@ -484,11 +511,20 @@
     "Tap to Rate:" : {
       "comment" : "The string for the word 'tap to rate'."
     },
+    "Tell us more" : {
+      "comment" : "Placeholder shown in the details editor when the reason is `Other` and details are required."
+    },
+    "Tell us more (optional)" : {
+      "comment" : "Placeholder shown in the details editor when optional."
+    },
     "Thank you for helping keep the community safe." : {
       "comment" : "The subheadline string for the report message pop-up\nThe subheadline string for the report review pop-up"
     },
     "Thank you for rating." : {
       "comment" : "The string for the rating submitted description."
+    },
+    "Thanks. We'll review this entry shortly." : {
+      "comment" : "Body of the success alert shown after a Parental Guide entry has been reported."
     },
     "The leaderboard is empty. Pull to refresh or check back later." : {
       "comment" : "The empty-state detail shown when the reputation leaderboard has no entries."

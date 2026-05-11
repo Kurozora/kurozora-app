@@ -40,6 +40,7 @@ class SettingsPickerTableViewController: KTableViewController {
 	private var allItems: [ItemKind] = []
 	private var filteredItems: [ItemKind] = []
 	private var selectedKey: String?
+	private var descriptionText: String?
 
 	private lazy var searchController = KSearchController(searchResultsController: nil)
 
@@ -48,12 +49,13 @@ class SettingsPickerTableViewController: KTableViewController {
 	weak var delegate: SettingsPickerTableViewControllerDelegate?
 
 	// MARK: - Init
-	convenience init(items: [String: String], selectedKey: String? = nil) {
+	convenience init(items: [String: String], selectedKey: String? = nil, descriptionText: String? = nil) {
 		self.init(style: .insetGrouped)
 		self.allItems = items.map { ItemKind(key: $0.key, value: $0.value) }
 			.sorted { $0.value.localizedCaseInsensitiveCompare($1.value) == .orderedAscending }
 		self.filteredItems = self.allItems
 		self.selectedKey = selectedKey
+		self.descriptionText = descriptionText
 	}
 
 	// MARK: - View
@@ -63,6 +65,7 @@ class SettingsPickerTableViewController: KTableViewController {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 
 		self.configureSearchController()
+		self.configureDescriptionHeader()
 		self.configureDataSource()
 		self.applySnapshot(animating: false)
 
@@ -70,6 +73,11 @@ class SettingsPickerTableViewController: KTableViewController {
 			guard let self = self else { return }
 			self.scrollToCurrentSelection()
 		}
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		self.updateDescriptionHeaderSize()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +95,52 @@ class SettingsPickerTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
+	private func configureDescriptionHeader() {
+		guard let descriptionText = self.descriptionText, !descriptionText.isEmpty else {
+			return
+		}
+
+		let descriptionLabel = KSecondaryLabel()
+		descriptionLabel.numberOfLines = 0
+		descriptionLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+		descriptionLabel.adjustsFontForContentSizeCategory = true
+		descriptionLabel.text = descriptionText
+		descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+
+		let container = UIView()
+		container.backgroundColor = .clear
+		container.preservesSuperviewLayoutMargins = true
+		container.layoutMargins = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
+		container.addSubview(descriptionLabel)
+
+		NSLayoutConstraint.activate([
+			descriptionLabel.topAnchor.constraint(equalTo: container.layoutMarginsGuide.topAnchor),
+			descriptionLabel.bottomAnchor.constraint(equalTo: container.layoutMarginsGuide.bottomAnchor),
+			descriptionLabel.leadingAnchor.constraint(equalTo: container.layoutMarginsGuide.leadingAnchor),
+			descriptionLabel.trailingAnchor.constraint(equalTo: container.layoutMarginsGuide.trailingAnchor)
+		])
+
+		self.tableView.tableHeaderView = container
+	}
+
+	private func updateDescriptionHeaderSize() {
+		guard let headerView = self.tableView.tableHeaderView else { return }
+		let width = self.tableView.bounds.width
+		guard width > 0 else { return }
+
+		let targetSize = CGSize(width: width, height: UIView.layoutFittingCompressedSize.height)
+		let fittedSize = headerView.systemLayoutSizeFitting(
+			targetSize,
+			withHorizontalFittingPriority: .required,
+			verticalFittingPriority: .fittingSizeLevel
+		)
+
+		if headerView.frame.size.height != fittedSize.height || headerView.frame.size.width != width {
+			headerView.frame.size = CGSize(width: width, height: fittedSize.height)
+			self.tableView.tableHeaderView = headerView
+		}
+	}
+
 	private func configureSearchController() {
 		self.searchController.searchBar.placeholder = L10n.search
 		self.searchController.searchResultsUpdater = self

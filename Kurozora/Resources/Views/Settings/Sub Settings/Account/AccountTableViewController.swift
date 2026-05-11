@@ -321,21 +321,33 @@ extension AccountTableViewController {
 		case .language:
 			self.selectedAccountSetting = .language
 
-			let viewController = SettingsPickerTableViewController(items: self.languages, selectedKey: self.selectedLanguage.key)
+			let viewController = SettingsPickerTableViewController(
+				items: self.languages,
+				selectedKey: self.selectedLanguage.key,
+				descriptionText: L10n.languagePickerDescription
+			)
 			viewController.title = "Language"
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
 		case .tvRating:
 			self.selectedAccountSetting = .tvRating
 
-			let viewController = SettingsPickerTableViewController(items: self.tvRatings, selectedKey: self.selectedTVRating.key)
+			let viewController = SettingsPickerTableViewController(
+				items: self.tvRatings,
+				selectedKey: self.selectedTVRating.key,
+				descriptionText: L10n.tvRatingPickerDescription
+			)
 			viewController.title = "TV Rating"
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
 		case .timezone:
 			self.selectedAccountSetting = .timezone
 
-			let viewController = SettingsPickerTableViewController(items: self.timezones, selectedKey: self.selectedTimezone.key)
+			let viewController = SettingsPickerTableViewController(
+				items: self.timezones,
+				selectedKey: self.selectedTimezone.key,
+				descriptionText: L10n.timezonePickerDescription
+			)
 			viewController.title = "Time Zone"
 			viewController.delegate = self
 			self.show(viewController, sender: nil)

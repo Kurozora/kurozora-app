@@ -1250,6 +1250,30 @@ extension L10n {
 		localized: "Languages",
 		comment: "The string for the word 'language'."
 	)
+	/// The explanatory description shown above the language picker clarifying that it changes content language, not the app's interface language.
+	///
+	/// - Tag: L10n-languagePickerDescription
+	static let languagePickerDescription: String = String(
+		localized: "languagePicker.description",
+		defaultValue: "Your preferred language is used for the information shown throughout Kurozora, such as titles, descriptions, and metadata. It does not change the language of the app's interface.\n\nThese changes take effect anywhere you are signed in with your Kurozora Account.\n\nIf information cannot be shown in your preferred language, English will be used instead.",
+		comment: "Explanatory text shown above the language picker to clarify that the setting changes content language, not the app's interface language."
+	)
+	/// The explanatory description shown above the TV rating picker clarifying that TV ratings are tiered.
+	///
+	/// - Tag: L10n-tvRatingPickerDescription
+	static let tvRatingPickerDescription: String = String(
+		localized: "tvRatingPicker.description",
+		defaultValue: "TV ratings are tiered. Depending on the chosen TV rating some shows might be hidden.\n\nFor example, selecting R15+ will show you all anime up to a TV rating of R15+.",
+		comment: "Explanatory text shown above the TV rating picker to clarify how tiered TV ratings affect visible content."
+	)
+	/// The explanatory description shown above the timezone picker clarifying what the timezone setting affects.
+	///
+	/// - Tag: L10n-timezonePickerDescription
+	static let timezonePickerDescription: String = String(
+		localized: "timezonePicker.description",
+		defaultValue: "The selected timezone will be used to display all dates and times, including premiere dates, broadcasts, and schedules.",
+		comment: "Explanatory text shown above the timezone picker to clarify what the setting affects."
+	)
 	/// The string for the word 'country'.
 	///
 	/// - Tag: L10n-country
