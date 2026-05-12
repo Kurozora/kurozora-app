@@ -27,6 +27,12 @@ class KTintedButton: KButton {
 
 			self.configuration = .prominentGlass()
 			self.configuration?.background.cornerRadius = cornerRadius == .zero ? 10 : cornerRadius
+			self.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+				var outgoing = incoming
+				let basePointSize = outgoing.font?.pointSize ?? UIFont.preferredFont(forTextStyle: .body).pointSize
+				outgoing.font = .systemFont(ofSize: basePointSize, weight: .semibold)
+				return outgoing
+			}
 		} else {
 			self.configuration = .plain()
 
