@@ -12,18 +12,6 @@ import IQKeyboardManagerSwift
 import KurozoraKit
 import UIKit
 
-protocol ReviewTextEditorDisplayLogic: AnyObject {
-	func displayConfigure(viewModel: ReviewTextEditor.Configure.ViewModel)
-	func displayUnsavedChanges(viewModel: ReviewTextEditor.UnsavedChanges.ViewModel)
-	func displaySaveRating(viewModel: ReviewTextEditor.SaveRating.ViewModel)
-	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel)
-	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel)
-	func displayConfirmCancel(viewModel: ReviewTextEditor.ConfirmCancel.ViewModel)
-	@MainActor
-	func displaySubmit(viewModel: ReviewTextEditor.Submit.ViewModel)
-	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel)
-}
-
 protocol ReviewTextEditorViewControllerDelegate: AnyObject {
 	func reviewTextEditorViewControllerDidSubmitReview()
 	func reviewTextEditorViewControllerDidDeleteReview()
@@ -38,44 +26,25 @@ final class ReviewTextEditorViewController: KViewController {
 	@IBOutlet private var sceneView: ReviewTextEditorView!
 
 	// MARK: - Properties
-	var interactor: ReviewTextEditorBusinessLogic?
-	var router: (ReviewTextEditorRoutingLogic & ReviewTextEditorDataPassing)?
+	/// The model being rated/reviewed.
+	var kind: ReviewKind?
 
-	var cancelBarButtonItem: UIBarButtonItem!
-	var sendBarButtonItem: UIBarButtonItem!
-	var deleteBarButtonItem: UIBarButtonItem!
+	/// The current rating value.
+	var rating: Double?
+
+	/// The current review text.
+	var review: String?
+
+	/// Whether the user has edited the rating or review since presentation.
+	private var isEdited: Bool = false
+
+	private var cancelBarButtonItem: UIBarButtonItem!
+	private var sendBarButtonItem: UIBarButtonItem!
+	private var deleteBarButtonItem: UIBarButtonItem!
 
 	weak var delegate: ReviewTextEditorViewControllerDelegate?
 
-	// MARK: - Initializers
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		self.setup()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.setup()
-	}
-
-	// MARK: - Setup
-	private func setup() {
-		let viewController = self
-		let interactor = ReviewTextEditorInteractor()
-		let presenter = ReviewTextEditorPresenter()
-		let router = ReviewTextEditorRouter()
-		let worker = ReviewTextEditorWorker()
-
-		viewController.interactor = interactor
-		viewController.router = router
-		interactor.presenter = presenter
-		interactor.worker = worker
-		presenter.viewController = viewController
-		router.viewController = viewController
-		router.dataStore = interactor
-	}
-
-	// MARK: - View state
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.sceneView.delegate = self
@@ -88,9 +57,11 @@ final class ReviewTextEditorViewController: KViewController {
 		self.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
 		self.sheetPresentationController?.prefersGrabberVisible = true
 
-		self.setupNavigationItems()
+		self.configureNavigationItems()
 
-		self.doConfigure()
+		let existing = self.rating ?? 0.0
+		let displayedRating = existing > 0 ? existing : 1.0
+		self.sceneView.configure(rating: displayedRating, review: self.review)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +82,7 @@ final class ReviewTextEditorViewController: KViewController {
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 
-		self.doUnsavedChanges()
+		self.updateUnsavedChangesState()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -123,13 +94,13 @@ final class ReviewTextEditorViewController: KViewController {
 	}
 
 	// MARK: - Functions
-	func setupNavigationItems() {
+	private func configureNavigationItems() {
 		self.cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonPressed(_:)))
 		self.sendBarButtonItem = UIBarButtonItem(title: L10n.send, style: .done, target: self, action: #selector(self.sendButtonPressed(_:)))
 		self.deleteBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(self.deleteButtonPressed(_:)))
 		self.deleteBarButtonItem.tintColor = .systemRed
 
-		let existingRating = self.router?.dataStore?.rating ?? 0
+		let existingRating = self.rating ?? 0
 
 		if existingRating > 0 {
 			self.navigationItem.leftBarButtonItems = [self.cancelBarButtonItem, self.deleteBarButtonItem]
@@ -140,20 +111,47 @@ final class ReviewTextEditorViewController: KViewController {
 		self.navigationItem.rightBarButtonItem = self.sendBarButtonItem
 	}
 
-	@objc func cancelButtonPressed(_ sender: UIBarButtonItem) {
-		self.doCancel(forceCancel: false)
+	private func updateUnsavedChangesState() {
+		self.navigationItem.rightBarButtonItem?.isEnabled = self.isEdited
+		self.isModalInPresentation = self.isEdited
 	}
 
-	@objc func deleteButtonPressed(_ sender: UIBarButtonItem) {
+	// MARK: - Actions
+	@objc private func cancelButtonPressed(_ sender: UIBarButtonItem) {
+		if self.isEdited {
+			self.presentDiscardConfirmation(showingSend: false)
+		} else {
+			self.dismiss(animated: true)
+		}
+	}
+
+	@objc private func deleteButtonPressed(_ sender: UIBarButtonItem) {
 		self.presentDeleteRatingConfirmation(restoringOnCancel: false)
 	}
 
-	/// Present the shared delete-rating confirmation dialog.
+	@objc private func sendButtonPressed(_ sender: UIBarButtonItem) {
+		let reviewText = self.review ?? ""
+		sender.isEnabled = false
+
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			if await OffTopicContentFilter.shared.isOffTopicSourceSeeking(reviewText) {
+				self.sendBarButtonItem.isEnabled = true
+				self.presentOffTopicWarning()
+				return
+			}
+
+			await self.performSubmit()
+		}
+	}
+
+	/// Presents the shared delete-rating confirmation dialog.
 	///
 	/// - Parameter restoringOnCancel: When `true`, cosmos view snaps back to the previously stored rating on cancel.
 	private func presentDeleteRatingConfirmation(restoringOnCancel: Bool) {
-		let previousRating = self.router?.dataStore?.rating
-		let previousReview = self.router?.dataStore?.review
+		let previousRating = self.rating
+		let previousReview = self.review
 
 		self.confirmDeleteRating(onConfirm: { [weak self] in
 			guard let self = self else { return }
@@ -163,13 +161,13 @@ final class ReviewTextEditorViewController: KViewController {
 
 			if restoringOnCancel {
 				let rating = (previousRating ?? 0) > 0 ? (previousRating ?? 0) : 1.0
-				self.sceneView.configure(using: ReviewTextEditor.Configure.ViewModel(rating: rating, review: previousReview))
+				self.sceneView.configure(rating: rating, review: previousReview)
 			}
 		})
 	}
 
 	private func performDeleteRating() {
-		guard let kind = self.router?.dataStore?.kind else { return }
+		guard let kind = self.kind else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -187,24 +185,6 @@ final class ReviewTextEditorViewController: KViewController {
 			} catch {
 				self.presentAlertController(title: L10n.ratingFailed, message: error.message)
 			}
-		}
-	}
-
-	@objc func sendButtonPressed(_ sender: UIBarButtonItem) {
-		// Off-topic nudge: if the review reads as a "where to watch/read" request,
-		// surface a soft warning before submitting. The user can still proceed.
-		// The classifier is async (may call the on-device LLM), so disable the
-		// Send button up front to prevent double-taps while it runs.
-		let reviewText = (self.interactor as? ReviewTextEditorDataStore)?.review ?? ""
-		sender.isEnabled = false
-		Task { @MainActor [weak self] in
-			guard let self = self else { return }
-			if await OffTopicContentFilter.shared.isOffTopicSourceSeeking(reviewText) {
-				self.sendBarButtonItem.isEnabled = true
-				self.presentOffTopicWarning()
-				return
-			}
-			self.doSubmit()
 		}
 	}
 
@@ -226,7 +206,10 @@ final class ReviewTextEditorViewController: KViewController {
 			alertController.addAction(UIAlertAction(title: L10n.offTopicPostAnyway, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.sendBarButtonItem.isEnabled = false
-				self.doSubmit()
+
+				Task { @MainActor in
+					await self.performSubmit()
+				}
 			})
 		}
 
@@ -234,99 +217,27 @@ final class ReviewTextEditorViewController: KViewController {
 			self.present(alertController, animated: true, completion: nil)
 		}
 	}
-}
 
-// MARK: - Requests
-extension ReviewTextEditorViewController {
-	func doConfigure() {
-		let request = ReviewTextEditor.Configure.Request()
-		self.interactor?.doConfigure(request: request)
-	}
-
-	func doUnsavedChanges() {
-		let request = ReviewTextEditor.UnsavedChanges.Request()
-		self.interactor?.doUnsavedChanges(request: request)
-	}
-
-	func doSaveRating(_ rating: Double) {
-		let request = ReviewTextEditor.SaveRating.Request(rating: rating)
-		self.interactor?.doSaveRating(request: request)
-	}
-
-	func doSaveReview(_ review: String) {
-		let request = ReviewTextEditor.SaveReview.Request(review: review)
-		self.interactor?.doSaveReview(request: request)
-	}
-
-	func doCancel(forceCancel: Bool) {
-		let request = ReviewTextEditor.Cancel.Request(forceCancel: forceCancel)
-		self.interactor?.doCancel(request: request)
-	}
-
-	func doConfirmCancel(showingSend: Bool) {
-		let request = ReviewTextEditor.ConfirmCancel.Request(showingSend: showingSend)
-		self.interactor?.doConfirmCancel(request: request)
-	}
-
-	func doSubmit() {
-		Task { [weak self] in
-			guard let self = self else { return }
-			let request = ReviewTextEditor.Submit.Request()
-			await self.interactor?.doSubmit(request: request)
-		}
-	}
-}
-
-// MARK: - Display
-extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
-	func displayConfigure(viewModel: ReviewTextEditor.Configure.ViewModel) {
-		self.sceneView.configure(using: viewModel)
-	}
-
-	func displayUnsavedChanges(viewModel: ReviewTextEditor.UnsavedChanges.ViewModel) {
-		// If there are unsaved changes, enable the Save button and disable the ability to
-		// dismiss using the pull-down gesture.
-		self.navigationItem.rightBarButtonItem?.isEnabled = viewModel.isEdited
-		self.isModalInPresentation = viewModel.isEdited
-	}
-
-	func displaySaveRating(viewModel: ReviewTextEditor.SaveRating.ViewModel) {
-		self.doUnsavedChanges()
-	}
-
-	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel) {
-		self.doUnsavedChanges()
-	}
-
-	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel) {
-		if !viewModel.forceCancel, viewModel.hasChanges {
-			// The user tapped Cancel with unsaved changes. Confirm that it's OK to lose the changes.
-			self.doConfirmCancel(showingSend: viewModel.hasChanges)
-		} else {
-			// There are no unsaved changes. Dismiss immediately.
-			self.dismiss(animated: true)
-		}
-	}
-
-	func displayConfirmCancel(viewModel: ReviewTextEditor.ConfirmCancel.ViewModel) {
-		// Present a UIAlertController as an action sheet to have the user confirm losing any recent changes.
+	/// Presents the "discard changes" action sheet.
+	///
+	/// - Parameter showingSend: When `true`, the sheet offers a "Send" action in addition to discard.
+	private func presentDiscardConfirmation(showingSend: Bool) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			guard let self = self else { return }
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
-			if viewModel.showingSend {
-				// Send action.
+			if showingSend {
 				actionSheetAlertController.addAction(UIAlertAction(title: L10n.send, style: .default) { _ in
-					self.doSubmit()
+					Task { @MainActor in
+						await self.performSubmit()
+					}
 				})
 			}
 
-			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: L10n.discard, style: .destructive) { _ in
-				self.doCancel(forceCancel: true)
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.discard, style: .destructive) { [weak self] _ in
+				self?.dismiss(animated: true)
 			})
 		}
 
-		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = self.navigationItem.leftBarButtonItem
 		}
@@ -336,20 +247,39 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 		}
 	}
 
-	func displaySubmit(viewModel: ReviewTextEditor.Submit.ViewModel) {
-		let `self` = self
+	/// Submits the rating and review to the backend.
+	@MainActor
+	private func performSubmit() async {
+		let existing = self.rating ?? 0.0
+		let rating = existing > 0 ? existing : 1.0
 
-		`self`.dismiss(animated: true) {
-			`self`.delegate?.reviewTextEditorViewControllerDidSubmitReview()
+		guard let kind = self.kind else {
+			self.presentAlertController(title: L10n.cantSaveReview, message: "No review kind was specified. Bad developer :O")
+			self.sendBarButtonItem.isEnabled = true
+			return
 		}
-	}
 
-	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel) {
-		self.presentAlertController(title: L10n.cantSaveReview, message: viewModel.message)
+		do throws(APIError) {
+			let didSubmit = try await kind.rate(using: rating, description: self.review)
+
+			guard didSubmit else {
+				self.presentAlertController(title: L10n.cantSaveReview, message: nil)
+				self.sendBarButtonItem.isEnabled = true
+				return
+			}
+
+			self.dismiss(animated: true) {
+				self.delegate?.reviewTextEditorViewControllerDidSubmitReview()
+			}
+		} catch {
+			print(error.localizedDescription)
+			self.presentAlertController(title: L10n.cantSaveReview, message: error.message)
+			self.sendBarButtonItem.isEnabled = true
+		}
 	}
 }
 
-// MARK: - ViewDelegate
+// MARK: - ReviewTextEditorViewDelegate
 extension ReviewTextEditorViewController: ReviewTextEditorViewDelegate {
 	func reviewTextEditorView(_ view: ReviewTextEditorView, rateWith rating: Double) {
 		if rating == 0 {
@@ -357,19 +287,21 @@ extension ReviewTextEditorViewController: ReviewTextEditorViewDelegate {
 			return
 		}
 
-		self.doSaveRating(rating)
+		self.isEdited = true
+		self.rating = rating
+		self.updateUnsavedChangesState()
 	}
 
 	func reviewTextEditorView(_ view: ReviewTextEditorView, textDidChange text: String) {
-		self.doSaveReview(text)
+		self.isEdited = true
+		self.review = text
+		self.updateUnsavedChangesState()
 	}
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension ReviewTextEditorViewController: UIAdaptivePresentationControllerDelegate {
 	func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-		// The system calls this delegate method whenever the user attempts to pull down to dismiss and `isModalInPresentation` is false.
-		// Clarify the user's intent by asking whether they want to cancel or send.
-		self.doConfirmCancel(showingSend: true)
+		self.presentDiscardConfirmation(showingSend: true)
 	}
 }

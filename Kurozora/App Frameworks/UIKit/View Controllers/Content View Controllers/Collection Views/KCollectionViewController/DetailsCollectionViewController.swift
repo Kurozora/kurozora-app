@@ -304,7 +304,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	/// Returns the editor configuration for the active model.
 	///
 	/// - Returns: A tuple containing the editor kind, the existing rating, and the existing review, or `nil` to disable the review flow.
-	func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? { nil }
+	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? { nil }
 
 	/// Presents the review details screen for the given review.
 	///
@@ -474,9 +474,9 @@ extension DetailsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 
 		let reviewTextEditorViewController = ReviewTextEditorViewController()
 		reviewTextEditorViewController.delegate = self
-		reviewTextEditorViewController.router?.dataStore?.kind = context.kind
-		reviewTextEditorViewController.router?.dataStore?.rating = context.rating
-		reviewTextEditorViewController.router?.dataStore?.review = context.review
+		reviewTextEditorViewController.kind = context.kind
+		reviewTextEditorViewController.rating = context.rating
+		reviewTextEditorViewController.review = context.review
 
 		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
 		navigationController.presentationController?.delegate = reviewTextEditorViewController
