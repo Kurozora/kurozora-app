@@ -10,7 +10,7 @@ import Kingfisher
 import KurozoraKit
 import UIKit
 
-class ProfileTableViewController: KTableViewController {
+class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case achievementsSegue
@@ -751,7 +751,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
 
-		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
+		self.show(.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -766,7 +766,7 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
+		self.show(.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -816,27 +816,27 @@ extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
 	}
 
 	func profileTableHeaderViewDidPressEditProfile(_ headerView: ProfileTableHeaderView) {
-		self.present(SegueIdentifiers.editProfileSegue, sender: self)
+		self.present(.editProfileSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReputationButton button: UIButton) {
-		self.show(SegueIdentifiers.reputationLeaderboardSegue, sender: self)
+		self.show(.reputationLeaderboardSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressAchievementsButton button: UIButton) {
-		self.show(SegueIdentifiers.achievementsSegue, sender: self)
+		self.show(.achievementsSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowingButton button: UIButton) {
-		self.show(SegueIdentifiers.followingSegue, sender: self)
+		self.show(.followingSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowersButton button: UIButton) {
-		self.show(SegueIdentifiers.followersSegue, sender: self)
+		self.show(.followersSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReviewsButton button: UIButton) {
-		self.show(SegueIdentifiers.userReviewsListSegue, sender: self)
+		self.show(.userReviewsListSegue, sender: self)
 	}
 
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressBadge profileBadge: ProfileBadge, from button: UIButton) {

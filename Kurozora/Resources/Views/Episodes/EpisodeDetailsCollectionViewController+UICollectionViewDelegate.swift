@@ -20,7 +20,7 @@ extension EpisodeDetailsCollectionViewController {
 				return
 			case .season:
 				guard let seasonIdentity = self.episode.relationships?.seasons?.data.first else { return }
-				self.show(SegueIdentifiers.seasonsListSegue, sender: seasonIdentity)
+				self.show(.seasonsListSegue, sender: seasonIdentity)
 				return
 			case .rank:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
@@ -28,26 +28,26 @@ extension EpisodeDetailsCollectionViewController {
 				return
 			case .previousEpisode:
 				guard let previousEpisode = self.episode.relationships?.previousEpisodes?.data.first else { return }
-				self.show(SegueIdentifiers.episodeDetailsSegue, sender: previousEpisode)
+				self.show(.episodeDetailsSegue, sender: previousEpisode)
 				return
 			case .nextEpisode:
 				guard let nextEpisode = self.episode.relationships?.nextEpisodes?.data.first else { return }
-				self.show(SegueIdentifiers.episodeDetailsSegue, sender: nextEpisode)
+				self.show(.episodeDetailsSegue, sender: nextEpisode)
 				return
 			case .show:
 				guard let show = self.episode.relationships?.shows?.data.first else { return }
-				self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+				self.show(.showDetailsSegue, sender: show)
 				return
 			}
 		case .cast:
 			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
-			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(.characterDetailsSegue, sender: character)
 		case .suggestedEpisodes:
 			let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
-			self.show(SegueIdentifiers.episodeDetailsSegue, sender: suggestedEpisode)
+			self.show(.episodeDetailsSegue, sender: suggestedEpisode)
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+			self.present(.reviewDetailsSegue, sender: review)
 		default: return
 		}
 	}

@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class RemindersCollectionViewController: KCollectionViewController {
+class RemindersCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

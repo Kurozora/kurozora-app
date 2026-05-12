@@ -10,7 +10,7 @@ import KurozoraKit
 import Tabman
 import UIKit
 
-class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable {
+class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

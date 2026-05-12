@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
+class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, TypedSegueHandling {
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case castListSegue
@@ -158,7 +158,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 		return try await episode.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let episode = self.episode else { return nil }
 		return (.episode(episode), episode.attributes.givenRating, nil)
 	}
@@ -253,11 +253,11 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController {
 // MARK: - CastCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.show(SegueIdentifiers.personDetailsSegue, sender: cell)
+		self.show(.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.show(SegueIdentifiers.characterDetailsSegue, sender: cell)
+		self.show(.characterDetailsSegue, sender: cell)
 	}
 }
 
@@ -282,14 +282,14 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = self.suggestedEpisodes[indexPath.item].relationships?.shows?.data.first else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = self.suggestedEpisodes[indexPath.item].relationships?.seasons?.data.first else { return }
 
-		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

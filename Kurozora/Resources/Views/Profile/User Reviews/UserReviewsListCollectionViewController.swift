@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import AVFoundation
 
-class UserReviewsListCollectionViewController: KCollectionViewController, SectionFetchable {
+class UserReviewsListCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue

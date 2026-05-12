@@ -17,7 +17,7 @@ enum CastKind: String {
 }
 
 /// A paginated list of cast entries for a show, literature, or game.
-class CastListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class CastListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue
@@ -262,7 +262,7 @@ extension CastListCollectionViewController {
 				let character = cast.relationships.characters.data.first
 			else { return }
 
-			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(.characterDetailsSegue, sender: character)
 		}
 	}
 
@@ -285,7 +285,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let person = cast.relationships.people?.data.first else { return }
 
-		self.show(SegueIdentifiers.personDetailsSegue, sender: person)
+		self.show(.personDetailsSegue, sender: person)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
@@ -293,6 +293,6 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let cast = self.cache[indexPath] as? Cast else { return }
 		guard let character = cast.relationships.characters.data.first else { return }
 
-		self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+		self.show(.characterDetailsSegue, sender: character)
 	}
 }

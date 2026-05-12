@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DisplaySettingsTableViewController: SubSettingsViewController {
+class DisplaySettingsTableViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case appearanceOptionsSegue
@@ -250,7 +250,7 @@ extension DisplaySettingsTableViewController {
 
 		switch row {
 		case .automaticDarkThemeOptions:
-			self.show(SegueIdentifiers.appearanceOptionsSegue, sender: nil)
+			self.show(.appearanceOptionsSegue, sender: nil)
 		case .appAppearance, .automaticDarkTheme, .trueBlack, .largeTitles:
 			break
 		}

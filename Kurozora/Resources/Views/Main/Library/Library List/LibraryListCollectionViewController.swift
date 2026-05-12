@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class LibraryListCollectionViewController: KCollectionViewController {
+class LibraryListCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - Properties
 	var shows: [Show] = []
 	var literatures: [Literature] = []
@@ -221,9 +221,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
-		guard let identifier = identifier as? SegueIdentifiers else {
-			return nil
-		}
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
@@ -376,9 +374,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
-		guard let identifier = identifier as? SegueIdentifiers else {
-			return
-		}
+		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
 		case .showDetailsSegue:

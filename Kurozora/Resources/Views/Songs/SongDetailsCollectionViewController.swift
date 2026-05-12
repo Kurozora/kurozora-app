@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import MusicKit
 
-class SongDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable {
+class SongDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsListSegue
@@ -123,7 +123,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return try await song.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let song = self.song else { return nil }
 		return (.song(song), song.attributes.library?.rating, song.attributes.library?.review)
 	}

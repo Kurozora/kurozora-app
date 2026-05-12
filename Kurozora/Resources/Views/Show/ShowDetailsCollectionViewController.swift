@@ -12,7 +12,7 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class ShowDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable {
+class ShowDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var show: Show! {
@@ -226,7 +226,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return try await show.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let show = self.show else { return nil }
 		return (.show(show), show.attributes.library?.rating, show.attributes.library?.review)
 	}
@@ -266,11 +266,11 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 // MARK: - CastCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.show(SegueIdentifiers.personDetailsSegue, sender: cell)
+		self.show(.personDetailsSegue, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.show(SegueIdentifiers.characterDetailsSegue, sender: cell)
+		self.show(.characterDetailsSegue, sender: cell)
 	}
 }
 

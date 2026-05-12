@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MotionSettingsViewController: SubSettingsViewController {
+class MotionSettingsViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case motionOptionsSegue
@@ -218,7 +218,7 @@ extension MotionSettingsViewController {
 
 		switch row {
 		case .splashScreen:
-			self.show(SegueIdentifiers.motionOptionsSegue, sender: nil)
+			self.show(.motionOptionsSegue, sender: nil)
 		case .toggleReduceMotion, .toggleReduceMotionSync:
 			break
 		}

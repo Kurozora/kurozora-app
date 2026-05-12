@@ -21,7 +21,7 @@ enum SearchViewKind {
 }
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
-class SearchResultsCollectionViewController: KCollectionViewController, SectionFetchable {
+class SearchResultsCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case scheduleSegue
@@ -1338,14 +1338,14 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = (self.fetchModel(at: indexPath) as Episode?)?.relationships?.shows?.data.first else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = (self.fetchModel(at: indexPath) as Episode?)?.relationships?.seasons?.data.first else { return }
 
-		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

@@ -17,19 +17,19 @@ extension ReCapCollectionViewController {
 			switch recapItem.attributes.recapItemType {
 			case .shows:
 				guard let show = self.cache[indexPath] as? Show else { return }
-				self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+				self.show(.showDetailsSegue, sender: show)
 			case .literatures:
 				guard let literature = self.cache[indexPath] as? Literature else { return }
-				self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+				self.show(.literatureDetailsSegue, sender: literature)
 			case .games:
 				guard let game = self.cache[indexPath] as? Game else { return }
-				self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+				self.show(.gameDetailsSegue, sender: game)
 			case .genres:
 				guard let genre = self.cache[indexPath] as? Genre else { return }
-				self.show(SegueIdentifiers.genresSegue, sender: genre)
+				self.show(.genresSegue, sender: genre)
 			case .themes:
 				guard let theme = self.cache[indexPath] as? Theme else { return }
-				self.show(SegueIdentifiers.themesSegue, sender: theme)
+				self.show(.themesSegue, sender: theme)
 			}
 		default: break
 		}

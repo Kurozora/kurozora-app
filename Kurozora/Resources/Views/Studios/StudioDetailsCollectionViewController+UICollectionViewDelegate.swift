@@ -29,21 +29,21 @@ extension StudioDetailsCollectionViewController {
 				return
 			case .successor:
 				guard let successor = self.studio.relationships?.successors?.data.first else { return }
-				self.show(SegueIdentifiers.studioDetailsSegue, sender: successor)
+				self.show(.studioDetailsSegue, sender: successor)
 				return
 			}
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
-			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(.showDetailsSegue, sender: show)
 		case .literatures:
 			guard let literature = self.cache[indexPath] as? Literature else { return }
-			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show(.literatureDetailsSegue, sender: literature)
 		case .games:
 			guard let game = self.cache[indexPath] as? Game else { return }
-			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show(.gameDetailsSegue, sender: game)
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+			self.present(.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class ThemesCollectionViewController: KCollectionViewController {
+class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case exploreSegue

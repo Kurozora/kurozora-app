@@ -25,7 +25,7 @@ extension ProfileTableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let feedMessage = self.feedMessages[safe: indexPath.row] else { return }
-		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
+		self.show(.feedMessageDetailsSegue, sender: feedMessage)
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

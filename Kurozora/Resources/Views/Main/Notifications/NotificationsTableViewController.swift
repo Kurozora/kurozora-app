@@ -12,7 +12,7 @@ import UIKit
 
 class NotificationDataSource: UITableViewDiffableDataSource<NotificationsTableViewController.SectionLayoutKind, UserNotification> {}
 
-class NotificationsTableViewController: KTableViewController, ProfileNavigable {
+class NotificationsTableViewController: KTableViewController, ProfileNavigable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case notificationsGroupingSegue

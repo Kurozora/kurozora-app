@@ -17,7 +17,7 @@ enum SongsListViewType: Int {
 }
 
 /// A list of songs for a show, grouped by song type.
-class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -261,11 +261,11 @@ extension ShowSongsListCollectionViewController {
 		if !self.showSongs.isEmpty {
 			guard let showSong = self.showSongs[safe: indexPath.item] else { return }
 
-			self.show(SegueIdentifiers.songDetailsSegue, sender: showSong.song)
+			self.show(.songDetailsSegue, sender: showSong.song)
 		} else if !self.songs.isEmpty {
 			guard let song = self.songs[safe: indexPath.item] else { return }
 
-			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
+			self.show(.songDetailsSegue, sender: song)
 		}
 	}
 
@@ -300,6 +300,6 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.showSongs[safe: indexPath.item]?.show else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+		self.show(.showDetailsSegue, sender: show)
 	}
 }

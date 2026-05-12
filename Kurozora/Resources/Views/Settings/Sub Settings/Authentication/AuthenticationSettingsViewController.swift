@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthenticationSettingsViewController: SubSettingsViewController {
+class AuthenticationSettingsViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case authenticationOptionsSegue
@@ -190,7 +190,7 @@ extension AuthenticationSettingsViewController {
 		switch self.visibleSections[contentSection].rows[indexPath.row] {
 		case .toggleAuthentication: break
 		case .requireAuthentication:
-			self.show(SegueIdentifiers.authenticationOptionsSegue, sender: nil)
+			self.show(.authenticationOptionsSegue, sender: nil)
 		}
 	}
 }

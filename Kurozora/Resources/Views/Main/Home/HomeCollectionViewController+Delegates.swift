@@ -16,37 +16,37 @@ extension HomeCollectionViewController {
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .shows, .mostPopularShows, .upcomingShows, .newShows:
 				guard let show = self.cache[indexPath] as? Show else { return }
-				self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+				self.show(.showDetailsSegue, sender: show)
 			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
 				guard let literature = self.cache[indexPath] as? Literature else { return }
-				self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+				self.show(.literatureDetailsSegue, sender: literature)
 			case .games, .mostPopularGames, .upcomingGames, .newGames:
 				guard let game = self.cache[indexPath] as? Game else { return }
-				self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+				self.show(.gameDetailsSegue, sender: game)
 			case .episodes, .upNextEpisodes:
 				guard let episode = self.cache[indexPath] as? Episode else { return }
-				self.show(SegueIdentifiers.episodeDetailsSegue, sender: [indexPath: episode])
+				self.show(.episodeDetailsSegue, sender: [indexPath: episode])
 			case .genres:
 				guard let genre = self.cache[indexPath] as? Genre else { return }
-				self.show(SegueIdentifiers.exploreSegue, sender: genre)
+				self.show(.exploreSegue, sender: genre)
 			case .themes:
 				guard let theme = self.cache[indexPath] as? Theme else { return }
-				self.show(SegueIdentifiers.exploreSegue, sender: theme)
+				self.show(.exploreSegue, sender: theme)
 			case .characters:
 				guard let character = self.cache[indexPath] as? Character else { return }
-				self.show(SegueIdentifiers.characterSegue, sender: character)
+				self.show(.characterSegue, sender: character)
 			case .people:
 				guard let person = self.cache[indexPath] as? Person else { return }
-				self.show(SegueIdentifiers.personSegue, sender: person)
+				self.show(.personSegue, sender: person)
 			case .songs:
 				guard let showSong = self.cache[indexPath] as? ShowSong else { return }
-				self.show(SegueIdentifiers.songDetailsSegue, sender: showSong.song)
+				self.show(.songDetailsSegue, sender: showSong.song)
 			case .recap:
 				guard let recap = self.cache[indexPath] as? Recap else { return }
-				self.show(SegueIdentifiers.reCapSegue, sender: recap)
+				self.show(.reCapSegue, sender: recap)
 			}
 		case .legal:
-			self.present(SegueIdentifiers.legalSegue, sender: nil)
+			self.present(.legalSegue, sender: nil)
 		default: break
 		}
 	}
@@ -241,7 +241,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
@@ -251,7 +251,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
-		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -259,7 +259,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show else { return }
-		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+		self.show(.showDetailsSegue, sender: show)
 	}
 }
 

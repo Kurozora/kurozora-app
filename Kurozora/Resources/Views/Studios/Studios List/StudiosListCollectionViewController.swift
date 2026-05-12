@@ -18,7 +18,7 @@ enum StudiosListFetchType {
 }
 
 /// A paginated list of studios.
-class StudiosListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class StudiosListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case studioDetailsSegue
@@ -225,7 +225,7 @@ extension StudiosListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let studio = self.cache[indexPath] as? Studio else { return }
 
-		self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
+		self.show(.studioDetailsSegue, sender: studio)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

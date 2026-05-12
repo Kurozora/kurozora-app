@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class StudioDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable {
+class StudioDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case reviewsListSegue
@@ -169,7 +169,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return try await studio.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewTextEditor.Kind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let studio = self.studio else { return nil }
 		return (.studio(studio), studio.attributes.library?.rating, studio.attributes.library?.review)
 	}

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class FavoritesCollectionViewController: KCollectionViewController {
+class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

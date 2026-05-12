@@ -16,7 +16,7 @@ struct RecapTabItem {
 	let month: Month?
 }
 
-class ReCapCollectionViewController: KCollectionViewController, SectionFetchable {
+class ReCapCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue

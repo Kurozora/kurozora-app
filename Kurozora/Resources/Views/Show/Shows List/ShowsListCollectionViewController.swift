@@ -24,7 +24,7 @@ enum ShowsListFetchType {
 }
 
 /// A paginated list of shows (or related shows).
-class ShowsListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class ShowsListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -335,7 +335,7 @@ extension ShowsListCollectionViewController {
 		let relatedShow = self.relatedShows[safe: indexPath.item]?.show
 		guard let show = show ?? relatedShow else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+		self.show(.showDetailsSegue, sender: show)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

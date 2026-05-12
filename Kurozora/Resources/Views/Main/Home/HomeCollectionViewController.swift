@@ -11,7 +11,7 @@ import SPConfetti
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable {
+class HomeCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case redeemSegue

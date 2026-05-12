@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SoundSettingsViewController: SubSettingsViewController {
+class SoundSettingsViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case soundOptionsSegue
@@ -173,7 +173,7 @@ extension SoundSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch Sound.Row.settingsCases[indexPath.row] {
 		case .selectChime:
-			self.show(SegueIdentifiers.soundOptionsSegue, sender: nil)
+			self.show(.soundOptionsSegue, sender: nil)
 		case .toggleChime, .toggleUISounds, .toggleHaptics:
 			break
 		}

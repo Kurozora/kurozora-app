@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsSettingsViewController: SubSettingsViewController {
+class NotificationsSettingsViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case notificationsGroupingSegue
@@ -193,7 +193,7 @@ extension NotificationsSettingsViewController {
 		switch self.visibleSections[contentSection] {
 		case .allowNotifications, .preferences: break
 		case .grouping:
-			self.show(SegueIdentifiers.notificationsGroupingSegue, sender: nil)
+			self.show(.notificationsGroupingSegue, sender: nil)
 		}
 	}
 }

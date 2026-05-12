@@ -17,7 +17,7 @@ enum PeopleListFetchType {
 }
 
 /// A paginated list of people (cast / crew).
-class PeopleListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class PeopleListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case personDetailsSegue
@@ -212,7 +212,7 @@ extension PeopleListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let person = self.cache[indexPath] as? Person else { return }
 
-		self.show(SegueIdentifiers.personDetailsSegue, sender: person)
+		self.show(.personDetailsSegue, sender: person)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

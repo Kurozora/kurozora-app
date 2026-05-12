@@ -20,31 +20,31 @@ extension SearchResultsCollectionViewController {
 			self.show(browseCategory.segueIdentifier ?? SegueIdentifiers.searchSegue, sender: browseCategory)
 		case .characterIdentity:
 			guard let character: Character = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(.characterDetailsSegue, sender: character)
 		case .episodeIdentity:
 			guard let episode: Episode = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.episodeDetailsSegue, sender: episode)
+			self.show(.episodeDetailsSegue, sender: episode)
 		case .personIdentity:
 			guard let person: Person = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.personDetailsSegue, sender: person)
+			self.show(.personDetailsSegue, sender: person)
 		case .showIdentity:
 			guard let show: Show = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(.showDetailsSegue, sender: show)
 		case .literatureIdentity:
 			guard let literature: Literature = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show(.literatureDetailsSegue, sender: literature)
 		case .gameIdentity:
 			guard let game: Game = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show(.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			guard let song: Song = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
+			self.show(.songDetailsSegue, sender: song)
 		case .studioIdentity:
 			guard let studio: Studio = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
+			self.show(.studioDetailsSegue, sender: studio)
 		case .userIdentity:
 			guard let user: User = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.userDetailsSegue, sender: user)
+			self.show(.userDetailsSegue, sender: user)
 		case .show: break
 		case .literature: break
 		case .game: break

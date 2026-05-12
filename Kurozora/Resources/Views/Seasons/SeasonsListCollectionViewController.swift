@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 
 /// A paginated list of seasons for a given show.
-class SeasonsListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class SeasonsListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case episodesListSegue
@@ -179,7 +179,7 @@ extension SeasonsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let season = self.cache[indexPath] as? Season else { return }
 
-		self.show(SegueIdentifiers.episodesListSegue, sender: season)
+		self.show(.episodesListSegue, sender: season)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -24,7 +24,7 @@ enum LiteraturesListFetchType {
 }
 
 /// A paginated list of literatures (or related literatures).
-class LiteraturesListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class LiteraturesListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case literatureDetailsSegue
@@ -335,7 +335,7 @@ extension LiteraturesListCollectionViewController {
 		let relatedLiterature = self.relatedLiteratures[safe: indexPath.item]?.literature
 		guard let literature = literature ?? relatedLiterature else { return }
 
-		self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+		self.show(.literatureDetailsSegue, sender: literature)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -16,28 +16,28 @@ extension UserReviewsListCollectionViewController {
 
 		if review.relationships?.literatures != nil {
 			guard let literature: Literature = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show(.literatureDetailsSegue, sender: literature)
 		} else if review.relationships?.characters != nil {
 			guard let character: Character = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show(.characterDetailsSegue, sender: character)
 		} else if review.relationships?.people != nil {
 			guard let person: Person = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.personDetailsSegue, sender: person)
+			self.show(.personDetailsSegue, sender: person)
 		} else if review.relationships?.episodes != nil {
 			guard let episode: Episode = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.episodeDetailsSegue, sender: episode)
+			self.show(.episodeDetailsSegue, sender: episode)
 		} else if review.relationships?.games != nil {
 			guard let game: Game = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show(.gameDetailsSegue, sender: game)
 		} else if review.relationships?.shows != nil {
 			guard let show: Show = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(.showDetailsSegue, sender: show)
 		} else if review.relationships?.songs != nil {
 			guard let song: Song = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.songDetailsSegue, sender: song)
+			self.show(.songDetailsSegue, sender: song)
 		} else if review.relationships?.studios != nil {
 			guard let studio: Studio = self.fetchModel(at: indexPath) else { return }
-			self.show(SegueIdentifiers.studioDetailsSegue, sender: studio)
+			self.show(.studioDetailsSegue, sender: studio)
 		}
 	}
 

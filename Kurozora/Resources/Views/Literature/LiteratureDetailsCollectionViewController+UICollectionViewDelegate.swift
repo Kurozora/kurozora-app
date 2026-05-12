@@ -29,12 +29,12 @@ extension LiteratureDetailsCollectionViewController {
 				return
 			case .tvRating:
 				guard let literatureIdentity = self.literatureIdentity else { return }
-				self.show(SegueIdentifiers.parentalGuideSegue, sender: literatureIdentity)
+				self.show(.parentalGuideSegue, sender: literatureIdentity)
 				return
 			case .studio:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.moreByStudio) else { return }
 				let indexPath = IndexPath(row: 0, section: sectionIndex)
-				self.show( SegueIdentifiers.literaturesListSegue, sender: indexPath)
+				self.show( .literaturesListSegue, sender: indexPath)
 				return
 			case .country:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
@@ -48,25 +48,25 @@ extension LiteratureDetailsCollectionViewController {
 		case .cast:
 			guard let cast = self.cache[indexPath] as? Cast else { return }
 			guard let character = cast.relationships.characters.data.first else { return }
-			self.show( SegueIdentifiers.characterDetailsSegue, sender: character)
+			self.show( .characterDetailsSegue, sender: character)
 		case .studios:
 			guard let studio = self.cache[indexPath] as? Studio else { return }
-			self.show( SegueIdentifiers.studioDetailsSegue, sender: studio)
+			self.show( .studioDetailsSegue, sender: studio)
 		case .moreByStudio:
 			guard let literature = self.cache[indexPath]  as? Literature else { return }
-			self.show( SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show( .literatureDetailsSegue, sender: literature)
 		case .relatedLiteratures:
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
-			self.show( SegueIdentifiers.literatureDetailsSegue, sender: literature)
+			self.show( .literatureDetailsSegue, sender: literature)
 		case .relatedShows:
 			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
-			self.show( SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show( .showDetailsSegue, sender: show)
 		case .relatedGames:
 			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
-			self.show( SegueIdentifiers.gameDetailsSegue, sender: game)
+			self.show( .gameDetailsSegue, sender: game)
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+			self.present(.reviewDetailsSegue, sender: review)
 		default: return
 		}
 	}

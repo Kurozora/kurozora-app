@@ -14,10 +14,10 @@ extension SongDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return }
-			self.show(SegueIdentifiers.showDetailsSegue, sender: show)
+			self.show(.showDetailsSegue, sender: show)
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+			self.present(.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

@@ -17,7 +17,7 @@ enum CharactersListFetchType {
 }
 
 /// A paginated list of characters.
-class CharactersListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class CharactersListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case characterDetailsSegue
@@ -212,7 +212,7 @@ extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let character = self.cache[indexPath] as? Character else { return }
 
-		self.show(SegueIdentifiers.characterDetailsSegue, sender: character)
+		self.show(.characterDetailsSegue, sender: character)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

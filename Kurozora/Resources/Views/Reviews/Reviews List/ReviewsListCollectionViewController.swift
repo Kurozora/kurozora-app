@@ -20,7 +20,7 @@ enum ReviewsListType {
 	case episode(_ episode: Episode)
 }
 
-class ReviewsListCollectionViewController: KCollectionViewController, RatingAlertPresentable {
+class ReviewsListCollectionViewController: KCollectionViewController, RatingAlertPresentable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -301,7 +301,7 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 			let indexPath = collectionView.indexPath(for: cell),
 			let review = self.reviews[safe: indexPath.item]
 		else { return }
-		self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+		self.present(.reviewDetailsSegue, sender: review)
 	}
 }
 
@@ -379,7 +379,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 		})
 	}
 
-	private func currentReviewKind() -> ReviewTextEditor.Kind? {
+	private func currentReviewKind() -> ReviewKind? {
 		switch self.listType {
 		case .character(let character): return .character(character)
 		case .episode(let episode): return .episode(episode)
@@ -418,34 +418,34 @@ extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDel
 		reviewTextEditorViewController.delegate = self
 		switch self.listType {
 		case .character(let character):
-			reviewTextEditorViewController.router?.dataStore?.kind = .character(character)
-			reviewTextEditorViewController.router?.dataStore?.rating = character.attributes.givenRating
+			reviewTextEditorViewController.kind = .character(character)
+			reviewTextEditorViewController.rating = character.attributes.givenRating
 		case .episode(let episode):
-			reviewTextEditorViewController.router?.dataStore?.kind = .episode(episode)
-			reviewTextEditorViewController.router?.dataStore?.rating = episode.attributes.givenRating
+			reviewTextEditorViewController.kind = .episode(episode)
+			reviewTextEditorViewController.rating = episode.attributes.givenRating
 		case .game(let game):
-			reviewTextEditorViewController.router?.dataStore?.kind = .game(game)
-			reviewTextEditorViewController.router?.dataStore?.rating = game.attributes.library?.rating
+			reviewTextEditorViewController.kind = .game(game)
+			reviewTextEditorViewController.rating = game.attributes.library?.rating
 		case .literature(let literature):
-			reviewTextEditorViewController.router?.dataStore?.kind = .literature(literature)
-			reviewTextEditorViewController.router?.dataStore?.rating = literature.attributes.library?.rating
+			reviewTextEditorViewController.kind = .literature(literature)
+			reviewTextEditorViewController.rating = literature.attributes.library?.rating
 		case .person(let person):
-			reviewTextEditorViewController.router?.dataStore?.kind = .person(person)
-			reviewTextEditorViewController.router?.dataStore?.rating = person.attributes.givenRating
+			reviewTextEditorViewController.kind = .person(person)
+			reviewTextEditorViewController.rating = person.attributes.givenRating
 		case .show(let show):
-			reviewTextEditorViewController.router?.dataStore?.kind = .show(show)
-			reviewTextEditorViewController.router?.dataStore?.rating = show.attributes.library?.rating
+			reviewTextEditorViewController.kind = .show(show)
+			reviewTextEditorViewController.rating = show.attributes.library?.rating
 		case .song(let song):
-			reviewTextEditorViewController.router?.dataStore?.kind = .song(song)
-			reviewTextEditorViewController.router?.dataStore?.rating = song.attributes.library?.rating
+			reviewTextEditorViewController.kind = .song(song)
+			reviewTextEditorViewController.rating = song.attributes.library?.rating
 		case .studio(let studio):
-			reviewTextEditorViewController.router?.dataStore?.kind = .studio(studio)
-			reviewTextEditorViewController.router?.dataStore?.rating = studio.attributes.library?.rating
+			reviewTextEditorViewController.kind = .studio(studio)
+			reviewTextEditorViewController.rating = studio.attributes.library?.rating
 		case .none:
-			reviewTextEditorViewController.router?.dataStore?.kind = nil
-			reviewTextEditorViewController.router?.dataStore?.rating = nil
+			reviewTextEditorViewController.kind = nil
+			reviewTextEditorViewController.rating = nil
 		}
-		reviewTextEditorViewController.router?.dataStore?.review = nil
+		reviewTextEditorViewController.review = nil
 
 		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
 		navigationController.presentationController?.delegate = reviewTextEditorViewController

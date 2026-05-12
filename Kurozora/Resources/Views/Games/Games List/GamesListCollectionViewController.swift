@@ -24,7 +24,7 @@ enum GamesListFetchType {
 }
 
 /// A paginated list of games (or related games).
-class GamesListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class GamesListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case gameDetailsSegue
@@ -335,7 +335,7 @@ extension GamesListCollectionViewController {
 		let relatedGame = self.relatedGames[safe: indexPath.item]?.game
 		guard let game = game ?? relatedGame else { return }
 
-		self.show(SegueIdentifiers.gameDetailsSegue, sender: game)
+		self.show(.gameDetailsSegue, sender: game)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

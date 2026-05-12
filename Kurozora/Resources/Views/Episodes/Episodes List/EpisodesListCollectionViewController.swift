@@ -29,7 +29,7 @@ enum EpisodesListFetchType: Equatable {
 }
 
 /// A paginated list of episodes.
-class EpisodesListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class EpisodesListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -467,7 +467,7 @@ extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let episode = self.cache[indexPath] as? Episode else { return }
 
-		self.show(SegueIdentifiers.episodeDetailsSegue, sender: [indexPath: episode])
+		self.show(.episodeDetailsSegue, sender: [indexPath: episode])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -513,7 +513,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
-		self.show(SegueIdentifiers.showDetailsSegue, sender: showIdentity)
+		self.show(.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
@@ -523,6 +523,6 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
-		self.show(SegueIdentifiers.episodesListSegue, sender: seasonIdentity)
+		self.show(.episodesListSegue, sender: seasonIdentity)
 	}
 }

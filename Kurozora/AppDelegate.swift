@@ -179,7 +179,7 @@ extension AppDelegate {
 		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
-			settingsTableViewController.showDetailViewController(SettingsTableViewController.SegueIdentifiers.accountSegue, sender: nil)
+			settingsTableViewController.showDetailViewController(.accountSegue, sender: nil)
 		}
 		UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 	}

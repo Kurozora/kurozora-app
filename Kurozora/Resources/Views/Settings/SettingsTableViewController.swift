@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class SettingsTableViewController: KTableViewController {
+class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case accountSegue
@@ -329,31 +329,31 @@ extension SettingsTableViewController {
 			self.authAndSegue(to: segueID)
 			return
 		case .switchAccount:
-			self.showSecondary(SegueIdentifiers.switchAccountSegue, sender: nil)
+			self.showSecondary(.switchAccountSegue, sender: nil)
 			return
 		case .keychain:
-			self.showSecondary(SegueIdentifiers.keysSegue, sender: nil)
+			self.showSecondary(.keysSegue, sender: nil)
 			return
 		case .browser:
-			self.showSecondary(SegueIdentifiers.browserSegue, sender: nil)
+			self.showSecondary(.browserSegue, sender: nil)
 			return
 		case .cache:
-			self.showSecondary(SegueIdentifiers.cacheSegue, sender: nil)
+			self.showSecondary(.cacheSegue, sender: nil)
 			return
 		case .displayBlindness:
-			self.showSecondary(SegueIdentifiers.displaySegue, sender: nil)
+			self.showSecondary(.displaySegue, sender: nil)
 			return
 		case .icon:
-			self.showSecondary(SegueIdentifiers.iconSegue, sender: nil)
+			self.showSecondary(.iconSegue, sender: nil)
 			return
 		case .library:
-			self.showSecondary(SegueIdentifiers.librarySegue, sender: nil)
+			self.showSecondary(.librarySegue, sender: nil)
 			return
 		case .motion:
-			self.showSecondary(SegueIdentifiers.motionSegue, sender: nil)
+			self.showSecondary(.motionSegue, sender: nil)
 			return
 		case .theme:
-			self.showSecondary(SegueIdentifiers.themeSegue, sender: nil)
+			self.showSecondary(.themeSegue, sender: nil)
 			return
 		case .notifications:
 			guard let segueID = sectionRow.segueIdentifier else { return }
@@ -365,7 +365,7 @@ extension SettingsTableViewController {
 			}
 			return
 		case .soundsAndHaptics:
-			self.showSecondary(SegueIdentifiers.soundSegue, sender: nil)
+			self.showSecondary(.soundSegue, sender: nil)
 			return
 		case .signalSticker:
 			if let signalStickerURL = URL.signalStickerURL {
@@ -378,16 +378,16 @@ extension SettingsTableViewController {
 			}
 			return
 		case .biometrics:
-			self.showSecondary(SegueIdentifiers.biometricsSegue, sender: nil)
+			self.showSecondary(.biometricsSegue, sender: nil)
 			return
 		case .privacy:
-			self.showSecondary(SegueIdentifiers.privacySegue, sender: nil)
+			self.showSecondary(.privacySegue, sender: nil)
 			return
 		case .unlockFeatures:
-			self.showSecondary(SegueIdentifiers.subscriptionSegue, sender: nil)
+			self.showSecondary(.subscriptionSegue, sender: nil)
 			return
 		case .tipjar:
-			self.showSecondary(SegueIdentifiers.tipJarSegue, sender: nil)
+			self.showSecondary(.tipJarSegue, sender: nil)
 			return
 		case .manageSubscriptions:
 			Task { [weak self] in
@@ -403,7 +403,7 @@ extension SettingsTableViewController {
 			}
 			return
 		case .requestRefund:
-			self.showSecondary(SegueIdentifiers.requestRefundSegue, sender: nil)
+			self.showSecondary(.requestRefundSegue, sender: nil)
 			return
 		case .rate:
 			if let rateURL = URL.rateURL {

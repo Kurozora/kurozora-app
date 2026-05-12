@@ -13,7 +13,7 @@ extension ReviewsListCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
 			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(SegueIdentifiers.reviewDetailsSegue, sender: review)
+			self.present(.reviewDetailsSegue, sender: review)
 		default: break
 		}
 	}

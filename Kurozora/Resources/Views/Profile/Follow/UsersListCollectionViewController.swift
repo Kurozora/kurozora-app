@@ -34,7 +34,7 @@ enum UsersListFetchType {
 	case blocked
 }
 
-class UsersListCollectionViewController: ListCollectionViewController, SectionFetchable {
+class UsersListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
 	/// The segues that this controller can perform.
 	enum SegueIdentifiers: String, SegueIdentifier {
@@ -596,7 +596,7 @@ extension UsersListCollectionViewController {
 			mentionDelegate.usersListCollectionViewController(self, didSelectUserForMention: user)
 			self.navigationController?.dismiss(animated: true)
 		} else {
-			self.show(SegueIdentifiers.userDetailsSegue, sender: user)
+			self.show(.userDetailsSegue, sender: user)
 		}
 	}
 

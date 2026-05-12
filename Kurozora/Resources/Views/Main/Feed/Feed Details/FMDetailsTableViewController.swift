@@ -10,7 +10,7 @@ import Kingfisher
 import KurozoraKit
 import UIKit
 
-class FMDetailsTableViewController: KTableViewController {
+class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case feedMessageDetailsSegue
@@ -469,7 +469,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let feedMessage = self.feedMessage.relationships.parent?.data.first else { return }
-		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
+		self.show(.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 
@@ -483,7 +483,7 @@ extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
-		self.show(SegueIdentifiers.feedMessageDetailsSegue, sender: feedMessage)
+		self.show(.feedMessageDetailsSegue, sender: feedMessage)
 	}
 }
 

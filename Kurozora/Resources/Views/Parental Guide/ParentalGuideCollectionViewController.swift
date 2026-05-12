@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class ParentalGuideCollectionViewController: KCollectionViewController {
+class ParentalGuideCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - SegueIdentifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case parentalGuideCategoryEntriesSegue

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PrivacySettingsViewController: SubSettingsViewController {
+class PrivacySettingsViewController: SubSettingsViewController, TypedSegueHandling {
 	// MARK: - Segue Identifiers
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case legalSegue
@@ -141,9 +141,9 @@ extension PrivacySettingsViewController {
 
 			UIApplication.shared.kOpen(nil, deepLink: settingsUrl)
 		case .privacy:
-			self.show(SegueIdentifiers.legalSegue, sender: nil)
+			self.show(.legalSegue, sender: nil)
 		case .blockedUsers:
-			self.show(SegueIdentifiers.blockedUsersSegue, sender: nil)
+			self.show(.blockedUsersSegue, sender: nil)
 		}
 	}
 }
