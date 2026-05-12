@@ -48,13 +48,16 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var usernameLabel: KSecondaryLabel!
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
-	@IBOutlet weak var postTextView: KSelectableTextView!
+	@IBOutlet weak var postTextViewPlaceholder: UIView!
 	@IBOutlet weak var postTextViewContainer: UIView!
 	@IBOutlet weak var heartButton: CellActionButton!
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
 	@IBOutlet weak var richLinkStackView: UIStackView!
+
+	// MARK: - Views
+	private(set) var postTextView: KSelectableTextView!
 
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
@@ -88,6 +91,11 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.configurePostTextView()
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -145,6 +153,17 @@ class BaseFeedMessageCell: KTableViewCell {
 	override func sharedInit() {
 		self.separatorInset = .zero
 		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+	}
+
+	fileprivate func configurePostTextView() {
+		let textView = KSelectableTextView()
+		textView.isScrollEnabled = false
+		textView.bounces = false
+
+		self.postTextViewPlaceholder.addSubview(textView)
+		textView.fillToSuperview()
+
+		self.postTextView = textView
 	}
 
 	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false, attributedTo: User? = nil) {

@@ -49,21 +49,11 @@ final class ReviewTextEditorView: UIView {
 private extension ReviewTextEditorView {
 	func installTextView() {
 		let textView = KTextView()
-		textView.translatesAutoresizingMaskIntoConstraints = false
-
-		var style = KTextViewStyle()
-		style.textColor = .white
-		style.alwaysBounceVertical = true
-		style.dataDetectorTypes = []
-		textView.applyStyle(style)
+		textView.alwaysBounceVertical = true
+		textView.showsHorizontalScrollIndicator = false
 
 		self.textViewPlaceholder.addSubview(textView)
-		NSLayoutConstraint.activate([
-			textView.leadingAnchor.constraint(equalTo: self.textViewPlaceholder.leadingAnchor),
-			textView.trailingAnchor.constraint(equalTo: self.textViewPlaceholder.trailingAnchor),
-			textView.topAnchor.constraint(equalTo: self.textViewPlaceholder.topAnchor),
-			textView.bottomAnchor.constraint(equalTo: self.textViewPlaceholder.bottomAnchor)
-		])
+		textView.fillToSuperview()
 
 		self.textView = textView
 	}

@@ -106,13 +106,9 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJg-0D-msp">
                                                 <rect key="frame" x="0.0" y="0.0" width="322" height="50"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="y0q-LX-PGG" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y0q-LX-PGG">
                                                         <rect key="frame" x="0.0" y="0.0" width="322" height="50"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
-                                                    </textView>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="y0q-LX-PGG" secondAttribute="bottom" id="3UL-lq-KBc"/>
@@ -271,7 +267,7 @@
                 <outlet property="displayNameLabel" destination="nJh-TG-lz6" id="glA-pV-73D"/>
                 <outlet property="heartButton" destination="SMa-vR-GBb" id="PXa-8N-4mp"/>
                 <outlet property="moreButton" destination="pwd-nA-Q7Q" id="hCx-Gc-PpJ"/>
-                <outlet property="postTextView" destination="y0q-LX-PGG" id="3IQ-Eh-2xn"/>
+                <outlet property="postTextViewPlaceholder" destination="y0q-LX-PGG" id="3IQ-Eh-2xn"/>
                 <outlet property="postTextViewContainer" destination="RJg-0D-msp" id="B2r-cC-g3m"/>
                 <outlet property="profileBadgeStackView" destination="0nP-Xc-7ki" id="Ohk-nr-SRg"/>
                 <outlet property="profileImageView" destination="k19-Mf-sNY" id="Y53-IK-FoK"/>

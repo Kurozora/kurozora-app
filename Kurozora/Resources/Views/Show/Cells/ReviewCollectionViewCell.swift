@@ -22,13 +22,34 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
-	@IBOutlet weak var contentTextView: KSelectableTextView!
+	@IBOutlet weak var contentTextViewPlaceholder: UIView!
 	@IBOutlet weak var moreButton: KButton!
 	@IBOutlet weak var moreImageView: UIImageView!
 	@IBOutlet weak var moreButtonView: UIView!
 
+	// MARK: - Views
+	private(set) var contentTextView: KSelectableTextView!
+
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.configureContentTextView()
+	}
+
+	// MARK: - Functions
+	private func configureContentTextView() {
+		let textView = KSelectableTextView()
+		textView.isScrollEnabled = false
+		textView.bounces = false
+
+		self.contentTextViewPlaceholder.addSubview(textView)
+		textView.fillToSuperview()
+
+		self.contentTextView = textView
+	}
 
 	/// Configure the cell with the given person details.
 	///

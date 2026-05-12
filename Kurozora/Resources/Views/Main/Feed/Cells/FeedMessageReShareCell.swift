@@ -14,12 +14,15 @@ class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
-	@IBOutlet weak var opPostTextView: KSelectableTextView!
+	@IBOutlet weak var opPostTextViewPlaceholder: UIView!
 	@IBOutlet weak var opPostTextViewContainer: UIView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opView: UIView?
 	@IBOutlet weak var opProfileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var opRichLinkStackView: UIStackView!
+
+	// MARK: - Views
+	private(set) var opPostTextView: KSelectableTextView!
 
 	// MARK: - Properties
 	var isOPExpanded: Bool = false
@@ -30,6 +33,11 @@ class FeedMessageReShareCell: FeedMessageCell {
 	fileprivate static var cachedOPBodyWidth: CGFloat = 0
 
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.configureOPPostTextView()
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -68,6 +76,18 @@ class FeedMessageReShareCell: FeedMessageCell {
 	}
 
 	// MARK: - Functions
+	private func configureOPPostTextView() {
+		let textView = KSelectableTextView()
+		textView.font = .preferredFont(forTextStyle: .footnote)
+		textView.isScrollEnabled = false
+		textView.bounces = false
+
+		self.opPostTextViewPlaceholder.addSubview(textView)
+		textView.fillToSuperview()
+
+		self.opPostTextView = textView
+	}
+
 	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false, attributedTo: User? = nil) {
 		self.configureCell(using: feedMessage, isOnProfile: isOnProfile, isExpanded: isExpanded, isOPExpanded: false)
 	}

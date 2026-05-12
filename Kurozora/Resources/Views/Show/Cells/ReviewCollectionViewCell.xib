@@ -61,13 +61,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T9c-i1-chK" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T9c-i1-chK">
                         <rect key="frame" x="60" y="75.5" width="306" height="38"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
-                    </textView>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-Ev-6jb">
                         <rect key="frame" x="248" y="90.5" width="118" height="23"/>
                         <subviews>
@@ -128,7 +124,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="contentTextView" destination="T9c-i1-chK" id="AwM-yz-ClD"/>
+                <outlet property="contentTextViewPlaceholder" destination="T9c-i1-chK" id="AwM-yz-ClD"/>
                 <outlet property="cosmosView" destination="6nH-tN-JrJ" id="qKM-ia-c9H"/>
                 <outlet property="dateTimeLabel" destination="WKI-z6-jsJ" id="zg8-ww-DON"/>
                 <outlet property="moreButton" destination="hOi-dG-PVY" id="fwu-Mt-yLg"/>

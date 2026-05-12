@@ -17,7 +17,6 @@ import UIKit
 class KTextView: UITextView {
 	// MARK: - Views
 	private let placeholderLabel = UILabel()
-	private var customLayoutManager = RichTextLayoutManager()
 
 	// MARK: - Properties
 	/// The placeholder text that the text view displays.
@@ -70,16 +69,36 @@ class KTextView: UITextView {
 
 	// MARK: - Initializers
 	override init(frame: CGRect, textContainer: NSTextContainer?) {
-		super.init(frame: frame, textContainer: textContainer)
+		let textStorage = NSTextStorage()
+		let layoutManager = RichTextLayoutManager()
+		textStorage.addLayoutManager(layoutManager)
+
+		let resolvedContainer: NSTextContainer
+		if let textContainer {
+			resolvedContainer = textContainer
+		} else {
+			let newContainer = NSTextContainer()
+			newContainer.widthTracksTextView = true
+			newContainer.lineFragmentPadding = 0
+			layoutManager.addTextContainer(newContainer)
+			resolvedContainer = newContainer
+		}
+
+		super.init(frame: frame, textContainer: resolvedContainer)
+
+		// Reference the locals after `super.init` so the optimizer can't drop them early.
+		_ = textStorage
+		_ = layoutManager
+
 		self.sharedInit()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		self.sharedInit()
+		fatalError("KTextView must not be decoded from a XIB. Replace the XIB element with a UIView placeholder and install KTextView programmatically.")
 	}
 
-	// MARK: - Functions
 	/// The shared settings used to initialize the label.
 	func sharedInit() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateAttributedText), name: .ThemeUpdateNotification, object: nil)
@@ -89,10 +108,6 @@ class KTextView: UITextView {
 		self.configureView()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
-	}
-
-	override var layoutManager: NSLayoutManager {
-		return self.customLayoutManager
 	}
 
 	/// Set attributed text with predefined attributes.
@@ -191,12 +206,7 @@ private extension KTextView {
 
 		self.backgroundColor = nil
 		self.textContainerInset = .zero
-		self.textContainer.lineFragmentPadding = 0
 		self.font = .preferredFont(forTextStyle: .body)
-
-		self.customLayoutManager.textStorage = self.textStorage
-		self.customLayoutManager.addTextContainer(self.textContainer)
-		self.textContainer.replaceLayoutManager(self.customLayoutManager)
 	}
 
 	func configurePlaceholderLabel() {

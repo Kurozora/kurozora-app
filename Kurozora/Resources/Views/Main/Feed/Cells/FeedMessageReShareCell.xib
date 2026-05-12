@@ -106,13 +106,9 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7r-BZ-DRR">
                                                 <rect key="frame" x="0.0" y="0.0" width="322" height="49"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8D-yG-Vss" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G8D-yG-Vss">
                                                         <rect key="frame" x="0.0" y="0.0" width="322" height="49"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
-                                                    </textView>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="G8D-yG-Vss" firstAttribute="leading" secondItem="O7r-BZ-DRR" secondAttribute="leading" id="TRQ-ES-euF"/>
@@ -157,13 +153,9 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAz-sL-J27">
                                                         <rect key="frame" x="0.0" y="0.0" width="274" height="50"/>
                                                         <subviews>
-                                                            <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pag-hU-7Is" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pag-hU-7Is">
                                                                 <rect key="frame" x="0.0" y="0.0" width="274" height="50"/>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                                <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
-                                                            </textView>
+                                                            </view>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="Pag-hU-7Is" firstAttribute="leading" secondItem="WAz-sL-J27" secondAttribute="leading" id="H8m-vO-ICW"/>
@@ -356,14 +348,14 @@
                 <outlet property="heartButton" destination="g2h-Jl-hU4" id="XJ4-Ht-0Q8"/>
                 <outlet property="moreButton" destination="PR1-Kw-3tG" id="2fv-2S-TRk"/>
                 <outlet property="opDateTimeLabel" destination="b5T-Si-mFD" id="JhP-B9-HOC"/>
-                <outlet property="opPostTextView" destination="Pag-hU-7Is" id="lLN-Gx-9JR"/>
+                <outlet property="opPostTextViewPlaceholder" destination="Pag-hU-7Is" id="lLN-Gx-9JR"/>
                 <outlet property="opPostTextViewContainer" destination="WAz-sL-J27" id="qqU-Zn-af8"/>
                 <outlet property="opProfileBadgeStackView" destination="WyU-x1-oit" id="gFC-4O-Ng8"/>
                 <outlet property="opProfileImageView" destination="SVj-BB-ctU" id="Rrh-fg-leL"/>
                 <outlet property="opRichLinkStackView" destination="3Oe-Vx-rn5" id="CPP-mo-gzB"/>
                 <outlet property="opUsernameLabel" destination="DKM-Gb-bFm" id="Rp0-jR-gnk"/>
                 <outlet property="opView" destination="kzd-Au-IiS" id="NW6-ja-Rux"/>
-                <outlet property="postTextView" destination="G8D-yG-Vss" id="qwh-lV-v98"/>
+                <outlet property="postTextViewPlaceholder" destination="G8D-yG-Vss" id="qwh-lV-v98"/>
                 <outlet property="postTextViewContainer" destination="O7r-BZ-DRR" id="v6G-HD-YIZ"/>
                 <outlet property="profileBadgeStackView" destination="oIp-DC-csB" id="2Bs-e2-9Z2"/>
                 <outlet property="profileImageView" destination="e4f-bR-xRy" id="MHZ-sf-I05"/>
