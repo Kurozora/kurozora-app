@@ -8,67 +8,36 @@
 
 import UIKit
 
-protocol SplashscreenDisplayLogic: AnyObject {
-	func displayAnimateLogo(viewModel: Splashscreen.AnimateLogo.ViewModel)
-}
+final class SplashscreenViewController: KViewController {
+	// MARK: - Views
+	private lazy var logoImageView: UIImageView = {
+		let imageView = UIImageView(image: UIImage(named: "kurozora_icon_monotone"))
+		imageView.alpha = 0.0
+		imageView.contentMode = .scaleToFill
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.theme_tintColor = KThemePicker.textColor.rawValue
+		return imageView
+	}()
 
-final class SplashscreenViewController: UIViewController {
-	// MARK: - IBOutlets
-	@IBOutlet private var sceneView: SplashscreenView!
-
-	// MARK: - Properties
-	var interactor: SplashscreenBusinessLogic?
-	var router: (SplashscreenRoutingLogic & SplashscreenDataPassing)?
-
-	// MARK: - Initializers
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		self.setup()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.setup()
-	}
-
-	// MARK: - Setup
-	private func setup() {
-		let viewController = self
-		let interactor = SplashscreenInteractor()
-		let presenter = SplashscreenPresenter()
-		let router = SplashscreenRouter()
-		let worker = SplashscreenWorker()
-
-		viewController.interactor = interactor
-		viewController.router = router
-		interactor.presenter = presenter
-		interactor.worker = worker
-		presenter.viewController = viewController
-		router.viewController = viewController
-		router.dataStore = interactor
-	}
-
-	// MARK: - View state
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.sceneView.viewDelegate = self
-	}
-}
 
-// MARK: - Requests
-extension SplashscreenViewController {
+		self.view.addSubview(self.logoImageView)
+
+		NSLayoutConstraint.activate([
+			self.logoImageView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+			self.logoImageView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+			self.logoImageView.widthAnchor.constraint(equalToConstant: 128.0),
+			self.logoImageView.widthAnchor.constraint(equalTo: self.logoImageView.heightAnchor, multiplier: 21.0 / 22.0)
+		])
+	}
+
+	// MARK: - Functions
+	/// Plays the splash logo animation.
+	///
+	/// - Parameter completion: Called when the animation finishes, with a flag indicating success.
 	func animateLogo(completion: ((Bool) -> Void)?) {
-		let request = Splashscreen.AnimateLogo.Request(completion: completion)
-		self.interactor?.animateLogo(request: request)
+		Animation.shared.playAnimation(on: self.logoImageView, completion: completion)
 	}
 }
-
-// MARK: - Display
-extension SplashscreenViewController: SplashscreenDisplayLogic {
-	func displayAnimateLogo(viewModel: Splashscreen.AnimateLogo.ViewModel) {
-		self.sceneView.animateLogo(completion: viewModel.completion)
-	}
-}
-
-// MARK: - ViewDelegate
-extension SplashscreenViewController: SplashscreenViewDelegate {}
