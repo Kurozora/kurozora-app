@@ -36,49 +36,12 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dZ1-SV-hSc">
-                        <rect key="frame" x="274" y="11" width="88" height="30"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Je-rT-PDE" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="iQt-3H-fwC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="GET">
-                                    <color key="titleColor" red="0.88217000000000001" green="0.88534999999999997" blue="0.90427000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="getThemeButtonPressed:" destination="7pW-K6-YMo" eventType="touchUpInside" id="cQ5-RK-jZk"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8g-Bw-EhA" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="58" y="0.0" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="04I-2H-5OC"/>
-                                    <constraint firstAttribute="width" secondItem="d8g-Bw-EhA" secondAttribute="height" multiplier="1:1" id="nge-K2-bcj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="ellipsis" catalog="system"/>
-                                </state>
-                                <connections>
-                                    <action selector="moreButtonPressed:" destination="7pW-K6-YMo" eventType="touchUpInside" id="JOa-bl-P43"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                    </stackView>
+                    <view opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="6Je-rT-PDE" customClass="KDownloadButton" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="312" y="11" width="50" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="iQt-3H-fwC"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="L0J-F1-Hqi">
                         <rect key="frame" x="0.0" y="51" width="362" height="250"/>
                         <subviews>
@@ -146,23 +109,22 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="dZ1-SV-hSc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Y0-p2-WlA" secondAttribute="top" id="0ov-dk-EY5"/>
-                    <constraint firstAttribute="trailing" secondItem="dZ1-SV-hSc" secondAttribute="trailing" id="5mG-lA-mWc"/>
+                    <constraint firstItem="6Je-rT-PDE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Y0-p2-WlA" secondAttribute="top" id="0ov-dk-EY5"/>
+                    <constraint firstAttribute="trailing" secondItem="6Je-rT-PDE" secondAttribute="trailing" id="5mG-lA-mWc"/>
                     <constraint firstItem="L0J-F1-Hqi" firstAttribute="leading" secondItem="6Y0-p2-WlA" secondAttribute="leading" id="AMr-Xy-7L8"/>
                     <constraint firstItem="lVp-GP-uLb" firstAttribute="leading" secondItem="6Y0-p2-WlA" secondAttribute="leading" id="DU7-vv-vbA"/>
-                    <constraint firstItem="dZ1-SV-hSc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lVp-GP-uLb" secondAttribute="trailing" constant="8" symbolic="YES" id="Hig-6L-86p"/>
+                    <constraint firstItem="6Je-rT-PDE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lVp-GP-uLb" secondAttribute="trailing" constant="8" symbolic="YES" id="Hig-6L-86p"/>
                     <constraint firstItem="lVp-GP-uLb" firstAttribute="top" secondItem="6Y0-p2-WlA" secondAttribute="top" id="UZM-ee-x0T"/>
                     <constraint firstAttribute="trailing" secondItem="L0J-F1-Hqi" secondAttribute="trailing" id="XtL-RH-JgZ"/>
-                    <constraint firstItem="L0J-F1-Hqi" firstAttribute="top" secondItem="dZ1-SV-hSc" secondAttribute="bottom" constant="10" id="hgQ-AX-zmN"/>
+                    <constraint firstItem="L0J-F1-Hqi" firstAttribute="top" secondItem="6Je-rT-PDE" secondAttribute="bottom" constant="10" id="hgQ-AX-zmN"/>
                     <constraint firstAttribute="bottom" secondItem="L0J-F1-Hqi" secondAttribute="bottom" id="odB-Mx-17u"/>
-                    <constraint firstItem="dZ1-SV-hSc" firstAttribute="bottom" secondItem="lVp-GP-uLb" secondAttribute="bottom" id="yj0-4e-TYp"/>
+                    <constraint firstItem="6Je-rT-PDE" firstAttribute="bottom" secondItem="lVp-GP-uLb" secondAttribute="bottom" id="yj0-4e-TYp"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="downloadCountLabel" destination="UmW-Ef-nmY" id="Os3-L9-IsR"/>
                 <outlet property="getThemeButton" destination="6Je-rT-PDE" id="Glt-iI-WUB"/>
-                <outlet property="moreButton" destination="d8g-Bw-EhA" id="p1Z-NS-6rQ"/>
                 <outlet property="screenshotsStackView" destination="L0J-F1-Hqi" id="mfL-Tt-LIX"/>
                 <outlet property="titleLabel" destination="Yek-OK-T2f" id="3Gd-d8-nZ7"/>
                 <outletCollection property="screenshotViews" destination="dD3-63-2Tq" collectionClass="NSMutableArray" id="HdR-Yt-f7H"/>
@@ -176,7 +138,6 @@
         <image name="Themes/Default/Screenshot_1" width="1170" height="2532"/>
         <image name="Themes/Default/Screenshot_2" width="1170" height="2532"/>
         <image name="Themes/Default/Screenshot_3" width="1170" height="2532"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

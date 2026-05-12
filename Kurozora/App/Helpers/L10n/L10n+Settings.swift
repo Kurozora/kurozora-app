@@ -630,6 +630,14 @@ extension L10n {
 	)
 
 	// MARK: - Theme Store
+	/// The menu button for applying a downloaded theme.
+	///
+	/// - Tag: L10n-applyTheme
+	static let applyTheme: String = String(
+		localized: "Apply Theme",
+		table: "Settings",
+		comment: "The menu button for applying a downloaded theme."
+	)
 	/// The action sheet button for redownloading an already-purchased theme.
 	///
 	/// - Tag: L10n-redownloadTheme
@@ -645,5 +653,13 @@ extension L10n {
 		localized: "Remove Theme",
 		table: "Settings",
 		comment: "The destructive action sheet button for removing a downloaded theme."
+	)
+	/// Error description shown when the theme storage directory cannot be resolved.
+	///
+	/// - Tag: L10n-themeStorageUnavailable
+	static let themeStorageUnavailable: String = String(
+		localized: "The theme storage directory is unavailable.",
+		table: "Settings",
+		comment: "Error description shown when the theme storage directory cannot be resolved."
 	)
 }

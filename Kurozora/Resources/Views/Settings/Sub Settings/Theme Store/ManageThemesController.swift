@@ -9,8 +9,18 @@
 import KurozoraKit
 import UIKit
 
+private struct ThemeDownloadHandle {
+	let task: Task<Void, Never>
+	let startedAt: Date
+	var progress: Double
+}
+
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	private static let minimumPendingDwell: TimeInterval = 0.5
+
+	private var downloads: [KurozoraItemID: ThemeDownloadHandle] = [:]
+
 	var appThemes: [AppTheme] = [] {
 		didSet {
 			self.updateDataSource()
@@ -130,7 +140,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 // MARK: - ThemesCollectionViewCellDelegate
 extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate {
-	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton) {
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIView) {
 		switch cell.kTheme {
 		case .kurozora:
 			KTheme.kurozora.switchToTheme()
@@ -145,134 +155,146 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		case .sakura:
 			KTheme.sakura.switchToTheme()
 		case .other(let theme):
-			if KThemeStyle.themeExist(for: theme), !User.isPro || !User.isSubscribed {
-				KTheme.other(theme).switchToTheme()
-			} else {
-				Task {
-					if await WorkflowController.shared.isProOrSubscribed(on: self) {
-						if KThemeStyle.themeExist(for: theme) && !KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
-							self.handleRedownloadTheme(cell)
-						} else {
-							self.shouldDownloadTheme(cell)
-						}
-					}
-				}
-			}
-		}
-	}
-
-	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton) {
-		switch cell.kTheme {
-		case .other(let theme):
-			let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-				guard let self = self else { return }
-
-				if User.isPro || User.isSubscribed {
-					// Add redownload action
-					let redownloadAction = UIAlertAction(title: L10n.redownloadTheme, style: .default) { _ in
-						self.handleRedownloadTheme(cell)
-					}
-					redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
-					redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-					actionSheetAlertController.addAction(redownloadAction)
-				}
-
-				// Add remove action
-				let removeAction = UIAlertAction(title: L10n.removeTheme, style: .destructive) { _ in
-					self.handleRemoveTheme(cell)
-					if UserSettings.currentTheme == theme.id.rawValue {
-						KThemeStyle.switchTo(style: .default)
-					}
-				}
-				removeAction.setValue(UIImage(systemName: "minus.circle"), forKey: "image")
-				removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				actionSheetAlertController.addAction(removeAction)
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = button
-				popoverController.sourceRect = button.bounds
-			}
-
-			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(actionSheetAlertController, animated: true, completion: nil)
-			}
-		default: break
-		}
-	}
-
-	/// Checks whether the selected theme should be downloaded or else applied.
-	fileprivate func shouldDownloadTheme(_ cell: ThemesCollectionViewCell) {
-		switch cell.kTheme {
-		case .other(let appTheme):
-			guard KThemeStyle.themeExist(for: appTheme) else {
-				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: L10n.cancel)
-				alertController.addAction(UIAlertAction(title: L10n.download, style: .default) { [weak self] _ in
-					guard let self = self else { return }
-					self.handleDownloadTheme(cell)
-				})
+			if self.downloads[theme.id] != nil {
+				self.cancelDownload(of: theme)
 				return
 			}
 
-			KThemeStyle.switchTo(appTheme: appTheme)
-		default: break
-		}
-	}
-
-	/// Handle the download process for the selected theme.
-	fileprivate func handleDownloadTheme(_ cell: ThemesCollectionViewCell) {
-		switch cell.kTheme {
-		case .other(let appTheme):
-			let appThemeName = appTheme.attributes.name
-			let alertController = self.presentActivityAlertController(title: "Downloading \(appThemeName)...", message: nil)
-
-			KThemeStyle.downloadThemeTask(for: appTheme) { isSuccess in
-				alertController.title = isSuccess ? "Finished downloading!" : "Download failed :("
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-					alertController.dismiss(animated: true, completion: nil)
+			if !KThemeStyle.themeExist(for: theme) || !KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
+				Task {
+					guard await WorkflowController.shared.isProOrSubscribed(on: self) else { return }
+					self.startDownload(of: theme)
 				}
-
-				if isSuccess {
-					KThemeStyle.switchTo(appTheme: appTheme)
-					cell.shouldHideMoreButton()
-				}
+				return
 			}
-		default: break
+
+			KThemeStyle.switchTo(appTheme: theme)
 		}
 	}
 
-	/// Handle the removing process for a downloaded theme.
-	fileprivate func handleRemoveTheme(_ cell: ThemesCollectionViewCell, timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
-		switch cell.kTheme {
-		case .other(let appTheme):
-			let appThemeName = appTheme.attributes.name
-			let alertController = self.presentActivityAlertController(title: "Removing \(appThemeName)...", message: nil)
-
-			KThemeStyle.removeThemeTask(for: appTheme) { isSuccess in
-				alertController.title = isSuccess ? "Finished removing!" : "Removing failed :("
-				DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
-					alertController.dismiss(animated: true, completion: nil)
-				}
-
-				if isSuccess {
-					cell.shouldHideMoreButton()
-				}
-
-				successHandler?(isSuccess)
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, downloadStateFor appTheme: AppTheme) -> KDownloadButtonState {
+		if let handle = self.downloads[appTheme.id] {
+			let dwellElapsed = Date().timeIntervalSince(handle.startedAt) >= Self.minimumPendingDwell
+			if dwellElapsed && handle.progress > 0 {
+				return .downloading(progress: handle.progress)
 			}
-		default: break
+			return .pending
 		}
+
+		let currentThemeID = UserSettings.currentTheme
+		let exists = KThemeStyle.themeExist(for: appTheme)
+		let isUpToDate = !exists || KThemeStyle.isUpToDate(appTheme.id, version: appTheme.attributes.version)
+
+		if exists && (User.isPro || User.isSubscribed) && !isUpToDate {
+			return .start(title: "UPDATE")
+		}
+		if exists {
+			let isSelected = currentThemeID == appTheme.id.rawValue
+			let title = isSelected ? "USING" : "USE"
+			return .downloaded(title: title, opensMenuOnTap: isSelected)
+		}
+		return .start(title: "GET")
 	}
 
-	/// Handle the redownload process for a downloaded theme.
-	fileprivate func handleRedownloadTheme(_ cell: ThemesCollectionViewCell) {
-		self.handleRemoveTheme(cell, timeout: 0) { [weak self] success in
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, menuFor appTheme: AppTheme) -> UIMenu? {
+		guard KThemeStyle.themeExist(for: appTheme) else {
+			return nil
+		}
+
+		let isSelected = UserSettings.currentTheme == appTheme.id.rawValue
+
+		var actions: [UIAction] = []
+
+		if !isSelected {
+			let applyAction = UIAction(title: L10n.applyTheme, image: UIImage(systemName: "checkmark.circle")) { _ in
+				KThemeStyle.switchTo(appTheme: appTheme)
+			}
+			actions.append(applyAction)
+		}
+
+		if User.isPro || User.isSubscribed {
+			let redownloadAction = UIAction(title: L10n.redownloadTheme, image: UIImage(systemName: "arrow.uturn.down")) { [weak self] _ in
+				self?.startDownload(of: appTheme)
+			}
+			actions.append(redownloadAction)
+		}
+
+		let removeAction = UIAction(title: L10n.removeTheme, image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+			self?.removeDownloadedTheme(appTheme)
+		}
+		actions.append(removeAction)
+
+		return UIMenu(title: "", children: actions)
+	}
+
+	fileprivate func startDownload(of appTheme: AppTheme) {
+		let themeID = appTheme.id
+		let startedAt = Date()
+
+		self.downloads[themeID]?.task.cancel()
+
+		let task = Task { @MainActor [weak self] in
 			guard let self = self else { return }
-			if success {
-				self.handleDownloadTheme(cell)
+
+			do {
+				try await KThemeStyle.downloadTheme(for: appTheme) { progress in
+					self.downloads[themeID]?.progress = progress
+					self.refreshCell(for: themeID)
+				}
+
+				try Task.checkCancellation()
+
+				let remaining = Self.minimumPendingDwell - Date().timeIntervalSince(startedAt)
+				if remaining > 0 {
+					try? await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000))
+				}
+
+				self.downloads.removeValue(forKey: themeID)
+				KThemeStyle.switchTo(appTheme: appTheme)
+				self.refreshCell(for: themeID)
+			} catch is CancellationError {
+				self.downloads.removeValue(forKey: themeID)
+				self.refreshCell(for: themeID)
+			} catch {
+				self.downloads.removeValue(forKey: themeID)
+				self.refreshCell(for: themeID)
+				print(error.localizedDescription)
 			}
 		}
+
+		self.downloads[themeID] = ThemeDownloadHandle(task: task, startedAt: startedAt, progress: 0)
+		self.refreshCell(for: themeID)
+
+		Task { @MainActor [weak self] in
+			try? await Task.sleep(nanoseconds: UInt64(Self.minimumPendingDwell * 1_000_000_000))
+			guard let self = self, self.downloads[themeID] != nil else { return }
+			self.refreshCell(for: themeID)
+		}
+	}
+
+	fileprivate func cancelDownload(of appTheme: AppTheme) {
+		self.downloads[appTheme.id]?.task.cancel()
+	}
+
+	fileprivate func removeDownloadedTheme(_ appTheme: AppTheme) {
+		do {
+			try KThemeStyle.removeTheme(for: appTheme)
+			if UserSettings.currentTheme == appTheme.id.rawValue {
+				KThemeStyle.switchTo(style: .default)
+			}
+			self.refreshCell(for: appTheme.id)
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	private func refreshCell(for themeID: KurozoraItemID) {
+		guard let itemIndex = self.appThemes.firstIndex(where: { $0.id == themeID }) else { return }
+
+		let indexPath = IndexPath(item: itemIndex, section: SectionLayoutKind.premium.rawValue)
+		guard let cell = self.collectionView.cellForItem(at: indexPath) as? ThemesCollectionViewCell else { return }
+
+		cell.refreshAffordance()
 	}
 }
 

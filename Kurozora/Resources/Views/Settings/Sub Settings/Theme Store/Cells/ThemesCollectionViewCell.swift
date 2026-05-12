@@ -10,8 +10,9 @@ import UIKit
 import KurozoraKit
 
 protocol ThemesCollectionViewCellDelegate: AnyObject {
-	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton)
-	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton)
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIView)
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, downloadStateFor appTheme: AppTheme) -> KDownloadButtonState
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, menuFor appTheme: AppTheme) -> UIMenu?
 }
 
 class ScreenshotView: UIView {
@@ -22,12 +23,15 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var downloadCountLabel: KSecondaryLabel!
-	@IBOutlet weak var getThemeButton: KTintedButton! {
+	@IBOutlet weak var getThemeButton: KDownloadButton! {
 		didSet {
-			NotificationCenter.default.addObserver(self, selector: #selector(updateGetThemeButton), name: .ThemeUpdateNotification, object: nil)
+			self.getThemeButton.onTap = { [weak self] _ in
+				guard let self = self else { return }
+				self.delegate?.themesCollectionViewCell(self, didPressGetButton: self.getThemeButton)
+			}
+			NotificationCenter.default.addObserver(self, selector: #selector(self.refreshAffordance), name: .ThemeUpdateNotification, object: nil)
 		}
 	}
-	@IBOutlet weak var moreButton: KButton!
 	@IBOutlet var screenshotViews: [ScreenshotView]!
 	@IBOutlet weak var screenshotsStackView: UIStackView!
 
@@ -44,11 +48,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		self.titleLabel.text = self.kTheme.stringValue
 		self.downloadCountLabel.text = self.kTheme.descriptionValue
-
-		// Configure more button
-		self.moreButton.layerCornerRadius = self.moreButton.frame.size.height / 2
-		self.moreButton.addBlurEffect()
-		self.moreButton.theme_tintColor = KThemePicker.textColor.rawValue
 
 		switch self.kTheme {
 		case .other(let theme):
@@ -76,7 +75,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				screenshotView.screenshotImageView.backgroundColor = UIColor(hexString: screenshot.backgroundColor ?? "#333333")
 				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: .Empty.themes)
 
-					// Stop after 3 screenshots
+				// Stop after 3 screenshots
 				if index == 2 { break }
 			}
 		default:
@@ -86,70 +85,41 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				screenshotView.screenshotImageView.image = image
 				screenshotView.isHidden = false
 
-					// Stop after 3 screenshots
+				// Stop after 3 screenshots
 				if index == 2 { break }
 			}
 		}
 
-		self.shouldHideMoreButton()
-		self.updateGetThemeButton()
+		self.refreshAffordance()
 	}
 
-	/// Checks whether to hide or unhide the more button for the current cell.
-	func shouldHideMoreButton() {
-		switch self.kTheme {
-		case .other(let theme):
-			// More button hidden by the default case. If theme exists then unhide.
-			self.moreButton.isHidden = !KThemeStyle.themeExist(for: theme)
-		default:
-			self.moreButton.isHidden = true
-		}
+	@objc func refreshAffordance() {
+		self.getThemeButton.menu = self.computedMenu()
+		self.getThemeButton.setState(self.computedDownloadState(), animated: self.window != nil)
 	}
 
-	/// Sets the correct title for `getThemeButton`.
-	@objc func updateGetThemeButton() {
-		let currentThemeID = UserSettings.currentTheme
-
+	private func computedDownloadState() -> KDownloadButtonState {
 		switch self.kTheme {
 		case .other(let theme):
-            if currentThemeID == theme.id.rawValue {
-				if User.isPro || User.isSubscribed {
-					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
-						self.getThemeButton.setTitle("USING", for: .normal)
-					} else {
-						self.getThemeButton.setTitle("UPDATE", for: .normal)
-					}
-				} else {
-					self.getThemeButton.setTitle("USING", for: .normal)
-				}
-			} else if KThemeStyle.themeExist(for: theme) {
-				if User.isPro || User.isSubscribed {
-					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
-						self.getThemeButton.setTitle("USE", for: .normal)
-					} else {
-						self.getThemeButton.setTitle("UPDATE", for: .normal)
-					}
-				} else {
-					self.getThemeButton.setTitle("USE", for: .normal)
-				}
-			} else {
-				self.getThemeButton.setTitle("GET", for: .normal)
+			if let delegate = self.delegate {
+				return delegate.themesCollectionViewCell(self, downloadStateFor: theme)
 			}
+			return .start(title: "GET")
 		default:
+			let currentThemeID = UserSettings.currentTheme
+
 			if self.kTheme.isEqual(currentThemeID) {
-				self.getThemeButton.setTitle("USING", for: .normal)
-			} else {
-				self.getThemeButton.setTitle("USE", for: .normal)
+				return .downloaded(title: "USING", opensMenuOnTap: false)
 			}
+
+			return .start(title: "USE")
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func getThemeButtonPressed(_ sender: UIButton) {
-		self.delegate?.themesCollectionViewCell(self, didPressGetButton: sender)
-	}
-
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		self.delegate?.themesCollectionViewCell(self, didPressMoreButton: sender)
+	private func computedMenu() -> UIMenu? {
+		guard case .other(let theme) = self.kTheme else {
+			return nil
+		}
+		return self.delegate?.themesCollectionViewCell(self, menuFor: theme)
 	}
 }

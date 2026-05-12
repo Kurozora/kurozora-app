@@ -97,17 +97,15 @@ extension ManageIconTableViewController {
 
 		switch indexPath.section {
 		case 0:
-			if indexPath.row == 0 {
-				KThemeStyle.changeIcon(to: nil)
-			} else {
-				KThemeStyle.changeIcon(to: alternativeIconsElement.name)
+			let iconName: String? = indexPath.row == 0 ? nil : alternativeIconsElement.name
+			Task {
+				try? await KThemeStyle.changeIcon(to: iconName)
+				self.changeIcon(tableView: tableView, alternativeIconsElement: alternativeIconsElement)
 			}
-
-			self.changeIcon(tableView: tableView, alternativeIconsElement: alternativeIconsElement)
 		default:
 			Task {
 				if await WorkflowController.shared.isProOrSubscribed(on: self) {
-					KThemeStyle.changeIcon(to: alternativeIconsElement.name)
+					try? await KThemeStyle.changeIcon(to: alternativeIconsElement.name)
 					self.changeIcon(tableView: tableView, alternativeIconsElement: alternativeIconsElement)
 				}
 			}

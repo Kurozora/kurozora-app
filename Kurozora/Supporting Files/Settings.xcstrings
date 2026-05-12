@@ -19,6 +19,9 @@
     "App Icon" : {
       "comment" : "The title string for the 'App Icon' settings."
     },
+    "Apply Theme" : {
+      "comment" : "The menu button for applying a downloaded theme."
+    },
     "Chime & Sound Effects" : {
       "comment" : "The string for the 'Chime & Sound Effects' settings option."
     },
@@ -195,6 +198,9 @@
     },
     "The official Kurozora theme." : {
       "comment" : "The string for default theme description."
+    },
+    "The theme storage directory is unavailable." : {
+      "comment" : "Error description shown when the theme storage directory cannot be resolved."
     },
     "Theme Store" : {
       "comment" : "The title string for the 'Theme Store Grouping' settings."

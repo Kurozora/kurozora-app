@@ -258,103 +258,58 @@ extension KThemeStyle {
 extension KThemeStyle {
 	/// Remove a theme for a given theme element.
 	///
-	/// - Parameters:
-	///    - appTheme: The app theme element which contains the link.
-	///    - successHandler: A closure returning a boolean indicating whether remove is successful.
-	///    - isSuccess: A boolean value indicating whether the remove is successful.
-	static func removeThemeTask(for appTheme: AppTheme, _ successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	/// - Parameter appTheme: The app theme whose file to remove.
+	static func removeTheme(for appTheme: AppTheme) throws {
 		guard let themesDirectoryURL = self.themesDirectoryURL else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
+			throw ThemeStyleError.themeStorageUnavailable
+		}
+
+		let url = themesDirectoryURL.appendingPathComponent("theme-\(appTheme.id).plist")
+		guard FileManager.default.fileExists(atPath: url.path) else {
 			return
 		}
 
-		do {
-			try FileManager.default.removeItem(at: themesDirectoryURL.appendingPathComponent("theme-\(appTheme.id).plist"))
-
-			DispatchQueue.main.async {
-				successHandler(!self.themeExist(for: appTheme))
-			}
-		} catch {
-			DispatchQueue.main.async {
-				successHandler(self.themeExist(for: appTheme))
-			}
-		}
+		try FileManager.default.removeItem(at: url)
 	}
 
-	/// Downlaoad a theme for a given theme element.
+	/// Download a theme for a given theme element.
 	///
-	/// - Parameters:
-	///    - appTheme: The app theme element which contains the link.
-	///    - successHandler: A closure returning a boolean indicating whether download is successful.
-	///    - isSuccess: A boolean value indicating whether the download is successful.
-	static func downloadThemeTask(for appTheme: AppTheme, _ successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let urlString = appTheme.attributes.downloadLink
-		guard let libraryDirectoryURL = self.libraryDirectoryURL else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
-		}
-		guard let themesDirectoryURL = self.themesDirectoryURL else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
+	/// - Parameter appTheme: The app theme element which contains the link.
+	static func downloadTheme(for appTheme: AppTheme) async throws {
+		guard let libraryDirectoryURL = self.libraryDirectoryURL,
+			  let themesDirectoryURL = self.themesDirectoryURL else {
+			throw ThemeStyleError.themeStorageUnavailable
 		}
 
-		let sessionConfig = URLSessionConfiguration.default
-		sessionConfig.httpAdditionalHeaders = [
-			"Authorization": "Bearer \(KService.authenticationKey)",
-			"X-API-Key": KService.apiKey
-		]
-		let session = URLSession(configuration: sessionConfig)
-		guard let url = URL(string: urlString) else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
+		let data = try await KService.themeDownload(appTheme.id).response()
+
+		if !self.directoryExist(atPath: themesDirectoryURL.path) {
+			try FileManager.default.createDirectory(at: libraryDirectoryURL.appendingPathComponent("Themes/"), withIntermediateDirectories: true)
 		}
-		var request = URLRequest(url: url)
-		request.httpMethod = "GET"
 
-		let task = session.downloadTask(with: request) { tempLocalURL, response, error in
-			if let tempLocalURL = tempLocalURL, error == nil {
-				// Response code
-				if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-					print("Success: \(statusCode)")
-				}
+		try data.write(to: themesDirectoryURL.appendingPathComponent("theme-\(appTheme.id).plist"), options: .atomic)
+	}
 
-				// Create Themes folder if it doesn't exist
-				if !self.directoryExist(atPath: themesDirectoryURL.path) {
-					do {
-						try FileManager.default.createDirectory(atPath: libraryDirectoryURL.appendingPathComponent("Themes/").path, withIntermediateDirectories: true, attributes: nil)
-					} catch {
-						DispatchQueue.main.async {
-							successHandler(self.themeExist(for: appTheme))
-						}
-					}
-				}
-
-				// Move file to Themes folder
-				do {
-					try FileManager.default.copyItem(at: tempLocalURL, to: themesDirectoryURL.appendingPathComponent("theme-\(appTheme.id).plist"))
-					DispatchQueue.main.async {
-						successHandler(self.themeExist(for: appTheme))
-					}
-				} catch {
-					DispatchQueue.main.async {
-						successHandler(self.themeExist(for: appTheme))
-					}
-				}
-			} else {
-				DispatchQueue.main.async {
-					successHandler(self.themeExist(for: appTheme))
-				}
-			}
+	static func downloadTheme(
+		for appTheme: AppTheme,
+		onProgress: @escaping @MainActor @Sendable (Double) -> Void
+	) async throws {
+		guard let libraryDirectoryURL = self.libraryDirectoryURL,
+			  let themesDirectoryURL = self.themesDirectoryURL else {
+			throw ThemeStyleError.themeStorageUnavailable
 		}
-		task.resume()
+
+		let data = try await KService.themeDownload(appTheme.id)
+			.onProgress(onProgress)
+			.response()
+
+		try Task.checkCancellation()
+
+		if !self.directoryExist(atPath: themesDirectoryURL.path) {
+			try FileManager.default.createDirectory(at: libraryDirectoryURL.appendingPathComponent("Themes/"), withIntermediateDirectories: true)
+		}
+
+		try data.write(to: themesDirectoryURL.appendingPathComponent("theme-\(appTheme.id).plist"), options: .atomic)
 	}
 
 	/// Check if directory exists at a given path.
@@ -385,18 +340,13 @@ extension KThemeStyle {
 	/// Changes the app icon to a given icon name.
 	///
 	/// - Parameter iconName: The name of the icon to switch to.
-	static func changeIcon(to iconName: String?) {
+	@MainActor
+	static func changeIcon(to iconName: String?) async throws {
 		// Check if app supports alternate icons
 		guard UIApplication.shared.supportsAlternateIcons else { return }
 
 		// Set alternate icon
-		UIApplication.shared.setAlternateIconName(iconName) { error in
-			if let error = error {
-				print("App icon failed to change due to \(error.localizedDescription)")
-			} else {
-				print("App icon changed successfully")
-			}
-		}
+		try await UIApplication.shared.setAlternateIconName(iconName)
 	}
 }
 
@@ -448,7 +398,7 @@ extension KThemeStyle {
 		return self.current == .night
 	}
 
-	/// Wheather it's currently night time.
+	/// Whether it's currently night time.
 	static var isSolarNighttime: Bool {
 		guard let currentUserSession = User.current?.relationships?.accessTokens?.data.first else { return false }
 		guard let userSessionLocation = currentUserSession.relationships.location.data.first else { return false }
@@ -476,6 +426,17 @@ extension KThemeStyle {
 				NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["option": 0])
 				UserSettings.set(0, forKey: .appearanceOption)
 			}
+		}
+	}
+}
+
+enum ThemeStyleError: LocalizedError {
+	case themeStorageUnavailable
+
+	var errorDescription: String? {
+		switch self {
+		case .themeStorageUnavailable:
+			return L10n.themeStorageUnavailable
 		}
 	}
 }
