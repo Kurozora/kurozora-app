@@ -131,10 +131,10 @@ final class KurozoraDelegate {
 	///    - window: The window on which the offline view will be shown.
 	///    - viewController: The view controller that should be dismissed.
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
-		if let warningViewController = window?.rootViewController as? WarningViewController, warningViewController.router?.dataStore?.warningType == .noSignal {
+		if let warningViewController = window?.rootViewController as? WarningViewController, warningViewController.warningType == .noSignal {
 			// Initialize app
 			KurozoraDelegate.shared.initiateApp(window: window)
-		} else if let warningViewController = viewController as? WarningViewController, warningViewController.router?.dataStore?.warningType == .noSignal {
+		} else if let warningViewController = viewController as? WarningViewController, warningViewController.warningType == .noSignal {
 			viewController.dismiss(animated: true, completion: nil)
 		}
 
@@ -158,17 +158,14 @@ final class KurozoraDelegate {
 			let meta = metaResponse.meta
 			let topViewController = UIApplication.topViewController
 			let warningViewController = WarningViewController()
+			warningViewController.window = window
 
-			if let warningDataStore = warningViewController.router?.dataStore {
-				warningDataStore.window = window
-
-				if meta.isMaintenanceModeEnabled {
-					warningDataStore.warningType = .maintenance
-				} else if meta.minimumAppVersion.compare(currentAppVersion, options: .numeric) == .orderedDescending {
-					warningDataStore.warningType = .forceUpdate
-				} else {
-					return false
-				}
+			if meta.isMaintenanceModeEnabled {
+				warningViewController.warningType = .maintenance
+			} else if meta.minimumAppVersion.compare(currentAppVersion, options: .numeric) == .orderedDescending {
+				warningViewController.warningType = .forceUpdate
+			} else {
+				return false
 			}
 
 			if window != nil {
@@ -192,11 +189,8 @@ final class KurozoraDelegate {
 	func showOfflineView(for window: UIWindow?) {
 		let topViewController = UIApplication.topViewController
 		let warningViewController = WarningViewController()
-
-		if let warningDataStore = warningViewController.router?.dataStore {
-			warningDataStore.window = window
-			warningDataStore.warningType = .noSignal
-		}
+		warningViewController.window = window
+		warningViewController.warningType = .noSignal
 
 		DispatchQueue.main.async {
 			if window != nil {
