@@ -35,8 +35,34 @@ extension NotificationsTableViewController {
 		case .feedMessageReply, .feedMessageReShare:
 			guard let feedMessageID = userNotification.attributes.payload.feedMessageID else { return }
 			WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
+		case .userMention:
+			if let feedMessageID = userNotification.attributes.payload.feedMessageID {
+				WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
+			} else if let link = userNotification.attributes.payload.link, let feedMessageID = Self.feedMessageID(fromLink: link) {
+				WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
+			}
 		default: break
 		}
+	}
+
+	/// Extracts the trailing feed message identifier from a mention payload link.
+	///
+	/// - Parameter link: The URL string from a mention notification's payload.
+	///
+	/// - Returns: The feed message identifier, or `nil` if the link does not point to a feed message.
+	private static func feedMessageID(fromLink link: String) -> KurozoraItemID? {
+		guard let url = URL(string: link) else { return nil }
+		let components = url.pathComponents
+
+		guard let messagesIndex = components.firstIndex(of: "messages"),
+			  components.index(after: messagesIndex) < components.endIndex else {
+			return nil
+		}
+
+		let rawID = components[components.index(after: messagesIndex)]
+		guard !rawID.isEmpty else { return nil }
+
+		return KurozoraItemID(rawID)
 	}
 
 	override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

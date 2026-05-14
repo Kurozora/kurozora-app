@@ -100,6 +100,14 @@ extension L10n {
 		table: "Settings",
 		comment: "The string for the 'view message re-share' notification action."
 	)
+	/// The string for the 'mention' notification type.
+	///
+	/// - Tag: L10n-mention
+	static let mention: String = String(
+		localized: "Mention",
+		table: "Settings",
+		comment: "The string for the 'mention' notification type."
+	)
 	/// The string for the 'subscription update' notification type.
 	///
 	/// - Tag: L10n-subscriptionUpdate

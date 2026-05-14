@@ -103,6 +103,9 @@
     "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing." : {
       "comment" : "A short description for the cache settings header."
     },
+    "Mention" : {
+      "comment" : "The string for the 'mention' notification type."
+    },
     "New Session" : {
       "comment" : "The string for the 'new session' notification type"
     },

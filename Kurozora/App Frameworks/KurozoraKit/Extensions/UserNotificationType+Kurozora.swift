@@ -20,6 +20,8 @@ extension UserNotificationType {
 			return L10n.follower
 		case .feedMessageReply, .feedMessageReShare:
 			return L10n.message
+		case .userMention:
+			return L10n.mention
 		case .libraryImportFinished:
 			return L10n.libraryImport
 		case .subscriptionStatus:
@@ -36,7 +38,7 @@ extension UserNotificationType {
             return .Icons.session
 		case .follower:
             return .Icons.follower
-		case .feedMessageReply, .feedMessageReShare:
+		case .feedMessageReply, .feedMessageReShare, .userMention:
             return .Icons.message
 		case .libraryImportFinished:
             return .Icons.library
