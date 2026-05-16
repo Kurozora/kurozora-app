@@ -438,15 +438,41 @@ extension NotificationsTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc fileprivate func updateNotifications(_ notification: NSNotification) {
-		guard let userNotification = notification.object as? UserNotification else { return }
+		if let userNotification = notification.object as? UserNotification {
+			Task { @MainActor [weak self] in
+				guard let self = self else { return }
+				var newSnapshot = self.dataSource.snapshot()
+				newSnapshot.reloadItems([userNotification])
+				self.dataSource.defaultRowAnimation = .automatic
+				self.dataSource.apply(newSnapshot)
+				self.updateTabBarBadge()
+			}
+			return
+		}
+
+		if let ids = notification.userInfo?["ids"] as? [String], !ids.isEmpty {
+			let read = (notification.userInfo?["read"] as? Bool) ?? true
+
+			Task { @MainActor [weak self] in
+				guard let self = self else { return }
+				let matches = self.findUserNotifications(matching: ids)
+
+				if matches.isEmpty {
+					guard User.isSignedIn else { return }
+					await self.fetchNotifications()
+					return
+				}
+
+				self.updateUserNotifications(matches, withStatus: read ? .read : .unread)
+				self.updateTabBarBadge()
+			}
+
+			return
+		}
 
 		Task { @MainActor [weak self] in
-			guard let self = self else { return }
-			var newSnapshot = self.dataSource.snapshot()
-			newSnapshot.reloadItems([userNotification])
-			self.dataSource.defaultRowAnimation = .automatic
-			self.dataSource.apply(newSnapshot)
-			self.updateTabBarBadge()
+			guard let self = self, User.isSignedIn else { return }
+			await self.fetchNotifications()
 		}
 	}
 
@@ -454,12 +480,52 @@ extension NotificationsTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc fileprivate func removeNotification(_ notification: NSNotification) {
-		guard let userNotification = notification.object as? UserNotification else { return }
-		guard let indexPath = self.dataSource.indexPath(for: userNotification) else { return }
+		if let userNotification = notification.object as? UserNotification {
+			guard let indexPath = self.dataSource.indexPath(for: userNotification) else { return }
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.removeNotification(at: indexPath)
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.removeNotification(at: indexPath)
+			}
+			return
+		}
+
+		if let ids = notification.userInfo?["ids"] as? [String], !ids.isEmpty {
+			Task { @MainActor [weak self] in
+				guard let self = self else { return }
+				let matches = self.findUserNotifications(matching: ids)
+
+				if matches.isEmpty {
+					guard User.isSignedIn else { return }
+					await self.fetchNotifications()
+					return
+				}
+
+				self.removeNotifications(matches)
+			}
+
+			return
+		}
+
+		Task { @MainActor [weak self] in
+			guard let self = self, User.isSignedIn else { return }
+			await self.fetchNotifications()
+		}
+	}
+
+	/// Returns the locally-cached notifications whose identifiers are in the supplied list.
+	///
+	/// - Parameter ids: The identifiers to look up.
+	///
+	/// - Returns: The matching ``UserNotification`` instances.
+	private func findUserNotifications(matching ids: [String]) -> [UserNotification] {
+		let lookup = Set(ids)
+		switch self.grouping {
+		case .automatic, .byType:
+			return self.groupedNotifications.flatMap { $0.sectionNotifications }
+				.filter { lookup.contains($0.id.rawValue) }
+		case .off:
+			return self.userNotifications.filter { lookup.contains($0.id.rawValue) }
 		}
 	}
 

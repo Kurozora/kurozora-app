@@ -161,6 +161,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		if UserSettings.automaticDarkTheme {
 			KThemeStyle.checkAutomaticSchedule()
 		}
+
+		if User.isSignedIn {
+			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
+		}
 	}
 
 	func sceneDidBecomeActive(_ scene: UIScene) {

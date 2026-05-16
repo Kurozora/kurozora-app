@@ -54,6 +54,8 @@ class KTabBarController: UITabBarController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotificationsDidUpdate), name: .KUNDidUpdate, object: nil)
+
 		// Initialize views
 		self.configureTabs()
 
@@ -236,6 +238,35 @@ class KTabBarController: UITabBarController {
 			})
 			tab?.badgeValue = badgeValue
 		}
+	}
+
+	/// Handles refreshing the notifications badge when the user notifications change.
+	@objc private func handleNotificationsDidUpdate(_ notification: Notification) {
+		if self.notificationsTableViewController()?.viewIfLoaded != nil {
+			return
+		}
+
+		Task { @MainActor [weak self] in
+			guard let self = self, User.isSignedIn else { return }
+			do {
+				let response = try await KService.notifications().response()
+				let unreadCount = response.data.filter { $0.attributes.readStatus == .unread }.count
+				self.setBadgeValue(unreadCount == 0 ? nil : "\(unreadCount)", for: .notifications)
+			} catch {
+				print("LiveUpdates: failed to refresh notifications badge -", error.localizedDescription)
+			}
+		}
+	}
+
+	/// Returns the loaded `NotificationsTableViewController` instance for the notifications tab, if any.
+	private func notificationsTableViewController() -> NotificationsTableViewController? {
+		guard let index = TabBarItem.tabBarCases.firstIndex(of: .notifications),
+			let viewControllers = self.viewControllers, viewControllers.indices.contains(index),
+			let navigationController = viewControllers[index] as? KNavigationController else {
+			return nil
+		}
+
+		return navigationController.viewControllers.first as? NotificationsTableViewController
 	}
 }
 

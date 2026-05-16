@@ -63,7 +63,7 @@ extension WorkflowController {
 
 	/// Sets up the notification actions for each of the available categories.
 	func setupCategoryActions() {
-		print("----- Setup categrory actions.")
+		print("----- Setup category actions.")
 		var notificationCategories: Set<UNNotificationCategory> = []
 
 		// Configure notification categories.
@@ -100,18 +100,41 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 			self.openSessionsManager()
 		case NotificationKind.Action.viewShowDetails.identifierValue:
 			if let showIDString = userInfo["SHOW_ID"] as? String {
-                let showID = KurozoraItemID(showIDString)
+				let showID = KurozoraItemID(showIDString)
 				self.openShowDetails(for: showID)
 			}
 		case NotificationKind.Action.viewProfileDetails.identifierValue:
 			if let userIDString = userInfo["USER_ID"] as? String {
-                let userID = KurozoraItemID(userIDString)
+				let userID = KurozoraItemID(userIDString)
 				self.openUserProfile(for: userID)
 			}
 		default: break
 		}
 
+		if let notificationIDString = userInfo["notification_id"] as? String, !notificationIDString.isEmpty {
+			self.markNotificationRead(notificationIDString)
+		}
+
 		completionHandler()
+	}
+
+	/// Marks the in-app notification with the given identifier as read.
+	///
+	/// - Parameter notificationID: The identifier of the notification.
+	private func markNotificationRead(_ notificationID: String) {
+		Task { @MainActor in
+			do {
+				_ = try await KService.updateNotification(notificationID, readStatus: .read).response()
+			} catch {
+				print("----- Failed to mark notification \(notificationID) as read: \(error.localizedDescription)")
+				return
+			}
+
+			NotificationCenter.default.post(name: .KUNDidUpdate,object: nil,userInfo: [
+				"ids": [notificationID],
+				"read": true
+			])
+		}
 	}
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

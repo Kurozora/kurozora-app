@@ -48,6 +48,9 @@ final class KurozoraDelegate {
 		FaceDetectionService.shared.activate()
 		#endif
 
+		// Start real time notification observer.
+		NotificationsRealtimeBridge.shared.start()
+
 		// Initialize the local Core Data store
 		_ = PersistenceController.shared
 
