@@ -280,7 +280,7 @@ extension SettingsTableViewController {
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
 			case .signalSticker, .telegramSticker, // .whatsAppSticker,
-			     .manageSubscriptions, .restoreFeatures, .requestRefund,
+			     .manageSubscriptions, .restoreFeatures,
 			     .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter:
 				return nil
 			case .account:
@@ -291,6 +291,8 @@ extension SettingsTableViewController {
 				return .keysSegue
 			case .browser:
 				return .browserSegue
+			case .cache:
+				return .cacheSegue
 			case .displayBlindness:
 				return .displaySegue
 			case .icon:
@@ -315,6 +317,8 @@ extension SettingsTableViewController {
 				return .subscriptionSegue
 			case .tipjar:
 				return .tipJarSegue
+			case .requestRefund:
+				return .requestRefundSegue
 			}
 		}
 

@@ -185,7 +185,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		     .librarySegue, .motionSegue, .themeSegue,
 		     .notificationSegue, .reminderSubscriptionSegue, .soundSegue,
 		     .biometricsSegue, .privacySegue,
-			 .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
+		     .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
 			return
 		case .cacheSegue:
 			guard let cacheSettingsTableViewController = destination as? CacheSettingsTableViewController else { return }
@@ -326,106 +326,51 @@ extension SettingsTableViewController {
 		}
 
 		switch sectionRow {
-		case .account:
+		case .switchAccount,
+		     .keychain,
+		     .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
+		     .soundsAndHaptics,
+		     .biometrics, .privacy,
+		     .unlockFeatures, .tipjar, .requestRefund:
+			guard let segueID = sectionRow.segueIdentifier else { return }
+			self.showSecondary(segueID, sender: nil)
+		case .account, .notifications:
 			guard let segueID = sectionRow.segueIdentifier else { return }
 			self.authAndSegue(to: segueID)
-			return
-		case .switchAccount:
-			self.showSecondary(.switchAccountSegue, sender: nil)
-			return
-		case .keychain:
-			self.showSecondary(.keysSegue, sender: nil)
-			return
-		case .browser:
-			self.showSecondary(.browserSegue, sender: nil)
-			return
-		case .cache:
-			self.showSecondary(.cacheSegue, sender: nil)
-			return
-		case .displayBlindness:
-			self.showSecondary(.displaySegue, sender: nil)
-			return
-		case .icon:
-			self.showSecondary(.iconSegue, sender: nil)
-			return
-		case .library:
-			self.showSecondary(.librarySegue, sender: nil)
-			return
-		case .motion:
-			self.showSecondary(.motionSegue, sender: nil)
-			return
-		case .theme:
-			self.showSecondary(.themeSegue, sender: nil)
-			return
-		case .notifications:
-			guard let segueID = sectionRow.segueIdentifier else { return }
-			self.authAndSegue(to: segueID)
-			return
 		case .reminder:
+			guard let segueID = sectionRow.segueIdentifier else { return }
 			Task { [weak self] in
 				guard let self = self else { return }
 				guard await WorkflowController.shared.isSubscribed(on: self) else { return }
-				self.showSecondary(.reminderSubscriptionSegue, sender: nil)
+				self.showSecondary(segueID, sender: nil)
 			}
-			return
-		case .soundsAndHaptics:
-			self.showSecondary(.soundSegue, sender: nil)
-			return
 		case .signalSticker:
-			if let signalStickerURL = URL.signalStickerURL {
-				UIApplication.shared.open(signalStickerURL)
-			}
-			return
+			guard let signalStickerURL = URL.signalStickerURL else { return }
+			UIApplication.shared.open(signalStickerURL)
 		case .telegramSticker:
-			if let telegramStickerURL = URL.telegramStickerURL {
-				UIApplication.shared.open(telegramStickerURL)
-			}
-			return
-		case .biometrics:
-			self.showSecondary(.biometricsSegue, sender: nil)
-			return
-		case .privacy:
-			self.showSecondary(.privacySegue, sender: nil)
-			return
-		case .unlockFeatures:
-			self.showSecondary(.subscriptionSegue, sender: nil)
-			return
-		case .tipjar:
-			self.showSecondary(.tipJarSegue, sender: nil)
-			return
+			guard let telegramStickerURL = URL.telegramStickerURL else { return }
+			UIApplication.shared.open(telegramStickerURL)
 		case .manageSubscriptions:
 			Task { [weak self] in
 				await Store.shared.manageSubscriptions(in: self?.view.window?.windowScene)
 			}
-			return
 		case .restoreFeatures:
-			Task {
-				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-				guard signedIn else { return }
-
+			Task { [weak self] in
+				guard let self = self else { return }
+				guard await WorkflowController.shared.isSignedIn(on: self) else { return }
 				await Store.shared.restore()
 			}
-			return
-		case .requestRefund:
-			self.showSecondary(.requestRefundSegue, sender: nil)
-			return
 		case .rate:
-			if let rateURL = URL.rateURL {
-				UIApplication.shared.open(rateURL)
-			}
-			return
+			guard let rateURL = URL.rateURL else { return }
+			UIApplication.shared.open(rateURL)
 		case .joinDiscord:
 			UIApplication.shared.kOpen(.discordPageURL)
-			return
 		case .followGitHub:
 			UIApplication.shared.kOpen(.gitHubPageURL)
-			return
 		case .followMastodon:
 			UIApplication.shared.kOpen(.mastodonPageURL)
-			return
 		case .followTwitter:
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
-			return
 		}
 	}
 
