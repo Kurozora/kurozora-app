@@ -149,11 +149,11 @@ extension SettingsTableViewController {
 		/// The row representing the notifications cell.
 		case notifications
 
-		/// The row representing the reminder cell.
-		case reminder
-
 		/// The row representing the sounds and haptics cell.
 		case soundsAndHaptics
+
+		/// The row representing the reminder cell.
+		case reminder
 
 		/// The row representing the Signal sticker cell.
 		case signalSticker
@@ -206,7 +206,7 @@ extension SettingsTableViewController {
 			.account, .switchAccount,
 			.keychain,
 			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
-			.notifications, .reminder, .soundsAndHaptics,
+			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker,
 			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .requestRefund,
@@ -217,7 +217,7 @@ extension SettingsTableViewController {
 		static let all: [Row] = [
 			.account, .switchAccount,
 			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
-			.notifications, .reminder, .soundsAndHaptics,
+			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker,
 			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures,
@@ -238,7 +238,7 @@ extension SettingsTableViewController {
 		static let allDebug: [Row] = [.keychain]
 
 		/// An array containing all alerts section settings rows.
-		static var allAlerts: [Row] = [.notifications, .reminder, .soundsAndHaptics]
+		static var allAlerts: [Row] = [.notifications, .soundsAndHaptics, .reminder]
 
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
@@ -279,8 +279,7 @@ extension SettingsTableViewController {
 		/// The segue identifier string of a settings row.
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .cache, .reminder,
-			     .signalSticker, .telegramSticker, // .whatsAppSticker,
+			case .signalSticker, .telegramSticker, // .whatsAppSticker,
 			     .manageSubscriptions, .restoreFeatures, .requestRefund,
 			     .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter:
 				return nil
@@ -306,6 +305,8 @@ extension SettingsTableViewController {
 				return .notificationSegue
 			case .soundsAndHaptics:
 				return .soundSegue
+			case .reminder:
+				return .reminderSubscriptionSegue
 			case .biometrics:
 				return .biometricsSegue
 			case .privacy:
@@ -342,9 +343,9 @@ extension SettingsTableViewController {
 				return .labelAndChevron
 			case .notifications:
 				return .chevron
-			case .reminder:
-				return .none
 			case .soundsAndHaptics:
+				return .chevron
+			case .reminder:
 				return .chevron
 			case .signalSticker:
 				return .chevron

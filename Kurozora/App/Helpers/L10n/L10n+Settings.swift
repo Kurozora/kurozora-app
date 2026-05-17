@@ -270,6 +270,38 @@ extension L10n {
 		table: "Settings",
 		comment: "The string for the 'Subscribe to Reminders' settings option."
 	)
+	/// The string for the 'Copy Subscription Link' calendar picker option.
+	///
+	/// - Tag: L10n-copySubscriptionLink
+	static let copySubscriptionLink: String = String(
+		localized: "Copy Subscription Link",
+		table: "Settings",
+		comment: "The string for the 'Copy Subscription Link' calendar picker option."
+	)
+	/// The confirmation string shown after copying the subscription link to the pasteboard.
+	///
+	/// - Tag: L10n-subscriptionLinkCopied
+	static let subscriptionLinkCopied: String = String(
+		localized: "Subscription link copied",
+		table: "Settings",
+		comment: "The confirmation string shown after copying the subscription link to the pasteboard."
+	)
+	/// The footer string for the reminder subscription picker.
+	///
+	/// - Tag: L10n-reminderSubscriptionFooter
+	static let reminderSubscriptionFooter: String = String(
+		localized: "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback.",
+		table: "Settings",
+		comment: "The footer string for the reminder subscription picker."
+	)
+	/// A short description for the reminder subscription settings header.
+	///
+	/// - Tag: L10n-reminderSubscriptionHeaderDescription
+	static let reminderSubscriptionHeaderDescription: String = String(
+		localized: "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere.",
+		table: "Settings",
+		comment: "A short description for the reminder subscription settings header."
+	)
 	/// The string for the 'Sound' settings option.
 	///
 	/// - Tag: L10n-sound

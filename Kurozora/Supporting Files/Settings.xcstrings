@@ -31,6 +31,9 @@
     "Chime Sound" : {
       "comment" : "The string for the 'Chime Sound' settings option."
     },
+    "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback." : {
+      "comment" : "The footer string for the reminder subscription picker."
+    },
     "Clear All" : {
       "comment" : "The title string for the 'Clear All' destructive button."
     },
@@ -42,6 +45,9 @@
     },
     "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences." : {
       "comment" : "A short description for the motion settings header."
+    },
+    "Copy Subscription Link" : {
+      "comment" : "The string for the 'Copy Subscription Link' calendar picker option."
     },
     "Customize how your library is organized by setting the default sort order for each tracking status and media type." : {
       "comment" : "A short description for the library settings header."
@@ -115,6 +121,9 @@
     "Optic ID & Passcode" : {
       "comment" : "The string for the 'Optic ID & Passcode' settings option."
     },
+    "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere." : {
+      "comment" : "A short description for the reminder subscription settings header."
+    },
     "Pull to refresh themes list!" : {
       "comment" : "Pull-to-refresh title for the themes list in the Theme Store."
     },
@@ -186,6 +195,9 @@
     },
     "Subscribe to Reminders" : {
       "comment" : "The string for the 'Subscribe to Reminders' settings option."
+    },
+    "Subscription link copied" : {
+      "comment" : "The confirmation string shown after copying the subscription link to the pasteboard."
     },
     "Subscription Update" : {
       "comment" : "The string for the 'subscription update' notification type"

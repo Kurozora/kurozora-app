@@ -99,6 +99,37 @@ class IconTableViewCell: SettingsCell {
 		self.iconImageView?.layerCornerRadius = 12.0
 	}
 
+	func configureCell(using calendarApp: KCalendarApp?) {
+		guard let calendarApp = calendarApp else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.primaryLabel?.text = calendarApp.stringValue
+
+		self.secondaryLabel?.text = nil
+		self.secondaryLabel?.isHidden = true
+
+		self.detailLabel?.text = nil
+		self.detailLabel?.isHidden = true
+
+		self.selectedImageView?.isHidden = true
+
+		self.iconImageView?.image = calendarApp.image
+
+		if calendarApp.image?.isSymbolImage == true {
+			self.iconImageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .regular, scale: .default)
+			self.iconImageView?.contentMode = .center
+			self.iconImageView?.layer.borderWidth = 0.0
+			self.iconImageView?.layerCornerRadius = 0.0
+		} else {
+			self.iconImageView?.preferredSymbolConfiguration = nil
+			self.iconImageView?.contentMode = .scaleAspectFit
+			self.iconImageView?.layerCornerRadius = 12.0
+		}
+	}
+
 	func configureCell(using appChimeElement: AppChimeElement?) {
 		guard let appChimeElement = appChimeElement else {
 			self.showSkeleton()

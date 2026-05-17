@@ -212,8 +212,16 @@ extension AppDelegate {
 
 	/// User chose "Subscribe to Reminders..." from the Account menu.
 	@objc func handleSubscribeToReminders(_ sender: AnyObject) {
-		Task {
-			await WorkflowController.shared.subscribeToReminders()
+		Task { @MainActor in
+			let topViewController = UIApplication.topViewController
+			guard await WorkflowController.shared.isSubscribed(on: topViewController) else { return }
+
+			let settingsSplitViewController = SettingsSplitViewController()
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
+				settingsTableViewController.showDetailViewController(.reminderSubscriptionSegue, sender: nil)
+			}
+			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 		}
 	}
 

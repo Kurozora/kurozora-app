@@ -22,6 +22,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case motionSegue
 		case themeSegue
 		case notificationSegue
+		case reminderSubscriptionSegue
 		case soundSegue
 		case biometricsSegue
 		case privacySegue
@@ -165,6 +166,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case .motionSegue: return MotionSettingsViewController()
 		case .themeSegue: return ManageThemesCollectionViewController()
 		case .notificationSegue: return NotificationsSettingsViewController()
+		case .reminderSubscriptionSegue: return ReminderSubscriptionTableViewController()
 		case .soundSegue: return SoundSettingsViewController()
 		case .biometricsSegue: return AuthenticationSettingsViewController()
 		case .privacySegue: return PrivacySettingsViewController()
@@ -181,7 +183,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case .accountSegue, .switchAccountSegue, .keysSegue,
 		     .browserSegue, .displaySegue, .iconSegue,
 		     .librarySegue, .motionSegue, .themeSegue,
-		     .notificationSegue, .soundSegue,
+		     .notificationSegue, .reminderSubscriptionSegue, .soundSegue,
 		     .biometricsSegue, .privacySegue,
 			 .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
 			return
@@ -361,7 +363,9 @@ extension SettingsTableViewController {
 			return
 		case .reminder:
 			Task { [weak self] in
-				await WorkflowController.shared.subscribeToReminders(on: self)
+				guard let self = self else { return }
+				guard await WorkflowController.shared.isSubscribed(on: self) else { return }
+				self.showSecondary(.reminderSubscriptionSegue, sender: nil)
 			}
 			return
 		case .soundsAndHaptics:
