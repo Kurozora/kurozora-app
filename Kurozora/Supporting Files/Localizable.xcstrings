@@ -40,6 +40,9 @@
     "Aliases" : {
       "comment" : "The string for the word 'aliases'."
     },
+    "All" : {
+      "comment" : "The string for the word 'all'."
+    },
     "Always Show Title" : {
       "comment" : "The view option that always shows the series title beneath the poster in the library compact layout."
     },
@@ -145,6 +148,9 @@
     "Country" : {
       "comment" : "The string for the word 'country'."
     },
+    "Current Season" : {
+      "comment" : "The string for the phrase 'Current Season'."
+    },
     "Date Added" : {
       "comment" : "The column header for the date the item was added to the library."
     },
@@ -219,6 +225,9 @@
     },
     "Explore" : {
       "comment" : "The string for the word 'explore'."
+    },
+    "Fall" : {
+      "comment" : "The string for the word 'fall'."
     },
     "Favorite" : {
       "comment" : "The accessibility label for the favorite column or control in the library table layout."
@@ -624,6 +633,9 @@
     "Season" : {
       "comment" : "The string for the word 'season'."
     },
+    "Season picker" : {
+      "comment" : "The accessibility label for the seasonal browse picker."
+    },
     "Seasons" : {
       "comment" : "The string for the word 'seasons'."
     },
@@ -690,6 +702,9 @@
     "Spoiler" : {
 
     },
+    "Spring" : {
+      "comment" : "The string for the word 'spring'."
+    },
     "Status" : {
       "comment" : "The column header for the item's airing or publishing status in the library table layout."
     },
@@ -719,6 +734,9 @@
     },
     "Suggestions" : {
       "comment" : "The string for the word 'suggestions'."
+    },
+    "Summer" : {
+      "comment" : "The string for the word 'summer'."
     },
     "Support Us" : {
       "comment" : "The string for the word 'support us'."
@@ -849,6 +867,9 @@
     },
     "What’s New in Kurozora" : {
       "comment" : "The string for the word 'What’s New'."
+    },
+    "Winter" : {
+      "comment" : "The string for the word 'winter'."
     },
     "Year" : {
       "comment" : "The column header for the item's release year in the library table layout."

@@ -14,13 +14,13 @@ extension HomeCollectionViewController {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
 		case .banner(let exploreCategory), .episode(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .shows, .mostPopularShows, .upcomingShows, .newShows:
+			case .shows, .mostPopularShows, .upcomingShows, .newShows, .showsSeason:
 				guard let show = self.cache[indexPath] as? Show else { return }
 				self.show(.showDetailsSegue, sender: show)
-			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
+			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures, .literaturesSeason:
 				guard let literature = self.cache[indexPath] as? Literature else { return }
 				self.show(.literatureDetailsSegue, sender: literature)
-			case .games, .mostPopularGames, .upcomingGames, .newGames:
+			case .games, .mostPopularGames, .upcomingGames, .newGames, .gamesSeason:
 				guard let game = self.cache[indexPath] as? Game else { return }
 				self.show(.gameDetailsSegue, sender: game)
 			case .episodes, .upNextEpisodes:
@@ -57,13 +57,13 @@ extension HomeCollectionViewController {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch exploreCategory.attributes.exploreCategoryType {
-		case .shows, .upcomingShows, .mostPopularShows, .newShows:
+		case .shows, .upcomingShows, .mostPopularShows, .newShows, .showsSeason:
 			guard let show = self.cache[indexPath] as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
+		case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures, .literaturesSeason:
 			guard let literature = self.cache[indexPath] as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .games, .upcomingGames, .mostPopularGames, .newGames:
+		case .games, .upcomingGames, .mostPopularGames, .newGames, .gamesSeason:
 			guard let game = self.cache[indexPath] as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .episodes, .upNextEpisodes:

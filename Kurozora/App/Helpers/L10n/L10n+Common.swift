@@ -263,6 +263,13 @@ extension L10n {
 		localized: "Add",
 		comment: "The string for the word 'add'."
 	)
+	/// The string for the word 'all'.
+	///
+	/// - Tag: L10n-all
+	static let all: String = String(
+		localized: "All",
+		comment: "The string for the word 'all'."
+	)
 	/// The string for the word 'apply'.
 	///
 	/// - Tag: L10n-apply
@@ -1294,6 +1301,48 @@ extension L10n {
 	static let seasons: String = String(
 		localized: "Seasons",
 		comment: "The string for the word 'seasons'."
+	)
+	/// The string for the word 'winter'.
+	///
+	/// - Tag: L10n-winter
+	static let winter: String = String(
+		localized: "Winter",
+		comment: "The string for the word 'winter'."
+	)
+	/// The string for the word 'spring'.
+	///
+	/// - Tag: L10n-spring
+	static let spring: String = String(
+		localized: "Spring",
+		comment: "The string for the word 'spring'."
+	)
+	/// The string for the word 'summer'.
+	///
+	/// - Tag: L10n-summer
+	static let summer: String = String(
+		localized: "Summer",
+		comment: "The string for the word 'summer'."
+	)
+	/// The string for the word 'fall'.
+	///
+	/// - Tag: L10n-fall
+	static let fall: String = String(
+		localized: "Fall",
+		comment: "The string for the word 'fall'."
+	)
+	/// The string for the accessibility label of the season picker.
+	///
+	/// - Tag: L10n-seasonPicker
+	static let seasonPicker: String = String(
+		localized: "Season picker",
+		comment: "The accessibility label for the seasonal browse picker."
+	)
+	/// The string for the phrase 'Current Season'.
+	///
+	/// - Tag: L10n-currentSeason
+	static let currentSeason: String = String(
+		localized: "Current Season",
+		comment: "The string for the phrase 'Current Season'."
 	)
 	/// The string for the word 'season'.
 	///

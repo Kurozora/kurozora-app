@@ -35,6 +35,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		case genresSegue
 		case themesSegue
 		case legalSegue
+		case seasonalBrowseSegue
 	}
 
 	// MARK: - Views
@@ -324,6 +325,12 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 					return !(exploreCategory.relationships.people?.data.isEmpty ?? false)
 				case .recap:
 					return !(exploreCategory.relationships.recaps?.data.isEmpty ?? false)
+				case .showsSeason:
+					return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
+				case .literaturesSeason:
+					return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
+				case .gamesSeason:
+					return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
 				}
 			}
 
@@ -474,6 +481,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		case .redeemSegue: return KNavigationController(rootViewController: RedeemTableViewController())
 		case .subscriptionSegue: return KNavigationController(rootViewController: SubscriptionCollectionViewController())
 		case .legalSegue: return KNavigationController(rootViewController: LegalViewController())
+		case .seasonalBrowseSegue: return SeasonalCollectionViewController()
 		}
 	}
 
@@ -597,6 +605,24 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 				episodesListCollectionViewController.episodesListFetchType = .season
 			} else if let upNextCategory = self.upNextCategory {
 				episodesListCollectionViewController.episodesListFetchType = .upNext(exploreCategory: upNextCategory)
+			}
+		case .seasonalBrowseSegue:
+			guard let seasonalCollectionViewController = destination as? SeasonalCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+			let (year, season) = SeasonOfYear.yearAndSeason(from: Date())
+
+			seasonalCollectionViewController.year = year
+			seasonalCollectionViewController.season = season
+
+			switch exploreCategory.attributes.exploreCategoryType {
+			case .showsSeason:
+				seasonalCollectionViewController.kind = .shows
+			case .literaturesSeason:
+				seasonalCollectionViewController.kind = .literatures
+			case .gamesSeason:
+				seasonalCollectionViewController.kind = .games
+			default: break
 			}
 		}
 	}

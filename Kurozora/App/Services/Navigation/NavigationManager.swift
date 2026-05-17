@@ -103,6 +103,8 @@ final class NavigationManager: NSObject {
 			context.selectTab(.home)
 		case .schedule:
 			context.selectTab(.schedule)
+		case .season:
+			self.handleSeasonalBrowseDeeplink(url: url, context: context)
 		case .library, .myLibrary, .list:
 			context.selectTab(.library)
 		case .feed, .timeline:
@@ -120,6 +122,30 @@ final class NavigationManager: NSObject {
 		case .parentalGuide:
 			self.handleParentalGuideDeeplink(parameters: parameters, context: context)
 		}
+	}
+
+	/// Handles deeplinking to the seasonal browse view.
+	///
+	/// Expected URL shape: `kurozora://season/{anime|manga|games}/{year}/{season}`.
+	///
+	/// - Parameters:
+	///    - url: The URL to parse.
+	///    - context: The navigation context to present on.
+	private func handleSeasonalBrowseDeeplink(url: URL, context: NavigationContext) {
+		let pathComponents = url.pathComponents.filter { $0 != "/" }
+
+		guard
+			pathComponents.count >= 3,
+			let year = Int(pathComponents[1]),
+			let kind = BrowseSeasonType(pathComponent: pathComponents[0]),
+			let season = SeasonOfYear(pathComponent: pathComponents[2])
+		else { return }
+
+		let seasonalCollectionViewController = SeasonalCollectionViewController()
+		seasonalCollectionViewController.kind = kind
+		seasonalCollectionViewController.year = year
+		seasonalCollectionViewController.season = season
+		context.show(seasonalCollectionViewController)
 	}
 
 	/// Handles deeplinking to the parental guide view.

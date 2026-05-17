@@ -99,6 +99,8 @@ extension HomeCollectionViewController {
 					segueID = .literaturesListSegue
 				case .games, .mostPopularGames, .upcomingGames, .newGames:
 					segueID = .gamesListSegue
+				case .showsSeason, .literaturesSeason, .gamesSeason:
+					segueID = .seasonalBrowseSegue
 				case .recap:
 					break
 				default:
@@ -220,6 +222,7 @@ extension HomeCollectionViewController {
 		case .characters, .people: return .profile(category)
 		case .genres, .themes: return .medium(category)
 		case .recap: return .small(category)
+		case .showsSeason, .literaturesSeason, .gamesSeason: return .small(category)
 		}
 	}
 
@@ -256,6 +259,12 @@ extension HomeCollectionViewController {
 			return (category.relationships.themes?.data ?? []).prefix(10).map { .themeIdentity($0) }
 		case .recap:
 			return (category.relationships.recaps?.data ?? []).prefix(10).map { .recap($0) }
+		case .showsSeason:
+			return (category.relationships.shows?.data ?? []).prefix(10).map { .showIdentity($0) }
+		case .literaturesSeason:
+			return (category.relationships.literatures?.data ?? []).prefix(10).map { .literatureIdentity($0) }
+		case .gamesSeason:
+			return (category.relationships.games?.data ?? []).prefix(10).map { .gameIdentity($0) }
 		}
 	}
 

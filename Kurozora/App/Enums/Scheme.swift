@@ -36,6 +36,7 @@ enum Scheme: String, CaseIterable {
 	case feed, timeline
 	case notification, notifications
 	case schedule
+	case season
 	case search
 	case parentalGuide = "parentalguide"
 
