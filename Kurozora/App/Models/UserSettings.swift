@@ -334,6 +334,17 @@ extension UserSettings {
 	}
 }
 
+#if DEBUG
+// MARK: - Face Detection
+extension UserSettings {
+	/// Returns the detection results that have already been submitted.
+	static var faceDetectionSubmitted: Set<String> {
+		guard let stored = self.shared.array(forKey: UserSettingsKey.faceDetectionSubmitted.rawValue) as? [String] else { return [] }
+		return Set(stored)
+	}
+}
+#endif
+
 // MARK: - Sounds & Haptics Settings
 extension UserSettings {
 	/// Returns a string indicating the preferred chime sound.

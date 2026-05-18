@@ -116,6 +116,10 @@ enum UserSettingsKey: String, CaseIterable {
 	case hapticsAllowed
 
 	// Register for notification
-	/// The key to the last notification registration reuest time.
+	/// The key to the last notification registration request time.
 	case lastNotificationRegistrationRequest
+
+	// Face Detection
+	/// The key to the detection results that have already been submitted.
+	case faceDetectionSubmitted
 }

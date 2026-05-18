@@ -23,6 +23,23 @@ final class FaceDetectionService {
 	private static let endpointPath = "face-detections/batch"
 	private static let sentinelDetectorIdentifier = "none"
 
+	/// The User-Agent string the Kurozora API validates against the registered iOS app client.
+	private static let userAgent: String = {
+		let info = Bundle.main.infoDictionary
+		let executable = info?["CFBundleExecutable"] as? String ?? "Unknown"
+		let bundle = info?["CFBundleIdentifier"] as? String ?? "Unknown"
+		let appVersion = info?["CFBundleShortVersionString"] as? String ?? "Unknown"
+		let appBuild = info?["CFBundleVersion"] as? String ?? "Unknown"
+		let version = ProcessInfo.processInfo.operatingSystemVersion
+		let versionString = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
+		#if targetEnvironment(macCatalyst)
+		let osNameVersion = "macOS(Catalyst) \(versionString)"
+		#else
+		let osNameVersion = "iOS \(versionString)"
+		#endif
+		return "\(executable)/\(appVersion) (\(bundle); build:\(appBuild); \(osNameVersion)) FaceDetection/1.0.0"
+	}()
+
 	private let stateQueue = DispatchQueue(label: "app.kurozora.face-detection.state")
 	private var pendingEntries: [FaceDetectionEntry] = []
 	private var flushTimer: Timer?
@@ -177,6 +194,7 @@ final class FaceDetectionService {
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("application/json", forHTTPHeaderField: "Accept")
 		request.setValue(KService.apiKey, forHTTPHeaderField: "X-API-Key")
+		request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
 
 		let token = KService.authenticationKey
 
