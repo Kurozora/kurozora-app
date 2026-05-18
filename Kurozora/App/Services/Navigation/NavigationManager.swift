@@ -121,6 +121,9 @@ final class NavigationManager: NSObject {
 			}
 		case .parentalGuide:
 			self.handleParentalGuideDeeplink(parameters: parameters, context: context)
+		case .stickers:
+			guard lastPathComponent == "whatsapp" else { return }
+			await WhatsAppStickerInstaller.shared.install(on: context)
 		}
 	}
 

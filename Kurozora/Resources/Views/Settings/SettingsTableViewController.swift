@@ -345,11 +345,15 @@ extension SettingsTableViewController {
 				self.showSecondary(segueID, sender: nil)
 			}
 		case .signalSticker:
-			guard let signalStickerURL = URL.signalStickerURL else { return }
-			UIApplication.shared.open(signalStickerURL)
+			UIApplication.shared.open(KService.signalStickerURL)
 		case .telegramSticker:
-			guard let telegramStickerURL = URL.telegramStickerURL else { return }
-			UIApplication.shared.open(telegramStickerURL)
+			UIApplication.shared.open(KService.telegramStickerURL)
+		case .whatsAppSticker:
+			let context = self.view.window?.windowScene.flatMap { NavigationContext(scene: $0) }
+
+			Task { @MainActor [weak self] in
+				await WhatsAppStickerInstaller.shared.install(on: context, presenter: self)
+			}
 		case .manageSubscriptions:
 			Task { [weak self] in
 				await Store.shared.manageSubscriptions(in: self?.view.window?.windowScene)

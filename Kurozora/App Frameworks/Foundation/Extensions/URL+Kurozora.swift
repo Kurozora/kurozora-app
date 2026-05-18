@@ -38,11 +38,8 @@ extension URL {
 	/// The Twitter page URL of Kurozora.
 	static let twitterPageURL = URL(string: "https://www.twitter.com/KurozoraApp")
 
-	/// Kuro-chan's Signal sticker pack URL.
-	static let signalStickerURL = URL(string: "https://signal.art/addstickers/#pack_id=a132f9a6b200d8978a5f5396decefdde&pack_key=db8680ea74e6f0fcb294bbad8dee75b9f27735a3cf81eb98f9c362a322df3177")
-
-	/// Kuro-chan's Telegram sticker pack URL.
-	static let telegramStickerURL = URL(string: "https://t.me/addstickers/KuroChanVT")
+	/// The WhatsApp third-party sticker install URL scheme.
+	static let whatsAppStickerInstallURL = URL(string: "whatsapp://stickerPack")
 
 	/// Log Horizon — Database website URL.
 	static let livingInTheDatabase = URL(string: "https://database.kurozora.app")

@@ -161,8 +161,8 @@ extension SettingsTableViewController {
 		/// The row representing the Telegram sticker cell.
 		case telegramSticker
 
-//		/// The row representing the WhatsApp sticker cell.
-//		case whatsAppSticker
+		/// The row representing the WhatsApp sticker cell.
+		case whatsAppSticker
 
 		/// The row representing the biometrics cell.
 		case biometrics
@@ -208,7 +208,7 @@ extension SettingsTableViewController {
 			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
-			.signalSticker, .telegramSticker,
+			.signalSticker, .telegramSticker, .whatsAppSticker,
 			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .requestRefund,
 			.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter
 		]
@@ -219,7 +219,7 @@ extension SettingsTableViewController {
 			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
-			.signalSticker, .telegramSticker,
+			.signalSticker, .telegramSticker, .whatsAppSticker,
 			.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures,
 			.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter
 		]
@@ -250,7 +250,7 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all general section settings rows.
-		static var allStickers: [Row] = [.signalSticker, .telegramSticker]
+		static var allStickers: [Row] = [.signalSticker, .telegramSticker, .whatsAppSticker]
 
 		/// An array containing all support section settings rows.
 		static var allSupport: [Row] {
@@ -279,7 +279,7 @@ extension SettingsTableViewController {
 		/// The segue identifier string of a settings row.
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .signalSticker, .telegramSticker, // .whatsAppSticker,
+			case .signalSticker, .telegramSticker, .whatsAppSticker,
 			     .manageSubscriptions, .restoreFeatures,
 			     .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter:
 				return nil
@@ -355,8 +355,8 @@ extension SettingsTableViewController {
 				return .chevron
 			case .telegramSticker:
 				return .chevron
-//			case .whatsAppSticker:
-//				return .chevron
+			case .whatsAppSticker:
+				return .chevron
 			case .biometrics:
 				return .chevron
 			case .privacy:
@@ -421,8 +421,8 @@ extension SettingsTableViewController {
 				return L10n.addStickerToSignal
 			case .telegramSticker:
 				return L10n.addStickerToTelegram
-//			case .whatsAppStickers:
-//				return "Add Sticker to WhatsApp"
+			case .whatsAppSticker:
+				return L10n.addStickerToWhatsApp
 			case .biometrics:
 				return UIDevice.supportedBiometric.localizedSettingsName
 			case .privacy:
@@ -501,8 +501,8 @@ extension SettingsTableViewController {
                 return .Icons.kuroChanStickerSignal
 			case .telegramSticker:
                 return .Icons.kuroChanStickerTelegram
-//			case .whatsAppSticker:
-//				return .Icons.kuroChanStickerWhatsApp
+			case .whatsAppSticker:
+				return .Icons.kuroChanStickerWhatsApp
 			case .biometrics:
 				return UIDevice.supportedBiometric.imageValue
 			case .privacy:

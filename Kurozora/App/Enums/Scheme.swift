@@ -23,6 +23,7 @@ import Foundation
 /// case schedule
 /// case search
 /// case parentalGuide
+/// case stickers
 /// ```
 enum Scheme: String, CaseIterable {
 	// MARK: - Cases
@@ -39,6 +40,7 @@ enum Scheme: String, CaseIterable {
 	case season
 	case search
 	case parentalGuide = "parentalguide"
+	case stickers
 
 	// MARK: - Properties
 	var urlValue: URL {

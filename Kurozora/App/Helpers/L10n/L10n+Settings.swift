@@ -406,6 +406,38 @@ extension L10n {
 		table: "Settings",
 		comment: "The string for the 'Add Sticker to Telegram' settings option."
 	)
+	/// The string for the 'Add Sticker to WhatsApp' settings option.
+	///
+	/// - Tag: L10n-addStickerToWhatsApp
+	static let addStickerToWhatsApp: String = String(
+		localized: "Add Sticker to WhatsApp",
+		table: "Settings",
+		comment: "The string for the 'Add Sticker to WhatsApp' settings option."
+	)
+	/// The alert message shown when WhatsApp is not installed on the device.
+	///
+	/// - Tag: L10n-whatsAppNotInstalled
+	static let whatsAppNotInstalled: String = String(
+		localized: "WhatsApp doesn’t appear to be installed on this device.",
+		table: "Settings",
+		comment: "The alert message shown when WhatsApp is not installed on the device."
+	)
+	/// The title of the alert shown when adding the WhatsApp sticker pack fails.
+	///
+	/// - Tag: L10n-stickerInstallFailedTitle
+	static let stickerInstallFailedTitle: String = String(
+		localized: "Couldn’t Add Sticker Pack",
+		table: "Settings",
+		comment: "The title of the alert shown when adding the WhatsApp sticker pack fails."
+	)
+	/// The message of the alert shown when adding the WhatsApp sticker pack fails.
+	///
+	/// - Tag: L10n-stickerInstallFailedMessage
+	static let stickerInstallFailedMessage: String = String(
+		localized: "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later.",
+		table: "Settings",
+		comment: "The message of the alert shown when adding the WhatsApp sticker pack fails."
+	)
 	/// The string for the 'Rate us on App Store' settings option.
 	///
 	/// - Tag: L10n-rateAppStore

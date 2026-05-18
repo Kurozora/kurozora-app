@@ -7,6 +7,9 @@
     "Add Sticker to Telegram" : {
       "comment" : "The string for the 'Add Sticker to Telegram' settings option."
     },
+    "Add Sticker to WhatsApp" : {
+      "comment" : "The string for the 'Add Sticker to WhatsApp' settings option."
+    },
     "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels." : {
       "comment" : "A short description for the sounds and haptics settings header."
     },
@@ -48,6 +51,9 @@
     },
     "Copy Subscription Link" : {
       "comment" : "The string for the 'Copy Subscription Link' calendar picker option."
+    },
+    "Couldn’t Add Sticker Pack" : {
+      "comment" : "The title of the alert shown when adding the WhatsApp sticker pack fails."
     },
     "Customize how your library is organized by setting the default sort order for each tracking status and media type." : {
       "comment" : "A short description for the library settings header."
@@ -181,6 +187,9 @@
     "Sign Out" : {
       "comment" : "The title string for the 'Sign Out' settings button."
     },
+    "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later." : {
+      "comment" : "The message of the alert shown when adding the WhatsApp sticker pack fails."
+    },
     "Sound" : {
       "comment" : "The string for the 'Sound' settings option."
     },
@@ -255,6 +264,9 @@
     },
     "View Show Details" : {
       "comment" : "The string for the 'view show details' notification action."
+    },
+    "WhatsApp doesn’t appear to be installed on this device." : {
+      "comment" : "The alert message shown when WhatsApp is not installed on the device."
     }
   },
   "version" : "1.0"
