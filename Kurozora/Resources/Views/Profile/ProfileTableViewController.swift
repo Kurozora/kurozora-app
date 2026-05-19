@@ -32,6 +32,8 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 	// MARK: - Properties
 	private var pendingLayoutUpdate: DispatchWorkItem?
+	private var statusObserver: Task<Void, Never>?
+
 	var heightCache: [IndexPath: CGFloat] = [:]
 	var userIdentity: UserIdentity?
 	var user: User! = User.current {
@@ -103,6 +105,10 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+
+	deinit {
+		self.statusObserver?.cancel()
 	}
 
 	/// Initialize a new instance of ProfileTableViewController with the given user id.
@@ -320,6 +326,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 			self.user = userResponse.data.first
 			self.configureProfile()
+			self.observeActivityStatus()
 
 			// Donate suggestion to Siri
 			self.userActivity = self.user.openDetailUserActivity
@@ -328,6 +335,25 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		}
 
 		await self.fetchFeedMessages()
+	}
+
+	/// Subscribes to live activity status updates for the currently displayed user.
+	private func observeActivityStatus() {
+		self.statusObserver?.cancel()
+
+		let userID = self.user.id
+		guard let numericID = Int(userID.rawValue) else { return }
+
+		self.statusObserver = Task { [weak self] in
+			for await event in KService.userStatusEvents(for: numericID) {
+				guard let self = self else { return }
+
+				await MainActor.run {
+					guard self.user.id == userID else { return }
+					self.profileHeaderView.updateActivityStatus(event.status)
+				}
+			}
+		}
 	}
 
 	func endFetch() {

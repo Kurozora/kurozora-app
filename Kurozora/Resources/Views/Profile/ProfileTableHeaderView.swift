@@ -36,6 +36,9 @@ class ProfileTableHeaderView: UIView {
 	/// The user currently being displayed. Stored for theme-change reconfigurations.
 	private var user: User?
 
+	/// The live activity status driving the online indicator. Set by ``ProfileTableViewController`` from realtime events.
+	private var activityStatus: ActivityStatus = .offline
+
 	// MARK: - Views
 	private(set) var bannerContainerView = UIView()
 	private(set) var bannerImageView = UIImageView()
@@ -121,6 +124,14 @@ class ProfileTableHeaderView: UIView {
 	}
 
 	// MARK: - Configuration
+	/// Updates the user's activity indicator.
+	///
+	/// - Parameter status: The activity status to render.
+	func updateActivityStatus(_ status: ActivityStatus) {
+		self.activityStatus = status
+		self.onlineIndicatorView.backgroundColor = status.colorValue
+	}
+
 	/// Configures all header elements with the given user's data.
 	func configure(with user: User) {
 		self.user = user
@@ -136,7 +147,7 @@ class ProfileTableHeaderView: UIView {
 		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.frame.size.height / 2
 
-		self.onlineIndicatorView.backgroundColor = user.attributes.activityStatus.colorValue
+		self.onlineIndicatorView.backgroundColor = self.activityStatus.colorValue
 		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.frame.size.height / 2
 
 		self.onlineIndicatorContainerView.isHidden = false
