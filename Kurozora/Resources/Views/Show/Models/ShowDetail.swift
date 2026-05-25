@@ -91,6 +91,9 @@ extension ShowDetail {
 				let ratingCount = show?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .season:
+				if let airYear = show?.attributes.startedAt?.components.year, show?.attributes.airSeason != nil {
+					return "\(airYear)"
+				}
 				return L10n.season
 			case .rank:
 				return L10n.chart // e.g. Thriller — show.attributes.popularity.genre

@@ -25,6 +25,7 @@ extension LiteratureDetailsCollectionViewController {
 		case personDetailsSegue
 		case reviewDetailsSegue
 		case parentalGuideSegue
+		case seasonalBrowseSegue
 	}
 
 	func makeDestinationVC(for identifier: SegueIdentifiers) -> UIViewController? {
@@ -43,6 +44,7 @@ extension LiteratureDetailsCollectionViewController {
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		case .parentalGuideSegue: return ParentalGuideCollectionViewController()
+		case .seasonalBrowseSegue: return SeasonalCollectionViewController()
 		}
 	}
 
@@ -131,6 +133,13 @@ extension LiteratureDetailsCollectionViewController {
 			guard let parentalGuideViewController = destination as? ParentalGuideCollectionViewController else { return }
 			guard let literatureIdentity = sender as? LiteratureIdentity else { return }
 			parentalGuideViewController.mediaType = .literature(literatureIdentity, title: self.literature?.attributes.title, ratingName: self.literature?.attributes.tvRating.name, ratingDescription: self.literature?.attributes.tvRating.description, slug: self.literature?.attributes.slug)
+		case .seasonalBrowseSegue:
+			guard let seasonalCollectionViewController = destination as? SeasonalCollectionViewController else { return }
+			guard let startedAt = self.literature?.attributes.startedAt else { return }
+			let (year, derivedSeason) = SeasonOfYear.yearAndSeason(from: startedAt)
+			seasonalCollectionViewController.kind = .literatures
+			seasonalCollectionViewController.year = year
+			seasonalCollectionViewController.season = self.literature?.attributes.publicationSeason.flatMap { SeasonOfYear(pathComponent: $0) } ?? derivedSeason
 		}
 	}
 }

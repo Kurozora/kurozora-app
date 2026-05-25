@@ -20,8 +20,11 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				if self.show?.attributes.startedAt != nil, self.show?.attributes.airSeason != nil {
+					self.show(.seasonalBrowseSegue, sender: nil)
+				} else if let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) {
+					collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				}
 				return
 			case .rank:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }

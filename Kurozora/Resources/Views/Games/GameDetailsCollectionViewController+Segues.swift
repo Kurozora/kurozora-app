@@ -25,6 +25,7 @@ extension GameDetailsCollectionViewController {
 		case characterDetailsSegue
 		case reviewDetailsSegue
 		case parentalGuideSegue
+		case seasonalBrowseSegue
 	}
 
 	func makeDestinationVC(for identifier: SegueIdentifiers) -> UIViewController? {
@@ -43,6 +44,7 @@ extension GameDetailsCollectionViewController {
 		case .personDetailsSegue: return PersonDetailsCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		case .parentalGuideSegue: return ParentalGuideCollectionViewController()
+		case .seasonalBrowseSegue: return SeasonalCollectionViewController()
 		}
 	}
 
@@ -140,6 +142,13 @@ extension GameDetailsCollectionViewController {
 			guard let parentalGuideViewController = destination as? ParentalGuideCollectionViewController else { return }
 			guard let gameIdentity = sender as? GameIdentity else { return }
 			parentalGuideViewController.mediaType = .game(gameIdentity, title: self.game?.attributes.title, ratingName: self.game?.attributes.tvRating.name, ratingDescription: self.game?.attributes.tvRating.description, slug: self.game?.attributes.slug)
+		case .seasonalBrowseSegue:
+			guard let seasonalCollectionViewController = destination as? SeasonalCollectionViewController else { return }
+			guard let startedAt = self.game?.attributes.startedAt else { return }
+			let (year, derivedSeason) = SeasonOfYear.yearAndSeason(from: startedAt)
+			seasonalCollectionViewController.kind = .games
+			seasonalCollectionViewController.year = year
+			seasonalCollectionViewController.season = self.game?.attributes.publicationSeason.flatMap { SeasonOfYear(pathComponent: $0) } ?? derivedSeason
 		}
 	}
 }

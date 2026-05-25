@@ -20,8 +20,11 @@ extension GameDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.publicationDates.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				if self.game?.attributes.startedAt != nil, self.game?.attributes.publicationSeason != nil {
+					self.show(.seasonalBrowseSegue, sender: nil)
+				} else if let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) {
+					collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.publicationDates.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				}
 				return
 			case .rank:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }

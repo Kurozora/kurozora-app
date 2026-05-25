@@ -91,6 +91,9 @@ extension LiteratureDetail {
 				let ratingCount = literature?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
 			case .season:
+				if let publicationYear = literature?.attributes.startedAt?.components.year, literature?.attributes.publicationSeason != nil {
+					return "\(publicationYear)"
+				}
 				return L10n.season
 			case .rank:
 				return L10n.chart // e.g. Thriller — literature.attributes.popularity.genre
