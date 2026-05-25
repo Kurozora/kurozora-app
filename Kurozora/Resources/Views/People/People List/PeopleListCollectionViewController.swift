@@ -61,7 +61,7 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 		self.title = L10n.people
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.people.lowercased()))
 		#endif
 	}
 
@@ -73,12 +73,12 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshPeople)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.people.lowercased()))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingPeople)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.people.lowercased()))
 		#endif
 
 		do {

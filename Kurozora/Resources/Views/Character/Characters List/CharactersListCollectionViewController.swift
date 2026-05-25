@@ -61,7 +61,7 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 		self.title = L10n.characters
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
 		#endif
 	}
 
@@ -73,12 +73,12 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingCharacters)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.characters.lowercased()))
 		#endif
 
 		do {

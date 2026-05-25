@@ -37,6 +37,9 @@
     "✓ Following" : {
       "comment" : "The user-cell follow button title when the current user is following the target user."
     },
+    "Achievements you earn show up here." : {
+      "comment" : "Empty-state detail for the achievements list when viewing your own profile."
+    },
     "Add %@" : {
       "comment" : "Title of the editor when adding a new entry for a category. The argument is the category display name."
     },
@@ -220,6 +223,9 @@
     "Move From Another Service" : {
       "comment" : "The headline string for the Library Import view"
     },
+    "No Achievements" : {
+      "comment" : "Empty-state title for the achievements list."
+    },
     "No Entries" : {
       "comment" : "The empty-state title on a Parental Guide category screen when no entries exist."
     },
@@ -237,6 +243,18 @@
     },
     "No Users" : {
       "comment" : "The empty-state title for a generic users list (search / leaderboard)."
+    },
+    "noAchievements.otherUserDetail" : {
+      "comment" : "Empty-state detail for the achievements list when viewing someone else's profile.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ has not earned any achievements yet."
+          }
+        }
+      }
     },
     "None" : {
       "comment" : "Placeholder shown for a category with no submissions in the Parental Guide summary."
@@ -280,65 +298,20 @@
     "Pull to refresh %@ list." : {
       "comment" : "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
     },
-    "Pull to refresh entries." : {
-      "comment" : "The pull-to-refresh prompt on the Parental Guide entries screen."
-    },
-    "Pull to refresh favorites list!" : {
-      "comment" : "Pull-to-refresh title for the favorites list."
-    },
-    "Pull to refresh genres list!" : {
-      "comment" : "Pull-to-refresh title for the genres list."
-    },
-    "Pull to refresh message details and replies!" : {
-      "comment" : "Pull-to-refresh title for the feed message details screen (thread view)."
-    },
-    "Pull to refresh parental guide." : {
-      "comment" : "The pull-to-refresh prompt on the Parental Guide screen."
-    },
-    "Pull to refresh profile details!" : {
-      "comment" : "Pull-to-refresh title for the profile details screen."
-    },
-    "Pull to refresh reminders list!" : {
-      "comment" : "Pull-to-refresh title for the reminders list."
-    },
-    "Pull to refresh reviews!" : {
-      "comment" : "Pull-to-refresh title for the global reviews list on a media item."
-    },
     "Pull to refresh the %@." : {
       "comment" : "Pull-to-refresh title for a user list variant. '%@' is the list kind, e.g. 'followers', 'following'."
     },
-    "Pull to refresh the cast." : {
-      "comment" : "Pull-to-refresh title for the cast list."
-    },
-    "Pull to refresh the characters." : {
-      "comment" : "Pull-to-refresh title for the characters list."
-    },
-    "Pull to refresh the episodes." : {
-      "comment" : "Pull-to-refresh title for the episodes list."
-    },
-    "Pull to refresh the leaderboard." : {
-      "comment" : "Pull-to-refresh title for the reputation leaderboard."
-    },
-    "Pull to refresh the people." : {
-      "comment" : "Pull-to-refresh title for the people list."
-    },
-    "Pull to refresh the reviews." : {
-      "comment" : "Pull-to-refresh title for a user's reviews list."
-    },
-    "Pull to refresh the seasons." : {
-      "comment" : "Pull-to-refresh title for the seasons list."
-    },
-    "Pull to refresh the studios." : {
-      "comment" : "Pull-to-refresh title for the studios list."
-    },
-    "Pull to refresh the users." : {
-      "comment" : "Pull-to-refresh title for the users list (follow / followers)."
-    },
-    "Pull to refresh your drafts!" : {
-      "comment" : "Pull-to-refresh title for the feed-message drafts list."
-    },
-    "Pull to refresh your explore feed!" : {
-      "comment" : "Pull-to-refresh title for the explore feed."
+    "pullToRefreshItems" : {
+      "comment" : "Pull-to-refresh title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Pull to refresh %@."
+          }
+        }
+      }
     },
     "Quote" : {
       "comment" : "The string for the 'Quote' context menu option."
@@ -379,56 +352,17 @@
     "Refreshing %@..." : {
       "comment" : "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'."
     },
-    "Refreshing cast..." : {
-      "comment" : "Refresh-in-progress title for the cast list."
-    },
-    "Refreshing characters..." : {
-      "comment" : "Refresh-in-progress title for the characters list."
-    },
-    "Refreshing drafts..." : {
-      "comment" : "Refresh-in-progress title for the feed-message drafts list."
-    },
-    "Refreshing episodes..." : {
-      "comment" : "Refresh-in-progress title for the episodes list."
-    },
-    "Refreshing favorites list..." : {
-      "comment" : "Refresh-in-progress title for the favorites list."
-    },
-    "Refreshing genres list..." : {
-      "comment" : "Refresh-in-progress title for the genres list."
-    },
-    "Refreshing leaderboard..." : {
-      "comment" : "Refresh-in-progress title for the reputation leaderboard."
-    },
-    "Refreshing message details..." : {
-      "comment" : "Refresh-in-progress title for the feed message details top section."
-    },
-    "Refreshing message replies..." : {
-      "comment" : "Refresh-in-progress title for the feed message replies list."
-    },
-    "Refreshing people..." : {
-      "comment" : "Refresh-in-progress title for the people list."
-    },
-    "Refreshing profile details..." : {
-      "comment" : "Refresh-in-progress title for the profile details screen."
-    },
-    "Refreshing reminders list..." : {
-      "comment" : "Refresh-in-progress title for the reminders list."
-    },
-    "Refreshing reviews..." : {
-      "comment" : "Refresh-in-progress title for the reviews list."
-    },
-    "Refreshing seasons..." : {
-      "comment" : "Refresh-in-progress title for the seasons list."
-    },
-    "Refreshing studios..." : {
-      "comment" : "Refresh-in-progress title for the studios list."
-    },
-    "Refreshing users..." : {
-      "comment" : "Refresh-in-progress title for the users list."
-    },
-    "Refreshing your explore feed..." : {
-      "comment" : "Refresh-in-progress title for the explore feed."
+    "refreshingItems" : {
+      "comment" : "Refresh-in-progress title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Refreshing %@..."
+          }
+        }
+      }
     },
     "Reply" : {
       "comment" : "The string for the 'Reply' context menu option."

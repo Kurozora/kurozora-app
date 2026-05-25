@@ -579,9 +579,6 @@
     "Product ids not set, call setProductIDs method!" : {
       "comment" : "The message string for the product not found."
     },
-    "Pull to refresh your sessions!" : {
-      "comment" : "Pull-to-refresh title for the active sessions list."
-    },
     "purchased.section" : {
       "comment" : "The 'purchased' section header on the Request Refund view.",
       "extractionState" : "extracted_with_value",
@@ -599,9 +596,6 @@
     },
     "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use." : {
       "comment" : "The footer string for the Redeem view."
-    },
-    "Refreshing sessions..." : {
-      "comment" : "Refresh-in-progress title for the active sessions list."
     },
     "refund.empty.detail" : {
       "comment" : "The empty-state detail for the Request Refund view.",

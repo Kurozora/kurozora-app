@@ -389,6 +389,69 @@ extension L10n {
 		localized: "People",
 		comment: "The string for the word 'people'."
 	)
+	/// The string for the word 'genres'.
+	///
+	/// - Tag: L10n-genres
+	static let genres: String = String(
+		localized: "Genres",
+		comment: "The string for the word 'genres'."
+	)
+	/// The string for the word 'themes'.
+	///
+	/// - Tag: L10n-themes
+	static let themes: String = String(
+		localized: "Themes",
+		comment: "The string for the word 'themes'."
+	)
+	/// The string for the word 'leaderboard'.
+	///
+	/// - Tag: L10n-leaderboard
+	static let leaderboard: String = String(
+		localized: "Leaderboard",
+		comment: "The string for the word 'leaderboard'."
+	)
+	/// The string for the phrase 'profile details'.
+	///
+	/// - Tag: L10n-profileDetails
+	static let profileDetails: String = String(
+		localized: "Profile Details",
+		comment: "The string for the phrase 'profile details'."
+	)
+	/// The string for the phrase 'message details'.
+	///
+	/// - Tag: L10n-messageDetails
+	static let messageDetails: String = String(
+		localized: "Message Details",
+		comment: "The string for the phrase 'message details'."
+	)
+	/// The string for the phrase 'message replies'.
+	///
+	/// - Tag: L10n-messageReplies
+	static let messageReplies: String = String(
+		localized: "Message Replies",
+		comment: "The string for the phrase 'message replies'."
+	)
+	/// The string for the phrase 'explore feed'.
+	///
+	/// - Tag: L10n-exploreFeed
+	static let exploreFeed: String = String(
+		localized: "Explore Feed",
+		comment: "The string for the phrase 'explore feed'."
+	)
+	/// The string for the phrase 'parental guide entries'.
+	///
+	/// - Tag: L10n-parentalGuideEntries
+	static let parentalGuideEntries: String = String(
+		localized: "Parental Guide Entries",
+		comment: "The string for the phrase 'parental guide entries'."
+	)
+	/// The string for the word 'sessions'.
+	///
+	/// - Tag: L10n-sessions
+	static let sessions: String = String(
+		localized: "Sessions",
+		comment: "The string for the word 'sessions'."
+	)
 	/// The string for the word 'more'.
 	///
 	/// - Tag: L10n-more

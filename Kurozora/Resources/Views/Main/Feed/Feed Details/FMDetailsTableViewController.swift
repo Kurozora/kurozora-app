@@ -31,7 +31,7 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 			self.title = "\(repliesCount.kkFormatted(precision: 0)) replies"
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingMessageReplies)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageReplies.lowercased()))
 			#endif
 		}
 	}
@@ -87,7 +87,7 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshMessageDetails)
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased()))
 		#endif
 
 		Task { [weak self] in
@@ -191,14 +191,14 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshMessageDetails)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased()))
 		#endif
 	}
 
 	/// Fetch feed message details.
 	func fetchDetails() async {
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingMessageDetails)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageDetails.lowercased()))
 		#endif
 
 		do {

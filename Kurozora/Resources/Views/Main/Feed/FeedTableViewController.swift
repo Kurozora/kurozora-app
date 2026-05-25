@@ -63,7 +63,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshExploreFeed)
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased()))
 		#endif
 
 		self.title = L10n.feed
@@ -212,7 +212,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshExploreFeed)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased()))
 		#endif
 	}
 
@@ -227,7 +227,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingExploreFeed)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.exploreFeed.lowercased()))
 		#endif
 
 		do {

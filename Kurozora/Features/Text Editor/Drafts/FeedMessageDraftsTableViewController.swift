@@ -80,7 +80,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshDrafts)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.drafts.lowercased()))
 		#endif
 
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -115,7 +115,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 	private func loadDrafts() {
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingDrafts)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.drafts.lowercased()))
 		#endif
 
 		self.drafts = DraftStore.shared.drafts(forUserSlug: self.userSlug)
@@ -125,7 +125,7 @@ final class FeedMessageDraftsTableViewController: KTableViewController {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshDrafts)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.drafts.lowercased()))
 		#endif
 	}
 

@@ -105,7 +105,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshEpisodes)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.episodes.lowercased()))
 		#endif
 
 		switch self.episodesListFetchType {
@@ -190,12 +190,12 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshEpisodes)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.episodes.lowercased()))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingEpisodes)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.episodes.lowercased()))
 		#endif
 
 		do {

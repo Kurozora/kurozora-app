@@ -818,22 +818,6 @@ extension L10n {
 	)
 
 	// MARK: - Sessions
-	/// Pull-to-refresh title for the active sessions list.
-	///
-	/// - Tag: L10n-pullToRefreshSessions
-	static let pullToRefreshSessions: String = String(
-		localized: "Pull to refresh your sessions!",
-		table: "Account",
-		comment: "Pull-to-refresh title for the active sessions list."
-	)
-	/// Refresh-in-progress title for the active sessions list.
-	///
-	/// - Tag: L10n-refreshingSessions
-	static let refreshingSessions: String = String(
-		localized: "Refreshing sessions...",
-		table: "Account",
-		comment: "Refresh-in-progress title for the active sessions list."
-	)
 	/// The string for the 'current session' section.
 	///
 	/// - Tag: L10n-currentSession

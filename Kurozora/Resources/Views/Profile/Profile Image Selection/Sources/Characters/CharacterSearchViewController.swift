@@ -75,7 +75,7 @@ class CharacterSearchViewController: KCollectionViewController {
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
 		#endif
 
 		self.navigationItem.searchController = self.searchController
@@ -237,7 +237,7 @@ class CharacterSearchViewController: KCollectionViewController {
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshCharacters)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
 		#endif
 		#endif
 	}

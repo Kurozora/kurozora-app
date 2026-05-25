@@ -23,7 +23,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshThemesList)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased()))
 			#endif
 			#endif
 		}
@@ -64,7 +64,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 		// Setup refresh control
 		self._prefersRefreshControlDisabled = false
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshThemesList)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased()))
 		#endif
 		#else
 		self._prefersRefreshControlDisabled = true
@@ -107,7 +107,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingThemesList)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.themes.lowercased()))
 			#endif
 			#endif
 		}

@@ -226,6 +226,9 @@
     "Explore" : {
       "comment" : "The string for the word 'explore'."
     },
+    "Explore Feed" : {
+      "comment" : "The string for the phrase 'explore feed'."
+    },
     "Fall" : {
       "comment" : "The string for the word 'fall'."
     },
@@ -297,7 +300,7 @@
       "comment" : "The string for the word 'general'."
     },
     "Genres" : {
-      "comment" : "The column header for the item's genres in the library table layout."
+      "comment" : "The column header for the item's genres in the library table layout.\nThe string for the word 'genres'."
     },
     "Guest" : {
       "comment" : "The string for the word 'Guest'."
@@ -368,6 +371,9 @@
     "Launch Kurozora" : {
 
     },
+    "Leaderboard" : {
+      "comment" : "The string for the word 'leaderboard'."
+    },
     "Library" : {
       "comment" : "The string for the word 'library'."
     },
@@ -415,6 +421,12 @@
     },
     "Message" : {
       "comment" : "The string for the word 'message'."
+    },
+    "Message Details" : {
+      "comment" : "The string for the phrase 'message details'."
+    },
+    "Message Replies" : {
+      "comment" : "The string for the phrase 'message replies'."
     },
     "Milestones" : {
       "comment" : "The string for the word 'Milestones'."
@@ -479,6 +491,9 @@
     "Page" : {
 
     },
+    "Parental Guide Entries" : {
+      "comment" : "The string for the phrase 'parental guide entries'."
+    },
     "Passcode" : {
       "comment" : "The string for the word 'passcode'."
     },
@@ -517,6 +532,9 @@
     },
     "Profile" : {
       "comment" : "The string for the word 'profile'."
+    },
+    "Profile Details" : {
+      "comment" : "The string for the phrase 'profile details'."
     },
     "Progress" : {
       "comment" : "The column header for the item's progress indicator in the library table layout."
@@ -657,6 +675,9 @@
     "Send" : {
       "comment" : "The string for the word 'send'."
     },
+    "Sessions" : {
+      "comment" : "The string for the word 'sessions'."
+    },
     "Settings" : {
       "comment" : "The string for the word 'settings'."
     },
@@ -752,6 +773,9 @@
     },
     "Theme" : {
       "comment" : "The string for the word 'theme'."
+    },
+    "Themes" : {
+      "comment" : "The string for the word 'themes'."
     },
     "There are %lld titles matching ‘%@’." : {
       "localizations" : {

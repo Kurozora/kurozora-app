@@ -71,7 +71,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReviews)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
 		#endif
 	}
 
@@ -128,7 +128,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingReviews)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reviews.lowercased()))
 			#endif
 		}
 
@@ -187,7 +187,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshReviews)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
 		#endif
 
 		self.fetchInProgress = false

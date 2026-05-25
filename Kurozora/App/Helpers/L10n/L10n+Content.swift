@@ -1111,7 +1111,7 @@ extension L10n {
 	static func pullToRefreshItems(_ items: String) -> String {
 		return String(
 			localized: "pullToRefreshItems",
-			defaultValue: "Pull to refresh \(items).",
+			defaultValue: "Pull to refresh \(items)…",
 			table: "Content",
 			comment: "Pull-to-refresh title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements')."
 		)
@@ -1124,7 +1124,7 @@ extension L10n {
 	static func refreshingItems(_ items: String) -> String {
 		return String(
 			localized: "refreshingItems",
-			defaultValue: "Refreshing \(items)...",
+			defaultValue: "Refreshing \(items)…",
 			table: "Content",
 			comment: "Refresh-in-progress title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements')."
 		)
@@ -1300,22 +1300,6 @@ extension L10n {
 		localized: "Parental Guide",
 		table: "Content",
 		comment: "The title of the Parental Guide screen."
-	)
-	/// The pull-to-refresh prompt on the Parental Guide screen.
-	///
-	/// - Tag: L10n-pullToRefreshParentalGuide
-	static let pullToRefreshParentalGuide: String = String(
-		localized: "Pull to refresh parental guide.",
-		table: "Content",
-		comment: "The pull-to-refresh prompt on the Parental Guide screen."
-	)
-	/// The pull-to-refresh prompt on the Parental Guide entries screen.
-	///
-	/// - Tag: L10n-pullToRefreshParentalGuideEntries
-	static let pullToRefreshParentalGuideEntries: String = String(
-		localized: "Pull to refresh entries.",
-		table: "Content",
-		comment: "The pull-to-refresh prompt on the Parental Guide entries screen."
 	)
 	/// The empty-state title on the Parental Guide screen when no entries exist yet.
 	///

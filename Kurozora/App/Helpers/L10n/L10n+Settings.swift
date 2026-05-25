@@ -668,38 +668,6 @@ extension L10n {
 	)
 
 	// MARK: - Refresh Control Titles
-	/// Pull-to-refresh title for the notifications list.
-	///
-	/// - Tag: L10n-pullToRefreshNotifications
-	static let pullToRefreshNotifications: String = String(
-		localized: "Pull to refresh your notifications!",
-		table: "Settings",
-		comment: "Pull-to-refresh title for the notifications list."
-	)
-	/// Refresh-in-progress title for the notifications list.
-	///
-	/// - Tag: L10n-refreshingNotifications
-	static let refreshingNotifications: String = String(
-		localized: "Refreshing notifications...",
-		table: "Settings",
-		comment: "Refresh-in-progress title for the notifications list."
-	)
-	/// Pull-to-refresh title for the themes list in the Theme Store.
-	///
-	/// - Tag: L10n-pullToRefreshThemesList
-	static let pullToRefreshThemesList: String = String(
-		localized: "Pull to refresh themes list!",
-		table: "Settings",
-		comment: "Pull-to-refresh title for the themes list in the Theme Store."
-	)
-	/// Refresh-in-progress title for the themes list in the Theme Store.
-	///
-	/// - Tag: L10n-refreshingThemesList
-	static let refreshingThemesList: String = String(
-		localized: "Refreshing themes list...",
-		table: "Settings",
-		comment: "Refresh-in-progress title for the themes list in the Theme Store."
-	)
 
 	// MARK: - Theme Store
 	/// The menu button for applying a downloaded theme.

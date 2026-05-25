@@ -63,7 +63,7 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 		self.title = L10n.studios
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.studios.lowercased()))
 		#endif
 	}
 
@@ -75,12 +75,12 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshStudios)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.studios.lowercased()))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingStudios)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.studios.lowercased()))
 		#endif
 
 		do {

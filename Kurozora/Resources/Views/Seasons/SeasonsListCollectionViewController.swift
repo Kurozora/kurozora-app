@@ -51,7 +51,7 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 		self.title = L10n.seasons
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.seasons.lowercased()))
 		#endif
 	}
 
@@ -63,12 +63,12 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSeasons)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.seasons.lowercased()))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingSeasons)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.seasons.lowercased()))
 		#endif
 
 		do {

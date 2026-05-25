@@ -69,7 +69,7 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshParentalGuide)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.parentalGuide.lowercased()))
 		#endif
 	}
 

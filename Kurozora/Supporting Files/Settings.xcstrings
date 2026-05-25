@@ -130,12 +130,6 @@
     "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere." : {
       "comment" : "A short description for the reminder subscription settings header."
     },
-    "Pull to refresh themes list!" : {
-      "comment" : "Pull-to-refresh title for the themes list in the Theme Store."
-    },
-    "Pull to refresh your notifications!" : {
-      "comment" : "Pull-to-refresh title for the notifications list."
-    },
     "Rate us on App Store" : {
       "comment" : "The string for the 'Rate us on App Store' settings option."
     },
@@ -147,12 +141,6 @@
     },
     "Reduce the intensity of animations, and motion effects throughout Kurozora." : {
       "comment" : "The footer string for the 'Reduce Motion' settings option."
-    },
-    "Refreshing notifications..." : {
-      "comment" : "Refresh-in-progress title for the notifications list."
-    },
-    "Refreshing themes list..." : {
-      "comment" : "Refresh-in-progress title for the themes list in the Theme Store."
     },
     "Remove Theme" : {
       "comment" : "The destructive action sheet button for removing a downloaded theme."

@@ -70,7 +70,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSessions)
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased()))
 		#endif
 
 		self.configureView()
@@ -159,7 +159,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshSessions)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased()))
 		#endif
 		#endif
 	}
@@ -174,7 +174,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingSessions)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.sessions.lowercased()))
 		#endif
 
 		do {
