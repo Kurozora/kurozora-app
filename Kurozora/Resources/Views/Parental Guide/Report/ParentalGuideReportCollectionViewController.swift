@@ -29,8 +29,15 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+
 	override var prefersRefreshControlDisabled: Bool {
-		return true
+		return self._prefersRefreshControlDisabled
 	}
 
 	override var prefersActivityIndicatorHidden: Bool {
@@ -40,6 +47,8 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self._prefersRefreshControlDisabled = true
 
 		self.title = L10n.reportParentalGuideEntry
 

@@ -29,8 +29,7 @@ class SearchFilterSelectCollectionViewCell: SearchFilterBaseCollectionViewCell {
 	}
 
 	// MARK: - IBActions
-	@objc
-	func menuOptionChanged(_ sender: UIAction) {
+	@objc func menuOptionChanged(_ sender: UIAction) {
 		self.delegate?.searchFilterBaseCollectionViewCell(self, didChangeValue: sender.title)
 	}
 }

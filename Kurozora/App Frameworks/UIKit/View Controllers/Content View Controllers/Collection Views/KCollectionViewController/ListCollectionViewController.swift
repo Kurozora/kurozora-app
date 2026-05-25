@@ -11,15 +11,14 @@ import UIKit
 
 /// A base collection view controller for paginated, identity-backed lists.
 class ListCollectionViewController: KCollectionViewController {
-	// MARK: - Pagination
+	// MARK: - Properties
 	/// The URL of the next page of results, or `nil` when the list is exhausted.
 	var nextPageCursor: PageCursor?
 
 	/// A Boolean value that indicates whether a fetch request is in progress.
 	var isRequestInProgress: Bool = false
 
-	// MARK: - Refresh control
-	/// The storage for ``prefersRefreshControlDisabled``.
+	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
 			self.setNeedsRefreshControlAppearanceUpdate()
@@ -30,7 +29,7 @@ class ListCollectionViewController: KCollectionViewController {
 		return self._prefersRefreshControlDisabled
 	}
 
-	// MARK: - Activity indicator
+	// Activity indicator
 	/// The storage for ``prefersActivityIndicatorHidden``.
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -42,7 +41,7 @@ class ListCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
-	// MARK: - Subclass hooks
+	// Subclass hooks
 	/// The image displayed in the empty-data view.
 	var emptyStateImage: UIImage { UIImage() }
 
@@ -54,9 +53,6 @@ class ListCollectionViewController: KCollectionViewController {
 
 	/// A Boolean value that indicates whether the list already has data loaded.
 	var hasLoadedInitialData: Bool { false }
-
-	/// Fetches the next page of items.
-	func fetchItems() async {}
 
 	// MARK: - View lifecycle
 	override func viewWillReload() {
@@ -86,7 +82,11 @@ class ListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	// MARK: - Refresh
+	// MARK: Functions
+	/// Fetches the next page of items.
+	func fetchItems() async {}
+
+	// Refresh
 	override func handleRefreshControl() {
 		self.nextPageCursor = nil
 
@@ -100,7 +100,7 @@ class ListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	// MARK: - Empty state
+	// Empty state
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: self.emptyStateImage)
 		self.emptyBackgroundView.configureLabels(title: self.emptyStateTitle, detail: self.emptyStateDetail)
@@ -133,7 +133,7 @@ class ListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
-	// MARK: - Pagination
+	// Pagination
 	/// Requests the next page when `indexPath` crosses the pagination threshold.
 	///
 	/// - Parameters:

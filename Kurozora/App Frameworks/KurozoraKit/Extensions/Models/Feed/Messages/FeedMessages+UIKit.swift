@@ -92,6 +92,9 @@ extension FeedMessage {
 				profileElements.append(blockAction)
 			}
 
+			// Mod actions
+			profileElements.append(contentsOf: user.makeModerationMenuElements(in: viewController, userInfo: userInfo))
+
 			menuElements.append(UIMenu(title: "@\(user.attributes.slug)", children: profileElements))
 
 			if User.isSignedIn, user == User.current {

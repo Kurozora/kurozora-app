@@ -1,0 +1,176 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ (%@)" : {
+      "comment" : "Expiry value for a temporary suspension, showing absolute date and relative countdown.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "%@ is currently suspended." : {
+      "comment" : "Admin headline for a temporary suspension."
+    },
+    "%@ is permanently suspended." : {
+      "comment" : "Admin headline for a permanent suspension."
+    },
+    "1 hour" : {
+      "comment" : "Timeout duration label."
+    },
+    "3 days" : {
+      "comment" : "Timeout duration label."
+    },
+    "7 days" : {
+      "comment" : "Timeout duration label."
+    },
+    "24 hours" : {
+      "comment" : "Timeout duration label."
+    },
+    "30 days" : {
+      "comment" : "Timeout duration label."
+    },
+    "Account Suspended" : {
+      "comment" : "Title of the suspension details view as seen by the suspended user."
+    },
+    "Appeal from %@" : {
+      "comment" : "Section header for the suspended user's appeal as seen by a moderator."
+    },
+    "Choose Duration" : {
+      "comment" : "Menu title for the duration picker."
+    },
+    "Choose Reason" : {
+      "comment" : "Menu title for the reason picker."
+    },
+    "Community Guidelines" : {
+      "comment" : "Button on the suspension details view that opens the community guidelines."
+    },
+    "Contest Suspension" : {
+      "comment" : "Title of the appeal compose view."
+    },
+    "Contest this suspension" : {
+      "comment" : "Primary action on the user-facing suspension details view."
+    },
+    "Duration" : {
+      "comment" : "Leading row title for the duration picker on the moderator issue-timeout view."
+    },
+    "Edit appeal" : {
+      "comment" : "Primary action on the user-facing suspension details view when an appeal has already been filed."
+    },
+    "Edit Appeal" : {
+      "comment" : "Title of the appeal compose view when editing an existing appeal."
+    },
+    "Ends" : {
+      "comment" : "Leading label of the expiry row on the suspension details view."
+    },
+    "Explain why you believe your suspension should be lifted. A moderator will review your message." : {
+      "comment" : "Prompt above the appeal text field."
+    },
+    "Filed %@" : {
+      "comment" : "Footer line showing when an appeal was filed."
+    },
+    "Harassment" : {
+      "comment" : "Timeout reason label."
+    },
+    "Hate" : {
+      "comment" : "Timeout reason label."
+    },
+    "Impersonation" : {
+      "comment" : "Timeout reason label."
+    },
+    "Issue Timeout" : {
+      "comment" : "Context menu action that opens the issue-timeout form."
+    },
+    "Moderator note" : {
+      "comment" : "Header for the moderator note on the suspension details view."
+    },
+    "No end date" : {
+      "comment" : "Expiry value for a permanent suspension."
+    },
+    "Note" : {
+      "comment" : "Section header for the note field on the moderator issue-timeout view."
+    },
+    "Note for the user" : {
+      "comment" : "Placeholder for the note field on the moderator issue-timeout view."
+    },
+    "NSFW" : {
+      "comment" : "Timeout reason label."
+    },
+    "Other" : {
+      "comment" : "Timeout reason label."
+    },
+    "Permanent" : {
+      "comment" : "Timeout duration label."
+    },
+    "Reason" : {
+      "comment" : "Leading label of the reason row on the suspension details view.\nLeading row title for the reason picker on the moderator issue-timeout view."
+    },
+    "Revoke Timeout" : {
+      "comment" : "Context menu action that lifts an active timeout."
+    },
+    "Revoke timeout on %@?" : {
+      "comment" : "Alert title for revoking a user's active timeout."
+    },
+    "Spam" : {
+      "comment" : "Timeout reason label."
+    },
+    "Submit" : {
+      "comment" : "Submit bar-button label on the moderator issue-timeout view."
+    },
+    "Submit Appeal" : {
+      "comment" : "Submit button on the appeal compose view."
+    },
+    "Suspended" : {
+      "comment" : "Profile banner shown for an active suspension without an expiry."
+    },
+    "Suspended for %lld day(s)" : {
+      "comment" : "Profile banner showing the remaining days of a suspension."
+    },
+    "Suspended for %lld hour(s)" : {
+      "comment" : "Profile banner showing the remaining hours of a suspension."
+    },
+    "Suspended for %lld minute(s)" : {
+      "comment" : "Profile banner showing the remaining minutes of a suspension."
+    },
+    "Suspended for %lld second(s)" : {
+      "comment" : "Profile banner showing the remaining seconds of a suspension."
+    },
+    "Suspended permanently" : {
+      "comment" : "Profile banner shown for a permanent suspension."
+    },
+    "Suspension Details" : {
+      "comment" : "Title of the suspension details view as seen by a moderator."
+    },
+    "Suspension ending" : {
+      "comment" : "Profile banner shown when a suspension has just ended."
+    },
+    "This lifts the suspension immediately. The user will be able to post, rate, and engage again." : {
+      "comment" : "Alert body for revoking a user's active timeout."
+    },
+    "Timeout" : {
+      "comment" : "Section header grouping the duration and reason pickers on the moderator issue-timeout view."
+    },
+    "Update Appeal" : {
+      "comment" : "Submit button on the appeal compose view when updating an existing appeal."
+    },
+    "Write your appeal" : {
+      "comment" : "Placeholder inside the appeal text view."
+    },
+    "Your account is permanently suspended." : {
+      "comment" : "Heading on the suspension details view for a permanent ban."
+    },
+    "Your account is temporarily suspended." : {
+      "comment" : "Heading on the suspension details view for a temporary suspension."
+    },
+    "Your appeal" : {
+      "comment" : "Section header for the suspended user's own appeal."
+    },
+    "Your appeal must be at least 10 characters long." : {
+      "comment" : "Error shown when the appeal message is too short."
+    }
+  },
+  "version" : "1.0"
+}

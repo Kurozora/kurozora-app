@@ -136,8 +136,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 		])
 	}
 
-	@objc
-	func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
+	@objc func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
 		guard let libraryKind = LibraryKind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 

@@ -47,8 +47,8 @@ final class NotificationsRealtimeBridge {
 				userInfo: Self.userInfo(for: ids)
 			)
 		case .newSession, .newFollower, .newFeedMessageReply, .newFeedMessageReShare,
-			.newUserMention, .subscriptionStatus, .libraryImportFinished,
-			.libraryImportUnsupported, .localLibraryImportFinished:
+			.newUserMention, .subscriptionStatus, .userTimedOut, .userTimeoutExpired,
+			.libraryImportFinished, .libraryImportUnsupported, .localLibraryImportFinished:
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		}
 	}

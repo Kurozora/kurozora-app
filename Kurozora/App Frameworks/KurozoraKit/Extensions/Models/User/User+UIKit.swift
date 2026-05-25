@@ -125,6 +125,9 @@ extension User {
 			menuElements.append(blockAction)
 		}
 
+		// Mod actions
+		menuElements.append(contentsOf: self.makeModerationMenuElements(in: viewController, userInfo: userInfo))
+
 		// Create "Share" element
 		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
@@ -216,8 +219,8 @@ extension User {
 	func confirmBlock(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) {
 		let isBlocked = self.attributes.blockStatus == .blocked
 		let title = isBlocked
-			? L10n.unblockTitle("@\(self.attributes.username)")
-			: L10n.blockTitle("@\(self.attributes.username)")
+			? L10n.unblockTitle("@\(self.attributes.slug)")
+			: L10n.blockTitle("@\(self.attributes.slug)")
 		let actionTitle = isBlocked ? L10n.unblock : L10n.block
 		let actionStyle: UIAlertAction.Style = isBlocked ? .default : .destructive
 
@@ -285,6 +288,106 @@ extension User {
 		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
 		viewController?.present(settingsSplitViewController, animated: true)
+	}
+
+	/// Builds the moderation section of the user context menu.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the menu.
+	///    - userInfo: Additional information about the context menu.
+	///
+	/// - Returns: An element array containing the moderation submenu.
+	func makeModerationMenuElements(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> [UIMenuElement] {
+		guard User.isSignedIn, User.current?.id != self.id, User.current?.attributes.isModerator == true else {
+			return []
+		}
+
+		var actions: [UIMenuElement] = []
+
+		let issueTimeoutAction = UIAction(
+			title: L10n.issueTimeout,
+			image: UIImage(systemName: "clock.badge.exclamationmark")
+		) { [weak self] _ in
+			guard let self = self else { return }
+			self.presentIssueTimeoutForm(on: viewController)
+		}
+		actions.append(issueTimeoutAction)
+
+		if self.relationships?.timeout?.data.first != nil {
+			let revokeTimeoutAction = UIAction(
+				title: L10n.revokeTimeout,
+				image: UIImage(systemName: "checkmark.seal"),
+				attributes: .destructive
+			) { [weak self] _ in
+				guard let self = self else { return }
+				self.confirmRevokeTimeout(via: viewController)
+			}
+			actions.append(revokeTimeoutAction)
+		}
+
+		return [UIMenu(title: "", options: .displayInline, children: actions)]
+	}
+
+	/// Presents the moderator issue-timeout compose flow against this user.
+	///
+	/// - Parameter viewController: The view controller from which to present the form.
+	func presentIssueTimeoutForm(on viewController: UIViewController?) {
+		let composeViewController = IssueTimeoutCollectionViewController()
+		composeViewController.targetUser = self
+		let navigationController = UINavigationController(rootViewController: composeViewController)
+		viewController?.present(navigationController, animated: true)
+	}
+
+	/// Confirms revocation of the active timeout before issuing the request.
+	///
+	/// - Parameter viewController: The view controller presenting the confirmation alert.
+	func confirmRevokeTimeout(via viewController: UIViewController?) {
+		let title = L10n.confirmRevokeTimeoutTitle(self.attributes.username)
+		let message = L10n.confirmRevokeTimeoutMessage
+
+		let alertController = UIAlertController.alert(title: title, message: message) { alertController in
+			let revokeAction = UIAlertAction(title: L10n.revokeTimeout, style: .destructive) { [weak self] _ in
+				guard let self = self else { return }
+				Task { await self.revokeTimeout(on: viewController) }
+			}
+			alertController.addAction(revokeAction)
+		}
+
+		if let popoverController = alertController.popoverPresentationController, let view = viewController?.view {
+			popoverController.sourceView = view
+			popoverController.sourceRect = view.frame
+		}
+
+		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			viewController?.present(alertController, animated: true, completion: nil)
+		}
+	}
+
+	/// Revokes the active moderation timeout on this user.
+	///
+	/// - Parameter viewController: The view controller used to surface any error alert.
+	@MainActor
+	func revokeTimeout(on viewController: UIViewController?) async {
+		let userIdentity = UserIdentity(id: self.id)
+
+		do {
+			_ = try await KService.revokeTimeout(userIdentity).response()
+			NotificationCenter.default.post(name: .KUserTimeoutDidChange, object: self.id)
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print("-----", error.localizedDescription)
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+	}
+}
+
+// MARK: - Moderation
+extension User.Attributes {
+	/// Whether the user currently holds a moderation role.
+	var isModerator: Bool {
+		guard let role = self.role else { return false }
+		return role == .superAdmin || role == .admin || role == .mod
 	}
 }
 

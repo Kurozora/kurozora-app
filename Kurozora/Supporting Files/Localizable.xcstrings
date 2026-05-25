@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ (%@)" : {
+      "comment" : "Expiry value for a temporary suspension, showing absolute date and relative countdown.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
     "%@ total series" : {
       "comment" : "The string for the word '%@ total series'."
     },
@@ -466,6 +477,9 @@
     },
     "Notifications" : {
       "comment" : "The string for the word 'notifications'."
+    },
+    "NSFW" : {
+      "comment" : "Timeout reason label."
     },
     "Number" : {
       "comment" : "The string for the word 'number'."

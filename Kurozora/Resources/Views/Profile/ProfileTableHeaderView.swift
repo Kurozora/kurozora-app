@@ -20,6 +20,7 @@ protocol ProfileTableHeaderViewDelegate: AnyObject {
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressFollowersButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReviewsButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressBadge profileBadge: ProfileBadge, from button: UIButton)
+	func profileTableHeaderViewDidPressTimeoutBanner(_ headerView: ProfileTableHeaderView)
 }
 
 // MARK: - ProfileTableHeaderView
@@ -56,6 +57,8 @@ class ProfileTableHeaderView: UIView {
 	private let displayNameLabel = KLabel()
 	private let usernameLabel = KSecondaryLabel()
 	private let userDetailsBodyView = UIView()
+	private let bodyStackView = UIStackView()
+	private let timeoutBannerButton = TimerButton()
 	private let bioTextView = KTextView()
 	private let buttonsStackView = UIStackView()
 	private let reputationButton = KButton()
@@ -164,6 +167,19 @@ class ProfileTableHeaderView: UIView {
 		}
 		user.attributes.bannerImage(imageView: self.bannerImageView)
 
+		// Configure timeout banner
+		let isSelfOrModerator = user.id == User.current?.id || User.current?.attributes.isModerator == true
+
+		if isSelfOrModerator, let attributes = user.relationships?.timeout?.data.first?.attributes {
+			self.timeoutBannerButton.isHidden = false
+			self.timeoutBannerButton.startCountdown(to: attributes.expiresAt) { remaining in
+				attributes.suspensionBannerTitle(forRemaining: remaining)
+			}
+		} else {
+			self.timeoutBannerButton.stopCountdown()
+			self.timeoutBannerButton.isHidden = true
+		}
+
 		// Configure user bio
 		self.bioTextView.setAttributedText(user.attributes.biographyMarkdown?.markdownAttributedString())
 
@@ -227,6 +243,12 @@ class ProfileTableHeaderView: UIView {
 	/// Configure the views.
 	private func configureViews() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeUpdate), name: .ThemeUpdateNotification, object: nil)
+
+		// Timeout banner button
+		self.timeoutBannerButton.translatesAutoresizingMaskIntoConstraints = false
+		self.timeoutBannerButton.isHidden = true
+		self.timeoutBannerButton.configuration?.image = UIImage(systemName: "exclamationmark.octagon.fill")
+		self.timeoutBannerButton.addTarget(self, action: #selector(self.timeoutBannerTapped), for: .touchUpInside)
 
 		// Banner container view
 		self.bannerContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -373,6 +395,11 @@ class ProfileTableHeaderView: UIView {
 		// Separator view
 		self.separatorView.translatesAutoresizingMaskIntoConstraints = false
 
+		// Body stack view
+		self.bodyStackView.translatesAutoresizingMaskIntoConstraints = false
+		self.bodyStackView.axis = .vertical
+		self.bodyStackView.spacing = 8
+
 		// Self (replaces old headerView)
 		self.translatesAutoresizingMaskIntoConstraints = false
 		self.backgroundColor = .clear
@@ -425,9 +452,11 @@ class ProfileTableHeaderView: UIView {
 		self.userDetailsHeaderView.addSubview(self.usernameLabel)
 
 		// User details body contents
-		self.userDetailsBodyView.addSubview(self.bioTextView)
-		self.userDetailsBodyView.addSubview(self.buttonsStackView)
-		self.userDetailsBodyView.addSubview(self.separatorView)
+		self.bodyStackView.addArrangedSubview(self.timeoutBannerButton)
+		self.bodyStackView.addArrangedSubview(self.bioTextView)
+		self.bodyStackView.addArrangedSubview(self.buttonsStackView)
+		self.bodyStackView.addArrangedSubview(self.separatorView)
+		self.userDetailsBodyView.addSubview(self.bodyStackView)
 
 		// Root contents
 		self.bannerContainerView.addSubview(self.bannerImageView)
@@ -549,23 +578,17 @@ class ProfileTableHeaderView: UIView {
 			self.userDetailsBodyView.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.leadingAnchor),
 			self.userDetailsBodyView.trailingAnchor.constraint(equalTo: self.userDetailsHeaderView.trailingAnchor),
 
-			// Bio text view
-			self.bioTextView.topAnchor.constraint(equalTo: self.userDetailsBodyView.topAnchor),
-			self.bioTextView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.bioTextView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
+			// Body stack view
+			self.bodyStackView.topAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.topAnchor),
+			self.bodyStackView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
+			self.bodyStackView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
+			self.userDetailsBodyView.bottomAnchor.constraint(equalTo: self.bodyStackView.bottomAnchor),
 
 			// Buttons stack view
-			self.buttonsStackView.topAnchor.constraint(equalTo: self.bioTextView.bottomAnchor, constant: 4),
-			self.buttonsStackView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.buttonsStackView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
 			self.buttonsStackView.heightAnchor.constraint(equalToConstant: 40),
 
 			// Separator view
-			self.separatorView.topAnchor.constraint(equalTo: self.buttonsStackView.bottomAnchor, constant: 10),
-			self.separatorView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
-			self.separatorView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
 			self.separatorView.heightAnchor.constraint(equalToConstant: 1),
-			self.userDetailsBodyView.bottomAnchor.constraint(equalTo: self.separatorView.bottomAnchor),
 
 			// Bottom
 			self.bottomAnchor.constraint(equalTo: self.userDetailsBodyView.bottomAnchor, constant: 20),
@@ -713,6 +736,10 @@ class ProfileTableHeaderView: UIView {
 			self.configureCountButtons(with: user)
 		}
 	}
+
+	@objc fileprivate func timeoutBannerTapped() {
+    		self.delegate?.profileTableHeaderViewDidPressTimeoutBanner(self)
+    	}
 }
 
 // MARK: - ProfileBadgeStackViewDelegate

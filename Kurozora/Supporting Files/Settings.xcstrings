@@ -118,6 +118,9 @@
     "Mention" : {
       "comment" : "The string for the 'mention' notification type."
     },
+    "Moderation" : {
+      "comment" : "The string for the 'moderation' notification type"
+    },
     "New Session" : {
       "comment" : "The string for the 'new session' notification type"
     },

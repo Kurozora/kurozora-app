@@ -146,6 +146,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTimeoutDidChange(_:)), name: .KUserTimeoutDidChange, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
@@ -185,9 +186,33 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserProfileDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KUserTimeoutDidChange, object: nil)
 
 		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
 			self.sidebarBottomProfileView?.isSelected = false
+		}
+	}
+
+	@objc private func handleTimeoutDidChange(_ notification: Notification) {
+		guard let changedUserID = notification.object as? KurozoraItemID, changedUserID == self.user?.id else { return }
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.refreshProfileDetails()
+		}
+	}
+
+	/// Re-fetches the user's profile to reflect a timeout change.
+	@MainActor
+	private func refreshProfileDetails() async {
+		guard let userIdentity = self.userIdentity else { return }
+
+		do {
+			let userResponse = try await KService.detail(userIdentity).response()
+			self.user = userResponse.data.first
+			self.configureProfile()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -873,6 +898,19 @@ extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func profileTableHeaderViewDidPressTimeoutBanner(_ headerView: ProfileTableHeaderView) {
+		guard let user = self.user, let timeout = user.relationships?.timeout?.data.first else { return }
+
+		let isAdminView = user.id != User.current?.id && User.current?.attributes.isModerator == true
+
+		let detailsViewController = UserTimeoutDetailsViewController()
+		detailsViewController.user = user
+		detailsViewController.timeout = timeout
+		detailsViewController.isAdminView = isAdminView
+		let navigationController = UINavigationController(rootViewController: detailsViewController)
+		self.present(navigationController, animated: true)
 	}
 }
 

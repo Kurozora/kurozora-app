@@ -26,6 +26,8 @@ extension UserNotificationType {
 			return L10n.libraryImport
 		case .subscriptionStatus:
 			return L10n.subscriptionUpdate
+		case .userTimedOut, .userTimeoutExpired:
+			return L10n.moderation
 		case .other:
 			return L10n.other
 		}
@@ -44,6 +46,8 @@ extension UserNotificationType {
             return .Icons.library
 		case .subscriptionStatus:
             return .Icons.unlock
+		case .userTimedOut, .userTimeoutExpired:
+            return .Icons.shieldCheckered
 		case .other:
             return .Icons.notifications
 		}

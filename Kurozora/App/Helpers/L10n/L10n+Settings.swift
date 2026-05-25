@@ -132,6 +132,14 @@ extension L10n {
 		table: "Settings",
 		comment: "The string for the 'library import' notification type"
 	)
+	/// The string for the 'moderation' notification type.
+	///
+	/// - Tag: L10n-moderation
+	static let moderation: String = String(
+		localized: "Moderation",
+		table: "Settings",
+		comment: "The string for the 'moderation' notification type"
+	)
 
 	// MARK: - Settings
 	/// The title string for the 'App Icon' settings.
