@@ -149,7 +149,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshProfileDetails)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased()))
 		#endif
 
 		if self.userIdentity == nil {
@@ -318,7 +318,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		guard let userIdentity = self.userIdentity else { return }
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingProfileDetails)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.profileDetails.lowercased()))
 		#endif
 
 		do {
@@ -366,7 +366,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshProfileDetails)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased()))
 		#endif
 	}
 
@@ -480,7 +480,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }
 
 		switch identifier {
-		case .achievementsSegue: return AchievementsTableViewController()
+		case .achievementsSegue: return UserAchievementsCollectionViewController()
 		case .reputationLeaderboardSegue: return UsersListCollectionViewController()
 		case .followingSegue: return UsersListCollectionViewController()
 		case .followersSegue: return UsersListCollectionViewController()
@@ -495,8 +495,8 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		switch identifier {
 		case .achievementsSegue:
-			guard let achievementsTableViewController = destination as? AchievementsTableViewController else { return }
-			achievementsTableViewController.user = self.user
+			guard let userAchievementsCollectionViewController = destination as? UserAchievementsCollectionViewController else { return }
+			userAchievementsCollectionViewController.user = self.user
 		case .reputationLeaderboardSegue:
 			guard let leaderboardViewController = destination as? UsersListCollectionViewController else { return }
 			leaderboardViewController.usersListFetchType = .reputation

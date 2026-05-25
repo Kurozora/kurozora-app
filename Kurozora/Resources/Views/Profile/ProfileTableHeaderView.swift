@@ -658,13 +658,8 @@ class ProfileTableHeaderView: UIView {
 		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
 		self.reputationButton.isHidden = false
 
-		// Configure achievements button
-		var achievementsCount = 0
-		if let achievements = user.relationships?.achievements?.data {
-			achievementsCount = achievements.count
-		}
-
-		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: self.countValueAttributes)
+		let achievementsCount = user.attributes.achievementsCount ?? 0
+		let achievementsCountString = NSAttributedString(string: achievementsCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let achievementsTitleString = NSAttributedString(string: "\n\(L10n.achievements)", attributes: self.countTitleAttributes)
 		let achievementsButtonTitle = NSMutableAttributedString()
 		achievementsButtonTitle.append(achievementsCountString)

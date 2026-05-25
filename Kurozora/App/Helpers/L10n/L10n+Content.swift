@@ -1103,278 +1103,59 @@ extension L10n {
 	)
 
 	// MARK: - Refresh Control Titles
-	/// Pull-to-refresh title for the studios list.
+	/// Pull-to-refresh title for a list of the specified items.
 	///
-	/// - Tag: L10n-pullToRefreshStudios
-	static let pullToRefreshStudios: String = String(
-		localized: "Pull to refresh the studios.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the studios list."
-	)
-	/// Refresh-in-progress title for the studios list.
+	/// - Parameter items: The localized noun naming the list (e.g. `L10n.achievements`).
 	///
-	/// - Tag: L10n-refreshingStudios
-	static let refreshingStudios: String = String(
-		localized: "Refreshing studios...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the studios list."
-	)
-	/// Pull-to-refresh title for the cast list.
+	/// - Tag: L10n-pullToRefreshItems
+	static func pullToRefreshItems(_ items: String) -> String {
+		return String(
+			localized: "pullToRefreshItems",
+			defaultValue: "Pull to refresh \(items).",
+			table: "Content",
+			comment: "Pull-to-refresh title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements')."
+		)
+	}
+	/// Refresh-in-progress title for a list of the specified items.
 	///
-	/// - Tag: L10n-pullToRefreshCast
-	static let pullToRefreshCast: String = String(
-		localized: "Pull to refresh the cast.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the cast list."
-	)
-	/// Refresh-in-progress title for the cast list.
+	/// - Parameter items: The localized noun naming the list (e.g. `L10n.achievements`).
 	///
-	/// - Tag: L10n-refreshingCast
-	static let refreshingCast: String = String(
-		localized: "Refreshing cast...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the cast list."
-	)
-	/// Pull-to-refresh title for the characters list.
+	/// - Tag: L10n-refreshingItems
+	static func refreshingItems(_ items: String) -> String {
+		return String(
+			localized: "refreshingItems",
+			defaultValue: "Refreshing \(items)...",
+			table: "Content",
+			comment: "Refresh-in-progress title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements')."
+		)
+	}
+	/// Empty-state title for the achievements list.
 	///
-	/// - Tag: L10n-pullToRefreshCharacters
-	static let pullToRefreshCharacters: String = String(
-		localized: "Pull to refresh the characters.",
+	/// - Tag: L10n-noAchievementsTitle
+	static let noAchievementsTitle: String = String(
+		localized: "No Achievements",
 		table: "Content",
-		comment: "Pull-to-refresh title for the characters list."
+		comment: "Empty-state title for the achievements list."
 	)
-	/// Refresh-in-progress title for the characters list.
+	/// Empty-state detail for the achievements list when viewing your own profile.
 	///
-	/// - Tag: L10n-refreshingCharacters
-	static let refreshingCharacters: String = String(
-		localized: "Refreshing characters...",
+	/// - Tag: L10n-noAchievementsCurrentUserDetail
+	static let noAchievementsCurrentUserDetail: String = String(
+		localized: "Achievements you earn show up here.",
 		table: "Content",
-		comment: "Refresh-in-progress title for the characters list."
+		comment: "Empty-state detail for the achievements list when viewing your own profile."
 	)
-	/// Pull-to-refresh title for the genres list.
+	/// Empty-state detail for the achievements list when viewing someone else's profile.
 	///
-	/// - Tag: L10n-pullToRefreshGenres
-	static let pullToRefreshGenres: String = String(
-		localized: "Pull to refresh genres list!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the genres list."
-	)
-	/// Refresh-in-progress title for the genres list.
-	///
-	/// - Tag: L10n-refreshingGenres
-	static let refreshingGenres: String = String(
-		localized: "Refreshing genres list...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the genres list."
-	)
-	/// Pull-to-refresh title for the favorites list.
-	///
-	/// - Tag: L10n-pullToRefreshFavorites
-	static let pullToRefreshFavorites: String = String(
-		localized: "Pull to refresh favorites list!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the favorites list."
-	)
-	/// Refresh-in-progress title for the favorites list.
-	///
-	/// - Tag: L10n-refreshingFavorites
-	static let refreshingFavorites: String = String(
-		localized: "Refreshing favorites list...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the favorites list."
-	)
-	/// Pull-to-refresh title for the episodes list.
-	///
-	/// - Tag: L10n-pullToRefreshEpisodes
-	static let pullToRefreshEpisodes: String = String(
-		localized: "Pull to refresh the episodes.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the episodes list."
-	)
-	/// Refresh-in-progress title for the episodes list.
-	///
-	/// - Tag: L10n-refreshingEpisodes
-	static let refreshingEpisodes: String = String(
-		localized: "Refreshing episodes...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the episodes list."
-	)
-	/// Pull-to-refresh title for the users list (follow / followers).
-	///
-	/// - Tag: L10n-pullToRefreshUsers
-	static let pullToRefreshUsers: String = String(
-		localized: "Pull to refresh the users.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the users list (follow / followers)."
-	)
-	/// Refresh-in-progress title for the users list.
-	///
-	/// - Tag: L10n-refreshingUsers
-	static let refreshingUsers: String = String(
-		localized: "Refreshing users...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the users list."
-	)
-	/// Pull-to-refresh title for the reputation leaderboard.
-	///
-	/// - Tag: L10n-pullToRefreshLeaderboard
-	static let pullToRefreshLeaderboard: String = String(
-		localized: "Pull to refresh the leaderboard.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the reputation leaderboard."
-	)
-	/// Refresh-in-progress title for the reputation leaderboard.
-	///
-	/// - Tag: L10n-refreshingLeaderboard
-	static let refreshingLeaderboard: String = String(
-		localized: "Refreshing leaderboard...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the reputation leaderboard."
-	)
-	/// Pull-to-refresh title for the profile details screen.
-	///
-	/// - Tag: L10n-pullToRefreshProfileDetails
-	static let pullToRefreshProfileDetails: String = String(
-		localized: "Pull to refresh profile details!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the profile details screen."
-	)
-	/// Refresh-in-progress title for the profile details screen.
-	///
-	/// - Tag: L10n-refreshingProfileDetails
-	static let refreshingProfileDetails: String = String(
-		localized: "Refreshing profile details...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the profile details screen."
-	)
-	/// Pull-to-refresh title for a user's reviews list.
-	///
-	/// - Tag: L10n-pullToRefreshUserReviews
-	static let pullToRefreshUserReviews: String = String(
-		localized: "Pull to refresh the reviews.",
-		table: "Content",
-		comment: "Pull-to-refresh title for a user's reviews list."
-	)
-	/// Refresh-in-progress title for the reviews list (shared across user and global reviews).
-	///
-	/// - Tag: L10n-refreshingReviews
-	static let refreshingReviews: String = String(
-		localized: "Refreshing reviews...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the reviews list."
-	)
-	/// Pull-to-refresh title for the global reviews list on a media item.
-	///
-	/// - Tag: L10n-pullToRefreshReviews
-	static let pullToRefreshReviews: String = String(
-		localized: "Pull to refresh reviews!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the global reviews list on a media item."
-	)
-	/// Pull-to-refresh title for the people list.
-	///
-	/// - Tag: L10n-pullToRefreshPeople
-	static let pullToRefreshPeople: String = String(
-		localized: "Pull to refresh the people.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the people list."
-	)
-	/// Refresh-in-progress title for the people list.
-	///
-	/// - Tag: L10n-refreshingPeople
-	static let refreshingPeople: String = String(
-		localized: "Refreshing people...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the people list."
-	)
-	/// Pull-to-refresh title for the seasons list.
-	///
-	/// - Tag: L10n-pullToRefreshSeasons
-	static let pullToRefreshSeasons: String = String(
-		localized: "Pull to refresh the seasons.",
-		table: "Content",
-		comment: "Pull-to-refresh title for the seasons list."
-	)
-	/// Refresh-in-progress title for the seasons list.
-	///
-	/// - Tag: L10n-refreshingSeasons
-	static let refreshingSeasons: String = String(
-		localized: "Refreshing seasons...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the seasons list."
-	)
-	/// Pull-to-refresh title for the feed message details screen (thread view).
-	///
-	/// - Tag: L10n-pullToRefreshMessageDetails
-	static let pullToRefreshMessageDetails: String = String(
-		localized: "Pull to refresh message details and replies!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the feed message details screen (thread view)."
-	)
-	/// Refresh-in-progress title for the feed message details top section.
-	///
-	/// - Tag: L10n-refreshingMessageDetails
-	static let refreshingMessageDetails: String = String(
-		localized: "Refreshing message details...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the feed message details top section."
-	)
-	/// Refresh-in-progress title for the feed message replies list.
-	///
-	/// - Tag: L10n-refreshingMessageReplies
-	static let refreshingMessageReplies: String = String(
-		localized: "Refreshing message replies...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the feed message replies list."
-	)
-	/// Pull-to-refresh title for the explore feed.
-	///
-	/// - Tag: L10n-pullToRefreshExploreFeed
-	static let pullToRefreshExploreFeed: String = String(
-		localized: "Pull to refresh your explore feed!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the explore feed."
-	)
-	/// Refresh-in-progress title for the explore feed.
-	///
-	/// - Tag: L10n-refreshingExploreFeed
-	static let refreshingExploreFeed: String = String(
-		localized: "Refreshing your explore feed...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the explore feed."
-	)
-	/// Pull-to-refresh title for the reminders list.
-	///
-	/// - Tag: L10n-pullToRefreshReminders
-	static let pullToRefreshReminders: String = String(
-		localized: "Pull to refresh reminders list!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the reminders list."
-	)
-	/// Refresh-in-progress title for the reminders list.
-	///
-	/// - Tag: L10n-refreshingReminders
-	static let refreshingReminders: String = String(
-		localized: "Refreshing reminders list...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the reminders list."
-	)
-	/// Pull-to-refresh title for the feed-message drafts list.
-	///
-	/// - Tag: L10n-pullToRefreshDrafts
-	static let pullToRefreshDrafts: String = String(
-		localized: "Pull to refresh your drafts!",
-		table: "Content",
-		comment: "Pull-to-refresh title for the feed-message drafts list."
-	)
-	/// Refresh-in-progress title for the feed-message drafts list.
-	///
-	/// - Tag: L10n-refreshingDrafts
-	static let refreshingDrafts: String = String(
-		localized: "Refreshing drafts...",
-		table: "Content",
-		comment: "Refresh-in-progress title for the feed-message drafts list."
-	)
+	/// - Tag: L10n-noAchievementsOtherUserDetail
+	static func noAchievementsOtherUserDetail(_ username: String) -> String {
+		return String(
+			localized: "noAchievements.otherUserDetail",
+			defaultValue: "\(username) has not earned any achievements yet.",
+			table: "Content",
+			comment: "Empty-state detail for the achievements list when viewing someone else's profile."
+		)
+	}
 	/// Pull-to-refresh title for a user list variant (followers/following/…).
 	///
 	/// - Tag: L10n-pullToRefreshUsersList
