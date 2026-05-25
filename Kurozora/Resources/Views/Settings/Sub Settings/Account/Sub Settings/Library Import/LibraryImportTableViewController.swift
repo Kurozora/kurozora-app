@@ -161,7 +161,7 @@ extension LibraryImportTableViewController {
 
 				if self.selectedFileURL != nil {
 					if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
-						actionButtonTableViewCell.actionTextField.text = ".../" + lastPathComponent
+						actionButtonTableViewCell.actionTextField.text = "…/" + lastPathComponent
 						self.rightNavigationBarButton.isEnabled = true
 					}
 				}

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,14 +16,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="323"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybT-w4-xOi">
-                        <rect key="frame" x="8" y="63" width="304" height="22.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text…" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybT-w4-xOi">
+                        <rect key="frame" x="8" y="67" width="304" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyM-PD-URv" userLabel="UserView">
-                        <rect key="frame" x="0.0" y="3" width="320" height="60"/>
+                        <rect key="frame" x="0.0" y="7" width="320" height="60"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jUC-T8-5IO">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
@@ -74,14 +75,14 @@
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z8I-9Y-Ope">
-                        <rect key="frame" x="0.0" y="93.5" width="320" height="180"/>
+                        <rect key="frame" x="0.0" y="89.5" width="320" height="180"/>
                         <color key="backgroundColor" red="0.83751755949999995" green="0.76316435240000002" blue="0.80550840530000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="180" id="oZP-M0-frs"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyQ-q7-aIu">
-                        <rect key="frame" x="130" y="153.5" width="60" height="60"/>
+                        <rect key="frame" x="130" y="149.5" width="60" height="60"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="msv-BW-0hx"/>
@@ -98,7 +99,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUr-yw-ota">
-                        <rect key="frame" x="54" y="281.5" width="50" height="38.5"/>
+                        <rect key="frame" x="54" y="277.5" width="50" height="38.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="38.5" id="VUq-Xe-OJI"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="vHj-Si-mBk"/>
@@ -114,7 +115,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNu-xm-5ry">
-                        <rect key="frame" x="4" y="280.5" width="50" height="38"/>
+                        <rect key="frame" x="4" y="276.5" width="50" height="38"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="38" id="mWD-Gm-aA3"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="tG1-Ck-Bhr"/>
@@ -171,6 +172,6 @@
     </objects>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
     </resources>
 </document>

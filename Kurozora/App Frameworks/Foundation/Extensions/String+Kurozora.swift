@@ -134,7 +134,7 @@ extension String {
 	/// Truncated string (limited to a given number of characters).
 	///
 	/// ```swift
-	/// "This is a very long sentence".truncated(toLength: 14) -> "This is a very..."
+	/// "This is a very long sentence".truncated(toLength: 14) -> "This is a very…"
 	///	"Short sentence".truncated(toLength: 14) -> "Short sentence"
 	/// ```
 	///
@@ -142,8 +142,8 @@ extension String {
 	///   - toLength: maximum number of characters before cutting.
 	///   - trailing: string to add at the end of truncated string.
 	///
-	/// - Returns: truncated string (this is an extr...).
-	func truncated(toLength length: Int, trailing: String? = "...") -> String {
+	/// - Returns: truncated string (this is an extr…).
+	func truncated(toLength length: Int, trailing: String? = "…") -> String {
 		guard 0 ..< self.count ~= length else { return self }
 		return self[self.startIndex ..< index(self.startIndex, offsetBy: length)] + (trailing ?? "")
 	}

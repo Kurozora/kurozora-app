@@ -151,7 +151,7 @@
     "Followed by you." : {
       "comment" : "The user-cell secondary line for another user that you already follow when their only follower is you."
     },
-    "Followed by you... and one fan!" : {
+    "Followed by you… and one fan!" : {
       "comment" : "The user-cell secondary line for your own profile when you have exactly one follower."
     },
     "Following" : {
@@ -295,7 +295,7 @@
     "Post Message" : {
       "comment" : "The string for the 'Post Message' context menu option."
     },
-    "Pull to refresh %@ list." : {
+    "Pull to refresh %@ list…" : {
       "comment" : "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
     },
     "Pull to refresh the %@." : {
@@ -308,7 +308,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Pull to refresh %@."
+            "value" : "Pull to refresh %@…"
           }
         }
       }
@@ -346,10 +346,10 @@
     "Recent" : {
       "comment" : "The string for the 'Recent' sort option on the post activity screen."
     },
-    "Refreshing %@ list..." : {
+    "Refreshing %@ list…" : {
       "comment" : "Refresh-in-progress title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
     },
-    "Refreshing %@..." : {
+    "Refreshing %@…" : {
       "comment" : "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'."
     },
     "refreshingItems" : {
@@ -359,7 +359,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Refreshing %@..."
+            "value" : "Refreshing %@…"
           }
         }
       }
@@ -556,7 +556,7 @@
     "When you block someone, they will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
       "comment" : "The intro string shown above the blocked users list"
     },
-    "Write a comment..." : {
+    "Write a comment…" : {
       "comment" : "The placeholder string for creating a new comment."
     },
     "Write a Review" : {

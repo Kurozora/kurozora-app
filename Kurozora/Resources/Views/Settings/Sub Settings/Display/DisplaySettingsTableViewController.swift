@@ -236,7 +236,7 @@ extension DisplaySettingsTableViewController {
 		case .appearance:
 			return nil
 		case .blindness:
-			return "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or..."
+			return "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…"
 		case .navigationBar:
 			return "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me"
 		}

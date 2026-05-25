@@ -190,7 +190,7 @@ extension L10n {
 		/// - Tag: L10n-forgotPasswordErrorAlertHeadline
 		static let forgotPasswordErrorAlertHeadline: String = String(
 			localized: "onboarding.forgotPasswordErrorAlertHeadline",
-			defaultValue: "Errr...",
+			defaultValue: "Errr…",
 			table: "Account",
 			comment: "The headline string for resetting password alert."
 		)
@@ -812,7 +812,7 @@ extension L10n {
 	///
 	/// - Tag: L10n-seeHowDataIsManaged
 	static let seeHowDataIsManaged: String = String(
-		localized: "See how your data is managed...",
+		localized: "See how your data is managed…",
 		table: "Account",
 		comment: "The tappable legal footer link shown on the onboarding footer cell."
 	)

@@ -75,7 +75,7 @@ class MenuController {
 	///
 	/// - Returns: The "Settings" UIMenu object.
 	class func openSettings() -> UIMenu {
-		let openSettingsCommand = UIKeyCommand(title: "Settings...", action: #selector(AppDelegate.handleSettings(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: "Settings...")
+		let openSettingsCommand = UIKeyCommand(title: "Settings…", action: #selector(AppDelegate.handleSettings(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: "Settings…")
 		return UIMenu(title: "Settings", identifier: UIMenu.Identifier("app.kurozora.menus.settings"), options: .displayInline, children: [openSettingsCommand])
 	}
 
@@ -101,7 +101,7 @@ class MenuController {
 			}
 
 			// Add "view my account" menu item.
-			let viewMyAccountCommand = UICommand(title: "View My Account...", action: #selector(AppDelegate.handleViewMyAccount(_:)), discoverabilityTitle: "View My Account...")
+			let viewMyAccountCommand = UICommand(title: "View My Account…", action: #selector(AppDelegate.handleViewMyAccount(_:)), discoverabilityTitle: "View My Account…")
 			userMenuChildren.append(viewMyAccountCommand)
 
 			// Add "sign out" menu item.
@@ -120,11 +120,11 @@ class MenuController {
 		if User.isSignedIn, let user = User.current {
 			if user.attributes.isSubscribed {
 				// Add "subscribe to reminders" menu item.
-				let subscribeToReminders =  UICommand(title: "Subscribe to Reminders...", action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: "Subscribe to Reminders...")
+				let subscribeToReminders =  UICommand(title: "Subscribe to Reminders…", action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: "Subscribe to Reminders…")
 				subscriptionMenuChildren.append(subscribeToReminders)
 			} else {
 				// Add "updgrade to Kurozora+" menu item.
-				let upgradeToKurozoraPlus =  UICommand(title: "Upgrade to Kurozora+...", action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: "Upgrade to Kurozora+...")
+				let upgradeToKurozoraPlus =  UICommand(title: "Upgrade to Kurozora+…", action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: "Upgrade to Kurozora+…")
 				subscriptionMenuChildren.append(upgradeToKurozoraPlus)
 			}
 		}
@@ -133,7 +133,7 @@ class MenuController {
 		let subscriptionMenu = UIMenu(title: "", identifier: UIMenu.Identifier("app.kurozora.menus.subscription"), options: .displayInline, children: subscriptionMenuChildren)
 
 		// Create the Redeem command.
-		let redeemCommand = UICommand(title: "Redeem...", action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: "Redeem...")
+		let redeemCommand = UICommand(title: "Redeem…", action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: "Redeem…")
 
 		// Create the Favorites command.
 		let favoritesCommand = UICommand(title: "Favorites", action: #selector(AppDelegate.handleFavorites(_:)), discoverabilityTitle: "Favorites")

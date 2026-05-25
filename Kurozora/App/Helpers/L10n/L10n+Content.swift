@@ -164,7 +164,7 @@ extension L10n {
 	///
 	/// - Tag: L10n-writeAComment
 	static let writeAComment: String = String(
-		localized: "Write a comment...",
+		localized: "Write a comment…",
 		table: "Content",
 		comment: "The placeholder string for creating a new comment."
 	)
@@ -947,7 +947,7 @@ extension L10n {
 	///
 	/// - Tag: L10n-userFollowersSelfOne
 	static let userFollowersSelfOne: String = String(
-		localized: "Followed by you... and one fan!",
+		localized: "Followed by you… and one fan!",
 		table: "Content",
 		comment: "The user-cell secondary line for your own profile when you have exactly one follower."
 	)
@@ -1172,7 +1172,7 @@ extension L10n {
 	/// - Tag: L10n-refreshingUsersList
 	static func refreshingUsersList(_ type: String) -> String {
 		String(
-			localized: "Refreshing \(type)...",
+			localized: "Refreshing \(type)…",
 			table: "Content",
 			comment: "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'."
 		)
@@ -1183,7 +1183,7 @@ extension L10n {
 	/// - Tag: L10n-pullToRefreshLibrary
 	static func pullToRefreshLibrary(_ status: String) -> String {
 		String(
-			localized: "Pull to refresh \(status) list.",
+			localized: "Pull to refresh \(status) list…",
 			table: "Content",
 			comment: "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
 		)
@@ -1194,7 +1194,7 @@ extension L10n {
 	/// - Tag: L10n-refreshingLibrary
 	static func refreshingLibrary(_ status: String) -> String {
 		String(
-			localized: "Refreshing \(status) list...",
+			localized: "Refreshing \(status) list…",
 			table: "Content",
 			comment: "Refresh-in-progress title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
 		)

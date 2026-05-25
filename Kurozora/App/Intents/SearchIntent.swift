@@ -65,7 +65,7 @@ struct SearchIntent: AppIntent, CustomIntentMigratedAppIntent, PredictableIntent
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 private extension IntentDialog {
 	static func titleParameterPrompt(title: String) -> Self {
-		"Searching for \(title) in Kurozora..."
+		"Searching for \(title) in Kurozora…"
 	}
 
 	static func titleParameterDisambiguationIntro(count: Int, title: String) -> Self {

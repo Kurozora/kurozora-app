@@ -144,7 +144,7 @@ extension AppDelegate {
 	/// Used to update your content.
 	@objc func handleRefreshControl() {}
 
-	/// User chose "Settings..." from the Application menu.
+	/// User chose "Settings…" from the Application menu.
 	@objc func handleSettings(_ sender: AnyObject) {
 		guard UIApplication.topViewController as? SubSettingsViewController == nil else { return }
 
@@ -174,7 +174,7 @@ extension AppDelegate {
 		}
 	}
 
-	/// User chose the "View My Account..." from the account menu.
+	/// User chose the "View My Account…" from the account menu.
 	@objc func handleViewMyAccount(_ sender: AnyObject) {
 		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
@@ -202,7 +202,7 @@ extension AppDelegate {
 		}
 	}
 
-	/// User chose "Upgrade to Kurozora+..." from the Account menu.
+	/// User chose "Upgrade to Kurozora+…" from the Account menu.
 	@objc func handleUpgradeToKurozoraPlus(_ sender: AnyObject) {
 		let subscriptionCollectionViewController = SubscriptionCollectionViewController()
 		let kNavigationController = KNavigationController(rootViewController: subscriptionCollectionViewController)
@@ -210,7 +210,7 @@ extension AppDelegate {
 		UIApplication.topViewController?.show(kNavigationController, sender: nil)
 	}
 
-	/// User chose "Subscribe to Reminders..." from the Account menu.
+	/// User chose "Subscribe to Reminders…" from the Account menu.
 	@objc func handleSubscribeToReminders(_ sender: AnyObject) {
 		Task { @MainActor in
 			let topViewController = UIApplication.topViewController

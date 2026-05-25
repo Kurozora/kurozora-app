@@ -67,7 +67,7 @@ class KWhatsNew {
         .image(title: "Country of Origin", subtitle: "Anime, manga, and games now have a country of origin detail.", image: .Icons.globe),
         .image(title: "Season Ratings", subtitle: "Season ratings reflect the average rating of all the episodes in a season to help you decide what to watch next. Don't forget to rate your favorite episodes!", image: .Icons.rating),
         .image(title: "Library Count", subtitle: "Easily view total counts from the navigation bar.", image: .Icons.libraryCount),
-        .image(title: "Delete Library", subtitle: "A new big red button to empty your library with a single tap... kind of... provide the secret code just to be safe :D", image: .Icons.libraryTrash),
+        .image(title: "Delete Library", subtitle: "A new big red button to empty your library with a single tap… kind of… provide the secret code just to be safe :D", image: .Icons.libraryTrash),
         .image(title: "In-app Purchase", subtitle: "Updated In-App Purchase process ensures smoother server verification and fewer errors.", image: .Icons.kurozoraPlus),
         .image(title: "Cache", subtitle: "Cache size now includes rich link data, with a detailed description explaining discrepancies between Kurozora and the Settings app.", image: .Icons.clearCache),
         .image(title: "Bug Fixes", subtitle: "Emptied two cans of premium bug spray to fix minor issues such as default themes not loading when not connected to the internet, pull-to-refresh not completing the refresh action correctly, and Re:CAP showing multiple months worth of statistics.", image: .Icons.ladybug)

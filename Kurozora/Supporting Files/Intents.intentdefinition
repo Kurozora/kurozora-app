@@ -238,11 +238,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>m7PQAB</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>23G5066c</string>
+	<string>25F5053d</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>16A5171r</string>
+	<string>17F42</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>16.0</string>
+	<string>26.5</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -329,7 +329,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Adding ${title}to your library...</string>
+							<string>Adding ${title}to your library…</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>BfcbUF</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -387,7 +387,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Adding to your ${library}...</string>
+							<string>Adding to your ${library}…</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>IF0kR4</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -675,7 +675,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Searching for ${title} in Kurozora...</string>
+							<string>Searching for ${title} in Kurozora…</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>ZMM2Jy</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -814,7 +814,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Opening ${title}...</string>
+							<string>Opening ${title}…</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>RHS0CI</string>
 							<key>INIntentParameterPromptDialogType</key>

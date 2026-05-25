@@ -79,7 +79,7 @@ struct MediaSaverManager {
 			let type = UTType(filenameExtension: originalURL.pathExtension)
 
 			if type == .webP {
-				print("----- Detected WebP format. Retrying with PNG conversion...")
+				print("----- Detected WebP format. Retrying with PNG conversion.")
 				try await self.retrySaveWithConversion(image: image)
 			} else {
 				throw SaverError.saveFailed(error)

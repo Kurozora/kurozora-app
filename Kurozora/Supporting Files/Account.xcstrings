@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Errr..."
+            "value" : "Errr…"
           }
         }
       }
@@ -684,7 +684,7 @@
     "Require Authentication" : {
       "comment" : "The string for 'Require Authentication' settings."
     },
-    "See how your data is managed..." : {
+    "See how your data is managed…" : {
       "comment" : "The tappable legal footer link shown on the onboarding footer cell."
     },
     "Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have." : {
