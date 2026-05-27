@@ -60,6 +60,7 @@ class ProfileTableHeaderView: UIView {
 	private let bodyStackView = UIStackView()
 	private let timeoutBannerButton = TimerButton()
 	private let bioTextView = KTextView()
+	private let buttonsScrollView = UIScrollView()
 	private let buttonsStackView = UIStackView()
 	private let reputationButton = KButton()
 	private let achievementsButton = KButton()
@@ -74,6 +75,7 @@ class ProfileTableHeaderView: UIView {
 	private var blurredBannerImage: UIImage?
 	private var bannerCompactWidthConstraint: NSLayoutConstraint!
 	private var bannerRegularWidthConstraint: NSLayoutConstraint!
+	private var buttonsFillWidthConstraint: NSLayoutConstraint!
 	private var bannerImageObservation: NSKeyValueObservation?
 
 	// MARK: - Styling
@@ -116,6 +118,7 @@ class ProfileTableHeaderView: UIView {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		self.updateBannerEdges()
+		self.updateButtonsRowInsets()
 	}
 
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -392,6 +395,12 @@ class ProfileTableHeaderView: UIView {
 		self.buttonsStackView.distribution = .fillEqually
 		self.buttonsStackView.spacing = 5
 
+		// Buttons scroll view
+		self.buttonsScrollView.translatesAutoresizingMaskIntoConstraints = false
+		self.buttonsScrollView.showsHorizontalScrollIndicator = false
+		self.buttonsScrollView.showsVerticalScrollIndicator = false
+		self.buttonsScrollView.contentInsetAdjustmentBehavior = .never
+
 		// Separator view
 		self.separatorView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -454,9 +463,9 @@ class ProfileTableHeaderView: UIView {
 		// User details body contents
 		self.bodyStackView.addArrangedSubview(self.timeoutBannerButton)
 		self.bodyStackView.addArrangedSubview(self.bioTextView)
-		self.bodyStackView.addArrangedSubview(self.buttonsStackView)
-		self.bodyStackView.addArrangedSubview(self.separatorView)
 		self.userDetailsBodyView.addSubview(self.bodyStackView)
+		self.userDetailsBodyView.addSubview(self.separatorView)
+		self.buttonsScrollView.addSubview(self.buttonsStackView)
 
 		// Root contents
 		self.bannerContainerView.addSubview(self.bannerImageView)
@@ -465,6 +474,7 @@ class ProfileTableHeaderView: UIView {
 		self.addSubview(self.bannerContainerView)
 		self.addSubview(self.userDetailsHeaderView)
 		self.addSubview(self.userDetailsBodyView)
+		self.addSubview(self.buttonsScrollView)
 	}
 
 	/// Configure the view constraints.
@@ -582,17 +592,40 @@ class ProfileTableHeaderView: UIView {
 			self.bodyStackView.topAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.topAnchor),
 			self.bodyStackView.leadingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.leadingAnchor),
 			self.bodyStackView.trailingAnchor.constraint(equalTo: self.userDetailsBodyView.layoutMarginsGuide.trailingAnchor),
-			self.userDetailsBodyView.bottomAnchor.constraint(equalTo: self.bodyStackView.bottomAnchor),
+
+			// Buttons scroll view
+			self.buttonsScrollView.topAnchor.constraint(equalTo: self.bodyStackView.bottomAnchor, constant: 8),
+			self.buttonsScrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			self.buttonsScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			self.buttonsScrollView.heightAnchor.constraint(equalToConstant: 40),
 
 			// Buttons stack view
-			self.buttonsStackView.heightAnchor.constraint(equalToConstant: 40),
+			self.buttonsStackView.topAnchor.constraint(equalTo: self.buttonsScrollView.contentLayoutGuide.topAnchor),
+			self.buttonsStackView.leadingAnchor.constraint(equalTo: self.buttonsScrollView.contentLayoutGuide.leadingAnchor),
+			self.buttonsStackView.trailingAnchor.constraint(equalTo: self.buttonsScrollView.contentLayoutGuide.trailingAnchor),
+			self.buttonsStackView.bottomAnchor.constraint(equalTo: self.buttonsScrollView.contentLayoutGuide.bottomAnchor),
+			self.buttonsStackView.heightAnchor.constraint(equalTo: self.buttonsScrollView.frameLayoutGuide.heightAnchor),
 
 			// Separator view
+			self.separatorView.topAnchor.constraint(equalTo: self.buttonsScrollView.bottomAnchor, constant: 8),
+			self.separatorView.leadingAnchor.constraint(equalTo: self.bodyStackView.leadingAnchor),
+			self.separatorView.trailingAnchor.constraint(equalTo: self.bodyStackView.trailingAnchor),
 			self.separatorView.heightAnchor.constraint(equalToConstant: 1),
+			self.userDetailsBodyView.bottomAnchor.constraint(equalTo: self.separatorView.bottomAnchor),
 
 			// Bottom
 			self.bottomAnchor.constraint(equalTo: self.userDetailsBodyView.bottomAnchor, constant: 20),
 		])
+
+		// Fill the content width when there's room
+		self.buttonsFillWidthConstraint = self.buttonsStackView.widthAnchor.constraint(equalTo: self.buttonsScrollView.frameLayoutGuide.widthAnchor)
+		self.buttonsFillWidthConstraint.priority = .defaultLow
+		self.buttonsFillWidthConstraint.isActive = true
+
+		// Floor each button's width so the row scrolls once the five no longer fit
+		for button in [self.reputationButton, self.achievementsButton, self.followingButton, self.followersButton, self.reviewsButton] {
+			button.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
+		}
 
 		self.updateBannerWidthConstraints()
 	}
@@ -668,9 +701,29 @@ class ProfileTableHeaderView: UIView {
 		}
 	}
 
+	/// Insets the full-bleed buttons row so its content rests at the body's content margins while
+	/// remaining free to scroll out to the view's edges.
+	private func updateButtonsRowInsets() {
+		let marginsGuide = self.userDetailsBodyView.layoutMarginsGuide
+		let contentFrame = self.convert(marginsGuide.layoutFrame, from: self.userDetailsBodyView)
+		guard contentFrame.width > 0 else { return }
+
+		let leftInset = max(contentFrame.minX, 0)
+		let rightInset = max(self.bounds.width - contentFrame.maxX, 0)
+
+		let insets = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+		if self.buttonsScrollView.contentInset != insets {
+			self.buttonsScrollView.contentInset = insets
+		}
+
+		let fillConstant = -(leftInset + rightInset)
+		if self.buttonsFillWidthConstraint.constant != fillConstant {
+			self.buttonsFillWidthConstraint.constant = fillConstant
+		}
+	}
+
 	/// Configures the count buttons with the given user's stats.
 	private func configureCountButtons(with user: User) {
-		// Configure reputation button
 		let reputationCount = user.attributes.reputationCount
 		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let reputationTitleString = NSAttributedString(string: L10n.profileReputationLabel, attributes: self.countTitleAttributes)
@@ -691,7 +744,6 @@ class ProfileTableHeaderView: UIView {
 		self.achievementsButton.setAttributedTitle(achievementsButtonTitle, for: .normal)
 		self.achievementsButton.isHidden = false
 
-		// Configure following & followers count
 		let followingCount = user.attributes.followingCount
 		let followingCountString = NSAttributedString(string: followingCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let followingTitleString = NSAttributedString(string: L10n.profileFollowingLabel, attributes: self.countTitleAttributes)
@@ -712,7 +764,6 @@ class ProfileTableHeaderView: UIView {
 		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
 		self.followersButton.isHidden = false
 
-		// Configure reviews count
 		let reviewsCount = user.attributes.ratingsCount
 		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let reviewsTitleString = NSAttributedString(string: L10n.profileReviewsLabel, attributes: self.countTitleAttributes)
