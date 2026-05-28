@@ -67,20 +67,27 @@ final class KurozoraDelegate {
 		// Migrate legacy keychain entries to the new account storage
 		AccountManager.shared.migrateIfNeeded()
 
-		// Get settings to enable extra functionality
-		await WorkflowController.shared.getSettings()
+		// Resolve the selected account
+		let accountKey = UserSettings.selectedAccount
+		let account = AccountManager.shared.account(forSlug: accountKey)
+
+		if let account = account {
+			KService.authenticationKey = account.authenticationToken
+		}
+
+		// Get settings and restore the user session concurrently
+		async let settings: Void = WorkflowController.shared.getSettings()
+		async let sessionRestored = WorkflowController.shared.restoreCurrentUserSession(updateAuthenticationKey: false)
+		await settings
+		_ = await sessionRestored
 
 		// Set YouTube API Key
 		if let youtubeAPIKey = KSettings?.youtubeAPIKey {
 			XCDYouTubeClient.setInnertubeApiKey(youtubeAPIKey)
 		}
 
-		// Restore current user session
-		await WorkflowController.shared.restoreCurrentUserSession()
-
 		// Push auth state to Watch if signed in
-		let accountKey = UserSettings.selectedAccount
-		if let account = AccountManager.shared.account(forSlug: accountKey) {
+		if let account = account {
 			WatchSessionManager.shared.sendAuthState(slug: accountKey, token: account.authenticationToken)
 		}
 

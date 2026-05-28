@@ -96,12 +96,16 @@ extension WorkflowController {
 	///
 	/// This method can be used to restore the current user's data after the app has been completely closed.
 	///
+	/// - Parameter updateAuthenticationKey: When `true`, sets `KService.authenticationKey` from the stored account before requesting the profile.
+	///
 	/// - Returns: A Boolean indicating whether the user's details were restored successfully.
 	@discardableResult
-	func restoreCurrentUserSession() async -> Bool {
+	func restoreCurrentUserSession(updateAuthenticationKey: Bool = true) async -> Bool {
 		let accountKey = UserSettings.selectedAccount
 		if let account = AccountManager.shared.account(forSlug: accountKey) {
-			KService.authenticationKey = account.authenticationToken
+			if updateAuthenticationKey {
+				KService.authenticationKey = account.authenticationToken
+			}
 
 			do {
 				_ = try await KService.profileDetails().response()
