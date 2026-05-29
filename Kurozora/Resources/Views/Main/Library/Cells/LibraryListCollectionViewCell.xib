@@ -28,6 +28,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="yQV-eW-YpY">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lls" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                            </view>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CsO-9g-Km2" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="60" y="8.6666666666666661" width="32" height="30.666666666666671"/>
                                 <constraints>
@@ -49,6 +52,10 @@
                             <constraint firstItem="yQV-eW-YpY" firstAttribute="top" secondItem="Awe-wF-sDX" secondAttribute="top" id="dQh-pH-tAf"/>
                             <constraint firstAttribute="bottom" secondItem="Awe-wF-sDX" secondAttribute="bottom" id="hhw-ae-WDB"/>
                             <constraint firstItem="Awe-wF-sDX" firstAttribute="top" secondItem="4LN-XX-xBx" secondAttribute="top" id="n6d-XB-hND"/>
+                            <constraint firstItem="Brd-vw-lls" firstAttribute="top" secondItem="Awe-wF-sDX" secondAttribute="top" id="BB1-vw-lls"/>
+                            <constraint firstItem="Brd-vw-lls" firstAttribute="leading" secondItem="Awe-wF-sDX" secondAttribute="leading" id="BB2-vw-lls"/>
+                            <constraint firstItem="Brd-vw-lls" firstAttribute="trailing" secondItem="Awe-wF-sDX" secondAttribute="trailing" id="BB3-vw-lls"/>
+                            <constraint firstItem="Brd-vw-lls" firstAttribute="bottom" secondItem="Awe-wF-sDX" secondAttribute="bottom" id="BB4-vw-lls"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 1 - 1d, 19h, 8m, 30s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="VEj-W3-uSN" customClass="BroadcastLabel" customModule="Kurozora" customModuleProvider="target">
@@ -100,6 +107,8 @@
                 <outlet property="estimatedAiringLabel" destination="VEj-W3-uSN" id="Fs0-gO-gtL"/>
                 <outlet property="informationLabel" destination="Xdo-7G-nrn" id="YPT-GS-TOH"/>
                 <outlet property="posterAspectRatioConstraint" destination="LYg-84-TvH" id="L2B-cO-8aG"/>
+                <outlet property="posterBorderView" destination="Brd-vw-lls" id="BBv-01-lls"/>
+                <outlet property="posterContainerView" destination="4LN-XX-xBx" id="CntC-01-lls"/>
                 <outlet property="posterImageOverlayView" destination="yQV-eW-YpY" id="mpc-JQ-MCJ"/>
                 <outlet property="posterImageView" destination="Awe-wF-sDX" id="H0D-1r-Vpd"/>
                 <outlet property="primaryLabel" destination="zPj-2x-dtt" id="oxB-2I-h7q"/>

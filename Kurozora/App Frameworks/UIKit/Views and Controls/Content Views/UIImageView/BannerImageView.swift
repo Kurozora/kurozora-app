@@ -11,7 +11,6 @@ import UIKit
 /// `BannerImageView` is a specially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
 /// `BannerImageView` adjusts some options to achieve its design, this includes:
-/// - Applying a border width and border color.
 /// - Presenting a default banner image if none is specified.
 /// - Rounding the image's corners.
 final class BannerImageView: RoundedRectangleImageView {
@@ -40,8 +39,5 @@ final class BannerImageView: RoundedRectangleImageView {
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
 		self.image = self.image ?? .Placeholders.showBanner
-
-		self.layer.borderWidth = 2
-		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
 	}
 }

@@ -27,6 +27,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="eSd-5E-z6q">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-sml" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="2M7-TL-18a"/>
@@ -39,6 +42,10 @@
                             <constraint firstItem="eSd-5E-z6q" firstAttribute="top" secondItem="biq-kw-T3L" secondAttribute="top" id="qcI-Zy-eVN"/>
                             <constraint firstAttribute="bottom" secondItem="biq-kw-T3L" secondAttribute="bottom" id="tju-Ab-onj"/>
                             <constraint firstItem="eSd-5E-z6q" firstAttribute="bottom" secondItem="biq-kw-T3L" secondAttribute="bottom" id="v0e-aC-HSC"/>
+                            <constraint firstItem="Brd-vw-sml" firstAttribute="top" secondItem="g2o-3O-6kL" secondAttribute="top" id="BB1-vw-sml"/>
+                            <constraint firstItem="Brd-vw-sml" firstAttribute="leading" secondItem="g2o-3O-6kL" secondAttribute="leading" id="BB2-vw-sml"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-sml" secondAttribute="trailing" id="BB3-vw-sml"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-sml" secondAttribute="bottom" id="BB4-vw-sml"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lkC-TT-hWL">
@@ -132,9 +139,6 @@
                         <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         <state key="normal" title="ADD"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="15"/>
-                            </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
@@ -163,6 +167,8 @@
             <connections>
                 <outlet property="broadcastLabel" destination="Tdr-Ou-IkD" id="kB9-r4-g4E"/>
                 <outlet property="libraryStatusButton" destination="EqD-dr-Qhq" id="9Zx-Vv-0fN"/>
+                <outlet property="posterBorderView" destination="Brd-vw-sml" id="BBv-01-sml"/>
+                <outlet property="posterContainerView" destination="g2o-3O-6kL" id="BBv-02-sml"/>
                 <outlet property="posterImageOverlay" destination="eSd-5E-z6q" id="lGX-E6-FYF"/>
                 <outlet property="posterImageView" destination="biq-kw-T3L" id="HEW-3f-WWy"/>
                 <outlet property="primaryLabel" destination="zcI-xN-jG9" id="JOT-Z1-FUR"/>

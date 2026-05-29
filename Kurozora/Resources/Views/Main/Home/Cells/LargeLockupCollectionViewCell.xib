@@ -27,19 +27,8 @@
                                 <rect key="frame" x="0.0" y="135.5" width="400" height="89.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZP-Up-kXD" userLabel="Border View">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZP-Up-kXD" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="225"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ReZero: Kara Hajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUB-2t-OCx">
                                 <rect key="frame" x="8" y="185.5" width="384" height="17"/>
@@ -63,7 +52,7 @@
                             <constraint firstAttribute="bottom" secondItem="JMj-aK-jKd" secondAttribute="bottom" id="FB9-PW-kNb"/>
                             <constraint firstAttribute="trailing" secondItem="oZP-Up-kXD" secondAttribute="trailing" id="NwV-kB-Ew3"/>
                             <constraint firstItem="oZP-Up-kXD" firstAttribute="top" secondItem="rZ6-ms-pn5" secondAttribute="top" id="Pki-Dj-7en"/>
-                            <constraint firstItem="UvI-WJ-zk0" firstAttribute="trailingMargin" secondItem="xUB-2t-OCx" secondAttribute="trailing" id="RNo-0I-OeV"/>
+                            <constraint firstItem="UvI-WJ-zk0" firstAttribute="trailing" secondItem="xUB-2t-OCx" secondAttribute="trailing" constant="12" id="RNo-0I-OeV"/>
                             <constraint firstItem="JMj-aK-jKd" firstAttribute="top" secondItem="rZ6-ms-pn5" secondAttribute="top" id="XQD-iT-XXg"/>
                             <constraint firstItem="JMj-aK-jKd" firstAttribute="leading" secondItem="rZ6-ms-pn5" secondAttribute="leading" id="Zd4-1C-Nyb"/>
                             <constraint firstAttribute="bottom" secondItem="oZP-Up-kXD" secondAttribute="bottom" id="a7T-HL-cQv"/>
@@ -71,15 +60,10 @@
                             <constraint firstItem="nv8-uF-ul2" firstAttribute="top" secondItem="xUB-2t-OCx" secondAttribute="bottom" id="avw-cx-hdP"/>
                             <constraint firstItem="UvI-WJ-zk0" firstAttribute="bottom" secondItem="JMj-aK-jKd" secondAttribute="bottom" id="dF7-9y-P0d"/>
                             <constraint firstItem="nv8-uF-ul2" firstAttribute="trailing" secondItem="xUB-2t-OCx" secondAttribute="trailing" id="emJ-HA-I46"/>
-                            <constraint firstItem="UvI-WJ-zk0" firstAttribute="bottom" secondItem="nv8-uF-ul2" secondAttribute="bottom" constant="8" id="mas-Hj-l35"/>
+                            <constraint firstItem="UvI-WJ-zk0" firstAttribute="bottom" secondItem="nv8-uF-ul2" secondAttribute="bottom" constant="12" id="mas-Hj-l35"/>
                             <constraint firstItem="UvI-WJ-zk0" firstAttribute="leading" secondItem="JMj-aK-jKd" secondAttribute="leading" id="rMR-sE-Q5w"/>
-                            <constraint firstItem="xUB-2t-OCx" firstAttribute="leading" secondItem="UvI-WJ-zk0" secondAttribute="leadingMargin" id="xRw-5L-unf"/>
+                            <constraint firstItem="xUB-2t-OCx" firstAttribute="leading" secondItem="UvI-WJ-zk0" secondAttribute="leading" constant="12" id="xRw-5L-unf"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>
@@ -92,6 +76,8 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="315" height="211"/>
             <connections>
+                <outlet property="bannerBorderView" destination="oZP-Up-kXD" id="BBv-Lg-001"/>
+                <outlet property="bannerContainerView" destination="rZ6-ms-pn5" id="Bnc-Lg-001"/>
                 <outlet property="bannerImageView" destination="JMj-aK-jKd" id="TD7-CD-KmN"/>
                 <outlet property="primaryLabel" destination="xUB-2t-OCx" id="cKP-R1-Q81"/>
                 <outlet property="secondaryLabel" destination="nv8-uF-ul2" id="eRO-fA-GSX"/>

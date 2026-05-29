@@ -8,10 +8,10 @@
 
 import Combine
 import KurozoraKit
+import SwiftTheme
 import UIKit
 #if DEBUG
 import FLEX
-import SwiftTheme
 #endif
 
 class KTabBarController: UITabBarController {

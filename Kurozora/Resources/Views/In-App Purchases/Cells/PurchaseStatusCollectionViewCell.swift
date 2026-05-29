@@ -19,6 +19,14 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var renewalStatusLabel: KLabel!
 	@IBOutlet weak var purchaseStatusLabel: KLabel!
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.contentView.layerCornerRadius = 12.0
+		self.productImageView.layerCornerRadius = 12.0
+	}
+
 	// MARK: - Functions
 	func configureCell(using product: Product?, status: Product.SubscriptionInfo.Status?) {
 		// Configure cell

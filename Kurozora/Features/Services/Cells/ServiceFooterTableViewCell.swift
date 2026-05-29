@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftTheme
 
 protocol ServiceFooterTableViewCellDelegate: AnyObject {
 	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton)

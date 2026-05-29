@@ -25,6 +25,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-ssn" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="f7H-8b-Tc3" secondAttribute="trailing" id="N8R-6a-ntI"/>
@@ -33,6 +36,10 @@
                             <constraint firstItem="f7H-8b-Tc3" firstAttribute="leading" secondItem="dls-0h-dle" secondAttribute="leading" id="ptx-kF-fTD"/>
                             <constraint firstAttribute="width" secondItem="dls-0h-dle" secondAttribute="height" multiplier="2:3" id="wsG-dZ-teJ"/>
                             <constraint firstItem="f7H-8b-Tc3" firstAttribute="top" secondItem="dls-0h-dle" secondAttribute="top" id="zj1-pn-p1Q"/>
+                            <constraint firstItem="Brd-vw-ssn" firstAttribute="top" secondItem="dls-0h-dle" secondAttribute="top" id="BB1-vw-ssn"/>
+                            <constraint firstItem="Brd-vw-ssn" firstAttribute="leading" secondItem="dls-0h-dle" secondAttribute="leading" id="BB2-vw-ssn"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-ssn" secondAttribute="trailing" id="BB3-vw-ssn"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-ssn" secondAttribute="bottom" id="BB4-vw-ssn"/>
                         </constraints>
                     </view>
                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Season 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbl-cp-8Ae" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
@@ -181,6 +188,8 @@
                 <outlet property="episodeCountLabel" destination="Ejo-f5-wbY" id="hpb-Tb-Tue"/>
                 <outlet property="episodeCountTitleLabel" destination="J7l-lc-5VH" id="OIQ-sl-xRd"/>
                 <outlet property="firstAiredLabel" destination="LPw-CP-IdP" id="Hhf-rY-YLQ"/>
+                <outlet property="posterBorderView" destination="Brd-vw-ssn" id="BBv-01-ssn"/>
+                <outlet property="posterContainerView" destination="dls-0h-dle" id="BBv-02-ssn"/>
                 <outlet property="posterImageView" destination="f7H-8b-Tc3" id="VmL-u1-bRs"/>
                 <outlet property="ratingLabel" destination="J5F-gX-VTT" id="4MJ-lP-aJR"/>
                 <outlet property="ratingTitleLabel" destination="lEP-J2-gh8" id="9cU-a4-ahK"/>

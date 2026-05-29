@@ -23,8 +23,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
                                 <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-SSR" userLabel="Poster Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Brd-vw-SSR" firstAttribute="top" secondItem="yp0-Ww-48d" secondAttribute="top" id="Brd-SSR-t"/>
+                            <constraint firstItem="Brd-vw-SSR" firstAttribute="leading" secondItem="yp0-Ww-48d" secondAttribute="leading" id="Brd-SSR-l"/>
+                            <constraint firstItem="Brd-vw-SSR" firstAttribute="trailing" secondItem="yp0-Ww-48d" secondAttribute="trailing" id="Brd-SSR-r"/>
+                            <constraint firstItem="Brd-vw-SSR" firstAttribute="bottom" secondItem="yp0-Ww-48d" secondAttribute="bottom" id="Brd-SSR-b"/>
                             <constraint firstAttribute="width" secondItem="NtG-gC-gVV" secondAttribute="height" multiplier="2:3" id="5hf-5z-3gs"/>
                             <constraint firstItem="yp0-Ww-48d" firstAttribute="top" secondItem="NtG-gC-gVV" secondAttribute="top" id="DLP-HE-w2t"/>
                             <constraint firstItem="yp0-Ww-48d" firstAttribute="leading" secondItem="NtG-gC-gVV" secondAttribute="leading" id="WEA-CQ-p8I"/>
@@ -52,6 +59,7 @@
             </collectionViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="borderView" destination="Brd-vw-SSR" id="Brd-vw-SSRO"/>
                 <outlet property="posterImageView" destination="yp0-Ww-48d" id="XlU-dH-QuQ"/>
                 <outlet property="titleLabel" destination="an6-JI-vxb" id="6DJ-t2-5XY"/>
             </connections>

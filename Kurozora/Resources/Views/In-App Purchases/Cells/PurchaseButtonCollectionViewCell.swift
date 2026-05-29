@@ -25,6 +25,16 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 	weak var delegate: PurchaseButtonCollectionViewCellDelegate?
 	var product: Product!
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.productImageView.layerCornerRadius = 12.0
+		self.productImageView.layer.cornerCurve = .continuous
+		self.productImageView.layer.borderWidth = self.productImageView.hairlineWidth
+		self.productImageView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+	}
+
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell(using product: Product?, isPurchased: Bool = false) {

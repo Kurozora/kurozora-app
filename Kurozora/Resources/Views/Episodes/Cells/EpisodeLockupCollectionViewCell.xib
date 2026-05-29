@@ -22,19 +22,25 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YY-qy-Rcf" userLabel="Shadow View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kso-7k-pdi" userLabel="Corner View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kso-7k-pdi" userLabel="Corner View">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Episode Banner" translatesAutoresizingMaskIntoConstraints="NO" id="Eyp-5T-Wke" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                                     </imageView>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-epi" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Eyp-5T-Wke" firstAttribute="leading" secondItem="Kso-7k-pdi" secondAttribute="leading" id="cxv-gQ-Elz"/>
                                     <constraint firstItem="Eyp-5T-Wke" firstAttribute="top" secondItem="Kso-7k-pdi" secondAttribute="top" id="qdC-Kw-aPX"/>
                                     <constraint firstAttribute="trailing" secondItem="Eyp-5T-Wke" secondAttribute="trailing" id="zrs-g8-mjM"/>
                                     <constraint firstAttribute="bottom" secondItem="Eyp-5T-Wke" secondAttribute="bottom" id="zvF-3J-zru"/>
+                                    <constraint firstItem="Brd-vw-epi" firstAttribute="top" secondItem="Kso-7k-pdi" secondAttribute="top" id="BB1-vw-epi"/>
+                                    <constraint firstItem="Brd-vw-epi" firstAttribute="leading" secondItem="Kso-7k-pdi" secondAttribute="leading" id="BB2-vw-epi"/>
+                                    <constraint firstAttribute="trailing" secondItem="Brd-vw-epi" secondAttribute="trailing" id="BB3-vw-epi"/>
+                                    <constraint firstAttribute="bottom" secondItem="Brd-vw-epi" secondAttribute="bottom" id="BB4-vw-epi"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -101,9 +107,6 @@
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <state key="normal" title="Mark as Watched"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -130,6 +133,7 @@
             <size key="customSize" width="375" height="430"/>
             <connections>
                 <outlet property="cornerView" destination="Kso-7k-pdi" id="Tg9-FG-3c1"/>
+                <outlet property="episodeBorderView" destination="Brd-vw-epi" id="BBv-01-epi"/>
                 <outlet property="episodeImageView" destination="Eyp-5T-Wke" id="1ic-Cz-tl9"/>
                 <outlet property="primaryLabel" destination="doD-Ch-lqu" id="UJG-Nk-za5"/>
                 <outlet property="rankLabel" destination="D4I-Ev-6Vb" id="ItD-2c-SYe"/>

@@ -24,11 +24,6 @@
                             <constraint firstAttribute="height" constant="48" id="a2O-C4-aB0"/>
                             <constraint firstAttribute="width" secondItem="cl7-hR-Oeu" secondAttribute="height" multiplier="1:1" id="ojH-qn-xRJ"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="12"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pP5-d1-Mhu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="64" y="7.9999999999999982" width="41" height="20.333333333333329"/>

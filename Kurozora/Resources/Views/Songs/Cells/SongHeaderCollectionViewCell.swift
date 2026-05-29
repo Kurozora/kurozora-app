@@ -18,6 +18,7 @@ protocol SongHeaderCollectionViewCellDelegate: AnyObject {
 class SongHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryImageView: AlbumImageView!
+	@IBOutlet weak var primaryBorderView: BorderView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var primaryButton: KTintedButton!
@@ -44,6 +45,10 @@ class SongHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell 
 		self.primaryImageView.isUserInteractionEnabled = true
 		let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
 		self.primaryImageView.addGestureRecognizer(primaryTap)
+
+		self.primaryImageView.applyCornerRadius(22.0)
+		self.primaryImageView.layer.borderWidth = 0
+		self.primaryBorderView.cornerRadius = 22.0
 	}
 
 	// MARK: - MediaViewerHeaderCell

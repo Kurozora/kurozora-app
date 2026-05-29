@@ -30,6 +30,9 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="U2D-Se-MKs">
                                         <rect key="frame" x="0.0" y="0.0" width="133.66666666666666" height="200.33333333333334"/>
                                     </imageView>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lcp" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="133.66666666666666" height="200.33333333333334"/>
+                                    </view>
                                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Fev-PL-Z7E" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="93.666666666666671" y="8.6666666666666661" width="32" height="30.666666666666671"/>
                                         <constraints>
@@ -50,6 +53,10 @@
                                     <constraint firstItem="U2D-Se-MKs" firstAttribute="bottom" secondItem="BNr-PS-fzK" secondAttribute="bottom" id="aL0-s9-9nb"/>
                                     <constraint firstAttribute="width" secondItem="xb2-ym-eOU" secondAttribute="height" multiplier="2:3" id="hpf-xo-wcI"/>
                                     <constraint firstItem="BNr-PS-fzK" firstAttribute="top" secondItem="xb2-ym-eOU" secondAttribute="top" id="lLC-ox-0Qi"/>
+                                    <constraint firstItem="Brd-vw-lcp" firstAttribute="top" secondItem="BNr-PS-fzK" secondAttribute="top" id="BB1-vw-lcp"/>
+                                    <constraint firstItem="Brd-vw-lcp" firstAttribute="leading" secondItem="BNr-PS-fzK" secondAttribute="leading" id="BB2-vw-lcp"/>
+                                    <constraint firstItem="Brd-vw-lcp" firstAttribute="trailing" secondItem="BNr-PS-fzK" secondAttribute="trailing" id="BB3-vw-lcp"/>
+                                    <constraint firstItem="Brd-vw-lcp" firstAttribute="bottom" secondItem="BNr-PS-fzK" secondAttribute="bottom" id="BB4-vw-lcp"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="One Piece" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCy-de-qsT" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -72,6 +79,8 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="posterAspectRatioConstraint" destination="hpf-xo-wcI" id="L1B-cO-8aF"/>
+                <outlet property="posterBorderView" destination="Brd-vw-lcp" id="BBv-01-lcp"/>
+                <outlet property="posterContainerView" destination="xb2-ym-eOU" id="CntC-01-lcp"/>
                 <outlet property="posterImageOverlayView" destination="U2D-Se-MKs" id="NBd-q3-jky"/>
                 <outlet property="posterImageView" destination="BNr-PS-fzK" id="QaX-be-XxI"/>
                 <outlet property="primaryLabel" destination="JCy-de-qsT" id="H8W-UN-lHZ"/>

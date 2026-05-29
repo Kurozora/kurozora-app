@@ -42,7 +42,7 @@ class KTextField: UITextField {
 		}
 		self.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		self.borderStyle = .roundedRect
-		self.layer.borderWidth = 1
+		self.layer.borderWidth = self.hairlineWidth
 		self.layerCornerRadius = 10
 	}
 }

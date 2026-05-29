@@ -19,7 +19,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AxB-ot-4Jx">
                         <rect key="frame" x="16" y="15" width="288" height="70"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-e2-6R8">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-e2-6R8" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="8" width="35" height="35"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s63-Rt-Hna" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
@@ -35,26 +35,6 @@
                                     <constraint firstAttribute="width" constant="35" id="pX8-c3-VcC"/>
                                     <constraint firstItem="s63-Rt-Hna" firstAttribute="top" secondItem="RJb-e2-6R8" secondAttribute="top" id="peP-h9-rKd"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="17"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8i-TH-Ymk">
                                 <rect key="frame" x="51" y="8" width="32" height="16"/>
@@ -102,11 +82,6 @@
                             <constraint firstItem="1MN-wD-chI" firstAttribute="top" secondItem="mcx-PL-p5s" secondAttribute="bottom" constant="4" id="jBf-N6-KVZ"/>
                             <constraint firstItem="RJb-e2-6R8" firstAttribute="top" secondItem="AxB-ot-4Jx" secondAttribute="topMargin" id="myv-h8-i6n"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>
@@ -119,6 +94,8 @@
             <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="bubbleView" destination="AxB-ot-4Jx" id="Bv1-RR-cmt"/>
+                <outlet property="profileBorderView" destination="RJb-e2-6R8" id="RJb-e2-6R8O"/>
                 <outlet property="dateTime" destination="Kcv-70-dIz" id="nZl-8C-Lfn"/>
                 <outlet property="heartButton" destination="1MN-wD-chI" id="Vap-dn-91F"/>
                 <outlet property="profileImage" destination="s63-Rt-Hna" id="IZ0-D7-3Ea"/>

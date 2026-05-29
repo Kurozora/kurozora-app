@@ -23,6 +23,13 @@ class CircularImageView: KImageView {
 		}
 	}
 
+	/// The vector mask that clips the imageView to a circle.
+	private let cornerMaskLayer: CAShapeLayer = {
+		let layer = CAShapeLayer()
+		layer.fillColor = UIColor.black.cgColor
+		return layer
+	}()
+
 	override var image: UIImage? {
 		get {
 			return super.image
@@ -36,8 +43,20 @@ class CircularImageView: KImageView {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.layerCornerRadius = self.frame.size.height / 2
+		self.refreshCornerMask()
 		self.applyFocalPointCrop()
+	}
+
+	override var mask: UIView? {
+		get {
+			return super.mask
+		}
+		set {
+			super.mask = newValue
+			if newValue == nil {
+				self.refreshCornerMask()
+			}
+		}
 	}
 
 	// MARK: - Functions
@@ -80,6 +99,22 @@ class CircularImageView: KImageView {
 				width: normalizedWidth,
 				height: 1
 			)
+		}
+	}
+
+	/// Updates the vector mask's path and re-attaches it if an external mask was cleared.
+	private func refreshCornerMask() {
+		guard self.bounds.width > 0, self.bounds.height > 0 else {
+			return
+		}
+
+		let radius = self.bounds.height / 2
+		let path = UIBezierPath(roundedRect: self.bounds, cornerRadius: radius)
+		self.cornerMaskLayer.path = path.cgPath
+		self.cornerMaskLayer.frame = self.bounds
+
+		if self.layer.mask !== self.cornerMaskLayer && super.mask == nil {
+			self.layer.mask = self.cornerMaskLayer
 		}
 	}
 }

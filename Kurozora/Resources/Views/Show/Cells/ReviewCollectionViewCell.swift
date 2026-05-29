@@ -18,6 +18,7 @@ protocol ReviewCollectionViewCellDelegate: AnyObject {
 class ReviewCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var borderView: BorderView!
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
@@ -37,6 +38,14 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.configureContentTextView()
+
+		self.profileImageView.layer.borderWidth = 0
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
 	}
 
 	// MARK: - Functions
@@ -66,6 +75,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		if showsFullReview {
 			// Configure view
 			self.layerCornerRadius = 0
+			self.layer.cornerCurve = .continuous
 			self.contentView.theme_backgroundColor = nil
 			self.contentView.backgroundColor = .clear
 
@@ -78,7 +88,8 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			self.moreButtonView.isHidden = true
 		} else {
 			// Configure view
-			self.layerCornerRadius = 8
+			self.layerCornerRadius = 22
+			self.layer.cornerCurve = .continuous
 			self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
 			// Configure body

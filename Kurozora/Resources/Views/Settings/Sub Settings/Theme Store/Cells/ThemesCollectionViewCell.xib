@@ -52,6 +52,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_1"/>
                                     </imageView>
+                                    <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm1" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="T9u-p2-Jsh" secondAttribute="trailing" id="KMh-Of-7sg"/>
@@ -59,9 +62,14 @@
                                     <constraint firstAttribute="width" secondItem="dD3-63-2Tq" secondAttribute="height" multiplier="9:19.5" id="bX8-qn-0MM"/>
                                     <constraint firstItem="T9u-p2-Jsh" firstAttribute="top" secondItem="dD3-63-2Tq" secondAttribute="top" id="fUM-5p-Rc8"/>
                                     <constraint firstAttribute="bottom" secondItem="T9u-p2-Jsh" secondAttribute="bottom" id="pKy-ai-Hzd"/>
+                                    <constraint firstItem="Brd-vw-thm1" firstAttribute="top" secondItem="T9u-p2-Jsh" secondAttribute="top" id="Brd-c1-top"/>
+                                    <constraint firstItem="Brd-vw-thm1" firstAttribute="leading" secondItem="T9u-p2-Jsh" secondAttribute="leading" id="Brd-c1-led"/>
+                                    <constraint firstAttribute="trailing" secondItem="Brd-vw-thm1" secondAttribute="trailing" id="Brd-c1-trl"/>
+                                    <constraint firstAttribute="bottom" secondItem="Brd-vw-thm1" secondAttribute="bottom" id="Brd-c1-bot"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="screenshotImageView" destination="T9u-p2-Jsh" id="UDy-fQ-NuG"/>
+                                    <outlet property="screenshotBorderView" destination="Brd-vw-thm1" id="Brd-ol-1xx"/>
                                 </connections>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIy-2g-3gR" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
@@ -71,6 +79,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_2"/>
                                     </imageView>
+                                    <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm2" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="RC1-qQ-BiE" secondAttribute="trailing" id="TpO-72-Phr"/>
@@ -78,9 +89,14 @@
                                     <constraint firstAttribute="bottom" secondItem="RC1-qQ-BiE" secondAttribute="bottom" id="qts-CT-857"/>
                                     <constraint firstAttribute="width" secondItem="pIy-2g-3gR" secondAttribute="height" multiplier="9:19.5" id="xnR-LT-SXw"/>
                                     <constraint firstItem="RC1-qQ-BiE" firstAttribute="top" secondItem="pIy-2g-3gR" secondAttribute="top" id="yre-f0-wDu"/>
+                                    <constraint firstItem="Brd-vw-thm2" firstAttribute="top" secondItem="RC1-qQ-BiE" secondAttribute="top" id="Brd-c2-top"/>
+                                    <constraint firstItem="Brd-vw-thm2" firstAttribute="leading" secondItem="RC1-qQ-BiE" secondAttribute="leading" id="Brd-c2-led"/>
+                                    <constraint firstAttribute="trailing" secondItem="Brd-vw-thm2" secondAttribute="trailing" id="Brd-c2-trl"/>
+                                    <constraint firstAttribute="bottom" secondItem="Brd-vw-thm2" secondAttribute="bottom" id="Brd-c2-bot"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="screenshotImageView" destination="RC1-qQ-BiE" id="lMb-bs-4KU"/>
+                                    <outlet property="screenshotBorderView" destination="Brd-vw-thm2" id="Brd-ol-2xx"/>
                                 </connections>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AUm-8s-w3U" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
@@ -90,6 +106,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
                                         <imageReference key="image" image="Themes/Default/Screenshot_3"/>
                                     </imageView>
+                                    <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm3" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="AUm-8s-w3U" secondAttribute="height" multiplier="9:19.5" id="J5v-t5-gTT"/>
@@ -97,9 +116,14 @@
                                     <constraint firstAttribute="trailing" secondItem="oU7-Gi-IVY" secondAttribute="trailing" id="O7c-5D-2wn"/>
                                     <constraint firstItem="oU7-Gi-IVY" firstAttribute="top" secondItem="AUm-8s-w3U" secondAttribute="top" id="gQT-eL-QGR"/>
                                     <constraint firstAttribute="bottom" secondItem="oU7-Gi-IVY" secondAttribute="bottom" id="rhu-R7-Mah"/>
+                                    <constraint firstItem="Brd-vw-thm3" firstAttribute="top" secondItem="oU7-Gi-IVY" secondAttribute="top" id="Brd-c3-top"/>
+                                    <constraint firstItem="Brd-vw-thm3" firstAttribute="leading" secondItem="oU7-Gi-IVY" secondAttribute="leading" id="Brd-c3-led"/>
+                                    <constraint firstAttribute="trailing" secondItem="Brd-vw-thm3" secondAttribute="trailing" id="Brd-c3-trl"/>
+                                    <constraint firstAttribute="bottom" secondItem="Brd-vw-thm3" secondAttribute="bottom" id="Brd-c3-bot"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="screenshotImageView" destination="oU7-Gi-IVY" id="mRh-AK-RmV"/>
+                                    <outlet property="screenshotBorderView" destination="Brd-vw-thm3" id="Brd-ol-3xx"/>
                                 </connections>
                             </view>
                         </subviews>

@@ -18,6 +18,7 @@ protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
 class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var episodeImageView: BannerImageView!
+	@IBOutlet weak var episodeBorderView: BorderView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var cornerView: UIView!
 	@IBOutlet weak var rankLabel: KLabel!
@@ -30,6 +31,16 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.cornerView.layer.cornerRadius = 22
+		self.episodeImageView?.applyCornerRadius(22)
+		self.episodeImageView?.layer.borderWidth = 0
+		self.episodeBorderView.cornerRadius = 22
+	}
+
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	///
@@ -41,9 +52,6 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 			self.showSkeleton()
 			return
 		}
-
-		// Configure view
-		self.cornerView.layerCornerRadius = 10
 
 		// Configure image view
 		episode.attributes.bannerImage(imageView: self.episodeImageView)

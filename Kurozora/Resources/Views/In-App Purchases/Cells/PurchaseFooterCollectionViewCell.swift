@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftTheme
 
 protocol PurchaseFooterCollectionViewCellDelegate: AnyObject {
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) async

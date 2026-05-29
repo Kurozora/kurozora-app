@@ -34,11 +34,6 @@
                                     <constraint firstAttribute="width" constant="30" id="anb-6C-jMf"/>
                                     <constraint firstAttribute="trailing" secondItem="WXt-Wf-FFr" secondAttribute="trailing" id="fHY-eR-L4R"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nv-9D-ZlI" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="38" y="0.0" width="38.666666666666657" height="30"/>

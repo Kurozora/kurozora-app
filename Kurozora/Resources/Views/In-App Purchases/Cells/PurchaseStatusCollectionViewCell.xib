@@ -25,11 +25,6 @@
                             <constraint firstAttribute="height" constant="50" id="2AD-PZ-ou2"/>
                             <constraint firstAttribute="width" secondItem="TCv-qC-Gx0" secondAttribute="height" multiplier="1:1" id="3fL-GI-WNj"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="12"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jci-ak-qaa" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="8" y="66" width="358" height="20.333333333333329"/>
@@ -140,11 +135,6 @@
                     <constraint firstItem="xgt-it-2Rt" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="ky4-qe-SnP"/>
                     <constraint firstAttribute="trailing" secondItem="qNF-Xl-AzR" secondAttribute="trailing" constant="8" id="uXY-eg-RD7"/>
                 </constraints>
-                <userDefinedRuntimeAttributes>
-                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                        <integer key="value" value="12"/>
-                    </userDefinedRuntimeAttribute>
-                </userDefinedRuntimeAttributes>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="375" height="174"/>

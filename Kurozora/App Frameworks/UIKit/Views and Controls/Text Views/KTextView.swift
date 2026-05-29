@@ -42,9 +42,9 @@ class KTextView: UITextView {
 	/// The color of the placeholder text.
 	///
 	/// This property applies to the entire text string in the [placeholder](x-source-tag://KTextView-placeholder) property.
-	var theme_placeholderColor: ThemeColorPicker? = KThemePicker.textFieldPlaceholderTextColor.rawValue {
+	var theme_placeholderColor: KThemePicker? = .textFieldPlaceholderTextColor {
 		didSet {
-			self.placeholderLabel.theme_textColor = self.theme_placeholderColor ?? KThemePicker.textFieldPlaceholderTextColor.rawValue
+			self.placeholderLabel.theme_textColor = self.theme_placeholderColor?.rawValue ?? KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
 	}
 
@@ -143,7 +143,7 @@ class KTextView: UITextView {
 
 	/// Called when the user begins editing.
 	@objc private func handleTextDidBeginEditing() {
-		self.placeholderLabel.theme_textColor = self.theme_placeholderColor
+		self.placeholderLabel.theme_textColor = self.theme_placeholderColor?.rawValue
 		self.placeholderLabel.isHidden = true
 	}
 
@@ -214,7 +214,7 @@ private extension KTextView {
 		self.placeholderLabel.font = self.font
 		self.placeholderLabel.numberOfLines = 0
 		self.placeholderLabel.isHidden = !self.text.isEmpty
-		self.placeholderLabel.theme_textColor = self.theme_placeholderColor
+		self.placeholderLabel.theme_textColor = self.theme_placeholderColor?.rawValue
 	}
 
 	func configureViewHierarchy() {

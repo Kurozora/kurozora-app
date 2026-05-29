@@ -24,6 +24,9 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="Hj7-7r-lDN" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-gme" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Hj7-7r-lDN" secondAttribute="trailing" id="4lZ-Es-35t"/>
@@ -32,6 +35,10 @@
                             <constraint firstItem="Hj7-7r-lDN" firstAttribute="leading" secondItem="vA2-tR-GbT" secondAttribute="leading" id="LFY-LX-psE"/>
                             <constraint firstAttribute="width" constant="100" id="mO7-9H-kll"/>
                             <constraint firstAttribute="bottom" secondItem="Hj7-7r-lDN" secondAttribute="bottom" id="xcf-K7-yBO"/>
+                            <constraint firstItem="Brd-vw-gme" firstAttribute="top" secondItem="vA2-tR-GbT" secondAttribute="top" id="BB1-vw-gme"/>
+                            <constraint firstItem="Brd-vw-gme" firstAttribute="leading" secondItem="vA2-tR-GbT" secondAttribute="leading" id="BB2-vw-gme"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-gme" secondAttribute="trailing" id="BB3-vw-gme"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-gme" secondAttribute="bottom" id="BB4-vw-gme"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UKB-W5-j0G">
@@ -125,9 +132,6 @@
                         <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         <state key="normal" title="ADD"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="15"/>
-                            </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
@@ -156,6 +160,8 @@
             <connections>
                 <outlet property="broadcastLabel" destination="sc5-rW-aHw" id="hKt-ln-sS1"/>
                 <outlet property="libraryStatusButton" destination="otZ-dn-j5q" id="Mqn-gz-uew"/>
+                <outlet property="posterBorderView" destination="Brd-vw-gme" id="BBv-01-gme"/>
+                <outlet property="posterContainerView" destination="vA2-tR-GbT" id="BBv-02-gme"/>
                 <outlet property="posterImageView" destination="Hj7-7r-lDN" id="2RG-pz-Wvk"/>
                 <outlet property="primaryLabel" destination="qYV-48-V8n" id="pSP-iW-4op"/>
                 <outlet property="rankLabel" destination="4pc-fd-9EC" id="jQv-DS-9I4"/>

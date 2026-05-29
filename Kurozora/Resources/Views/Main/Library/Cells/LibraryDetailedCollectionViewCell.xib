@@ -28,6 +28,9 @@
                                 <rect key="frame" x="0.0" y="112.66666666666669" width="400" height="112.33333333333331"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lde" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="225"/>
+                            </view>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nJT-33-hnn" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="360" y="8.6666666666666661" width="32" height="30.666666666666671"/>
                                 <constraints>
@@ -49,6 +52,10 @@
                             <constraint firstItem="Uca-Cy-xHa" firstAttribute="top" secondItem="CIv-rz-kh7" secondAttribute="centerY" id="nKp-gR-go7"/>
                             <constraint firstItem="CIv-rz-kh7" firstAttribute="leading" secondItem="16r-iS-7bZ" secondAttribute="leading" id="rA7-7b-VIu"/>
                             <constraint firstItem="CIv-rz-kh7" firstAttribute="top" secondItem="16r-iS-7bZ" secondAttribute="top" id="wjd-RN-UPQ"/>
+                            <constraint firstItem="Brd-vw-lde" firstAttribute="top" secondItem="16r-iS-7bZ" secondAttribute="top" id="BB1-vw-lde"/>
+                            <constraint firstItem="Brd-vw-lde" firstAttribute="leading" secondItem="16r-iS-7bZ" secondAttribute="leading" id="BB2-vw-lde"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-lde" secondAttribute="trailing" id="BB3-vw-lde"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-lde" secondAttribute="bottom" id="BB4-vw-lde"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ena-Bt-caq">
@@ -61,6 +68,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="yHC-Pl-VIJ">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                             </imageView>
+                            <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lid" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="yHC-Pl-VIJ" firstAttribute="leading" secondItem="Ewv-Ls-PDt" secondAttribute="leading" id="0ND-H0-OJ1"/>
@@ -73,6 +83,10 @@
                             <constraint firstItem="Ewv-Ls-PDt" firstAttribute="top" secondItem="ena-Bt-caq" secondAttribute="top" id="uef-gT-H1a"/>
                             <constraint firstAttribute="bottom" secondItem="Ewv-Ls-PDt" secondAttribute="bottom" id="zCD-qk-1yg"/>
                             <constraint firstItem="Ewv-Ls-PDt" firstAttribute="leading" secondItem="ena-Bt-caq" secondAttribute="leading" id="zRx-3X-qS8"/>
+                            <constraint firstItem="Brd-vw-lid" firstAttribute="top" secondItem="Ewv-Ls-PDt" secondAttribute="top" id="Brd-lid-t"/>
+                            <constraint firstItem="Brd-vw-lid" firstAttribute="leading" secondItem="Ewv-Ls-PDt" secondAttribute="leading" id="Brd-lid-l"/>
+                            <constraint firstItem="Brd-vw-lid" firstAttribute="trailing" secondItem="Ewv-Ls-PDt" secondAttribute="trailing" id="Brd-lid-r"/>
+                            <constraint firstItem="Brd-vw-lid" firstAttribute="bottom" secondItem="Ewv-Ls-PDt" secondAttribute="bottom" id="Brd-lid-b"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Kajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="lp6-QM-DaY">
@@ -108,13 +122,16 @@
             <size key="customSize" width="400" height="225"/>
             <connections>
                 <outlet property="bannerContainerView" destination="16r-iS-7bZ" id="oav-G8-DQy"/>
+                <outlet property="episodeBorderView" destination="Brd-vw-lde" id="BBv-01-lde"/>
                 <outlet property="episodeImageView" destination="CIv-rz-kh7" id="9bP-Sr-AY3"/>
                 <outlet property="posterAspectRatioConstraint" destination="hv0-QG-mkZ" id="L3B-cO-8aH"/>
+                <outlet property="posterBorderView" destination="Brd-vw-lid" id="Brd-vw-lidO"/>
                 <outlet property="posterImageOverlayView" destination="yHC-Pl-VIJ" id="RBL-cr-ENx"/>
                 <outlet property="posterImageView" destination="Ewv-Ls-PDt" id="mqb-Ho-MFk"/>
                 <outlet property="posterShadowView" destination="ena-Bt-caq" id="sNR-Os-PIl"/>
                 <outlet property="primaryLabel" destination="lp6-QM-DaY" id="YdG-hy-BhY"/>
                 <outlet property="selectionImageOverlayView" destination="nJT-33-hnn" id="Uv0-6j-yuO"/>
+                <outlet property="shadowImageView" destination="Uca-Cy-xHa" id="Uca-Cy-xHaO"/>
                 <outlet property="userProgressLabel" destination="RQ0-40-Hwx" id="icH-WV-wiG"/>
             </connections>
             <point key="canvasLocation" x="-311" y="153"/>

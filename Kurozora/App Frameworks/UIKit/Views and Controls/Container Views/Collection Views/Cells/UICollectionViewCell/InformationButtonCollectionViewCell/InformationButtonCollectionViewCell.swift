@@ -37,7 +37,8 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	/// The shared settings used to initialize the cell.
 	fileprivate func sharedInit() {
 		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		self.layerCornerRadius = 8
+		self.layerCornerRadius = 22
+		self.layer.cornerCurve = .continuous
 	}
 
 	/// Configure the cell with the given studio information.

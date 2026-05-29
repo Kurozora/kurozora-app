@@ -8,4 +8,29 @@
 
 import UIKit
 
-class PersonReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {}
+class PersonReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
+	// MARK: - Properties
+	private var posterCircleObservation: NSKeyValueObservation?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.posterCircleObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+			self?.syncPosterBorderRadius()
+		}
+
+		self.posterImageView?.layer.borderWidth = 0
+		self.syncPosterBorderRadius()
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.syncPosterBorderRadius()
+	}
+
+	// MARK: - Functions
+	private func syncPosterBorderRadius() {
+		guard let posterBorderView = self.posterBorderView else { return }
+		posterBorderView.cornerRadius = (self.posterImageView?.bounds.height ?? 0) / 2.0
+	}
+}

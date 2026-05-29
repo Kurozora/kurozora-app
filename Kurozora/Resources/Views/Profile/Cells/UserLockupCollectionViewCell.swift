@@ -37,6 +37,7 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var followStatusLabel: KSecondaryLabel!
 	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var borderView: BorderView!
 	@IBOutlet weak var followButton: KTintedButton!
 
 	// MARK: - Properties
@@ -46,6 +47,18 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 	private var isInBlockedMode: Bool = false
 
 	// MARK: - View Lifecycle
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.profileImageView.layer.borderWidth = 0
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 

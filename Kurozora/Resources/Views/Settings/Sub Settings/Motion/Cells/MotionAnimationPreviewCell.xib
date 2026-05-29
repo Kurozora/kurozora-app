@@ -39,9 +39,6 @@
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="_test" image="play.fill" catalog="system"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </button>

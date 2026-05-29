@@ -37,11 +37,6 @@
                                             <constraint firstAttribute="width" constant="30" id="qug-b3-SMy"/>
                                             <constraint firstAttribute="bottom" secondItem="Sgm-tg-5nb" secondAttribute="bottom" id="uCA-fU-tNm"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <integer key="value" value="6"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1v6-Ix-upi" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="38" y="0.0" width="38.666666666666657" height="30"/>

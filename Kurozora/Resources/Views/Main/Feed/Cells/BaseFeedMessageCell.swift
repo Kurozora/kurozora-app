@@ -44,6 +44,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var statusLabel: KSecondaryLabel!
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var profileBorderView: BorderView!
 	@IBOutlet weak var displayNameLabel: KLabel!
 	@IBOutlet weak var usernameLabel: KSecondaryLabel!
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
@@ -94,6 +95,9 @@ class BaseFeedMessageCell: KTableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.configurePostTextView()
+
+		self.profileImageView.layer.borderWidth = 0
+		self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
 	}
 
 	override func prepareForReuse() {
@@ -117,6 +121,8 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
+
+		self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
 
 		let width = self.postTextView.bounds.width
 		if width > 0, width != self.cachedBodyWidth {

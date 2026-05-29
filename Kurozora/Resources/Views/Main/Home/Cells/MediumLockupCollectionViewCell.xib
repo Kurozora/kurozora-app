@@ -32,19 +32,8 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grain" translatesAutoresizingMaskIntoConstraints="NO" id="QHT-Mg-dgm">
                                 <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cC-BS-6hY" userLabel="Border View">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cC-BS-6hY" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <constraints>
@@ -66,11 +55,6 @@
                             <constraint firstAttribute="trailing" secondItem="1ri-jr-BHw" secondAttribute="trailing" id="uLp-JD-S4p"/>
                             <constraint firstAttribute="bottom" secondItem="QHT-Mg-dgm" secondAttribute="bottom" id="xkS-7I-TOU"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okd-mu-YDE">
                         <rect key="frame" x="0.0" y="168" width="284" height="46"/>
@@ -103,6 +87,7 @@
             <size key="customSize" width="284" height="190"/>
             <connections>
                 <outlet property="backgroundColorView" destination="ni9-Cf-IrR" id="S1G-Y9-IfZ"/>
+                <outlet property="mediumBorderView" destination="3cC-BS-6hY" id="BBv-Md-001"/>
                 <outlet property="primaryLabel" destination="uWC-M2-fx0" id="hv4-eZ-tjw"/>
                 <outlet property="rankLabel" destination="OkU-DY-ywW" id="rDx-9q-9Cn"/>
                 <outlet property="symbolImageView" destination="hQ3-se-UId" id="vXi-51-wEA"/>

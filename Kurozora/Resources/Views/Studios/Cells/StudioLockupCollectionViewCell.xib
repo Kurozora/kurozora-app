@@ -18,12 +18,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Studio Profile" translatesAutoresizingMaskIntoConstraints="NO" id="br2-r6-Rm3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ConT-vw-stu" userLabel="Primary Container View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Studio Profile" translatesAutoresizingMaskIntoConstraints="NO" id="br2-r6-Rm3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                            </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-stu" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                            </view>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="br2-r6-Rm3" secondAttribute="height" multiplier="16:9" id="jB9-i3-Hgk"/>
+                            <constraint firstAttribute="width" secondItem="ConT-vw-stu" secondAttribute="height" multiplier="16:9" id="jB9-i3-Hgk"/>
+                            <constraint firstItem="br2-r6-Rm3" firstAttribute="top" secondItem="ConT-vw-stu" secondAttribute="top" id="Img-stu-t"/>
+                            <constraint firstItem="br2-r6-Rm3" firstAttribute="leading" secondItem="ConT-vw-stu" secondAttribute="leading" id="Img-stu-l"/>
+                            <constraint firstAttribute="trailing" secondItem="br2-r6-Rm3" secondAttribute="trailing" id="Img-stu-r"/>
+                            <constraint firstAttribute="bottom" secondItem="br2-r6-Rm3" secondAttribute="bottom" id="Img-stu-b"/>
+                            <constraint firstItem="Brd-vw-stu" firstAttribute="top" secondItem="ConT-vw-stu" secondAttribute="top" id="BB1-vw-stu"/>
+                            <constraint firstItem="Brd-vw-stu" firstAttribute="leading" secondItem="ConT-vw-stu" secondAttribute="leading" id="BB2-vw-stu"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-stu" secondAttribute="trailing" id="BB3-vw-stu"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-stu" secondAttribute="bottom" id="BB4-vw-stu"/>
                         </constraints>
-                    </imageView>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jhC-Kh-3ho">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <subviews>
@@ -72,21 +88,23 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="1Cm-xu-Uok" secondAttribute="trailing" id="0Ju-J7-iRB"/>
                     <constraint firstAttribute="bottom" secondItem="1Cm-xu-Uok" secondAttribute="bottom" id="5ug-M1-ICM"/>
-                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="trailing" secondItem="br2-r6-Rm3" secondAttribute="trailing" id="7V7-i0-o9S"/>
+                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="trailing" secondItem="ConT-vw-stu" secondAttribute="trailing" id="7V7-i0-o9S"/>
                     <constraint firstItem="1Cm-xu-Uok" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="7nZ-0h-dn9"/>
                     <constraint firstItem="1Cm-xu-Uok" firstAttribute="top" secondItem="jhC-Kh-3ho" secondAttribute="bottom" constant="8" symbolic="YES" id="Ghq-Yx-6XK"/>
-                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="leading" secondItem="br2-r6-Rm3" secondAttribute="leading" id="UWa-3n-Q5r"/>
-                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="top" secondItem="br2-r6-Rm3" secondAttribute="top" id="aH3-of-bgE"/>
-                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="bottom" secondItem="br2-r6-Rm3" secondAttribute="bottom" id="dd9-lp-QAN"/>
-                    <constraint firstItem="br2-r6-Rm3" firstAttribute="top" secondItem="wV1-x6-CfA" secondAttribute="top" id="s78-1L-Aoc"/>
-                    <constraint firstItem="br2-r6-Rm3" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="tVg-Xy-ahJ"/>
-                    <constraint firstAttribute="trailing" secondItem="br2-r6-Rm3" secondAttribute="trailing" id="yjI-nk-zyL"/>
+                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="leading" secondItem="ConT-vw-stu" secondAttribute="leading" id="UWa-3n-Q5r"/>
+                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="top" secondItem="ConT-vw-stu" secondAttribute="top" id="aH3-of-bgE"/>
+                    <constraint firstItem="jhC-Kh-3ho" firstAttribute="bottom" secondItem="ConT-vw-stu" secondAttribute="bottom" id="dd9-lp-QAN"/>
+                    <constraint firstItem="ConT-vw-stu" firstAttribute="top" secondItem="wV1-x6-CfA" secondAttribute="top" id="s78-1L-Aoc"/>
+                    <constraint firstItem="ConT-vw-stu" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="tVg-Xy-ahJ"/>
+                    <constraint firstAttribute="trailing" secondItem="ConT-vw-stu" secondAttribute="trailing" id="yjI-nk-zyL"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="375" height="268"/>
             <connections>
+                <outlet property="primaryBorderView" destination="Brd-vw-stu" id="BBv-01-stu"/>
+                <outlet property="primaryContainerView" destination="ConT-vw-stu" id="CntC-01-stu"/>
                 <outlet property="primaryImageView" destination="br2-r6-Rm3" id="W8W-xc-5eN"/>
                 <outlet property="primaryLabel" destination="D0b-25-g1e" id="WD4-Iw-2Yx"/>
                 <outlet property="profileImageContainer" destination="jhC-Kh-3ho" id="b56-Ua-fv2"/>

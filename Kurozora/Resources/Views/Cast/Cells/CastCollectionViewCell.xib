@@ -17,14 +17,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="irr-5j-Rg1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ConT-vw-pca" userLabel="Person Container View">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
-                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="irr-5j-Rg1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-pca" userLabel="Person Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                            </view>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="150" id="B2w-7U-nVx"/>
-                            <constraint firstAttribute="width" secondItem="irr-5j-Rg1" secondAttribute="height" multiplier="2:3" id="EKe-Mj-Zc5"/>
+                            <constraint firstAttribute="height" constant="150" id="ConT-pca-h"/>
+                            <constraint firstAttribute="width" secondItem="ConT-vw-pca" secondAttribute="height" multiplier="2:3" id="ConT-pca-w"/>
+                            <constraint firstItem="irr-5j-Rg1" firstAttribute="top" secondItem="ConT-vw-pca" secondAttribute="top" id="Img-pca-t"/>
+                            <constraint firstItem="irr-5j-Rg1" firstAttribute="leading" secondItem="ConT-vw-pca" secondAttribute="leading" id="Img-pca-l"/>
+                            <constraint firstAttribute="trailing" secondItem="irr-5j-Rg1" secondAttribute="trailing" id="Img-pca-r"/>
+                            <constraint firstAttribute="bottom" secondItem="irr-5j-Rg1" secondAttribute="bottom" id="Img-pca-b"/>
+                            <constraint firstItem="Brd-vw-pca" firstAttribute="top" secondItem="ConT-vw-pca" secondAttribute="top" id="BB1-vw-pca"/>
+                            <constraint firstItem="Brd-vw-pca" firstAttribute="leading" secondItem="ConT-vw-pca" secondAttribute="leading" id="BB2-vw-pca"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-pca" secondAttribute="trailing" id="BB3-vw-pca"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-pca" secondAttribute="bottom" id="BB4-vw-pca"/>
                         </constraints>
-                    </imageView>
+                    </view>
                     <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yūsuke Kobayashias" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ph7-Qa-3RF" customClass="KCopyableTintedLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="108" y="0.0" width="131" height="17"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,14 +69,30 @@
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qyy-78-Swb" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ConT-vw-cca" userLabel="Character Container View">
                         <rect key="frame" x="274" y="0.0" width="100" height="150"/>
-                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qyy-78-Swb" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-cca" userLabel="Character Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                            </view>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="150" id="UbN-pe-BwR"/>
-                            <constraint firstAttribute="width" secondItem="qyy-78-Swb" secondAttribute="height" multiplier="2:3" id="Z9g-qT-Azd"/>
+                            <constraint firstAttribute="height" constant="150" id="ConT-cca-h"/>
+                            <constraint firstAttribute="width" secondItem="ConT-vw-cca" secondAttribute="height" multiplier="2:3" id="ConT-cca-w"/>
+                            <constraint firstItem="qyy-78-Swb" firstAttribute="top" secondItem="ConT-vw-cca" secondAttribute="top" id="Img-cca-t"/>
+                            <constraint firstItem="qyy-78-Swb" firstAttribute="leading" secondItem="ConT-vw-cca" secondAttribute="leading" id="Img-cca-l"/>
+                            <constraint firstAttribute="trailing" secondItem="qyy-78-Swb" secondAttribute="trailing" id="Img-cca-r"/>
+                            <constraint firstAttribute="bottom" secondItem="qyy-78-Swb" secondAttribute="bottom" id="Img-cca-b"/>
+                            <constraint firstItem="Brd-vw-cca" firstAttribute="top" secondItem="ConT-vw-cca" secondAttribute="top" id="BB1-vw-cca"/>
+                            <constraint firstItem="Brd-vw-cca" firstAttribute="leading" secondItem="ConT-vw-cca" secondAttribute="leading" id="BB2-vw-cca"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-cca" secondAttribute="trailing" id="BB3-vw-cca"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-cca" secondAttribute="bottom" id="BB4-vw-cca"/>
                         </constraints>
-                    </imageView>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROT-4r-4vA">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                         <connections>
@@ -75,31 +107,31 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="qyy-78-Swb" firstAttribute="top" secondItem="cId-jW-dTX" secondAttribute="top" id="0mU-Be-b8v"/>
-                    <constraint firstItem="qyy-78-Swb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Q5o-Ip-gRt" secondAttribute="trailing" constant="8" symbolic="YES" id="5tp-yc-4dY"/>
-                    <constraint firstAttribute="bottom" secondItem="qyy-78-Swb" secondAttribute="bottom" id="Bsh-yQ-IM2"/>
-                    <constraint firstItem="irr-5j-Rg1" firstAttribute="top" secondItem="cId-jW-dTX" secondAttribute="top" id="DdT-4F-L16"/>
-                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="leading" secondItem="qyy-78-Swb" secondAttribute="leading" id="FIX-Tg-AYC"/>
-                    <constraint firstItem="crw-ue-ykT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="irr-5j-Rg1" secondAttribute="trailing" constant="10" id="FNn-Hy-3Av"/>
-                    <constraint firstItem="irr-5j-Rg1" firstAttribute="leading" secondItem="cId-jW-dTX" secondAttribute="leading" id="Gfk-KG-WIY"/>
-                    <constraint firstAttribute="trailing" secondItem="qyy-78-Swb" secondAttribute="trailing" id="GtT-r6-xVi"/>
-                    <constraint firstItem="ROT-4r-4vA" firstAttribute="trailing" secondItem="irr-5j-Rg1" secondAttribute="trailing" id="Gw5-2P-nfD"/>
-                    <constraint firstItem="ROT-4r-4vA" firstAttribute="leading" secondItem="irr-5j-Rg1" secondAttribute="leading" id="HU9-Ea-daL"/>
-                    <constraint firstItem="ROT-4r-4vA" firstAttribute="bottom" secondItem="irr-5j-Rg1" secondAttribute="bottom" id="JC5-SR-oXO"/>
-                    <constraint firstItem="qyy-78-Swb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ph7-Qa-3RF" secondAttribute="trailing" constant="8" symbolic="YES" id="L3z-iA-n1h"/>
+                    <constraint firstItem="ConT-vw-cca" firstAttribute="top" secondItem="cId-jW-dTX" secondAttribute="top" id="0mU-Be-b8v"/>
+                    <constraint firstItem="ConT-vw-cca" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Q5o-Ip-gRt" secondAttribute="trailing" constant="8" symbolic="YES" id="5tp-yc-4dY"/>
+                    <constraint firstAttribute="bottom" secondItem="ConT-vw-cca" secondAttribute="bottom" id="Bsh-yQ-IM2"/>
+                    <constraint firstItem="ConT-vw-pca" firstAttribute="top" secondItem="cId-jW-dTX" secondAttribute="top" id="DdT-4F-L16"/>
+                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="leading" secondItem="ConT-vw-cca" secondAttribute="leading" id="FIX-Tg-AYC"/>
+                    <constraint firstItem="crw-ue-ykT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ConT-vw-pca" secondAttribute="trailing" constant="10" id="FNn-Hy-3Av"/>
+                    <constraint firstItem="ConT-vw-pca" firstAttribute="leading" secondItem="cId-jW-dTX" secondAttribute="leading" id="Gfk-KG-WIY"/>
+                    <constraint firstAttribute="trailing" secondItem="ConT-vw-cca" secondAttribute="trailing" id="GtT-r6-xVi"/>
+                    <constraint firstItem="ROT-4r-4vA" firstAttribute="trailing" secondItem="ConT-vw-pca" secondAttribute="trailing" id="Gw5-2P-nfD"/>
+                    <constraint firstItem="ROT-4r-4vA" firstAttribute="leading" secondItem="ConT-vw-pca" secondAttribute="leading" id="HU9-Ea-daL"/>
+                    <constraint firstItem="ROT-4r-4vA" firstAttribute="bottom" secondItem="ConT-vw-pca" secondAttribute="bottom" id="JC5-SR-oXO"/>
+                    <constraint firstItem="ConT-vw-cca" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ph7-Qa-3RF" secondAttribute="trailing" constant="8" symbolic="YES" id="L3z-iA-n1h"/>
                     <constraint firstItem="crw-ue-ykT" firstAttribute="top" secondItem="Q5o-Ip-gRt" secondAttribute="bottom" constant="8" symbolic="YES" id="LTW-pr-tci"/>
-                    <constraint firstItem="irr-5j-Rg1" firstAttribute="top" secondItem="Ph7-Qa-3RF" secondAttribute="top" id="UG2-AX-SjW"/>
+                    <constraint firstItem="ConT-vw-pca" firstAttribute="top" secondItem="Ph7-Qa-3RF" secondAttribute="top" id="UG2-AX-SjW"/>
                     <constraint firstItem="4JN-MW-Mtv" firstAttribute="trailing" secondItem="crw-ue-ykT" secondAttribute="trailing" id="Y1B-ia-4O2"/>
-                    <constraint firstItem="qyy-78-Swb" firstAttribute="leading" secondItem="crw-ue-ykT" secondAttribute="trailing" constant="8" symbolic="YES" id="ZD3-BL-oB8"/>
-                    <constraint firstItem="ROT-4r-4vA" firstAttribute="top" secondItem="irr-5j-Rg1" secondAttribute="top" id="aGt-eO-D45"/>
-                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="bottom" secondItem="qyy-78-Swb" secondAttribute="bottom" id="ago-PM-F4U"/>
-                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="top" secondItem="qyy-78-Swb" secondAttribute="top" id="dSi-eU-0ve"/>
-                    <constraint firstAttribute="bottom" secondItem="irr-5j-Rg1" secondAttribute="bottom" id="h55-Hl-kZT"/>
+                    <constraint firstItem="ConT-vw-cca" firstAttribute="leading" secondItem="crw-ue-ykT" secondAttribute="trailing" constant="8" symbolic="YES" id="ZD3-BL-oB8"/>
+                    <constraint firstItem="ROT-4r-4vA" firstAttribute="top" secondItem="ConT-vw-pca" secondAttribute="top" id="aGt-eO-D45"/>
+                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="bottom" secondItem="ConT-vw-cca" secondAttribute="bottom" id="ago-PM-F4U"/>
+                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="top" secondItem="ConT-vw-cca" secondAttribute="top" id="dSi-eU-0ve"/>
+                    <constraint firstAttribute="bottom" secondItem="ConT-vw-pca" secondAttribute="bottom" id="h55-Hl-kZT"/>
                     <constraint firstItem="Q5o-Ip-gRt" firstAttribute="leading" secondItem="Ph7-Qa-3RF" secondAttribute="leading" id="hGe-8K-5oU"/>
-                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="trailing" secondItem="qyy-78-Swb" secondAttribute="trailing" id="lqw-Pq-Jrw"/>
-                    <constraint firstItem="Ph7-Qa-3RF" firstAttribute="leading" secondItem="irr-5j-Rg1" secondAttribute="trailing" constant="8" symbolic="YES" id="mDl-ax-sxl"/>
+                    <constraint firstItem="jIB-bQ-1iP" firstAttribute="trailing" secondItem="ConT-vw-cca" secondAttribute="trailing" id="lqw-Pq-Jrw"/>
+                    <constraint firstItem="Ph7-Qa-3RF" firstAttribute="leading" secondItem="ConT-vw-pca" secondAttribute="trailing" constant="8" symbolic="YES" id="mDl-ax-sxl"/>
                     <constraint firstItem="Q5o-Ip-gRt" firstAttribute="top" secondItem="Ph7-Qa-3RF" secondAttribute="bottom" id="nqC-kk-MBw"/>
-                    <constraint firstItem="4JN-MW-Mtv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="irr-5j-Rg1" secondAttribute="trailing" constant="8" symbolic="YES" id="sMS-ab-7ei"/>
+                    <constraint firstItem="4JN-MW-Mtv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ConT-vw-pca" secondAttribute="trailing" constant="8" symbolic="YES" id="sMS-ab-7ei"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4JN-MW-Mtv" secondAttribute="bottom" constant="10" id="tpJ-Y2-CNE"/>
                     <constraint firstItem="4JN-MW-Mtv" firstAttribute="top" secondItem="crw-ue-ykT" secondAttribute="bottom" id="vCp-I2-cvo"/>
                 </constraints>
@@ -107,11 +139,15 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="characterBorderView" destination="Brd-vw-cca" id="BBv-01-cca"/>
                 <outlet property="characterButton" destination="jIB-bQ-1iP" id="uxa-YK-CqU"/>
+                <outlet property="characterContainerView" destination="ConT-vw-cca" id="CntC-01-cca"/>
                 <outlet property="characterImageView" destination="qyy-78-Swb" id="PZR-JO-MLI"/>
                 <outlet property="characterNameLabel" destination="crw-ue-ykT" id="bye-zp-e6X"/>
                 <outlet property="characterRoleLabel" destination="4JN-MW-Mtv" id="qaI-ly-7cw"/>
+                <outlet property="personBorderView" destination="Brd-vw-pca" id="BBv-01-pca"/>
                 <outlet property="personButton" destination="ROT-4r-4vA" id="xgT-6O-m00"/>
+                <outlet property="personContainerView" destination="ConT-vw-pca" id="CntC-01-pca"/>
                 <outlet property="personImageView" destination="irr-5j-Rg1" id="VZK-S2-sda"/>
                 <outlet property="personNameLabel" destination="Ph7-Qa-3RF" id="xzm-U3-Xz9"/>
             </connections>

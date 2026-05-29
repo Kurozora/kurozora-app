@@ -30,6 +30,12 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// The rank label of the cell.
 	@IBOutlet weak var rankLabel: KLabel!
 
+	/// The album's container view.
+	@IBOutlet weak var albumContainerView: UIView!
+
+	/// The album artwork's border view.
+	@IBOutlet weak var albumBorderView: BorderView!
+
 	/// A button representing the state of the music.
 	@IBOutlet weak var albumImageView: UIImageView!
 
@@ -46,6 +52,15 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	private var artworkTask: Task<Void, Never>?
 
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.albumContainerView.layer.cornerRadius = 22
+		(self.albumImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
+		self.albumImageView?.layer.borderWidth = 0
+		self.albumBorderView.cornerRadius = 22
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		self.artworkTask?.cancel()

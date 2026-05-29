@@ -21,9 +21,10 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 	@IBOutlet weak var quickDetailsView: UIView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KLabel!
-	@IBOutlet weak var rankButton: UIButton!
+	@IBOutlet weak var rankButton: UIButton?
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var posterBorderView: BorderView?
 
 	// MARK: - Properties
 	weak var delegate: BaseDetailHeaderCollectionViewCellDelegate?
@@ -37,7 +38,9 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			self.visualEffectView.effect = UIGlassEffect(style: .clear)
 		}
-		self.visualEffectView.layerCornerRadius = 10.0
+		self.visualEffectView.layerCornerRadius = 30.0
+
+		self.rankButton?.layerCornerRadius = 6.0
 
 		// Configure poster
 		self.posterImageView.tag = 0

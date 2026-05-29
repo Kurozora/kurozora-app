@@ -17,11 +17,27 @@ class RecapLockupCollectionViewCell: KCollectionViewCell {
 	/// The logo image of the cell.
 	@IBOutlet weak var logoImageView: UIImageView!
 
+	/// The album's container view.
+	@IBOutlet weak var albumContainerView: UIView!
+
 	/// The album image of the cell.
 	@IBOutlet weak var albumImageView: RoundedRectangleImageView!
 
+	/// The album's border view.
+	@IBOutlet weak var albumBorderView: BorderView!
+
 	/// The gradient on top of `albumImageView`.
 	@IBOutlet weak var gradientView: GradientView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.albumContainerView.layer.cornerRadius = 22
+		self.albumImageView.applyCornerRadius(22)
+		self.albumImageView.layer.borderWidth = 0
+		self.albumBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	/// Configures the cell with the given `ShowSong` object.

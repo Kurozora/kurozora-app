@@ -35,7 +35,7 @@ class ProfileImageButton: UIButton {
 	/// The shared settings used to initialize the button.
 	func sharedInit() {
 		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
-			self.layer.borderWidth = 2
+			self.layer.borderWidth = self.hairlineWidth
 			self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
 		}
 	}

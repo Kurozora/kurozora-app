@@ -119,7 +119,7 @@
                                             </view>
                                         </subviews>
                                     </stackView>
-                                    <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzd-Au-IiS">
+                                    <view userInteractionEnabled="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzd-Au-IiS" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="52" y="97" width="322" height="86"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="SVj-BB-ctU" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
@@ -166,9 +166,16 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-OPS" userLabel="OP Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="8" width="24" height="24"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstItem="Brd-vw-OPS" firstAttribute="top" secondItem="SVj-BB-ctU" secondAttribute="top" id="Brd-OPS-t"/>
+                                            <constraint firstItem="Brd-vw-OPS" firstAttribute="leading" secondItem="SVj-BB-ctU" secondAttribute="leading" id="Brd-OPS-l"/>
+                                            <constraint firstItem="Brd-vw-OPS" firstAttribute="trailing" secondItem="SVj-BB-ctU" secondAttribute="trailing" id="Brd-OPS-r"/>
+                                            <constraint firstItem="Brd-vw-OPS" firstAttribute="bottom" secondItem="SVj-BB-ctU" secondAttribute="bottom" id="Brd-OPS-b"/>
                                             <constraint firstItem="3Oe-Vx-rn5" firstAttribute="top" secondItem="DKM-Gb-bFm" secondAttribute="bottom" constant="4" id="0Gn-1l-3qc"/>
                                             <constraint firstItem="3Oe-Vx-rn5" firstAttribute="leading" secondItem="DKM-Gb-bFm" secondAttribute="leading" id="58K-An-XC6"/>
                                             <constraint firstItem="DKM-Gb-bFm" firstAttribute="top" secondItem="kzd-Au-IiS" secondAttribute="top" constant="8" id="9T3-3g-SYy"/>
@@ -187,17 +194,6 @@
                                             <constraint firstItem="b5T-Si-mFD" firstAttribute="leading" secondItem="WyU-x1-oit" secondAttribute="trailing" constant="8" symbolic="YES" id="vNa-Gk-isn"/>
                                             <constraint firstItem="DKM-Gb-bFm" firstAttribute="top" secondItem="SVj-BB-ctU" secondAttribute="top" id="vw8-uv-Hb9"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bk-La-sLd" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="52" y="40" width="322" height="143"/>
@@ -295,9 +291,16 @@
                                             <constraint firstItem="PR1-Kw-3tG" firstAttribute="top" secondItem="7vK-7b-7ph" secondAttribute="top" id="yci-QA-iHi"/>
                                         </constraints>
                                     </view>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-FRS" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="Brd-vw-FRS" firstAttribute="top" secondItem="e4f-bR-xRy" secondAttribute="top" id="Brd-FRS-t"/>
+                                    <constraint firstItem="Brd-vw-FRS" firstAttribute="leading" secondItem="e4f-bR-xRy" secondAttribute="leading" id="Brd-FRS-l"/>
+                                    <constraint firstItem="Brd-vw-FRS" firstAttribute="trailing" secondItem="e4f-bR-xRy" secondAttribute="trailing" id="Brd-FRS-r"/>
+                                    <constraint firstItem="Brd-vw-FRS" firstAttribute="bottom" secondItem="e4f-bR-xRy" secondAttribute="bottom" id="Brd-FRS-b"/>
                                     <constraint firstItem="JOv-fM-VMf" firstAttribute="top" secondItem="e4f-bR-xRy" secondAttribute="top" id="7Ad-vx-512"/>
                                     <constraint firstItem="8bk-La-sLd" firstAttribute="bottom" secondItem="kzd-Au-IiS" secondAttribute="bottom" id="7GL-cb-2ZS"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="A5V-X5-eni" secondAttribute="trailing" id="8Ek-Nj-4ix"/>
@@ -351,6 +354,7 @@
                 <outlet property="opPostTextViewPlaceholder" destination="Pag-hU-7Is" id="lLN-Gx-9JR"/>
                 <outlet property="opPostTextViewContainer" destination="WAz-sL-J27" id="qqU-Zn-af8"/>
                 <outlet property="opProfileBadgeStackView" destination="WyU-x1-oit" id="gFC-4O-Ng8"/>
+                <outlet property="opProfileBorderView" destination="Brd-vw-OPS" id="Brd-vw-OPSO"/>
                 <outlet property="opProfileImageView" destination="SVj-BB-ctU" id="Rrh-fg-leL"/>
                 <outlet property="opRichLinkStackView" destination="3Oe-Vx-rn5" id="CPP-mo-gzB"/>
                 <outlet property="opUsernameLabel" destination="DKM-Gb-bFm" id="Rp0-jR-gnk"/>
@@ -358,6 +362,7 @@
                 <outlet property="postTextViewPlaceholder" destination="G8D-yG-Vss" id="qwh-lV-v98"/>
                 <outlet property="postTextViewContainer" destination="O7r-BZ-DRR" id="v6G-HD-YIZ"/>
                 <outlet property="profileBadgeStackView" destination="oIp-DC-csB" id="2Bs-e2-9Z2"/>
+                <outlet property="profileBorderView" destination="Brd-vw-FRS" id="Brd-vw-FRSO"/>
                 <outlet property="profileImageView" destination="e4f-bR-xRy" id="MHZ-sf-I05"/>
                 <outlet property="richLinkStackView" destination="Fnd-c3-SAA" id="EMv-J7-JF5"/>
                 <outlet property="shareButton" destination="tuW-Ob-zaE" id="7Yd-pe-gnf"/>

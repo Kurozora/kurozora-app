@@ -18,6 +18,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var scoreView: KCosmosView!
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView?
+	@IBOutlet weak var posterBorderView: BorderView?
 
 	// MARK: - Properties
 	lazy var literatureMask: UIImageView = {
@@ -57,7 +58,9 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		character.attributes.profileImage(imageView: self.posterImageView)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for episode: Episode?) {
@@ -77,7 +80,10 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		episode.attributes.bannerImage(imageView: self.posterImageView)
 		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(10.0)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.cornerRadius = 10.0
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for game: Game?) {
@@ -95,9 +101,12 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		game.attributes.posterImage(imageView: self.posterImageView)
-		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(18.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(22.0)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.cornerRadius = 22.0
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for literature: Literature?) {
@@ -119,6 +128,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.literatureMask.frame = self.posterImageView.bounds
 		self.posterImageView.mask = self.literatureMask
 		self.posterImageOverlayView?.isHidden = false
+		self.posterBorderView?.isHidden = true
 	}
 
 	func configure(using review: Review?, for person: Person?) {
@@ -137,7 +147,9 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		person.attributes.profileImage(imageView: self.posterImageView)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for show: Show?) {
@@ -155,9 +167,12 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure poster
 		show.attributes.posterImage(imageView: self.posterImageView)
-		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(10.0)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(22.0)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.cornerRadius = 22.0
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for song: Song?) {
@@ -175,8 +190,12 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure artwork
 		song.attributes.artworkImage(imageView: self.posterImageView)
+		(self.posterImageView as? RoundedRectangleImageView)?.applyCornerRadius(22.0)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.cornerRadius = 22.0
+		self.posterBorderView?.isHidden = false
 	}
 
 	func configure(using review: Review?, for studio: Studio?) {
@@ -195,7 +214,9 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		// Configure poster
 		studio.attributes.profileImage(imageView: self.posterImageView)
 		self.posterImageView.mask = nil
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageOverlayView?.isHidden = true
+		self.posterBorderView?.isHidden = false
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {

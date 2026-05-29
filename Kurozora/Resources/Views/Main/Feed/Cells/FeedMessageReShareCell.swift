@@ -13,6 +13,7 @@ import LinkPresentation
 class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
+	@IBOutlet weak var opProfileBorderView: BorderView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
 	@IBOutlet weak var opPostTextViewPlaceholder: UIView!
 	@IBOutlet weak var opPostTextViewContainer: UIView!
@@ -36,6 +37,9 @@ class FeedMessageReShareCell: FeedMessageCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.configureOPPostTextView()
+
+		self.opProfileImageView.layer.borderWidth = 0
+		self.opProfileBorderView.cornerRadius = self.opProfileImageView.bounds.height / 2.0
 	}
 
 	override func prepareForReuse() {
@@ -57,6 +61,8 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
+
+		self.opProfileBorderView.cornerRadius = self.opProfileImageView.bounds.height / 2.0
 
 		let width = self.opPostTextView.bounds.width
 

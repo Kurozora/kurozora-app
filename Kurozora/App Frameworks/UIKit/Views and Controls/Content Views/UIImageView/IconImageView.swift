@@ -28,7 +28,8 @@ final class IconImageView: KImageView {
 	/// The shared settings used to initialize the label.
 	private func sharedInit() {
 		self.layerCornerRadius = 6
-		self.layer.borderWidth = 1
-		self.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
+		self.layer.cornerCurve = .continuous
+		self.layer.borderWidth = self.hairlineWidth
+		self.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 	}
 }

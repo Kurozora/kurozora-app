@@ -43,6 +43,10 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
+		self.statusButton.layerCornerRadius = 6.0
+		self.favoriteButton.layerCornerRadius = 15.0
+		self.reminderButton.layerCornerRadius = 15.0
+
 		self.posterImageOverlayView.isUserInteractionEnabled = false
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
@@ -97,7 +101,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure rank button
 		let rank = show.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
-		self.rankButton.setTitle(rankLabel, for: .normal)
+		self.rankButton?.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
@@ -105,9 +109,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		show.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView.applyCornerRadius(10.0)
+		self.posterImageView.applyCornerRadius(22.0)
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageView.mask = nil
 		self.posterImageOverlayView.isHidden = true
+		self.posterBorderView?.isHidden = false
+		self.posterBorderView?.cornerRadius = 22.0
+
+		self.visualEffectView.layerCornerRadius = 30.0
 
 		// Configure banner view
 		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
@@ -147,7 +156,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure rank button
 		let rank = literature.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
-		self.rankButton.setTitle(rankLabel, for: .normal)
+		self.rankButton?.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
@@ -156,9 +165,13 @@ extension ShowDetailHeaderCollectionViewCell {
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView.applyCornerRadius(0.0)
+		self.posterImageView.layer.borderWidth = 0
 		self.literatureMask.frame = self.posterImageView.bounds
 		self.posterImageView.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
+		self.posterBorderView?.isHidden = true
+
+		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure banner view
 		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
@@ -198,7 +211,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure rank button
 		let rank = game.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
-		self.rankButton.setTitle(rankLabel, for: .normal)
+		self.rankButton?.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
@@ -206,9 +219,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		game.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView.applyCornerRadius(18.0)
+		self.posterImageView.applyCornerRadius(22.0)
+		self.posterImageView.layer.borderWidth = 0
 		self.posterImageView.mask = nil
 		self.posterImageOverlayView.isHidden = true
+		self.posterBorderView?.isHidden = false
+		self.posterBorderView?.cornerRadius = 22.0
+
+		self.visualEffectView.layerCornerRadius = 30.0
 
 		// Configure banner view
 		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {

@@ -16,6 +16,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
 	@IBOutlet weak var posterImageOverlay: UIImageView!
+	@IBOutlet weak var posterContainerView: UIView!
+	@IBOutlet weak var posterBorderView: BorderView!
 
 	// MARK: - Properties
 	lazy var literatureMask: UIImageView = {
@@ -28,6 +30,11 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
+
+		self.posterContainerView.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22)
+		self.posterImageView?.layer.borderWidth = 0
+		self.posterBorderView.cornerRadius = 22
 
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
@@ -61,9 +68,11 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreView.isHidden = ratingAverage == 0.0
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
-		self.posterImageView?.applyCornerRadius(10.0)
+		self.posterImageView?.applyCornerRadius(22.0)
+		self.posterImageView?.layer.borderWidth = 0
 		self.posterImageView?.mask = nil
 		self.posterImageOverlay.isHidden = true
+		self.posterBorderView.isHidden = false
 
 		// Configure time label
 		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
@@ -97,6 +106,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
+		self.posterBorderView.isHidden = true
 
 		// Configure time label
 		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
@@ -121,9 +131,11 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.ternaryLabel?.text = relatedShow.attributes.relation.name
 
 		// Configure poster image
-		self.posterImageView?.applyCornerRadius(10.0)
+		self.posterImageView?.applyCornerRadius(22.0)
+		self.posterImageView?.layer.borderWidth = 0
 		self.posterImageView?.mask = nil
 		self.posterImageOverlay.isHidden = true
+		self.posterBorderView.isHidden = false
 
 		// Configure broadcast label
 		self.broadcastLabel.text = nil
@@ -143,6 +155,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
+		self.posterBorderView.isHidden = true
 
 		// Configure broadcast label
 		self.broadcastLabel.text = nil

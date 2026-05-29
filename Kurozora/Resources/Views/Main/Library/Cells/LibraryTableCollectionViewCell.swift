@@ -8,7 +8,6 @@
 
 import Cosmos
 import KurozoraKit
-import SwiftTheme
 import UIKit
 
 protocol LibraryTableCollectionViewCellDelegate: AnyObject {
@@ -46,7 +45,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	// MARK: - Views
 	private let stackView = UIStackView()
 	private let selectionImageOverlayView = UIImageView()
-	private let rowDivider = UIView()
+	private let rowDivider = SeparatorView()
 
 	private var stackLeadingConstraint: NSLayoutConstraint?
 
@@ -55,7 +54,9 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private var columnWidthConstraints: [LibraryColumn: NSLayoutConstraint] = [:]
 
 	private weak var titleLabel: UILabel?
+	private weak var posterContainerView: UIView?
 	private weak var posterImageView: PosterImageView?
+	private weak var posterBorderView: BorderView?
 	private weak var posterImageOverlayView: UIImageView?
 	private var posterAspectRatioConstraint: NSLayoutConstraint?
 	private weak var inlineCosmosView: KCosmosView?
@@ -272,7 +273,6 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.selectionImageOverlayView.translatesAutoresizingMaskIntoConstraints = false
 		self.contentView.addSubview(self.selectionImageOverlayView)
 
-		self.rowDivider.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		self.rowDivider.translatesAutoresizingMaskIntoConstraints = false
 		self.contentView.addSubview(self.rowDivider)
 
@@ -302,7 +302,9 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.columnWidthConstraints.removeAll()
 		self.columnOrder = columns
 		self.titleLabel = nil
+		self.posterContainerView = nil
 		self.posterImageView = nil
+		self.posterBorderView = nil
 		self.posterImageOverlayView = nil
 		self.posterAspectRatioConstraint = nil
 		self.inlineCosmosView = nil
@@ -388,27 +390,54 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private func makeRichTitleContainer(for kind: LibraryKind) -> UIView {
 		let container = UIView()
 
+		let posterContainerView = UIView()
+		posterContainerView.translatesAutoresizingMaskIntoConstraints = false
+		container.addSubview(posterContainerView)
+
 		let posterImageView = PosterImageView()
 		posterImageView.contentMode = .scaleAspectFill
 		posterImageView.clipsToBounds = true
 		posterImageView.tag = Self.posterTag
 		posterImageView.translatesAutoresizingMaskIntoConstraints = false
-		container.addSubview(posterImageView)
+		posterContainerView.addSubview(posterImageView)
+
+		NSLayoutConstraint.activate([
+			posterImageView.leadingAnchor.constraint(equalTo: posterContainerView.leadingAnchor),
+			posterImageView.trailingAnchor.constraint(equalTo: posterContainerView.trailingAnchor),
+			posterImageView.topAnchor.constraint(equalTo: posterContainerView.topAnchor),
+			posterImageView.bottomAnchor.constraint(equalTo: posterContainerView.bottomAnchor),
+		])
 
 		let overlayImageView = UIImageView(image: UIImage(named: "book_texture_overlay"))
 		overlayImageView.contentMode = .scaleAspectFill
 		overlayImageView.isUserInteractionEnabled = false
 		overlayImageView.translatesAutoresizingMaskIntoConstraints = false
-		container.addSubview(overlayImageView)
+		posterContainerView.addSubview(overlayImageView)
 
 		NSLayoutConstraint.activate([
-			overlayImageView.leadingAnchor.constraint(equalTo: posterImageView.leadingAnchor),
-			overlayImageView.trailingAnchor.constraint(equalTo: posterImageView.trailingAnchor),
-			overlayImageView.topAnchor.constraint(equalTo: posterImageView.topAnchor),
-			overlayImageView.bottomAnchor.constraint(equalTo: posterImageView.bottomAnchor),
+			overlayImageView.leadingAnchor.constraint(equalTo: posterContainerView.leadingAnchor),
+			overlayImageView.trailingAnchor.constraint(equalTo: posterContainerView.trailingAnchor),
+			overlayImageView.topAnchor.constraint(equalTo: posterContainerView.topAnchor),
+			overlayImageView.bottomAnchor.constraint(equalTo: posterContainerView.bottomAnchor),
 		])
 
 		self.posterImageOverlayView = overlayImageView
+
+		let borderView = BorderView()
+		borderView.cornerRadius = 22
+		borderView.isUserInteractionEnabled = false
+		borderView.translatesAutoresizingMaskIntoConstraints = false
+		posterContainerView.addSubview(borderView)
+
+		NSLayoutConstraint.activate([
+			borderView.leadingAnchor.constraint(equalTo: posterContainerView.leadingAnchor),
+			borderView.trailingAnchor.constraint(equalTo: posterContainerView.trailingAnchor),
+			borderView.topAnchor.constraint(equalTo: posterContainerView.topAnchor),
+			borderView.bottomAnchor.constraint(equalTo: posterContainerView.bottomAnchor),
+		])
+
+		self.posterContainerView = posterContainerView
+		self.posterBorderView = borderView
 
 		let titleLabel = KLabel()
 		titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
@@ -467,13 +496,13 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.inlineVisibilityButton = visibilityButton
 
 		NSLayoutConstraint.activate([
-			posterImageView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
-			posterImageView.widthAnchor.constraint(equalToConstant: Self.posterWidth),
-			posterImageView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-			posterImageView.topAnchor.constraint(greaterThanOrEqualTo: container.topAnchor, constant: Self.rowVerticalPadding),
-			posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: container.bottomAnchor, constant: -Self.rowVerticalPadding),
+			posterContainerView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
+			posterContainerView.widthAnchor.constraint(equalToConstant: Self.posterWidth),
+			posterContainerView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+			posterContainerView.topAnchor.constraint(greaterThanOrEqualTo: container.topAnchor, constant: Self.rowVerticalPadding),
+			posterContainerView.bottomAnchor.constraint(lessThanOrEqualTo: container.bottomAnchor, constant: -Self.rowVerticalPadding),
 
-			metadataContainer.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 12),
+			metadataContainer.leadingAnchor.constraint(equalTo: posterContainerView.trailingAnchor, constant: 12),
 			metadataContainer.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
 			metadataContainer.topAnchor.constraint(equalTo: container.topAnchor, constant: Self.rowVerticalPadding),
 			metadataContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -Self.rowVerticalPadding),
@@ -591,11 +620,11 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func applyPosterHeight(_ height: CGFloat) {
-		guard let posterImageView = self.posterImageView else { return }
+		guard let posterContainerView = self.posterContainerView else { return }
 
 		self.posterAspectRatioConstraint?.isActive = false
 
-		let constraint = posterImageView.heightAnchor.constraint(equalToConstant: height)
+		let constraint = posterContainerView.heightAnchor.constraint(equalToConstant: height)
 		constraint.priority = .required - 1
 		constraint.isActive = true
 		self.posterAspectRatioConstraint = constraint
@@ -606,18 +635,26 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 		switch kind {
 		case .shows:
-			posterImageView.applyCornerRadius(10.0)
+			self.posterContainerView?.layer.cornerRadius = 22
+			posterImageView.applyCornerRadius(22.0)
+			posterImageView.layer.borderWidth = 0
 			posterImageView.mask = nil
 			self.posterImageOverlayView?.isHidden = true
+			self.posterBorderView?.isHidden = false
 		case .literatures:
+			self.posterContainerView?.layer.cornerRadius = 0
 			posterImageView.applyCornerRadius(0.0)
 			posterImageView.mask = self.literatureMask
 			self.syncLiteratureMaskFrame()
 			self.posterImageOverlayView?.isHidden = false
+			self.posterBorderView?.isHidden = true
 		case .games:
-			posterImageView.applyCornerRadius(18.0)
+			self.posterContainerView?.layer.cornerRadius = 22
+			posterImageView.applyCornerRadius(22.0)
+			posterImageView.layer.borderWidth = 0
 			posterImageView.mask = nil
 			self.posterImageOverlayView?.isHidden = true
+			self.posterBorderView?.isHidden = false
 		}
 	}
 

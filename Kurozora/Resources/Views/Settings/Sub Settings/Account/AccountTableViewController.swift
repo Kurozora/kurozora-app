@@ -18,6 +18,7 @@ enum AccountSetting {
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - Views
 	private let profileImageView = ProfileImageView(frame: .zero)
+	private let profileBorderView = BorderView()
 	private let usernameLabel = KLabel()
 	private let userEmailLabel = KSecondaryLabel()
 
@@ -77,6 +78,7 @@ class AccountTableViewController: SubSettingsViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		self.updateTableHeaderWidth()
+		self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -166,6 +168,7 @@ class AccountTableViewController: SubSettingsViewController {
 
 		self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
 		self.profileImageView.contentMode = .scaleAspectFill
+		self.profileImageView.layer.borderWidth = 0
 		self.usernameLabel.textAlignment = .center
 		self.userEmailLabel.textAlignment = .center
 		self.userEmailLabel.numberOfLines = 2
@@ -173,6 +176,10 @@ class AccountTableViewController: SubSettingsViewController {
 		self.userEmailLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
 
 		headerView.addSubview(stackView)
+
+		self.profileBorderView.isUserInteractionEnabled = false
+		self.profileBorderView.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(self.profileBorderView)
 
 		NSLayoutConstraint.activate([
 			self.profileImageView.heightAnchor.constraint(equalToConstant: 80),
@@ -182,7 +189,12 @@ class AccountTableViewController: SubSettingsViewController {
 			stackView.bottomAnchor.constraint(equalTo: headerView.layoutMarginsGuide.bottomAnchor),
 			stackView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
 			stackView.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
-			stackView.trailingAnchor.constraint(lessThanOrEqualTo: headerView.layoutMarginsGuide.trailingAnchor)
+			stackView.trailingAnchor.constraint(lessThanOrEqualTo: headerView.layoutMarginsGuide.trailingAnchor),
+
+			self.profileBorderView.topAnchor.constraint(equalTo: self.profileImageView.topAnchor),
+			self.profileBorderView.leadingAnchor.constraint(equalTo: self.profileImageView.leadingAnchor),
+			self.profileBorderView.trailingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor),
+			self.profileBorderView.bottomAnchor.constraint(equalTo: self.profileImageView.bottomAnchor)
 		])
 
 		stackView.setCustomSpacing(8, after: self.profileImageView)

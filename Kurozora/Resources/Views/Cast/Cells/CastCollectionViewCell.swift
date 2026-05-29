@@ -16,17 +16,36 @@ protocol CastCollectionViewCellDelegate: AnyObject {
 
 class CastCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var personContainerView: UIView!
 	@IBOutlet weak var personImageView: PosterImageView!
+	@IBOutlet weak var personBorderView: BorderView!
 	@IBOutlet weak var personNameLabel: KCopyableTintedLabel!
 	@IBOutlet weak var personButton: UIButton!
 
+	@IBOutlet weak var characterContainerView: UIView!
 	@IBOutlet weak var characterImageView: PosterImageView!
+	@IBOutlet weak var characterBorderView: BorderView!
 	@IBOutlet weak var characterNameLabel: KCopyableLabel!
 	@IBOutlet weak var characterRoleLabel: KSecondaryLabel!
 	@IBOutlet weak var characterButton: UIButton!
 
 	// MARK: - Properties
 	weak var delegate: CastCollectionViewCellDelegate?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.personContainerView.layer.cornerRadius = 22
+		self.personImageView?.applyCornerRadius(22)
+		self.personImageView?.layer.borderWidth = 0
+		self.personBorderView.cornerRadius = 22
+
+		self.characterContainerView.layer.cornerRadius = 22
+		self.characterImageView?.applyCornerRadius(22)
+		self.characterImageView?.layer.borderWidth = 0
+		self.characterBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.

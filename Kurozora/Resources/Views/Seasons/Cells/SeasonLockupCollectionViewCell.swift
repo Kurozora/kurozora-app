@@ -11,7 +11,9 @@ import KurozoraKit
 
 class SeasonLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var posterContainerView: UIView!
 	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var posterBorderView: BorderView!
 	@IBOutlet weak var countLabel: KSecondaryLabel!
 	@IBOutlet weak var startDateTitleLabel: KSecondaryLabel!
 	@IBOutlet weak var episodeCountTitleLabel: KSecondaryLabel!
@@ -21,6 +23,16 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var episodeCountLabel: KLabel!
 	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.posterContainerView.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22)
+		self.posterImageView?.layer.borderWidth = 0
+		self.posterBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the season's details.

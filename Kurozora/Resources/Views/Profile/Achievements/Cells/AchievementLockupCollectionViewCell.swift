@@ -17,6 +17,8 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 	private let gradientView: GradientView = {
 		let view = GradientView()
 		view.translatesAutoresizingMaskIntoConstraints = false
+		view.layer.cornerRadius = 28.0
+		view.layer.masksToBounds = true
 		view.gradientLayer?.startPoint = CGPoint(x: 0.5, y: 1.0)
 		view.gradientLayer?.endPoint = CGPoint(x: 0.5, y: 0.0)
 		return view
@@ -84,6 +86,14 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 		label.textAlignment = .center
 		label.numberOfLines = 1
 		return label
+	}()
+
+	private let cardBorderView: BorderView = {
+		let view = BorderView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.isUserInteractionEnabled = false
+		view.cornerRadius = 28
+		return view
 	}()
 
 	// MARK: - Initializers
@@ -157,12 +167,9 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 		]
 	}
 
-	/// Applies the card's corner radius, clipping, and border.
+	/// Applies the card's corner radius.
 	private func applyCardStyling() {
-		self.contentView.layer.cornerRadius = 16.0
-		self.contentView.clipsToBounds = true
-		self.contentView.layer.borderWidth = 1.0
-		self.contentView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		self.contentView.layer.cornerRadius = 28.0
 	}
 
 	private func configureSubviews() {
@@ -186,6 +193,7 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 		self.contentView.addSubview(self.primaryLabel)
 		self.contentView.addSubview(self.secondaryLabel)
 		self.contentView.addSubview(self.dateLabel)
+		self.contentView.addSubview(self.cardBorderView)
 
 		self.badgeRingView.addSubview(self.badgeImageView)
 		self.badgeRingView.addSubview(self.lockImageView)
@@ -196,6 +204,11 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 			self.gradientView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
 			self.gradientView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
 			self.gradientView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+
+			self.cardBorderView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+			self.cardBorderView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			self.cardBorderView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+			self.cardBorderView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
 			self.badgeRingView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
 			self.badgeRingView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 32.0),

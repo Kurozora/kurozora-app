@@ -23,6 +23,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Episode Banner" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="56.333333333333336"/>
                             </imageView>
+                            <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-ere" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="56.333333333333336"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="0PW-Ec-ntK"/>
@@ -31,6 +34,10 @@
                             <constraint firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Zod-IC-n2l"/>
                             <constraint firstAttribute="width" secondItem="E0g-j2-6fU" secondAttribute="height" multiplier="16:9" id="rmD-f6-89h"/>
                             <constraint firstItem="A6J-B2-cz1" firstAttribute="top" secondItem="E0g-j2-6fU" secondAttribute="top" id="tbw-HO-0VY"/>
+                            <constraint firstItem="Brd-vw-ere" firstAttribute="top" secondItem="A6J-B2-cz1" secondAttribute="top" id="Brd-ere-t"/>
+                            <constraint firstItem="Brd-vw-ere" firstAttribute="leading" secondItem="A6J-B2-cz1" secondAttribute="leading" id="Brd-ere-l"/>
+                            <constraint firstItem="Brd-vw-ere" firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="Brd-ere-r"/>
+                            <constraint firstItem="Brd-vw-ere" firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Brd-ere-b"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-x5-kbX">
@@ -123,6 +130,7 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="374" height="80"/>
             <connections>
+                <outlet property="posterBorderView" destination="Brd-vw-ere" id="Brd-vw-ereO"/>
                 <outlet property="posterImageView" destination="A6J-B2-cz1" id="eZn-a0-0J8"/>
                 <outlet property="primaryLabel" destination="bn8-Fu-Nhc" id="ZyK-2M-Vz7"/>
                 <outlet property="scoreLabel" destination="X7R-Rr-sgt" id="jPU-qG-v8X"/>

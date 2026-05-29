@@ -14,9 +14,22 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var rankLabel: KLabel!
+	@IBOutlet weak var primaryContainerView: UIView!
 	@IBOutlet weak var primaryImageView: BannerImageView!
+	@IBOutlet weak var primaryBorderView: BorderView!
 	@IBOutlet weak var secondaryImageView: StudioLogoImageView!
 	@IBOutlet weak var profileImageContainer: UIView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.primaryContainerView.layer.cornerRadius = 22
+		self.profileImageContainer.layer.cornerRadius = 22
+		self.primaryImageView?.applyCornerRadius(22)
+		self.primaryImageView?.layer.borderWidth = 0
+		self.primaryBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.

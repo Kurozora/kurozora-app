@@ -46,11 +46,6 @@
                     <constraint firstItem="Xmu-Cr-VYY" firstAttribute="top" secondItem="Qec-lt-Oc2" secondAttribute="bottom" constant="8" id="ueW-Ky-yAO"/>
                     <constraint firstItem="r6R-7h-6K7" firstAttribute="leading" secondItem="3FR-Fn-Ess" secondAttribute="leading" constant="8" id="vQK-in-ZmG"/>
                 </constraints>
-                <userDefinedRuntimeAttributes>
-                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                        <integer key="value" value="12"/>
-                    </userDefinedRuntimeAttribute>
-                </userDefinedRuntimeAttributes>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="344" height="242"/>

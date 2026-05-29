@@ -15,8 +15,19 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var broadcastLabel: BroadcastLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
+	@IBOutlet weak var posterContainerView: UIView!
+	@IBOutlet weak var posterBorderView: BorderView!
 
 	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.posterContainerView.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22)
+		self.posterImageView?.layer.borderWidth = 0
+		self.posterBorderView.cornerRadius = 22
+	}
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -39,8 +50,6 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreView.isHidden = ratingAverage == 0.0
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
-		self.posterImageView?.applyCornerRadius(18.0)
-
 		// Configure time label
 		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
 
@@ -61,8 +70,6 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.configure(using: relatedGame.game)
 
 		self.ternaryLabel?.text = relatedGame.attributes.relation.name
-
-		self.posterImageView?.applyCornerRadius(18.0)
 
 		self.broadcastLabel.text = nil
 	}

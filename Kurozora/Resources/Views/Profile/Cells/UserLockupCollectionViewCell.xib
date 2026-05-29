@@ -77,6 +77,9 @@
                             </button>
                         </subviews>
                     </stackView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-ULC" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="30" y="17.5" width="50" height="50"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rOW-St-aCK" secondAttribute="bottom" constant="8" id="rOW-St-bo0"/>
@@ -84,11 +87,16 @@
                     <constraint firstItem="rOW-St-aCK" firstAttribute="leading" secondItem="twD-iu-pMU" secondAttribute="leading" constant="8" id="rOW-St-le0"/>
                     <constraint firstItem="rOW-St-aCK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="twD-iu-pMU" secondAttribute="top" constant="8" id="rOW-St-tp0"/>
                     <constraint firstAttribute="trailing" secondItem="rOW-St-aCK" secondAttribute="trailing" constant="8" id="rOW-St-tr0"/>
+                    <constraint firstItem="Brd-vw-ULC" firstAttribute="top" secondItem="odr-db-nYm" secondAttribute="top" id="Brd-ULC-t"/>
+                    <constraint firstItem="Brd-vw-ULC" firstAttribute="leading" secondItem="odr-db-nYm" secondAttribute="leading" id="Brd-ULC-l"/>
+                    <constraint firstItem="Brd-vw-ULC" firstAttribute="trailing" secondItem="odr-db-nYm" secondAttribute="trailing" id="Brd-ULC-r"/>
+                    <constraint firstItem="Brd-vw-ULC" firstAttribute="bottom" secondItem="odr-db-nYm" secondAttribute="bottom" id="Brd-ULC-b"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="371" height="364"/>
             <connections>
+                <outlet property="borderView" destination="Brd-vw-ULC" id="Brd-vw-ULCO"/>
                 <outlet property="followButton" destination="DCQ-kD-c3o" id="Nh0-Gl-n16"/>
                 <outlet property="followStatusLabel" destination="fSL-kB-m7w" id="gT2-xR-q9P"/>
                 <outlet property="primaryLabel" destination="nXw-r0-7jg" id="SMe-gX-BKE"/>

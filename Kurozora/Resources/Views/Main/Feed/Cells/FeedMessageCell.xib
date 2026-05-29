@@ -218,9 +218,16 @@
                                             <constraint firstItem="oVU-7x-rh9" firstAttribute="centerY" secondItem="7yB-Qf-tEF" secondAttribute="centerY" id="cog-mq-cGP"/>
                                         </constraints>
                                     </view>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-FMC" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="Brd-vw-FMC" firstAttribute="top" secondItem="k19-Mf-sNY" secondAttribute="top" id="Brd-FMC-t"/>
+                                    <constraint firstItem="Brd-vw-FMC" firstAttribute="leading" secondItem="k19-Mf-sNY" secondAttribute="leading" id="Brd-FMC-l"/>
+                                    <constraint firstItem="Brd-vw-FMC" firstAttribute="trailing" secondItem="k19-Mf-sNY" secondAttribute="trailing" id="Brd-FMC-r"/>
+                                    <constraint firstItem="Brd-vw-FMC" firstAttribute="bottom" secondItem="k19-Mf-sNY" secondAttribute="bottom" id="Brd-FMC-b"/>
                                     <constraint firstItem="nz0-og-pmN" firstAttribute="trailing" secondItem="9H5-rQ-Cpx" secondAttribute="trailing" id="14f-ge-n8W"/>
                                     <constraint firstItem="nJh-TG-lz6" firstAttribute="top" secondItem="k19-Mf-sNY" secondAttribute="top" id="2QY-GX-yid"/>
                                     <constraint firstItem="nz0-og-pmN" firstAttribute="bottom" secondItem="9H5-rQ-Cpx" secondAttribute="bottom" id="65l-4D-VfN"/>
@@ -270,6 +277,7 @@
                 <outlet property="postTextViewPlaceholder" destination="y0q-LX-PGG" id="3IQ-Eh-2xn"/>
                 <outlet property="postTextViewContainer" destination="RJg-0D-msp" id="B2r-cC-g3m"/>
                 <outlet property="profileBadgeStackView" destination="0nP-Xc-7ki" id="Ohk-nr-SRg"/>
+                <outlet property="profileBorderView" destination="Brd-vw-FMC" id="Brd-vw-FMCO"/>
                 <outlet property="profileImageView" destination="k19-Mf-sNY" id="Y53-IK-FoK"/>
                 <outlet property="richLinkStackView" destination="9H5-rQ-Cpx" id="nj3-sq-Bsx"/>
                 <outlet property="shareButton" destination="RaJ-8y-tee" id="kf4-Uu-JcV"/>

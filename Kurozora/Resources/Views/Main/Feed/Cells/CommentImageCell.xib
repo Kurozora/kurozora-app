@@ -51,11 +51,6 @@
                         <state key="normal" image="play.fill" catalog="system">
                             <color key="titleShadowColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="25"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CE0-k4-2ih">
                         <rect key="frame" x="99" y="189.5" width="44" height="35"/>
@@ -79,10 +74,17 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-CIC" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="8" width="35" height="35"/>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
+                    <constraint firstItem="Brd-vw-CIC" firstAttribute="top" secondItem="ggh-0k-zx2" secondAttribute="top" id="Brd-CIC-t"/>
+                    <constraint firstItem="Brd-vw-CIC" firstAttribute="leading" secondItem="ggh-0k-zx2" secondAttribute="leading" id="Brd-CIC-l"/>
+                    <constraint firstItem="Brd-vw-CIC" firstAttribute="trailing" secondItem="ggh-0k-zx2" secondAttribute="trailing" id="Brd-CIC-r"/>
+                    <constraint firstItem="Brd-vw-CIC" firstAttribute="bottom" secondItem="ggh-0k-zx2" secondAttribute="bottom" id="Brd-CIC-b"/>
                     <constraint firstItem="8ho-YB-xG7" firstAttribute="leading" secondItem="ggh-0k-zx2" secondAttribute="trailing" constant="8" symbolic="YES" id="0D7-vM-Wrg"/>
                     <constraint firstItem="1yG-ym-g6N" firstAttribute="leading" secondItem="zbx-9i-Ifl" secondAttribute="leadingMargin" constant="43" id="B2S-8Q-W8U"/>
                     <constraint firstItem="1yG-ym-g6N" firstAttribute="trailing" secondItem="CE0-k4-2ih" secondAttribute="leading" constant="4" id="FHx-Lg-s1a"/>
@@ -101,6 +103,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateTime" destination="1yG-ym-g6N" id="Yaw-Re-RWp"/>
+                <outlet property="profileBorderView" destination="Brd-vw-CIC" id="Brd-vw-CICO"/>
                 <outlet property="heartButton" destination="CE0-k4-2ih" id="Ixs-h8-Zvw"/>
                 <outlet property="imageContent" destination="8ho-YB-xG7" id="iCZ-Nj-nTe"/>
                 <outlet property="imageHeightConstraint" destination="f8h-og-Udi" id="vST-IW-ska"/>

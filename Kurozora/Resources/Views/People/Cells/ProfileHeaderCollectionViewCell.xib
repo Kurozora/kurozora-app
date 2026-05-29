@@ -27,6 +27,9 @@
                             <constraint firstAttribute="width" constant="128" id="PHC-00-022"/>
                         </constraints>
                     </imageView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-040" userLabel="Primary Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="143" y="128" width="128" height="128"/>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-030">
                         <rect key="frame" x="20" y="304.66666666666669" width="69.333333333333329" height="59.333333333333314"/>
                         <subviews>
@@ -59,12 +62,17 @@
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="PHC-00-030" secondAttribute="trailing" id="PHC-00-121"/>
                     <constraint firstAttribute="bottom" secondItem="PHC-00-030" secondAttribute="bottom" constant="20" id="PHC-00-122"/>
                     <constraint firstItem="PHC-00-030" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PHC-00-020" secondAttribute="bottom" constant="8" symbolic="YES" id="PHC-00-123"/>
+                    <constraint firstItem="PHC-00-040" firstAttribute="top" secondItem="PHC-00-020" secondAttribute="top" id="PHC-00-130"/>
+                    <constraint firstItem="PHC-00-040" firstAttribute="leading" secondItem="PHC-00-020" secondAttribute="leading" id="PHC-00-131"/>
+                    <constraint firstItem="PHC-00-040" firstAttribute="trailing" secondItem="PHC-00-020" secondAttribute="trailing" id="PHC-00-132"/>
+                    <constraint firstItem="PHC-00-040" firstAttribute="bottom" secondItem="PHC-00-020" secondAttribute="bottom" id="PHC-00-133"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="bannerImageView" destination="PHC-00-010" id="PHC-90-001"/>
                 <outlet property="labelStackView" destination="PHC-00-030" id="PHC-90-002"/>
+                <outlet property="primaryBorderView" destination="PHC-00-040" id="PHC-90-006"/>
                 <outlet property="primaryImageView" destination="PHC-00-020" id="PHC-90-003"/>
                 <outlet property="primaryLabel" destination="PHC-00-031" id="PHC-90-004"/>
                 <outlet property="secondaryLabel" destination="PHC-00-032" id="PHC-90-005"/>

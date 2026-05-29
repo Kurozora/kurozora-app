@@ -12,6 +12,7 @@ import UIKit
 class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var imageView: CircularImageView!
+	@IBOutlet weak var borderView: BorderView!
 	@IBOutlet weak var labelsStackView: UIStackView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
@@ -21,8 +22,13 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.imageView.layer.borderWidth = 2
-		self.imageView.layer.borderColor = UIColor.white.withAlphaComponent(0.20).cgColor
+		self.imageView.layer.borderWidth = 0
+		self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
 	}
 
 	// MARK: - Functions

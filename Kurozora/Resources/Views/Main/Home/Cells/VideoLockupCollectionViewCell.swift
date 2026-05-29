@@ -14,6 +14,10 @@ import XCDYouTubeKit
 
 class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var bannerContainerView: UIView!
+	@IBOutlet weak var bannerBorderView: BorderView!
+	@IBOutlet weak var posterContainerView: UIView!
+	@IBOutlet weak var posterBorderView: BorderView!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
 	@IBOutlet weak var taglineLabel: KLabel!
@@ -27,6 +31,17 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
+
+		self.bannerContainerView.backgroundColor = .clear
+		self.bannerContainerView.layer.cornerRadius = 22
+		self.bannerImageView?.applyCornerRadius(22)
+		self.bannerImageView?.layer.borderWidth = 0
+		self.bannerBorderView.cornerRadius = 22
+
+		self.posterContainerView.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22)
+		self.posterImageView?.layer.borderWidth = 0
+		self.posterBorderView.cornerRadius = 22
 
 		self.configureVideoPlayerContainer()
 	}

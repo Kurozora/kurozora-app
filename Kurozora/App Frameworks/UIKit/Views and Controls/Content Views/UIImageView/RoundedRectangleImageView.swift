@@ -16,10 +16,29 @@ class RoundedRectangleImageView: UIImageView {
 	/// The corner radius value.
 	fileprivate var _cornerRadius: CGFloat = 10.0
 
+	/// The vector mask that clips the imageView to a rounded-rectangle shape.
+	private let cornerMaskLayer: CAShapeLayer = {
+		let layer = CAShapeLayer()
+		layer.fillColor = UIColor.black.cgColor
+		return layer
+	}()
+
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.layerCornerRadius = self._cornerRadius
+		self.refreshCornerMask()
+	}
+
+	override var mask: UIView? {
+		get {
+			return super.mask
+		}
+		set {
+			super.mask = newValue
+			if newValue == nil {
+				self.refreshCornerMask()
+			}
+		}
 	}
 
 	// MARK: - Functions
@@ -29,7 +48,23 @@ class RoundedRectangleImageView: UIImageView {
 	///    - cornerRadius: The corner radius value to apply on the image view.
 	func applyCornerRadius(_ cornerRadius: CGFloat) {
 		self._cornerRadius = cornerRadius
+		self.refreshCornerMask()
 
 		self.setNeedsLayout()
+	}
+
+	/// Updates the vector mask's path.
+	private func refreshCornerMask() {
+		guard self.bounds.width > 0, self.bounds.height > 0 else {
+			return
+		}
+
+		let path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self._cornerRadius)
+		self.cornerMaskLayer.path = path.cgPath
+		self.cornerMaskLayer.frame = self.bounds
+
+		if self.layer.mask !== self.cornerMaskLayer && super.mask == nil {
+			self.layer.mask = self.cornerMaskLayer
+		}
 	}
 }

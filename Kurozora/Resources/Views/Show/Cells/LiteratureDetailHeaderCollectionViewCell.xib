@@ -68,6 +68,9 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                                                 <gestureRecognizers/>
                                                             </imageView>
+                                                            <view userInteractionEnabled="NO" hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lh" userLabel="Poster Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                                                            </view>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -82,6 +85,10 @@
                                                             <constraint firstAttribute="bottom" secondItem="kRi-Qh-SkY" secondAttribute="bottom" id="aqU-sQ-CHH"/>
                                                             <constraint firstItem="kRi-Qh-SkY" firstAttribute="top" secondItem="KXb-kQ-Cx1" secondAttribute="top" id="em8-61-8W7"/>
                                                             <constraint firstAttribute="trailing" secondItem="kRi-Qh-SkY" secondAttribute="trailing" id="rtp-Qv-5hI"/>
+                                                            <constraint firstItem="Brd-vw-lh" firstAttribute="top" secondItem="kRi-Qh-SkY" secondAttribute="top" id="Brd-lh-t"/>
+                                                            <constraint firstItem="Brd-vw-lh" firstAttribute="leading" secondItem="kRi-Qh-SkY" secondAttribute="leading" id="Brd-lh-l"/>
+                                                            <constraint firstItem="Brd-vw-lh" firstAttribute="trailing" secondItem="kRi-Qh-SkY" secondAttribute="trailing" id="Brd-lh-r"/>
+                                                            <constraint firstItem="Brd-vw-lh" firstAttribute="bottom" secondItem="kRi-Qh-SkY" secondAttribute="bottom" id="Brd-lh-b"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -124,11 +131,6 @@
                                                                 <state key="normal" title="TBA">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <integer key="value" value="6"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
                                                             </button>
                                                             <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I73-9r-xwp">
                                                                 <rect key="frame" x="187" y="0.0" width="47" height="24"/>
@@ -141,11 +143,6 @@
                                                                 <state key="normal" title="Rank -">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <integer key="value" value="6"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -184,9 +181,6 @@
                                                             <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="15"/>
-                                                            </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
@@ -205,9 +199,6 @@
                                                             <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="15"/>
-                                                            </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
@@ -285,6 +276,7 @@
                 <outlet property="favoriteButton" destination="zKx-AL-Wax" id="yhs-cd-tX4"/>
                 <outlet property="libraryStatusButton" destination="AiY-jy-tlc" id="2GV-hw-fuM"/>
                 <outlet property="posterImageOverlayView" destination="HdJ-NA-mdX" id="etD-YL-4uA"/>
+                <outlet property="posterBorderView" destination="Brd-vw-lh" id="Brd-vw-lhO"/>
                 <outlet property="posterImageView" destination="kRi-Qh-SkY" id="Fdx-xN-IrS"/>
                 <outlet property="primaryLabel" destination="OYW-mG-XdN" id="iZs-Tt-cXc"/>
                 <outlet property="quickDetailsView" destination="yeT-gJ-wBV" id="2V4-YS-HGI"/>

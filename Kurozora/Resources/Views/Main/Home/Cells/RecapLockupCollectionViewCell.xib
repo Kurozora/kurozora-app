@@ -34,6 +34,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MzZ-gM-Qxg" customClass="GradientView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-rec" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re:CAP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-5f-qhk">
                                 <rect key="frame" x="8" y="8" width="85" height="29.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
@@ -79,12 +82,11 @@
                             <constraint firstAttribute="trailing" secondItem="0gO-l7-a4f" secondAttribute="trailing" constant="8" id="u5Q-m8-fHv"/>
                             <constraint firstAttribute="bottom" secondItem="uNn-wj-mpw" secondAttribute="bottom" id="waz-ei-bof"/>
                             <constraint firstAttribute="trailing" secondItem="Ya4-yY-Ehn" secondAttribute="trailing" id="zyq-no-35G"/>
+                            <constraint firstItem="Brd-vw-rec" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" id="BB1-vw-rec"/>
+                            <constraint firstItem="Brd-vw-rec" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="BB2-vw-rec"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-rec" secondAttribute="trailing" id="BB3-vw-rec"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-rec" secondAttribute="bottom" id="BB4-vw-rec"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>
@@ -97,6 +99,8 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="374" height="374"/>
             <connections>
+                <outlet property="albumBorderView" destination="Brd-vw-rec" id="BBv-01-rec"/>
+                <outlet property="albumContainerView" destination="Fmf-at-mZU" id="CntC-01-rec"/>
                 <outlet property="albumImageView" destination="uNn-wj-mpw" id="mIU-PN-q3i"/>
                 <outlet property="gradientView" destination="MzZ-gM-Qxg" id="uV3-ZT-TLt"/>
                 <outlet property="logoImageView" destination="0gO-l7-a4f" id="nD5-lE-fZb"/>

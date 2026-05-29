@@ -24,6 +24,9 @@
                             <constraint firstAttribute="width" secondItem="Q0I-12-fgP" secondAttribute="height" multiplier="1:1" id="HWR-5p-Z3G"/>
                         </constraints>
                     </imageView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-snh" userLabel="Primary Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="156.66666666666666" y="20.000000000000007" width="100.66666666666666" height="100.66666666666669"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OV-E9-jsQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="173" y="128.66666666666666" width="68" height="33.666666666666657"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -52,9 +55,6 @@
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="PREVIEW" image="play.fill" catalog="system"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -82,10 +82,15 @@
                     <constraint firstItem="fCF-FR-u3F" firstAttribute="top" secondItem="3OV-E9-jsQ" secondAttribute="bottom" constant="8" symbolic="YES" id="wcA-FO-QNM"/>
                     <constraint firstItem="Q0I-12-fgP" firstAttribute="top" secondItem="gom-U6-7E9" secondAttribute="top" constant="20" id="wt9-I0-V8I"/>
                     <constraint firstItem="qji-7f-QMR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gom-U6-7E9" secondAttribute="leading" id="yb5-Tx-9gw"/>
+                    <constraint firstItem="Brd-vw-snh" firstAttribute="top" secondItem="Q0I-12-fgP" secondAttribute="top" id="Brd-snh-t"/>
+                    <constraint firstItem="Brd-vw-snh" firstAttribute="leading" secondItem="Q0I-12-fgP" secondAttribute="leading" id="Brd-snh-l"/>
+                    <constraint firstItem="Brd-vw-snh" firstAttribute="trailing" secondItem="Q0I-12-fgP" secondAttribute="trailing" id="Brd-snh-r"/>
+                    <constraint firstItem="Brd-vw-snh" firstAttribute="bottom" secondItem="Q0I-12-fgP" secondAttribute="bottom" id="Brd-snh-b"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="primaryBorderView" destination="Brd-vw-snh" id="Brd-vw-snhO"/>
                 <outlet property="primaryButton" destination="fXU-Vw-tcL" id="nuT-Y3-9eK"/>
                 <outlet property="primaryImageView" destination="Q0I-12-fgP" id="nxJ-XY-45c"/>
                 <outlet property="primaryLabel" destination="3OV-E9-jsQ" id="Gt5-Wi-0Ml"/>

@@ -13,6 +13,7 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCe
 	// MARK: - IBOutlets
 	@IBOutlet weak var bannerImageView: BannerImageView!
 	@IBOutlet weak var primaryImageView: CircularImageView!
+	@IBOutlet weak var primaryBorderView: BorderView!
 	@IBOutlet weak var labelStackView: UIStackView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KLabel!
@@ -30,6 +31,9 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCe
 		let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
 		self.primaryImageView.addGestureRecognizer(primaryTap)
 
+		self.primaryImageView.layer.borderWidth = 0
+		self.primaryBorderView.cornerRadius = self.primaryImageView.bounds.height / 2.0
+
 		self.bannerImageView.tag = 1
 		self.bannerImageView.isUserInteractionEnabled = true
 		self.bannerImageView.layer.borderWidth = 0
@@ -42,6 +46,11 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCe
 
 		self.primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
 		self.secondaryLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.primaryBorderView.cornerRadius = self.primaryImageView.bounds.height / 2.0
 	}
 
 	// MARK: - Configure

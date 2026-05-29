@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import SwiftTheme
 import UIKit
 
 protocol LibraryTableHeaderReusableViewDelegate: AnyObject {
@@ -50,7 +49,7 @@ protocol LibraryTableHeaderReusableViewDelegate: AnyObject {
 class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 	// MARK: - Subviews
 	private let stackView = UIStackView()
-	private let bottomSeparator = UIView()
+	private let bottomSeparator = SeparatorView()
 
 	private var columnLabels: [LibraryColumn: UILabel] = [:]
 	private var columnContainers: [LibraryColumn: UIView] = [:]
@@ -121,7 +120,6 @@ class LibraryTableHeaderReusableView: UICollectionReusableView, ReusableView {
 		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.addSubview(self.stackView)
 
-		self.bottomSeparator.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		self.bottomSeparator.translatesAutoresizingMaskIntoConstraints = false
 		self.addSubview(self.bottomSeparator)
 
@@ -425,10 +423,7 @@ private extension LibraryTableHeaderReusableView {
 
 // MARK: - UIGestureRecognizerDelegate
 extension LibraryTableHeaderReusableView: UIGestureRecognizerDelegate {
-	func gestureRecognizer(
-		_ gestureRecognizer: UIGestureRecognizer,
-		shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer
-	) -> Bool {
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		// Force the enclosing collection view's pan-based gestures (scroll, selection-marquee,
 		// multi-select drag) to wait for our column gesture to fail before they recognize. Once our
 		// pan begins, those gestures are canceled — eliminating the marquee that otherwise appears
@@ -450,7 +445,7 @@ private final class ResizeHandleView: UIView {
 	var initialWidth: CGFloat = 0
 
 	// MARK: - Subviews
-	private let visibleLine = UIView()
+	private let visibleLine = SeparatorView()
 
 	// MARK: - Initialization
 	init(column: LibraryColumn) {
@@ -498,7 +493,6 @@ private final class ResizeHandleView: UIView {
 	private func configureView() {
 		self.backgroundColor = .clear
 
-		self.visibleLine.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		self.visibleLine.translatesAutoresizingMaskIntoConstraints = false
 		self.addSubview(self.visibleLine)
 

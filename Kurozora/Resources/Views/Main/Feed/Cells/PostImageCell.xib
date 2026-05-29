@@ -52,8 +52,15 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-PIC" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="44" height="44"/>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Brd-vw-PIC" firstAttribute="top" secondItem="ZQo-zy-zA0" secondAttribute="top" id="Brd-PIC-t"/>
+                            <constraint firstItem="Brd-vw-PIC" firstAttribute="leading" secondItem="ZQo-zy-zA0" secondAttribute="leading" id="Brd-PIC-l"/>
+                            <constraint firstItem="Brd-vw-PIC" firstAttribute="trailing" secondItem="ZQo-zy-zA0" secondAttribute="trailing" id="Brd-PIC-r"/>
+                            <constraint firstItem="Brd-vw-PIC" firstAttribute="bottom" secondItem="ZQo-zy-zA0" secondAttribute="bottom" id="Brd-PIC-b"/>
                             <constraint firstItem="PSg-z8-vFt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bth-kG-BTL" secondAttribute="trailing" constant="10" id="8LJ-mS-2wH"/>
                             <constraint firstAttribute="height" constant="60" id="GGo-8w-yV7"/>
                             <constraint firstItem="bth-kG-BTL" firstAttribute="leading" secondItem="ZQo-zy-zA0" secondAttribute="trailing" constant="8" id="IuW-vA-PeA"/>
@@ -92,11 +99,6 @@
                         <state key="normal" image="play.fill" catalog="system">
                             <color key="titleShadowColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="30"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUr-yw-ota">
                         <rect key="frame" x="54" y="277.5" width="50" height="38.5"/>
@@ -162,6 +164,7 @@
                 <outlet property="imageContent" destination="Z8I-9Y-Ope" id="wob-95-zv5"/>
                 <outlet property="imageHeightConstraint" destination="oZP-M0-frs" id="nxV-9q-cnO"/>
                 <outlet property="playButton" destination="vyQ-q7-aIu" id="YpI-Zd-cXG"/>
+                <outlet property="profileBorderView" destination="Brd-vw-PIC" id="Brd-vw-PICO"/>
                 <outlet property="profileImage" destination="ZQo-zy-zA0" id="ltF-8i-vzf"/>
                 <outlet property="replyButton" destination="iUr-yw-ota" id="vrG-g4-oot"/>
                 <outlet property="textContent" destination="ybT-w4-xOi" id="uZ7-7O-BJd"/>

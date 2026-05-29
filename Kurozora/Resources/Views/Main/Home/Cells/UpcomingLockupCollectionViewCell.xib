@@ -59,6 +59,9 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-upc" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="460"/>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Iy-r5-WeR" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="139" y="393" width="96" height="30"/>
                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -99,11 +102,16 @@
                     <constraint firstAttribute="bottom" secondItem="Xke-oL-b0t" secondAttribute="bottom" constant="15" id="wcs-VZ-cbk"/>
                     <constraint firstAttribute="trailing" secondItem="Odw-6B-bvS" secondAttribute="trailing" constant="8" id="wuI-sf-6zt"/>
                     <constraint firstAttribute="trailing" secondItem="plS-64-dNR" secondAttribute="trailing" id="yuJ-dx-rwQ"/>
+                    <constraint firstItem="Brd-vw-upc" firstAttribute="top" secondItem="GHM-Zt-JgC" secondAttribute="top" id="BB1-vw-upc"/>
+                    <constraint firstItem="Brd-vw-upc" firstAttribute="leading" secondItem="GHM-Zt-JgC" secondAttribute="leading" id="BB2-vw-upc"/>
+                    <constraint firstAttribute="trailing" secondItem="Brd-vw-upc" secondAttribute="trailing" id="BB3-vw-upc"/>
+                    <constraint firstAttribute="bottom" secondItem="Brd-vw-upc" secondAttribute="bottom" id="BB4-vw-upc"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="374" height="460"/>
             <connections>
+                <outlet property="bannerBorderView" destination="Brd-vw-upc" id="BBv-01-upc"/>
                 <outlet property="bannerImageView" destination="plS-64-dNR" id="FYK-SX-1tR"/>
                 <outlet property="logoImageView" destination="MsG-So-pRe" id="7UR-za-Ie8"/>
                 <outlet property="primaryLabel" destination="Odw-6B-bvS" id="MoU-kz-rlp"/>

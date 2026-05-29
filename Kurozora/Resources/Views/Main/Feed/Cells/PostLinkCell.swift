@@ -32,9 +32,9 @@ class LinkCell: PostCell {
 			imageContent?.addGestureRecognizer(gestureRecognizer)
 		}
 
-		let borderWidth: CGFloat = 1
-		linkContentView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1).cgColor
-		linkContentView.layer.borderWidth = borderWidth
+		linkContentView.layerCornerRadius = 4
+		linkContentView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		linkContentView.layer.borderWidth = linkContentView.hairlineWidth
 	}
 
 	// MARK: - UITapGestureRecognizer

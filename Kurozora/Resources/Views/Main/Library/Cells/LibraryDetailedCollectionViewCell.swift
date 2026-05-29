@@ -13,14 +13,27 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var bannerContainerView: UIView!
 	@IBOutlet weak var episodeImageView: BannerImageView!
+	@IBOutlet weak var episodeBorderView: BorderView!
+	@IBOutlet weak var shadowImageView: UIImageView?
 	@IBOutlet weak var userProgressLabel: UILabel!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.bannerContainerView.layer.cornerRadius = 22
+		self.episodeImageView?.applyCornerRadius(22)
+		self.episodeImageView?.layer.borderWidth = 0
+		self.episodeBorderView.cornerRadius = 22
+
+		self.shadowImageView?.layer.cornerRadius = 22
+		self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+		self.shadowImageView?.layer.masksToBounds = true
+	}
 
 	// MARK: - Functions
 	override func configure(using show: Show, showSelectionIcon: Bool) {
 		super.configure(using: show, showSelectionIcon: showSelectionIcon)
-
-		// Configure banner container
-		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
 		self.primaryLabel.textColor = .white
@@ -36,13 +49,13 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		// Configure poster
 		self.posterShadowView?.applyShadow()
+		self.posterImageView?.applyCornerRadius(12.0)
+		self.posterBorderView?.cornerRadius = 12.0
+		self.posterBorderView?.isHidden = false
 	}
 
 	override func configure(using literature: Literature, showSelectionIcon: Bool) {
 		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
-
-		// Configure banner container
-		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
 		self.primaryLabel.textColor = .white
@@ -63,9 +76,6 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	override func configure(using game: Game, showSelectionIcon: Bool) {
 		super.configure(using: game, showSelectionIcon: showSelectionIcon)
 
-		// Configure banner container
-		self.bannerContainerView.layerCornerRadius = 10.0
-
 		// Configure title
 		self.primaryLabel.textColor = .white
 
@@ -80,5 +90,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		// Configure poster
 		self.posterShadowView?.applyShadow()
+		self.posterImageView?.applyCornerRadius(12.0)
+		self.posterBorderView?.cornerRadius = 12.0
+		self.posterBorderView?.isHidden = false
 	}
 }

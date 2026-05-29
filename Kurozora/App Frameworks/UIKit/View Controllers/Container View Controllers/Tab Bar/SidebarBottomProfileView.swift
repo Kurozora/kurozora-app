@@ -16,6 +16,7 @@ protocol KSidebarBottomProfileViewDelegate: AnyObject {
 final class KSidebarBottomProfileView: UIControl {
 	// MARK: - Subviews
 	private let profileImageView = ProfileImageView(frame: .zero)
+	private let profileBorderView = BorderView()
 	private let nameLabel = KLabel()
 
 	private let selectedBackgroundView = CircularView()
@@ -52,11 +53,14 @@ final class KSidebarBottomProfileView: UIControl {
 		self.selectedBackgroundView.isUserInteractionEnabled = false
 		self.addSubview(self.selectedBackgroundView)
 
-		// Image
 		self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
-		self.profileImageView.layer.cornerRadius = 22
-		self.profileImageView.clipsToBounds = true
+		self.profileImageView.layer.borderWidth = 0
 		self.addSubview(self.profileImageView)
+
+		self.profileBorderView.translatesAutoresizingMaskIntoConstraints = false
+		self.profileBorderView.isUserInteractionEnabled = false
+		self.profileBorderView.cornerRadius = 22
+		self.addSubview(self.profileBorderView)
 
 		// Label
 		self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +77,11 @@ final class KSidebarBottomProfileView: UIControl {
 			self.profileImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
 			self.profileImageView.widthAnchor.constraint(equalToConstant: 44),
 			self.profileImageView.heightAnchor.constraint(equalToConstant: 44),
+
+			self.profileBorderView.topAnchor.constraint(equalTo: self.profileImageView.topAnchor),
+			self.profileBorderView.leadingAnchor.constraint(equalTo: self.profileImageView.leadingAnchor),
+			self.profileBorderView.trailingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor),
+			self.profileBorderView.bottomAnchor.constraint(equalTo: self.profileImageView.bottomAnchor),
 
 			self.nameLabel.leadingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor, constant: 12),
 			self.nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),

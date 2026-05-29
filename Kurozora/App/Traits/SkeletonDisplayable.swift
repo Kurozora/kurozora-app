@@ -31,10 +31,12 @@ extension SkeletonDisplayable where Self: UICollectionViewCell {
 		let skeletonView = UIView()
 		skeletonView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		skeletonView.isUserInteractionEnabled = false
-		skeletonView.layerCornerRadius = 10.0
+		skeletonView.layerCornerRadius = 22.0
+		skeletonView.layer.cornerCurve = .continuous
 		skeletonView.tag = self.skeletonViewTag
 		self.contentView.addSubview(skeletonView)
-		self.contentView.layerCornerRadius = 10.0
+		self.contentView.layerCornerRadius = 22.0
+		self.contentView.layer.cornerCurve = .continuous
 		skeletonView.fillToSuperview()
 	}
 
@@ -53,10 +55,12 @@ extension SkeletonDisplayable where Self: UITableViewCell {
 		let skeletonView = UIView()
 		skeletonView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		skeletonView.isUserInteractionEnabled = false
-		skeletonView.layerCornerRadius = 10.0
+		skeletonView.layerCornerRadius = 22.0
+		skeletonView.layer.cornerCurve = .continuous
 		skeletonView.tag = self.skeletonViewTag
 		self.contentView.addSubview(skeletonView)
-		self.contentView.layerCornerRadius = 10.0
+		self.contentView.layerCornerRadius = 22.0
+		self.contentView.layer.cornerCurve = .continuous
 		skeletonView.fillToSuperview()
 	}
 

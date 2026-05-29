@@ -12,7 +12,21 @@ import KurozoraKit
 class IconNotificationCell: BasicNotificationCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var borderView: BorderView!
 	@IBOutlet weak var titleLabel: KLabel!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.profileImageView.layer.borderWidth = 0
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
 
 	// MARK: - Functions
 	override func configureCell(using userNotification: UserNotification) {

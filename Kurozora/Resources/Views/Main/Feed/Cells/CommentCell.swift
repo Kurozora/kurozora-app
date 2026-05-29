@@ -8,4 +8,13 @@
 
 import UIKit
 
-class CommentCell: PostCell { }
+class CommentCell: PostCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var bubbleView: UIView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.bubbleView.layerCornerRadius = 10
+	}
+}

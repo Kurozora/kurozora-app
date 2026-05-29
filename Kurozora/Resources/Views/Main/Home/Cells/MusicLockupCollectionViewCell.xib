@@ -24,6 +24,9 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-wj-mpw" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-msc" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0p-jL-Bv1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="322" y="322" width="44" height="44"/>
                                 <constraints>
@@ -53,12 +56,11 @@
                             <constraint firstItem="H0p-jL-Bv1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fmf-at-mZU" secondAttribute="leading" constant="20" symbolic="YES" id="sYC-pu-t6t"/>
                             <constraint firstAttribute="bottom" secondItem="uNn-wj-mpw" secondAttribute="bottom" id="waz-ei-bof"/>
                             <constraint firstAttribute="bottom" secondItem="H0p-jL-Bv1" secondAttribute="bottom" constant="8" id="zoF-5S-wue"/>
+                            <constraint firstItem="Brd-vw-msc" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" id="BB1-vw-msc"/>
+                            <constraint firstItem="Brd-vw-msc" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="BB2-vw-msc"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-msc" secondAttribute="trailing" id="BB3-vw-msc"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-msc" secondAttribute="bottom" id="BB4-vw-msc"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcf-Ej-vcv">
                         <rect key="frame" x="0.0" y="382" width="374" height="114.5"/>
@@ -151,6 +153,8 @@
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="albumBorderView" destination="Brd-vw-msc" id="BBv-01-msc"/>
+                <outlet property="albumContainerView" destination="Fmf-at-mZU" id="Acv-Ml-001"/>
                 <outlet property="albumImageView" destination="uNn-wj-mpw" id="eEc-cS-XO6"/>
                 <outlet property="playButton" destination="H0p-jL-Bv1" id="J5v-lg-5fQ"/>
                 <outlet property="primaryLabel" destination="gpf-VE-M9t" id="B9d-uX-wgT"/>

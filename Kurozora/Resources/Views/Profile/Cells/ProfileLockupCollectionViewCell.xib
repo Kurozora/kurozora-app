@@ -52,17 +52,25 @@
                             </stackView>
                         </subviews>
                     </stackView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-plk" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="cQA-Lc-oSV" secondAttribute="bottom" id="cQA-Lc-bo"/>
                     <constraint firstItem="cQA-Lc-oSV" firstAttribute="leading" secondItem="cQA-Lc-cVw" secondAttribute="leading" id="cQA-Lc-le"/>
                     <constraint firstItem="cQA-Lc-oSV" firstAttribute="top" secondItem="cQA-Lc-cVw" secondAttribute="top" id="cQA-Lc-tp"/>
                     <constraint firstAttribute="trailing" secondItem="cQA-Lc-oSV" secondAttribute="trailing" id="cQA-Lc-tr"/>
+                    <constraint firstItem="Brd-vw-plk" firstAttribute="top" secondItem="cQA-Lc-img" secondAttribute="top" id="Brd-plk-t"/>
+                    <constraint firstItem="Brd-vw-plk" firstAttribute="leading" secondItem="cQA-Lc-img" secondAttribute="leading" id="Brd-plk-l"/>
+                    <constraint firstItem="Brd-vw-plk" firstAttribute="trailing" secondItem="cQA-Lc-img" secondAttribute="trailing" id="Brd-plk-r"/>
+                    <constraint firstItem="Brd-vw-plk" firstAttribute="bottom" secondItem="cQA-Lc-img" secondAttribute="bottom" id="Brd-plk-b"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="128" height="213"/>
             <connections>
+                <outlet property="borderView" destination="Brd-vw-plk" id="Brd-vw-plkO"/>
                 <outlet property="imageView" destination="cQA-Lc-img" id="cQA-Lc-oI"/>
                 <outlet property="labelsStackView" destination="cQA-Lc-iSV" id="cQA-Lc-oL"/>
                 <outlet property="primaryLabel" destination="cQA-Lc-pri" id="cQA-Lc-oP"/>

@@ -17,6 +17,7 @@ protocol ThemesCollectionViewCellDelegate: AnyObject {
 
 class ScreenshotView: UIView {
 	@IBOutlet weak var screenshotImageView: PosterImageView!
+	@IBOutlet weak var screenshotBorderView: BorderView!
 }
 
 class ThemesCollectionViewCell: UICollectionViewCell {
@@ -75,6 +76,10 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				screenshotView.screenshotImageView.backgroundColor = UIColor(hexString: screenshot.backgroundColor ?? "#333333")
 				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: .Empty.themes)
 
+				screenshotView.screenshotImageView.applyCornerRadius(10.0)
+				screenshotView.screenshotImageView.layer.borderWidth = 0
+				screenshotView.screenshotBorderView.cornerRadius = 10.0
+
 				// Stop after 3 screenshots
 				if index == 2 { break }
 			}
@@ -84,6 +89,10 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				screenshotView.screenshotImageView.backgroundColor = self.kTheme.colorValue
 				screenshotView.screenshotImageView.image = image
 				screenshotView.isHidden = false
+
+				screenshotView.screenshotImageView.applyCornerRadius(10.0)
+				screenshotView.screenshotImageView.layer.borderWidth = 0
+				screenshotView.screenshotBorderView.cornerRadius = 10.0
 
 				// Stop after 3 screenshots
 				if index == 2 { break }

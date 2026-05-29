@@ -14,7 +14,16 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var rankLabel: KLabel!
 	@IBOutlet weak var backgroundColorView: GradientView!
+	@IBOutlet weak var mediumBorderView: BorderView!
 	@IBOutlet weak var symbolImageView: UIImageView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.backgroundColorView.layer.cornerRadius = 22
+		self.mediumBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	/// Configures the cell with the given `Genre` obejct.

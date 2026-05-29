@@ -36,6 +36,12 @@ extension UIView {
 		}
 	}
 
+	/// The width of a single physical pixel for the view's current display scale.
+	var hairlineWidth: CGFloat {
+		let scale = self.traitCollection.displayScale
+		return 1.0 / (scale > 0 ? scale : UIScreen.main.scale)
+	}
+
 	// MARK: - Functions
 	/// Adds parallax effect to the view.
 	///

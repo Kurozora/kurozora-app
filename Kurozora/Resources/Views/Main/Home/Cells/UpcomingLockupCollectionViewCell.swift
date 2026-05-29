@@ -12,6 +12,18 @@ import KurozoraKit
 class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var logoImageView: UIImageView!
+	@IBOutlet weak var bannerBorderView: BorderView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.contentView.layer.cornerRadius = 22
+		self.bannerImageView?.applyCornerRadius(22)
+		(self.shadowImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
+		self.bannerImageView?.layer.borderWidth = 0
+		self.bannerBorderView.cornerRadius = 22
+	}
 
 	// MARK: - Functions
 	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {

@@ -52,8 +52,15 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-PLK" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="44" height="44"/>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Brd-vw-PLK" firstAttribute="top" secondItem="i5S-Tr-rBn" secondAttribute="top" id="Brd-PLK-t"/>
+                            <constraint firstItem="Brd-vw-PLK" firstAttribute="leading" secondItem="i5S-Tr-rBn" secondAttribute="leading" id="Brd-PLK-l"/>
+                            <constraint firstItem="Brd-vw-PLK" firstAttribute="trailing" secondItem="i5S-Tr-rBn" secondAttribute="trailing" id="Brd-PLK-r"/>
+                            <constraint firstItem="Brd-vw-PLK" firstAttribute="bottom" secondItem="i5S-Tr-rBn" secondAttribute="bottom" id="Brd-PLK-b"/>
                             <constraint firstAttribute="trailingMargin" secondItem="U8D-dN-Wxy" secondAttribute="trailing" id="87A-wS-wGK"/>
                             <constraint firstItem="yRE-id-MZ3" firstAttribute="top" secondItem="xkh-3P-CZQ" secondAttribute="top" id="8pK-vU-I5h"/>
                             <constraint firstItem="U8D-dN-Wxy" firstAttribute="top" secondItem="8FX-ar-fWA" secondAttribute="top" id="ALD-y3-6v4"/>
@@ -159,11 +166,6 @@
                             <constraint firstItem="iDw-n0-0EO" firstAttribute="leading" secondItem="CPV-zV-fi1" secondAttribute="leading" id="pWK-Bq-Oem"/>
                             <constraint firstAttribute="trailing" secondItem="QRO-AN-LPb" secondAttribute="trailing" id="uzv-ra-k2c"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="4"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -199,6 +201,7 @@
                 <outlet property="linkContentView" destination="W6o-b1-leK" id="1OI-lD-R4a"/>
                 <outlet property="linkTitleLabel" destination="tFp-uV-eHj" id="oJQ-3F-1fE"/>
                 <outlet property="linkUrlLabel" destination="CPV-zV-fi1" id="mle-Hz-hGt"/>
+                <outlet property="profileBorderView" destination="Brd-vw-PLK" id="Brd-vw-PLKO"/>
                 <outlet property="profileImage" destination="i5S-Tr-rBn" id="7ul-aa-NGw"/>
                 <outlet property="replyButton" destination="j4x-1G-pBi" id="KiI-0E-SDV"/>
                 <outlet property="textContent" destination="sbd-BL-zcJ" id="9l1-kz-9Zc"/>

@@ -46,6 +46,10 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 		}
 		episode.attributes.posterImage(imageView: self.posterImageView)
 
+		self.posterImageView.applyCornerRadius(22.0)
+		self.posterImageView.layer.borderWidth = 0
+		self.posterBorderView?.cornerRadius = 22.0
+
 		// Configure banner view
 		if let bannerBackgroundColor = episode.attributes.banner?.backgroundColor {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)

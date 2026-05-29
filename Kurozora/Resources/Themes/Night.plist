@@ -21,7 +21,7 @@
 		<key>blurBackgroundColor</key>
 		<string>#33333380</string>
 		<key>borderColor</key>
-		<string>#A2A2A2</string>
+		<string>#EEEEEE26</string>
 		<key>textColor</key>
 		<string>#EEEEEE</string>
 		<key>textFieldBackgroundColor</key>
@@ -37,9 +37,9 @@
 		<key>tintedButtonTextColor</key>
 		<string>#EEEEEE</string>
 		<key>separatorColor</key>
-		<string>#C6C5C5</string>
+		<string>#C6C5C599</string>
 		<key>separatorColorLight</key>
-		<string>#555555</string>
+		<string>#555555D9</string>
 		<key>subTextColor</key>
 		<string>#A2A2A2</string>
 	</dict>

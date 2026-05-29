@@ -25,7 +25,7 @@
                         </constraints>
                         <imageReference key="image" image="circle.fill" catalog="system" renderingMode="template"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Session" translatesAutoresizingMaskIntoConstraints="NO" id="iXq-c3-nYT">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Session" translatesAutoresizingMaskIntoConstraints="NO" id="iXq-c3-nYT" customClass="IconImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="20" y="8" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="NQV-9E-fa0"/>

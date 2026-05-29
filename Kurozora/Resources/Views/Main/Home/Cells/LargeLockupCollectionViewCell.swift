@@ -10,6 +10,24 @@ import UIKit
 import KurozoraKit
 
 class LargeLockupCollectionViewCell: BaseLockupCollectionViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var bannerContainerView: UIView!
+	@IBOutlet weak var bannerBorderView: BorderView!
+
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.bannerContainerView.layer.cornerRadius = 22
+		self.bannerImageView?.applyCornerRadius(22)
+		self.bannerImageView?.layer.borderWidth = 0
+		self.bannerBorderView.cornerRadius = 22
+
+		self.shadowImageView?.layer.cornerRadius = 22
+		self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+		self.shadowImageView?.layer.masksToBounds = true
+	}
+
 	// MARK: - Functions
 	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {
 		super.configure(using: show, rank: rank, scheduleIsShown: scheduleIsShown)

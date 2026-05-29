@@ -13,7 +13,9 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var posterShadowView: UIView?
+	@IBOutlet weak var posterContainerView: UIView?
 	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var posterBorderView: BorderView?
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 	@IBOutlet weak var selectionImageOverlayView: UIImageView!
 	@IBOutlet weak var posterAspectRatioConstraint: NSLayoutConstraint?
@@ -38,6 +40,10 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
+
+		self.posterContainerView?.layer.cornerRadius = 22
+		self.posterBorderView?.cornerRadius = 22
+
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
 		}
@@ -75,9 +81,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
-		self.posterImageView?.applyCornerRadius(10.0)
+		self.posterContainerView?.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22.0)
+		self.posterImageView?.layer.borderWidth = 0
 		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
+		self.posterBorderView?.isHidden = false
 	}
 
 	/// Configure the cell with the given literature's details.
@@ -96,10 +105,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
+		self.posterContainerView?.layer.cornerRadius = 0
 		self.posterImageView?.applyCornerRadius(0.0)
 		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
 		self.posterImageView?.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
+		self.posterBorderView?.isHidden = true
 	}
 
 	/// Configure the cell with the given game's details.
@@ -118,9 +129,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		game.attributes.posterImage(imageView: self.posterImageView)
 
 		self.applyPosterAspectRatio(widthToHeight: 1.0)
-		self.posterImageView?.applyCornerRadius(18.0)
+		self.posterContainerView?.layer.cornerRadius = 22
+		self.posterImageView?.applyCornerRadius(22.0)
+		self.posterImageView?.layer.borderWidth = 0
 		self.posterImageView?.mask = nil
 		self.posterImageOverlayView.isHidden = true
+		self.posterBorderView?.isHidden = false
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {

@@ -23,6 +23,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                             </imageView>
+                            <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-gre" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="0PW-Ec-ntK"/>
@@ -31,6 +34,10 @@
                             <constraint firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Zod-IC-n2l"/>
                             <constraint firstAttribute="width" secondItem="E0g-j2-6fU" secondAttribute="height" multiplier="1:1" id="rmD-f6-89h"/>
                             <constraint firstItem="A6J-B2-cz1" firstAttribute="top" secondItem="E0g-j2-6fU" secondAttribute="top" id="tbw-HO-0VY"/>
+                            <constraint firstItem="Brd-vw-gre" firstAttribute="top" secondItem="A6J-B2-cz1" secondAttribute="top" id="Brd-gre-t"/>
+                            <constraint firstItem="Brd-vw-gre" firstAttribute="leading" secondItem="A6J-B2-cz1" secondAttribute="leading" id="Brd-gre-l"/>
+                            <constraint firstItem="Brd-vw-gre" firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="Brd-gre-r"/>
+                            <constraint firstItem="Brd-vw-gre" firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Brd-gre-b"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-x5-kbX">
@@ -123,6 +130,7 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="374" height="111"/>
             <connections>
+                <outlet property="posterBorderView" destination="Brd-vw-gre" id="Brd-vw-greO"/>
                 <outlet property="posterImageView" destination="A6J-B2-cz1" id="eZn-a0-0J8"/>
                 <outlet property="primaryLabel" destination="bn8-Fu-Nhc" id="ZyK-2M-Vz7"/>
                 <outlet property="scoreLabel" destination="X7R-Rr-sgt" id="jPU-qG-v8X"/>

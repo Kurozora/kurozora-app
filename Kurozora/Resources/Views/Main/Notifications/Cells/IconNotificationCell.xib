@@ -25,7 +25,7 @@
                         </constraints>
                         <imageReference key="image" image="circle.fill" catalog="system" renderingMode="template"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Follower" translatesAutoresizingMaskIntoConstraints="NO" id="qDv-a6-HxK">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Follower" translatesAutoresizingMaskIntoConstraints="NO" id="qDv-a6-HxK" customClass="IconImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="20" y="8" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="qDv-a6-HxK" secondAttribute="height" multiplier="1:1" id="1WU-rr-V7V"/>
@@ -72,9 +72,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-INC" userLabel="Profile Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="40" width="44" height="44"/>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
+                    <constraint firstItem="Brd-vw-INC" firstAttribute="top" secondItem="f5P-1F-luJ" secondAttribute="top" id="Brd-INC-t"/>
+                    <constraint firstItem="Brd-vw-INC" firstAttribute="leading" secondItem="f5P-1F-luJ" secondAttribute="leading" id="Brd-INC-l"/>
+                    <constraint firstItem="Brd-vw-INC" firstAttribute="trailing" secondItem="f5P-1F-luJ" secondAttribute="trailing" id="Brd-INC-r"/>
+                    <constraint firstItem="Brd-vw-INC" firstAttribute="bottom" secondItem="f5P-1F-luJ" secondAttribute="bottom" id="Brd-INC-b"/>
                     <constraint firstItem="f5P-1F-luJ" firstAttribute="top" secondItem="8Sf-vh-lRQ" secondAttribute="top" id="06x-TS-ZwH"/>
                     <constraint firstItem="f5P-1F-luJ" firstAttribute="leading" secondItem="qDv-a6-HxK" secondAttribute="leading" id="0wp-bt-71n"/>
                     <constraint firstItem="qDv-a6-HxK" firstAttribute="top" secondItem="4OU-7B-lf9" secondAttribute="top" constant="8" id="1Tc-zn-A74"/>
@@ -109,6 +116,7 @@
                 <outlet property="dateLabel" destination="hut-bs-9tO" id="ZKA-1j-cWr"/>
                 <outlet property="notificationIconImageView" destination="qDv-a6-HxK" id="1gU-7b-vFG"/>
                 <outlet property="notificationTypeLabel" destination="9bk-ks-THM" id="raM-BR-3cc"/>
+                <outlet property="borderView" destination="Brd-vw-INC" id="Brd-vw-INCO"/>
                 <outlet property="profileImageView" destination="f5P-1F-luJ" id="I97-4l-yS8"/>
                 <outlet property="readStatusImageView" destination="vLi-2k-523" id="jsM-Mn-ffZ"/>
                 <outlet property="titleLabel" destination="8Sf-vh-lRQ" id="d7n-HF-Pv8"/>
