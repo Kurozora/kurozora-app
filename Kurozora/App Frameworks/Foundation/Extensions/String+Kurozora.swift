@@ -23,8 +23,9 @@ extension String {
 	/// Falls back to `splitInitials` for unparseable input.
 	var initials: String {
 		let formatter = PersonNameComponentsFormatter()
+		let nameCandidate = String(self.drop(while: { !$0.isLetter }))
 
-		if let components = formatter.personNameComponents(from: self) {
+		if let components = formatter.personNameComponents(from: nameCandidate) {
 			let abbreviated = PersonNameComponentsFormatter.localizedString(from: components, style: .abbreviated, options: [])
 			let lettersOnly = abbreviated.filter(\.isLetter)
 
