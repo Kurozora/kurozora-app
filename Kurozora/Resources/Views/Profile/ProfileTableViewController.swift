@@ -164,6 +164,11 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		self.configureNavigationItems()
 
+		// Pre-fill from the user model when available
+		if let user = self.user, user.id == self.userIdentity?.id {
+			self.configureProfile()
+		}
+
 		// Fetch user details
 		Task { [weak self] in
 			guard let self = self else { return }

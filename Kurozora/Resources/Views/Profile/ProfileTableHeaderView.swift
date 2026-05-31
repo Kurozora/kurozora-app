@@ -49,8 +49,8 @@ class ProfileTableHeaderView: UIView {
 	private let userDetailsHeaderView = UIView()
 	private let profilePhotoWrapperView = UIView()
 	private let circularView = CircularView()
-	private let onlineIndicatorContainerView = UIView()
-	private let onlineIndicatorView = UIView()
+	private let onlineIndicatorContainerView = CircularView()
+	private let onlineIndicatorView = CircularView()
 	private let profileBadgeStackView = ProfileBadgeStackView()
 	private let followButton = KTintedButton()
 	private let editProfileButton = KTintedButton()
@@ -71,11 +71,19 @@ class ProfileTableHeaderView: UIView {
 	private let leftMirrorImageView = UIImageView()
 	private let rightMirrorImageView = UIImageView()
 
+	private let bannerSkeletonView = UIView()
+	private let profileSkeletonView = CircularView()
+	private let displayNameSkeletonView = UIView()
+	private let usernameSkeletonView = UIView()
+	private let actionButtonSkeletonView = UIView()
+
 	private let blurCIContext = CIContext(options: [.useSoftwareRenderer: false])
 	private var blurredBannerImage: UIImage?
 	private var bannerCompactWidthConstraint: NSLayoutConstraint!
 	private var bannerRegularWidthConstraint: NSLayoutConstraint!
 	private var buttonsFillWidthConstraint: NSLayoutConstraint!
+	private var headerBottomLoadedConstraint: NSLayoutConstraint!
+	private var headerBottomSkeletonConstraint: NSLayoutConstraint!
 	private var bannerImageObservation: NSKeyValueObservation?
 
 	// MARK: - Styling
@@ -107,6 +115,7 @@ class ProfileTableHeaderView: UIView {
 		self.configureViews()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
+		self.showSkeleton()
 	}
 
 	@available(*, unavailable)
@@ -138,9 +147,36 @@ class ProfileTableHeaderView: UIView {
 		self.onlineIndicatorView.backgroundColor = status.colorValue
 	}
 
+	/// Reveals the skeleton placeholders.
+	func showSkeleton() {
+		self.setSkeletonHidden(false)
+	}
+
+	/// Removes the skeleton placeholders.
+	func hideSkeleton() {
+		self.setSkeletonHidden(true)
+	}
+
+	/// Toggles the skeleton placeholders.
+	///
+	/// - Parameter isHidden: Whether the placeholders should be hidden.
+	private func setSkeletonHidden(_ isHidden: Bool) {
+		self.bannerSkeletonView.isHidden = isHidden
+		self.profileSkeletonView.isHidden = isHidden
+		self.displayNameSkeletonView.isHidden = isHidden
+		self.usernameSkeletonView.isHidden = isHidden
+		self.actionButtonSkeletonView.isHidden = isHidden
+		self.separatorView.isHidden = !isHidden
+
+		self.headerBottomSkeletonConstraint.isActive = !isHidden
+		self.headerBottomLoadedConstraint.isActive = isHidden
+	}
+
 	/// Configures all header elements with the given user's data.
 	func configure(with user: User) {
 		self.user = user
+		self.hideSkeleton()
+
 		// Configure display name
 		self.displayNameLabel.text = user.attributes.username
 		self.displayNameLabel.isHidden = false
@@ -151,10 +187,7 @@ class ProfileTableHeaderView: UIView {
 
 		// Configure online status
 		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.frame.size.height / 2
-
 		self.onlineIndicatorView.backgroundColor = self.activityStatus.colorValue
-		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.frame.size.height / 2
 
 		self.onlineIndicatorContainerView.isHidden = false
 		self.onlineIndicatorView.isHidden = false
@@ -409,6 +442,20 @@ class ProfileTableHeaderView: UIView {
 		self.bodyStackView.axis = .vertical
 		self.bodyStackView.spacing = 8
 
+		// Skeleton placeholders
+		for skeletonView in [self.bannerSkeletonView, self.profileSkeletonView, self.displayNameSkeletonView, self.usernameSkeletonView, self.actionButtonSkeletonView] {
+			skeletonView.translatesAutoresizingMaskIntoConstraints = false
+			skeletonView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			skeletonView.isUserInteractionEnabled = false
+		}
+
+		self.displayNameSkeletonView.layerCornerRadius = 6
+		self.displayNameSkeletonView.layer.cornerCurve = .continuous
+		self.usernameSkeletonView.layerCornerRadius = 5
+		self.usernameSkeletonView.layer.cornerCurve = .continuous
+		self.actionButtonSkeletonView.layerCornerRadius = 12
+		self.actionButtonSkeletonView.layer.cornerCurve = .continuous
+
 		// Self (replaces old headerView)
 		self.translatesAutoresizingMaskIntoConstraints = false
 		self.backgroundColor = .clear
@@ -448,6 +495,7 @@ class ProfileTableHeaderView: UIView {
 	private func configureViewHierarchy() {
 		// Profile photo wrapper contents
 		self.circularView.addSubview(self.profileImageView)
+		self.circularView.addSubview(self.profileSkeletonView)
 		self.profilePhotoWrapperView.addSubview(self.circularView)
 		self.profilePhotoWrapperView.addSubview(self.onlineIndicatorContainerView)
 		self.profilePhotoWrapperView.addSubview(self.onlineIndicatorView)
@@ -459,6 +507,9 @@ class ProfileTableHeaderView: UIView {
 		self.userDetailsHeaderView.addSubview(self.editProfileButton)
 		self.userDetailsHeaderView.addSubview(self.displayNameLabel)
 		self.userDetailsHeaderView.addSubview(self.usernameLabel)
+		self.userDetailsHeaderView.addSubview(self.displayNameSkeletonView)
+		self.userDetailsHeaderView.addSubview(self.usernameSkeletonView)
+		self.userDetailsHeaderView.addSubview(self.actionButtonSkeletonView)
 
 		// User details body contents
 		self.bodyStackView.addArrangedSubview(self.timeoutBannerButton)
@@ -471,6 +522,7 @@ class ProfileTableHeaderView: UIView {
 		self.bannerContainerView.addSubview(self.bannerImageView)
 		self.bannerContainerView.addSubview(self.leftMirrorImageView)
 		self.bannerContainerView.addSubview(self.rightMirrorImageView)
+		self.bannerContainerView.addSubview(self.bannerSkeletonView)
 		self.addSubview(self.bannerContainerView)
 		self.addSubview(self.userDetailsHeaderView)
 		self.addSubview(self.userDetailsBodyView)
@@ -578,7 +630,36 @@ class ProfileTableHeaderView: UIView {
 			self.usernameLabel.topAnchor.constraint(equalTo: self.displayNameLabel.bottomAnchor),
 			self.usernameLabel.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
 			self.userDetailsHeaderView.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.usernameLabel.trailingAnchor),
-			self.userDetailsHeaderView.bottomAnchor.constraint(equalTo: self.usernameLabel.bottomAnchor),
+
+			// Banner skeleton view
+			self.bannerSkeletonView.topAnchor.constraint(equalTo: self.bannerContainerView.topAnchor),
+			self.bannerSkeletonView.leadingAnchor.constraint(equalTo: self.bannerContainerView.leadingAnchor),
+			self.bannerSkeletonView.trailingAnchor.constraint(equalTo: self.bannerContainerView.trailingAnchor),
+			self.bannerSkeletonView.bottomAnchor.constraint(equalTo: self.bannerContainerView.bottomAnchor),
+
+			// Profile skeleton view
+			self.profileSkeletonView.topAnchor.constraint(equalTo: self.circularView.topAnchor),
+			self.profileSkeletonView.leadingAnchor.constraint(equalTo: self.circularView.leadingAnchor),
+			self.profileSkeletonView.trailingAnchor.constraint(equalTo: self.circularView.trailingAnchor),
+			self.profileSkeletonView.bottomAnchor.constraint(equalTo: self.circularView.bottomAnchor),
+
+			// Display name skeleton view
+			self.displayNameSkeletonView.topAnchor.constraint(equalTo: self.profilePhotoWrapperView.bottomAnchor, constant: 8),
+			self.displayNameSkeletonView.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
+			self.displayNameSkeletonView.widthAnchor.constraint(equalToConstant: 140),
+			self.displayNameSkeletonView.heightAnchor.constraint(equalToConstant: 16),
+
+			// Username skeleton view
+			self.usernameSkeletonView.topAnchor.constraint(equalTo: self.displayNameSkeletonView.bottomAnchor, constant: 6),
+			self.usernameSkeletonView.leadingAnchor.constraint(equalTo: self.userDetailsHeaderView.layoutMarginsGuide.leadingAnchor),
+			self.usernameSkeletonView.widthAnchor.constraint(equalToConstant: 100),
+			self.usernameSkeletonView.heightAnchor.constraint(equalToConstant: 12),
+
+			// Action button skeleton view
+			self.actionButtonSkeletonView.topAnchor.constraint(equalTo: self.followButton.topAnchor),
+			self.actionButtonSkeletonView.trailingAnchor.constraint(equalTo: self.followButton.trailingAnchor),
+			self.actionButtonSkeletonView.widthAnchor.constraint(equalToConstant: 72),
+			self.actionButtonSkeletonView.heightAnchor.constraint(equalToConstant: 32),
 
 			// Badge stack top
 			self.profileBadgeStackView.topAnchor.constraint(greaterThanOrEqualTo: self.bannerContainerView.bottomAnchor, constant: 8),
@@ -616,6 +697,10 @@ class ProfileTableHeaderView: UIView {
 			// Bottom
 			self.bottomAnchor.constraint(equalTo: self.userDetailsBodyView.bottomAnchor, constant: 20),
 		])
+
+		// Drive the header's bottom off the loaded name or its skeleton, toggled with the loading state
+		self.headerBottomLoadedConstraint = self.userDetailsHeaderView.bottomAnchor.constraint(equalTo: self.usernameLabel.bottomAnchor)
+		self.headerBottomSkeletonConstraint = self.userDetailsHeaderView.bottomAnchor.constraint(equalTo: self.usernameSkeletonView.bottomAnchor)
 
 		// Fill the content width when there's room
 		self.buttonsFillWidthConstraint = self.buttonsStackView.widthAnchor.constraint(equalTo: self.buttonsScrollView.frameLayoutGuide.widthAnchor)
