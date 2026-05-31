@@ -187,7 +187,7 @@ class AccountTableViewController: SubSettingsViewController {
 
 			stackView.topAnchor.constraint(equalTo: headerView.layoutMarginsGuide.topAnchor),
 			stackView.bottomAnchor.constraint(equalTo: headerView.layoutMarginsGuide.bottomAnchor),
-			stackView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+			stackView.centerXAnchor.constraint(equalTo: headerView.layoutMarginsGuide.centerXAnchor),
 			stackView.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.layoutMarginsGuide.leadingAnchor),
 			stackView.trailingAnchor.constraint(lessThanOrEqualTo: headerView.layoutMarginsGuide.trailingAnchor),
 
