@@ -11,39 +11,6 @@ import UIKit
 
 extension Studio.Attributes {
 	// MARK: - Properties
-	/// Returns a `UIImageView` object containing the studio's profile image.
-	///
-	/// If the studio has no logo image set, then a placeholder image is applied.
-	///
-	/// - Returns: a `UIImageView` object containing the studio's profile image.
-	var profileImageView: UIImageView {
-		let profileImageView = UIImageView()
-		profileImageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
-		return profileImageView
-	}
-
-	/// Returns a `UIImageView` object containing the studio's banner image.
-	///
-	/// If the studio has no banner image set, then a placeholder image is returned.
-	///
-	/// - Returns: a `UIImageView` object containing the studio's banner image.
-	var bannerImageView: UIImageView? {
-		let bannerImageView = UIImageView()
-		bannerImageView.setImage(with: self.banner?.url ?? "", placeholder: self.bannerPlaceholderImage)
-		return bannerImageView
-	}
-
-	/// Returns a `UIImageView` object containing the studio's logo image.
-	///
-	/// If the studio has no logo image set, then a placeholder image is returned.
-	///
-	/// - Returns: a `UIImageView` object containing the studio's logo image.
-	var logoImageView: UIImageView? {
-		let logoImageView = UIImageView()
-		logoImageView.setImage(with: self.logo?.url ?? "", placeholder: self.logoPlaceholderImage)
-		return logoImageView
-	}
-
 	/// Returns a placeholder `UIImage` for the studio's profile using the studio's initials if available, otherwise a placeholder studio image is returned.
 	///
 	/// - Returns: a placeholder `UIImage` for the studio's profile using the studio's initials if available, otherwise a placeholder profile image is returned.

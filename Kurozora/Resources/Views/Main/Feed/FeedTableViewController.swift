@@ -282,7 +282,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.configure(for: User.current)
 	}
 
 	/// Shows the text editor for posting a new message.

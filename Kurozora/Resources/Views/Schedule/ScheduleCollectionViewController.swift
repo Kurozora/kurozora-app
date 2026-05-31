@@ -246,7 +246,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.configure(for: User.current)
 	}
 
 	/// Scroll to today's schedule section.

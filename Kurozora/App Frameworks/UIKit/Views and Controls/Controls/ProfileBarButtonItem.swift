@@ -72,14 +72,30 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 			self.button.heightAnchor.constraint(equalToConstant: buttonSize)
 		])
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSignInDidChange), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.refreshProfileImage), name: .KUserProfileDidUpdate, object: nil)
+	}
+
+	/// Loads the given user's profile image onto the button, falling back to the placeholder when no user is signed in.
+	///
+	/// - Parameter user: The user whose profile image should be displayed.
+	func configure(for user: User?) {
+		if let user = user {
+			user.attributes.profileImage(button: self.button)
+		} else {
+			self.image = .Placeholders.userProfile
+		}
+	}
+
+	@objc private func handleSignInDidChange() {
+		self.configure(for: User.current)
 	}
 
 	@objc private func refreshProfileImage(_ notification: Notification) {
 		if let image = notification.userInfo?["profileImage"] as? UIImage {
 			self.image = image
 		} else {
-			self.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+			self.configure(for: User.current)
 		}
 	}
 }

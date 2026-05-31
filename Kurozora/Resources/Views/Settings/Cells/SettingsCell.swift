@@ -54,6 +54,10 @@ class SettingsCell: KTableViewCell {
 		self.configure(title: sectionRow?.primaryStringValue, subtitle: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue)
 
 		switch sectionRow {
+		case .account:
+			if let iconImageView = self.iconImageView {
+				User.current?.attributes.profileImage(imageView: iconImageView)
+			}
 		case .motion:
 			self.updateSplashScreenAnimation()
 			NotificationCenter.default.addObserver(self, selector: #selector(self.updateSplashScreenAnimation), name: .KSSplashScreenAnimationDidChange, object: nil)

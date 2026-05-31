@@ -261,7 +261,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.configure(for: User.current)
 	}
 
 	/// Updates the tab bar badge value according to the number of unread notifications.

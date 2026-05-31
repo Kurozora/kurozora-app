@@ -346,7 +346,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileBarButtonItem?.image = User.current?.attributes.profileImageView.image ?? .Placeholders.userProfile
+		self.profileBarButtonItem?.configure(for: User.current)
 	}
 
 	/// Handles the episode watch status update notification.

@@ -11,18 +11,6 @@ import UIKit
 
 extension User.Attributes {
 	// MARK: - Properties
-	/// Returns a `UIImageView` object containing the user's profile image.
-	///
-	/// If the user has no profile image set, then an image with the initials of the user's username is returned.
-	/// If no user is signed in then a placeholder profile image is returned.
-	///
-	/// - Returns: a `UIImageView` object containing the user's profile image.
-	var profileImageView: UIImageView {
-		let profileImageView = UIImageView()
-		profileImageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
-		return profileImageView
-	}
-
 	/// Returns a placeholder `UIImage` for the user's profile using the user's initials if available, otherwise a placeholder user image is returned.
 	///
 	/// - Returns: a placeholder `UIImage` for the user's profile using the user's initials if available, otherwise a placeholder profile image is returned.
@@ -62,6 +50,13 @@ extension User.Attributes {
 	/// - Parameter imageView: The image view on which to set the profile image.
 	func profileImage(imageView: UIImageView) {
 		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
+	}
+
+	/// Set the current signed in user's profile image on the given button.
+	///
+	/// - Parameter button: The button on which to set the profile image.
+	func profileImage(button: UIButton) {
+		button.setImage(with: self.profile?.url ?? "", placeholder: self.profilePlaceholderImage)
 	}
 
 	/// Set the current signed in user's banner image.
