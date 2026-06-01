@@ -11,16 +11,6 @@ import UIKit
 
 extension Person.Attributes {
 	// MARK: - Properties
-	/// Returns a `UIImage` with the image url of the person.
-	///
-	/// If the person has no image set, then an image with the initials of the person's full name is returned.
-	/// If no full name is available then a placeholder person image is returned.
-	var profileImage: UIImageView {
-		let imageView = UIImageView()
-		self.profileImage(imageView: imageView)
-		return imageView
-	}
-
 	/// Returns a placeholder `UIImage` for the person using the person's initials if available, otherwise a placeholder person image is returned.
 	var profilePlaceholderImage: UIImage {
 		let fullNameInitials = self.fullName.initials

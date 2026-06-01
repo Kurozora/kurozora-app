@@ -11,15 +11,6 @@ import UIKit
 
 extension Character.Attributes {
 	// MARK: - Properties
-	/// Returns a `UIImage` with the image url of the character.
-	///
-	/// If the character has no profile image set, then a placeholder image is applied.
-	var profileImage: UIImageView {
-		let imageView = UIImageView()
-		self.profileImage(imageView: imageView)
-		return imageView
-	}
-
 	/// Returns a placeholder `UIImage` for the character using the character's initials if available, otherwise a placeholder character image is returned.
 	var profilePlaceholderImage: UIImage {
 		let fullNameInitials = self.name.initials

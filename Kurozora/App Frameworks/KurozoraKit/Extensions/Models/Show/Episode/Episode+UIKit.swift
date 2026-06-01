@@ -140,8 +140,8 @@ extension Episode {
 		activityItems.append(self.webpageURLString)
 		activityItems.append("Track your watch progress of \"\(self.attributes.title)\" via @KurozoraApp")
 
-		if let episodeImage = self.attributes.banner?.url {
-			activityItems.append(episodeImage)
+		if let bannerImageURLString = self.attributes.banner?.url ?? self.attributes.poster?.url, !bannerImageURLString.isEmpty {
+			activityItems.append(ImageActivityItemProvider(urlString: bannerImageURLString, placeholder: .Placeholders.episodeBanner))
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])

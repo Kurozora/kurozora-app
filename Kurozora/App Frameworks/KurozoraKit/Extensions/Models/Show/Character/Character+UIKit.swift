@@ -91,8 +91,8 @@ extension Character {
 		activityItems.append(self.webpageURLString)
 		activityItems.append("You should check out \"\(self.attributes.name)\" via @KurozoraApp")
 
-		if let profileImage = self.attributes.profileImage.image {
-			activityItems.append(profileImage)
+		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
+			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])

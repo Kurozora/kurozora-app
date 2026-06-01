@@ -71,8 +71,15 @@ extension Cast {
 			activityItems.append("TIL, \(person) is the voice actor of \(character) via @KurozoraApp")
 		}
 
-		if let castImage = castImage() {
-			activityItems.append(castImage)
+		if let personImageURLString = self.relationships.people?.data.first?.attributes.profile?.url, !personImageURLString.isEmpty,
+		   let characterImageURLString = self.relationships.characters.data.first?.attributes.profile?.url, !characterImageURLString.isEmpty {
+			activityItems.append(ImageActivityItemProvider(placeholder: .Placeholders.userProfile) {
+				guard let personImage = ImageActivityItemProvider.loadImage(for: personImageURLString),
+				      let characterImage = ImageActivityItemProvider.loadImage(for: characterImageURLString) else {
+					return nil
+				}
+				return Cast.mergedImage(leftImage: personImage, rightImage: characterImage)
+			})
 		}
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
@@ -89,23 +96,20 @@ extension Cast {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	/// Merges and returns the combined image of the cast.
+	/// Merges two images side by side into a single image.
 	///
-	/// - Returns: a combined image of the cast.
-	private func castImage() -> UIImage? {
-		guard let personImage = self.relationships.people?.data.first?.attributes.profileImage.image else { return nil }
-		guard let characterImage = self.relationships.characters.data.first?.attributes.profileImage.image else { return nil }
-		let leftImage = personImage
-		let rightImage = characterImage
-
+	/// - Parameters:
+	///    - leftImage: The image drawn on the leading half.
+	///    - rightImage: The image drawn on the trailing half.
+	///
+	/// - Returns: The combined image.
+	private static func mergedImage(leftImage: UIImage, rightImage: UIImage) -> UIImage {
 		let size = CGSize(width: leftImage.size.width + rightImage.size.width, height: max(leftImage.size.height, rightImage.size.height))
-		UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+		let renderer = UIGraphicsImageRenderer(size: size)
 
-		leftImage.draw(in: CGRect(x: 0, y: 0, width: size.width / 2, height: size.height))
-		rightImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width / 2, height: size.height))
-
-		let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		return newImage
+		return renderer.image { _ in
+			leftImage.draw(in: CGRect(x: 0, y: 0, width: size.width / 2, height: size.height))
+			rightImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width / 2, height: size.height))
+		}
 	}
 }

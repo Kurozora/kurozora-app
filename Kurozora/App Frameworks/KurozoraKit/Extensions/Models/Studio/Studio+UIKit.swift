@@ -6,7 +6,6 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Kingfisher
 import KurozoraKit
 import UIKit
 
@@ -90,33 +89,27 @@ extension Studio {
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
-	@MainActor
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		let webpageURLString = self.webpageURLString
-		let name = self.attributes.name
-		let profileImageURLString = self.attributes.profile?.url
+		var activityItems: [Any] = []
+		activityItems.append(self.webpageURLString)
+		activityItems.append("Check out shows made by \"\(self.attributes.name)\" via @KurozoraApp")
 
-		Task {
-			var activityItems: [Any] = [webpageURLString, "Check out shows made by \"\(name)\" via @KurozoraApp"]
-
-			if let profileImageURLString, let imageURL = URL(string: profileImageURLString),
-			   let result = try? await KingfisherManager.shared.retrieveImage(with: imageURL) {
-				activityItems.append(result.image)
-			}
-
-			let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-			if let popoverController = activityViewController.popoverPresentationController {
-				if let sourceView = sourceView {
-					popoverController.sourceView = sourceView
-					popoverController.sourceRect = sourceView.frame
-				} else {
-					popoverController.barButtonItem = barButtonItem
-				}
-			}
-
-			viewController?.present(activityViewController, animated: true, completion: nil)
+		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
+			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))
 		}
+
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
+
+		if let popoverController = activityViewController.popoverPresentationController {
+			if let sourceView = sourceView {
+				popoverController.sourceView = sourceView
+				popoverController.sourceRect = sourceView.frame
+			} else {
+				popoverController.barButtonItem = barButtonItem
+			}
+		}
+
+		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
 	/// Rate the studio with the given rating.
