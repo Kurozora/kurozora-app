@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import UIKit
 import KurozoraKit
 
 /// Information that represents the customer’s purchase of a product in your app.
@@ -49,6 +50,9 @@ final class Store: NSObject, ObservableObject {
 	/// The transaction listener `Task` object.
 	var updateListenerTask: Task<Void, Error>?
 
+	/// The promoted-IAP intent listener `Task` object.
+	var purchaseIntentTask: Task<Void, Never>?
+
 	/// The dictionary containing all `StoreKit` products.
 	private var products: [String: String] = [:]
 
@@ -59,25 +63,20 @@ final class Store: NSObject, ObservableObject {
 	private override init() {
 		super.init()
 		print("🧾 StoreKit 2 initialized.")
-		print("🧾 Add SKPaymentQueue observer.")
 
-		SKPaymentQueue.default().add(self)
-
-//		#if DEBUG
-//		if let path = Bundle.main.path(forResource: "Debug Products", ofType: "plist"),
-//		   let plist = FileManager.default.contents(atPath: path) {
-//			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
-//		} else {
-//			products = [:]
-//		}
-//		#else
-		if let path = Bundle.main.path(forResource: "Products", ofType: "plist"),
+		// NOTE: Pass `-StoreKitTesting YES` (Edit Scheme -> Run -> Arguments) to load the local `.storekit` catalog.
+		#if DEBUG
+		let plistName = UserDefaults.standard.bool(forKey: "StoreKitTesting") ? "Debug Products" : "Products"
+		#else
+		let plistName = "Products"
+		#endif
+		if let path = Bundle.main.path(forResource: plistName, ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
 			self.products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
 		} else {
 			self.products = [:]
 		}
-//		#endif
+		print("🧾 Loaded \(self.products.count) product IDs from \(plistName).plist:", Array(self.products.keys).sorted())
 
 		// Initialize empty products then do a product request asynchronously to fill them in.
 		self.tips = []
@@ -87,10 +86,15 @@ final class Store: NSObject, ObservableObject {
 		// Start a transaction listener as close to app launch as possible so you don't miss any transactions.
 		self.updateListenerTask = self.listenForTransactions()
 
+		if #available(iOS 16.4, macCatalyst 16.4, *) {
+			self.purchaseIntentTask = self.observePurchaseIntents()
+		}
+
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			// Initialize the store by starting a product request.
 			await self.requestProducts()
+			await self.drainPendingPromotedIntent()
 		}
 	}
 
@@ -100,6 +104,7 @@ final class Store: NSObject, ObservableObject {
 	deinit {
 		print("🧾 StoreKit 2 deinitialized.")
 		self.updateListenerTask?.cancel()
+		self.purchaseIntentTask?.cancel()
 	}
 
 	// MARK: - Functions
@@ -112,11 +117,8 @@ final class Store: NSObject, ObservableObject {
 			for await result in Transaction.updates {
 				do {
 					let transaction = try self.checkVerified(result)
-
-					// Deliver content to the user.
 					await self.updatePurchasedIdentifiers(transaction)
-
-					// Always finish a transaction.
+					await self.verifyTransactions([result.jwsRepresentation])
 					await transaction.finish()
 				} catch {
 					// StoreKit has a receipt it can read but it failed verification. Don't deliver content to the user.
@@ -131,7 +133,9 @@ final class Store: NSObject, ObservableObject {
 	func requestProducts() async {
 		do {
 			// Request products from the App Store using the identifiers defined in the Products.plist file.
+			print("🧾 Requesting \(self.products.count) products from StoreKit:", Array(self.products.keys).sorted())
 			let storeProducts = try await Product.products(for: products.keys)
+			print("🧾 StoreKit returned \(storeProducts.count) products:", storeProducts.map(\.id).sorted())
 
 			var newTips: [Product] = []
 			var newSubscriptions: [Product] = []
@@ -161,44 +165,17 @@ final class Store: NSObject, ObservableObject {
 		}
 	}
 
-	func refreshReceipt() {
-		let request = SKReceiptRefreshRequest(receiptProperties: nil)
-		request.start()
-	}
+	/// Verify the validity of the given transactions.
+	///
+	/// - Parameter jwses: The transactions to validate.
+	private func verifyTransactions(_ jwses: [String]) async {
+		guard !jwses.isEmpty else { return }
 
-	/// Handles successful purchase transactions.
-	fileprivate func handleSuccess(_ transaction: Transaction) async {
-		// Deliver content to the user.
-		await self.updatePurchasedIdentifiers(transaction)
-		print("🧾 Deliver content for \(transaction.productID).")
-
-		await self.verifyReceipt()
-	}
-
-	/// Verifies the receipt using Kurozora API.
-	private func verifyReceipt() async {
-		self.refreshReceipt()
-
-		// Get the receipt if it's available
-		if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-		   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
-			do {
-				let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-				let receiptString = receiptData.base64EncodedString(options: [])
-				print("🧾 Receipt string:", receiptString)
-
-				let verifyResponse = try await KService.verifyReceipt(receiptString)
-
-				NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
-
-				// Finish the successful transaction.
-				print("🧾 Transaction verified.")
-			} catch {
-				print("🧾 Transaction NOT verified.")
-				print("🧾 Couldn't read receipt data with error: " + error.localizedDescription)
-			}
-		} else {
-			print("🧾 Receipt verification failed: App Store receipt not found.")
+		do {
+			_ = try await KService.verifyTransactions(jwses).response()
+			NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
+		} catch {
+			print("🧾 Backend verify failed: \(error)")
 		}
 	}
 
@@ -215,13 +192,9 @@ final class Store: NSObject, ObservableObject {
 		switch result {
 		case .success(let verification):
 			let transaction = try self.checkVerified(verification)
-
-			// Handle success
-			await self.handleSuccess(transaction)
-
-			// Always finish a transaction.
+			await self.updatePurchasedIdentifiers(transaction)
+			await self.verifyTransactions([verification.jwsRepresentation])
 			await transaction.finish()
-
 			return transaction
 		case .userCancelled, .pending:
 			return nil
@@ -239,11 +212,85 @@ final class Store: NSObject, ObservableObject {
 		do {
 			try await AppStore.sync()
 
-			await self.verifyReceipt()
-		} catch let error as KKAPIError {
-			print("🧾 Restore failed", error.message)
+			var jwses: [String] = []
+
+			for await result in Transaction.currentEntitlements {
+				if case .verified = result {
+					jwses.append(result.jwsRepresentation)
+				}
+			}
+
+			await self.verifyTransactions(jwses)
 		} catch {
 			print("🧾 Restore failed", error.localizedDescription)
+		}
+	}
+
+	/// Observes promoted IAP intents and routes them through the consent flow.
+	@available(iOS 16.4, macCatalyst 16.4, *)
+	private func observePurchaseIntents() -> Task<Void, Never> {
+		Task.detached { @MainActor [weak self] in
+			guard let self = self else { return }
+			for await intent in PurchaseIntent.intents {
+				PendingPromotedIntent.save(productID: intent.product.id)
+				await self.presentConsentAndPurchase(for: intent.product)
+			}
+		}
+	}
+
+	/// Resume any persisted promoted IAP intent left over from a prior session.
+	@MainActor
+	private func drainPendingPromotedIntent() async {
+		guard
+			let productID = PendingPromotedIntent.peek(),
+			let product = self.findProduct(byID: productID)
+		else { return }
+		await self.presentConsentAndPurchase(for: product)
+	}
+
+	/// Look up a loaded product by its identifier.
+	@MainActor
+	func findProduct(byID id: String) -> Product? {
+		return self.tips.first(where: { $0.id == id })
+			?? self.subscriptions.first(where: { $0.id == id })
+			?? self.nonConsumables.first(where: { $0.id == id })
+	}
+
+	/// Prompt sign-in if needed, then ask the user to confirm a promoted IAP purchase.
+	@MainActor
+	private func presentConsentAndPurchase(for product: Product) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: UIApplication.topViewController)
+		guard signedIn else {
+			PendingPromotedIntent.clear()
+			return
+		}
+
+		guard let presentingViewController = UIApplication.topViewController else { return }
+
+		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+			let alert = UIAlertController(
+				title: "Continue your purchase?",
+				message: "Resume the \(product.displayName) purchase you started in the App Store.",
+				preferredStyle: .alert
+			)
+
+			let continueAction = UIAlertAction(title: "Continue", style: .default) { [weak self] _ in
+				Task { @MainActor in
+					_ = try? await self?.purchase(product)
+					PendingPromotedIntent.clear()
+					continuation.resume()
+				}
+			}
+			let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+				PendingPromotedIntent.clear()
+				continuation.resume()
+			}
+
+			alert.addAction(continueAction)
+			alert.addAction(dismissAction)
+			alert.preferredAction = continueAction
+
+			presentingViewController.present(alert, animated: true)
 		}
 	}
 
@@ -323,8 +370,13 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: The product's image.
 	func image(for productId: String) -> UIImage? {
-		let product = self.title(for: productId)
-		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.tipJar)
+		let title = self.title(for: productId)
+
+		if let subscriptionImage = UIImage(named: "Promotional/In App Purchases/Subscriptions/\(title)") {
+			return subscriptionImage
+		}
+
+		return title.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.tipJar)
 	}
 
 	/// How much money the user saves between subscription tiers.
@@ -380,18 +432,18 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: a `SubscriptionTier` object.
 	func tier(for productID: String) -> SubscriptionTier {
-//		#if DEBUG
-//		switch productID {
-//		case "app.kurozora.temporary.kurozoraPlus1Month":
-//			return .plus1Month
-//		case "app.kurozora.temporary.kurozoraPlus6Months":
-//			return .plus6Months
-//		case "app.kurozora.temporary.kurozoraPlus12Months":
-//			return .plus12Months
-//		default:
-//			return .none
-//		}
-//		#else
+		#if DEBUG
+		switch productID {
+		case "app.kurozora.temporary.kurozoraPlus1Month":
+			return .plus1Month
+		case "app.kurozora.temporary.kurozoraPlus6Months":
+			return .plus6Months
+		case "app.kurozora.temporary.kurozoraPlus12Months":
+			return .plus12Months
+		default:
+			return .none
+		}
+		#else
 		switch productID {
 		case "app.kurozora.autoRenewableSubscription.kPlus1Month":
 			return .plus1Month
@@ -402,50 +454,6 @@ final class Store: NSObject, ObservableObject {
 		default:
 			return .none
 		}
-//		#endif
-	}
-}
-
-// MARK: - SKPaymentTransactionObserver
-extension Store: SKPaymentTransactionObserver {
-	func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-		for transaction in transactions {
-			switch transaction.transactionState {
-			case .purchasing:
-				// Do not block your UI. Allow the user to continue using your app.
-				print("🧾 Transaction in progress: \(transaction)")
-			case .deferred:
-				// Do not block your UI. Allow the user to continue using your app.
-				print("🧾 Transaction deferred: \(transaction)")
-			case .purchased:
-				// The purchase was successful.
-				print("🧾 Transaction purchased: \(transaction)")
-				Task {
-					await self.verifyReceipt()
-					queue.finishTransaction(transaction)
-				}
-			case .restored:
-				print("🧾 Transaction restore: \(transaction)")
-				Task {
-					await self.verifyReceipt()
-					queue.finishTransaction(transaction)
-				}
-			case .failed:
-				print("🧾 Transaction failed: \(transaction)")
-				queue.finishTransaction(transaction)
-			@unknown default:
-				queue.finishTransaction(transaction)
-			}
-		}
-	}
-
-	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
-		for transaction in transactions {
-			print("🧾 \(transaction.payment.productIdentifier) was removed from the payment queue.")
-		}
-	}
-
-	func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
-		return AppStore.canMakePayments
+		#endif
 	}
 }
