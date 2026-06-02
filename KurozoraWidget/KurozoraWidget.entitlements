@@ -9,7 +9,6 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)app.kurozora.shared</string>
-		<string>$(AppIdentifierPrefix)app.kurozora.shared.debug</string>
 	</array>
 </dict>
 </plist>

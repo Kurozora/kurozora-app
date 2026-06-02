@@ -23,11 +23,7 @@ final class AccountManager {
 
 	// MARK: - Initializers
 	private init() {
-		#if DEBUG
-		let accessGroup = "\(SharedDelegate.shared.appIdentifierPrefix)app.kurozora.shared.debug"
-		#else
 		let accessGroup = "\(SharedDelegate.shared.appIdentifierPrefix)app.kurozora.shared"
-		#endif
 
 		self.keychain = Keychain(service: "Kurozora.Accounts", accessGroup: accessGroup)
 			.synchronizable(true)
