@@ -89,13 +89,13 @@ extension NotificationsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		switch self.grouping {
-		case .automatic, .byType:
+		switch self.dataSource.sectionIdentifier(for: section) {
+		case .grouped(let groupNotification):
 			let titleHeaderTableReusableView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableReusableView.reuseIdentifier) as? TitleHeaderTableReusableView
-			let groupNotification = self.groupedNotifications[section]
 			titleHeaderTableReusableView?.configure(withTitle: groupNotification.sectionTitle, buttonIsHidden: true, section: section)
 			return titleHeaderTableReusableView
-		case .off: return nil
+		case .main, .none:
+			return nil
 		}
 	}
 
