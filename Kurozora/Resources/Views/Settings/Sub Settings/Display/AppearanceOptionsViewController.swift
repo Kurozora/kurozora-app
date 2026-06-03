@@ -29,7 +29,7 @@ class AppearanceOptionsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Appearance Schedule"
+		self.title = L10n.appearanceSchedule
 		self.configureView()
 	}
 
@@ -96,7 +96,7 @@ extension AppearanceOptionsViewController {
 			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: DatePickerSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(DatePickerSettingsCell.reuseID)")
 			}
-			datePickerSettingsCell.configure(title: "Starts at", date: self.inputDates[indexPath.row - 1])
+			datePickerSettingsCell.configure(title: L10n.startsAt, date: self.inputDates[indexPath.row - 1])
 			datePickerSettingsCell.delegate = self
 			return datePickerSettingsCell
 		}

@@ -710,4 +710,135 @@ extension L10n {
 		table: "Settings",
 		comment: "Error description shown when the theme storage directory cannot be resolved."
 	)
+
+	// MARK: - Browser
+	/// The name of the in-app browser option in the browser picker.
+	///
+	/// - Tag: L10n-browserInAppDefault
+	static let browserInAppDefault: String = String(
+		localized: "In-app (default)",
+		table: "Settings",
+		comment: "The name of the in-app browser option in the browser picker."
+	)
+
+	// MARK: - Empty States
+	/// The empty-state detail shown when no themes are available in the theme store.
+	///
+	/// - Tag: L10n-noThemesAvailableDetail
+	static let noThemesAvailableDetail: String = String(
+		localized: "Themes are not available at this moment. Please check back again later.",
+		table: "Settings",
+		comment: "The empty-state detail shown when no themes are available in the theme store."
+	)
+	/// The empty-state title for the debug keychain list when no keys remain.
+	///
+	/// - Tag: L10n-debugNoKeysTitle
+	static let debugNoKeysTitle: String = String(
+		localized: "No Keys",
+		table: "Settings",
+		comment: "The empty-state title for the debug keychain list when no keys remain."
+	)
+	/// The empty-state detail for the debug keychain list when no keys remain.
+	///
+	/// - Tag: L10n-debugNoKeysDetail
+	static let debugNoKeysDetail: String = String(
+		localized: "All keychain entries have been removed.",
+		table: "Settings",
+		comment: "The empty-state detail for the debug keychain list when no keys remain."
+	)
+
+	// MARK: - Sign In
+	/// The string for the 'sign in' action.
+	///
+	/// - Tag: L10n-signIn
+	static let signIn: String = String(
+		localized: "Sign In",
+		table: "Settings",
+		comment: "The string for the 'sign in' action."
+	)
+
+	// MARK: - Appearance
+	/// The title of the appearance schedule screen.
+	///
+	/// - Tag: L10n-appearanceSchedule
+	static let appearanceSchedule: String = String(
+		localized: "Appearance Schedule",
+		table: "Settings",
+		comment: "The title of the appearance schedule screen."
+	)
+	/// The settings row title for the automatic dark theme schedule start time.
+	///
+	/// - Tag: L10n-startsAt
+	static let startsAt: String = String(
+		localized: "Starts at",
+		table: "Settings",
+		comment: "The settings row title for the automatic dark theme schedule start time."
+	)
+	/// The settings switch title for the true black option.
+	///
+	/// - Tag: L10n-trueBlack
+	static let trueBlack: String = String(
+		localized: "True Black",
+		table: "Settings",
+		comment: "The settings switch title for the true black option."
+	)
+	/// The settings switch title for the large titles option.
+	///
+	/// - Tag: L10n-largeTitles
+	static let largeTitles: String = String(
+		localized: "Large Titles",
+		table: "Settings",
+		comment: "The settings switch title for the large titles option."
+	)
+
+	// MARK: - Theme Store Buttons
+	/// The download button title for an unowned theme.
+	///
+	/// - Tag: L10n-themeButtonGet
+	static let themeButtonGet: String = String(
+		localized: "GET",
+		table: "Settings",
+		comment: "The download button title for an unowned theme."
+	)
+	/// The button title for applying a downloaded theme.
+	///
+	/// - Tag: L10n-themeButtonUse
+	static let themeButtonUse: String = String(
+		localized: "USE",
+		table: "Settings",
+		comment: "The button title for applying a downloaded theme."
+	)
+	/// The button title for updating a downloaded theme.
+	///
+	/// - Tag: L10n-themeButtonUpdate
+	static let themeButtonUpdate: String = String(
+		localized: "UPDATE",
+		table: "Settings",
+		comment: "The button title for updating a downloaded theme."
+	)
+	/// The button title shown for the currently applied theme.
+	///
+	/// - Tag: L10n-themeButtonUsing
+	static let themeButtonUsing: String = String(
+		localized: "USING",
+		table: "Settings",
+		comment: "The button title shown for the currently applied theme."
+	)
+
+	// MARK: - Theme Downloads
+	/// The download count shown on a theme.
+	///
+	/// - Parameters:
+	///   - formattedCount: The display-formatted download count.
+	///   - count: The number of downloads.
+	///
+	/// - Tag: L10n-downloadsCount
+	static func downloadsCount(_ formattedCount: String, count: Int) -> String {
+		String(
+			localized: "theme.downloadsCount",
+			defaultValue: "\(formattedCount) \(count) Downloads",
+			table: "Settings",
+			comment: "The download count shown on a theme."
+		)
+	}
 }

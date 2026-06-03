@@ -116,7 +116,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.notifications.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.notifications.lowercased(with: Locale.current)))
 		#endif
 
 		self.tableView.allowsMultipleSelectionDuringEditing = true
@@ -200,7 +200,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		}
 
 		emptyBackgroundView.configureImageView(image: .Empty.notifications)
-		emptyBackgroundView.configureLabels(title: "No Notifications", detail: detailString)
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.notifications), detail: detailString)
 		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 
 		tableView.backgroundView?.alpha = 0
@@ -222,7 +222,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		self.toggleEmptyDataView()
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.notifications.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.notifications.lowercased(with: Locale.current)))
 		#endif
 		self.updateTabBarBadge()
 	}
@@ -235,7 +235,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.notifications.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.notifications.lowercased(with: Locale.current)))
 		#endif
 
 		if User.isSignedIn {

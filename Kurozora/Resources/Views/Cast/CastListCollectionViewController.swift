@@ -62,7 +62,7 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 		self.title = L10n.cast
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.cast.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.cast.lowercased(with: Locale.current)))
 		#endif
 	}
 
@@ -74,12 +74,12 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 			self.endFetch()
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.cast.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.cast.lowercased(with: Locale.current)))
 			#endif
 		}
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.cast.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.cast.lowercased(with: Locale.current)))
 		#endif
 
 		do {

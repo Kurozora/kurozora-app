@@ -50,7 +50,7 @@ class KSearchController: UISearchController {
 				#if targetEnvironment(macCatalyst)
 				self.searchBar.placeholder = L10n.search
 				#else
-				self.searchBar.placeholder = "Anime, Manga, Games and More"
+				self.searchBar.placeholder = L10n.searchPlaceholder
 				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
 				#endif
 				self.searchBar.scopeButtonTitles = SearchScope.allString

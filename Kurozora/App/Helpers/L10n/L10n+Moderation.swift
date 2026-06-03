@@ -460,4 +460,22 @@ extension L10n {
 		table: "Moderation",
 		comment: "Timeout reason label."
 	)
+
+	// MARK: - Self Label
+	/// The title of the content warning self-label sheet.
+	///
+	/// - Tag: L10n-selfLabelTitle
+	static let selfLabelTitle: String = String(
+		localized: "Add a content warning",
+		table: "Moderation",
+		comment: "The title of the content warning self-label sheet."
+	)
+	/// The subtitle of the content warning self-label sheet.
+	///
+	/// - Tag: L10n-selfLabelSubtitle
+	static let selfLabelSubtitle: String = String(
+		localized: "Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences.",
+		table: "Moderation",
+		comment: "The subtitle of the content warning self-label sheet."
+	)
 }

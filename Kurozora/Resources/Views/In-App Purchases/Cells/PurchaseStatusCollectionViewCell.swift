@@ -40,15 +40,15 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 		if let product = product, let status = status, let subscription = product.subscription {
 			self.productImageView.image = UIImage(named: "Promotional/In App Purchases/Subscriptions/\(Store.shared.title(for: product.id))")
 			self.productNameLabel.text = product.displayName
-			self.priceLabel.text = "\(product.displayPrice) per \(subscription.subscriptionPeriod.displayUnit)"
+			self.priceLabel.text = L10n.pricePerUnit(product.displayPrice, per: subscription.subscriptionPeriod.displayUnit)
 			self.renewalStatusLabel.text = self.renewalDescription(for: product, status: status)
 			self.purchaseStatusLabel.text = self.description(for: product, status: status)
 		} else {
 			self.productImageView.image = nil
-			self.productNameLabel.text = "Unknown"
-			self.priceLabel.text = "Unknown"
-			self.renewalStatusLabel.text = "Unknown"
-			self.purchaseStatusLabel.text = "Unknown"
+			self.productNameLabel.text = L10n.unknown
+			self.priceLabel.text = L10n.unknown
+			self.renewalStatusLabel.text = L10n.unknown
+			self.purchaseStatusLabel.text = L10n.unknown
 		}
 	}
 

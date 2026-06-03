@@ -550,6 +550,196 @@ extension L10n {
 		comment: "The message string for restoring IAP has succeeded."
 	)
 
+	// MARK: - Product Features
+	/// The 'stylish app icons' product feature title.
+	///
+	/// - Tag: L10n-featureAppIconsTitle
+	static let featureAppIconsTitle: String = String(
+		localized: "Stylish App Icons",
+		table: "Account",
+		comment: "The 'stylish app icons' product feature title."
+	)
+	/// The 'stylish app icons' product feature description.
+	///
+	/// - Tag: L10n-featureAppIconsDescription
+	static let featureAppIconsDescription: String = String(
+		localized: "Make your home screen stand out with premium and limited time app icons.",
+		table: "Account",
+		comment: "The 'stylish app icons' product feature description."
+	)
+	/// The 'startup chimes' product feature title.
+	///
+	/// - Tag: L10n-featureStartupChimesTitle
+	static let featureStartupChimesTitle: String = String(
+		localized: "Startup Chimes",
+		table: "Account",
+		comment: "The 'startup chimes' product feature title."
+	)
+	/// The 'startup chimes' product feature description.
+	///
+	/// - Tag: L10n-featureStartupChimesDescription
+	static let featureStartupChimesDescription: String = String(
+		localized: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.",
+		table: "Account",
+		comment: "The 'startup chimes' product feature description."
+	)
+	/// The 'get animated' product feature title.
+	///
+	/// - Tag: L10n-featureGetAnimatedTitle
+	static let featureGetAnimatedTitle: String = String(
+		localized: "Get Animated",
+		table: "Account",
+		comment: "The 'get animated' product feature title."
+	)
+	/// The 'get animated' product feature description.
+	///
+	/// - Tag: L10n-featureGetAnimatedDescription
+	static let featureGetAnimatedDescription: String = String(
+		localized: "Upgrade your profile with a gif image that captures your unique style.",
+		table: "Account",
+		comment: "The 'get animated' product feature description."
+	)
+	/// The 'change your identity' product feature title.
+	///
+	/// - Tag: L10n-featureChangeIdentityTitle
+	static let featureChangeIdentityTitle: String = String(
+		localized: "Change Your Identity",
+		table: "Account",
+		comment: "The 'change your identity' product feature title."
+	)
+	/// The 'change your identity' product feature description.
+	///
+	/// - Tag: L10n-featureChangeIdentityDescription
+	static let featureChangeIdentityDescription: String = String(
+		localized: "Switch things up every now an then with a fresh username that truly represents you.",
+		table: "Account",
+		comment: "The 'change your identity' product feature description."
+	)
+	/// The 'support the community' product feature title.
+	///
+	/// - Tag: L10n-featureSupportCommunityTitle
+	static let featureSupportCommunityTitle: String = String(
+		localized: "Support the Community",
+		table: "Account",
+		comment: "The 'support the community' product feature title."
+	)
+	/// The 'support the community' product feature description.
+	///
+	/// - Tag: L10n-featureSupportCommunityDescription
+	static let featureSupportCommunityDescription: String = String(
+		localized: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.",
+		table: "Account",
+		comment: "The 'support the community' product feature description."
+	)
+	/// The product feature title for an extended feed-message character limit.
+	///
+	/// - Parameter count: The maximum number of characters.
+	///
+	/// - Tag: L10n-featureUpToCharacters
+	static func featureUpToCharacters(_ count: Int) -> String {
+		String(
+			localized: "Up to \(count) Characters",
+			table: "Account",
+			comment: "The product feature title for an extended feed-message character limit."
+		)
+	}
+	/// The 'unified anime linking' product feature title.
+	///
+	/// - Tag: L10n-featureUnifiedLinkingTitle
+	static let featureUnifiedLinkingTitle: String = String(
+		localized: "Unified Anime Linking",
+		table: "Account",
+		comment: "The 'unified anime linking' product feature title."
+	)
+	/// The 'unified anime linking' product feature description.
+	///
+	/// - Tag: L10n-featureUnifiedLinkingDescription
+	static let featureUnifiedLinkingDescription: String = String(
+		localized: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.",
+		table: "Account",
+		comment: "The 'unified anime linking' product feature description."
+	)
+	/// The 'integrate with calendar' product feature title.
+	///
+	/// - Tag: L10n-featureCalendarTitle
+	static let featureCalendarTitle: String = String(
+		localized: "Integrate with Calendar",
+		table: "Account",
+		comment: "The 'integrate with calendar' product feature title."
+	)
+	/// The 'integrate with calendar' product feature description.
+	///
+	/// - Tag: L10n-featureCalendarDescription
+	static let featureCalendarDescription: String = String(
+		localized: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.",
+		table: "Account",
+		comment: "The 'integrate with calendar' product feature description."
+	)
+	/// The 'dynamic themes' product feature title.
+	///
+	/// - Tag: L10n-featureDynamicThemesTitle
+	static let featureDynamicThemesTitle: String = String(
+		localized: "Dynamic Themes",
+		table: "Account",
+		comment: "The 'dynamic themes' product feature title."
+	)
+	/// The 'dynamic themes' product feature description.
+	///
+	/// - Tag: L10n-featureDynamicThemesDescription
+	static let featureDynamicThemesDescription: String = String(
+		localized: "Choose from a range of themes to create a look that reflects your personality and style.",
+		table: "Account",
+		comment: "The 'dynamic themes' product feature description."
+	)
+	/// The subscription feed-message character-limit product feature description.
+	///
+	/// - Tag: L10n-featureSubscriptionCharacterLimitDescription
+	static let featureSubscriptionCharacterLimitDescription: String = String(
+		localized: "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.",
+		table: "Account",
+		comment: "The subscription feed-message character-limit product feature description."
+	)
+	/// The 'unlock subscriber badge' product feature title.
+	///
+	/// - Tag: L10n-featureSubscriberBadgeTitle
+	static let featureSubscriberBadgeTitle: String = String(
+		localized: "Unlock Subscriber Badge",
+		table: "Account",
+		comment: "The 'unlock subscriber badge' product feature title."
+	)
+	/// The 'unlock subscriber badge' product feature description.
+	///
+	/// - Tag: L10n-featureSubscriberBadgeDescription
+	static let featureSubscriberBadgeDescription: String = String(
+		localized: "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!",
+		table: "Account",
+		comment: "The 'unlock subscriber badge' product feature description."
+	)
+	/// The tip jar feed-message character-limit product feature description.
+	///
+	/// - Tag: L10n-featureTipJarCharacterLimitDescription
+	static let featureTipJarCharacterLimitDescription: String = String(
+		localized: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.",
+		table: "Account",
+		comment: "The tip jar feed-message character-limit product feature description."
+	)
+	/// The 'unlock pro badge' product feature title.
+	///
+	/// - Tag: L10n-featureProBadgeTitle
+	static let featureProBadgeTitle: String = String(
+		localized: "Unlock Pro Badge",
+		table: "Account",
+		comment: "The 'unlock pro badge' product feature title."
+	)
+	/// The 'unlock pro badge' product feature description.
+	///
+	/// - Tag: L10n-featureProBadgeDescription
+	static let featureProBadgeDescription: String = String(
+		localized: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.",
+		table: "Account",
+		comment: "The 'unlock pro badge' product feature description."
+	)
+
 	// MARK: - Subscription
 	/// The footer string for the Subscription view.
 	///
@@ -841,5 +1031,363 @@ extension L10n {
 		localized: "This device",
 		table: "Account",
 		comment: "The string for 'this device'."
+	)
+
+	// MARK: - Account Screen
+	/// The title of the account settings screen.
+	///
+	/// - Tag: L10n-kurozoraAccount
+	static let kurozoraAccount: String = String(
+		localized: "Kurozora Account",
+		table: "Account",
+		comment: "The title of the account settings screen."
+	)
+	/// The title of the active sessions screen.
+	///
+	/// - Tag: L10n-activeSessions
+	static let activeSessions: String = String(
+		localized: "Active Sessions",
+		table: "Account",
+		comment: "The title of the active sessions screen."
+	)
+
+	// MARK: - Edit Profile
+	/// The section label above the username field on the edit profile screen.
+	///
+	/// - Tag: L10n-editProfileUsernameLabel
+	static let editProfileUsernameLabel: String = String(
+		localized: "Username",
+		table: "Account",
+		comment: "The section label above the username field on the edit profile screen."
+	)
+	/// The section label above the display name field on the edit profile screen.
+	///
+	/// - Tag: L10n-editProfileDisplayNameLabel
+	static let editProfileDisplayNameLabel: String = String(
+		localized: "Display Name",
+		table: "Account",
+		comment: "The section label above the display name field on the edit profile screen."
+	)
+	/// The section label above the bio field on the edit profile screen.
+	///
+	/// - Tag: L10n-editProfileBioLabel
+	static let editProfileBioLabel: String = String(
+		localized: "About Me",
+		table: "Account",
+		comment: "The section label above the bio field on the edit profile screen."
+	)
+	/// The alert title shown when updating the profile fails.
+	///
+	/// - Tag: L10n-editProfileErrorTitle
+	static let editProfileErrorTitle: String = String(
+		localized: "Error Updating Profile",
+		table: "Account",
+		comment: "The alert title shown when updating the profile fails."
+	)
+
+	// MARK: - Profile Image Selection
+	/// The camera-menu action that captures a new photo.
+	///
+	/// - Tag: L10n-pickerTakePhoto
+	static let pickerTakePhoto: String = String(
+		localized: "Take Photo",
+		table: "Account",
+		comment: "The camera-menu action that captures a new photo."
+	)
+	/// The camera-menu action that picks a photo from the library.
+	///
+	/// - Tag: L10n-pickerPhotoLibrary
+	static let pickerPhotoLibrary: String = String(
+		localized: "Photo Library",
+		table: "Account",
+		comment: "The camera-menu action that picks a photo from the library."
+	)
+	/// The empty-state title prompting the user to grant photo access.
+	///
+	/// - Tag: L10n-photoAccessTitle
+	static let photoAccessTitle: String = String(
+		localized: "Access Your Photos",
+		table: "Account",
+		comment: "The empty-state title prompting the user to grant photo access."
+	)
+	/// The empty-state detail prompting the user to grant photo access.
+	///
+	/// - Tag: L10n-photoAccessDetail
+	static let photoAccessDetail: String = String(
+		localized: "Allow access to your photo library to choose a profile picture.",
+		table: "Account",
+		comment: "The empty-state detail prompting the user to grant photo access."
+	)
+	/// The button that requests photo library access.
+	///
+	/// - Tag: L10n-photoAccessAllowButton
+	static let photoAccessAllowButton: String = String(
+		localized: "Allow Access",
+		table: "Account",
+		comment: "The button that requests photo library access."
+	)
+	/// The empty-state title shown when photo access has been denied.
+	///
+	/// - Tag: L10n-photoAccessDeniedTitle
+	static let photoAccessDeniedTitle: String = String(
+		localized: "Photo Access Denied",
+		table: "Account",
+		comment: "The empty-state title shown when photo access has been denied."
+	)
+	/// The empty-state detail shown when photo access has been denied.
+	///
+	/// - Tag: L10n-photoAccessDeniedDetail
+	static let photoAccessDeniedDetail: String = String(
+		localized: "You've denied photo library access. You can change this in Settings.",
+		table: "Account",
+		comment: "The empty-state detail shown when photo access has been denied."
+	)
+	/// The button that opens the system settings.
+	///
+	/// - Tag: L10n-openSettings
+	static let openSettings: String = String(
+		localized: "Open Settings",
+		table: "Account",
+		comment: "The button that opens the system settings."
+	)
+	/// The empty-state title shown when photo access is restricted.
+	///
+	/// - Tag: L10n-photoAccessRestrictedTitle
+	static let photoAccessRestrictedTitle: String = String(
+		localized: "Photo Access Restricted",
+		table: "Account",
+		comment: "The empty-state title shown when photo access is restricted."
+	)
+	/// The empty-state detail shown when photo access is restricted.
+	///
+	/// - Tag: L10n-photoAccessRestrictedDetail
+	static let photoAccessRestrictedDetail: String = String(
+		localized: "Photo library access is restricted on this device.",
+		table: "Account",
+		comment: "The empty-state detail shown when photo access is restricted."
+	)
+	/// The alert title shown when the image source is unavailable on the device.
+	///
+	/// - Tag: L10n-imagePickerUnavailableTitle
+	static let imagePickerUnavailableTitle: String = String(
+		localized: "Unavailable",
+		table: "Account",
+		comment: "The alert title shown when the image source is unavailable on the device."
+	)
+	/// The alert message shown when the image source is unavailable on the device.
+	///
+	/// - Tag: L10n-imagePickerUnavailableMessage
+	static let imagePickerUnavailableMessage: String = String(
+		localized: "This feature is not available on your device.",
+		table: "Account",
+		comment: "The alert message shown when the image source is unavailable on the device."
+	)
+
+	// MARK: - Redeem Actions
+	/// The redeem bar button on the redeem screen.
+	///
+	/// - Tag: L10n-redeemButton
+	static let redeemButton: String = String(
+		localized: "Redeem 🚀",
+		table: "Account",
+		comment: "The redeem bar button on the redeem screen."
+	)
+	/// The success message shown after a code is redeemed.
+	///
+	/// - Parameter code: The redeemed code.
+	///
+	/// - Tag: L10n-redeemSuccessMessage
+	static func redeemSuccessMessage(_ code: String) -> String {
+		String(
+			localized: "\(code) was successfully redeemed 🤩",
+			table: "Account",
+			comment: "The success message shown after a code is redeemed."
+		)
+	}
+	/// The placeholder for the manual code entry field.
+	///
+	/// - Tag: L10n-redeemManualPlaceholder
+	static let redeemManualPlaceholder: String = String(
+		localized: "Or enter your code manually",
+		table: "Account",
+		comment: "The placeholder for the manual code entry field."
+	)
+
+	// MARK: - Purchase
+	/// The price shown alongside its billing period.
+	///
+	/// - Parameters:
+	///   - price: The localized display price.
+	///   - unit: The localized billing period.
+	///
+	/// - Tag: L10n-pricePerUnit
+	static func pricePerUnit(_ price: String, per unit: String) -> String {
+		String(
+			localized: "\(price) per \(unit)",
+			table: "Account",
+			comment: "The price shown alongside its billing period."
+		)
+	}
+
+	// MARK: - Sessions Actions
+	/// The swipe action that signs out of a single session.
+	///
+	/// - Tag: L10n-signOutOfSession
+	static let signOutOfSession: String = String(
+		localized: "Sign Out of Session",
+		table: "Account",
+		comment: "The swipe action that signs out of a single session."
+	)
+
+	// MARK: - Promoted Purchase
+	/// The alert title prompting the user to resume a promoted purchase.
+	///
+	/// - Tag: L10n-continuePurchaseTitle
+	static let continuePurchaseTitle: String = String(
+		localized: "Continue your purchase?",
+		table: "Account",
+		comment: "The alert title prompting the user to resume a promoted purchase."
+	)
+	/// The alert message prompting the user to resume a promoted purchase.
+	///
+	/// - Parameter product: The product display name.
+	///
+	/// - Tag: L10n-continuePurchaseMessage
+	static func continuePurchaseMessage(_ product: String) -> String {
+		String(
+			localized: "Resume the \(product) purchase you started in the App Store.",
+			table: "Account",
+			comment: "The alert message prompting the user to resume a promoted purchase."
+		)
+	}
+
+	// MARK: - Access Gating
+	/// The alert title shown when a feature requires Kurozora+.
+	///
+	/// - Tag: L10n-kurozoraPlusRequiredTitle
+	static let kurozoraPlusRequiredTitle: String = String(
+		localized: "Kurozora+ Required",
+		table: "Account",
+		comment: "The alert title shown when a feature requires Kurozora+."
+	)
+	/// The alert message shown when a feature requires Kurozora+.
+	///
+	/// - Tag: L10n-kurozoraPlusRequiredMessage
+	static let kurozoraPlusRequiredMessage: String = String(
+		localized: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.",
+		table: "Account",
+		comment: "The alert message shown when a feature requires Kurozora+."
+	)
+	/// The alert title shown when a feature requires Pro.
+	///
+	/// - Tag: L10n-proRequiredTitle
+	static let proRequiredTitle: String = String(
+		localized: "Pro Required",
+		table: "Account",
+		comment: "The alert title shown when a feature requires Pro."
+	)
+	/// The alert message shown when a feature requires Pro.
+	///
+	/// - Tag: L10n-proRequiredMessage
+	static let proRequiredMessage: String = String(
+		localized: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.",
+		table: "Account",
+		comment: "The alert message shown when a feature requires Pro."
+	)
+
+	// MARK: - Unlock Screen
+	/// The subtext on the unlock screen on Mac Catalyst.
+	///
+	/// - Tag: L10n-unlockSnoopingQuit
+	static let unlockSnoopingQuit: String = String(
+		localized: "Use the button above to unlock Kurozora or if you're snooping around someone else's device then press ⌘ + Q to quit 😤",
+		table: "Account",
+		comment: "The subtext on the unlock screen on Mac Catalyst."
+	)
+	/// The subtext on the unlock screen on iOS.
+	///
+	/// - Tag: L10n-unlockSnoopingExit
+	static let unlockSnoopingExit: String = String(
+		localized: "Use the button above to unlock Kurozora or if you're snooping around someone else's device then exit the app 😤",
+		table: "Account",
+		comment: "The subtext on the unlock screen on iOS."
+	)
+
+	// MARK: - Authentication
+	/// The alert title shown when biometric authentication fails.
+	///
+	/// - Tag: L10n-errorAuthenticating
+	static let errorAuthenticating: String = String(
+		localized: "Error Authenticating",
+		table: "Account",
+		comment: "The alert title shown when biometric authentication fails."
+	)
+
+	// MARK: - Onboarding Placeholders
+	/// The username field placeholder during sign-up.
+	///
+	/// - Tag: L10n-onboardingUsernamePlaceholder
+	static let onboardingUsernamePlaceholder: String = String(
+		localized: "Username: pick a cool one 🙈",
+		table: "Account",
+		comment: "The username field placeholder during sign-up."
+	)
+	/// The email field placeholder during sign-up.
+	///
+	/// - Tag: L10n-onboardingSignUpEmailPlaceholder
+	static let onboardingSignUpEmailPlaceholder: String = String(
+		localized: "Email: we all forget our passwords 🙉",
+		table: "Account",
+		comment: "The email field placeholder during sign-up."
+	)
+	/// The password field placeholder during sign-up.
+	///
+	/// - Tag: L10n-onboardingSignUpPasswordPlaceholder
+	static let onboardingSignUpPasswordPlaceholder: String = String(
+		localized: "Password: make it super secret 🙊",
+		table: "Account",
+		comment: "The password field placeholder during sign-up."
+	)
+	/// The email field placeholder during sign-in.
+	///
+	/// - Tag: L10n-onboardingSignInEmailPlaceholder
+	static let onboardingSignInEmailPlaceholder: String = String(
+		localized: "Your cool email address 🙌",
+		table: "Account",
+		comment: "The email field placeholder during sign-in."
+	)
+	/// The password field placeholder during sign-in.
+	///
+	/// - Tag: L10n-onboardingSignInPasswordPlaceholder
+	static let onboardingSignInPasswordPlaceholder: String = String(
+		localized: "Your super secret password 👀",
+		table: "Account",
+		comment: "The password field placeholder during sign-in."
+	)
+	/// The email field placeholder during password reset.
+	///
+	/// - Tag: L10n-onboardingResetEmailPlaceholder
+	static let onboardingResetEmailPlaceholder: String = String(
+		localized: "Your email address to the rescue 💌",
+		table: "Account",
+		comment: "The email field placeholder during password reset."
+	)
+	/// The footer explaining how the Kurozora account is used during onboarding.
+	///
+	/// - Tag: L10n-onboardingFooter
+	static let onboardingFooter: String = String(
+		localized: "Your Kurozora Account information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in.",
+		table: "Account",
+		comment: "The footer explaining how the Kurozora account is used during onboarding."
+	)
+
+	// MARK: - Library Import
+	/// The import bar button on the library import screen.
+	///
+	/// - Tag: L10n-importButton
+	static let importButton: String = String(
+		localized: "Import 📲",
+		table: "Account",
+		comment: "The import bar button on the library import screen."
 	)
 }

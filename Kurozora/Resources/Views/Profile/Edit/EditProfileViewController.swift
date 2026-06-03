@@ -332,7 +332,7 @@ class EditProfileViewController: KViewController {
 
 				self.dismiss(animated: true)
 			} catch let error as APIError {
-				self.presentAlertController(title: "Error Updating Profile", message: error.message)
+				self.presentAlertController(title: L10n.editProfileErrorTitle, message: error.message)
 				print(error.localizedDescription)
 			} catch {
 				print(error.localizedDescription)
@@ -401,7 +401,7 @@ private extension EditProfileViewController {
 	}
 
 	func configureNavigationBarItems() {
-		self.title = "Profile"
+		self.title = L10n.profile
 
 		self.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .stop, primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
@@ -558,7 +558,7 @@ private extension EditProfileViewController {
 
 		self.usernameSectionLabel = KSecondaryLabel()
 		self.usernameSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.usernameSectionLabel.text = "USERNAME"
+		self.usernameSectionLabel.text = L10n.editProfileUsernameLabel.uppercased(with: Locale.current)
 		self.usernameSectionLabel.font = .preferredFont(forTextStyle: .caption1)
 		self.usernameContainerView.addSubview(self.usernameSectionLabel)
 
@@ -577,7 +577,7 @@ private extension EditProfileViewController {
 
 		self.displayNameSectionLabel = KSecondaryLabel()
 		self.displayNameSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.displayNameSectionLabel.text = "DISPLAY NAME"
+		self.displayNameSectionLabel.text = L10n.editProfileDisplayNameLabel.uppercased(with: Locale.current)
 		self.displayNameSectionLabel.font = .preferredFont(forTextStyle: .caption1)
 		self.displayNameContainerView.addSubview(self.displayNameSectionLabel)
 
@@ -597,7 +597,7 @@ private extension EditProfileViewController {
 
 		self.bioSectionLabel = KSecondaryLabel()
 		self.bioSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.bioSectionLabel.text = "ABOUT ME"
+		self.bioSectionLabel.text = L10n.editProfileBioLabel.uppercased(with: Locale.current)
 		self.bioSectionLabel.font = .preferredFont(forTextStyle: .caption1)
 		self.bioContainerView.addSubview(self.bioSectionLabel)
 

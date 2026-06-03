@@ -67,9 +67,9 @@ class ReCapMilestoneCollectionViewCell: KCollectionViewCell {
 				""
 			}
 
-			self.secondaryLabel.text = "You were in the top \(topPercentile)% of \(recapItemTitle) this year."
+			self.secondaryLabel.text = L10n.recapTopPercentile(topPercentile, of: recapItemTitle)
 			self.tertiaryLabel.text = "\(topPercentile)%"
-			self.quaternaryLabel.text = "Top \(recapItemTitle.capitalized.dropLast())"
+			self.quaternaryLabel.text = L10n.top(String(recapItemTitle.capitalized(with: Locale.current).dropLast()))
 		}
 
 		self.progressView.lineWidth = 16.0

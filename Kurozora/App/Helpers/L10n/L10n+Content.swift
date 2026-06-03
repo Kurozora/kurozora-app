@@ -1156,6 +1156,65 @@ extension L10n {
 			comment: "Empty-state detail for the achievements list when viewing someone else's profile."
 		)
 	}
+
+	// MARK: - Empty States
+	/// The generic empty-state title for a list of the specified items.
+	///
+	/// - Parameter items: The localized noun naming the list (e.g. `L10n.genres`).
+	///
+	/// - Tag: L10n-noItemsTitle
+	static func noItemsTitle(_ items: String) -> String {
+		String(
+			localized: "No \(items)",
+			table: "Content",
+			comment: "The generic empty-state title for a list."
+		)
+	}
+	/// The empty-state detail shown when a list could not be fetched.
+	///
+	/// - Parameter items: The localized lowercase noun naming the list (e.g. `L10n.genres.localizedLowercase`).
+	///
+	/// - Tag: L10n-cantGetListDetail
+	static func cantGetListDetail(_ items: String) -> String {
+		String(
+			localized: "Can't get \(items) list. Please reload the page or restart the app and check your WiFi connection.",
+			table: "Content",
+			comment: "The empty-state detail shown when a list could not be fetched."
+		)
+	}
+	/// The empty-state detail for a feed message that has no replies yet.
+	///
+	/// - Tag: L10n-noRepliesDetail
+	static let noRepliesDetail: String = String(
+		localized: "Be the first to reply to this message!",
+		table: "Content",
+		comment: "The empty-state detail for a feed message that has no replies yet."
+	)
+	/// The empty-state detail for a character search with no results.
+	///
+	/// - Tag: L10n-noCharactersSearchDetail
+	static let noCharactersSearchDetail: String = String(
+		localized: "There are no characters matching your search. Please try a different query or check your WiFi connection.",
+		table: "Content",
+		comment: "The empty-state detail for a character search with no results."
+	)
+
+	// MARK: - Counts
+	/// The reply count shown as a feed message details title.
+	///
+	/// - Parameters:
+	///   - formattedCount: The display-formatted reply count.
+	///   - count: The number of replies.
+	///
+	/// - Tag: L10n-repliesCount
+	static func repliesCount(_ formattedCount: String, count: Int) -> String {
+		String(
+			localized: "feedMessage.repliesCount",
+			defaultValue: "\(formattedCount) \(count) replies",
+			table: "Content",
+			comment: "The reply count shown as a feed message details title."
+		)
+	}
 	/// Pull-to-refresh title for a user list variant (followers/following/…).
 	///
 	/// - Tag: L10n-pullToRefreshUsersList
@@ -1677,5 +1736,523 @@ extension L10n {
 		localized: "Other",
 		table: "Content",
 		comment: "Display name of the `other` Parental Guide report reason."
+	)
+
+	// MARK: - TV Rating Descriptions
+	/// The descriptive label for the 'Not Rated' TV rating.
+	///
+	/// - Tag: L10n-tvRatingNotRated
+	static let tvRatingNotRated: String = String(
+		localized: "Not Rated",
+		table: "Content",
+		comment: "The descriptive label for the 'Not Rated' TV rating."
+	)
+	/// The descriptive label for the 'All Ages' TV rating.
+	///
+	/// - Tag: L10n-tvRatingAllAges
+	static let tvRatingAllAges: String = String(
+		localized: "All Ages",
+		table: "Content",
+		comment: "The descriptive label for the 'All Ages' TV rating."
+	)
+	/// The descriptive label for the 'Parental Guidance Suggested' TV rating.
+	///
+	/// - Tag: L10n-tvRatingParentalGuidance
+	static let tvRatingParentalGuidance: String = String(
+		localized: "Parental Guidance Suggested",
+		table: "Content",
+		comment: "The descriptive label for the 'Parental Guidance Suggested' TV rating."
+	)
+	/// The descriptive label for the 'Violence & Profanity' TV rating.
+	///
+	/// - Tag: L10n-tvRatingViolenceProfanity
+	static let tvRatingViolenceProfanity: String = String(
+		localized: "Violence & Profanity",
+		table: "Content",
+		comment: "The descriptive label for the 'Violence & Profanity' TV rating."
+	)
+	/// The descriptive label for the 'Adults Only' TV rating.
+	///
+	/// - Tag: L10n-tvRatingAdultsOnly
+	static let tvRatingAdultsOnly: String = String(
+		localized: "Adults Only",
+		table: "Content",
+		comment: "The descriptive label for the 'Adults Only' TV rating."
+	)
+
+	// MARK: - Country of Origin
+	/// The localized country name for China.
+	///
+	/// - Tag: L10n-countryChina
+	static let countryChina: String = String(
+		localized: "China",
+		table: "Content",
+		comment: "The localized country name for China."
+	)
+	/// The localized country name for Japan.
+	///
+	/// - Tag: L10n-countryJapan
+	static let countryJapan: String = String(
+		localized: "Japan",
+		table: "Content",
+		comment: "The localized country name for Japan."
+	)
+	/// The localized country name for Korea.
+	///
+	/// - Tag: L10n-countryKorea
+	static let countryKorea: String = String(
+		localized: "Korea",
+		table: "Content",
+		comment: "The localized country name for Korea."
+	)
+	/// The localized country name for the United States.
+	///
+	/// - Tag: L10n-countryUnitedStates
+	static let countryUnitedStates: String = String(
+		localized: "United States",
+		table: "Content",
+		comment: "The localized country name for the United States."
+	)
+
+	// MARK: - Milestone Kinds
+	/// The label for the 'minutes watched' milestone.
+	///
+	/// - Tag: L10n-milestoneMinutesWatched
+	static let milestoneMinutesWatched: String = String(
+		localized: "Minutes Watched",
+		table: "Content",
+		comment: "The label for the 'minutes watched' milestone."
+	)
+	/// The label for the 'episodes watched' milestone.
+	///
+	/// - Tag: L10n-milestoneEpisodesWatched
+	static let milestoneEpisodesWatched: String = String(
+		localized: "Episodes Watched",
+		table: "Content",
+		comment: "The label for the 'episodes watched' milestone."
+	)
+	/// The label for the 'minutes read' milestone.
+	///
+	/// - Tag: L10n-milestoneMinutesRead
+	static let milestoneMinutesRead: String = String(
+		localized: "Minutes Read",
+		table: "Content",
+		comment: "The label for the 'minutes read' milestone."
+	)
+	/// The label for the 'chapters read' milestone.
+	///
+	/// - Tag: L10n-milestoneChaptersRead
+	static let milestoneChaptersRead: String = String(
+		localized: "Chapters Read",
+		table: "Content",
+		comment: "The label for the 'chapters read' milestone."
+	)
+	/// The label for the 'minutes played' milestone.
+	///
+	/// - Tag: L10n-milestoneMinutesPlayed
+	static let milestoneMinutesPlayed: String = String(
+		localized: "Minutes Played",
+		table: "Content",
+		comment: "The label for the 'minutes played' milestone."
+	)
+	/// The label for the 'games played' milestone.
+	///
+	/// - Tag: L10n-milestoneGamesPlayed
+	static let milestoneGamesPlayed: String = String(
+		localized: "Games Played",
+		table: "Content",
+		comment: "The label for the 'games played' milestone."
+	)
+	/// The label for the 'top percentile' milestone.
+	///
+	/// - Tag: L10n-milestoneTopPercentile
+	static let milestoneTopPercentile: String = String(
+		localized: "Top Percentile",
+		table: "Content",
+		comment: "The label for the 'top percentile' milestone."
+	)
+	/// The 'minutes' unit label for a milestone value.
+	///
+	/// - Tag: L10n-unitMinutes
+	static let unitMinutes: String = String(
+		localized: "Minutes",
+		table: "Content",
+		comment: "The 'minutes' unit label for a milestone value."
+	)
+	/// The 'percentile' unit label for a milestone value.
+	///
+	/// - Tag: L10n-unitPercentile
+	static let unitPercentile: String = String(
+		localized: "Percentile",
+		table: "Content",
+		comment: "The 'percentile' unit label for a milestone value."
+	)
+
+	// MARK: - Profile Badges
+	/// The title shown on the new-user profile badge.
+	///
+	/// - Tag: L10n-badgeNewUserTitle
+	static let badgeNewUserTitle: String = String(
+		localized: "I'm new here!",
+		table: "Content",
+		comment: "The title shown on the new-user profile badge."
+	)
+	/// The title shown on the developer profile badge.
+	///
+	/// - Tag: L10n-badgeDeveloperTitle
+	static let badgeDeveloperTitle: String = String(
+		localized: "Active Developer",
+		table: "Content",
+		comment: "The title shown on the developer profile badge."
+	)
+	/// The title shown on the early-supporter profile badge.
+	///
+	/// - Tag: L10n-badgeEarlySupporterTitle
+	static let badgeEarlySupporterTitle: String = String(
+		localized: "Early Supporter",
+		table: "Content",
+		comment: "The title shown on the early-supporter profile badge."
+	)
+	/// The title shown on the staff profile badge.
+	///
+	/// - Tag: L10n-badgeStaffTitle
+	static let badgeStaffTitle: String = String(
+		localized: "Staff",
+		table: "Content",
+		comment: "The title shown on the staff profile badge."
+	)
+	/// The title shown on the verified profile badge.
+	///
+	/// - Tag: L10n-badgeVerifiedTitle
+	static let badgeVerifiedTitle: String = String(
+		localized: "Verified",
+		table: "Content",
+		comment: "The title shown on the verified profile badge."
+	)
+	/// The new-user badge description shown on your own profile.
+	///
+	/// - Tag: L10n-badgeNewUserCurrentUserDescription
+	static let badgeNewUserCurrentUserDescription: String = String(
+		localized: "Welcome to Kurozora! Introduce yourself to get started (^_^)/",
+		table: "Content",
+		comment: "The new-user badge description shown on your own profile."
+	)
+	/// The new-user badge description shown on another user's profile.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeNewUserDescription
+	static func badgeNewUserDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is new to Kurozora. Say hi to them (^o^)/",
+			table: "Content",
+			comment: "The new-user badge description shown on another user's profile."
+		)
+	}
+	/// The developer badge description.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeDeveloperDescription
+	static func badgeDeveloperDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is an active developer.",
+			table: "Content",
+			comment: "The developer badge description."
+		)
+	}
+	/// The early-supporter badge description.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeEarlySupporterDescription
+	static func badgeEarlySupporterDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is an early supporter of Kurozora.",
+			table: "Content",
+			comment: "The early-supporter badge description."
+		)
+	}
+	/// The staff badge description.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeStaffDescription
+	static func badgeStaffDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is a staff member.",
+			table: "Content",
+			comment: "The staff badge description."
+		)
+	}
+	/// The Pro badge description.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeProDescription
+	static func badgeProDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is a Pro user.",
+			table: "Content",
+			comment: "The Pro badge description."
+		)
+	}
+	/// The subscriber badge description.
+	///
+	/// - Parameters:
+	///   - username: The display name of the user.
+	///   - date: The localized date the user subscribed.
+	///
+	/// - Tag: L10n-badgeSubscriberDescription
+	static func badgeSubscriberDescription(_ username: String, since date: String) -> String {
+		String(
+			localized: "\(username) is a Kurozora+ subscriber since \(date).",
+			table: "Content",
+			comment: "The subscriber badge description."
+		)
+	}
+	/// The verified badge description.
+	///
+	/// - Parameter username: The display name of the user.
+	///
+	/// - Tag: L10n-badgeVerifiedDescription
+	static func badgeVerifiedDescription(_ username: String) -> String {
+		String(
+			localized: "\(username) is verified because they are notable in animators, voice actors, entertainment studios, or another designated category.",
+			table: "Content",
+			comment: "The verified badge description."
+		)
+	}
+	/// The action button on the new-user badge that mentions the user.
+	///
+	/// - Tag: L10n-badgeMentionUser
+	static let badgeMentionUser: String = String(
+		localized: "Mention User",
+		table: "Content",
+		comment: "The action button on the new-user badge that mentions the user."
+	)
+	/// The action button on the developer badge.
+	///
+	/// - Tag: L10n-badgeBecomeDeveloper
+	static let badgeBecomeDeveloper: String = String(
+		localized: "Become a Developer",
+		table: "Content",
+		comment: "The action button on the developer badge."
+	)
+	/// The action button on the staff badge.
+	///
+	/// - Tag: L10n-badgeJoinStaff
+	static let badgeJoinStaff: String = String(
+		localized: "Join Kurozora Staff",
+		table: "Content",
+		comment: "The action button on the staff badge."
+	)
+	/// The action button on the Pro badge.
+	///
+	/// - Tag: L10n-badgeBecomePro
+	static let badgeBecomePro: String = String(
+		localized: "Become a Pro User",
+		table: "Content",
+		comment: "The action button on the Pro badge."
+	)
+	/// The action button on the verified badge.
+	///
+	/// - Tag: L10n-badgeGetVerified
+	static let badgeGetVerified: String = String(
+		localized: "Get Verified",
+		table: "Content",
+		comment: "The action button on the verified badge."
+	)
+
+	/// The ratings count shown on a show's rating bar.
+	///
+	/// - Parameters:
+	///   - formattedCount: The display-formatted rating count.
+	///   - count: The number of ratings.
+	///
+	/// - Tag: L10n-ratingsCount
+	static func ratingsCount(_ formattedCount: String, count: Int) -> String {
+		String(
+			localized: "show.ratingsCount",
+			defaultValue: "\(formattedCount) \(count) Ratings",
+			table: "Content",
+			comment: "The ratings count shown on a show's rating bar."
+		)
+	}
+	/// The library item count shown as a navigation subtitle.
+	///
+	/// - Parameter count: The number of items.
+	///
+	/// - Tag: L10n-itemsCount
+	static func itemsCount(_ count: Int) -> String {
+		String(
+			localized: "\(count) Items",
+			table: "Content",
+			comment: "The library item count shown as a navigation subtitle."
+		)
+	}
+	/// The label naming the sort type and option in use.
+	///
+	/// - Parameters:
+	///   - type: The localized sort type.
+	///   - option: The localized sort option.
+	///
+	/// - Tag: L10n-sortingBy
+	static func sortingBy(_ type: String, option: String) -> String {
+		String(
+			localized: "Sorting by \(type) (\(option))",
+			table: "Content",
+			comment: "The label naming the sort type and option in use."
+		)
+	}
+	/// The menu action that stops sorting the library.
+	///
+	/// - Tag: L10n-stopSorting
+	static let stopSorting: String = String(
+		localized: "Stop sorting",
+		table: "Content",
+		comment: "The menu action that stops sorting the library."
+	)
+
+	// MARK: - Feed Message
+	/// The status label shown on a pinned feed message.
+	///
+	/// - Tag: L10n-messagePinned
+	static let messagePinned: String = String(
+		localized: "Pinned",
+		table: "Content",
+		comment: "The status label shown on a pinned feed message."
+	)
+	/// The warning shown over a message that is NSFW and contains spoilers.
+	///
+	/// - Tag: L10n-messageWarningNsfwSpoilers
+	static let messageWarningNsfwSpoilers: String = String(
+		localized: "This message is NSFW and contains spoilers - tap to view",
+		table: "Content",
+		comment: "The warning shown over a message that is NSFW and contains spoilers."
+	)
+	/// The warning shown over a message that is NSFW.
+	///
+	/// - Tag: L10n-messageWarningNsfw
+	static let messageWarningNsfw: String = String(
+		localized: "This message is NSFW - tap to view",
+		table: "Content",
+		comment: "The warning shown over a message that is NSFW."
+	)
+	/// The warning shown over a message that contains spoilers.
+	///
+	/// - Tag: L10n-messageWarningSpoilers
+	static let messageWarningSpoilers: String = String(
+		localized: "The message contains spoilers - tap to view",
+		table: "Content",
+		comment: "The warning shown over a message that contains spoilers."
+	)
+
+	// MARK: - Cast
+	/// The label naming the character a cast member voices.
+	///
+	/// - Parameter name: The character name.
+	///
+	/// - Tag: L10n-castCharacterAs
+	static func castCharacterAs(_ name: String) -> String {
+		String(
+			localized: "as \(name)",
+			table: "Content",
+			comment: "The label naming the character a cast member voices."
+		)
+	}
+
+	// MARK: - ReCap
+	/// The milestone label for a user's top percentile in a category.
+	///
+	/// - Parameters:
+	///   - percentile: The top percentile.
+	///   - category: The category name.
+	///
+	/// - Tag: L10n-recapTopPercentile
+	static func recapTopPercentile(_ percentile: String, of category: String) -> String {
+		String(
+			localized: "You were in the top \(percentile)% of \(category) this year.",
+			table: "Content",
+			comment: "The milestone label for a user's top percentile in a category."
+		)
+	}
+
+	// MARK: - Seasons
+	/// The label naming a season by its number.
+	///
+	/// - Parameter number: The season number.
+	///
+	/// - Tag: L10n-seasonNumber
+	static func seasonNumber(_ number: Int) -> String {
+		String(
+			localized: "Season \(number)",
+			table: "Content",
+			comment: "The label naming a season by its number."
+		)
+	}
+
+	// MARK: - Parental Guide Actions
+	/// The context-menu action that marks a Parental Guide entry as helpful.
+	///
+	/// - Tag: L10n-helpful
+	static let helpful: String = String(
+		localized: "Helpful",
+		table: "Content",
+		comment: "The context-menu action that marks a Parental Guide entry as helpful."
+	)
+	/// The context-menu action that marks a Parental Guide entry as unhelpful.
+	///
+	/// - Tag: L10n-unhelpful
+	static let unhelpful: String = String(
+		localized: "Unhelpful",
+		table: "Content",
+		comment: "The context-menu action that marks a Parental Guide entry as unhelpful."
+	)
+	/// The confirmation message shown before deleting a Parental Guide entry.
+	///
+	/// - Tag: L10n-deleteEntryConfirmMessage
+	static let deleteEntryConfirmMessage: String = String(
+		localized: "Are you sure you want to delete this entry?",
+		table: "Content",
+		comment: "The confirmation message shown before deleting a Parental Guide entry."
+	)
+
+	// MARK: - Review Actions
+	/// The context-menu action that opens a reviewer's profile.
+	///
+	/// - Parameter username: The reviewer's display name.
+	///
+	/// - Tag: L10n-showUserProfile
+	static func showUserProfile(_ username: String) -> String {
+		String(
+			localized: "Show \(username)'s Profile",
+			table: "Content",
+			comment: "The context-menu action that opens a reviewer's profile."
+		)
+	}
+
+	// MARK: - Music
+	/// The label naming the episodes a song appears in.
+	///
+	/// - Parameter value: The episode descriptor.
+	///
+	/// - Tag: L10n-episodeLabel
+	static func episodeLabel(_ value: String) -> String {
+		String(
+			localized: "Episode: \(value)",
+			table: "Content",
+			comment: "The label naming the episodes a song appears in."
+		)
+	}
+
+	// MARK: - Ratings
+	/// The label shown in place of the rating count when a title has too few ratings.
+	///
+	/// - Tag: L10n-notEnoughRatings
+	static let notEnoughRatings: String = String(
+		localized: "Not enough ratings",
+		table: "Content",
+		comment: "The label shown in place of the rating count when a title has too few ratings."
 	)
 }

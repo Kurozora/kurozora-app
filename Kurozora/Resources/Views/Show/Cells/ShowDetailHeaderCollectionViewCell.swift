@@ -253,7 +253,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			libraryStatusString = libraryStatus.gameStringValue
 		}
 
-		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : L10n.add.uppercased(), for: .normal)
+		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatusString.capitalized(with: Locale.current)) ▾" : L10n.add.uppercased(with: Locale.current), for: .normal)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {

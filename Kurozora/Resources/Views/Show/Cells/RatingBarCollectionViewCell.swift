@@ -45,7 +45,7 @@ class RatingBarCollectionViewCell: UICollectionViewCell {
 			imageView.theme_tintColor = KThemePicker.textColor.rawValue
 		}
 
-		self.primaryLabel.text = "\(stats.ratingCount.formatted(.number)) Ratings"
+		self.primaryLabel.text = L10n.ratingsCount(stats.ratingCount.formatted(.number), count: stats.ratingCount)
 
 		let progressViews = [
 			(self.progressView1, rating1Percentage, rating1TooltipInteraction),

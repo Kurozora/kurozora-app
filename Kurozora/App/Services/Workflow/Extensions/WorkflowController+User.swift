@@ -56,7 +56,7 @@ extension WorkflowController {
 		}
 
 		let viewController = viewController ?? UIApplication.topViewController
-		_ = viewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
+		_ = viewController?.presentAlertController(title: L10n.kurozoraPlusRequiredTitle, message: L10n.kurozoraPlusRequiredMessage, actions: [subscribeAction])
 		return false
 	}
 
@@ -78,7 +78,7 @@ extension WorkflowController {
 		}
 
 		let viewController = viewController ?? UIApplication.topViewController
-		_ = viewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
+		_ = viewController?.presentAlertController(title: L10n.proRequiredTitle, message: L10n.proRequiredMessage, actions: [proAction, subscribeAction])
 		return false
 	}
 
@@ -170,7 +170,7 @@ extension WorkflowController {
 			AccountManager.shared.remove(slug: slug)
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
 		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
+			await UIApplication.topViewController?.presentAlertController(title: L10n.cantSignOutTitle, message: error.message)
 			print("-----", error.message)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -192,7 +192,7 @@ extension WorkflowController {
 			AccountManager.shared.remove(slug: slug)
 			return true
 		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)
+			await UIApplication.topViewController?.presentAlertController(title: L10n.cantDeleteAccountTitle, message: error.message)
 			print("-----", error.message)
 		} catch {
 			print("-----", error.localizedDescription)

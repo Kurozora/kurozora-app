@@ -42,7 +42,7 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Functions
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: .Empty.keychain)
-		self.emptyBackgroundView.configureLabels(title: "No Keys", detail: "All keychain entries have been removed.")
+		self.emptyBackgroundView.configureLabels(title: L10n.debugNoKeysTitle, detail: L10n.debugNoKeysDetail)
 
 		self.tableView.backgroundView?.alpha = 0
 	}

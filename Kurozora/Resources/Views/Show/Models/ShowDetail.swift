@@ -89,7 +89,7 @@ extension ShowDetail {
 			switch self {
 			case .rating:
 				let ratingCount = show?.attributes.stats?.ratingCount ?? 0
-				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
+				return ratingCount != 0 ? L10n.ratingsCount(ratingCount.kkFormatted(precision: 0), count: ratingCount) : L10n.notEnoughRatings
 			case .season:
 				if let airYear = show?.attributes.startedAt?.components.year, show?.attributes.airSeason != nil {
 					return "\(airYear)"

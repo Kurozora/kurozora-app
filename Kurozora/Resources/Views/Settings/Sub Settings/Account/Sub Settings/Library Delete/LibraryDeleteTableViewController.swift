@@ -33,7 +33,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Delete Library"
+		self.title = L10n.libraryDeleteHeadline
 
 		self.configureNavigationItems()
 
@@ -48,7 +48,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	/// Configures the navigation items.
 	private func configureNavigationItems() {
 		let rightNavigationBarButton = UIBarButtonItem(
-			title: "Delete",
+			title: L10n.delete,
 			style: .plain,
 			target: self,
 			action: #selector(rightNavigationBarButtonPressed(sender:))

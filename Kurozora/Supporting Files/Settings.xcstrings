@@ -1,264 +1,336 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Add Sticker to Signal" : {
-      "comment" : "The string for the 'Add Sticker to Signal' settings option."
+  "sourceLanguage": "en",
+  "strings": {
+    "Add Sticker to Signal": {
+      "comment": "The string for the 'Add Sticker to Signal' settings option."
     },
-    "Add Sticker to Telegram" : {
-      "comment" : "The string for the 'Add Sticker to Telegram' settings option."
+    "Add Sticker to Telegram": {
+      "comment": "The string for the 'Add Sticker to Telegram' settings option."
     },
-    "Add Sticker to WhatsApp" : {
-      "comment" : "The string for the 'Add Sticker to WhatsApp' settings option."
+    "Add Sticker to WhatsApp": {
+      "comment": "The string for the 'Add Sticker to WhatsApp' settings option."
     },
-    "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels." : {
-      "comment" : "A short description for the sounds and haptics settings header."
+    "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels.": {
+      "comment": "A short description for the sounds and haptics settings header."
     },
-    "Allow Notifications" : {
-      "comment" : "The title string for the 'Allow Notifications' settings."
+    "All keychain entries have been removed.": {
+      "comment": "The empty-state detail for the debug keychain list when no keys remain."
     },
-    "Animations" : {
-      "comment" : "The string for the 'Animations' settings header."
+    "Allow Notifications": {
+      "comment": "The title string for the 'Allow Notifications' settings."
     },
-    "App Icon" : {
-      "comment" : "The title string for the 'App Icon' settings."
+    "Animations": {
+      "comment": "The string for the 'Animations' settings header."
     },
-    "Apply Theme" : {
-      "comment" : "The menu button for applying a downloaded theme."
+    "App Icon": {
+      "comment": "The title string for the 'App Icon' settings."
     },
-    "Chime & Sound Effects" : {
-      "comment" : "The string for the 'Chime & Sound Effects' settings option."
+    "Appearance Schedule": {
+      "comment": "The title of the appearance schedule screen."
     },
-    "Chime on Startup" : {
-      "comment" : "The string for the 'Chime on Startup' settings option."
+    "Apply Theme": {
+      "comment": "The menu button for applying a downloaded theme."
     },
-    "Chime Sound" : {
-      "comment" : "The string for the 'Chime Sound' settings option."
+    "Chime & Sound Effects": {
+      "comment": "The string for the 'Chime & Sound Effects' settings option."
     },
-    "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback." : {
-      "comment" : "The footer string for the reminder subscription picker."
+    "Chime on Startup": {
+      "comment": "The string for the 'Chime on Startup' settings option."
     },
-    "Clear All" : {
-      "comment" : "The title string for the 'Clear All' destructive button."
+    "Chime Sound": {
+      "comment": "The string for the 'Chime Sound' settings option."
     },
-    "Clear all Cache?" : {
-      "comment" : "The title string for the 'Clear all Cache?' alert."
+    "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback.": {
+      "comment": "The footer string for the reminder subscription picker."
     },
-    "Cloudless." : {
-      "comment" : "The string for sky theme description."
+    "Clear All": {
+      "comment": "The title string for the 'Clear All' destructive button."
     },
-    "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences." : {
-      "comment" : "A short description for the motion settings header."
+    "Clear all Cache?": {
+      "comment": "The title string for the 'Clear all Cache?' alert."
     },
-    "Copy Subscription Link" : {
-      "comment" : "The string for the 'Copy Subscription Link' calendar picker option."
+    "Cloudless.": {
+      "comment": "The string for sky theme description."
     },
-    "Couldn’t Add Sticker Pack" : {
-      "comment" : "The title of the alert shown when adding the WhatsApp sticker pack fails."
+    "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences.": {
+      "comment": "A short description for the motion settings header."
     },
-    "Customize how your library is organized by setting the default sort order for each tracking status and media type." : {
-      "comment" : "A short description for the library settings header."
+    "Copy Subscription Link": {
+      "comment": "The string for the 'Copy Subscription Link' calendar picker option."
     },
-    "Delete Account" : {
-      "comment" : "The title string for the 'Delete Account' settings button."
+    "Couldn’t Add Sticker Pack": {
+      "comment": "The title of the alert shown when adding the WhatsApp sticker pack fails."
     },
-    "Delete Library" : {
-      "comment" : "The title string for the 'Delete Library' settings."
+    "Customize how your library is organized by setting the default sort order for each tracking status and media type.": {
+      "comment": "A short description for the library settings header."
     },
-    "Display & Blindness" : {
-      "comment" : "The string for the 'Display & Blindness' settings option."
+    "Delete Account": {
+      "comment": "The title string for the 'Delete Account' settings button."
     },
-    "Easy on the eyes." : {
-      "comment" : "The string for night theme description."
+    "Delete Library": {
+      "comment": "The title string for the 'Delete Library' settings."
     },
-    "Face ID & Passcode" : {
-      "comment" : "The string for the 'Face ID & Passcode' settings option."
+    "Display & Blindness": {
+      "comment": "The string for the 'Display & Blindness' settings option."
     },
-    "Follow us on GitHub" : {
-      "comment" : "The string for the 'Follow us on GitHub' settings option."
+    "Easy on the eyes.": {
+      "comment": "The string for night theme description."
     },
-    "Follow us on Mastodon" : {
-      "comment" : "The string for the 'Follow us on Mastodon' settings option."
+    "Face ID & Passcode": {
+      "comment": "The string for the 'Face ID & Passcode' settings option."
     },
-    "Follow us on Twitter" : {
-      "comment" : "The string for the 'Follow us on Twitter' settings option."
+    "Follow us on GitHub": {
+      "comment": "The string for the 'Follow us on GitHub' settings option."
     },
-    "Get off my lawn!" : {
-      "comment" : "The string for grass theme description."
+    "Follow us on Mastodon": {
+      "comment": "The string for the 'Follow us on Mastodon' settings option."
     },
-    "Haptics" : {
-      "comment" : "The string for the 'Haptics' settings option."
+    "Follow us on Twitter": {
+      "comment": "The string for the 'Follow us on Twitter' settings option."
     },
-    "Import Library" : {
-      "comment" : "The title string for the 'Import Library' settings."
+    "GET": {
+      "comment": "The download button title for an unowned theme."
     },
-    "In full bloom." : {
-      "comment" : "The string for sakura theme description."
+    "Get off my lawn!": {
+      "comment": "The string for grass theme description."
     },
-    "Join our Discord Community" : {
-      "comment" : "The string for the 'Join our Discord Community' settings option."
+    "Haptics": {
+      "comment": "The string for the 'Haptics' settings option."
     },
-    "Keys Manager" : {
-      "comment" : "The string for the 'Keys Manager' settings option."
+    "Import Library": {
+      "comment": "The title string for the 'Import Library' settings."
     },
-    "Kurozora Account, Sign in with Apple & Library Import" : {
-      "comment" : "The sub-headline string for the account settings option when signed in."
+    "In full bloom.": {
+      "comment": "The string for sakura theme description."
     },
-    "Library Import" : {
-      "comment" : "The string for the 'library import' notification type"
+    "In-app (default)": {
+      "comment": "The name of the in-app browser option in the browser picker."
     },
-    "Manage Active Sessions" : {
-      "comment" : "The title string for the 'Manage Active Sessions' settings."
+    "Join our Discord Community": {
+      "comment": "The string for the 'Join our Discord Community' settings option."
     },
-    "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together." : {
-      "comment" : "A short description for the notifications settings header."
+    "Keys Manager": {
+      "comment": "The string for the 'Keys Manager' settings option."
     },
-    "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing." : {
-      "comment" : "A short description for the cache settings header."
+    "Kurozora Account, Sign in with Apple & Library Import": {
+      "comment": "The sub-headline string for the account settings option when signed in."
     },
-    "Mention" : {
-      "comment" : "The string for the 'mention' notification type."
+    "Large Titles": {
+      "comment": "The settings switch title for the large titles option."
     },
-    "Moderation" : {
-      "comment" : "The string for the 'moderation' notification type"
+    "Library Import": {
+      "comment": "The string for the 'library import' notification type"
     },
-    "New Session" : {
-      "comment" : "The string for the 'new session' notification type"
+    "Manage Active Sessions": {
+      "comment": "The title string for the 'Manage Active Sessions' settings."
     },
-    "Notification Grouping" : {
-      "comment" : "The title string for the 'Notification Grouping' settings."
+    "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together.": {
+      "comment": "A short description for the notifications settings header."
     },
-    "Optic ID & Passcode" : {
-      "comment" : "The string for the 'Optic ID & Passcode' settings option."
+    "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing.": {
+      "comment": "A short description for the cache settings header."
     },
-    "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere." : {
-      "comment" : "A short description for the reminder subscription settings header."
+    "Mention": {
+      "comment": "The string for the 'mention' notification type."
     },
-    "Rate us on App Store" : {
-      "comment" : "The string for the 'Rate us on App Store' settings option."
+    "Moderation": {
+      "comment": "The string for the 'moderation' notification type"
     },
-    "Redownload Theme" : {
-      "comment" : "The action sheet button for redownloading an already-purchased theme."
+    "New Session": {
+      "comment": "The string for the 'new session' notification type"
     },
-    "Reduce Motion" : {
-      "comment" : "The string for the 'Reduce Motion' settings option."
+    "No Keys": {
+      "comment": "The empty-state title for the debug keychain list when no keys remain."
     },
-    "Reduce the intensity of animations, and motion effects throughout Kurozora." : {
-      "comment" : "The footer string for the 'Reduce Motion' settings option."
+    "Notification Grouping": {
+      "comment": "The title string for the 'Notification Grouping' settings."
     },
-    "Remove Theme" : {
-      "comment" : "The destructive action sheet button for removing a downloaded theme."
+    "Optic ID & Passcode": {
+      "comment": "The string for the 'Optic ID & Passcode' settings option."
     },
-    "Request Refund" : {
-      "comment" : "The string for the 'Request Refund' settings option."
+    "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere.": {
+      "comment": "A short description for the reminder subscription settings header."
     },
-    "Require authentication to unlock the app and choose how frequently you need to verify your identity." : {
-      "comment" : "A short description for the authentication settings header."
+    "Rate us on App Store": {
+      "comment": "The string for the 'Rate us on App Store' settings option."
     },
-    "Restore Purchase" : {
-      "comment" : "The string for the 'Restore Purchase' settings option."
+    "Redownload Theme": {
+      "comment": "The action sheet button for redownloading an already-purchased theme."
     },
-    "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information." : {
-      "comment" : "A short description for the privacy settings header."
+    "Reduce Motion": {
+      "comment": "The string for the 'Reduce Motion' settings option."
     },
-    "Rise and shine." : {
-      "comment" : "The string for day theme description."
+    "Reduce the intensity of animations, and motion effects throughout Kurozora.": {
+      "comment": "The footer string for the 'Reduce Motion' settings option."
     },
-    "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback." : {
-      "comment" : "A short description for the browser settings header."
+    "Remove Theme": {
+      "comment": "The destructive action sheet button for removing a downloaded theme."
     },
-    "Setup Kurozora Account and more." : {
-      "comment" : "The sub-headline string for the account settings option when not signed in."
+    "Request Refund": {
+      "comment": "The string for the 'Request Refund' settings option."
     },
-    "Sign in to your Kurozora account" : {
-      "comment" : "The headline string for the account settings option."
+    "Require authentication to unlock the app and choose how frequently you need to verify your identity.": {
+      "comment": "A short description for the authentication settings header."
     },
-    "Sign in with Apple" : {
-      "comment" : "The title string for the 'Sign in with Apple' settings."
+    "Restore Purchase": {
+      "comment": "The string for the 'Restore Purchase' settings option."
     },
-    "Sign Out" : {
-      "comment" : "The title string for the 'Sign Out' settings button."
+    "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information.": {
+      "comment": "A short description for the privacy settings header."
     },
-    "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later." : {
-      "comment" : "The message of the alert shown when adding the WhatsApp sticker pack fails."
+    "Rise and shine.": {
+      "comment": "The string for day theme description."
     },
-    "Sound" : {
-      "comment" : "The string for the 'Sound' settings option."
+    "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback.": {
+      "comment": "A short description for the browser settings header."
     },
-    "Sounds" : {
-      "comment" : "The string for the 'Sounds' settings option."
+    "Setup Kurozora Account and more.": {
+      "comment": "The sub-headline string for the account settings option when not signed in."
     },
-    "Sounds & Haptics" : {
-      "comment" : "The string for the 'Sounds & Haptics' settings option."
+    "Sign In": {
+      "comment": "The string for the 'sign in' action."
     },
-    "Splash Screen" : {
-      "comment" : "The string for the 'Splash Screen' settings option."
+    "Sign in to your Kurozora account": {
+      "comment": "The headline string for the account settings option."
     },
-    "Subscribe to Reminders" : {
-      "comment" : "The string for the 'Subscribe to Reminders' settings option."
+    "Sign in with Apple": {
+      "comment": "The title string for the 'Sign in with Apple' settings."
     },
-    "Subscription link copied" : {
-      "comment" : "The confirmation string shown after copying the subscription link to the pasteboard."
+    "Sign Out": {
+      "comment": "The title string for the 'Sign Out' settings button."
     },
-    "Subscription Update" : {
-      "comment" : "The string for the 'subscription update' notification type"
+    "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later.": {
+      "comment": "The message of the alert shown when adding the WhatsApp sticker pack fails."
     },
-    "Switch Account" : {
-      "comment" : "The string for the 'Switch Account' settings option."
+    "Sound": {
+      "comment": "The string for the 'Sound' settings option."
     },
-    "Sync With Device Settings" : {
-      "comment" : "The string for the 'Sync With Device Settings' settings option."
+    "Sounds": {
+      "comment": "The string for the 'Sounds' settings option."
     },
-    "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again." : {
-      "comment" : "The message string for the cache section footer."
+    "Sounds & Haptics": {
+      "comment": "The string for the 'Sounds & Haptics' settings option."
     },
-    "The official Kurozora theme." : {
-      "comment" : "The string for default theme description."
+    "Splash Screen": {
+      "comment": "The string for the 'Splash Screen' settings option."
     },
-    "The theme storage directory is unavailable." : {
-      "comment" : "Error description shown when the theme storage directory cannot be resolved."
+    "Starts at": {
+      "comment": "The settings row title for the automatic dark theme schedule start time."
     },
-    "Theme Store" : {
-      "comment" : "The title string for the 'Theme Store Grouping' settings."
+    "Subscribe to Reminders": {
+      "comment": "The string for the 'Subscribe to Reminders' settings option."
     },
-    "Timezone" : {
-      "comment" : "The title string for the 'Timezone' settings."
+    "Subscription link copied": {
+      "comment": "The confirmation string shown after copying the subscription link to the pasteboard."
     },
-    "Tip Jar" : {
-      "comment" : "The string for the 'Tip Jar' settings option."
+    "Subscription Update": {
+      "comment": "The string for the 'subscription update' notification type"
     },
-    "Touch ID & Passcode" : {
-      "comment" : "The string for the 'Touch ID & Passcode' settings option."
+    "Switch Account": {
+      "comment": "The string for the 'Switch Account' settings option."
     },
-    "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app." : {
-      "comment" : "The footer string for the haptics settings option."
+    "Sync With Device Settings": {
+      "comment": "The string for the 'Sync With Device Settings' settings option."
     },
-    "Unlock Features" : {
-      "comment" : "The string for the 'Unlock Features' settings option."
+    "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.": {
+      "comment": "The message string for the cache section footer."
     },
-    "User Interface Sounds" : {
-      "comment" : "The string for the 'User Interface Sounds' settings option."
+    "The official Kurozora theme.": {
+      "comment": "The string for default theme description."
     },
-    "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions." : {
-      "comment" : "A short description for the keys manager settings header."
+    "The theme storage directory is unavailable.": {
+      "comment": "Error description shown when the theme storage directory cannot be resolved."
     },
-    "View Message Re-share" : {
-      "comment" : "The string for the 'view message re-share' notification action."
+    "Theme Store": {
+      "comment": "The title string for the 'Theme Store Grouping' settings."
     },
-    "View Message Reply" : {
-      "comment" : "The string for the 'view message reply' notification action."
+    "Themes are not available at this moment. Please check back again later.": {
+      "comment": "The empty-state detail shown when no themes are available in the theme store."
     },
-    "View Profile" : {
-      "comment" : "The string for the 'view profile' notification action."
+    "Timezone": {
+      "comment": "The title string for the 'Timezone' settings."
     },
-    "View Sessions" : {
-      "comment" : "The string for the 'view sessions' notification action."
+    "Tip Jar": {
+      "comment": "The string for the 'Tip Jar' settings option."
     },
-    "View Show Details" : {
-      "comment" : "The string for the 'view show details' notification action."
+    "Touch ID & Passcode": {
+      "comment": "The string for the 'Touch ID & Passcode' settings option."
     },
-    "WhatsApp doesn’t appear to be installed on this device." : {
-      "comment" : "The alert message shown when WhatsApp is not installed on the device."
+    "True Black": {
+      "comment": "The settings switch title for the true black option."
+    },
+    "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.": {
+      "comment": "The footer string for the haptics settings option."
+    },
+    "Unlock Features": {
+      "comment": "The string for the 'Unlock Features' settings option."
+    },
+    "UPDATE": {
+      "comment": "The button title for updating a downloaded theme."
+    },
+    "USE": {
+      "comment": "The button title for applying a downloaded theme."
+    },
+    "User Interface Sounds": {
+      "comment": "The string for the 'User Interface Sounds' settings option."
+    },
+    "USING": {
+      "comment": "The button title shown for the currently applied theme."
+    },
+    "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.": {
+      "comment": "A short description for the keys manager settings header."
+    },
+    "View Message Re-share": {
+      "comment": "The string for the 'view message re-share' notification action."
+    },
+    "View Message Reply": {
+      "comment": "The string for the 'view message reply' notification action."
+    },
+    "View Profile": {
+      "comment": "The string for the 'view profile' notification action."
+    },
+    "View Sessions": {
+      "comment": "The string for the 'view sessions' notification action."
+    },
+    "View Show Details": {
+      "comment": "The string for the 'view show details' notification action."
+    },
+    "WhatsApp doesn’t appear to be installed on this device.": {
+      "comment": "The alert message shown when WhatsApp is not installed on the device."
+    },
+    "theme.downloadsCount": {
+      "comment": "The download count shown on a theme.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
+          },
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "Download"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "Downloads"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

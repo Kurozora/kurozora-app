@@ -423,7 +423,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 				} catch let error as APIError {
-					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+					self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
 					print("----- Add to library failed", error.message)
 				}
 			}
@@ -449,12 +449,12 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						// Update entry in library
 						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(), for: .normal)
+						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
 						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
-						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
 					}
 				}

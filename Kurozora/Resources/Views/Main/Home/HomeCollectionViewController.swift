@@ -48,9 +48,9 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	lazy var genre: Genre? = nil
 	lazy var theme: Theme? = nil
 	let quickLinks: [QuickLink] = [
-		QuickLink(title: "About In-App Purchases", url: "https://kurozora.app/kb/iap"),
-		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),
-		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome"),
+		QuickLink(title: L10n.quickLinkIAP, url: "https://kurozora.app/kb/iap"),
+		QuickLink(title: L10n.quickLinkPersonalisation, url: "https://kurozora.app/kb/personalisation"),
+		QuickLink(title: L10n.quickLinkWelcome, url: "https://kurozora.app/welcome"),
 	]
 	var upNextCategory: ExploreCategory?
 	var quickActions: [QuickAction] = []

@@ -89,10 +89,8 @@ enum KTheme {
 			switch downloadCount {
 			case 0:
 				return L10n.new
-			case 1:
-				return "\(downloadCount) Download"
 			default:
-				return "\(downloadCount.kkFormatted(precision: 0)) Downloads"
+				return L10n.downloadsCount(downloadCount.kkFormatted(precision: 0), count: downloadCount)
 			}
 		}
 	}

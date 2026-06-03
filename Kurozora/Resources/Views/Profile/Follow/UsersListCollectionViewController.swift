@@ -174,11 +174,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		case .follow:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.localizedTitleLowercase))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased(with: Locale.current)))
 		case .reputation:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.leaderboard.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.leaderboard.lowercased(with: Locale.current)))
 		case .blocked:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased(with: Locale.current)))
 		}
 		#endif
 	}
@@ -235,11 +235,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			case .follow:
 				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshUsersList(self.usersListType.localizedTitleLowercase))
 			case .search:
-				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased()))
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased(with: Locale.current)))
 			case .reputation:
-				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.leaderboard.lowercased()))
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.leaderboard.lowercased(with: Locale.current)))
 			case .blocked:
-				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased()))
+				self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.users.lowercased(with: Locale.current)))
 			}
 			#endif
 		}
@@ -249,11 +249,11 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		case .follow:
 			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingUsersList(self.usersListType.localizedTitleLowercase))
 		case .search:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.users.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.users.lowercased(with: Locale.current)))
 		case .reputation:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.leaderboard.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.leaderboard.lowercased(with: Locale.current)))
 		case .blocked:
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.users.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.users.lowercased(with: Locale.current)))
 		}
 		#endif
 

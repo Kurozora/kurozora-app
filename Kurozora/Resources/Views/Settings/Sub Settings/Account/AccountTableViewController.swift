@@ -55,7 +55,7 @@ class AccountTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Kurozora Account"
+		self.title = L10n.kurozoraAccount
 
 		self.configureTableHeaderView()
 
@@ -338,7 +338,7 @@ extension AccountTableViewController {
 				selectedKey: self.selectedLanguage.key,
 				descriptionText: L10n.languagePickerDescription
 			)
-			viewController.title = "Language"
+			viewController.title = L10n.language
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
 		case .tvRating:
@@ -349,7 +349,7 @@ extension AccountTableViewController {
 				selectedKey: self.selectedTVRating.key,
 				descriptionText: L10n.tvRatingPickerDescription
 			)
-			viewController.title = "TV Rating"
+			viewController.title = L10n.tvRating
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
 		case .timezone:
@@ -360,7 +360,7 @@ extension AccountTableViewController {
 				selectedKey: self.selectedTimezone.key,
 				descriptionText: L10n.timezonePickerDescription
 			)
-			viewController.title = "Time Zone"
+			viewController.title = L10n.timeZone
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
 		case .importLibrary:
@@ -376,7 +376,7 @@ extension AccountTableViewController {
 			let viewController = ManageActiveSessionsController()
 			self.show(viewController, sender: nil)
 		case .signOut:
-			let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😅")
+			let alertController = self.presentAlertController(title: L10n.signOut, message: L10n.signOutConfirmMessage, defaultActionButtonTitle: L10n.signOutCancel)
 			alertController.addAction(UIAlertAction(title: L10n.signOutConfirm, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 

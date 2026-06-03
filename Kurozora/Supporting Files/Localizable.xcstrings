@@ -16,10 +16,62 @@
       "comment" : "The string for the word '%@ total series'."
     },
     "%lld Selected" : {
-      "comment" : "The label showing how many items are selected in batch-edit mode."
+      "comment" : "The label showing how many items are selected in batch-edit mode.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Selected"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Selected"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld total series" : {
+      "comment" : "The total series count shown on the ReCap year card.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld total series"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld total series"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "About" : {
       "comment" : "The string for the word 'about'."
+    },
+    "About In-App Purchases" : {
+      "comment" : "The Home quick link to the in-app purchases article."
+    },
+    "About Personalisation" : {
+      "comment" : "The Home quick link to the personalisation article."
+    },
+    "Access to photo library denied." : {
+      "comment" : "The toast shown when photo library access is denied while saving."
     },
     "Account" : {
       "comment" : "The string for the word 'account'."
@@ -60,8 +112,14 @@
     "Anime" : {
       "comment" : "The string for the word 'anime'."
     },
+    "Anime, Manga, Games and More" : {
+      "comment" : "The placeholder shown in the main search bar."
+    },
     "Apply" : {
       "comment" : "The string for the word 'apply'."
+    },
+    "Are you sure you want to sign out?" : {
+      "comment" : "The body string for the sign-out confirmation alert."
     },
     "As Heard On" : {
       "comment" : "The string for the word 'As Heard On'."
@@ -177,20 +235,51 @@
     "Defunct" : {
       "comment" : "The string for the word 'defunct'."
     },
-    "Delete" : {
-
-    },
     "Delete %lld Items" : {
-      "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected."
+      "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete Item"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld Items"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Delete %lld Notifications" : {
-      "comment" : "The destructive button shown when removing multiple notifications."
-    },
-    "Delete Item" : {
-      "comment" : "The destructive button shown in the delete confirmation alert when one item is selected."
-    },
-    "Delete Notification" : {
-      "comment" : "The destructive button shown when removing a single notification."
+      "comment" : "The destructive button shown when removing multiple notifications.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete Notification"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld Notifications"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Delete Permanently" : {
       "comment" : "The string for the phrase 'Delete Permanently'."
@@ -203,6 +292,9 @@
     },
     "Discover" : {
       "comment" : "The string for the word 'discover'."
+    },
+    "Dismiss" : {
+      "comment" : "The string for the word 'dismiss'."
     },
     "Done" : {
       "comment" : "The string for the word 'done'."
@@ -239,6 +331,12 @@
     },
     "Explore Feed" : {
       "comment" : "The string for the phrase 'explore feed'."
+    },
+    "Failed to download image." : {
+      "comment" : "The toast shown when an image fails to download."
+    },
+    "Failed to save image." : {
+      "comment" : "The toast shown when an image fails to save."
     },
     "Fall" : {
       "comment" : "The string for the word 'fall'."
@@ -332,7 +430,7 @@
       "comment" : "The view option that hides the series title in the library compact layout."
     },
     "Home" : {
-
+      "comment" : "The menu command and title for the Home screen."
     },
     "Hooray!" : {
       "comment" : "The headline string for sign up alert."
@@ -340,11 +438,17 @@
     "Icon" : {
       "comment" : "The string for the word 'icon'."
     },
+    "Image could not be saved." : {
+      "comment" : "The default toast shown when an image could not be saved."
+    },
     "Image Playground" : {
 
     },
     "Image Playground ✨" : {
       "comment" : "The action sheet button for generating a new image with Image Playground."
+    },
+    "Image saved to your library!" : {
+      "comment" : "The toast shown after an image is saved to the photo library."
     },
     "Images" : {
       "comment" : "The string for the word 'images'."
@@ -363,6 +467,12 @@
     },
     "Kurozora’s Screens" : {
 
+    },
+    "Labels" : {
+      "comment" : "The button title for opening the content labels picker."
+    },
+    "Labels Added" : {
+      "comment" : "The button title shown when content labels have been added."
     },
     "languagePicker.description" : {
       "comment" : "Explanatory text shown above the language picker to clarify that the setting changes content language, not the app's interface language.",
@@ -390,6 +500,39 @@
     },
     "Library Type" : {
       "comment" : "The string for the word 'Library Type'."
+    },
+    "library.deleteItemsConfirmation" : {
+      "comment" : "The confirmation alert message shown when removing items from the library.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "This item will be deleted from your library."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "These items will be deleted from your library."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Literatures" : {
       "comment" : "The string for the word 'literatures'."
@@ -463,6 +606,9 @@
     "My Reminders" : {
       "comment" : "The string for the word 'My Reminders'"
     },
+    "Name" : {
+      "comment" : "The string for the word 'name'."
+    },
     "New" : {
       "comment" : "The string for the word 'new'."
     },
@@ -472,11 +618,47 @@
     "No Drafts" : {
       "comment" : "The string for the 'no drafts' empty state title."
     },
+    "No, keep me signed in 😅" : {
+      "comment" : "The cancel button for the sign-out confirmation alert."
+    },
     "None" : {
 
     },
     "Notifications" : {
       "comment" : "The string for the word 'notifications'."
+    },
+    "notifications.deleteNotificationsConfirmation" : {
+      "comment" : "The confirmation alert message shown when removing notifications.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "This notification will be removed."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "These notifications will be removed."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "NSFW" : {
       "comment" : "Timeout reason label."
@@ -490,6 +672,9 @@
     "OK" : {
 
     },
+    "Open in Browser" : {
+      "comment" : "The action that opens the media in a browser."
+    },
     "Open Kurozora" : {
 
     },
@@ -498,6 +683,9 @@
     },
     "Open Twitter" : {
       "comment" : "The string for the word 'Open Twitter'."
+    },
+    "Options" : {
+      "comment" : "The string for the word 'options'."
     },
     "Other" : {
       "comment" : "The string for the word 'other'."
@@ -528,6 +716,9 @@
     },
     "Play" : {
       "comment" : "The string for the word 'Play'."
+    },
+    "Posts" : {
+      "comment" : "The string for the word 'posts'."
     },
     "Premium" : {
       "comment" : "The string for the word 'Premium'."
@@ -574,6 +765,15 @@
     "Redeem" : {
       "comment" : "The string for the word 'Redeem'."
     },
+    "Redeem…" : {
+      "comment" : "The menu command that opens the redeem flow."
+    },
+    "Refresh" : {
+      "comment" : "The menu title for the refresh command."
+    },
+    "Refresh Page" : {
+      "comment" : "The menu command that refreshes the current page."
+    },
     "Related Games" : {
       "comment" : "The string for the word 'related games'."
     },
@@ -606,6 +806,9 @@
     },
     "Remove reminder" : {
       "comment" : "The accessibility label for the reminder button when a reminder is set."
+    },
+    "Replies" : {
+      "comment" : "The string for the word 'replies'."
     },
     "Reset" : {
       "comment" : "The string for the word 'reset'."
@@ -695,6 +898,9 @@
     "Settings" : {
       "comment" : "The string for the word 'settings'."
     },
+    "Settings…" : {
+      "comment" : "The menu command that opens settings."
+    },
     "Share" : {
       "comment" : "The string for the word 'share'."
     },
@@ -764,6 +970,9 @@
     "Subscribe" : {
       "comment" : "The string for the word 'subscribe'."
     },
+    "Subscribe to Reminders…" : {
+      "comment" : "The menu command that subscribes to reminders."
+    },
     "Successor" : {
       "comment" : "The string for the word 'successor'."
     },
@@ -781,6 +990,9 @@
     },
     "Take Photo 📷" : {
       "comment" : "The action sheet button for capturing a new photo from the camera."
+    },
+    "Tap to Rotate" : {
+      "comment" : "The button that rotates the media viewer."
     },
     "TBA" : {
       "comment" : "The string for the word 'tba'."
@@ -801,17 +1013,8 @@
         }
       }
     },
-    "These items will be deleted from your library." : {
-      "comment" : "The confirmation alert message shown when removing multiple items from the library."
-    },
-    "These notifications will be removed." : {
-      "comment" : "The confirmation alert message shown when removing multiple notifications."
-    },
-    "This item will be deleted from your library." : {
-      "comment" : "The confirmation alert message shown when removing a single item from the library."
-    },
-    "This notification will be removed." : {
-      "comment" : "The confirmation alert message shown when removing a single notification."
+    "Time Zone" : {
+      "comment" : "The string for the phrase 'Time Zone'."
     },
     "timezonePicker.description" : {
       "comment" : "Explanatory text shown above the timezone picker to clarify what the setting affects.",
@@ -830,6 +1033,9 @@
     },
     "Today" : {
       "comment" : "The string for the word 'today'."
+    },
+    "Toggle Home" : {
+      "comment" : "The discoverability title for the Home menu command."
     },
     "Top %@" : {
       "comment" : "The string for the word 'Top %@'."
@@ -856,7 +1062,7 @@
       "comment" : "The string for the word 'Unfavorite'."
     },
     "Unknown" : {
-
+      "comment" : "The string for the word 'unknown'."
     },
     "Update Library Status" : {
       "comment" : "The string for the word 'update library status'."
@@ -864,11 +1070,17 @@
     "Update!" : {
       "comment" : "The string for the word 'update'."
     },
+    "Upgrade to Kurozora+…" : {
+      "comment" : "The menu command that opens the Kurozora+ upgrade flow."
+    },
     "User" : {
       "comment" : "The string for the word 'user'."
     },
     "Users" : {
       "comment" : "The string for the word 'users'."
+    },
+    "View My Account…" : {
+      "comment" : "The menu command that opens the user's account."
     },
     "View on Amazon Music" : {
       "comment" : "The string for the word 'View on Amazon Music'."
@@ -902,6 +1114,9 @@
     },
     "Websites" : {
       "comment" : "The string for the word 'websites'."
+    },
+    "Welcome to Kurozora" : {
+      "comment" : "The Home quick link to the welcome page."
     },
     "What’s New in Kurozora" : {
       "comment" : "The string for the word 'What’s New'."

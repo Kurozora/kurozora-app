@@ -28,10 +28,10 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 			self.feedMessageID = self.feedMessage?.id ?? ""
 
 			let repliesCount = self.feedMessage.attributes.metrics.replyCount
-			self.title = "\(repliesCount.kkFormatted(precision: 0)) replies"
+			self.title = L10n.repliesCount(repliesCount.kkFormatted(precision: 0), count: repliesCount)
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageReplies.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageReplies.lowercased(with: Locale.current)))
 			#endif
 		}
 	}
@@ -87,7 +87,7 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased()))
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased(with: Locale.current)))
 		#endif
 
 		Task { [weak self] in
@@ -131,7 +131,7 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 //		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 
 		emptyBackgroundView.configureImageView(image: .Empty.comment)
-		emptyBackgroundView.configureLabels(title: "No Replies", detail: "Be the first to reply to this message!")
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.replies), detail: L10n.noRepliesDetail)
 
 		tableView.backgroundView?.alpha = 0
 	}
@@ -191,14 +191,14 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased(with: Locale.current)))
 		#endif
 	}
 
 	/// Fetch feed message details.
 	func fetchDetails() async {
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageDetails.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.messageDetails.lowercased(with: Locale.current)))
 		#endif
 
 		do {

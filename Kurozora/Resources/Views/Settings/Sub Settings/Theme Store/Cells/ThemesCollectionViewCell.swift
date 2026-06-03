@@ -113,15 +113,15 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			if let delegate = self.delegate {
 				return delegate.themesCollectionViewCell(self, downloadStateFor: theme)
 			}
-			return .start(title: "GET")
+			return .start(title: L10n.themeButtonGet)
 		default:
 			let currentThemeID = UserSettings.currentTheme
 
 			if self.kTheme.isEqual(currentThemeID) {
-				return .downloaded(title: "USING", opensMenuOnTap: false)
+				return .downloaded(title: L10n.themeButtonUsing, opensMenuOnTap: false)
 			}
 
-			return .start(title: "USE")
+			return .start(title: L10n.themeButtonUse)
 		}
 	}
 

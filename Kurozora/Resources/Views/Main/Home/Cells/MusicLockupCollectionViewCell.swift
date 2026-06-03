@@ -104,7 +104,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure episodes
 		self.tertiaryLabel.isHidden = !showEpisodes
-		self.tertiaryLabel.text = "Episode: \(showSong.attributes.episodes)"
+		self.tertiaryLabel.text = L10n.episodeLabel("\(showSong.attributes.episodes)")
 
 		// Configure rank
 		if let rank = rank {

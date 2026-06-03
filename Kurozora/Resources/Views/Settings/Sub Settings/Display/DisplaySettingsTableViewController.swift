@@ -197,7 +197,7 @@ extension DisplaySettingsTableViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
-			cell.configure(title: "Options", detail: self.automaticDarkThemeOptionsValueText())
+			cell.configure(title: L10n.options, detail: self.automaticDarkThemeOptionsValueText())
 			cell.chevronImageView?.isHidden = false
 			cell.detailLabel?.isHidden = false
 			return cell
@@ -205,13 +205,13 @@ extension DisplaySettingsTableViewController {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: "True Black", isOn: UserSettings.trueBlackEnabled, switchType: .trueBlack)
+			self.configureSwitchCell(cell, title: L10n.trueBlack, isOn: UserSettings.trueBlackEnabled, switchType: .trueBlack)
 			return cell
 		case .largeTitles:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
 			}
-			self.configureSwitchCell(cell, title: "Large Titles", isOn: UserSettings.largeTitlesEnabled, switchType: .largeTitles)
+			self.configureSwitchCell(cell, title: L10n.largeTitles, isOn: UserSettings.largeTitlesEnabled, switchType: .largeTitles)
 			return cell
 		}
 	}

@@ -363,7 +363,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 			},
 			didRemove: { [weak cell, weak button] _ in
 				cell?.libraryStatus = .none
-				button?.setTitle(L10n.add.uppercased(), for: .normal)
+				button?.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 			}
 		)
 	}
@@ -634,7 +634,7 @@ extension DetailsCollectionViewController {
 						self.configureNavBarButtons()
 						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 					} catch let error as APIError {
-						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
 						print("----- Add to library failed", error.message)
 					}
 				}
@@ -652,7 +652,7 @@ extension DetailsCollectionViewController {
 						NotificationCenter.default.post(name: Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section"), object: nil)
 						self.configureNavBarButtons()
 					} catch let error as APIError {
-						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
 					}
 				}

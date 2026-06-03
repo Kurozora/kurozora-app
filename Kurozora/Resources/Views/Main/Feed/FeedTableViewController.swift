@@ -63,7 +63,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased()))
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased(with: Locale.current)))
 		#endif
 
 		self.title = L10n.feed
@@ -152,7 +152,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 
 	override func configureEmptyDataView() {
 		emptyBackgroundView.configureImageView(image: .Empty.comment)
-		emptyBackgroundView.configureLabels(title: "No Feed", detail: "Can't get feed list. Please refresh the page or restart the app and check your WiFi connection.")
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.feed), detail: L10n.cantGetListDetail(L10n.feed.lowercased(with: Locale.current)))
 
 		tableView.backgroundView?.alpha = 0
 	}
@@ -212,7 +212,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.exploreFeed.lowercased(with: Locale.current)))
 		#endif
 	}
 
@@ -227,7 +227,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.exploreFeed.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.exploreFeed.lowercased(with: Locale.current)))
 		#endif
 
 		do {

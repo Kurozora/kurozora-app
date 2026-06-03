@@ -58,4 +58,84 @@ extension L10n {
 		table: "Alerts",
 		comment: "The string for the maintenance warning message."
 	)
+
+	// MARK: - Library
+	/// The alert title shown when adding an item to the library fails.
+	///
+	/// - Tag: L10n-cantAddToLibraryTitle
+	static let cantAddToLibraryTitle: String = String(
+		localized: "Can't Add to Your Library 😔",
+		table: "Alerts",
+		comment: "The alert title shown when adding an item to the library fails."
+	)
+	/// The alert title shown when removing an item from the library fails.
+	///
+	/// - Tag: L10n-cantRemoveFromLibraryTitle
+	static let cantRemoveFromLibraryTitle: String = String(
+		localized: "Can't Remove From Your Library 😔",
+		table: "Alerts",
+		comment: "The alert title shown when removing an item from the library fails."
+	)
+
+	// MARK: - Purchases
+	/// The alert title shown when a purchase fails verification.
+	///
+	/// - Tag: L10n-purchaseFailedTitle
+	static let purchaseFailedTitle: String = String(
+		localized: "Purchase Failed",
+		table: "Alerts",
+		comment: "The alert title shown when a purchase fails verification."
+	)
+	/// The alert message shown when a purchase cannot be verified by the App Store.
+	///
+	/// - Tag: L10n-purchaseVerificationFailedMessage
+	static let purchaseVerificationFailedMessage: String = String(
+		localized: "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer.",
+		table: "Alerts",
+		comment: "The alert message shown when a purchase cannot be verified by the App Store."
+	)
+
+	// MARK: - Redeem
+	/// The alert title shown when no camera is available to scan a code.
+	///
+	/// - Tag: L10n-redeemNoCameraTitle
+	static let redeemNoCameraTitle: String = String(
+		localized: "Well, this is awkward.",
+		table: "Alerts",
+		comment: "The alert title shown when no camera is available to scan a code."
+	)
+	/// The alert message shown when no camera is available to scan a code.
+	///
+	/// - Tag: L10n-redeemNoCameraMessage
+	static let redeemNoCameraMessage: String = String(
+		localized: "You don't seem to have a camera 😓",
+		table: "Alerts",
+		comment: "The alert message shown when no camera is available to scan a code."
+	)
+
+	// MARK: - Account
+	/// The alert title shown when signing out fails.
+	///
+	/// - Tag: L10n-cantSignOutTitle
+	static let cantSignOutTitle: String = String(
+		localized: "Can't Sign Out 😔",
+		table: "Alerts",
+		comment: "The alert title shown when signing out fails."
+	)
+	/// The alert title shown when deleting the account fails.
+	///
+	/// - Tag: L10n-cantDeleteAccountTitle
+	static let cantDeleteAccountTitle: String = String(
+		localized: "Can't Delete Account 😔",
+		table: "Alerts",
+		comment: "The alert title shown when deleting the account fails."
+	)
+	/// The alert title shown when importing to the library fails.
+	///
+	/// - Tag: L10n-cantImportToLibraryTitle
+	static let cantImportToLibraryTitle: String = String(
+		localized: "Can't Import To Library 😔",
+		table: "Alerts",
+		comment: "The alert title shown when importing to the library fails."
+	)
 }

@@ -36,6 +36,9 @@
     "Account Suspended" : {
       "comment" : "Title of the suspension details view as seen by the suspended user."
     },
+    "Add a content warning" : {
+      "comment" : "The title of the content warning self-label sheet."
+    },
     "Appeal from %@" : {
       "comment" : "Section header for the suspended user's appeal as seen by a moderator."
     },
@@ -44,6 +47,9 @@
     },
     "Choose Reason" : {
       "comment" : "Menu title for the reason picker."
+    },
+    "Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences." : {
+      "comment" : "The subtitle of the content warning self-label sheet."
     },
     "Community Guidelines" : {
       "comment" : "Button on the suspension details view that opens the community guidelines."

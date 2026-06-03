@@ -17,10 +17,10 @@ enum CountryOfOrigin: Int, CaseIterable {
 	/// The name of a Country of Origin.
 	var name: String {
 		switch self {
-		case .china: return "China"
-		case .japan: return "Japan"
-		case .korea: return "Korea"
-		case .unitedStates: return "United States"
+		case .china: return L10n.countryChina
+		case .japan: return L10n.countryJapan
+		case .korea: return L10n.countryKorea
+		case .unitedStates: return L10n.countryUnitedStates
 		}
 	}
 

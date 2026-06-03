@@ -8,81 +8,20 @@
 
 import Foundation
 
-private struct StaticData {
-	static let shortSuffixes = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qat", "Qid", "Sxd", "Spd", "Ocd", "Nod", "Vg", "Uvg"]
-
-	static let groupingSeparator: String = Locale.current.groupingSeparator ?? ","
-	static let decimalSeparator: String = Locale.current.decimalSeparator ?? "."
-}
-
 extension Int {
-	/// String formatted values properly displaying huge numbers.
+	/// A locale-aware, compact string for large numbers.
 	///
-	/// Units: Thousand (K), Million (M), Billion (B), Trillion (T), Quadrillion (Qa), Quintillion (Qi), Sextillion (Sx), Septillion (Sp), Octillion (Oc), Nonillion (No), Decillion (Dc), Undecillion (Ud), Duodecillion (Dd), Tredecillion (Td), Quattuordecillion (Qat), Quinquadecillion (Qid), Sexdecillion (Sxd), Septendecillion (Spd), Octodecillion (Ocd), Novendecillion (Nod), Vigintillion(Vg), Vunvigintillion (Uvg)
+	/// Uses the system compact notation so scaling follows the current locale —
+	/// `12K` in English, `1.2万` in Japanese, `12 тыс.` in Russian.
 	///
-	/// - Parameters:
-	///    - precision: The number of decimal places to keep (default is 3).
+	/// - Parameter precision: The maximum number of fractional digits to keep (default is 3).
 	///
-	/// - Returns: A formatted string representing the number with the specified precision and suffix.
+	/// - Returns: The number formatted with compact notation in the current locale.
 	func kkFormatted(precision: Int = 3) -> String {
-		if self == 0 {
-			return "0"
-		}
-
-		let isNegative = self < 0
-		let absoluteValue = Double(self.magnitude)
-
-		// Clamp index to valid range
-		let index = Swift.max(0, Swift.min(StaticData.shortSuffixes.count - 1, Int(log(absoluteValue) / log(1000))))
-
-		let scaledNumber = absoluteValue / pow(1000, Double(index))
-
-		// Manual rounding
-		let multiplier = pow(10.0, Double(precision))
-		let roundedValue = (scaledNumber * multiplier).rounded() / multiplier
-
-		// Convert to string with fixed precision
-		var numberString = String(format: "%.\(precision)f", roundedValue)
-
-		// Trim trailing zeros and decimal point
-		if let dotIndex = numberString.firstIndex(of: ".") {
-			var end = numberString.index(before: numberString.endIndex)
-			while end > dotIndex && numberString[end] == "0" {
-				end = numberString.index(before: end)
-			}
-			if numberString[end] == "." {
-				end = numberString.index(before: end)
-			}
-			numberString = String(numberString[..<numberString.index(after: end)])
-		}
-
-		// Apply locale grouping
-		if let dotIndex = numberString.firstIndex(of: ".") {
-			let integerPart = String(numberString[..<dotIndex])
-			let decimalPart = String(numberString[numberString.index(after: dotIndex)...])
-			numberString = insertGrouping(intPart: integerPart) + StaticData.decimalSeparator + decimalPart
-		} else {
-			numberString = insertGrouping(intPart: numberString)
-		}
-
-		let suffix = StaticData.shortSuffixes[index]
-
-		return (isNegative ? "-" : "") + numberString + suffix
-	}
-
-	// Helper for grouping thousands without NumberFormatter
-	@inline(__always)
-	private func insertGrouping(intPart: String) -> String {
-		let chars = Array(intPart)
-		var grouped: [Character] = []
-		var count = 0
-		for char in chars.reversed() {
-			if count != 0 && count % 3 == 0 {
-				grouped.append(Character(Locale.current.groupingSeparator ?? ","))
-			}
-			grouped.append(char)
-			count += 1
-		}
-		return String(grouped.reversed())
+		return self.formatted(
+			.number
+			.notation(.compactName)
+			.precision(.fractionLength(0...precision))
+		)
 	}
 }

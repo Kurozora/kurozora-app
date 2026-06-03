@@ -66,11 +66,11 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
-		self.title = "Active Sessions"
+		self.title = L10n.activeSessions
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased()))
+		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased(with: Locale.current)))
 		#endif
 
 		self.configureView()
@@ -159,7 +159,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.sessions.lowercased(with: Locale.current)))
 		#endif
 		#endif
 	}
@@ -174,7 +174,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.sessions.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.sessions.lowercased(with: Locale.current)))
 		#endif
 
 		do {

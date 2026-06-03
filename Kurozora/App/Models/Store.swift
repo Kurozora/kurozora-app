@@ -269,19 +269,19 @@ final class Store: NSObject, ObservableObject {
 
 		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
 			let alert = UIAlertController(
-				title: "Continue your purchase?",
-				message: "Resume the \(product.displayName) purchase you started in the App Store.",
+				title: L10n.continuePurchaseTitle,
+				message: L10n.continuePurchaseMessage(product.displayName),
 				preferredStyle: .alert
 			)
 
-			let continueAction = UIAlertAction(title: "Continue", style: .default) { [weak self] _ in
+			let continueAction = UIAlertAction(title: L10n.continue, style: .default) { [weak self] _ in
 				Task { @MainActor in
 					_ = try? await self?.purchase(product)
 					PendingPromotedIntent.clear()
 					continuation.resume()
 				}
 			}
-			let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+			let dismissAction = UIAlertAction(title: L10n.dismiss, style: .cancel) { _ in
 				PendingPromotedIntent.clear()
 				continuation.resume()
 			}

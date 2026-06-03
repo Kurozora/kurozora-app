@@ -47,7 +47,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Import Library"
+		self.title = L10n.importLibrary
 
 		self.configureNavigationItems()
 
@@ -62,7 +62,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	/// Configures the navigation items.
 	private func configureNavigationItems() {
 		let rightNavigationBarButton = UIBarButtonItem(
-			title: "Import 📲",
+			title: L10n.importButton,
 			style: .plain,
 			target: self,
 			action: #selector(rightNavigationBarButtonPressed(sender:))
@@ -94,7 +94,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 				_ = try await KService.importLibrary(.shows, service: .mal, behavior: .overwrite, filePath: filePath).response()
 			} catch let error as APIError {
 				_ = await MainActor.run {
-					self.presentAlertController(title: "Can't Import To Library 😔", message: error.message)
+					self.presentAlertController(title: L10n.cantImportToLibraryTitle, message: error.message)
 				}
 
 				print("----- Library import failed", error.message)

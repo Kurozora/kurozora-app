@@ -40,6 +40,20 @@ extension L10n {
 		localized: "Yes, sign me out 🤨",
 		comment: "The destructive confirmation button for the sign-out alert."
 	)
+	/// The body string for the sign-out confirmation alert.
+	///
+	/// - Tag: L10n-signOutConfirmMessage
+	static let signOutConfirmMessage: String = String(
+		localized: "Are you sure you want to sign out?",
+		comment: "The body string for the sign-out confirmation alert."
+	)
+	/// The cancel button for the sign-out confirmation alert.
+	///
+	/// - Tag: L10n-signOutCancel
+	static let signOutCancel: String = String(
+		localized: "No, keep me signed in 😅",
+		comment: "The cancel button for the sign-out confirmation alert."
+	)
 
 	// MARK: - Library
 	/// The string for the phrase 'View Options', used as a submenu title in the library table layout.
@@ -1012,6 +1026,41 @@ extension L10n {
 		localized: "Reviews",
 		comment: "The string for the word 'reviews'."
 	)
+	/// The string for the word 'posts'.
+	///
+	/// - Tag: L10n-posts
+	static let posts: String = String(
+		localized: "Posts",
+		comment: "The string for the word 'posts'."
+	)
+	/// The string for the word 'replies'.
+	///
+	/// - Tag: L10n-replies
+	static let replies: String = String(
+		localized: "Replies",
+		comment: "The string for the word 'replies'."
+	)
+	/// The string for the word 'unknown'.
+	///
+	/// - Tag: L10n-unknown
+	static let unknown: String = String(
+		localized: "Unknown",
+		comment: "The string for the word 'unknown'."
+	)
+	/// The string for the word 'name'.
+	///
+	/// - Tag: L10n-name
+	static let name: String = String(
+		localized: "Name",
+		comment: "The string for the word 'name'."
+	)
+	/// The string for the word 'dismiss'.
+	///
+	/// - Tag: L10n-dismiss
+	static let dismiss: String = String(
+		localized: "Dismiss",
+		comment: "The string for the word 'dismiss'."
+	)
 	/// The string for the word 'search'.
 	///
 	/// - Tag: L10n-search
@@ -1358,6 +1407,13 @@ extension L10n {
 		localized: "TV Rating",
 		comment: "The string for the word 'TV rating'."
 	)
+	/// The string for the phrase 'Time Zone'.
+	///
+	/// - Tag: L10n-timeZone
+	static let timeZone: String = String(
+		localized: "Time Zone",
+		comment: "The string for the phrase 'Time Zone'."
+	)
 	/// The string for the word 'seasons'.
 	///
 	/// - Tag: L10n-seasons
@@ -1600,10 +1656,10 @@ extension L10n {
 	/// The string for the phrase '%@ total series'.
 	///
 	/// - Tag: L10n-totalSeries
-	static func totalSeries(_ string: String) -> String {
+	static func totalSeries(_ count: Int) -> String {
 		return String(
-			localized: "\(string) total series",
-			comment: "The string for the word '%@ total series'."
+			localized: "\(count) total series",
+			comment: "The total series count shown on the ReCap year card."
 		)
 	}
 
@@ -1653,11 +1709,6 @@ extension L10n {
 		localized: "Select Items",
 		comment: "The label shown in the bottom batch-edit toolbar when no items are selected."
 	)
-	/// The string for the phrase 'Delete Item'.
-	static let deleteItem: String = String(
-		localized: "Delete Item",
-		comment: "The destructive button shown in the delete confirmation alert when one item is selected."
-	)
 	/// The string for the phrase 'Could Not Update Library'.
 	static let couldNotUpdateLibrary: String = String(
 		localized: "Could Not Update Library",
@@ -1668,16 +1719,18 @@ extension L10n {
 		localized: "Could Not Update Favorites",
 		comment: "The error alert title when a favorites batch update fails."
 	)
-	/// The string for the phrase 'This item will be deleted from your library.'.
-	static let deleteSingleItemConfirmation: String = String(
-		localized: "This item will be deleted from your library.",
-		comment: "The confirmation alert message shown when removing a single item from the library."
-	)
-	/// The string for the phrase 'These items will be deleted from your library.'.
-	static let deleteMultipleItemsConfirmation: String = String(
-		localized: "These items will be deleted from your library.",
-		comment: "The confirmation alert message shown when removing multiple items from the library."
-	)
+	/// The confirmation alert message shown when removing items from the library.
+	///
+	/// - Parameter count: The number of items being removed.
+	///
+	/// - Tag: L10n-deleteItemsConfirmation
+	static func deleteItemsConfirmation(_ count: Int) -> String {
+		return String(
+			localized: "library.deleteItemsConfirmation",
+			defaultValue: "\(count) items will be deleted from your library.",
+			comment: "The confirmation alert message shown when removing items from the library."
+		)
+	}
 	/// The string for the phrase '%d Selected'.
 	static func itemsSelected(_ count: Int) -> String {
 		return String(
@@ -1703,28 +1756,25 @@ extension L10n {
 		localized: "Select Notifications",
 		comment: "The label shown in the bottom batch-edit toolbar when no notifications are selected."
 	)
-	/// The string for the phrase 'Delete Notification'.
-	static let deleteNotification: String = String(
-		localized: "Delete Notification",
-		comment: "The destructive button shown when removing a single notification."
-	)
-	/// The destructive button shown when removing multiple notifications.
+	/// The destructive button shown when removing notifications.
 	static func deleteNotifications(_ count: Int) -> String {
 		return String(
 			localized: "Delete \(count) Notifications",
 			comment: "The destructive button shown when removing multiple notifications."
 		)
 	}
-	/// The string for the phrase 'This notification will be removed.'.
-	static let deleteSingleNotificationConfirmation: String = String(
-		localized: "This notification will be removed.",
-		comment: "The confirmation alert message shown when removing a single notification."
-	)
-	/// The string for the phrase 'These notifications will be removed.'.
-	static let deleteMultipleNotificationsConfirmation: String = String(
-		localized: "These notifications will be removed.",
-		comment: "The confirmation alert message shown when removing multiple notifications."
-	)
+	/// The confirmation alert message shown when removing notifications.
+	///
+	/// - Parameter count: The number of notifications being removed.
+	///
+	/// - Tag: L10n-deleteNotificationsConfirmation
+	static func deleteNotificationsConfirmation(_ count: Int) -> String {
+		return String(
+			localized: "notifications.deleteNotificationsConfirmation",
+			defaultValue: "\(count) notifications will be removed.",
+			comment: "The confirmation alert message shown when removing notifications."
+		)
+	}
 	/// The string for the phrase 'Could Not Update Notifications'.
 	static let couldNotUpdateNotifications: String = String(
 		localized: "Could Not Update Notifications",
@@ -1734,5 +1784,178 @@ extension L10n {
 	static let couldNotRemoveNotifications: String = String(
 		localized: "Could Not Remove Notifications",
 		comment: "The error alert title shown when a notifications batch remove fails."
+	)
+
+	// MARK: - Menu Commands
+	/// The menu command and title for the Home screen.
+	///
+	/// - Tag: L10n-home
+	static let home: String = String(
+		localized: "Home",
+		comment: "The menu command and title for the Home screen."
+	)
+	/// The discoverability title for the Home menu command.
+	///
+	/// - Tag: L10n-toggleHome
+	static let toggleHome: String = String(
+		localized: "Toggle Home",
+		comment: "The discoverability title for the Home menu command."
+	)
+	/// The menu title for the refresh command.
+	///
+	/// - Tag: L10n-refresh
+	static let refresh: String = String(
+		localized: "Refresh",
+		comment: "The menu title for the refresh command."
+	)
+	/// The menu command that refreshes the current page.
+	///
+	/// - Tag: L10n-refreshPage
+	static let refreshPage: String = String(
+		localized: "Refresh Page",
+		comment: "The menu command that refreshes the current page."
+	)
+	/// The menu command that opens settings.
+	///
+	/// - Tag: L10n-settingsCommand
+	static let settingsCommand: String = String(
+		localized: "Settings…",
+		comment: "The menu command that opens settings."
+	)
+	/// The menu command that opens the user's account.
+	///
+	/// - Tag: L10n-viewMyAccount
+	static let viewMyAccount: String = String(
+		localized: "View My Account…",
+		comment: "The menu command that opens the user's account."
+	)
+	/// The menu command that subscribes to reminders.
+	///
+	/// - Tag: L10n-subscribeToRemindersCommand
+	static let subscribeToRemindersCommand: String = String(
+		localized: "Subscribe to Reminders…",
+		comment: "The menu command that subscribes to reminders."
+	)
+	/// The menu command that opens the Kurozora+ upgrade flow.
+	///
+	/// - Tag: L10n-upgradeToKurozoraPlus
+	static let upgradeToKurozoraPlus: String = String(
+		localized: "Upgrade to Kurozora+…",
+		comment: "The menu command that opens the Kurozora+ upgrade flow."
+	)
+	/// The menu command that opens the redeem flow.
+	///
+	/// - Tag: L10n-redeemCommand
+	static let redeemCommand: String = String(
+		localized: "Redeem…",
+		comment: "The menu command that opens the redeem flow."
+	)
+
+	// MARK: - Media Viewer
+	/// The action that opens the media in a browser.
+	///
+	/// - Tag: L10n-openInBrowser
+	static let openInBrowser: String = String(
+		localized: "Open in Browser",
+		comment: "The action that opens the media in a browser."
+	)
+	/// The toast shown after an image is saved to the photo library.
+	///
+	/// - Tag: L10n-imageSavedToLibrary
+	static let imageSavedToLibrary: String = String(
+		localized: "Image saved to your library!",
+		comment: "The toast shown after an image is saved to the photo library."
+	)
+	/// The default toast shown when an image could not be saved.
+	///
+	/// - Tag: L10n-imageSaveFailed
+	static let imageSaveFailed: String = String(
+		localized: "Image could not be saved.",
+		comment: "The default toast shown when an image could not be saved."
+	)
+	/// The toast shown when photo library access is denied while saving.
+	///
+	/// - Tag: L10n-photoLibraryAccessDenied
+	static let photoLibraryAccessDenied: String = String(
+		localized: "Access to photo library denied.",
+		comment: "The toast shown when photo library access is denied while saving."
+	)
+	/// The toast shown when an image fails to download.
+	///
+	/// - Tag: L10n-imageDownloadFailed
+	static let imageDownloadFailed: String = String(
+		localized: "Failed to download image.",
+		comment: "The toast shown when an image fails to download."
+	)
+	/// The toast shown when an image fails to save.
+	///
+	/// - Tag: L10n-imageSaveFailedRetry
+	static let imageSaveFailedRetry: String = String(
+		localized: "Failed to save image.",
+		comment: "The toast shown when an image fails to save."
+	)
+	/// The button that rotates the media viewer.
+	///
+	/// - Tag: L10n-tapToRotate
+	static let tapToRotate: String = String(
+		localized: "Tap to Rotate",
+		comment: "The button that rotates the media viewer."
+	)
+
+	// MARK: - Text Editor
+	/// The button title for opening the content labels picker.
+	///
+	/// - Tag: L10n-labels
+	static let labels: String = String(
+		localized: "Labels",
+		comment: "The button title for opening the content labels picker."
+	)
+	/// The button title shown when content labels have been added.
+	///
+	/// - Tag: L10n-labelsAdded
+	static let labelsAdded: String = String(
+		localized: "Labels Added",
+		comment: "The button title shown when content labels have been added."
+	)
+
+	// MARK: - Search
+	/// The placeholder shown in the main search bar.
+	///
+	/// - Tag: L10n-searchPlaceholder
+	static let searchPlaceholder: String = String(
+		localized: "Anime, Manga, Games and More",
+		comment: "The placeholder shown in the main search bar."
+	)
+
+	// MARK: - Quick Links
+	/// The Home quick link to the in-app purchases article.
+	///
+	/// - Tag: L10n-quickLinkIAP
+	static let quickLinkIAP: String = String(
+		localized: "About In-App Purchases",
+		comment: "The Home quick link to the in-app purchases article."
+	)
+	/// The Home quick link to the personalisation article.
+	///
+	/// - Tag: L10n-quickLinkPersonalisation
+	static let quickLinkPersonalisation: String = String(
+		localized: "About Personalisation",
+		comment: "The Home quick link to the personalisation article."
+	)
+	/// The Home quick link to the welcome page.
+	///
+	/// - Tag: L10n-quickLinkWelcome
+	static let quickLinkWelcome: String = String(
+		localized: "Welcome to Kurozora",
+		comment: "The Home quick link to the welcome page."
+	)
+
+	// MARK: - Misc
+	/// The string for the word 'options'.
+	///
+	/// - Tag: L10n-options
+	static let options: String = String(
+		localized: "Options",
+		comment: "The string for the word 'options'."
 	)
 }

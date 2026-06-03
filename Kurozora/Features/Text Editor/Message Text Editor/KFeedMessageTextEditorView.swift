@@ -264,7 +264,7 @@ private extension KFeedMessageTextEditorView {
 		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
 		var configuration = UIButton.Configuration.plain()
-		configuration.title = "Labels"
+		configuration.title = L10n.labels
 		configuration.image = UIImage(systemName: "shield")
 		configuration.imagePlacement = .leading
 		configuration.imagePadding = 6

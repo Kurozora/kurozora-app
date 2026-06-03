@@ -64,7 +64,7 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reminders.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reminders.lowercased(with: Locale.current)))
 		#endif
 	}
 
@@ -89,7 +89,7 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 		}
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.reminders)
-		self.emptyBackgroundView.configureLabels(title: "No Reminders", detail: detailString)
+		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.reminders), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -118,7 +118,7 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reminders.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reminders.lowercased(with: Locale.current)))
 			#endif
 		}
 
@@ -160,7 +160,7 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reminders.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reminders.lowercased(with: Locale.current)))
 		#endif
 
 		self.fetchInProgress = false

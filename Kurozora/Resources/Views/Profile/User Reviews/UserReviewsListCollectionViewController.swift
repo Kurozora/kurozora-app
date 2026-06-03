@@ -87,7 +87,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased(with: Locale.current)))
 		#endif
 
 		self.configureDataSource()
@@ -170,7 +170,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reviews.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reviews.lowercased(with: Locale.current)))
 		#endif
 
 		guard let user = self.user else { return }
@@ -196,7 +196,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased(with: Locale.current)))
 		#endif
 	}
 

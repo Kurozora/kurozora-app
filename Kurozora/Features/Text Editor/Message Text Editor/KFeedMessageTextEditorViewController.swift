@@ -766,7 +766,7 @@ extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
 		}
 
 		let labelsAdded = self.isSpoiler || self.isNSFW
-		self.configureLabelsButton(title: labelsAdded ? "Labels Added" : "Labels", imageName: labelsAdded ? "checkmark" : "shield")
+		self.configureLabelsButton(title: labelsAdded ? L10n.labelsAdded : L10n.labels, imageName: labelsAdded ? "checkmark" : "shield")
 	}
 
 	private func configureLabelsButton(title: String, imageName: String) {

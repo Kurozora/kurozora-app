@@ -33,11 +33,10 @@ class AuthenticationViewController: KViewController {
 		self.unlockDescriptionView.isHidden = true
 		self.lockImageView.isHidden = false
 
-		let subText = "Use the button above to unlock Kurozora or if you're snooping around someone else's device then "
 		#if targetEnvironment(macCatalyst)
-			self.subtextLabel.text = subText + "press ⌘ + Q to quit 😤"
+			self.subtextLabel.text = L10n.unlockSnoopingQuit
 		#else
-			self.subtextLabel.text = subText + "exit the app 😤"
+			self.subtextLabel.text = L10n.unlockSnoopingExit
 		#endif
 	}
 

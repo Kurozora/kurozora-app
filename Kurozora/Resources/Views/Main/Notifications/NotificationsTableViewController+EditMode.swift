@@ -246,8 +246,8 @@ extension NotificationsTableViewController {
 	/// - Returns: A destructive menu containing the delete confirmation action.
 	private func makeBatchDeleteMenu(selectedNotifications: [UserNotification]) -> UIMenu {
 		let count = selectedNotifications.count
-		let buttonTitle: String = count == 1 ? L10n.deleteNotification : L10n.deleteNotifications(count)
-		let message: String = count == 1 ? L10n.deleteSingleNotificationConfirmation : L10n.deleteMultipleNotificationsConfirmation
+		let buttonTitle: String = L10n.deleteNotifications(count)
+		let message: String = L10n.deleteNotificationsConfirmation(count)
 
 		let confirmAction = UIAction(title: buttonTitle, image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
 			self?.performBatchDelete(selectedNotifications: selectedNotifications)

@@ -42,8 +42,8 @@ class MenuController {
 	///
 	/// - Returns: The "Minimize and Zoom" menu.
 	class func newScene() -> UIMenu {
-		let newSceneCommand = UIKeyCommand(title: "Home", action: #selector(AppDelegate.handleNewScene), input: "0", modifierFlags: .command, discoverabilityTitle: "Toggle Home")
-		return UIMenu(title: "Home", identifier: UIMenu.Identifier("app.kurozora.menus.newScene"), options: .displayInline, children: [newSceneCommand])
+		let newSceneCommand = UIKeyCommand(title: L10n.home, action: #selector(AppDelegate.handleNewScene), input: "0", modifierFlags: .command, discoverabilityTitle: L10n.toggleHome)
+		return UIMenu(title: L10n.home, identifier: UIMenu.Identifier("app.kurozora.menus.newScene"), options: .displayInline, children: [newSceneCommand])
 	}
 
 	/// Builds and returns the "Minimize and Zoom" menu.
@@ -67,24 +67,24 @@ class MenuController {
 	///
 	/// - Returns: The "Refresh Page" UIMenu object.
 	class func refreshPage() -> UIMenu {
-		let refreshPageCommand = UIKeyCommand(title: "Refresh Page", action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
-		return UIMenu(title: "Refresh", identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
+		let refreshPageCommand = UIKeyCommand(title: L10n.refreshPage, action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: L10n.refreshPage)
+		return UIMenu(title: L10n.refresh, identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
 	}
 
 	/// Builds and returns the "Settings" menu.
 	///
 	/// - Returns: The "Settings" UIMenu object.
 	class func openSettings() -> UIMenu {
-		let openSettingsCommand = UIKeyCommand(title: "Settings…", action: #selector(AppDelegate.handleSettings(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: "Settings…")
-		return UIMenu(title: "Settings", identifier: UIMenu.Identifier("app.kurozora.menus.settings"), options: .displayInline, children: [openSettingsCommand])
+		let openSettingsCommand = UIKeyCommand(title: L10n.settingsCommand, action: #selector(AppDelegate.handleSettings(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: L10n.settingsCommand)
+		return UIMenu(title: L10n.settings, identifier: UIMenu.Identifier("app.kurozora.menus.settings"), options: .displayInline, children: [openSettingsCommand])
 	}
 
 	///  Builds and returns the "Search" menu.
 	///
 	///  - Returns: The "Search" UIMenu object.
 	class func search() -> UIMenu {
-		let searchPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
-		return UIMenu(title: "Search", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [searchPageCommand])
+		let searchPageCommand = UIKeyCommand(title: L10n.search, action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: L10n.search)
+		return UIMenu(title: L10n.search, identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [searchPageCommand])
 	}
 
 	class func account() -> UIMenu {
@@ -101,15 +101,15 @@ class MenuController {
 			}
 
 			// Add "view my account" menu item.
-			let viewMyAccountCommand = UICommand(title: "View My Account…", action: #selector(AppDelegate.handleViewMyAccount(_:)), discoverabilityTitle: "View My Account…")
+			let viewMyAccountCommand = UICommand(title: L10n.viewMyAccount, action: #selector(AppDelegate.handleViewMyAccount(_:)), discoverabilityTitle: L10n.viewMyAccount)
 			userMenuChildren.append(viewMyAccountCommand)
 
 			// Add "sign out" menu item.
-			let signOutCommand = UICommand(title: "Sign Out", action: #selector(AppDelegate.handleSignOut(_:)), discoverabilityTitle: "Sign Out")
+			let signOutCommand = UICommand(title: L10n.signOut, action: #selector(AppDelegate.handleSignOut(_:)), discoverabilityTitle: L10n.signOut)
 			userMenuChildren.append(signOutCommand)
 		} else {
 			// Add "sign in" menu item.
-			let signInCommand = UICommand(title: "Sign In", action: #selector(AppDelegate.handleSignIn(_:)), discoverabilityTitle: "Sign In")
+			let signInCommand = UICommand(title: L10n.signIn, action: #selector(AppDelegate.handleSignIn(_:)), discoverabilityTitle: L10n.signIn)
 			userMenuChildren.append(signInCommand)
 		}
 
@@ -120,11 +120,11 @@ class MenuController {
 		if User.isSignedIn, let user = User.current {
 			if user.attributes.isSubscribed {
 				// Add "subscribe to reminders" menu item.
-				let subscribeToReminders =  UICommand(title: "Subscribe to Reminders…", action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: "Subscribe to Reminders…")
+				let subscribeToReminders =  UICommand(title: L10n.subscribeToRemindersCommand, action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: L10n.subscribeToRemindersCommand)
 				subscriptionMenuChildren.append(subscribeToReminders)
 			} else {
 				// Add "updgrade to Kurozora+" menu item.
-				let upgradeToKurozoraPlus =  UICommand(title: "Upgrade to Kurozora+…", action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: "Upgrade to Kurozora+…")
+				let upgradeToKurozoraPlus =  UICommand(title: L10n.upgradeToKurozoraPlus, action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: L10n.upgradeToKurozoraPlus)
 				subscriptionMenuChildren.append(upgradeToKurozoraPlus)
 			}
 		}
@@ -133,12 +133,12 @@ class MenuController {
 		let subscriptionMenu = UIMenu(title: "", identifier: UIMenu.Identifier("app.kurozora.menus.subscription"), options: .displayInline, children: subscriptionMenuChildren)
 
 		// Create the Redeem command.
-		let redeemCommand = UICommand(title: "Redeem…", action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: "Redeem…")
+		let redeemCommand = UICommand(title: L10n.redeemCommand, action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: L10n.redeemCommand)
 
 		// Create the Favorites command.
-		let favoritesCommand = UICommand(title: "Favorites", action: #selector(AppDelegate.handleFavorites(_:)), discoverabilityTitle: "Favorites")
+		let favoritesCommand = UICommand(title: L10n.favorites, action: #selector(AppDelegate.handleFavorites(_:)), discoverabilityTitle: L10n.favorites)
 
-		return UIMenu(title: "Account", identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoritesCommand])
+		return UIMenu(title: L10n.account, identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoritesCommand])
 	}
 
 	#if DEBUG

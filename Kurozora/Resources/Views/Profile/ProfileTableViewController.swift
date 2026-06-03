@@ -150,7 +150,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased(with: Locale.current)))
 		#endif
 
 		if self.userIdentity == nil {
@@ -266,7 +266,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		}
 
 		emptyBackgroundView.configureImageView(image: .Empty.comment)
-		emptyBackgroundView.configureLabels(title: "No Posts", detail: detailString)
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.posts), detail: detailString)
 		emptyBackgroundView.verticalOffset = verticalOffset
 
 		tableView.backgroundView?.alpha = 0
@@ -348,7 +348,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		guard let userIdentity = self.userIdentity else { return }
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.profileDetails.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.profileDetails.lowercased(with: Locale.current)))
 		#endif
 
 		do {
@@ -396,7 +396,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased(with: Locale.current)))
 		#endif
 	}
 

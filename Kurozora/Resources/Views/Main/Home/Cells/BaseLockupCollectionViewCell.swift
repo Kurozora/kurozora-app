@@ -191,7 +191,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			libraryStatusString = self.libraryStatus.gameStringValue
 		}
 
-		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : L10n.add.uppercased(), for: .normal)
+		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized(with: Locale.current)) ▾" : L10n.add.uppercased(with: Locale.current), for: .normal)
 	}
 
 	func configureReminderButton(for reminderStatus: ReminderStatus?) {

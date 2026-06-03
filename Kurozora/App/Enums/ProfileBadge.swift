@@ -24,19 +24,19 @@ enum ProfileBadge {
 	var title: String {
 		switch self {
 		case .newUser:
-			return "I'm new here!"
+			return L10n.badgeNewUserTitle
 		case .developer:
-			return "Active Developer"
+			return L10n.badgeDeveloperTitle
 		case .earlySupporter:
-			return "Early Supporter"
+			return L10n.badgeEarlySupporterTitle
 		case .staff:
-			return "Staff"
+			return L10n.badgeStaffTitle
 		case .pro:
 			return "Kurozora Pro"
 		case .subscriber:
 			return "Kurozora+"
 		case .verified:
-			return "Verified"
+			return L10n.badgeVerifiedTitle
 		}
 	}
 
@@ -44,19 +44,19 @@ enum ProfileBadge {
 	var description: String {
 		switch self {
 		case .newUser(let user, let isCurrentUser):
-			return isCurrentUser ? "Welcome to Kurozora! Introduce yourself to get started (^_^)/" : "\(user.attributes.username) is new to Kurozora. Say hi to them (^o^)/"
+			return isCurrentUser ? L10n.badgeNewUserCurrentUserDescription : L10n.badgeNewUserDescription(user.attributes.username)
 		case .developer(let username):
-			return "\(username) is an active developer."
+			return L10n.badgeDeveloperDescription(username)
 		case .earlySupporter(let username):
-			return "\(username) is an early supporter of Kurozora."
+			return L10n.badgeEarlySupporterDescription(username)
 		case .staff(let username):
-			return "\(username) is a staff member."
+			return L10n.badgeStaffDescription(username)
 		case .pro(let username):
-			return "\(username) is a Pro user."
+			return L10n.badgeProDescription(username)
 		case .subscriber(let username, let subscribedAt):
-			return "\(username) is a Kurozora+ subscriber since \(subscribedAt.formatted(date: .abbreviated, time: .omitted))."
+			return L10n.badgeSubscriberDescription(username, since: subscribedAt.formatted(date: .abbreviated, time: .omitted))
 		case .verified(let username):
-			return "\(username) is verified because they are notable in animators, voice actors, entertainment studios, or another designated category."
+			return L10n.badgeVerifiedDescription(username)
 		}
 	}
 
@@ -64,19 +64,19 @@ enum ProfileBadge {
 	var buttonTitle: String? {
 		switch self {
 		case .newUser(_, let isCurrentUser):
-			return isCurrentUser ? nil : "Mention User"
+			return isCurrentUser ? nil : L10n.badgeMentionUser
 		case .developer:
-			return "Become a Developer"
+			return L10n.badgeBecomeDeveloper
 		case .earlySupporter:
 			return nil
 		case .staff:
-			return "Join Kurozora Staff"
+			return L10n.badgeJoinStaff
 		case .pro:
-			return "Become a Pro User"
+			return L10n.badgeBecomePro
 		case .subscriber:
-			return "Become a Subscriber"
+			return L10n.becomeASubscriber
 		case .verified:
-			return "Get Verified"
+			return L10n.badgeGetVerified
 		}
 	}
 

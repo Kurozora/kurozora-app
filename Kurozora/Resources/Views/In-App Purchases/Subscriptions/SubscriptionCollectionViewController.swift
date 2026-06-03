@@ -24,16 +24,16 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	var currentSubscription: Product?
 	var status: Product.SubscriptionInfo.Status?
 	var productFeatures: [ProductFeature] = [
-		ProductFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: .Promotional.InAppPurchases.unifiedAnimeLinking),
-		ProductFeature(title: "Integrate with Calendar", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: .Promotional.InAppPurchases.reminders),
-		ProductFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: .Promotional.InAppPurchases.themes),
-		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
-		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
-		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
-		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
-		ProductFeature(title: "Up to 1000 Characters", description: "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
-		ProductFeature(title: "Unlock Subscriber Badge", description: "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!", image: .Promotional.InAppPurchases.subscriberBadge),
-		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
+		ProductFeature(title: L10n.featureUnifiedLinkingTitle, description: L10n.featureUnifiedLinkingDescription, image: .Promotional.InAppPurchases.unifiedAnimeLinking),
+		ProductFeature(title: L10n.featureCalendarTitle, description: L10n.featureCalendarDescription, image: .Promotional.InAppPurchases.reminders),
+		ProductFeature(title: L10n.featureDynamicThemesTitle, description: L10n.featureDynamicThemesDescription, image: .Promotional.InAppPurchases.themes),
+		ProductFeature(title: L10n.featureAppIconsTitle, description: L10n.featureAppIconsDescription, image: .Promotional.InAppPurchases.icons),
+		ProductFeature(title: L10n.featureStartupChimesTitle, description: L10n.featureStartupChimesDescription, image: .Promotional.InAppPurchases.chimes),
+		ProductFeature(title: L10n.featureGetAnimatedTitle, description: L10n.featureGetAnimatedDescription, image: .Promotional.InAppPurchases.gifs),
+		ProductFeature(title: L10n.featureChangeIdentityTitle, description: L10n.featureChangeIdentityDescription, image: .Promotional.InAppPurchases.username),
+		ProductFeature(title: L10n.featureUpToCharacters(1000), description: L10n.featureSubscriptionCharacterLimitDescription, image: .Promotional.InAppPurchases.characterCount500),
+		ProductFeature(title: L10n.featureSubscriberBadgeTitle, description: L10n.featureSubscriberBadgeDescription, image: .Promotional.InAppPurchases.subscriberBadge),
+		ProductFeature(title: L10n.featureSupportCommunityTitle, description: L10n.featureSupportCommunityDescription, image: .Promotional.InAppPurchases.support)
 	]
 	var serviceType: ServiceType = .subscription
 
@@ -111,7 +111,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 				SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc], duration: 3000)
 			}
 		} catch StoreError.failedVerification {
-			_ = self.presentAlertController(title: "Purchase Failed", message: "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer.")
+			_ = self.presentAlertController(title: L10n.purchaseFailedTitle, message: L10n.purchaseVerificationFailedMessage)
 		} catch {
 			print("------ Failed purchase: \(error)")
 		}

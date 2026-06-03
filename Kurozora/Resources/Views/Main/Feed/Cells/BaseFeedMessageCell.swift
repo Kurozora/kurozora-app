@@ -201,7 +201,7 @@ class BaseFeedMessageCell: KTableViewCell {
 			self.configureAttributionTapGesture()
 		} else if isOnProfile, feedMessage.attributes.isPinned {
 			self.statusImageView.image = UIImage(systemName: "pin.fill")
-			self.statusLabel.text = "Pinned"
+			self.statusLabel.text = L10n.messagePinned
 			self.statusStackView.isHidden = false
 		} else {
 			self.statusStackView.isHidden = true
@@ -388,11 +388,11 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure warning transcript
 		if isNSFW, isSpoiler {
-			self.warningTranscriptLabel?.text = "This message is NSFW and contains spoilers - tap to view"
+			self.warningTranscriptLabel?.text = L10n.messageWarningNsfwSpoilers
 		} else if isNSFW {
-			self.warningTranscriptLabel?.text = "This message is NSFW - tap to view"
+			self.warningTranscriptLabel?.text = L10n.messageWarningNsfw
 		} else if isSpoiler {
-			self.warningTranscriptLabel?.text = "The message contains spoilers - tap to view"
+			self.warningTranscriptLabel?.text = L10n.messageWarningSpoilers
 		}
 
 		// Add gesture recognizer to hide visual effect

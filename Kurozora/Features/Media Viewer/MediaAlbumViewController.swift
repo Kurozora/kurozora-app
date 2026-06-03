@@ -251,7 +251,7 @@ final class MediaAlbumViewController: UIPageViewController {
 			})
 		}
 
-		options.append(UIAction(title: "Open in Browser", image: UIImage(systemName: "safari")) { _ in
+		options.append(UIAction(title: L10n.openInBrowser, image: UIImage(systemName: "safari")) { _ in
 			UIApplication.shared.kOpen(item.url)
 		})
 
@@ -299,7 +299,7 @@ final class MediaAlbumViewController: UIPageViewController {
 	/// Presents a toast at the top of the viewer indicating that the media has been saved successfully.
 	private func handleSaveSuccess() {
 		let button = self.createToast()
-		button.configuration?.title = "Image saved to your library!"
+		button.configuration?.title = L10n.imageSavedToLibrary
 		button.configuration?.image = UIImage(systemName: "checkmark.circle")
 
 		self.view.addSubview(button)
@@ -329,16 +329,16 @@ final class MediaAlbumViewController: UIPageViewController {
 	}
 
 	private func handleSaveError(_ error: MediaSaverManager.SaverError) {
-		var message = "Image could not be saved."
+		var message = L10n.imageSaveFailed
 		let button = self.createToast()
 
 		switch error {
 		case .accessDenied:
-			message = "Access to photo library denied."
+			message = L10n.photoLibraryAccessDenied
 		case .invalidData, .downloadFailed:
-			message = "Failed to download image."
+			message = L10n.imageDownloadFailed
 		case .saveFailed:
-			message = "Failed to save image."
+			message = L10n.imageSaveFailedRetry
 		}
 
 		button.configuration?.title = message
@@ -603,7 +603,7 @@ extension MediaAlbumViewController {
 
 		let tapToRotateButton = AdaptiveCornerButton()
 		tapToRotateButton.translatesAutoresizingMaskIntoConstraints = false
-		tapToRotateButton.configuration?.title = "Tap to Rotate"
+		tapToRotateButton.configuration?.title = L10n.tapToRotate
 		tapToRotateButton.configuration?.image = UIImage(systemName: "lock.open.rotation")
 		tapToRotateButton.configuration?.imagePlacement = .leading
 		tapToRotateButton.configuration?.imagePadding = 8

@@ -1,6 +1,21 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Can't Add to Your Library 😔" : {
+      "comment" : "The alert title shown when adding an item to the library fails."
+    },
+    "Can't Delete Account 😔" : {
+      "comment" : "The alert title shown when deleting the account fails."
+    },
+    "Can't Import To Library 😔" : {
+      "comment" : "The alert title shown when importing to the library fails."
+    },
+    "Can't Remove From Your Library 😔" : {
+      "comment" : "The alert title shown when removing an item from the library fails."
+    },
+    "Can't Sign Out 😔" : {
+      "comment" : "The alert title shown when signing out fails."
+    },
     "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter." : {
       "comment" : "The string for the maintenance warning message."
     },
@@ -10,14 +25,26 @@
     "Network Unavailable" : {
       "comment" : "The string for the no signal warning title."
     },
+    "Purchase Failed" : {
+      "comment" : "The alert title shown when a purchase fails verification."
+    },
     "Scheduled Maintenance" : {
       "comment" : "The string for the maintenance warning title."
     },
     "Update Available" : {
       "comment" : "The string for the force update warning title."
     },
+    "Well, this is awkward." : {
+      "comment" : "The alert title shown when no camera is available to scan a code."
+    },
+    "You don't seem to have a camera 😓" : {
+      "comment" : "The alert message shown when no camera is available to scan a code."
+    },
     "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora." : {
       "comment" : "The string for the no signal warning message."
+    },
+    "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer." : {
+      "comment" : "The alert message shown when a purchase cannot be verified by the App Store."
     }
   },
   "version" : "1.0"

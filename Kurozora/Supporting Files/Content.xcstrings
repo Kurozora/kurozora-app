@@ -16,17 +16,69 @@
     "%@ has blocked you" : {
       "comment" : "The headline shown when the auth user has been blocked by another user. The argument is the @username of the blocking user."
     },
+    "%@ is a Kurozora+ subscriber since %@." : {
+      "comment" : "The subscriber badge description.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ is a Kurozora+ subscriber since %2$@."
+          }
+        }
+      }
+    },
+    "%@ is a Pro user." : {
+      "comment" : "The Pro badge description."
+    },
+    "%@ is a staff member." : {
+      "comment" : "The staff badge description."
+    },
+    "%@ is an active developer." : {
+      "comment" : "The developer badge description."
+    },
+    "%@ is an early supporter of Kurozora." : {
+      "comment" : "The early-supporter badge description."
+    },
     "%@ is blocked" : {
       "comment" : "The headline shown when the auth user has blocked the profile's user. The argument is the @username of the blocked user."
     },
+    "%@ is new to Kurozora. Say hi to them (^o^)/" : {
+      "comment" : "The new-user badge description shown on another user's profile."
+    },
     "%@ is not following anyone yet." : {
       "comment" : "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
+    },
+    "%@ is verified because they are notable in animators, voice actors, entertainment studios, or another designated category." : {
+      "comment" : "The verified badge description."
     },
     "%1$@ is rated %2$@ for %3$@" : {
       "comment" : "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name."
     },
     "%1$d of %2$d found this %3$@." : {
       "comment" : "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase."
+    },
+    "%lld Items" : {
+      "comment" : "The library item count shown as a navigation subtitle.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Item"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Items"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "＋ Follow" : {
       "comment" : "The user-cell follow button title when the current user is not yet following the target user."
@@ -40,23 +92,38 @@
     "Achievements you earn show up here." : {
       "comment" : "Empty-state detail for the achievements list when viewing your own profile."
     },
+    "Active Developer" : {
+      "comment" : "The title shown on the developer profile badge."
+    },
     "Add %@" : {
       "comment" : "Title of the editor when adding a new entry for a category. The argument is the category display name."
     },
     "Add your take when sharing someone else's post and it'll show up here." : {
       "comment" : "The empty-state subheadline for the Quotes tab on the post activity screen."
     },
+    "Adults Only" : {
+      "comment" : "The descriptive label for the 'Adults Only' TV rating."
+    },
     "Advanced Search" : {
       "comment" : "The string for the 'advanced search' browse option."
     },
+    "All Ages" : {
+      "comment" : "The descriptive label for the 'All Ages' TV rating."
+    },
     "Amplify posts you like" : {
       "comment" : "The empty-state headline for the Re-shares tab on the post activity screen."
+    },
+    "Are you sure you want to delete this entry?" : {
+      "comment" : "The confirmation message shown before deleting a Parental Guide entry."
     },
     "Are you sure you want to view these posts? Viewing posts won’t unblock %@." : {
       "comment" : "Subheadline prompting the auth user to opt in to viewing a blocked user's posts. The argument is the @username of the blocked user."
     },
     "Are you sure?" : {
       "comment" : "The subheadline string for the unpin message pop-up"
+    },
+    "as %@" : {
+      "comment" : "The label naming the character a cast member voices."
     },
     "Be the first to contribute." : {
       "comment" : "The empty-state body on the Parental Guide screen when no entries exist yet."
@@ -66,6 +133,15 @@
     },
     "Be the first to follow!" : {
       "comment" : "The user-cell secondary line for another user when nobody follows them yet."
+    },
+    "Be the first to reply to this message!" : {
+      "comment" : "The empty-state detail for a feed message that has no replies yet."
+    },
+    "Become a Developer" : {
+      "comment" : "The action button on the developer badge."
+    },
+    "Become a Pro User" : {
+      "comment" : "The action button on the Pro badge."
     },
     "Block" : {
       "comment" : "The string for the word 'block'."
@@ -79,11 +155,20 @@
     "Blocked Users" : {
       "comment" : "The label for the Settings entry that opens the blocked users list"
     },
+    "Can't get %@ list. Please reload the page or restart the app and check your WiFi connection." : {
+      "comment" : "The empty-state detail shown when a list could not be fetched."
+    },
     "Can't get users list. Please reload the page or restart the app and check your WiFi connection." : {
       "comment" : "The empty-state detail shown when the users search returns no results or fails to load."
     },
     "Can’t Save Review 😔" : {
       "comment" : "The string for can't save review description."
+    },
+    "Chapters Read" : {
+      "comment" : "The label for the 'chapters read' milestone."
+    },
+    "China" : {
+      "comment" : "The localized country name for China."
     },
     "Click to Rate:" : {
       "comment" : "The string for the word 'click to rate'."
@@ -118,11 +203,53 @@
     "Discard changes?" : {
       "comment" : "Title of the discard-changes alert in the Parental Guide editor."
     },
+    "Early Supporter" : {
+      "comment" : "The title shown on the early-supporter profile badge."
+    },
     "Edit" : {
       "comment" : "The string for the word 'edit'."
     },
     "Edit %@" : {
       "comment" : "Title of the editor when editing an existing entry for a category. The argument is the category display name."
+    },
+    "Episode: %@" : {
+      "comment" : "The label naming the episodes a song appears in."
+    },
+    "Episodes Watched" : {
+      "comment" : "The label for the 'episodes watched' milestone."
+    },
+    "feedMessage.repliesCount" : {
+      "comment" : "The reply count shown as a feed message details title.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "reply"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "replies"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Find who you're looking for" : {
       "comment" : "The title string for the search pop-up when trying to tag a user in a message or reply."
@@ -160,6 +287,12 @@
     "Frequency" : {
       "comment" : "Header for the frequency section of the Parental Guide editor."
     },
+    "Games Played" : {
+      "comment" : "The label for the 'games played' milestone."
+    },
+    "Get Verified" : {
+      "comment" : "The action button on the verified badge."
+    },
     "Go To" : {
       "comment" : "The string for the 'Go To' context menu option."
     },
@@ -172,8 +305,14 @@
     "Go to last watched episode" : {
       "comment" : "The string for the 'Go to last watched episode' context menu option."
     },
+    "Helpful" : {
+      "comment" : "The context-menu action that marks a Parental Guide entry as helpful."
+    },
     "Hide fillers" : {
       "comment" : "The string for the 'Hide fillers' context menu option."
+    },
+    "I'm new here!" : {
+      "comment" : "The title shown on the new-user profile badge."
     },
     "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below." : {
       "comment" : "The subheadline string for the Library Import view."
@@ -187,11 +326,20 @@
     "Is this a 'where to watch' question?" : {
       "comment" : "The headline string for the off-topic content warning pop-up."
     },
+    "Japan" : {
+      "comment" : "The localized country name for Japan."
+    },
+    "Join Kurozora Staff" : {
+      "comment" : "The action button on the staff badge."
+    },
     "Just Added" : {
       "comment" : "The string for the 'just added' browse option."
     },
     "Keep Editing" : {
       "comment" : "Cancel button on the discard-changes alert."
+    },
+    "Korea" : {
+      "comment" : "The localized country name for Korea."
     },
     "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file." : {
       "comment" : "The footer string for the Library Import view."
@@ -211,17 +359,35 @@
     "Limit Reached" : {
       "comment" : "The headline string for the character limit reached error pop-up"
     },
+    "Mention User" : {
+      "comment" : "The action button on the new-user badge that mentions the user."
+    },
     "Message Reported" : {
       "comment" : "The headline string for the report message pop-up"
     },
     "Message will be deleted permanently." : {
       "comment" : "The subheadline string for the delete message pop-up"
     },
+    "Minutes" : {
+      "comment" : "The 'minutes' unit label for a milestone value."
+    },
+    "Minutes Played" : {
+      "comment" : "The label for the 'minutes played' milestone."
+    },
+    "Minutes Read" : {
+      "comment" : "The label for the 'minutes read' milestone."
+    },
+    "Minutes Watched" : {
+      "comment" : "The label for the 'minutes watched' milestone."
+    },
     "Most Popular" : {
       "comment" : "The string for the 'most popular' browse option."
     },
     "Move From Another Service" : {
       "comment" : "The headline string for the Library Import view"
+    },
+    "No %@" : {
+      "comment" : "The generic empty-state title for a list."
     },
     "No Achievements" : {
       "comment" : "Empty-state title for the achievements list."
@@ -259,6 +425,12 @@
     "None" : {
       "comment" : "Placeholder shown for a category with no submissions in the Parental Guide summary."
     },
+    "Not enough ratings" : {
+      "comment" : "The label shown in place of the rating count when a title has too few ratings."
+    },
+    "Not Rated" : {
+      "comment" : "The descriptive label for the 'Not Rated' TV rating."
+    },
     "OK" : {
       "comment" : "Generic OK button shown on Parental Guide alerts."
     },
@@ -271,8 +443,14 @@
     "Other" : {
       "comment" : "Display name of the `other` Parental Guide report reason."
     },
+    "Parental Guidance Suggested" : {
+      "comment" : "The descriptive label for the 'Parental Guidance Suggested' TV rating."
+    },
     "Parental Guide" : {
       "comment" : "The title of the Parental Guide screen."
+    },
+    "Percentile" : {
+      "comment" : "The 'percentile' unit label for a milestone value."
     },
     "Permanently delete your library." : {
       "comment" : "The subheadline string for the Library Delete view."
@@ -282,6 +460,9 @@
     },
     "Pin this message" : {
       "comment" : "The headline string for the pin message pop-up"
+    },
+    "Pinned" : {
+      "comment" : "The status label shown on a pinned feed message."
     },
     "Post" : {
       "comment" : "The string for the 'Post' context menu option."
@@ -391,6 +572,9 @@
     "Search for the person you want to mention" : {
       "comment" : "The subtitle string for the search pop-up when trying to tag a user in a message or reply."
     },
+    "Season %lld" : {
+      "comment" : "The label naming a season by its number."
+    },
     "See Also" : {
       "comment" : "The string for the 'see also' section."
     },
@@ -418,6 +602,9 @@
     "Share someone else's post on your timeline by reposting it. When you do, it'll show up here." : {
       "comment" : "The empty-state subheadline for the Re-shares tab on the post activity screen."
     },
+    "Show %@'s Profile" : {
+      "comment" : "The context-menu action that opens a reviewer's profile."
+    },
     "Show fillers" : {
       "comment" : "The string for the 'Show fillers' context menu option."
     },
@@ -427,14 +614,64 @@
     "Show Replies" : {
       "comment" : "The string for the 'Show Replies' context menu option."
     },
+    "show.ratingsCount" : {
+      "comment" : "The ratings count shown on a show's rating bar.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Rating"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Ratings"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Something went wrong" : {
       "comment" : "Generic error alert title shown when a Parental Guide submission fails."
+    },
+    "Sorting by %@ (%@)" : {
+      "comment" : "The label naming the sort type and option in use.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sorting by %1$@ (%2$@)"
+          }
+        }
+      }
     },
     "Spam" : {
       "comment" : "Display name of the `spam` Parental Guide report reason."
     },
     "Spoiler" : {
       "comment" : "Display name of the `spoiler` Parental Guide report reason.\nLabel for the spoiler toggle in the Parental Guide editor."
+    },
+    "Staff" : {
+      "comment" : "The title shown on the staff profile badge."
+    },
+    "Stop sorting" : {
+      "comment" : "The menu action that stops sorting the library."
     },
     "Submit" : {
       "comment" : "Submit button title in the Parental Guide report sheet."
@@ -463,6 +700,12 @@
     "The leaderboard is empty. Pull to refresh or check back later." : {
       "comment" : "The empty-state detail shown when the reputation leaderboard has no entries."
     },
+    "The message contains spoilers - tap to view" : {
+      "comment" : "The warning shown over a message that contains spoilers."
+    },
+    "There are no characters matching your search. Please try a different query or check your WiFi connection." : {
+      "comment" : "The empty-state detail for a character search with no results."
+    },
     "There are no entries in this category yet." : {
       "comment" : "The empty-state body on a Parental Guide category screen when no entries exist."
     },
@@ -471,6 +714,12 @@
     },
     "This action can't be undone." : {
       "comment" : "Body of the confirmation alert when deleting a Parental Guide entry."
+    },
+    "This message is NSFW - tap to view" : {
+      "comment" : "The warning shown over a message that is NSFW."
+    },
+    "This message is NSFW and contains spoilers - tap to view" : {
+      "comment" : "The warning shown over a message that is NSFW and contains spoilers."
     },
     "This reason contains spoilers — click to view" : {
       "comment" : "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
@@ -502,6 +751,9 @@
     "Top OVA" : {
       "comment" : "The string for the 'top ova' browse option."
     },
+    "Top Percentile" : {
+      "comment" : "The label for the 'top percentile' milestone."
+    },
     "Top Specials" : {
       "comment" : "The string for the 'top specials' browse option."
     },
@@ -523,6 +775,12 @@
     "Unfollow" : {
       "comment" : "The string for the word 'unfollow'."
     },
+    "Unhelpful" : {
+      "comment" : "The context-menu action that marks a Parental Guide entry as unhelpful."
+    },
+    "United States" : {
+      "comment" : "The localized country name for the United States."
+    },
     "Unknown" : {
       "comment" : "Placeholder shown for an unknown rating in the Parental Guide summary."
     },
@@ -538,6 +796,9 @@
     "Up Next" : {
       "comment" : "The string for the 'Up Next' view title."
     },
+    "Verified" : {
+      "comment" : "The title shown on the verified profile badge."
+    },
     "View Guidelines" : {
       "comment" : "The action string for opening the community guidelines from the off-topic warning."
     },
@@ -546,6 +807,12 @@
     },
     "View posts" : {
       "comment" : "The label for the opt-in button to view a blocked user's posts"
+    },
+    "Violence & Profanity" : {
+      "comment" : "The descriptive label for the 'Violence & Profanity' TV rating."
+    },
+    "Welcome to Kurozora! Introduce yourself to get started (^_^)/" : {
+      "comment" : "The new-user badge description shown on your own profile."
     },
     "What stands out?" : {
       "comment" : "Placeholder for the reason text view in the Parental Guide editor."
@@ -581,6 +848,17 @@
     },
     "You re-shared" : {
       "comment" : "The string for the auth user's re-share attribution row."
+    },
+    "You were in the top %@%% of %@ this year." : {
+      "comment" : "The milestone label for a user's top percentile in a category.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You were in the top %1$@%% of %2$@ this year."
+          }
+        }
+      }
     },
     "You, followed by you!" : {
       "comment" : "The user-cell secondary line for your own profile when you have no followers yet."

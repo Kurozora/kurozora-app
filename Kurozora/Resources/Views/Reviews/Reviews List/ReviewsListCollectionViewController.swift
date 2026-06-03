@@ -71,7 +71,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased(with: Locale.current)))
 		#endif
 	}
 
@@ -97,7 +97,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		let detailString = "Be the first to place a review!"
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.reminders)
-		self.emptyBackgroundView.configureLabels(title: "No Reviews", detail: detailString)
+		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.reviews), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -128,7 +128,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reviews.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.reviews.lowercased(with: Locale.current)))
 			#endif
 		}
 
@@ -187,7 +187,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.reviews.lowercased(with: Locale.current)))
 		#endif
 
 		self.fetchInProgress = false

@@ -54,7 +54,7 @@ extension Studio {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: "Name", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+		let copyTitleAction = UIAction(title: L10n.name, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			UIPasteboard.general.string = self.attributes.name
 		}

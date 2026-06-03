@@ -94,7 +94,7 @@ extension LibraryViewController {
 	///    - sortType: The sort type currently in effect.
 	///    - option: The sort option that refines the sort type.
 	func updateSortTypeBarButtonItem(sortType: LibrarySortType, option: LibrarySortOption) {
-		self.sortTypeBarButtonItem.title = "Sorting by \(sortType.stringValue) (\(option.stringValue))"
+		self.sortTypeBarButtonItem.title = L10n.sortingBy(sortType.stringValue, option: option.stringValue)
 		self.sortTypeBarButtonItem.image = sortType == .none
 			? UIImage(systemName: "line.3.horizontal.decrease.circle")
 			: UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
@@ -174,7 +174,7 @@ extension LibraryViewController {
 		}
 
 		if let sortValue = self.libraryViewControllerDataSource?.sortValue(), sortValue != .none {
-			let stopSortingAction = UIAction(title: "Stop sorting", image: UIImage(systemName: "xmark.circle.fill"), attributes: .destructive) { [weak self] _ in
+			let stopSortingAction = UIAction(title: L10n.stopSorting, image: UIImage(systemName: "xmark.circle.fill"), attributes: .destructive) { [weak self] _ in
 				guard let self = self else {
 					return
 				}
@@ -230,7 +230,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 
 	func libraryListViewController(updateTotalCount totalCount: Int) {
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 9.0, *) {
-			self.navigationItem.subtitle = totalCount > 0 ? "\(totalCount) Items" : nil
+			self.navigationItem.subtitle = totalCount > 0 ? L10n.itemsCount(totalCount) : nil
 		} else {
 			self.navigationItem.title = "\(L10n.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
 		}

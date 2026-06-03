@@ -85,7 +85,7 @@ extension EpisodeDetail {
 			switch self {
 			case .rating:
 				let ratingCount = episode?.attributes.stats?.ratingCount ?? 0
-				return ratingCount != 0 ? "\(ratingCount.kkFormatted(precision: 0)) Ratings" : "Not enough ratings"
+				return ratingCount != 0 ? L10n.ratingsCount(ratingCount.kkFormatted(precision: 0), count: ratingCount) : L10n.notEnoughRatings
 			case .season:
 				return L10n.season
 			case .rank:

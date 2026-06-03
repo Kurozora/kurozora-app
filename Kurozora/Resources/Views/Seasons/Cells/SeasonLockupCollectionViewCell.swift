@@ -50,7 +50,7 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 		season.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure season number
-		self.countLabel.text = "Season \(season.attributes.number)"
+		self.countLabel.text = L10n.seasonNumber(season.attributes.number)
 
 		// Configure title
 		self.titleLabel.text = season.attributes.title

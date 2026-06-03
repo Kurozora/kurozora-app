@@ -24,7 +24,7 @@ enum KBrowser: Int, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .kurozora:
-			return "In-app (default)"
+			return L10n.browserInAppDefault
 		case .safari:
 			return "Safari"
 		case .brave:

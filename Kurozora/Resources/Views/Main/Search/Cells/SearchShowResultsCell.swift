@@ -63,7 +63,7 @@ class SearchShowResultsCell: KCollectionViewCell {
 			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
-		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : L10n.add.uppercased(), for: .normal)
+		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized(with: Locale.current)) ▾" : L10n.add.uppercased(with: Locale.current), for: .normal)
 
 		// Configure rating
 		self.showRatingLabel.text = show.attributes.tvRating.name

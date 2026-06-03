@@ -31,9 +31,9 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		guard let show = show else { return }
 
 		if let startedAt = show.attributes.startedAt {
-			self.secondaryLabel?.text = "\(L10n.expected.capitalized) \(startedAt.appFormatted(date: .abbreviated, time: .omitted))"
+			self.secondaryLabel?.text = "\(L10n.expected.capitalized(with: Locale.current)) \(startedAt.appFormatted(date: .abbreviated, time: .omitted))"
 		} else {
-			self.secondaryLabel?.text = L10n.comingSoon.capitalized
+			self.secondaryLabel?.text = L10n.comingSoon.capitalized(with: Locale.current)
 		}
 
 		// Configure banner

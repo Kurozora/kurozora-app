@@ -20,13 +20,13 @@ class TipJarCollectionViewController: KCollectionViewController {
 	}
 
 	var productFeatures: [ProductFeature] = [
-		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: .Promotional.InAppPurchases.icons),
-		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: .Promotional.InAppPurchases.chimes),
-		ProductFeature(title: "Get Animated", description: "Upgrade your profile with a gif image that captures your unique style.", image: .Promotional.InAppPurchases.gifs),
-		ProductFeature(title: "Change Your Identity", description: "Switch things up every now an then with a fresh username that truly represents you.", image: .Promotional.InAppPurchases.username),
-		ProductFeature(title: "Up to 500 Characters", description: "Have more to say? Express yourself fully with a 500 character limit for your feed messages.", image: .Promotional.InAppPurchases.characterCount500),
-		ProductFeature(title: "Unlock Pro Badge", description: "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.", image: .Promotional.InAppPurchases.proBadge),
-		ProductFeature(title: "Support the Community", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: .Promotional.InAppPurchases.support)
+		ProductFeature(title: L10n.featureAppIconsTitle, description: L10n.featureAppIconsDescription, image: .Promotional.InAppPurchases.icons),
+		ProductFeature(title: L10n.featureStartupChimesTitle, description: L10n.featureStartupChimesDescription, image: .Promotional.InAppPurchases.chimes),
+		ProductFeature(title: L10n.featureGetAnimatedTitle, description: L10n.featureGetAnimatedDescription, image: .Promotional.InAppPurchases.gifs),
+		ProductFeature(title: L10n.featureChangeIdentityTitle, description: L10n.featureChangeIdentityDescription, image: .Promotional.InAppPurchases.username),
+		ProductFeature(title: L10n.featureUpToCharacters(500), description: L10n.featureTipJarCharacterLimitDescription, image: .Promotional.InAppPurchases.characterCount500),
+		ProductFeature(title: L10n.featureProBadgeTitle, description: L10n.featureProBadgeDescription, image: .Promotional.InAppPurchases.proBadge),
+		ProductFeature(title: L10n.featureSupportCommunityTitle, description: L10n.featureSupportCommunityDescription, image: .Promotional.InAppPurchases.support)
 	]
 	var serviceType: ServiceType = .tipJar
 
@@ -127,7 +127,7 @@ extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelega
 		} catch StoreError.failedVerification {
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
-				_ = self.presentAlertController(title: "Purchase Failed", message: "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer.")
+				_ = self.presentAlertController(title: L10n.purchaseFailedTitle, message: L10n.purchaseVerificationFailedMessage)
 			}
 		} catch {
 			print("------ Failed purchase: \(error)")

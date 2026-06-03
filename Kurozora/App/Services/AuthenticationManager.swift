@@ -97,7 +97,7 @@ final class AuthenticationManager {
 			DispatchQueue.main.async {
 				if let error = authError {
 					UIApplication.topViewController?.presentAlertController(
-						title: "Error Authenticating",
+						title: L10n.errorAuthenticating,
 						message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
 					)
 				}
@@ -158,7 +158,7 @@ final class AuthenticationManager {
 
 			Task { @MainActor in
 				UIApplication.topViewController?.presentAlertController(
-					title: "Error Authenticating",
+					title: L10n.errorAuthenticating,
 					message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
 				)
 			}

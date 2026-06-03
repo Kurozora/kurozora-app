@@ -62,7 +62,7 @@ class RedeemTableViewController: ServiceTableViewController {
 
 	/// Configures the redeem bar button item.
 	private func configureRedeemBarButtonItem() {
-		self.redeemBarButtonItem = UIBarButtonItem(title: "Redeem 🚀", primaryAction: UIAction { [weak self] _ in
+		self.redeemBarButtonItem = UIBarButtonItem(title: L10n.redeemButton, primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.handleRedeemBarButtonItem()
 		})
@@ -84,7 +84,7 @@ class RedeemTableViewController: ServiceTableViewController {
 			self.imagePicker.delegate = self
 			self.present(self.imagePicker, animated: true, completion: nil)
 		} else {
-			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
+			self.presentAlertController(title: L10n.redeemNoCameraTitle, message: L10n.redeemNoCameraMessage)
 		}
 	}
 
@@ -114,7 +114,7 @@ class RedeemTableViewController: ServiceTableViewController {
 			return
 		}
 
-		self.presentAlertController(title: L10n.redeemSuccessHeadline, message: "\(redeemCode) was successfully redeemed 🤩")
+		self.presentAlertController(title: L10n.redeemSuccessHeadline, message: L10n.redeemSuccessMessage(redeemCode))
 	}
 
 	/// Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
@@ -172,7 +172,7 @@ extension RedeemTableViewController {
 			actionButtonTableViewCell.actionTextField.tag = indexPath.row
 			actionButtonTableViewCell.actionTextField.delegate = self
 			actionButtonTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-			actionButtonTableViewCell.actionTextField.placeholder = "Or enter your code manually"
+			actionButtonTableViewCell.actionTextField.placeholder = L10n.redeemManualPlaceholder
 			actionButtonTableViewCell.actionButton.isHidden = false
 			self.textFieldArray.append(actionButtonTableViewCell.actionTextField)
 			return actionButtonTableViewCell

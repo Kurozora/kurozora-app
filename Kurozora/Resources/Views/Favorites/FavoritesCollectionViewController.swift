@@ -83,7 +83,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.favorites.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.favorites.lowercased(with: Locale.current)))
 		#endif
 	}
 
@@ -177,7 +177,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 		}
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.favorites)
-		self.emptyBackgroundView.configureLabels(title: "No Favorites", detail: detailString)
+		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.favorites), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -205,7 +205,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 			self._prefersActivityIndicatorHidden = false
 
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.favorites.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.favorites.lowercased(with: Locale.current)))
 			#endif
 		}
 
@@ -251,7 +251,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 
 		// Reset refresh controller title
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.favorites.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.favorites.lowercased(with: Locale.current)))
 		#endif
 
 		self.fetchInProgress = false

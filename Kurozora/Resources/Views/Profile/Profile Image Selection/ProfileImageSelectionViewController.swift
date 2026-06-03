@@ -139,7 +139,7 @@ class ProfileImageSelectionViewController: KViewController {
 
 	private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
 		guard UIImagePickerController.isSourceTypeAvailable(sourceType) else {
-			self.presentAlertController(title: "Unavailable", message: "This feature is not available on your device.")
+			self.presentAlertController(title: L10n.imagePickerUnavailableTitle, message: L10n.imagePickerUnavailableMessage)
 			return
 		}
 

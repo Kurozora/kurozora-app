@@ -48,7 +48,7 @@ extension Review {
 		// Username action
 		if let user = self.relationships?.users?.data.first {
 			let username = user.attributes.username
-			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { _ in
+			let userAction = UIAction(title: L10n.showUserProfile(username), image: UIImage(systemName: "person.crop.circle.fill")) { _ in
 				self.visitOriginalPosterProfile(from: viewController)
 			}
 			userMenuElements.append(userAction)

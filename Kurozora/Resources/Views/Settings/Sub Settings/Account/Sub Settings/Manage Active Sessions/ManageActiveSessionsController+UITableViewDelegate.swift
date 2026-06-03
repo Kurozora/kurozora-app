@@ -83,7 +83,7 @@ extension ManageActiveSessionsController {
 		case .current:
 			return nil
 		case .other:
-			let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] _, _, completionHandler in
+			let signOutOfSessionAction = UIContextualAction(style: .destructive, title: L10n.signOut) { [weak self] _, _, completionHandler in
 				guard
 					let self = self,
 					let session = self.cache[indexPath] as? Session

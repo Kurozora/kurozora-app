@@ -50,13 +50,13 @@ extension ParentalGuideEntry {
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		let helpfulAction = UIAction(title: "Helpful", image: UIImage(systemName: "hand.thumbsup")) { _ in
+		let helpfulAction = UIAction(title: L10n.helpful, image: UIImage(systemName: "hand.thumbsup")) { _ in
 			Task {
 				await self.castVote(.helpful, indexPath: userInfo?["indexPath"] as? IndexPath)
 			}
 		}
 
-		let unhelpfulAction = UIAction(title: "Unhelpful", image: UIImage(systemName: "hand.thumbsdown")) { _ in
+		let unhelpfulAction = UIAction(title: L10n.unhelpful, image: UIImage(systemName: "hand.thumbsdown")) { _ in
 			Task {
 				await self.castVote(.unhelpful, indexPath: userInfo?["indexPath"] as? IndexPath)
 			}
@@ -65,26 +65,26 @@ extension ParentalGuideEntry {
 		menuElements.append(UIMenu(title: "", options: .displayInline, children: [helpfulAction, unhelpfulAction]))
 
 		let mediaType = userInfo?["mediaType"] as? ParentalGuide.MediaType
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up")) { _ in
 			self.openShareSheet(on: viewController, mediaType: mediaType, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 
 		menuElements.append(UIMenu(title: "", options: .displayInline, children: [shareAction]))
 
 		if let viewerID = User.current?.id.rawValue, viewerID == self.attributes.userID {
-			let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak viewController] _ in
+			let editAction = UIAction(title: L10n.edit, image: UIImage(systemName: "pencil")) { [weak viewController] _ in
 				guard let viewController = viewController else { return }
 
 				self.presentEditor(in: viewController, mediaType: userInfo?["mediaType"] as? ParentalGuide.MediaType)
 			}
 
-			let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+			let deleteAction = UIAction(title: L10n.delete, image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
 				self.confirmDelete(via: viewController, indexPath: userInfo?["indexPath"] as? IndexPath)
 			}
 
 			menuElements.append(UIMenu(title: "", options: .displayInline, children: [editAction, deleteAction]))
 		} else if User.isSignedIn {
-			let reportAction = UIAction(title: "Report", image: UIImage(systemName: "exclamationmark.triangle"), attributes: .destructive) { _ in
+			let reportAction = UIAction(title: L10n.report, image: UIImage(systemName: "exclamationmark.triangle"), attributes: .destructive) { _ in
 				Task {
 					await self.reportEntry(on: viewController)
 				}
@@ -248,8 +248,8 @@ extension ParentalGuideEntry {
 	///    - viewController: The view controller presenting the alert.
 	///    - indexPath: The index path of the cell that initiated the delete.
 	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, indexPath: IndexPath?) {
-		let alert = UIAlertController.alert(title: nil, message: "Are you sure you want to delete this entry?") { alertController in
-			let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+		let alert = UIAlertController.alert(title: nil, message: L10n.deleteEntryConfirmMessage) { alertController in
+			let deleteAction = UIAlertAction(title: L10n.delete, style: .destructive) { _ in
 				Task {
 					await self.remove(at: indexPath)
 				}

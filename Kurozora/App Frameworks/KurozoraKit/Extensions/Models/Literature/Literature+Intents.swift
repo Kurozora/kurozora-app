@@ -46,7 +46,7 @@ extension Literature {
 		attributeSet.audiences = [self.attributes.tvRating.name]
 		attributeSet.rating = self.attributes.stats?.ratingAverage as? NSNumber
 		if let ratingDescription = self.attributes.stats?.ratingCount {
-			attributeSet.ratingDescription = "\(ratingDescription.kkFormatted(precision: 0)) Ratings"
+			attributeSet.ratingDescription = L10n.ratingsCount(ratingDescription.kkFormatted(precision: 0), count: ratingDescription)
 		}
 		attributeSet.startDate = self.attributes.startedAt
 		attributeSet.endDate = self.attributes.endedAt

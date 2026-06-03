@@ -111,7 +111,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 	override func configureEmptyDataView() {
 		emptyBackgroundView.configureImageView(image: .Empty.themes)
-		emptyBackgroundView.configureLabels(title: "No Themes", detail: "Themes are not available at this moment. Please check back again later.")
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.themes), detail: L10n.noThemesAvailableDetail)
 
 		collectionView.backgroundView?.alpha = 0
 	}
@@ -186,14 +186,14 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		let isUpToDate = !exists || KThemeStyle.isUpToDate(appTheme.id, version: appTheme.attributes.version)
 
 		if exists && (User.isPro || User.isSubscribed) && !isUpToDate {
-			return .start(title: "UPDATE")
+			return .start(title: L10n.themeButtonUpdate)
 		}
 		if exists {
 			let isSelected = currentThemeID == appTheme.id.rawValue
 			let title = isSelected ? "USING" : "USE"
 			return .downloaded(title: title, opensMenuOnTap: isSelected)
 		}
-		return .start(title: "GET")
+		return .start(title: L10n.themeButtonGet)
 	}
 
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, menuFor appTheme: AppTheme) -> UIMenu? {

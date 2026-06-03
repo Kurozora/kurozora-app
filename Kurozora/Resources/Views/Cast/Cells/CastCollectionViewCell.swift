@@ -67,7 +67,7 @@ class CastCollectionViewCell: KCollectionViewCell {
 
 		// Configure character
 		if let character = cast.relationships.characters.data.first {
-			self.characterNameLabel.text = "as \(character.attributes.name)"
+			self.characterNameLabel.text = L10n.castCharacterAs(character.attributes.name)
 			character.attributes.profileImage(imageView: self.characterImageView)
 		}
 		self.characterRoleLabel.text = cast.attributes.role.name

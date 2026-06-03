@@ -37,19 +37,19 @@ enum MilestoneKind: Int, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .minuetsWatched:
-			return "Minutes Watched"
+			return L10n.milestoneMinutesWatched
 		case .episodesWatched:
-			return "Episodes Watched"
+			return L10n.milestoneEpisodesWatched
 		case .minuetsRead:
-			return "Minutes Read"
+			return L10n.milestoneMinutesRead
 		case .chaptersRead:
-			return "Chapters Read"
+			return L10n.milestoneChaptersRead
 		case .minutesPlayed:
-			return "Minutes Played"
+			return L10n.milestoneMinutesPlayed
 		case .gamesPlayed:
-			return "Games Played"
+			return L10n.milestoneGamesPlayed
 		case .topPercentile:
-			return "Top Percentile"
+			return L10n.milestoneTopPercentile
 		}
 	}
 
@@ -57,15 +57,15 @@ enum MilestoneKind: Int, CaseIterable {
 	var unitValue: String {
 		switch self {
 		case .minuetsWatched, .minuetsRead, .minutesPlayed:
-			return "Minutes"
+			return L10n.unitMinutes
 		case .episodesWatched:
-			return "Episodes"
+			return L10n.episodes
 		case .chaptersRead:
-			return "Chapters"
+			return L10n.columnChapters
 		case .gamesPlayed:
-			return "Games"
+			return L10n.games
 		case .topPercentile:
-			return "Percentile"
+			return L10n.unitPercentile
 		}
 	}
 }

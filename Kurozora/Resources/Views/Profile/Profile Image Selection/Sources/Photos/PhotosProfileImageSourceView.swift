@@ -140,12 +140,12 @@ class PhotosProfileImageSourceView: UIView {
 	}
 
 	private func buildCameraMenu() -> UIMenu {
-		let takePhoto = UIAction(title: "Take Photo", image: UIImage(systemName: "camera")) { [weak self] _ in
+		let takePhoto = UIAction(title: L10n.pickerTakePhoto, image: UIImage(systemName: "camera")) { [weak self] _ in
 			guard let self = self else { return }
 			self.delegate?.photosProfileImageSourceViewDidRequestCamera(self)
 		}
 
-		let photoLibrary = UIAction(title: "Photo Library", image: UIImage(systemName: "photo.on.rectangle")) { [weak self] _ in
+		let photoLibrary = UIAction(title: L10n.pickerPhotoLibrary, image: UIImage(systemName: "photo.on.rectangle")) { [weak self] _ in
 			guard let self = self else { return }
 			self.delegate?.photosProfileImageSourceViewDidRequestPhotos(self)
 		}
@@ -220,16 +220,16 @@ class PhotosProfileImageSourceView: UIView {
 			self.emptyBackgroundView.isHidden = false
 			self.collectionView.isHidden = true
 			self.emptyBackgroundView.configureImageView(image: UIImage(systemName: "photo.on.rectangle.angled")!)
-			self.emptyBackgroundView.configureLabels(title: "Access Your Photos", detail: "Allow access to your photo library to choose a profile picture.")
-			self.emptyBackgroundView.configureButton(title: "Allow Access") { [weak self] in
+			self.emptyBackgroundView.configureLabels(title: L10n.photoAccessTitle, detail: L10n.photoAccessDetail)
+			self.emptyBackgroundView.configureButton(title: L10n.photoAccessAllowButton) { [weak self] in
 				self?.requestPhotoLibraryAccessIfNeeded()
 			}
 		case .denied:
 			self.emptyBackgroundView.isHidden = false
 			self.collectionView.isHidden = true
 			self.emptyBackgroundView.configureImageView(image: UIImage(systemName: "photo.on.rectangle.angled")!)
-			self.emptyBackgroundView.configureLabels(title: "Photo Access Denied", detail: "You've denied photo library access. You can change this in Settings.")
-			self.emptyBackgroundView.configureButton(title: "Open Settings") {
+			self.emptyBackgroundView.configureLabels(title: L10n.photoAccessDeniedTitle, detail: L10n.photoAccessDeniedDetail)
+			self.emptyBackgroundView.configureButton(title: L10n.openSettings) {
 				#if targetEnvironment(macCatalyst)
 					let settingsUrl = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")
 				#else
@@ -241,7 +241,7 @@ class PhotosProfileImageSourceView: UIView {
 			self.emptyBackgroundView.isHidden = false
 			self.collectionView.isHidden = true
 			self.emptyBackgroundView.configureImageView(image: UIImage(systemName: "photo.on.rectangle.angled")!)
-			self.emptyBackgroundView.configureLabels(title: "Photo Access Restricted", detail: "Photo library access is restricted on this device.")
+			self.emptyBackgroundView.configureLabels(title: L10n.photoAccessRestrictedTitle, detail: L10n.photoAccessRestrictedDetail)
 		@unknown default:
 			break
 		}

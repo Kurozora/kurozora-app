@@ -56,7 +56,7 @@ class UserAchievementsCollectionViewController: KCollectionViewController {
 		self.title = L10n.achievements
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.achievements.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.achievements.lowercased(with: Locale.current)))
 		#endif
 
 		self.configureDataSource()
@@ -122,7 +122,7 @@ class UserAchievementsCollectionViewController: KCollectionViewController {
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.achievements.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.achievements.lowercased(with: Locale.current)))
 		#endif
 
 		let userIdentity = UserIdentity(id: user.id)
@@ -147,7 +147,7 @@ class UserAchievementsCollectionViewController: KCollectionViewController {
 		self.endFetch()
 
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.achievements.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.achievements.lowercased(with: Locale.current)))
 		#endif
 	}
 }

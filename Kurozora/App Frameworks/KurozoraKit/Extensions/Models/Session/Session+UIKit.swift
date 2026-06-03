@@ -45,7 +45,7 @@ extension Session {
 		var menuElements: [UIMenuElement] = []
 
 		// Sign out of session action
-		let signOutOfSessionAction = UIAction(title: "Sign Out of Session", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
+		let signOutOfSessionAction = UIAction(title: L10n.signOutOfSession, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				Task {
 					await self.signOutOfSession(at: indexPath)

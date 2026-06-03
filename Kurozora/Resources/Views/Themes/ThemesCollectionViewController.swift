@@ -23,7 +23,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased(with: Locale.current)))
 			#endif
 			#endif
 		}
@@ -64,7 +64,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 		// Setup refresh control
 		self._prefersRefreshControlDisabled = false
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.themes.lowercased(with: Locale.current)))
 		#endif
 		#else
 		self._prefersRefreshControlDisabled = true
@@ -88,7 +88,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 
 	override func configureEmptyDataView() {
 		emptyBackgroundView.configureImageView(image: .Empty.genres)
-		emptyBackgroundView.configureLabels(title: "No Themes", detail: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.")
+		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.themes), detail: L10n.cantGetListDetail(L10n.themes.lowercased(with: Locale.current)))
 
 		collectionView.backgroundView?.alpha = 0
 	}
@@ -107,7 +107,7 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.themes.lowercased()))
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingItems(L10n.themes.lowercased(with: Locale.current)))
 			#endif
 			#endif
 		}

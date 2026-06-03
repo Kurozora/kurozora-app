@@ -67,8 +67,8 @@ class SelfLabelViewController: KViewController {
 
 		self.configureView()
 
-		self.titleLabel.text = "Add a content warning"
-		self.subtitleLabel.text = "Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences."
+		self.titleLabel.text = L10n.selfLabelTitle
+		self.subtitleLabel.text = L10n.selfLabelSubtitle
 		self.labelSegmentedControl.segmentTitles = self.options.map { selfLabel in
 			selfLabel.stringValue
 		}
@@ -150,7 +150,7 @@ class SelfLabelViewController: KViewController {
 	private func configurePrimaryButton() {
 		self.primaryButton = KTintedButton()
 		self.primaryButton.translatesAutoresizingMaskIntoConstraints = false
-		self.primaryButton.setTitle("Done", for: .normal)
+		self.primaryButton.setTitle(L10n.done, for: .normal)
 		self.primaryButton.titleLabel?.font = .preferredFont(forTextStyle: .body)
 		self.primaryButton.highlightBackgroundColorEnabled = true
 		self.primaryButton.addAction(UIAction { [weak self] _ in

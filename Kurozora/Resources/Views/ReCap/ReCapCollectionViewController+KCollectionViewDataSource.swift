@@ -50,7 +50,7 @@ extension ReCapCollectionViewController {
 				return nil
 			case .topShows(let recap), .topGames(let recap), .topLiteratures(let recap):
 				title = L10n.top(recap.attributes.type)
-				subtitle = L10n.totalSeries("\(recap.attributes.totalSeriesCount)")
+				subtitle = L10n.totalSeries(recap.attributes.totalSeriesCount)
 			case .topGenres(let recap), .topThemes(let recap):
 				title = L10n.top(recap.attributes.type)
 				subtitle = nil

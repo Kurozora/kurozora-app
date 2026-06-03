@@ -75,7 +75,7 @@ class CharacterSearchViewController: KCollectionViewController {
 
 		// Add Refresh Control to Collection View
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased(with: Locale.current)))
 		#endif
 
 		self.navigationItem.searchController = self.searchController
@@ -193,7 +193,7 @@ class CharacterSearchViewController: KCollectionViewController {
 
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
-		self.emptyBackgroundView.configureLabels(title: "No Characters", detail: "There are no characters matching your search. Please try a different query or check your WiFi connection.")
+		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.characters), detail: L10n.noCharactersSearchDetail)
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -237,7 +237,7 @@ class CharacterSearchViewController: KCollectionViewController {
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased(with: Locale.current)))
 		#endif
 		#endif
 	}

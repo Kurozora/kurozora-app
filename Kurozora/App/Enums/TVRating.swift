@@ -35,15 +35,15 @@ enum TVRating: Int, CaseIterable {
 	var description: String {
 		switch self {
 		case .notRated:
-			return "Not Rated"
+			return L10n.tvRatingNotRated
 		case .allAges:
-			return "All Ages"
+			return L10n.tvRatingAllAges
 		case .pg12:
-			return "Parental Guidance Suggested"
+			return L10n.tvRatingParentalGuidance
 		case .r15:
-			return "Violence & Profanity"
+			return L10n.tvRatingViolenceProfanity
 		case .r18:
-			return "Adults Only"
+			return L10n.tvRatingAdultsOnly
 		}
 	}
 

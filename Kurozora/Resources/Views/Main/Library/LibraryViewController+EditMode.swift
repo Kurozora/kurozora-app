@@ -285,8 +285,8 @@ extension LibraryViewController {
 	/// - Returns: A destructive menu containing the delete confirmation action.
 	private func makeBatchDeleteMenu(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath]) -> UIMenu {
 		let count = selectedIndexPaths.count
-		let buttonTitle: String = count == 1 ? L10n.deleteItem : L10n.deleteItems(count)
-		let message: String = count == 1 ? L10n.deleteSingleItemConfirmation : L10n.deleteMultipleItemsConfirmation
+		let buttonTitle: String = L10n.deleteItems(count)
+		let message: String = L10n.deleteItemsConfirmation(count)
 
 		let confirmAction = UIAction(title: buttonTitle, image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
 			self?.performBatchDelete(currentSection: currentSection, selectedIndexPaths: selectedIndexPaths)

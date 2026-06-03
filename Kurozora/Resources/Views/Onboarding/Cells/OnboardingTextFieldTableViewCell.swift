@@ -23,31 +23,31 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 		case .signUp:
 			switch self.textField.textType {
 			case .username:
-				self.textField.placeholder = "Username: pick a cool one 🙈"
+				self.textField.placeholder = L10n.onboardingUsernamePlaceholder
 			case .emailAddress:
-				self.textField.placeholder = "Email: we all forget our passwords 🙉"
+				self.textField.placeholder = L10n.onboardingSignUpEmailPlaceholder
 			case .password:
-				self.textField.placeholder = "Password: make it super secret 🙊"
+				self.textField.placeholder = L10n.onboardingSignUpPasswordPlaceholder
 			default: break
 			}
 		case .siwa:
 			switch self.textField.textType {
 			case .username:
-				self.textField.placeholder = "Username: pick a cool one 🙈"
+				self.textField.placeholder = L10n.onboardingUsernamePlaceholder
 			default: break
 			}
 		case .signIn:
 			switch self.textField.textType {
 			case .emailAddress:
-				self.textField.placeholder = "Your cool email address 🙌"
+				self.textField.placeholder = L10n.onboardingSignInEmailPlaceholder
 			case .password:
-				self.textField.placeholder = "Your super secret password 👀"
+				self.textField.placeholder = L10n.onboardingSignInPasswordPlaceholder
 			default: break
 			}
 		case .reset:
 			switch self.textField.textType {
 			case .emailAddress:
-				self.textField.placeholder = "Your email address to the rescue 💌"
+				self.textField.placeholder = L10n.onboardingResetEmailPlaceholder
 			default: break
 			}
 		case .twoFactor:
