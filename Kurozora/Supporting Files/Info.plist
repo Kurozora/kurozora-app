@@ -100,7 +100,6 @@
 		<string>googlechrome</string>
 		<string>firefox-focus</string>
 		<string>firefox</string>
-		<string>dolphin</string>
 		<string>brave</string>
 		<string>ddgquicklink</string>
 		<string>medium</string>
@@ -108,6 +107,8 @@
 		<string>fb</string>
 		<string>whatsapp</string>
 		<string>youtube</string>
+		<string>x-fantastical3</string>
+		<string>protoncalendar</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -138,6 +139,8 @@
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile picture or share your images in the app.</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>app.kurozora.tracker.user-activity.openShow</string>
