@@ -193,15 +193,15 @@ final class KDownloadButton: UIControl {
 	}
 
 	private func applyChevronVisibility() {
-		guard case .downloaded = self.currentState, self.downloadedButton.menu != nil else {
+		switch self.currentState {
+		case .downloaded where self.downloadedButton.menu != nil:
+			let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold)
+			self.downloadedButton.configuration?.image = UIImage(systemName: "chevron.down", withConfiguration: symbolConfiguration)
+			self.downloadedButton.configuration?.imagePlacement = .trailing
+			self.downloadedButton.configuration?.imagePadding = 4
+		default:
 			self.downloadedButton.configuration?.image = nil
-			return
 		}
-
-		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold)
-		self.downloadedButton.configuration?.image = UIImage(systemName: "chevron.down", withConfiguration: symbolConfiguration)
-		self.downloadedButton.configuration?.imagePlacement = .trailing
-		self.downloadedButton.configuration?.imagePadding = 4
 	}
 
 	private func preferredWidth(for state: KDownloadButtonState) -> CGFloat {

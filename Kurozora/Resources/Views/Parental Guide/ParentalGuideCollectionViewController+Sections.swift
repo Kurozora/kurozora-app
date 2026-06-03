@@ -29,6 +29,16 @@ extension ParentalGuideCollectionViewController {
 				return category.displayName
 			}
 		}
+
+		/// The associated parental guide category.
+		var category: ParentalGuideCategory? {
+			switch self {
+			case .category(let category):
+				return category
+			case .summary:
+				return nil
+			}
+		}
 	}
 
 	/// The set of available item kinds.

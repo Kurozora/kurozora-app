@@ -54,12 +54,12 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 
 	/// Get the renewal info and transaction from the subscription status.
 	fileprivate func getRenewalInfoAndTransaction(from status: Product.SubscriptionInfo.Status) -> (Product.SubscriptionInfo.RenewalInfo, Transaction)? {
-		guard case .verified(let renewalInfo) = status.renewalInfo,
-			  case .verified(let transaction) = status.transaction else {
+		switch (status.renewalInfo, status.transaction) {
+		case (.verified(let renewalInfo), .verified(let transaction)):
+			return (renewalInfo, transaction)
+		default:
 			return nil
 		}
-
-		return (renewalInfo, transaction)
 	}
 
 	/// Build a string description of the renewal status to display to the user.

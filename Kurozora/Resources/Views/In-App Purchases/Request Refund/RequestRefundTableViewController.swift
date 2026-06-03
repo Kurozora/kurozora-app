@@ -151,6 +151,17 @@ extension RequestRefundTableViewController {
 		/// A store transaction.
 		case transaction(_ transaction: StoreTransaction)
 
+		// MARK: - Properties
+		/// The associated store transaction.
+		var transaction: StoreTransaction? {
+			switch self {
+			case .transaction(let transaction):
+				return transaction
+			case .header:
+				return nil
+			}
+		}
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {

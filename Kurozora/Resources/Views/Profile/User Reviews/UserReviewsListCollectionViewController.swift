@@ -370,6 +370,15 @@ extension UserReviewsListCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review)
 
+		// MARK: - Properties
+		/// The associated review.
+		var review: Review? {
+			switch self {
+			case .review(let review):
+				return review
+			}
+		}
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {

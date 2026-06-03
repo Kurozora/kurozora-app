@@ -22,7 +22,7 @@ extension RequestRefundTableViewController {
 		tableView.deselectRow(at: indexPath, animated: true)
 
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
-		guard case .transaction(let transaction) = itemKind, transaction.attributes.isRefundable else { return }
+		guard let transaction = itemKind.transaction, transaction.attributes.isRefundable else { return }
 		guard let windowScene = self.view.window?.windowScene else { return }
 		guard let transactionID = UInt64(transaction.attributes.transactionID) else { return }
 

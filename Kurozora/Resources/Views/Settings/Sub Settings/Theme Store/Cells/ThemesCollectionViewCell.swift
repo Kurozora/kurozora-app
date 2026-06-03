@@ -126,9 +126,11 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func computedMenu() -> UIMenu? {
-		guard case .other(let theme) = self.kTheme else {
+		switch self.kTheme {
+		case .other(let theme):
+			return self.delegate?.themesCollectionViewCell(self, menuFor: theme)
+		default:
 			return nil
 		}
-		return self.delegate?.themesCollectionViewCell(self, menuFor: theme)
 	}
 }

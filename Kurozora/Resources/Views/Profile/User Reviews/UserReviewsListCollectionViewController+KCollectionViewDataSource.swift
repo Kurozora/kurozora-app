@@ -18,7 +18,7 @@ extension UserReviewsListCollectionViewController {
 		let baseReviewCell = self.getConfiguredBaseReviewCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
-			guard case .review(let review) = itemKind else { return nil }
+			guard let review = itemKind.review else { return nil }
 
 			if review.relationships?.literatures != nil {
 				return collectionView.dequeueConfiguredReusableCell(using: baseReviewCell, for: indexPath, item: itemKind)
@@ -59,7 +59,7 @@ extension UserReviewsListCollectionViewController {
 	func getConfiguredGameReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: GameReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			guard case .review(let review) = itemKind else { return }
+			guard let review = itemKind.review else { return }
 
 			let game: Game? = self.fetchModel(at: indexPath)
 
@@ -76,7 +76,7 @@ extension UserReviewsListCollectionViewController {
 	func getConfiguredBaseReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: BaseReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			guard case .review(let review) = itemKind else { return }
+			guard let review = itemKind.review else { return }
 
 			if review.relationships?.shows != nil {
 				let show: Show? = self.fetchModel(at: indexPath)
@@ -105,7 +105,7 @@ extension UserReviewsListCollectionViewController {
 	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, ItemKind>(cellNib: MusicReviewLockupCollectionViewCell.nib) { [weak self] musicReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			guard case .review(let review) = itemKind else { return }
+			guard let review = itemKind.review else { return }
 
 			let song: Song? = self.fetchModel(at: indexPath)
 
@@ -122,7 +122,7 @@ extension UserReviewsListCollectionViewController {
 	func getConfiguredEpisodeReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: EpisodeReviewLockupCollectionViewCell.nib) { [weak self] episodeReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			guard case .review(let review) = itemKind else { return }
+			guard let review = itemKind.review else { return }
 
 			let episode: Episode? = self.fetchModel(at: indexPath)
 
@@ -139,7 +139,7 @@ extension UserReviewsListCollectionViewController {
 	func getConfiguredPersonReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, ItemKind>(cellNib: PersonReviewLockupCollectionViewCell.nib) { [weak self] baseReviewLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			guard case .review(let review) = itemKind else { return }
+			guard let review = itemKind.review else { return }
 
 			if review.relationships?.characters != nil {
 				let character: Character? = self.fetchModel(at: indexPath)

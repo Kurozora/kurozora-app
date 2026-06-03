@@ -338,7 +338,7 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 		case .parentalGuideCategoryEntriesSegue:
 			guard let destination = destination as? ParentalGuideCategoryEntriesCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
-			guard case let .category(category) = self.snapshot.sectionIdentifiers[indexPath.section] else { return }
+			guard let category = self.snapshot.sectionIdentifiers[indexPath.section].category else { return }
 
 			destination.mediaType = self.mediaType
 			destination.category = category
