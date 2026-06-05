@@ -94,7 +94,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	override func configureEmptyDataView() {
-		let detailString = "Be the first to place a review!"
+		let detailString = L10n.beFirstToReview
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.reminders)
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.reviews), detail: detailString)
@@ -367,7 +367,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 						cell.configure(using: nil)
 					} else {
 						cell.configure(using: previousRating)
-						self.presentAlertController(title: L10n.ratingFailed, message: "Not available yet for this type.")
+						self.presentAlertController(title: L10n.ratingFailed, message: L10n.notAvailableForType)
 					}
 				} catch {
 					cell.configure(using: previousRating)

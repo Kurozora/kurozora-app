@@ -16,7 +16,7 @@ extension Game {
 	/// Create an NSUserActivity from the selected game.
 	var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: .openGame)
-		let title = "Open \(self.attributes.title)"
+		let title = L10n.openTitle(self.attributes.title)
 		userActivity.contentAttributeSet = self.contentAttributeSet
 		userActivity.title = self.attributes.title
 		try? userActivity.setTypedPayload(["id": self.id])

@@ -27,7 +27,7 @@ struct LaunchAppAccessory: Widget {
 			.accessoryRectangular,
 		])
 		.configurationDisplayName("Kurozora")
-		.description("Quikly launch the Kurozora app")
+		.description("Quickly launch the Kurozora app")
 		.contentMarginsDisabled()
 	}
 }

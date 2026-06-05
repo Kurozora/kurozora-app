@@ -38,8 +38,8 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.seasons }
-	override var emptyStateTitle: String { "No Seasons" }
-	override var emptyStateDetail: String { "This show doesn't have seasons yet. Please check back again later." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.seasons) }
+	override var emptyStateDetail: String { L10n.noItemsYet(L10n.show.lowercased(with: .current), L10n.seasons.lowercased(with: .current)) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.seasonIdentities.isEmpty

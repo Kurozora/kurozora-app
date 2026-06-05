@@ -64,8 +64,8 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.gameLibrary }
-	override var emptyStateTitle: String { "No Games" }
-	override var emptyStateDetail: String { "Can't get games list. Please refresh the page or restart the app and check your WiFi connection." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.games) }
+	override var emptyStateDetail: String { L10n.cantGetListRefresh(L10n.games.lowercased(with: .current)) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.gameIdentities.isEmpty || !self.relatedGames.isEmpty

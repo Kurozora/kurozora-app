@@ -67,7 +67,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override var emptyStateImage: UIImage { .Empty.animeLibrary }
 
-	override var emptyStateDetail: String { "This show doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.show.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

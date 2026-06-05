@@ -132,7 +132,7 @@ extension HomeCollectionViewController {
 				segueID = .songsListSegue
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .quickLinks:
-				exploreSectionTitleCell.configure(withTitle: "Quick Links", indexPath: indexPath)
+				exploreSectionTitleCell.configure(withTitle: L10n.quickLinks, indexPath: indexPath)
 			case .quickActions: break
 			case .legal: break
 			}

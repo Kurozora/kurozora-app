@@ -86,27 +86,27 @@ class BroadcastLabel: KSecondaryLabel {
 		if seconds >= secondsInYear {
 			let months = seconds / secondsInMonth
 			let days = (seconds % secondsInMonth) / secondsInDay
-			result = "\(months)M \(days)d"
+			result = "\(L10n.countdownMonths(months)) \(L10n.countdownDays(days))"
 		} else if seconds >= secondsInMonth {
 			let days = seconds / secondsInDay
 			let hours = (seconds % secondsInDay) / secondsInHour
-			result = "\(days)d \(hours)h"
+			result = "\(L10n.countdownDays(days)) \(L10n.countdownHours(hours))"
 		} else if seconds >= secondsInDay {
 			let days = seconds / secondsInDay
 			let hours = (seconds % secondsInDay) / secondsInHour
 			let minutes = (seconds % secondsInHour) / secondsInMinute
-			result = "\(days)d \(hours)h \(minutes)m"
+			result = "\(L10n.countdownDays(days)) \(L10n.countdownHours(hours)) \(L10n.countdownMinutes(minutes))"
 		} else if seconds >= secondsInHour {
 			let hours = seconds / secondsInHour
 			let minutes = (seconds % secondsInHour) / secondsInMinute
 			let secs = seconds % secondsInMinute
-			result = "\(hours)h \(minutes)m \(secs)s"
+			result = "\(L10n.countdownHours(hours)) \(L10n.countdownMinutes(minutes)) \(L10n.countdownSeconds(secs))"
 		} else if seconds >= secondsInMinute {
 			let minutes = seconds / secondsInMinute
 			let secs = seconds % secondsInMinute
-			result = "\(minutes)m \(secs)s"
+			result = "\(L10n.countdownMinutes(minutes)) \(L10n.countdownSeconds(secs))"
 		} else {
-			result = "\(seconds)s"
+			result = L10n.countdownSeconds(seconds)
 		}
 
 		return result
@@ -125,14 +125,14 @@ class BroadcastLabel: KSecondaryLabel {
 
 		if diffInSeconds > 0 {
 			// Future broadcast
-			return formatTimeDifference(seconds: diffInSeconds) + " from now"
+			return L10n.timeFromNow(formatTimeDifference(seconds: diffInSeconds))
 		} else if diffInSeconds <= 0 && abs(diffInSeconds) <= broadcastDuration {
 			// Broadcast happening (within the duration)
-			return formatTimeDifference(seconds: abs(diffInSeconds)) + " ago"
+			return L10n.timeAgo(formatTimeDifference(seconds: abs(diffInSeconds)))
 		} else {
 			// After the broadcast duration, switch back to counting until next broadcast
 			let nextBroadcastInSeconds = broadcastDuration + diffInSeconds
-			return formatTimeDifference(seconds: nextBroadcastInSeconds) + " from now"
+			return L10n.timeFromNow(formatTimeDifference(seconds: nextBroadcastInSeconds))
 		}
 	}
 }

@@ -16,8 +16,8 @@ class DisplaySettingsTableViewController: SubSettingsViewController, TypedSegueH
 
 	// MARK: - Properties
 	private let appearanceOptions: [DisplaySettingsCell.Option] = [
-		.init(identifier: AppAppearanceOption.light.rawValue, title: "Light", image: .Settings.Display.lightOption),
-		.init(identifier: AppAppearanceOption.dark.rawValue, title: "Dark", image: .Settings.Display.darkOption)
+		.init(identifier: AppAppearanceOption.light.rawValue, title: L10n.light, image: .Settings.Display.lightOption),
+		.init(identifier: AppAppearanceOption.dark.rawValue, title: L10n.dark, image: .Settings.Display.darkOption)
 	]
 	private var displayedAppAppearanceOption: AppAppearanceOption = AppAppearanceOption(rawValue: UserSettings.appearanceOption) ?? .light
 
@@ -67,15 +67,15 @@ class DisplaySettingsTableViewController: SubSettingsViewController, TypedSegueH
 
 	private func automaticDarkThemeOptionsValueText() -> String {
 		if UserSettings.darkThemeOption == DarkThemeOption.automatic.rawValue, KThemeStyle.isSolarNighttime {
-			return "Dark Until Sunrise"
+			return L10n.darkUntilSunrise
 		} else if UserSettings.darkThemeOption == DarkThemeOption.automatic.rawValue, !KThemeStyle.isSolarNighttime {
-			return "Light Until Sunset"
+			return L10n.lightUntilSunset
 		} else if UserSettings.darkThemeOption == DarkThemeOption.custom.rawValue, KThemeStyle.isCustomNighttime {
 			let startDate = UserSettings.darkThemeOptionStart.convertToAMPM()
-			return "Dark Until \(startDate)"
+			return L10n.darkUntil(startDate)
 		} else if UserSettings.darkThemeOption == DarkThemeOption.custom.rawValue, !KThemeStyle.isCustomNighttime {
 			let endDate = UserSettings.darkThemeOptionEnd.convertToAMPM()
-			return "Light Until \(endDate)"
+			return L10n.lightUntil(endDate)
 		}
 
 		return ""
@@ -221,9 +221,9 @@ extension DisplaySettingsTableViewController {
 
 		switch section {
 		case .appearance:
-			return "Appearance"
+			return L10n.appearance
 		case .blindness:
-			return "Blindness"
+			return L10n.blindness
 		case .navigationBar:
 			return nil
 		}
@@ -236,9 +236,9 @@ extension DisplaySettingsTableViewController {
 		case .appearance:
 			return nil
 		case .blindness:
-			return "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…"
+			return L10n.trueBlackFooter
 		case .navigationBar:
-			return "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me"
+			return L10n.largeTitlesFooter
 		}
 	}
 }

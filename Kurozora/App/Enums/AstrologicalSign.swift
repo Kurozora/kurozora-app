@@ -21,34 +21,34 @@ enum AstrologicalSign: Int, CaseIterable {
 	case aquarius = 10
 	case pisces = 11
 
-	// MARK: - Propreties
+	// MARK: - Properties
 	/// The title of an astrological sign.
 	var title: String {
 		switch self {
 		case .aries:
-			return "Aries"
+			return L10n.aries
 		case .taurus:
-			return "Taurus"
+			return L10n.taurus
 		case .gemini:
-			return "Gemini"
+			return L10n.gemini
 		case .cancer:
-			return "Cancer"
+			return L10n.cancer
 		case .leo:
-			return "Leo"
+			return L10n.leo
 		case .virgo:
-			return "Virgo"
+			return L10n.virgo
 		case .libra:
-			return "Libra"
+			return L10n.libra
 		case .scorpio:
-			return "Scorpio"
+			return L10n.scorpio
 		case .sagittarius:
-			return "Sagittarius"
+			return L10n.sagittarius
 		case .capricorn:
-			return "Capricorn"
+			return L10n.capricorn
 		case .aquarius:
-			return "Aquarius"
+			return L10n.aquarius
 		case .pisces:
-			return "Pisces"
+			return L10n.pisces
 		}
 	}
 

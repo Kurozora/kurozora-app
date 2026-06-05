@@ -390,12 +390,12 @@ final class Store: NSObject, ObservableObject {
 			return ""
 		}
 
-		let subscriptionDescription: String = subscription.subscriptionPeriod.displayUnit + " at " + product.displayPricePerMonth + "mo. Save " + product.priceSaved(comparedTo: firstProduct.pricePerMonth)
+		let subscriptionDescription = L10n.subscriptionSavingDescription(subscription.subscriptionPeriod.displayUnit, product.displayPricePerMonth, product.priceSaved(comparedTo: firstProduct.pricePerMonth))
 
 		// If it has an introduction price. For example a week of trial period.
 		if let introductoryOffer = product.subscription?.introductoryOffer {
 			let subscriptionPeriod = introductoryOffer.period.displayUnit
-			let subscriptionTrialPeriod = "Includes " + subscriptionPeriod + " free trial!"
+			let subscriptionTrialPeriod = L10n.subscriptionTrial(subscriptionPeriod)
 
 			if self.tier(for: product.id) == .plus1Month {
 				return subscriptionTrialPeriod

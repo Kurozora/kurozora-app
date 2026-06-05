@@ -74,11 +74,11 @@ extension ReCapCollectionViewController {
 				let title: String
 
 				if Date.now.components.month == 12 {
-					title = "December Re:CAP is still in progress. Check back in a week."
+					title = L10n.recapInProgressWeek(Month.december.name)
 				} else if let month = Month(rawValue: self.month) {
-					title = "\(month.name) Re:CAP is still in progress. Check back in early \(month.next.name)."
+					title = L10n.recapInProgressMonth(month.name, month.next.name)
 				} else {
-					title = "Re:CAP is still in progress. Check back early next month."
+					title = L10n.recapInProgressGeneric
 				}
 
 				let header: SectionLayoutKind = .header(title)
@@ -87,7 +87,7 @@ extension ReCapCollectionViewController {
 			}
 		} else {
 			if let month = Month(rawValue: self.month) {
-				let title = "Series that defined your arc in \(month.name)"
+				let title = L10n.recapDefiningSeries(month.name)
 				let sectionHeader = SectionLayoutKind.header(title)
 
 				self.snapshot.appendSections([sectionHeader])
@@ -142,7 +142,7 @@ extension ReCapCollectionViewController {
 			}
 
 			// Add milestones
-			let title = "These milestones marked your season finale"
+			let title = L10n.recapFinaleMilestones
 			let sectionHeader = SectionLayoutKind.header(title)
 
 			self.snapshot.appendSections([sectionHeader])

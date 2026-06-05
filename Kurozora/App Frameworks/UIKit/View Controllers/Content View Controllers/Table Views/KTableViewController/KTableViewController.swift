@@ -110,6 +110,12 @@ class KTableViewController: UITableViewController, SegueHandler {
 	}
 
 	// MARK: - Functions
+	/// Re-applies localized strings by reloading the table's content.
+	override func reloadLocalization() {
+		guard self.isViewLoaded else { return }
+		self.tableView.reloadData()
+	}
+
 	/// Configures the gradient view with default values.
 	fileprivate func configureGradientView() {
 		self.view.addSubview(self.gradientView)

@@ -1,916 +1,2726 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "%@ per %@" : {
-      "comment" : "The price shown alongside its billing period.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ per %2$@"
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ at %@mo. Save %@": {
+      "comment": "The subscription saving description, where the placeholders are the billing period, the monthly price and the saved percentage.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ at %2$@mo. Save %3$@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ voor %2$@/mnd. Bespaar %3$@"
           }
         }
       }
     },
-    "%@ was successfully redeemed 🤩" : {
-      "comment" : "The success message shown after a code is redeemed."
-    },
-    "%d was successfully redeemed 🤩" : {
-      "comment" : "The subheadline string for the redeem success pop-up."
-    },
-    "1 Minute" : {
-      "comment" : "The string for authenticating after 1 minute."
-    },
-    "2 Minutes" : {
-      "comment" : "The string for authenticating after 2 minutes."
-    },
-    "3 Minutes" : {
-      "comment" : "The string for authenticating after 3 minutes."
-    },
-    "4 Minutes" : {
-      "comment" : "The string for authenticating after 4 minutes."
-    },
-    "5 Minutes" : {
-      "comment" : "The string for authenticating after 5 minutes."
-    },
-    "30 Seconds" : {
-      "comment" : "The string for authenticating after 30 seconds."
-    },
-    "About Me" : {
-      "comment" : "The section label above the bio field on the edit profile screen."
-    },
-    "Access Your Photos" : {
-      "comment" : "The empty-state title prompting the user to grant photo access."
-    },
-    "Active Sessions" : {
-      "comment" : "The title of the active sessions screen."
-    },
-    "All purchases have been restored.\nPlease remember that only previously bought non-consumable products and auto-renewable subscriptions can be restored." : {
-      "comment" : "The message string for restoring IAP has succeeded."
-    },
-    "Allow Access" : {
-      "comment" : "The button that requests photo library access."
-    },
-    "Allow access to your photo library to choose a profile picture." : {
-      "comment" : "The empty-state detail prompting the user to grant photo access."
-    },
-    "Authentication is required every time you return to the app." : {
-      "comment" : "The string for requiring authentication immediately."
-    },
-    "Authentication is required if the app remains in the background for more than %@." : {
-      "comment" : "The string for the 'Authentication Interval' settings description."
-    },
-    "Change Your Identity" : {
-      "comment" : "The 'change your identity' product feature title."
-    },
-    "Choose from a range of themes to create a look that reflects your personality and style." : {
-      "comment" : "The 'dynamic themes' product feature description."
-    },
-    "Continue your purchase?" : {
-      "comment" : "The alert title prompting the user to resume a promoted purchase."
-    },
-    "Current Session" : {
-      "comment" : "The string for the 'current session' section."
-    },
-    "Display Name" : {
-      "comment" : "The section label above the display name field on the edit profile screen."
-    },
-    "Dive even deeper into discussions with an extended 1000 character limit for your feed messages." : {
-      "comment" : "The subscription feed-message character-limit product feature description."
-    },
-    "Dynamic Themes" : {
-      "comment" : "The 'dynamic themes' product feature title."
-    },
-    "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora." : {
-      "comment" : "The 'unlock pro badge' product feature description."
-    },
-    "Email: we all forget our passwords 🙉" : {
-      "comment" : "The email field placeholder during sign-up."
-    },
-    "Error Authenticating" : {
-      "comment" : "The alert title shown when biometric authentication fails."
-    },
-    "Error Redeeming Code" : {
-      "comment" : "The headline string for the redeem error pop-up."
-    },
-    "Error Updating Profile" : {
-      "comment" : "The alert title shown when updating the profile fails."
-    },
-    "For more information, please visit our " : {
-      "comment" : "The footer string to visit privacy policy."
-    },
-    "Found a Kurozora code in the wild? This is the place to redeem it!" : {
-      "comment" : "The subheadline string for the Redeem view."
-    },
-    "Get Animated" : {
-      "comment" : "The 'get animated' product feature title."
-    },
-    "Have more to say? Express yourself fully with a 500 character limit for your feed messages." : {
-      "comment" : "The tip jar feed-message character-limit product feature description."
-    },
-    "Immediately" : {
-      "comment" : "The string for authenticating immediately."
-    },
-    "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds." : {
-      "comment" : "The 'startup chimes' product feature description."
-    },
-    "Import 📲" : {
-      "comment" : "The import bar button on the library import screen."
-    },
-    "Integrate with Calendar" : {
-      "comment" : "The 'integrate with calendar' product feature title."
-    },
-    "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings." : {
-      "comment" : "The 'integrate with calendar' product feature description."
-    },
-    "Kurozora & Privacy" : {
-      "comment" : "The string for the phrase 'Kurozora & Privacy'."
-    },
-    "Kurozora Account" : {
-      "comment" : "The title of the account settings screen."
-    },
-    "Kurozora offers Sign in with Apple for users who want the extra peace of mind when it comes to security and privacy. Sign in with Apple is a convenient way to sign in to apps and sites while having more control over the information you share. Kurozora is restricted to asking only for your name and email address, and Apple won’t track your app activity or build a profile of you." : {
-      "comment" : "The footer string for the Sign in with Apple view."
-    },
-    "Kurozora+ Required" : {
-      "comment" : "The alert title shown when a feature requires Kurozora+."
-    },
-    "Make your home screen stand out with premium and limited time app icons." : {
-      "comment" : "The 'stylish app icons' product feature description."
-    },
-    "Manage Subscriptions" : {
-      "comment" : "The string for the 'manage subscriptions' settings option."
-    },
-    "onboarding.appleAuthenticationFailedMessage" : {
-      "comment" : "Error message shown when Apple authentication fails.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Authentication failed by Apple. Please try again."
+    "%@ per %@": {
+      "comment": "The price shown alongside its billing period.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ per %2$@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ per %2$@"
           }
         }
       }
     },
-    "onboarding.appleAuthenticationNotHandledMessage" : {
-      "comment" : "Error message shown when Apple authentication was not handled properly.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "An error occurred and the authentication was not handled by Apple. Please try again."
+    "%@ was successfully redeemed 🤩": {
+      "comment": "The success message shown after a code is redeemed.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is succesvol ingewisseld 🤩"
           }
         }
       }
     },
-    "onboarding.appleInvalidResponseMessage" : {
-      "comment" : "Error message shown when Apple returns an invalid authentication response.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "The app received an invalid response from Apple. Please try again."
+    "%d was successfully redeemed 🤩": {
+      "comment": "The subheadline string for the redeem success pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d is succesvol ingewisseld 🤩"
           }
         }
       }
     },
-    "onboarding.forgotPasswordAlertHeadline" : {
-      "comment" : "The headline string for resetting password alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Success!"
+    "%lld days": {
+      "comment": "The subscription period in days.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "dag"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dagen"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordAlertSubheadline" : {
-      "comment" : "The subheadline string for resetting password alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly."
+    "%lld months": {
+      "comment": "The subscription period in months.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "month"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld months"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "maand"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld maanden"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordButton" : {
-      "comment" : "The button string for resetting password.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Send ✨"
+    "%lld weeks": {
+      "comment": "The subscription period in weeks.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld weeks"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld weken"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordErrorAlertHeadline" : {
-      "comment" : "The headline string for resetting password alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Errr…"
+    "%lld years": {
+      "comment": "The subscription period in years.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "year"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld years"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "jaar"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld jaar"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordErrorAlertSubheadline" : {
-      "comment" : "The subheadline string for resetting password alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Please type a valid Kurozora Account 😣"
+    "%lldd": {
+      "comment": "The compact subscription period in days.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "d"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldd"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "d"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldd"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordHeadline" : {
-      "comment" : "The headline string for resetting password.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Forgot Password?"
+    "%lldm": {
+      "comment": "The compact subscription period in months.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "m"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldm"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "m"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldm"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordOptionsButton" : {
-      "comment" : "The button string for the forgot password option on the sign in screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Forgot your password? Let's reset 📧"
+    "%lldw": {
+      "comment": "The compact subscription period in weeks.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "w"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldw"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "w"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldw"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.forgotPasswordSubheadline" : {
-      "comment" : "The subheadline string for resetting password.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Enter your Kurozora Account to continue."
+    "%lldy": {
+      "comment": "The compact subscription period in years.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "y"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldy"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "j"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lldj"
+                }
+              }
+            }
           }
         }
       }
     },
-    "onboarding.genericSignInErrorMessage" : {
-      "comment" : "Generic error message shown when sign-in fails for an unknown reason.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "An error occurred while trying to sign in. Please try again."
+    "1 minute": {
+      "comment": "The one minute interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minuut"
           }
         }
       }
     },
-    "onboarding.onboardingDescription" : {
-      "comment" : "The description string shown below onboarding options.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Your Kurozora Account lets you access your library, favorites, reminders, reviews, and more on your devices, automatically."
+    "1 Minute": {
+      "comment": "The string for authenticating after 1 minute.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minuut"
           }
         }
       }
     },
-    "onboarding.onboardingOrSeparator" : {
-      "comment" : "The separator string between onboarding options.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "━━━━━━ or ━━━━━━"
+    "2 minutes": {
+      "comment": "The two minutes interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 minuten"
           }
         }
       }
     },
-    "onboarding.registerOptionsButton" : {
-      "comment" : "The button string for the register option on the sign in screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "New to Kurozora? Join us 🔥"
+    "2 Minutes": {
+      "comment": "The string for authenticating after 2 minutes.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 minuten"
           }
         }
       }
     },
-    "onboarding.signInButton" : {
-      "comment" : "The button string for signing in.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open sesame 👐"
+    "3 minutes": {
+      "comment": "The three minutes interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 minuten"
           }
         }
       }
     },
-    "onboarding.signInErrorTitle" : {
-      "comment" : "Alert title shown when the user cannot sign in.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Can't Sign In 😔"
+    "3 Minutes": {
+      "comment": "The string for authenticating after 3 minutes.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 minuten"
           }
         }
       }
     },
-    "onboarding.signInHeadline" : {
-      "comment" : "The headline string for signing in.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Kurozora Account"
+    "4 minutes": {
+      "comment": "The four minutes interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 minuten"
           }
         }
       }
     },
-    "onboarding.signInSubheadline" : {
-      "comment" : "The subheadline string for signing in.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Sign in with your Kurozora Account to use the library and other Kurozora services."
+    "4 Minutes": {
+      "comment": "The string for authenticating after 4 minutes.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 minuten"
           }
         }
       }
     },
-    "onboarding.signInWithAppleTitle" : {
-      "comment" : "Title for the button or screen that allows the user to sign in with Apple.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Sign in with Apple"
+    "5 minutes": {
+      "comment": "The five minutes interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 minuten"
           }
         }
       }
     },
-    "onboarding.signUpAlertHeadline" : {
-      "comment" : "The headline string for sign up alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Hooray!"
+    "5 Minutes": {
+      "comment": "The string for authenticating after 5 minutes.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 minuten"
           }
         }
       }
     },
-    "onboarding.signUpAlertSubheadline" : {
-      "comment" : "The subheadline string for sign up alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Account created successfully! Please check your email for confirmation."
+    "12 months": {
+      "comment": "The display phrase for a single-year subscription period, shown as twelve months.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 maanden"
           }
         }
       }
     },
-    "onboarding.signUpButton" : {
-      "comment" : "The button string for signing up.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Join 🤗"
+    "30 seconds": {
+      "comment": "The thirty seconds interval phrase used in the authentication interval description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 seconden"
           }
         }
       }
     },
-    "onboarding.signUpErrorAlertHeadline" : {
-      "comment" : "The headline string for sign up alert.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Can't Sign Up 😔"
+    "30 Seconds": {
+      "comment": "The string for authenticating after 30 seconds.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 seconden"
           }
         }
       }
     },
-    "onboarding.signUpHeadline" : {
-      "comment" : "The headline string for signing up.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "New to Kurozora?"
+    "a day": {
+      "comment": "The display phrase for a single-day subscription period.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "een dag"
           }
         }
       }
     },
-    "onboarding.signUpSubheadline" : {
-      "comment" : "The subheadline string for signing up.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Create an account and join the community."
+    "a month": {
+      "comment": "The display phrase for a single-month subscription period.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "een maand"
           }
         }
       }
     },
-    "onboarding.siwaButton" : {
-      "comment" : "The button string for sign in with Apple.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Join 🤗"
+    "a week": {
+      "comment": "The display phrase for a single-week subscription period.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "een week"
           }
         }
       }
     },
-    "onboarding.siwaHeadline" : {
-      "comment" : "The headline string for Sign in with Apple.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Setup Account"
+    "About Me": {
+      "comment": "The section label above the bio field on the edit profile screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Over mij"
           }
         }
       }
     },
-    "onboarding.siwaSubheadline" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Finish setting up your account and join the community."
+    "Access Your Photos": {
+      "comment": "The empty-state title prompting the user to grant photo access.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toegang tot je foto's"
           }
         }
       }
     },
-    "onboarding.twoFactorExpiredMessage" : {
-      "comment" : "Alert message shown when the two-factor authentication challenge expires.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Your verification session has expired. Please sign in again."
+    "Active Sessions": {
+      "comment": "The title of the active sessions screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actieve sessies"
           }
         }
       }
     },
-    "onboarding.twoFactorExpiredTitle" : {
-      "comment" : "Alert title shown when the two-factor authentication challenge expires.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Session Expired"
+    "All purchases have been restored.\nPlease remember that only previously bought non-consumable products and auto-renewable subscriptions can be restored.": {
+      "comment": "The message string for restoring IAP has succeeded.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle aankopen zijn hersteld.\nLet op: alleen eerder gekochte niet-verbruikbare producten en automatisch verlengende abonnementen kunnen worden hersteld."
           }
         }
       }
     },
-    "onboarding.twoFactorHeadline" : {
-      "comment" : "Headline shown on the two-factor authentication challenge screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Two-Factor Authentication"
+    "Allow Access": {
+      "comment": "The button that requests photo library access.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geef toegang"
           }
         }
       }
     },
-    "onboarding.twoFactorInvalidCode" : {
-      "comment" : "Inline error shown beneath the input field when the two-factor code is incorrect.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Incorrect code. Please try again."
+    "Allow access to your photo library to choose a profile picture.": {
+      "comment": "The empty-state detail prompting the user to grant photo access.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geef toegang tot je fotobibliotheek om een profielfoto te kiezen."
           }
         }
       }
     },
-    "onboarding.twoFactorInvalidFormat" : {
-      "comment" : "Inline error shown when the recovery code is not in the expected format.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Recovery codes use the format XXXXXXXXXX-XXXXXXXXXX."
+    "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": {
+      "comment": "The confirmation message shown before permanently deleting an account.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weet u zeker dat u uw account wilt verwijderen? Zodra uw account is verwijderd, worden alle bijbehorende bronnen en gegevens permanent verwijderd. Voer uw wachtwoord in om te bevestigen dat u uw account permanent wilt verwijderen."
           }
         }
       }
     },
-    "onboarding.twoFactorNetworkError" : {
-      "comment" : "Inline error shown on the two-factor screen when the verification request fails due to a network error.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Network error. Check your connection and try again."
+    "authenticate to continue.": {
+      "comment": "The biometric prompt reason shown when returning to the locked app on Mac.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "authenticeer om door te gaan."
           }
         }
       }
     },
-    "onboarding.twoFactorRecoveryPlaceholder" : {
-      "comment" : "Placeholder showing the format of a recovery code on the two-factor challenge screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "XXXXXXXXXX-XXXXXXXXXX"
+    "authenticate to disable app lock.": {
+      "comment": "The biometric prompt reason shown when disabling app lock on Mac.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "authenticeer om appvergrendeling uit te schakelen."
           }
         }
       }
     },
-    "onboarding.twoFactorSubheadlineRecovery" : {
-      "comment" : "Subheadline shown when the two-factor challenge expects a recovery code.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Enter one of your recovery codes."
+    "Authenticate to disable app lock.": {
+      "comment": "The biometric prompt reason shown when disabling app lock.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticeer om appvergrendeling uit te schakelen."
           }
         }
       }
     },
-    "onboarding.twoFactorSubheadlineTOTP" : {
-      "comment" : "Subheadline shown when the two-factor challenge expects a 6-digit TOTP code.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Enter the 6-digit code from your authenticator app."
+    "authenticate to enable app lock.": {
+      "comment": "The biometric prompt reason shown when enabling app lock on Mac.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "authenticeer om appvergrendeling in te schakelen."
           }
         }
       }
     },
-    "onboarding.twoFactorTOTPPlaceholder" : {
-      "comment" : "Placeholder shown in the TOTP entry field of the two-factor challenge screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "000 000"
+    "Authenticate to enable app lock.": {
+      "comment": "The biometric prompt reason shown when enabling app lock.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticeer om appvergrendeling in te schakelen."
           }
         }
       }
     },
-    "onboarding.twoFactorUseRecoveryCode" : {
-      "comment" : "Toggle button title that switches the two-factor challenge screen from TOTP to recovery code entry.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Use a recovery code instead"
+    "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times.": {
+      "comment": "The error shown when the user is locked out of biometric authentication.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticatie kon niet doorgaan omdat de gebruiker is buitengesloten van biometrische authenticatie, omdat de authenticatie te vaak is mislukt."
           }
         }
       }
     },
-    "onboarding.twoFactorUseTOTP" : {
-      "comment" : "Toggle button title that switches the two-factor challenge screen from recovery code to TOTP entry.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Use authenticator code instead"
+    "Authentication could not start because the device does not support biometric authentication.": {
+      "comment": "The error shown when the device does not support biometric authentication.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticatie kon niet starten omdat het apparaat geen biometrische authenticatie ondersteunt."
           }
         }
       }
     },
-    "onboarding.twoFactorVerifyButton" : {
-      "comment" : "Title for the navigation bar verify button on the two-factor challenge screen.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Verify ✅"
+    "Authentication could not start because the user has not enrolled in biometric authentication.": {
+      "comment": "The error shown when the user has not enrolled in biometric authentication.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticatie kon niet starten omdat de gebruiker zich niet heeft aangemeld voor biometrische authenticatie."
           }
         }
       }
     },
-    "Open in Settings app" : {
-      "comment" : "The string for the phrase 'Open in Settings app'."
-    },
-    "Open Settings" : {
-      "comment" : "The button that opens the system settings."
-    },
-    "Or enter your code manually" : {
-      "comment" : "The placeholder for the manual code entry field."
-    },
-    "Other Sessions" : {
-      "comment" : "The string for the 'other sessions' section."
-    },
-    "Password: make it super secret 🙊" : {
-      "comment" : "The password field placeholder during sign-up."
-    },
-    "Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase." : {
-      "comment" : "The footer string for the Subscription view."
-    },
-    "Payment will be charged to your Apple ID account at the confirmation of purchase. Unlike Kurozora+ subscription, tips are a one time purchase. Your account will be charged only once every time you tip." : {
-      "comment" : "The footer string for the Tip Jar view."
-    },
-    "Photo Access Denied" : {
-      "comment" : "The empty-state title shown when photo access has been denied."
-    },
-    "Photo Access Restricted" : {
-      "comment" : "The empty-state title shown when photo access is restricted."
-    },
-    "Photo Library" : {
-      "comment" : "The camera-menu action that picks a photo from the library."
-    },
-    "Photo library access is restricted on this device." : {
-      "comment" : "The empty-state detail shown when photo access is restricted."
-    },
-    "Privacy Policy" : {
-      "comment" : "The string for the word privacy policy."
-    },
-    "Pro Required" : {
-      "comment" : "The alert title shown when a feature requires Pro."
-    },
-    "Processing redeem code." : {
-      "comment" : "The headline string for the redeem processing pop-up."
-    },
-    "Product ids not set, call setProductIDs method!" : {
-      "comment" : "The message string for the product not found."
-    },
-    "purchased.section" : {
-      "comment" : "The 'purchased' section header on the Request Refund view.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Purchased"
+    "Authentication is required every time you return to the app.": {
+      "comment": "The string for requiring authentication immediately.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificatie is vereist telkens wanneer u terugkeert naar de app."
           }
         }
       }
     },
-    "Redeem 🚀" : {
-      "comment" : "The redeem bar button on the redeem screen."
-    },
-    "Redeem your code using the camera on your device." : {
-      "comment" : "The headline string for the Redeem view."
-    },
-    "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use." : {
-      "comment" : "The footer string for the Redeem view."
-    },
-    "refund.empty.detail" : {
-      "comment" : "The empty-state detail for the Request Refund view.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "There are no purchases on this account that can be refunded."
+    "Authentication is required if the app remains in the background for more than %@.": {
+      "comment": "The string for the 'Authentication Interval' settings description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificatie is vereist als de app langer dan %@ op de achtergrond blijft."
           }
         }
       }
     },
-    "refund.empty.title" : {
-      "comment" : "The empty-state title for the Request Refund view.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "No Purchases"
+    "Authentication was cancelled by application": {
+      "comment": "The error shown when authentication is cancelled by the app.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticatie is geannuleerd door de app"
           }
         }
       }
     },
-    "refund.purchasedOn" : {
-      "comment" : "The 'Purchased <date>' subtitle for a consumable transaction.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Purchased %@"
+    "Authentication was cancelled by the system": {
+      "comment": "The error shown when authentication is cancelled by the system.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authenticatie is geannuleerd door het systeem"
           }
         }
       }
     },
-    "refund.refundedOn" : {
-      "comment" : "The 'Refunded <date>' subtitle for a revoked transaction.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refunded %@"
+    "Change Your Identity": {
+      "comment": "The 'change your identity' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verander je identiteit"
           }
         }
       }
     },
-    "refund.subscribedOn" : {
-      "comment" : "The 'Subscribed <date>' subtitle for a subscription transaction.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Subscribed %@"
+    "Choose from a range of themes to create a look that reflects your personality and style.": {
+      "comment": "The 'dynamic themes' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies uit een reeks thema's om een look te maken die bij je persoonlijkheid en stijl past."
           }
         }
       }
     },
-    "refunded.section" : {
-      "comment" : "The 'refunded' section header on the Request Refund view.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refunded"
+    "Continue your purchase?": {
+      "comment": "The alert title prompting the user to resume a promoted purchase.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw aankoop voortzetten?"
           }
         }
       }
     },
-    "requestRefund.header.description" : {
-      "comment" : "The description string for the Request Refund view.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Review your recent purchases and ask Apple to refund any you no longer want. Apple decides each request, so refunds aren't guaranteed."
+    "Current Session": {
+      "comment": "The string for the 'current session' section.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Huidige sessie"
           }
         }
       }
     },
-    "Require Authentication" : {
-      "comment" : "The string for 'Require Authentication' settings."
+    "Did not find error code on LAError object": {
+      "comment": "The error shown when an unrecognized authentication error code is returned.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen foutcode gevonden op het LAError-object"
+          }
+        }
+      }
     },
-    "Resume the %@ purchase you started in the App Store." : {
-      "comment" : "The alert message prompting the user to resume a promoted purchase."
+    "Display Name": {
+      "comment": "The section label above the display name field on the edit profile screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergavenaam"
+          }
+        }
+      }
     },
-    "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place." : {
-      "comment" : "The 'unified anime linking' product feature description."
+    "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.": {
+      "comment": "The subscription feed-message character-limit product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duik nog dieper in discussies met een uitgebreide limiet van 1000 tekens voor je feedberichten."
+          }
+        }
+      }
     },
-    "See how your data is managed…" : {
-      "comment" : "The tappable legal footer link shown on the onboarding footer cell."
+    "Dynamic Themes": {
+      "comment": "The 'dynamic themes' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamische thema's"
+          }
+        }
+      }
     },
-    "Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have." : {
-      "comment" : "The subheadline string for the Sign in with Apple view."
+    "Elevate your status in the Kurozora community with the prestigious Pro badge next to your username, and show your support for Kurozora.": {
+      "comment": "The 'unlock pro badge' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verhoog je status in de Kurozora-community met de prestigieuze Pro-badge naast je gebruikersnaam en laat je steun voor Kurozora zien."
+          }
+        }
+      }
     },
-    "Sign Out of Session" : {
-      "comment" : "The swipe action that signs out of a single session."
+    "Email: we all forget our passwords 🙉": {
+      "comment": "The email field placeholder during sign-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail: we vergeten allemaal weleens ons wachtwoord 🙉"
+          }
+        }
+      }
     },
-    "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!" : {
-      "comment" : "The 'unlock subscriber badge' product feature description."
+    "Error Authenticating": {
+      "comment": "The alert title shown when biometric authentication fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fout bij verifiëren"
+          }
+        }
+      }
     },
-    "Start using Sign in with Apple" : {
-      "comment" : "The headline string for the Sign in with Apple view."
+    "Error Redeeming Code": {
+      "comment": "The headline string for the redeem error pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fout bij inwisselen code"
+          }
+        }
+      }
     },
-    "Startup Chimes" : {
-      "comment" : "The 'startup chimes' product feature title."
+    "Error Updating Profile": {
+      "comment": "The alert title shown when updating the profile fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fout bij bijwerken profiel"
+          }
+        }
+      }
     },
-    "Stylish App Icons" : {
-      "comment" : "The 'stylish app icons' product feature title."
+    "Found a Kurozora code in the wild? This is the place to redeem it!": {
+      "comment": "The subheadline string for the Redeem view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een Kurozora-code gevonden? Hier kun je hem inwisselen!"
+          }
+        }
+      }
     },
-    "Support the Community" : {
-      "comment" : "The 'support the community' product feature title."
+    "Get Animated": {
+      "comment": "The 'get animated' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kom in beweging"
+          }
+        }
+      }
     },
-    "Switch things up every now an then with a fresh username that truly represents you." : {
-      "comment" : "The 'change your identity' product feature description."
+    "Have more to say? Express yourself fully with a 500 character limit for your feed messages.": {
+      "comment": "The tip jar feed-message character-limit product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meer te zeggen? Uit jezelf volledig met een limiet van 500 tekens voor je feedberichten."
+          }
+        }
+      }
     },
-    "Take Photo" : {
-      "comment" : "The camera-menu action that captures a new photo."
+    "Immediately": {
+      "comment": "The string for authenticating immediately.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direct"
+          }
+        }
+      }
     },
-    "Terms of Use" : {
-      "comment" : "The string for the word terms of use."
+    "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.": {
+      "comment": "The 'startup chimes' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dompel jezelf vanaf het begin onder in de wereld van anime met serene startgeluiden en iconische animageluiden."
+          }
+        }
+      }
     },
-    "The code entered is not valid." : {
-      "comment" : "The subheadline string for the redeem error pop-up."
+    "Import 📲": {
+      "comment": "The import bar button on the library import screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importeer 📲"
+          }
+        }
+      }
     },
-    "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored." : {
-      "comment" : "The message string for restoring IAP has failed."
+    "Includes %@ free trial!": {
+      "comment": "The introductory free trial description, where the placeholder is the trial period.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inclusief %@ gratis proefperiode!"
+          }
+        }
+      }
     },
-    "This device" : {
-      "comment" : "The string for 'this device'."
+    "Integrate with Calendar": {
+      "comment": "The 'integrate with calendar' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Integreer met Agenda"
+          }
+        }
+      }
     },
-    "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+." : {
-      "comment" : "The alert message shown when a feature requires Pro."
+    "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.": {
+      "comment": "The 'integrate with calendar' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Integreer je animaschema in je agenda. Mis nooit meer een aflevering met herinneringen voor nieuwe uitzendingen."
+          }
+        }
+      }
     },
-    "This feature is not available on your device." : {
-      "comment" : "The alert message shown when the image source is unavailable on the device."
+    "Kurozora & Privacy": {
+      "comment": "The string for the phrase 'Kurozora & Privacy'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora en privacy"
+          }
+        }
+      }
     },
-    "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development." : {
-      "comment" : "The alert message shown when a feature requires Kurozora+."
+    "Kurozora Account": {
+      "comment": "The title of the account settings screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora-account"
+          }
+        }
+      }
     },
-    "Unavailable" : {
-      "comment" : "The alert title shown when the image source is unavailable on the device."
+    "Kurozora offers Sign in with Apple for users who want the extra peace of mind when it comes to security and privacy. Sign in with Apple is a convenient way to sign in to apps and sites while having more control over the information you share. Kurozora is restricted to asking only for your name and email address, and Apple won’t track your app activity or build a profile of you.": {
+      "comment": "The footer string for the Sign in with Apple view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora biedt Log in met Apple voor gebruikers die extra gemoedsrust willen op het gebied van beveiliging en privacy. Log in met Apple is een handige manier om in te loggen bij apps en sites terwijl u meer controle houdt over de informatie die u deelt. Kurozora mag alleen om uw naam en e-mailadres vragen, en Apple volgt uw app-activiteit niet en bouwt geen profiel van u op."
+          }
+        }
+      }
     },
-    "Unified Anime Linking" : {
-      "comment" : "The 'unified anime linking' product feature title."
+    "Kurozora+ Required": {
+      "comment": "The alert title shown when a feature requires Kurozora+.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora+ vereist"
+          }
+        }
+      }
     },
-    "Unlock Kurozora" : {
-      "comment" : "The unlock button title for the biometric-authentication screen."
+    "Make your home screen stand out with premium and limited time app icons.": {
+      "comment": "The 'stylish app icons' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laat je beginscherm opvallen met premium app-symbolen voor beperkte tijd."
+          }
+        }
+      }
     },
-    "Unlock Pro Badge" : {
-      "comment" : "The 'unlock pro badge' product feature title."
+    "Manage Subscriptions": {
+      "comment": "The string for the 'manage subscriptions' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abonnementen beheren"
+          }
+        }
+      }
     },
-    "Unlock Subscriber Badge" : {
-      "comment" : "The 'unlock subscriber badge' product feature title."
+    "Not interactive": {
+      "comment": "The error shown when authentication is not interactive.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet interactief"
+          }
+        }
+      }
     },
-    "Up to %lld Characters" : {
-      "comment" : "The product feature title for an extended feed-message character limit."
+    "onboarding.appleAuthenticationFailedMessage": {
+      "comment": "Error message shown when Apple authentication fails.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Authentication failed by Apple. Please try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificatie door Apple is mislukt. Probeer het opnieuw."
+          }
+        }
+      }
     },
-    "Upgrade your profile with a gif image that captures your unique style." : {
-      "comment" : "The 'get animated' product feature description."
+    "onboarding.appleAuthenticationNotHandledMessage": {
+      "comment": "Error message shown when Apple authentication was not handled properly.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "An error occurred and the authentication was not handled by Apple. Please try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is een fout opgetreden en de verificatie is niet door Apple afgehandeld. Probeer het opnieuw."
+          }
+        }
+      }
     },
-    "Use the button above to unlock Kurozora or if you're snooping around someone else's device then exit the app 😤" : {
-      "comment" : "The subtext on the unlock screen on iOS."
+    "onboarding.appleInvalidResponseMessage": {
+      "comment": "Error message shown when Apple returns an invalid authentication response.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "The app received an invalid response from Apple. Please try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De app heeft een ongeldig antwoord van Apple ontvangen. Probeer het opnieuw."
+          }
+        }
+      }
     },
-    "Use the button above to unlock Kurozora or if you're snooping around someone else's device then press ⌘ + Q to quit 😤" : {
-      "comment" : "The subtext on the unlock screen on Mac Catalyst."
+    "onboarding.forgotPasswordAlertHeadline": {
+      "comment": "The headline string for resetting password alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Success!"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelukt!"
+          }
+        }
+      }
     },
-    "Username" : {
-      "comment" : "The section label above the username field on the edit profile screen."
+    "onboarding.forgotPasswordAlertSubheadline": {
+      "comment": "The subheadline string for resetting password alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als er een account bestaat met dit Kurozora-account, ontvang je binnenkort een e-mail met je resetlink."
+          }
+        }
+      }
     },
-    "Username: pick a cool one 🙈" : {
-      "comment" : "The username field placeholder during sign-up."
+    "onboarding.forgotPasswordButton": {
+      "comment": "The button string for resetting password.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Send ✨"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verstuur ✨"
+          }
+        }
+      }
     },
-    "You are not authorized to make payments. In-App Purchases may be restricted on your device." : {
-      "comment" : "The message string for IAP is disabled."
+    "onboarding.forgotPasswordErrorAlertHeadline": {
+      "comment": "The headline string for resetting password alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Errr…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eh…"
+          }
+        }
+      }
     },
-    "You've denied photo library access. You can change this in Settings." : {
-      "comment" : "The empty-state detail shown when photo access has been denied."
+    "onboarding.forgotPasswordErrorAlertSubheadline": {
+      "comment": "The subheadline string for resetting password alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Please type a valid Kurozora Account 😣"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voer een geldig Kurozora-account in 😣"
+          }
+        }
+      }
     },
-    "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities." : {
-      "comment" : "The 'support the community' product feature description."
+    "onboarding.forgotPasswordHeadline": {
+      "comment": "The headline string for resetting password.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Forgot Password?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wachtwoord vergeten?"
+          }
+        }
+      }
     },
-    "Your cool email address 🙌" : {
-      "comment" : "The email field placeholder during sign-in."
+    "onboarding.forgotPasswordOptionsButton": {
+      "comment": "The button string for the forgot password option on the sign in screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Forgot your password? Let's reset 📧"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wachtwoord vergeten? Reset het 📧"
+          }
+        }
+      }
     },
-    "Your email address to the rescue 💌" : {
-      "comment" : "The email field placeholder during password reset."
+    "onboarding.forgotPasswordSubheadline": {
+      "comment": "The subheadline string for resetting password.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Enter your Kurozora Account to continue."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voer je Kurozora-account in om door te gaan."
+          }
+        }
+      }
     },
-    "Your Kurozora Account information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in." : {
-      "comment" : "The footer explaining how the Kurozora account is used during onboarding."
+    "onboarding.genericSignInErrorMessage": {
+      "comment": "Generic error message shown when sign-in fails for an unknown reason.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "An error occurred while trying to sign in. Please try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is een fout opgetreden bij het inloggen. Probeer het opnieuw."
+          }
+        }
+      }
     },
-    "Your super secret password 👀" : {
-      "comment" : "The password field placeholder during sign-in."
+    "onboarding.onboardingDescription": {
+      "comment": "The description string shown below onboarding options.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your Kurozora Account lets you access your library, favorites, reminders, reviews, and more on your devices, automatically."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met je Kurozora-account heb je automatisch toegang tot je bibliotheek, favorieten, herinneringen, recensies en meer op al je apparaten."
+          }
+        }
+      }
     },
-    "Zoop, badoop, fruitloop!" : {
-      "comment" : "The headline string for the redeem success pop-up."
+    "onboarding.onboardingOrSeparator": {
+      "comment": "The separator string between onboarding options.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "━━━━━━ or ━━━━━━"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "━━━━━━ of ━━━━━━"
+          }
+        }
+      }
+    },
+    "onboarding.registerOptionsButton": {
+      "comment": "The button string for the register option on the sign in screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "New to Kurozora? Join us 🔥"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuw bij Kurozora? Doe mee 🔥"
+          }
+        }
+      }
+    },
+    "onboarding.signInButton": {
+      "comment": "The button string for signing in.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Open sesame 👐"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesam, open u 👐"
+          }
+        }
+      }
+    },
+    "onboarding.signInErrorTitle": {
+      "comment": "Alert title shown when the user cannot sign in.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Can't Sign In 😔"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inloggen lukt niet 😔"
+          }
+        }
+      }
+    },
+    "onboarding.signInHeadline": {
+      "comment": "The headline string for signing in.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Kurozora Account"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora-account"
+          }
+        }
+      }
+    },
+    "onboarding.signInSubheadline": {
+      "comment": "The subheadline string for signing in.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sign in with your Kurozora Account to use the library and other Kurozora services."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in met je Kurozora-account om de bibliotheek en andere Kurozora-diensten te gebruiken."
+          }
+        }
+      }
+    },
+    "onboarding.signInWithAppleTitle": {
+      "comment": "Title for the button or screen that allows the user to sign in with Apple.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sign in with Apple"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in met Apple"
+          }
+        }
+      }
+    },
+    "onboarding.signUpAlertHeadline": {
+      "comment": "The headline string for sign up alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Hooray!"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoera!"
+          }
+        }
+      }
+    },
+    "onboarding.signUpAlertSubheadline": {
+      "comment": "The subheadline string for sign up alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Account created successfully! Please check your email for confirmation."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account aangemaakt! Controleer je e-mail voor de bevestiging."
+          }
+        }
+      }
+    },
+    "onboarding.signUpButton": {
+      "comment": "The button string for signing up.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Join 🤗"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doe mee 🤗"
+          }
+        }
+      }
+    },
+    "onboarding.signUpErrorAlertHeadline": {
+      "comment": "The headline string for sign up alert.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Can't Sign Up 😔"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registreren lukt niet 😔"
+          }
+        }
+      }
+    },
+    "onboarding.signUpHeadline": {
+      "comment": "The headline string for signing up.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "New to Kurozora?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuw bij Kurozora?"
+          }
+        }
+      }
+    },
+    "onboarding.signUpSubheadline": {
+      "comment": "The subheadline string for signing up.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Create an account and join the community."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maak een account aan en word lid van de community."
+          }
+        }
+      }
+    },
+    "onboarding.siwaButton": {
+      "comment": "The button string for sign in with Apple.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Join 🤗"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doe mee 🤗"
+          }
+        }
+      }
+    },
+    "onboarding.siwaHeadline": {
+      "comment": "The headline string for Sign in with Apple.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Setup Account"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account instellen"
+          }
+        }
+      }
+    },
+    "onboarding.siwaSubheadline": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Finish setting up your account and join the community."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rond het instellen van je account af en word lid van de community."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorExpiredMessage": {
+      "comment": "Alert message shown when the two-factor authentication challenge expires.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your verification session has expired. Please sign in again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw verificatiesessie is verlopen. Log opnieuw in."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorExpiredTitle": {
+      "comment": "Alert title shown when the two-factor authentication challenge expires.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Session Expired"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessie verlopen"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorHeadline": {
+      "comment": "Headline shown on the two-factor authentication challenge screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Two-Factor Authentication"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tweestapsverificatie"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorInvalidCode": {
+      "comment": "Inline error shown beneath the input field when the two-factor code is incorrect.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Incorrect code. Please try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onjuiste code. Probeer het opnieuw."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorInvalidFormat": {
+      "comment": "Inline error shown when the recovery code is not in the expected format.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Recovery codes use the format XXXXXXXXXX-XXXXXXXXXX."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herstelcodes hebben de notatie XXXXXXXXXX-XXXXXXXXXX."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorNetworkError": {
+      "comment": "Inline error shown on the two-factor screen when the verification request fails due to a network error.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Network error. Check your connection and try again."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Netwerkfout. Controleer uw verbinding en probeer het opnieuw."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorRecoveryPlaceholder": {
+      "comment": "Placeholder showing the format of a recovery code on the two-factor challenge screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "XXXXXXXXXX-XXXXXXXXXX"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XXXXXXXXXX-XXXXXXXXXX"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorSubheadlineRecovery": {
+      "comment": "Subheadline shown when the two-factor challenge expects a recovery code.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Enter one of your recovery codes."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voer een van uw herstelcodes in."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorSubheadlineTOTP": {
+      "comment": "Subheadline shown when the two-factor challenge expects a 6-digit TOTP code.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Enter the 6-digit code from your authenticator app."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voer de zescijferige code uit uw authenticator-app in."
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorTOTPPlaceholder": {
+      "comment": "Placeholder shown in the TOTP entry field of the two-factor challenge screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "000 000"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "000 000"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorUseRecoveryCode": {
+      "comment": "Toggle button title that switches the two-factor challenge screen from TOTP to recovery code entry.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Use a recovery code instead"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruik in plaats daarvan een herstelcode"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorUseTOTP": {
+      "comment": "Toggle button title that switches the two-factor challenge screen from recovery code to TOTP entry.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Use authenticator code instead"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruik in plaats daarvan een authenticator-code"
+          }
+        }
+      }
+    },
+    "onboarding.twoFactorVerifyButton": {
+      "comment": "Title for the navigation bar verify button on the two-factor challenge screen.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Verify ✅"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verifieer ✅"
+          }
+        }
+      }
+    },
+    "Open in Settings app": {
+      "comment": "The string for the phrase 'Open in Settings app'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open in de app Instellingen"
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "comment": "The button that opens the system settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Instellingen"
+          }
+        }
+      }
+    },
+    "Or enter your code manually": {
+      "comment": "The placeholder for the manual code entry field.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Of voer je code handmatig in"
+          }
+        }
+      }
+    },
+    "Other Sessions": {
+      "comment": "The string for the 'other sessions' section.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overige sessies"
+          }
+        }
+      }
+    },
+    "Passcode is not set on the device": {
+      "comment": "The error shown when no passcode is set on the device.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is geen toegangscode ingesteld op het apparaat"
+          }
+        }
+      }
+    },
+    "Password: make it super secret 🙊": {
+      "comment": "The password field placeholder during sign-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wachtwoord: maak het supergeheim 🙊"
+          }
+        }
+      }
+    },
+    "Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.": {
+      "comment": "The footer string for the Subscription view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De betaling wordt bij bevestiging van de aankoop in rekening gebracht op uw Apple ID-account. Het abonnement wordt automatisch verlengd, tenzij het minstens 24 uur voor het einde van de huidige periode wordt opgezegd. Uw account wordt binnen 24 uur voor het einde van de huidige periode belast voor de verlenging. U kunt uw abonnementen beheren en opzeggen via uw accountinstellingen in de App Store na de aankoop."
+          }
+        }
+      }
+    },
+    "Payment will be charged to your Apple ID account at the confirmation of purchase. Unlike Kurozora+ subscription, tips are a one time purchase. Your account will be charged only once every time you tip.": {
+      "comment": "The footer string for the Tip Jar view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De betaling wordt bij bevestiging van de aankoop in rekening gebracht op uw Apple ID-account. In tegenstelling tot een Kurozora+-abonnement is een fooi een eenmalige aankoop. Uw account wordt elke keer dat u een fooi geeft slechts één keer belast."
+          }
+        }
+      }
+    },
+    "period": {
+      "comment": "The fallback word for an unknown subscription period unit.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "periode"
+          }
+        }
+      }
+    },
+    "Photo Access Denied": {
+      "comment": "The empty-state title shown when photo access has been denied.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fototoegang geweigerd"
+          }
+        }
+      }
+    },
+    "Photo Access Restricted": {
+      "comment": "The empty-state title shown when photo access is restricted.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fototoegang beperkt"
+          }
+        }
+      }
+    },
+    "Photo Library": {
+      "comment": "The camera-menu action that picks a photo from the library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotobibliotheek"
+          }
+        }
+      }
+    },
+    "Photo library access is restricted on this device.": {
+      "comment": "The empty-state detail shown when photo access is restricted.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toegang tot de fotobibliotheek is beperkt op dit apparaat."
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "comment": "The string for the word privacy policy.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacybeleid"
+          }
+        }
+      }
+    },
+    "Pro Required": {
+      "comment": "The alert title shown when a feature requires Pro.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro vereist"
+          }
+        }
+      }
+    },
+    "Processing redeem code.": {
+      "comment": "The headline string for the redeem processing pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Code wordt verwerkt."
+          }
+        }
+      }
+    },
+    "Product ids not set, call setProductIDs method!": {
+      "comment": "The message string for the product not found.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Product-id's niet ingesteld, roep setProductIDs aan!"
+          }
+        }
+      }
+    },
+    "purchased.section": {
+      "comment": "The 'purchased' section header on the Request Refund view.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Purchased"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gekocht"
+          }
+        }
+      }
+    },
+    "Redeem 🚀": {
+      "comment": "The redeem bar button on the redeem screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wissel in 🚀"
+          }
+        }
+      }
+    },
+    "Redeem your code using the camera on your device.": {
+      "comment": "The headline string for the Redeem view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wissel je code in met de camera van je apparaat."
+          }
+        }
+      }
+    },
+    "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use.": {
+      "comment": "The footer string for the Redeem view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Door een code in te wisselen ontgrendel je speciale badges en prestaties en verhoog je je reputatiepunten. Houd er rekening mee dat Kurozora-codes maar één keer per account inwisselbaar zijn en na één gebruik vervallen."
+          }
+        }
+      }
+    },
+    "refund.empty.detail": {
+      "comment": "The empty-state detail for the Request Refund view.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "There are no purchases on this account that can be refunded."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er staan op dit account geen aankopen die kunnen worden terugbetaald."
+          }
+        }
+      }
+    },
+    "refund.empty.title": {
+      "comment": "The empty-state title for the Request Refund view.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "No Purchases"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen aankopen"
+          }
+        }
+      }
+    },
+    "refund.purchasedOn": {
+      "comment": "The 'Purchased <date>' subtitle for a consumable transaction.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Purchased %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gekocht %@"
+          }
+        }
+      }
+    },
+    "refund.refundedOn": {
+      "comment": "The 'Refunded <date>' subtitle for a revoked transaction.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Refunded %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terugbetaald %@"
+          }
+        }
+      }
+    },
+    "refund.subscribedOn": {
+      "comment": "The 'Subscribed <date>' subtitle for a subscription transaction.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Subscribed %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geabonneerd %@"
+          }
+        }
+      }
+    },
+    "refunded.section": {
+      "comment": "The 'refunded' section header on the Request Refund view.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Refunded"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terugbetaald"
+          }
+        }
+      }
+    },
+    "requestRefund.header.description": {
+      "comment": "The description string for the Request Refund view.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Review your recent purchases and ask Apple to refund any you no longer want. Apple decides each request, so refunds aren't guaranteed."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk uw recente aankopen en vraag Apple om terugbetaling van wat u niet meer wilt. Apple beslist over elk verzoek, dus terugbetaling is niet gegarandeerd."
+          }
+        }
+      }
+    },
+    "Require Authentication": {
+      "comment": "The string for 'Require Authentication' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificatie vereisen"
+          }
+        }
+      }
+    },
+    "Resume the %@ purchase you started in the App Store.": {
+      "comment": "The alert message prompting the user to resume a promoted purchase.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hervat de aankoop van %@ die u in de App Store bent begonnen."
+          }
+        }
+      }
+    },
+    "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.": {
+      "comment": "The 'unified anime linking' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stap naadloos over van andere diensten naar Kurozora. Voeg 'kurozora.app' toe aan een URL en wij brengen al je animadata op één plek samen."
+          }
+        }
+      }
+    },
+    "See how your data is managed…": {
+      "comment": "The tappable legal footer link shown on the onboarding footer cell.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk hoe je gegevens worden beheerd…"
+          }
+        }
+      }
+    },
+    "Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have.": {
+      "comment": "The subheadline string for the Sign in with Apple view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in met Apple is de snelle, makkelijke manier om in te loggen bij Kurozora met de Apple ID die u al hebt."
+          }
+        }
+      }
+    },
+    "Sign Out of Session": {
+      "comment": "The swipe action that signs out of a single session.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessie afmelden"
+          }
+        }
+      }
+    },
+    "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!": {
+      "comment": "The 'unlock subscriber badge' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Val op in de community met een exclusieve abonneebadge die meegroeit naarmate je Kurozora blijft steunen!"
+          }
+        }
+      }
+    },
+    "Start using Sign in with Apple": {
+      "comment": "The headline string for the Sign in with Apple view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin met Log in met Apple"
+          }
+        }
+      }
+    },
+    "Startup Chimes": {
+      "comment": "The 'startup chimes' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startgeluiden"
+          }
+        }
+      }
+    },
+    "Stylish App Icons": {
+      "comment": "The 'stylish app icons' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stijlvolle app-symbolen"
+          }
+        }
+      }
+    },
+    "Support the Community": {
+      "comment": "The 'support the community' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steun de community"
+          }
+        }
+      }
+    },
+    "Switch things up every now an then with a fresh username that truly represents you.": {
+      "comment": "The 'change your identity' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gooi het af en toe over een andere boeg met een nieuwe gebruikersnaam die echt bij je past."
+          }
+        }
+      }
+    },
+    "Take Photo": {
+      "comment": "The camera-menu action that captures a new photo.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maak foto"
+          }
+        }
+      }
+    },
+    "Terms of Use": {
+      "comment": "The string for the word terms of use.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruiksvoorwaarden"
+          }
+        }
+      }
+    },
+    "The code entered is not valid.": {
+      "comment": "The subheadline string for the redeem error pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De ingevoerde code is ongeldig."
+          }
+        }
+      }
+    },
+    "The context is invalid": {
+      "comment": "The error shown when the authentication context is invalid.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De context is ongeldig"
+          }
+        }
+      }
+    },
+    "The user chose to use the fallback": {
+      "comment": "The error shown when the user chooses the fallback option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De gebruiker koos voor de terugvaloptie"
+          }
+        }
+      }
+    },
+    "The user did cancel": {
+      "comment": "The error shown when the user cancels authentication.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De gebruiker heeft geannuleerd"
+          }
+        }
+      }
+    },
+    "The user failed to provide valid credentials": {
+      "comment": "The error shown when the user fails to provide valid credentials.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De gebruiker heeft geen geldige inloggegevens opgegeven"
+          }
+        }
+      }
+    },
+    "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored.": {
+      "comment": "The message string for restoring IAP has failed.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er zijn geen herstelbare aankopen.\nAlleen eerder gekochte niet-verbruikbare producten en automatisch verlengende abonnementen kunnen worden hersteld."
+          }
+        }
+      }
+    },
+    "This device": {
+      "comment": "The string for 'this device'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit apparaat"
+          }
+        }
+      }
+    },
+    "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.": {
+      "comment": "The alert message shown when a feature requires Pro.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze functie is beschikbaar voor Pro-gebruikers. De opbrengst gaat naar de ontwikkeling van Kurozora. Deze functie en alle andere functies zijn ook inbegrepen bij Kurozora+."
+          }
+        }
+      }
+    },
+    "This feature is not available on your device.": {
+      "comment": "The alert message shown when the image source is unavailable on the device.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze functie is niet beschikbaar op je apparaat."
+          }
+        }
+      }
+    },
+    "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.": {
+      "comment": "The alert message shown when a feature requires Kurozora+.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze functie is alleen beschikbaar voor Kurozora+-gebruikers. De opbrengst gaat naar de ontwikkeling van Kurozora."
+          }
+        }
+      }
+    },
+    "Unavailable": {
+      "comment": "The alert title shown when the image source is unavailable on the device.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet beschikbaar"
+          }
+        }
+      }
+    },
+    "Unified Anime Linking": {
+      "comment": "The 'unified anime linking' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uniforme anime-koppeling"
+          }
+        }
+      }
+    },
+    "Unlock Kurozora": {
+      "comment": "The unlock button title for the biometric-authentication screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontgrendel Kurozora"
+          }
+        }
+      }
+    },
+    "Unlock Pro Badge": {
+      "comment": "The 'unlock pro badge' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro-badge ontgrendelen"
+          }
+        }
+      }
+    },
+    "Unlock Subscriber Badge": {
+      "comment": "The 'unlock subscriber badge' product feature title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abonneebadge ontgrendelen"
+          }
+        }
+      }
+    },
+    "Up to %lld Characters": {
+      "comment": "The product feature title for an extended feed-message character limit.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tot %lld tekens"
+          }
+        }
+      }
+    },
+    "Upgrade your profile with a gif image that captures your unique style.": {
+      "comment": "The 'get animated' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verfraai je profiel met een gif die je unieke stijl vastlegt."
+          }
+        }
+      }
+    },
+    "Use the button above to unlock Kurozora or if you're snooping around someone else's device then exit the app 😤": {
+      "comment": "The subtext on the unlock screen on iOS.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruik de knop hierboven om Kurozora te ontgrendelen, of als je in het apparaat van iemand anders aan het snuffelen bent, sluit dan de app 😤"
+          }
+        }
+      }
+    },
+    "Use the button above to unlock Kurozora or if you're snooping around someone else's device then press ⌘ + Q to quit 😤": {
+      "comment": "The subtext on the unlock screen on Mac Catalyst.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruik de knop hierboven om Kurozora te ontgrendelen, of als je in het apparaat van iemand anders aan het snuffelen bent, druk dan op ⌘ + Q om af te sluiten 😤"
+          }
+        }
+      }
+    },
+    "Username": {
+      "comment": "The section label above the username field on the edit profile screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruikersnaam"
+          }
+        }
+      }
+    },
+    "Username: pick a cool one 🙈": {
+      "comment": "The username field placeholder during sign-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruikersnaam: kies een coole 🙈"
+          }
+        }
+      }
+    },
+    "visitPrivacyPolicyFooter": {
+      "comment": "Footer linking to the privacy policy. The placeholder is the linked Privacy Policy text.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "For more information, please visit our %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga voor meer informatie naar ons %@"
+          }
+        }
+      }
+    },
+    "Welcome back! Please authenticate to continue.": {
+      "comment": "The biometric prompt reason shown when returning to the locked app.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welkom terug! Authenticeer om door te gaan."
+          }
+        }
+      }
+    },
+    "You are not authorized to make payments. In-App Purchases may be restricted on your device.": {
+      "comment": "The message string for IAP is disabled.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "U bent niet gemachtigd om betalingen te doen. In-app-aankopen zijn mogelijk beperkt op uw apparaat."
+          }
+        }
+      }
+    },
+    "You've denied photo library access. You can change this in Settings.": {
+      "comment": "The empty-state detail shown when photo access has been denied.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je hebt toegang tot de fotobibliotheek geweigerd. Je kunt dit wijzigen in Instellingen."
+          }
+        }
+      }
+    },
+    "Your account was successfully created!": {
+      "comment": "The welcome message shown after account setup completes.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je account is succesvol aangemaakt!"
+          }
+        }
+      }
+    },
+    "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.": {
+      "comment": "The 'support the community' product feature description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je bijdrage helpt bij het onderhouden van de servers, het betalen van softwarelicenties en het financieren van evenementen en activiteiten."
+          }
+        }
+      }
+    },
+    "Your cool email address 🙌": {
+      "comment": "The email field placeholder during sign-in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je coole e-mailadres 🙌"
+          }
+        }
+      }
+    },
+    "Your email address to the rescue 💌": {
+      "comment": "The email field placeholder during password reset.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je e-mailadres als redding 💌"
+          }
+        }
+      }
+    },
+    "Your Kurozora Account information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in.": {
+      "comment": "The footer explaining how the Kurozora account is used during onboarding.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je Kurozora-accountgegevens worden gebruikt om Kurozora-diensten in te schakelen wanneer je inlogt. Tot de Kurozora-diensten behoort de bibliotheek waarin je de series kunt bijhouden die je interesseren."
+          }
+        }
+      }
+    },
+    "Your super secret password 👀": {
+      "comment": "The password field placeholder during sign-in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je supergeheime wachtwoord 👀"
+          }
+        }
+      }
+    },
+    "Zoop, badoop, fruitloop!": {
+      "comment": "The headline string for the redeem success pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoop, badoop, fruitloop!"
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

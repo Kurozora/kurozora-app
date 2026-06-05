@@ -19,6 +19,12 @@ class WriteAReviewCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: WriteAReviewCollectionViewCellDelegate?
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.primaryButton.setTitle(L10n.writeAReview, for: .normal)
+	}
+
 	// MARK: - IBActions
 	@IBAction func primaryButtonPressed(_ sender: UIButton) {
 		Task {

@@ -133,6 +133,12 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	}
 
 	// MARK: - Functions
+	/// Re-applies localized strings by reloading the collection's content.
+	override func reloadLocalization() {
+		guard self.isViewLoaded else { return }
+		self.collectionView.reloadData()
+	}
+
 	/// Configures the gradient view with default values.
 	fileprivate func configureGradientView() {
 		self.view.addSubview(self.gradientView)

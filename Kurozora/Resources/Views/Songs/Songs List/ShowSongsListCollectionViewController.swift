@@ -55,8 +55,8 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { "No show songs" }
-	override var emptyStateDetail: String { "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection." }
+	override var emptyStateTitle: String { L10n.noShowSongs }
+	override var emptyStateDetail: String { L10n.cantGetShowSongs }
 
 	override var hasLoadedInitialData: Bool {
 		!self.showSongs.isEmpty || !self.songs.isEmpty

@@ -17,9 +17,9 @@ enum MonogramFontStyle: Int, CaseIterable {
 	var title: String {
 		switch self {
 		case .defaultStyle: return "SF Pro"
-		case .rounded: return "Rounded"
-		case .serif: return "Serif"
-		case .compressed: return "Compressed"
+		case .rounded: return L10n.rounded
+		case .serif: return L10n.serif
+		case .compressed: return L10n.compressed
 		}
 	}
 }

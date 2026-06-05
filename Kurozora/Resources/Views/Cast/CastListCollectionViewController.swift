@@ -49,8 +49,8 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { "No Cast" }
-	override var emptyStateDetail: String { "This \(self.castKind.rawValue) doesn't have casts yet. Please check back again later." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.cast) }
+	override var emptyStateDetail: String { L10n.noCastsYet(self.castKind.rawValue) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.castIdentities.isEmpty

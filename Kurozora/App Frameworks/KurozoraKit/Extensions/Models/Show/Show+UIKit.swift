@@ -136,7 +136,7 @@ extension Show {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Track your progress of \"\(self.attributes.title)\" via @KurozoraApp")
+		activityItems.append(L10n.shareShow(self.attributes.title))
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
@@ -225,10 +225,10 @@ extension Show {
 				"favoriteStatus": favoriteResponse.data.favoriteStatus
 			])
 		} catch let error as APIError {
-			viewController?.presentAlertController(title: "Can't Favorite", message: error.message)
+			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.message)
 			print("----- Toggle favorite failed:", error.message)
 		} catch {
-			viewController?.presentAlertController(title: "Can't Favorite", message: error.localizedDescription)
+			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.localizedDescription)
 			print("----- Toggle favorite failed:", error.localizedDescription)
 		}
 	}
@@ -253,10 +253,10 @@ extension Show {
 					"reminderStatus": updateReminderResponse.data.reminderStatus
 				])
 			} catch let error as APIError {
-				viewController?.presentAlertController(title: "Can't Add Reminder", message: error.message)
+				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.message)
 				print("----- Toggle reminder failed:", error.message)
 			} catch {
-				viewController?.presentAlertController(title: "Can't Add Reminder", message: error.localizedDescription)
+				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.localizedDescription)
 				print("----- Toggle reminder failed:", error.localizedDescription)
 			}
 		}

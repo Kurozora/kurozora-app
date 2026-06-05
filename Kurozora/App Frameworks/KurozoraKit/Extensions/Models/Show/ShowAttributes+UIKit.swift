@@ -21,7 +21,7 @@ extension Show.Attributes {
 
 		// Add the episode count
 		if self.episodeCount != 0 {
-			informationString += " · \(self.episodeCount) \(self.episodeCount == 1 ? "episode" : "episodes")"
+			informationString += " · " + L10n.episodeCount(self.episodeCount)
 		}
 
 		// Add the duration
@@ -79,7 +79,7 @@ extension Show.Attributes {
 		let timeString = DateFormatter.broadcastTime.string(from: broadcastAt)
 		let weekdayString = dateFormatter.string(from: broadcastAt)
 
-		return "\(weekdayString) at \(timeString)"
+		return L10n.scheduleDayTime(weekdayString, timeString)
 	}
 
 	// MARK: - Functions

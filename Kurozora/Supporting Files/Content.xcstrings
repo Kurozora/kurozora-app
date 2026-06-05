@@ -1,78 +1,323 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "\nFollowers" : {
-      "comment" : "The 'Followers' label shown under the follower count in the profile header (newline prefix reserved for two-line stacked layout)."
-    },
-    "\nFollowing" : {
-      "comment" : "The 'Following' label shown under the following count in the profile header (newline prefix reserved for two-line stacked layout)."
-    },
-    "\nReputation" : {
-      "comment" : "The 'Reputation' label shown under the reputation count in the profile header (newline prefix reserved for two-line stacked layout)."
-    },
-    "\nReviews" : {
-      "comment" : "The 'Reviews' label shown under the reviews count in the profile header (newline prefix reserved for two-line stacked layout)."
-    },
-    "%@ has blocked you" : {
-      "comment" : "The headline shown when the auth user has been blocked by another user. The argument is the @username of the blocking user."
-    },
-    "%@ is a Kurozora+ subscriber since %@." : {
-      "comment" : "The subscriber badge description.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ is a Kurozora+ subscriber since %2$@."
+  "sourceLanguage": "en",
+  "strings": {
+    "#%lld in the current season.": {
+      "comment": "The footnote showing an episode's position in the current season.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#%lld in het huidige seizoen."
           }
         }
       }
     },
-    "%@ is a Pro user." : {
-      "comment" : "The Pro badge description."
+    "%@ ago": {
+      "comment": "A broadcast countdown that already started, where the placeholder is the elapsed duration.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ geleden"
+          }
+        }
+      }
     },
-    "%@ is a staff member." : {
-      "comment" : "The staff badge description."
+    "%@ at %@": {
+      "comment": "A broadcast or publication schedule line pairing a weekday with a time.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ at %2$@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ om %2$@"
+          }
+        }
+      }
     },
-    "%@ is an active developer." : {
-      "comment" : "The developer badge description."
+    "%@ from now": {
+      "comment": "A broadcast countdown ending in the future, where the placeholder is the remaining duration.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "over %@"
+          }
+        }
+      }
     },
-    "%@ is an early supporter of Kurozora." : {
-      "comment" : "The early-supporter badge description."
+    "%@ has blocked you": {
+      "comment": "The headline shown when the auth user has been blocked by another user. The argument is the @username of the blocking user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ heeft je geblokkeerd"
+          }
+        }
+      }
     },
-    "%@ is blocked" : {
-      "comment" : "The headline shown when the auth user has blocked the profile's user. The argument is the @username of the blocked user."
+    "%@ has no %@ in their %@ list.": {
+      "comment": "The library empty-state detail for another user's empty list.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ has no %2$@ in their %3$@ list."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ heeft geen %2$@ in zijn of haar %3$@-lijst."
+          }
+        }
+      }
     },
-    "%@ is new to Kurozora. Say hi to them (^o^)/" : {
-      "comment" : "The new-user badge description shown on another user's profile."
+    "%@ has not submitted any reviews yet. Check back later.": {
+      "comment": "The reviews empty-state detail for another user's profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ heeft nog geen recensies geplaatst. Kom later terug."
+          }
+        }
+      }
     },
-    "%@ is not following anyone yet." : {
-      "comment" : "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name."
+    "%@ hasn't favorited %@ yet.": {
+      "comment": "The favorites empty-state detail for another user's profile.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ hasn't favorited %2$@ yet."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ heeft nog geen %2$@ als favoriet."
+          }
+        }
+      }
     },
-    "%@ is verified because they are notable in animators, voice actors, entertainment studios, or another designated category." : {
-      "comment" : "The verified badge description."
+    "%@ is a Kurozora+ subscriber since %@.": {
+      "comment": "The subscriber badge description.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ is a Kurozora+ subscriber since %2$@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is sinds %2$@ Kurozora+-abonnee."
+          }
+        }
+      }
     },
-    "%1$@ is rated %2$@ for %3$@" : {
-      "comment" : "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name."
+    "%@ is a Pro user.": {
+      "comment": "The Pro badge description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is een Pro-gebruiker."
+          }
+        }
+      }
     },
-    "%1$d of %2$d found this %3$@." : {
-      "comment" : "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase."
+    "%@ is a staff member.": {
+      "comment": "The staff badge description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is een stafmedewerker."
+          }
+        }
+      }
     },
-    "%lld Items" : {
-      "comment" : "The library item count shown as a navigation subtitle.",
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Item"
+    "%@ is an active developer.": {
+      "comment": "The developer badge description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is een actieve ontwikkelaar."
+          }
+        }
+      }
+    },
+    "%@ is an early supporter of Kurozora.": {
+      "comment": "The early-supporter badge description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is een vroege supporter van Kurozora."
+          }
+        }
+      }
+    },
+    "%@ is blocked": {
+      "comment": "The headline shown when the auth user has blocked the profile's user. The argument is the @username of the blocked user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is geblokkeerd"
+          }
+        }
+      }
+    },
+    "%@ is new to Kurozora. Say hi to them (^o^)/": {
+      "comment": "The new-user badge description shown on another user's profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is nieuw bij Kurozora. Zeg eens hallo (^o^)/"
+          }
+        }
+      }
+    },
+    "%@ is not following anyone yet.": {
+      "comment": "The empty-state detail shown on another user's following list when they don't follow anyone yet. '%@' is the target user's display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ volgt nog niemand."
+          }
+        }
+      }
+    },
+    "%@ is verified because they are notable in animators, voice actors, entertainment studios, or another designated category.": {
+      "comment": "The verified badge description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is geverifieerd omdat hij of zij opvalt onder animators, stemacteurs, entertainmentstudio's of een andere aangewezen categorie."
+          }
+        }
+      }
+    },
+    "%@ Re:CAP is still in progress. Check back in a week.": {
+      "comment": "The ReCap in-progress header shown in December.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Re:CAP is nog bezig. Kom over een week terug."
+          }
+        }
+      }
+    },
+    "%@ Re:CAP is still in progress. Check back in early %@.": {
+      "comment": "The ReCap in-progress header for a given month.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ Re:CAP is still in progress. Check back in early %2$@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ Re:CAP is nog bezig. Kom begin %2$@ terug."
+          }
+        }
+      }
+    },
+    "%@ reposted this": {
+      "comment": "The re-share attribution for another user's repost.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ heeft dit gerepost"
+          }
+        }
+      }
+    },
+    "%@ tag detected": {
+      "comment": "The alert title shown when a hashtag is detected.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-tag gedetecteerd"
+          }
+        }
+      }
+    },
+    "%1$@ is rated %2$@ for %3$@": {
+      "comment": "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is beoordeeld als %2$@ voor %3$@"
+          }
+        }
+      }
+    },
+    "%1$d of %2$d found this %3$@.": {
+      "comment": "Sentiment subtitle under each Parental Guide category section header. %1$d is matching count, %2$d is total count, %3$@ is the lowercased rating phrase.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d van %2$d vond dit %3$@."
+          }
+        }
+      }
+    },
+    "%lld editions": {
+      "comment": "The edition count shown in a media information line.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld edition"
                 }
               },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Items"
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld editions"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld editie"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld edities"
                 }
               }
             }
@@ -80,168 +325,1535 @@
         }
       }
     },
-    "＋ Follow" : {
-      "comment" : "The user-cell follow button title when the current user is not yet following the target user."
+    "%lld episodes": {
+      "comment": "The episode count shown in a media information line.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld episode"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld episodes"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld aflevering"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld afleveringen"
+                }
+              }
+            }
+          }
+        }
+      }
     },
-    "＋ Follow %@" : {
-      "comment" : "The empty-state action button shown on another user's empty followers list. '%@' is the target user's display name."
+    "%lld Items": {
+      "comment": "The library item count shown as a navigation subtitle.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Items"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items"
+                }
+              }
+            }
+          }
+        }
+      }
     },
-    "✓ Following" : {
-      "comment" : "The user-cell follow button title when the current user is following the target user."
+    "%lld TV · %lld Movie · %lld OVA · %lld Music/ONA/Specials": {
+      "comment": "The library media-type breakdown line.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld TV · %2$lld Movie · %3$lld OVA · %4$lld Music/ONA/Specials"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld TV · %2$lld Film · %3$lld OVA · %4$lld Muziek/ONA/Specials"
+          }
+        }
+      }
     },
-    "Achievements you earn show up here." : {
-      "comment" : "Empty-state detail for the achievements list when viewing your own profile."
+    "%lld volumes": {
+      "comment": "The volume count shown in a media information line.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld volume"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld volumes"
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld deel"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld delen"
+                }
+              }
+            }
+          }
+        }
+      }
     },
-    "Active Developer" : {
-      "comment" : "The title shown on the developer profile badge."
+    "%lldd": {
+      "comment": "The compact day count in a broadcast countdown.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldd"
+          }
+        }
+      }
     },
-    "Add %@" : {
-      "comment" : "Title of the editor when adding a new entry for a category. The argument is the category display name."
+    "%lldh": {
+      "comment": "The compact hour count in a broadcast countdown.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldu"
+          }
+        }
+      }
     },
-    "Add your take when sharing someone else's post and it'll show up here." : {
-      "comment" : "The empty-state subheadline for the Quotes tab on the post activity screen."
+    "%lldm": {
+      "comment": "The compact minute count in a broadcast countdown.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldm"
+          }
+        }
+      }
     },
-    "Adults Only" : {
-      "comment" : "The descriptive label for the 'Adults Only' TV rating."
+    "%lldM": {
+      "comment": "The compact month count in a broadcast countdown.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldmnd"
+          }
+        }
+      }
     },
-    "Advanced Search" : {
-      "comment" : "The string for the 'advanced search' browse option."
+    "%llds": {
+      "comment": "The compact second count in a broadcast countdown.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%llds"
+          }
+        }
+      }
     },
-    "All Ages" : {
-      "comment" : "The descriptive label for the 'All Ages' TV rating."
+    "＋ Follow": {
+      "comment": "The user-cell follow button title when the current user is not yet following the target user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "＋ Volgen"
+          }
+        }
+      }
     },
-    "Amplify posts you like" : {
-      "comment" : "The empty-state headline for the Re-shares tab on the post activity screen."
+    "＋ Follow %@": {
+      "comment": "The empty-state action button shown on another user's empty followers list. '%@' is the target user's display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "＋ %@ volgen"
+          }
+        }
+      }
     },
-    "Are you sure you want to delete this entry?" : {
-      "comment" : "The confirmation message shown before deleting a Parental Guide entry."
+    "+%lld More Languages": {
+      "comment": "The label shown when several more languages are available.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%lld meer talen"
+          }
+        }
+      }
     },
-    "Are you sure you want to view these posts? Viewing posts won’t unblock %@." : {
-      "comment" : "Subheadline prompting the auth user to opt in to viewing a blocked user's posts. The argument is the @username of the blocked user."
+    "+1 More Language": {
+      "comment": "The label shown when one more language is available.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+1 meer taal"
+          }
+        }
+      }
     },
-    "Are you sure?" : {
-      "comment" : "The subheadline string for the unpin message pop-up"
+    "✓ Following": {
+      "comment": "The user-cell follow button title when the current user is following the target user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✓ Volgend"
+          }
+        }
+      }
     },
-    "as %@" : {
-      "comment" : "The label naming the character a cast member voices."
+    "4-Koma Manga": {
+      "comment": "The display value '4-Koma Manga'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4-koma-manga"
+          }
+        }
+      }
     },
-    "Be the first to contribute." : {
-      "comment" : "The empty-state body on the Parental Guide screen when no entries exist yet."
+    "A release date has yet to be announced.": {
+      "comment": "The footnote shown when an episode's release date is unannounced.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er moet nog een releasedatum worden aangekondigd."
+          }
+        }
+      }
     },
-    "Be the first to follow %@!" : {
-      "comment" : "The empty-state detail shown on another user's followers list when nobody follows them yet. '%@' is the target user's display name."
+    "Achievements you earn show up here.": {
+      "comment": "Empty-state detail for the achievements list when viewing your own profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prestaties die je verdient, verschijnen hier."
+          }
+        }
+      }
     },
-    "Be the first to follow!" : {
-      "comment" : "The user-cell secondary line for another user when nobody follows them yet."
+    "Across %@.": {
+      "comment": "The footnote summarizing how content is spread across units, as in 'Across 5 seasons.'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verspreid over %@."
+          }
+        }
+      }
     },
-    "Be the first to reply to this message!" : {
-      "comment" : "The empty-state detail for a feed message that has no replies yet."
+    "Act": {
+      "comment": "The display value 'Act'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Act"
+          }
+        }
+      }
     },
-    "Become a Developer" : {
-      "comment" : "The action button on the developer badge."
+    "Active Developer": {
+      "comment": "The title shown on the developer profile badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actieve ontwikkelaar"
+          }
+        }
+      }
     },
-    "Become a Pro User" : {
-      "comment" : "The action button on the Pro badge."
+    "Add %@": {
+      "comment": "Title of the editor when adding a new entry for a category. The argument is the category display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ toevoegen"
+          }
+        }
+      }
     },
-    "Block" : {
-      "comment" : "The string for the word 'block'."
+    "Add a %@ to your %@ list and it will show up here.": {
+      "comment": "The library empty-state prompt to add an item to a list.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Add a %1$@ to your %2$@ list and it will show up here."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg een %1$@ toe aan je %2$@-lijst en hij verschijnt hier."
+          }
+        }
+      }
     },
-    "Block %@" : {
-      "comment" : "The title prompting the user to block another user. The argument is the @username of the target user."
+    "Add to Apple Music": {
+      "comment": "The menu action that adds a song to the Apple Music library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toevoegen aan Apple Music"
+          }
+        }
+      }
     },
-    "Blocked" : {
-      "comment" : "The label shown on the button when the user has blocked another user"
+    "Add your take when sharing someone else's post and it'll show up here.": {
+      "comment": "The empty-state subheadline for the Quotes tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg je eigen woorden toe wanneer je het bericht van iemand anders deelt, dan verschijnt het hier."
+          }
+        }
+      }
     },
-    "Blocked Users" : {
-      "comment" : "The label for the Settings entry that opens the blocked users list"
+    "Address": {
+      "comment": "The 'Address' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adres"
+          }
+        }
+      }
     },
-    "Can't get %@ list. Please reload the page or restart the app and check your WiFi connection." : {
-      "comment" : "The empty-state detail shown when a list could not be fetched."
+    "Adults Only": {
+      "comment": "The descriptive label for the 'Adults Only' TV rating.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alleen volwassenen"
+          }
+        }
+      }
     },
-    "Can't get users list. Please reload the page or restart the app and check your WiFi connection." : {
-      "comment" : "The empty-state detail shown when the users search returns no results or fails to load."
+    "Advanced Search": {
+      "comment": "The string for the 'advanced search' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geavanceerd zoeken"
+          }
+        }
+      }
     },
-    "Can’t Save Review 😔" : {
-      "comment" : "The string for can't save review description."
+    "Age (years)": {
+      "comment": "The 'Age (years)' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leeftijd (jaren)"
+          }
+        }
+      }
     },
-    "Chapters Read" : {
-      "comment" : "The label for the 'chapters read' milestone."
+    "Air Day": {
+      "comment": "The 'Air Day' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uitzenddag"
+          }
+        }
+      }
     },
-    "China" : {
-      "comment" : "The localized country name for China."
+    "Air Season": {
+      "comment": "The 'Air Season' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uitzendseizoen"
+          }
+        }
+      }
     },
-    "Click to Rate:" : {
-      "comment" : "The string for the word 'click to rate'."
+    "Air Time": {
+      "comment": "The 'Air Time' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uitzendtijd"
+          }
+        }
+      }
     },
-    "Delete" : {
-      "comment" : "The string for the word 'delete'."
+    "Alcohol, Drugs & Smoking": {
+      "comment": "The Parental Guide category 'Alcohol, Drugs & Smoking'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alcohol, drugs en roken"
+          }
+        }
+      }
     },
-    "Delete Library" : {
-      "comment" : "The headline string for the Library Delete view"
+    "Alive": {
+      "comment": "The display value 'Alive'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Levend"
+          }
+        }
+      }
     },
-    "Delete Message" : {
-      "comment" : "The string for the 'Delete Message' context menu option."
+    "All Ages": {
+      "comment": "The descriptive label for the 'All Ages' TV rating.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle leeftijden"
+          }
+        }
+      }
     },
-    "Delete Rating?" : {
-      "comment" : "The title string for the confirmation dialog when the user clears their rating or deletes their review."
+    "Amplify posts you like": {
+      "comment": "The empty-state headline for the Re-shares tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versterk berichten die je leuk vindt"
+          }
+        }
+      }
     },
-    "Delete Review" : {
-      "comment" : "The string for the 'Delete Review' context menu option."
+    "anime watchers": {
+      "comment": "The ReCap milestone noun phrase for shows.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "anime-kijkers"
+          }
+        }
+      }
     },
-    "Delete this entry" : {
-      "comment" : "Title of the destructive delete row in the Parental Guide editor."
+    "Anvil": {
+      "comment": "The display value 'Anvil'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aambeeld"
+          }
+        }
+      }
     },
-    "Delete this entry?" : {
-      "comment" : "Title of the confirmation alert when deleting a Parental Guide entry."
+    "Aquarius": {
+      "comment": "The display value 'Aquarius'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waterman"
+          }
+        }
+      }
     },
-    "Depiction" : {
-      "comment" : "Header for the depiction section of the Parental Guide editor."
+    "Are you sure you want to delete this entry?": {
+      "comment": "The confirmation message shown before deleting a Parental Guide entry.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weet je zeker dat je dit item wilt verwijderen?"
+          }
+        }
+      }
     },
-    "Details" : {
-      "comment" : "Header above the details editor in the Parental Guide report sheet."
+    "Are you sure you want to view these posts? Viewing posts won’t unblock %@.": {
+      "comment": "Subheadline prompting the auth user to opt in to viewing a blocked user's posts. The argument is the @username of the blocked user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weet je zeker dat je deze berichten wilt bekijken? Berichten bekijken deblokkeert %@ niet."
+          }
+        }
+      }
     },
-    "Discard changes?" : {
-      "comment" : "Title of the discard-changes alert in the Parental Guide editor."
+    "Are you sure?": {
+      "comment": "The subheadline string for the unpin message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weet je het zeker?"
+          }
+        }
+      }
     },
-    "Early Supporter" : {
-      "comment" : "The title shown on the early-supporter profile badge."
+    "Aries": {
+      "comment": "The display value 'Aries'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ram"
+          }
+        }
+      }
     },
-    "Edit" : {
-      "comment" : "The string for the word 'edit'."
+    "as %@": {
+      "comment": "The label naming the character a cast member voices.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "als %@"
+          }
+        }
+      }
     },
-    "Edit %@" : {
-      "comment" : "Title of the editor when editing an existing entry for a category. The argument is the category display name."
+    "Astrological Sign": {
+      "comment": "The 'Astrological Sign' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sterrenbeeld"
+          }
+        }
+      }
     },
-    "Episode: %@" : {
-      "comment" : "The label naming the episodes a song appears in."
+    "Be the first to contribute.": {
+      "comment": "The empty-state body on the Parental Guide screen when no entries exist yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wees de eerste die bijdraagt."
+          }
+        }
+      }
     },
-    "Episodes Watched" : {
-      "comment" : "The label for the 'episodes watched' milestone."
+    "Be the first to follow %@!": {
+      "comment": "The empty-state detail shown on another user's followers list when nobody follows them yet. '%@' is the target user's display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wees de eerste die %@ volgt!"
+          }
+        }
+      }
     },
-    "feedMessage.repliesCount" : {
-      "comment" : "The reply count shown as a feed message details title.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ %#@count@"
+    "Be the first to follow!": {
+      "comment": "The user-cell secondary line for another user when nobody follows them yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wees de eerste die volgt!"
+          }
+        }
+      }
+    },
+    "Be the first to place a review!": {
+      "comment": "The reviews list empty-state detail.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wees de eerste die een recensie plaatst!"
+          }
+        }
+      }
+    },
+    "Be the first to reply to this message!": {
+      "comment": "The empty-state detail for a feed message that has no replies yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wees de eerste die op dit bericht reageert!"
+          }
+        }
+      }
+    },
+    "Become a Developer": {
+      "comment": "The action button on the developer badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word ontwikkelaar"
+          }
+        }
+      }
+    },
+    "Become a Pro User": {
+      "comment": "The action button on the Pro badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word Pro-gebruiker"
+          }
+        }
+      }
+    },
+    "Birth Date": {
+      "comment": "The 'Birth Date' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geboortedatum"
+          }
+        }
+      }
+    },
+    "Birth Day": {
+      "comment": "The 'Birth Day' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geboortedag"
+          }
+        }
+      }
+    },
+    "Birth Month": {
+      "comment": "The 'Birth Month' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geboortemaand"
+          }
+        }
+      }
+    },
+    "Block": {
+      "comment": "The string for the word 'block'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blokkeren"
+          }
+        }
+      }
+    },
+    "Block %@": {
+      "comment": "The title prompting the user to block another user. The argument is the @username of the target user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ blokkeren"
+          }
+        }
+      }
+    },
+    "Blocked": {
+      "comment": "The label shown on the button when the user has blocked another user",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geblokkeerd"
+          }
+        }
+      }
+    },
+    "Blocked Users": {
+      "comment": "The label for the Settings entry that opens the blocked users list",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geblokkeerde gebruikers"
+          }
+        }
+      }
+    },
+    "Book": {
+      "comment": "The display value 'Book'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boek"
+          }
+        }
+      }
+    },
+    "Both": {
+      "comment": "The self-label option 'Both'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beide"
+          }
+        }
+      }
+    },
+    "Bounce": {
+      "comment": "The display value 'Bounce'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stuiteren"
+          }
+        }
+      }
+    },
+    "Broadcast": {
+      "comment": "The label for a show's broadcast schedule.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uitzending"
+          }
+        }
+      }
+    },
+    "Bust": {
+      "comment": "The 'Bust' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buste"
+          }
+        }
+      }
+    },
+    "Calendar": {
+      "comment": "The Apple Calendar app destination.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agenda"
+          }
+        }
+      }
+    },
+    "Can't Add Reminder": {
+      "comment": "The alert title shown when adding a reminder fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herinnering toevoegen lukt niet"
+          }
+        }
+      }
+    },
+    "Can't Favorite": {
+      "comment": "The alert title shown when favoriting fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoriet maken lukt niet"
+          }
+        }
+      }
+    },
+    "Can't get %@ list. Please refresh the page or restart the app and check your WiFi connection.": {
+      "comment": "The empty-state detail shown when a list could not be fetched, asking to refresh.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan de lijst met %@ niet ophalen. Ververs de pagina of herstart de app en controleer je wifiverbinding."
+          }
+        }
+      }
+    },
+    "Can't get %@ list. Please reload the page or restart the app and check your WiFi connection.": {
+      "comment": "The empty-state detail shown when a list could not be fetched.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan de lijst met %@ niet ophalen. Herlaad de pagina of herstart de app en controleer je wifiverbinding."
+          }
+        }
+      }
+    },
+    "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection.": {
+      "comment": "The empty-state detail shown when the show songs list could not be fetched.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan de lijst met serienummers niet ophalen. Herlaad de pagina of herstart de app en controleer je wifiverbinding."
+          }
+        }
+      }
+    },
+    "Can't get users list. Please reload the page or restart the app and check your WiFi connection.": {
+      "comment": "The empty-state detail shown when the users search returns no results or fails to load.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan de gebruikerslijst niet ophalen. Herlaad de pagina of herstart de app en controleer je wifiverbinding."
+          }
+        }
+      }
+    },
+    "Can’t Save Review 😔": {
+      "comment": "The string for can't save review description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recensie opslaan lukt niet 😔"
+          }
+        }
+      }
+    },
+    "Cancer": {
+      "comment": "The display value 'Cancer'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kreeft"
+          }
+        }
+      }
+    },
+    "Capricorn": {
+      "comment": "The display value 'Capricorn'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steenbok"
+          }
+        }
+      }
+    },
+    "Card Game": {
+      "comment": "The display value 'Card Game'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaartspel"
+          }
+        }
+      }
+    },
+    "Change Emoji": {
+      "comment": "The accessibility label for the change emoji action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emoji wijzigen"
+          }
+        }
+      }
+    },
+    "Change Kaomoji": {
+      "comment": "The accessibility label for the change kaomoji action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaomoji wijzigen"
+          }
+        }
+      }
+    },
+    "Chapters Read": {
+      "comment": "The label for the 'chapters read' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelezen hoofdstukken"
+          }
+        }
+      }
+    },
+    "Character": {
+      "comment": "The singular word 'character'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personage"
+          }
+        }
+      }
+    },
+    "Character Search": {
+      "comment": "The accessibility label for the character search action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personages zoeken"
+          }
+        }
+      }
+    },
+    "Check out \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a person, where the placeholder is the name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Check out %@’s library via @KurozoraApp": {
+      "comment": "The share text for a user's library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk de bibliotheek van %@ via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Check out shows made by \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a studio, where the placeholder is the name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk series gemaakt door \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "China": {
+      "comment": "The localized country name for China.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "China"
+          }
+        }
+      }
+    },
+    "Click to Rate:": {
+      "comment": "The string for the word 'click to rate'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klik om te beoordelen:"
+          }
+        }
+      }
+    },
+    "Color": {
+      "comment": "The accessibility label for the color action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleur"
+          }
+        }
+      }
+    },
+    "Compact": {
+      "comment": "The display value 'Compact'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compact"
+          }
+        }
+      }
+    },
+    "Compressed": {
+      "comment": "The monogram style 'Compressed'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smal"
+          }
+        }
+      }
+    },
+    "Country of Origin": {
+      "comment": "The label for a title's country of origin.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Land van herkomst"
+          }
+        }
+      }
+    },
+    "Crop": {
+      "comment": "The accessibility label for the crop action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bijsnijden"
+          }
+        }
+      }
+    },
+    "Currently Airing": {
+      "comment": "The display value 'Currently Airing'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wordt momenteel uitgezonden"
+          }
+        }
+      }
+    },
+    "Currently Publishing": {
+      "comment": "The display value 'Currently Publishing'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wordt momenteel gepubliceerd"
+          }
+        }
+      }
+    },
+    "Deceased": {
+      "comment": "The display value 'Deceased'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overleden"
+          }
+        }
+      }
+    },
+    "Deceased Date": {
+      "comment": "The 'Deceased Date' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overlijdensdatum"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "comment": "The string for the word 'delete'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwijder"
+          }
+        }
+      }
+    },
+    "Delete Library": {
+      "comment": "The headline string for the Library Delete view",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliotheek verwijderen"
+          }
+        }
+      }
+    },
+    "Delete Message": {
+      "comment": "The string for the 'Delete Message' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht verwijderen"
+          }
+        }
+      }
+    },
+    "Delete Rating?": {
+      "comment": "The title string for the confirmation dialog when the user clears their rating or deletes their review.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordeling verwijderen?"
+          }
+        }
+      }
+    },
+    "Delete Review": {
+      "comment": "The string for the 'Delete Review' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recensie verwijderen"
+          }
+        }
+      }
+    },
+    "Delete this entry": {
+      "comment": "Title of the destructive delete row in the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit item verwijderen"
+          }
+        }
+      }
+    },
+    "Delete this entry?": {
+      "comment": "Title of the confirmation alert when deleting a Parental Guide entry.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit item verwijderen?"
+          }
+        }
+      }
+    },
+    "Depiction": {
+      "comment": "Header for the depiction section of the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergave"
+          }
+        }
+      }
+    },
+    "Describe yourself!": {
+      "comment": "The edit-profile bio placeholder.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beschrijf jezelf!"
+          }
+        }
+      }
+    },
+    "Detailed": {
+      "comment": "The display value 'Detailed'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gedetailleerd"
+          }
+        }
+      }
+    },
+    "Details": {
+      "comment": "Header above the details editor in the Parental Guide report sheet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        }
+      }
+    },
+    "Digital Manga": {
+      "comment": "The display value 'Digital Manga'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Digitale manga"
+          }
+        }
+      }
+    },
+    "Disabled": {
+      "comment": "The display value 'Disabled'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uitgeschakeld"
+          }
+        }
+      }
+    },
+    "Discard changes?": {
+      "comment": "Title of the discard-changes alert in the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzigingen negeren?"
+          }
+        }
+      }
+    },
+    "Discontinued": {
+      "comment": "The display value 'Discontinued'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopgezet"
+          }
+        }
+      }
+    },
+    "Discover %@ shows via @KurozoraApp.": {
+      "comment": "The share text for a genre or theme, where the placeholder is the name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontdek %@-series via @KurozoraApp."
+          }
+        }
+      }
+    },
+    "DLC": {
+      "comment": "The display value 'DLC'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DLC"
+          }
+        }
+      }
+    },
+    "Doujinshi": {
+      "comment": "The literature type 'Doujinshi'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doujinshi"
+          }
+        }
+      }
+    },
+    "Duration (minutes)": {
+      "comment": "The 'Duration (minutes)' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duur (minuten)"
+          }
+        }
+      }
+    },
+    "Early Supporter": {
+      "comment": "The title shown on the early-supporter profile badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vroege supporter"
+          }
+        }
+      }
+    },
+    "Edit": {
+      "comment": "The string for the word 'edit'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bewerk"
+          }
+        }
+      }
+    },
+    "Edit %@": {
+      "comment": "Title of the editor when editing an existing entry for a category. The argument is the category display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bewerken"
+          }
+        }
+      }
+    },
+    "Edit Initials": {
+      "comment": "The accessibility label for the edit initials action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Initialen bewerken"
+          }
+        }
+      }
+    },
+    "Edition": {
+      "comment": "The singular word for a game edition.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editie"
+          }
+        }
+      }
+    },
+    "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app.": {
+      "comment": "The authentication settings description for Face ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie in zodat Kurozora wordt vergrendeld zodra u hem sluit. U wordt gevraagd om te verifiëren met Face ID of de toegangscode van uw apparaat wanneer u de app opnieuw opent."
+          }
+        }
+      }
+    },
+    "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Optic ID or your device's passcode when you reopen the app.": {
+      "comment": "The authentication settings description for Optic ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie in zodat Kurozora wordt vergrendeld zodra u hem sluit. U wordt gevraagd om te verifiëren met Optic ID of de toegangscode van uw apparaat wanneer u de app opnieuw opent."
+          }
+        }
+      }
+    },
+    "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Touch ID or your device's passcode when you reopen the app.": {
+      "comment": "The authentication settings description for Touch ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie in zodat Kurozora wordt vergrendeld zodra u hem sluit. U wordt gevraagd om te verifiëren met Touch ID of de toegangscode van uw apparaat wanneer u de app opnieuw opent."
+          }
+        }
+      }
+    },
+    "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app.": {
+      "comment": "The authentication settings description for passcode only.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie in zodat Kurozora wordt vergrendeld zodra u hem sluit. U wordt gevraagd om te verifiëren met de toegangscode van uw apparaat wanneer u de app opnieuw opent."
+          }
+        }
+      }
+    },
+    "Episode": {
+      "comment": "The singular word 'episode'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aflevering"
+          }
+        }
+      }
+    },
+    "Episode: %@": {
+      "comment": "The label naming the episodes a song appears in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aflevering: %@"
+          }
+        }
+      }
+    },
+    "Episodes Watched": {
+      "comment": "The label for the 'episodes watched' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekeken afleveringen"
+          }
+        }
+      }
+    },
+    "Favorited %@ will show up on this page!": {
+      "comment": "The favorites empty-state detail for your own profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoriete %@ verschijnen op deze pagina!"
+          }
+        }
+      }
+    },
+    "feedMessage.repliesCount": {
+      "comment": "The reply count shown as a feed message details title.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
           },
-          "substitutions" : {
-            "count" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "reply"
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "reply"
                     }
                   },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "replies"
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "replies"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
+          },
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "reactie"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "reacties"
                     }
                   }
                 }
@@ -251,393 +1863,2340 @@
         }
       }
     },
-    "Find who you're looking for" : {
-      "comment" : "The title string for the search pop-up when trying to tag a user in a message or reply."
-    },
-    "Follow a user and they will show up here!" : {
-      "comment" : "The empty-state detail shown on your own following list when you don't follow anyone yet."
-    },
-    "Follow other users so they will follow you back. Who knows, you might meet your next BFF!" : {
-      "comment" : "The empty-state detail shown on your own followers list when you have none."
-    },
-    "Followed by %@ fans." : {
-      "comment" : "The user-cell secondary line for your own profile with a large (1000+) follower count. '%@' is the abbreviated follower count, e.g. '1.2K'."
-    },
-    "Followed by %@ users." : {
-      "comment" : "The user-cell secondary line for another user that you don't follow. '%@' is the formatted total follower count."
-    },
-    "Followed by one user." : {
-      "comment" : "The user-cell secondary line for another user that you don't follow when they have exactly one follower."
-    },
-    "Followed by you and %@ fans." : {
-      "comment" : "The user-cell secondary line for your own profile with a small (2–999) follower count. '%@' is the follower count."
-    },
-    "Followed by you and %@ users." : {
-      "comment" : "The user-cell secondary line for another user that you already follow. '%@' is the formatted count of other followers (excluding the current user)."
-    },
-    "Followed by you." : {
-      "comment" : "The user-cell secondary line for another user that you already follow when their only follower is you."
-    },
-    "Followed by you… and one fan!" : {
-      "comment" : "The user-cell secondary line for your own profile when you have exactly one follower."
-    },
-    "Following" : {
-      "comment" : "The follow-status badge text shown after a person icon in the mention picker."
-    },
-    "Frequency" : {
-      "comment" : "Header for the frequency section of the Parental Guide editor."
-    },
-    "Games Played" : {
-      "comment" : "The label for the 'games played' milestone."
-    },
-    "Get Verified" : {
-      "comment" : "The action button on the verified badge."
-    },
-    "Go To" : {
-      "comment" : "The string for the 'Go To' context menu option."
-    },
-    "Go to first episode" : {
-      "comment" : "The string for the 'Go to first episode' context menu option."
-    },
-    "Go to last episode" : {
-      "comment" : "The string for the 'Go to last episode' context menu option."
-    },
-    "Go to last watched episode" : {
-      "comment" : "The string for the 'Go to last watched episode' context menu option."
-    },
-    "Helpful" : {
-      "comment" : "The context-menu action that marks a Parental Guide entry as helpful."
-    },
-    "Hide fillers" : {
-      "comment" : "The string for the 'Hide fillers' context menu option."
-    },
-    "I'm new here!" : {
-      "comment" : "The title shown on the new-user profile badge."
-    },
-    "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below." : {
-      "comment" : "The subheadline string for the Library Import view."
-    },
-    "Inaccurate" : {
-      "comment" : "Display name of the `inaccurate` Parental Guide report reason."
-    },
-    "Inappropriate" : {
-      "comment" : "Display name of the `inappropriate` Parental Guide report reason."
-    },
-    "Is this a 'where to watch' question?" : {
-      "comment" : "The headline string for the off-topic content warning pop-up."
-    },
-    "Japan" : {
-      "comment" : "The localized country name for Japan."
-    },
-    "Join Kurozora Staff" : {
-      "comment" : "The action button on the staff badge."
-    },
-    "Just Added" : {
-      "comment" : "The string for the 'just added' browse option."
-    },
-    "Keep Editing" : {
-      "comment" : "Cancel button on the discard-changes alert."
-    },
-    "Korea" : {
-      "comment" : "The localized country name for Korea."
-    },
-    "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file." : {
-      "comment" : "The footer string for the Library Import view."
-    },
-    "Kurozora is for tracking your progress, it doesn't stream or host content. Posts asking where to watch or read often go unanswered. You can still post if you'd like." : {
-      "comment" : "The subheadline string for the off-topic content warning pop-up."
-    },
-    "Leaderboard" : {
-      "comment" : "The title shown on the reputation leaderboard screen."
-    },
-    "Library.xml" : {
-      "comment" : "The placeholder string for the library xml file name."
-    },
-    "Like" : {
-      "comment" : "The string for the word 'like'."
-    },
-    "Limit Reached" : {
-      "comment" : "The headline string for the character limit reached error pop-up"
-    },
-    "Mention User" : {
-      "comment" : "The action button on the new-user badge that mentions the user."
-    },
-    "Message Reported" : {
-      "comment" : "The headline string for the report message pop-up"
-    },
-    "Message will be deleted permanently." : {
-      "comment" : "The subheadline string for the delete message pop-up"
-    },
-    "Minutes" : {
-      "comment" : "The 'minutes' unit label for a milestone value."
-    },
-    "Minutes Played" : {
-      "comment" : "The label for the 'minutes played' milestone."
-    },
-    "Minutes Read" : {
-      "comment" : "The label for the 'minutes read' milestone."
-    },
-    "Minutes Watched" : {
-      "comment" : "The label for the 'minutes watched' milestone."
-    },
-    "Most Popular" : {
-      "comment" : "The string for the 'most popular' browse option."
-    },
-    "Move From Another Service" : {
-      "comment" : "The headline string for the Library Import view"
-    },
-    "No %@" : {
-      "comment" : "The generic empty-state title for a list."
-    },
-    "No Achievements" : {
-      "comment" : "Empty-state title for the achievements list."
-    },
-    "No Entries" : {
-      "comment" : "The empty-state title on a Parental Guide category screen when no entries exist."
-    },
-    "No Followers" : {
-      "comment" : "The empty-state title for the followers list."
-    },
-    "No Following" : {
-      "comment" : "The empty-state title for the following list."
-    },
-    "No Parental Guide Yet" : {
-      "comment" : "The empty-state title on the Parental Guide screen when no entries exist yet."
-    },
-    "No Quotes" : {
-      "comment" : "The empty-state headline for the Quotes tab on the post activity screen."
-    },
-    "No Users" : {
-      "comment" : "The empty-state title for a generic users list (search / leaderboard)."
-    },
-    "noAchievements.otherUserDetail" : {
-      "comment" : "Empty-state detail for the achievements list when viewing someone else's profile.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ has not earned any achievements yet."
+    "Fillers": {
+      "comment": "The 'Fillers' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fillers"
           }
         }
       }
     },
-    "None" : {
-      "comment" : "Placeholder shown for a category with no submissions in the Parental Guide summary."
-    },
-    "Not enough ratings" : {
-      "comment" : "The label shown in place of the rating count when a title has too few ratings."
-    },
-    "Not Rated" : {
-      "comment" : "The descriptive label for the 'Not Rated' TV rating."
-    },
-    "OK" : {
-      "comment" : "Generic OK button shown on Parental Guide alerts."
-    },
-    "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion." : {
-      "comment" : "The footer string for the Library Delete view."
-    },
-    "Open Apple Music Library" : {
-      "comment" : "The alert button that deep-links to the user's Apple Music library."
-    },
-    "Other" : {
-      "comment" : "Display name of the `other` Parental Guide report reason."
-    },
-    "Parental Guidance Suggested" : {
-      "comment" : "The descriptive label for the 'Parental Guidance Suggested' TV rating."
-    },
-    "Parental Guide" : {
-      "comment" : "The title of the Parental Guide screen."
-    },
-    "Percentile" : {
-      "comment" : "The 'percentile' unit label for a milestone value."
-    },
-    "Permanently delete your library." : {
-      "comment" : "The subheadline string for the Library Delete view."
-    },
-    "Pin" : {
-      "comment" : "The string for the word 'pin'."
-    },
-    "Pin this message" : {
-      "comment" : "The headline string for the pin message pop-up"
-    },
-    "Pinned" : {
-      "comment" : "The status label shown on a pinned feed message."
-    },
-    "Post" : {
-      "comment" : "The string for the 'Post' context menu option."
-    },
-    "Post activity" : {
-      "comment" : "The navigation title for the post activity screen."
-    },
-    "Post Anyway" : {
-      "comment" : "The destructive action string for proceeding with an off-topic post anyway."
-    },
-    "Post Message" : {
-      "comment" : "The string for the 'Post Message' context menu option."
-    },
-    "Pull to refresh %@ list…" : {
-      "comment" : "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
-    },
-    "Pull to refresh the %@." : {
-      "comment" : "Pull-to-refresh title for a user list variant. '%@' is the list kind, e.g. 'followers', 'following'."
-    },
-    "pullToRefreshItems" : {
-      "comment" : "Pull-to-refresh title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Pull to refresh %@…"
+    "Finales": {
+      "comment": "The 'Finales' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finales"
           }
         }
       }
     },
-    "Quote" : {
-      "comment" : "The string for the 'Quote' context menu option."
-    },
-    "Quotes" : {
-      "comment" : "The string for the 'Quotes' tab on the post activity screen."
-    },
-    "Rating" : {
-      "comment" : "Row label for the rating in the Parental Guide summary.\nThe string for the word 'rating'."
-    },
-    "Rating Failed" : {
-      "comment" : "The string for the 'rating failed' section."
-    },
-    "Ratings" : {
-      "comment" : "The string for the word 'ratings'."
-    },
-    "Ratings & Reviews" : {
-      "comment" : "The string for the word 'ratings & reviews'."
-    },
-    "Re-share" : {
-      "comment" : "The string for the 'Re-share' context menu option."
-    },
-    "Re-shared by %@" : {
-      "comment" : "The string for the re-share attribution row."
-    },
-    "Re-shares" : {
-      "comment" : "The string for the 'Re-shares' tab on the post activity screen."
-    },
-    "Reason" : {
-      "comment" : "Header above the reason picker in the Parental Guide report sheet.\nHeader for the reason section of the Parental Guide editor."
-    },
-    "Recent" : {
-      "comment" : "The string for the 'Recent' sort option on the post activity screen."
-    },
-    "Refreshing %@ list…" : {
-      "comment" : "Refresh-in-progress title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'."
-    },
-    "Refreshing %@…" : {
-      "comment" : "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'."
-    },
-    "refreshingItems" : {
-      "comment" : "Refresh-in-progress title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refreshing %@…"
+    "Find who you're looking for": {
+      "comment": "The title string for the search pop-up when trying to tag a user in a message or reply.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vind wie je zoekt"
           }
         }
       }
     },
-    "Reply" : {
-      "comment" : "The string for the 'Reply' context menu option."
+    "Finished Airing": {
+      "comment": "The display value 'Finished Airing'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klaar met uitzenden"
+          }
+        }
+      }
     },
-    "Report" : {
-      "comment" : "The string for the word 'report'."
+    "Finished Publishing": {
+      "comment": "The display value 'Finished Publishing'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klaar met publiceren"
+          }
+        }
+      }
     },
-    "Report Entry" : {
-      "comment" : "Title shown in the navigation bar of the Parental Guide report sheet."
+    "First Aired": {
+      "comment": "The 'First Aired' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eerst uitgezonden"
+          }
+        }
+      }
     },
-    "Report Message" : {
-      "comment" : "The string for the 'Report Message' context menu option."
+    "First Published": {
+      "comment": "The 'First Published' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eerst gepubliceerd"
+          }
+        }
+      }
     },
-    "Report Review" : {
-      "comment" : "The string for the 'Report Review' context menu option."
+    "Follow %@ via @KurozoraApp": {
+      "comment": "The share text inviting others to follow a user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg %@ via @KurozoraApp"
+          }
+        }
+      }
     },
-    "Reported" : {
-      "comment" : "Title of the success alert shown after a Parental Guide entry has been reported."
+    "Follow a user and they will show up here!": {
+      "comment": "The empty-state detail shown on your own following list when you don't follow anyone yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg een gebruiker en die verschijnt hier!"
+          }
+        }
+      }
     },
-    "Review Reported" : {
-      "comment" : "The headline string for the report review pop-up"
+    "Follow other users so they will follow you back. Who knows, you might meet your next BFF!": {
+      "comment": "The empty-state detail shown on your own followers list when you have none.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg andere gebruikers, dan volgen ze jou terug. Wie weet ontmoet je je volgende beste vriend(in)!"
+          }
+        }
+      }
     },
-    "Review will be deleted permanently." : {
-      "comment" : "The subheadline string for the delete review pop-up"
+    "Followed by %@ fans.": {
+      "comment": "The user-cell secondary line for your own profile with a large (1000+) follower count. '%@' is the abbreviated follower count, e.g. '1.2K'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door %@ fans."
+          }
+        }
+      }
     },
-    "Search for the person you want to mention" : {
-      "comment" : "The subtitle string for the search pop-up when trying to tag a user in a message or reply."
+    "Followed by %@ users.": {
+      "comment": "The user-cell secondary line for another user that you don't follow. '%@' is the formatted total follower count.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door %@ gebruikers."
+          }
+        }
+      }
     },
-    "Season %lld" : {
-      "comment" : "The label naming a season by its number."
+    "Followed by one user.": {
+      "comment": "The user-cell secondary line for another user that you don't follow when they have exactly one follower.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door één gebruiker."
+          }
+        }
+      }
     },
-    "See Also" : {
-      "comment" : "The string for the 'see also' section."
+    "Followed by you and %@ fans.": {
+      "comment": "The user-cell secondary line for your own profile with a small (2–999) follower count. '%@' is the follower count.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door jou en %@ fans."
+          }
+        }
+      }
     },
-    "Select behavior" : {
-      "comment" : "The placeholder string for selecting the import behavior."
+    "Followed by you and %@ users.": {
+      "comment": "The user-cell secondary line for another user that you already follow. '%@' is the formatted count of other followers (excluding the current user).",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door jou en %@ gebruikers."
+          }
+        }
+      }
     },
-    "Select File" : {
-      "comment" : "The button string for selecting a file to import."
+    "Followed by you.": {
+      "comment": "The user-cell secondary line for another user that you already follow when their only follower is you.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door jou."
+          }
+        }
+      }
     },
-    "Select service" : {
-      "comment" : "The placeholder string for selecting the import service."
+    "Followed by you… and one fan!": {
+      "comment": "The user-cell secondary line for your own profile when you have exactly one follower.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevolgd door jou… en één fan!"
+          }
+        }
+      }
     },
-    "Server returned no entry." : {
-      "comment" : "Error message shown when the server's Parental Guide submission response is empty."
+    "Font & Width": {
+      "comment": "The accessibility label for the font and width action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lettertype & breedte"
+          }
+        }
+      }
     },
-    "Severity" : {
-      "comment" : "Header for the severity section of the Parental Guide editor."
+    "Frequency": {
+      "comment": "Header for the frequency section of the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frequentie"
+          }
+        }
+      }
     },
-    "Share Message" : {
-      "comment" : "The string for the 'Share Message' context menu option."
+    "Frightening & Intense Scenes": {
+      "comment": "The Parental Guide category 'Frightening & Intense Scenes'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Angstaanjagende en intense scènes"
+          }
+        }
+      }
     },
-    "Share Review" : {
-      "comment" : "The string for the 'Share Review' context menu option."
+    "Full Game": {
+      "comment": "The display value 'Full Game'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volledige game"
+          }
+        }
+      }
     },
-    "Share someone else's post on your timeline by reposting it. When you do, it'll show up here." : {
-      "comment" : "The empty-state subheadline for the Re-shares tab on the post activity screen."
+    "Game": {
+      "comment": "The display value 'Game'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game"
+          }
+        }
+      }
     },
-    "Show %@'s Profile" : {
-      "comment" : "The context-menu action that opens a reviewer's profile."
+    "game players": {
+      "comment": "The ReCap milestone noun phrase for games.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gamers"
+          }
+        }
+      }
     },
-    "Show fillers" : {
-      "comment" : "The string for the 'Show fillers' context menu option."
+    "Games Played": {
+      "comment": "The label for the 'games played' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gespeelde games"
+          }
+        }
+      }
     },
-    "Show Profile" : {
-      "comment" : "The string for the 'Show Profile' context menu option."
+    "Gemini": {
+      "comment": "The display value 'Gemini'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tweelingen"
+          }
+        }
+      }
     },
-    "Show Replies" : {
-      "comment" : "The string for the 'Show Replies' context menu option."
+    "Get Verified": {
+      "comment": "The action button on the verified badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word geverifieerd"
+          }
+        }
+      }
     },
-    "show.ratingsCount" : {
-      "comment" : "The ratings count shown on a show's rating bar.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ %#@count@"
+    "Go To": {
+      "comment": "The string for the 'Go To' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga naar"
+          }
+        }
+      }
+    },
+    "Go to first episode": {
+      "comment": "The string for the 'Go to first episode' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga naar eerste aflevering"
+          }
+        }
+      }
+    },
+    "Go to last episode": {
+      "comment": "The string for the 'Go to last episode' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga naar laatste aflevering"
+          }
+        }
+      }
+    },
+    "Go to last watched episode": {
+      "comment": "The string for the 'Go to last watched episode' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga naar laatst bekeken aflevering"
+          }
+        }
+      }
+    },
+    "Heartbeat": {
+      "comment": "The display value 'Heartbeat'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hartslag"
+          }
+        }
+      }
+    },
+    "Height": {
+      "comment": "The 'Height' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lengte"
+          }
+        }
+      }
+    },
+    "Helpful": {
+      "comment": "The context-menu action that marks a Parental Guide entry as helpful.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuttig"
+          }
+        }
+      }
+    },
+    "Hidden": {
+      "comment": "The 'Hidden' filter option label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verborgen"
+          }
+        }
+      }
+    },
+    "Hide fillers": {
+      "comment": "The string for the 'Hide fillers' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verberg fillers"
+          }
+        }
+      }
+    },
+    "Hip": {
+      "comment": "The 'Hip' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heup"
+          }
+        }
+      }
+    },
+    "How to Remove": {
+      "comment": "The alert title explaining how to remove a song from Apple Music.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoe te verwijderen"
+          }
+        }
+      }
+    },
+    "I'm new here!": {
+      "comment": "The title shown on the new-user profile badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ik ben hier nieuw!"
+          }
+        }
+      }
+    },
+    "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below.": {
+      "comment": "The subheadline string for the Library Import view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als je een export van je anime- of mangabibliotheek van andere diensten hebt, zoals MyAnimeList, kun je die hieronder selecteren."
+          }
+        }
+      }
+    },
+    "In Apple Music Library": {
+      "comment": "The menu action shown when a song is already in the Apple Music library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Apple Music-bibliotheek"
+          }
+        }
+      }
+    },
+    "Inaccurate": {
+      "comment": "Display name of the `inaccurate` Parental Guide report reason.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onnauwkeurig"
+          }
+        }
+      }
+    },
+    "Inappropriate": {
+      "comment": "Display name of the `inappropriate` Parental Guide report reason.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongepast"
+          }
+        }
+      }
+    },
+    "Is this a 'where to watch' question?": {
+      "comment": "The headline string for the off-topic content warning pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Is dit een 'waar te kijken'-vraag?"
+          }
+        }
+      }
+    },
+    "It looks like we don't have an evaluation for this category yet.": {
+      "comment": "The Parental Guide empty-category message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het lijkt erop dat we voor deze categorie nog geen beoordeling hebben."
+          }
+        }
+      }
+    },
+    "Japan": {
+      "comment": "The localized country name for Japan.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Japan"
+          }
+        }
+      }
+    },
+    "Japanese: %@": {
+      "comment": "The studio's Japanese name alias, where the placeholder is the name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Japans: %@"
+          }
+        }
+      }
+    },
+    "Join Kurozora Staff": {
+      "comment": "The action button on the staff badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word Kurozora-staf"
+          }
+        }
+      }
+    },
+    "Just Added": {
+      "comment": "The string for the 'just added' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net toegevoegd"
+          }
+        }
+      }
+    },
+    "Keep Editing": {
+      "comment": "Cancel button on the discard-changes alert.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blijf bewerken"
+          }
+        }
+      }
+    },
+    "Korea": {
+      "comment": "The localized country name for Korea.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korea"
+          }
+        }
+      }
+    },
+    "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file.": {
+      "comment": "The footer string for the Library Import view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora garandeert niet dat alle series en manga's naar je bibliotheek worden geïmporteerd. Zodra het verzoek is verwerkt, wordt er een melding verstuurd met de status van het importverzoek. Daarnaast wordt het geüploade bestand verwijderd zodra het importverzoek is verwerkt.\n\nMet 'overschrijven' vervang je je Kurozora-bibliotheek door de geïmporteerde bibliotheek uit het bestand.\nMet 'samenvoegen' voeg je ontbrekende items toe aan je Kurozora-bibliotheek. Als een item al bestaat, wordt de trackinginformatie in je Kurozora-bibliotheek bijgewerkt met die uit het bestand."
+          }
+        }
+      }
+    },
+    "Kurozora is for tracking your progress, it doesn't stream or host content. Posts asking where to watch or read often go unanswered. You can still post if you'd like.": {
+      "comment": "The subheadline string for the off-topic content warning pop-up.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora is bedoeld om je voortgang bij te houden en streamt of host geen content. Berichten met de vraag waar je iets kunt kijken of lezen blijven vaak onbeantwoord. Je kunt alsnog plaatsen als je wilt."
+          }
+        }
+      }
+    },
+    "Language": {
+      "comment": "The singular label for a title's language.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taal"
+          }
+        }
+      }
+    },
+    "Last Aired": {
+      "comment": "The 'Last Aired' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laatst uitgezonden"
+          }
+        }
+      }
+    },
+    "Last Published": {
+      "comment": "The 'Last Published' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laatst gepubliceerd"
+          }
+        }
+      }
+    },
+    "Leaderboard": {
+      "comment": "The title shown on the reputation leaderboard screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ranglijst"
+          }
+        }
+      }
+    },
+    "Leo": {
+      "comment": "The display value 'Leo'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leeuw"
+          }
+        }
+      }
+    },
+    "Libra": {
+      "comment": "The display value 'Libra'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weegschaal"
+          }
+        }
+      }
+    },
+    "Library is currently available to registered Kurozora users only.": {
+      "comment": "The library empty-state detail shown when signed out.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De bibliotheek is momenteel alleen beschikbaar voor geregistreerde Kurozora-gebruikers."
+          }
+        }
+      }
+    },
+    "Library.xml": {
+      "comment": "The placeholder string for the library xml file name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library.xml"
+          }
+        }
+      }
+    },
+    "Light Novel": {
+      "comment": "The display value 'Light Novel'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light novel"
+          }
+        }
+      }
+    },
+    "Like": {
+      "comment": "The string for the word 'like'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vind ik leuk"
+          }
+        }
+      }
+    },
+    "Limit Reached": {
+      "comment": "The headline string for the character limit reached error pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limiet bereikt"
+          }
+        }
+      }
+    },
+    "List": {
+      "comment": "The display value 'List'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lijst"
+          }
+        }
+      }
+    },
+    "Listen to \"%@\" by \"%@\" on @KurozoraApp": {
+      "comment": "The share text for a song, where the placeholders are the title and the artist.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Listen to \"%1$@\" by \"%2$@\" on @KurozoraApp"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luister naar \"%1$@\" van \"%2$@\" op @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Literature": {
+      "comment": "The singular word 'literature' as a media type.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Literatuur"
+          }
+        }
+      }
+    },
+    "Lock with Face ID & Passcode": {
+      "comment": "The authentication settings name for Face ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vergrendel met Face ID en toegangscode"
+          }
+        }
+      }
+    },
+    "Lock with Optic ID & Passcode": {
+      "comment": "The authentication settings name for Optic ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vergrendel met Optic ID en toegangscode"
+          }
+        }
+      }
+    },
+    "Lock with Passcode": {
+      "comment": "The authentication settings name for passcode only.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vergrendel met toegangscode"
+          }
+        }
+      }
+    },
+    "Lock with Touch ID & Passcode": {
+      "comment": "The authentication settings name for Touch ID.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vergrendel met Touch ID en toegangscode"
+          }
+        }
+      }
+    },
+    "Manga": {
+      "comment": "The display value 'Manga'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manga"
+          }
+        }
+      }
+    },
+    "manga readers": {
+      "comment": "The ReCap milestone noun phrase for literatures.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "manga-lezers"
+          }
+        }
+      }
+    },
+    "Manhua": {
+      "comment": "The literature type 'Manhua'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manhua"
+          }
+        }
+      }
+    },
+    "Manhwa": {
+      "comment": "The literature type 'Manhwa'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manhwa"
+          }
+        }
+      }
+    },
+    "Mark as Read": {
+      "comment": "The context-menu action that marks a notification as read.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markeer als gelezen"
+          }
+        }
+      }
+    },
+    "Mark as Unread": {
+      "comment": "The context-menu action that marks a notification as unread.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markeer als ongelezen"
+          }
+        }
+      }
+    },
+    "Media Type": {
+      "comment": "The 'Media Type' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mediatype"
+          }
+        }
+      }
+    },
+    "Mention User": {
+      "comment": "The action button on the new-user badge that mentions the user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruiker vermelden"
+          }
+        }
+      }
+    },
+    "Message Reported": {
+      "comment": "The headline string for the report message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht gemeld"
+          }
+        }
+      }
+    },
+    "Message will be deleted permanently.": {
+      "comment": "The subheadline string for the delete message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het bericht wordt permanent verwijderd."
+          }
+        }
+      }
+    },
+    "Minutes": {
+      "comment": "The 'minutes' unit label for a milestone value.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minuten"
+          }
+        }
+      }
+    },
+    "Minutes Played": {
+      "comment": "The label for the 'minutes played' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gespeelde minuten"
+          }
+        }
+      }
+    },
+    "Minutes Read": {
+      "comment": "The label for the 'minutes read' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelezen minuten"
+          }
+        }
+      }
+    },
+    "Minutes Watched": {
+      "comment": "The label for the 'minutes watched' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekeken minuten"
+          }
+        }
+      }
+    },
+    "Missing": {
+      "comment": "The display value 'Missing'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vermist"
+          }
+        }
+      }
+    },
+    "Mixed media": {
+      "comment": "The display value 'Mixed media'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemengde media"
+          }
+        }
+      }
+    },
+    "MOD": {
+      "comment": "The display value 'MOD'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MOD"
+          }
+        }
+      }
+    },
+    "Most Popular": {
+      "comment": "The string for the 'most popular' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Populairst"
+          }
+        }
+      }
+    },
+    "Move From Another Service": {
+      "comment": "The headline string for the Library Import view",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overstappen van een andere dienst"
+          }
+        }
+      }
+    },
+    "Movie": {
+      "comment": "The display value 'Movie'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Film"
+          }
+        }
+      }
+    },
+    "Music": {
+      "comment": "The display value 'Music'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muziek"
+          }
+        }
+      }
+    },
+    "No %@": {
+      "comment": "The generic empty-state title for a list.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen %@"
+          }
+        }
+      }
+    },
+    "No Achievements": {
+      "comment": "Empty-state title for the achievements list.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen prestaties"
+          }
+        }
+      }
+    },
+    "No broadcast data available at the moment.": {
+      "comment": "The footnote shown when no broadcast data is available.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Op dit moment zijn er geen uitzendgegevens beschikbaar."
+          }
+        }
+      }
+    },
+    "No Entries": {
+      "comment": "The empty-state title on a Parental Guide category screen when no entries exist.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen items"
+          }
+        }
+      }
+    },
+    "No Followers": {
+      "comment": "The empty-state title for the followers list.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen volgers"
+          }
+        }
+      }
+    },
+    "No Following": {
+      "comment": "The empty-state title for the following list.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niemand gevolgd"
+          }
+        }
+      }
+    },
+    "No Parental Guide Yet": {
+      "comment": "The empty-state title on the Parental Guide screen when no entries exist yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog geen oudergids"
+          }
+        }
+      }
+    },
+    "No publication data available at the moment.": {
+      "comment": "The footnote shown when no publication data is available.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Op dit moment zijn er geen publicatiegegevens beschikbaar."
+          }
+        }
+      }
+    },
+    "No Quotes": {
+      "comment": "The empty-state headline for the Quotes tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen citaten"
+          }
+        }
+      }
+    },
+    "No show songs": {
+      "comment": "The empty-state title for the show songs list.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen serienummers"
+          }
+        }
+      }
+    },
+    "No Users": {
+      "comment": "The empty-state title for a generic users list (search / leaderboard).",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen gebruikers"
+          }
+        }
+      }
+    },
+    "noAchievements.otherUserDetail": {
+      "comment": "Empty-state detail for the achievements list when viewing someone else's profile.",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%@ has not earned any achievements yet."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ heeft nog geen prestaties verdiend."
+          }
+        }
+      }
+    },
+    "None": {
+      "comment": "Placeholder shown for a category with no submissions in the Parental Guide summary.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen"
+          }
+        }
+      }
+    },
+    "Not Airing Yet": {
+      "comment": "The display value 'Not Airing Yet'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog niet uitgezonden"
+          }
+        }
+      }
+    },
+    "Not available yet for this type.": {
+      "comment": "The alert message shown when an action is unavailable for a media type.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog niet beschikbaar voor dit type."
+          }
+        }
+      }
+    },
+    "Not enough ratings": {
+      "comment": "The label shown in place of the rating count when a title has too few ratings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet genoeg beoordelingen"
+          }
+        }
+      }
+    },
+    "Not Published Yet": {
+      "comment": "The display value 'Not Published Yet'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog niet gepubliceerd"
+          }
+        }
+      }
+    },
+    "Not Rated": {
+      "comment": "The descriptive label for the 'Not Rated' TV rating.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet beoordeeld"
+          }
+        }
+      }
+    },
+    "Notifications are only available to registered Kurozora users.": {
+      "comment": "The notifications empty-state detail when signed out.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meldingen zijn alleen beschikbaar voor geregistreerde Kurozora-gebruikers."
+          }
+        }
+      }
+    },
+    "Novel": {
+      "comment": "The display value 'Novel'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roman"
+          }
+        }
+      }
+    },
+    "NSFW": {
+      "comment": "The 'NSFW' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NSFW"
+          }
+        }
+      }
+    },
+    "Number Total": {
+      "comment": "The 'Number Total' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Totaal aantal"
+          }
+        }
+      }
+    },
+    "OEL": {
+      "comment": "The literature type 'OEL' (original English-language).",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OEL"
+          }
+        }
+      }
+    },
+    "OK": {
+      "comment": "Generic OK button shown on Parental Guide alerts.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oké"
+          }
+        }
+      }
+    },
+    "On Hiatus": {
+      "comment": "The display value 'On Hiatus'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Op pauze"
+          }
+        }
+      }
+    },
+    "ONA": {
+      "comment": "The display value 'ONA'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ONA"
+          }
+        }
+      }
+    },
+    "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion.": {
+      "comment": "The footer string for the Library Delete view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zodra uw bibliotheek is verwijderd, worden alle bijbehorende bronnen en gegevens permanent verwijderd. Dit omvat beoordelingen, favorieten, herinneringen en bekeken afleveringen. U wordt om uw wachtwoord gevraagd om de verwijdering te bevestigen."
+          }
+        }
+      }
+    },
+    "One-shot": {
+      "comment": "The literature type 'One-shot'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One-shot"
+          }
+        }
+      }
+    },
+    "Open %@": {
+      "comment": "The suggested Siri phrase for opening a title, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ openen"
+          }
+        }
+      }
+    },
+    "Open %@’s profile": {
+      "comment": "The suggested Siri phrase for opening a user's profile, where the placeholder is the display name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiel van %@ openen"
+          }
+        }
+      }
+    },
+    "Open Apple Music Library": {
+      "comment": "The alert button that deep-links to the user's Apple Music library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Apple Music-bibliotheek"
+          }
+        }
+      }
+    },
+    "Original": {
+      "comment": "The display value 'Original'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Origineel"
+          }
+        }
+      }
+    },
+    "Other": {
+      "comment": "Display name of the `other` Parental Guide report reason.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overig"
+          }
+        }
+      }
+    },
+    "out of 5": {
+      "comment": "The rating denominator shown beneath an average score, as in '4.2 out of 5'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "van de 5"
+          }
+        }
+      }
+    },
+    "OVA": {
+      "comment": "The display value 'OVA'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OVA"
+          }
+        }
+      }
+    },
+    "Pages": {
+      "comment": "The 'Pages' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pagina's"
+          }
+        }
+      }
+    },
+    "Parental Guidance Suggested": {
+      "comment": "The descriptive label for the 'Parental Guidance Suggested' TV rating.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouderlijk toezicht aanbevolen"
+          }
+        }
+      }
+    },
+    "Parental Guide": {
+      "comment": "The title of the Parental Guide screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oudergids"
+          }
+        }
+      }
+    },
+    "Percentile": {
+      "comment": "The 'percentile' unit label for a milestone value.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percentiel"
+          }
+        }
+      }
+    },
+    "Permanently delete your library.": {
+      "comment": "The subheadline string for the Library Delete view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwijder uw bibliotheek permanent."
+          }
+        }
+      }
+    },
+    "Person": {
+      "comment": "The singular word 'person'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Persoon"
+          }
+        }
+      }
+    },
+    "Picture Book": {
+      "comment": "The display value 'Picture Book'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prentenboek"
+          }
+        }
+      }
+    },
+    "Pin": {
+      "comment": "The string for the word 'pin'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vastmaken"
+          }
+        }
+      }
+    },
+    "Pin this message": {
+      "comment": "The headline string for the pin message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht vastmaken"
+          }
+        }
+      }
+    },
+    "Pinned": {
+      "comment": "The status label shown on a pinned feed message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vastgezet"
+          }
+        }
+      }
+    },
+    "Pisces": {
+      "comment": "The display value 'Pisces'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vissen"
+          }
+        }
+      }
+    },
+    "Playing": {
+      "comment": "The library status 'Playing' for games.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spelen"
+          }
+        }
+      }
+    },
+    "Post": {
+      "comment": "The string for the 'Post' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plaatsen"
+          }
+        }
+      }
+    },
+    "Post activity": {
+      "comment": "The navigation title for the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berichtactiviteit"
+          }
+        }
+      }
+    },
+    "Post Anyway": {
+      "comment": "The destructive action string for proceeding with an off-topic post anyway.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toch plaatsen"
+          }
+        }
+      }
+    },
+    "Post Message": {
+      "comment": "The string for the 'Post Message' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht plaatsen"
+          }
+        }
+      }
+    },
+    "Premieres": {
+      "comment": "The 'Premieres' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premières"
+          }
+        }
+      }
+    },
+    "Profanity": {
+      "comment": "The Parental Guide category 'Profanity'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grof taalgebruik"
+          }
+        }
+      }
+    },
+    "Publication": {
+      "comment": "The label for a title's publication schedule.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicatie"
+          }
+        }
+      }
+    },
+    "Publication Day": {
+      "comment": "The 'Publication Day' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicatiedag"
+          }
+        }
+      }
+    },
+    "Publication Season": {
+      "comment": "The 'Publication Season' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicatieseizoen"
+          }
+        }
+      }
+    },
+    "Publication Time": {
+      "comment": "The 'Publication Time' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicatietijd"
+          }
+        }
+      }
+    },
+    "Published": {
+      "comment": "The label for a title's publication dates.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gepubliceerd"
+          }
+        }
+      }
+    },
+    "Pull to refresh %@ list…": {
+      "comment": "Pull-to-refresh title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trek om de %@-lijst te vernieuwen…"
+          }
+        }
+      }
+    },
+    "Pull to refresh the %@.": {
+      "comment": "Pull-to-refresh title for a user list variant. '%@' is the list kind, e.g. 'followers', 'following'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trek om de %@ te vernieuwen."
+          }
+        }
+      }
+    },
+    "pullToRefreshItems": {
+      "comment": "Pull-to-refresh title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Pull to refresh %@…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trek om %@ te vernieuwen…"
+          }
+        }
+      }
+    },
+    "Quick Links": {
+      "comment": "The Home 'Quick Links' section header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snelkoppelingen"
+          }
+        }
+      }
+    },
+    "Quote": {
+      "comment": "The string for the 'Quote' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Citeren"
+          }
+        }
+      }
+    },
+    "Quotes": {
+      "comment": "The string for the 'Quotes' tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Citaten"
+          }
+        }
+      }
+    },
+    "Radio": {
+      "comment": "The display value 'Radio'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radio"
+          }
+        }
+      }
+    },
+    "Rating": {
+      "comment": "Noun. The user's star rating score, not the age rating.\nRow label for the rating in the Parental Guide summary.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordeling"
+          }
+        }
+      }
+    },
+    "Rating Failed": {
+      "comment": "The string for the 'rating failed' section.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordelen mislukt"
+          }
+        }
+      }
+    },
+    "Ratings": {
+      "comment": "The string for the word 'ratings'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordelingen"
+          }
+        }
+      }
+    },
+    "Ratings & Reviews": {
+      "comment": "The string for the word 'ratings & reviews'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordelingen en recensies"
+          }
+        }
+      }
+    },
+    "Ratings and reviews you submit will appear here. ": {
+      "comment": "The reviews empty-state detail for your own profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordelingen en recensies die je plaatst, verschijnen hier. "
+          }
+        }
+      }
+    },
+    "Re-share": {
+      "comment": "The string for the 'Re-share' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opnieuw delen"
+          }
+        }
+      }
+    },
+    "Re-shared by %@": {
+      "comment": "The string for the re-share attribution row.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opnieuw gedeeld door %@"
+          }
+        }
+      }
+    },
+    "Re-shares": {
+      "comment": "The string for the 'Re-shares' tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herdelingen"
+          }
+        }
+      }
+    },
+    "Re:CAP is still in progress. Check back early next month.": {
+      "comment": "The generic ReCap in-progress header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re:CAP is nog bezig. Kom begin volgende maand terug."
+          }
+        }
+      }
+    },
+    "Reading": {
+      "comment": "The library status 'Reading' for literatures.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lezen"
+          }
+        }
+      }
+    },
+    "Reason": {
+      "comment": "Header above the reason picker in the Parental Guide report sheet.\nHeader for the reason section of the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reden"
+          }
+        }
+      }
+    },
+    "Recent": {
+      "comment": "The string for the 'Recent' sort option on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent"
+          }
+        }
+      }
+    },
+    "Record": {
+      "comment": "The display value 'Record'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Label"
+          }
+        }
+      }
+    },
+    "Refreshing %@ list…": {
+      "comment": "Refresh-in-progress title for the library list scoped by tracking status. '%@' is the lowercase status, e.g. 'watching', 'completed'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-lijst vernieuwen…"
+          }
+        }
+      }
+    },
+    "Refreshing %@…": {
+      "comment": "Refresh-in-progress title for a user list variant. '%@' is the lowercase list kind, e.g. 'followers', 'following'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ vernieuwen…"
+          }
+        }
+      }
+    },
+    "refreshingItems": {
+      "comment": "Refresh-in-progress title for a list. The parameter is the localized noun for the list type (e.g. 'reviews', 'achievements').",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Refreshing %@…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ vernieuwen…"
+          }
+        }
+      }
+    },
+    "Remove Notification": {
+      "comment": "The context-menu action that removes a notification.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Melding verwijderen"
+          }
+        }
+      }
+    },
+    "Reply": {
+      "comment": "The string for the 'Reply' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antwoorden"
+          }
+        }
+      }
+    },
+    "Report": {
+      "comment": "The string for the word 'report'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rapporteer"
+          }
+        }
+      }
+    },
+    "Report Entry": {
+      "comment": "Title shown in the navigation bar of the Parental Guide report sheet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item melden"
+          }
+        }
+      }
+    },
+    "Report Message": {
+      "comment": "The string for the 'Report Message' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht melden"
+          }
+        }
+      }
+    },
+    "Report Review": {
+      "comment": "The string for the 'Report Review' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recensie melden"
+          }
+        }
+      }
+    },
+    "Reported": {
+      "comment": "Title of the success alert shown after a Parental Guide entry has been reported.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemeld"
+          }
+        }
+      }
+    },
+    "Review Reported": {
+      "comment": "The headline string for the report review pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recensie gemeld"
+          }
+        }
+      }
+    },
+    "Review will be deleted permanently.": {
+      "comment": "The subheadline string for the delete review pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De recensie wordt permanent verwijderd."
+          }
+        }
+      }
+    },
+    "Rounded": {
+      "comment": "The monogram style 'Rounded'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afgerond"
+          }
+        }
+      }
+    },
+    "Sagittarius": {
+      "comment": "The display value 'Sagittarius'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boogschutter"
+          }
+        }
+      }
+    },
+    "Scale": {
+      "comment": "The display value 'Scale'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schalen"
+          }
+        }
+      }
+    },
+    "Scorpio": {
+      "comment": "The display value 'Scorpio'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schorpioen"
+          }
+        }
+      }
+    },
+    "Search for the person you want to mention": {
+      "comment": "The subtitle string for the search pop-up when trying to tag a user in a message or reply.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek de persoon die je wilt vermelden"
+          }
+        }
+      }
+    },
+    "Season %lld": {
+      "comment": "The label naming a season by its number.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seizoen %lld"
+          }
+        }
+      }
+    },
+    "See Also": {
+      "comment": "The string for the 'see also' section.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zie ook"
+          }
+        }
+      }
+    },
+    "Select behavior": {
+      "comment": "The placeholder string for selecting the import behavior.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecteer gedrag"
+          }
+        }
+      }
+    },
+    "Select File": {
+      "comment": "The button string for selecting a file to import.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecteer bestand"
+          }
+        }
+      }
+    },
+    "Select service": {
+      "comment": "The placeholder string for selecting the import service.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecteer dienst"
+          }
+        }
+      }
+    },
+    "Series that defined your arc in %@": {
+      "comment": "The ReCap header for the defining series of a month.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Series die jouw arc in %@ bepaalden"
+          }
+        }
+      }
+    },
+    "Serif": {
+      "comment": "The monogram style 'Serif'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serif"
+          }
+        }
+      }
+    },
+    "Server returned no entry.": {
+      "comment": "Error message shown when the server's Parental Guide submission response is empty.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De server gaf geen item terug."
+          }
+        }
+      }
+    },
+    "Severity": {
+      "comment": "Header for the severity section of the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ernst"
+          }
+        }
+      }
+    },
+    "Sex & Nudity": {
+      "comment": "The Parental Guide category 'Sex & Nudity'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seks en naaktheid"
+          }
+        }
+      }
+    },
+    "Shake": {
+      "comment": "The display value 'Shake'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schudden"
+          }
+        }
+      }
+    },
+    "Share Message": {
+      "comment": "The string for the 'Share Message' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht delen"
+          }
+        }
+      }
+    },
+    "Share Review": {
+      "comment": "The string for the 'Share Review' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recensie delen"
+          }
+        }
+      }
+    },
+    "Share someone else's post on your timeline by reposting it. When you do, it'll show up here.": {
+      "comment": "The empty-state subheadline for the Re-shares tab on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deel het bericht van iemand anders op je tijdlijn door het opnieuw te plaatsen. Wanneer je dat doet, verschijnt het hier."
+          }
+        }
+      }
+    },
+    "Show": {
+      "comment": "The singular word 'show' as a media type.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie"
+          }
+        }
+      }
+    },
+    "Show %@'s Profile": {
+      "comment": "The context-menu action that opens a reviewer's profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon profiel van %@"
+          }
+        }
+      }
+    },
+    "Show fillers": {
+      "comment": "The string for the 'Show fillers' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon fillers"
+          }
+        }
+      }
+    },
+    "Show Profile": {
+      "comment": "The string for the 'Show Profile' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon profiel"
+          }
+        }
+      }
+    },
+    "Show Replies": {
+      "comment": "The string for the 'Show Replies' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon antwoorden"
+          }
+        }
+      }
+    },
+    "show.ratingsCount": {
+      "comment": "The ratings count shown on a show's rating bar.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
           },
-          "substitutions" : {
-            "count" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Rating"
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "Rating"
                     }
                   },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Ratings"
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "Ratings"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
+          },
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "beoordeling"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "beoordelingen"
                     }
                   }
                 }
@@ -647,225 +4206,1235 @@
         }
       }
     },
-    "Something went wrong" : {
-      "comment" : "Generic error alert title shown when a Parental Guide submission fails."
-    },
-    "Sorting by %@ (%@)" : {
-      "comment" : "The label naming the sort type and option in use.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Sorting by %1$@ (%2$@)"
+    "Shown": {
+      "comment": "The 'Shown' filter option label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Getoond"
           }
         }
       }
     },
-    "Spam" : {
-      "comment" : "Display name of the `spam` Parental Guide report reason."
-    },
-    "Spoiler" : {
-      "comment" : "Display name of the `spoiler` Parental Guide report reason.\nLabel for the spoiler toggle in the Parental Guide editor."
-    },
-    "Staff" : {
-      "comment" : "The title shown on the staff profile badge."
-    },
-    "Stop sorting" : {
-      "comment" : "The menu action that stops sorting the library."
-    },
-    "Submit" : {
-      "comment" : "Submit button title in the Parental Guide report sheet."
-    },
-    "Summary" : {
-      "comment" : "Header for the Parental Guide summary section."
-    },
-    "Tap to Rate:" : {
-      "comment" : "The string for the word 'tap to rate'."
-    },
-    "Tell us more" : {
-      "comment" : "Placeholder shown in the details editor when the reason is `Other` and details are required."
-    },
-    "Tell us more (optional)" : {
-      "comment" : "Placeholder shown in the details editor when optional."
-    },
-    "Thank you for helping keep the community safe." : {
-      "comment" : "The subheadline string for the report message pop-up\nThe subheadline string for the report review pop-up"
-    },
-    "Thank you for rating." : {
-      "comment" : "The string for the rating submitted description."
-    },
-    "Thanks. We'll review this entry shortly." : {
-      "comment" : "Body of the success alert shown after a Parental Guide entry has been reported."
-    },
-    "The leaderboard is empty. Pull to refresh or check back later." : {
-      "comment" : "The empty-state detail shown when the reputation leaderboard has no entries."
-    },
-    "The message contains spoilers - tap to view" : {
-      "comment" : "The warning shown over a message that contains spoilers."
-    },
-    "There are no characters matching your search. Please try a different query or check your WiFi connection." : {
-      "comment" : "The empty-state detail for a character search with no results."
-    },
-    "There are no entries in this category yet." : {
-      "comment" : "The empty-state body on a Parental Guide category screen when no entries exist."
-    },
-    "They will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
-      "comment" : "The subheadline string for the blocking a user"
-    },
-    "This action can't be undone." : {
-      "comment" : "Body of the confirmation alert when deleting a Parental Guide entry."
-    },
-    "This message is NSFW - tap to view" : {
-      "comment" : "The warning shown over a message that is NSFW."
-    },
-    "This message is NSFW and contains spoilers - tap to view" : {
-      "comment" : "The warning shown over a message that is NSFW and contains spoilers."
-    },
-    "This reason contains spoilers — click to view" : {
-      "comment" : "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
-    },
-    "This reason contains spoilers — tap to view" : {
-      "comment" : "Spoiler-warning banner overlaid on a parental guide entry on touch platforms."
-    },
-    "this user" : {
-      "comment" : "The fallback word used in place of a user's display name when one is unavailable, lowercase form (mid-sentence)."
-    },
-    "This user" : {
-      "comment" : "The fallback word used in place of a user's display name when one is unavailable, sentence-case form."
-    },
-    "This will appear at the top of your profile and replace any previously pinned message. Are you sure?" : {
-      "comment" : "The subheadline string for the pin message pop-up"
-    },
-    "Top" : {
-      "comment" : "The string for the 'Top' sort option on the post activity screen."
-    },
-    "Top Airing" : {
-      "comment" : "The string for the 'top airing' browse option."
-    },
-    "Top Anime" : {
-      "comment" : "The string for the 'top anime' browse option."
-    },
-    "Top Movies" : {
-      "comment" : "The string for the 'top movies' browse option."
-    },
-    "Top OVA" : {
-      "comment" : "The string for the 'top ova' browse option."
-    },
-    "Top Percentile" : {
-      "comment" : "The label for the 'top percentile' milestone."
-    },
-    "Top Specials" : {
-      "comment" : "The string for the 'top specials' browse option."
-    },
-    "Top TV Series" : {
-      "comment" : "The string for the 'top tv series' browse option."
-    },
-    "Top Upcoming" : {
-      "comment" : "The string for the 'top upcoming' browse option."
-    },
-    "Unblock" : {
-      "comment" : "The string for the word 'unblock'."
-    },
-    "Unblock %@" : {
-      "comment" : "The title prompting the user to unblock another user. The argument is the @username of the target user."
-    },
-    "Undo Re-share" : {
-      "comment" : "The string for the 'Undo Re-share' context menu option."
-    },
-    "Unfollow" : {
-      "comment" : "The string for the word 'unfollow'."
-    },
-    "Unhelpful" : {
-      "comment" : "The context-menu action that marks a Parental Guide entry as unhelpful."
-    },
-    "United States" : {
-      "comment" : "The localized country name for the United States."
-    },
-    "Unknown" : {
-      "comment" : "Placeholder shown for an unknown rating in the Parental Guide summary."
-    },
-    "Unlike" : {
-      "comment" : "The string for the word 'unlike'."
-    },
-    "Unpin" : {
-      "comment" : "The string for the word 'unpin'."
-    },
-    "Unpin from your profile" : {
-      "comment" : "The headline string for the unpin message pop-up"
-    },
-    "Up Next" : {
-      "comment" : "The string for the 'Up Next' view title."
-    },
-    "Verified" : {
-      "comment" : "The title shown on the verified profile badge."
-    },
-    "View Guidelines" : {
-      "comment" : "The action string for opening the community guidelines from the off-topic warning."
-    },
-    "View post activity" : {
-      "comment" : "The string for the 'View post activity' context menu option."
-    },
-    "View posts" : {
-      "comment" : "The label for the opt-in button to view a blocked user's posts"
-    },
-    "Violence & Profanity" : {
-      "comment" : "The descriptive label for the 'Violence & Profanity' TV rating."
-    },
-    "Welcome to Kurozora! Introduce yourself to get started (^_^)/" : {
-      "comment" : "The new-user badge description shown on your own profile."
-    },
-    "What stands out?" : {
-      "comment" : "Placeholder for the reason text view in the Parental Guide editor."
-    },
-    "What’s on your mind?" : {
-      "comment" : "The placeholder string for creating a new feed message."
-    },
-    "When you block someone, they will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them." : {
-      "comment" : "The intro string shown above the blocked users list"
-    },
-    "Write a comment…" : {
-      "comment" : "The placeholder string for creating a new comment."
-    },
-    "Write a Review" : {
-      "comment" : "The string for the word 'write a review'."
-    },
-    "Yes, view profile" : {
-      "comment" : "The label for the opt-in button to view a blocked user's profile"
-    },
-    "You can view public posts from %@, but you are blocked from engaging with them. You also cannot follow or message %@." : {
-      "comment" : "Subheadline explaining what is restricted when the auth user has been blocked by another user. Both arguments are the @username of the blocking user.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "You can view public posts from %1$@, but you are blocked from engaging with them. You also cannot follow or message %2$@."
+    "Something went wrong": {
+      "comment": "Generic error alert title shown when a Parental Guide submission fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is iets misgegaan"
           }
         }
       }
     },
-    "You have exceeded the character limit for a message." : {
-      "comment" : "The subheadline string for the character limit reached error pop-up"
-    },
-    "You re-shared" : {
-      "comment" : "The string for the auth user's re-share attribution row."
-    },
-    "You were in the top %@%% of %@ this year." : {
-      "comment" : "The milestone label for a user's top percentile in a category.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "You were in the top %1$@%% of %2$@ this year."
+    "Song": {
+      "comment": "The singular word 'song'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nummer"
           }
         }
       }
     },
-    "You, followed by you!" : {
-      "comment" : "The user-cell secondary line for your own profile when you have no followers yet."
+    "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.": {
+      "comment": "The alert message explaining how to remove a song from Apple Music.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nummers die aan je Apple Music-bibliotheek zijn toegevoegd, kunnen vanwege API-beperkingen niet vanuit Kurozora worden verwijderd. Verwijder het nummer handmatig in de Muziek-app."
+          }
+        }
+      }
     },
-    "Your rating and review will be removed." : {
-      "comment" : "The body string for the confirmation dialog when the user clears their rating or deletes their review."
+    "Sorting by %@ (%@)": {
+      "comment": "The label naming the sort type and option in use.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sorting by %1$@ (%2$@)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sorteren op %1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "Source": {
+      "comment": "The label for the source material of a title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bron"
+          }
+        }
+      }
+    },
+    "Spam": {
+      "comment": "Display name of the `spam` Parental Guide report reason.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spam"
+          }
+        }
+      }
+    },
+    "Special": {
+      "comment": "The display value 'Special'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Special"
+          }
+        }
+      }
+    },
+    "Specials": {
+      "comment": "The 'Specials' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specials"
+          }
+        }
+      }
+    },
+    "Spin": {
+      "comment": "The display value 'Spin'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Draaien"
+          }
+        }
+      }
+    },
+    "Spoiler": {
+      "comment": "Display name of the `spoiler` Parental Guide report reason.\nLabel for the spoiler toggle in the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spoiler"
+          }
+        }
+      }
+    },
+    "Staff": {
+      "comment": "The title shown on the staff profile badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Staf"
+          }
+        }
+      }
+    },
+    "Stop sorting": {
+      "comment": "The menu action that stops sorting the library.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop met sorteren"
+          }
+        }
+      }
+    },
+    "Submit": {
+      "comment": "Submit button title in the Parental Guide report sheet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verstuur"
+          }
+        }
+      }
+    },
+    "Summary": {
+      "comment": "Header for the Parental Guide summary section.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samenvatting"
+          }
+        }
+      }
+    },
+    "Synonyms: %@": {
+      "comment": "The studio's synonym aliases, where the placeholder is the comma-separated names.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synoniemen: %@"
+          }
+        }
+      }
+    },
+    "Table": {
+      "comment": "The display value 'Table'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabel"
+          }
+        }
+      }
+    },
+    "Tap to Rate:": {
+      "comment": "The string for the word 'tap to rate'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tik om te beoordelen:"
+          }
+        }
+      }
+    },
+    "Taurus": {
+      "comment": "The display value 'Taurus'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stier"
+          }
+        }
+      }
+    },
+    "Tell us more": {
+      "comment": "Placeholder shown in the details editor when the reason is `Other` and details are required.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertel ons meer"
+          }
+        }
+      }
+    },
+    "Tell us more (optional)": {
+      "comment": "Placeholder shown in the details editor when optional.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertel ons meer (optioneel)"
+          }
+        }
+      }
+    },
+    "Thank you for helping keep the community safe.": {
+      "comment": "The subheadline string for the report message pop-up\nThe subheadline string for the report review pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bedankt dat je de community veilig helpt houden."
+          }
+        }
+      }
+    },
+    "Thank you for rating.": {
+      "comment": "The string for the rating submitted description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bedankt voor je beoordeling."
+          }
+        }
+      }
+    },
+    "Thanks. We'll review this entry shortly.": {
+      "comment": "Body of the success alert shown after a Parental Guide entry has been reported.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bedankt. We bekijken dit item binnenkort."
+          }
+        }
+      }
+    },
+    "The broadcasting of this series has ended.": {
+      "comment": "The footnote shown when a show has finished broadcasting.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De uitzending van deze serie is afgelopen."
+          }
+        }
+      }
+    },
+    "The character is %@.": {
+      "comment": "The footnote describing a character's status, where the placeholder is the localized status.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het personage is %@."
+          }
+        }
+      }
+    },
+    "The episode has finished airing.": {
+      "comment": "The footnote shown when an episode has finished airing.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De aflevering is klaar met uitzenden."
+          }
+        }
+      }
+    },
+    "The episode will air on the announced date.": {
+      "comment": "The footnote shown when an episode will air on its announced date.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De aflevering wordt op de aangekondigde datum uitgezonden."
+          }
+        }
+      }
+    },
+    "The leaderboard is empty. Pull to refresh or check back later.": {
+      "comment": "The empty-state detail shown when the reputation leaderboard has no entries.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De ranglijst is leeg. Trek om te vernieuwen of kom later terug."
+          }
+        }
+      }
+    },
+    "The message contains spoilers - tap to view": {
+      "comment": "The warning shown over a message that contains spoilers.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het bericht bevat spoilers - tik om te bekijken"
+          }
+        }
+      }
+    },
+    "The publication of this series has ended.": {
+      "comment": "The footnote shown when a title has finished publication.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De publicatie van deze serie is afgelopen."
+          }
+        }
+      }
+    },
+    "The studio has been defunct for %lld years.": {
+      "comment": "Footnote on the studio detail header for how long the studio has been defunct.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De studio is al %lld jaar opgeheven."
+          }
+        }
+      }
+    },
+    "The studio was founded %lld years ago.": {
+      "comment": "Footnote on the studio detail header for how long ago the studio was founded.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De studio is %lld jaar geleden opgericht."
+          }
+        }
+      }
+    },
+    "There are no characters matching your search. Please try a different query or check your WiFi connection.": {
+      "comment": "The empty-state detail for a character search with no results.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er zijn geen personages die overeenkomen met je zoekopdracht. Probeer een andere zoekterm of controleer je wifiverbinding."
+          }
+        }
+      }
+    },
+    "There are no entries in this category yet.": {
+      "comment": "The empty-state body on a Parental Guide category screen when no entries exist.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er staan nog geen items in deze categorie."
+          }
+        }
+      }
+    },
+    "There are no messages on this feed!": {
+      "comment": "The profile feed empty-state detail for another user's profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er staan geen berichten op deze feed!"
+          }
+        }
+      }
+    },
+    "There are no messages on your feed!": {
+      "comment": "The profile feed empty-state detail for your own profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er staan geen berichten op je feed!"
+          }
+        }
+      }
+    },
+    "These milestones marked your season finale": {
+      "comment": "The ReCap header for finale milestones.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze mijlpalen markeerden je seizoensfinale"
+          }
+        }
+      }
+    },
+    "They will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them.": {
+      "comment": "The subheadline string for the blocking a user",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hij of zij kan je openbare berichten zien, maar kan er niet meer mee interacteren. Ook kan hij of zij je niet meer volgen of een bericht sturen, en je ziet geen meldingen meer van hem of haar."
+          }
+        }
+      }
+    },
+    "This %@ doesn't have %@ yet. Please check back again later.": {
+      "comment": "The empty-state detail shown when a container has no items of a kind yet.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "This %1$@ doesn't have %2$@ yet. Please check back again later."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze %1$@ heeft nog geen %2$@. Kom later terug."
+          }
+        }
+      }
+    },
+    "This %@ doesn't have casts yet. Please check back again later.": {
+      "comment": "The empty-state detail shown when a title has no casts yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze %@ heeft nog geen casts. Kom later terug."
+          }
+        }
+      }
+    },
+    "This %@ doesn't have details yet. Please check back again later.": {
+      "comment": "The empty-state detail shown when a screen has no details yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze %@ heeft nog geen details. Kom later terug."
+          }
+        }
+      }
+    },
+    "This action can't be undone.": {
+      "comment": "Body of the confirmation alert when deleting a Parental Guide entry.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze actie kan niet ongedaan worden gemaakt."
+          }
+        }
+      }
+    },
+    "This message is NSFW - tap to view": {
+      "comment": "The warning shown over a message that is NSFW.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit bericht is NSFW - tik om te bekijken"
+          }
+        }
+      }
+    },
+    "This message is NSFW and contains spoilers - tap to view": {
+      "comment": "The warning shown over a message that is NSFW and contains spoilers.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit bericht is NSFW en bevat spoilers - tik om te bekijken"
+          }
+        }
+      }
+    },
+    "This reason contains spoilers — click to view": {
+      "comment": "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze reden bevat spoilers — klik om te bekijken"
+          }
+        }
+      }
+    },
+    "This reason contains spoilers — tap to view": {
+      "comment": "Spoiler-warning banner overlaid on a parental guide entry on touch platforms.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze reden bevat spoilers — tik om te bekijken"
+          }
+        }
+      }
+    },
+    "This user": {
+      "comment": "Fallback used in place of a user's display name when one is unavailable.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze gebruiker"
+          }
+        }
+      }
+    },
+    "This will appear at the top of your profile and replace any previously pinned message. Are you sure?": {
+      "comment": "The subheadline string for the pin message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit verschijnt boven aan je profiel en vervangt een eerder vastgemaakt bericht. Weet je het zeker?"
+          }
+        }
+      }
+    },
+    "TIL, %@ is the voice actor of %@ via @KurozoraApp": {
+      "comment": "The share text for a voice actor and the character they voice.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "TIL, %1$@ is the voice actor of %2$@ via @KurozoraApp"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wist je dat? %1$@ is de stemacteur van %2$@ via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "To Be Announced": {
+      "comment": "The display value 'To Be Announced'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog aan te kondigen"
+          }
+        }
+      }
+    },
+    "Top": {
+      "comment": "The string for the 'Top' sort option on the post activity screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top"
+          }
+        }
+      }
+    },
+    "Top Airing": {
+      "comment": "The string for the 'top airing' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top lopend"
+          }
+        }
+      }
+    },
+    "Top Anime": {
+      "comment": "The string for the 'top anime' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top anime"
+          }
+        }
+      }
+    },
+    "Top Movies": {
+      "comment": "The string for the 'top movies' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top films"
+          }
+        }
+      }
+    },
+    "Top OVA": {
+      "comment": "The string for the 'top ova' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top OVA"
+          }
+        }
+      }
+    },
+    "Top Percentile": {
+      "comment": "The label for the 'top percentile' milestone.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoogste percentiel"
+          }
+        }
+      }
+    },
+    "Top Specials": {
+      "comment": "The string for the 'top specials' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top specials"
+          }
+        }
+      }
+    },
+    "Top TV Series": {
+      "comment": "The string for the 'top tv series' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top tv-series"
+          }
+        }
+      }
+    },
+    "Top Upcoming": {
+      "comment": "The string for the 'top upcoming' browse option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top aankomend"
+          }
+        }
+      }
+    },
+    "Track your playing progress of \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a game, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg je speelvoortgang van \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Track your progress of \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a show, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg je voortgang van \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Track your reading progress of \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a literature, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg je leesvoortgang van \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "Track your watch progress of \"%@\" via @KurozoraApp": {
+      "comment": "The share text for an episode, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg je kijkvoortgang van \"%@\" via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "TV": {
+      "comment": "The display value 'TV'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TV"
+          }
+        }
+      }
+    },
+    "Unblock": {
+      "comment": "The string for the word 'unblock'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deblokkeren"
+          }
+        }
+      }
+    },
+    "Unblock %@": {
+      "comment": "The title prompting the user to unblock another user. The argument is the @username of the target user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ deblokkeren"
+          }
+        }
+      }
+    },
+    "Undo Re-share": {
+      "comment": "The string for the 'Undo Re-share' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herdeling ongedaan maken"
+          }
+        }
+      }
+    },
+    "Unfollow": {
+      "comment": "The string for the word 'unfollow'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontvolgen"
+          }
+        }
+      }
+    },
+    "Unhelpful": {
+      "comment": "The context-menu action that marks a Parental Guide entry as unhelpful.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet nuttig"
+          }
+        }
+      }
+    },
+    "United States": {
+      "comment": "The localized country name for the United States.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verenigde Staten"
+          }
+        }
+      }
+    },
+    "Unknown": {
+      "comment": "Placeholder shown for an unknown rating in the Parental Guide summary.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onbekend"
+          }
+        }
+      }
+    },
+    "Unlike": {
+      "comment": "The string for the word 'unlike'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet meer leuk"
+          }
+        }
+      }
+    },
+    "Unpin": {
+      "comment": "The string for the word 'unpin'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Losmaken"
+          }
+        }
+      }
+    },
+    "Unpin from your profile": {
+      "comment": "The headline string for the unpin message pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Losmaken van je profiel"
+          }
+        }
+      }
+    },
+    "Up Next": {
+      "comment": "The string for the 'Up Next' view title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hierna"
+          }
+        }
+      }
+    },
+    "Verified": {
+      "comment": "The title shown on the verified profile badge.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geverifieerd"
+          }
+        }
+      }
+    },
+    "View Guidelines": {
+      "comment": "The action string for opening the community guidelines from the off-topic warning.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk richtlijnen"
+          }
+        }
+      }
+    },
+    "View post activity": {
+      "comment": "The string for the 'View post activity' context menu option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berichtactiviteit bekijken"
+          }
+        }
+      }
+    },
+    "View posts": {
+      "comment": "The label for the opt-in button to view a blocked user's posts",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berichten bekijken"
+          }
+        }
+      }
+    },
+    "Violence & Gore": {
+      "comment": "The Parental Guide category 'Violence & Gore'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geweld en bloederigheid"
+          }
+        }
+      }
+    },
+    "Violence & Profanity": {
+      "comment": "The descriptive label for the 'Violence & Profanity' TV rating.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geweld en grof taalgebruik"
+          }
+        }
+      }
+    },
+    "Virgo": {
+      "comment": "The display value 'Virgo'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maagd"
+          }
+        }
+      }
+    },
+    "Visual Novel": {
+      "comment": "The display value 'Visual Novel'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual novel"
+          }
+        }
+      }
+    },
+    "Voice actor": {
+      "comment": "The static descriptor label for a voice actor in the cast cell.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stemacteur"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "comment": "The singular word for a manga volume.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deel"
+          }
+        }
+      }
+    },
+    "Waist": {
+      "comment": "The 'Waist' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taille"
+          }
+        }
+      }
+    },
+    "Watching": {
+      "comment": "The library status 'Watching' for shows.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kijken"
+          }
+        }
+      }
+    },
+    "Web Manga": {
+      "comment": "The display value 'Web Manga'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webmanga"
+          }
+        }
+      }
+    },
+    "Web novel": {
+      "comment": "The display value 'Web novel'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webroman"
+          }
+        }
+      }
+    },
+    "Weight": {
+      "comment": "The 'Weight' search filter label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gewicht"
+          }
+        }
+      }
+    },
+    "Welcome to Kurozora! Introduce yourself to get started (^_^)/": {
+      "comment": "The new-user badge description shown on your own profile.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welkom bij Kurozora! Stel jezelf voor om te beginnen (^_^)/"
+          }
+        }
+      }
+    },
+    "What stands out?": {
+      "comment": "Placeholder for the reason text view in the Parental Guide editor.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wat valt op?"
+          }
+        }
+      }
+    },
+    "What’s on your mind?": {
+      "comment": "The placeholder string for creating a new feed message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waar denk je aan?"
+          }
+        }
+      }
+    },
+    "When you block someone, they will be able to see your public messages, but will no longer be able to engage with them. They will also not be able to follow or message you, and you will not see notifications from them.": {
+      "comment": "The intro string shown above the blocked users list",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer je iemand blokkeert, kan diegene je openbare berichten zien, maar kan er niet meer mee interacteren. Ook kan diegene je niet meer volgen of een bericht sturen, en je ziet geen meldingen meer van diegene."
+          }
+        }
+      }
+    },
+    "When you have notifications, you will see them here!": {
+      "comment": "The notifications empty-state detail when signed in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als je meldingen hebt, zie je ze hier!"
+          }
+        }
+      }
+    },
+    "With a total of %@.": {
+      "comment": "The footnote stating the total duration of a title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met een totaal van %@."
+          }
+        }
+      }
+    },
+    "Write a comment…": {
+      "comment": "The placeholder string for creating a new comment.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schrijf een reactie…"
+          }
+        }
+      }
+    },
+    "Write a Review": {
+      "comment": "The string for the word 'write a review'.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schrijf een recensie"
+          }
+        }
+      }
+    },
+    "Yes, view profile": {
+      "comment": "The label for the opt-in button to view a blocked user's profile",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ja, bekijk profiel"
+          }
+        }
+      }
+    },
+    "You can view public posts from %@, but you are blocked from engaging with them. You also cannot follow or message %@.": {
+      "comment": "Subheadline explaining what is restricted when the auth user has been blocked by another user. Both arguments are the @username of the blocking user.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You can view public posts from %1$@, but you are blocked from engaging with them. You also cannot follow or message %2$@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je kunt openbare berichten van %1$@ bekijken, maar je mag er niet mee interacteren. Je kunt %2$@ ook niet volgen of een bericht sturen."
+          }
+        }
+      }
+    },
+    "You have exceeded the character limit for a message.": {
+      "comment": "The subheadline string for the character limit reached error pop-up",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je hebt de tekenlimiet voor een bericht overschreden."
+          }
+        }
+      }
+    },
+    "You re-shared": {
+      "comment": "The string for the auth user's re-share attribution row.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jij hebt opnieuw gedeeld"
+          }
+        }
+      }
+    },
+    "You reposted this": {
+      "comment": "The re-share attribution for your own repost.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jij hebt dit gerepost"
+          }
+        }
+      }
+    },
+    "You should check out \"%@\" via @KurozoraApp": {
+      "comment": "The share text for a character, where the placeholder is the name.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je moet \"%@\" eens bekijken via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "You should watch \"%@\" season via @KurozoraApp": {
+      "comment": "The share text for a season, where the placeholder is the title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je moet het seizoen van \"%@\" eens kijken via @KurozoraApp"
+          }
+        }
+      }
+    },
+    "You were in the top %@%% of %@ this year.": {
+      "comment": "The milestone label for a user's top percentile in a category.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You were in the top %1$@%% of %2$@ this year."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je zat dit jaar in de top %1$@%% van %2$@."
+          }
+        }
+      }
+    },
+    "You, followed by you!": {
+      "comment": "The user-cell secondary line for your own profile when you have no followers yet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jij, gevolgd door jou!"
+          }
+        }
+      }
+    },
+    "Your rating and review will be removed.": {
+      "comment": "The body string for the confirmation dialog when the user clears their rating or deletes their review.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je beoordeling en recensie worden verwijderd."
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

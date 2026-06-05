@@ -66,7 +66,7 @@ class EditProfileViewController: KViewController {
 	var user: User! = User.current
 
 	var imageEditKind: ImageEditKind = .none
-	var placeholderText = "Describe yourself!"
+	var placeholderText = L10n.describeYourself
 
 	var originalUsernameText: String? {
 		didSet {

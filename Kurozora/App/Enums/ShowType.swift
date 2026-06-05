@@ -21,19 +21,19 @@ enum ShowType: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .Unknown:
-			return "Unknown"
+			return L10n.unknown
 		case .TV:
-			return "TV"
+			return L10n.tv
 		case .OVA:
-			return "OVA"
+			return L10n.ova
 		case .Movie:
-			return "Movie"
+			return L10n.movie
 		case .Special:
-			return "Special"
+			return L10n.special
 		case .ONA:
-			return "ONA"
+			return L10n.ona
 		case .Music:
-			return "Music"
+			return L10n.music
 		}
 	}
 }

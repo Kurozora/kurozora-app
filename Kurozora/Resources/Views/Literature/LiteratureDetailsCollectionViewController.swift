@@ -58,7 +58,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 
 	override var emptyStateImage: UIImage { .Empty.mangaLibrary }
 
-	override var emptyStateDetail: String { "This literature doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.literature.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

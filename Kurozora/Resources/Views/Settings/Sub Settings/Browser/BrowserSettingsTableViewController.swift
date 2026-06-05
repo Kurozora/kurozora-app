@@ -67,7 +67,7 @@ extension BrowserSettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		guard self.contentSection(for: section) != nil else { return nil }
-		return "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback."
+		return L10n.browserSettingsFooter
 	}
 }
 

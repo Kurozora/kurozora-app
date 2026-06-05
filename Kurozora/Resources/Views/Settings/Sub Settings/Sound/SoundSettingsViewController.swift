@@ -120,7 +120,7 @@ extension SoundSettingsViewController {
 
 			let stored = UserSettings.selectedChime
 			let firstChimeName = Chime.shared.appChimeGroups.first?.chimes.first?.first?.name
-			let detail = (stored == firstChimeName) ? "Default" : stored
+			let detail = (stored == firstChimeName) ? L10n.`default` : stored
 			cell.configure(title: L10n.chimeSound, detail: detail)
 			return cell
 		case .toggleChime:

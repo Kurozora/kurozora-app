@@ -46,15 +46,15 @@ extension LABiometryType {
 	var localizedAuthenticationSettingsName: String {
 		switch self {
 		case .faceID:
-			return "Lock with Face ID & Passcode"
+			return L10n.lockWithFaceID
 		case .touchID:
-			return "Lock with Touch ID & Passcode"
+			return L10n.lockWithTouchID
 		case .opticID:
-			return "Lock with Optic ID & Passcode"
+			return L10n.lockWithOpticID
 		case .none:
-			return "Lock with Passcode"
+			return L10n.lockWithPasscode
 		@unknown default:
-			return "Lock with Passcode"
+			return L10n.lockWithPasscode
 		}
 	}
 
@@ -62,15 +62,15 @@ extension LABiometryType {
 	var localizedAuthenticationSettingsDescription: String {
 		switch self {
 		case .faceID:
-			return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app."
+			return L10n.lockDescriptionFaceID
 		case .touchID:
-			return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Touch ID or your device's passcode when you reopen the app."
+			return L10n.lockDescriptionTouchID
 		case .opticID:
-			return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Optic ID or your device's passcode when you reopen the app."
+			return L10n.lockDescriptionOpticID
 		case .none:
-			return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app."
+			return L10n.lockDescriptionPasscode
 		@unknown default:
-			return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app."
+			return L10n.lockDescriptionPasscode
 		}
 	}
 }

@@ -260,9 +260,9 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		var detailString: String
 
 		if self.userIdentity?.id == User.current?.id {
-			detailString = "There are no messages on your feed!"
+			detailString = L10n.feedEmptyDetailSelf
 		} else {
-			detailString = "There are no messages on this feed!"
+			detailString = L10n.feedEmptyDetailOther
 		}
 
 		emptyBackgroundView.configureImageView(image: .Empty.comment)

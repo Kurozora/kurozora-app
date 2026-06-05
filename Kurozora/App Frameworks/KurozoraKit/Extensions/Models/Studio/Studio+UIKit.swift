@@ -92,7 +92,7 @@ extension Studio {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Check out shows made by \"\(self.attributes.name)\" via @KurozoraApp")
+		activityItems.append(L10n.shareStudio(self.attributes.name))
 
 		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
 			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))

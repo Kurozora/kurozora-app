@@ -64,8 +64,8 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	override var emptyStateImage: UIImage { .Empty.animeLibrary }
-	override var emptyStateTitle: String { "No Shows" }
-	override var emptyStateDetail: String { "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.shows) }
+	override var emptyStateDetail: String { L10n.cantGetListRefresh(L10n.shows.lowercased(with: .current)) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.showIdentities.isEmpty || !self.relatedShows.isEmpty

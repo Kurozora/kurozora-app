@@ -71,7 +71,7 @@ class SearchShowResultsCell: KCollectionViewCell {
 
 		// Configure episode count
 		let episodeCount = show.attributes.episodeCount
-		self.episodeCountLabel.text = "\(episodeCount) \(episodeCount >= 1 ? "Episode" : "Episodes")"
+		self.episodeCountLabel.text = "\(episodeCount) \(episodeCount == 1 ? L10n.episode : L10n.episodes)"
 		self.episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date

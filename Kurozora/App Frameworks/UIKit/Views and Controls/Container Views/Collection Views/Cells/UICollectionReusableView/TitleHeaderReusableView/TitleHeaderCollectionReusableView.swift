@@ -24,6 +24,12 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	private(set) var segueID: (any SegueIdentifier)?
 	private(set) var indexPath: IndexPath?
 
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		self.headerButton.setTitle(L10n.seeAll, for: .normal)
+	}
+
 	// MARK: - Functions
 	/// Configures the views in the reusable view.
 	///

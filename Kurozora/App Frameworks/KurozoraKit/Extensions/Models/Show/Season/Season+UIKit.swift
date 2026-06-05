@@ -131,7 +131,7 @@ extension Season {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		let shareText = "\(self.webpageURLString)/episodes\nYou should watch \"\(self.attributes.title)\" season via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)/episodes\n" + L10n.shareSeason(self.attributes.title)
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {

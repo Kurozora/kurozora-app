@@ -27,21 +27,21 @@ enum SplashScreenAnimation: Int {
 	var titleValue: String {
 		switch self {
 		case .none:
-			return "Disabled"
+			return L10n.disabled
 		case .default:
 			return L10n.default
 		case .shake:
-			return "Shake"
+			return L10n.shake
 		case .scale:
-			return "Scale"
+			return L10n.scale
 		case .anvil:
-			return "Anvil"
+			return L10n.anvil
 		case .spin:
-			return "Spin"
+			return L10n.spin
 		case .heartbeat:
-			return "Heartbeat"
+			return L10n.heartbeat
 		case .bounce:
-			return "Bounce"
+			return L10n.bounce
 		}
 	}
 }

@@ -13,667 +13,1171 @@ extension L10n {
 	/// The string for default theme description.
 	///
 	/// - Tag: L10n-defaultThemeDescription
-	static let defaultThemeDescription: String = String(
-		localized: "The official Kurozora theme.",
-		table: "Settings",
-		comment: "The string for default theme description."
-	)
+	static var defaultThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "The official Kurozora theme.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for default theme description."
+			)
+		}
+	}
 	/// The string for day theme description.
 	///
 	/// - Tag: L10n-dayThemeDescription
-	static let dayThemeDescription: String = String(
-		localized: "Rise and shine.",
-		table: "Settings",
-		comment: "The string for day theme description."
-	)
+	static var dayThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Rise and shine.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for day theme description."
+			)
+		}
+	}
 	/// The string for night theme description.
 	///
 	/// - Tag: L10n-nightThemeDescription
-	static let nightThemeDescription: String = String(
-		localized: "Easy on the eyes.",
-		table: "Settings",
-		comment: "The string for night theme description."
-	)
+	static var nightThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Easy on the eyes.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for night theme description."
+			)
+		}
+	}
 	/// The string for grass theme description.
 	///
 	/// - Tag: L10n-grassThemeDescription
-	static let grassThemeDescription: String = String(
-		localized: "Get off my lawn!",
-		table: "Settings",
-		comment: "The string for grass theme description."
-	)
+	static var grassThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Get off my lawn!",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for grass theme description."
+			)
+		}
+	}
 	/// The string for sky theme description.
 	///
 	/// - Tag: L10n-skyThemeDescription
-	static let skyThemeDescription: String = String(
-		localized: "Cloudless.",
-		table: "Settings",
-		comment: "The string for sky theme description."
-	)
+	static var skyThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Cloudless.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for sky theme description."
+			)
+		}
+	}
 	/// The string for sakura theme description.
 	///
 	/// - Tag: L10n-sakuraThemeDescription
-	static let sakuraThemeDescription: String = String(
-		localized: "In full bloom.",
-		table: "Settings",
-		comment: "The string for sakura theme description."
-	)
+	static var sakuraThemeDescription: String {
+		L10n.resolve {
+			String(
+				localized: "In full bloom.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for sakura theme description."
+			)
+		}
+	}
 
 	// MARK: - Notification
 	/// The string for the 'view sessions' notification action.
 	///
 	/// - Tag: L10n-viewSessions
-	static let viewSessions: String = String(
-		localized: "View Sessions",
-		table: "Settings",
-		comment: "The string for the 'view sessions' notification action."
-	)
+	static var viewSessions: String {
+		L10n.resolve {
+			String(
+				localized: "View Sessions",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'view sessions' notification action."
+			)
+		}
+	}
 	/// The string for the 'view show details' notification action.
 	///
 	/// - Tag: L10n-viewShowDetails
-	static let viewShowDetails: String = String(
-		localized: "View Show Details",
-		table: "Settings",
-		comment: "The string for the 'view show details' notification action."
-	)
+	static var viewShowDetails: String {
+		L10n.resolve {
+			String(
+				localized: "View Show Details",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'view show details' notification action."
+			)
+		}
+	}
 	/// The string for the 'view profile' notification action.
 	///
 	/// - Tag: L10n-viewProfile
-	static let viewProfile: String = String(
-		localized: "View Profile",
-		table: "Settings",
-		comment: "The string for the 'view profile' notification action."
-	)
+	static var viewProfile: String {
+		L10n.resolve {
+			String(
+				localized: "View Profile",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'view profile' notification action."
+			)
+		}
+	}
 	/// The string for the 'view message reply' notification action.
 	///
 	/// - Tag: L10n-viewMessageReply
-	static let viewMessageReply: String = String(
-		localized: "View Message Reply",
-		table: "Settings",
-		comment: "The string for the 'view message reply' notification action."
-	)
+	static var viewMessageReply: String {
+		L10n.resolve {
+			String(
+				localized: "View Message Reply",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'view message reply' notification action."
+			)
+		}
+	}
 	/// The string for the 'view message re-share' notification action.
 	///
 	/// - Tag: L10n-viewMessageReShare
-	static let viewMessageReShare: String = String(
-		localized: "View Message Re-share",
-		table: "Settings",
-		comment: "The string for the 'view message re-share' notification action."
-	)
+	static var viewMessageReShare: String {
+		L10n.resolve {
+			String(
+				localized: "View Message Re-share",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'view message re-share' notification action."
+			)
+		}
+	}
 	/// The string for the 'mention' notification type.
 	///
 	/// - Tag: L10n-mention
-	static let mention: String = String(
-		localized: "Mention",
-		table: "Settings",
-		comment: "The string for the 'mention' notification type."
-	)
+	static var mention: String {
+		L10n.resolve {
+			String(
+				localized: "Mention",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'mention' notification type."
+			)
+		}
+	}
 	/// The string for the 'subscription update' notification type.
 	///
 	/// - Tag: L10n-subscriptionUpdate
-	static let subscriptionUpdate: String = String(
-		localized: "Subscription Update",
-		table: "Settings",
-		comment: "The string for the 'subscription update' notification type"
-	)
+	static var subscriptionUpdate: String {
+		L10n.resolve {
+			String(
+				localized: "Subscription Update",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'subscription update' notification type"
+			)
+		}
+	}
 	/// The string for the 'new session' notification type.
 	///
 	/// - Tag: L10n-newSession
-	static let newSession: String = String(
-		localized: "New Session",
-		table: "Settings",
-		comment: "The string for the 'new session' notification type"
-	)
+	static var newSession: String {
+		L10n.resolve {
+			String(
+				localized: "New Session",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'new session' notification type"
+			)
+		}
+	}
 	/// The string for the 'library import' notification type.
 	///
 	/// - Tag: L10n-libraryImportNotification
-	static let libraryImport: String = String(
-		localized: "Library Import",
-		table: "Settings",
-		comment: "The string for the 'library import' notification type"
-	)
+	static var libraryImport: String {
+		L10n.resolve {
+			String(
+				localized: "Library Import",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'library import' notification type"
+			)
+		}
+	}
 	/// The string for the 'moderation' notification type.
 	///
 	/// - Tag: L10n-moderation
-	static let moderation: String = String(
-		localized: "Moderation",
-		table: "Settings",
-		comment: "The string for the 'moderation' notification type"
-	)
+	static var moderation: String {
+		L10n.resolve {
+			String(
+				localized: "Moderation",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'moderation' notification type"
+			)
+		}
+	}
 
 	// MARK: - Settings
 	/// The title string for the 'App Icon' settings.
 	///
 	/// - Tag: L10n-appIcon
-	static let appIcon: String = String(
-		localized: "App Icon",
-		table: "Settings",
-		comment: "The title string for the 'App Icon' settings."
-	)
+	static var appIcon: String {
+		L10n.resolve {
+			String(
+				localized: "App Icon",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'App Icon' settings."
+			)
+		}
+	}
 	/// The title string for the 'Theme Store' settings.
 	///
 	/// - Tag: L10n-themeStore
-	static let themeStore: String = String(
-		localized: "Theme Store",
-		table: "Settings",
-		comment: "The title string for the 'Theme Store Grouping' settings."
-	)
+	static var themeStore: String {
+		L10n.resolve {
+			String(
+				localized: "Theme Store",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Theme Store Grouping' settings."
+			)
+		}
+	}
 	/// The title string for the 'Allow Notifications' settings.
 	///
 	/// - Tag: L10n-allowNotifications
-	static let allowNotifications: String = String(
-		localized: "Allow Notifications",
-		table: "Settings",
-		comment: "The title string for the 'Allow Notifications' settings."
-	)
+	static var allowNotifications: String {
+		L10n.resolve {
+			String(
+				localized: "Allow Notifications",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Allow Notifications' settings."
+			)
+		}
+	}
 	/// The title string for the 'Notification Grouping' settings.
 	///
 	/// - Tag: L10n-notificationGrouping
-	static let notificationGrouping: String = String(
-		localized: "Notification Grouping",
-		table: "Settings",
-		comment: "The title string for the 'Notification Grouping' settings."
-	)
+	static var notificationGrouping: String {
+		L10n.resolve {
+			String(
+				localized: "Notification Grouping",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Notification Grouping' settings."
+			)
+		}
+	}
 	/// The title string for the 'Timezone' settings.
 	///
 	/// - Tag: L10n-timezone
-	static let timezone: String = String(
-		localized: "Timezone",
-		table: "Settings",
-		comment: "The title string for the 'Timezone' settings."
-	)
+	static var timezone: String {
+		L10n.resolve {
+			String(
+				localized: "Timezone",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Timezone' settings."
+			)
+		}
+	}
 	/// The title string for the 'Sign in with Apple' settings.
 	///
 	/// - Tag: L10n-signInWithApple
-	static let signInWithApple: String = String(
-		localized: "Sign in with Apple",
-		table: "Settings",
-		comment: "The title string for the 'Sign in with Apple' settings."
-	)
+	static var signInWithApple: String {
+		L10n.resolve {
+			String(
+				localized: "Sign in with Apple",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Sign in with Apple' settings."
+			)
+		}
+	}
 	/// The title string for the 'Manage Active Sessions' settings.
 	///
 	/// - Tag: L10n-manageActiveSessions
-	static let manageActiveSessions: String = String(
-		localized: "Manage Active Sessions",
-		table: "Settings",
-		comment: "The title string for the 'Manage Active Sessions' settings."
-	)
+	static var manageActiveSessions: String {
+		L10n.resolve {
+			String(
+				localized: "Manage Active Sessions",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Manage Active Sessions' settings."
+			)
+		}
+	}
 	/// The title string for the 'Import Library' settings.
 	///
 	/// - Tag: L10n-importLibrary
-	static let importLibrary: String = String(
-		localized: "Import Library",
-		table: "Settings",
-		comment: "The title string for the 'Import Library' settings."
-	)
+	static var importLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Import Library",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Import Library' settings."
+			)
+		}
+	}
 	/// The title string for the 'Delete Library' settings.
 	///
 	/// - Tag: L10n-deleteLibrary
-	static let deleteLibrary: String = String(
-		localized: "Delete Library",
-		table: "Settings",
-		comment: "The title string for the 'Delete Library' settings."
-	)
+	static var deleteLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Delete Library",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Delete Library' settings."
+			)
+		}
+	}
+	/// The placeholder shown before a library kind is chosen on the delete library screen.
+	static var selectLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Select library",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The placeholder shown before a library kind is chosen on the delete library screen."
+			)
+		}
+	}
 	/// The title string for the 'Delete Account' settings.
 	///
 	/// - Tag: L10n-deleteAccount
-	static let deleteAccount: String = String(
-		localized: "Delete Account",
-		table: "Settings",
-		comment: "The title string for the 'Delete Account' settings button."
-	)
+	static var deleteAccount: String {
+		L10n.resolve {
+			String(
+				localized: "Delete Account",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Delete Account' settings button."
+			)
+		}
+	}
 	/// The title string for the 'Sign Out' settings.
 	///
 	/// - Tag: L10n-signOut
-	static let signOut: String = String(
-		localized: "Sign Out",
-		table: "Settings",
-		comment: "The title string for the 'Sign Out' settings button."
-	)
+	static var signOut: String {
+		L10n.resolve {
+			String(
+				localized: "Sign Out",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Sign Out' settings button."
+			)
+		}
+	}
 	/// The headline string for the account settings option.
 	///
 	/// - Tag: L10n-accountHeadline
-	static let accountHeadline: String = String(
-		localized: "Sign in to your Kurozora account",
-		table: "Settings",
-		comment: "The headline string for the account settings option."
-	)
+	static var accountHeadline: String {
+		L10n.resolve {
+			String(
+				localized: "Sign in to your Kurozora account",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The headline string for the account settings option."
+			)
+		}
+	}
 	/// The sub-headline string for the account settings option when not signed in.
 	///
 	/// - Tag: L10n-accountSubheadline
-	static let accountSubheadline: String = String(
-		localized: "Setup Kurozora Account and more.",
-		table: "Settings",
-		comment: "The sub-headline string for the account settings option when not signed in."
-	)
+	static var accountSubheadline: String {
+		L10n.resolve {
+			String(
+				localized: "Setup Kurozora Account and more.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sub-headline string for the account settings option when not signed in."
+			)
+		}
+	}
 	/// The sub-headline string for the account settings option when signed in.
 	///
 	/// - Tag: L10n-accountSignedInSubheadline
-	static let accountSignedInSubheadline: String = String(
-		localized: "Kurozora Account, Sign in with Apple & Library Import",
-		table: "Settings",
-		comment: "The sub-headline string for the account settings option when signed in."
-	)
+	static var accountSignedInSubheadline: String {
+		L10n.resolve {
+			String(
+				localized: "Kurozora Account, Sign in with Apple & Library Import",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sub-headline string for the account settings option when signed in."
+			)
+		}
+	}
 	/// The string for the 'Switch Account' settings option.
 	///
 	/// - Tag: L10n-switchAccount
-	static let switchAccount: String = String(
-		localized: "Switch Account",
-		table: "Settings",
-		comment: "The string for the 'Switch Account' settings option."
-	)
+	static var switchAccount: String {
+		L10n.resolve {
+			String(
+				localized: "Switch Account",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Switch Account' settings option."
+			)
+		}
+	}
 	/// The string for the 'Keys Manager' settings option.
 	///
 	/// - Tag: L10n-keysManager
-	static let keysManager: String = String(
-		localized: "Keys Manager",
-		table: "Settings",
-		comment: "The string for the 'Keys Manager' settings option."
-	)
+	static var keysManager: String {
+		L10n.resolve {
+			String(
+				localized: "Keys Manager",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Keys Manager' settings option."
+			)
+		}
+	}
 	/// The string for the 'Subscribe to Reminders' settings option.
 	///
 	/// - Tag: L10n-subscribeToReminders
-	static let subscribeToReminders: String = String(
-		localized: "Subscribe to Reminders",
-		table: "Settings",
-		comment: "The string for the 'Subscribe to Reminders' settings option."
-	)
+	static var subscribeToReminders: String {
+		L10n.resolve {
+			String(
+				localized: "Subscribe to Reminders",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Subscribe to Reminders' settings option."
+			)
+		}
+	}
 	/// The string for the 'Copy Subscription Link' calendar picker option.
 	///
 	/// - Tag: L10n-copySubscriptionLink
-	static let copySubscriptionLink: String = String(
-		localized: "Copy Subscription Link",
-		table: "Settings",
-		comment: "The string for the 'Copy Subscription Link' calendar picker option."
-	)
+	static var copySubscriptionLink: String {
+		L10n.resolve {
+			String(
+				localized: "Copy Subscription Link",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Copy Subscription Link' calendar picker option."
+			)
+		}
+	}
 	/// The confirmation string shown after copying the subscription link to the pasteboard.
 	///
 	/// - Tag: L10n-subscriptionLinkCopied
-	static let subscriptionLinkCopied: String = String(
-		localized: "Subscription link copied",
-		table: "Settings",
-		comment: "The confirmation string shown after copying the subscription link to the pasteboard."
-	)
+	static var subscriptionLinkCopied: String {
+		L10n.resolve {
+			String(
+				localized: "Subscription link copied",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The confirmation string shown after copying the subscription link to the pasteboard."
+			)
+		}
+	}
 	/// The footer string for the reminder subscription picker.
 	///
 	/// - Tag: L10n-reminderSubscriptionFooter
-	static let reminderSubscriptionFooter: String = String(
-		localized: "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback.",
-		table: "Settings",
-		comment: "The footer string for the reminder subscription picker."
-	)
+	static var reminderSubscriptionFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the reminder subscription picker."
+			)
+		}
+	}
 	/// A short description for the reminder subscription settings header.
 	///
 	/// - Tag: L10n-reminderSubscriptionHeaderDescription
-	static let reminderSubscriptionHeaderDescription: String = String(
-		localized: "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere.",
-		table: "Settings",
-		comment: "A short description for the reminder subscription settings header."
-	)
+	static var reminderSubscriptionHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the reminder subscription settings header."
+			)
+		}
+	}
 	/// The string for the 'Sound' settings option.
 	///
 	/// - Tag: L10n-sound
-	static let sound: String = String(
-		localized: "Sound",
-		table: "Settings",
-		comment: "The string for the 'Sound' settings option."
-	)
+	static var sound: String {
+		L10n.resolve {
+			String(
+				localized: "Sound",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Sound' settings option."
+			)
+		}
+	}
 	/// The string for the 'Sounds' settings option.
 	///
 	/// - Tag: L10n-sounds
-	static let sounds: String = String(
-		localized: "Sounds",
-		table: "Settings",
-		comment: "The string for the 'Sounds' settings option."
-	)
+	static var sounds: String {
+		L10n.resolve {
+			String(
+				localized: "Sounds",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Sounds' settings option."
+			)
+		}
+	}
 	/// The string for the 'Sounds & Haptics' settings option.
 	///
 	/// - Tag: L10n-soundsAndHaptics
-	static let soundsAndHaptics: String = String(
-		localized: "Sounds & Haptics",
-		table: "Settings",
-		comment: "The string for the 'Sounds & Haptics' settings option."
-	)
+	static var soundsAndHaptics: String {
+		L10n.resolve {
+			String(
+				localized: "Sounds & Haptics",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Sounds & Haptics' settings option."
+			)
+		}
+	}
 	/// The string for the 'Display & Blindness' settings option.
 	///
 	/// - Tag: L10n-displayBlindness
-	static let displayBlindness: String = String(
-		localized: "Display & Blindness",
-		table: "Settings",
-		comment: "The string for the 'Display & Blindness' settings option."
-	)
+	static var displayBlindness: String {
+		L10n.resolve {
+			String(
+				localized: "Display & Blindness",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Display & Blindness' settings option."
+			)
+		}
+	}
 	/// The string for the 'Face ID & Passcode' settings option.
 	///
 	/// - Tag: L10n-faceIDPasscode
-	static let faceIDPasscode: String = String(
-		localized: "Face ID & Passcode",
-		table: "Settings",
-		comment: "The string for the 'Face ID & Passcode' settings option."
-	)
+	static var faceIDPasscode: String {
+		L10n.resolve {
+			String(
+				localized: "Face ID & Passcode",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Face ID & Passcode' settings option."
+			)
+		}
+	}
 	/// The string for the 'Touch ID & Passcode' settings option.
 	///
 	/// - Tag: L10n-touchIDPasscode
-	static let touchIDPasscode: String = String(
-		localized: "Touch ID & Passcode",
-		table: "Settings",
-		comment: "The string for the 'Touch ID & Passcode' settings option."
-	)
+	static var touchIDPasscode: String {
+		L10n.resolve {
+			String(
+				localized: "Touch ID & Passcode",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Touch ID & Passcode' settings option."
+			)
+		}
+	}
 	/// The string for the 'Optic ID & Passcode' settings option.
 	///
 	/// - Tag: L10n-opticIDPasscode
-	static let opticIDPasscode: String = String(
-		localized: "Optic ID & Passcode",
-		table: "Settings",
-		comment: "The string for the 'Optic ID & Passcode' settings option."
-	)
+	static var opticIDPasscode: String {
+		L10n.resolve {
+			String(
+				localized: "Optic ID & Passcode",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Optic ID & Passcode' settings option."
+			)
+		}
+	}
 	/// The string for the 'Unlock Features' settings option.
 	///
 	/// - Tag: L10n-unlockFeatures
-	static let unlockFeatures: String = String(
-		localized: "Unlock Features",
-		table: "Settings",
-		comment: "The string for the 'Unlock Features' settings option."
-	)
+	static var unlockFeatures: String {
+		L10n.resolve {
+			String(
+				localized: "Unlock Features",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Unlock Features' settings option."
+			)
+		}
+	}
 	/// The string for the 'Tip Jar' settings option.
 	///
 	/// - Tag: L10n-tipJar
-	static let tipJar: String = String(
-		localized: "Tip Jar",
-		table: "Settings",
-		comment: "The string for the 'Tip Jar' settings option."
-	)
+	static var tipJar: String {
+		L10n.resolve {
+			String(
+				localized: "Tip Jar",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Tip Jar' settings option."
+			)
+		}
+	}
 	/// The string for the 'Restore Purchase' settings option.
 	///
 	/// - Tag: L10n-restorePurchase
-	static let restorePurchase: String = String(
-		localized: "Restore Purchase",
-		table: "Settings",
-		comment: "The string for the 'Restore Purchase' settings option."
-	)
+	static var restorePurchase: String {
+		L10n.resolve {
+			String(
+				localized: "Restore Purchase",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Restore Purchase' settings option."
+			)
+		}
+	}
 	/// The string for the 'Request Refund' settings option.
 	///
 	/// - Tag: L10n-requestRefund
-	static let requestRefund: String = String(
-		localized: "Request Refund",
-		table: "Settings",
-		comment: "The string for the 'Request Refund' settings option."
-	)
+	static var requestRefund: String {
+		L10n.resolve {
+			String(
+				localized: "Request Refund",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Request Refund' settings option."
+			)
+		}
+	}
 	/// The string for the 'Add Sticker to Signal' settings option.
 	///
 	/// - Tag: L10n-addStickerToSignal
-	static let addStickerToSignal: String = String(
-		localized: "Add Sticker to Signal",
-		table: "Settings",
-		comment: "The string for the 'Add Sticker to Signal' settings option."
-	)
+	static var addStickerToSignal: String {
+		L10n.resolve {
+			String(
+				localized: "Add Sticker to Signal",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Add Sticker to Signal' settings option."
+			)
+		}
+	}
 	/// The string for the 'Add Sticker to Telegram' settings option.
 	///
 	/// - Tag: L10n-addStickerToTelegram
-	static let addStickerToTelegram: String = String(
-		localized: "Add Sticker to Telegram",
-		table: "Settings",
-		comment: "The string for the 'Add Sticker to Telegram' settings option."
-	)
+	static var addStickerToTelegram: String {
+		L10n.resolve {
+			String(
+				localized: "Add Sticker to Telegram",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Add Sticker to Telegram' settings option."
+			)
+		}
+	}
 	/// The string for the 'Add Sticker to WhatsApp' settings option.
 	///
 	/// - Tag: L10n-addStickerToWhatsApp
-	static let addStickerToWhatsApp: String = String(
-		localized: "Add Sticker to WhatsApp",
-		table: "Settings",
-		comment: "The string for the 'Add Sticker to WhatsApp' settings option."
-	)
+	static var addStickerToWhatsApp: String {
+		L10n.resolve {
+			String(
+				localized: "Add Sticker to WhatsApp",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Add Sticker to WhatsApp' settings option."
+			)
+		}
+	}
 	/// The alert message shown when WhatsApp is not installed on the device.
 	///
 	/// - Tag: L10n-whatsAppNotInstalled
-	static let whatsAppNotInstalled: String = String(
-		localized: "WhatsApp doesn’t appear to be installed on this device.",
-		table: "Settings",
-		comment: "The alert message shown when WhatsApp is not installed on the device."
-	)
+	static var whatsAppNotInstalled: String {
+		L10n.resolve {
+			String(
+				localized: "WhatsApp doesn’t appear to be installed on this device.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The alert message shown when WhatsApp is not installed on the device."
+			)
+		}
+	}
 	/// The title of the alert shown when adding the WhatsApp sticker pack fails.
 	///
 	/// - Tag: L10n-stickerInstallFailedTitle
-	static let stickerInstallFailedTitle: String = String(
-		localized: "Couldn’t Add Sticker Pack",
-		table: "Settings",
-		comment: "The title of the alert shown when adding the WhatsApp sticker pack fails."
-	)
+	static var stickerInstallFailedTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Couldn’t Add Sticker Pack",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the alert shown when adding the WhatsApp sticker pack fails."
+			)
+		}
+	}
 	/// The message of the alert shown when adding the WhatsApp sticker pack fails.
 	///
 	/// - Tag: L10n-stickerInstallFailedMessage
-	static let stickerInstallFailedMessage: String = String(
-		localized: "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later.",
-		table: "Settings",
-		comment: "The message of the alert shown when adding the WhatsApp sticker pack fails."
-	)
+	static var stickerInstallFailedMessage: String {
+		L10n.resolve {
+			String(
+				localized: "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message of the alert shown when adding the WhatsApp sticker pack fails."
+			)
+		}
+	}
 	/// The string for the 'Rate us on App Store' settings option.
 	///
 	/// - Tag: L10n-rateAppStore
-	static let rateAppStore: String = String(
-		localized: "Rate us on App Store",
-		table: "Settings",
-		comment: "The string for the 'Rate us on App Store' settings option."
-	)
+	static var rateAppStore: String {
+		L10n.resolve {
+			String(
+				localized: "Rate us on App Store",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Rate us on App Store' settings option."
+			)
+		}
+	}
 	/// The string for the 'Join our Discord Community' settings option.
 	///
 	/// - Tag: L10n-joinDiscord
-	static let joinDiscord: String = String(
-		localized: "Join our Discord Community",
-		table: "Settings",
-		comment: "The string for the 'Join our Discord Community' settings option."
-	)
+	static var joinDiscord: String {
+		L10n.resolve {
+			String(
+				localized: "Join our Discord Community",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Join our Discord Community' settings option."
+			)
+		}
+	}
 	/// The string for the 'Follow us on GitHub' settings option.
 	///
 	/// - Tag: L10n-followGitHub
-	static let followGitHub: String = String(
-		localized: "Follow us on GitHub",
-		table: "Settings",
-		comment: "The string for the 'Follow us on GitHub' settings option."
-	)
+	static var followGitHub: String {
+		L10n.resolve {
+			String(
+				localized: "Follow us on GitHub",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Follow us on GitHub' settings option."
+			)
+		}
+	}
 	/// The string for the 'Follow us on Mastodon' settings option.
 	///
 	/// - Tag: L10n-followMastodon
-	static let followMastodon: String = String(
-		localized: "Follow us on Mastodon",
-		table: "Settings",
-		comment: "The string for the 'Follow us on Mastodon' settings option."
-	)
+	static var followMastodon: String {
+		L10n.resolve {
+			String(
+				localized: "Follow us on Mastodon",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Follow us on Mastodon' settings option."
+			)
+		}
+	}
 	/// The string for the 'Follow us on Twitter' settings option.
 	///
 	/// - Tag: L10n-followTwitter
-	static let followTwitter: String = String(
-		localized: "Follow us on Twitter",
-		table: "Settings",
-		comment: "The string for the 'Follow us on Twitter' settings option."
-	)
+	static var followTwitter: String {
+		L10n.resolve {
+			String(
+				localized: "Follow us on Twitter",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Follow us on Twitter' settings option."
+			)
+		}
+	}
 	/// The title string for the 'Clear all Cache?' alert.
 	///
 	/// - Tag: L10n-clearAllCache
-	static let clearAllCache: String = String(
-		localized: "Clear all Cache?",
-		table: "Settings",
-		comment: "The title string for the 'Clear all Cache?' alert."
-	)
+	static var clearAllCache: String {
+		L10n.resolve {
+			String(
+				localized: "Clear all Cache?",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Clear all Cache?' alert."
+			)
+		}
+	}
 	/// The message string for the cache section footer.
 	///
 	/// - Tag: L10n-clearCacheFooterMessage
-	static let clearCacheFooterMessage: String = String(
-		localized: "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.",
-		table: "Settings",
-		comment: "The message string for the cache section footer."
-	)
+	static var clearCacheFooterMessage: String {
+		L10n.resolve {
+			String(
+				localized: "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message string for the cache section footer."
+			)
+		}
+	}
 	/// The title string for the 'Clear All' destructive button.
 	///
 	/// - Tag: L10n-clearAll
-	static let clearAll: String = String(
-		localized: "Clear All",
-		table: "Settings",
-		comment: "The title string for the 'Clear All' destructive button."
-	)
+	static var clearAll: String {
+		L10n.resolve {
+			String(
+				localized: "Clear All",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Clear All' destructive button."
+			)
+		}
+	}
 	/// A short description for the cache settings header.
 	///
 	/// - Tag: L10n-cacheHeaderDescription
-	static let cacheHeaderDescription: String = String(
-		localized: "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing.",
-		table: "Settings",
-		comment: "A short description for the cache settings header."
-	)
+	static var cacheHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the cache settings header."
+			)
+		}
+	}
 	/// A short description for the keys manager settings header.
 	///
 	/// - Tag: L10n-keysManagerHeaderDescription
-	static let keysManagerHeaderDescription: String = String(
-		localized: "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.",
-		table: "Settings",
-		comment: "A short description for the keys manager settings header."
-	)
+	static var keysManagerHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the keys manager settings header."
+			)
+		}
+	}
 	/// A short description for the browser settings header.
 	///
 	/// - Tag: L10n-browserHeaderDescription
-	static let browserHeaderDescription: String = String(
-		localized: "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback.",
-		table: "Settings",
-		comment: "A short description for the browser settings header."
-	)
+	static var browserHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the browser settings header."
+			)
+		}
+	}
 	/// A short description for the library settings header.
 	///
 	/// - Tag: L10n-libraryHeaderDescription
-	static let libraryHeaderDescription: String = String(
-		localized: "Customize how your library is organized by setting the default sort order for each tracking status and media type.",
-		table: "Settings",
-		comment: "A short description for the library settings header."
-	)
+	static var libraryHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Customize how your library is organized by setting the default sort order for each tracking status and media type.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the library settings header."
+			)
+		}
+	}
 	/// A short description for the motion settings header.
 	///
 	/// - Tag: L10n-motionHeaderDescription
-	static let motionHeaderDescription: String = String(
-		localized: "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences.",
-		table: "Settings",
-		comment: "A short description for the motion settings header."
-	)
+	static var motionHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the motion settings header."
+			)
+		}
+	}
 	/// A short description for the notifications settings header.
 	///
 	/// - Tag: L10n-notificationsHeaderDescription
-	static let notificationsHeaderDescription: String = String(
-		localized: "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together.",
-		table: "Settings",
-		comment: "A short description for the notifications settings header."
-	)
+	static var notificationsHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the notifications settings header."
+			)
+		}
+	}
 	/// A short description for the sounds and haptics settings header.
 	///
 	/// - Tag: L10n-soundHeaderDescription
-	static let soundHeaderDescription: String = String(
-		localized: "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels.",
-		table: "Settings",
-		comment: "A short description for the sounds and haptics settings header."
-	)
+	static var soundHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the sounds and haptics settings header."
+			)
+		}
+	}
 	/// A short description for the authentication settings header.
 	///
 	/// - Tag: L10n-authenticationHeaderDescription
-	static let authenticationHeaderDescription: String = String(
-		localized: "Require authentication to unlock the app and choose how frequently you need to verify your identity.",
-		table: "Settings",
-		comment: "A short description for the authentication settings header."
-	)
+	static var authenticationHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Require authentication to unlock the app and choose how frequently you need to verify your identity.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the authentication settings header."
+			)
+		}
+	}
 	/// A short description for the privacy settings header.
 	///
 	/// - Tag: L10n-privacyHeaderDescription
-	static let privacyHeaderDescription: String = String(
-		localized: "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information.",
-		table: "Settings",
-		comment: "A short description for the privacy settings header."
-	)
+	static var privacyHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the privacy settings header."
+			)
+		}
+	}
 
 	// MARK: - Motion Settings
 	/// The string for the 'Animations' settings header.
 	///
 	/// - Tag: L10n-animations
-	static let animations: String = String(
-		localized: "Animations",
-		table: "Settings",
-		comment: "The string for the 'Animations' settings header."
-	)
+	static var animations: String {
+		L10n.resolve {
+			String(
+				localized: "Animations",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Animations' settings header."
+			)
+		}
+	}
 	/// The string for the 'Splash Screen' settings option.
 	///
 	/// - Tag: L10n-splashScreen
-	static let splashScreen: String = String(
-		localized: "Splash Screen",
-		table: "Settings",
-		comment: "The string for the 'Splash Screen' settings option."
-	)
+	static var splashScreen: String {
+		L10n.resolve {
+			String(
+				localized: "Splash Screen",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Splash Screen' settings option."
+			)
+		}
+	}
 	/// The string for the 'Reduce Motion' settings option.
 	///
 	/// - Tag: L10n-reduceMotion
-	static let reduceMotion: String = String(
-		localized: "Reduce Motion",
-		table: "Settings",
-		comment: "The string for the 'Reduce Motion' settings option."
-	)
+	static var reduceMotion: String {
+		L10n.resolve {
+			String(
+				localized: "Reduce Motion",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Reduce Motion' settings option."
+			)
+		}
+	}
 	/// The string for the 'Sync With Device Settings' settings option.
 	///
 	/// - Tag: L10n-syncWithDeviceSettings
-	static let syncWithDeviceSettings: String = String(
-		localized: "Sync With Device Settings",
-		table: "Settings",
-		comment: "The string for the 'Sync With Device Settings' settings option."
-	)
+	static var syncWithDeviceSettings: String {
+		L10n.resolve {
+			String(
+				localized: "Sync With Device Settings",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Sync With Device Settings' settings option."
+			)
+		}
+	}
 	/// The footer string for the 'Reduce Motion' settings option.
 	///
 	/// - Tag: L10n-reduceMotionFooter
-	static let reduceMotionFooter: String = String(
-		localized: "Reduce the intensity of animations, and motion effects throughout Kurozora.",
-		table: "Settings",
-		comment: "The footer string for the 'Reduce Motion' settings option."
-	)
+	static var reduceMotionFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Reduce the intensity of animations, and motion effects throughout Kurozora.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the 'Reduce Motion' settings option."
+			)
+		}
+	}
 
 	// MARK: - Sounds & Haptics
 	/// The string for the 'Chime & Sound Effects' settings option.
 	///
 	/// - Tag: L10n-chimeAndSoundEffects
-	static let chimeAndSoundEffects: String = String(
-		localized: "Chime & Sound Effects",
-		table: "Settings",
-		comment: "The string for the 'Chime & Sound Effects' settings option."
-	)
+	static var chimeAndSoundEffects: String {
+		L10n.resolve {
+			String(
+				localized: "Chime & Sound Effects",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Chime & Sound Effects' settings option."
+			)
+		}
+	}
 	/// The string for the 'Chime Sound' settings option.
 	///
 	/// - Tag: L10n-chimeSound
-	static let chimeSound: String = String(
-		localized: "Chime Sound",
-		table: "Settings",
-		comment: "The string for the 'Chime Sound' settings option."
-	)
+	static var chimeSound: String {
+		L10n.resolve {
+			String(
+				localized: "Chime Sound",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Chime Sound' settings option."
+			)
+		}
+	}
 	/// The string for the 'Chime on Startup' settings option.
 	///
 	/// - Tag: L10n-chimeOnStartup
-	static let chimeOnStartup: String = String(
-		localized: "Chime on Startup",
-		table: "Settings",
-		comment: "The string for the 'Chime on Startup' settings option."
-	)
+	static var chimeOnStartup: String {
+		L10n.resolve {
+			String(
+				localized: "Chime on Startup",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Chime on Startup' settings option."
+			)
+		}
+	}
 	/// The string for the 'User Interface Sounds' settings option.
 	///
 	/// - Tag: L10n-uiSounds
-	static let uiSounds: String = String(
-		localized: "User Interface Sounds",
-		table: "Settings",
-		comment: "The string for the 'User Interface Sounds' settings option."
-	)
+	static var uiSounds: String {
+		L10n.resolve {
+			String(
+				localized: "User Interface Sounds",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'User Interface Sounds' settings option."
+			)
+		}
+	}
 	/// The string for the 'Haptics' settings option.
 	///
 	/// - Tag: L10n-haptics
-	static let haptics: String = String(
-		localized: "Haptics",
-		table: "Settings",
-		comment: "The string for the 'Haptics' settings option."
-	)
+	static var haptics: String {
+		L10n.resolve {
+			String(
+				localized: "Haptics",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Haptics' settings option."
+			)
+		}
+	}
 	/// The footer string for the haptics settings option.
 	///
 	/// - Tag: L10n-hapticsFooter
-	static let hapticsFooter: String = String(
-		localized: "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.",
-		table: "Settings",
-		comment: "The footer string for the haptics settings option."
-	)
+	static var hapticsFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the haptics settings option."
+			)
+		}
+	}
 
 	// MARK: - Refresh Control Titles
 
@@ -681,149 +1185,251 @@ extension L10n {
 	/// The menu button for applying a downloaded theme.
 	///
 	/// - Tag: L10n-applyTheme
-	static let applyTheme: String = String(
-		localized: "Apply Theme",
-		table: "Settings",
-		comment: "The menu button for applying a downloaded theme."
-	)
+	static var applyTheme: String {
+		L10n.resolve {
+			String(
+				localized: "Apply Theme",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu button for applying a downloaded theme."
+			)
+		}
+	}
 	/// The action sheet button for redownloading an already-purchased theme.
 	///
 	/// - Tag: L10n-redownloadTheme
-	static let redownloadTheme: String = String(
-		localized: "Redownload Theme",
-		table: "Settings",
-		comment: "The action sheet button for redownloading an already-purchased theme."
-	)
+	static var redownloadTheme: String {
+		L10n.resolve {
+			String(
+				localized: "Redownload Theme",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action sheet button for redownloading an already-purchased theme."
+			)
+		}
+	}
 	/// The destructive action sheet button for removing a downloaded theme.
 	///
 	/// - Tag: L10n-removeTheme
-	static let removeTheme: String = String(
-		localized: "Remove Theme",
-		table: "Settings",
-		comment: "The destructive action sheet button for removing a downloaded theme."
-	)
+	static var removeTheme: String {
+		L10n.resolve {
+			String(
+				localized: "Remove Theme",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destructive action sheet button for removing a downloaded theme."
+			)
+		}
+	}
 	/// Error description shown when the theme storage directory cannot be resolved.
 	///
 	/// - Tag: L10n-themeStorageUnavailable
-	static let themeStorageUnavailable: String = String(
-		localized: "The theme storage directory is unavailable.",
-		table: "Settings",
-		comment: "Error description shown when the theme storage directory cannot be resolved."
-	)
+	static var themeStorageUnavailable: String {
+		L10n.resolve {
+			String(
+				localized: "The theme storage directory is unavailable.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Error description shown when the theme storage directory cannot be resolved."
+			)
+		}
+	}
 
 	// MARK: - Browser
 	/// The name of the in-app browser option in the browser picker.
 	///
 	/// - Tag: L10n-browserInAppDefault
-	static let browserInAppDefault: String = String(
-		localized: "In-app (default)",
-		table: "Settings",
-		comment: "The name of the in-app browser option in the browser picker."
-	)
+	static var browserInAppDefault: String {
+		L10n.resolve {
+			String(
+				localized: "In-app (default)",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the in-app browser option in the browser picker."
+			)
+		}
+	}
 
 	// MARK: - Empty States
 	/// The empty-state detail shown when no themes are available in the theme store.
 	///
 	/// - Tag: L10n-noThemesAvailableDetail
-	static let noThemesAvailableDetail: String = String(
-		localized: "Themes are not available at this moment. Please check back again later.",
-		table: "Settings",
-		comment: "The empty-state detail shown when no themes are available in the theme store."
-	)
+	static var noThemesAvailableDetail: String {
+		L10n.resolve {
+			String(
+				localized: "Themes are not available at this moment. Please check back again later.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The empty-state detail shown when no themes are available in the theme store."
+			)
+		}
+	}
 	/// The empty-state title for the debug keychain list when no keys remain.
 	///
 	/// - Tag: L10n-debugNoKeysTitle
-	static let debugNoKeysTitle: String = String(
-		localized: "No Keys",
-		table: "Settings",
-		comment: "The empty-state title for the debug keychain list when no keys remain."
-	)
+	static var debugNoKeysTitle: String {
+		L10n.resolve {
+			String(
+				localized: "No Keys",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The empty-state title for the debug keychain list when no keys remain."
+			)
+		}
+	}
 	/// The empty-state detail for the debug keychain list when no keys remain.
 	///
 	/// - Tag: L10n-debugNoKeysDetail
-	static let debugNoKeysDetail: String = String(
-		localized: "All keychain entries have been removed.",
-		table: "Settings",
-		comment: "The empty-state detail for the debug keychain list when no keys remain."
-	)
+	static var debugNoKeysDetail: String {
+		L10n.resolve {
+			String(
+				localized: "All keychain entries have been removed.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The empty-state detail for the debug keychain list when no keys remain."
+			)
+		}
+	}
 
 	// MARK: - Sign In
 	/// The string for the 'sign in' action.
 	///
 	/// - Tag: L10n-signIn
-	static let signIn: String = String(
-		localized: "Sign In",
-		table: "Settings",
-		comment: "The string for the 'sign in' action."
-	)
+	static var signIn: String {
+		L10n.resolve {
+			String(
+				localized: "Sign In",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'sign in' action."
+			)
+		}
+	}
 
 	// MARK: - Appearance
 	/// The title of the appearance schedule screen.
 	///
 	/// - Tag: L10n-appearanceSchedule
-	static let appearanceSchedule: String = String(
-		localized: "Appearance Schedule",
-		table: "Settings",
-		comment: "The title of the appearance schedule screen."
-	)
+	static var appearanceSchedule: String {
+		L10n.resolve {
+			String(
+				localized: "Appearance Schedule",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the appearance schedule screen."
+			)
+		}
+	}
 	/// The settings row title for the automatic dark theme schedule start time.
 	///
 	/// - Tag: L10n-startsAt
-	static let startsAt: String = String(
-		localized: "Starts at",
-		table: "Settings",
-		comment: "The settings row title for the automatic dark theme schedule start time."
-	)
+	static var startsAt: String {
+		L10n.resolve {
+			String(
+				localized: "Starts at",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings row title for the automatic dark theme schedule start time."
+			)
+		}
+	}
 	/// The settings switch title for the true black option.
 	///
 	/// - Tag: L10n-trueBlack
-	static let trueBlack: String = String(
-		localized: "True Black",
-		table: "Settings",
-		comment: "The settings switch title for the true black option."
-	)
+	static var trueBlack: String {
+		L10n.resolve {
+			String(
+				localized: "True Black",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings switch title for the true black option."
+			)
+		}
+	}
 	/// The settings switch title for the large titles option.
 	///
 	/// - Tag: L10n-largeTitles
-	static let largeTitles: String = String(
-		localized: "Large Titles",
-		table: "Settings",
-		comment: "The settings switch title for the large titles option."
-	)
+	static var largeTitles: String {
+		L10n.resolve {
+			String(
+				localized: "Large Titles",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings switch title for the large titles option."
+			)
+		}
+	}
 
 	// MARK: - Theme Store Buttons
 	/// The download button title for an unowned theme.
 	///
 	/// - Tag: L10n-themeButtonGet
-	static let themeButtonGet: String = String(
-		localized: "GET",
-		table: "Settings",
-		comment: "The download button title for an unowned theme."
-	)
+	static var themeButtonGet: String {
+		L10n.resolve {
+			String(
+				localized: "GET",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The download button title for an unowned theme."
+			)
+		}
+	}
 	/// The button title for applying a downloaded theme.
 	///
 	/// - Tag: L10n-themeButtonUse
-	static let themeButtonUse: String = String(
-		localized: "USE",
-		table: "Settings",
-		comment: "The button title for applying a downloaded theme."
-	)
+	static var themeButtonUse: String {
+		L10n.resolve {
+			String(
+				localized: "USE",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button title for applying a downloaded theme."
+			)
+		}
+	}
 	/// The button title for updating a downloaded theme.
 	///
 	/// - Tag: L10n-themeButtonUpdate
-	static let themeButtonUpdate: String = String(
-		localized: "UPDATE",
-		table: "Settings",
-		comment: "The button title for updating a downloaded theme."
-	)
+	static var themeButtonUpdate: String {
+		L10n.resolve {
+			String(
+				localized: "UPDATE",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button title for updating a downloaded theme."
+			)
+		}
+	}
 	/// The button title shown for the currently applied theme.
 	///
 	/// - Tag: L10n-themeButtonUsing
-	static let themeButtonUsing: String = String(
-		localized: "USING",
-		table: "Settings",
-		comment: "The button title shown for the currently applied theme."
-	)
+	static var themeButtonUsing: String {
+		L10n.resolve {
+			String(
+				localized: "USING",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button title shown for the currently applied theme."
+			)
+		}
+	}
 
 	// MARK: - Theme Downloads
 	/// The download count shown on a theme.
@@ -838,7 +1444,101 @@ extension L10n {
 			localized: "theme.downloadsCount",
 			defaultValue: "\(formattedCount) \(count) Downloads",
 			table: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The download count shown on a theme."
 		)
+	}
+
+	// MARK: - Settings Sections
+	/// The footer for the privacy settings option.
+	static var privacySettingsFooter: String {
+		L10n.resolve {
+			String(localized: "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the privacy settings option.")
+		}
+	}
+	/// The footer for the browser settings option.
+	static var browserSettingsFooter: String {
+		L10n.resolve {
+			String(localized: "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the browser settings option.")
+		}
+	}
+	/// The footer for the appearance schedule option.
+	static var appearanceScheduleFooter: String {
+		L10n.resolve {
+			String(localized: "Automatically transition appearance between light and dark based on time preference.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the appearance schedule option.")
+		}
+	}
+	/// The footer for the in-app notifications option.
+	static var inAppNotificationsFooter: String {
+		L10n.resolve {
+			String(localized: "Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the in-app notifications option.")
+		}
+	}
+	/// The footer for the true black option.
+	static var trueBlackFooter: String {
+		L10n.resolve {
+			String(localized: "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the true black option.")
+		}
+	}
+	/// The footer for the large titles option.
+	static var largeTitlesFooter: String {
+		L10n.resolve {
+			String(localized: "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the large titles option.")
+		}
+	}
+	/// The appearance schedule value for dark until sunrise.
+	static var darkUntilSunrise: String {
+		L10n.resolve {
+			String(localized: "Dark Until Sunrise", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for dark until sunrise.")
+		}
+	}
+	/// The appearance schedule value for light until sunset.
+	static var lightUntilSunset: String {
+		L10n.resolve {
+			String(localized: "Light Until Sunset", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for light until sunset.")
+		}
+	}
+	/// The appearance schedule value for dark until a specific time.
+	static func darkUntil(_ date: String) -> String {
+		L10n.resolve {
+			String(localized: "Dark Until \(date)", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for dark until a specific time.")
+		}
+	}
+	/// The appearance schedule value for light until a specific time.
+	static func lightUntil(_ date: String) -> String {
+		L10n.resolve {
+			String(localized: "Light Until \(date)", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for light until a specific time.")
+		}
+	}
+	/// The 'Appearance' settings section header.
+	static var appearance: String {
+		L10n.resolve {
+			String(localized: "Appearance", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Appearance' settings section header.")
+		}
+	}
+	/// The 'Blindness' settings section header.
+	static var blindness: String {
+		L10n.resolve {
+			String(localized: "Blindness", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Blindness' settings section header.")
+		}
+	}
+	/// The 'Light' appearance option.
+	static var light: String {
+		L10n.resolve {
+			String(localized: "Light", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Light' appearance option.")
+		}
+	}
+	/// The 'Dark' appearance option.
+	static var dark: String {
+		L10n.resolve {
+			String(localized: "Dark", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Dark' appearance option.")
+		}
+	}
+	/// The about-section credit footer.
+	static func appCreditFooter(_ version: String, _ build: String) -> String {
+		L10n.resolve {
+			String(localized: "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora \(version) (\(build))", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The about-section credit footer.")
+		}
 	}
 }

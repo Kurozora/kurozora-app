@@ -24,34 +24,11 @@ enum Month: Int, CaseIterable {
 	case december = 12
 
 	// MARK: - Properties
-	/// The name value of a month.
+	/// The localized standalone name of the month.
 	var name: String {
-		switch self {
-		case .january:
-			return "January"
-		case .february:
-			return "February"
-		case .march:
-			return "March"
-		case .april:
-			return "April"
-		case .may:
-			return "May"
-		case .june:
-			return "June"
-		case .july:
-			return "July"
-		case .august:
-			return "August"
-		case .september:
-			return "September"
-		case .october:
-			return "October"
-		case .november:
-			return "November"
-		case .december:
-			return "December"
-		}
+		let formatter = DateFormatter()
+		formatter.locale = LanguageManager.shared.locale
+		return formatter.standaloneMonthSymbols[self.rawValue - 1]
 	}
 
 	/// The next month.

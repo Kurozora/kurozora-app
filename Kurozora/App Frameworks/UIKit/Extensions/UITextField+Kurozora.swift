@@ -48,19 +48,19 @@ extension UITextField {
 				autocorrectionType = .no
 				autocapitalizationType = .none
 				isSecureTextEntry = false
-				placeholder = "Email Address"
+				placeholder = L10n.emailAddress
 			case .username:
 				keyboardType = .default
 				autocorrectionType = .no
 				autocapitalizationType = .none
 				isSecureTextEntry = false
-				placeholder = "Username"
+				placeholder = L10n.username
 			case .password:
 				keyboardType = .asciiCapable
 				autocorrectionType = .no
 				autocapitalizationType = .none
 				isSecureTextEntry = true
-				placeholder = "Password"
+				placeholder = L10n.password
 			case .oneTimeCode:
 				keyboardType = .numberPad
 				autocorrectionType = .no

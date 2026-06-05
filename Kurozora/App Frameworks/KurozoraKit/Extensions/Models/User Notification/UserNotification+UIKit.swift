@@ -64,7 +64,7 @@ extension UserNotification {
 
 		// Update read status action
 		let readStatus: ReadStatus = self.attributes.readStatus == .unread ? .read : .unread
-		let title = readStatus == .read ? "Mark as Read" : "Mark as Unread"
+		let title = readStatus == .read ? L10n.markNotificationRead : L10n.markNotificationUnread
 		let image = readStatus == .read ? UIImage(systemName: "circlebadge") : UIImage(systemName: "circlebadge.fill")
 		let updateReadStatusAction = UIAction(title: title, image: image) { [weak self] _ in
 			guard let self = self else { return }
@@ -77,7 +77,7 @@ extension UserNotification {
 		menuElements.append(updateReadStatusAction)
 
 		// Delete action
-		let deleteAction = UIAction(title: "Remove Notification", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
+		let deleteAction = UIAction(title: L10n.removeNotification, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
 			guard let self = self else { return }
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				Task {

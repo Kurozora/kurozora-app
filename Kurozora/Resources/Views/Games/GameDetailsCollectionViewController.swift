@@ -58,7 +58,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override var emptyStateImage: UIImage { .Empty.gameLibrary }
 
-	override var emptyStateDetail: String { "This game doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.game.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

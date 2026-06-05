@@ -154,36 +154,36 @@ extension LibraryListCollectionViewController {
 		switch self.libraryKind {
 		case .shows:
 			libraryStatus = self.libraryStatus.showStringValue
-			titleString = "No Shows"
+			titleString = L10n.noItemsTitle(L10n.shows)
 			subtitleString = if self.viewedUser == User.current {
-				"Add a show to your \(libraryStatus.lowercased()) list and it will show up here."
+				L10n.addItemToList(L10n.show.lowercased(with: .current), libraryStatus.lowercased())
 			} else {
-				"\(self.viewedUser?.attributes.username ?? "") has no shows in their \(libraryStatus.lowercased()) list."
+				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.shows.lowercased(with: .current), libraryStatus.lowercased())
 			}
 			image = .Empty.animeLibrary
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
-			titleString = "No Literatures"
+			titleString = L10n.noItemsTitle(L10n.literatures)
 			subtitleString = if self.viewedUser == User.current {
-				"Add a literature to your \(libraryStatus.lowercased()) list and it will show up here."
+				L10n.addItemToList(L10n.literature.lowercased(with: .current), libraryStatus.lowercased())
 			} else {
-				"\(self.viewedUser?.attributes.username ?? "") has no literatures in their \(libraryStatus.lowercased()) list."
+				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.literatures.lowercased(with: .current), libraryStatus.lowercased())
 			}
 			image = .Empty.mangaLibrary
 		case .games:
 			libraryStatus = self.libraryStatus.gameStringValue
-			titleString = "No Games"
+			titleString = L10n.noItemsTitle(L10n.games)
 			subtitleString = if self.viewedUser == User.current {
-				"Add a game to your \(libraryStatus.lowercased()) list and it will show up here."
+				L10n.addItemToList(L10n.game.lowercased(with: .current), libraryStatus.lowercased())
 			} else {
-				"\(self.viewedUser?.attributes.username ?? "") has no games in their \(libraryStatus.lowercased()) list."
+				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.games.lowercased(with: .current), libraryStatus.lowercased())
 			}
 			image = .Empty.gameLibrary
 		}
 
 		if self.viewedUser == nil {
-			subtitleString = "Library is currently available to registered Kurozora users only."
-			buttonTitle = "Sign In"
+			subtitleString = L10n.librarySignedOutDetail
+			buttonTitle = L10n.signIn
 			buttonAction = {
 				let signInTableViewController = SignInTableViewController()
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)

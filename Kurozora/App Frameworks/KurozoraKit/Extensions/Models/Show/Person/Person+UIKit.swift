@@ -54,7 +54,7 @@ extension Person {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: "Name", image: UIImage(systemName: "document.on.document.fill")) { _ in
+		let copyTitleAction = UIAction(title: L10n.name, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.fullName
 		}
 		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
@@ -89,7 +89,7 @@ extension Person {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Check out \"\(self.attributes.fullName)\" via @KurozoraApp")
+		activityItems.append(L10n.sharePerson(self.attributes.fullName))
 
 		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
 			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))

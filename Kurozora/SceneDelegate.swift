@@ -32,6 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window = UIWindow(windowScene: windowScene)
 		self.window?.makeKeyAndVisible()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.reloadLocalizationForLanguageChange), name: .appLanguageDidChange, object: nil)
+
 		// Initialize theme
 		KThemeStyle.initAppTheme()
 
@@ -74,6 +76,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			self.configure(scene: self.window?.windowScene, with: userActivity)
 		}
+	}
+
+	/// Re-localizes the visible UI in place after a language change, preserving navigation state.
+	@objc private func reloadLocalizationForLanguageChange() {
+		self.window?.rootViewController?.reloadLocalizationTree()
 	}
 
 	#if targetEnvironment(macCatalyst)

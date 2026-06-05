@@ -242,10 +242,7 @@ extension SettingsTableViewController {
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch self.settingsSection[section] {
 		case .about:
-			return """
-			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
-			Kurozora \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1.0.0") (\(Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) ?? "0"))
-			"""
+			return L10n.appCreditFooter("\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1.0.0")", "\(Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) ?? "0")")
 		default:
 			return nil
 		}

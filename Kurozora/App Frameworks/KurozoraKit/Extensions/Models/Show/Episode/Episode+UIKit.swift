@@ -138,7 +138,7 @@ extension Episode {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Track your watch progress of \"\(self.attributes.title)\" via @KurozoraApp")
+		activityItems.append(L10n.shareEpisode(self.attributes.title))
 
 		if let bannerImageURLString = self.attributes.banner?.url ?? self.attributes.poster?.url, !bannerImageURLString.isEmpty {
 			activityItems.append(ImageActivityItemProvider(urlString: bannerImageURLString, placeholder: .Placeholders.episodeBanner))

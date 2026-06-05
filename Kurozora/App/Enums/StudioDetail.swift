@@ -78,7 +78,7 @@ extension StudioDetail {
 			case .rank:
 				return L10n.chart
 			case .tvRating:
-				return "Rated"
+				return L10n.rated
 			case .successor:
 				return L10n.successor
 			}
@@ -239,14 +239,16 @@ extension StudioDetail {
 				var aliases: String?
 
 				if let givenName = studio.attributes.japaneseName {
-					aliases = "Japanese: \(givenName)"
+					aliases = L10n.studioAliasJapanese(givenName)
 				}
 
 				if let alternativeNames = studio.attributes.alternativeNames?.filter({ !$0.isEmpty }), !alternativeNames.isEmpty {
+					let synonyms = L10n.studioAliasSynonyms(alternativeNames.joined(separator: ", "))
+
 					if let unwrappedAliases = aliases {
-						aliases = "\(unwrappedAliases)\nSynonyms: \(alternativeNames.joined(separator: ", "))"
+						aliases = "\(unwrappedAliases)\n\(synonyms)"
 					} else {
-						aliases = "Synonyms: \(alternativeNames.joined(separator: ", "))"
+						aliases = synonyms
 					}
 				}
 
@@ -306,14 +308,14 @@ extension StudioDetail {
 				let calendar = Calendar.current
 				guard let years = calendar.dateComponents([.year], from: foundedAt, to: .now).year else { return nil }
 
-				return "The studio was founded \(years) years ago."
+				return L10n.studioFoundedYearsAgo(years)
 			case .defunct:
 				guard let defunctAt = studio.attributes.defunctAt else { return nil }
 
 				let calendar = Calendar.current
 				guard let years = calendar.dateComponents([.year], from: defunctAt, to: .now).year else { return nil }
 
-				return "The studio has been defunct for \(years) years."
+				return L10n.studioDefunctForYears(years)
 			case .rating:
 				return studio.attributes.tvRating.description
 			default:

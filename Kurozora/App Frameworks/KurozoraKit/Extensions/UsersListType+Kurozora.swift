@@ -14,15 +14,15 @@ extension UsersListType {
 	var localizedTitle: String {
 		switch self {
 		case .followers: return L10n.followers
-		case .following: return L10n.following
+		case .following: return L10n.followingList
 		}
 	}
 
 	/// The localized title of the users list in lowercase, suitable for inlining into a sentence.
 	var localizedTitleLowercase: String {
 		switch self {
-		case .followers: return L10n.followersLowercase
-		case .following: return L10n.followingLowercase
+		case .followers: return L10n.followers.lowercased(with: .current)
+		case .following: return L10n.followingList.lowercased(with: .current)
 		}
 	}
 }

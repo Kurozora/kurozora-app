@@ -59,7 +59,7 @@ extension UIViewController {
 	///
 	/// - Returns: the presented alert controller.
 	@discardableResult @MainActor
-	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
+	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = L10n.okay, handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
 		// Add other actions if available.

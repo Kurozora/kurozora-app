@@ -98,7 +98,7 @@ extension LiteratureDetail {
 			case .rank:
 				return L10n.chart // e.g. Thriller — literature.attributes.popularity.genre
 			case .tvRating:
-				return "Rated"
+				return L10n.rated
 			case .studio:
 				return L10n.studio
 			case .country:
@@ -109,9 +109,9 @@ extension LiteratureDetail {
 				case 0:
 					return L10n.language
 				case 1:
-					return "+1 More Language"
+					return L10n.oneMoreLanguage
 				default:
-					return "+\(languages.count - 1) More Languages"
+					return L10n.moreLanguages(languages.count - 1)
 				}
 			}
 		}
@@ -220,27 +220,27 @@ extension LiteratureDetail {
 		var stringValue: String {
 			switch self {
 			case .type:
-				return "Type"
+				return L10n.columnType
 			case .source:
-				return "Source"
+				return L10n.source
 			case .genres:
-				return "Genres"
+				return L10n.genres
 			case .themes:
-				return "Themes"
+				return L10n.themes
 			case .chapters:
-				return "Chapters"
+				return L10n.columnChapters
 			case .duration:
-				return "Duration"
+				return L10n.duration
 			case .publication:
-				return "Publication"
+				return L10n.publication
 			case .publicationDates:
-				return "Published"
+				return L10n.published
 			case .rating:
 				return L10n.rating
 			case .countryOfOrigin:
-				return "Country of Origin"
+				return L10n.countryOfOrigin
 			case .languages:
-				return "Languages"
+				return L10n.language
 //			case .studio:
 //				return "Studio"
 //			case .network:
@@ -316,7 +316,7 @@ extension LiteratureDetail {
 			case .rating:
 				return literature.attributes.tvRating.name
 			case .countryOfOrigin:
-				return literature.attributes.countryOfOrigin?.name ?? "Unknown"
+				return literature.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
 				let languages = literature.attributes.languages.compactMap {
 					$0.name
@@ -402,15 +402,15 @@ extension LiteratureDetail {
 			case .genres, .themes:
 				return nil
 			case .chapters:
-				let chapterCount = literature.attributes.volumeCount <= 1 ? "one" : "\(literature.attributes.volumeCount)"
-				let volumeString = literature.attributes.volumeCount > 1 ? "volumes" : "volume"
-				return "Across \(chapterCount) \(volumeString)."
+				let chapterCount = literature.attributes.volumeCount <= 1 ? L10n.one : "\(literature.attributes.volumeCount)"
+				let volumeString = literature.attributes.volumeCount > 1 ? L10n.columnVolumes.lowercased(with: .current) : L10n.volume.lowercased(with: .current)
+				return L10n.across("\(chapterCount) \(volumeString)")
 			case .duration:
-				return "With a total of \(literature.attributes.durationTotal)."
+				return L10n.withTotalOf(literature.attributes.durationTotal)
 			case .publication:
-				guard literature.attributes.endedAt == nil else { return "The publicationing of this series has ended." }
+				guard literature.attributes.endedAt == nil else { return L10n.publicationEnded }
 				guard literature.attributes.publicationDate == nil else { return nil }
-				return "No publication data available at the moment."
+				return L10n.noPublicationData
 			case .publicationDates:
 				guard self.secondaryInformation(from: literature) == nil else { return nil }
 				return literature.attributes.status.description

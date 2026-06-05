@@ -19,9 +19,9 @@ extension Game.Attributes {
 	var informationString: String {
 		var informationString = "\(self.type.name) · \(self.tvRating.name)"
 
-		// Add the episode count
+		// Add the edition count
 		if self.editionCount != 0 {
-			informationString += " · \(self.editionCount) \(self.editionCount == 1 ? "edition" : "editions")"
+			informationString += " · " + L10n.editionCount(self.editionCount)
 		}
 
 		// Add the duration
@@ -85,7 +85,7 @@ extension Game.Attributes {
 		let timeString = DateFormatter.broadcastTime.string(from: publicationAt)
 		let weekdayString = dateFormatter.string(from: publicationAt)
 
-		return "\(weekdayString) at \(timeString)"
+		return L10n.scheduleDayTime(weekdayString, timeString)
 	}
 
 	// MARK: - Functions

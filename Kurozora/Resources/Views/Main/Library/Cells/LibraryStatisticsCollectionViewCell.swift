@@ -28,7 +28,7 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 		let movieCount = self.getOccurancesOf(strings: ["Movie"])
 		let ovaCount = self.getOccurancesOf(strings: ["OVA"])
 		let undefinedCount = self.getOccurancesOfNot(strings: ["Tv", "Movie"])
-		self.secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(ovaCount) OVA · \(undefinedCount) Music/ONA/Specials"
+		self.secondaryLabel.text = L10n.libraryStatsBreakdown(tvCount, movieCount, ovaCount, undefinedCount)
 	}
 
 	/// Gets number of occurances of the given string in the shows array.

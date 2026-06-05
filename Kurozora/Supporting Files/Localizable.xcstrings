@@ -9,11 +9,42 @@
             "state" : "new",
             "value" : "%1$@ (%2$@)"
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (%2$@)"
+          }
         }
       }
     },
     "%@ total series" : {
-      "comment" : "The string for the word '%@ total series'."
+      "comment" : "The string for the word '%@ total series'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ series in totaal"
+          }
+        }
+      }
+    },
+    "%lld of %lld" : {
+      "comment" : "A one-based position within a total count, where the placeholders are the current index and the total.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld van %2$lld"
+          }
+        }
+      }
     },
     "%lld Selected" : {
       "comment" : "The label showing how many items are selected in batch-edit mode.",
@@ -31,6 +62,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld Selected"
+                }
+              }
+            }
+          }
+        },
+        "nl" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld geselecteerd"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld geselecteerd"
                 }
               }
             }
@@ -58,182 +107,663 @@
               }
             }
           }
+        },
+        "nl" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld serie in totaal"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld series in totaal"
+                }
+              }
+            }
+          }
         }
       }
     },
     "About" : {
-      "comment" : "The string for the word 'about'."
+      "comment" : "The string for the word 'about'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over"
+          }
+        }
+      }
     },
     "About In-App Purchases" : {
-      "comment" : "The Home quick link to the in-app purchases article."
+      "comment" : "The Home quick link to the in-app purchases article.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over in-app-aankopen"
+          }
+        }
+      }
     },
     "About Personalisation" : {
-      "comment" : "The Home quick link to the personalisation article."
+      "comment" : "The Home quick link to the personalisation article.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over personalisatie"
+          }
+        }
+      }
     },
     "Access to photo library denied." : {
-      "comment" : "The toast shown when photo library access is denied while saving."
+      "comment" : "The toast shown when photo library access is denied while saving.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toegang tot fotobibliotheek geweigerd."
+          }
+        }
+      }
     },
     "Account" : {
-      "comment" : "The string for the word 'account'."
+      "comment" : "The string for the word 'account'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        }
+      }
     },
     "Achievements" : {
-      "comment" : "The string for the word 'achievements'."
+      "comment" : "The string for the word 'achievements'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prestaties"
+          }
+        }
+      }
     },
     "Add" : {
-      "comment" : "The string for the word 'add'."
+      "comment" : "The string for the word 'add'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voeg toe"
+          }
+        }
+      }
     },
     "Add reminder" : {
-      "comment" : "The accessibility label for the reminder button when no reminder is set."
+      "comment" : "The accessibility label for the reminder button when no reminder is set.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinnering toevoegen"
+          }
+        }
+      }
     },
     "Add to favorites" : {
-      "comment" : "The accessibility label for the favorite button when the item is not favorited."
+      "comment" : "The accessibility label for the favorite button when the item is not favorited.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toevoegen aan favorieten"
+          }
+        }
+      }
     },
     "Add to Library" : {
-      "comment" : "The string for the word 'add to library'."
+      "comment" : "The string for the word 'add to library'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toevoegen aan bibliotheek"
+          }
+        }
+      }
     },
     "Age" : {
-      "comment" : "The string for the word 'age'."
+      "comment" : "The string for the word 'age'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leeftijd"
+          }
+        }
+      }
     },
     "Aired" : {
-      "comment" : "The string for the word 'aired'."
+      "comment" : "The string for the word 'aired'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uitgezonden"
+          }
+        }
+      }
     },
     "Alerts" : {
-      "comment" : "The string for the word 'alerts'."
+      "comment" : "The string for the word 'alerts'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waarschuwingen"
+          }
+        }
+      }
     },
     "Aliases" : {
-      "comment" : "The string for the word 'aliases'."
+      "comment" : "The string for the word 'aliases'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliassen"
+          }
+        }
+      }
     },
     "All" : {
-      "comment" : "The string for the word 'all'."
+      "comment" : "The string for the word 'all'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles"
+          }
+        }
+      }
     },
     "Always Show Title" : {
-      "comment" : "The view option that always shows the series title beneath the poster in the library compact layout."
+      "comment" : "The view option that always shows the series title beneath the poster in the library compact layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel altijd tonen"
+          }
+        }
+      }
     },
     "Anime" : {
-      "comment" : "The string for the word 'anime'."
+      "comment" : "The string for the word 'anime'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anime"
+          }
+        }
+      }
     },
     "Anime, Manga, Games and More" : {
-      "comment" : "The placeholder shown in the main search bar."
+      "comment" : "The placeholder shown in the main search bar.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anime, manga, games en meer"
+          }
+        }
+      }
     },
     "Apply" : {
-      "comment" : "The string for the word 'apply'."
+      "comment" : "The string for the word 'apply'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas toe"
+          }
+        }
+      }
     },
     "Are you sure you want to sign out?" : {
-      "comment" : "The body string for the sign-out confirmation alert."
+      "comment" : "The body string for the sign-out confirmation alert.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weet je zeker dat je je wilt afmelden?"
+          }
+        }
+      }
     },
     "As Heard On" : {
-      "comment" : "The string for the word 'As Heard On'."
+      "comment" : "The string for the word 'As Heard On'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te horen in"
+          }
+        }
+      }
     },
     "Automatic" : {
-      "comment" : "The string for the word 'automatic'."
+      "comment" : "The string for the word 'automatic'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatisch"
+          }
+        }
+      }
     },
     "Badges" : {
-      "comment" : "The string for the word 'badges'."
+      "comment" : "The string for the word 'badges'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges"
+          }
+        }
+      }
     },
     "Become a Subscriber" : {
-      "comment" : "The string for the word 'Become a Subscriber'."
+      "comment" : "The string for the word 'Become a Subscriber'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Word abonnee"
+          }
+        }
+      }
     },
     "Browse" : {
-      "comment" : "The string for the word 'browse'."
+      "comment" : "The string for the word 'browse'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek"
+          }
+        }
+      }
     },
     "Browse Genres" : {
-      "comment" : "The string for the word 'browse genres'."
+      "comment" : "The string for the word 'browse genres'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek genres"
+          }
+        }
+      }
     },
     "Browse Themes" : {
-      "comment" : "The string for the word 'browse themes'."
+      "comment" : "The string for the word 'browse themes'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek thema's"
+          }
+        }
+      }
     },
     "Browser" : {
-      "comment" : "The string for the word 'browser'."
+      "comment" : "The string for the word 'browser'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browser"
+          }
+        }
+      }
     },
     "By Type" : {
-      "comment" : "The string for the word 'by type'."
+      "comment" : "The string for the word 'by type'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Op type"
+          }
+        }
+      }
     },
     "Cache" : {
-      "comment" : "The string for the word 'cache'."
+      "comment" : "The string for the word 'cache'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache"
+          }
+        }
+      }
     },
     "Can’t delete library 😔" : {
-      "comment" : "The string for the sentence 'Can’t delete library 😔'."
+      "comment" : "The string for the sentence 'Can’t delete library 😔'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheek verwijderen lukt niet 😔"
+          }
+        }
+      }
     },
     "Cancel" : {
-      "comment" : "The string for the word 'cancel'."
+      "comment" : "The string for the word 'cancel'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuleer"
+          }
+        }
+      }
     },
     "Cast" : {
-      "comment" : "The string for the word 'cast'."
+      "comment" : "The string for the word 'cast'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cast"
+          }
+        }
+      }
     },
     "Catalog" : {
-      "comment" : "The string for the word 'catalog'."
+      "comment" : "The string for the word 'catalog'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catalogus"
+          }
+        }
+      }
     },
     "Chapters" : {
-      "comment" : "The column header for the literature item's chapter count in the library table layout."
+      "comment" : "The column header for the literature item's chapter count in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoofdstukken"
+          }
+        }
+      }
     },
     "Characteristics" : {
-      "comment" : "The string for the word 'characteristics'."
+      "comment" : "The string for the word 'characteristics'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kenmerken"
+          }
+        }
+      }
     },
     "Characters" : {
-      "comment" : "The string for the word 'characters'."
+      "comment" : "The string for the word 'characters'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personages"
+          }
+        }
+      }
     },
     "Chart" : {
-      "comment" : "The string for the word 'chart'."
+      "comment" : "The string for the word 'chart'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hitlijst"
+          }
+        }
+      }
     },
     "Choose Photo" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies foto"
+          }
+        }
+      }
     },
     "Coming Soon" : {
-      "comment" : "The string for the word 'coming soon'."
+      "comment" : "The string for the word 'coming soon'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Binnenkort"
+          }
+        }
+      }
     },
     "Continue" : {
-      "comment" : "The string for the word 'Continue'."
+      "comment" : "The string for the word 'Continue'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ga door"
+          }
+        }
+      }
     },
     "Copy" : {
-      "comment" : "The string for the word 'copy'."
+      "comment" : "The string for the word 'copy'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieer"
+          }
+        }
+      }
     },
     "Copy Link" : {
-      "comment" : "The string for the word 'Copy Link'."
+      "comment" : "The string for the word 'Copy Link'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieer link"
+          }
+        }
+      }
     },
     "Copy Review" : {
-      "comment" : "The string for the word 'Copy Review'."
+      "comment" : "The string for the word 'Copy Review'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieer recensie"
+          }
+        }
+      }
     },
     "Copy Title" : {
-      "comment" : "The string for the word 'Copy Title'."
+      "comment" : "The string for the word 'Copy Title'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieer titel"
+          }
+        }
+      }
     },
     "Copyright" : {
-      "comment" : "The string for the word 'copyright'."
+      "comment" : "The string for the word 'copyright'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright"
+          }
+        }
+      }
     },
     "Could Not Remove Notifications" : {
-      "comment" : "The error alert title shown when a notifications batch remove fails."
+      "comment" : "The error alert title shown when a notifications batch remove fails.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan meldingen niet verwijderen"
+          }
+        }
+      }
     },
     "Could Not Update Favorites" : {
-      "comment" : "The error alert title when a favorites batch update fails."
+      "comment" : "The error alert title when a favorites batch update fails.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan favorieten niet bijwerken"
+          }
+        }
+      }
     },
     "Could Not Update Library" : {
-      "comment" : "The error alert title when a library batch update fails."
+      "comment" : "The error alert title when a library batch update fails.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan bibliotheek niet bijwerken"
+          }
+        }
+      }
     },
     "Could Not Update Notifications" : {
-      "comment" : "The error alert title shown when a notifications batch update fails."
+      "comment" : "The error alert title shown when a notifications batch update fails.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan meldingen niet bijwerken"
+          }
+        }
+      }
     },
     "Could Not Update Reminders" : {
-      "comment" : "The error alert title when a reminders batch update fails."
+      "comment" : "The error alert title when a reminders batch update fails.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan herinneringen niet bijwerken"
+          }
+        }
+      }
     },
     "Country" : {
-      "comment" : "The string for the word 'country'."
+      "comment" : "The string for the word 'country'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Land"
+          }
+        }
+      }
     },
     "Current Season" : {
-      "comment" : "The string for the phrase 'Current Season'."
+      "comment" : "The string for the phrase 'Current Season'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huidig seizoen"
+          }
+        }
+      }
     },
     "Date Added" : {
-      "comment" : "The column header for the date the item was added to the library."
+      "comment" : "The column header for the date the item was added to the library.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toegevoegd op"
+          }
+        }
+      }
     },
     "Debug" : {
-      "comment" : "The string for the word 'debug'."
+      "comment" : "The string for the word 'debug'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug"
+          }
+        }
+      }
     },
     "Debut" : {
-      "comment" : "The string for the word 'debut'."
+      "comment" : "The string for the word 'debut'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debuut"
+          }
+        }
+      }
     },
     "Default" : {
-      "comment" : "The string for the word 'Default'."
+      "comment" : "The string for the word 'Default'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standaard"
+          }
+        }
+      }
     },
     "Defunct" : {
-      "comment" : "The string for the word 'defunct'."
+      "comment" : "The string for the word 'defunct'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgeheven"
+          }
+        }
+      }
     },
     "Delete %lld Items" : {
       "comment" : "The destructive button shown in the delete confirmation alert when multiple items are selected.",
@@ -251,6 +781,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Delete %lld Items"
+                }
+              }
+            }
+          }
+        },
+        "nl" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Item verwijderen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld items verwijderen"
                 }
               }
             }
@@ -278,86 +826,321 @@
               }
             }
           }
+        },
+        "nl" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Melding verwijderen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld meldingen verwijderen"
+                }
+              }
+            }
+          }
         }
       }
     },
     "Delete Permanently" : {
-      "comment" : "The string for the phrase 'Delete Permanently'."
+      "comment" : "The string for the phrase 'Delete Permanently'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permanent verwijderen"
+          }
+        }
+      }
     },
     "Deselect All" : {
-      "comment" : "The leading nav-bar action that deselects every selected library item in batch-edit mode."
+      "comment" : "The leading nav-bar action that deselects every selected library item in batch-edit mode.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deselecteer alles"
+          }
+        }
+      }
     },
     "Discard" : {
-      "comment" : "The string for the word 'discard'."
+      "comment" : "The string for the word 'discard'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negeer"
+          }
+        }
+      }
     },
     "Discover" : {
-      "comment" : "The string for the word 'discover'."
+      "comment" : "The string for the word 'discover'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek"
+          }
+        }
+      }
     },
     "Dismiss" : {
-      "comment" : "The string for the word 'dismiss'."
+      "comment" : "The string for the word 'dismiss'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sluiten"
+          }
+        }
+      }
     },
     "Done" : {
-      "comment" : "The string for the word 'done'."
+      "comment" : "The string for the word 'done'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gereed"
+          }
+        }
+      }
     },
     "Download" : {
-      "comment" : "The string for the word 'download'."
+      "comment" : "The string for the word 'download'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download"
+          }
+        }
+      }
     },
     "Drafts" : {
-      "comment" : "The string for the word 'drafts'."
+      "comment" : "The string for the word 'drafts'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concepten"
+          }
+        }
+      }
     },
     "Duration" : {
-      "comment" : "The string for the word 'duration'."
+      "comment" : "The string for the word 'duration'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duur"
+          }
+        }
+      }
     },
     "Editions" : {
-      "comment" : "The column header for the game item's edition count in the library table layout."
+      "comment" : "The column header for the game item's edition count in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edities"
+          }
+        }
+      }
+    },
+    "Email Address" : {
+      "comment" : "The email address field placeholder.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mailadres"
+          }
+        }
+      }
     },
     "Emoji" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji"
+          }
+        }
+      }
     },
     "Empty draft" : {
-      "comment" : "The string for the 'empty draft' placeholder."
+      "comment" : "The string for the 'empty draft' placeholder.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leeg concept"
+          }
+        }
+      }
     },
     "Episodes" : {
-      "comment" : "The string for the word 'episodes'."
+      "comment" : "The string for the word 'episodes'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afleveringen"
+          }
+        }
+      }
     },
     "Error" : {
-      "comment" : "The string for the word 'Error'."
+      "comment" : "The string for the word 'Error'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fout"
+          }
+        }
+      }
     },
     "Expected" : {
-      "comment" : "The string for the word 'expected'."
+      "comment" : "The string for the word 'expected'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwacht"
+          }
+        }
+      }
     },
     "Explore" : {
-      "comment" : "The string for the word 'explore'."
+      "comment" : "The string for the word 'explore'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek"
+          }
+        }
+      }
     },
     "Explore Feed" : {
-      "comment" : "The string for the phrase 'explore feed'."
+      "comment" : "The string for the phrase 'explore feed'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontdek feed"
+          }
+        }
+      }
     },
     "Failed to download image." : {
-      "comment" : "The toast shown when an image fails to download."
+      "comment" : "The toast shown when an image fails to download.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeelding downloaden mislukt."
+          }
+        }
+      }
     },
     "Failed to save image." : {
-      "comment" : "The toast shown when an image fails to save."
+      "comment" : "The toast shown when an image fails to save.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeelding bewaren mislukt."
+          }
+        }
+      }
     },
     "Fall" : {
-      "comment" : "The string for the word 'fall'."
+      "comment" : "The string for the word 'fall'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herfst"
+          }
+        }
+      }
     },
     "Favorite" : {
-      "comment" : "The accessibility label for the favorite column or control in the library table layout."
+      "comment" : "The accessibility label for the favorite column or control in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoriet"
+          }
+        }
+      }
     },
     "Favorites" : {
-      "comment" : "The string for the word 'Favorites'"
+      "comment" : "The string for the word 'Favorites'",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorieten"
+          }
+        }
+      }
     },
     "Feed" : {
-      "comment" : "The string for the word 'feed'."
+      "comment" : "The string for the word 'feed'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feed"
+          }
+        }
+      }
     },
     "Filter" : {
-      "comment" : "The string for the word 'filter'."
+      "comment" : "The string for the word 'filter'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
     },
     "Filters" : {
-      "comment" : "The string for the word 'filters'."
+      "comment" : "The string for the word 'filters'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filters"
+          }
+        }
+      }
     },
     "Find %@" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vind %@"
+          }
+        }
+      }
     },
     "Find %@ in %@" : {
       "localizations" : {
@@ -366,113 +1149,395 @@
             "state" : "new",
             "value" : "Find %1$@ in %2$@"
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vind %1$@ in %2$@"
+          }
         }
       }
     },
     "Find ${title} on Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vind ${title} op Kurozora"
+          }
+        }
+      }
     },
     "Find on Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vind op Kurozora"
+          }
+        }
+      }
     },
     "Follow" : {
-      "comment" : "The string for the word 'follow'."
+      "comment" : "The string for the word 'follow'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgen"
+          }
+        }
+      }
     },
     "Follower" : {
-      "comment" : "The string for the word 'follower'."
-    },
-    "followers" : {
-      "comment" : "The lowercase plural string for the word 'followers', suitable for inlining mid-sentence."
+      "comment" : "The string for the word 'follower'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volger"
+          }
+        }
+      }
     },
     "Followers" : {
-      "comment" : "The plural string for the word 'followers'."
+      "comment" : "The plural string for the word 'followers'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgers"
+          }
+        }
+      }
     },
-    "following" : {
-      "comment" : "The lowercase string for the word 'following', suitable for inlining mid-sentence."
+    "followingList" : {
+      "comment" : "Noun. The accounts a user follows. Shown as a list title and a profile stat label.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Following"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgend"
+          }
+        }
+      }
     },
-    "Following" : {
-      "comment" : "The string for the word 'following'."
+    "followingState" : {
+      "comment" : "Verb. The follow button title when the user already follows this account.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Following"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgend"
+          }
+        }
+      }
     },
     "For" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor"
+          }
+        }
+      }
     },
     "Founded" : {
-      "comment" : "The string for the word 'founded'."
+      "comment" : "The string for the word 'founded'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgericht"
+          }
+        }
+      }
     },
     "Founded on %@" : {
-      "comment" : "The string for the word 'Founded on [date]'."
+      "comment" : "The string for the word 'Founded on [date]'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgericht op %@"
+          }
+        }
+      }
     },
     "Games" : {
-      "comment" : "The string for the word 'games'."
+      "comment" : "The string for the word 'games'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Games"
+          }
+        }
+      }
     },
     "General" : {
-      "comment" : "The string for the word 'general'."
+      "comment" : "The string for the word 'general'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algemeen"
+          }
+        }
+      }
     },
     "Genres" : {
-      "comment" : "The column header for the item's genres in the library table layout.\nThe string for the word 'genres'."
+      "comment" : "The column header for the item's genres in the library table layout.\nThe string for the word 'genres'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genres"
+          }
+        }
+      }
     },
     "Guest" : {
-      "comment" : "The string for the word 'Guest'."
+      "comment" : "The string for the word 'Guest'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gast"
+          }
+        }
+      }
     },
     "Header" : {
-      "comment" : "The string for the word 'header'."
+      "comment" : "The string for the word 'header'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koptekst"
+          }
+        }
+      }
     },
     "Headquarters" : {
-      "comment" : "The string for the word 'headquarters'."
+      "comment" : "The string for the word 'headquarters'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoofdkantoor"
+          }
+        }
+      }
     },
     "Hide" : {
-      "comment" : "The string for the word 'Hide'."
+      "comment" : "Verb. Hides a library title. Paired with Reveal.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verberg"
+          }
+        }
+      }
     },
     "Hide from Public" : {
-      "comment" : "The string for the phrase 'hide from public'."
+      "comment" : "The string for the phrase 'hide from public'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbergen voor publiek"
+          }
+        }
+      }
     },
     "Hide Title" : {
-      "comment" : "The view option that hides the series title in the library compact layout."
+      "comment" : "The view option that hides the series title in the library compact layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel verbergen"
+          }
+        }
+      }
     },
     "Home" : {
-      "comment" : "The menu command and title for the Home screen."
+      "comment" : "The menu command and title for the Home screen.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
     },
     "Hooray!" : {
-      "comment" : "The headline string for sign up alert."
+      "comment" : "The headline string for sign up alert.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoera!"
+          }
+        }
+      }
     },
     "Icon" : {
-      "comment" : "The string for the word 'icon'."
+      "comment" : "The string for the word 'icon'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbool"
+          }
+        }
+      }
     },
     "Image could not be saved." : {
-      "comment" : "The default toast shown when an image could not be saved."
+      "comment" : "The default toast shown when an image could not be saved.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeelding kon niet worden bewaard."
+          }
+        }
+      }
     },
     "Image Playground" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image Playground"
+          }
+        }
+      }
     },
     "Image Playground ✨" : {
-      "comment" : "The action sheet button for generating a new image with Image Playground."
+      "comment" : "The action sheet button for generating a new image with Image Playground.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image Playground ✨"
+          }
+        }
+      }
     },
     "Image saved to your library!" : {
-      "comment" : "The toast shown after an image is saved to the photo library."
+      "comment" : "The toast shown after an image is saved to the photo library.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeelding opgeslagen in je bibliotheek!"
+          }
+        }
+      }
     },
     "Images" : {
-      "comment" : "The string for the word 'images'."
+      "comment" : "The string for the word 'images'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeeldingen"
+          }
+        }
+      }
     },
     "Information" : {
-      "comment" : "The string for the word 'information'."
+      "comment" : "The string for the word 'information'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informatie"
+          }
+        }
+      }
     },
     "Just to confirm, you wanted ‘%@’?" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Even bevestigen, je bedoelde '%@'?"
+          }
+        }
+      }
     },
     "Kaomoji" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaomoji"
+          }
+        }
+      }
     },
     "Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurozora"
+          }
+        }
+      }
     },
     "Kurozora’s Screens" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurozora's schermen"
+          }
+        }
+      }
     },
     "Labels" : {
-      "comment" : "The button title for opening the content labels picker."
+      "comment" : "The button title for opening the content labels picker.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels"
+          }
+        }
+      }
     },
     "Labels Added" : {
-      "comment" : "The button title shown when content labels have been added."
+      "comment" : "The button title shown when content labels have been added.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels toegevoegd"
+          }
+        }
+      }
     },
     "languagePicker.description" : {
       "comment" : "Explanatory text shown above the language picker to clarify that the setting changes content language, not the app's interface language.",
@@ -483,23 +1548,68 @@
             "state" : "new",
             "value" : "Your preferred language is used for the information shown throughout Kurozora, such as titles, descriptions, and metadata. It does not change the language of the app's interface.\n\nThese changes take effect anywhere you are signed in with your Kurozora Account.\n\nIf information cannot be shown in your preferred language, English will be used instead."
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je voorkeurstaal wordt gebruikt voor de informatie die overal in Kurozora wordt getoond, zoals titels, beschrijvingen en metadata. Het wijzigt de taal van de interface van de app niet.\n\nDeze wijzigingen gelden overal waar je bent ingelogd met je Kurozora-account.\n\nAls informatie niet in je voorkeurstaal kan worden getoond, wordt Engels gebruikt."
+          }
         }
       }
     },
     "Languages" : {
-      "comment" : "The string for the word 'language'."
+      "comment" : "The string for the word 'language'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talen"
+          }
+        }
+      }
     },
     "Launch Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Kurozora"
+          }
+        }
+      }
     },
     "Leaderboard" : {
-      "comment" : "The string for the word 'leaderboard'."
+      "comment" : "The string for the word 'leaderboard'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ranglijst"
+          }
+        }
+      }
     },
     "Library" : {
-      "comment" : "The string for the word 'library'."
+      "comment" : "The string for the word 'library'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheek"
+          }
+        }
+      }
     },
     "Library Type" : {
-      "comment" : "The string for the word 'Library Type'."
+      "comment" : "The string for the word 'Library Type'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheektype"
+          }
+        }
+      }
     },
     "library.deleteItemsConfirmation" : {
       "comment" : "The confirmation alert message shown when removing items from the library.",
@@ -531,101 +1641,374 @@
               }
             }
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Dit item wordt uit je bibliotheek verwijderd."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Deze items worden uit je bibliotheek verwijderd."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
     "Literatures" : {
-      "comment" : "The string for the word 'literatures'."
+      "comment" : "The string for the word 'literatures'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Literatuur"
+          }
+        }
+      }
     },
     "Lyrics" : {
-      "comment" : "The string for the word 'Lyrics'."
+      "comment" : "The string for the word 'Lyrics'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Songtekst"
+          }
+        }
+      }
     },
     "Manage" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beheren"
+          }
+        }
+      }
     },
     "Mark all" : {
-      "comment" : "The string for the phrase 'Mark all'."
+      "comment" : "The string for the phrase 'Mark all'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markeer alles"
+          }
+        }
+      }
     },
     "Mark all as read" : {
-      "comment" : "The string for the phrase 'Mark all as read'."
+      "comment" : "The string for the phrase 'Mark all as read'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles als gelezen markeren"
+          }
+        }
+      }
     },
     "Mark all as unread" : {
-      "comment" : "The string for the phrase 'Mark all as unread'."
+      "comment" : "The string for the phrase 'Mark all as unread'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles als ongelezen markeren"
+          }
+        }
+      }
     },
     "Mark All Unwatched" : {
-      "comment" : "The string for the phrase 'mark all unwatched'."
+      "comment" : "The string for the phrase 'mark all unwatched'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles als niet bekeken markeren"
+          }
+        }
+      }
     },
     "Mark All Watched" : {
-      "comment" : "The string for the phrase 'mark all watched'."
+      "comment" : "The string for the phrase 'mark all watched'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles als bekeken markeren"
+          }
+        }
+      }
     },
     "Mark as read" : {
-      "comment" : "The string for the phrase 'Mark as read'."
+      "comment" : "The string for the phrase 'Mark as read'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markeer als gelezen"
+          }
+        }
+      }
     },
     "Mark as unread" : {
-      "comment" : "The string for the phrase 'Mark as unread'."
+      "comment" : "The string for the phrase 'Mark as unread'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markeer als ongelezen"
+          }
+        }
+      }
     },
     "Mark as Unwatched" : {
-      "comment" : "The string for the phrase 'mark as unwatched'."
+      "comment" : "The string for the phrase 'mark as unwatched'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markeer als niet bekeken"
+          }
+        }
+      }
     },
     "Mark as Watched" : {
-      "comment" : "The string for the phrase 'mark as watched'."
+      "comment" : "The string for the phrase 'mark as watched'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markeer als bekeken"
+          }
+        }
+      }
     },
     "Measurements" : {
-      "comment" : "The string for the word 'measurements'."
+      "comment" : "The string for the word 'measurements'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afmetingen"
+          }
+        }
+      }
     },
     "Message" : {
-      "comment" : "The string for the word 'message'."
+      "comment" : "The string for the word 'message'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bericht"
+          }
+        }
+      }
     },
     "Message Details" : {
-      "comment" : "The string for the phrase 'message details'."
+      "comment" : "The string for the phrase 'message details'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berichtdetails"
+          }
+        }
+      }
     },
     "Message Replies" : {
-      "comment" : "The string for the phrase 'message replies'."
+      "comment" : "The string for the phrase 'message replies'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berichtreacties"
+          }
+        }
+      }
     },
     "Milestones" : {
-      "comment" : "The string for the word 'Milestones'."
+      "comment" : "The string for the word 'Milestones'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mijlpalen"
+          }
+        }
+      }
     },
     "Monogram" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monogram"
+          }
+        }
+      }
     },
     "More" : {
-      "comment" : "The string for the word 'more'."
+      "comment" : "The overflow ('More') menu button.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meer"
+          }
+        }
+      }
     },
     "More by" : {
-      "comment" : "The string for the word 'more by'."
+      "comment" : "The string for the word 'more by'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meer van"
+          }
+        }
+      }
     },
     "Motion" : {
-      "comment" : "The string for the word 'motion'."
+      "comment" : "The string for the word 'motion'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beweging"
+          }
+        }
+      }
     },
     "Move to" : {
-      "comment" : "The string for the menu title that lets the user pick a target library status."
+      "comment" : "The string for the menu title that lets the user pick a target library status.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verplaats naar"
+          }
+        }
+      }
     },
     "My Favorites" : {
-      "comment" : "The string for the word 'My Favorites'"
+      "comment" : "The string for the word 'My Favorites'",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mijn favorieten"
+          }
+        }
+      }
     },
     "My Reminders" : {
-      "comment" : "The string for the word 'My Reminders'"
+      "comment" : "The string for the word 'My Reminders'",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mijn herinneringen"
+          }
+        }
+      }
     },
     "Name" : {
-      "comment" : "The string for the word 'name'."
+      "comment" : "The string for the word 'name'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam"
+          }
+        }
+      }
     },
     "New" : {
-      "comment" : "The string for the word 'new'."
+      "comment" : "The string for the word 'new'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuw"
+          }
+        }
+      }
     },
     "Next" : {
-      "comment" : "The string for the word 'next'."
+      "comment" : "The string for the word 'next'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgende"
+          }
+        }
+      }
     },
     "No Drafts" : {
-      "comment" : "The string for the 'no drafts' empty state title."
+      "comment" : "The string for the 'no drafts' empty state title.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen concepten"
+          }
+        }
+      }
     },
     "No, keep me signed in 😅" : {
-      "comment" : "The cancel button for the sign-out confirmation alert."
+      "comment" : "The cancel button for the sign-out confirmation alert.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nee, hou me ingelogd 😅"
+          }
+        }
+      }
     },
     "None" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen"
+          }
+        }
+      }
     },
     "Notifications" : {
-      "comment" : "The string for the word 'notifications'."
+      "comment" : "The string for the word 'notifications'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meldingen"
+          }
+        }
+      }
     },
     "notifications.deleteNotificationsConfirmation" : {
       "comment" : "The confirmation alert message shown when removing notifications.",
@@ -657,182 +2040,711 @@
               }
             }
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Deze melding wordt verwijderd."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Deze meldingen worden verwijderd."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
     "NSFW" : {
-      "comment" : "Timeout reason label."
+      "comment" : "Timeout reason label.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSFW"
+          }
+        }
+      }
     },
     "Number" : {
-      "comment" : "The string for the word 'number'."
+      "comment" : "The string for the word 'number'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nummer"
+          }
+        }
+      }
     },
     "Off" : {
-      "comment" : "The string for the word 'off'."
+      "comment" : "The string for the word 'off'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uit"
+          }
+        }
+      }
     },
     "OK" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oké"
+          }
+        }
+      }
+    },
+    "one" : {
+      "comment" : "The spelled-out word for a count of one, as in 'Across one season.'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "één"
+          }
+        }
+      }
     },
     "Open in Browser" : {
-      "comment" : "The action that opens the media in a browser."
+      "comment" : "The action that opens the media in a browser.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Openen in browser"
+          }
+        }
+      }
     },
     "Open Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Kurozora"
+          }
+        }
+      }
     },
     "Open Kurozora to your preferred page." : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Kurozora op je voorkeurspagina."
+          }
+        }
+      }
     },
     "Open Twitter" : {
-      "comment" : "The string for the word 'Open Twitter'."
+      "comment" : "The string for the word 'Open Twitter'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Twitter"
+          }
+        }
+      }
     },
     "Options" : {
-      "comment" : "The string for the word 'options'."
+      "comment" : "The string for the word 'options'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opties"
+          }
+        }
+      }
     },
     "Other" : {
-      "comment" : "The string for the word 'other'."
+      "comment" : "Catch-all 'Other' option.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overig"
+          }
+        }
+      }
     },
     "Page" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagina"
+          }
+        }
+      }
     },
     "Parental Guide Entries" : {
-      "comment" : "The string for the phrase 'parental guide entries'."
+      "comment" : "The string for the phrase 'parental guide entries'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oudergids-items"
+          }
+        }
+      }
     },
     "Passcode" : {
-      "comment" : "The string for the word 'passcode'."
+      "comment" : "The string for the word 'passcode'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toegangscode"
+          }
+        }
+      }
     },
     "Password" : {
-      "comment" : "The string for the word 'password'."
+      "comment" : "The string for the word 'password'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wachtwoord"
+          }
+        }
+      }
     },
     "Pause" : {
-      "comment" : "The string for the word 'Pause'."
+      "comment" : "The string for the word 'Pause'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pauzeer"
+          }
+        }
+      }
     },
     "People" : {
-      "comment" : "The string for the word 'people'."
+      "comment" : "The string for the word 'people'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personen"
+          }
+        }
+      }
     },
     "Photo Library 🏛" : {
-      "comment" : "The action sheet button for picking an existing photo from the library."
+      "comment" : "The action sheet button for picking an existing photo from the library.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotobibliotheek 🏛"
+          }
+        }
+      }
     },
     "Photos" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto's"
+          }
+        }
+      }
     },
     "Play" : {
-      "comment" : "The string for the word 'Play'."
+      "comment" : "Verb. Media playback control. Paired with Pause.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speel af"
+          }
+        }
+      }
     },
     "Posts" : {
-      "comment" : "The string for the word 'posts'."
+      "comment" : "The string for the word 'posts'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berichten"
+          }
+        }
+      }
     },
     "Premium" : {
-      "comment" : "The string for the word 'Premium'."
+      "comment" : "The string for the word 'Premium'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium"
+          }
+        }
+      }
     },
     "Preview" : {
-      "comment" : "The string for the word 'preview'."
+      "comment" : "The string for the word 'preview'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voorbeeld"
+          }
+        }
+      }
     },
     "Previous" : {
-      "comment" : "The string for the word 'previous'."
+      "comment" : "The string for the word 'previous'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorige"
+          }
+        }
+      }
     },
     "Privacy" : {
-      "comment" : "The string for the word 'privacy'."
+      "comment" : "The string for the word 'privacy'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
     },
     "Pro" : {
-      "comment" : "The string for the word 'pro'."
+      "comment" : "The string for the word 'pro'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        }
+      }
     },
     "Profile" : {
-      "comment" : "The string for the word 'profile'."
+      "comment" : "The string for the word 'profile'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profiel"
+          }
+        }
+      }
     },
     "Profile Details" : {
-      "comment" : "The string for the phrase 'profile details'."
+      "comment" : "The string for the phrase 'profile details'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profielgegevens"
+          }
+        }
+      }
     },
     "Progress" : {
-      "comment" : "The column header for the item's progress indicator in the library table layout."
+      "comment" : "The column header for the item's progress indicator in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voortgang"
+          }
+        }
+      }
     },
-    "Quikly launch the Kurozora app" : {
-
+    "Quickly launch the Kurozora app" : {
+      "comment" : "Description of the Kurozora app.",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start de Kurozora-app snel"
+          }
+        }
+      }
     },
     "Rank" : {
-      "comment" : "The string for the word 'rank'."
+      "comment" : "The string for the word 'rank'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rang"
+          }
+        }
+      }
     },
     "Rated" : {
-      "comment" : "The string for the word 'rated'."
+      "comment" : "The string for the word 'rated'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beoordeeld"
+          }
+        }
+      }
     },
     "Rating" : {
-      "comment" : "The string for the word 'rating'."
+      "comment" : "The string for the word 'rating'.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beoordeling"
+          }
+        }
+      }
     },
     "Re:CAP" : {
-      "comment" : "The string for the word 'Re:CAP'."
+      "comment" : "The string for the word 'Re:CAP'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Re:CAP"
+          }
+        }
+      }
     },
     "Reconnect!" : {
-      "comment" : "The string for the word 'reconnect'."
+      "comment" : "The string for the word 'reconnect'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw verbinden!"
+          }
+        }
+      }
     },
     "Redeem" : {
-      "comment" : "The string for the word 'Redeem'."
+      "comment" : "The string for the word 'Redeem'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inwisselen"
+          }
+        }
+      }
     },
     "Redeem…" : {
-      "comment" : "The menu command that opens the redeem flow."
+      "comment" : "The menu command that opens the redeem flow.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inwisselen…"
+          }
+        }
+      }
     },
     "Refresh" : {
-      "comment" : "The menu title for the refresh command."
+      "comment" : "The menu title for the refresh command.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vernieuwen"
+          }
+        }
+      }
     },
     "Refresh Page" : {
-      "comment" : "The menu command that refreshes the current page."
+      "comment" : "The menu command that refreshes the current page.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagina vernieuwen"
+          }
+        }
+      }
     },
     "Related Games" : {
-      "comment" : "The string for the word 'related games'."
+      "comment" : "The string for the word 'related games'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerelateerde games"
+          }
+        }
+      }
     },
     "Related Literatures" : {
-      "comment" : "The string for the word 'related literatures'."
+      "comment" : "The string for the word 'related literatures'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerelateerde literatuur"
+          }
+        }
+      }
     },
     "Related Shows" : {
-      "comment" : "The string for the word 'related shows'."
+      "comment" : "The string for the word 'related shows'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerelateerde series"
+          }
+        }
+      }
     },
     "Remind Me" : {
-      "comment" : "The string for the word 'Remind Me'"
+      "comment" : "The string for the word 'Remind Me'",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinner mij"
+          }
+        }
+      }
     },
     "Reminder" : {
-      "comment" : "The accessibility label for the reminder column or control in the library table layout."
+      "comment" : "The accessibility label for the reminder column or control in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinnering"
+          }
+        }
+      }
     },
     "Reminders" : {
-      "comment" : "The string for the word 'Reminders'"
+      "comment" : "The string for the word 'Reminders'",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinneringen"
+          }
+        }
+      }
     },
     "Remove" : {
-      "comment" : "The string for the word 'remove'."
+      "comment" : "The string for the word 'remove'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijder"
+          }
+        }
+      }
     },
     "Remove from favorites" : {
-      "comment" : "The accessibility label for the favorite button when the item is already favorited."
+      "comment" : "The accessibility label for the favorite button when the item is already favorited.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijderen uit favorieten"
+          }
+        }
+      }
     },
     "Remove from Library" : {
-      "comment" : "The string for the word 'remove from library'."
+      "comment" : "The string for the word 'remove from library'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijderen uit bibliotheek"
+          }
+        }
+      }
     },
     "Remove image" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afbeelding verwijderen"
+          }
+        }
+      }
     },
     "Remove reminder" : {
-      "comment" : "The accessibility label for the reminder button when a reminder is set."
+      "comment" : "The accessibility label for the reminder button when a reminder is set.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinnering verwijderen"
+          }
+        }
+      }
     },
     "Replies" : {
-      "comment" : "The string for the word 'replies'."
+      "comment" : "The string for the word 'replies'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reacties"
+          }
+        }
+      }
+    },
+    "Reputation" : {
+      "comment" : "Noun. A user's reputation score.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reputatie"
+          }
+        }
+      }
     },
     "Reset" : {
-      "comment" : "The string for the word 'reset'."
+      "comment" : "The string for the word 'reset'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstel"
+          }
+        }
+      }
     },
     "Reset to Default" : {
-      "comment" : "The destructive action that restores the default set of library table view options."
+      "comment" : "The destructive action that restores the default set of library table view options.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standaard herstellen"
+          }
+        }
+      }
+    },
+    "reveal" : {
+      "comment" : "Verb. Reveals a hidden library title. The opposite of Hide.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toon"
+          }
+        }
+      }
     },
     "Reviews" : {
-      "comment" : "The string for the word 'reviews'."
+      "comment" : "The string for the word 'reviews'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beoordelingen"
+          }
+        }
+      }
     },
     "Rich Links" : {
-      "comment" : "The string for the phrase 'rich links'."
+      "comment" : "The string for the phrase 'rich links'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verrijkte links"
+          }
+        }
+      }
     },
     "Save Draft" : {
-      "comment" : "The string for the phrase 'save draft'."
+      "comment" : "The string for the phrase 'save draft'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concept bewaren"
+          }
+        }
+      }
     },
     "Schedule" : {
-      "comment" : "The string for the word 'schedule'."
+      "comment" : "The string for the word 'schedule'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schema"
+          }
+        }
+      }
     },
     "Search" : {
-      "comment" : "The string for the word 'search'."
+      "comment" : "The string for the word 'search'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeken"
+          }
+        }
+      }
     },
     "Search characters" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek personages"
+          }
+        }
+      }
     },
     "Search for %@ in %@" : {
       "localizations" : {
@@ -841,167 +2753,591 @@
             "state" : "new",
             "value" : "Search for %1$@ in %2$@"
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek %1$@ in %2$@"
+          }
         }
       }
     },
     "Search for %@ in Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek %@ in Kurozora"
+          }
+        }
+      }
     },
     "Search for anime, manga, games, and more in Kurozora" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek anime, manga, games en meer in Kurozora"
+          }
+        }
+      }
     },
     "Search in" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeken in"
+          }
+        }
+      }
     },
     "Search Kind" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeksoort"
+          }
+        }
+      }
     },
     "Search Library" : {
-      "comment" : "The title and placeholder for the library search screen."
+      "comment" : "The title and placeholder for the library search screen.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doorzoek bibliotheek"
+          }
+        }
+      }
     },
     "Search Scope" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoekbereik"
+          }
+        }
+      }
     },
     "Searching for %@ in Kurozora…" : {
-
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeken naar %@ in Kurozora…"
+          }
+        }
+      }
     },
     "Season" : {
-      "comment" : "The string for the word 'season'."
+      "comment" : "Noun. A show's season or installment, not the airing quarter.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seizoen"
+          }
+        }
+      }
     },
     "Season picker" : {
-      "comment" : "The accessibility label for the seasonal browse picker."
+      "comment" : "The accessibility label for the seasonal browse picker.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seizoenkiezer"
+          }
+        }
+      }
     },
     "Seasons" : {
-      "comment" : "The string for the word 'seasons'."
+      "comment" : "The string for the word 'seasons'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seizoenen"
+          }
+        }
+      }
     },
     "Security" : {
-      "comment" : "The string for the word 'security'."
+      "comment" : "The string for the word 'security'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beveiliging"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "comment" : "The section-header button that opens the full list.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toon alles"
+          }
+        }
+      }
     },
     "Select" : {
-      "comment" : "The leading nav-bar action that enters batch-edit mode in lists such as notifications."
+      "comment" : "The leading nav-bar action that enters batch-edit mode in lists such as notifications.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer"
+          }
+        }
+      }
     },
     "Select All" : {
-      "comment" : "The leading nav-bar action that selects every loaded library item in batch-edit mode."
+      "comment" : "The leading nav-bar action that selects every loaded library item in batch-edit mode.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer alles"
+          }
+        }
+      }
     },
     "Select Items" : {
-      "comment" : "The label shown in the bottom batch-edit toolbar when no items are selected."
+      "comment" : "The label shown in the bottom batch-edit toolbar when no items are selected.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer items"
+          }
+        }
+      }
     },
     "Select Notifications" : {
-      "comment" : "The label shown in the bottom batch-edit toolbar when no notifications are selected."
+      "comment" : "The label shown in the bottom batch-edit toolbar when no notifications are selected.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer meldingen"
+          }
+        }
+      }
     },
     "Send" : {
-      "comment" : "The string for the word 'send'."
+      "comment" : "The string for the word 'send'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verstuur"
+          }
+        }
+      }
     },
     "Sessions" : {
-      "comment" : "The string for the word 'sessions'."
+      "comment" : "The string for the word 'sessions'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sessies"
+          }
+        }
+      }
     },
     "Settings" : {
-      "comment" : "The string for the word 'settings'."
+      "comment" : "The string for the word 'settings'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instellingen"
+          }
+        }
+      }
     },
     "Settings…" : {
-      "comment" : "The menu command that opens settings."
+      "comment" : "The menu command that opens settings.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instellingen…"
+          }
+        }
+      }
     },
     "Share" : {
-      "comment" : "The string for the word 'share'."
-    },
-    "Show" : {
-      "comment" : "The string for the word 'Show' as the verb opposite of Hide."
+      "comment" : "Verb. The share action.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deel"
+          }
+        }
+      }
     },
     "Show more" : {
-      "comment" : "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped."
+      "comment" : "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meer tonen"
+          }
+        }
+      }
     },
     "Show Poster" : {
-      "comment" : "The view option that toggles whether the title cell shows a poster."
+      "comment" : "The view option that toggles whether the title cell shows a poster.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poster tonen"
+          }
+        }
+      }
     },
     "Show to Public" : {
-      "comment" : "The string for the phrase 'show to public'."
+      "comment" : "The string for the phrase 'show to public'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Openbaar tonen"
+          }
+        }
+      }
     },
     "Shows" : {
-      "comment" : "The string for the word 'shows'."
+      "comment" : "The string for the word 'shows'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Series"
+          }
+        }
+      }
     },
     "Shows title only when poster art isn't available" : {
-      "comment" : "The subtitle explaining the 'Smart' compact title-visibility option."
+      "comment" : "The subtitle explaining the 'Smart' compact title-visibility option.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toont alleen de titel als er geen posterafbeelding beschikbaar is"
+          }
+        }
+      }
     },
     "Smart" : {
-      "comment" : "The view option that hides the series title when real poster art is available in the library compact layout."
+      "comment" : "The view option that hides the series title when real poster art is available in the library compact layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slim"
+          }
+        }
+      }
     },
     "Social" : {
-      "comment" : "The string for the word 'social'."
+      "comment" : "The string for the word 'social'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sociaal"
+          }
+        }
+      }
     },
     "Socials" : {
-      "comment" : "The string for the word 'socials'."
+      "comment" : "The string for the word 'socials'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sociale media"
+          }
+        }
+      }
     },
     "Songs" : {
-      "comment" : "The string for the word 'songs'."
+      "comment" : "The string for the word 'songs'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nummers"
+          }
+        }
+      }
     },
     "Sort" : {
-      "comment" : "The string for the word 'sort'."
+      "comment" : "The string for the word 'sort'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorteer"
+          }
+        }
+      }
     },
     "Sorting" : {
-      "comment" : "The string for the word 'Sorting'."
+      "comment" : "The string for the word 'Sorting'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorteren"
+          }
+        }
+      }
     },
     "Spoiler" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spoiler"
+          }
+        }
+      }
     },
     "Spring" : {
-      "comment" : "The string for the word 'spring'."
+      "comment" : "The string for the word 'spring'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lente"
+          }
+        }
+      }
     },
     "Status" : {
-      "comment" : "The column header for the item's airing or publishing status in the library table layout."
+      "comment" : "The column header for the item's airing or publishing status in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
     },
     "Stickers" : {
-      "comment" : "The string for the word 'stickers'."
+      "comment" : "The string for the word 'stickers'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stickers"
+          }
+        }
+      }
     },
     "Stop" : {
-      "comment" : "The string for the word 'stop'."
+      "comment" : "The string for the word 'stop'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
+      }
     },
     "Stop Reminding" : {
-      "comment" : "The string for the phrase 'Stop Reminding'."
+      "comment" : "The string for the phrase 'Stop Reminding'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop met herinneren"
+          }
+        }
+      }
     },
     "Studio" : {
-      "comment" : "The string for the word 'studio'."
+      "comment" : "The string for the word 'studio'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Studio"
+          }
+        }
+      }
     },
     "Studios" : {
-      "comment" : "The string for the word 'studios'."
+      "comment" : "The string for the word 'studios'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Studio's"
+          }
+        }
+      }
     },
     "Submitted" : {
-      "comment" : "The string for the word 'submitted'."
+      "comment" : "The string for the word 'submitted'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingediend"
+          }
+        }
+      }
     },
     "Subscribe" : {
-      "comment" : "The string for the word 'subscribe'."
+      "comment" : "The string for the word 'subscribe'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonneer"
+          }
+        }
+      }
     },
     "Subscribe to Reminders…" : {
-      "comment" : "The menu command that subscribes to reminders."
+      "comment" : "The menu command that subscribes to reminders.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonneer op herinneringen…"
+          }
+        }
+      }
     },
     "Successor" : {
-      "comment" : "The string for the word 'successor'."
+      "comment" : "The string for the word 'successor'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opvolger"
+          }
+        }
+      }
     },
     "Suggestions" : {
-      "comment" : "The string for the word 'suggestions'."
+      "comment" : "The string for the word 'suggestions'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggesties"
+          }
+        }
+      }
     },
     "Summer" : {
-      "comment" : "The string for the word 'summer'."
+      "comment" : "The string for the word 'summer'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zomer"
+          }
+        }
+      }
     },
     "Support Us" : {
-      "comment" : "The string for the word 'support us'."
+      "comment" : "The string for the word 'support us'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steun ons"
+          }
+        }
+      }
     },
     "Synopsis" : {
-      "comment" : "The string for the word 'synopsis'."
+      "comment" : "The string for the word 'synopsis'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samenvatting"
+          }
+        }
+      }
     },
     "Take Photo 📷" : {
-      "comment" : "The action sheet button for capturing a new photo from the camera."
+      "comment" : "The action sheet button for capturing a new photo from the camera.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maak foto 📷"
+          }
+        }
+      }
     },
     "Tap to Rotate" : {
-      "comment" : "The button that rotates the media viewer."
+      "comment" : "The button that rotates the media viewer.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tik om te draaien"
+          }
+        }
+      }
     },
     "TBA" : {
-      "comment" : "The string for the word 'tba'."
+      "comment" : "The string for the word 'tba'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TBA"
+          }
+        }
+      }
     },
     "Theme" : {
-      "comment" : "The string for the word 'theme'."
+      "comment" : "The string for the word 'theme'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thema"
+          }
+        }
+      }
     },
     "Themes" : {
-      "comment" : "The string for the word 'themes'."
+      "comment" : "The string for the word 'themes'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thema's"
+          }
+        }
+      }
     },
     "There are %lld titles matching ‘%@’." : {
       "localizations" : {
@@ -1010,11 +3346,25 @@
             "state" : "new",
             "value" : "There are %1$lld titles matching ‘%2$@’."
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er zijn %1$lld titels die overeenkomen met '%2$@'."
+          }
         }
       }
     },
     "Time Zone" : {
-      "comment" : "The string for the phrase 'Time Zone'."
+      "comment" : "The string for the phrase 'Time Zone'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tijdzone"
+          }
+        }
+      }
     },
     "timezonePicker.description" : {
       "comment" : "Explanatory text shown above the timezone picker to clarify what the setting affects.",
@@ -1025,23 +3375,69 @@
             "state" : "new",
             "value" : "The selected timezone will be used to display all dates and times, including premiere dates, broadcasts, and schedules."
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De geselecteerde tijdzone wordt gebruikt om alle datums en tijden weer te geven, waaronder premièredata, uitzendingen en schema's."
+          }
         }
       }
     },
     "Title" : {
-      "comment" : "The column header for the item's title in the library table layout."
+      "comment" : "The column header for the item's title in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        }
+      }
     },
     "Today" : {
-      "comment" : "The string for the word 'today'."
+      "comment" : "The string for the word 'today'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vandaag"
+          }
+        }
+      }
     },
     "Toggle Home" : {
-      "comment" : "The discoverability title for the Home menu command."
+      "comment" : "The discoverability title for the Home menu command.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start wisselen"
+          }
+        }
+      }
     },
     "Top %@" : {
-      "comment" : "The string for the word 'Top %@'."
+      "comment" : "The string for the word 'Top %@'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top %@"
+          }
+        }
+      }
     },
     "TV Rating" : {
-      "comment" : "The string for the word 'TV rating'."
+      "comment" : "The string for the word 'TV rating'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leeftijdsclassificatie"
+          }
+        }
+      }
     },
     "tvRatingPicker.description" : {
       "comment" : "Explanatory text shown above the TV rating picker to clarify how tiered TV ratings affect visible content.",
@@ -1052,89 +3448,322 @@
             "state" : "new",
             "value" : "TV ratings are tiered. Depending on the chosen TV rating some shows might be hidden.\n\nFor example, selecting R15+ will show you all anime up to a TV rating of R15+."
           }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-classificaties zijn gelaagd. Afhankelijk van de gekozen TV-classificatie worden sommige series mogelijk verborgen.\n\nAls je bijvoorbeeld R15+ kiest, zie je alle anime tot en met de TV-classificatie R15+."
+          }
         }
       }
     },
     "Type" : {
-      "comment" : "The column header for the item's media type in the library table layout."
+      "comment" : "The column header for the item's media type in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type"
+          }
+        }
+      }
     },
     "Unfavorite" : {
-      "comment" : "The string for the word 'Unfavorite'."
+      "comment" : "The string for the word 'Unfavorite'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uit favorieten"
+          }
+        }
+      }
     },
     "Unknown" : {
-      "comment" : "The string for the word 'unknown'."
+      "comment" : "The string for the word 'unknown'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onbekend"
+          }
+        }
+      }
     },
     "Update Library Status" : {
-      "comment" : "The string for the word 'update library status'."
+      "comment" : "The string for the word 'update library status'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheekstatus bijwerken"
+          }
+        }
+      }
     },
     "Update!" : {
-      "comment" : "The string for the word 'update'."
+      "comment" : "The string for the word 'update'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update!"
+          }
+        }
+      }
     },
     "Upgrade to Kurozora+…" : {
-      "comment" : "The menu command that opens the Kurozora+ upgrade flow."
+      "comment" : "The menu command that opens the Kurozora+ upgrade flow.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade naar Kurozora+…"
+          }
+        }
+      }
     },
     "User" : {
-      "comment" : "The string for the word 'user'."
+      "comment" : "The string for the word 'user'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruiker"
+          }
+        }
+      }
+    },
+    "Username" : {
+      "comment" : "The username field placeholder.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruikersnaam"
+          }
+        }
+      }
     },
     "Users" : {
-      "comment" : "The string for the word 'users'."
+      "comment" : "The string for the word 'users'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruikers"
+          }
+        }
+      }
     },
     "View My Account…" : {
-      "comment" : "The menu command that opens the user's account."
+      "comment" : "The menu command that opens the user's account.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk mijn account…"
+          }
+        }
+      }
     },
     "View on Amazon Music" : {
-      "comment" : "The string for the word 'View on Amazon Music'."
+      "comment" : "The string for the word 'View on Amazon Music'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk op Amazon Music"
+          }
+        }
+      }
     },
     "View on Apple Music" : {
-      "comment" : "The string for the word 'View on Apple Music'."
+      "comment" : "The string for the word 'View on Apple Music'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk op Apple Music"
+          }
+        }
+      }
     },
     "View on Deezer" : {
-      "comment" : "The string for the word 'View on Deezer'."
+      "comment" : "The string for the word 'View on Deezer'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk op Deezer"
+          }
+        }
+      }
     },
     "View on Spotify" : {
-      "comment" : "The string for the word 'View on Spotify'."
+      "comment" : "The string for the word 'View on Spotify'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk op Spotify"
+          }
+        }
+      }
     },
     "View on YouTube" : {
-      "comment" : "The string for the word 'View on YouTube'."
+      "comment" : "The string for the word 'View on YouTube'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk op YouTube"
+          }
+        }
+      }
     },
     "View Options" : {
-      "comment" : "The submenu title for toggling view options in the library table layout."
+      "comment" : "The submenu title for toggling view options in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weergaveopties"
+          }
+        }
+      }
     },
     "View Subscription" : {
-      "comment" : "The string for the word 'View Subscription'."
+      "comment" : "The string for the word 'View Subscription'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonnement bekijken"
+          }
+        }
+      }
     },
     "Visibility" : {
-      "comment" : "The accessibility label for the visibility column or control in the library table layout."
+      "comment" : "The accessibility label for the visibility column or control in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zichtbaarheid"
+          }
+        }
+      }
     },
     "Volumes" : {
-      "comment" : "The column header for the literature item's volume count in the library table layout."
+      "comment" : "The column header for the literature item's volume count in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delen"
+          }
+        }
+      }
     },
     "Watched" : {
-      "comment" : "The string for the word 'watched'."
+      "comment" : "Library status for an item the user has watched.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekeken"
+          }
+        }
+      }
     },
     "Websites" : {
-      "comment" : "The string for the word 'websites'."
+      "comment" : "The string for the word 'websites'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Websites"
+          }
+        }
+      }
     },
     "Welcome to Kurozora" : {
-      "comment" : "The Home quick link to the welcome page."
+      "comment" : "The Home quick link to the welcome page.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welkom bij Kurozora"
+          }
+        }
+      }
     },
     "What’s New in Kurozora" : {
-      "comment" : "The string for the word 'What’s New'."
+      "comment" : "The string for the word 'What’s New'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wat is er nieuw in Kurozora"
+          }
+        }
+      }
     },
     "Winter" : {
-      "comment" : "The string for the word 'winter'."
+      "comment" : "The string for the word 'winter'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winter"
+          }
+        }
+      }
     },
     "Year" : {
-      "comment" : "The column header for the item's release year in the library table layout."
+      "comment" : "The column header for the item's release year in the library table layout.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaar"
+          }
+        }
+      }
     },
     "Yes, sign me out 🤨" : {
-      "comment" : "The destructive confirmation button for the sign-out alert."
+      "comment" : "The destructive confirmation button for the sign-out alert.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja, meld me af 🤨"
+          }
+        }
+      }
     },
     "Your Library" : {
-      "comment" : "The string for the word 'your library'."
+      "comment" : "The string for the word 'your library'.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je bibliotheek"
+          }
+        }
+      }
     },
     "Your saved drafts will appear here." : {
-      "comment" : "The string for the 'no drafts' empty state detail."
+      "comment" : "The string for the 'no drafts' empty state detail.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je bewaarde concepten verschijnen hier."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

@@ -1,51 +1,171 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Can't Add to Your Library 😔" : {
-      "comment" : "The alert title shown when adding an item to the library fails."
+  "sourceLanguage": "en",
+  "strings": {
+    "Can't Add to Your Library 😔": {
+      "comment": "The alert title shown when adding an item to the library fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan niet aan je bibliotheek toevoegen 😔"
+          }
+        }
+      }
     },
-    "Can't Delete Account 😔" : {
-      "comment" : "The alert title shown when deleting the account fails."
+    "Can't Delete Account 😔": {
+      "comment": "The alert title shown when deleting the account fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan account niet verwijderen 😔"
+          }
+        }
+      }
     },
-    "Can't Import To Library 😔" : {
-      "comment" : "The alert title shown when importing to the library fails."
+    "Can't Import To Library 😔": {
+      "comment": "The alert title shown when importing to the library fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan niet importeren in bibliotheek 😔"
+          }
+        }
+      }
     },
-    "Can't Remove From Your Library 😔" : {
-      "comment" : "The alert title shown when removing an item from the library fails."
+    "Can't Remove From Your Library 😔": {
+      "comment": "The alert title shown when removing an item from the library fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan niet uit je bibliotheek verwijderen 😔"
+          }
+        }
+      }
     },
-    "Can't Sign Out 😔" : {
-      "comment" : "The alert title shown when signing out fails."
+    "Can't Sign Out 😔": {
+      "comment": "The alert title shown when signing out fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afmelden lukt niet 😔"
+          }
+        }
+      }
     },
-    "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter." : {
-      "comment" : "The string for the maintenance warning message."
+    "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter.": {
+      "comment": "The string for the maintenance warning message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora is momenteel in onderhoud. Alle diensten zijn binnenkort weer beschikbaar. Als dit langer dan een uur duurt, kun je de status volgen op Twitter."
+          }
+        }
+      }
     },
-    "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store." : {
-      "comment" : "The string for the force update warning message."
+    "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store.": {
+      "comment": "The string for the force update warning message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora is bijgewerkt met ingrijpende wijzigingen. Werk de app bij om te voorkomen dat hij vastloopt en om hem zoals gewoonlijk te blijven gebruiken. De update is binnenkort beschikbaar in de App Store."
+          }
+        }
+      }
     },
-    "Network Unavailable" : {
-      "comment" : "The string for the no signal warning title."
+    "Network Unavailable": {
+      "comment": "The string for the no signal warning title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Netwerk niet beschikbaar"
+          }
+        }
+      }
     },
-    "Purchase Failed" : {
-      "comment" : "The alert title shown when a purchase fails verification."
+    "Purchase Failed": {
+      "comment": "The alert title shown when a purchase fails verification.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aankoop mislukt"
+          }
+        }
+      }
     },
-    "Scheduled Maintenance" : {
-      "comment" : "The string for the maintenance warning title."
+    "Scheduled Maintenance": {
+      "comment": "The string for the maintenance warning title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gepland onderhoud"
+          }
+        }
+      }
     },
-    "Update Available" : {
-      "comment" : "The string for the force update warning title."
+    "Update Available": {
+      "comment": "The string for the force update warning title.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update beschikbaar"
+          }
+        }
+      }
     },
-    "Well, this is awkward." : {
-      "comment" : "The alert title shown when no camera is available to scan a code."
+    "Well, this is awkward.": {
+      "comment": "The alert title shown when no camera is available to scan a code.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tja, dit is ongemakkelijk."
+          }
+        }
+      }
     },
-    "You don't seem to have a camera 😓" : {
-      "comment" : "The alert message shown when no camera is available to scan a code."
+    "You don't seem to have a camera 😓": {
+      "comment": "The alert message shown when no camera is available to scan a code.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je hebt blijkbaar geen camera 😓"
+          }
+        }
+      }
     },
-    "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora." : {
-      "comment" : "The string for the no signal warning message."
+    "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora.": {
+      "comment": "The string for the no signal warning message.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je moet verbonden zijn met een wifinetwerk of een mobiel data-abonnement hebben om Kurozora te gebruiken."
+          }
+        }
+      }
     },
-    "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer." : {
-      "comment" : "The alert message shown when a purchase cannot be verified by the App Store."
+    "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer.": {
+      "comment": "The alert message shown when a purchase cannot be verified by the App Store.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw aankoop kon niet worden geverifieerd door de App Store. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar."
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

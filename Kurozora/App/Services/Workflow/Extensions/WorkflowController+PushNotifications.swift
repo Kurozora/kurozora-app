@@ -130,7 +130,7 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 				return
 			}
 
-			NotificationCenter.default.post(name: .KUNDidUpdate,object: nil,userInfo: [
+			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil,userInfo: [
 				"ids": [notificationID],
 				"read": true
 			])

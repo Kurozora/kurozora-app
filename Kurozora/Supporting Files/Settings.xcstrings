@@ -2,301 +2,1066 @@
   "sourceLanguage": "en",
   "strings": {
     "Add Sticker to Signal": {
-      "comment": "The string for the 'Add Sticker to Signal' settings option."
+      "comment": "The string for the 'Add Sticker to Signal' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sticker toevoegen aan Signal"
+          }
+        }
+      }
     },
     "Add Sticker to Telegram": {
-      "comment": "The string for the 'Add Sticker to Telegram' settings option."
+      "comment": "The string for the 'Add Sticker to Telegram' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sticker toevoegen aan Telegram"
+          }
+        }
+      }
     },
     "Add Sticker to WhatsApp": {
-      "comment": "The string for the 'Add Sticker to WhatsApp' settings option."
+      "comment": "The string for the 'Add Sticker to WhatsApp' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sticker toevoegen aan WhatsApp"
+          }
+        }
+      }
     },
     "Adjust the startup chime, UI sound effects, and haptic feedback to personalize how the app sounds and feels.": {
-      "comment": "A short description for the sounds and haptics settings header."
+      "comment": "A short description for the sounds and haptics settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas het startgeluid, de geluidseffecten en de haptische feedback aan om te bepalen hoe de app klinkt en aanvoelt."
+          }
+        }
+      }
     },
     "All keychain entries have been removed.": {
-      "comment": "The empty-state detail for the debug keychain list when no keys remain."
+      "comment": "The empty-state detail for the debug keychain list when no keys remain.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle sleutelhangeritems zijn verwijderd."
+          }
+        }
+      }
     },
     "Allow Notifications": {
-      "comment": "The title string for the 'Allow Notifications' settings."
+      "comment": "The title string for the 'Allow Notifications' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meldingen toestaan"
+          }
+        }
+      }
     },
     "Animations": {
-      "comment": "The string for the 'Animations' settings header."
+      "comment": "The string for the 'Animations' settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animaties"
+          }
+        }
+      }
     },
     "App Icon": {
-      "comment": "The title string for the 'App Icon' settings."
+      "comment": "The title string for the 'App Icon' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App-symbool"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "comment": "The 'Appearance' settings section header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergave"
+          }
+        }
+      }
     },
     "Appearance Schedule": {
-      "comment": "The title of the appearance schedule screen."
+      "comment": "The title of the appearance schedule screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergaveschema"
+          }
+        }
+      }
     },
     "Apply Theme": {
-      "comment": "The menu button for applying a downloaded theme."
+      "comment": "The menu button for applying a downloaded theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thema toepassen"
+          }
+        }
+      }
+    },
+    "Automatically transition appearance between light and dark based on time preference.": {
+      "comment": "The footer for the appearance schedule option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel automatisch tussen licht en donker op basis van je tijdsvoorkeur."
+          }
+        }
+      }
+    },
+    "Blindness": {
+      "comment": "The 'Blindness' settings section header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blindheid"
+          }
+        }
+      }
+    },
+    "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora %@ (%@)": {
+      "comment": "The about-section credit footer.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora %1$@ (%2$@)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebouwd met te weinig 😴, veel 🍵 en 🌸-allergie door Kirito\nKurozora %1$@ (%2$@)"
+          }
+        }
+      }
     },
     "Chime & Sound Effects": {
-      "comment": "The string for the 'Chime & Sound Effects' settings option."
+      "comment": "The string for the 'Chime & Sound Effects' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startgeluid en geluidseffecten"
+          }
+        }
+      }
     },
     "Chime on Startup": {
-      "comment": "The string for the 'Chime on Startup' settings option."
+      "comment": "The string for the 'Chime on Startup' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startgeluid bij opstarten"
+          }
+        }
+      }
     },
     "Chime Sound": {
-      "comment": "The string for the 'Chime Sound' settings option."
+      "comment": "The string for the 'Chime Sound' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startgeluid"
+          }
+        }
+      }
+    },
+    "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback.": {
+      "comment": "The footer for the browser settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies een standaardbrowser waarin weblinks worden geopend. Als je de app niet hebt geïnstalleerd, openen de links als terugval in Safari."
+          }
+        }
+      }
     },
     "Choose where to subscribe to your Kurozora reminders. If the selected app isn't installed, the link will open in Safari as a fallback.": {
-      "comment": "The footer string for the reminder subscription picker."
+      "comment": "The footer string for the reminder subscription picker.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies waar je je Kurozora-herinneringen wilt volgen. Als de gekozen app niet is geïnstalleerd, opent de link als terugval in Safari."
+          }
+        }
+      }
     },
     "Clear All": {
-      "comment": "The title string for the 'Clear All' destructive button."
+      "comment": "The title string for the 'Clear All' destructive button.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wis alles"
+          }
+        }
+      }
     },
     "Clear all Cache?": {
-      "comment": "The title string for the 'Clear all Cache?' alert."
+      "comment": "The title string for the 'Clear all Cache?' alert.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle cache wissen?"
+          }
+        }
+      }
     },
     "Cloudless.": {
-      "comment": "The string for sky theme description."
+      "comment": "The string for sky theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onbewolkt."
+          }
+        }
+      }
     },
     "Control animations and visual effects throughout the app, including the splash screen animation and reduced motion preferences.": {
-      "comment": "A short description for the motion settings header."
+      "comment": "A short description for the motion settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beheer animaties en visuele effecten in de hele app, waaronder de startschermanimatie en de voorkeuren voor verminderde beweging."
+          }
+        }
+      }
     },
     "Copy Subscription Link": {
-      "comment": "The string for the 'Copy Subscription Link' calendar picker option."
+      "comment": "The string for the 'Copy Subscription Link' calendar picker option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abonnementslink kopiëren"
+          }
+        }
+      }
     },
     "Couldn’t Add Sticker Pack": {
-      "comment": "The title of the alert shown when adding the WhatsApp sticker pack fails."
+      "comment": "The title of the alert shown when adding the WhatsApp sticker pack fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan stickerpakket niet toevoegen"
+          }
+        }
+      }
     },
     "Customize how your library is organized by setting the default sort order for each tracking status and media type.": {
-      "comment": "A short description for the library settings header."
+      "comment": "A short description for the library settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bepaal hoe je bibliotheek is geordend door de standaardsortering per volgstatus en mediatype in te stellen."
+          }
+        }
+      }
+    },
+    "Dark": {
+      "comment": "The 'Dark' appearance option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donker"
+          }
+        }
+      }
+    },
+    "Dark Until %@": {
+      "comment": "The appearance schedule value for dark until a specific time.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donker tot %@"
+          }
+        }
+      }
+    },
+    "Dark Until Sunrise": {
+      "comment": "The appearance schedule value for dark until sunrise.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donker tot zonsopgang"
+          }
+        }
+      }
     },
     "Delete Account": {
-      "comment": "The title string for the 'Delete Account' settings button."
+      "comment": "The title string for the 'Delete Account' settings button.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account verwijderen"
+          }
+        }
+      }
     },
     "Delete Library": {
-      "comment": "The title string for the 'Delete Library' settings."
+      "comment": "The title string for the 'Delete Library' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliotheek verwijderen"
+          }
+        }
+      }
+    },
+    "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me": {
+      "comment": "The footer for the large titles option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie uit als je de grote titels in de navigatiebalk haat #irritant #te_lelijk_voor_mij"
+          }
+        }
+      }
     },
     "Display & Blindness": {
-      "comment": "The string for the 'Display & Blindness' settings option."
+      "comment": "The string for the 'Display & Blindness' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergave en blindheid"
+          }
+        }
+      }
     },
     "Easy on the eyes.": {
-      "comment": "The string for night theme description."
+      "comment": "The string for night theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prettig voor de ogen."
+          }
+        }
+      }
+    },
+    "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…": {
+      "comment": "The footer for the true black option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel deze optie in als je liever een donkerder zwart hebt. Of als je je ogen wilt sparen terwijl je de app in het donker gebruikt. Of die kostbare batterijsappen. Of of of…"
+          }
+        }
+      }
     },
     "Face ID & Passcode": {
-      "comment": "The string for the 'Face ID & Passcode' settings option."
+      "comment": "The string for the 'Face ID & Passcode' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID en toegangscode"
+          }
+        }
+      }
     },
     "Follow us on GitHub": {
-      "comment": "The string for the 'Follow us on GitHub' settings option."
+      "comment": "The string for the 'Follow us on GitHub' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg ons op GitHub"
+          }
+        }
+      }
     },
     "Follow us on Mastodon": {
-      "comment": "The string for the 'Follow us on Mastodon' settings option."
+      "comment": "The string for the 'Follow us on Mastodon' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg ons op Mastodon"
+          }
+        }
+      }
     },
     "Follow us on Twitter": {
-      "comment": "The string for the 'Follow us on Twitter' settings option."
+      "comment": "The string for the 'Follow us on Twitter' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volg ons op Twitter"
+          }
+        }
+      }
     },
     "GET": {
-      "comment": "The download button title for an unowned theme."
+      "comment": "The download button title for an unowned theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HAAL OP"
+          }
+        }
+      }
     },
     "Get off my lawn!": {
-      "comment": "The string for grass theme description."
+      "comment": "The string for grass theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blijf van mijn gazon!"
+          }
+        }
+      }
     },
     "Haptics": {
-      "comment": "The string for the 'Haptics' settings option."
+      "comment": "The string for the 'Haptics' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haptische feedback"
+          }
+        }
+      }
     },
     "Import Library": {
-      "comment": "The title string for the 'Import Library' settings."
+      "comment": "The title string for the 'Import Library' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliotheek importeren"
+          }
+        }
+      }
     },
     "In full bloom.": {
-      "comment": "The string for sakura theme description."
+      "comment": "The string for sakura theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In volle bloei."
+          }
+        }
+      }
     },
     "In-app (default)": {
-      "comment": "The name of the in-app browser option in the browser picker."
+      "comment": "The name of the in-app browser option in the browser picker.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In-app (standaard)"
+          }
+        }
+      }
     },
     "Join our Discord Community": {
-      "comment": "The string for the 'Join our Discord Community' settings option."
+      "comment": "The string for the 'Join our Discord Community' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word lid van onze Discord-community"
+          }
+        }
+      }
     },
     "Keys Manager": {
-      "comment": "The string for the 'Keys Manager' settings option."
+      "comment": "The string for the 'Keys Manager' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleutelbeheer"
+          }
+        }
+      }
     },
     "Kurozora Account, Sign in with Apple & Library Import": {
-      "comment": "The sub-headline string for the account settings option when signed in."
+      "comment": "The sub-headline string for the account settings option when signed in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora-account, Log in met Apple en bibliotheekimport"
+          }
+        }
+      }
     },
     "Large Titles": {
-      "comment": "The settings switch title for the large titles option."
+      "comment": "The settings switch title for the large titles option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grote titels"
+          }
+        }
+      }
     },
     "Library Import": {
-      "comment": "The string for the 'library import' notification type"
+      "comment": "The string for the 'library import' notification type",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliotheekimport"
+          }
+        }
+      }
+    },
+    "Light": {
+      "comment": "The 'Light' appearance option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licht"
+          }
+        }
+      }
+    },
+    "Light Until %@": {
+      "comment": "The appearance schedule value for light until a specific time.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licht tot %@"
+          }
+        }
+      }
+    },
+    "Light Until Sunset": {
+      "comment": "The appearance schedule value for light until sunset.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licht tot zonsondergang"
+          }
+        }
+      }
     },
     "Manage Active Sessions": {
-      "comment": "The title string for the 'Manage Active Sessions' settings."
+      "comment": "The title string for the 'Manage Active Sessions' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actieve sessies beheren"
+          }
+        }
+      }
     },
     "Manage in-app notification preferences including sounds, badges, and how notifications are grouped together.": {
-      "comment": "A short description for the notifications settings header."
+      "comment": "A short description for the notifications settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beheer de meldingsvoorkeuren in de app, waaronder geluiden, badges en hoe meldingen worden gegroepeerd."
+          }
+        }
+      }
     },
     "Manage your app experience by clearing temporary files, downloaded content, and cached media used for faster loading and offline viewing.": {
-      "comment": "A short description for the cache settings header."
+      "comment": "A short description for the cache settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beheer je app-ervaring door tijdelijke bestanden, gedownloade inhoud en media in de cache te wissen die worden gebruikt voor sneller laden en offline kijken."
+          }
+        }
+      }
     },
     "Mention": {
-      "comment": "The string for the 'mention' notification type."
+      "comment": "The string for the 'mention' notification type.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vermelding"
+          }
+        }
+      }
     },
     "Moderation": {
-      "comment": "The string for the 'moderation' notification type"
+      "comment": "The string for the 'moderation' notification type",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moderatie"
+          }
+        }
+      }
     },
     "New Session": {
-      "comment": "The string for the 'new session' notification type"
+      "comment": "The string for the 'new session' notification type",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuwe sessie"
+          }
+        }
+      }
     },
     "No Keys": {
-      "comment": "The empty-state title for the debug keychain list when no keys remain."
+      "comment": "The empty-state title for the debug keychain list when no keys remain.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen sleutels"
+          }
+        }
+      }
     },
     "Notification Grouping": {
-      "comment": "The title string for the 'Notification Grouping' settings."
+      "comment": "The title string for the 'Notification Grouping' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meldingen groeperen"
+          }
+        }
+      }
     },
     "Optic ID & Passcode": {
-      "comment": "The string for the 'Optic ID & Passcode' settings option."
+      "comment": "The string for the 'Optic ID & Passcode' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optic ID en toegangscode"
+          }
+        }
+      }
     },
     "Pick a calendar app to subscribe to your Kurozora reminders, or copy the subscription link to use elsewhere.": {
-      "comment": "A short description for the reminder subscription settings header."
+      "comment": "A short description for the reminder subscription settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies een agenda-app om je Kurozora-herinneringen te volgen, of kopieer de abonnementslink om elders te gebruiken."
+          }
+        }
+      }
     },
     "Rate us on App Store": {
-      "comment": "The string for the 'Rate us on App Store' settings option."
+      "comment": "The string for the 'Rate us on App Store' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beoordeel ons in de App Store"
+          }
+        }
+      }
+    },
+    "Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora.": {
+      "comment": "The footer for the in-app notifications option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontvang meldingen in Kurozora terwijl je de app gebruikt. Dit staat los van systeembrede meldingen voor Kurozora."
+          }
+        }
+      }
     },
     "Redownload Theme": {
-      "comment": "The action sheet button for redownloading an already-purchased theme."
+      "comment": "The action sheet button for redownloading an already-purchased theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thema opnieuw downloaden"
+          }
+        }
+      }
     },
     "Reduce Motion": {
-      "comment": "The string for the 'Reduce Motion' settings option."
+      "comment": "The string for the 'Reduce Motion' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verminder beweging"
+          }
+        }
+      }
     },
     "Reduce the intensity of animations, and motion effects throughout Kurozora.": {
-      "comment": "The footer string for the 'Reduce Motion' settings option."
+      "comment": "The footer string for the 'Reduce Motion' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verminder de intensiteit van animaties en bewegingseffecten in heel Kurozora."
+          }
+        }
+      }
     },
     "Remove Theme": {
-      "comment": "The destructive action sheet button for removing a downloaded theme."
+      "comment": "The destructive action sheet button for removing a downloaded theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thema verwijderen"
+          }
+        }
+      }
     },
     "Request Refund": {
-      "comment": "The string for the 'Request Refund' settings option."
+      "comment": "The string for the 'Request Refund' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terugbetaling aanvragen"
+          }
+        }
+      }
     },
     "Require authentication to unlock the app and choose how frequently you need to verify your identity.": {
-      "comment": "A short description for the authentication settings header."
+      "comment": "A short description for the authentication settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vereis verificatie om de app te ontgrendelen en kies hoe vaak u uw identiteit moet bevestigen."
+          }
+        }
+      }
     },
     "Restore Purchase": {
-      "comment": "The string for the 'Restore Purchase' settings option."
+      "comment": "The string for the 'Restore Purchase' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aankopen herstellen"
+          }
+        }
+      }
     },
     "Review your privacy settings, manage app permissions in the Settings app, manage blocked accounts, and access legal information.": {
-      "comment": "A short description for the privacy settings header."
+      "comment": "A short description for the privacy settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk uw privacyinstellingen, beheer app-machtigingen in de app Instellingen, beheer geblokkeerde accounts en raadpleeg juridische informatie."
+          }
+        }
+      }
     },
     "Rise and shine.": {
-      "comment": "The string for day theme description."
+      "comment": "The string for day theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opstaan en stralen."
+          }
+        }
+      }
+    },
+    "Select library": {
+      "comment": "The placeholder shown before a library kind is chosen on the delete library screen.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliotheek selecteren"
+          }
+        }
+      }
     },
     "Set a default browser for opening web links. If the selected app isn't installed, links open in Safari as a fallback.": {
-      "comment": "A short description for the browser settings header."
+      "comment": "A short description for the browser settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stel een standaardbrowser in voor het openen van weblinks. Als de gekozen app niet is geïnstalleerd, openen links als terugval in Safari."
+          }
+        }
+      }
     },
     "Setup Kurozora Account and more.": {
-      "comment": "The sub-headline string for the account settings option when not signed in."
+      "comment": "The sub-headline string for the account settings option when not signed in.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stel je Kurozora-account in en meer."
+          }
+        }
+      }
     },
     "Sign In": {
-      "comment": "The string for the 'sign in' action."
+      "comment": "The string for the 'sign in' action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inloggen"
+          }
+        }
+      }
     },
     "Sign in to your Kurozora account": {
-      "comment": "The headline string for the account settings option."
+      "comment": "The headline string for the account settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in op je Kurozora-account"
+          }
+        }
+      }
     },
     "Sign in with Apple": {
-      "comment": "The title string for the 'Sign in with Apple' settings."
+      "comment": "The title string for the 'Sign in with Apple' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in met Apple"
+          }
+        }
+      }
     },
     "Sign Out": {
-      "comment": "The title string for the 'Sign Out' settings button."
+      "comment": "The title string for the 'Sign Out' settings button.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afmelden"
+          }
+        }
+      }
     },
     "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later.": {
-      "comment": "The message of the alert shown when adding the WhatsApp sticker pack fails."
+      "comment": "The message of the alert shown when adding the WhatsApp sticker pack fails.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is iets misgegaan bij het voorbereiden van de Kuro-chan-stickers voor WhatsApp. Probeer het later opnieuw."
+          }
+        }
+      }
     },
     "Sound": {
-      "comment": "The string for the 'Sound' settings option."
+      "comment": "The string for the 'Sound' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geluid"
+          }
+        }
+      }
     },
     "Sounds": {
-      "comment": "The string for the 'Sounds' settings option."
+      "comment": "The string for the 'Sounds' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geluiden"
+          }
+        }
+      }
     },
     "Sounds & Haptics": {
-      "comment": "The string for the 'Sounds & Haptics' settings option."
+      "comment": "The string for the 'Sounds & Haptics' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geluiden en haptische feedback"
+          }
+        }
+      }
     },
     "Splash Screen": {
-      "comment": "The string for the 'Splash Screen' settings option."
+      "comment": "The string for the 'Splash Screen' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startscherm"
+          }
+        }
+      }
     },
     "Starts at": {
-      "comment": "The settings row title for the automatic dark theme schedule start time."
+      "comment": "The settings row title for the automatic dark theme schedule start time.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begint om"
+          }
+        }
+      }
     },
     "Subscribe to Reminders": {
-      "comment": "The string for the 'Subscribe to Reminders' settings option."
+      "comment": "The string for the 'Subscribe to Reminders' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herinneringen volgen"
+          }
+        }
+      }
     },
     "Subscription link copied": {
-      "comment": "The confirmation string shown after copying the subscription link to the pasteboard."
+      "comment": "The confirmation string shown after copying the subscription link to the pasteboard.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abonnementslink gekopieerd"
+          }
+        }
+      }
     },
     "Subscription Update": {
-      "comment": "The string for the 'subscription update' notification type"
+      "comment": "The string for the 'subscription update' notification type",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abonnementsupdate"
+          }
+        }
+      }
     },
     "Switch Account": {
-      "comment": "The string for the 'Switch Account' settings option."
+      "comment": "The string for the 'Switch Account' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account wisselen"
+          }
+        }
+      }
     },
     "Sync With Device Settings": {
-      "comment": "The string for the 'Sync With Device Settings' settings option."
+      "comment": "The string for the 'Sync With Device Settings' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchroniseren met apparaatinstellingen"
+          }
+        }
+      }
     },
     "The numbers you see in Kurozora might not match the one in the Settings app. That's because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.": {
-      "comment": "The message string for the cache section footer."
+      "comment": "The message string for the cache section footer.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De getallen die je in Kurozora ziet, komen mogelijk niet overeen met die in de app Instellingen. Dat komt doordat de caches op je schijf en in het RAM hier samen worden geteld. Beide leegmaken maakt de app eerst wat trager, maar zodra de caches weer zijn opgebouwd, gaat het sneller."
+          }
+        }
+      }
     },
     "The official Kurozora theme.": {
-      "comment": "The string for default theme description."
+      "comment": "The string for default theme description.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het officiële Kurozora-thema."
+          }
+        }
+      }
     },
     "The theme storage directory is unavailable.": {
-      "comment": "Error description shown when the theme storage directory cannot be resolved."
+      "comment": "Error description shown when the theme storage directory cannot be resolved.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De opslagmap voor thema's is niet beschikbaar."
+          }
+        }
+      }
     },
     "Theme Store": {
-      "comment": "The title string for the 'Theme Store Grouping' settings."
-    },
-    "Themes are not available at this moment. Please check back again later.": {
-      "comment": "The empty-state detail shown when no themes are available in the theme store."
-    },
-    "Timezone": {
-      "comment": "The title string for the 'Timezone' settings."
-    },
-    "Tip Jar": {
-      "comment": "The string for the 'Tip Jar' settings option."
-    },
-    "Touch ID & Passcode": {
-      "comment": "The string for the 'Touch ID & Passcode' settings option."
-    },
-    "True Black": {
-      "comment": "The settings switch title for the true black option."
-    },
-    "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.": {
-      "comment": "The footer string for the haptics settings option."
-    },
-    "Unlock Features": {
-      "comment": "The string for the 'Unlock Features' settings option."
-    },
-    "UPDATE": {
-      "comment": "The button title for updating a downloaded theme."
-    },
-    "USE": {
-      "comment": "The button title for applying a downloaded theme."
-    },
-    "User Interface Sounds": {
-      "comment": "The string for the 'User Interface Sounds' settings option."
-    },
-    "USING": {
-      "comment": "The button title shown for the currently applied theme."
-    },
-    "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.": {
-      "comment": "A short description for the keys manager settings header."
-    },
-    "View Message Re-share": {
-      "comment": "The string for the 'view message re-share' notification action."
-    },
-    "View Message Reply": {
-      "comment": "The string for the 'view message reply' notification action."
-    },
-    "View Profile": {
-      "comment": "The string for the 'view profile' notification action."
-    },
-    "View Sessions": {
-      "comment": "The string for the 'view sessions' notification action."
-    },
-    "View Show Details": {
-      "comment": "The string for the 'view show details' notification action."
-    },
-    "WhatsApp doesn’t appear to be installed on this device.": {
-      "comment": "The alert message shown when WhatsApp is not installed on the device."
+      "comment": "The title string for the 'Theme Store Grouping' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Themawinkel"
+          }
+        }
+      }
     },
     "theme.downloadsCount": {
       "comment": "The download count shown on a theme.",
@@ -327,6 +1092,243 @@
                 }
               }
             }
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %#@count@"
+          },
+          "substitutions": {
+            "count": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "download"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "downloads"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Themes are not available at this moment. Please check back again later.": {
+      "comment": "The empty-state detail shown when no themes are available in the theme store.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thema's zijn op dit moment niet beschikbaar. Kom later terug."
+          }
+        }
+      }
+    },
+    "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions.": {
+      "comment": "The footer for the privacy settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit brengt u naar de privacyinstellingen van Kurozora in de app Instellingen, waar u de machtigingen van de app kunt aanpassen."
+          }
+        }
+      }
+    },
+    "Timezone": {
+      "comment": "The title string for the 'Timezone' settings.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tijdzone"
+          }
+        }
+      }
+    },
+    "Tip Jar": {
+      "comment": "The string for the 'Tip Jar' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fooienpot"
+          }
+        }
+      }
+    },
+    "Touch ID & Passcode": {
+      "comment": "The string for the 'Touch ID & Passcode' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch ID en toegangscode"
+          }
+        }
+      }
+    },
+    "True Black": {
+      "comment": "The settings switch title for the true black option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Echt zwart"
+          }
+        }
+      }
+    },
+    "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.": {
+      "comment": "The footer string for the haptics settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het uitschakelen van haptische feedback heeft alleen invloed op aangepaste haptiek. Standaard systeemonderdelen, zoals de schakelaars hierboven, geven nog steeds haptische feedback. Je kunt alle haptiek uitschakelen in de app Instellingen."
+          }
+        }
+      }
+    },
+    "Unlock Features": {
+      "comment": "The string for the 'Unlock Features' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Functies ontgrendelen"
+          }
+        }
+      }
+    },
+    "UPDATE": {
+      "comment": "The button title for updating a downloaded theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WERK BIJ"
+          }
+        }
+      }
+    },
+    "USE": {
+      "comment": "The button title for applying a downloaded theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GEBRUIK"
+          }
+        }
+      }
+    },
+    "User Interface Sounds": {
+      "comment": "The string for the 'User Interface Sounds' settings option.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interfacegeluiden"
+          }
+        }
+      }
+    },
+    "USING": {
+      "comment": "The button title shown for the currently applied theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IN GEBRUIK"
+          }
+        }
+      }
+    },
+    "View and manage stored keychain entries and account credentials. Modifying these values may affect your sign-in sessions.": {
+      "comment": "A short description for the keys manager settings header.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekijk en beheer opgeslagen sleutelhangeritems en accountgegevens. Het wijzigen van deze waarden kan invloed hebben op uw aanmeldsessies."
+          }
+        }
+      }
+    },
+    "View Message Re-share": {
+      "comment": "The string for the 'view message re-share' notification action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herdeling bekijken"
+          }
+        }
+      }
+    },
+    "View Message Reply": {
+      "comment": "The string for the 'view message reply' notification action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antwoord bekijken"
+          }
+        }
+      }
+    },
+    "View Profile": {
+      "comment": "The string for the 'view profile' notification action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiel bekijken"
+          }
+        }
+      }
+    },
+    "View Sessions": {
+      "comment": "The string for the 'view sessions' notification action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessies bekijken"
+          }
+        }
+      }
+    },
+    "View Show Details": {
+      "comment": "The string for the 'view show details' notification action.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seriedetails bekijken"
+          }
+        }
+      }
+    },
+    "WhatsApp doesn’t appear to be installed on this device.": {
+      "comment": "The alert message shown when WhatsApp is not installed on the device.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WhatsApp lijkt niet op dit apparaat geïnstalleerd te zijn."
           }
         }
       }

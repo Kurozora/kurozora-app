@@ -98,7 +98,7 @@ extension ShowDetail {
 			case .rank:
 				return L10n.chart // e.g. Thriller — show.attributes.popularity.genre
 			case .tvRating:
-				return "Rated"
+				return L10n.rated
 			case .studio:
 				return L10n.studio
 			case .country:
@@ -107,11 +107,11 @@ extension ShowDetail {
 				let languages = show?.attributes.languages ?? []
 				switch languages.count - 1 {
 				case 0:
-					return "Language"
+					return L10n.languageSingular
 				case 1:
-					return "+1 More Language"
+					return L10n.oneMoreLanguage
 				default:
-					return "+\(languages.count - 1) More Languages"
+					return L10n.moreLanguages(languages.count - 1)
 				}
 			}
 		}
@@ -220,27 +220,27 @@ extension ShowDetail {
 		var stringValue: String {
 			switch self {
 			case .type:
-				return "Type"
+				return L10n.columnType
 			case .source:
-				return "Source"
+				return L10n.source
 			case .genres:
-				return "Genres"
+				return L10n.genres
 			case .themes:
-				return "Themes"
+				return L10n.themes
 			case .episodes:
 				return L10n.episodes
 			case .duration:
 				return L10n.duration
 			case .broadcast:
-				return "Broadcast"
+				return L10n.broadcast
 			case .airDates:
 				return L10n.aired
 			case .rating:
 				return L10n.rating
 			case .countryOfOrigin:
-				return "Country of Origin"
+				return L10n.countryOfOrigin
 			case .languages:
-				return "Languages"
+				return L10n.language
 //			case .studio:
 //				return "Studio"
 //			case .network:
@@ -320,7 +320,7 @@ extension ShowDetail {
 			case .rating:
 				return show.attributes.tvRating.name
 			case .countryOfOrigin:
-				return show.attributes.countryOfOrigin?.name ?? "Unknown"
+				return show.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
 				let languages = show.attributes.languages.compactMap {
 					$0.name
@@ -406,15 +406,15 @@ extension ShowDetail {
 			case .genres, .themes:
 				return nil
 			case .episodes:
-				let seasonCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"
+				let seasonCount = show.attributes.seasonCount <= 1 ? L10n.one : "\(show.attributes.seasonCount)"
 				let seasonString = show.attributes.seasonCount > 1 ? L10n.seasons : L10n.season
-				return "Across \(seasonCount) \(seasonString.lowercased())."
+				return L10n.across("\(seasonCount) \(seasonString.lowercased(with: .current))")
 			case .duration:
-				return "With a total of \(show.attributes.durationTotal)."
+				return L10n.withTotalOf(show.attributes.durationTotal)
 			case .broadcast:
-				guard show.attributes.endedAt == nil else { return "The broadcasting of this series has ended." }
+				guard show.attributes.endedAt == nil else { return L10n.broadcastEnded }
 				guard show.attributes.nextBroadcastAt == nil else { return nil }
-				return "No broadcast data available at the moment."
+				return L10n.noBroadcastData
 			case .airDates:
 				guard self.secondaryInformation(from: show) == nil else { return nil }
 				return show.attributes.status.description

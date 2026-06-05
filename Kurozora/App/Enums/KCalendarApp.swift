@@ -23,7 +23,7 @@ enum KCalendarApp: Int, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .calendar:
-			return "Calendar"
+			return L10n.calendar
 		case .fantastical:
 			return "Fantastical"
 		case .googleCalendar:

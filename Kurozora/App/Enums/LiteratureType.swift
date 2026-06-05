@@ -23,23 +23,23 @@ enum LiteratureType: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .unknown:
-			return "Unknown"
+			return L10n.unknown
 		case .doujinshi:
-			return "Doujinshi"
+			return L10n.doujinshi
 		case .manhwa:
-			return "Manhwa"
+			return L10n.manhwa
 		case .manhua:
-			return "Manhua"
+			return L10n.manhua
 		case .oel:
-			return "OEL"
+			return L10n.oel
 		case .novel:
-			return "Novel"
+			return L10n.novel
 		case .manga:
-			return "Manga"
+			return L10n.manga
 		case .lightNovel:
-			return "Light Novel"
+			return L10n.lightNovel
 		case .oneShot:
-			return "One-shot"
+			return L10n.oneShot
 		}
 	}
 }

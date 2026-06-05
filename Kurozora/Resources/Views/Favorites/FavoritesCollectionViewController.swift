@@ -159,20 +159,20 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 		if self.viewedUser?.id == User.current?.id {
 			switch self.libraryKind {
 			case .shows:
-				detailString = "Favorited shows will show up on this page!"
+				detailString = L10n.favoritedWillShowUp(L10n.shows.lowercased(with: .current))
 			case .literatures:
-				detailString = "Favorited literatures will show up on this page!"
+				detailString = L10n.favoritedWillShowUp(L10n.literatures.lowercased(with: .current))
 			case .games:
-				detailString = "Favorited games will show up on this page!"
+				detailString = L10n.favoritedWillShowUp(L10n.games.lowercased(with: .current))
 			}
 		} else {
 			switch self.libraryKind {
 			case .shows:
-				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited shows yet."
+				detailString = L10n.userHasntFavorited(self.viewedUser?.attributes.username ?? L10n.thisUser, L10n.shows.lowercased(with: .current))
 			case .literatures:
-				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited literatures yet."
+				detailString = L10n.userHasntFavorited(self.viewedUser?.attributes.username ?? L10n.thisUser, L10n.literatures.lowercased(with: .current))
 			case .games:
-				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited games yet."
+				detailString = L10n.userHasntFavorited(self.viewedUser?.attributes.username ?? L10n.thisUser, L10n.games.lowercased(with: .current))
 			}
 		}
 

@@ -32,7 +32,7 @@ class ParentalGuideEmptyCategoryCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Renders the empty-state message as a tinted, underlined invitation.
 	func configure() {
-		let title = "It looks like we don't have an evaluation for this category yet."
+		let title = L10n.pgNoEvaluation
 		let attributes: [NSAttributedString.Key: Any] = [
 			.foregroundColor: KThemePicker.tintColor.colorValue,
 			.underlineStyle: NSUnderlineStyle.single.rawValue,

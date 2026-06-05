@@ -126,11 +126,11 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 	override func configureEmptyDataView() {
 		let username = self.user?.attributes.username
-		let titleString: String = "No Reviews"
+		let titleString: String = L10n.noItemsTitle(L10n.reviews)
 		let detailString: String = if self.user?.id == User.current?.id {
-			"Ratings and reviews you submit will appear here. "
+			L10n.reviewsEmptySelfDetail
 		} else {
-			"\(username ?? "") has not submitted any reviews yet. Check back later."
+			L10n.reviewsEmptyOtherDetail(username ?? "")
 		}
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.follow)

@@ -138,9 +138,9 @@ final class AuthenticationManager {
 		var authError: NSError?
 
 		#if targetEnvironment(macCatalyst)
-		let reasonString = "authenticate to continue."
+		let reasonString = L10n.biometricReasonContinueMac
 		#else
-		let reasonString = "Welcome back! Please authenticate to continue."
+		let reasonString = L10n.biometricReasonContinue
 		#endif
 
 		if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
@@ -174,13 +174,13 @@ final class AuthenticationManager {
 	private static func evaluatePolicyFailErrorMessage(forErrorCode errorCode: Int) -> String {
 		switch errorCode {
 		case LAError.biometryNotAvailable.rawValue:
-			return "Authentication could not start because the device does not support biometric authentication."
+			return L10n.authErrorBiometryNotAvailable
 		case LAError.biometryLockout.rawValue:
-			return "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
+			return L10n.authErrorBiometryLockout
 		case LAError.biometryNotEnrolled.rawValue:
-			return "Authentication could not start because the user has not enrolled in biometric authentication."
+			return L10n.authErrorBiometryNotEnrolled
 		default:
-			return "Did not find error code on LAError object"
+			return L10n.authErrorUnknownCode
 		}
 	}
 
@@ -192,21 +192,21 @@ final class AuthenticationManager {
 	private static func evaluateAuthenticationPolicyMessage(forErrorCode errorCode: Int) -> String {
 		switch errorCode {
 		case LAError.authenticationFailed.rawValue:
-			return "The user failed to provide valid credentials"
+			return L10n.authErrorAuthenticationFailed
 		case LAError.appCancel.rawValue:
-			return "Authentication was cancelled by application"
+			return L10n.authErrorAppCancel
 		case LAError.invalidContext.rawValue:
-			return "The context is invalid"
+			return L10n.authErrorInvalidContext
 		case LAError.notInteractive.rawValue:
-			return "Not interactive"
+			return L10n.authErrorNotInteractive
 		case LAError.passcodeNotSet.rawValue:
-			return "Passcode is not set on the device"
+			return L10n.authErrorPasscodeNotSet
 		case LAError.systemCancel.rawValue:
-			return "Authentication was cancelled by the system"
+			return L10n.authErrorSystemCancel
 		case LAError.userCancel.rawValue:
-			return "The user did cancel"
+			return L10n.authErrorUserCancel
 		case LAError.userFallback.rawValue:
-			return "The user chose to use the fallback"
+			return L10n.authErrorUserFallback
 		default:
 			return self.evaluatePolicyFailErrorMessage(forErrorCode: errorCode)
 		}

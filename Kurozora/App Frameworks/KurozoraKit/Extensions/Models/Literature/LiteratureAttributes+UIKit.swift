@@ -19,9 +19,9 @@ extension Literature.Attributes {
 	var informationString: String {
 		var informationString = "\(self.type.name) · \(self.tvRating.name)"
 
-		// Add the episode count
+		// Add the volume count
 		if self.volumeCount != 0 {
-			informationString += " · \(self.volumeCount) \(self.volumeCount == 1 ? "volume" : "volumes")"
+			informationString += " · " + L10n.volumeCount(self.volumeCount)
 		}
 
 		// Add the duration
@@ -85,7 +85,7 @@ extension Literature.Attributes {
 		let timeString = DateFormatter.broadcastTime.string(from: publicationAt)
 		let weekdayString = dateFormatter.string(from: publicationAt)
 
-		return "\(weekdayString) at \(timeString)"
+		return L10n.scheduleDayTime(weekdayString, timeString)
 	}
 
 	// MARK: - Functions

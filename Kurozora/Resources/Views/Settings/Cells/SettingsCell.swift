@@ -131,13 +131,13 @@ extension SettingsCell {
 	@objc func updateAppIcon() {
 		let appIcon = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
 		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
-		self.detailLabel?.text = appIcon == UserSettings.defaultAppIcon ? "Default" : appIcon
+		self.detailLabel?.text = appIcon == UserSettings.defaultAppIcon ? L10n.`default` : appIcon
 	}
 
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateAppTheme() {
 		let themeName = UserSettings.currentThemeName
-		self.detailLabel?.text = (themeName.isEmpty || themeName == KThemeStyle.default.stringValue) ? "Default" : themeName
+		self.detailLabel?.text = (themeName.isEmpty || themeName == KThemeStyle.default.stringValue) ? L10n.`default` : themeName
 	}
 
 	/// Updates the app theme text with the one selected by the user.

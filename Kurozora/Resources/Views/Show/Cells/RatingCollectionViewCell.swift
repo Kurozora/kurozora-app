@@ -19,5 +19,6 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	func configure(using stats: MediaStat) {
 		// Configure average rating
 		self.primaryLabel.text = "\(stats.ratingAverage)"
+		self.secondaryLabel.text = L10n.outOfFive
 	}
 }

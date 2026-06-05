@@ -63,7 +63,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 	// MARK: - Overridden Properties
 	override var emptyStateImage: UIImage { .Empty.cast }
 
-	override var emptyStateDetail: String { "This character doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.character.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

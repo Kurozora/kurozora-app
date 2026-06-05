@@ -188,10 +188,10 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		var buttonAction: (() -> Void)?
 
 		if User.isSignedIn {
-			detailString = "When you have notifications, you will see them here!"
+			detailString = L10n.notificationsEmptyDetail
 		} else {
-			detailString = "Notifications are only available to registered Kurozora users."
-			buttonTitle = "Sign In"
+			detailString = L10n.notificationsSignedOutDetail
+			buttonTitle = L10n.signIn
 			buttonAction = {
 				let signInTableViewController = SignInTableViewController()
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)

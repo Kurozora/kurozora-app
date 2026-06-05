@@ -39,13 +39,13 @@ enum LibraryCellStyle: Int {
 	var stringValue: String {
 		switch self {
 		case .detailed:
-			return "Detailed"
+			return L10n.detailed
 		case .compact:
-			return "Compact"
+			return L10n.compact
 		case .list:
-			return "List"
+			return L10n.list
 		case .table:
-			return "Table"
+			return L10n.table
 		}
 	}
 

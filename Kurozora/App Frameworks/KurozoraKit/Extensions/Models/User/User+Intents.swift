@@ -16,7 +16,7 @@ extension User {
 	/// Create an NSUserActivity from the selected user.
 	public var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: .openUser)
-		let title = "Open \(self.attributes.username)’s profile"
+		let title = L10n.openUserProfile(self.attributes.username)
 		userActivity.contentAttributeSet = self.contentAttributeSet
 		userActivity.title = self.attributes.username
 		try? userActivity.setTypedPayload(["id": self.id])

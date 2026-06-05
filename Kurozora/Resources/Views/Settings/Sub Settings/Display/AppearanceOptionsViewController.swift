@@ -113,7 +113,7 @@ extension AppearanceOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		if section == 0 {
-			return "Automatically transition appearance between light and dark based on time preference."
+			return L10n.appearanceScheduleFooter
 		}
 		return nil
 	}

@@ -19,15 +19,15 @@ enum StudioType: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .anime:
-			return "Anime"
+			return L10n.anime
 		case .manga:
-			return "Manga"
+			return L10n.manga
 		case .game:
-			return "Game"
+			return L10n.game
 		case .act:
-			return "Act"
+			return L10n.act
 		case .record:
-			return "Record"
+			return L10n.record
 		}
 	}
 }

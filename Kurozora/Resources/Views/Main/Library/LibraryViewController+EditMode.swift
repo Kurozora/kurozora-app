@@ -241,7 +241,7 @@ extension LibraryViewController {
 		}
 
 		let anyVisible = currentSection.anySelectedIsVisible(at: selectedIndexPaths)
-		let hideTitle = anyVisible ? L10n.hide : L10n.show
+		let hideTitle = anyVisible ? L10n.hide : L10n.reveal
 		let hideImage = UIImage(systemName: anyVisible ? "eye.slash" : "eye")
 		let hideAction = UIAction(title: hideTitle, image: hideImage) { [weak self] _ in
 			self?.performBatchHideToggle(currentSection: currentSection, selectedIndexPaths: selectedIndexPaths, hide: anyVisible)

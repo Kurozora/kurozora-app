@@ -83,17 +83,17 @@ enum AuthenticationInterval: Int, CaseIterable {
 		case .immediately:
 			return L10n.immediateAuthenticationRequired
 		case .thirtySeconds:
-			return L10n.authenticationInterval("30 seconds.")
+			return L10n.authenticationInterval(L10n.intervalThirtySeconds)
 		case .oneMinute:
-			return L10n.authenticationInterval("1 minute.")
+			return L10n.authenticationInterval(L10n.intervalOneMinute)
 		case .twoMinutes:
-			return L10n.authenticationInterval("2 minutes.")
+			return L10n.authenticationInterval(L10n.intervalTwoMinutes)
 		case .threeMinutes:
-			return L10n.authenticationInterval("3 minutes.")
+			return L10n.authenticationInterval(L10n.intervalThreeMinutes)
 		case .fourMinutes:
-			return L10n.authenticationInterval("4 minutes.")
+			return L10n.authenticationInterval(L10n.intervalFourMinutes)
 		case .fiveMinutes:
-			return L10n.authenticationInterval("5 minutes")
+			return L10n.authenticationInterval(L10n.intervalFiveMinutes)
 		}
 	}
 }

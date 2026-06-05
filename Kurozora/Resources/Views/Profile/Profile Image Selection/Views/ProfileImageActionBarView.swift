@@ -34,49 +34,49 @@ class ProfileImageActionBarView: UIView {
 	// MARK: - Views
 	private lazy var monogramEditInitialsButton: UIButton = .makePillButton(
 		systemName: "character.cursor.ibeam",
-		accessibilityLabel: "Edit Initials",
+		accessibilityLabel: L10n.editInitials,
 		target: self,
 		action: #selector(self.monogramEditInitialsButtonTapped)
 	)
 
 	private lazy var monogramFontWidthButton: UIButton = .makePillButton(
 		systemName: "textformat.size",
-		accessibilityLabel: "Font & Width",
+		accessibilityLabel: L10n.fontAndWidth,
 		target: self,
 		action: #selector(self.monogramFontWidthButtonTapped)
 	)
 
 	private lazy var colorButton: UIButton = .makePillButton(
 		systemName: "paintpalette",
-		accessibilityLabel: "Color",
+		accessibilityLabel: L10n.color,
 		target: self,
 		action: #selector(self.colorButtonTapped)
 	)
 
 	private(set) lazy var characterSearchButton: UIButton = .makePillButton(
 		systemName: "person.2.fill",
-		accessibilityLabel: "Character Search",
+		accessibilityLabel: L10n.characterSearch,
 		target: self,
 		action: #selector(self.characterSearchButtonTapped)
 	)
 
 	private(set) lazy var cropButton: UIButton = .makePillButton(
 		systemName: "crop",
-		accessibilityLabel: "Crop",
+		accessibilityLabel: L10n.crop,
 		target: self,
 		action: #selector(self.cropButtonTapped)
 	)
 
 	private lazy var emojiSelectorButton: UIButton = .makePillButton(
 		systemName: "face.smiling",
-		accessibilityLabel: "Change Emoji",
+		accessibilityLabel: L10n.changeEmoji,
 		target: self,
 		action: #selector(self.emojiSelectorButtonTapped)
 	)
 
 	private lazy var kaomojiSelectorButton: UIButton = .makePillButton(
 		title: "^_^",
-		accessibilityLabel: "Change Kaomoji",
+		accessibilityLabel: L10n.changeKaomoji,
 		target: self,
 		action: #selector(self.kaomojiSelectorButtonTapped)
 	)

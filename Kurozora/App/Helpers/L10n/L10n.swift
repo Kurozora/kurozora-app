@@ -14,10 +14,34 @@ import Foundation
 /// `.xcstrings` catalog for independent translation workflows:
 ///
 /// - ``Account`` domain → `Account.xcstrings`
-/// - ``Content`` domain → `Content.xcstrings`
-/// - ``Settings`` domain → `Settings.xcstrings`
 /// - ``Alerts`` domain → `Alerts.xcstrings`
-/// - `Common` domain → `Localizable.xcstrings` *(default, unscoped strings)*
+/// - ``Common`` domain → `Localizable.xcstrings`  *(default, unscoped strings)*
+/// - ``Content`` domain → `Content.xcstrings`
+/// - ``Moderation`` domain → `Moderation.xcstrings`
+/// - ``Settings`` domain → `Settings.xcstrings`
 ///
 /// - Tag: L10n
-struct L10n {}
+struct L10n {
+	/// Resolves a localized string and records how to re-resolve it for live language switching.
+	///
+	/// - Parameter resolver: A closure that produces the localized string against the current language.
+	/// - Returns: The resolved string for the current language.
+	static func resolve(_ resolver: @escaping () -> String) -> String {
+		let value = resolver()
+
+		if Thread.isMainThread {
+			L10nProvenance.pending = resolver
+		}
+
+		return value
+	}
+}
+
+/// Main-thread scratch state for re-resolving the most recently produced localized string.
+enum L10nProvenance {
+	/// The re-resolve closure for the most recently resolved localized string.
+	static var pending: (() -> String)?
+
+	/// A Boolean value indicating whether the engine is re-applying bindings after a language change.
+	static var isReapplying = false
+}

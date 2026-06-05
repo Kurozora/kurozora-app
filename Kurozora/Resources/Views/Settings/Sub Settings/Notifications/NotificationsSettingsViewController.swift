@@ -173,7 +173,7 @@ extension NotificationsSettingsViewController {
 
 		switch self.visibleSections[contentSection] {
 		case .allowNotifications:
-			return "Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora."
+			return L10n.inAppNotificationsFooter
 		case .preferences, .grouping:
 			return nil
 		}

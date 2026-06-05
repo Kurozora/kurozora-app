@@ -6,6 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import Foundation
+
 enum DayOfWeek: Int, CaseIterable {
 	// MARK: - Cases
 	case sunday = 0
@@ -17,23 +19,10 @@ enum DayOfWeek: Int, CaseIterable {
 	case saturday = 6
 
 	// MARK: - Properties
-	/// The name value of a season.
+	/// The localized standalone name of the weekday.
 	var name: String {
-		switch self {
-		case .sunday:
-			return "Sunday"
-		case .monday:
-			return "Monday"
-		case .tuesday:
-			return "Tuesday"
-		case .wednesday:
-			return "Wednesday"
-		case .thursday:
-			return "Thursday"
-		case .friday:
-			return "Friday"
-		case .saturday:
-			return "Saturday"
-		}
+		let formatter = DateFormatter()
+		formatter.locale = LanguageManager.shared.locale
+		return formatter.standaloneWeekdaySymbols[self.rawValue]
 	}
 }

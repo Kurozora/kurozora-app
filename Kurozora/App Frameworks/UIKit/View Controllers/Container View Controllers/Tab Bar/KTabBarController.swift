@@ -105,6 +105,21 @@ class KTabBarController: UITabBarController {
 	}
 
 	// MARK: - Functions
+	/// Re-applies the localized tab titles in place, preserving each tab's navigation stack.
+	override func reloadLocalization() {
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			for tab in self.tabs {
+				guard let tabBarItem = TabBarItem.tabBarCases.first(where: { $0.rowIdentifierValue == tab.identifier }) else { continue }
+				tab.title = tabBarItem.stringValue
+			}
+		} else {
+			self.viewControllers?.enumerated().forEach { index, viewController in
+				guard TabBarItem.tabBarCases.indices.contains(index) else { return }
+				viewController.tabBarItem?.title = TabBarItem.tabBarCases[index].stringValue
+			}
+		}
+	}
+
 	func selectTab(_ tabItem: TabBarItem) {
 		if #available(iOS 18.0, *) {
 			self.selectedIndex = self.tabs.firstIndex(of: tabItem.tab) ?? 0

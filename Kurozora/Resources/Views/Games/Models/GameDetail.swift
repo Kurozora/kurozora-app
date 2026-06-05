@@ -98,7 +98,7 @@ extension GameDetail {
 			case .rank:
 				return L10n.chart // e.g. Thriller — game.attributes.popularity.genre
 			case .tvRating:
-				return "Rated"
+				return L10n.rated
 			case .studio:
 				return L10n.studio
 			case .country:
@@ -109,9 +109,9 @@ extension GameDetail {
 				case 0:
 					return L10n.language
 				case 1:
-					return "+1 More Language"
+					return L10n.oneMoreLanguage
 				default:
-					return "+\(languages.count - 1) More Languages"
+					return L10n.moreLanguages(languages.count - 1)
 				}
 			}
 		}
@@ -220,27 +220,27 @@ extension GameDetail {
 		var stringValue: String {
 			switch self {
 			case .type:
-				return "Type"
+				return L10n.columnType
 			case .source:
-				return "Source"
+				return L10n.source
 			case .genres:
-				return "Genres"
+				return L10n.genres
 			case .themes:
-				return "Themes"
+				return L10n.themes
 			case .editions:
-				return "Editions"
+				return L10n.columnEditions
 			case .duration:
-				return "Duration"
+				return L10n.duration
 			case .publication:
-				return "Publication"
+				return L10n.publication
 			case .publicationDates:
-				return "Published"
+				return L10n.published
 			case .rating:
-				return "Rating"
+				return L10n.rating
 			case .countryOfOrigin:
-				return "Country of Origin"
+				return L10n.countryOfOrigin
 			case .languages:
-				return "Languages"
+				return L10n.language
 //			case .studio:
 //				return "Studio"
 //			case .network:
@@ -320,7 +320,7 @@ extension GameDetail {
 			case .rating:
 				return game.attributes.tvRating.name
 			case .countryOfOrigin:
-				return game.attributes.countryOfOrigin?.name ?? "Unknown"
+				return game.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
 				let languages = game.attributes.languages.compactMap {
 					$0.name
@@ -406,15 +406,15 @@ extension GameDetail {
 			case .genres, .themes:
 				return nil
 			case .editions:
-				let editionCount = game.attributes.editionCount <= 1 ? "one" : "\(game.attributes.editionCount)"
-				let editionString = game.attributes.editionCount > 1 ? "editions" : "edition"
-				return "Across \(editionCount) \(editionString)."
+				let editionCount = game.attributes.editionCount <= 1 ? L10n.one : "\(game.attributes.editionCount)"
+				let editionString = game.attributes.editionCount > 1 ? L10n.columnEditions.lowercased(with: .current) : L10n.edition.lowercased(with: .current)
+				return L10n.across("\(editionCount) \(editionString)")
 			case .duration:
-				return "With a total of \(game.attributes.durationTotal)."
+				return L10n.withTotalOf(game.attributes.durationTotal)
 			case .publication:
-				guard game.attributes.endedAt == nil else { return "The publicationing of this series has ended." }
+				guard game.attributes.endedAt == nil else { return L10n.publicationEnded }
 				guard game.attributes.publicationDate == nil else { return nil }
-				return "No publication data available at the moment."
+				return L10n.noPublicationData
 			case .publicationDates:
 				guard self.secondaryInformation(from: game) == nil else { return nil }
 				return game.attributes.status.description

@@ -17,11 +17,11 @@ enum SelfLabel: String, CaseIterable {
 	var stringValue: String {
 		switch self {
 		case .spoiler:
-			return "Spoiler"
+			return L10n.reportReasonSpoiler
 		case .nsfw:
-			return "NSFW"
+			return L10n.nsfw
 		case .both:
-			return "Both"
+			return L10n.both
 		}
 	}
 }

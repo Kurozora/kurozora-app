@@ -73,7 +73,7 @@ extension Genre {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Discover \(self.attributes.name) shows via @KurozoraApp.")
+		activityItems.append(L10n.shareDiscover(self.attributes.name))
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 

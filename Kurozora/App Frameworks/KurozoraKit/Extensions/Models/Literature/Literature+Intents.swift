@@ -16,7 +16,7 @@ extension Literature {
 	/// Create an NSUserActivity from the selected literature.
 	var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: .openLiterature)
-		let title = "Open \(self.attributes.title)"
+		let title = L10n.openTitle(self.attributes.title)
 		userActivity.contentAttributeSet = self.contentAttributeSet
 		userActivity.title = self.attributes.title
 		try? userActivity.setTypedPayload(["id": self.id])

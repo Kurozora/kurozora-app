@@ -17,11 +17,11 @@ enum GameType: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .dlc:
-			return "DLC"
+			return L10n.dlc
 		case .mod:
-			return "MOD"
+			return L10n.mod
 		case .fullGame:
-			return "Full Game"
+			return L10n.fullGame
 		}
 	}
 }

@@ -128,13 +128,13 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 				if self.user?.id == User.current?.id {
 					return L10n.followersEmptyDetailSelf
 				} else {
-					return L10n.followersEmptyDetailOther(username ?? L10n.thisUserLowercase)
+					return L10n.followersEmptyDetailOther(username ?? L10n.thisUser.lowercased(with: .current))
 				}
 			case .following:
 				if self.user?.id == User.current?.id {
 					return L10n.followingEmptyDetailSelf
 				} else {
-					return L10n.followingEmptyDetailOther(username ?? L10n.thisUserCapitalized)
+					return L10n.followingEmptyDetailOther(username ?? L10n.thisUser)
 				}
 			}
 		case .search:

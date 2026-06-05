@@ -34,41 +34,41 @@ enum SourceType: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .unknown:
-			return "Unknown"
+			return L10n.unknown
 		case .original:
-			return "Original"
+			return L10n.original
 		case .book:
-			return "Book"
+			return L10n.book
 		case .pictureBook:
-			return "Picture Book"
+			return L10n.pictureBook
 		case .manga:
-			return "Manga"
+			return L10n.manga
 		case .digitalManga:
-			return "Digital Manga"
+			return L10n.digitalManga
 		case .fourKomaManga:
-			return "4-Koma Manga"
+			return L10n.fourKomaManga
 		case .webManga:
-			return "Web Manga"
+			return L10n.webManga
 		case .novel:
-			return "Novel"
+			return L10n.novel
 		case .lightNovel:
-			return "Light Novel"
+			return L10n.lightNovel
 		case .visualNovel:
-			return "Visual Novel"
+			return L10n.visualNovel
 		case .game:
-			return "Game"
+			return L10n.game
 		case .cardGame:
-			return "Card Game"
+			return L10n.cardGame
 		case .music:
-			return "Music"
+			return L10n.music
 		case .radio:
-			return "Radio"
+			return L10n.radio
 		case .webNovel:
-			return "Web novel"
+			return L10n.webNovel
 		case .mixedMedia:
-			return "Mixed media"
+			return L10n.mixedMedia
 		case .other:
-			return "Other"
+			return L10n.other
 		}
 	}
 }

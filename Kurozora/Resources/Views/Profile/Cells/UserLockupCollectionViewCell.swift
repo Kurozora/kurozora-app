@@ -122,7 +122,7 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 			attachment.image = UIImage(systemName: "person.fill")?.withTintColor(textColor, renderingMode: .alwaysOriginal)
 
 			let attributedString = NSMutableAttributedString(attachment: attachment)
-			attributedString.append(NSAttributedString(string: " \(L10n.userMentionFollowingBadge)", attributes: [
+			attributedString.append(NSAttributedString(string: " \(L10n.followingState)", attributes: [
 				.foregroundColor: textColor,
 				.font: UIFont.preferredFont(forTextStyle: .caption1)
 			]))

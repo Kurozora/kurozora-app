@@ -206,7 +206,7 @@ extension CharacterDetail {
 			switch self {
 			case .debut:
 				guard let status = character.attributes.status else { return nil }
-				return "The character is \(status)."
+				return L10n.characterStatusFootnote("\(status)")
 			case .age:
 				var ageFootnote = ""
 				if let birthdate = character.attributes.birthdate, !birthdate.isEmpty {

@@ -112,7 +112,7 @@ extension PrivacySettingsViewController {
 
 		switch Section.allCases[contentSection] {
 		case .inAppPrivacy:
-			return "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions."
+			return L10n.privacySettingsFooter
 		case .settingsPrivacy:
 			return nil
 		case .accountPrivacy:

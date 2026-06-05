@@ -128,7 +128,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					await self.getProfileDetails()
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: L10n.done) { [weak self] _ in
+					self.presentAlertController(title: L10n.Onboarding.signUpAlertHeadline, message: L10n.Onboarding.signUpWelcomeMessage, defaultActionButtonTitle: L10n.done) { [weak self] _ in
 						guard let self = self else { return }
 						self.dismiss(animated: true) {
 							self.onSignUp?()

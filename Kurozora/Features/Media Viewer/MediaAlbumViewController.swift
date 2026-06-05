@@ -183,7 +183,7 @@ final class MediaAlbumViewController: UIPageViewController {
 	}
 
 	private func updateIndexButton() {
-		self.indexButton.setTitle("\(self.currentIndex + 1) of \(self.items.count)", for: .normal)
+		self.indexButton.setTitle(L10n.indexOfTotal(self.currentIndex + 1, self.items.count), for: .normal)
 		self.indexButton.isHidden = self.items.count <= 1
 	}
 

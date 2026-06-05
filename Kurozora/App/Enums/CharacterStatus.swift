@@ -13,18 +13,18 @@ enum CharacterStatus: Int, CaseIterable {
 	case deceased = 2
 	case missing = 3
 
-	// MARK: - Propreties
+	// MARK: - Properties
 	/// The title of an astrological sign.
 	var title: String {
 		switch self {
 		case .unknown:
-			return "Unknown"
+			return L10n.unknown
 		case .alive:
-			return "Alive"
+			return L10n.alive
 		case .deceased:
-			return "Deceased"
+			return L10n.deceased
 		case .missing:
-			return "Missing"
+			return L10n.missing
 		}
 	}
 }

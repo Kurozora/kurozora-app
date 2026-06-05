@@ -1,182 +1,628 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "%@ (%@)" : {
-      "comment" : "Expiry value for a temporary suspension, showing absolute date and relative countdown.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ (%2$@)"
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ (%@)": {
+      "comment": "Expiry value for a temporary suspension, showing absolute date and relative countdown.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ (%2$@)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ (%2$@)"
           }
         }
       }
     },
-    "%@ is currently suspended." : {
-      "comment" : "Admin headline for a temporary suspension."
+    "%@ is currently suspended.": {
+      "comment": "Admin headline for a temporary suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is momenteel geschorst."
+          }
+        }
+      }
     },
-    "%@ is permanently suspended." : {
-      "comment" : "Admin headline for a permanent suspension."
+    "%@ is permanently suspended.": {
+      "comment": "Admin headline for a permanent suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is permanent geschorst."
+          }
+        }
+      }
     },
-    "1 hour" : {
-      "comment" : "Timeout duration label."
+    "1 hour": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 uur"
+          }
+        }
+      }
     },
-    "3 days" : {
-      "comment" : "Timeout duration label."
+    "3 days": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 dagen"
+          }
+        }
+      }
     },
-    "7 days" : {
-      "comment" : "Timeout duration label."
+    "7 days": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 dagen"
+          }
+        }
+      }
     },
-    "24 hours" : {
-      "comment" : "Timeout duration label."
+    "24 hours": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 uur"
+          }
+        }
+      }
     },
-    "30 days" : {
-      "comment" : "Timeout duration label."
+    "30 days": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 dagen"
+          }
+        }
+      }
     },
-    "Account Suspended" : {
-      "comment" : "Title of the suspension details view as seen by the suspended user."
+    "Account Suspended": {
+      "comment": "Title of the suspension details view as seen by the suspended user.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account geschorst"
+          }
+        }
+      }
     },
-    "Add a content warning" : {
-      "comment" : "The title of the content warning self-label sheet."
+    "Add a content warning": {
+      "comment": "The title of the content warning self-label sheet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inhoudswaarschuwing toevoegen"
+          }
+        }
+      }
     },
-    "Appeal from %@" : {
-      "comment" : "Section header for the suspended user's appeal as seen by a moderator."
+    "Appeal from %@": {
+      "comment": "Section header for the suspended user's appeal as seen by a moderator.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bezwaar van %@"
+          }
+        }
+      }
     },
-    "Choose Duration" : {
-      "comment" : "Menu title for the duration picker."
+    "Choose Duration": {
+      "comment": "Menu title for the duration picker.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies duur"
+          }
+        }
+      }
     },
-    "Choose Reason" : {
-      "comment" : "Menu title for the reason picker."
+    "Choose Reason": {
+      "comment": "Menu title for the reason picker.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies reden"
+          }
+        }
+      }
     },
-    "Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences." : {
-      "comment" : "The subtitle of the content warning self-label sheet."
+    "Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences.": {
+      "comment": "The subtitle of the content warning self-label sheet.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies de zelflabels die van toepassing zijn op de media die je plaatst. Als er niets is geselecteerd, is dit bericht geschikt voor alle doelgroepen."
+          }
+        }
+      }
     },
-    "Community Guidelines" : {
-      "comment" : "Button on the suspension details view that opens the community guidelines."
+    "Community Guidelines": {
+      "comment": "Button on the suspension details view that opens the community guidelines.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Communityrichtlijnen"
+          }
+        }
+      }
     },
-    "Contest Suspension" : {
-      "comment" : "Title of the appeal compose view."
+    "Contest Suspension": {
+      "comment": "Title of the appeal compose view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schorsing aanvechten"
+          }
+        }
+      }
     },
-    "Contest this suspension" : {
-      "comment" : "Primary action on the user-facing suspension details view."
+    "Contest this suspension": {
+      "comment": "Primary action on the user-facing suspension details view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vecht deze schorsing aan"
+          }
+        }
+      }
     },
-    "Duration" : {
-      "comment" : "Leading row title for the duration picker on the moderator issue-timeout view."
+    "Duration": {
+      "comment": "Leading row title for the duration picker on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duur"
+          }
+        }
+      }
     },
-    "Edit appeal" : {
-      "comment" : "Primary action on the user-facing suspension details view when an appeal has already been filed."
+    "Edit appeal": {
+      "comment": "Primary action on the user-facing suspension details view when an appeal has already been filed.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bezwaar bewerken"
+          }
+        }
+      }
     },
-    "Edit Appeal" : {
-      "comment" : "Title of the appeal compose view when editing an existing appeal."
+    "Edit Appeal": {
+      "comment": "Title of the appeal compose view when editing an existing appeal.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bezwaar bewerken"
+          }
+        }
+      }
     },
-    "Ends" : {
-      "comment" : "Leading label of the expiry row on the suspension details view."
+    "Ends": {
+      "comment": "Leading label of the expiry row on the suspension details view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eindigt"
+          }
+        }
+      }
     },
-    "Explain why you believe your suspension should be lifted. A moderator will review your message." : {
-      "comment" : "Prompt above the appeal text field."
+    "Explain why you believe your suspension should be lifted. A moderator will review your message.": {
+      "comment": "Prompt above the appeal text field.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leg uit waarom u vindt dat uw schorsing moet worden opgeheven. Een moderator beoordeelt uw bericht."
+          }
+        }
+      }
     },
-    "Filed %@" : {
-      "comment" : "Footer line showing when an appeal was filed."
+    "Filed %@": {
+      "comment": "Footer line showing when an appeal was filed.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingediend %@"
+          }
+        }
+      }
     },
-    "Harassment" : {
-      "comment" : "Timeout reason label."
+    "Harassment": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intimidatie"
+          }
+        }
+      }
     },
-    "Hate" : {
-      "comment" : "Timeout reason label."
+    "Hate": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haat"
+          }
+        }
+      }
     },
-    "Impersonation" : {
-      "comment" : "Timeout reason label."
+    "Impersonation": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imitatie"
+          }
+        }
+      }
     },
-    "Issue Timeout" : {
-      "comment" : "Context menu action that opens the issue-timeout form."
+    "Issue Timeout": {
+      "comment": "Context menu action that opens the issue-timeout form.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time-out opleggen"
+          }
+        }
+      }
     },
-    "Moderator note" : {
-      "comment" : "Header for the moderator note on the suspension details view."
+    "Moderator note": {
+      "comment": "Header for the moderator note on the suspension details view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moderatornotitie"
+          }
+        }
+      }
     },
-    "No end date" : {
-      "comment" : "Expiry value for a permanent suspension."
+    "No end date": {
+      "comment": "Expiry value for a permanent suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen einddatum"
+          }
+        }
+      }
     },
-    "Note" : {
-      "comment" : "Section header for the note field on the moderator issue-timeout view."
+    "Note": {
+      "comment": "Section header for the note field on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notitie"
+          }
+        }
+      }
     },
-    "Note for the user" : {
-      "comment" : "Placeholder for the note field on the moderator issue-timeout view."
+    "Note for the user": {
+      "comment": "Placeholder for the note field on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notitie voor de gebruiker"
+          }
+        }
+      }
     },
-    "NSFW" : {
-      "comment" : "Timeout reason label."
+    "NSFW": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NSFW"
+          }
+        }
+      }
     },
-    "Other" : {
-      "comment" : "Timeout reason label."
+    "Other": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overig"
+          }
+        }
+      }
     },
-    "Permanent" : {
-      "comment" : "Timeout duration label."
+    "Permanent": {
+      "comment": "Timeout duration label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permanent"
+          }
+        }
+      }
     },
-    "Reason" : {
-      "comment" : "Leading label of the reason row on the suspension details view.\nLeading row title for the reason picker on the moderator issue-timeout view."
+    "Reason": {
+      "comment": "Leading label of the reason row on the suspension details view.\nLeading row title for the reason picker on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reden"
+          }
+        }
+      }
     },
-    "Revoke Timeout" : {
-      "comment" : "Context menu action that lifts an active timeout."
+    "Revoke Timeout": {
+      "comment": "Context menu action that lifts an active timeout.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time-out intrekken"
+          }
+        }
+      }
     },
-    "Revoke timeout on %@?" : {
-      "comment" : "Alert title for revoking a user's active timeout."
+    "Revoke timeout on %@?": {
+      "comment": "Alert title for revoking a user's active timeout.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time-out voor %@ intrekken?"
+          }
+        }
+      }
     },
-    "Spam" : {
-      "comment" : "Timeout reason label."
+    "Spam": {
+      "comment": "Timeout reason label.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spam"
+          }
+        }
+      }
     },
-    "Submit" : {
-      "comment" : "Submit bar-button label on the moderator issue-timeout view."
+    "Submit": {
+      "comment": "Submit bar-button label on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verstuur"
+          }
+        }
+      }
     },
-    "Submit Appeal" : {
-      "comment" : "Submit button on the appeal compose view."
+    "Submit Appeal": {
+      "comment": "Submit button on the appeal compose view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bezwaar indienen"
+          }
+        }
+      }
     },
-    "Suspended" : {
-      "comment" : "Profile banner shown for an active suspension without an expiry."
+    "Suspended": {
+      "comment": "Profile banner shown for an active suspension without an expiry.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschorst"
+          }
+        }
+      }
     },
-    "Suspended for %lld day(s)" : {
-      "comment" : "Profile banner showing the remaining days of a suspension."
+    "Suspended for %lld day(s)": {
+      "comment": "Profile banner showing the remaining days of a suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschorst voor %lld dag(en)"
+          }
+        }
+      }
     },
-    "Suspended for %lld hour(s)" : {
-      "comment" : "Profile banner showing the remaining hours of a suspension."
+    "Suspended for %lld hour(s)": {
+      "comment": "Profile banner showing the remaining hours of a suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschorst voor %lld uur"
+          }
+        }
+      }
     },
-    "Suspended for %lld minute(s)" : {
-      "comment" : "Profile banner showing the remaining minutes of a suspension."
+    "Suspended for %lld minute(s)": {
+      "comment": "Profile banner showing the remaining minutes of a suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschorst voor %lld minuut(en)"
+          }
+        }
+      }
     },
-    "Suspended for %lld second(s)" : {
-      "comment" : "Profile banner showing the remaining seconds of a suspension."
+    "Suspended for %lld second(s)": {
+      "comment": "Profile banner showing the remaining seconds of a suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschorst voor %lld seconde(n)"
+          }
+        }
+      }
     },
-    "Suspended permanently" : {
-      "comment" : "Profile banner shown for a permanent suspension."
+    "Suspended permanently": {
+      "comment": "Profile banner shown for a permanent suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permanent geschorst"
+          }
+        }
+      }
     },
-    "Suspension Details" : {
-      "comment" : "Title of the suspension details view as seen by a moderator."
+    "Suspension Details": {
+      "comment": "Title of the suspension details view as seen by a moderator.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schorsingsdetails"
+          }
+        }
+      }
     },
-    "Suspension ending" : {
-      "comment" : "Profile banner shown when a suspension has just ended."
+    "Suspension ending": {
+      "comment": "Profile banner shown when a suspension has just ended.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schorsing eindigt"
+          }
+        }
+      }
     },
-    "This lifts the suspension immediately. The user will be able to post, rate, and engage again." : {
-      "comment" : "Alert body for revoking a user's active timeout."
+    "This lifts the suspension immediately. The user will be able to post, rate, and engage again.": {
+      "comment": "Alert body for revoking a user's active timeout.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit heft de schorsing direct op. De gebruiker kan weer plaatsen, beoordelen en deelnemen."
+          }
+        }
+      }
     },
-    "Timeout" : {
-      "comment" : "Section header grouping the duration and reason pickers on the moderator issue-timeout view."
+    "Timeout": {
+      "comment": "Section header grouping the duration and reason pickers on the moderator issue-timeout view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time-out"
+          }
+        }
+      }
     },
-    "Update Appeal" : {
-      "comment" : "Submit button on the appeal compose view when updating an existing appeal."
+    "Update Appeal": {
+      "comment": "Submit button on the appeal compose view when updating an existing appeal.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bezwaar bijwerken"
+          }
+        }
+      }
     },
-    "Write your appeal" : {
-      "comment" : "Placeholder inside the appeal text view."
+    "Write your appeal": {
+      "comment": "Placeholder inside the appeal text view.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schrijf uw bezwaar"
+          }
+        }
+      }
     },
-    "Your account is permanently suspended." : {
-      "comment" : "Heading on the suspension details view for a permanent ban."
+    "Your account is permanently suspended.": {
+      "comment": "Heading on the suspension details view for a permanent ban.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw account is permanent geschorst."
+          }
+        }
+      }
     },
-    "Your account is temporarily suspended." : {
-      "comment" : "Heading on the suspension details view for a temporary suspension."
+    "Your account is temporarily suspended.": {
+      "comment": "Heading on the suspension details view for a temporary suspension.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw account is tijdelijk geschorst."
+          }
+        }
+      }
     },
-    "Your appeal" : {
-      "comment" : "Section header for the suspended user's own appeal."
+    "Your appeal": {
+      "comment": "Section header for the suspended user's own appeal.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw bezwaar"
+          }
+        }
+      }
     },
-    "Your appeal must be at least 10 characters long." : {
-      "comment" : "Error shown when the appeal message is too short."
+    "Your appeal must be at least 10 characters long.": {
+      "comment": "Error shown when the appeal message is too short.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uw bezwaar moet minstens 10 tekens lang zijn."
+          }
+        }
+      }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

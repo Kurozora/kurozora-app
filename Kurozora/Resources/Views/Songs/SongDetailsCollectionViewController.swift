@@ -50,7 +50,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	// MARK: - Overridden Properties
 	override var emptyStateImage: UIImage { .Empty.cast }
 
-	override var emptyStateDetail: String { "This song doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.song.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

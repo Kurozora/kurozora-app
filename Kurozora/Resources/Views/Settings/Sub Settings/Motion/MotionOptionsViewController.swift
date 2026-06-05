@@ -166,7 +166,7 @@ extension MotionOptionsViewController {
 		guard let section = Section(rawValue: section) else { return nil }
 		switch section {
 		case .preview:
-			return "Preview"
+			return L10n.preview
 		case .options:
 			return L10n.animations
 		}

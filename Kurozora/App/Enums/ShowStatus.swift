@@ -20,17 +20,17 @@ enum ShowStatus: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .toBeAnnounced:
-			return "To Be Announced"
+			return L10n.toBeAnnounced
 		case .notAiringYet:
-			return "Not Airing Yet"
+			return L10n.notAiringYet
 		case .currentlyAiring:
-			return "Currently Airing"
+			return L10n.currentlyAiring
 		case .finishedAiring:
-			return "Finished Airing"
+			return L10n.finishedAiring
 		case .onHiatus:
-			return "On Hiatus"
+			return L10n.onHiatus
 		case .discontinued:
-			return "Discontinued"
+			return L10n.discontinued
 		}
 	}
 }

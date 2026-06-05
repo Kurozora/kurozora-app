@@ -263,15 +263,15 @@ extension EpisodeDetail {
 		func footnote(from episode: Episode) -> String? {
 			switch self {
 			case .number:
-				return "#\(episode.attributes.number) in the current season."
+				return L10n.episodeInCurrentSeason(episode.attributes.number)
 			case .duration:
 				return nil
 			case .airDate:
 				if let startedAt = episode.attributes.startedAt {
 					let isInFuture = startedAt > Date()
-					return isInFuture ? "The episode will air on the announced date." : "The episode has finished airing."
+					return isInFuture ? L10n.episodeWillAir : L10n.episodeFinishedAiring
 				}
-				return "A release date has yet to be announced."
+				return L10n.episodeReleaseDateTBA
 			}
 		}
 	}

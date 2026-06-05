@@ -20,17 +20,17 @@ enum GameStatus: Int, CaseIterable {
 	var name: String {
 		switch self {
 		case .toBeAnnounced:
-			return "To Be Announced"
+			return L10n.toBeAnnounced
 		case .notPublishedYet:
-			return "Not Published Yet"
+			return L10n.notPublishedYet
 		case .currentlyPublishing:
-			return "Currently Publishing"
+			return L10n.currentlyPublishing
 		case .finishedPublishing:
-			return "Finished Publishing"
+			return L10n.finishedPublishing
 		case .onHiatus:
-			return "On Hiatus"
+			return L10n.onHiatus
 		case .discontinued:
-			return "Discontinued"
+			return L10n.discontinued
 		}
 	}
 }

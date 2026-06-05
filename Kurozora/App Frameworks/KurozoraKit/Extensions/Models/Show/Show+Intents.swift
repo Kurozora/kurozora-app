@@ -16,7 +16,7 @@ public extension Show {
 	/// Create an NSUserActivity from the selected show.
 	var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: .openShow)
-		let title = "Open \(self.attributes.title)"
+		let title = L10n.openTitle(self.attributes.title)
 		userActivity.contentAttributeSet = self.contentAttributeSet
 		userActivity.title = self.attributes.title
 		try? userActivity.setTypedPayload(["id": self.id])

@@ -68,7 +68,7 @@ extension Cast {
 
 		if let person = self.relationships.people?.data.first?.attributes.fullName,
 		   let character = self.relationships.characters.data.first?.attributes.name {
-			activityItems.append("TIL, \(person) is the voice actor of \(character) via @KurozoraApp")
+			activityItems.append(L10n.shareCast(person, character))
 		}
 
 		if let personImageURLString = self.relationships.people?.data.first?.attributes.profile?.url, !personImageURLString.isEmpty,

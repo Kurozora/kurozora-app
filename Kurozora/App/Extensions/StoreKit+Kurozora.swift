@@ -93,18 +93,17 @@ extension Product.SubscriptionPeriod {
 	// MARK: - Properties
 	/// Returns the unit as a string in pluralized form if required.
 	var unitString: String {
-		let plural = 1 < value
 		switch unit {
 		case .day:
-			return plural ? "\(value) days" : "day"
+			return L10n.periodWordDays(value)
 		case .week:
-			return plural ? "\(value) weeks" : "week"
+			return L10n.periodWordWeeks(value)
 		case .month:
-			return plural ? "\(value) months" : "month"
+			return L10n.periodWordMonths(value)
 		case .year:
-			return plural ? "\(value) years" : "year"
+			return L10n.periodWordYears(value)
 		@unknown default:
-			return "period"
+			return L10n.periodWordDefault
 		}
 	}
 
@@ -112,27 +111,32 @@ extension Product.SubscriptionPeriod {
 	var displayUnit: String {
 		let plural = 1 < value
 		switch unit {
+		case .day:
+			return plural ? L10n.periodWordDays(value) : L10n.periodDisplaySingularDay
+		case .week:
+			return plural ? L10n.periodWordWeeks(value) : L10n.periodDisplaySingularWeek
+		case .month:
+			return plural ? L10n.periodWordMonths(value) : L10n.periodDisplaySingularMonth
 		case .year:
-			return plural ? unitString : "12 months"
-		default:
-			return plural ? unitString : "a \(unitString)"
+			return plural ? L10n.periodWordYears(value) : L10n.periodDisplaySingularYear
+		@unknown default:
+			return self.unitString
 		}
 	}
 
 	/// Returns the localized unit of the subscription in a shorter format.
 	var shortDisplayUnit: String {
-		let plural = 1 < value
 		switch unit {
 		case .year:
-			return plural ? "\(value)y" : "y"
+			return L10n.periodShortYears(value)
 		case .month:
-			return plural ? "\(value)m" : "m"
+			return L10n.periodShortMonths(value)
 		case .week:
-			return plural ? "\(value)w" : "w"
+			return L10n.periodShortWeeks(value)
 		case .day:
-			return plural ? "\(value)d" : "d"
+			return L10n.periodShortDays(value)
 		default:
-			return unitString
+			return self.unitString
 		}
 	}
 }

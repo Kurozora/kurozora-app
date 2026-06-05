@@ -453,7 +453,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 						self.didDeleteReview(at: nil)
 					} else {
 						cell.configure(using: previousRating)
-						self.presentAlertController(title: L10n.ratingFailed, message: "Not available yet for this type.")
+						self.presentAlertController(title: L10n.ratingFailed, message: L10n.notAvailableForType)
 					}
 				} catch {
 					cell.configure(using: previousRating)

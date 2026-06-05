@@ -386,7 +386,7 @@ extension AccountTableViewController {
 				}
 			})
 		case .deleteAccount:
-			let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.", defaultActionButtonTitle: L10n.cancel)
+			let alertController = self.presentAlertController(title: L10n.deleteAccount, message: L10n.deleteAccountConfirmation, defaultActionButtonTitle: L10n.cancel)
 			alertController.addTextField { textField in
 				textField.textType = .password
 				textField.placeholder = L10n.password
@@ -489,6 +489,7 @@ extension AccountTableViewController: SettingsPickerTableViewControllerDelegate 
 		switch self.selectedAccountSetting {
 		case .language:
 			self.selectedLanguage = self.selectedLanguage.key == key ? self.selectedLanguage : (key, self.languages[key] ?? "")
+			LanguageManager.shared.setLanguage(key)
 			await self.updateInformation()
 		case .tvRating:
 			self.selectedTVRating = self.selectedTVRating.key == key ? self.selectedTVRating : (key, self.tvRatings[key] ?? "")

@@ -521,8 +521,8 @@ extension FeedTableViewController: FMDetailsTableViewControllerDelegate {
 
 extension FeedTableViewController: UITextViewDelegate {
 	func showHashTagAlert(_ tagType: String, payload: String) {
-		let alertView = UIAlertController(title: "\(tagType) tag detected", message: "\(payload)", preferredStyle: .alert)
-		alertView.addAction(title: "OK")
+		let alertView = UIAlertController(title: L10n.tagDetected(tagType), message: "\(payload)", preferredStyle: .alert)
+		alertView.addAction(title: L10n.okay)
 		self.show(alertView, sender: nil)
 	}
 }

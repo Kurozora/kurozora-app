@@ -114,6 +114,15 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 	}
 
 	// MARK: - Functions
+	override func reloadLocalization() {
+		if let feedMessage = self.feedMessage {
+			let repliesCount = feedMessage.attributes.metrics.replyCount
+			self.title = L10n.repliesCount(repliesCount.kkFormatted(precision: 0), count: repliesCount)
+		}
+
+		super.reloadLocalization()
+	}
+
 	override func handleRefreshControl() {
 		self.nextPageCursor = nil
 		self.heightCache.removeAll()

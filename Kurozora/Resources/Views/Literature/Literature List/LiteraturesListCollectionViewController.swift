@@ -64,8 +64,8 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.mangaLibrary }
-	override var emptyStateTitle: String { "No Literatures" }
-	override var emptyStateDetail: String { "Can't get literatures list. Please refresh the page or restart the app and check your WiFi connection." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.literatures) }
+	override var emptyStateDetail: String { L10n.cantGetListRefresh(L10n.literatures.lowercased(with: .current)) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.literatureIdentities.isEmpty || !self.relatedLiteratures.isEmpty

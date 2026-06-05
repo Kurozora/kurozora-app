@@ -133,7 +133,7 @@ extension User {
 			guard let self = self else { return }
 			var activityItems: [Any] = []
 			activityItems.append(self.webpageURLString)
-			activityItems.append("Follow \(self.attributes.username) via @KurozoraApp")
+			activityItems.append(L10n.shareFollowUser(self.attributes.username))
 
 			self.openShareSheet(activityItems: activityItems, on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -157,7 +157,7 @@ extension User {
 	func openShareSheet(activityItems: [Any], on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Follow \(self.attributes.username) via @KurozoraApp")
+		activityItems.append(L10n.shareFollowUser(self.attributes.username))
 
 		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
 			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))
@@ -497,7 +497,7 @@ extension User {
 			guard let self = self else { return }
 			var activityItems: [Any] = []
 			activityItems.append("https://kurozora.app/profile/\(self.attributes.slug)/\(UserSettings.libraryKind.urlPathName)")
-			activityItems.append("Check out \(self.attributes.username)’s library via @KurozoraApp")
+			activityItems.append(L10n.shareUserLibrary(self.attributes.username))
 
 			self.openShareSheet(activityItems: activityItems, on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}

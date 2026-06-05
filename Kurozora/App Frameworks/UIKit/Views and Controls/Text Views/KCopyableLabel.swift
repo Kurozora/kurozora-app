@@ -46,7 +46,7 @@ class KCopyableLabel: KLabel {
 	/// - Returns: a `UIMenu` object with the preconfigured actions.
 	private func makeContextMenu() -> UIMenu {
 		// Create a UIAction for sharing
-		let copyAction = UIAction(title: "Copy") { [weak self] action in
+		let copyAction = UIAction(title: L10n.copy) { [weak self] action in
 			guard let self = self else { return }
 			self.copy(action)
 		}

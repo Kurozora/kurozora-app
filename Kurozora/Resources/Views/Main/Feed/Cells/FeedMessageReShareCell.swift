@@ -125,9 +125,9 @@ class FeedMessageReShareCell: FeedMessageCell {
 			} else {
 				self.statusImageView.image = UIImage(systemName: "arrow.2.squarepath")
 				self.statusLabel.text = if user.attributes.username == User.current?.attributes.username {
-					"You reposted this"
+					L10n.youReposted
 				} else {
-					"\(user.attributes.username) reposted this"
+					L10n.userReposted(user.attributes.username)
 				}
 				self.statusStackView.isHidden = false
 			}

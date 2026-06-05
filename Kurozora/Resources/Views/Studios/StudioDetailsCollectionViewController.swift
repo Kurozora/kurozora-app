@@ -58,7 +58,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	// MARK: - Overridden Properties
 	override var emptyStateImage: UIImage { .Empty.cast }
 
-	override var emptyStateDetail: String { "This studio doesn't have details yet. Please check back again later." }
+	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.studio.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 

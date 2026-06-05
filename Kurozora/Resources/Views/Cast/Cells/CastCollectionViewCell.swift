@@ -21,6 +21,7 @@ class CastCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var personBorderView: BorderView!
 	@IBOutlet weak var personNameLabel: KCopyableTintedLabel!
 	@IBOutlet weak var personButton: UIButton!
+	@IBOutlet weak var voiceActorLabel: KSecondaryLabel!
 
 	@IBOutlet weak var characterContainerView: UIView!
 	@IBOutlet weak var characterImageView: PosterImageView!
@@ -45,6 +46,8 @@ class CastCollectionViewCell: KCollectionViewCell {
 		self.characterImageView?.applyCornerRadius(22)
 		self.characterImageView?.layer.borderWidth = 0
 		self.characterBorderView.cornerRadius = 22
+
+		self.voiceActorLabel.text = L10n.voiceActor
 	}
 
 	// MARK: - Functions

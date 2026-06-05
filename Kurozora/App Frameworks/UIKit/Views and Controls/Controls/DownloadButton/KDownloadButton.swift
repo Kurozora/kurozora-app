@@ -38,7 +38,7 @@ final class KDownloadButton: UIControl {
 		}
 	}
 
-	private(set) var currentState: KDownloadButtonState = .start(title: "GET")
+	private(set) var currentState: KDownloadButtonState = .start(title: L10n.themeButtonGet)
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -77,13 +77,13 @@ final class KDownloadButton: UIControl {
 
 		self.startButton.layerCornerRadius = self.ringDiameter / 2
 		self.downloadedButton.layerCornerRadius = self.ringDiameter / 2
-		self.startButton.setTitle("GET", for: .normal)
-		self.downloadedButton.setTitle("USING", for: .normal)
+		self.startButton.setTitle(L10n.themeButtonGet, for: .normal)
+		self.downloadedButton.setTitle(L10n.themeButtonUsing, for: .normal)
 
 		self.addTarget(self, action: #selector(self.handleTouchUpInside), for: .touchUpInside)
 		self.downloadedButton.addTarget(self, action: #selector(self.handleDownloadedButtonTap), for: .touchUpInside)
 
-		self.applyState(.start(title: "GET"), animated: false)
+		self.applyState(.start(title: L10n.themeButtonGet), animated: false)
 	}
 
 	@objc private func handleTouchUpInside() {

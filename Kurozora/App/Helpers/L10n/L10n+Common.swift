@@ -13,1483 +13,2782 @@ extension L10n {
 	/// The action sheet button for capturing a new photo from the camera.
 	///
 	/// - Tag: L10n-takePhoto
-	static let takePhoto: String = String(
-		localized: "Take Photo 📷",
-		comment: "The action sheet button for capturing a new photo from the camera."
-	)
+	static var takePhoto: String {
+		L10n.resolve {
+			String(
+				localized: "Take Photo 📷",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action sheet button for capturing a new photo from the camera."
+			)
+		}
+	}
 	/// The action sheet button for picking an existing photo from the library.
 	///
 	/// - Tag: L10n-photoLibrary
-	static let photoLibrary: String = String(
-		localized: "Photo Library 🏛",
-		comment: "The action sheet button for picking an existing photo from the library."
-	)
+	static var photoLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Photo Library 🏛",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action sheet button for picking an existing photo from the library."
+			)
+		}
+	}
 	/// The action sheet button for generating a new image with Image Playground.
 	///
 	/// - Tag: L10n-imagePlayground
-	static let imagePlayground: String = String(
-		localized: "Image Playground ✨",
-		comment: "The action sheet button for generating a new image with Image Playground."
-	)
+	static var imagePlayground: String {
+		L10n.resolve {
+			String(
+				localized: "Image Playground ✨",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action sheet button for generating a new image with Image Playground."
+			)
+		}
+	}
 
 	// MARK: - Sign Out Confirmation
 	/// The destructive confirmation button for the sign-out alert.
 	///
 	/// - Tag: L10n-signOutConfirm
-	static let signOutConfirm: String = String(
-		localized: "Yes, sign me out 🤨",
-		comment: "The destructive confirmation button for the sign-out alert."
-	)
+	static var signOutConfirm: String {
+		L10n.resolve {
+			String(
+				localized: "Yes, sign me out 🤨",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destructive confirmation button for the sign-out alert."
+			)
+		}
+	}
 	/// The body string for the sign-out confirmation alert.
 	///
 	/// - Tag: L10n-signOutConfirmMessage
-	static let signOutConfirmMessage: String = String(
-		localized: "Are you sure you want to sign out?",
-		comment: "The body string for the sign-out confirmation alert."
-	)
+	static var signOutConfirmMessage: String {
+		L10n.resolve {
+			String(
+				localized: "Are you sure you want to sign out?",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The body string for the sign-out confirmation alert."
+			)
+		}
+	}
 	/// The cancel button for the sign-out confirmation alert.
 	///
 	/// - Tag: L10n-signOutCancel
-	static let signOutCancel: String = String(
-		localized: "No, keep me signed in 😅",
-		comment: "The cancel button for the sign-out confirmation alert."
-	)
+	static var signOutCancel: String {
+		L10n.resolve {
+			String(
+				localized: "No, keep me signed in 😅",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The cancel button for the sign-out confirmation alert."
+			)
+		}
+	}
 
 	// MARK: - Library
 	/// The string for the phrase 'View Options', used as a submenu title in the library table layout.
 	///
 	/// - Tag: L10n-viewOptions
-	static let viewOptions: String = String(
-		localized: "View Options",
-		comment: "The submenu title for toggling view options in the library table layout."
-	)
+	static var viewOptions: String {
+		L10n.resolve {
+			String(
+				localized: "View Options",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The submenu title for toggling view options in the library table layout."
+			)
+		}
+	}
 	/// The string for the phrase 'Show Poster', used as a view option in the library table layout.
 	///
 	/// - Tag: L10n-showPoster
-	static let showPoster: String = String(
-		localized: "Show Poster",
-		comment: "The view option that toggles whether the title cell shows a poster."
-	)
+	static var showPoster: String {
+		L10n.resolve {
+			String(
+				localized: "Show Poster",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The view option that toggles whether the title cell shows a poster."
+			)
+		}
+	}
 	/// The string for the phrase 'Always Show Title', used as a view option in the library compact layout.
 	///
 	/// - Tag: L10n-compactTitleAlways
-	static let compactTitleAlways: String = String(
-		localized: "Always Show Title",
-		comment: "The view option that always shows the series title beneath the poster in the library compact layout."
-	)
+	static var compactTitleAlways: String {
+		L10n.resolve {
+			String(
+				localized: "Always Show Title",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The view option that always shows the series title beneath the poster in the library compact layout."
+			)
+		}
+	}
 	/// The string for the phrase 'Hide Title', used as a view option in the library compact layout.
 	///
 	/// - Tag: L10n-compactTitleNever
-	static let compactTitleNever: String = String(
-		localized: "Hide Title",
-		comment: "The view option that hides the series title in the library compact layout."
-	)
+	static var compactTitleNever: String {
+		L10n.resolve {
+			String(
+				localized: "Hide Title",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The view option that hides the series title in the library compact layout."
+			)
+		}
+	}
 	/// The string for the word 'Smart', used as a view option in the library compact layout.
 	///
 	/// - Tag: L10n-compactTitleSmart
-	static let compactTitleSmart: String = String(
-		localized: "Smart",
-		comment: "The view option that hides the series title when real poster art is available in the library compact layout."
-	)
+	static var compactTitleSmart: String {
+		L10n.resolve {
+			String(
+				localized: "Smart",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The view option that hides the series title when real poster art is available in the library compact layout."
+			)
+		}
+	}
 	/// The string for the subtitle accompanying the 'Smart' compact title-visibility option.
 	///
 	/// - Tag: L10n-compactTitleSmartSubtitle
-	static let compactTitleSmartSubtitle: String = String(
-		localized: "Shows title only when poster art isn't available",
-		comment: "The subtitle explaining the 'Smart' compact title-visibility option."
-	)
+	static var compactTitleSmartSubtitle: String {
+		L10n.resolve {
+			String(
+				localized: "Shows title only when poster art isn't available",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subtitle explaining the 'Smart' compact title-visibility option."
+			)
+		}
+	}
 	/// The string for the phrase 'Reset to Default', used inside the library table's View Options menu.
 	///
 	/// - Tag: L10n-resetToDefault
-	static let resetToDefault: String = String(
-		localized: "Reset to Default",
-		comment: "The destructive action that restores the default set of library table view options."
-	)
+	static var resetToDefault: String {
+		L10n.resolve {
+			String(
+				localized: "Reset to Default",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destructive action that restores the default set of library table view options."
+			)
+		}
+	}
 	/// The string for the word 'Title', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnTitle
-	static let columnTitle: String = String(
-		localized: "Title",
-		comment: "The column header for the item's title in the library table layout."
-	)
+	static var columnTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Title",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's title in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Type', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnType
-	static let columnType: String = String(
-		localized: "Type",
-		comment: "The column header for the item's media type in the library table layout."
-	)
+	static var columnType: String {
+		L10n.resolve {
+			String(
+				localized: "Type",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's media type in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Status', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnStatus
-	static let columnStatus: String = String(
-		localized: "Status",
-		comment: "The column header for the item's airing or publishing status in the library table layout."
-	)
+	static var columnStatus: String {
+		L10n.resolve {
+			String(
+				localized: "Status",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's airing or publishing status in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Genres', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnGenres
-	static let columnGenres: String = String(
-		localized: "Genres",
-		comment: "The column header for the item's genres in the library table layout."
-	)
+	static var columnGenres: String {
+		L10n.resolve {
+			String(
+				localized: "Genres",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's genres in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Year', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnYear
-	static let columnYear: String = String(
-		localized: "Year",
-		comment: "The column header for the item's release year in the library table layout."
-	)
+	static var columnYear: String {
+		L10n.resolve {
+			String(
+				localized: "Year",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's release year in the library table layout."
+			)
+		}
+	}
 	/// The string for the phrase 'Date Added', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnDateAdded
-	static let columnDateAdded: String = String(
-		localized: "Date Added",
-		comment: "The column header for the date the item was added to the library."
-	)
+	static var columnDateAdded: String {
+		L10n.resolve {
+			String(
+				localized: "Date Added",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the date the item was added to the library."
+			)
+		}
+	}
 	/// The string for the word 'Progress', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnProgress
-	static let columnProgress: String = String(
-		localized: "Progress",
-		comment: "The column header for the item's progress indicator in the library table layout."
-	)
+	static var columnProgress: String {
+		L10n.resolve {
+			String(
+				localized: "Progress",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the item's progress indicator in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Chapters', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnChapters
-	static let columnChapters: String = String(
-		localized: "Chapters",
-		comment: "The column header for the literature item's chapter count in the library table layout."
-	)
+	static var columnChapters: String {
+		L10n.resolve {
+			String(
+				localized: "Chapters",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the literature item's chapter count in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Volumes', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnVolumes
-	static let columnVolumes: String = String(
-		localized: "Volumes",
-		comment: "The column header for the literature item's volume count in the library table layout."
-	)
+	static var columnVolumes: String {
+		L10n.resolve {
+			String(
+				localized: "Volumes",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the literature item's volume count in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Editions', used as a column header in the library table layout.
 	///
 	/// - Tag: L10n-columnEditions
-	static let columnEditions: String = String(
-		localized: "Editions",
-		comment: "The column header for the game item's edition count in the library table layout."
-	)
+	static var columnEditions: String {
+		L10n.resolve {
+			String(
+				localized: "Editions",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The column header for the game item's edition count in the library table layout."
+			)
+		}
+	}
 
 	// MARK: - Library Table Accessibility
 	/// The string for the word 'Favorite', used as an accessibility label for the library table's favorite control.
 	///
 	/// - Tag: L10n-favorite
-	static let favorite: String = String(
-		localized: "Favorite",
-		comment: "The accessibility label for the favorite column or control in the library table layout."
-	)
+	static var favorite: String {
+		L10n.resolve {
+			String(
+				localized: "Favorite",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the favorite column or control in the library table layout."
+			)
+		}
+	}
 	/// The string for the word 'Reminder', used as an accessibility label for the library table's reminder control.
 	///
 	/// - Tag: L10n-reminder
-	static let reminder: String = String(
-		localized: "Reminder",
-		comment: "The accessibility label for the reminder column or control in the library table layout."
-	)
+	static var reminder: String {
+		L10n.resolve {
+			String(
+				localized: "Reminder",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the reminder column or control in the library table layout."
+			)
+		}
+	}
 	/// The string for the phrase 'Remove from favorites', used as an accessibility label when a library item is favorited.
 	///
 	/// - Tag: L10n-removeFromFavorites
-	static let removeFromFavorites: String = String(
-		localized: "Remove from favorites",
-		comment: "The accessibility label for the favorite button when the item is already favorited."
-	)
+	static var removeFromFavorites: String {
+		L10n.resolve {
+			String(
+				localized: "Remove from favorites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the favorite button when the item is already favorited."
+			)
+		}
+	}
 	/// The string for the phrase 'Add to favorites', used as an accessibility label when a library item is not favorited.
 	///
 	/// - Tag: L10n-addToFavorites
-	static let addToFavorites: String = String(
-		localized: "Add to favorites",
-		comment: "The accessibility label for the favorite button when the item is not favorited."
-	)
+	static var addToFavorites: String {
+		L10n.resolve {
+			String(
+				localized: "Add to favorites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the favorite button when the item is not favorited."
+			)
+		}
+	}
 	/// The string for the phrase 'Remove reminder', used as an accessibility label when a library item has a reminder set.
 	///
 	/// - Tag: L10n-removeReminder
-	static let removeReminder: String = String(
-		localized: "Remove reminder",
-		comment: "The accessibility label for the reminder button when a reminder is set."
-	)
+	static var removeReminder: String {
+		L10n.resolve {
+			String(
+				localized: "Remove reminder",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the reminder button when a reminder is set."
+			)
+		}
+	}
 	/// The string for the phrase 'Add reminder', used as an accessibility label when a library item has no reminder.
 	///
 	/// - Tag: L10n-addReminder
-	static let addReminder: String = String(
-		localized: "Add reminder",
-		comment: "The accessibility label for the reminder button when no reminder is set."
-	)
+	static var addReminder: String {
+		L10n.resolve {
+			String(
+				localized: "Add reminder",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the reminder button when no reminder is set."
+			)
+		}
+	}
 	/// The string for the word 'Visibility', used as an accessibility label for the library table's public-visibility control.
 	///
 	/// - Tag: L10n-visibility
-	static let visibility: String = String(
-		localized: "Visibility",
-		comment: "The accessibility label for the visibility column or control in the library table layout."
-	)
+	static var visibility: String {
+		L10n.resolve {
+			String(
+				localized: "Visibility",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the visibility column or control in the library table layout."
+			)
+		}
+	}
 
 	// MARK: - Misc
 	/// The string for the word 'Error'.
 	///
 	/// - Tag: L10n-error
-	static let error: String = String(
-		localized: "Error",
-		comment: "The string for the word 'Error'."
-	)
+	static var error: String {
+		L10n.resolve {
+			String(
+				localized: "Error",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Error'."
+			)
+		}
+	}
 	/// The string for the word 'Default'.
 	///
 	/// - Tag: L10n-default
 	static let `default`: String = String(
 		localized: "Default",
+		bundle: LanguageManager.shared.bundle,
+		locale: LanguageManager.shared.locale,
 		comment: "The string for the word 'Default'."
 	)
 	/// The string for the word 'Premium'.
 	///
 	/// - Tag: L10n-premium
-	static let premium: String = String(
-		localized: "Premium",
-		comment: "The string for the word 'Premium'."
-	)
+	static var premium: String {
+		L10n.resolve {
+			String(
+				localized: "Premium",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Premium'."
+			)
+		}
+	}
 	/// The string for the word 'today'.
 	///
 	/// - Tag: L10n-today
-	static let today: String = String(
-		localized: "Today",
-		comment: "The string for the word 'today'."
-	)
+	static var today: String {
+		L10n.resolve {
+			String(
+				localized: "Today",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'today'."
+			)
+		}
+	}
 	/// The string for the word 'submitted'.
 	///
 	/// - Tag: L10n-submitted
-	static let submitted: String = String(
-		localized: "Submitted",
-		comment: "The string for the word 'submitted'."
-	)
+	static var submitted: String {
+		L10n.resolve {
+			String(
+				localized: "Submitted",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'submitted'."
+			)
+		}
+	}
 	/// The string for the word 'rated'.
 	///
 	/// - Tag: L10n-rated
-	static let rated: String = String(
-		localized: "Rated",
-		comment: "The string for the word 'rated'."
-	)
+	static var rated: String {
+		L10n.resolve {
+			String(
+				localized: "Rated",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'rated'."
+			)
+		}
+	}
+	/// The section-header button that opens the full list.
+	///
+	/// - Tag: L10n-seeAll
+	static var seeAll: String {
+		L10n.resolve {
+			String(
+				localized: "See All",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The section-header button that opens the full list."
+			)
+		}
+	}
+	/// The spelled-out word for a count of one.
+	///
+	/// - Tag: L10n-one
+	static var one: String {
+		L10n.resolve {
+			String(
+				localized: "one",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The spelled-out word for a count of one, as in 'Across one season.'."
+			)
+		}
+	}
 	/// The string for the word 'add'.
 	///
 	/// - Tag: L10n-add
-	static let add: String = String(
-		localized: "Add",
-		comment: "The string for the word 'add'."
-	)
+	static var add: String {
+		L10n.resolve {
+			String(
+				localized: "Add",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'add'."
+			)
+		}
+	}
 	/// The string for the word 'all'.
 	///
 	/// - Tag: L10n-all
-	static let all: String = String(
-		localized: "All",
-		comment: "The string for the word 'all'."
-	)
+	static var all: String {
+		L10n.resolve {
+			String(
+				localized: "All",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'all'."
+			)
+		}
+	}
 	/// The string for the word 'apply'.
 	///
 	/// - Tag: L10n-apply
-	static let apply: String = String(
-		localized: "Apply",
-		comment: "The string for the word 'apply'."
-	)
+	static var apply: String {
+		L10n.resolve {
+			String(
+				localized: "Apply",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'apply'."
+			)
+		}
+	}
 	/// The string for the word 'reset'.
 	///
 	/// - Tag: L10n-reset
-	static let reset: String = String(
-		localized: "Reset",
-		comment: "The string for the word 'reset'."
-	)
+	static var reset: String {
+		L10n.resolve {
+			String(
+				localized: "Reset",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'reset'."
+			)
+		}
+	}
 	/// The string for the word 'discover'.
 	///
 	/// - Tag: L10n-discover
-	static let discover: String = String(
-		localized: "Discover",
-		comment: "The string for the word 'discover'."
-	)
+	static var discover: String {
+		L10n.resolve {
+			String(
+				localized: "Discover",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'discover'."
+			)
+		}
+	}
 	/// The string for the word 'browse'.
 	///
 	/// - Tag: L10n-browse
-	static let browse: String = String(
-		localized: "Browse",
-		comment: "The string for the word 'browse'."
-	)
+	static var browse: String {
+		L10n.resolve {
+			String(
+				localized: "Browse",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'browse'."
+			)
+		}
+	}
 	/// The string for the word 'browse genres'.
 	///
 	/// - Tag: L10n-browseGenres
-	static let browseGenres: String = String(
-		localized: "Browse Genres",
-		comment: "The string for the word 'browse genres'."
-	)
+	static var browseGenres: String {
+		L10n.resolve {
+			String(
+				localized: "Browse Genres",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'browse genres'."
+			)
+		}
+	}
 	/// The string for the word 'browse themes'.
 	///
 	/// - Tag: L10n-browseThemes
-	static let browseThemes: String = String(
-		localized: "Browse Themes",
-		comment: "The string for the word 'browse themes'."
-	)
+	static var browseThemes: String {
+		L10n.resolve {
+			String(
+				localized: "Browse Themes",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'browse themes'."
+			)
+		}
+	}
 	/// The string for the word 'header'.
 	///
 	/// - Tag: L10n-header
-	static let header: String = String(
-		localized: "Header",
-		comment: "The string for the word 'header'."
-	)
+	static var header: String {
+		L10n.resolve {
+			String(
+				localized: "Header",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'header'."
+			)
+		}
+	}
 	/// The string for the word 'about'.
 	///
 	/// - Tag: L10n-about
-	static let about: String = String(
-		localized: "About",
-		comment: "The string for the word 'about'."
-	)
+	static var about: String {
+		L10n.resolve {
+			String(
+				localized: "About",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'about'."
+			)
+		}
+	}
 	/// The string for the word 'information'.
 	///
 	/// - Tag: L10n-information
-	static let information: String = String(
-		localized: "Information",
-		comment: "The string for the word 'information'."
-	)
+	static var information: String {
+		L10n.resolve {
+			String(
+				localized: "Information",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'information'."
+			)
+		}
+	}
 	/// The string for the word 'number'.
 	///
 	/// - Tag: L10n-number
-	static let number: String = String(
-		localized: "Number",
-		comment: "The string for the word 'number'."
-	)
+	static var number: String {
+		L10n.resolve {
+			String(
+				localized: "Number",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'number'."
+			)
+		}
+	}
 	/// The string for the word 'duration'.
 	///
 	/// - Tag: L10n-duration
-	static let duration: String = String(
-		localized: "Duration",
-		comment: "The string for the word 'duration'."
-	)
+	static var duration: String {
+		L10n.resolve {
+			String(
+				localized: "Duration",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'duration'."
+			)
+		}
+	}
 	/// The string for the word 'aired'.
 	///
 	/// - Tag: L10n-aired
-	static let aired: String = String(
-		localized: "Aired",
-		comment: "The string for the word 'aired'."
-	)
+	static var aired: String {
+		L10n.resolve {
+			String(
+				localized: "Aired",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'aired'."
+			)
+		}
+	}
 	/// The string for the word 'tba'.
 	///
 	/// - Tag: L10n-tba
-	static let tba: String = String(
-		localized: "TBA",
-		comment: "The string for the word 'tba'."
-	)
+	static var tba: String {
+		L10n.resolve {
+			String(
+				localized: "TBA",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'tba'."
+			)
+		}
+	}
 	/// The string for the word 'shows'.
 	///
 	/// - Tag: L10n-shows
-	static let shows: String = String(
-		localized: "Shows",
-		comment: "The string for the word 'shows'."
-	)
+	static var shows: String {
+		L10n.resolve {
+			String(
+				localized: "Shows",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'shows'."
+			)
+		}
+	}
 	/// The string for the word 'characters'.
 	///
 	/// - Tag: L10n-characters
-	static let characters: String = String(
-		localized: "Characters",
-		comment: "The string for the word 'characters'."
-	)
+	static var characters: String {
+		L10n.resolve {
+			String(
+				localized: "Characters",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'characters'."
+			)
+		}
+	}
 	/// The string for the word 'episodes'.
 	///
 	/// - Tag: L10n-episodes
-	static let episodes: String = String(
-		localized: "Episodes",
-		comment: "The string for the word 'episodes'."
-	)
+	static var episodes: String {
+		L10n.resolve {
+			String(
+				localized: "Episodes",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'episodes'."
+			)
+		}
+	}
 	/// The string for the word 'people'.
 	///
 	/// - Tag: L10n-people
-	static let people: String = String(
-		localized: "People",
-		comment: "The string for the word 'people'."
-	)
+	static var people: String {
+		L10n.resolve {
+			String(
+				localized: "People",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'people'."
+			)
+		}
+	}
 	/// The string for the word 'genres'.
 	///
 	/// - Tag: L10n-genres
-	static let genres: String = String(
-		localized: "Genres",
-		comment: "The string for the word 'genres'."
-	)
+	static var genres: String {
+		L10n.resolve {
+			String(
+				localized: "Genres",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'genres'."
+			)
+		}
+	}
 	/// The string for the word 'themes'.
 	///
 	/// - Tag: L10n-themes
-	static let themes: String = String(
-		localized: "Themes",
-		comment: "The string for the word 'themes'."
-	)
+	static var themes: String {
+		L10n.resolve {
+			String(
+				localized: "Themes",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'themes'."
+			)
+		}
+	}
 	/// The string for the word 'leaderboard'.
 	///
 	/// - Tag: L10n-leaderboard
-	static let leaderboard: String = String(
-		localized: "Leaderboard",
-		comment: "The string for the word 'leaderboard'."
-	)
+	static var leaderboard: String {
+		L10n.resolve {
+			String(
+				localized: "Leaderboard",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'leaderboard'."
+			)
+		}
+	}
 	/// The string for the phrase 'profile details'.
 	///
 	/// - Tag: L10n-profileDetails
-	static let profileDetails: String = String(
-		localized: "Profile Details",
-		comment: "The string for the phrase 'profile details'."
-	)
+	static var profileDetails: String {
+		L10n.resolve {
+			String(
+				localized: "Profile Details",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'profile details'."
+			)
+		}
+	}
 	/// The string for the phrase 'message details'.
 	///
 	/// - Tag: L10n-messageDetails
-	static let messageDetails: String = String(
-		localized: "Message Details",
-		comment: "The string for the phrase 'message details'."
-	)
+	static var messageDetails: String {
+		L10n.resolve {
+			String(
+				localized: "Message Details",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'message details'."
+			)
+		}
+	}
 	/// The string for the phrase 'message replies'.
 	///
 	/// - Tag: L10n-messageReplies
-	static let messageReplies: String = String(
-		localized: "Message Replies",
-		comment: "The string for the phrase 'message replies'."
-	)
+	static var messageReplies: String {
+		L10n.resolve {
+			String(
+				localized: "Message Replies",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'message replies'."
+			)
+		}
+	}
 	/// The string for the phrase 'explore feed'.
 	///
 	/// - Tag: L10n-exploreFeed
-	static let exploreFeed: String = String(
-		localized: "Explore Feed",
-		comment: "The string for the phrase 'explore feed'."
-	)
+	static var exploreFeed: String {
+		L10n.resolve {
+			String(
+				localized: "Explore Feed",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'explore feed'."
+			)
+		}
+	}
 	/// The string for the phrase 'parental guide entries'.
 	///
 	/// - Tag: L10n-parentalGuideEntries
-	static let parentalGuideEntries: String = String(
-		localized: "Parental Guide Entries",
-		comment: "The string for the phrase 'parental guide entries'."
-	)
+	static var parentalGuideEntries: String {
+		L10n.resolve {
+			String(
+				localized: "Parental Guide Entries",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'parental guide entries'."
+			)
+		}
+	}
 	/// The string for the word 'sessions'.
 	///
 	/// - Tag: L10n-sessions
-	static let sessions: String = String(
-		localized: "Sessions",
-		comment: "The string for the word 'sessions'."
-	)
+	static var sessions: String {
+		L10n.resolve {
+			String(
+				localized: "Sessions",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'sessions'."
+			)
+		}
+	}
 	/// The string for the word 'more'.
 	///
 	/// - Tag: L10n-more
-	static let more: String = String(
-		localized: "More",
-		comment: "The string for the word 'more'."
-	)
+	static var more: String {
+		L10n.resolve {
+			String(
+				localized: "More",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The overflow ('More') menu button."
+			)
+		}
+	}
 	/// The string for the phrase 'Show more'.
 	///
 	/// - Tag: L10n-showMore
-	static let showMore: String = String(
-		localized: "Show more",
-		comment: "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped."
-	)
+	static var showMore: String {
+		L10n.resolve {
+			String(
+				localized: "Show more",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The inline affordance appended after a truncated feed message body that expands the rest of the post when tapped."
+			)
+		}
+	}
 	/// The string for the word 'debut'.
 	///
 	/// - Tag: L10n-debut
-	static let debut: String = String(
-		localized: "Debut",
-		comment: "The string for the word 'debut'."
-	)
+	static var debut: String {
+		L10n.resolve {
+			String(
+				localized: "Debut",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'debut'."
+			)
+		}
+	}
 	/// The string for the word 'age'.
 	///
 	/// - Tag: L10n-age
-	static let age: String = String(
-		localized: "Age",
-		comment: "The string for the word 'age'."
-	)
+	static var age: String {
+		L10n.resolve {
+			String(
+				localized: "Age",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'age'."
+			)
+		}
+	}
 	/// The string for the word 'measurements'.
 	///
 	/// - Tag: L10n-measurements
-	static let measurements: String = String(
-		localized: "Measurements",
-		comment: "The string for the word 'measurements'."
-	)
+	static var measurements: String {
+		L10n.resolve {
+			String(
+				localized: "Measurements",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'measurements'."
+			)
+		}
+	}
 	/// The string for the word 'characteristics'.
 	///
 	/// - Tag: L10n-characteristics
-	static let characteristics: String = String(
-		localized: "Characteristics",
-		comment: "The string for the word 'characteristics'."
-	)
+	static var characteristics: String {
+		L10n.resolve {
+			String(
+				localized: "Characteristics",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'characteristics'."
+			)
+		}
+	}
 	/// The string for the word 'aliases'.
 	///
 	/// - Tag: L10n-aliases
-	static let aliases: String = String(
-		localized: "Aliases",
-		comment: "The string for the word 'aliases'."
-	)
+	static var aliases: String {
+		L10n.resolve {
+			String(
+				localized: "Aliases",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'aliases'."
+			)
+		}
+	}
 	/// The string for the word 'socials'.
 	///
 	/// - Tag: L10n-socials
-	static let socials: String = String(
-		localized: "Socials",
-		comment: "The string for the word 'socials'."
-	)
+	static var socials: String {
+		L10n.resolve {
+			String(
+				localized: "Socials",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'socials'."
+			)
+		}
+	}
 	/// The string for the word 'websites'.
 	///
 	/// - Tag: L10n-websites
-	static let websites: String = String(
-		localized: "Websites",
-		comment: "The string for the word 'websites'."
-	)
+	static var websites: String {
+		L10n.resolve {
+			String(
+				localized: "Websites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'websites'."
+			)
+		}
+	}
 	/// The string for the word 'new'.
 	///
 	/// - Tag: L10n-new
-	static let new: String = String(
-		localized: "New",
-		comment: "The string for the word 'new'."
-	)
+	static var new: String {
+		L10n.resolve {
+			String(
+				localized: "New",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'new'."
+			)
+		}
+	}
 	/// The string for the word 'off'.
 	///
 	/// - Tag: L10n-off
-	static let off: String = String(
-		localized: "Off",
-		comment: "The string for the word 'off'."
-	)
+	static var off: String {
+		L10n.resolve {
+			String(
+				localized: "Off",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'off'."
+			)
+		}
+	}
 	/// The string for the word 'automatic'.
 	///
 	/// - Tag: L10n-automatic
-	static let automatic: String = String(
-		localized: "Automatic",
-		comment: "The string for the word 'automatic'."
-	)
+	static var automatic: String {
+		L10n.resolve {
+			String(
+				localized: "Automatic",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'automatic'."
+			)
+		}
+	}
 	/// The string for the word 'by type'.
 	///
 	/// - Tag: L10n-byType
-	static let byType: String = String(
-		localized: "By Type",
-		comment: "The string for the word 'by type'."
-	)
+	static var byType: String {
+		L10n.resolve {
+			String(
+				localized: "By Type",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'by type'."
+			)
+		}
+	}
 	/// The string for the word 'other'.
 	///
 	/// - Tag: L10n-other
-	static let other: String = String(
-		localized: "Other",
-		comment: "The string for the word 'other'."
-	)
+	static var other: String {
+		L10n.resolve {
+			String(
+				localized: "Other",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Catch-all 'Other' option."
+			)
+		}
+	}
 	/// The string for the word 'follower'.
 	///
 	/// - Tag: L10n-follower
-	static let follower: String = String(
-		localized: "Follower",
-		comment: "The string for the word 'follower'."
-	)
+	static var follower: String {
+		L10n.resolve {
+			String(
+				localized: "Follower",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'follower'."
+			)
+		}
+	}
 	/// The string for the word 'followers'.
 	///
 	/// - Tag: L10n-followers
-	static let followers: String = String(
-		localized: "Followers",
-		comment: "The plural string for the word 'followers'."
-	)
-	/// The lowercase string for the word 'followers', suitable for inlining mid-sentence.
+	static var followers: String {
+		L10n.resolve {
+			String(
+				localized: "Followers",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The plural string for the word 'followers'."
+			)
+		}
+	}
+	/// The string for the active follow state.
 	///
-	/// - Tag: L10n-followersLowercase
-	static let followersLowercase: String = String(
-		localized: "followers",
-		comment: "The lowercase plural string for the word 'followers', suitable for inlining mid-sentence."
-	)
-	/// The string for the word 'following'.
+	/// - Tag: L10n-followingState
+	static var followingState: String {
+		L10n.resolve {
+			String(
+				localized: "followingState",
+				defaultValue: "Following",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. The follow button title when the user already follows this account."
+			)
+		}
+	}
+	/// The string for the following list.
 	///
-	/// - Tag: L10n-following
-	static let following: String = String(
-		localized: "Following",
-		comment: "The string for the word 'following'."
-	)
-	/// The lowercase string for the word 'following', suitable for inlining mid-sentence.
+	/// - Tag: L10n-followingList
+	static var followingList: String {
+		L10n.resolve {
+			String(
+				localized: "followingList",
+				defaultValue: "Following",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Noun. The accounts a user follows. Shown as a list title and a profile stat label."
+			)
+		}
+	}
+	/// The string for the word 'reputation'.
 	///
-	/// - Tag: L10n-followingLowercase
-	static let followingLowercase: String = String(
-		localized: "following",
-		comment: "The lowercase string for the word 'following', suitable for inlining mid-sentence."
-	)
+	/// - Tag: L10n-reputation
+	static var reputation: String {
+		L10n.resolve {
+			String(
+				localized: "Reputation",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Noun. A user's reputation score."
+			)
+		}
+	}
 	/// The string for the word 'follow'.
 	///
 	/// - Tag: L10n-follow
-	static let follow: String = String(
-		localized: "Follow",
-		comment: "The string for the word 'follow'."
-	)
+	static var follow: String {
+		L10n.resolve {
+			String(
+				localized: "Follow",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'follow'."
+			)
+		}
+	}
 	/// The string for the word 'message'.
 	///
 	/// - Tag: L10n-message
-	static let message: String = String(
-		localized: "Message",
-		comment: "The string for the word 'message'."
-	)
+	static var message: String {
+		L10n.resolve {
+			String(
+				localized: "Message",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'message'."
+			)
+		}
+	}
 	/// The string for the word 'catalog'.
 	///
 	/// - Tag: L10n-catalog
-	static let catalog: String = String(
-		localized: "Catalog",
-		comment: "The string for the word 'catalog'."
-	)
+	static var catalog: String {
+		L10n.resolve {
+			String(
+				localized: "Catalog",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'catalog'."
+			)
+		}
+	}
 	/// The string for the word 'library'.
 	///
 	/// - Tag: L10n-library
-	static let library: String = String(
-		localized: "Library",
-		comment: "The string for the word 'library'."
-	)
+	static var library: String {
+		String(
+			localized: "Library",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'library'."
+		)
+	}
 	/// The string for the word 'Sorting'.
 	///
 	/// - Tag: L10n-sorting
-	static let sorting: String = String(
-		localized: "Sorting",
-		comment: "The string for the word 'Sorting'."
-	)
+	static var sorting: String {
+		L10n.resolve {
+			String(
+				localized: "Sorting",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Sorting'."
+			)
+		}
+	}
 	/// The string for the word 'Library Type'.
 	///
 	/// - Tag: L10n-libraryType
-	static let libraryType: String = String(
-		localized: "Library Type",
-		comment: "The string for the word 'Library Type'."
-	)
+	static var libraryType: String {
+		L10n.resolve {
+			String(
+				localized: "Library Type",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Library Type'."
+			)
+		}
+	}
 	/// The string for the word 'your library'.
 	///
 	/// - Tag: L10n-yourLibrary
-	static let yourLibrary: String = String(
-		localized: "Your Library",
-		comment: "The string for the word 'your library'."
-	)
+	static var yourLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Your Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'your library'."
+			)
+		}
+	}
 	/// The string for the word 'add to library'.
 	///
 	/// - Tag: L10n-addToLibrary
-	static let addToLibrary: String = String(
-		localized: "Add to Library",
-		comment: "The string for the word 'add to library'."
-	)
+	static var addToLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Add to Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'add to library'."
+			)
+		}
+	}
 	/// The string for the word 'update library status'.
 	///
 	/// - Tag: L10n-updateLibraryStatus
-	static let updateLibraryStatus: String = String(
-		localized: "Update Library Status",
-		comment: "The string for the word 'update library status'."
-	)
+	static var updateLibraryStatus: String {
+		L10n.resolve {
+			String(
+				localized: "Update Library Status",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'update library status'."
+			)
+		}
+	}
 	/// The string for the word 'remove from library'.
 	///
 	/// - Tag: L10n-removeFromLibrary
-	static let removeFromLibrary: String = String(
-		localized: "Remove from Library",
-		comment: "The string for the word 'remove from library'."
-	)
+	static var removeFromLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Remove from Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'remove from library'."
+			)
+		}
+	}
 	/// The string for the sentence 'Can’t delete library 😔'.
 	///
 	/// - Tag: L10n-cantDeleteLibrary
-	static let cantDeleteLibrary: String = String(
-		localized: "Can’t delete library 😔",
-		comment: "The string for the sentence 'Can’t delete library 😔'."
-	)
+	static var cantDeleteLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Can’t delete library 😔",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the sentence 'Can’t delete library 😔'."
+			)
+		}
+	}
 	/// The string for the phrase 'Delete Permanently'.
 	///
 	/// - Tag: L10n-deletePermanently
-	static let deletePermanently: String = String(
-		localized: "Delete Permanently",
-		comment: "The string for the phrase 'Delete Permanently'."
-	)
+	static var deletePermanently: String {
+		L10n.resolve {
+			String(
+				localized: "Delete Permanently",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Delete Permanently'."
+			)
+		}
+	}
 	/// The string for the phrase 'hide from public'.
 	///
 	/// - Tag: L10n-hideFromPublic
-	static let hideFromPublic: String = String(
-		localized: "Hide from Public",
-		comment: "The string for the phrase 'hide from public'."
-	)
+	static var hideFromPublic: String {
+		L10n.resolve {
+			String(
+				localized: "Hide from Public",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'hide from public'."
+			)
+		}
+	}
 	/// The string for the phrase 'show to public'.
 	///
 	/// - Tag: L10n-showToPublic
-	static let showToPublic: String = String(
-		localized: "Show to Public",
-		comment: "The string for the phrase 'show to public'."
-	)
+	static var showToPublic: String {
+		L10n.resolve {
+			String(
+				localized: "Show to Public",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'show to public'."
+			)
+		}
+	}
 	/// The string for the word 'watched'.
 	///
 	/// - Tag: L10n-watched
-	static let watched: String = String(
-		localized: "Watched",
-		comment: "The string for the word 'watched'."
-	)
+	static var watched: String {
+		L10n.resolve {
+			String(
+				localized: "Watched",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Library status for an item the user has watched."
+			)
+		}
+	}
 	/// The string for the phrase 'mark as watched'.
 	///
 	/// - Tag: L10n-markAsWatched
-	static let markAsWatched: String = String(
-		localized: "Mark as Watched",
-		comment: "The string for the phrase 'mark as watched'."
-	)
+	static var markAsWatched: String {
+		L10n.resolve {
+			String(
+				localized: "Mark as Watched",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'mark as watched'."
+			)
+		}
+	}
 	/// The string for the phrase 'mark as unwatched'.
 	///
 	/// - Tag: L10n-markAsUnwatched
-	static let markAsUnwatched: String = String(
-		localized: "Mark as Unwatched",
-		comment: "The string for the phrase 'mark as unwatched'."
-	)
+	static var markAsUnwatched: String {
+		L10n.resolve {
+			String(
+				localized: "Mark as Unwatched",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'mark as unwatched'."
+			)
+		}
+	}
 	/// The string for the phrase 'mark all watched'.
 	///
 	/// - Tag: L10n-markAllWatched
-	static let markAllWatched: String = String(
-		localized: "Mark All Watched",
-		comment: "The string for the phrase 'mark all watched'."
-	)
+	static var markAllWatched: String {
+		L10n.resolve {
+			String(
+				localized: "Mark All Watched",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'mark all watched'."
+			)
+		}
+	}
 	/// The string for the phrase 'mark all unwatched'.
 	///
 	/// - Tag: L10n-markAllUnwatched
-	static let markAllUnwatched: String = String(
-		localized: "Mark All Unwatched",
-		comment: "The string for the phrase 'mark all unwatched'."
-	)
+	static var markAllUnwatched: String {
+		L10n.resolve {
+			String(
+				localized: "Mark All Unwatched",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'mark all unwatched'."
+			)
+		}
+	}
 	/// The string for the phrase 'Mark all'.
 	///
 	/// - Tag: L10n-markAll
-	static let markAll: String = String(
-		localized: "Mark all",
-		comment: "The string for the phrase 'Mark all'."
-	)
+	static var markAll: String {
+		L10n.resolve {
+			String(
+				localized: "Mark all",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Mark all'."
+			)
+		}
+	}
 	/// The string for the phrase 'Mark all as read'.
 	///
 	/// - Tag: L10n-markAllAsRead
-	static let markAllAsRead: String = String(
-		localized: "Mark all as read",
-		comment: "The string for the phrase 'Mark all as read'."
-	)
+	static var markAllAsRead: String {
+		L10n.resolve {
+			String(
+				localized: "Mark all as read",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Mark all as read'."
+			)
+		}
+	}
 	/// The string for the phrase 'Mark all as unread'.
 	///
 	/// - Tag: L10n-markAllAsUnread
-	static let markAllAsUnread: String = String(
-		localized: "Mark all as unread",
-		comment: "The string for the phrase 'Mark all as unread'."
-	)
+	static var markAllAsUnread: String {
+		L10n.resolve {
+			String(
+				localized: "Mark all as unread",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Mark all as unread'."
+			)
+		}
+	}
 	/// The string for the phrase 'Mark as read'.
 	///
 	/// - Tag: L10n-markAsRead
-	static let markAsRead: String = String(
-		localized: "Mark as read",
-		comment: "The string for the phrase 'Mark as read'."
-	)
+	static var markAsRead: String {
+		L10n.resolve {
+			String(
+				localized: "Mark as read",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Mark as read'."
+			)
+		}
+	}
 	/// The string for the phrase 'Mark as unread'.
 	///
 	/// - Tag: L10n-markAsUnread
-	static let markAsUnread: String = String(
-		localized: "Mark as unread",
-		comment: "The string for the phrase 'Mark as unread'."
-	)
+	static var markAsUnread: String {
+		L10n.resolve {
+			String(
+				localized: "Mark as unread",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Mark as unread'."
+			)
+		}
+	}
 	/// The string for the word 'next'.
 	///
 	/// - Tag: L10n-next
-	static let next: String = String(
-		localized: "Next",
-		comment: "The string for the word 'next'."
-	)
+	static var next: String {
+		L10n.resolve {
+			String(
+				localized: "Next",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'next'."
+			)
+		}
+	}
 	/// The string for the word 'previous'.
 	///
 	/// - Tag: L10n-previous
-	static let previous: String = String(
-		localized: "Previous",
-		comment: "The string for the word 'previous'."
-	)
+	static var previous: String {
+		L10n.resolve {
+			String(
+				localized: "Previous",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'previous'."
+			)
+		}
+	}
 	/// The string for the word 'chart'.
 	///
 	/// - Tag: L10n-chart
-	static let chart: String = String(
-		localized: "Chart",
-		comment: "The string for the word 'chart'."
-	)
+	static var chart: String {
+		L10n.resolve {
+			String(
+				localized: "Chart",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'chart'."
+			)
+		}
+	}
 	/// The string for the word 'anime'.
 	///
 	/// - Tag: L10n-anime
-	static let anime: String = String(
-		localized: "Anime",
-		comment: "The string for the word 'anime'."
-	)
+	static var anime: String {
+		L10n.resolve {
+			String(
+				localized: "Anime",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'anime'."
+			)
+		}
+	}
 	/// The string for the word 'literatures'.
 	///
 	/// - Tag: L10n-literatures
-	static let literatures: String = String(
-		localized: "Literatures",
-		comment: "The string for the word 'literatures'."
-	)
+	static var literatures: String {
+		L10n.resolve {
+			String(
+				localized: "Literatures",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'literatures'."
+			)
+		}
+	}
 	/// The string for the word 'games'.
 	///
 	/// - Tag: L10n-games
-	static let games: String = String(
-		localized: "Games",
-		comment: "The string for the word 'games'."
-	)
+	static var games: String {
+		L10n.resolve {
+			String(
+				localized: "Games",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'games'."
+			)
+		}
+	}
 	/// The string for the word 'user'.
 	///
 	/// - Tag: L10n-user
-	static let user: String = String(
-		localized: "User",
-		comment: "The string for the word 'user'."
-	)
+	static var user: String {
+		L10n.resolve {
+			String(
+				localized: "User",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'user'."
+			)
+		}
+	}
 	/// The string for the word 'users'.
 	///
 	/// - Tag: L10n-users
-	static let users: String = String(
-		localized: "Users",
-		comment: "The string for the word 'users'."
-	)
+	static var users: String {
+		L10n.resolve {
+			String(
+				localized: "Users",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'users'."
+			)
+		}
+	}
 	/// The string for the word 'account'.
 	///
 	/// - Tag: L10n-account
-	static let account: String = String(
-		localized: "Account",
-		comment: "The string for the word 'account'."
-	)
+	static var account: String {
+		L10n.resolve {
+			String(
+				localized: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'account'."
+			)
+		}
+	}
 	/// The string for the word 'debug'.
 	///
 	/// - Tag: L10n-debug
-	static let debug: String = String(
-		localized: "Debug",
-		comment: "The string for the word 'debug'."
-	)
+	static var debug: String {
+		L10n.resolve {
+			String(
+				localized: "Debug",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'debug'."
+			)
+		}
+	}
 	/// The string for the word 'pro'.
 	///
 	/// - Tag: L10n-pro
-	static let pro: String = String(
-		localized: "Pro",
-		comment: "The string for the word 'pro'."
-	)
+	static var pro: String {
+		L10n.resolve {
+			String(
+				localized: "Pro",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'pro'."
+			)
+		}
+	}
 	/// The string for the word 'alerts'.
 	///
 	/// - Tag: L10n-alerts
-	static let alerts: String = String(
-		localized: "Alerts",
-		comment: "The string for the word 'alerts'."
-	)
+	static var alerts: String {
+		L10n.resolve {
+			String(
+				localized: "Alerts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'alerts'."
+			)
+		}
+	}
 	/// The string for the word 'general'.
 	///
 	/// - Tag: L10n-general
-	static let general: String = String(
-		localized: "General",
-		comment: "The string for the word 'general'."
-	)
+	static var general: String {
+		L10n.resolve {
+			String(
+				localized: "General",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'general'."
+			)
+		}
+	}
 	/// The string for the word 'Guest'.
 	///
 	/// - Tag: L10n-guest
-	static let guest: String = String(
-		localized: "Guest",
-		comment: "The string for the word 'Guest'."
-	)
+	static var guest: String {
+		L10n.resolve {
+			String(
+				localized: "Guest",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Guest'."
+			)
+		}
+	}
 	/// The string for the word 'notifications'.
 	///
 	/// - Tag: L10n-notifications
-	static let notifications: String = String(
-		localized: "Notifications",
-		comment: "The string for the word 'notifications'."
-	)
+	static var notifications: String {
+		String(
+			localized: "Notifications",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'notifications'."
+		)
+	}
 	/// The string for the word 'profile'.
 	///
 	/// - Tag: L10n-profile
-	static let profile: String = String(
-		localized: "Profile",
-		comment: "The string for the word 'profile'."
-	)
+	static var profile: String {
+		L10n.resolve {
+			String(
+				localized: "Profile",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'profile'."
+			)
+		}
+	}
 	/// The string for the word 'stickers'.
 	///
 	/// - Tag: L10n-stickers
-	static let stickers: String = String(
-		localized: "Stickers",
-		comment: "The string for the word 'stickers'."
-	)
+	static var stickers: String {
+		L10n.resolve {
+			String(
+				localized: "Stickers",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'stickers'."
+			)
+		}
+	}
 	/// The string for the word 'security'.
 	///
 	/// - Tag: L10n-security
-	static let security: String = String(
-		localized: "Security",
-		comment: "The string for the word 'security'."
-	)
+	static var security: String {
+		L10n.resolve {
+			String(
+				localized: "Security",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'security'."
+			)
+		}
+	}
 	/// The string for the word 'support us'.
 	///
 	/// - Tag: L10n-supportUs
-	static let supportUs: String = String(
-		localized: "Support Us",
-		comment: "The string for the word 'support us'."
-	)
+	static var supportUs: String {
+		L10n.resolve {
+			String(
+				localized: "Support Us",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'support us'."
+			)
+		}
+	}
 	/// The string for the word 'social'.
 	///
 	/// - Tag: L10n-social
-	static let social: String = String(
-		localized: "Social",
-		comment: "The string for the word 'social'."
-	)
+	static var social: String {
+		L10n.resolve {
+			String(
+				localized: "Social",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'social'."
+			)
+		}
+	}
 	/// The string for the word 'theme'.
 	///
 	/// - Tag: L10n-theme
-	static let theme: String = String(
-		localized: "Theme",
-		comment: "The string for the word 'theme'."
-	)
+	static var theme: String {
+		L10n.resolve {
+			String(
+				localized: "Theme",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'theme'."
+			)
+		}
+	}
 	/// The string for the word 'icon'.
 	///
 	/// - Tag: L10n-icon
-	static let icon: String = String(
-		localized: "Icon",
-		comment: "The string for the word 'icon'."
-	)
+	static var icon: String {
+		L10n.resolve {
+			String(
+				localized: "Icon",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'icon'."
+			)
+		}
+	}
 	/// The string for the word 'motion'.
 	///
 	/// - Tag: L10n-motion
-	static let motion: String = String(
-		localized: "Motion",
-		comment: "The string for the word 'motion'."
-	)
+	static var motion: String {
+		L10n.resolve {
+			String(
+				localized: "Motion",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'motion'."
+			)
+		}
+	}
 	/// The string for the word 'browser'.
 	///
 	/// - Tag: L10n-browser
-	static let browser: String = String(
-		localized: "Browser",
-		comment: "The string for the word 'browser'."
-	)
+	static var browser: String {
+		L10n.resolve {
+			String(
+				localized: "Browser",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'browser'."
+			)
+		}
+	}
 	/// The string for the word 'passcode'.
 	///
 	/// - Tag: L10n-passcode
-	static let passcode: String = String(
-		localized: "Passcode",
-		comment: "The string for the word 'passcode'."
-	)
+	static var passcode: String {
+		L10n.resolve {
+			String(
+				localized: "Passcode",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'passcode'."
+			)
+		}
+	}
 	/// The string for the word 'cache'.
 	///
 	/// - Tag: L10n-cache
-	static let cache: String = String(
-		localized: "Cache",
-		comment: "The string for the word 'cache'."
-	)
+	static var cache: String {
+		L10n.resolve {
+			String(
+				localized: "Cache",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'cache'."
+			)
+		}
+	}
 	/// The string for the word 'images'.
 	///
 	/// - Tag: L10n-images
-	static let images: String = String(
-		localized: "Images",
-		comment: "The string for the word 'images'."
-	)
+	static var images: String {
+		L10n.resolve {
+			String(
+				localized: "Images",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'images'."
+			)
+		}
+	}
 	/// The string for the phrase 'rich links'.
 	///
 	/// - Tag: L10n-richLinks
-	static let richLinks: String = String(
-		localized: "Rich Links",
-		comment: "The string for the phrase 'rich links'."
-	)
+	static var richLinks: String {
+		L10n.resolve {
+			String(
+				localized: "Rich Links",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'rich links'."
+			)
+		}
+	}
 	/// The string for the word 'privacy'.
 	///
 	/// - Tag: L10n-privacy
-	static let privacy: String = String(
-		localized: "Privacy",
-		comment: "The string for the word 'privacy'."
-	)
+	static var privacy: String {
+		L10n.resolve {
+			String(
+				localized: "Privacy",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'privacy'."
+			)
+		}
+	}
 	/// The string for the word 'founded'.
 	///
 	/// - Tag: L10n-founded
-	static let founded: String = String(
-		localized: "Founded",
-		comment: "The string for the word 'founded'."
-	)
+	static var founded: String {
+		L10n.resolve {
+			String(
+				localized: "Founded",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'founded'."
+			)
+		}
+	}
 	/// The string for the word 'defunct'.
 	///
 	/// - Tag: L10n-defunct
-	static let defunct: String = String(
-		localized: "Defunct",
-		comment: "The string for the word 'defunct'."
-	)
+	static var defunct: String {
+		L10n.resolve {
+			String(
+				localized: "Defunct",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'defunct'."
+			)
+		}
+	}
 	/// The string for the word 'headquarters'.
 	///
 	/// - Tag: L10n-headquarters
-	static let headquarters: String = String(
-		localized: "Headquarters",
-		comment: "The string for the word 'headquarters'."
-	)
+	static var headquarters: String {
+		L10n.resolve {
+			String(
+				localized: "Headquarters",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'headquarters'."
+			)
+		}
+	}
 	/// The string for the word 'synopsis'.
 	///
 	/// - Tag: L10n-synopsis
-	static let synopsis: String = String(
-		localized: "Synopsis",
-		comment: "The string for the word 'synopsis'."
-	)
+	static var synopsis: String {
+		L10n.resolve {
+			String(
+				localized: "Synopsis",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'synopsis'."
+			)
+		}
+	}
 	/// The string for the word 'explore'.
 	///
 	/// - Tag: L10n-explore
-	static let explore: String = String(
-		localized: "Explore",
-		comment: "The string for the word 'explore'."
-	)
+	static var explore: String {
+		String(
+			localized: "Explore",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'explore'."
+		)
+	}
 	/// The string for the word 'schedule'.
 	///
 	/// - Tag: L10n-schedule
-	static let schedule: String = String(
-		localized: "Schedule",
-		comment: "The string for the word 'schedule'."
-	)
+	static var schedule: String {
+		String(
+			localized: "Schedule",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'schedule'."
+		)
+	}
 	/// The string for the word 'feed'.
 	///
 	/// - Tag: L10n-feed
-	static let feed: String = String(
-		localized: "Feed",
-		comment: "The string for the word 'feed'."
-	)
+	static var feed: String {
+		String(
+			localized: "Feed",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'feed'."
+		)
+	}
 	/// The string for the word 'reviews'.
 	///
 	/// - Tag: L10n-reviews
-	static let reviews: String = String(
-		localized: "Reviews",
-		comment: "The string for the word 'reviews'."
-	)
+	static var reviews: String {
+		L10n.resolve {
+			String(
+				localized: "Reviews",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'reviews'."
+			)
+		}
+	}
 	/// The string for the word 'posts'.
 	///
 	/// - Tag: L10n-posts
-	static let posts: String = String(
-		localized: "Posts",
-		comment: "The string for the word 'posts'."
-	)
+	static var posts: String {
+		L10n.resolve {
+			String(
+				localized: "Posts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'posts'."
+			)
+		}
+	}
 	/// The string for the word 'replies'.
 	///
 	/// - Tag: L10n-replies
-	static let replies: String = String(
-		localized: "Replies",
-		comment: "The string for the word 'replies'."
-	)
+	static var replies: String {
+		L10n.resolve {
+			String(
+				localized: "Replies",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'replies'."
+			)
+		}
+	}
 	/// The string for the word 'unknown'.
 	///
 	/// - Tag: L10n-unknown
-	static let unknown: String = String(
-		localized: "Unknown",
-		comment: "The string for the word 'unknown'."
-	)
+	static var unknown: String {
+		L10n.resolve {
+			String(
+				localized: "Unknown",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'unknown'."
+			)
+		}
+	}
 	/// The string for the word 'name'.
 	///
 	/// - Tag: L10n-name
-	static let name: String = String(
-		localized: "Name",
-		comment: "The string for the word 'name'."
-	)
+	static var name: String {
+		L10n.resolve {
+			String(
+				localized: "Name",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'name'."
+			)
+		}
+	}
 	/// The string for the word 'dismiss'.
 	///
 	/// - Tag: L10n-dismiss
-	static let dismiss: String = String(
-		localized: "Dismiss",
-		comment: "The string for the word 'dismiss'."
-	)
+	static var dismiss: String {
+		L10n.resolve {
+			String(
+				localized: "Dismiss",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'dismiss'."
+			)
+		}
+	}
 	/// The string for the word 'search'.
 	///
 	/// - Tag: L10n-search
-	static let search: String = String(
-		localized: "Search",
-		comment: "The string for the word 'search'."
-	)
+	static var search: String {
+		String(
+			localized: "Search",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'search'."
+		)
+	}
 	/// The string for the phrase 'Search Library'.
 	///
 	/// - Tag: L10n-searchLibrary
-	static let searchLibrary: String = String(
-		localized: "Search Library",
-		comment: "The title and placeholder for the library search screen."
-	)
+	static var searchLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Search Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title and placeholder for the library search screen."
+			)
+		}
+	}
 	/// The string for the word 'suggestions'.
 	///
 	/// - Tag: L10n-suggestions
-	static let suggestions: String = String(
-		localized: "Suggestions",
-		comment: "The string for the word 'suggestions'."
-	)
+	static var suggestions: String {
+		L10n.resolve {
+			String(
+				localized: "Suggestions",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'suggestions'."
+			)
+		}
+	}
 	/// The string for the word 'sort'.
 	///
 	/// - Tag: L10n-sort
-	static let sort: String = String(
-		localized: "Sort",
-		comment: "The string for the word 'sort'."
-	)
+	static var sort: String {
+		L10n.resolve {
+			String(
+				localized: "Sort",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'sort'."
+			)
+		}
+	}
 	/// The string for the word 'filter'.
 	///
 	/// - Tag: L10n-filter
-	static let filter: String = String(
-		localized: "Filter",
-		comment: "The string for the word 'filter'."
-	)
+	static var filter: String {
+		L10n.resolve {
+			String(
+				localized: "Filter",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'filter'."
+			)
+		}
+	}
 	/// The string for the word 'filters'.
 	///
 	/// - Tag: L10n-filters
-	static let filters: String = String(
-		localized: "Filters",
-		comment: "The string for the word 'filters'."
-	)
+	static var filters: String {
+		L10n.resolve {
+			String(
+				localized: "Filters",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'filters'."
+			)
+		}
+	}
 	/// The string for the word 'settings'.
 	///
 	/// - Tag: L10n-settings
-	static let settings: String = String(
-		localized: "Settings",
-		comment: "The string for the word 'settings'."
-	)
+	static var settings: String {
+		String(
+			localized: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'settings'."
+		)
+	}
 	/// The string for the word 'subscribe'.
 	///
 	/// - Tag: L10n-subscribe
-	static let subscribe: String = String(
-		localized: "Subscribe",
-		comment: "The string for the word 'subscribe'."
-	)
+	static var subscribe: String {
+		L10n.resolve {
+			String(
+				localized: "Subscribe",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'subscribe'."
+			)
+		}
+	}
 	/// The string for the word 'send'.
 	///
 	/// - Tag: L10n-send
-	static let send: String = String(
-		localized: "Send",
-		comment: "The string for the word 'send'."
-	)
+	static var send: String {
+		L10n.resolve {
+			String(
+				localized: "Send",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'send'."
+			)
+		}
+	}
 	/// The string for the phrase 'save draft'.
 	///
 	/// - Tag: L10n-saveDraft
-	static let saveDraft: String = String(
-		localized: "Save Draft",
-		comment: "The string for the phrase 'save draft'."
-	)
+	static var saveDraft: String {
+		L10n.resolve {
+			String(
+				localized: "Save Draft",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'save draft'."
+			)
+		}
+	}
 	/// The string for the word 'drafts'.
 	///
 	/// - Tag: L10n-drafts
-	static let drafts: String = String(
-		localized: "Drafts",
-		comment: "The string for the word 'drafts'."
-	)
+	static var drafts: String {
+		L10n.resolve {
+			String(
+				localized: "Drafts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'drafts'."
+			)
+		}
+	}
 	/// The string for the 'no drafts' empty state title.
 	///
 	/// - Tag: L10n-noDraftsTitle
-	static let noDraftsTitle: String = String(
-		localized: "No Drafts",
-		comment: "The string for the 'no drafts' empty state title."
-	)
+	static var noDraftsTitle: String {
+		L10n.resolve {
+			String(
+				localized: "No Drafts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'no drafts' empty state title."
+			)
+		}
+	}
 	/// The string for the 'no drafts' empty state detail.
 	///
 	/// - Tag: L10n-noDraftsDetail
-	static let noDraftsDetail: String = String(
-		localized: "Your saved drafts will appear here.",
-		comment: "The string for the 'no drafts' empty state detail."
-	)
+	static var noDraftsDetail: String {
+		L10n.resolve {
+			String(
+				localized: "Your saved drafts will appear here.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'no drafts' empty state detail."
+			)
+		}
+	}
 	/// The string for the 'empty draft' placeholder.
 	///
 	/// - Tag: L10n-emptyDraft
-	static let emptyDraft: String = String(
-		localized: "Empty draft",
-		comment: "The string for the 'empty draft' placeholder."
-	)
+	static var emptyDraft: String {
+		L10n.resolve {
+			String(
+				localized: "Empty draft",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'empty draft' placeholder."
+			)
+		}
+	}
 	/// The string for the word 'discard'.
 	///
 	/// - Tag: L10n-discard
-	static let discard: String = String(
-		localized: "Discard",
-		comment: "The string for the word 'discard'."
-	)
+	static var discard: String {
+		L10n.resolve {
+			String(
+				localized: "Discard",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'discard'."
+			)
+		}
+	}
 	/// The string for the word 'done'.
 	///
 	/// - Tag: L10n-done
-	static let done: String = String(
-		localized: "Done",
-		comment: "The string for the word 'done'."
-	)
+	static var done: String {
+		L10n.resolve {
+			String(
+				localized: "Done",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'done'."
+			)
+		}
+	}
 	/// The string for the word 'cancel'.
 	///
 	/// - Tag: L10n-cancel
-	static let cancel: String = String(
-		localized: "Cancel",
-		comment: "The string for the word 'cancel'."
-	)
+	static var cancel: String {
+		L10n.resolve {
+			String(
+				localized: "Cancel",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'cancel'."
+			)
+		}
+	}
 	/// The string for the word 'remove'.
 	///
 	/// - Tag: L10n-remove
-	static let remove: String = String(
-		localized: "Remove",
-		comment: "The string for the word 'remove'."
-	)
+	static var remove: String {
+		L10n.resolve {
+			String(
+				localized: "Remove",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'remove'."
+			)
+		}
+	}
 	/// The string for the word 'share'.
 	///
 	/// - Tag: L10n-share
-	static let share: String = String(
-		localized: "Share",
-		comment: "The string for the word 'share'."
-	)
+	static var share: String {
+		L10n.resolve {
+			String(
+				localized: "Share",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. The share action."
+			)
+		}
+	}
 	/// The string for the word 'copy'.
 	///
 	/// - Tag: L10n-copy
-	static let copy: String = String(
-		localized: "Copy",
-		comment: "The string for the word 'copy'."
-	)
+	static var copy: String {
+		L10n.resolve {
+			String(
+				localized: "Copy",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'copy'."
+			)
+		}
+	}
 	/// The string for the word 'Copy Review'.
 	///
 	/// - Tag: L10n-copyReview
-	static let copyReview: String = String(
-		localized: "Copy Review",
-		comment: "The string for the word 'Copy Review'."
-	)
+	static var copyReview: String {
+		L10n.resolve {
+			String(
+				localized: "Copy Review",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Copy Review'."
+			)
+		}
+	}
 	/// The string for the word 'Copy Title'.
 	///
 	/// - Tag: L10n-copyTitle
-	static let copyTitle: String = String(
-		localized: "Copy Title",
-		comment: "The string for the word 'Copy Title'."
-	)
+	static var copyTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Copy Title",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Copy Title'."
+			)
+		}
+	}
 	/// The string for the word 'Copy Link'.
 	///
 	/// - Tag: L10n-copyLink
-	static let copyLink: String = String(
-		localized: "Copy Link",
-		comment: "The string for the word 'Copy Link'."
-	)
+	static var copyLink: String {
+		L10n.resolve {
+			String(
+				localized: "Copy Link",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Copy Link'."
+			)
+		}
+	}
 	/// The string for the word 'update'.
 	///
 	/// - Tag: L10n-update
-	static let update: String = String(
-		localized: "Update!",
-		comment: "The string for the word 'update'."
-	)
+	static var update: String {
+		L10n.resolve {
+			String(
+				localized: "Update!",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'update'."
+			)
+		}
+	}
 	/// The string for the word 'reconnect'.
 	///
 	/// - Tag: L10n-reconnect
-	static let reconnect: String = String(
-		localized: "Reconnect!",
-		comment: "The string for the word 'reconnect'."
-	)
+	static var reconnect: String {
+		L10n.resolve {
+			String(
+				localized: "Reconnect!",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'reconnect'."
+			)
+		}
+	}
 	/// The string for the word 'Lyrics'.
 	///
 	/// - Tag: L10n-lyrics
-	static let lyrics: String = String(
-		localized: "Lyrics",
-		comment: "The string for the word 'Lyrics'."
-	)
+	static var lyrics: String {
+		L10n.resolve {
+			String(
+				localized: "Lyrics",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Lyrics'."
+			)
+		}
+	}
 	/// The string for the phrase 'As Heard On'.
 	///
 	/// - Tag: L10n-asHeardOn
-	static let asHeardOn: String = String(
-		localized: "As Heard On",
-		comment: "The string for the word 'As Heard On'."
-	)
+	static var asHeardOn: String {
+		L10n.resolve {
+			String(
+				localized: "As Heard On",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'As Heard On'."
+			)
+		}
+	}
 	/// The string for the phrase 'View on Amazon Music'.
 	///
 	/// - Tag: L10n-viewOnAmazonMusic
-	static let viewOnAmazonMusic: String = String(
-		localized: "View on Amazon Music",
-		comment: "The string for the word 'View on Amazon Music'."
-	)
+	static var viewOnAmazonMusic: String {
+		L10n.resolve {
+			String(
+				localized: "View on Amazon Music",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View on Amazon Music'."
+			)
+		}
+	}
 	/// The string for the phrase 'View on Apple Music'.
 	///
 	/// - Tag: L10n-viewOnAppleMusic
-	static let viewOnAppleMusic: String = String(
-		localized: "View on Apple Music",
-		comment: "The string for the word 'View on Apple Music'."
-	)
+	static var viewOnAppleMusic: String {
+		L10n.resolve {
+			String(
+				localized: "View on Apple Music",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View on Apple Music'."
+			)
+		}
+	}
 	/// The string for the phrase 'View on Deezer'.
 	///
 	/// - Tag: L10n-viewOnDeezer
-	static let viewOnDeezer: String = String(
-		localized: "View on Deezer",
-		comment: "The string for the word 'View on Deezer'."
-	)
+	static var viewOnDeezer: String {
+		L10n.resolve {
+			String(
+				localized: "View on Deezer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View on Deezer'."
+			)
+		}
+	}
 	/// The string for the phrase 'View on Spotify'.
 	///
 	/// - Tag: L10n-viewOnSpotify
-	static let viewOnSpotify: String = String(
-		localized: "View on Spotify",
-		comment: "The string for the word 'View on Spotify'."
-	)
+	static var viewOnSpotify: String {
+		L10n.resolve {
+			String(
+				localized: "View on Spotify",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View on Spotify'."
+			)
+		}
+	}
 	/// The string for the phrase 'View on YouTube'.
 	///
 	/// - Tag: L10n-viewOnYouTube
-	static let viewOnYouTube: String = String(
-		localized: "View on YouTube",
-		comment: "The string for the word 'View on YouTube'."
-	)
+	static var viewOnYouTube: String {
+		L10n.resolve {
+			String(
+				localized: "View on YouTube",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View on YouTube'."
+			)
+		}
+	}
 	/// The string for the word 'preview'.
 	///
 	/// - Tag: L10n-preview
-	static let preview: String = String(
-		localized: "Preview",
-		comment: "The string for the word 'preview'."
-	)
+	static var preview: String {
+		L10n.resolve {
+			String(
+				localized: "Preview",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'preview'."
+			)
+		}
+	}
 	/// The string for the word 'Play'.
 	///
 	/// - Tag: L10n-play
-	static let play: String = String(
-		localized: "Play",
-		comment: "The string for the word 'Play'."
-	)
+	static var play: String {
+		L10n.resolve {
+			String(
+				localized: "Play",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. Media playback control. Paired with Pause."
+			)
+		}
+	}
 	/// The string for the word 'pause'.
 	///
 	/// - Tag: L10n-pause
-	static let pause: String = String(
-		localized: "Pause",
-		comment: "The string for the word 'Pause'."
-	)
+	static var pause: String {
+		L10n.resolve {
+			String(
+				localized: "Pause",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Pause'."
+			)
+		}
+	}
 	/// The string for the word 'stop'.
 	///
 	/// - Tag: L10n-stop
-	static let stop: String = String(
-		localized: "Stop",
-		comment: "The string for the word 'stop'."
-	)
+	static var stop: String {
+		L10n.resolve {
+			String(
+				localized: "Stop",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'stop'."
+			)
+		}
+	}
 	/// The string for the word 'password'.
 	///
 	/// - Tag: L10n-password
-	static let password: String = String(
-		localized: "Password",
-		comment: "The string for the word 'password'."
-	)
+	static var password: String {
+		L10n.resolve {
+			String(
+				localized: "Password",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'password'."
+			)
+		}
+	}
+	/// The email address field placeholder.
+	static var emailAddress: String {
+		L10n.resolve {
+			String(
+				localized: "Email Address",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The email address field placeholder."
+			)
+		}
+	}
+	/// The username field placeholder.
+	static var username: String {
+		L10n.resolve {
+			String(
+				localized: "Username",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The username field placeholder."
+			)
+		}
+	}
+	/// A one-based position within a total count.
+	static func indexOfTotal(_ current: Int, _ total: Int) -> String {
+		L10n.resolve {
+			String(
+				localized: "\(current) of \(total)",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A one-based position within a total count, where the placeholders are the current index and the total."
+			)
+		}
+	}
 	/// The string for the word 'download'.
 	///
 	/// - Tag: L10n-download
-	static let download: String = String(
-		localized: "Download",
-		comment: "The string for the word 'download'."
-	)
+	static var download: String {
+		L10n.resolve {
+			String(
+				localized: "Download",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'download'."
+			)
+		}
+	}
 	/// The string for the phrase 'coming soon'.
 	///
 	/// - Tag: L10n-comingSoon
-	static let comingSoon: String = String(
-		localized: "Coming Soon",
-		comment: "The string for the word 'coming soon'."
-	)
+	static var comingSoon: String {
+		L10n.resolve {
+			String(
+				localized: "Coming Soon",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'coming soon'."
+			)
+		}
+	}
 	/// The string for the word 'expected'.
 	///
 	/// - Tag: L10n-expected
-	static let expected: String = String(
-		localized: "Expected",
-		comment: "The string for the word 'expected'."
-	)
+	static var expected: String {
+		L10n.resolve {
+			String(
+				localized: "Expected",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'expected'."
+			)
+		}
+	}
 	/// The string for the word 'achievements'.
 	///
 	/// - Tag: L10n-achievements
-	static let achievements: String = String(
-		localized: "Achievements",
-		comment: "The string for the word 'achievements'."
-	)
+	static var achievements: String {
+		L10n.resolve {
+			String(
+				localized: "Achievements",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'achievements'."
+			)
+		}
+	}
 	/// The string for the word 'badges'.
 	///
 	/// - Tag: L10n-badges
-	static let badges: String = String(
-		localized: "Badges",
-		comment: "The string for the word 'badges'."
-	)
+	static var badges: String {
+		L10n.resolve {
+			String(
+				localized: "Badges",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'badges'."
+			)
+		}
+	}
 	/// The string for the word 'rank'.
 	///
 	/// - Tag: L10n-rank
-	static let rank: String = String(
-		localized: "Rank",
-		comment: "The string for the word 'rank'."
-	)
+	static var rank: String {
+		L10n.resolve {
+			String(
+				localized: "Rank",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'rank'."
+			)
+		}
+	}
 	/// The string for the word 'languages'.
 	///
 	/// - Tag: L10n-language
-	static let language: String = String(
-		localized: "Languages",
-		comment: "The string for the word 'language'."
-	)
+	static var language: String {
+		L10n.resolve {
+			String(
+				localized: "Languages",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'language'."
+			)
+		}
+	}
 	/// The explanatory description shown above the language picker clarifying that it changes content language, not the app's interface language.
 	///
 	/// - Tag: L10n-languagePickerDescription
-	static let languagePickerDescription: String = String(
-		localized: "languagePicker.description",
-		defaultValue: "Your preferred language is used for the information shown throughout Kurozora, such as titles, descriptions, and metadata. It does not change the language of the app's interface.\n\nThese changes take effect anywhere you are signed in with your Kurozora Account.\n\nIf information cannot be shown in your preferred language, English will be used instead.",
-		comment: "Explanatory text shown above the language picker to clarify that the setting changes content language, not the app's interface language."
-	)
+	static var languagePickerDescription: String {
+		L10n.resolve {
+			String(
+				localized: "languagePicker.description",
+				defaultValue: "Your preferred language is used for the information shown throughout Kurozora, such as titles, descriptions, and metadata. It does not change the language of the app's interface.\n\nThese changes take effect anywhere you are signed in with your Kurozora Account.\n\nIf information cannot be shown in your preferred language, English will be used instead.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Explanatory text shown above the language picker to clarify that the setting changes content language, not the app's interface language."
+			)
+		}
+	}
 	/// The explanatory description shown above the TV rating picker clarifying that TV ratings are tiered.
 	///
 	/// - Tag: L10n-tvRatingPickerDescription
-	static let tvRatingPickerDescription: String = String(
-		localized: "tvRatingPicker.description",
-		defaultValue: "TV ratings are tiered. Depending on the chosen TV rating some shows might be hidden.\n\nFor example, selecting R15+ will show you all anime up to a TV rating of R15+.",
-		comment: "Explanatory text shown above the TV rating picker to clarify how tiered TV ratings affect visible content."
-	)
+	static var tvRatingPickerDescription: String {
+		L10n.resolve {
+			String(
+				localized: "tvRatingPicker.description",
+				defaultValue: "TV ratings are tiered. Depending on the chosen TV rating some shows might be hidden.\n\nFor example, selecting R15+ will show you all anime up to a TV rating of R15+.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Explanatory text shown above the TV rating picker to clarify how tiered TV ratings affect visible content."
+			)
+		}
+	}
 	/// The explanatory description shown above the timezone picker clarifying what the timezone setting affects.
 	///
 	/// - Tag: L10n-timezonePickerDescription
-	static let timezonePickerDescription: String = String(
-		localized: "timezonePicker.description",
-		defaultValue: "The selected timezone will be used to display all dates and times, including premiere dates, broadcasts, and schedules.",
-		comment: "Explanatory text shown above the timezone picker to clarify what the setting affects."
-	)
+	static var timezonePickerDescription: String {
+		L10n.resolve {
+			String(
+				localized: "timezonePicker.description",
+				defaultValue: "The selected timezone will be used to display all dates and times, including premiere dates, broadcasts, and schedules.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Explanatory text shown above the timezone picker to clarify what the setting affects."
+			)
+		}
+	}
 	/// The string for the word 'country'.
 	///
 	/// - Tag: L10n-country
-	static let country: String = String(
-		localized: "Country",
-		comment: "The string for the word 'country'."
-	)
+	static var country: String {
+		L10n.resolve {
+			String(
+				localized: "Country",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'country'."
+			)
+		}
+	}
 	/// The string for the phrase 'TV Rating'.
 	///
 	/// - Tag: L10n-tvRating
-	static let tvRating: String = String(
-		localized: "TV Rating",
-		comment: "The string for the word 'TV rating'."
-	)
+	static var tvRating: String {
+		L10n.resolve {
+			String(
+				localized: "TV Rating",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'TV rating'."
+			)
+		}
+	}
 	/// The string for the phrase 'Time Zone'.
 	///
 	/// - Tag: L10n-timeZone
-	static let timeZone: String = String(
-		localized: "Time Zone",
-		comment: "The string for the phrase 'Time Zone'."
-	)
+	static var timeZone: String {
+		L10n.resolve {
+			String(
+				localized: "Time Zone",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Time Zone'."
+			)
+		}
+	}
 	/// The string for the word 'seasons'.
 	///
 	/// - Tag: L10n-seasons
-	static let seasons: String = String(
-		localized: "Seasons",
-		comment: "The string for the word 'seasons'."
-	)
+	static var seasons: String {
+		L10n.resolve {
+			String(
+				localized: "Seasons",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'seasons'."
+			)
+		}
+	}
 	/// The string for the word 'winter'.
 	///
 	/// - Tag: L10n-winter
-	static let winter: String = String(
-		localized: "Winter",
-		comment: "The string for the word 'winter'."
-	)
+	static var winter: String {
+		L10n.resolve {
+			String(
+				localized: "Winter",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'winter'."
+			)
+		}
+	}
 	/// The string for the word 'spring'.
 	///
 	/// - Tag: L10n-spring
-	static let spring: String = String(
-		localized: "Spring",
-		comment: "The string for the word 'spring'."
-	)
+	static var spring: String {
+		L10n.resolve {
+			String(
+				localized: "Spring",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'spring'."
+			)
+		}
+	}
 	/// The string for the word 'summer'.
 	///
 	/// - Tag: L10n-summer
-	static let summer: String = String(
-		localized: "Summer",
-		comment: "The string for the word 'summer'."
-	)
+	static var summer: String {
+		L10n.resolve {
+			String(
+				localized: "Summer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'summer'."
+			)
+		}
+	}
 	/// The string for the word 'fall'.
 	///
 	/// - Tag: L10n-fall
-	static let fall: String = String(
-		localized: "Fall",
-		comment: "The string for the word 'fall'."
-	)
+	static var fall: String {
+		L10n.resolve {
+			String(
+				localized: "Fall",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'fall'."
+			)
+		}
+	}
 	/// The string for the accessibility label of the season picker.
 	///
 	/// - Tag: L10n-seasonPicker
-	static let seasonPicker: String = String(
-		localized: "Season picker",
-		comment: "The accessibility label for the seasonal browse picker."
-	)
+	static var seasonPicker: String {
+		L10n.resolve {
+			String(
+				localized: "Season picker",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the seasonal browse picker."
+			)
+		}
+	}
 	/// The string for the phrase 'Current Season'.
 	///
 	/// - Tag: L10n-currentSeason
-	static let currentSeason: String = String(
-		localized: "Current Season",
-		comment: "The string for the phrase 'Current Season'."
-	)
+	static var currentSeason: String {
+		L10n.resolve {
+			String(
+				localized: "Current Season",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Current Season'."
+			)
+		}
+	}
 	/// The string for the word 'season'.
 	///
 	/// - Tag: L10n-season
-	static let season: String = String(
-		localized: "Season",
-		comment: "The string for the word 'season'."
-	)
+	static var season: String {
+		L10n.resolve {
+			String(
+				localized: "Season",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Noun. A show's season or installment, not the airing quarter."
+			)
+		}
+	}
 	/// The string for the word 'studios'.
 	///
 	/// - Tag: L10n-studios
-	static let studios: String = String(
-		localized: "Studios",
-		comment: "The string for the word 'studios'."
-	)
+	static var studios: String {
+		L10n.resolve {
+			String(
+				localized: "Studios",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'studios'."
+			)
+		}
+	}
 	/// The string for the word 'studio'.
 	///
 	/// - Tag: L10n-studio
-	static let studio: String = String(
-		localized: "Studio",
-		comment: "The string for the word 'studio'."
-	)
+	static var studio: String {
+		L10n.resolve {
+			String(
+				localized: "Studio",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'studio'."
+			)
+		}
+	}
 	/// The string for the phrase 'Founded on [date]'.
 	///
 	/// - Tag: L10n-foundedOn
 	static func foundedOn(date: String) -> String {
 		String(
 			localized: "Founded on \(date)",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The string for the word 'Founded on [date]'."
 		)
 	}
@@ -1497,158 +2796,282 @@ extension L10n {
 	/// The string for the word 'successor'.
 	///
 	/// - Tag: L10n-successor
-	static let successor: String = String(
-		localized: "Successor",
-		comment: "The string for the word 'successor'."
-	)
+	static var successor: String {
+		L10n.resolve {
+			String(
+				localized: "Successor",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'successor'."
+			)
+		}
+	}
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: L10n-cast
-	static let cast: String = String(
-		localized: "Cast",
-		comment: "The string for the word 'cast'."
-	)
+	static var cast: String {
+		L10n.resolve {
+			String(
+				localized: "Cast",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'cast'."
+			)
+		}
+	}
 	/// The string for the word 'songs'.
 	///
 	/// - Tag: L10n-songs
-	static let songs: String = String(
-		localized: "Songs",
-		comment: "The string for the word 'songs'."
-	)
+	static var songs: String {
+		L10n.resolve {
+			String(
+				localized: "Songs",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'songs'."
+			)
+		}
+	}
 	/// The string for the phrase 'More by'.
 	///
 	/// - Tag: L10n-moreBy
-	static let moreBy: String = String(
-		localized: "More by",
-		comment: "The string for the word 'more by'."
-	)
+	static var moreBy: String {
+		L10n.resolve {
+			String(
+				localized: "More by",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'more by'."
+			)
+		}
+	}
 	/// The string for the phrase 'Related Shows'.
 	///
 	/// - Tag: L10n-relatedShows
-	static let relatedShows: String = String(
-		localized: "Related Shows",
-		comment: "The string for the word 'related shows'."
-	)
+	static var relatedShows: String {
+		L10n.resolve {
+			String(
+				localized: "Related Shows",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'related shows'."
+			)
+		}
+	}
 	/// The string for the phrase 'Related Literatures'.
 	///
 	/// - Tag: L10n-relatedLiteratures
-	static let relatedLiteratures: String = String(
-		localized: "Related Literatures",
-		comment: "The string for the word 'related literatures'."
-	)
+	static var relatedLiteratures: String {
+		L10n.resolve {
+			String(
+				localized: "Related Literatures",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'related literatures'."
+			)
+		}
+	}
 	/// The string for the phrase 'Related Games'.
 	///
 	/// - Tag: L10n-relatedGames
-	static let relatedGames: String = String(
-		localized: "Related Games",
-		comment: "The string for the word 'related games'."
-	)
+	static var relatedGames: String {
+		L10n.resolve {
+			String(
+				localized: "Related Games",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'related games'."
+			)
+		}
+	}
 	/// The string for the word 'copyright'.
 	///
 	/// - Tag: L10n-copyright
-	static let copyright: String = String(
-		localized: "Copyright",
-		comment: "The string for the word 'copyright'."
-	)
+	static var copyright: String {
+		L10n.resolve {
+			String(
+				localized: "Copyright",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'copyright'."
+			)
+		}
+	}
 	/// The string for the phrase 'Open Twitter'.
 	///
 	/// - Tag: L10n-openTwitter
-	static let openTwitter: String = String(
-		localized: "Open Twitter",
-		comment: "The string for the word 'Open Twitter'."
-	)
+	static var openTwitter: String {
+		L10n.resolve {
+			String(
+				localized: "Open Twitter",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Open Twitter'."
+			)
+		}
+	}
 	/// The string for the word 'Redeem'.
 	///
 	/// - Tag: L10n-redeem
-	static let redeem: String = String(
-		localized: "Redeem",
-		comment: "The string for the word 'Redeem'."
-	)
+	static var redeem: String {
+		L10n.resolve {
+			String(
+				localized: "Redeem",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Redeem'."
+			)
+		}
+	}
 	/// The string for the phrase 'View Subscription'.
 	///
 	/// - Tag: L10n-viewSubscription
-	static let viewSubscription: String = String(
-		localized: "View Subscription",
-		comment: "The string for the word 'View Subscription'."
-	)
+	static var viewSubscription: String {
+		L10n.resolve {
+			String(
+				localized: "View Subscription",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'View Subscription'."
+			)
+		}
+	}
 	/// The string for the phrase 'Become a Subscriber'.
 	///
 	/// - Tag: L10n-becomeASubscriber
-	static let becomeASubscriber: String = String(
-		localized: "Become a Subscriber",
-		comment: "The string for the word 'Become a Subscriber'."
-	)
+	static var becomeASubscriber: String {
+		L10n.resolve {
+			String(
+				localized: "Become a Subscriber",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Become a Subscriber'."
+			)
+		}
+	}
 	/// The string for the word 'Continue'.
 	///
 	/// - Tag: L10n-continue
 	static let `continue`: String = String(
 		localized: "Continue",
+		bundle: LanguageManager.shared.bundle,
+		locale: LanguageManager.shared.locale,
 		comment: "The string for the word 'Continue'."
 	)
 	/// The string for the phrase 'What’s New'.
 	///
 	/// - Tag: L10n-whatsNew
-	static let whatsNew: String = String(
-		localized: "What’s New in Kurozora",
-		comment: "The string for the word 'What’s New'."
-	)
+	static var whatsNew: String {
+		L10n.resolve {
+			String(
+				localized: "What’s New in Kurozora",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'What’s New'."
+			)
+		}
+	}
 	/// The string for the word 'Favorites'.
 	///
 	/// - Tag: L10n-favorites
-	static let favorites: String = String(
-		localized: "Favorites",
-		comment: "The string for the word 'Favorites'"
-	)
+	static var favorites: String {
+		L10n.resolve {
+			String(
+				localized: "Favorites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Favorites'"
+			)
+		}
+	}
 	/// The string for the phrase 'My Favorites'.
 	///
 	/// - Tag: L10n-myFavorites
-	static let myFavorites: String = String(
-		localized: "My Favorites",
-		comment: "The string for the word 'My Favorites'"
-	)
+	static var myFavorites: String {
+		L10n.resolve {
+			String(
+				localized: "My Favorites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'My Favorites'"
+			)
+		}
+	}
 	/// The string for the word 'Reminders'.
 	///
 	/// - Tag: L10n-reminders
-	static let reminders: String = String(
-		localized: "Reminders",
-		comment: "The string for the word 'Reminders'"
-	)
+	static var reminders: String {
+		L10n.resolve {
+			String(
+				localized: "Reminders",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Reminders'"
+			)
+		}
+	}
 	/// The string for the phrase 'Remind Me'.
 	///
 	/// - Tag: L10n-remindMe
-	static let remindMe: String = String(
-		localized: "Remind Me",
-		comment: "The string for the word 'Remind Me'"
-	)
+	static var remindMe: String {
+		L10n.resolve {
+			String(
+				localized: "Remind Me",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Remind Me'"
+			)
+		}
+	}
 	/// The string for the phrase 'My Reminders'.
 	///
 	/// - Tag: L10n-myReminders
-	static let myReminders: String = String(
-		localized: "My Reminders",
-		comment: "The string for the word 'My Reminders'"
-	)
+	static var myReminders: String {
+		L10n.resolve {
+			String(
+				localized: "My Reminders",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'My Reminders'"
+			)
+		}
+	}
 
 	// MARK: - ReCap
 	/// The string for the word 'Re:Cap'.
 	///
 	/// - Tag: L10n-reCAP
-	static let reCAP: String = String(
-		localized: "Re:CAP",
-		comment: "The string for the word 'Re:CAP'."
-	)
+	static var reCAP: String {
+		L10n.resolve {
+			String(
+				localized: "Re:CAP",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Re:CAP'."
+			)
+		}
+	}
 	/// The string for the word 'Milestones'.
 	///
 	/// - Tag: L10n-milestones
-	static let milestones: String = String(
-		localized: "Milestones",
-		comment: "The string for the word 'Milestones'."
-	)
+	static var milestones: String {
+		L10n.resolve {
+			String(
+				localized: "Milestones",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Milestones'."
+			)
+		}
+	}
 	/// The string for the phrase 'Top %@'.
 	///
 	/// - Tag: L10n-topX
 	static func top(_ string: String) -> String {
 		return String(
 			localized: "Top \(string)",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The string for the word 'Top %@'."
 		)
 	}
@@ -1659,66 +3082,137 @@ extension L10n {
 	static func totalSeries(_ count: Int) -> String {
 		return String(
 			localized: "\(count) total series",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The total series count shown on the ReCap year card."
 		)
 	}
 
 	// MARK: - Library Batch Edit
 	/// The string for the word 'Hide'.
-	static let hide: String = String(
-		localized: "Hide",
-		comment: "The string for the word 'Hide'."
-	)
-	/// The string for the word 'Show'.
-	static let show: String = String(
-		localized: "Show",
-		comment: "The string for the word 'Show' as the verb opposite of Hide."
-	)
+	static var hide: String {
+		L10n.resolve {
+			String(
+				localized: "Hide",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. Hides a library title. Paired with Reveal."
+			)
+		}
+	}
+	/// The string for the reveal action.
+	///
+	/// - Tag: L10n-reveal
+	static var reveal: String {
+		L10n.resolve {
+			String(
+				localized: "reveal",
+				defaultValue: "Show",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. Reveals a hidden library title. The opposite of Hide."
+			)
+		}
+	}
 	/// The string for the word 'Unfavorite'.
-	static let unfavorite: String = String(
-		localized: "Unfavorite",
-		comment: "The string for the word 'Unfavorite'."
-	)
+	static var unfavorite: String {
+		L10n.resolve {
+			String(
+				localized: "Unfavorite",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Unfavorite'."
+			)
+		}
+	}
 	/// The string for the phrase 'Stop Reminding'.
-	static let stopReminding: String = String(
-		localized: "Stop Reminding",
-		comment: "The string for the phrase 'Stop Reminding'."
-	)
+	static var stopReminding: String {
+		L10n.resolve {
+			String(
+				localized: "Stop Reminding",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Stop Reminding'."
+			)
+		}
+	}
 	/// The string for the phrase 'Could Not Update Reminders'.
-	static let couldNotUpdateReminders: String = String(
-		localized: "Could Not Update Reminders",
-		comment: "The error alert title when a reminders batch update fails."
-	)
+	static var couldNotUpdateReminders: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Update Reminders",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error alert title when a reminders batch update fails."
+			)
+		}
+	}
 	/// The string for the phrase 'Move to'.
-	static let moveTo: String = String(
-		localized: "Move to",
-		comment: "The string for the menu title that lets the user pick a target library status."
-	)
+	static var moveTo: String {
+		L10n.resolve {
+			String(
+				localized: "Move to",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the menu title that lets the user pick a target library status."
+			)
+		}
+	}
 	/// The string for the phrase 'Select All'.
-	static let selectAll: String = String(
-		localized: "Select All",
-		comment: "The leading nav-bar action that selects every loaded library item in batch-edit mode."
-	)
+	static var selectAll: String {
+		L10n.resolve {
+			String(
+				localized: "Select All",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The leading nav-bar action that selects every loaded library item in batch-edit mode."
+			)
+		}
+	}
 	/// The string for the phrase 'Deselect All'.
-	static let deselectAll: String = String(
-		localized: "Deselect All",
-		comment: "The leading nav-bar action that deselects every selected library item in batch-edit mode."
-	)
+	static var deselectAll: String {
+		L10n.resolve {
+			String(
+				localized: "Deselect All",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The leading nav-bar action that deselects every selected library item in batch-edit mode."
+			)
+		}
+	}
 	/// The string for the phrase 'Select Items'.
-	static let selectItems: String = String(
-		localized: "Select Items",
-		comment: "The label shown in the bottom batch-edit toolbar when no items are selected."
-	)
+	static var selectItems: String {
+		L10n.resolve {
+			String(
+				localized: "Select Items",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label shown in the bottom batch-edit toolbar when no items are selected."
+			)
+		}
+	}
 	/// The string for the phrase 'Could Not Update Library'.
-	static let couldNotUpdateLibrary: String = String(
-		localized: "Could Not Update Library",
-		comment: "The error alert title when a library batch update fails."
-	)
+	static var couldNotUpdateLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Update Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error alert title when a library batch update fails."
+			)
+		}
+	}
 	/// The string for the phrase 'Could Not Update Favorites'.
-	static let couldNotUpdateFavorites: String = String(
-		localized: "Could Not Update Favorites",
-		comment: "The error alert title when a favorites batch update fails."
-	)
+	static var couldNotUpdateFavorites: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Update Favorites",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error alert title when a favorites batch update fails."
+			)
+		}
+	}
 	/// The confirmation alert message shown when removing items from the library.
 	///
 	/// - Parameter count: The number of items being removed.
@@ -1728,6 +3222,8 @@ extension L10n {
 		return String(
 			localized: "library.deleteItemsConfirmation",
 			defaultValue: "\(count) items will be deleted from your library.",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The confirmation alert message shown when removing items from the library."
 		)
 	}
@@ -1735,6 +3231,8 @@ extension L10n {
 	static func itemsSelected(_ count: Int) -> String {
 		return String(
 			localized: "\(count) Selected",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The label showing how many items are selected in batch-edit mode."
 		)
 	}
@@ -1742,24 +3240,40 @@ extension L10n {
 	static func deleteItems(_ count: Int) -> String {
 		return String(
 			localized: "Delete \(count) Items",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The destructive button shown in the delete confirmation alert when multiple items are selected."
 		)
 	}
 
 	/// The string for the word 'Select'.
-	static let select: String = String(
-		localized: "Select",
-		comment: "The leading nav-bar action that enters batch-edit mode in lists such as notifications."
-	)
+	static var select: String {
+		L10n.resolve {
+			String(
+				localized: "Select",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The leading nav-bar action that enters batch-edit mode in lists such as notifications."
+			)
+		}
+	}
 	/// The string for the phrase 'Select Notifications'.
-	static let selectNotifications: String = String(
-		localized: "Select Notifications",
-		comment: "The label shown in the bottom batch-edit toolbar when no notifications are selected."
-	)
+	static var selectNotifications: String {
+		L10n.resolve {
+			String(
+				localized: "Select Notifications",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label shown in the bottom batch-edit toolbar when no notifications are selected."
+			)
+		}
+	}
 	/// The destructive button shown when removing notifications.
 	static func deleteNotifications(_ count: Int) -> String {
 		return String(
 			localized: "Delete \(count) Notifications",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The destructive button shown when removing multiple notifications."
 		)
 	}
@@ -1772,190 +3286,342 @@ extension L10n {
 		return String(
 			localized: "notifications.deleteNotificationsConfirmation",
 			defaultValue: "\(count) notifications will be removed.",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
 			comment: "The confirmation alert message shown when removing notifications."
 		)
 	}
 	/// The string for the phrase 'Could Not Update Notifications'.
-	static let couldNotUpdateNotifications: String = String(
-		localized: "Could Not Update Notifications",
-		comment: "The error alert title shown when a notifications batch update fails."
-	)
+	static var couldNotUpdateNotifications: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Update Notifications",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error alert title shown when a notifications batch update fails."
+			)
+		}
+	}
 	/// The string for the phrase 'Could Not Remove Notifications'.
-	static let couldNotRemoveNotifications: String = String(
-		localized: "Could Not Remove Notifications",
-		comment: "The error alert title shown when a notifications batch remove fails."
-	)
+	static var couldNotRemoveNotifications: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Remove Notifications",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error alert title shown when a notifications batch remove fails."
+			)
+		}
+	}
 
 	// MARK: - Menu Commands
 	/// The menu command and title for the Home screen.
 	///
 	/// - Tag: L10n-home
-	static let home: String = String(
-		localized: "Home",
-		comment: "The menu command and title for the Home screen."
-	)
+	static var home: String {
+		L10n.resolve {
+			String(
+				localized: "Home",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command and title for the Home screen."
+			)
+		}
+	}
 	/// The discoverability title for the Home menu command.
 	///
 	/// - Tag: L10n-toggleHome
-	static let toggleHome: String = String(
-		localized: "Toggle Home",
-		comment: "The discoverability title for the Home menu command."
-	)
+	static var toggleHome: String {
+		L10n.resolve {
+			String(
+				localized: "Toggle Home",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The discoverability title for the Home menu command."
+			)
+		}
+	}
 	/// The menu title for the refresh command.
 	///
 	/// - Tag: L10n-refresh
-	static let refresh: String = String(
-		localized: "Refresh",
-		comment: "The menu title for the refresh command."
-	)
+	static var refresh: String {
+		L10n.resolve {
+			String(
+				localized: "Refresh",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu title for the refresh command."
+			)
+		}
+	}
 	/// The menu command that refreshes the current page.
 	///
 	/// - Tag: L10n-refreshPage
-	static let refreshPage: String = String(
-		localized: "Refresh Page",
-		comment: "The menu command that refreshes the current page."
-	)
+	static var refreshPage: String {
+		L10n.resolve {
+			String(
+				localized: "Refresh Page",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that refreshes the current page."
+			)
+		}
+	}
 	/// The menu command that opens settings.
 	///
 	/// - Tag: L10n-settingsCommand
-	static let settingsCommand: String = String(
-		localized: "Settings…",
-		comment: "The menu command that opens settings."
-	)
+	static var settingsCommand: String {
+		L10n.resolve {
+			String(
+				localized: "Settings…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that opens settings."
+			)
+		}
+	}
 	/// The menu command that opens the user's account.
 	///
 	/// - Tag: L10n-viewMyAccount
-	static let viewMyAccount: String = String(
-		localized: "View My Account…",
-		comment: "The menu command that opens the user's account."
-	)
+	static var viewMyAccount: String {
+		L10n.resolve {
+			String(
+				localized: "View My Account…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that opens the user's account."
+			)
+		}
+	}
 	/// The menu command that subscribes to reminders.
 	///
 	/// - Tag: L10n-subscribeToRemindersCommand
-	static let subscribeToRemindersCommand: String = String(
-		localized: "Subscribe to Reminders…",
-		comment: "The menu command that subscribes to reminders."
-	)
+	static var subscribeToRemindersCommand: String {
+		L10n.resolve {
+			String(
+				localized: "Subscribe to Reminders…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that subscribes to reminders."
+			)
+		}
+	}
 	/// The menu command that opens the Kurozora+ upgrade flow.
 	///
 	/// - Tag: L10n-upgradeToKurozoraPlus
-	static let upgradeToKurozoraPlus: String = String(
-		localized: "Upgrade to Kurozora+…",
-		comment: "The menu command that opens the Kurozora+ upgrade flow."
-	)
+	static var upgradeToKurozoraPlus: String {
+		L10n.resolve {
+			String(
+				localized: "Upgrade to Kurozora+…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that opens the Kurozora+ upgrade flow."
+			)
+		}
+	}
 	/// The menu command that opens the redeem flow.
 	///
 	/// - Tag: L10n-redeemCommand
-	static let redeemCommand: String = String(
-		localized: "Redeem…",
-		comment: "The menu command that opens the redeem flow."
-	)
+	static var redeemCommand: String {
+		L10n.resolve {
+			String(
+				localized: "Redeem…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that opens the redeem flow."
+			)
+		}
+	}
 
 	// MARK: - Media Viewer
 	/// The action that opens the media in a browser.
 	///
 	/// - Tag: L10n-openInBrowser
-	static let openInBrowser: String = String(
-		localized: "Open in Browser",
-		comment: "The action that opens the media in a browser."
-	)
+	static var openInBrowser: String {
+		L10n.resolve {
+			String(
+				localized: "Open in Browser",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action that opens the media in a browser."
+			)
+		}
+	}
 	/// The toast shown after an image is saved to the photo library.
 	///
 	/// - Tag: L10n-imageSavedToLibrary
-	static let imageSavedToLibrary: String = String(
-		localized: "Image saved to your library!",
-		comment: "The toast shown after an image is saved to the photo library."
-	)
+	static var imageSavedToLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Image saved to your library!",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown after an image is saved to the photo library."
+			)
+		}
+	}
 	/// The default toast shown when an image could not be saved.
 	///
 	/// - Tag: L10n-imageSaveFailed
-	static let imageSaveFailed: String = String(
-		localized: "Image could not be saved.",
-		comment: "The default toast shown when an image could not be saved."
-	)
+	static var imageSaveFailed: String {
+		L10n.resolve {
+			String(
+				localized: "Image could not be saved.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The default toast shown when an image could not be saved."
+			)
+		}
+	}
 	/// The toast shown when photo library access is denied while saving.
 	///
 	/// - Tag: L10n-photoLibraryAccessDenied
-	static let photoLibraryAccessDenied: String = String(
-		localized: "Access to photo library denied.",
-		comment: "The toast shown when photo library access is denied while saving."
-	)
+	static var photoLibraryAccessDenied: String {
+		L10n.resolve {
+			String(
+				localized: "Access to photo library denied.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown when photo library access is denied while saving."
+			)
+		}
+	}
 	/// The toast shown when an image fails to download.
 	///
 	/// - Tag: L10n-imageDownloadFailed
-	static let imageDownloadFailed: String = String(
-		localized: "Failed to download image.",
-		comment: "The toast shown when an image fails to download."
-	)
+	static var imageDownloadFailed: String {
+		L10n.resolve {
+			String(
+				localized: "Failed to download image.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown when an image fails to download."
+			)
+		}
+	}
 	/// The toast shown when an image fails to save.
 	///
 	/// - Tag: L10n-imageSaveFailedRetry
-	static let imageSaveFailedRetry: String = String(
-		localized: "Failed to save image.",
-		comment: "The toast shown when an image fails to save."
-	)
+	static var imageSaveFailedRetry: String {
+		L10n.resolve {
+			String(
+				localized: "Failed to save image.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown when an image fails to save."
+			)
+		}
+	}
 	/// The button that rotates the media viewer.
 	///
 	/// - Tag: L10n-tapToRotate
-	static let tapToRotate: String = String(
-		localized: "Tap to Rotate",
-		comment: "The button that rotates the media viewer."
-	)
+	static var tapToRotate: String {
+		L10n.resolve {
+			String(
+				localized: "Tap to Rotate",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button that rotates the media viewer."
+			)
+		}
+	}
 
 	// MARK: - Text Editor
 	/// The button title for opening the content labels picker.
 	///
 	/// - Tag: L10n-labels
-	static let labels: String = String(
-		localized: "Labels",
-		comment: "The button title for opening the content labels picker."
-	)
+	static var labels: String {
+		L10n.resolve {
+			String(
+				localized: "Labels",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button title for opening the content labels picker."
+			)
+		}
+	}
 	/// The button title shown when content labels have been added.
 	///
 	/// - Tag: L10n-labelsAdded
-	static let labelsAdded: String = String(
-		localized: "Labels Added",
-		comment: "The button title shown when content labels have been added."
-	)
+	static var labelsAdded: String {
+		L10n.resolve {
+			String(
+				localized: "Labels Added",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button title shown when content labels have been added."
+			)
+		}
+	}
 
 	// MARK: - Search
 	/// The placeholder shown in the main search bar.
 	///
 	/// - Tag: L10n-searchPlaceholder
-	static let searchPlaceholder: String = String(
-		localized: "Anime, Manga, Games and More",
-		comment: "The placeholder shown in the main search bar."
-	)
+	static var searchPlaceholder: String {
+		L10n.resolve {
+			String(
+				localized: "Anime, Manga, Games and More",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The placeholder shown in the main search bar."
+			)
+		}
+	}
 
 	// MARK: - Quick Links
 	/// The Home quick link to the in-app purchases article.
 	///
 	/// - Tag: L10n-quickLinkIAP
-	static let quickLinkIAP: String = String(
-		localized: "About In-App Purchases",
-		comment: "The Home quick link to the in-app purchases article."
-	)
+	static var quickLinkIAP: String {
+		L10n.resolve {
+			String(
+				localized: "About In-App Purchases",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The Home quick link to the in-app purchases article."
+			)
+		}
+	}
 	/// The Home quick link to the personalisation article.
 	///
 	/// - Tag: L10n-quickLinkPersonalisation
-	static let quickLinkPersonalisation: String = String(
-		localized: "About Personalisation",
-		comment: "The Home quick link to the personalisation article."
-	)
+	static var quickLinkPersonalisation: String {
+		L10n.resolve {
+			String(
+				localized: "About Personalisation",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The Home quick link to the personalisation article."
+			)
+		}
+	}
 	/// The Home quick link to the welcome page.
 	///
 	/// - Tag: L10n-quickLinkWelcome
-	static let quickLinkWelcome: String = String(
-		localized: "Welcome to Kurozora",
-		comment: "The Home quick link to the welcome page."
-	)
+	static var quickLinkWelcome: String {
+		L10n.resolve {
+			String(
+				localized: "Welcome to Kurozora",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The Home quick link to the welcome page."
+			)
+		}
+	}
 
 	// MARK: - Misc
 	/// The string for the word 'options'.
 	///
 	/// - Tag: L10n-options
-	static let options: String = String(
-		localized: "Options",
-		comment: "The string for the word 'options'."
-	)
+	static var options: String {
+		L10n.resolve {
+			String(
+				localized: "Options",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'options'."
+			)
+		}
+	}
 }

@@ -66,7 +66,7 @@ extension KKSong {
 			var addElements: [UIMenuElement] = []
 			// Create "Add to Apple Music" element
 			if let song = userInfo?["song"] as? MKSong {
-				let title = song.isInLibrary ? "In Apple Music Library" : "Add to Apple Music"
+				let title = song.isInLibrary ? L10n.inAppleMusicLibrary : L10n.addToAppleMusic
 				let image = song.isInLibrary ? UIImage(systemName: "checkmark") : UIImage(systemName: "plus")
 				let addAction = UIAction(title: title, image: image) { _ in
 					if song.isInLibrary {
@@ -169,7 +169,7 @@ extension KKSong {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
-		activityItems.append("Listen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp")
+		activityItems.append(L10n.shareSong(self.attributes.title, self.attributes.artist))
 
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
@@ -255,6 +255,6 @@ extension KKSong {
 			UIApplication.shared.kOpen(nil, deepLink: url)
 		}))
 
-		viewController?.presentAlertController(title: "How to Remove", message: "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.", actions: actions)
+		viewController?.presentAlertController(title: L10n.howToRemove, message: L10n.songRemovalMessage, actions: actions)
 	}
 }

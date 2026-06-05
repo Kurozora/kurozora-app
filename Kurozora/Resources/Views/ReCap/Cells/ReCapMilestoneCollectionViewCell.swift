@@ -58,11 +58,11 @@ class ReCapMilestoneCollectionViewCell: KCollectionViewCell {
 			let topPercentile = String(format: "%.2f", recapItem.attributes.topPercentile)
 			let recapItemTitle: String = switch recapItem.attributes.recapItemType {
 			case .shows:
-				"anime watchers"
+				L10n.animeWatchers
 			case .games:
-				"game players"
+				L10n.gamePlayers
 			case .literatures:
-				"manga readers"
+				L10n.mangaReaders
 			case .genres, .themes:
 				""
 			}

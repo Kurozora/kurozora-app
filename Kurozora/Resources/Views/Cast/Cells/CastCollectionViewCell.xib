@@ -150,6 +150,7 @@
                 <outlet property="personContainerView" destination="ConT-vw-pca" id="CntC-01-pca"/>
                 <outlet property="personImageView" destination="irr-5j-Rg1" id="VZK-S2-sda"/>
                 <outlet property="personNameLabel" destination="Ph7-Qa-3RF" id="xzm-U3-Xz9"/>
+                <outlet property="voiceActorLabel" destination="Q5o-Ip-gRt" id="voi-ce-lbl"/>
             </connections>
             <point key="canvasLocation" x="136.95652173913044" y="20.758928571428569"/>
         </collectionViewCell>

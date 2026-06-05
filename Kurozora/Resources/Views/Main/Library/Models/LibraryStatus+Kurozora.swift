@@ -13,7 +13,7 @@ extension LibraryStatus {
 	var showStringValue: String {
 		switch self {
 		case .inProgress:
-			return "Watching"
+			return L10n.watching
 		default:
 			return self.stringValue
 		}
@@ -23,7 +23,7 @@ extension LibraryStatus {
 	var literatureStringValue: String {
 		switch self {
 		case .inProgress:
-			return "Reading"
+			return L10n.reading
 		default:
 			return self.stringValue
 		}
@@ -33,7 +33,7 @@ extension LibraryStatus {
 	var gameStringValue: String {
 		switch self {
 		case .inProgress:
-			return "Playing"
+			return L10n.playing
 		default:
 			return self.stringValue
 		}

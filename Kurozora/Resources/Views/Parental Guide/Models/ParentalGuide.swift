@@ -120,15 +120,15 @@ extension ParentalGuideCategory {
 	var displayName: String {
 		switch self {
 		case .sexAndNudity:
-			return "Sex & Nudity"
+			return L10n.pgSexAndNudity
 		case .violenceAndGore:
-			return "Violence & Gore"
+			return L10n.pgViolenceAndGore
 		case .profanity:
-			return "Profanity"
+			return L10n.pgProfanity
 		case .alcoholDrugsAndSmoking:
-			return "Alcohol, Drugs & Smoking"
+			return L10n.pgAlcoholDrugsAndSmoking
 		case .frighteningAndIntenseScenes:
-			return "Frightening & Intense Scenes"
+			return L10n.pgFrighteningAndIntenseScenes
 		}
 	}
 

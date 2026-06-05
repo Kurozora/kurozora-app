@@ -48,8 +48,8 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { "No Characters" }
-	override var emptyStateDetail: String { "Can't get characters list. Please reload the page or restart the app and check your WiFi connection." }
+	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.characters) }
+	override var emptyStateDetail: String { L10n.cantGetListDetail(L10n.characters.lowercased(with: .current)) }
 
 	override var hasLoadedInitialData: Bool {
 		!self.characterIdentities.isEmpty
