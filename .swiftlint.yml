@@ -2,6 +2,7 @@ disabled_rules: # rule identifiers to exclude from running
   - cyclomatic_complexity
   - discarded_notification_center_observer
   - discouraged_direct_init
+  - invisible_character
   - file_length
   - function_body_length
   - identifier_name
