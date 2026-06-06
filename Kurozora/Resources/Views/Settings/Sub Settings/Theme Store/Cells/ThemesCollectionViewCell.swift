@@ -47,7 +47,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		self.titleLabel.text = self.kTheme.stringValue
+		self.titleLabel.text = self.kTheme.displayName
 		self.downloadCountLabel.text = self.kTheme.descriptionValue
 
 		switch self.kTheme {

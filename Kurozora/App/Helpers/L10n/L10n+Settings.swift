@@ -95,6 +95,38 @@ extension L10n {
 		}
 	}
 
+	// MARK: - Theme Names
+	/// The display name of the Day theme.
+	static var themeDay: String {
+		L10n.resolve {
+			String(localized: "Day", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Day theme.")
+		}
+	}
+	/// The display name of the Night theme.
+	static var themeNight: String {
+		L10n.resolve {
+			String(localized: "Night", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Night theme.")
+		}
+	}
+	/// The display name of the Grass theme.
+	static var themeGrass: String {
+		L10n.resolve {
+			String(localized: "Grass", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Grass theme.")
+		}
+	}
+	/// The display name of the Sky theme.
+	static var themeSky: String {
+		L10n.resolve {
+			String(localized: "Sky", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Sky theme.")
+		}
+	}
+	/// The display name of the Sakura theme.
+	static var themeSakura: String {
+		L10n.resolve {
+			String(localized: "Sakura", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Sakura theme.")
+		}
+	}
+
 	// MARK: - Notification
 	/// The string for the 'view sessions' notification action.
 	///

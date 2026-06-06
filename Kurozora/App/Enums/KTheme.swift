@@ -69,6 +69,28 @@ enum KTheme {
 		}
 	}
 
+	/// The localized display name of the default theme type.
+	///
+	/// Built-in themes resolve to their localized name. Custom themes return their own name unchanged.
+	var displayName: String {
+		switch self {
+		case .kurozora:
+			return "Kurozora"
+		case .day:
+			return L10n.themeDay
+		case .night:
+			return L10n.themeNight
+		case .grass:
+			return L10n.themeGrass
+		case .sky:
+			return L10n.themeSky
+		case .sakura:
+			return L10n.themeSakura
+		case .other(let theme):
+			return theme.attributes.name
+		}
+	}
+
 	/// The description value of the default theme type.
 	var descriptionValue: String {
 		switch self {

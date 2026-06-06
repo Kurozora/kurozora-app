@@ -462,7 +462,7 @@ extension SettingsTableViewController {
 			case .motion:
 				return UserSettings.currentSplashScreenAnimation.titleValue
 			case .theme:
-				return UserSettings.currentThemeName
+				return KThemeStyle.localizedName(forStoredName: UserSettings.currentThemeName)
 			default:
 				return ""
 			}

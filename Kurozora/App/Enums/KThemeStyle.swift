@@ -144,6 +144,30 @@ enum KThemeStyle: Int {
 		}
 	}
 
+	/// Returns the localized display name for a stored theme name.
+	///
+	/// - Parameter storedName: The persisted theme name.
+	///
+	/// - Returns: the localized display name for the stored theme name.
+	static func localizedName(forStoredName storedName: String) -> String {
+		switch self.themeValue(from: storedName) {
+		case .default:
+			return "Kurozora"
+		case .day:
+			return L10n.themeDay
+		case .night:
+			return L10n.themeNight
+		case .grass:
+			return L10n.themeGrass
+		case .sky:
+			return L10n.themeSky
+		case .sakura:
+			return L10n.themeSakura
+		case .other:
+			return storedName
+		}
+	}
+
 	/// Starts automatic dark theme scheduel if it hasn't been started before.
 	static func startAutomaticDarkThemeSchedule(_ firstTime: Bool = false) {
 		if firstTime {

@@ -137,7 +137,7 @@ extension SettingsCell {
 	/// Updates the app theme text with the one selected by the user.
 	@objc func updateAppTheme() {
 		let themeName = UserSettings.currentThemeName
-		self.detailLabel?.text = (themeName.isEmpty || themeName == KThemeStyle.default.stringValue) ? L10n.`default` : themeName
+		self.detailLabel?.text = (themeName.isEmpty || themeName == KThemeStyle.default.stringValue) ? L10n.`default` : KThemeStyle.localizedName(forStoredName: themeName)
 	}
 
 	/// Updates the app theme text with the one selected by the user.

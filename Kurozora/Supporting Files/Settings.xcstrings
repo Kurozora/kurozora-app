@@ -326,6 +326,17 @@
         }
       }
     },
+    "Day": {
+      "comment": "The display name of the Day theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dag"
+          }
+        }
+      }
+    },
     "Delete Account": {
       "comment": "The title string for the 'Delete Account' settings button.",
       "localizations": {
@@ -454,6 +465,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Blijf van mijn gazon!"
+          }
+        }
+      }
+    },
+    "Grass": {
+      "comment": "The display name of the Grass theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gras"
           }
         }
       }
@@ -656,6 +678,17 @@
         }
       }
     },
+    "Night": {
+      "comment": "The display name of the Night theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nacht"
+          }
+        }
+      }
+    },
     "No Keys": {
       "comment": "The empty-state title for the debug keychain list when no keys remain.",
       "localizations": {
@@ -821,6 +854,17 @@
         }
       }
     },
+    "Sakura": {
+      "comment": "The display name of the Sakura theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sakura"
+          }
+        }
+      }
+    },
     "Select library": {
       "comment": "The placeholder shown before a library kind is chosen on the delete library screen.",
       "localizations": {
@@ -894,6 +938,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Afmelden"
+          }
+        }
+      }
+    },
+    "Sky": {
+      "comment": "The display name of the Sky theme.",
+      "localizations": {
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lucht"
           }
         }
       }
