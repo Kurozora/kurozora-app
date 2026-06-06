@@ -2504,8 +2504,6 @@ extension L10n {
 		}
 	}
 
-
-
 	/// The title shown on the reputation leaderboard screen.
 	///
 	/// - Tag: L10n-reputationLeaderboardTitle

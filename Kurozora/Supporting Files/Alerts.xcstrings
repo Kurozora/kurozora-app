@@ -9,6 +9,108 @@
             "state": "translated",
             "value": "Kan niet aan je bibliotheek toevoegen 😔"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo agregar a tu biblioteca 😔"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّرت الإضافة إلى مكتبتك 😔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tidak Bisa Menambahkan ke Library Kamu 😔"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリに追加できませんでした 😔"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível adicionar à sua biblioteca 😔"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hinzufügen zur Bibliothek fehlgeschlagen 😔"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d'ajouter à ta bibliothèque 😔"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile aggiungere alla tua libreria 😔"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리에 추가할 수 없어요 😔"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można dodać do biblioteki 😔"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось добавить в библиотеку 😔"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося додати до вашої бібліотеки 😔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法添加到你的资料库 😔"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法加入你的書庫 😔"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เพิ่มลงในคลังไม่ได้ 😔"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kütüphanene Eklenemedi 😔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể thêm vào Thư viện 😔"
+          }
         }
       }
     },
@@ -19,6 +121,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kan account niet verwijderen 😔"
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo eliminar la cuenta 😔"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر حذف الحساب 😔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tidak Dapat Menghapus Akun 😔"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アカウントを削除できませんでした 😔"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível excluir a conta 😔"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konto kann nicht gelöscht werden 😔"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de supprimer le compte 😔"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile eliminare l'account 😔"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "계정을 삭제할 수 없습니다 😔"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można usunąć konta 😔"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось удалить аккаунт 😔"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося видалити обліковий запис 😔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法删除账户 😔"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法刪除帳號 😔"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ลบบัญชีไม่ได้ 😔"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hesap Silinemedi 😔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể xoá tài khoản 😔"
           }
         }
       }
@@ -31,6 +235,108 @@
             "state": "translated",
             "value": "Kan niet importeren in bibliotheek 😔"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo importar a la biblioteca 😔"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر الاستيراد إلى المكتبة 😔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tidak Bisa Mengimpor ke Library 😔"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリにインポートできませんでした 😔"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível importar para a biblioteca 😔"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import in die Bibliothek fehlgeschlagen 😔"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d'importer dans la bibliothèque 😔"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile importare nella libreria 😔"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리로 가져올 수 없어요 😔"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można zaimportować do biblioteki 😔"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось импортировать в библиотеку 😔"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося імпортувати до бібліотеки 😔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法导入到资料库 😔"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法匯入書庫 😔"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "นำเข้าสู่คลังไม่ได้ 😔"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kütüphaneye Aktarılamadı 😔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể nhập vào Thư viện 😔"
+          }
         }
       }
     },
@@ -41,6 +347,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kan niet uit je bibliotheek verwijderen 😔"
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo quitar de tu biblioteca 😔"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّرت الإزالة من مكتبتك 😔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tidak Bisa Menghapus dari Library Kamu 😔"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリから削除できませんでした 😔"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível remover da sua biblioteca 😔"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entfernen aus deiner Bibliothek fehlgeschlagen 😔"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de retirer de ta bibliothèque 😔"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile rimuovere dalla tua libreria 😔"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리에서 제거할 수 없어요 😔"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można usunąć z biblioteki 😔"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось удалить из библиотеки 😔"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося видалити з вашої бібліотеки 😔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法从你的资料库中移除 😔"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法從你的書庫移除 😔"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "นำออกจากคลังไม่ได้ 😔"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kütüphanenden Kaldırılamadı 😔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể xoá khỏi Thư viện 😔"
           }
         }
       }
@@ -53,6 +461,108 @@
             "state": "translated",
             "value": "Afmelden lukt niet 😔"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cerrar sesión 😔"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تسجيل الخروج 😔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tidak Dapat Keluar 😔"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サインアウトできませんでした 😔"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível sair 😔"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abmelden nicht möglich 😔"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de se déconnecter 😔"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile disconnettersi 😔"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "로그아웃할 수 없습니다 😔"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można się wylogować 😔"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось выйти 😔"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося вийти 😔"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法退出登录 😔"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法登出 😔"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ออกจากระบบไม่ได้ 😔"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oturum Kapatılamadı 😔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không thể đăng xuất 😔"
+          }
         }
       }
     },
@@ -63,6 +573,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kurozora is momenteel in onderhoud. Alle diensten zijn binnenkort weer beschikbaar. Als dit langer dan een uur duurt, kun je de status volgen op Twitter."
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora está en mantenimiento. Todos los servicios estarán disponibles en breve. Si esto continúa por más de una hora, puedes seguir el estado en Twitter."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يخضع Kurozora حاليًا للصيانة. ستتوفّر جميع الخدمات قريبًا. إذا استمر ذلك لأكثر من ساعة، يمكنك متابعة الحالة على Twitter."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora sedang dalam pemeliharaan. Semua layanan akan tersedia kembali sebentar lagi. Jika berlanjut lebih dari satu jam, Anda dapat mengikuti statusnya di Twitter."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozoraは現在メンテナンス中です。すべてのサービスはまもなくご利用いただけます。1時間以上続く場合は、Twitterで状況をご確認いただけます。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Kurozora está em manutenção no momento. Todos os serviços estarão disponíveis em breve. Se isso continuar por mais de uma hora, você pode acompanhar o status no Twitter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora wird gerade gewartet. Alle Dienste sind in Kürze wieder verfügbar. Falls das länger als eine Stunde dauert, kannst du den Status auf Twitter verfolgen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora est actuellement en maintenance. Tous les services seront de nouveau disponibles sous peu. Si cela persiste pendant plus d'une heure, vous pouvez suivre l'état sur Twitter."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora è attualmente in manutenzione. Tutti i servizi torneranno disponibili a breve. Se la situazione dovesse protrarsi per più di un'ora, può seguire lo stato su Twitter."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora는 현재 점검 중이에요. 모든 서비스가 곧 다시 이용 가능해요. 한 시간 넘게 계속되면 Twitter에서 상태를 확인할 수 있어요."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora jest obecnie w trakcie konserwacji. Wszystkie usługi będą wkrótce dostępne. Jeśli potrwa to dłużej niż godzinę, możesz śledzić status na Twitterze."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В Kurozora сейчас идут технические работы. Все сервисы скоро снова станут доступны. Если это продлится больше часа, вы можете следить за статусом в Twitter."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наразі в Kurozora тривають технічні роботи. Усі сервіси невдовзі стануть доступними. Якщо це триватиме понад годину, ви можете стежити за статусом у Twitter."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora 当前正在维护中。所有服务将很快恢复。如果此情况持续超过一小时，你可以在 Twitter 上关注最新状态。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora 目前正在維護中，所有服務即將恢復。若此狀況持續超過一小時，您可以在 Twitter 上關注最新狀態。"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ขณะนี้ Kurozora อยู่ระหว่างการบำรุงรักษา บริการทั้งหมดจะกลับมาใช้งานได้ในไม่ช้า หากสถานการณ์นี้ดำเนินต่อไปนานกว่าหนึ่งชั่วโมง คุณสามารถติดตามสถานะได้ที่ Twitter"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora şu anda bakımda. Tüm hizmetler kısa süre içinde tekrar kullanılabilir olacak. Bu durum bir saatten uzun sürerse, durumu Twitter'dan takip edebilirsiniz."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora hiện đang bảo trì. Tất cả dịch vụ sẽ sớm hoạt động trở lại. Nếu tình trạng này kéo dài hơn một giờ, bạn có thể theo dõi trạng thái trên Twitter."
           }
         }
       }
@@ -75,6 +687,108 @@
             "state": "translated",
             "value": "Kurozora is bijgewerkt met ingrijpende wijzigingen. Werk de app bij om te voorkomen dat hij vastloopt en om hem zoals gewoonlijk te blijven gebruiken. De update is binnenkort beschikbaar in de App Store."
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora se actualizó con cambios incompatibles. Para evitar que la app falle, debe actualizarla para seguir usándola con normalidad. La actualización debería estar disponible pronto en el App Store."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تحديث Kurozora بتغييرات جوهرية. لتفادي تعطّل التطبيق، يجب عليك تحديثه لمواصلة استخدامه كالمعتاد. من المفترض أن يتوفّر التحديث قريبًا على App Store."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora diperbarui dengan perubahan besar. Untuk mencegah aplikasi mengalami crash, Anda harus memperbaruinya agar dapat terus menggunakannya seperti biasa. Pembaruan akan segera tersedia di App Store."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozoraに互換性に影響する変更が加えられました。アプリのクラッシュを防ぎ、これまでどおりご利用いただくには、アップデートが必要です。アップデートはまもなくApp Storeでご利用いただけます。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Kurozora foi atualizado com mudanças incompatíveis. Para evitar que o aplicativo trave, você precisa atualizá-lo para continuar usando normalmente. A atualização estará disponível em breve na App Store."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora wurde mit grundlegenden Änderungen aktualisiert. Damit die App nicht abstürzt, müssen Sie sie aktualisieren, um sie wie gewohnt weiter zu nutzen. Das Update sollte bald im App Store verfügbar sein."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora a été mis à jour avec des changements majeurs. Pour éviter que l'application ne plante, vous devez la mettre à jour afin de continuer à l'utiliser normalement. La mise à jour devrait être disponible prochainement sur l'App Store."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora è stato aggiornato con modifiche rilevanti. Per evitare che l'app si arresti in modo anomalo, è necessario aggiornarla per continuare a usarla normalmente. L'aggiornamento sarà presto disponibile sull'App Store."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora가 호환되지 않는 변경 사항과 함께 업데이트되었습니다. 앱이 충돌하지 않도록 평소처럼 계속 사용하시려면 업데이트해야 합니다. 업데이트는 곧 App Store에서 이용하실 수 있습니다."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora została zaktualizowana o zmiany powodujące niezgodność. Aby aplikacja nie ulegała awariom, musisz ją zaktualizować, aby korzystać z niej jak dotychczas. Aktualizacja powinna być wkrótce dostępna w App Store."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora обновлён с критическими изменениями. Чтобы приложение не давало сбоев, его необходимо обновить для дальнейшей работы как обычно. Обновление скоро появится в App Store."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У Kurozora внесено зміни, несумісні з поточною версією. Щоб уникнути збоїв застосунку, вам необхідно оновити його, аби й надалі користуватися ним як зазвичай. Оновлення невдовзі стане доступним в App Store."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora 进行了重大更新。为避免应用崩溃，你必须更新后才能继续正常使用。更新版本应该很快会在 App Store 上提供。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora 已更新並包含重大變更。為避免應用程式當機，您必須更新後才能繼續正常使用。更新很快就會在 App Store 上推出。"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora ได้รับการอัปเดตที่มีการเปลี่ยนแปลงครั้งใหญ่ เพื่อป้องกันไม่ให้แอปขัดข้อง คุณจำเป็นต้องอัปเดตเพื่อใช้งานต่อตามปกติ การอัปเดตน่าจะพร้อมให้ดาวน์โหลดบน App Store เร็ว ๆ นี้"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora, uyumluluğu etkileyen değişikliklerle güncellendi. Uygulamanın çökmesini önlemek için, eskisi gibi kullanmaya devam etmek üzere güncellemeniz gerekiyor. Güncelleme yakında App Store'da kullanılabilir olacak."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora đã được cập nhật với những thay đổi quan trọng. Để tránh ứng dụng bị sập, bạn phải cập nhật để tiếp tục sử dụng như bình thường. Bản cập nhật sẽ sớm có trên App Store."
+          }
         }
       }
     },
@@ -85,6 +799,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Netwerk niet beschikbaar"
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Red no disponible"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشبكة غير متوفّرة"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jaringan Tidak Tersedia"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ネットワークに接続できません"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rede indisponível"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Netzwerk nicht verfügbar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réseau indisponible"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rete non disponibile"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "네트워크를 사용할 수 없음"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak połączenia z siecią"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеть недоступна"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мережа недоступна"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "网络不可用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法連線網路"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ไม่สามารถใช้งานเครือข่ายได้"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ağ Kullanılamıyor"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không có mạng"
           }
         }
       }
@@ -97,6 +913,108 @@
             "state": "translated",
             "value": "Aankoop mislukt"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La compra falló"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشلت عملية الشراء"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pembelian Gagal"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入に失敗しました"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falha na compra"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kauf fehlgeschlagen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Échec de l'achat"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acquisto non riuscito"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "구매 실패"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakup nie powiódł się"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось совершить покупку"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося здійснити покупку"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "购买失败"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購買失敗"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "การซื้อล้มเหลว"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satın Alma Başarısız Oldu"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mua hàng không thành công"
+          }
         }
       }
     },
@@ -107,6 +1025,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gepland onderhoud"
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenimiento programado"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صيانة مجدولة"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pemeliharaan Terjadwal"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メンテナンスのお知らせ"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manutenção programada"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geplante Wartung"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenance planifiée"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manutenzione programmata"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "예정된 점검"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaplanowana konserwacja"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плановые технические работы"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заплановані технічні роботи"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "计划维护"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "預定維護"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "การบำรุงรักษาตามกำหนด"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Planlı Bakım"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bảo trì theo lịch"
           }
         }
       }
@@ -119,6 +1139,108 @@
             "state": "translated",
             "value": "Update beschikbaar"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualización disponible"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتوفّر تحديث"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pembaruan Tersedia"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アップデートがあります"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atualização disponível"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update verfügbar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mise à jour disponible"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiornamento disponibile"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "업데이트 사용 가능"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostępna aktualizacja"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступно обновление"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступне оновлення"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有可用更新"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有可用更新"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "มีอัปเดตให้ใช้งาน"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güncelleme Mevcut"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đã có bản cập nhật"
+          }
         }
       }
     },
@@ -129,6 +1251,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tja, dit is ongemakkelijk."
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bueno, esto es incómodo."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حسنًا، هذا محرج بعض الشيء."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wah, ini canggung."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ええと、ちょっと気まずいですね。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem, que situação constrangedora."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tja, das ist jetzt unangenehm."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eh bien, c'est gênant."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beh, che imbarazzo."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이런, 좀 곤란하네요."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No cóż, niezręczna sytuacja."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Так, неловко вышло."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Що ж, незручно вийшло."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "嗯，这有点尴尬。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "嗯，這有點尷尬。"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เอ่อ... กระอักกระอ่วนจัง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu biraz tuhaf oldu."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ồ, hơi ngại đây."
           }
         }
       }
@@ -141,6 +1365,108 @@
             "state": "translated",
             "value": "Je hebt blijkbaar geen camera 😓"
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parece que no tienes una cámara 😓"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبدو أنه لا تتوفّر لديك كاميرا 😓"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepertinya kamu tidak punya kamera 😓"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラが見つからないようです 😓"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parece que você não tem uma câmera 😓"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du scheinst keine Kamera zu haben 😓"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu ne sembles pas avoir d'appareil photo 😓"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sembra che tu non abbia una fotocamera 😓"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "카메라가 없는 것 같아요 😓"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wygląda na to, że nie masz aparatu 😓"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Похоже, у тебя нет камеры 😓"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схоже, у тебе немає камери 😓"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你似乎没有摄像头 😓"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的裝置似乎沒有相機 😓"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ดูเหมือนว่าคุณจะไม่มีกล้อง 😓"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görünüşe göre bir kameran yok 😓"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hình như máy bạn không có camera 😓"
+          }
         }
       }
     },
@@ -152,6 +1478,108 @@
             "state": "translated",
             "value": "Je moet verbonden zijn met een wifinetwerk of een mobiel data-abonnement hebben om Kurozora te gebruiken."
           }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Debes conectarte a una red Wi-Fi o tener un plan de datos móviles para usar Kurozora."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يجب الاتصال بشبكة Wi-Fi أو امتلاك باقة بيانات خلوية لاستخدام Kurozora."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anda harus terhubung ke jaringan Wi-Fi atau memiliki paket data seluler untuk menggunakan Kurozora."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozoraをご利用いただくには、Wi-Fiネットワークに接続するか、モバイルデータ通信プランが必要です。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você precisa se conectar a uma rede Wi-Fi ou ter um plano de dados móveis para usar o Kurozora."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du musst mit einem WLAN verbunden sein oder über einen Mobilfunktarif verfügen, um Kurozora zu nutzen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous devez vous connecter à un réseau Wi-Fi ou disposer d'un forfait de données cellulaires pour utiliser Kurozora."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per usare Kurozora è necessario connettersi a una rete Wi-Fi o disporre di un piano dati cellulare."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora를 사용하려면 Wi-Fi 네트워크에 연결하거나 셀룰러 데이터 요금제가 있어야 해요."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby korzystać z aplikacji Kurozora, musisz połączyć się z siecią Wi-Fi lub mieć aktywny pakiet danych komórkowych."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для использования Kurozora необходимо подключиться к сети Wi-Fi или иметь тарифный план мобильной передачи данных."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Щоб користуватися Kurozora, вам необхідно під'єднатися до мережі Wi-Fi або мати тарифний план мобільного зв'язку."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你必须连接 Wi-Fi 网络或拥有蜂窝数据套餐才能使用 Kurozora。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您必須連接 Wi-Fi 網路或使用行動數據方案，才能使用 Kurozora。"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "คุณต้องเชื่อมต่อกับเครือข่าย Wi-Fi หรือมีแพ็กเกจข้อมูลมือถือเพื่อใช้งาน Kurozora"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurozora'yı kullanmak için bir Wi-Fi ağına bağlanmanız veya bir hücresel veri planınızın olması gerekir."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bạn phải kết nối mạng Wi-Fi hoặc có gói dữ liệu di động để sử dụng Kurozora."
+          }
         }
       }
     },
@@ -162,6 +1590,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uw aankoop kon niet worden geverifieerd door de App Store. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar."
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El App Store no pudo verificar su compra. Si esto sigue ocurriendo, comuníquese con el desarrollador."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر على App Store التحقق من عملية الشراء. إذا استمر حدوث ذلك، فيُرجى التواصل مع المطوّر."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pembelian Anda tidak dapat diverifikasi oleh App Store. Jika hal ini terus terjadi, silakan hubungi pengembang."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入をApp Storeで確認できませんでした。この問題が続く場合は、開発者までお問い合わせください。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível verificar sua compra na App Store. Se isso continuar acontecendo, entre em contato com o desenvolvedor."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ihr Kauf konnte vom App Store nicht verifiziert werden. Falls dies weiterhin auftritt, wenden Sie sich bitte an den Entwickler."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre achat n'a pas pu être vérifié par l'App Store. Si le problème persiste, veuillez contacter le développeur."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non è stato possibile verificare l'acquisto tramite l'App Store. Se il problema persiste, la preghiamo di contattare lo sviluppatore."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store에서 구매를 확인할 수 없습니다. 이 문제가 계속 발생하면 개발자에게 문의해 주십시오."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się zweryfikować zakupu w App Store. Jeśli problem będzie się powtarzał, skontaktuj się z deweloperem."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вашу покупку не удалось подтвердить в App Store. Если это повторяется, пожалуйста, свяжитесь с разработчиком."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store не вдалося підтвердити вашу покупку. Якщо це повторюватиметься, будь ласка, зверніться до розробника."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store 无法验证你的购买。如果此情况持续发生，请联系开发者。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store 無法驗證您的購買項目。若此情形持續發生，請聯絡開發者。"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ไม่สามารถตรวจสอบการซื้อของคุณกับ App Store ได้ หากยังคงเกิดเหตุการณ์นี้ขึ้นอีก โปรดติดต่อผู้พัฒนา"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satın alma işleminiz App Store tarafından doğrulanamadı. Bu durum devam ederse, lütfen geliştiriciyle iletişime geçin."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store không thể xác minh giao dịch mua hàng của bạn. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ nhà phát triển."
           }
         }
       }

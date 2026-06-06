@@ -168,6 +168,7 @@
 				App/Models/StoredAccount.swift,
 				App/Models/UserSettings.swift,
 				App/Services/AccountManager.swift,
+				App/Services/LanguageManager.swift,
 				Features/Animation/Animation.swift,
 				SharedDelegate.swift,
 				"Supporting Files/Assets.xcassets",
@@ -428,6 +429,24 @@
 			knownRegions = (
 				en,
 				Base,
+				nl,
+				ar,
+				fr,
+				de,
+				"zh-Hans",
+				"zh-Hant",
+				id,
+				ko,
+				ja,
+				pl,
+				vi,
+				tr,
+				th,
+				uk,
+				"es-419",
+				ru,
+				"pt-BR",
+				it,
 			);
 			mainGroup = 66647B472084995500CF624F;
 			packageReferences = (
@@ -832,6 +851,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-toolchain /toolchain";
 				SDKROOT = iphoneos;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -914,6 +934,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-scanner-prefix-map $(DEVELOPER_DIR)=/^developer -scanner-prefix-map-toolchain /toolchain";
 				SDKROOT = iphoneos;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1014,6 +1035,7 @@
 				PRODUCT_NAME = Kurozora;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -1043,6 +1065,7 @@
 				PRODUCT_NAME = Kurozora;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
