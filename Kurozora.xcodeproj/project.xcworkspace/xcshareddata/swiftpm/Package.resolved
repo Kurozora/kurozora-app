@@ -25,7 +25,7 @@
       "location" : "https://github.com/FLEXTool/FLEX.git",
       "state" : {
         "branch" : "master",
-        "revision" : "19267d623357b04b7eada38cf4579ab818c54a29"
+        "revision" : "d2ebc254062e16a252cdc40ce34119cfef7713fd"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardCore.git",
       "state" : {
-        "revision" : "6501e93b03161ce1c9355d2d689bad91c534104e",
-        "version" : "1.0.8"
+        "revision" : "4ece00fae7ddff664eb7b2c7d3b4b722bcdd438c",
+        "version" : "1.0.9"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
       "state" : {
-        "revision" : "5e15518eaa4966527140aeeae96dc306f96cf7b8",
-        "version" : "8.0.2"
+        "revision" : "0972dd6eded87c930fb6ad36b3c5ecd620f06894",
+        "version" : "8.0.3"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardNotification.git",
       "state" : {
-        "revision" : "08bdc90e7db64ac88f51da5dc9e82f4c247e7057",
-        "version" : "1.0.6"
+        "revision" : "efa705d7200edd95b6e31e65e25171f7e897f995",
+        "version" : "1.0.7"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardToolbar.git",
       "state" : {
-        "revision" : "9fef421f6fb39a3e0495f0004f9111b8eaaf0e69",
-        "version" : "1.1.3"
+        "revision" : "81f444408e5ab5d9293c427f96f399ed444f1e95",
+        "version" : "1.1.4"
       }
     },
     {
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "c152c1915f60c51e4afa0752656993ee5b3c63db",
-        "version" : "8.8.1"
+        "revision" : "cf8be20d07654570554c8a8a4952bc8a5766a8b0",
+        "version" : "8.9.0"
       }
     },
     {
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kurozora/KurozoraKit.git",
       "state" : {
-        "revision" : "ab95b69d4c2773008309ef49036c1a89d7c54df3",
-        "version" : "2.0.0"
+        "revision" : "4caab005374ac955e4a73cff535260401c9b10b7",
+        "version" : "2.2.0"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mono0926/LicensePlist",
       "state" : {
-        "revision" : "d66dd02655edf264aa0647897decab7f82a869ea",
-        "version" : "3.27.2"
+        "revision" : "faa1f63e0bb0fb40bb49a29172c082b8d897558c",
+        "version" : "3.27.9"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Pulse",
       "state" : {
-        "revision" : "6125ce7fb51b114ba71b761d18cfd5557923bd4d",
-        "version" : "5.1.4"
+        "revision" : "a4e5bc2b0439552d4ff5fc9667c389be6ef5bd52",
+        "version" : "5.2.2"
       }
     },
     {
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "626b5b7b2f45e1b0b1c6f4a309296d1d21d7311b",
-        "version" : "1.7.1"
+        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version" : "1.8.2"
       }
     },
     {
@@ -222,8 +222,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "5073617dac96330a486245e4c0179cb0a6fd2256",
-        "version" : "1.12.0"
+        "revision" : "2aed77ae5ec9a86d8fe42c12275e4c2653a286ee",
+        "version" : "1.13.1"
       }
     },
     {
@@ -231,8 +231,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins.git",
       "state" : {
-        "revision" : "8a4640d14777685ba8f14e832373160498fbab92",
-        "version" : "0.63.2"
+        "revision" : "18d8d2d18e1668006d1d209e0b5f5e06c1da7cb5",
+        "version" : "0.63.3"
       }
     },
     {
@@ -282,7 +282,7 @@
     {
       "identity" : "xcodeedit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tomlokhorst/XcodeEdit",
+      "location" : "https://github.com/tomlokhorst/XcodeEdit.git",
       "state" : {
         "revision" : "0e550cdee72844b35431afc3a1e176042be6d0f0",
         "version" : "2.13.0"
@@ -293,8 +293,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams.git",
       "state" : {
-        "revision" : "3d6871d5b4a5cd519adf233fbb576e0a2af71c17",
-        "version" : "5.4.0"
+        "revision" : "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+        "version" : "6.2.2"
       }
     }
   ],

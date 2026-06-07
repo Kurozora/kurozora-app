@@ -1,10 +1,10 @@
-name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.10.2, source: https://github.com/Alamofire/Alamofire
+name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.11.1, source: https://github.com/Alamofire/Alamofire
 
 name: Cosmos, nameSpecified: Cosmos, owner: evgenyneu, version: 25.0.1, source: https://github.com/evgenyneu/Cosmos
 
 name: IQKeyboardCore, nameSpecified: IQKeyboardCore, owner: hackiftekhar, version: 1.0.8, source: https://github.com/hackiftekhar/IQKeyboardCore
 
-name: IQKeyboardManager, nameSpecified: IQKeyboardManagerSwift, owner: hackiftekhar, version: 8.0.1, source: https://github.com/hackiftekhar/IQKeyboardManager
+name: IQKeyboardManager, nameSpecified: IQKeyboardManagerSwift, owner: hackiftekhar, version: 8.0.2, source: https://github.com/hackiftekhar/IQKeyboardManager
 
 name: IQKeyboardNotification, nameSpecified: IQKeyboardNotification, owner: hackiftekhar, version: 1.0.6, source: https://github.com/hackiftekhar/IQKeyboardNotification
 
@@ -22,7 +22,7 @@ name: KeychainAccess, nameSpecified: KeychainAccess, owner: kishikawakatsumi, ve
 
 name: Kingfisher, nameSpecified: Kingfisher, owner: onevcat, version: 8.6.2, source: https://github.com/onevcat/Kingfisher
 
-name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.3, source: https://github.com/Kurozora/KurozoraKit
+name: KurozoraKit, nameSpecified: KurozoraKit, owner: Kurozora, version: 1.22.4, source: https://github.com/Kurozora/KurozoraKit
 
 name: Pageboy, nameSpecified: Pageboy, owner: uias, version: 4.2.0, source: https://github.com/uias/Pageboy
 
@@ -32,7 +32,7 @@ name: Solar, nameSpecified: Solar, owner: ceeK, version: 3.0.1, source: https://
 
 name: SPConfetti, nameSpecified: SPConfetti, owner: ivanvorobei, version: 1.4.2, source: https://github.com/ivanvorobei/SPConfetti
 
-name: SwiftLintPlugins, nameSpecified: SwiftLintPlugins, owner: SimplyDanny, version: 0.62.2, source: https://github.com/SimplyDanny/SwiftLintPlugins
+name: SwiftLintPlugins, nameSpecified: SwiftLintPlugins, owner: SimplyDanny, version: 0.63.2, source: https://github.com/SimplyDanny/SwiftLintPlugins
 
 name: SwiftTheme, nameSpecified: SwiftTheme, owner: wxxsw, version: 0.6.4, source: https://github.com/wxxsw/SwiftTheme
 

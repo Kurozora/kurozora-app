@@ -11,8 +11,26 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v1_13_0
+		return v1_14_0
 	}
+
+    /// Features of version 1.14.0 of the app.
+    static var v1_14_0: [WhatsNewItem] = [
+        .image(title: "Summer Solstice", subtitle: "Soak up the longest day of the year with the returning『Hanabi』,『Pink Lemonade』and『Shio Suika』summer app icons.", image: .Icons.gift),
+        .image(title: "Speak Your Language", subtitle: "Kurozora now speaks your language! Available in 18 languages with live switching that updates the entire app instantly. English fills in wherever a translation is still on its way.", image: .Icons.language),
+        .image(title: "Parental Guide", subtitle: "Know before you watch, read, or play. The all-new Parental Guide breaks down mature content for shows, games, and literature, with community voting and editing to keep every entry accurate.", image: .Icons.privacy),
+        .image(title: "Two-Factor Authentication", subtitle: "Lock it down. Add an extra layer of security to your account with two-factor authentication, supporting authenticator apps and recovery codes.", image: .Icons.lock),
+        .image(title: "Seasonal Browsing", subtitle: "Travel through the seasons! Browse anime by season and year to revisit what aired and discover what’s coming next.", image: .Icons.calendar),
+        .image(title: "Up Next, Everywhere", subtitle: "Never lose your place. The new Up Next widget keeps your next episode one tap from your Home Screen, and you can mark episodes as watched without even opening the app.", image: .Icons.widget),
+        .image(title: "Drafts, Mentions & Markdown", subtitle: "Composing just got serious. Save drafts for later, @mention users with autocomplete, style your posts with Markdown, and switch accounts right from the composer.", image: .Icons.message),
+        .image(title: "Notifications, Live", subtitle: "Stay in the loop as it happens. Notifications now arrive in real time, with a new batch edit mode to mark or clear them all at once.", image: .Icons.notifications),
+        .image(title: "Review Detail", subtitle: "Give reviews the spotlight they deserve. Tap any review to open a dedicated detail page, then select or copy the text to share your favorite takes.", image: .Icons.rating),
+        .image(title: "Media Viewer", subtitle: "Get up close. A new full-screen media viewer lets you pinch, zoom, and pan through images across the app.", image: .Icons.eyeCircle),
+        .image(title: "Library, Leveled Up", subtitle: "Track like a pro. Enjoy a new table layout, batch editing, per-item visibility, customizable columns, and search built right into your library.", image: .Icons.librarySparkles),
+        .image(title: "Profile Picture Studio", subtitle: "Make it yours. Choose from emoji, kaomoji, or monograms, generate art with Image Playground, and let smart cropping frame your face just right.", image: .Icons.personCropCircleGear),
+        .image(title: "Subscriptions, Simplified", subtitle: "Stay in control. Manage your subscription, restore past purchases, and even request a refund without ever leaving the app.", image: .Icons.manageSubscriptions),
+        .image(title: "Bug Fixes", subtitle: "Swept the last of the spring bugs out into the summer sun. Crashes, layout quirks, and stubborn glitches have been squashed for a smoother, brighter season ahead.", image: .Icons.ladybug)
+    ]
 
     /// Features of version 1.13.0 of the app.
     static var v1_13_0: [WhatsNewItem] = [
