@@ -59,7 +59,7 @@ final class KurozoraDelegate {
 
 		// Restore selected API endpoint
 		#if DEBUG
-		if let savedEndpoint = UserSettings.apiEndpoint, let endpoint = APIEndpoints.first { $0.baseURL == savedEndpoint.baseURL } ?? APIEndpoints.first {
+		if let savedEndpoint = UserSettings.apiEndpoint, let endpoint = APIEndpoints.first(where: { $0.baseURL == savedEndpoint.baseURL }) ?? APIEndpoints.first {
             KService.apiEndpoint(endpoint)
 		}
 		#endif

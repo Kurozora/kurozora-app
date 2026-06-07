@@ -82,7 +82,14 @@ extension NSAttributedString {
 	///   - font: The body font, or `nil` to default to `.body`.
 	///
 	/// - Returns: The truncated string, or `attributed` unchanged when truncation isn't required.
-	static func kkTruncatedBody(_ attributed: NSAttributedString, lineLimit: Int, cachedWidth: CGFloat, fallbackHostBounds: CGFloat, actionID: String, font sourceFont: UIFont?) -> NSAttributedString {
+	static func kkTruncatedBody(
+		_ attributed: NSAttributedString,
+		lineLimit: Int,
+		cachedWidth: CGFloat,
+		fallbackHostBounds: CGFloat,
+		actionID: String,
+		font sourceFont: UIFont?
+	) -> NSAttributedString {
 		let font = sourceFont ?? .preferredFont(forTextStyle: .body)
 		let width: CGFloat
 		if cachedWidth > 0 {

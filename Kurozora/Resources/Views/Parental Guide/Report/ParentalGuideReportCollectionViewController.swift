@@ -134,7 +134,7 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 			}
 		} catch {
 			print(error.localizedDescription)
-			await self.presentErrorAlert(message: error.localizedDescription)
+			self.presentErrorAlert(message: error.localizedDescription)
 		}
 	}
 

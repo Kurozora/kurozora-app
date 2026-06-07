@@ -77,7 +77,7 @@ extension ParentalGuideEditorCollectionViewController {
 		self.snapshot.appendSections([.rating])
 		self.snapshot.appendItems([.ratingPicker], toSection: .rating)
 
-		let hasSeverity = self.rating != nil && self.rating != .none
+		let hasSeverity = self.rating != nil && self.rating != ParentalGuideRating.none
 
 		if hasSeverity {
 			self.snapshot.appendSections([.frequency])

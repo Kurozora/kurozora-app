@@ -583,7 +583,7 @@ extension ProfileTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if self.shouldShowBlockedByBanner, indexPath.section == 0 {
-			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedByBannerTableViewCell.self, for: indexPath) as? ProfileBlockedByBannerTableViewCell else {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedByBannerTableViewCell.self, for: indexPath) else {
 				return UITableViewCell()
 			}
 
@@ -592,7 +592,7 @@ extension ProfileTableViewController {
 		}
 
 		if self.shouldShowBlockedOptIn {
-			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedOptInTableViewCell.self, for: indexPath) as? ProfileBlockedOptInTableViewCell else {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileBlockedOptInTableViewCell.self, for: indexPath) else {
 				return UITableViewCell()
 			}
 

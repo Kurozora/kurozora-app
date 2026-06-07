@@ -110,7 +110,7 @@ class ParentalGuideEditorCollectionViewController: KCollectionViewController {
 		}
 
 		let hasRating = self.rating != nil
-		let isNoneRating = self.rating == .none
+		let isNoneRating = self.rating == ParentalGuideRating.none
 		let hasFrequency = isNoneRating || !category.supportsFrequency || self.frequency != nil
 		let hasDepiction = isNoneRating || !category.supportsDepiction || self.depiction != nil
 
@@ -171,7 +171,7 @@ class ParentalGuideEditorCollectionViewController: KCollectionViewController {
 			}
 
 			guard let entry = response.data.first else {
-				await self.presentErrorAlert(message: L10n.parentalGuideEmptyResponse)
+				self.presentErrorAlert(message: L10n.parentalGuideEmptyResponse)
 				return
 			}
 
@@ -181,7 +181,7 @@ class ParentalGuideEditorCollectionViewController: KCollectionViewController {
 			}
 		} catch {
 			print(error.localizedDescription)
-			await self.presentErrorAlert(message: error.localizedDescription)
+			self.presentErrorAlert(message: error.localizedDescription)
 		}
 	}
 
