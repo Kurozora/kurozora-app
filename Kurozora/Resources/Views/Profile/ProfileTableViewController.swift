@@ -153,8 +153,8 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.profileDetails.lowercased(with: Locale.current)))
 		#endif
 
-		if self.userIdentity == nil {
-			self.userIdentity = UserIdentity(id: self.user.id)
+		if self.userIdentity == nil, let user = self.user {
+			self.userIdentity = UserIdentity(id: user.id)
 		}
 
 		self.mediaViewerDelegate = self
