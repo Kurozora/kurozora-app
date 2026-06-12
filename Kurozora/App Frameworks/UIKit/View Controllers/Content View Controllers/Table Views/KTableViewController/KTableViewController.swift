@@ -109,6 +109,15 @@ class KTableViewController: UITableViewController, SegueHandler {
 		self.configureEmptyDataView()
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		// Center the empty view within the unavailable space
+		let contentInset = self.tableView.adjustedContentInset
+		let occupiedHeight = self.tableView.contentSize.height
+		self.emptyBackgroundView.verticalOffset = (contentInset.top + occupiedHeight - contentInset.bottom) / 2
+	}
+
 	// MARK: - Functions
 	/// Re-applies localized strings by reloading the table's content.
 	override func reloadLocalization() {

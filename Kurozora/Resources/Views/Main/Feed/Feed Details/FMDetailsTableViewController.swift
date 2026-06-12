@@ -136,9 +136,6 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 	}
 
 	override func configureEmptyDataView() {
-		// TODO: Refactor
-//		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
-
 		emptyBackgroundView.configureImageView(image: .Empty.comment)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.replies), detail: L10n.noRepliesDetail)
 

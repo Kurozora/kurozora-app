@@ -110,10 +110,18 @@ class EmptyBackgroundView: UIView {
 	/// The vertical spacing between the image, label and button views.
 	let verticalSpace = 8
 
-	/// The vertical offset of the view.
-	var verticalOffset: CGFloat = 0.0
+	/// The vertical offset applied to the centered content.
+	var verticalOffset: CGFloat = 0.0 {
+		didSet {
+			guard self.verticalOffset != oldValue else { return }
+			self.contentViewCenterYConstraint?.constant = self.verticalOffset
+		}
+	}
 
-	/// Whetehr the constraints are configured.
+	/// The constraint centering the content view vertically.
+	private var contentViewCenterYConstraint: NSLayoutConstraint?
+
+	/// Whether the constraints are configured.
 	var didConfigureConstraints = false
 
 	/// The method to call when the button is tapped.
@@ -203,7 +211,7 @@ class EmptyBackgroundView: UIView {
 	func configureButton(title: String, handler: (() -> Void)?) {
 		self.button.setAttributedTitle(.init(string: title), for: .normal)
 		self.didTapButtonHandle = handler
-		self.button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+		self.button.addTarget(self, action: #selector(self.didTapButton(_:)), for: .touchUpInside)
 
 		if self.canShowButton {
 			self.button.isHidden = false
@@ -220,57 +228,43 @@ class EmptyBackgroundView: UIView {
 	}
 
 	override func updateConstraints() {
-		if !didConfigureConstraints {
-			// First, configure the content view constaints
-			// The content view must alway be centered to its superview
-			let centerXConstraint = NSLayoutConstraint(item: self.contentView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0.0)
-			let centerYConstraint = NSLayoutConstraint(item: self.contentView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: self.verticalOffset)
+		if !self.didConfigureConstraints {
+			// Center the content to the layout margins guide, so it responds to sidebars and other insets.
+			let layoutMarginsGuide = self.layoutMarginsGuide
+			self.contentView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
+			self.contentView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
 
-			self.addConstraints([centerXConstraint, centerYConstraint])
-			self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView": self.contentView]))
+			let contentViewCenterYConstraint = self.contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: self.verticalOffset)
+			contentViewCenterYConstraint.isActive = true
+			self.contentViewCenterYConstraint = contentViewCenterYConstraint
 
 			let width = frame.width > 0 ? frame.width : UIScreen.main.bounds.width
-			let padding = roundf(Float(width / 16.0))
+			let padding = (width / 16.0).rounded()
 
-			var subviewStrings: [String] = []
-			var views: [String: UIView] = [:]
-			let metrics = ["padding": padding]
+			// Center the image while the text elements inset from the content view's edges.
+			self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
 
-			// Assign the image view's horizontal constraints
-			subviewStrings.append("imageView")
-			views[subviewStrings.last!] = self.imageView
-			self.contentView.addConstraint(NSLayoutConstraint(item: self.imageView, attribute: .centerX, relatedBy: .equal, toItem: self.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+			let insetSubviews: [UIView] = [self.titleLabel, self.detailLabel, self.button]
+			for subview in insetSubviews {
+				subview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: padding).isActive = true
+				subview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -padding).isActive = true
+			}
 
-			// Assign the title label's horizontal constraints
-			subviewStrings.append("titleLabel")
-			views[subviewStrings.last!] = self.titleLabel
-			self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(padding)-[titleLabel(>=0)]-(padding)-|", options: [], metrics: metrics, views: views))
+			// Stack the elements top to bottom, separated by the vertical space.
+			let stackedSubviews: [UIView] = [self.imageView, self.titleLabel, self.detailLabel, self.button]
+			var previousSubview: UIView?
 
-			// Assign the detail label's horizontal constraints
-			subviewStrings.append("detailLabel")
-			views[subviewStrings.last!] = self.detailLabel
-			self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(padding)-[detailLabel(>=0)]-(padding)-|", options: [], metrics: metrics, views: views))
-
-			// Assign the button's horizontal constraints
-			subviewStrings.append("button")
-			views[subviewStrings.last!] = self.button
-			self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(padding)-[button(>=0)]-(padding)-|", options: [], metrics: metrics, views: views))
-
-			// Build a dynamic string format for the vertical constraints, adding a margin between each element.
-			var verticalFormat = String()
-			for i in 0 ..< subviewStrings.count {
-				let string = subviewStrings[i]
-				verticalFormat += "[\(string)]"
-
-				if i < subviewStrings.count - 1 {
-					verticalFormat += "-(\(self.verticalSpace))-"
+			for subview in stackedSubviews {
+				if let previousSubview = previousSubview {
+					subview.topAnchor.constraint(equalTo: previousSubview.bottomAnchor, constant: CGFloat(self.verticalSpace)).isActive = true
+				} else {
+					subview.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
 				}
+
+				previousSubview = subview
 			}
 
-			// Assign the vertical constraints to the content view
-			if !verticalFormat.isEmpty {
-				self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|\(verticalFormat)|", options: [], metrics: metrics, views: views))
-			}
+			previousSubview?.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
 
 			self.didConfigureConstraints = true
 		}
