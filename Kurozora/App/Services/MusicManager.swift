@@ -170,6 +170,31 @@ final class MusicManager: NSObject {
 		return MusicAuthorization.currentStatus
 	}
 
+	/// The current playback position in seconds of the active player.
+	var currentPlaybackSeconds: TimeInterval {
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			return self.applicationPlayer.playbackTime
+		default:
+			let previewSeconds = self.player?.currentTime().seconds
+			return previewSeconds?.isFinite == true ? previewSeconds ?? 0 : 0
+		}
+	}
+
+	/// Seeks the active player to the given position in seconds.
+	///
+	/// - Parameter seconds: The position to seek to.
+	func seek(toSeconds seconds: TimeInterval) {
+		let target = max(0, seconds)
+
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			self.applicationPlayer.playbackTime = target
+		default:
+			self.player?.seek(to: CMTime(seconds: target, preferredTimescale: 600))
+		}
+	}
+
 	// MARK: Configuration
 	private let stateLock = NSLock()
 	private var _hasAMSubscription: Bool = false

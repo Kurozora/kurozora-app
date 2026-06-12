@@ -41,6 +41,16 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	var showIdentities: [ShowIdentity] = []
 
+	/// The synced lyrics of the song.
+	var syncedLyrics: Lyrics?
+
+	/// Original lyrics derived from the synced lyrics.
+	var plainLyrics: String? {
+		guard let lines = self.syncedLyrics?.attributes.lines, !lines.isEmpty else { return nil }
+		let text = lines.map(\.text).joined(separator: "\n")
+		return text.isEmpty ? nil : text
+	}
+
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -107,6 +117,13 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		do {
 			let reviewIdentityResponse = try await KService.reviews(for: songIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
+			let lyricsResponse = try await KService.lyrics(for: songIdentity).response()
+			self.syncedLyrics = lyricsResponse.data.first
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -197,13 +214,11 @@ extension SongDetailsCollectionViewController {
 // MARK: - TextViewCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		let synopsisViewController = SynopsisViewController()
-		synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-		synopsisViewController.synopsis = self.song.attributes.originalLyrics
+		guard let syncedLyrics = self.syncedLyrics, let songID = self.song?.id else { return }
 
-		let kNavigationController = KNavigationController(rootViewController: synopsisViewController)
-		kNavigationController.modalPresentationStyle = .formSheet
-
+		let lyricsViewController = LyricsViewController(lyrics: syncedLyrics, songID: songID)
+		let kNavigationController = KNavigationController(rootViewController: lyricsViewController)
+		kNavigationController.modalPresentationStyle = .pageSheet
 		self.present(kNavigationController, animated: true)
 	}
 }

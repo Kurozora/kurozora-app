@@ -77,7 +77,7 @@ extension SongDetailsCollectionViewController {
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .lyrics:
-				if let lyrics = self.song.attributes.originalLyrics, !lyrics.isEmpty {
+				if self.plainLyrics != nil {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true

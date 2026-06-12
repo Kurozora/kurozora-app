@@ -2303,6 +2303,45 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the phrase 'Show Pronunciation'.
+	///
+	/// - Tag: L10n-showPronunciation
+	static var showPronunciation: String {
+		L10n.resolve {
+			String(
+				localized: "Show Pronunciation",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the lyrics menu action that reveals the romanized pronunciation beneath each word."
+			)
+		}
+	}
+	/// The string for the phrase 'Hide Pronunciation'.
+	///
+	/// - Tag: L10n-hidePronunciation
+	static var hidePronunciation: String {
+		L10n.resolve {
+			String(
+				localized: "Hide Pronunciation",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the lyrics menu action that hides the romanized pronunciation beneath each word."
+			)
+		}
+	}
+	/// The string for the word 'Translation'.
+	///
+	/// - Tag: L10n-translation
+	static var translation: String {
+		L10n.resolve {
+			String(
+				localized: "Translation",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the lyrics menu for choosing the translation language shown beneath each line."
+			)
+		}
+	}
 	/// The string for the phrase 'As Heard On'.
 	///
 	/// - Tag: L10n-asHeardOn

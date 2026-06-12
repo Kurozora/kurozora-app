@@ -50,7 +50,7 @@ extension SongDetailsCollectionViewController {
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .lyrics
-				textViewCollectionViewCell?.textViewContent = self.song.attributes.originalLyrics
+				textViewCollectionViewCell?.textViewContent = self.plainLyrics
 				return textViewCollectionViewCell
 			case .rating:
 				let songDetailRating = SongDetail.Rating(rawValue: indexPath.item) ?? .average
@@ -130,7 +130,7 @@ extension SongDetailsCollectionViewController {
 				self.snapshot.appendSections([songDetailSection])
 				self.snapshot.appendItems([.song(self.song)], toSection: songDetailSection)
 			case .lyrics:
-				if let synopsis = self.song.attributes.originalLyrics, !synopsis.isEmpty {
+				if self.plainLyrics != nil {
 					self.snapshot.appendSections([songDetailSection])
 					self.snapshot.appendItems([.song(self.song)], toSection: songDetailSection)
 				}
