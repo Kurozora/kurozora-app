@@ -274,8 +274,13 @@ extension KCollectionViewController {
 	/// Configures the activity indicator with default values.
 	private func configureActivityIndicator() {
 		self.activityIndicatorView.removeFromSuperview()
+		self.activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
 		self.view.addSubview(self.activityIndicatorView)
-		self.activityIndicatorView.center = self.view.center
+
+		NSLayoutConstraint.activate([
+			self.activityIndicatorView.centerXAnchor.constraint(equalTo: self.view.layoutMarginsGuide.centerXAnchor),
+			self.activityIndicatorView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor)
+		])
 
 		self.setNeedsActivityIndicatorAppearanceUpdate()
 	}

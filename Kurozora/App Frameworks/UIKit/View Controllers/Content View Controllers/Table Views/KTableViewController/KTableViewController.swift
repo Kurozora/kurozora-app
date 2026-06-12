@@ -227,10 +227,15 @@ extension KTableViewController {
 	/// Configures the activity indicator with default values.
 	private func configureActivityIndicator() {
 		self.activityIndicatorView.removeFromSuperview()
-		self.view.addSubview(activityIndicatorView)
-		self.activityIndicatorView.center = self.view.center
+		self.activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+		self.view.addSubview(self.activityIndicatorView)
 
-		setNeedsActivityIndicatorAppearanceUpdate()
+		NSLayoutConstraint.activate([
+			self.activityIndicatorView.centerXAnchor.constraint(equalTo: self.view.layoutMarginsGuide.centerXAnchor),
+			self.activityIndicatorView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor)
+		])
+
+		self.setNeedsActivityIndicatorAppearanceUpdate()
 	}
 
 	/// Indicates to the system that the view controller activity indicator attributes have changed.
