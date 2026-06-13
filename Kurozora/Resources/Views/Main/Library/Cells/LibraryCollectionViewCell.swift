@@ -22,7 +22,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	lazy var literatureMask: UIImageView = {
-		let maskView = UIImageView(image: UIImage(named: "book_mask"))
+		let maskView = UIImageView(image: .bookMask)
 		return maskView
 	}()
 

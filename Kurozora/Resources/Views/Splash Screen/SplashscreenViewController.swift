@@ -11,7 +11,7 @@ import UIKit
 final class SplashscreenViewController: KViewController {
 	// MARK: - Views
 	private lazy var logoImageView: UIImageView = {
-		let imageView = UIImageView(image: UIImage(named: "kurozora_icon_monotone"))
+		let imageView = UIImageView(image: .kurozoraIconMonotone)
 		imageView.alpha = 0.0
 		imageView.contentMode = .scaleToFill
 		imageView.translatesAutoresizingMaskIntoConstraints = false

@@ -175,7 +175,7 @@ struct DateWidgetEntryContentView: View {
 	DateEntry(
 		date: Date(),
 		banner: Banner(
-			image: UIImage(named: "starry_sky"),
+			image: .starrySky,
 			height: 1080,
 			width: 1920,
 			deeplinkURL: nil
@@ -196,7 +196,7 @@ struct DateWidgetEntryContentView: View {
 	DateEntry(
 		date: Date(),
 		banner: Banner(
-			image: UIImage(named: "starry_sky"),
+			image: .starrySky,
 			height: 1080,
 			width: 1920,
 			deeplinkURL: nil

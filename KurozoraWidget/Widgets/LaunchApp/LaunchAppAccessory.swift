@@ -36,7 +36,7 @@ struct LaunchAppAccessory: Widget {
 @available(tvOS, unavailable)
 struct AccessoryCircularView: View {
 	var body: some View {
-		Image("Symbols/kurozora")
+		Image(.Symbols.kurozora)
 			.resizable()
 			.scaledToFit()
 			.frame(height: 52)
@@ -52,7 +52,7 @@ struct AccessoryRectangularWidget: View {
 
 	var body: some View {
 		HStack {
-			Image("Symbols/kurozora")
+			Image(.Symbols.kurozora)
 				.resizable()
 				.scaledToFit()
 				.frame(height: 36)

@@ -19,16 +19,16 @@ extension LibrarySortType {
 			return UIImage(systemName: "textformat.abc")!
 		case .popularity:
 			return UIImage(systemName: "flame.fill")!
-//			case .nextAiringEpisode:
-//				return UIImage(named: "arrowshape.turn.up.forward.tv.fill")!
-//			case .nextEpisodeToWatch:
-//				return UIImage(named: "eye.tv.fill")!
+//		case .nextAiringEpisode:
+//			return .Symbols.arrowshapeTurnUpForwardTvFill
+//		case .nextEpisodeToWatch:
+//			return .Symbols.eyeTvFill
 		case .date:
 			return UIImage(systemName: "calendar")!
 		case .rating:
 			return UIImage(systemName: "star.fill")!
 		case .myRating:
-			return UIImage(named: "Symbols/person.crop.circle.fill.badge.star")!
+			return .Symbols.personCropCircleFillBadgeStar
 		}
 	}
 }

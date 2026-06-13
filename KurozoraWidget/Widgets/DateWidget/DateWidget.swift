@@ -12,14 +12,14 @@ import WidgetKit
 
 struct Provider: IntentTimelineProvider {
 	func placeholder(in context: Context) -> DateEntry {
-		let image = ImageFetcher.shared.fetchRandomImage() ?? UIImage(named: "starry_sky")
+		let image = ImageFetcher.shared.fetchRandomImage() ?? .starrySky
 
 		return DateEntry(
 			date: Date(),
 			banner: Banner(
-				image: image?.resized(toWidth: context.displaySize.width),
-				height: Int(image?.size.height ?? 1080),
-				width: Int(image?.size.width ?? 1920),
+				image: image.resized(toWidth: context.displaySize.width),
+				height: Int(image.size.height),
+				width: Int(image.size.width),
 				deeplinkURL: nil
 			),
 			isDimmed: true,

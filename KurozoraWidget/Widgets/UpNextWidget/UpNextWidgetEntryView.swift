@@ -218,17 +218,15 @@ struct UpNextWidgetEntryView: View {
 	// MARK: - Unauthenticated View
 	private var unauthenticatedView: some View {
 		ZStack {
-			let uiImage = self.entry.episodes.first?.bannerImage ?? UIImage(named: "starry_sky")
+			let uiImage = self.entry.episodes.first?.bannerImage ?? .starrySky
 
-			if let uiImage = uiImage {
-				Image(uiImage: uiImage)
-					.resizable()
-					.scaledToFill()
-					.clipped()
-					.overlay {
-						Color.black.opacity(0.5)
-					}
-			}
+			Image(uiImage: uiImage)
+				.resizable()
+				.scaledToFill()
+				.clipped()
+				.overlay {
+					Color.black.opacity(0.5)
+				}
 
 			VStack(spacing: 8) {
 				Image(systemName: "play.rectangle.on.rectangle")

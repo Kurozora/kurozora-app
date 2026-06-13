@@ -113,9 +113,9 @@ extension EpisodeDetail {
 			case .rank:
 				return UIImage(systemName: "chart.bar.fill")
 			case .previousEpisode:
-				return UIImage(named: "arrowshape.turn.up.backward.tv.fill")
+				return .Symbols.arrowshapeTurnUpBackwardTvFill
 			case .nextEpisode:
-				return UIImage(named: "arrowshape.turn.up.forward.tv.fill")
+				return .Symbols.arrowshapeTurnUpForwardTvFill
 			case .show:
 				return UIImage(systemName: "tv.fill")
 			}

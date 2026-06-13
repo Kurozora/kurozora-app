@@ -48,11 +48,9 @@ struct UpNextEpisodeItem: Identifiable {
 
 	static var placeholder: UpNextEpisodeItem {
 		let targetSize = CGSize(width: 320, height: 180)
-		let scaledImage = UIImage(named: "starry_sky").flatMap { image -> UIImage? in
-			let renderer = UIGraphicsImageRenderer(size: targetSize)
-			return renderer.image { _ in
-				image.draw(in: CGRect(origin: .zero, size: targetSize))
-			}
+		let renderer = UIGraphicsImageRenderer(size: targetSize)
+		let scaledImage = renderer.image { _ in
+			UIImage.starrySky.draw(in: CGRect(origin: .zero, size: targetSize))
 		}
 		return UpNextEpisodeItem(
 			id: UUID().uuidString,
