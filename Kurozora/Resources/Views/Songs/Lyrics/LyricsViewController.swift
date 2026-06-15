@@ -51,7 +51,7 @@ final class LyricsViewController: KTableViewController {
 	}()
 
 	// MARK: - Properties
-	private let lyrics: Lyrics
+	private var lyrics: Lyrics?
 	private let songID: KurozoraItemID
 	private let gapThresholdMs = 4000
 
@@ -63,12 +63,13 @@ final class LyricsViewController: KTableViewController {
 	private var isBlurSuppressed = false
 	private var wasPlaying = false
 	private var hasPerformedInitialSync = false
+	private var hasLoadedLyrics = false
 
 	private var showsTransliteration = UserSettings.lyricsShowsTransliteration
 	private var selectedTranslationLanguage: String? = UserSettings.lyricsTranslationLanguage
 
 	private var offsetMs: Int {
-		return self.lyrics.attributes.lyricOffsetMs ?? 0
+		return self.lyrics?.attributes.lyricOffsetMs ?? 0
 	}
 
 	/// A Boolean value that indicates whether this song is the one loaded in the player.
@@ -97,15 +98,15 @@ final class LyricsViewController: KTableViewController {
 		return cells
 	}
 
-	private lazy var items: [Item] = self.buildItems()
+	private var items: [Item] = []
 
-	private lazy var lineAlignments: [Int: NSTextAlignment] = self.computeLineAlignments()
+	private var lineAlignments: [Int: NSTextAlignment] = [:]
 
-	private lazy var backgroundLineIndices: Set<Int> = self.computeBackgroundLineIndices()
+	private var backgroundLineIndices: Set<Int> = []
 
-	private lazy var availableTransliterationLanguages: [String] = Array(Set(self.lyrics.attributes.lines.flatMap { $0.transliterations.map(\.language) })).sorted()
+	private var availableTransliterationLanguages: [String] = []
 
-	private lazy var availableTranslationLanguages: [String] = Array(Set(self.lyrics.attributes.lines.flatMap { $0.translations.map(\.language) })).sorted()
+	private var availableTranslationLanguages: [String] = []
 
 	override var prefersRefreshControlDisabled: Bool {
 		return true
@@ -116,9 +117,9 @@ final class LyricsViewController: KTableViewController {
 	}
 
 	// MARK: - Initializers
-	init(lyrics: Lyrics, songID: KurozoraItemID) {
-		self.lyrics = lyrics
+	init(songID: KurozoraItemID, lyrics: Lyrics? = nil) {
 		self.songID = songID
+		self.lyrics = lyrics
 		super.init(style: .plain)
 	}
 
@@ -136,11 +137,15 @@ final class LyricsViewController: KTableViewController {
 
 		self.configureTableView()
 		self.configureDataSource()
-		self.updateDataSource()
-		self.updateOptionsMenu()
 		self.presentFloatingOptionsButton()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.themeDidChange), name: .ThemeUpdateNotification, object: nil)
+
+		if let lyrics = self.lyrics {
+			self.applyLyrics(lyrics)
+		} else {
+			self.fetchLyrics()
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -191,6 +196,13 @@ final class LyricsViewController: KTableViewController {
 		self.tableView.estimatedRowHeight = 72
 	}
 
+	override func configureEmptyDataView() {
+		guard self.hasLoadedLyrics, self.items.isEmpty else { return }
+
+		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
+		self.emptyBackgroundView.configureLabels(title: L10n.lyricsUnavailableTitle, detail: L10n.lyricsUnavailableDetail)
+	}
+
 	/// Floats the options button over the view's bottom trailing edge.
 	private func presentFloatingOptionsButton() {
 		self.view.addSubview(self.optionsButton)
@@ -202,6 +214,7 @@ final class LyricsViewController: KTableViewController {
 			self.optionsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -inset),
 		])
 
+		self.optionsButton.isHidden = !self.hasLoadedLyrics
 		self.updateOptionsButtonAppearance()
 	}
 
@@ -214,12 +227,49 @@ final class LyricsViewController: KTableViewController {
 		self.updateOptionsButtonAppearance()
 	}
 
+	/// Rebuilds the derived content from the given lyrics and refreshes the view.
+	///
+	/// - Parameter lyrics: The lyrics to display.
+	private func applyLyrics(_ lyrics: Lyrics?) {
+		self.lyrics = lyrics
+		self.hasLoadedLyrics = true
+
+		self.items = self.buildItems()
+		self.lineAlignments = self.computeLineAlignments()
+		self.backgroundLineIndices = self.computeBackgroundLineIndices()
+		self.availableTransliterationLanguages = self.meaningfulTransliterationLanguages(in: lyrics)
+		self.availableTranslationLanguages = Array(Set((lyrics?.attributes.lines ?? []).flatMap { $0.translations.map(\.language) })).sorted()
+
+		self.updateDataSource()
+		self.updateOptionsMenu()
+		self.optionsButton.isHidden = self.items.isEmpty
+		self.configureEmptyDataView()
+
+		self.hasPerformedInitialSync = false
+		self.view.setNeedsLayout()
+	}
+
+	/// Fetches the song's lyrics and applies them once they arrive.
+	private func fetchLyrics() {
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			do {
+				let lyricsResponse = try await KService.lyrics(for: SongIdentity(id: self.songID)).response()
+				self.applyLyrics(lyricsResponse.data.first)
+			} catch {
+				print(error.localizedDescription)
+				self.applyLyrics(nil)
+			}
+		}
+	}
+
 	// MARK: Items
 	private func buildItems() -> [Item] {
 		var items: [Item] = []
 		var previousEndMs = 0
 
-		for line in self.lyrics.attributes.lines {
+		for line in self.lyrics?.attributes.lines ?? [] {
 			let beginMs = line.beginMs ?? previousEndMs
 
 			if self.canTimeSync, beginMs - previousEndMs >= self.gapThresholdMs {
@@ -239,7 +289,7 @@ final class LyricsViewController: KTableViewController {
 	///
 	/// - Returns: The alignment for each line, keyed by item index.
 	private func computeLineAlignments() -> [Int: NSTextAlignment] {
-		let agentTypes = Dictionary(self.lyrics.attributes.agents.map { ($0.key, $0.type.lowercased()) }, uniquingKeysWith: { first, _ in first })
+		let agentTypes = Dictionary((self.lyrics?.attributes.agents ?? []).map { ($0.key, $0.type.lowercased()) }, uniquingKeysWith: { first, _ in first })
 
 		var alignments: [Int: NSTextAlignment] = [:]
 		var lastPersonAgent: String?
@@ -656,10 +706,12 @@ final class LyricsViewController: KTableViewController {
 
 	// MARK: Mapping
 	private func pairs(for line: Lyrics.Line) -> (main: [KaraokeWordPair], background: [KaraokeWordPair], hasWordTiming: Bool) {
-		let romajiWords = self.showsTransliteration ? line.transliterations.first?.words : nil
+		let transliteration = line.transliterations.first
+		let showsRomaji = self.showsTransliteration && self.transliterationDiffers(transliteration, from: line.text)
+		let romajiWords = showsRomaji ? transliteration?.words : nil
 
 		if line.words.isEmpty {
-			let romajiText = self.showsTransliteration ? line.transliterations.first?.text : nil
+			let romajiText = showsRomaji ? transliteration?.text : nil
 			let pair = KaraokeWordPair(original: line.text, romaji: romajiText, beginMs: line.beginMs ?? 0, endMs: line.endMs ?? 0, trailingSpace: false)
 			return ([pair], [], false)
 		}
@@ -684,6 +736,35 @@ final class LyricsViewController: KTableViewController {
 	private func translationText(for line: Lyrics.Line) -> String? {
 		guard let language = self.selectedTranslationLanguage else { return nil }
 		return line.translations.first { $0.language == language }?.text
+	}
+
+	/// Whether the transliteration adds romanization beyond the original line.
+	///
+	/// - Parameters:
+	///    - transliteration: The line's transliteration.
+	///    - original: The original line text.
+	///
+	/// - Returns: `true` when the transliteration differs from the original.
+	private func transliterationDiffers(_ transliteration: Lyrics.Transliteration?, from original: String) -> Bool {
+		guard let transliteration = transliteration else { return false }
+		return transliteration.text.trimmingCharacters(in: .whitespacesAndNewlines) != original.trimmingCharacters(in: .whitespacesAndNewlines)
+	}
+
+	/// The transliteration languages that add romanization beyond the original lines.
+	///
+	/// - Parameter lyrics: The lyrics to inspect.
+	///
+	/// - Returns: The languages whose transliteration differs from the original on at least one line.
+	private func meaningfulTransliterationLanguages(in lyrics: Lyrics?) -> [String] {
+		var languages: Set<String> = []
+
+		for line in lyrics?.attributes.lines ?? [] {
+			for transliteration in line.transliterations where self.transliterationDiffers(transliteration, from: line.text) {
+				languages.insert(transliteration.language)
+			}
+		}
+
+		return languages.sorted()
 	}
 
 	@objc private func dismissLyrics() {

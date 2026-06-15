@@ -26788,6 +26788,9 @@
         }
       }
     },
+    "Go to Song" : {
+      "comment" : "The string for the 'Go to Song' context menu option."
+    },
     "Guest" : {
       "comment" : "The string for the word 'Guest'.",
       "localizations" : {
@@ -34689,6 +34692,9 @@
         }
       }
     },
+    "Lyrics aren't available for this song yet." : {
+      "comment" : "The detail shown when a song has no synced lyrics."
+    },
     "Manage" : {
       "localizations" : {
         "ar" : {
@@ -40744,6 +40750,9 @@
           }
         }
       }
+    },
+    "No Lyrics" : {
+      "comment" : "The title shown when a song has no synced lyrics."
     },
     "No, keep me signed in 😅" : {
       "comment" : "The cancel button for the sign-out confirmation alert.",
@@ -73831,6 +73840,9 @@
           }
         }
       }
+    },
+    "View on" : {
+      "comment" : "The string for the 'View on' submenu grouping external music services."
     },
     "View on Amazon Music" : {
       "comment" : "The string for the word 'View on Amazon Music'.",

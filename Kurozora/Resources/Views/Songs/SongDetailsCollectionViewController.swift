@@ -216,7 +216,7 @@ extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
 		guard let syncedLyrics = self.syncedLyrics, let songID = self.song?.id else { return }
 
-		let lyricsViewController = LyricsViewController(lyrics: syncedLyrics, songID: songID)
+		let lyricsViewController = LyricsViewController(songID: songID, lyrics: syncedLyrics)
 		let kNavigationController = KNavigationController(rootViewController: lyricsViewController)
 		kNavigationController.modalPresentationStyle = .pageSheet
 		self.present(kNavigationController, animated: true)

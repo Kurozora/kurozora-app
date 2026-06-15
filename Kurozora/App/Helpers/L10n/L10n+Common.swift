@@ -2303,6 +2303,32 @@ extension L10n {
 			)
 		}
 	}
+	/// The title shown when a song has no synced lyrics.
+	///
+	/// - Tag: L10n-lyricsUnavailableTitle
+	static var lyricsUnavailableTitle: String {
+		L10n.resolve {
+			String(
+				localized: "No Lyrics",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when a song has no synced lyrics."
+			)
+		}
+	}
+	/// The detail shown when a song has no synced lyrics.
+	///
+	/// - Tag: L10n-lyricsUnavailableDetail
+	static var lyricsUnavailableDetail: String {
+		L10n.resolve {
+			String(
+				localized: "Lyrics aren't available for this song yet.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The detail shown when a song has no synced lyrics."
+			)
+		}
+	}
 	/// The string for the phrase 'Show Pronunciation'.
 	///
 	/// - Tag: L10n-showPronunciation
@@ -2417,6 +2443,32 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "The string for the word 'View on YouTube'."
+			)
+		}
+	}
+	/// The string for the 'View on' context menu that groups external music services.
+	///
+	/// - Tag: L10n-viewOn
+	static var viewOn: String {
+		L10n.resolve {
+			String(
+				localized: "View on",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'View on' submenu grouping external music services."
+			)
+		}
+	}
+	/// The string for the 'Go to Song' context menu option.
+	///
+	/// - Tag: L10n-goToSong
+	static var goToSong: String {
+		L10n.resolve {
+			String(
+				localized: "Go to Song",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Go to Song' context menu option."
 			)
 		}
 	}

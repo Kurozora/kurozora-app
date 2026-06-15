@@ -91,9 +91,12 @@ final class MusicPlaybackControlView: UIView {
 			self.playPauseTapped()
 		}, for: .touchUpInside)
 
-		// Add the interaction
-		let interaction = UIContextMenuInteraction(delegate: self)
-		self.addInteraction(interaction)
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+		tapGestureRecognizer.delegate = self
+		self.addGestureRecognizer(tapGestureRecognizer)
+
+		let contextMenuInteraction = UIContextMenuInteraction(delegate: self)
+		self.addInteraction(contextMenuInteraction)
 	}
 
 	private func configureViewHierarchy() {
@@ -179,6 +182,28 @@ final class MusicPlaybackControlView: UIView {
 
 	private func playPauseTapped() {
 		self.playbackController?.togglePlayPause()
+	}
+
+	@objc private func handleTap() {
+		self.presentLyrics()
+	}
+
+	/// Presents the current song's lyrics as a sheet.
+	private func presentLyrics() {
+		guard let songID = self.currentKKSong?.id, let viewController = UIApplication.topViewController else { return }
+
+		let lyricsViewController = LyricsViewController(songID: songID)
+		let navigationController = KNavigationController(rootViewController: lyricsViewController)
+		navigationController.modalPresentationStyle = .pageSheet
+		viewController.present(navigationController, animated: true)
+	}
+}
+
+// MARK: - UIGestureRecognizerDelegate
+@available(iOS 26.0, *)
+extension MusicPlaybackControlView: UIGestureRecognizerDelegate {
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+		return !self.playPauseButton.frame.contains(touch.location(in: self))
 	}
 }
 

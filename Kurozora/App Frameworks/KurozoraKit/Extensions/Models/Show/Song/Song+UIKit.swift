@@ -84,6 +84,18 @@ extension KKSong {
 			menuElements.append(UIMenu(title: "", options: .displayInline, children: addElements))
 		}
 
+		var navigationElements: [UIMenuElement] = []
+		// Create "Go to Song" element
+		let isOnSongDetails = (viewController as? SongDetailsCollectionViewController)?.songIdentity?.id == self.id
+
+		if !isOnSongDetails {
+			let songID = self.id
+			let goToSongAction = UIAction(title: L10n.goToSong, image: UIImage(systemName: "music.note")) { _ in
+				viewController.show(SongDetailsCollectionViewController()(with: songID), sender: nil)
+			}
+			navigationElements.append(goToSongAction)
+		}
+
 		var viewOnElements: [UIMenuElement] = []
 		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
@@ -125,7 +137,14 @@ extension KKSong {
 			}
 			viewOnElements.append(spotifyAction)
 		}
-		menuElements.append(UIMenu(title: "", options: .displayInline, children: viewOnElements))
+
+		if !viewOnElements.isEmpty {
+			navigationElements.append(UIMenu(title: L10n.viewOn, image: UIImage(systemName: "arrow.up.forward"), children: viewOnElements))
+		}
+
+		if !navigationElements.isEmpty {
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: navigationElements))
+		}
 
 		// Create "share" menu
 		var shareMenuChildren: [UIMenuElement] = []
