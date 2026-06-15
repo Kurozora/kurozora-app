@@ -84,6 +84,10 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		self.configureDataSource()
 		self.configureNavigationItems()
 
+		#if DEBUG
+		self.installLyricsCaptureButton()
+		#endif
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
@@ -107,6 +111,8 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		self.configureNavBarButtons()
 
+		await self.fetchUserOverlays()
+
 		do {
 			let showIdentityResponse = try await KService.shows(for: songIdentity).limit(10).response()
 			self.showIdentities = showIdentityResponse.data
@@ -129,6 +135,64 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		self.updateDataSource()
+	}
+
+	/// Fetches the auth user's favorite and review overlay for the current song
+	/// in parallel and applies the result to the song's library attributes.
+	private func fetchUserOverlays() async {
+		guard
+			let songID = self.song?.id,
+			let userID = User.current?.id
+		else { return }
+		let userIdentity = UserIdentity(id: userID)
+
+		async let isFavorited: Bool? = {
+			do {
+				let response = try await KService
+					.favoritesOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
+					.response()
+				return !response.data.isEmpty
+			} catch {
+				print("favoritesOverlay fetch failed: \(error.localizedDescription)")
+				return nil
+			}
+		}()
+
+		async let reviewEntry: ReviewsOverlayAttributes? = {
+			do {
+				let response = try await KService
+					.reviewsOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
+					.response()
+				return response.data.first?.attributes
+			} catch {
+				print("reviewsOverlay fetch failed: \(error.localizedDescription)")
+				return nil
+			}
+		}()
+
+		let (favorited, review) = await (isFavorited, reviewEntry)
+
+		// Song favorites and reviews aren't library-gated server-side, so the
+		// overlays may return state for a song that has no embedded library row.
+		// Materialise a fresh `LibraryAttributes` to hold the overlay results.
+		if self.song.attributes.library == nil, favorited == true || review != nil {
+			self.song.attributes.library = LibraryAttributes()
+		}
+
+		if let favorited = favorited {
+			self.song.attributes.library?.isFavorited = favorited
+		}
+		if let review = review {
+			self.song.attributes.library?.rating = review.score
+			self.song.attributes.library?.review = review.description
+		} else {
+			self.song.attributes.library?.rating = nil
+			self.song.attributes.library?.review = nil
+		}
+
+		await MainActor.run { [weak self] in
+			self?.updateDataSource()
+		}
 	}
 
 	override func makeMoreMenu() -> UIMenu? {
@@ -363,3 +427,132 @@ extension SongDetailsCollectionViewController {
 		}
 	}
 }
+
+#if DEBUG
+extension SongDetailsCollectionViewController {
+	func installLyricsCaptureButton() {
+		let captureAction = UIAction(title: "Capture Lyrics", image: UIImage(systemName: "captions.bubble")) { [weak self] _ in
+			self?.captureLyrics()
+		}
+		let tokenAction = UIAction(title: "Replace Privileged Token…", image: UIImage(systemName: "key.horizontal")) { [weak self] _ in
+			self?.promptForPrivilegedToken { _ in }
+		}
+
+		let captureButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "captions.bubble"), primaryAction: nil, menu: UIMenu(children: [captureAction, tokenAction]))
+		self.navigationItem.rightBarButtonItems = [self.moreBarButtonItem, captureButton]
+	}
+
+	private func captureLyrics() {
+		guard let song = self.song else { return }
+
+		Task { [weak self] in
+			await self?.runCapture(for: song)
+		}
+	}
+
+	/// Resolves the song's Apple Music identifier and captures its raw syllable lyrics.
+	///
+	/// - Parameter song: The song to capture lyrics for.
+	private func runCapture(for song: KKSong) async {
+		guard !UserSettings.appleMusicPrivilegedToken.isEmpty else {
+			self.promptForPrivilegedToken { [weak self] saved in
+				guard saved else { return }
+				Task { await self?.runCapture(for: song) }
+			}
+			return
+		}
+
+		let appleMusicID: Int
+		if let existing = song.attributes.amID {
+			appleMusicID = existing
+		} else if let resolved = await self.resolveAppleMusicID(for: song) {
+			appleMusicID = resolved
+		} else {
+			return
+		}
+
+		let outcome = await LyricsCaptureManager.shared.capture(
+			appleMusicID: appleMusicID,
+			title: song.attributes.title,
+			artist: song.attributes.artist,
+			kkSongID: "\(song.id)"
+		)
+		self.presentCaptureOutcome(outcome)
+	}
+
+	/// Presents the reconcile picker and persists the confirmed identifier.
+	///
+	/// - Parameter song: The song to resolve.
+	///
+	/// - Returns: The confirmed Apple Music identifier.
+	private func resolveAppleMusicID(for song: KKSong) async -> Int? {
+		let selected: Int? = await withCheckedContinuation { continuation in
+			let reconcileViewController = AMIDReconcileViewController(
+				songTitle: song.attributes.title,
+				songArtist: song.attributes.artist
+			) { appleMusicID in
+				continuation.resume(returning: appleMusicID)
+			}
+			let navigationController = KNavigationController(rootViewController: reconcileViewController)
+			navigationController.modalPresentationStyle = .formSheet
+			navigationController.presentationController?.delegate = reconcileViewController
+			self.present(navigationController, animated: true)
+		}
+
+		guard let selected = selected else { return nil }
+
+		let saved = await AppleMusicIDUpdater.save(appleMusicID: selected, forSongID: "\(song.id)")
+		print("----- LyricsCapture: amID \(selected) saved to backend:", saved)
+
+		return selected
+	}
+
+	/// Prompts user to paste the privileged Apple Music developer token.
+	///
+	/// - Parameter completion: The handler invoked with whether a token was saved.
+	private func promptForPrivilegedToken(completion: @escaping (Bool) -> Void) {
+		let alertController = UIAlertController(
+			title: "Privileged Token",
+			message: "Paste the Apple Music web player developer token (Authorization: Bearer …).",
+			preferredStyle: .alert
+		)
+		alertController.addTextField { textField in
+			textField.placeholder = "eyJhbGciOi…"
+			textField.text = UserSettings.appleMusicPrivilegedToken
+			textField.clearButtonMode = .whileEditing
+		}
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+			completion(false)
+		})
+		alertController.addAction(UIAlertAction(title: "Save", style: .default) { _ in
+			let token = alertController.textFields?.first?.text ?? ""
+			UserSettings.set(token, forKey: .appleMusicPrivilegedToken)
+			completion(!token.isEmpty)
+		})
+		self.present(alertController, animated: true)
+	}
+
+	/// Presents a summary of the capture outcome.
+	///
+	/// - Parameter outcome: The outcome to summarize.
+	private func presentCaptureOutcome(_ outcome: LyricsCaptureManager.CaptureOutcome) {
+		let message: String
+		switch outcome {
+		case .success(let appleMusicID, let jsonBytes, let ttmlBytes):
+			message = "Captured \(appleMusicID).\nJSON: \(jsonBytes) bytes · TTML: \(ttmlBytes) bytes\n\(LyricsCaptureManager.shared.captureDirectoryURL.path)"
+		case .missingToken:
+			message = "No privileged token configured."
+		case .empty:
+			message = "Apple returned an empty response."
+		case .forbidden(let statusCode, _):
+			message = "Rejected (\(statusCode)). The token likely lacks the lyrics entitlement, or the account isn't an active Apple Music subscriber."
+		case .failed(let reason):
+			message = "Failed: \(reason)"
+		}
+
+		let alertController = UIAlertController(title: "Lyrics Capture", message: message, preferredStyle: .alert)
+		alertController.addAction(UIAlertAction(title: L10n.okay, style: .default))
+		self.present(alertController, animated: true)
+	}
+}
+#endif
