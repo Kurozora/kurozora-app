@@ -15,13 +15,13 @@ extension ManageActiveSessionsController {
 	}
 
 	func configureDataSource() {
-		let currentSessionCellRegistration = self.getConfiguredCurrentSessionCell()
+		let accessTokenCellRegistration = self.getConfiguredAccessTokenCell()
 		let sessionLockupCellRegistration = self.getConfiguredSessionLockupCell()
 
-		self.dataSource = UITableViewDiffableDataSource<SectionLayoutKind, ItemKind>(tableView: self.tableView) { (tableView: UITableView, indexPath: IndexPath, itemKind: ItemKind) -> UITableViewCell? in
+		self.dataSource = SessionDataSource(tableView: self.tableView) { (tableView: UITableView, indexPath: IndexPath, itemKind: ItemKind) -> UITableViewCell? in
 			switch itemKind {
 			case .accessToken:
-				return tableView.dequeueConfiguredReusableCell(using: currentSessionCellRegistration, for: indexPath, item: itemKind)
+				return tableView.dequeueConfiguredReusableCell(using: accessTokenCellRegistration, for: indexPath, item: itemKind)
 			case .sessionIdentity:
 				return tableView.dequeueConfiguredReusableCell(using: sessionLockupCellRegistration, for: indexPath, item: itemKind)
 			}
@@ -30,19 +30,34 @@ extension ManageActiveSessionsController {
 	}
 
 	func updateDataSource() {
+		self.cache.removeAll()
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		if let accessToken = User.current?.relationships?.accessTokens?.data.first {
+
+		let currentAccessToken = self.currentAccessToken
+		if let currentAccessToken = currentAccessToken {
 			self.snapshot.appendSections([.current])
-			self.snapshot.appendItems([.accessToken(accessToken)], toSection: .current)
+			self.snapshot.appendItems([.accessToken(currentAccessToken)], toSection: .current)
 		}
 
-		if !self.sessionIdentities.isEmpty {
-			let sessionIdentityItemKinds: [ItemKind] = self.sessionIdentities.map { sessionIdentity in
-				.sessionIdentity(sessionIdentity)
-			}
+		// Merge app and web sessions into one list, ordered by most recent activity.
+		let appEntries: [(date: Date, item: ItemKind, session: Session?)] = self.appSessions
+			.filter { $0.id != currentAccessToken?.id }
+			.map { (date: $0.attributes.lastValidatedAt ?? .distantPast, item: .accessToken($0), session: nil) }
+		let webEntries: [(date: Date, item: ItemKind, session: Session?)] = self.webSessions
+			.map { (date: $0.attributes.lastValidatedAt, item: .sessionIdentity(SessionIdentity(id: $0.id)), session: $0) }
+		let sessionEntries = (appEntries + webEntries).sorted { $0.date > $1.date }
 
+		if !sessionEntries.isEmpty {
 			self.snapshot.appendSections([.other])
-			self.snapshot.appendItems(sessionIdentityItemKinds, toSection: .other)
+			self.snapshot.appendItems(sessionEntries.map { $0.item }, toSection: .other)
+		}
+
+		// Pre-fill the cache with resolved web sessions so their cells render without a lazy fetch.
+		let otherSectionIndex = currentAccessToken != nil ? 1 : 0
+		for (index, entry) in sessionEntries.enumerated() {
+			if let session = entry.session {
+				self.cache[IndexPath(item: index, section: otherSectionIndex)] = session
+			}
 		}
 
 		self.dataSource.apply(self.snapshot)

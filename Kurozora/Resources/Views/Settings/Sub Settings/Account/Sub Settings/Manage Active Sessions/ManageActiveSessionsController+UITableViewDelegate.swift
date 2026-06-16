@@ -17,13 +17,9 @@ extension ManageActiveSessionsController {
 		case .current:
 			return
 		case .other:
-			let sessionIdentities = self.sessionIdentities.count - 1
-			var itemsCount = sessionIdentities / 4 / 2
-			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
-			itemsCount = sessionIdentities - itemsCount
-			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+			let lastItemIndex = tableView.numberOfRows(inSection: indexPath.section) - 1
 
-			if indexPath.item >= itemsCount, self.nextPageCursor != nil {
+			if indexPath.item >= lastItemIndex - 5, self.nextPageCursor != nil {
 				Task { [weak self] in
 					guard let self = self else { return }
 					await self.fetchSessions()
@@ -33,31 +29,30 @@ extension ManageActiveSessionsController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return }
-
-		switch sectionIdentifier {
-		case .current:
-			return
-		case .other:
-			guard let sessionLockupCell = tableView.cellForRow(at: indexPath) as? SessionLockupCell else { return }
-			sessionLockupCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			sessionLockupCell.primaryLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			sessionLockupCell.secondaryLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-		}
+		guard !self.isEditing else { return }
+		(tableView.cellForRow(at: indexPath) as? SessionLockupCell)?.applyHighlightedAppearance(highlighted: true)
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return }
+		guard !self.isEditing else { return }
+		(tableView.cellForRow(at: indexPath) as? SessionLockupCell)?.applyHighlightedAppearance(highlighted: false)
+	}
 
-		switch sectionIdentifier {
-		case .current:
+	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		return self.dataSource.sectionIdentifier(for: indexPath.section) == .current ? nil : indexPath
+	}
+
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard self.isEditing else {
+			tableView.deselectRow(at: indexPath, animated: true)
 			return
-		case .other:
-			guard let sessionLockupCell = tableView.cellForRow(at: indexPath) as? SessionLockupCell else { return }
-			sessionLockupCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			sessionLockupCell.primaryLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			sessionLockupCell.secondaryLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
+		self.didUpdateBatchSelection()
+	}
+
+	override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+		guard self.isEditing else { return }
+		self.didUpdateBatchSelection()
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -86,11 +81,18 @@ extension ManageActiveSessionsController {
 			let signOutOfSessionAction = UIContextualAction(style: .destructive, title: L10n.signOut) { [weak self] _, _, completionHandler in
 				guard
 					let self = self,
-					let session = self.cache[indexPath] as? Session
+					let itemKind = self.dataSource.itemIdentifier(for: indexPath)
 				else { return }
 
 				Task {
-					await session.signOutOfSession(at: indexPath)
+					switch itemKind {
+					case .accessToken(let accessToken):
+						await accessToken.signOutOfAccessToken(at: indexPath)
+					case .sessionIdentity:
+						if let session = self.cache[indexPath] as? Session {
+							await session.signOutOfSession(at: indexPath)
+						}
+					}
 					completionHandler(true)
 				}
 			}
@@ -111,10 +113,16 @@ extension ManageActiveSessionsController {
 		case .current:
 			return nil
 		case .other:
-			guard let session = self.cache[indexPath] as? Session else { return nil }
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 			let tableViewCell = tableView.cellForRow(at: indexPath)
 
-			return session.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
+			switch itemKind {
+			case .accessToken(let accessToken):
+				return accessToken.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
+			case .sessionIdentity:
+				guard let session = self.cache[indexPath] as? Session else { return nil }
+				return session.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
+			}
 		}
 	}
 

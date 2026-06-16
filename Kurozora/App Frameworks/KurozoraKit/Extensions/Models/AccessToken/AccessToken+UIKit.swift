@@ -1,16 +1,16 @@
 //
-//  Session+UIKit.swift
+//  AccessToken+UIKit.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 22/11/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 16/06/2026.
+//  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import UIKit
 import KurozoraKit
 
-extension Session {
-	/// Create a context menu configuration for the session.
+extension AccessToken {
+	/// Create a context menu configuration for the access token.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the context menu.
@@ -18,7 +18,7 @@ extension Session {
 	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	///
-	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the session.
+	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the access token.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?)
@@ -30,7 +30,7 @@ extension Session {
 		}
 	}
 
-	/// Create a context menu for the session.
+	/// Create a context menu for the access token.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the context menu.
@@ -38,7 +38,7 @@ extension Session {
 	///    - sourceView: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	///
-	/// - Returns: A `UIMenu` representing the context menu for the session.
+	/// - Returns: A `UIMenu` representing the context menu for the access token.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
@@ -48,7 +48,7 @@ extension Session {
 		let signOutOfSessionAction = UIAction(title: L10n.signOutOfSession, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				Task {
-					await self.signOutOfSession(at: indexPath)
+					await self.signOutOfAccessToken(at: indexPath)
 				}
 			}
 		}
@@ -58,11 +58,10 @@ extension Session {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Sends a request to remove the session from the user's session list.
-	func signOutOfSession(at indexPath: IndexPath) async {
+	/// Sends a request to remove the access token from the user's session list.
+	func signOutOfAccessToken(at indexPath: IndexPath) async {
 		do {
-			let sessionIdentity = SessionIdentity(id: self.id)
-			_ = try await KService.deleteSession(sessionIdentity).response()
+			_ = try await KService.deleteAccessToken(self.id.rawValue).response()
 			NotificationCenter.default.post(name: .KSSessionIsDeleted, object: nil, userInfo: ["indexPath": indexPath])
 		} catch {
 			print(error.localizedDescription)

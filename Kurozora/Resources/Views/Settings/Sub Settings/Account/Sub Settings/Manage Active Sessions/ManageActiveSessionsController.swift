@@ -11,6 +11,12 @@ import KurozoraKit
 import MapKit
 import UIKit
 
+class SessionDataSource: UITableViewDiffableDataSource<ManageActiveSessionsController.SectionLayoutKind, ManageActiveSessionsController.ItemKind> {
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return self.sectionIdentifier(for: indexPath.section) != .current
+	}
+}
+
 class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	// MARK: - Views
 	private let mapContainerView = UIView()
@@ -26,24 +32,59 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	}
 
 	// MARK: - Properties
-	var sessionIdentities: [SessionIdentity] = []
+	/// The user's app sessions.
+	var appSessions: [AccessToken] = []
+
+	/// The user's web sessions.
+	var webSessions: [Session] = []
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
-	var dataSource: UITableViewDiffableDataSource<SectionLayoutKind, ItemKind>!
+	var dataSource: SessionDataSource!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	/// The next page url of the pagination.
+	/// The cursor for the next page of app sessions.
 	var nextPageCursor: PageCursor?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
 
+	/// The access token for the device the user is currently signed in on.
+	var currentAccessToken: AccessToken? {
+		User.current?.relationships?.accessTokens?.data.first
+	}
+
 	// Map & Location
-	var pointAnnotation: MKPointAnnotation!
-	var pinAnnotationView: MKMarkerAnnotationView!
 	let locationManager = CLLocationManager()
+
+	// Batch edit
+	/// The bar button item that hosts the select and sign-out-all actions.
+	var moreBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that exits batch-edit mode.
+	var cancelEditingBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that toggles between selecting and deselecting every loaded session.
+	var selectAllBarButtonItem = UIBarButtonItem()
+
+	/// The bar button item that hosts the destructive sign-out confirmation in batch-edit mode.
+	var deleteBatchBarButtonItem = UIBarButtonItem()
+
+	/// The label that displays the selected-session count in the bottom toolbar.
+	var selectionCountLabel = UILabel()
+
+	/// The right bar button items captured before entering batch-edit mode.
+	var savedRightBarButtonItems: [UIBarButtonItem]?
+
+	/// The left bar button items captured before entering batch-edit mode.
+	var savedLeftBarButtonItems: [UIBarButtonItem]?
+
+	/// A boolean value that indicates whether batch-edit is currently displayed.
+	var batchEditIsActive: Bool = false
+
+	/// A boolean value that indicates whether this controller hid the tab bar to enter edit mode.
+	var didHideTabBarForEdit: Bool = false
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -76,6 +117,9 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		self.configureView()
 		self.configureDataSource()
 
+		self.tableView.allowsMultipleSelectionDuringEditing = true
+		self.configureNavigationItems()
+
 		// Fetch sessions
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -102,6 +146,27 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	}
 
 	// MARK: - Functions
+	/// Configures the navigation bar items.
+	private func configureNavigationItems() {
+		self.configureBatchEditBarButtonItems()
+		self.configureBottomActionContainer()
+		self.updateMoreBarButtonItem()
+	}
+
+	/// Rebuilds the more menu shown in the navigation bar.
+	private func updateMoreBarButtonItem() {
+		let selectAction = UIAction(title: L10n.select, image: UIImage(systemName: "checkmark.circle")) { [weak self] _ in
+			self?.setEditing(true, animated: true)
+		}
+		let signOutAllAction = UIAction(title: L10n.signOutAllOtherSessions, image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), attributes: .destructive) { [weak self] _ in
+			self?.confirmSignOutAllOtherSessions()
+		}
+
+		self.moreBarButtonItem.image = UIImage(systemName: "ellipsis.circle")
+		self.moreBarButtonItem.menu = UIMenu(children: [selectAction, signOutAllAction])
+		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+	}
+
 	/// The shared settings used to initialize the table view.
 	private func configureView() {
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true
@@ -153,8 +218,8 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		self.isRequestInProgress = false
 		self._prefersActivityIndicatorHidden = true
 
-		self.createAnnotations()
 		self.updateDataSource()
+		self.createAnnotations()
 
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
@@ -178,17 +243,18 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		#endif
 
 		do {
-			let sessionResponse = try await KService.sessions().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+			let accessTokenResponse = try await KService.accessTokens().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 			// Reset data if necessary
 			if self.nextPageCursor == nil {
-				self.sessionIdentities = []
+				self.appSessions = []
+				await self.fetchWebSessions()
 			}
 
 			// Save next page url and append new data
-			self.nextPageCursor = sessionResponse.nextCursor
-			self.sessionIdentities.append(contentsOf: sessionResponse.data)
-			self.sessionIdentities.removeDuplicates()
+			self.nextPageCursor = accessTokenResponse.nextCursor
+			self.appSessions.append(contentsOf: accessTokenResponse.data)
+			self.appSessions.removeDuplicates()
 
 			// End fetch
 			self.endFetch()
@@ -197,31 +263,80 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		}
 	}
 
-	/// Creates annotations and adds them to the map view.
-	private func createAnnotations() {
-		guard let sessions = cache as? [IndexPath: Session] else { return }
+	/// Fetches and resolves the user's web sessions.
+	private func fetchWebSessions() async {
+		do {
+			let sessionResponse = try await KService.sessions().limit(100).response()
+			let sessionIdentities = sessionResponse.data
 
-		sessions.forEach { [weak self] _, session in
-			guard let self = self else { return }
-			let annotation = ImageAnnotation()
-
-			if let deviceName = session.relationships.platform.data.first?.attributes {
-				annotation.title = deviceName.deviceModel
-				annotation.image = deviceName.deviceImage
+			guard !sessionIdentities.isEmpty else {
+				self.webSessions = []
+				return
 			}
 
-			if let sessionLocation = session.relationships.location.data.first {
-				if let latitude = sessionLocation.attributes.latitude, let longitude = sessionLocation.attributes.longitude {
-					annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-				}
+			var sessions: [Session] = []
+			for chunk in sessionIdentities.chunked(into: 25) {
+				let detailResponse = try await KService.details(chunk).response()
+				sessions.append(contentsOf: detailResponse.data)
 			}
+			self.webSessions = sessions
+		} catch {
+			print(error.localizedDescription)
+			self.webSessions = []
+		}
+	}
 
-			self.mapView.addAnnotation(annotation)
+	/// Rebuilds the map annotations from the loaded sessions.
+	func createAnnotations() {
+		let staleAnnotations = self.mapView.annotations.filter { $0 is ImageAnnotation }
+		self.mapView.removeAnnotations(staleAnnotations)
+
+		var annotations: [ImageAnnotation] = self.appSessions.compactMap { session in
+			self.makeAnnotation(platform: session.relationships.platform.data.first?.attributes, location: session.relationships.location.data.first?.attributes)
+		}
+		annotations += self.webSessions.compactMap { session in
+			self.makeAnnotation(platform: session.relationships.platform.data.first?.attributes, location: session.relationships.location.data.first?.attributes)
+		}
+
+		self.mapView.addAnnotations(annotations)
+
+		if !annotations.isEmpty {
+			self.mapView.showAnnotations(annotations, animated: true)
 		}
 
 		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
 		self.locationManager.requestWhenInUseAuthorization()
 		self.locationManager.startUpdatingLocation()
+	}
+
+	/// Creates a map annotation for a session's platform and location.
+	///
+	/// - Parameters:
+	///    - platform: The platform the session was created on.
+	///    - location: The location the session was created from.
+	///
+	/// - Returns: An annotation positioned at the session's coordinate.
+	private func makeAnnotation(platform: Platform.Attributes?, location: Location.Attributes?) -> ImageAnnotation? {
+		guard
+			let location = location,
+			let latitude = location.latitude,
+			let longitude = location.longitude
+		else { return nil }
+
+		let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+
+		guard CLLocationCoordinate2DIsValid(coordinate), latitude != 0 || longitude != 0 else { return nil }
+
+		let annotation = ImageAnnotation()
+		annotation.coordinate = coordinate
+		annotation.title = platform?.deviceModel
+		annotation.image = platform?.deviceImage
+		annotation.subtitle = [location.city, location.region, location.country]
+			.compactMap { $0 }
+			.filter { !$0.isEmpty && $0 != "Unknown" }
+			.joined(separator: ", ")
+
+		return annotation
 	}
 
 	/// Removes the session specified in the received information.
@@ -235,12 +350,21 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 		}
 	}
 
-	/// Removes the session specified by the givne index path.
+	/// Removes the session specified by the given index path.
 	///
 	/// - Parameter indexPath: The index path of the session.
 	func removeSession(at indexPath: IndexPath) {
-		self.sessionIdentities.remove(at: indexPath.item)
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+
+		switch itemKind {
+		case .accessToken(let accessToken):
+			self.appSessions.removeAll { $0.id == accessToken.id }
+		case .sessionIdentity(let sessionIdentity):
+			self.webSessions.removeAll { $0.id == sessionIdentity.id }
+		}
+
 		self.updateDataSource()
+		self.createAnnotations()
 	}
 
 	// MARK: - SectionFetchable
@@ -252,40 +376,38 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	}
 }
 
-// MARK: - UITableViewDataSource
-extension ManageActiveSessionsController {
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return false }
-		return sectionIdentifier != .current
-	}
-}
-
 // MARK: - MKMapViewDelegate
 extension ManageActiveSessionsController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		if annotation.isEqual(mapView.userLocation) {
+		if annotation is MKUserLocation {
 			return nil
 		}
 
-		if !annotation.isKind(of: ImageAnnotation.self) {
-			var pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "DefaultPinView")
-			if pinAnnotationView == nil {
-				pinAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "DefaultPinView")
-			}
-			return pinAnnotationView
+		if let cluster = annotation as? MKClusterAnnotation {
+			let identifier = "clusterAnnotation"
+			let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+				?? MKMarkerAnnotationView(annotation: cluster, reuseIdentifier: identifier)
+			clusterView.annotation = cluster
+			clusterView.markerTintColor = .kurozora
+			return clusterView
 		}
 
-		var annotationView = MKMarkerAnnotationView()
-		if let markerAnnotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation") as? MKMarkerAnnotationView {
-			annotationView = markerAnnotationView
-		} else {
-			annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
-			if let annotation = annotation as? ImageAnnotation {
-				annotationView.glyphImage = annotation.image
-			}
+		guard let imageAnnotation = annotation as? ImageAnnotation else {
+			let identifier = "DefaultPinView"
+			let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+				?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			pinView.annotation = annotation
+			return pinView
 		}
 
+		let identifier = "imageAnnotation"
+		let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+			?? MKMarkerAnnotationView(annotation: imageAnnotation, reuseIdentifier: identifier)
+		annotationView.annotation = imageAnnotation
+		annotationView.glyphImage = imageAnnotation.image
 		annotationView.markerTintColor = .kurozora
+		annotationView.clusteringIdentifier = identifier
+		annotationView.canShowCallout = true
 
 		return annotationView
 	}
@@ -357,11 +479,14 @@ extension ManageActiveSessionsController {
 
 // MARK: - Cell Registration
 extension ManageActiveSessionsController {
-	func getConfiguredCurrentSessionCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
-		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { currentSessionCell, _, itemKind in
+	func getConfiguredAccessTokenCell() -> UITableView.CellRegistration<SessionLockupCell, ItemKind> {
+		return UITableView.CellRegistration<SessionLockupCell, ItemKind>(cellNib: SessionLockupCell.nib) { [weak self] accessTokenCell, indexPath, itemKind in
+			guard let self = self else { return }
+
 			switch itemKind {
 			case .accessToken(let accessToken):
-				currentSessionCell.configureCell(using: accessToken)
+				let isCurrentDevice = self.dataSource.sectionIdentifier(for: indexPath.section) == .current
+				accessTokenCell.configureCell(using: accessToken, isCurrentDevice: isCurrentDevice)
 			default: break
 			}
 		}

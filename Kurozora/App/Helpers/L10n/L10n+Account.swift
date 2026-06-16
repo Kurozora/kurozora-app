@@ -1728,6 +1728,63 @@ extension L10n {
 		}
 	}
 
+	/// The title of the action that signs out every other session.
+	///
+	/// - Tag: L10n-signOutAllOtherSessions
+	static var signOutAllOtherSessions: String {
+		L10n.resolve {
+			String(
+				localized: "Sign Out All Other Sessions",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the action that signs out every other session."
+			)
+		}
+	}
+	/// The message asking for the password before signing out the selected sessions.
+	///
+	/// - Tag: L10n-signOutSessionsConfirmation
+	static var signOutSessionsConfirmation: String {
+		L10n.resolve {
+			String(
+				localized: "Enter your password to sign out the selected sessions.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message asking for the password before signing out the selected sessions."
+			)
+		}
+	}
+	/// The message asking for the password before signing out every other session.
+	///
+	/// - Tag: L10n-signOutAllOtherSessionsConfirmation
+	static var signOutAllOtherSessionsConfirmation: String {
+		L10n.resolve {
+			String(
+				localized: "Enter your password to sign out all of your other sessions across all of your devices.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message asking for the password before signing out every other session."
+			)
+		}
+	}
+	/// The error title shown when sessions can't be signed out.
+	///
+	/// - Tag: L10n-couldNotSignOutSessions
+	static var couldNotSignOutSessions: String {
+		L10n.resolve {
+			String(
+				localized: "Could Not Sign Out Sessions",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error title shown when sessions can't be signed out."
+			)
+		}
+	}
+
 	// MARK: - Account Screen
 	/// The title of the account settings screen.
 	///
