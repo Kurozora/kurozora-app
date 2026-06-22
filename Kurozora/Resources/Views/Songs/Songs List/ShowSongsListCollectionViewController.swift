@@ -302,4 +302,33 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 
 		self.show(.showDetailsSegue, sender: show)
 	}
+
+	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
+		let kkSongs = self.showSongs.isEmpty ? self.songs : self.showSongs.map { $0.song }
+		guard kkSongs.indices.contains(indexPath.item) else { return }
+		let tappedItem = indexPath.item
+
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
+			let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
+
+			var queueSongs: [MKSong] = []
+			var queueKKSongs: [KKSong] = []
+			var startIndex = 0
+
+			for (offset, kkSong) in kkSongs.enumerated() {
+				guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
+				if offset == tappedItem {
+					startIndex = queueSongs.count
+				}
+				queueSongs.append(song)
+				queueKKSongs.append(kkSong)
+			}
+
+			guard !queueSongs.isEmpty else { return }
+			MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
+		}
+	}
 }

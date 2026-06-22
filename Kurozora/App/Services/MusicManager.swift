@@ -165,6 +165,9 @@ final class MusicManager: NSObject {
 	/// The set of Combine subscriptions retained by the manager.
 	private var subscriptions = Set<AnyCancellable>()
 
+	/// The display link that drives playback progress updates while a song is playing.
+	private var progressDisplayLink: CADisplayLink?
+
 	/// The current MusicKit authorization status.
 	var authorizationState: MusicAuthorization.Status {
 		return MusicAuthorization.currentStatus
@@ -178,6 +181,17 @@ final class MusicManager: NSObject {
 		default:
 			let previewSeconds = self.player?.currentTime().seconds
 			return previewSeconds?.isFinite == true ? previewSeconds ?? 0 : 0
+		}
+	}
+
+	/// The total duration in seconds of the active player's current item.
+	var currentDurationSeconds: TimeInterval {
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			return self.currentSong?.song.duration ?? 0
+		default:
+			let previewDuration = self.player?.currentItem?.duration.seconds
+			return previewDuration?.isFinite == true ? previewDuration ?? 0 : 0
 		}
 	}
 
@@ -227,6 +241,33 @@ final class MusicManager: NSObject {
 	/// A Boolean value that indicates whether a song is currently playing.
 	@Published private(set) var isPlaying: Bool = false
 
+	/// The active player's playback progress.
+	@Published private(set) var playbackProgress: PlaybackProgress = .zero
+
+	/// Whether there is a song to skip forward to.
+	@Published private(set) var canSkipForward: Bool = false
+
+	/// Whether there is a song to skip backward to.
+	@Published private(set) var canSkipBackward: Bool = false
+
+	/// Whether shuffle is enabled.
+	@Published private(set) var shuffleEnabled: Bool = false
+
+	/// The current repeat mode.
+	@Published private(set) var repeatMode: PlaybackRepeatMode = .off
+
+	/// The songs in the current playback queue.
+	private var queueSongs: [MKSong] = []
+
+	/// The Kurozora models aligned by index with `queueSongs`.
+	private var queueKKSongs: [KKSong] = []
+
+	/// The index of the current song in the preview queue.
+	private var previewQueueIndex: Int = 0
+
+	/// The subscription to the application player's queue changes.
+	private var queueSubscription: AnyCancellable?
+
 	// MARK: - Initializers
 	override private init() {
 		super.init()
@@ -235,6 +276,29 @@ final class MusicManager: NSObject {
 			.receive(on: RunLoop.main).sink { [weak self] in
 				guard let self = self else { return }
 				self.isPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
+			}
+			.store(in: &self.subscriptions)
+
+		self.$isPlaying
+			.receive(on: RunLoop.main)
+			.removeDuplicates()
+			.sink { [weak self] isPlaying in
+				guard let self = self else { return }
+				if isPlaying {
+					self.startProgressUpdates()
+				} else {
+					self.stopProgressUpdates()
+				}
+			}
+			.store(in: &self.subscriptions)
+
+		self.$currentSong
+			.receive(on: RunLoop.main)
+			.map { $0 == nil }
+			.removeDuplicates()
+			.sink { [weak self] isCleared in
+				guard let self = self, isCleared else { return }
+				self.playbackProgress = .zero
 			}
 			.store(in: &self.subscriptions)
 	}
@@ -412,37 +476,68 @@ final class MusicManager: NSObject {
 	///    - playButton: The button that initiated playback, if any. The button's image
 	///     is updated to reflect the playback state during preview playback.
 	///    - kkSong: The Kurozora model associated with `song`, if available.
-	func play(song: MKSong, playButton: UIButton?, kkSong: KKSong? = nil) {
+	func play(song: MKSong, playButton: UIButton? = nil, kkSong: KKSong? = nil) {
+		self.play(songs: [song], kkSongs: kkSong.map { [$0] } ?? [], startingAt: 0, playButton: playButton)
+	}
+
+	/// Plays the song at the given index of a queue, falling back to a 30-second preview when the
+	/// user is not authorized for full playback.
+	///
+	/// - Parameters:
+	///    - songs: The songs forming the playback queue.
+	///    - kkSongs: The Kurozora models aligned by index with `songs`, when available.
+	///    - index: The index of the song to start playing.
+	///    - playButton: The button that initiated playback, if any.
+	func play(songs: [MKSong], kkSongs: [KKSong] = [], startingAt index: Int, playButton: UIButton? = nil) {
+		guard songs.indices.contains(index) else { return }
+
+		// The player queue starts at the tapped song, so reorder from it onward. This avoids
+		// `Queue(for:startingAt:)`, whose async start-positioning fails the first `play()` with error 6.
+		let orderedSongs = Array(songs[index...])
+		let orderedKKSongs = songs.count == kkSongs.count ? Array(kkSongs[index...]) : []
+		let song = orderedSongs[0]
+
 		Task { [weak self] in
 			guard let self else { return }
 			await self.ensureSetup()
 
+			self.queueSongs = orderedSongs
+			self.queueKKSongs = orderedKKSongs
+			self.previewQueueIndex = 0
+
 			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 			case (.authorized, true):
-				await self.playWithMusicKit(song: song, kkSong: kkSong)
+				await self.playWithMusicKit(song: song)
 			default:
-				await self.playPreview(song: song, playButton: playButton, kkSong: kkSong)
+				await self.playPreview(song: song, playButton: playButton, kkSong: self.kkSong(at: 0))
 			}
 		}
 	}
 
-	private func playWithMusicKit(song: MKSong, kkSong: KKSong?) async {
-		do {
-			if self.currentSong == song {
+	private func playWithMusicKit(song: MKSong) async {
+		if self.currentSong == song {
+			do {
 				if self.applicationPlayer.state.playbackStatus == .playing {
 					self.applicationPlayer.pause()
 				} else {
 					try await self.applicationPlayer.play()
 				}
-			} else {
-				self.applicationPlayer.queue = [song.song]
-				self.currentSong = song
-				self.currentKKSong = kkSong
-				try await self.applicationPlayer.play()
+			} catch {
+				print("----- [Error] MusicKit playback failed: \(error.localizedDescription)")
 			}
+			return
+		}
+
+		do {
+			self.applicationPlayer.queue = ApplicationMusicPlayer.Queue(for: self.queueSongs.map { $0.song })
+			self.applicationPlayer.state.shuffleMode = self.shuffleEnabled ? .songs : .off
+			self.applicationPlayer.state.repeatMode = self.musicKitRepeatMode(self.repeatMode)
+			self.observeQueue()
+			self.currentSong = song
+			self.currentKKSong = self.kkSong(for: song)
+			self.updateSkipAvailability()
+			try await self.applicationPlayer.play()
 		} catch {
-			self.currentSong = nil
-			self.currentKKSong = nil
 			print("----- [Error] MusicKit playback failed: \(error.localizedDescription)")
 		}
 	}
@@ -481,11 +576,10 @@ final class MusicManager: NSObject {
 			forName: .AVPlayerItemDidPlayToEndTime,
 			object: playerItem,
 			queue: .main
-		) { [weak self, weak playButton] _ in
+		) { [weak self] _ in
 			guard let self else { return }
 			Task { @MainActor in
-				await self.tearDownPreviewPlayer()
-				playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
+				await self.handlePreviewEnded()
 			}
 		}
 	}
@@ -500,6 +594,216 @@ final class MusicManager: NSObject {
 		self.currentSong = nil
 		self.currentKKSong = nil
 		self.isPlaying = false
+	}
+
+	// MARK: - Queue
+	/// Re-subscribes to the application player's queue to track the current entry.
+	private func observeQueue() {
+		self.queueSubscription = self.applicationPlayer.queue.objectWillChange
+			.receive(on: RunLoop.main)
+			.sink { [weak self] in
+				self?.syncCurrentEntry()
+			}
+	}
+
+	/// Syncs the current song and Kurozora model from the application player's current entry.
+	private func syncCurrentEntry() {
+		guard
+			let itemID = self.applicationPlayer.queue.currentEntry?.item?.id,
+			let mkSong = self.queueSongs.first(where: { $0.song.id == itemID })
+		else { return }
+
+		self.currentSong = mkSong
+		self.currentKKSong = self.kkSong(for: mkSong)
+		self.updateSkipAvailability()
+		self.refreshProgressWhilePaused()
+	}
+
+	/// Skips to the next song in the queue.
+	func skipForward() {
+		Task { [weak self] in
+			guard let self else { return }
+			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+			case (.authorized, true):
+				try? await self.applicationPlayer.skipToNextEntry()
+			default:
+				await self.skipPreview(by: 1)
+			}
+		}
+	}
+
+	/// Restarts the current song when more than three seconds have elapsed, otherwise skips to the previous song.
+	func skipBackward() {
+		Task { [weak self] in
+			guard let self else { return }
+
+			if self.currentPlaybackSeconds > 3 {
+				self.seek(toSeconds: 0)
+				self.refreshProgressWhilePaused(position: 0)
+				return
+			}
+
+			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+			case (.authorized, true):
+				try? await self.applicationPlayer.skipToPreviousEntry()
+				self.refreshProgressWhilePaused(position: 0)
+			default:
+				await self.skipPreview(by: -1)
+			}
+		}
+	}
+
+	/// Toggles shuffle on or off.
+	func toggleShuffle() {
+		self.shuffleEnabled.toggle()
+
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			self.applicationPlayer.state.shuffleMode = self.shuffleEnabled ? .songs : .off
+		default:
+			break
+		}
+	}
+
+	/// Advances the repeat mode to its next state.
+	func cycleRepeat() {
+		self.repeatMode = switch self.repeatMode {
+		case .off: .all
+		case .all: .one
+		case .one: .off
+		}
+
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			self.applicationPlayer.state.repeatMode = self.musicKitRepeatMode(self.repeatMode)
+		default:
+			break
+		}
+
+		self.updateSkipAvailability()
+	}
+
+	/// Plays the song `offset` positions from the current one in the preview queue.
+	///
+	/// - Parameter offset: The signed number of songs to move by.
+	private func skipPreview(by offset: Int) async {
+		guard !self.queueSongs.isEmpty else { return }
+		var newIndex = self.previewQueueIndex + offset
+
+		if newIndex >= self.queueSongs.count {
+			guard self.repeatMode == .all else { return }
+			newIndex = 0
+		} else if newIndex < 0 {
+			newIndex = 0
+		}
+
+		self.previewQueueIndex = newIndex
+		await self.playPreview(song: self.queueSongs[newIndex], playButton: nil, kkSong: self.kkSong(at: newIndex))
+	}
+
+	/// Advances the preview player when the current preview reaches its end.
+	private func handlePreviewEnded() async {
+		if self.repeatMode == .one {
+			self.seek(toSeconds: 0)
+			await self.player?.play()
+			return
+		}
+
+		let hasNext = self.previewQueueIndex + 1 < self.queueSongs.count || self.repeatMode == .all
+		if hasNext {
+			await self.skipPreview(by: 1)
+		} else {
+			await self.tearDownPreviewPlayer()
+		}
+	}
+
+	/// Recomputes whether the current song can skip forward or backward.
+	private func updateSkipAvailability() {
+		guard let index = self.queueSongs.firstIndex(where: { $0 == self.currentSong }) else {
+			self.canSkipForward = false
+			self.canSkipBackward = false
+			return
+		}
+
+		self.previewQueueIndex = index
+		self.canSkipBackward = true
+		self.canSkipForward = index < self.queueSongs.count - 1 || self.repeatMode == .all
+	}
+
+	private func musicKitRepeatMode(_ mode: PlaybackRepeatMode) -> MusicKit.MusicPlayer.RepeatMode {
+		switch mode {
+		case .off: return .none
+		case .all: return .all
+		case .one: return .one
+		}
+	}
+
+	private func kkSong(at index: Int) -> KKSong? {
+		return index < self.queueKKSongs.count ? self.queueKKSongs[index] : nil
+	}
+
+	private func kkSong(for song: MKSong) -> KKSong? {
+		guard
+			let index = self.queueSongs.firstIndex(where: { $0 == song }),
+			index < self.queueKKSongs.count
+		else { return nil }
+		return self.queueKKSongs[index]
+	}
+
+	// MARK: - Progress
+	/// Starts the display link that publishes playback progress.
+	private func startProgressUpdates() {
+		guard self.progressDisplayLink == nil else { return }
+
+		let displayLink = CADisplayLink(target: self, selector: #selector(self.updateProgress))
+		displayLink.preferredFrameRateRange = CAFrameRateRange(minimum: 8, maximum: 30, preferred: 15)
+		displayLink.add(to: .main, forMode: .common)
+		self.progressDisplayLink = displayLink
+
+		self.updateProgress()
+	}
+
+	/// Stops the display link and captures the final playback position.
+	private func stopProgressUpdates() {
+		self.progressDisplayLink?.invalidate()
+		self.progressDisplayLink = nil
+
+		if self.currentSong != nil {
+			self.updateProgress()
+		}
+	}
+
+	/// Publishes a snapshot of the active player's current position and duration.
+	@objc private func updateProgress() {
+		let duration = self.currentDurationSeconds
+		let safeDuration = duration.isFinite && duration > 0 ? duration : 0
+		self.playbackProgress = PlaybackProgress(currentSeconds: self.currentPlaybackSeconds, durationSeconds: safeDuration)
+	}
+
+	/// Publishes a progress snapshot while paused so a skip or restart updates the bar immediately.
+	///
+	/// - Parameter position: An explicit position to publish; when `nil`, the live player position is read.
+	private func refreshProgressWhilePaused(position: TimeInterval? = nil) {
+		guard !self.isPlaying else { return }
+
+		let publish: () -> Void = { [weak self] in
+			guard let self, !self.isPlaying else { return }
+
+			guard let position = position else {
+				self.updateProgress()
+				return
+			}
+
+			let duration = self.currentDurationSeconds
+			let safeDuration = duration.isFinite && duration > 0 ? duration : 0
+			self.playbackProgress = PlaybackProgress(currentSeconds: max(0, position), durationSeconds: safeDuration)
+		}
+
+		if Thread.isMainThread {
+			publish()
+		} else {
+			DispatchQueue.main.async(execute: publish)
+		}
 	}
 
 	// MARK: - Library
@@ -542,8 +846,50 @@ extension MusicManager: MediaPlaybackControlling {
 		return self.$isPlaying
 	}
 
+	var playbackProgressPublisher: Published<PlaybackProgress>.Publisher {
+		return self.$playbackProgress
+	}
+
+	var canSkipForwardPublisher: Published<Bool>.Publisher {
+		return self.$canSkipForward
+	}
+
+	var canSkipBackwardPublisher: Published<Bool>.Publisher {
+		return self.$canSkipBackward
+	}
+
+	var shuffleEnabledPublisher: Published<Bool>.Publisher {
+		return self.$shuffleEnabled
+	}
+
+	var repeatModePublisher: Published<PlaybackRepeatMode>.Publisher {
+		return self.$repeatMode
+	}
+
 	func togglePlayPause() {
-		guard let song = self.currentSong else { return }
-		self.play(song: song, playButton: nil)
+		guard self.currentSong != nil else { return }
+
+		Task { [weak self] in
+			guard let self else { return }
+			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+			case (.authorized, true):
+				if self.applicationPlayer.state.playbackStatus == .playing {
+					self.applicationPlayer.pause()
+				} else {
+					try? await self.applicationPlayer.play()
+				}
+			default:
+				switch self.player?.timeControlStatus {
+				case .playing:
+					await self.player?.pause()
+					self.isPlaying = false
+				case .paused:
+					await self.player?.play()
+					self.isPlaying = true
+				default:
+					break
+				}
+			}
+		}
 	}
 }

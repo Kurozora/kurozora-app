@@ -14,6 +14,19 @@ import UIKit
 
 protocol MusicLockupCollectionViewCellDelegate: AnyObject {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
+
+	/// Tells the delegate the cell's play button was tapped, so it can play the song in its list context.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose play button was tapped.
+	///    - indexPath: The index path of the cell within the collection view.
+	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath)
+}
+
+extension MusicLockupCollectionViewCellDelegate {
+	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
+		cell.playResolvedSong()
+	}
 }
 
 class MusicLockupCollectionViewCell: KCollectionViewCell {
@@ -182,11 +195,10 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
-		MusicManager.shared.$isPlaying
+		Publishers.CombineLatest(MusicManager.shared.$isPlaying, MusicManager.shared.$currentSong)
 			.receive(on: RunLoop.main)
-			.sink { [weak self] _ in
-				guard let self = self else { return }
-				self.updatePlayButton()
+			.sink { [weak self] _, _ in
+				self?.updatePlayButton()
 			}
 			.store(in: &self.subscriptions)
 
@@ -242,10 +254,16 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
+	/// Plays only this cell's song, used as the default when the delegate provides no queue.
+	func playResolvedSong() {
+		guard let song = self.song else { return }
+		MusicManager.shared.play(song: song, kkSong: self.kkSong)
+	}
+
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
-		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, playButton: sender, kkSong: self.kkSong)
+		guard let indexPath = self.indexPath else { return }
+		self.delegate?.musicLockupCollectionViewCell(self, didTapPlayButtonAt: indexPath)
 	}
 
 	@IBAction func showButtonPressed(_ sender: UIButton) {
