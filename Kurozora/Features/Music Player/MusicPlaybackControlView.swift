@@ -188,7 +188,9 @@ final class MusicPlaybackControlView: UIView {
 	private var lastAppliedLayout: MusicAccessoryLayout?
 
 	/// The number of seconds each scan step seeks while a skip button is held.
-	private let scanStepSeconds: TimeInterval = 5
+	private var scanStepSeconds: TimeInterval {
+		return TimeInterval(UserSettings.musicSkipDuration.rawValue)
+	}
 
 	/// The repeating timer that seeks within the song while a skip button is held.
 	private var scanTimer: Timer?

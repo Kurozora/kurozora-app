@@ -14,7 +14,7 @@ struct PlaybackProgress: Equatable {
 	/// The current playback position in seconds.
 	var currentSeconds: TimeInterval
 
-	/// The total duration of the current song in seconds, or `0` when unknown.
+	/// The total duration of the current song in seconds.
 	var durationSeconds: TimeInterval
 
 	/// A zero-valued progress, used when nothing is playing.
@@ -46,10 +46,10 @@ enum PlaybackRepeatMode {
 
 /// A protocol that abstracts playback control so views aren't coupled to a specific player implementation.
 protocol MediaPlaybackControlling: AnyObject {
-	/// A publisher that emits the currently playing song, or `nil` when nothing is playing.
+	/// A publisher that emits the currently playing song.
 	var currentSongPublisher: Published<MKSong?>.Publisher { get }
 
-	/// A publisher that emits the Kurozora song model for the currently playing song, or `nil` when unavailable.
+	/// A publisher that emits the Kurozora song model for the currently playing song.
 	var currentKKSongPublisher: Published<KKSong?>.Publisher { get }
 
 	/// A publisher that emits whether audio is currently playing.
@@ -58,10 +58,10 @@ protocol MediaPlaybackControlling: AnyObject {
 	/// A publisher that emits the active player's playback progress.
 	var playbackProgressPublisher: Published<PlaybackProgress>.Publisher { get }
 
-	/// The currently playing song, or `nil` when nothing is playing.
+	/// The currently playing song.
 	var currentSong: MKSong? { get }
 
-	/// The Kurozora song model associated with the currently playing song, or `nil` when unavailable.
+	/// The Kurozora song model associated with the currently playing song.
 	var currentKKSong: KKSong? { get }
 
 	/// Whether audio is currently playing.

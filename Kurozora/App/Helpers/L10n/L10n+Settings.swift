@@ -1573,4 +1573,94 @@ extension L10n {
 			String(localized: "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora \(version) (\(build))", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The about-section credit footer.")
 		}
 	}
+
+	// MARK: - Music
+	/// The 'On' state value.
+	static var on: String {
+		L10n.resolve {
+			String(localized: "On", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'On' state value.")
+		}
+	}
+	/// The description of the music settings header.
+	static var musicHeaderDescription: String {
+		L10n.resolve {
+			String(localized: "Customize how your music plays and lyrics appear, from blending songs together with crossfade to how far the skip controls seek while held.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The description of the music settings header.")
+		}
+	}
+	/// The audio section title.
+	static var audio: String {
+		L10n.resolve {
+			String(localized: "Audio", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The audio section title.")
+		}
+	}
+	/// The title of the song transitions setting.
+	static var songTransitions: String {
+		L10n.resolve {
+			String(localized: "Song Transitions", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the song transitions setting.")
+		}
+	}
+	/// The footer describing the song transitions setting.
+	static var songTransitionsDescription: String {
+		L10n.resolve {
+			String(localized: "Beginnings and endings of songs blend together seamlessly. Albums and some genres will still play without transitions. Unavailable while using AirPlay.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the song transitions setting.")
+		}
+	}
+	/// The footer describing the crossfade transition style.
+	static var crossfadeDescription: String {
+		L10n.resolve {
+			String(localized: "Simple song transitions from one to the next for a set duration.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the crossfade transition style.")
+		}
+	}
+	/// The title of the crossfade duration setting.
+	static var crossfadeDuration: String {
+		L10n.resolve {
+			String(localized: "Crossfade Duration", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the crossfade duration setting.")
+		}
+	}
+	/// The label showing a duration in seconds in the music settings.
+	static func secondsCount(_ count: Int) -> String {
+		return String(
+			localized: "\(count) seconds",
+			table: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The label showing a duration in seconds in the music settings."
+		)
+	}
+	/// The title of the skip duration setting.
+	static var skipDuration: String {
+		L10n.resolve {
+			String(localized: "Skip Duration", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the skip duration setting.")
+		}
+	}
+	/// The footer describing the skip duration setting.
+	static var skipDurationDescription: String {
+		L10n.resolve {
+			String(localized: "How far the skip buttons seek when held.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the skip duration setting.")
+		}
+	}
+	/// The title of the larger text setting.
+	static var largerText: String {
+		L10n.resolve {
+			String(localized: "Larger Text", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the larger text setting.")
+		}
+	}
+	/// The footer describing the larger text setting.
+	static var largerTextDescription: String {
+		L10n.resolve {
+			String(localized: "Choose whether lyrics or pronunciation is shown larger when both appear.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the larger text setting.")
+		}
+	}
+	/// The pronunciation larger-text option.
+	static var pronunciation: String {
+		L10n.resolve {
+			String(localized: "Pronunciation", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The pronunciation larger-text option.")
+		}
+	}
+	/// The title of the song change notifications setting.
+	static var whenSongChanges: String {
+		L10n.resolve {
+			String(localized: "When song changes", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the song change notifications setting.")
+		}
+	}
 }

@@ -10,8 +10,18 @@ import UIKit
 
 struct LyricsLayout {
 	// MARK: - Properties
-	static let originalFont = UIFont.systemFont(ofSize: 26, weight: .bold)
-	static let romajiFont = UIFont.systemFont(ofSize: 16, weight: .semibold)
+	static var originalFont: UIFont {
+		return UserSettings.lyricsLargerText == .pronunciation
+			? .systemFont(ofSize: 16, weight: .semibold)
+			: .systemFont(ofSize: 26, weight: .bold)
+	}
+
+	static var romajiFont: UIFont {
+		return UserSettings.lyricsLargerText == .pronunciation
+			? .systemFont(ofSize: 26, weight: .bold)
+			: .systemFont(ofSize: 16, weight: .semibold)
+	}
+
 	static let translationFont = UIFont.systemFont(ofSize: 15, weight: .regular)
 
 	static let horizontalInset: CGFloat = 20

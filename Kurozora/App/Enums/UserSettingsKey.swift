@@ -122,4 +122,28 @@ enum UserSettingsKey: String, CaseIterable {
 	// Face Detection
 	/// The key to the detection results that have already been submitted.
 	case faceDetectionSubmitted
+
+	// Lyrics capture (DEBUG)
+	/// The key to the privileged Apple Music developer token used for lyrics capture.
+	case appleMusicPrivilegedToken
+
+	// Lyrics keys
+	/// The key indicating whether the lyrics transliteration is shown.
+	case lyricsShowsTransliteration
+	/// The key to the selected lyrics translation language.
+	case lyricsTranslationLanguage
+	/// The key to the text shown larger when a line and its pronunciation both appear.
+	case lyricsLargerText
+
+	// Music keys
+	/// The key indicating whether the now-playing accessory shows total time instead of remaining time.
+	case musicAccessoryShowsTotalTime
+	/// The key indicating whether songs crossfade into one another.
+	case musicCrossfadeEnabled
+	/// The key to the crossfade duration in seconds.
+	case musicCrossfadeDuration
+	/// The key to the number of seconds a skip button seeks while held.
+	case musicSkipDuration
+	/// The key indicating whether a notification is posted when the song changes.
+	case musicSongChangeNotificationsEnabled
 }

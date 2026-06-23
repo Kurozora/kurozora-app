@@ -172,6 +172,8 @@ final class KaraokeLineView: UIView {
 		let rowHeight = originalLineHeight + (hasRomaji ? LyricsLayout.originalToRomajiSpacing + romajiLineHeight : 0)
 		let spaceWidth = (" " as NSString).size(withAttributes: [.font: originalFont]).width
 
+		let pronunciationOnTop = hasRomaji && UserSettings.lyricsLargerText == .pronunciation
+
 		var layouts: [WordLayout] = []
 		var penX: CGFloat = 0
 		var penY: CGFloat = LyricsLayout.activeWordLift
@@ -186,8 +188,15 @@ final class KaraokeLineView: UIView {
 				penY += rowHeight + LyricsLayout.rowSpacing
 			}
 
-			let originalOrigin = CGPoint(x: penX, y: penY)
-			let romajiOrigin = CGPoint(x: penX, y: penY + originalLineHeight + LyricsLayout.originalToRomajiSpacing)
+			let originalOrigin: CGPoint
+			let romajiOrigin: CGPoint
+			if pronunciationOnTop {
+				romajiOrigin = CGPoint(x: penX, y: penY)
+				originalOrigin = CGPoint(x: penX, y: penY + romajiLineHeight + LyricsLayout.originalToRomajiSpacing)
+			} else {
+				originalOrigin = CGPoint(x: penX, y: penY)
+				romajiOrigin = CGPoint(x: penX, y: penY + originalLineHeight + LyricsLayout.originalToRomajiSpacing)
+			}
 			layouts.append(WordLayout(pair: pair, originalOrigin: originalOrigin, originalSize: originalSize, romajiOrigin: romajiOrigin, romajiSize: romajiSize))
 
 			penX += tileWidth + (pair.trailingSpace ? spaceWidth : LyricsLayout.pairSpacing)

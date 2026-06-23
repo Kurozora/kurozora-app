@@ -30,6 +30,8 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
 			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
 			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
+			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
+			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 		])
 		return shared
 	}
@@ -343,7 +345,65 @@ extension UserSettings {
 		return Set(stored)
 	}
 }
+
+// MARK: - Lyrics Capture
+extension UserSettings {
+	/// Returns the privileged Apple Music developer token used for lyrics capture.
+	static var appleMusicPrivilegedToken: String {
+		guard let token = self.shared.string(forKey: #function) else { return "" }
+		return token
+	}
+}
 #endif
+
+// MARK: - Lyrics
+extension UserSettings {
+	/// Returns a Boolean indicating whether the lyrics transliteration is shown.
+	static var lyricsShowsTransliteration: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns the selected lyrics translation language.
+	static var lyricsTranslationLanguage: String? {
+		return self.shared.string(forKey: #function)
+	}
+
+	/// Returns the text shown larger when a line and its pronunciation both appear.
+	static var lyricsLargerText: LyricsLargerText {
+		guard let largerText = LyricsLargerText(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return largerText
+	}
+}
+
+// MARK: - Music
+extension UserSettings {
+	/// Returns a Boolean indicating whether the now-playing accessory shows total time instead of remaining time.
+	static var musicAccessoryShowsTotalTime: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether songs crossfade into one another.
+	static var musicCrossfadeEnabled: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns the crossfade duration.
+	static var musicCrossfadeDuration: CrossfadeDuration {
+		guard let duration = CrossfadeDuration(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return duration
+	}
+
+	/// Returns the skip duration.
+	static var musicSkipDuration: SkipDuration {
+		guard let duration = SkipDuration(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return duration
+	}
+
+	/// Returns a Boolean indicating whether a notification is posted when the song changes.
+	static var musicSongChangeNotificationsEnabled: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+}
 
 // MARK: - Sounds & Haptics Settings
 extension UserSettings {

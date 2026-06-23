@@ -11,6 +11,7 @@ import Combine
 import MusicKit
 import StoreKit
 import UIKit
+import UserNotifications
 
 // MARK: - SongCache
 /// A bounded in-memory cache of `MKSong` values, keyed by Apple Music identifier.
@@ -307,6 +308,32 @@ final class MusicManager: NSObject {
 				self.playbackProgress = .zero
 			}
 			.store(in: &self.subscriptions)
+
+		self.$currentSong
+			.receive(on: RunLoop.main)
+			.removeDuplicates()
+			.sink { [weak self] song in
+				self?.postSongChangeNotificationIfNeeded(for: song)
+			}
+			.store(in: &self.subscriptions)
+	}
+
+	/// Posts a local notification announcing the given song while the app is in the background.
+	///
+	/// - Parameter song: The song that started playing.
+	private func postSongChangeNotificationIfNeeded(for song: MKSong?) {
+		guard
+			UserSettings.musicSongChangeNotificationsEnabled,
+			let song = song,
+			UIApplication.shared.applicationState != .active
+		else { return }
+
+		let content = UNMutableNotificationContent()
+		content.title = song.song.title
+		content.body = song.song.artistName
+
+		let request = UNNotificationRequest(identifier: "musicSongChange", content: content, trigger: nil)
+		UNUserNotificationCenter.current().add(request)
 	}
 
 	// MARK: - Setup
@@ -535,10 +562,18 @@ final class MusicManager: NSObject {
 		}
 
 		do {
+			#if !targetEnvironment(macCatalyst)
+			if #available(iOS 18.0, *) {
+				self.applicationPlayer.transition = UserSettings.musicCrossfadeEnabled
+					? .crossfade(duration: TimeInterval(UserSettings.musicCrossfadeDuration.rawValue))
+					: .none
+			}
+			#endif
+
 			let queuedSongs = Array(self.queueSongs[index...])
 			self.applicationPlayer.queue = ApplicationMusicPlayer.Queue(for: queuedSongs.map { $0.song })
 			self.applicationPlayer.state.shuffleMode = self.shuffleEnabled ? .songs : .off
-			self.applicationPlayer.state.repeatMode = self.musicKitRepeatMode(self.repeatMode)
+			self.applicationPlayer.state.repeatMode = self.repeatMode.musicKitRepeatMode
 			self.observeQueue()
 			self.currentSong = song
 			self.currentKKSong = self.kkSong(for: song)
@@ -723,7 +758,7 @@ final class MusicManager: NSObject {
 
 		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 		case (.authorized, true):
-			self.applicationPlayer.state.repeatMode = self.musicKitRepeatMode(self.repeatMode)
+			self.applicationPlayer.state.repeatMode = self.repeatMode.musicKitRepeatMode
 		default:
 			break
 		}
@@ -763,14 +798,6 @@ final class MusicManager: NSObject {
 	/// Advances the preview player when the current preview reaches its end.
 	private func handlePreviewEnded() async {
 		await self.skipPreview(by: 1, resumePlayback: true)
-	}
-
-	private func musicKitRepeatMode(_ mode: PlaybackRepeatMode) -> MusicKit.MusicPlayer.RepeatMode {
-		switch mode {
-		case .off: return .none
-		case .all: return .all
-		case .one: return .one
-		}
 	}
 
 	private func kkSong(at index: Int) -> KKSong? {
@@ -920,3 +947,16 @@ extension MusicManager: MediaPlaybackControlling {
 		}
 	}
 }
+
+// MARK: - PlaybackRepeatMode
+extension PlaybackRepeatMode {
+	/// The equivalent MusicKit repeat mode.
+	var musicKitRepeatMode: MusicKit.MusicPlayer.RepeatMode {
+		switch self {
+		case .off: return .none
+		case .all: return .all
+		case .one: return .one
+		}
+	}
+}
+

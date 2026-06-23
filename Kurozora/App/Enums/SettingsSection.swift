@@ -140,6 +140,9 @@ extension SettingsTableViewController {
 		/// The row representing the library cell.
 		case library
 
+		/// The row representing the music cell.
+		case music
+
 		/// The row representing the motion cell.
 		case motion
 
@@ -205,7 +208,7 @@ extension SettingsTableViewController {
 		static let all: [Row] = [
 			.account, .switchAccount,
 			.keychain,
-			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
+			.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -216,7 +219,7 @@ extension SettingsTableViewController {
 		/// An array containing all normal user settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme,
+			.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -243,9 +246,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.cache, .displayBlindness, .library, .motion, .theme]
+			return [.cache, .displayBlindness, .library, .music, .motion, .theme]
 			#else
-			return [.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme]
+			return [.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme]
 			#endif
 		}
 
@@ -299,6 +302,8 @@ extension SettingsTableViewController {
 				return .iconSegue
 			case .library:
 				return .librarySegue
+			case .music:
+				return .musicSegue
 			case .motion:
 				return .motionSegue
 			case .theme:
@@ -340,6 +345,8 @@ extension SettingsTableViewController {
 			case .icon:
 				return .labelAndChevron
 			case .library:
+				return .chevron
+			case .music:
 				return .chevron
 			case .motion:
 				return .labelAndChevron
@@ -403,6 +410,8 @@ extension SettingsTableViewController {
 				return L10n.icon
 			case .library:
 				return L10n.library
+			case .music:
+				return L10n.music
 			case .motion:
 				return L10n.motion
 			case .theme:
@@ -487,6 +496,8 @@ extension SettingsTableViewController {
 				return UIImage(named: UserSettings.appIcon)
 			case .library:
                 return .Icons.library
+			case .music:
+                return .Icons.music
 			case .motion:
                 return .Icons.motion
 			case .theme:
