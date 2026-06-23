@@ -67,23 +67,11 @@ protocol MediaPlaybackControlling: AnyObject {
 	/// Whether audio is currently playing.
 	var isPlaying: Bool { get }
 
-	/// A publisher that emits whether there is a song to skip forward to.
-	var canSkipForwardPublisher: Published<Bool>.Publisher { get }
-
-	/// A publisher that emits whether there is a song to skip backward to.
-	var canSkipBackwardPublisher: Published<Bool>.Publisher { get }
-
 	/// A publisher that emits whether shuffle is enabled.
 	var shuffleEnabledPublisher: Published<Bool>.Publisher { get }
 
 	/// A publisher that emits the current repeat mode.
 	var repeatModePublisher: Published<PlaybackRepeatMode>.Publisher { get }
-
-	/// Whether there is a song to skip forward to.
-	var canSkipForward: Bool { get }
-
-	/// Whether there is a song to skip backward to.
-	var canSkipBackward: Bool { get }
 
 	/// Whether shuffle is enabled.
 	var shuffleEnabled: Bool { get }
@@ -98,6 +86,11 @@ protocol MediaPlaybackControlling: AnyObject {
 	///
 	/// - Parameter seconds: The position to seek to, in seconds.
 	func seek(toSeconds seconds: TimeInterval)
+
+	/// Seeks the active player by a relative offset within the current song.
+	///
+	/// - Parameter seconds: The signed number of seconds to move by.
+	func seek(bySeconds seconds: TimeInterval)
 
 	/// Skips to the next song in the queue.
 	func skipForward()

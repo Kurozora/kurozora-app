@@ -10,12 +10,10 @@ import AVFoundation
 import MediaPlayer
 import UIKit
 
-/// A control that adjusts the system media volume.
-///
-/// Pressing the speaker reveals the slider; while revealed, hovering keeps it open and moving away
-/// collapses it. Pressing again toggles mute, and dragging adjusts the volume relative to where the
-/// drag began. An off-screen `MPVolumeView` sets the system volume and suppresses the volume HUD.
-@available(iOS 26.0, *)
+#if targetEnvironment(macCatalyst)
+import CoreAudio
+#endif
+
 final class VolumeControl: UIControl {
 	// MARK: - Views
 	private let sliderContainer: UIVisualEffectView = {
@@ -90,6 +88,9 @@ final class VolumeControl: UIControl {
 	/// Whether the current press began on the speaker glyph rather than the extended slider area.
 	private var pressedGlyph = false
 
+	/// Whether the current press came from an indirect pointer rather than a direct touch.
+	private var pointerPress = false
+
 	/// Whether the inline slider is revealed.
 	private var isRevealed = false
 
@@ -98,6 +99,20 @@ final class VolumeControl: UIControl {
 
 	/// The observation of system volume changes.
 	private var volumeObservation: NSObjectProtocol?
+
+	#if targetEnvironment(macCatalyst)
+	/// The Core Audio device whose volume is currently being observed.
+	private var observedAudioDeviceID: AudioObjectID?
+
+	/// The channels the volume listener is attached to on the observed device.
+	private var observedVolumeChannels: [UInt32] = []
+
+	/// The block invoked when the observed device's volume changes.
+	private var volumeListenerBlock: AudioObjectPropertyListenerBlock?
+
+	/// The block invoked when the default output device changes.
+	private var defaultDeviceListenerBlock: AudioObjectPropertyListenerBlock?
+	#endif
 
 	private var sliderContainerLeadingConstraint: NSLayoutConstraint!
 	private var sliderFillWidthConstraint: NSLayoutConstraint!
@@ -114,13 +129,13 @@ final class VolumeControl: UIControl {
 	}
 
 	deinit {
+		#if targetEnvironment(macCatalyst)
+		self.stopObservingSystemVolume()
+		#else
 		if let volumeObservation = self.volumeObservation {
-			#if targetEnvironment(macCatalyst)
-			DistributedNotificationCenter.default().removeObserver(volumeObservation)
-			#else
 			NotificationCenter.default.removeObserver(volumeObservation)
-			#endif
 		}
+		#endif
 	}
 
 	// MARK: - View
@@ -195,14 +210,7 @@ final class VolumeControl: UIControl {
 		self.syncVolumeFromSystem()
 
 		#if targetEnvironment(macCatalyst)
-		self.volumeObservation = DistributedNotificationCenter.default().addObserver(
-			forName: NSNotification.Name("com.apple.sound.settingsChangedNotification"),
-			object: nil,
-			queue: .main
-		) { [weak self] _ in
-			guard let self = self, !self.isTracking else { return }
-			self.syncVolumeFromSystem()
-		}
+		self.startObservingSystemVolume()
 		#else
 		self.volumeObservation = NotificationCenter.default.addObserver(
 			forName: NSNotification.Name("AVSystemController_SystemVolumeDidChangeNotification"),
@@ -223,12 +231,16 @@ final class VolumeControl: UIControl {
 	}
 
 	override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+		self.pointerPress = touch.type == .indirectPointer
 		self.wasRevealedAtPressStart = self.isRevealed
 		self.pressedGlyph = self.bounds.contains(touch.location(in: self))
 		self.locationAtDragStart = touch.location(in: self).x
 		self.volumeAtDragStart = self.currentVolume
 		self.didDrag = false
-		self.setRevealed(true)
+
+		if self.pointerPress {
+			self.setRevealed(true)
+		}
 
 		if self.pressedGlyph {
 			self.setPressed(true)
@@ -244,6 +256,10 @@ final class VolumeControl: UIControl {
 			if abs(delta) > 4, !self.didDrag {
 				self.didDrag = true
 				self.setPressed(false)
+
+				if !self.pointerPress {
+					self.setRevealed(true)
+				}
 			}
 
 			let newVolume = min(1, max(0, self.volumeAtDragStart + Float(delta / self.dragRange)))
@@ -269,13 +285,24 @@ final class VolumeControl: UIControl {
 	override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		self.setPressed(false)
 
-		if self.pressedGlyph && !self.didDrag && self.wasRevealedAtPressStart {
-			self.toggleMute()
+		if self.pointerPress {
+			if self.pressedGlyph, !self.didDrag, self.wasRevealedAtPressStart {
+				self.toggleMute()
+			}
+		} else {
+			if self.pressedGlyph, !self.didDrag {
+				self.toggleMute()
+			}
+			self.setRevealed(false)
 		}
 	}
 
 	override func cancelTracking(with event: UIEvent?) {
 		self.setPressed(false)
+
+		if !self.pointerPress {
+			self.setRevealed(false)
+		}
 	}
 
 	@objc private func handleHover(_ gestureRecognizer: UIHoverGestureRecognizer) {
@@ -306,13 +333,155 @@ final class VolumeControl: UIControl {
 		self.setSystemVolume(volume)
 	}
 
-	/// Reads the current system volume from the volume view's slider, falling back to the audio session.
+	/// Reads the current system volume.
 	private func syncVolumeFromSystem() {
+		#if targetEnvironment(macCatalyst)
+		if let systemVolume = self.currentSystemOutputVolume() {
+			self.currentVolume = systemVolume
+			self.updateSliderFill()
+			self.updateGlyph()
+			return
+		}
+		#endif
+
 		let sliderValue = self.volumeView.subviews.compactMap { $0 as? UISlider }.first?.value
 		self.currentVolume = sliderValue ?? AVAudioSession.sharedInstance().outputVolume
 		self.updateSliderFill()
 		self.updateGlyph()
 	}
+
+	#if targetEnvironment(macCatalyst)
+	/// Reads the default output device's volume scalar through the Core Audio HAL.
+	///
+	/// - Returns: The output volume in the range `0...1`.
+	private func currentSystemOutputVolume() -> Float? {
+		guard let deviceID = self.defaultOutputDeviceID() else { return nil }
+
+		let channelVolumes = self.volumeChannels(for: deviceID).compactMap { channel -> Float? in
+			var address = AudioObjectPropertyAddress(
+				mSelector: kAudioDevicePropertyVolumeScalar,
+				mScope: kAudioDevicePropertyScopeOutput,
+				mElement: channel
+			)
+			var volume = Float32(0)
+			var volumeSize = UInt32(MemoryLayout<Float32>.size)
+			guard AudioObjectGetPropertyData(deviceID, &address, 0, nil, &volumeSize, &volume) == noErr else { return nil }
+			return volume
+		}
+
+		guard !channelVolumes.isEmpty else { return nil }
+		return channelVolumes.reduce(0, +) / Float(channelVolumes.count)
+	}
+
+	/// Returns the identifier of the system's default audio output device.
+	///
+	/// - Returns: The default output device identifier.
+	private func defaultOutputDeviceID() -> AudioObjectID? {
+		var deviceID = AudioObjectID(0)
+		var deviceIDSize = UInt32(MemoryLayout<AudioObjectID>.size)
+		var address = AudioObjectPropertyAddress(
+			mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+			mScope: kAudioObjectPropertyScopeGlobal,
+			mElement: kAudioObjectPropertyElementMain
+		)
+
+		guard AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &deviceIDSize, &deviceID) == noErr else {
+			return nil
+		}
+		return deviceID
+	}
+
+	/// Returns the volume channels to read for the given device, preferring the main channel.
+	///
+	/// - Parameter deviceID: The output device to inspect.
+	///
+	/// - Returns: The main channel when it exposes a volume, otherwise the left and right channels.
+	private func volumeChannels(for deviceID: AudioObjectID) -> [UInt32] {
+		var address = AudioObjectPropertyAddress(
+			mSelector: kAudioDevicePropertyVolumeScalar,
+			mScope: kAudioDevicePropertyScopeOutput,
+			mElement: kAudioObjectPropertyElementMain
+		)
+		return AudioObjectHasProperty(deviceID, &address) ? [kAudioObjectPropertyElementMain] : [1, 2]
+	}
+
+	/// Starts observing system volume and default-output-device changes through the Core Audio HAL.
+	private func startObservingSystemVolume() {
+		self.volumeListenerBlock = { [weak self] _, _ in
+			guard let self = self, !self.isTracking else { return }
+			self.syncVolumeFromSystem()
+		}
+		self.attachVolumeListener()
+
+		let defaultDeviceBlock: AudioObjectPropertyListenerBlock = { [weak self] _, _ in
+			guard let self = self else { return }
+			self.detachVolumeListener()
+			self.attachVolumeListener()
+			if !self.isTracking {
+				self.syncVolumeFromSystem()
+			}
+		}
+		self.defaultDeviceListenerBlock = defaultDeviceBlock
+
+		var address = AudioObjectPropertyAddress(
+			mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+			mScope: kAudioObjectPropertyScopeGlobal,
+			mElement: kAudioObjectPropertyElementMain
+		)
+		_ = AudioObjectAddPropertyListenerBlock(AudioObjectID(kAudioObjectSystemObject), &address, .main, defaultDeviceBlock)
+	}
+
+	/// Removes all Core Audio volume observers.
+	private func stopObservingSystemVolume() {
+		self.detachVolumeListener()
+
+		if let defaultDeviceListenerBlock = self.defaultDeviceListenerBlock {
+			var address = AudioObjectPropertyAddress(
+				mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+				mScope: kAudioObjectPropertyScopeGlobal,
+				mElement: kAudioObjectPropertyElementMain
+			)
+			_ = AudioObjectRemovePropertyListenerBlock(AudioObjectID(kAudioObjectSystemObject), &address, .main, defaultDeviceListenerBlock)
+			self.defaultDeviceListenerBlock = nil
+		}
+
+		self.volumeListenerBlock = nil
+	}
+
+	/// Attaches the volume listener to the current default output device.
+	private func attachVolumeListener() {
+		guard let volumeListenerBlock = self.volumeListenerBlock, let deviceID = self.defaultOutputDeviceID() else { return }
+		let channels = self.volumeChannels(for: deviceID)
+		self.observedAudioDeviceID = deviceID
+		self.observedVolumeChannels = channels
+
+		for channel in channels {
+			var address = AudioObjectPropertyAddress(
+				mSelector: kAudioDevicePropertyVolumeScalar,
+				mScope: kAudioDevicePropertyScopeOutput,
+				mElement: channel
+			)
+			_ = AudioObjectAddPropertyListenerBlock(deviceID, &address, .main, volumeListenerBlock)
+		}
+	}
+
+	/// Detaches the volume listener from the device it was attached to.
+	private func detachVolumeListener() {
+		guard let volumeListenerBlock = self.volumeListenerBlock, let deviceID = self.observedAudioDeviceID else { return }
+
+		for channel in self.observedVolumeChannels {
+			var address = AudioObjectPropertyAddress(
+				mSelector: kAudioDevicePropertyVolumeScalar,
+				mScope: kAudioDevicePropertyScopeOutput,
+				mElement: channel
+			)
+			_ = AudioObjectRemovePropertyListenerBlock(deviceID, &address, .main, volumeListenerBlock)
+		}
+
+		self.observedAudioDeviceID = nil
+		self.observedVolumeChannels = []
+	}
+	#endif
 
 	/// Sets the system media volume by driving the off-screen volume view's slider.
 	///
@@ -348,7 +517,7 @@ final class VolumeControl: UIControl {
 	///
 	/// - Parameter pressed: Whether the control is being pressed.
 	private func setPressed(_ pressed: Bool) {
-		self.highlightView.setPressed(pressed, animated: true)
+		self.highlightView.setPressed(pressed && self.pointerPress, animated: true)
 
 		if pressed {
 			UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState]) {

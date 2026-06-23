@@ -19,6 +19,9 @@ class KTabBarController: UITabBarController {
 	private var subscriptions = Set<AnyCancellable>()
 	private var _previousTabs: NSObject?
 
+	/// The now-playing accessory's content view, retained so its container can be sized across size-class changes.
+	private var musicAccessoryContentView: UIView?
+
 	@available(iOS 18.0, *)
 	private var previousTabs: [UITab] {
 		get {
@@ -51,6 +54,13 @@ class KTabBarController: UITabBarController {
 	}
 
 	// MARK: - View
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		#if !targetEnvironment(macCatalyst)
+		self.updateMusicAccessorySize()
+		#endif
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -75,6 +85,52 @@ class KTabBarController: UITabBarController {
 			self.tabs = self.previousTabs
 		}
 	}
+
+	/// Builds the music playback accessory.
+	///
+	/// - Returns: A tab accessory wrapping a freshly bound ``MusicPlaybackControlView``.
+	@available(iOS 26.0, *)
+	private func makeMusicAccessory() -> UITabAccessory {
+		let musicPlaybackControlView = MusicPlaybackControlView()
+		musicPlaybackControlView.playbackController = MusicManager.shared
+		self.musicAccessoryContentView = musicPlaybackControlView
+		return UITabAccessory(contentView: musicPlaybackControlView)
+	}
+
+    #if !targetEnvironment(macCatalyst)
+	/// Sizes the music player accessory's container.
+	///
+	/// - Note: After the window crosses between the regular and compact layouts, the system leaves the accessory
+	/// at a stale size and no longer resizes it. The controller keeps laying out, so it drives the
+	/// container's frame here, centered in the content area beside the sidebar. Ugly, but so is Apple's
+	/// implementation of tab bar bottom accessory.
+	private func updateMusicAccessorySize() {
+		guard #available(iOS 26.0, *), self.traitCollection.horizontalSizeClass == .regular else { return }
+		guard let container = self.musicAccessoryContentView?.superview, let containerParent = container.superview else { return }
+
+		// The system centers the accessory on the content-area center (non-sidebar area). Keep that
+		// center and cap the width to what fits symmetrically around it, so it never crosses the sidebar.
+		let horizontalInset: CGFloat = 16
+		let center = container.frame.midX
+		let widthFittingContentArea = max(0, 2 * (containerParent.bounds.width - horizontalInset - center))
+
+		let readableWidth = self.view.readableContentGuide.layoutFrame.width
+		let targetWidth = min(readableWidth > 0 ? readableWidth : widthFittingContentArea, widthFittingContentArea)
+		let targetHeight: CGFloat = 64
+		guard targetWidth > 0 else { return }
+
+		let targetFrame = CGRect(
+			x: (center - targetWidth / 2).rounded(),
+			y: (container.frame.maxY - targetHeight).rounded(),
+			width: targetWidth.rounded(),
+			height: targetHeight
+		)
+
+		if container.frame != targetFrame {
+			container.frame = targetFrame
+		}
+	}
+    #endif
 
 	/// Configure the tabs.
 	@MainActor
@@ -189,13 +245,12 @@ class KTabBarController: UITabBarController {
 
 				if song != nil {
 					if self.bottomAccessory == nil {
-						let musicPlaybackControlView = MusicPlaybackControlView()
-						musicPlaybackControlView.playbackController = MusicManager.shared
-						self.setBottomAccessory(UITabAccessory(contentView: musicPlaybackControlView), animated: true)
+						self.setBottomAccessory(self.makeMusicAccessory(), animated: true)
 					}
 				} else {
 					if self.bottomAccessory != nil {
 						self.setBottomAccessory(nil, animated: true)
+						self.musicAccessoryContentView = nil
 					}
 				}
 			}

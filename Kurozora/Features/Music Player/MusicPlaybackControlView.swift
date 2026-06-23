@@ -10,11 +10,6 @@ import Combine
 import CoreImage
 import UIKit
 
-/// The now-playing controls shown in the tab bar's bottom accessory while a song plays.
-///
-/// Lays out the artwork, title, transport controls, progress scrubber, and the AirPlay, volume,
-/// lyrics, and menu controls. The visible controls adapt to the accessory's environment and width
-/// through ``MusicAccessoryLayout``.
 @available(iOS 26.0, *)
 final class MusicPlaybackControlView: UIView {
 	// MARK: - Views
@@ -70,7 +65,6 @@ final class MusicPlaybackControlView: UIView {
 		let label = KMarqueeLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = .preferredFont(forTextStyle: .caption2)
-		label.textColor = .secondaryLabel
 		return label
 	}()
 
@@ -114,22 +108,22 @@ final class MusicPlaybackControlView: UIView {
 		return button
 	}()
 
-	private let menuButton: TransportButton = {
-		let button = TransportButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.fixedHighlightDiameter = 38
+	private let menuButton: MenuControl = {
+		let control = MenuControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		control.fixedHighlightDiameter = 38
 		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
-		button.symbolImage = UIImage(systemName: "ellipsis", withConfiguration: config)
-		return button
+		control.symbolImage = UIImage(systemName: "ellipsis", withConfiguration: config)
+		return control
 	}()
 
-	private let lyricsButton: TransportButton = {
-		let button = TransportButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.fixedHighlightDiameter = 38
+	private let lyricsButton: IconPressControl = {
+		let control = IconPressControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		control.fixedHighlightDiameter = 38
 		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
-		button.symbolImage = UIImage(systemName: "quote.bubble", withConfiguration: config)
-		return button
+		control.symbolImage = UIImage(systemName: "quote.bubble", withConfiguration: config)
+		return control
 	}()
 
 	private let labelStack: UIStackView = {
@@ -187,12 +181,43 @@ final class MusicPlaybackControlView: UIView {
 	/// The play/pause state currently reflected by the button's symbol.
 	private var displayedIsPlaying = false
 
+	/// The point size of the play/pause symbol, smaller in the compact form.
+	private var playSymbolPointSize: CGFloat = 25
+
 	/// The most recently applied layout, used to avoid redundant layout passes.
 	private var lastAppliedLayout: MusicAccessoryLayout?
+
+	/// The number of seconds each scan step seeks while a skip button is held.
+	private let scanStepSeconds: TimeInterval = 5
+
+	/// The repeating timer that seeks within the song while a skip button is held.
+	private var scanTimer: Timer?
+
+	private lazy var skipForwardWidthConstraint = self.skipForwardButton.widthAnchor.constraint(equalToConstant: 24)
+
+	private lazy var trailingStackTrailingConstraint = self.trailingStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4)
+
+	private lazy var metadataTopConstraint = self.metadataContainer.topAnchor.constraint(equalTo: self.topAnchor, constant: 10)
+
+	private lazy var metadataBottomConstraint = self.metadataContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+
+	private lazy var leadingStackLeadingConstraint = self.leadingStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12)
 
 	#if targetEnvironment(macCatalyst)
 	/// The height forced on the bottom accessory.
 	private let accessoryHeight: CGFloat = 54.0
+	#else
+	/// The reused context for rendering blurred snapshots.
+	private let blurContext = CIContext()
+
+	/// The padding, in points, added around a snapshot so its blur can feather beyond the source bounds.
+	private let blurInset: CGFloat = 30
+
+	/// The blurred snapshots overlaid on de-emphasized views, keyed by the source view.
+	private var blurOverlays: [UIView: UIImageView] = [:]
+
+	/// The original alpha of each content subview hidden behind a blur overlay, keyed by the source view.
+	private var blurHiddenContent: [UIView: [(view: UIView, alpha: CGFloat)]] = [:]
 	#endif
 
 	/// The context-menu interaction used for long-press and right-click anywhere on the accessory.
@@ -227,6 +252,10 @@ final class MusicPlaybackControlView: UIView {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+
+	deinit {
+		self.scanTimer?.invalidate()
 	}
 
 	// MARK: - View
@@ -288,12 +317,9 @@ final class MusicPlaybackControlView: UIView {
 			self?.presentLyrics()
 		}, for: .touchUpInside)
 
-		self.menuButton.showsMenuAsPrimaryAction = true
-		self.menuButton.menu = UIMenu(children: [
-			UIDeferredMenuElement.uncached { [weak self] completion in
-				completion(self?.makeSongMenu()?.children ?? [])
-			},
-		])
+		self.menuButton.menuProvider = { [weak self] in
+			self?.makeSongMenu()
+		}
 
 		self.progressView.onExpansionChange = { [weak self] expanded in
 			self?.setMetadataDeEmphasized(expanded)
@@ -305,6 +331,12 @@ final class MusicPlaybackControlView: UIView {
 
 		let hoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.handleArtworkHover(_:)))
 		self.artworkImageView.addGestureRecognizer(hoverGestureRecognizer)
+
+		let skipBackwardHold = UILongPressGestureRecognizer(target: self, action: #selector(self.handleSkipBackwardHold(_:)))
+		self.skipBackButton.addGestureRecognizer(skipBackwardHold)
+
+		let skipForwardHold = UILongPressGestureRecognizer(target: self, action: #selector(self.handleSkipForwardHold(_:)))
+		self.skipForwardButton.addGestureRecognizer(skipForwardHold)
 
 		self.addInteraction(self.contextMenuInteraction)
 	}
@@ -330,12 +362,12 @@ final class MusicPlaybackControlView: UIView {
 		leadingStackCollapse.priority = .defaultHigh
 
 		NSLayoutConstraint.activate([
-			self.leadingStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+			self.leadingStackLeadingConstraint,
 			self.leadingStack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 			leadingStackCollapse,
 
-			self.metadataContainer.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-			self.metadataContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+			self.metadataTopConstraint,
+			self.metadataBottomConstraint,
 			self.metadataContainer.leadingAnchor.constraint(equalTo: self.leadingStack.trailingAnchor, constant: 8),
 			self.metadataContainer.trailingAnchor.constraint(equalTo: self.trailingStack.leadingAnchor, constant: -8),
 
@@ -348,7 +380,7 @@ final class MusicPlaybackControlView: UIView {
 			self.labelStack.centerYAnchor.constraint(equalTo: self.metadataContainer.centerYAnchor),
 			self.labelStack.trailingAnchor.constraint(equalTo: self.metadataContainer.trailingAnchor),
 
-			self.trailingStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
+			self.trailingStackTrailingConstraint,
 			self.trailingStack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 
 			self.playPauseButton.widthAnchor.constraint(equalToConstant: 30),
@@ -363,9 +395,9 @@ final class MusicPlaybackControlView: UIView {
 			self.volumeControl.heightAnchor.constraint(equalToConstant: 44),
 			self.shuffleButton.widthAnchor.constraint(equalToConstant: 20),
 			self.shuffleButton.heightAnchor.constraint(equalToConstant: 44),
-			self.skipBackButton.widthAnchor.constraint(equalToConstant: 30),
+			self.skipBackButton.widthAnchor.constraint(equalToConstant: 24),
 			self.skipBackButton.heightAnchor.constraint(equalToConstant: 44),
-			self.skipForwardButton.widthAnchor.constraint(equalToConstant: 30),
+			self.skipForwardWidthConstraint,
 			self.skipForwardButton.heightAnchor.constraint(equalToConstant: 44),
 			self.repeatButton.widthAnchor.constraint(equalToConstant: 20),
 			self.repeatButton.heightAnchor.constraint(equalToConstant: 44),
@@ -427,24 +459,6 @@ final class MusicPlaybackControlView: UIView {
 			.receive(on: RunLoop.main)
 			.sink { [weak self] progress in
 				self?.progressView.configure(with: progress)
-			}
-			.store(in: &self.subscriptions)
-
-		controller.canSkipForwardPublisher
-			.receive(on: RunLoop.main)
-			.sink { [weak self] canSkip in
-				guard let self = self else { return }
-				self.skipForwardButton.isEnabled = canSkip
-				self.skipForwardButton.alpha = canSkip ? 1 : 0.4
-			}
-			.store(in: &self.subscriptions)
-
-		controller.canSkipBackwardPublisher
-			.receive(on: RunLoop.main)
-			.sink { [weak self] canSkip in
-				guard let self = self else { return }
-				self.skipBackButton.isEnabled = canSkip
-				self.skipBackButton.alpha = canSkip ? 1 : 0.4
 			}
 			.store(in: &self.subscriptions)
 
@@ -514,6 +528,21 @@ final class MusicPlaybackControlView: UIView {
 		self.setArrangedViews(trailingViews, in: self.trailingStack)
 
 		self.trailingStack.setCustomSpacing(8, after: self.menuButton)
+		self.trailingStack.setCustomSpacing(16, after: self.playPauseButton)
+
+		let compactForm = !layout.playPauseIsLeading
+		self.skipForwardWidthConstraint.constant = compactForm ? 30 : 24
+		self.skipForwardButton.setSkipMetrics(pointSize: compactForm ? 17 : 13, spacing: compactForm ? 11 : 9)
+		self.trailingStackTrailingConstraint.constant = compactForm ? -16 : -4
+		self.leadingStackLeadingConstraint.constant = compactForm ? 8 : 12
+		self.metadataTopConstraint.constant = compactForm ? 6 : 10
+		self.metadataBottomConstraint.constant = compactForm ? -8 : -10
+
+		let playSize: CGFloat = compactForm ? 22 : 25
+		if playSize != self.playSymbolPointSize {
+			self.playSymbolPointSize = playSize
+			self.updatePlayPauseSymbol(replace: false)
+		}
 	}
 
 	/// Reconciles a stack's arranged subviews to exactly the given views, in order.
@@ -564,11 +593,17 @@ final class MusicPlaybackControlView: UIView {
 	private func applyPlayPauseSymbol(isPlaying: Bool) {
 		guard self.displayedIsPlaying != isPlaying else { return }
 		self.displayedIsPlaying = isPlaying
+		self.updatePlayPauseSymbol(replace: true)
+	}
 
-		let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .medium)
-		let symbolName = isPlaying ? "pause.fill" : "play.fill"
+	/// Renders the play/pause symbol at the current point size.
+	///
+	/// - Parameter replace: Whether to animate the change with a replace transition.
+	private func updatePlayPauseSymbol(replace: Bool) {
+		let config = UIImage.SymbolConfiguration(pointSize: self.playSymbolPointSize, weight: .medium)
+		let symbolName = self.displayedIsPlaying ? "pause.fill" : "play.fill"
 		guard let image = UIImage(systemName: symbolName, withConfiguration: config) else { return }
-		self.playPauseButton.setSymbolImage(image, replace: true)
+		self.playPauseButton.setSymbolImage(image, replace: replace)
 	}
 
 	@objc private func handleTap() {
@@ -593,12 +628,60 @@ final class MusicPlaybackControlView: UIView {
 		}
 	}
 
+	@objc private func handleSkipBackwardHold(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		self.handleScanGesture(gestureRecognizer, button: self.skipBackButton, step: -self.scanStepSeconds)
+	}
+
+	@objc private func handleSkipForwardHold(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		self.handleScanGesture(gestureRecognizer, button: self.skipForwardButton, step: self.scanStepSeconds)
+	}
+
+	/// Starts or stops a repeating within-song seek as a skip button is held and released.
+	///
+	/// - Parameters:
+	///    - gestureRecognizer: The long-press recognizer reporting the hold state.
+	///    - button: The skip button whose chevron signals each scan step.
+	///    - step: The signed number of seconds to seek per step.
+	private func handleScanGesture(_ gestureRecognizer: UILongPressGestureRecognizer, button: TransportButton, step: TimeInterval) {
+		switch gestureRecognizer.state {
+		case .began:
+			self.startScanning(button: button, step: step)
+		case .ended, .cancelled, .failed:
+			self.stopScanning()
+		default:
+			break
+		}
+	}
+
+	/// Begins repeatedly seeking within the song.
+	///
+	/// - Parameters:
+	///    - button: The skip button whose chevron signals each scan step.
+	///    - step: The signed number of seconds to seek per step.
+	private func startScanning(button: TransportButton, step: TimeInterval) {
+		self.stopScanning()
+
+		let scan: () -> Void = { [weak self, weak button] in
+			self?.playbackController?.seek(bySeconds: step)
+			button?.animateSkip()
+		}
+
+		scan()
+		self.scanTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+			scan()
+		}
+	}
+
+	/// Stops the repeating within-song seek.
+	private func stopScanning() {
+		self.scanTimer?.invalidate()
+		self.scanTimer = nil
+	}
+
 	/// Scales down and blurs the metadata while the scrubber is expanded.
 	///
 	/// - Parameter deEmphasized: Whether the metadata should recede.
 	private func setMetadataDeEmphasized(_ deEmphasized: Bool) {
-		let radius: CGFloat = deEmphasized ? 8 : 0
-
 		let animations = { [weak self] in
 			guard let self = self else { return }
 			let transform: CGAffineTransform = deEmphasized ? CGAffineTransform(scaleX: 0.96, y: 0.96) : .identity
@@ -612,10 +695,17 @@ final class MusicPlaybackControlView: UIView {
 			UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: animations)
 		}
 
+		#if targetEnvironment(macCatalyst)
+		let radius: CGFloat = deEmphasized ? 8 : 0
 		self.animateBlur(on: self.metadataContainer.layer, to: radius)
 		self.animateBlur(on: self.menuButton.layer, to: radius)
+		#else
+		self.setContentBlur(on: self.metadataContainer, deEmphasized: deEmphasized)
+		self.setContentBlur(on: self.menuButton, deEmphasized: deEmphasized)
+		#endif
 	}
 
+	#if targetEnvironment(macCatalyst)
 	/// Animates a Gaussian blur on the given layer's content.
 	///
 	/// - Parameters:
@@ -640,6 +730,74 @@ final class MusicPlaybackControlView: UIView {
 		layer.add(animation, forKey: "metadataBlur")
 		layer.setValue(radius, forKeyPath: keyPath)
 	}
+	#else
+	/// Cross-fades a Gaussian blurred snapshot over the given view to emulate a content blur.
+	///
+	/// - Parameters:
+	///    - view: The view to blur.
+	///    - deEmphasized: Whether the blurred snapshot should be shown.
+	private func setContentBlur(on view: UIView, deEmphasized: Bool) {
+		if deEmphasized {
+			guard self.blurOverlays[view] == nil, let image = self.blurredImage(of: view) else { return }
+
+			let hiddenContent = view.subviews.map { (view: $0, alpha: $0.alpha) }
+			let overlay = UIImageView(image: image)
+			overlay.frame = view.bounds.insetBy(dx: -self.blurInset, dy: -self.blurInset)
+			overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+			overlay.alpha = 0
+			view.addSubview(overlay)
+			self.blurOverlays[view] = overlay
+			self.blurHiddenContent[view] = hiddenContent
+
+			let reveal = {
+				overlay.alpha = 1
+				hiddenContent.forEach { $0.view.alpha = 0 }
+			}
+			if UIAccessibility.isReduceMotionEnabled {
+				reveal()
+			} else {
+				UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: reveal)
+			}
+		} else {
+			guard let overlay = self.blurOverlays.removeValue(forKey: view) else { return }
+			let hiddenContent = self.blurHiddenContent.removeValue(forKey: view) ?? []
+
+			let restore = {
+				overlay.alpha = 0
+				hiddenContent.forEach { $0.view.alpha = $0.alpha }
+			}
+			let removal: (Bool) -> Void = { _ in overlay.removeFromSuperview() }
+			if UIAccessibility.isReduceMotionEnabled {
+				restore()
+				removal(true)
+			} else {
+				UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: restore, completion: removal)
+			}
+		}
+	}
+
+	/// Renders a Gaussian blurred image of the given view's current content.
+	///
+	/// - Parameter view: The view to snapshot.
+	///
+	/// - Returns: The blurred image.
+	private func blurredImage(of view: UIView) -> UIImage? {
+		guard view.bounds.width > 0, view.bounds.height > 0 else { return nil }
+
+		let paddedSize = CGSize(width: view.bounds.width + self.blurInset * 2, height: view.bounds.height + self.blurInset * 2)
+		let renderer = UIGraphicsImageRenderer(size: paddedSize)
+		let snapshot = renderer.image { context in
+			context.cgContext.translateBy(x: self.blurInset, y: self.blurInset)
+			view.layer.render(in: context.cgContext)
+		}
+
+		guard let inputImage = CIImage(image: snapshot) else { return nil }
+		let blurred = inputImage.applyingGaussianBlur(sigma: 8 * snapshot.scale)
+
+		guard let cgImage = self.blurContext.createCGImage(blurred, from: inputImage.extent) else { return nil }
+		return UIImage(cgImage: cgImage, scale: snapshot.scale, orientation: .up)
+	}
+	#endif
 
 	/// Presents the current song's lyrics as a sheet.
 	private func presentLyrics() {

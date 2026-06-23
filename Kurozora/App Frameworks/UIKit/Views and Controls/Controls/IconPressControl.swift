@@ -1,20 +1,23 @@
 //
-//  TransportButton.swift
+//  IconPressControl.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 22/06/2026.
+//  Created by Khoren Katklian on 30/06/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import SwiftTheme
 import UIKit
 
-/// A transport control button whose symbol gently shrinks while a circular highlight grows on press.
-/// On release the content transition (replace/push) plays from the shrunk state, then the symbol
-/// settles back to full size. Controls that toggle on and off can stay active, keeping a tinted
-/// highlight and symbol.
-@available(iOS 26.0, *)
-final class TransportButton: UIButton {
+/// A control that displays a symbol and reacts to a press by shrinking the symbol while a circular
+/// highlight grows beneath it.
+///
+/// Set ``symbolImage`` and ``restingThemeColor`` for the resting appearance. Subclasses reflect
+/// additional states by overriding ``maintainsHighlight``, ``symbolThemeColor``, and
+/// ``highlightBackgroundColor``, calling ``updateColors()`` and ``updateHighlight(animated:)`` when
+/// that state changes.
+@available(iOS 17.0, *)
+class IconPressControl: UIControl {
 	// MARK: - Views
 	private let highlightView: UIView = {
 		let view = UIView()
@@ -26,7 +29,8 @@ final class TransportButton: UIButton {
 		return view
 	}()
 
-	private let symbolView: UIImageView = {
+	/// The image view rendering the control's symbol.
+	let symbolView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .center
@@ -35,24 +39,12 @@ final class TransportButton: UIButton {
 	}()
 
 	// MARK: - Properties
-	/// The skip-conveyor glyph, when this button is a skip control.
-	private var skipChevron: SkipChevronView?
-
-	/// The theme color of the symbol while the control is inactive.
+	/// The theme color of the symbol in the control's resting state.
 	var restingThemeColor: KThemePicker = .textColor {
 		didSet { self.updateColors() }
 	}
 
-	/// Whether the control is in its active (enabled) state, persisting a tinted highlight and symbol.
-	var isActive: Bool = false {
-		didSet {
-			guard oldValue != self.isActive else { return }
-			self.updateColors()
-			self.updateHighlight(animated: true)
-		}
-	}
-
-	/// The symbol shown by the button.
+	/// The symbol shown by the control.
 	var symbolImage: UIImage? {
 		get { self.symbolView.image }
 		set { self.symbolView.image = newValue }
@@ -62,6 +54,15 @@ final class TransportButton: UIButton {
 	var fixedHighlightDiameter: CGFloat? {
 		didSet { self.setNeedsLayout() }
 	}
+
+	/// Whether the highlight stays visible regardless of the press or focus state.
+	var maintainsHighlight: Bool { false }
+
+	/// The theme color applied to the symbol.
+	var symbolThemeColor: KThemePicker { self.restingThemeColor }
+
+	/// The background color of the press highlight.
+	var highlightBackgroundColor: UIColor { .black.withAlphaComponent(0.5) }
 
 	private var isPressed = false
 	private var isPointerPress = false
@@ -110,6 +111,44 @@ final class TransportButton: UIButton {
 	}
 
 	// MARK: - Functions
+	/// Sets the symbol, optionally morphing from the previous one.
+	///
+	/// - Parameters:
+	///    - image: The symbol to show.
+	///    - replace: Whether to animate the change with a replace transition.
+	func setSymbolImage(_ image: UIImage, replace: Bool) {
+		if replace {
+			self.symbolView.setSymbolImage(image, contentTransition: .replace, options: .speed(1.8))
+		} else {
+			self.symbolView.image = image
+		}
+	}
+
+	/// Re-applies the symbol and highlight colors for the current state.
+	func updateColors() {
+		self.symbolView.theme_tintColor = self.symbolThemeColor.rawValue
+		self.highlightView.backgroundColor = self.highlightBackgroundColor
+	}
+
+	/// Grows or fades the circular highlight for the current pressed, focused, or maintained state.
+	///
+	/// - Parameter animated: Whether to spring to the new state.
+	func updateHighlight(animated: Bool) {
+		let showsHighlight = (self.isPressed && self.isPointerPress) || self.isFocused || self.maintainsHighlight
+
+		let animation = { [weak self] in
+			guard let self = self else { return }
+			self.highlightView.alpha = showsHighlight ? 1 : 0
+			self.highlightView.transform = showsHighlight ? .identity : CGAffineTransform(scaleX: 0.5, y: 0.5)
+		}
+
+		if animated {
+			UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState], animations: animation)
+		} else {
+			animation()
+		}
+	}
+
 	private func sharedInit() {
 		self.clipsToBounds = false
 		self.addSubview(self.highlightView)
@@ -127,39 +166,6 @@ final class TransportButton: UIButton {
 		])
 
 		self.updateColors()
-
-		self.addAction(UIAction { [weak self] _ in
-			self?.skipChevron?.animateSkip()
-		}, for: .touchUpInside)
-	}
-
-	/// Configures this button as a skip control, replacing the symbol with an animatable chevron.
-	///
-	/// - Parameter direction: The skip direction.
-	func configureSkip(direction: SkipChevronView.Direction) {
-		let chevron = SkipChevronView(direction: direction)
-		chevron.translatesAutoresizingMaskIntoConstraints = false
-		self.symbolView.addSubview(chevron)
-		NSLayoutConstraint.activate([
-			chevron.leadingAnchor.constraint(equalTo: self.symbolView.leadingAnchor),
-			chevron.trailingAnchor.constraint(equalTo: self.symbolView.trailingAnchor),
-			chevron.topAnchor.constraint(equalTo: self.symbolView.topAnchor),
-			chevron.bottomAnchor.constraint(equalTo: self.symbolView.bottomAnchor),
-		])
-		self.skipChevron = chevron
-	}
-
-	/// Sets the symbol, optionally morphing from the previous one.
-	///
-	/// - Parameters:
-	///    - image: The symbol to show.
-	///    - replace: Whether to animate the change with a replace transition.
-	func setSymbolImage(_ image: UIImage, replace: Bool) {
-		if replace {
-			self.symbolView.setSymbolImage(image, contentTransition: .replace, options: .speed(1.8))
-		} else {
-			self.symbolView.image = image
-		}
 	}
 
 	private func setPressed(_ pressed: Bool) {
@@ -176,32 +182,5 @@ final class TransportButton: UIButton {
 			}
 		}
 		self.updateHighlight(animated: true)
-	}
-
-	/// Grows or fades the circular highlight for the current pressed/active state.
-	///
-	/// - Parameter animated: Whether to spring to the new state.
-	private func updateHighlight(animated: Bool) {
-		let showsHighlight = self.isPressed || self.isActive
-
-		let animation = { [weak self] in
-			guard let self = self else { return }
-			self.highlightView.alpha = showsHighlight ? 1 : 0
-			self.highlightView.transform = showsHighlight ? .identity : CGAffineTransform(scaleX: 0.5, y: 0.5)
-		}
-
-		if animated {
-			UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState], animations: animation)
-		} else {
-			animation()
-		}
-	}
-
-	/// Applies the symbol and highlight colors for the current active state.
-	private func updateColors() {
-		self.symbolView.theme_tintColor = (self.isActive ? KThemePicker.tintColor : self.restingThemeColor).rawValue
-		self.highlightView.backgroundColor = self.isActive
-			? KThemePicker.tintColor.colorValue.withAlphaComponent(0.5)
-			: .black.withAlphaComponent(0.5)
 	}
 }

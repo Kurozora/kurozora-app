@@ -8,8 +8,6 @@
 
 import UIKit
 
-/// A description of which controls the now-playing accessory shows for a given
-/// tab-accessory environment and available width.
 @available(iOS 26.0, *)
 struct MusicAccessoryLayout: Equatable {
 	// MARK: - Properties

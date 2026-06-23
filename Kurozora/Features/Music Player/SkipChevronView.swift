@@ -8,9 +8,6 @@
 
 import UIKit
 
-/// A double-triangle skip glyph that animates as a conveyor: on each skip the leading triangle shrinks
-/// and slides out, the trailing one moves to full size in its place, and a new one grows in from behind.
-@available(iOS 26.0, *)
 final class SkipChevronView: UIView {
 	// MARK: - Direction
 	enum Direction {
@@ -24,7 +21,7 @@ final class SkipChevronView: UIView {
 	private let direction: Direction
 
 	/// The center-to-center distance between the two resting triangles.
-	private let triangleSpacing: CGFloat = 9
+	private var triangleSpacing: CGFloat = 9
 
 	/// The scale of a triangle as it enters or exits at the edges.
 	private let edgeScale: CGFloat = 0.25
@@ -74,6 +71,22 @@ final class SkipChevronView: UIView {
 	}
 
 	// MARK: - Functions
+	/// Re-renders the triangles at the given size and spacing.
+	///
+	/// - Parameters:
+	///    - pointSize: The triangle symbol point size.
+	///    - spacing: The center-to-center distance between the resting triangles.
+	func setMetrics(pointSize: CGFloat, spacing: CGFloat) {
+		self.triangleSpacing = spacing
+
+		let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .medium)
+		let image = UIImage(systemName: "play.fill", withConfiguration: configuration)?.withRenderingMode(.alwaysTemplate)
+		self.triangles.forEach { $0.image = image }
+
+		self.invalidateIntrinsicContentSize()
+		self.setNeedsLayout()
+	}
+
 	/// Runs one step of the conveyor.
 	func animateSkip() {
 		guard !self.isAnimating, self.bounds.width > 0 else { return }

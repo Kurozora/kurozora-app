@@ -8,9 +8,6 @@
 
 import UIKit
 
-/// A bottom-anchored progress bar that shows a hairline by default and expands into a
-/// scrubber with time labels while hovered or scrubbed.
-@available(iOS 26.0, *)
 final class PlaybackProgressView: UIView {
 	// MARK: - Views
 	private let trackView: UIView = {
@@ -186,12 +183,11 @@ final class PlaybackProgressView: UIView {
 	///
 	/// - Parameter progress: The progress snapshot to display.
 	func configure(with progress: PlaybackProgress) {
+		guard !self.isScrubbing else { return }
+
 		self.progress = progress
 		self.updateFill()
-
-		if !self.isScrubbing {
-			self.updateLabels()
-		}
+		self.updateLabels()
 	}
 
 	private func updateFill() {

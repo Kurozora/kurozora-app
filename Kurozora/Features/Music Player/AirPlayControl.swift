@@ -9,11 +9,6 @@
 import AVKit
 import UIKit
 
-/// A route picker wrapped in the accessory's press feedback.
-///
-/// `AVRoutePickerView` draws and handles its own glyph, so the press highlight is a sibling behind
-/// it rather than a subview, and the press is observed by a non-cancelling gesture recognizer that
-/// leaves the picker free to open.
 final class AirPlayControl: UIView {
 	// MARK: - Views
 	private let highlightView = PressHighlightView()
@@ -29,6 +24,9 @@ final class AirPlayControl: UIView {
 	// MARK: - Properties
 	/// Observations that keep the route picker's button opaque despite its built-in touch dimming.
 	private var dimmingObservations: [NSKeyValueObservation] = []
+
+	/// Whether the current press came from an indirect pointer rather than a direct touch.
+	private var pointerPress = false
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -113,7 +111,7 @@ final class AirPlayControl: UIView {
 	///
 	/// - Parameter pressed: Whether the control is being pressed.
 	private func setPressed(_ pressed: Bool) {
-		self.highlightView.setPressed(pressed, animated: true)
+		self.highlightView.setPressed(pressed && self.pointerPress, animated: true)
 
 		if pressed {
 			UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState]) {
@@ -130,6 +128,11 @@ final class AirPlayControl: UIView {
 // MARK: - UIGestureRecognizerDelegate
 extension AirPlayControl: UIGestureRecognizerDelegate {
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		return true
+	}
+
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+		self.pointerPress = touch.type == .indirectPointer
 		return true
 	}
 }
