@@ -267,7 +267,13 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .songIdentity:
 				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Song?, at: indexPath)
+				let song: Song? = self.fetchModel(at: indexPath)
+				let resolvedSong = song?.attributes.amID.flatMap { self.resolvedSongs[$0] }
+				musicLockupCollectionViewCell.configure(using: song, at: indexPath, resolvedSong: resolvedSong)
+
+				if let song = song {
+					self.resolveMusicSong(song)
+				}
 			default: break
 			}
 		}

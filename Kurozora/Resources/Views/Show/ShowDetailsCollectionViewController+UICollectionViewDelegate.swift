@@ -91,10 +91,11 @@ extension ShowDetailsCollectionViewController {
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
 			guard
-				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
-				let song = cell.song
+				let showSong = self.showSongs[safe: indexPath.item],
+				let appleMusicID = showSong.song.attributes.amID,
+				let song = self.resolvedSongs[appleMusicID]
 			else { return nil }
-			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: [
+			return showSong.song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

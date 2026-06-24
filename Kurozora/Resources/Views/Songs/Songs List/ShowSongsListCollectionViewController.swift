@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import Combine
 import KurozoraKit
 import UIKit
 
@@ -41,6 +42,12 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	var showSongs: [ShowSong] = []
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
 
+	/// The resolved Apple Music songs keyed by Apple Music identifier.
+	var resolvedSongs: [Int: MKSong] = [:]
+
+	/// Observes playback changes so visible song cells reflect the currently playing song.
+	private var playbackObserver: AnyCancellable?
+
 	/// The player that previews songs.
 	var player: AVPlayer?
 
@@ -66,6 +73,28 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 		super.viewDidLoad()
 
 		self.title = L10n.songs
+		self.observePlaybackChanges()
+	}
+
+	/// Subscribes to playback changes, so visible song cells reflect the currently playing song.
+	private func observePlaybackChanges() {
+		self.playbackObserver = Publishers.CombineLatest(MusicManager.shared.currentKKSongPublisher, MusicManager.shared.isPlayingPublisher)
+			.receive(on: RunLoop.main)
+			.sink { [weak self] _, _ in
+				self?.refreshVisibleMusicCells()
+			}
+	}
+
+	/// Refreshes the play button glyph and artwork of every visible song cell.
+	private func refreshVisibleMusicCells() {
+		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
+			guard
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let song = self.showSongs[safe: indexPath.item]?.song ?? self.songs[safe: indexPath.item]
+			else { continue }
+			cell.updatePlayButton(for: song)
+			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -105,7 +134,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 
 		let appleMusicIDs = self.showSongs.compactMap { $0.song.attributes.amID }
 			+ self.songs.compactMap { $0.attributes.amID }
-		_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
+		self.resolvedSongs = await MusicManager.shared.getSongs(for: appleMusicIDs)
 
 		self.groupShowSongs()
 	}
@@ -222,9 +251,13 @@ extension ShowSongsListCollectionViewController {
 			switch itemKind {
 			case .showSong(let showSong, _):
 				let showIDExists = self.showIdentity != nil
-				cell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
+				let resolvedSong = showSong.song.attributes.amID.flatMap { self.resolvedSongs[$0] }
+				cell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists, resolvedSong: resolvedSong)
+				self.resolveMusicSong(showSong.song)
 			case .song(let song, _):
-				cell.configure(using: song, at: indexPath)
+				let resolvedSong = song.attributes.amID.flatMap { self.resolvedSongs[$0] }
+				cell.configure(using: song, at: indexPath, resolvedSong: resolvedSong)
+				self.resolveMusicSong(song)
 			}
 		}
 	}
@@ -274,11 +307,12 @@ extension ShowSongsListCollectionViewController {
 
 		if !self.showSongs.isEmpty {
 			guard
-				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
-				let song = cell.song
+				let showSong = self.showSongs[safe: indexPath.item],
+				let appleMusicID = showSong.song.attributes.amID,
+				let song = self.resolvedSongs[appleMusicID]
 			else { return nil }
 
-			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: [
+			return showSong.song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
@@ -301,6 +335,18 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 		guard let show = self.showSongs[safe: indexPath.item]?.show else { return }
 
 		self.show(.showDetailsSegue, sender: show)
+	}
+
+	/// Resolves and caches the Apple Music song for the given Kurozora song.
+	///
+	/// - Parameter song: The Kurozora song to resolve.
+	func resolveMusicSong(_ song: KKSong) {
+		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
+
+		Task { [weak self] in
+			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
+			self?.refreshVisibleMusicCells()
+		}
 	}
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {

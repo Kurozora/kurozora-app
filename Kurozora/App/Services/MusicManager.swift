@@ -693,9 +693,13 @@ final class MusicManager: NSObject {
 			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 			case (.authorized, true):
 				let wasPlaying = self.isPlaying
-				if self.repeatMode == .one {
+				switch self.repeatMode {
+				case .one:
 					self.applicationPlayer.restartCurrentEntry()
-				} else {
+				case .off where self.isAtLastQueueEntry:
+					self.endMusicKitPlayback()
+					return
+				default:
 					try? await self.applicationPlayer.skipToNextEntry()
 				}
 				if !wasPlaying {
@@ -705,6 +709,22 @@ final class MusicManager: NSObject {
 				await self.skipPreview(by: 1, resumePlayback: self.isPlaying)
 			}
 		}
+	}
+
+	/// Whether the application player is positioned on the last entry of its queue.
+	private var isAtLastQueueEntry: Bool {
+		guard let currentEntry = self.applicationPlayer.queue.currentEntry else { return false }
+		return self.applicationPlayer.queue.entries.last?.id == currentEntry.id
+	}
+
+	/// Ends application player playback and clears the now-playing state.
+	private func endMusicKitPlayback() {
+		self.queueSubscription?.cancel()
+		self.queueSubscription = nil
+		self.applicationPlayer.stop()
+		self.currentSong = nil
+		self.currentKKSong = nil
+		self.isPlaying = false
 	}
 
 	/// Restarts the current song when more than three seconds have elapsed, otherwise steps to the previous song, honoring the repeat mode.

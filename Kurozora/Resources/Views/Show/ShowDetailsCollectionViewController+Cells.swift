@@ -97,7 +97,9 @@ extension ShowDetailsCollectionViewController {
 			switch itemKind {
 			case .showSong(let showSong, _):
 				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath)
+				let resolvedSong = showSong.song.attributes.amID.flatMap { self.resolvedSongs[$0] }
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, resolvedSong: resolvedSong)
+				self.resolveMusicSong(showSong.song)
 			default: break
 			}
 		}

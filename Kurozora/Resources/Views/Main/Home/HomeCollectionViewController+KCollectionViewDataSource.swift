@@ -426,7 +426,9 @@ extension HomeCollectionViewController {
 			self.cache[indexPath] = showSong
 
 			cell.delegate = self
-			cell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
+			let resolvedSong = showSong.song.attributes.amID.flatMap { self.resolvedSongs[$0] }
+			cell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true, resolvedSong: resolvedSong)
+			self.resolveMusicSong(showSong.song)
 		}
 	}
 

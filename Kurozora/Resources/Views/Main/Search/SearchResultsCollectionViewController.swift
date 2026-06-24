@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Combine
 #if !targetEnvironment(macCatalyst)
 import IQKeyboardManagerSwift
 #endif
@@ -96,6 +97,9 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 	/// Per-search-type model caches.
 	private var cachesByType: [SearchType: [IndexPath: KurozoraItem]] = [:]
+
+	/// The resolved Apple Music songs keyed by Apple Music identifier.
+	var resolvedSongs: [Int: MKSong] = [:]
 
 	/// The hydrated models keyed by index path.
 	var cache: [IndexPath: KurozoraItem] {
@@ -1352,6 +1356,22 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
+
+	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
+		(self.fetchModel(at: indexPath) as Song?)?.play()
+	}
+
+	/// Resolves and caches the Apple Music song for the given Kurozora song.
+	///
+	/// - Parameter song: The Kurozora song to resolve.
+	func resolveMusicSong(_ song: KKSong) {
+		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
+
+		Task { [weak self] in
+			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
+			self?.refreshVisibleMusicCells()
+		}
+	}
 }
 
 // MARK: - ActionBaseExploreCollectionViewCellDelegate

@@ -204,6 +204,16 @@ extension KKSong {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	/// Plays the song, resolving its Apple Music catalog entry first.
+	func play() {
+		guard let appleMusicID = self.attributes.amID else { return }
+
+		Task {
+			guard let song = await MusicManager.shared.getSong(for: appleMusicID) else { return }
+			MusicManager.shared.play(song: song, kkSong: self)
+		}
+	}
+
 	/// Play the given song.
 	///
 	/// - Parameters:

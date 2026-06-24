@@ -146,10 +146,11 @@ extension SearchResultsCollectionViewController {
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songIdentity:
 			guard
-				let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell,
-				let song = cell.song
+				let kkSong: Song = self.fetchModel(at: indexPath),
+				let appleMusicID = kkSong.attributes.amID,
+				let song = self.resolvedSongs[appleMusicID]
 			else { return nil }
-			return (self.fetchModel(at: indexPath) as Song?)?.contextMenuConfiguration(in: self, userInfo: [
+			return kkSong.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Combine
 import KurozoraKit
 import SPConfetti
 import UIKit
@@ -90,6 +91,12 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// The resolved Apple Music songs keyed by Apple Music identifier.
+	var resolvedSongs: [Int: MKSong] = [:]
+
+	/// Observes playback changes so visible song cells reflect the currently playing song.
+	private var playbackObserver: AnyCancellable?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -172,11 +179,33 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		self.configureQuickActions()
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observePlaybackChanges()
 
 		// Fetch explore details.
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchExplore()
+		}
+	}
+
+	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
+	private func observePlaybackChanges() {
+		self.playbackObserver = Publishers.CombineLatest(MusicManager.shared.currentKKSongPublisher, MusicManager.shared.isPlayingPublisher)
+			.receive(on: RunLoop.main)
+			.sink { [weak self] _, _ in
+				self?.refreshVisibleMusicCells()
+			}
+	}
+
+	/// Refreshes the play button glyph and artwork of every visible song cell.
+	func refreshVisibleMusicCells() {
+		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
+			guard
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let song = (self.cache[indexPath] as? ShowSong)?.song
+			else { continue }
+			cell.updatePlayButton(for: song)
+			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
 		}
 	}
 

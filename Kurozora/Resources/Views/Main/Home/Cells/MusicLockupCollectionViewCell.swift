@@ -6,27 +6,24 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Combine
 import KurozoraKit
 import MusicKit
-import SwiftyJSON
 import UIKit
 
 protocol MusicLockupCollectionViewCellDelegate: AnyObject {
+	/// Tells the delegate the cell's show button was tapped.
+	///
+	/// - Parameters:
+	///    - sender: The button that was tapped.
+	///    - indexPath: The index path of the cell within the collection view.
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
 
-	/// Tells the delegate the cell's play button was tapped, so it can play the song in its list context.
+	/// Tells the delegate the cell's play button was tapped.
 	///
 	/// - Parameters:
 	///    - cell: The cell whose play button was tapped.
 	///    - indexPath: The index path of the cell within the collection view.
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath)
-}
-
-extension MusicLockupCollectionViewCellDelegate {
-	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		cell.playResolvedSong()
-	}
 }
 
 class MusicLockupCollectionViewCell: KCollectionViewCell {
@@ -49,20 +46,24 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// The album artwork's border view.
 	@IBOutlet weak var albumBorderView: BorderView!
 
-	/// A button representing the state of the music.
+	/// The album artwork image view.
 	@IBOutlet weak var albumImageView: UIImageView!
 
-	/// A button representing the state of the music.
+	/// A button representing the playback state of the song.
 	@IBOutlet weak var playButton: KButton!
 
-	/// A button representing the show a music belongs to.
+	/// A button representing the show a song belongs to.
 	@IBOutlet weak var showButton: KButton!
 
-	/// A button representing the type of the music.
+	/// A button representing the type of the song.
 	@IBOutlet weak var typeButton: UIButton!
 
-	private var subscriptions = Set<AnyCancellable>()
-	private var artworkTask: Task<Void, Never>?
+	// MARK: - Properties
+	/// The index path of the cell within the parent collection view.
+	var indexPath: IndexPath?
+
+	/// The object responsible for delegating actions.
+	weak var delegate: MusicLockupCollectionViewCellDelegate?
 
 	// MARK: - View
 	override func awakeFromNib() {
@@ -72,31 +73,20 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		(self.albumImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
 		self.albumImageView?.layer.borderWidth = 0
 		self.albumBorderView.cornerRadius = 22
+
+		self.playButton.highlightBackgroundColorEnabled = false
+		self.playButton.springEnabled = true
+		self.playButton.addBlurEffect()
+		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		self.artworkTask?.cancel()
-		self.artworkTask = nil
-		self.subscriptions.removeAll()
-		self.song = nil
+
 		self.playButton.isHidden = true
 		self.albumImageView?.backgroundColor = .clear
 		self.albumImageView?.image = .Placeholders.musicAlbum
 	}
-
-	// MARK: - Properties
-	/// The index path of the cell within the parent collection view.
-	var indexPath: IndexPath?
-
-	/// A single music item.
-	var song: MKSong?
-
-	/// The Kurozora song model used for context menu actions.
-	var kkSong: KKSong?
-
-	/// The `MusicLockupCollectionViewCellDelegate` object responsible for delegating actions.
-	weak var delegate: MusicLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configures the cell with the given `ShowSong` object.
@@ -107,7 +97,8 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	///    - rank: The rank of the song in a ranked list.
 	///    - showEpisodes: Whether to show which episodes this song played in.
 	///    - showShow: Whether to show which show this song belongs to.
-	func configure(using showSong: ShowSong?, at indexPath: IndexPath, rank: Int? = nil, showEpisodes: Bool = true, showShow: Bool = false) {
+	///    - resolvedSong: The resolved Apple Music song.
+	func configure(using showSong: ShowSong?, at indexPath: IndexPath, rank: Int? = nil, showEpisodes: Bool = true, showShow: Bool = false, resolvedSong: MKSong? = nil) {
 		guard let showSong = showSong else {
 			self.resetShowSong()
 			self.showSkeleton()
@@ -115,20 +106,11 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
-		// Configure episodes
 		self.tertiaryLabel.isHidden = !showEpisodes
 		self.tertiaryLabel.text = L10n.episodeLabel("\(showSong.attributes.episodes)")
 
-		// Configure rank
-		if let rank = rank {
-			self.rankLabel.text = "#\(rank)"
-			self.rankLabel.isHidden = false
-		} else {
-			self.rankLabel.text = nil
-			self.rankLabel.isHidden = true
-		}
+		self.configureRank(rank)
 
-		// Configure type button
 		self.typeButton.isHidden = false
 		self.typeButton.layerCornerRadius = 12.0
 		self.typeButton.titleLabel?.font = .systemFont(ofSize: 12.0, weight: .semibold)
@@ -136,15 +118,13 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.typeButton.backgroundColor = showSong.attributes.type.backgroundColorValue
 		self.typeButton.setTitleColor(.white, for: .normal)
 
-		// Configure type button
 		self.showButton.isHidden = !showShow
 		self.showButton.setTitle(showSong.show?.attributes.title, for: .normal)
 
-		// Configure with song
-		self.configure(using: showSong.song, at: indexPath, fromShowSong: true)
+		self.configure(using: showSong.song, at: indexPath, fromShowSong: true, resolvedSong: resolvedSong)
 	}
 
-	/// Resets showSong related views.
+	/// Resets the `ShowSong` related views.
 	func resetShowSong() {
 		self.tertiaryLabel.isHidden = true
 		self.typeButton.isHidden = true
@@ -157,10 +137,10 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	///    - song: The `Song` object used to configure the cell.
 	///    - indexPath: The index path of the cell within the collection view.
 	///    - rank: The rank of the song in a ranked list.
-	///    - fromShowSong: A boolean indicating if the method was called from `configure(using: ShowSong)` method.
-	func configure(using song: KKSong?, at indexPath: IndexPath, rank: Int? = nil, fromShowSong: Bool = false) {
+	///    - fromShowSong: Whether the method was called from the `ShowSong` overload.
+	///    - resolvedSong: The resolved Apple Music song.
+	func configure(using song: KKSong?, at indexPath: IndexPath, rank: Int? = nil, fromShowSong: Bool = false, resolvedSong: MKSong? = nil) {
 		if !fromShowSong {
-			// Configure showSong views.
 			self.configure(using: nil, at: indexPath, rank: rank, showEpisodes: false, showShow: false)
 		}
 
@@ -170,15 +150,19 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 		self.indexPath = indexPath
-		self.kkSong = song
 
-		// Configure title
 		self.primaryLabel.text = song.attributes.title
-
-		// Configure artist
 		self.secondaryLabel.text = song.attributes.artist
 
-		// Configure rank
+		self.configureRank(rank)
+		self.updateArtwork(for: song, resolvedSong: resolvedSong)
+		self.configurePlayButton(for: song)
+	}
+
+	/// Configures the rank label with the given rank.
+	///
+	/// - Parameter rank: The rank of the song in a ranked list.
+	private func configureRank(_ rank: Int?) {
 		if let rank = rank {
 			self.rankLabel.text = "#\(rank)"
 			self.rankLabel.isHidden = false
@@ -186,78 +170,56 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLabel.text = nil
 			self.rankLabel.isHidden = true
 		}
+	}
 
-		// Configure play button
-		self.playButton.highlightBackgroundColorEnabled = false
-		self.playButton.springEnabled = true
-		self.playButton.isHidden = true
-		self.playButton.layerCornerRadius = self.playButton.frame.size.height / 2
-		self.playButton.addBlurEffect()
-		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
-
-		Publishers.CombineLatest(MusicManager.shared.$isPlaying, MusicManager.shared.$currentSong)
-			.receive(on: RunLoop.main)
-			.sink { [weak self] _, _ in
-				self?.updatePlayButton()
-			}
-			.store(in: &self.subscriptions)
-
-		self.artworkTask = Task { @MainActor [weak self] in
-			guard let self = self else { return }
-
-			if let appleMusicID = song.attributes.amID {
-				self.song = await MusicManager.shared.getSong(for: appleMusicID)
-				self.updatePlayButton()
-				self.updateArtwork()
+	/// Sets the album artwork.
+	///
+	/// - Parameters:
+	///    - song: The song whose artwork is shown.
+	///    - resolvedSong: The resolved Apple Music song.
+	func updateArtwork(for song: KKSong, resolvedSong: MKSong?) {
+		if let urlString = song.attributes.artwork?.url, !urlString.isEmpty {
+			if let backgroundColor = song.attributes.artwork?.backgroundColor {
+				self.albumImageView?.backgroundColor = UIColor(hexString: backgroundColor)
 			} else {
-				self.resetArtwork()
+				self.albumImageView?.backgroundColor = .clear
 			}
-		}
-	}
-
-	/// Updates the play button status.
-	func updatePlayButton() {
-		if MusicManager.shared.currentSong == self.song, MusicManager.shared.isPlaying {
-			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-		} else {
-			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-		}
-	}
-
-	/// Updates the album image view.
-	func updateArtwork() {
-		guard let song = song else {
-			self.resetArtwork()
+			self.albumImageView?.setImage(with: urlString, placeholder: .Placeholders.musicAlbum)
 			return
 		}
-		guard let artworkURL = song.song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.playButton.isHidden = false
-			if let backgroundColor = song.song.artwork?.backgroundColor {
+		if let artwork = resolvedSong?.song.artwork, let urlString = artwork.url(width: 320, height: 320)?.absoluteString {
+			if let backgroundColor = artwork.backgroundColor {
 				self.albumImageView?.backgroundColor = UIColor(cgColor: backgroundColor)
+			} else {
+				self.albumImageView?.backgroundColor = .clear
 			}
-			self.albumImageView?.setImage(with: artworkURL, placeholder: .Placeholders.musicAlbum)
+			self.albumImageView?.setImage(with: urlString, placeholder: .Placeholders.musicAlbum)
+			return
 		}
+
+		self.albumImageView?.backgroundColor = .clear
+		self.albumImageView?.image = .Placeholders.musicAlbum
 	}
 
-	/// Resets the music artwork to its initial state.
-	private func resetArtwork() {
-		self.song = nil
+	/// Configures the play button for the given song.
+	///
+	/// - Parameter song: The song the button plays.
+	private func configurePlayButton(for song: KKSong) {
+		self.playButton.isHidden = song.attributes.amID == nil
+		guard !self.playButton.isHidden else { return }
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.playButton.isHidden = true
-			self.albumImageView?.backgroundColor = .clear
-			self.albumImageView?.image = .Placeholders.musicAlbum
-		}
+		self.playButton.layerCornerRadius = self.playButton.frame.size.height / 2
+		self.updatePlayButton(for: song)
 	}
 
-	/// Plays only this cell's song, used as the default when the delegate provides no queue.
-	func playResolvedSong() {
-		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, kkSong: self.kkSong)
+	/// Updates the play button's glyph to reflect whether the given song is currently playing.
+	///
+	/// - Parameter song: The song the button plays.
+	func updatePlayButton(for song: KKSong) {
+		let isCurrentSong = MusicManager.shared.currentKKSong?.id == song.id
+		let systemName = isCurrentSong && MusicManager.shared.isPlaying ? "pause.fill" : "play.fill"
+		self.playButton.setImage(UIImage(systemName: systemName), for: .normal)
 	}
 
 	// MARK: - IBActions

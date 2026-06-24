@@ -71,9 +71,9 @@ extension HomeCollectionViewController {
 			return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
 			guard
-				let musicLockupCollectionViewCell = collectionViewCell as? MusicLockupCollectionViewCell,
-				let song = musicLockupCollectionViewCell.song,
-				let showSong = self.cache[indexPath] as? ShowSong
+				let showSong = self.cache[indexPath] as? ShowSong,
+				let appleMusicID = showSong.song.attributes.amID,
+				let song = self.resolvedSongs[appleMusicID]
 			else { return nil }
 			return showSong.song.contextMenuConfiguration(in: self, userInfo: [
 				"indexPath": indexPath,
@@ -260,6 +260,22 @@ extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		guard let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show else { return }
 		self.show(.showDetailsSegue, sender: show)
+	}
+
+	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
+		(self.cache[indexPath] as? ShowSong)?.song.play()
+	}
+
+	/// Resolves and caches the Apple Music song for the given Kurozora song.
+	///
+	/// - Parameter song: The Kurozora song to resolve.
+	func resolveMusicSong(_ song: KKSong) {
+		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
+
+		Task { [weak self] in
+			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
+			self?.refreshVisibleMusicCells()
+		}
 	}
 }
 
