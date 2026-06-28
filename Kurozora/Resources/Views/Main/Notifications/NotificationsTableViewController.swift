@@ -21,6 +21,9 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 	// MARK: - Views
 	var profileBarButtonItem: ProfileBarButtonItem?
 
+	/// The bar button item that opens the weekly digest.
+	var digestBarButtonItem = UIBarButtonItem()
+
 	/// The bar button item that enters batch-edit mode.
 	var selectBarButtonItem = UIBarButtonItem()
 
@@ -343,9 +346,22 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		}
 	}
 
+	/// Configures the bar button item that opens the weekly digest.
+	private func configureDigestBarButtonItem() {
+		self.digestBarButtonItem.title = L10n.digest
+		self.digestBarButtonItem.image = UIImage(systemName: "sparkles")
+		self.digestBarButtonItem.style = .plain
+		self.digestBarButtonItem.primaryAction = UIAction(title: L10n.digest, image: UIImage(systemName: "sparkles")) { [weak self] _ in
+			guard let self = self else { return }
+			let digestCollectionViewController = DigestCollectionViewController()
+			self.show(digestCollectionViewController, sender: nil)
+		}
+	}
+
 	/// Wires the navigation items used both in normal and batch edit mode.
 	fileprivate func configureNavigationItems() {
 		self.configureSelectBarButtonItem()
+		self.configureDigestBarButtonItem()
 		self.configureBatchEditBarButtonItems()
 		self.configureBottomActionContainer()
 		self.configureProfileBarButtonItem()
@@ -371,6 +387,7 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		}
 
 		self.navigationItem.rightBarButtonItems = rightItems
+		self.navigationItem.leftBarButtonItems = User.isSignedIn ? [self.digestBarButtonItem] : nil
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.isEnabled = User.isSignedIn

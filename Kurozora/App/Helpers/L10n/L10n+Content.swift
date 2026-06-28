@@ -3074,6 +3074,56 @@ extension L10n {
 		}
 	}
 
+	// MARK: - Digest
+	/// The title of the weekly digest screen.
+	static var digest: String {
+		L10n.resolve {
+			String(localized: "Your Week", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the weekly digest screen.")
+		}
+	}
+	/// The digest stat for the user's watch streak.
+	static func digestWeekStreak(_ weeks: Int) -> String {
+		L10n.resolve {
+			String(localized: "On a \(weeks)-week watch streak!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest stat for the user's watch streak.")
+		}
+	}
+	/// The digest stat for the user's next watched-episode milestone.
+	static func digestMilestone(_ remaining: Int, _ milestone: Int) -> String {
+		L10n.resolve {
+			String(localized: "Only \(remaining) episodes to \(milestone) watched episodes!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest stat for the user's next watched-episode milestone.")
+		}
+	}
+	/// The digest momentum caption above the week's stats.
+	static var digestMomentumCaption: String {
+		L10n.resolve {
+			String(localized: "Your week in numbers", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum caption above the week's stats.")
+		}
+	}
+	/// The digest momentum label under the watched-episodes count.
+	static var digestMomentumEpisodesLabel: String {
+		L10n.resolve {
+			String(localized: "episodes watched", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the watched-episodes count.")
+		}
+	}
+	/// The digest momentum label under the amount of time watched.
+	static var digestMomentumTimeLabel: String {
+		L10n.resolve {
+			String(localized: "watched", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the amount of time watched.")
+		}
+	}
+	/// The digest momentum label under the finished-titles count.
+	static var digestMomentumFinishedLabel: String {
+		L10n.resolve {
+			String(localized: "titles finished", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the finished-titles count.")
+		}
+	}
+	/// The digest momentum button linking to the user's Re:CAP.
+	static var digestSeeReCap: String {
+		L10n.resolve {
+			String(localized: "See your Re:CAP", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum button linking to the user's Re:CAP.")
+		}
+	}
+
 	// MARK: - ReCap, Parental Guide, Feed, Library
 	/// The ReCap in-progress header shown in December.
 	static func recapInProgressWeek(_ month: String) -> String {

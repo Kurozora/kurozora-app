@@ -108,7 +108,10 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 				let userID = KurozoraItemID(userIDString)
 				self.openUserProfile(for: userID)
 			}
-		default: break
+		default:
+			if let path = userInfo["path"] as? String {
+				self.handleDeepLinkPath(path)
+			}
 		}
 
 		if let notificationIDString = userInfo["notification_id"] as? String, !notificationIDString.isEmpty {
@@ -202,5 +205,25 @@ extension WorkflowController {
 	func openFeedMessage(for feedMessageID: KurozoraItemID, in viewController: UIViewController? = UIApplication.topViewController) {
 		let fmDetailsTableViewController = FMDetailsTableViewController()(with: feedMessageID)
 		viewController?.show(fmDetailsTableViewController, sender: nil)
+	}
+
+	/// Routes the given deep-link path carried by a notification's payload to its screen.
+	///
+	/// - Parameter path: The deep-link path carried by the notification's payload.
+	func handleDeepLinkPath(_ path: String) {
+		switch path {
+		case "digest":
+			self.openDigest()
+		default:
+			break
+		}
+	}
+
+	/// Open the weekly digest view if it isn't already the current view.
+	func openDigest(in viewController: UIViewController? = UIApplication.topViewController) {
+		if UIApplication.topViewController as? DigestCollectionViewController == nil {
+			let digestCollectionViewController = DigestCollectionViewController()
+			viewController?.show(digestCollectionViewController, sender: nil)
+		}
 	}
 }

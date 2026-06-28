@@ -15,6 +15,14 @@ extension UIFont {
 		return UIFont(descriptor: descriptor, size: 0)
 	}
 
+	/// Returns the semibold version of the font.
+	var semibold: UIFont {
+		let descriptor = self.fontDescriptor.addingAttributes([
+			.traits: [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold],
+		])
+		return UIFont(descriptor: descriptor, size: 0)
+	}
+
 	// MARK: - Functions
 	/// Returns the font to use for the monogram profile image.
 	///
