@@ -144,28 +144,7 @@ extension ReviewsListCollectionViewController {
 			case .rateAndReview:
 				self.snapshot.appendSections([reviewSection])
 
-				let rating: Double?
-
-				switch self.listType {
-				case .character(let character):
-					rating = character.attributes.givenRating
-				case .episode(let episode):
-					rating = episode.attributes.givenRating
-				case .game(let game):
-					rating = game.attributes.library?.rating
-				case .literature(let literature):
-					rating = literature.attributes.library?.rating
-				case .person(let person):
-					rating = person.attributes.givenRating
-				case .show(let show):
-					rating = show.attributes.library?.rating
-				case .song(let song):
-					rating = song.attributes.library?.rating
-				case .studio(let studio):
-					rating = studio.attributes.library?.rating
-				case .none:
-					rating = nil
-				}
+				let rating: Double? = self.givenRating
 
 				RateAndReview.allCases.forEach { rateAndReview in
 					self.snapshot.appendItems([.rateAndReview(rateAndReview, currentRating: rating)], toSection: reviewSection)

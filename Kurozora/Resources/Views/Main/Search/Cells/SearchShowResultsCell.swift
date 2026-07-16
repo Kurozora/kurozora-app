@@ -49,9 +49,9 @@ class SearchShowResultsCell: KCollectionViewCell {
 		}
 		show.attributes.posterImage(imageView: self.posterImageView)
 
-		// Configure library status
+		// Configure library status — local store wins.
 		self.libraryKind = libraryKind
-		self.libraryStatus = show.attributes.library?.status ?? .none
+		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: show.id.rawValue, kind: libraryKind)?.status ?? .none
 		let libraryStatus: String
 
 		switch self.libraryKind {

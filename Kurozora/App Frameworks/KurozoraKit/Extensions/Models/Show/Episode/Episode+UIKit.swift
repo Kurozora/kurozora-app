@@ -11,6 +11,11 @@ import UIKit
 import WidgetKit
 
 extension Episode {
+	/// The authenticated user's watch status for the episode.
+	@MainActor var watchStatus: WatchStatus? {
+		return WatchedStore.shared.status(forEpisodeID: self.id.rawValue)
+	}
+
 	/// The webpage URL of the episode.
 	var webpageURLString: String {
 		return "https://kurozora.app/episodes/\(self.id)"
@@ -31,11 +36,9 @@ extension Episode {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
-			guard let self = self else { return nil }
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 			return EpisodeDetailsCollectionViewController()(with: self.id)
-		}, actionProvider: { [weak self] _ in
-			guard let self = self else { return nil }
+		}, actionProvider: { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		})
 	}
@@ -57,40 +60,33 @@ extension Episode {
 
 		if User.isSignedIn {
 			// Create "update watch status" element
-			let watchStatus = self.attributes.watchStatus
+			let watchStatus = self.watchStatus
+			let updateWatchStatusTitle = watchStatus == .watched ? L10n.markAsUnwatched : L10n.markAsWatched
+			let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
+			let attributes: UIAction.Attributes = watchStatus == .watched ? .destructive : []
 
-			if watchStatus != .disabled {
-				let updateWatchStatusTitle = watchStatus == .watched ? L10n.markAsUnwatched : L10n.markAsWatched
-				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
-				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
-
-				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
-					guard let self = self else { return }
-					Task {
-						await self.updateWatchStatus(userInfo: userInfo)
-					}
+			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { _ in
+				Task {
+					await self.updateWatchStatus(userInfo: userInfo)
 				}
-				menuElements.append(watchAction)
 			}
+			menuElements.append(watchAction)
 		}
 
 		// Create "share" menu
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.webpageURLString
 		}
 		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyMenu)
@@ -106,19 +102,20 @@ extension Episode {
 	/// Updates the watch status of the episode.
 	///
 	/// - Parameter userInfo: A dictionary that contains information related to the notification.
+	@MainActor
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
 		do {
 			let episodeIdentity = EpisodeIdentity(id: self.id)
 			let episodeUpdateResponse = try await KService.updateWatchStatus(forEpisode: episodeIdentity).response()
 			let watchStatus = episodeUpdateResponse.data.watchStatus
 
-			// Update watch status
-			self.attributes = self.attributes.updated(using: watchStatus)
+			// Record the new status in the cache.
+			WatchedStore.shared.setStatus(watchStatus, forEpisodeID: self.id.rawValue)
 
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
 			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: error.message)
+			await UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
 			print("----- Update episode watch status failed", error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -174,14 +171,6 @@ extension Episode {
 		do {
 			_ = try await KService.rate(episodeIdentity, score: rating).description(description).response()
 
-			// Update current rating for the user.
-			self.attributes.givenRating = rating
-
-			// Update review only if the user removes it explicitly.
-			if description != nil {
-				self.attributes.givenReview = description
-			}
-
 			return rating
 		} catch let error as APIError {
 			print(error.localizedDescription)
@@ -196,13 +185,23 @@ extension Episode {
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
 	func deleteRating() async throws(APIError) -> Bool {
-		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for episodes.
-		print("deleteRating placeholder — Episode endpoint not yet available")
-		return false
+		let episodeIdentity = EpisodeIdentity(id: self.id)
+
+		do {
+			_ = try await KService.deleteRating(episodeIdentity).response()
+			return true
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return false
+		}
 	}
 
+	@MainActor
 	private func validateIsWatched() async -> Bool {
-		if self.attributes.watchStatus == nil {
+		if self.watchStatus == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please watch \(self.attributes.title) first.")
 
 			return false

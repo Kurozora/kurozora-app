@@ -15,6 +15,11 @@ extension Show {
 		return "https://kurozora.app/anime/\(self.attributes.slug)"
 	}
 
+	/// The authenticated user's library state for the show.
+	@MainActor var libraryAttributes: LibraryAttributes? {
+		return LibraryStore.shared.effectiveLibrary(forTrackableID: self.id.rawValue, kind: .shows)
+	}
+
 	/// Create a context menu configuration for the show.
 	///
 	/// - Parameters:
@@ -29,11 +34,9 @@ extension Show {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
-			guard let self = self else { return nil }
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 			return ShowDetailsCollectionViewController()(with: self.id)
-		}) { [weak self] _ in
-			guard let self = self else { return nil }
+		}) { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
@@ -49,9 +52,11 @@ extension Show {
 	/// - Returns: A `UIMenu` representing the context menu for the show.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
-		let libraryStatus = self.attributes.library?.status ?? .none
+		let library = self.libraryAttributes
+		let libraryStatus = library?.status ?? .none
 
 		if User.isSignedIn {
 			// Create "add to library" element
@@ -61,17 +66,15 @@ extension Show {
 
 		if User.isSignedIn {
 			// Create "mark as hidden" element
-			let hiddenStatus = self.attributes.library?.hiddenStatus
+			let hiddenStatus = library?.hiddenStatus
 
 			if hiddenStatus != .disabled {
 				let updateHiddenStatusTitle = hiddenStatus == .hidden ? L10n.showToPublic : L10n.hideFromPublic
 				let updateHiddenStatusImage = hiddenStatus == .hidden ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
 
-				let hideAction = UIAction(title: updateHiddenStatusTitle, image: updateHiddenStatusImage) { [weak self] _ in
-					guard let self = self else { return }
-					guard let isHidden = self.attributes.library?.isHidden else { return }
-
-					Task {
+				let hideAction = UIAction(title: updateHiddenStatusTitle, image: updateHiddenStatusImage) { _ in
+					Task { @MainActor in
+						guard let isHidden = self.libraryAttributes?.isHidden else { return }
 						await self.markAsHidden(!isHidden)
 					}
 				}
@@ -83,19 +86,16 @@ extension Show {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.webpageURLString
 		}
 		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyMenu)
@@ -107,9 +107,7 @@ extension Show {
 		// Create "remove from library" menu
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: L10n.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
-					guard let self = self else { return }
-
+				let removeFromLibraryAction = UIAction(title: L10n.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 					Task {
 						await self.removeFromLibrary()
 					}
@@ -152,14 +150,14 @@ extension Show {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	@MainActor
 	func addToLibrary() -> UIMenu {
-		let libraryStatus = self.attributes.library?.status ?? .none
+		let libraryStatus = self.libraryAttributes?.status ?? .none
 		let addToLibraryMenuTitle = libraryStatus == .none ? L10n.addToLibrary : L10n.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
-		LibraryStatus.all.forEach { [weak self] actionLibraryStatus in
-			guard let self = self else { return }
+		LibraryStatus.all.forEach { actionLibraryStatus in
 			let selectedLibraryStatus = libraryStatus == actionLibraryStatus
 
 			menuElements.append(UIAction(title: actionLibraryStatus.showStringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
@@ -174,15 +172,16 @@ extension Show {
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
+	@MainActor
 	fileprivate func addToLibrary(status: LibraryStatus) async {
 		do {
 			let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: status, itemIDs: [self.id]).response()
 
-			// Update entry in library
-			self.attributes.library?.update(using: libraryUpdateResponse.data)
 
-			let libraryAddToNotificationName = Notification.Name("AddTo\(status.sectionValue)Section")
-			NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+			// Apply the freshly-created rows into the local store immediately.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .shows)
+			}
 
 			// Request review
 			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
@@ -194,16 +193,15 @@ extension Show {
 		}
 	}
 
+	@MainActor
 	func removeFromLibrary() async {
 		do {
 			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemIDs: [self.id]).response()
 
-			// Update entry in library
-			self.attributes.library?.update(using: libraryUpdateResponse.data)
 
-			if let oldLibraryStatus = self.attributes.library?.status {
-				let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-				NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+			// Optimistic local write — drop the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
 			}
 		} catch let error as APIError {
 			print("----- Remove from library failed", error.message)
@@ -220,10 +218,14 @@ extension Show {
 		do {
 			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .shows, itemIDs: [self.id]).response()
 
-			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
-			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
-				"favoriteStatus": favoriteResponse.data.favoriteStatus
-			])
+
+			// Optimistic local write — flip the cached isFavorited flag.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyFavorite(favoriteResponse.data.favoriteStatus == .favorited, forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
+			}
+
+			// The favorites list covers kinds outside the local library store; refresh via notification.
+			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 		} catch let error as APIError {
 			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.message)
 			print("----- Toggle favorite failed:", error.message)
@@ -242,16 +244,20 @@ extension Show {
 
 		if await WorkflowController.shared.isSubscribed(on: viewController) {
 			do {
-				if self.attributes.library?.status == nil {
+				if self.libraryAttributes?.status == nil {
 					await self.addToLibrary(status: .planning)
 				}
 
 				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .shows, itemIDs: [self.id]).response()
 
-				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
-				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
-					"reminderStatus": updateReminderResponse.data.reminderStatus
-				])
+
+				// Optimistic local write — flip the cached isReminded flag.
+				if let slug = User.current?.attributes.slug {
+					LibraryStore.shared.applyReminder(updateReminderResponse.data.reminderStatus == .reminded, forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
+				}
+
+				// The reminders list fetches from the network; refresh via notification.
+				NotificationCenter.default.post(name: .KReminderModelsListDidChange, object: nil)
 			} catch let error as APIError {
 				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.message)
 				print("----- Toggle reminder failed:", error.message)
@@ -269,6 +275,7 @@ extension Show {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the show if rated successfully.
+	@MainActor
 	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
 		let showIdentity = ShowIdentity(id: self.id)
@@ -276,12 +283,10 @@ extension Show {
 		do {
 			_ = try await KService.rate(showIdentity, score: rating).description(description).response()
 
-			// Update current rating for the user.
-			self.attributes.library?.rating = rating
 
-			// Update review only if the user removes it explicitly.
-			if description != nil {
-				self.attributes.library?.review = description
+			// Optimistic local write — mirror the rate/review onto the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRating(score: rating, description: description, forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
 			}
 
 			return rating
@@ -297,26 +302,49 @@ extension Show {
 	/// Delete the user's rating and review for this show.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
+	@MainActor
 	func deleteRating() async throws(APIError) -> Bool {
-		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for shows.
-		print("deleteRating placeholder — Show endpoint not yet available")
-		return false
+		let showIdentity = ShowIdentity(id: self.id)
+
+		do {
+			_ = try await KService.deleteRating(showIdentity).response()
+
+			// Optimistic local write — clear the rate/review on the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRatingRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
+			}
+
+			return true
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return false
+		}
 	}
 
 	/// Update the hidden status of the show.
 	///
 	/// - Parameters:
 	///    - hidden: The boolean value determining whether to hide the show in the user's library.
+	@MainActor
 	func markAsHidden(_ hidden: Bool) async {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
 			_ = try await KService.updateInLibrary(.shows, itemIDs: [self.id]).hidden(hidden).response()
 
-			self.attributes.library?.isHidden = hidden
-			self.attributes.library?.hiddenStatus = HiddenStatus(hidden)
+			// Optimistic local write — mirror the hidden state onto the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyHidden(hidden, forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
+			}
+		} catch let error as APIError {
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
+			print("----- Update hidden status failed:", error.message)
 		} catch {
-			print(error.localizedDescription)
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.localizedDescription)
+			print("----- Update hidden status failed:", error.localizedDescription)
 		}
 	}
 
@@ -325,8 +353,8 @@ extension Show {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		guard self.attributes.library?.hiddenStatus != .disabled else { return }
-		let isHidden = self.attributes.library?.isHidden ?? false
+		guard self.libraryAttributes?.hiddenStatus != .disabled else { return }
+		let isHidden = self.libraryAttributes?.isHidden ?? false
 		await self.markAsHidden(!isHidden)
 	}
 
@@ -334,21 +362,25 @@ extension Show {
 	///
 	/// - Parameters:
 	///    - count: The number to update the rewatch count with.
+	@MainActor
 	func rewatch(for count: Int) async {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
 			_ = try await KService.updateInLibrary(.shows, itemIDs: [self.id]).rewatchCount(count).response()
 
-			// Update current rating for the user.
-			self.attributes.library?.rewatchCount = count
+			// Optimistic local write — mirror the rewatch count onto the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRewatchCount(count, forTrackableID: self.id.rawValue, userSlug: slug, kind: .shows)
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
 	}
 
+	@MainActor
 	private func validateIsInLibrary() async -> Bool {
-		if self.attributes.library?.status == nil {
+		if self.libraryAttributes?.status == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false

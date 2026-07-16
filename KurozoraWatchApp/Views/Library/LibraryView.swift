@@ -29,7 +29,7 @@ struct LibraryView: View {
 						EmptyStateView(systemImage: "rectangle.stack", message: "No shows in progress.\nStart watching on your iPhone!")
 					} else {
 						List(self.viewModel.shows, id: \.id) { show in
-							NavigationLink(destination: ShowDetailView(show: show)) {
+							NavigationLink(destination: ShowDetailView(show: show, initialLibraryStatus: .inProgress)) {
 								LibraryRowView(show: show)
 							}
 						}

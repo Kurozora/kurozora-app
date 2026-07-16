@@ -96,7 +96,7 @@ extension EpisodeDetailsCollectionViewController {
 					switch itemKind {
 					case .episode(let episode, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: episode.attributes.givenRating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 					default: break
 					}
 				case .writeAReview:

@@ -26,6 +26,16 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity?
+
+	/// The authenticated user's library state for the character.
+	var libraryAttributes: LibraryAttributes?
+
+	/// The entity tag of the last applied favorites overlay.
+	var favoritesOverlayETag: String?
+
+	/// The entity tag of the last applied reviews overlay.
+	var reviewsOverlayETag: String?
+
 	var character: Character! {
 		didSet {
 			self.title = self.character.attributes.name
@@ -121,6 +131,8 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 			}
 		}
 
+		await self.fetchUserOverlays()
+
 		do {
 			let reviewIdentityResponse = try await KService.reviews(for: characterIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
@@ -162,6 +174,51 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 		}
 	}
 
+	/// Fetches the auth user's favorite and review overlays for the current character.
+	private func fetchUserOverlays() async {
+		guard
+			let characterID = self.character?.id,
+			let userID = User.current?.id
+		else { return }
+		let userIdentity = UserIdentity(id: userID)
+
+		do {
+			let overlayResult = try await KService
+				.favoritesOverlay(forUser: userIdentity, kind: .characters, itemIDs: [characterID])
+				.response(ifNoneMatch: self.favoritesOverlayETag)
+
+			if case .modified(let response, let etag) = overlayResult {
+				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
+				libraryAttributes.isFavorited = !response.data.isEmpty
+				self.libraryAttributes = libraryAttributes
+				self.favoritesOverlayETag = etag
+			}
+		} catch {
+			print("favoritesOverlay fetch failed: \(error.localizedDescription)")
+		}
+
+		do {
+			let overlayResult = try await KService
+				.reviewsOverlay(forUser: userIdentity, kind: .characters, itemIDs: [characterID])
+				.response(ifNoneMatch: self.reviewsOverlayETag)
+
+			if case .modified(let response, let etag) = overlayResult {
+				let reviewEntry = response.data.first?.attributes
+				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
+				libraryAttributes.rating = reviewEntry?.score
+				libraryAttributes.review = reviewEntry?.description
+				self.libraryAttributes = libraryAttributes
+				self.reviewsOverlayETag = etag
+			}
+		} catch {
+			print("reviewsOverlay fetch failed: \(error.localizedDescription)")
+		}
+
+		await MainActor.run { [weak self] in
+			self?.updateDataSource()
+		}
+	}
+
 	override func makeMoreMenu() -> UIMenu? {
 		return self.character?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
@@ -173,7 +230,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 
 	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let character = self.character else { return nil }
-		return (.character(character), character.attributes.givenRating, nil)
+		return (.character(character), self.libraryAttributes?.rating, nil)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -185,8 +242,8 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 	}
 
 	override func didDeleteReview(at indexPath: IndexPath?) {
-		self.character?.attributes.givenRating = nil
-		self.character?.attributes.givenReview = nil
+		self.libraryAttributes?.rating = nil
+		self.libraryAttributes?.review = nil
 	}
 
 	// MARK: - Segue
@@ -214,6 +271,8 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 		case .reviewsListSegue:
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .character(self.character)
+			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
+			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 		case .showsListSegue:
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity

@@ -13,6 +13,9 @@ struct ShowDetailView: View {
 	// MARK: - Properties
 	let show: Show
 
+	/// The library status known by the presenting screen, if any.
+	var initialLibraryStatus: LibraryStatus?
+
 	@State private var libraryStatus: LibraryStatus?
 	@State private var isUpdatingStatus = false
 
@@ -82,7 +85,7 @@ struct ShowDetailView: View {
 		}
 		.navigationTitle(self.show.attributes.title)
 		.onAppear {
-			self.libraryStatus = self.show.attributes.library?.status
+			self.libraryStatus = self.initialLibraryStatus
 		}
 	}
 
@@ -99,11 +102,11 @@ struct ShowDetailView: View {
 
 		do {
 			let response = try await KService.addToLibrary(.shows, status: status, itemIDs: [self.show.id]).response()
-			self.libraryStatus = response.data.status
+			self.libraryStatus = response.data.attributes.status
 		} catch {
 			NSLog("Library status update failed: %@", error.localizedDescription)
 			// Revert on failure
-			self.libraryStatus = self.show.attributes.library?.status
+			self.libraryStatus = self.initialLibraryStatus
 		}
 	}
 }

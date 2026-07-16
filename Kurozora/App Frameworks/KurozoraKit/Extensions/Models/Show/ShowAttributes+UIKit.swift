@@ -53,9 +53,6 @@ extension Show.Attributes {
 //			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
 //		}
 
-		if let givenRating = self.library?.rating {
-			informationString += " · ☆ \(givenRating)"
-		}
 
 		return informationString
 	}

@@ -10,17 +10,13 @@ import KurozoraKit
 import UIKit
 
 /// A type whose library entry can be read and updated.
-protocol Libraryable: AnyObject {
+@MainActor
+protocol Libraryable {
 	/// The unique identifier of the model.
 	var id: KurozoraItemID { get }
 
-	/// The cached library attributes of the model.
+	/// The authenticated user's library state for the model.
 	var libraryAttributes: LibraryAttributes? { get }
-
-	/// Applies the given update to the model's library attributes.
-	///
-	/// - Parameter libraryUpdate: The update to merge into the library attributes.
-	func updateLibrary(using libraryUpdate: LibraryUpdate)
 
 	/// Toggles the favorite status of the model.
 	///
@@ -38,26 +34,8 @@ protocol Libraryable: AnyObject {
 	func toggleVisibility(on viewController: UIViewController?) async
 }
 
-extension Show: Libraryable {
-	var libraryAttributes: LibraryAttributes? { self.attributes.library }
+extension Show: Libraryable {}
 
-	func updateLibrary(using libraryUpdate: LibraryUpdate) {
-		self.attributes.library?.update(using: libraryUpdate)
-	}
-}
+extension Literature: Libraryable {}
 
-extension Literature: Libraryable {
-	var libraryAttributes: LibraryAttributes? { self.attributes.library }
-
-	func updateLibrary(using libraryUpdate: LibraryUpdate) {
-		self.attributes.library?.update(using: libraryUpdate)
-	}
-}
-
-extension Game: Libraryable {
-	var libraryAttributes: LibraryAttributes? { self.attributes.library }
-
-	func updateLibrary(using libraryUpdate: LibraryUpdate) {
-		self.attributes.library?.update(using: libraryUpdate)
-	}
-}
+extension Game: Libraryable {}

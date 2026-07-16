@@ -63,6 +63,9 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// The current scope of the search.
 	var currentScope: SearchScope = .kurozora
 
+	/// Debounced work item that fires a local-library search after the user pauses typing.
+	private var libraryAsYouTypeWorkItem: DispatchWorkItem?
+
 	/// The current types of the search.
 	var currentTypes: [SearchType] = []
 
@@ -138,6 +141,12 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>!
 	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>!
+
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
+	/// Observes playback changes so visible song cells reflect the currently-playing song.
+	private var playbackObserver: AnyCancellable?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -240,6 +249,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		}
 		self.configureView()
 		self.configureDataSource()
+		self.observeLibraryChanges()
+		self.observePlaybackChanges()
 
 		switch self.searchViewKind {
 		case .single(let type):
@@ -293,6 +304,80 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	// MARK: - Functions
 	func configureFilterBarButtonItem() {
 		self.filterBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(self.handleFilterBarButtonItemPressed(_:)))
+	}
+
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, userSlug: entry.userSlug, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
+	private func observePlaybackChanges() {
+		self.playbackObserver = Publishers.CombineLatest(MusicManager.shared.currentKKSongPublisher, MusicManager.shared.isPlayingPublisher)
+			.receive(on: RunLoop.main)
+			.sink { [weak self] _, _ in
+				self?.refreshVisibleMusicCells()
+			}
+	}
+
+	/// Refreshes the play button glyph and artwork of every visible song cell.
+	private func refreshVisibleMusicCells() {
+		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
+			guard
+				let indexPath = self.collectionView.indexPath(for: cell),
+				let song = self.fetchModel(at: indexPath) as Song?
+			else { continue }
+			cell.updatePlayButton(for: song)
+			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
+		}
+	}
+
+	/// Updates every search result whose underlying show/literature/game matches the given trackable identity.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
+		var matchedItems: [SearchResults.Item] = []
+		let currentSnapshot = self.dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			switch (item, kind) {
+			case (.show(let show), .shows) where show.id.rawValue == trackableID:
+				matchedItems.append(item)
+			case (.literature(let literature), .literatures) where literature.id.rawValue == trackableID:
+				matchedItems.append(item)
+			case (.game(let game), .games) where game.id.rawValue == trackableID:
+				matchedItems.append(item)
+			case (.showIdentity(let identity), .shows) where identity.id.rawValue == trackableID:
+				if let indexPath = self.dataSource.indexPath(for: item),
+				   let show = self.cache[indexPath] as? Show {
+					matchedItems.append(item)
+				}
+			case (.literatureIdentity(let identity), .literatures) where identity.id.rawValue == trackableID:
+				if let indexPath = self.dataSource.indexPath(for: item),
+				   let literature = self.cache[indexPath] as? Literature {
+					matchedItems.append(item)
+				}
+			case (.gameIdentity(let identity), .games) where identity.id.rawValue == trackableID:
+				if let indexPath = self.dataSource.indexPath(for: item),
+				   let game = self.cache[indexPath] as? Game {
+					matchedItems.append(item)
+				}
+			default:
+				break
+			}
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Returns the search types derived from the current tokens in the search field.
@@ -506,6 +591,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				guard let self = self else { return }
 				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 				guard signedIn else { return }
+				guard let userSlug = User.current?.attributes.slug else { return }
 
 				let searchTypes: [SearchType]
 				if #available(iOS 16.0, *) {
@@ -513,9 +599,96 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				} else {
 					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games]
 				}
-				await self.search(scope: searchScope, types: searchTypes, query: query, next: next, filter: filter)
+
+				await self.searchLocalLibrary(types: searchTypes, query: query, userSlug: userSlug)
 			}
 		}
+	}
+
+	/// Performs the library scope's search against the local store.
+	///
+	/// - Parameters:
+	///    - types: The library kinds (`shows`/`literatures`/`games`) to search.
+	///    - query: The trimmed search query.
+	///    - userSlug: The signed-in user's account slug.
+	fileprivate func searchLocalLibrary(types: [SearchType], query: String, userSlug: String) async {
+		guard !self.isRequestInProgress else { return }
+		self.isRequestInProgress = true
+		self.searchQuery = query
+
+		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+		if trimmed.isEmpty {
+			self.isRequestInProgress = false
+			self._prefersActivityIndicatorHidden = true
+			return
+		}
+
+		for type in types {
+			let kind: LibraryKind
+			switch type {
+			case .shows:
+				kind = .shows
+			case .literatures:
+				kind = .literatures
+			case .games:
+				kind = .games
+			default:
+				continue
+			}
+
+			let entries = LibraryStore.shared.search(
+				forUserSlug: userSlug,
+				kind: kind,
+				query: trimmed,
+				sortType: .alphabetically,
+				sortOption: .ascending,
+				offset: 0,
+				limit: 100
+			)
+
+			switch kind {
+			case .shows:
+				let identities = entries.map { ShowIdentity(id: KurozoraItemID($0.trackableID)) }
+				self.showIdentities.appendDistinct(contentsOf: identities)
+				self.showNextPageCursor = nil
+			case .literatures:
+				let identities = entries.map { LiteratureIdentity(id: KurozoraItemID($0.trackableID)) }
+				self.literatureIdentities.appendDistinct(contentsOf: identities)
+				self.literatureNextPageCursor = nil
+			case .games:
+				let identities = entries.map { GameIdentity(id: KurozoraItemID($0.trackableID)) }
+				self.gameIdentities.appendDistinct(contentsOf: identities)
+				self.gameNextPageCursor = nil
+			}
+		}
+
+		if types.count > 1 {
+			self.searchTypes = self.determineLocalResultTypes()
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+			#else
+			self.kSearchController.searchBar.setShowsScope(false, animated: true)
+			self.kSearchController.searchBar.showsBookmarkButton = true
+			#endif
+			self.setShowToolbar(true)
+		} else {
+			self.searchTypes = types
+		}
+
+		self.updateDataSource()
+		await self.prefetchCurrentSections()
+
+		self.isRequestInProgress = false
+		self._prefersActivityIndicatorHidden = true
+	}
+
+	/// Returns the non-empty library result types after a local search.
+	fileprivate func determineLocalResultTypes() -> [SearchType] {
+		var resultTypes: [SearchType] = []
+		if !self.showIdentities.isEmpty { resultTypes.append(.shows) }
+		if !self.literatureIdentities.isEmpty { resultTypes.append(.literatures) }
+		if !self.gameIdentities.isEmpty { resultTypes.append(.games) }
+		return resultTypes
 	}
 
 	fileprivate func search(scope: SearchScope, types: [SearchType], query: String, next: PageCursor?, filter: SearchFilter?) async {
@@ -1050,6 +1223,34 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		return true
 	}
 
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		// Search-as-you-type only applies to library scope.
+		guard self.currentScope == .library else { return }
+
+		self.libraryAsYouTypeWorkItem?.cancel()
+		guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+			self.resetSearchResults(for: nil)
+			self.updateDataSource()
+			return
+		}
+
+		let workItem = DispatchWorkItem { [weak self] in
+			guard let self = self else { return }
+
+			let types: [SearchType]
+			if #available(iOS 16.0, *) {
+				let tokenTypes = self.typesFromTokens()
+				types = tokenTypes.isEmpty ? self.availableTypesForCurrentScope() : tokenTypes
+			} else {
+				types = self.availableTypesForCurrentScope()
+			}
+
+			self.performSearch(with: searchText, in: .library, for: types, with: self.reusableFilter(for: types), next: nil)
+		}
+		self.libraryAsYouTypeWorkItem = workItem
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: workItem)
+	}
+
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		switch self.searchViewKind {
 		case .single:
@@ -1233,21 +1434,14 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemIDs: [modelID]).response()
 
-					switch cell.libraryKind {
-					case .shows:
-						(self.fetchModel(at: indexPath) as Show?)?.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .literatures:
-						(self.fetchModel(at: indexPath) as Literature?)?.attributes.library?.update(using: libraryUpdateResponse.data)
-					case .games:
-						(self.fetchModel(at: indexPath) as Game?)?.attributes.library?.update(using: libraryUpdateResponse.data)
+
+					if let slug = User.current?.attributes.slug {
+						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
 					}
 
 					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
@@ -1262,23 +1456,17 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemIDs: [modelID]).response()
+						_ = try await KService.removeFromLibrary(cell.libraryKind, itemIDs: [modelID]).response()
 
-						switch cell.libraryKind {
-						case .shows:
-							(self.fetchModel(at: indexPath) as Show?)?.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .literatures:
-							(self.fetchModel(at: indexPath) as Literature?)?.attributes.library?.update(using: libraryUpdateResponse.data)
-						case .games:
-							(self.fetchModel(at: indexPath) as Game?)?.attributes.library?.update(using: libraryUpdateResponse.data)
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
 						}
 
 						// Update entry in library
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)

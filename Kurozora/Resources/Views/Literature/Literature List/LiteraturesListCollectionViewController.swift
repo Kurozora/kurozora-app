@@ -60,6 +60,9 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -69,6 +72,51 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 
 	override var hasLoadedInitialData: Bool {
 		!self.literatureIdentities.isEmpty || !self.relatedLiteratures.isEmpty
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.observeLibraryChanges()
+	}
+
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug, kind: .literatures),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, isRemoval: true)
+			}
+		)
+	}
+
+	/// Updates every visible cell whose underlying literature matches the given entry's trackable identity.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, isRemoval: Bool) {
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = self.dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			switch item {
+			case .literatureIdentity(let identity):
+				if identity.id.rawValue == trackableID,
+				   let index = currentSnapshot.indexOfItem(item),
+				   let literature = self.cache[IndexPath(item: index, section: 0)] as? Literature {
+					matchedItems.append(item)
+				}
+			case .relatedLiterature(let relatedLiterature):
+				if relatedLiterature.literature.id.rawValue == trackableID {
+					matchedItems.append(item)
+				}
+			}
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	override func fetchItems() async {
@@ -374,13 +422,13 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 			Task {
 				do {
 					let libraryUpdateResponse = try await KService.addToLibrary(.literatures, status: value, itemIDs: [literature.id]).response()
-					literature.attributes.library?.update(using: libraryUpdateResponse.data)
+
+					if let slug = User.current?.attributes.slug {
+						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .literatures)
+					}
 
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 				} catch let error as APIError {
@@ -395,13 +443,14 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 				Task {
 					do {
 						let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, itemIDs: [literature.id]).response()
-						literature.attributes.library?.update(using: libraryUpdateResponse.data)
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: literature.id.rawValue, userSlug: slug, kind: .literatures)
+						}
 
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)

@@ -85,7 +85,7 @@ extension CharacterDetailsCollectionViewController {
 					switch itemKind {
 					case .character(let character, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: character.attributes.givenRating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 					default: break
 					}
 				case .writeAReview:

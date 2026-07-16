@@ -54,19 +54,16 @@ extension Studio {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: L10n.name, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyTitleAction = UIAction(title: L10n.name, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.name
 		}
-		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.webpageURLString
 		}
 		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyMenu)
@@ -125,13 +122,6 @@ extension Studio {
 		do {
 			_ = try await KService.rate(studioIdentity, score: rating).description(description).response()
 
-			// Update current rating for the user.
-			self.attributes.library?.rating = rating
-
-			// Update review only if the user removes it explicitly.
-			if description != nil {
-				self.attributes.library?.review = description
-			}
 
 			return rating
 		} catch let error as APIError {
@@ -147,8 +137,17 @@ extension Studio {
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
 	func deleteRating() async throws(APIError) -> Bool {
-		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for studios.
-		print("deleteRating placeholder — Studio endpoint not yet available")
-		return false
+		let studioIdentity = StudioIdentity(id: self.id)
+
+		do {
+			_ = try await KService.deleteRating(studioIdentity).response()
+			return true
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return false
+		}
 	}
 }

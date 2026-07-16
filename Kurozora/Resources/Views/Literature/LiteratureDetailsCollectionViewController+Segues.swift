@@ -54,6 +54,8 @@ extension LiteratureDetailsCollectionViewController {
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .literature(self.literature)
+			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
+			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 		case .castListSegue:
 			// Segue to cast list
 			guard let castListCollectionViewController = destination as? CastListCollectionViewController else { return }

@@ -16,4 +16,78 @@
             <fetchIndexElement property="updatedAt" type="Binary" order="descending"/>
         </fetchIndex>
     </entity>
+    <entity name="LocalLibraryEntry" representedClassName="LocalLibraryEntry" syncable="YES">
+        <attribute name="airingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="bannerBackgroundColor" optional="YES" attributeType="String"/>
+        <attribute name="bannerURL" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="durationCount" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
+        <attribute name="endedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="favoritedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="genresLocalized" optional="YES" attributeType="String"/>
+        <attribute name="mediaTypeName" optional="YES" attributeType="String"/>
+        <attribute name="isFavorited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isReminded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kindRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="popularityRank" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
+        <attribute name="posterBackgroundColor" optional="YES" attributeType="String"/>
+        <attribute name="posterURL" optional="YES" attributeType="String"/>
+        <attribute name="publicRating" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="remoteID" attributeType="String" defaultValueString=""/>
+        <attribute name="remindedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="reviewCreatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="reviewDescription" optional="YES" attributeType="String"/>
+        <attribute name="reviewID" optional="YES" attributeType="String"/>
+        <attribute name="reviewScore" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="reviewUpdatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="rewatchCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String"/>
+        <attribute name="sortTitle" optional="YES" attributeType="String"/>
+        <attribute name="startedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="statusName" optional="YES" attributeType="String"/>
+        <attribute name="tagline" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="trackableID" attributeType="String" defaultValueString=""/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userSlug" attributeType="String"/>
+        <fetchIndex name="byUserSlugKindUpdatedAt">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
+            <fetchIndexElement property="updatedAt" type="Binary" order="descending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserSlugKindStatusSortTitle">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
+            <fetchIndexElement property="status" type="Binary" order="ascending"/>
+            <fetchIndexElement property="sortTitle" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserSlugKindTrackable">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
+            <fetchIndexElement property="trackableID" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userSlug"/>
+                <constraint value="kindRaw"/>
+                <constraint value="remoteID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalSyncCursor" representedClassName="LocalSyncCursor" syncable="YES">
+        <attribute name="cursorID" optional="YES" attributeType="String"/>
+        <attribute name="cursorUpdatedAt" optional="YES" attributeType="String"/>
+        <attribute name="kindRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="syncedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userSlug" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userSlug"/>
+                <constraint value="kindRaw"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
 </model>

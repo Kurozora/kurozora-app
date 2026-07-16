@@ -15,6 +15,10 @@ import UIKit
 class GameDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Properties
 	var gameIdentity: GameIdentity?
+
+	/// The authenticated user's library state for the game.
+	var libraryAttributes: LibraryAttributes?
+
 	var game: Game! {
 		didSet {
 			self.title = self.game.attributes.title
@@ -46,6 +50,9 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	/// Observes local library mutations to refresh the header.
+	private var libraryObserver: LocalLibraryEntryObserver?
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
@@ -92,11 +99,67 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		super.viewDidLoad()
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	/// Subscribes to local library mutations targeting this game and its related items.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				guard let self = self else { return }
+				self.handleLibraryEntryChange(trackableID: entry.trackableID, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				guard let self = self else { return }
+				self.handleLibraryEntryChange(trackableID: removed.trackableID, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Reapplies the header's overlay when the change targets this game, then reconfigures
+	/// every item bound to the changed trackable identity.
+	private func handleLibraryEntryChange(trackableID: String, kind: LibraryKind, isRemoval: Bool) {
+		if kind == .games, trackableID == (self.gameIdentity?.id.rawValue ?? self.game?.id.rawValue) {
+			if isRemoval {
+				self.libraryAttributes = nil
+			} else {
+				self.applyLocalLibraryOverlay()
+			}
+			self.refreshTouchBarLibraryState()
+		}
+		self.reconfigureGameItems(forTrackableID: trackableID, kind: kind)
+	}
+
+	/// Reconfigures every item in the current snapshot — header and related games/shows/literatures —
+	/// whose underlying model matches the given trackable identity.
+	private func reconfigureGameItems(forTrackableID trackableID: String, kind: LibraryKind) {
+		guard let dataSource = self.dataSource else { return }
+		var snapshot = dataSource.snapshot()
+		let matchedItems = snapshot.itemIdentifiers.filter { item in
+			switch (item, kind) {
+			case (.game(let game, _), .games):
+				return game.id.rawValue == trackableID
+			case (.relatedGame(let relatedGame, _), .games):
+				return relatedGame.game.id.rawValue == trackableID
+			case (.relatedShow(let relatedShow, _), .shows):
+				return relatedShow.show.id.rawValue == trackableID
+			case (.relatedLiterature(let relatedLiterature, _), .literatures):
+				return relatedLiterature.literature.id.rawValue == trackableID
+			default:
+				return false
+			}
+		}
+		guard !matchedItems.isEmpty else { return }
+		snapshot.reconfigureItems(matchedItems)
+		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	// MARK: - Functions
@@ -105,7 +168,8 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		if self.game == nil {
 			do {
-				let gameResponse = try await KService.detail(gameIdentity).response()
+				// Catalog-only — per-user state comes from the local store and overlays.
+				let gameResponse = try await KService.detail(gameIdentity).embedded(false).response()
 				self.game = gameResponse.data.first
 
 				// Donate suggestion to Siri.
@@ -114,11 +178,13 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 				print(error.localizedDescription)
 			}
 
+			self.applyLocalLibraryOverlay()
 			self.configureNavBarButtons()
 		} else {
 			// Donate suggestion to Siri.
 			self.userActivity = self.game.openDetailUserActivity
 
+			self.applyLocalLibraryOverlay()
 			self.updateDataSource()
 			self.configureNavBarButtons()
 		}
@@ -180,6 +246,15 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 	}
 
+	/// Mirrors the local-store library state for this game into `libraryAttributes`.
+	private func applyLocalLibraryOverlay() {
+		guard let game = self.game,
+		      let slug = User.current?.attributes.slug
+		else { return }
+
+		self.libraryAttributes = LibraryStore.shared.overlay(forTrackableID: game.id.rawValue, userSlug: slug, kind: .games)
+	}
+
 	override func makeMoreMenu() -> UIMenu? {
 		return self.game?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
@@ -191,7 +266,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let game = self.game else { return nil }
-		return (.game(game), game.attributes.library?.rating, nil)
+		return (.game(game), self.libraryAttributes?.rating, nil)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -210,8 +285,8 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func didDeleteReview(at indexPath: IndexPath?) {
-		self.game?.attributes.library?.rating = nil
-		self.game?.attributes.library?.review = nil
+		self.libraryAttributes?.rating = nil
+		self.libraryAttributes?.review = nil
 	}
 
 	// MARK: - Segue

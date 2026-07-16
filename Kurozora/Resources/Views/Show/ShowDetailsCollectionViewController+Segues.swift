@@ -62,6 +62,8 @@ extension ShowDetailsCollectionViewController {
 			// Segue to reviews list
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .show(self.show)
+			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
+			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 		case .seasonsListSegue:
 			// Segue to seasons list
 			guard let seasonsCollectionViewController = destination as? SeasonsListCollectionViewController else { return }

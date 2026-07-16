@@ -59,6 +59,9 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -99,6 +102,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 		self.configureView()
 		self.configureDataSource()
+		self.observeLibraryChanges()
 
 		// Fetch ReCap details.
 		Task { [weak self] in
@@ -123,6 +127,57 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, userSlug: entry.userSlug, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Updates every cached show/literature/game whose identity matches the given trackable identity.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = self.dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			let matches: Bool
+			switch (item, kind) {
+			case (.showIdentity(let identity, _), .shows):
+				matches = identity.id.rawValue == trackableID
+			case (.literatureIdentity(let identity, _), .literatures):
+				matches = identity.id.rawValue == trackableID
+			case (.gameIdentity(let identity, _), .games):
+				matches = identity.id.rawValue == trackableID
+			default:
+				matches = false
+			}
+			guard matches else { continue }
+
+			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
+			switch kind {
+			case .shows:
+				guard let show = self.cache[indexPath] as? Show else { continue }
+			case .literatures:
+				guard let literature = self.cache[indexPath] as? Literature else { continue }
+			case .games:
+				guard let game = self.cache[indexPath] as? Game else { continue }
+			}
+			matchedItems.append(item)
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	func configureView() {
@@ -404,21 +459,19 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 					switch cell.libraryKind {
 					case .shows:
 						guard let show = self.cache[indexPath] as? Show else { return }
-						show.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .literatures:
 						guard let literature = self.cache[indexPath] as? Literature else { return }
-						literature.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .games:
 						guard let game = self.cache[indexPath] as? Game else { return }
-						game.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					if let slug = User.current?.attributes.slug {
+						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
 					}
 
 					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
@@ -438,21 +491,20 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 						switch cell.libraryKind {
 						case .shows:
 							guard let show = self.cache[indexPath] as? Show else { return }
-							show.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							guard let literature = self.cache[indexPath] as? Literature else { return }
-							literature.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
 							guard let game = self.cache[indexPath] as? Game else { return }
-							game.attributes.library?.update(using: libraryUpdateResponse.data)
+						}
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
 						}
 
 						// Update entry in library
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
@@ -478,7 +530,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			let show = self.cache[indexPath] as? Show
 		else { return }
 		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
 	}
 }
 

@@ -50,7 +50,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	lazy var theme: Theme? = nil
 	let quickLinks: [QuickLink] = [
 		QuickLink(title: L10n.quickLinkIAP, url: "https://kurozora.app/kb/iap"),
-		QuickLink(title: L10n.quickLinkPersonalisation, url: "https://kurozora.app/kb/personalisation"),
+		QuickLink(title: L10n.quickLinkPersonalization, url: "https://kurozora.app/kb/personalization"),
 		QuickLink(title: L10n.quickLinkWelcome, url: "https://kurozora.app/welcome"),
 	]
 	var upNextCategory: ExploreCategory?
@@ -93,6 +93,9 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
 	var resolvedSongs: [Int: MKSong] = [:]
+
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
 
 	/// Observes playback changes so visible song cells reflect the currently playing song.
 	private var playbackObserver: AnyCancellable?
@@ -164,6 +167,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibraryStoreDidHydrate(_:)), name: .KLibraryStoreDidHydrate, object: nil)
 
 		// Add Refresh Control to Collection View
 		#if DEBUG
@@ -179,6 +183,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		self.configureQuickActions()
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 		self.observePlaybackChanges()
 
 		// Fetch explore details.
@@ -186,6 +191,82 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			guard let self = self else { return }
 			await self.fetchExplore()
 		}
+	}
+
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, userSlug: entry.userSlug, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Reconfigures every cached show/literature/game item once the overlay cache is ready.
+	@objc private func handleLibraryStoreDidHydrate(_ notification: Notification) {
+		Task { @MainActor [weak self] in
+			guard let self = self, self.dataSource != nil else { return }
+
+			var matchedItems: [ItemKind] = []
+			let currentSnapshot = self.dataSource.snapshot()
+
+			for item in currentSnapshot.itemIdentifiers {
+				switch item {
+				case .showIdentity, .literatureIdentity, .gameIdentity:
+					guard let indexPath = self.dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
+					matchedItems.append(item)
+				default:
+					continue
+				}
+			}
+
+			guard !matchedItems.isEmpty else { return }
+			var snapshot = currentSnapshot
+			snapshot.reconfigureItems(matchedItems)
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
+	}
+
+	/// Updates every cached show/literature/game whose identity matches the given trackable identity.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = self.dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			let matches: Bool
+			switch (item, kind) {
+			case (.showIdentity(let identity, _), .shows):
+				matches = identity.id.rawValue == trackableID
+			case (.literatureIdentity(let identity, _), .literatures):
+				matches = identity.id.rawValue == trackableID
+			case (.gameIdentity(let identity, _), .games):
+				matches = identity.id.rawValue == trackableID
+			default:
+				matches = false
+			}
+			guard matches else { continue }
+
+			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
+			switch kind {
+			case .shows:
+				guard let show = self.cache[indexPath] as? Show else { continue }
+			case .literatures:
+				guard let literature = self.cache[indexPath] as? Literature else { continue }
+			case .games:
+				guard let game = self.cache[indexPath] as? Game else { continue }
+			}
+			matchedItems.append(item)
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Subscribes to playback changes so visible song cells reflect the currently playing song.

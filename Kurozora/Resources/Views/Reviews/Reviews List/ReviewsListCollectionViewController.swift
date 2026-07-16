@@ -31,6 +31,12 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 	// MARK: - Properties
 	var listType: ReviewsListType?
+
+	/// The authenticated user's rating for the reviewed item.
+	var givenRating: Double?
+
+	/// The authenticated user's review text for the reviewed item.
+	var givenReview: String?
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
@@ -205,33 +211,8 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 				self.reviews.remove(at: indexPath.item)
 			}
 
-			switch self.listType {
-			case .character(let character):
-				character.attributes.givenRating = nil
-				character.attributes.givenReview = nil
-			case .episode(let episode):
-				episode.attributes.givenRating = nil
-				episode.attributes.givenReview = nil
-			case .game(let game):
-				game.attributes.library?.rating = nil
-				game.attributes.library?.review = nil
-			case .literature(let literature):
-				literature.attributes.library?.rating = nil
-				literature.attributes.library?.review = nil
-			case .person(let person):
-				person.attributes.givenRating = nil
-				person.attributes.givenReview = nil
-			case .show(let show):
-				show.attributes.library?.rating = nil
-				show.attributes.library?.review = nil
-			case .song(let song):
-				song.attributes.library?.rating = nil
-				song.attributes.library?.review = nil
-			case .studio(let studio):
-				studio.attributes.library?.rating = nil
-				studio.attributes.library?.review = nil
-			case .none: break
-			}
+			self.givenRating = nil
+			self.givenReview = nil
 
 			self.updateDataSource()
 		}
@@ -394,17 +375,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 	}
 
 	private func currentGivenRating() -> Double? {
-		switch self.listType {
-		case .character(let character): return character.attributes.givenRating
-		case .episode(let episode): return episode.attributes.givenRating
-		case .game(let game): return game.attributes.library?.rating
-		case .literature(let literature): return literature.attributes.library?.rating
-		case .person(let person): return person.attributes.givenRating
-		case .show(let show): return show.attributes.library?.rating
-		case .song(let song): return song.attributes.library?.rating
-		case .studio(let studio): return studio.attributes.library?.rating
-		case .none: return nil
-		}
+		return self.givenRating
 	}
 }
 
@@ -419,28 +390,28 @@ extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDel
 		switch self.listType {
 		case .character(let character):
 			reviewTextEditorViewController.kind = .character(character)
-			reviewTextEditorViewController.rating = character.attributes.givenRating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .episode(let episode):
 			reviewTextEditorViewController.kind = .episode(episode)
-			reviewTextEditorViewController.rating = episode.attributes.givenRating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .game(let game):
 			reviewTextEditorViewController.kind = .game(game)
-			reviewTextEditorViewController.rating = game.attributes.library?.rating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .literature(let literature):
 			reviewTextEditorViewController.kind = .literature(literature)
-			reviewTextEditorViewController.rating = literature.attributes.library?.rating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .person(let person):
 			reviewTextEditorViewController.kind = .person(person)
-			reviewTextEditorViewController.rating = person.attributes.givenRating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .show(let show):
 			reviewTextEditorViewController.kind = .show(show)
-			reviewTextEditorViewController.rating = show.attributes.library?.rating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .song(let song):
 			reviewTextEditorViewController.kind = .song(song)
-			reviewTextEditorViewController.rating = song.attributes.library?.rating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .studio(let studio):
 			reviewTextEditorViewController.kind = .studio(studio)
-			reviewTextEditorViewController.rating = studio.attributes.library?.rating
+			reviewTextEditorViewController.rating = self.givenRating
 		case .none:
 			reviewTextEditorViewController.kind = nil
 			reviewTextEditorViewController.rating = nil

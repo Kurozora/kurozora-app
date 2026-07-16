@@ -141,10 +141,8 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 			switch kind {
 			case .shows:
 				guard let show = self.cache[indexPath] as? Show else { continue }
-				show.attributes.library = isRemoval ? nil : LibraryStore.shared.overlay(forTrackableID: trackableID, userSlug: userSlug, kind: .shows)
 			case .games:
 				guard let game = self.cache[indexPath] as? Game else { continue }
-				game.attributes.library = isRemoval ? nil : LibraryStore.shared.overlay(forTrackableID: trackableID, userSlug: userSlug, kind: .games)
 			case .literatures:
 				continue
 			}
@@ -243,13 +241,10 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 					switch cell.libraryKind {
 					case .shows:
 						guard let show = self.cache[indexPath] as? Show else { return }
-						show.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 					case .literatures:
 						guard let literature = self.cache[indexPath] as? Literature else { return }
-						literature.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 					case .games:
 						guard let game = self.cache[indexPath] as? Game else { return }
-						game.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 					}
 
 					if let slug = User.current?.attributes.slug {
@@ -259,9 +254,6 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
@@ -281,13 +273,10 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 						switch cell.libraryKind {
 						case .shows:
 							guard let show = self.cache[indexPath] as? Show else { return }
-							show.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 						case .literatures:
 							guard let literature = self.cache[indexPath] as? Literature else { return }
-							literature.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 						case .games:
 							guard let game = self.cache[indexPath] as? Game else { return }
-							game.attributes.library?.update(using: libraryUpdateResponse.data.attributes)
 						}
 
 						if let slug = User.current?.attributes.slug {
@@ -298,8 +287,6 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
@@ -325,7 +312,7 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			let show = self.cache[indexPath] as? Show
 		else { return }
 		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
 	}
 }
 

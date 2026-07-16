@@ -7,6 +7,9 @@
 //
 
 import CoreData
+import os.log
+
+private let persistenceLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "PersistenceController")
 
 /// Manages the Core Data stack for local persistence.
 ///
@@ -26,12 +29,21 @@ final class PersistenceController {
 
 	// MARK: - Initializers
 	private init() {
-		self.container = NSPersistentContainer(name: "KurozoraLocal")
-		self.container.loadPersistentStores { _, error in
-			if let error = error {
-				print("----- [PersistenceController] Failed to load store:", error.localizedDescription)
+		let container = NSPersistentContainer(name: "KurozoraLocal")
+		container.loadPersistentStores { storeDescription, error in
+			guard error != nil else { return }
+
+			// The store is a resyncable cache; rebuild it instead of blocking on migration.
+			guard let storeURL = storeDescription.url else { return }
+			do {
+				try container.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, type: .sqlite)
+				_ = try container.persistentStoreCoordinator.addPersistentStore(type: .sqlite, at: storeURL)
+				persistenceLogger.notice("Store was incompatible and has been rebuilt; the next sync repopulates it.")
+			} catch {
+				persistenceLogger.error("Store recovery failed: \(error.localizedDescription)")
 			}
 		}
+		self.container = container
 		self.container.viewContext.automaticallyMergesChangesFromParent = true
 		self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 	}
@@ -45,7 +57,20 @@ final class PersistenceController {
 		do {
 			try context.save()
 		} catch {
-			print("----- [PersistenceController] Save failed:", error.localizedDescription)
+			persistenceLogger.error("Save failed: \(error.localizedDescription)")
+		}
+	}
+
+	/// Runs the given block on a private background context and awaits its completion.
+	///
+	/// - Parameter block: The work to perform with a background `NSManagedObjectContext`.
+	func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) async {
+		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+			self.container.performBackgroundTask { context in
+				context.automaticallyMergesChangesFromParent = true
+				block(context)
+				continuation.resume()
+			}
 		}
 	}
 }

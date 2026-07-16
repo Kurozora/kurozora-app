@@ -63,11 +63,6 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 extension ShowDetailHeaderCollectionViewCell {
 	/// The shared settings used to initialize the cell.
 	private func sharedConfiguration() {
-		// Configure notifications
-		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
-
 		// Configure shadows
 		self.shadowView.applyShadow()
 		self.reminderButton.applyShadow()
@@ -139,8 +134,8 @@ extension ShowDetailHeaderCollectionViewCell {
 
 		self.sharedConfiguration()
 
-		// Configure library status
-		self.libraryStatus = literature.attributes.library?.status ?? .none
+		// Configure library status — overlay-first via `updateLibraryActions`.
+		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)?.status ?? .none
 		self.updateLibraryActions(using: literature)
 
 		// Configure title label
@@ -194,8 +189,8 @@ extension ShowDetailHeaderCollectionViewCell {
 
 		self.sharedConfiguration()
 
-		// Configure library status
-		self.libraryStatus = game.attributes.library?.status ?? .none
+		// Configure library status — overlay-first via `updateLibraryActions`.
+		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)?.status ?? .none
 		self.updateLibraryActions(using: game)
 
 		// Configure title label
@@ -256,22 +251,6 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatusString.capitalized(with: Locale.current)) ▾" : L10n.add.uppercased(with: Locale.current), for: .normal)
 	}
 
-	@objc func handleFavoriteToggle(_ notification: NSNotification) {
-		guard let favoriteStatus = notification.userInfo?["favoriteStatus"] as? FavoriteStatus else { return }
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.updateFavoriteStatus(favoriteStatus)
-		}
-	}
-
-	@objc func handleReminderToggle(_ notification: NSNotification) {
-		guard let reminderStatus = notification.userInfo?["reminderStatus"] as? ReminderStatus else { return }
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.updateReminderStatus(reminderStatus)
-		}
-	}
-
 	/// Updates the `favoriteButton` appearance with the favorite status of the show.
 	///
 	/// - Parameters:
@@ -324,9 +303,10 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - show: The show object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using show: Show, animated: Bool = false) {
-		self.updateLibraryStatus(show.attributes.library?.status)
-		self.updateFavoriteStatus(show.attributes.library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(show.attributes.library?.reminderStatus, animated: animated)
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: show.id.rawValue, kind: .shows)
+		self.updateLibraryStatus(library?.status)
+		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(library?.reminderStatus, animated: animated)
 	}
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the literature.
@@ -335,9 +315,10 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - literature: The literature object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
-		self.updateLibraryStatus(literature.attributes.library?.status)
-		self.updateFavoriteStatus(literature.attributes.library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(literature.attributes.library?.reminderStatus, animated: animated)
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
+		self.updateLibraryStatus(library?.status)
+		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(library?.reminderStatus, animated: animated)
 	}
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
@@ -346,9 +327,10 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - game: The game object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using game: Game, animated: Bool = false) {
-		self.updateLibraryStatus(game.attributes.library?.status)
-		self.updateFavoriteStatus(game.attributes.library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(game.attributes.library?.reminderStatus, animated: animated)
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
+		self.updateLibraryStatus(library?.status)
+		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(library?.reminderStatus, animated: animated)
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {

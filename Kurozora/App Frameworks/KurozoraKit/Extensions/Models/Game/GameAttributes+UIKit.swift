@@ -53,9 +53,6 @@ extension Game.Attributes {
 //			informationString += " · ✓ \(completionPercentage)/\(self.episodeCount)"
 //		}
 
-		if let givenRating = self.library?.rating {
-			informationString += " · ☆ \(givenRating)"
-		}
 
 		return informationString
 	}

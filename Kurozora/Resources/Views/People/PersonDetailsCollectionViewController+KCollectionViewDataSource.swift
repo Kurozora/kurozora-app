@@ -85,7 +85,7 @@ extension PersonDetailsCollectionViewController {
 					switch itemKind {
 					case .person(let person, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: person.attributes.givenRating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 					default: break
 					}
 				case .writeAReview:

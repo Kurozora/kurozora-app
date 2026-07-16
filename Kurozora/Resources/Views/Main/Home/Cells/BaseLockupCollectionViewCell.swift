@@ -71,11 +71,12 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			show.attributes.posterImage(imageView: self.posterImageView!)
 		}
 
-		// Configure library status
-		self.configureLibraryStatus(with: show.attributes.library?.status)
+		// Configure library status — overlay-first; the local store is the source of truth.
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: show.id.rawValue, kind: .shows)
+		self.configureLibraryStatus(with: library?.status)
 
 		// Configure reminder button
-		self.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		self.configureReminderButton(for: library?.reminderStatus)
 	}
 
 	/// Configure the cell with the `Literature` object.
@@ -116,11 +117,12 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			literature.attributes.posterImage(imageView: self.posterImageView!)
 		}
 
-		// Configure library status
-		self.configureLibraryStatus(with: literature.attributes.library?.status)
+		// Configure library status — see Show overload for the overlay-first rationale.
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
+		self.configureLibraryStatus(with: library?.status)
 
 		// Configure reminder button
-		self.configureReminderButton(for: literature.attributes.library?.reminderStatus)
+		self.configureReminderButton(for: library?.reminderStatus)
 	}
 
 	/// Configure the cell with the `Game` object.
@@ -161,11 +163,12 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			game.attributes.posterImage(imageView: self.posterImageView!)
 		}
 
-		// Configure library status
-		self.configureLibraryStatus(with: game.attributes.library?.status)
+		// Configure library status — see Show overload for the overlay-first rationale.
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
+		self.configureLibraryStatus(with: library?.status)
 
 		// Configure reminder button
-		self.configureReminderButton(for: game.attributes.library?.reminderStatus)
+		self.configureReminderButton(for: library?.reminderStatus)
 	}
 
 	func configureRank(_ rank: Int?) {

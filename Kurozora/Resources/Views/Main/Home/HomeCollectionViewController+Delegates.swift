@@ -143,21 +143,19 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 					switch cell.libraryKind {
 					case .shows:
 						let show = self.cache[indexPath] as? Show
-						show?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .literatures:
 						let literature = self.cache[indexPath] as? Literature
-						literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .games:
 						let game = self.cache[indexPath] as? Game
-						game?.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					if let slug = User.current?.attributes.slug {
+						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
 					}
 
 					// Update entry in library
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					// Request review
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
@@ -177,21 +175,20 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 						switch cell.libraryKind {
 						case .shows:
 							let show = self.cache[indexPath] as? Show
-							show?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							let literature = self.cache[indexPath] as? Literature
-							literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
 							let game = self.cache[indexPath] as? Game
-							game?.attributes.library?.update(using: libraryUpdateResponse.data)
+						}
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
 						}
 
 						// Update entry in library
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
@@ -215,7 +212,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let show = self.cache[indexPath] as? Show else { return }
 		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
 	}
 }
 

@@ -211,6 +211,9 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 				self.nextPageCursor = response.nextCursor
 				self.episodeIdentities.append(contentsOf: response.data)
 				self.episodeIdentities.removeDuplicates()
+
+				// Fetch the auth user's per-episode watched overlay in parallel with episode hydration.
+				await self.fetchWatchedOverlay()
 			case .search:
 				let searchResponse = try await KService.search(.kurozora, types: [.episodes], query: self.searchQuery).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).filter(nil).response()
 
@@ -238,6 +241,38 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			}
 		} catch {
 			print(error.localizedDescription)
+		}
+	}
+
+	/// Fetches the auth user's per-episode watched overlay for the current `episodeIdentities`.
+	private func fetchWatchedOverlay() async {
+		guard let userID = User.current?.id, !self.episodeIdentities.isEmpty else { return }
+		let userIdentity = UserIdentity(id: userID)
+		let episodeIDs = self.episodeIdentities.map(\.id)
+
+		do {
+			let requestedIDs = episodeIDs.map(\.rawValue)
+			let cachedETag = await WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
+			let overlayResult = try await KService
+				.watchedOverlay(forUser: userIdentity, episodes: episodeIDs)
+				.response(ifNoneMatch: cachedETag)
+
+			// A 304 means the cache already reflects the current state.
+			guard case .modified(let response, let etag) = overlayResult else { return }
+
+			// Record the overlay in the cache.
+			await WatchedStore.shared.apply(response.data, requestedIDs: requestedIDs)
+			await WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
+
+			// `apply(unchanged-snapshot)` is a no-op; mark every item for reconfiguration explicitly.
+			await MainActor.run { [weak self] in
+				guard let self = self else { return }
+				var newSnapshot = self.dataSource.snapshot()
+				newSnapshot.reconfigureItems(newSnapshot.itemIdentifiers)
+				self.dataSource.apply(newSnapshot)
+			}
+		} catch {
+			print("watchedOverlay fetch failed: \(error.localizedDescription)")
 		}
 	}
 

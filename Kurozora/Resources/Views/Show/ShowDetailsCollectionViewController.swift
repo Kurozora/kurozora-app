@@ -16,6 +16,10 @@ import UIKit
 class ShowDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
+
+	/// The authenticated user's library state for the show.
+	var libraryAttributes: LibraryAttributes?
+
 	var show: Show! {
 		didSet {
 			self.title = self.show.attributes.title
@@ -61,6 +65,12 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
 	var resolvedSongs: [Int: MKSong] = [:]
 
+	/// Observes local library mutations to refresh the header.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
+	/// Observes playback changes so visible song cells reflect the currently-playing song.
+	private var playbackObserver: AnyCancellable?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -105,12 +115,70 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		super.viewDidLoad()
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 		self.observePlaybackChanges()
 
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	/// Subscribes to local library mutations targeting this show and its related/more-by-studio items.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				guard let self = self else { return }
+				self.handleLibraryEntryChange(trackableID: entry.trackableID, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				guard let self = self else { return }
+				self.handleLibraryEntryChange(trackableID: removed.trackableID, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Reapplies the header's overlay when the change targets this show, then reconfigures
+	/// every item bound to the changed trackable identity.
+	private func handleLibraryEntryChange(trackableID: String, kind: LibraryKind, isRemoval: Bool) {
+		if kind == .shows, trackableID == (self.showIdentity?.id.rawValue ?? self.show?.id.rawValue) {
+			if isRemoval {
+				self.libraryAttributes = nil
+			} else {
+				self.applyLocalLibraryOverlay()
+			}
+			self.refreshTouchBarLibraryState()
+		}
+		self.reconfigureShowItems(forTrackableID: trackableID, kind: kind)
+	}
+
+	/// Reconfigures every item in the current snapshot — header, related shows/literatures/games,
+	/// and studio shows — whose underlying model matches the given trackable identity.
+	private func reconfigureShowItems(forTrackableID trackableID: String, kind: LibraryKind) {
+		guard let dataSource = self.dataSource else { return }
+		var snapshot = dataSource.snapshot()
+		let matchedItems = snapshot.itemIdentifiers.filter { item in
+			switch (item, kind) {
+			case (.show(let show, _), .shows):
+				return show.id.rawValue == trackableID
+			case (.showIdentity(let showIdentity, _), .shows):
+				return showIdentity.id.rawValue == trackableID
+			case (.relatedShow(let relatedShow, _), .shows):
+				return relatedShow.show.id.rawValue == trackableID
+			case (.relatedLiterature(let relatedLiterature, _), .literatures):
+				return relatedLiterature.literature.id.rawValue == trackableID
+			case (.relatedGame(let relatedGame, _), .games):
+				return relatedGame.game.id.rawValue == trackableID
+			default:
+				return false
+			}
+		}
+		guard !matchedItems.isEmpty else { return }
+		snapshot.reconfigureItems(matchedItems)
+		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
@@ -148,7 +216,8 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		if self.show == nil {
 			do {
-				let showResponse = try await KService.detail(showIdentity).response()
+				// Catalog-only — per-user state comes from the local store and overlays.
+				let showResponse = try await KService.detail(showIdentity).embedded(false).response()
 				self.show = showResponse.data.first
 
 				// Donate suggestion to Siri.
@@ -157,11 +226,13 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 				print(error.localizedDescription)
 			}
 
+			self.applyLocalLibraryOverlay()
 			self.configureNavBarButtons()
 		} else {
 			// Donate suggestion to Siri.
 			self.userActivity = self.show.openDetailUserActivity
 
+			self.applyLocalLibraryOverlay()
 			self.updateDataSource()
 			self.configureNavBarButtons()
 		}
@@ -243,6 +314,15 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 	}
 
+	/// Mirrors the local-store library state for this show into `libraryAttributes`.
+	private func applyLocalLibraryOverlay() {
+		guard let show = self.show,
+		      let slug = User.current?.attributes.slug
+		else { return }
+
+		self.libraryAttributes = LibraryStore.shared.overlay(forTrackableID: show.id.rawValue, userSlug: slug, kind: .shows)
+	}
+
 	override func makeMoreMenu() -> UIMenu? {
 		return self.show?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
@@ -254,7 +334,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let show = self.show else { return nil }
-		return (.show(show), show.attributes.library?.rating, show.attributes.library?.review)
+		return (.show(show), self.libraryAttributes?.rating, self.libraryAttributes?.review)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -273,8 +353,8 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func didDeleteReview(at indexPath: IndexPath?) {
-		self.show?.attributes.library?.rating = nil
-		self.show?.attributes.library?.review = nil
+		self.libraryAttributes?.rating = nil
+		self.libraryAttributes?.review = nil
 	}
 
 	// MARK: - Segue

@@ -53,6 +53,9 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -116,6 +119,7 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 		self.configureView()
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -135,6 +139,44 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, userSlug: entry.userSlug, kind: entry.kind, isRemoval: false)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind, isRemoval: true)
+			}
+		)
+	}
+
+	/// Updates every item whose embedded show/literature/game matches the given trackable identity.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = self.dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			switch (item, kind) {
+			case (.show(let show, _), .shows) where show.id.rawValue == trackableID:
+				matchedItems.append(item)
+			case (.literature(let literature, _), .literatures) where literature.id.rawValue == trackableID:
+				matchedItems.append(item)
+			case (.game(let game, _), .games) where game.id.rawValue == trackableID:
+				matchedItems.append(item)
+			default:
+				break
+			}
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Configures the profile bar button item.
@@ -506,20 +548,18 @@ extension SeasonalCollectionViewController: BaseLockupCollectionViewCellDelegate
 					switch cell.libraryKind {
 					case .shows:
 						let show = browseSeason.relationships.shows?.data[safe: indexPath.item] as? Show
-						show?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .literatures:
 						let literature = browseSeason.relationships.literatures?.data[safe: indexPath.item] as? Literature
-						literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 					case .games:
 						let game = browseSeason.relationships.games?.data[safe: indexPath.item] as? Game
-						game?.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					if let slug = User.current?.attributes.slug {
+						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
 					}
 
 					cell.libraryStatus = value
 					button.setTitle("\(title) ▾", for: .normal)
-
-					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 
 					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 				} catch let error as APIError {
@@ -538,20 +578,19 @@ extension SeasonalCollectionViewController: BaseLockupCollectionViewCellDelegate
 						switch cell.libraryKind {
 						case .shows:
 							let show = browseSeason.relationships.shows?.data[safe: indexPath.item] as? Show
-							show?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							let literature = browseSeason.relationships.literatures?.data[safe: indexPath.item] as? Literature
-							literature?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
 							let game = browseSeason.relationships.games?.data[safe: indexPath.item] as? Game
-							game?.attributes.library?.update(using: libraryUpdateResponse.data)
+						}
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
 						}
 
 						cell.libraryStatus = .none
 						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 
-						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
 						print("----- Remove from library failed", error.message)
@@ -576,7 +615,7 @@ extension SeasonalCollectionViewController: BaseLockupCollectionViewCellDelegate
 		guard let show = browseSeason.relationships.shows?.data[safe: indexPath.item] as? Show else { return }
 
 		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
 	}
 }
 

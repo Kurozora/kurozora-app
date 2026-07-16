@@ -99,15 +99,11 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KModelReminderIsToggled, object: nil)
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -248,15 +244,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		}
 	}
 
-	@objc private func handleFavoriteToggle(_ notification: NSNotification) {
+	/// Refreshes the touch-bar heart/bell icons from the current favorite/reminder state.
+	func refreshTouchBarLibraryState() {
 		#if targetEnvironment(macCatalyst)
 		let favorited = self.favoriteTarget?.libraryAttributes?.favoriteStatus == .favorited
 		self.toggleFavoriteTouchBarItem?.image = UIImage(systemName: favorited ? "heart.fill" : "heart")
-		#endif
-	}
 
-	@objc private func handleReminderToggle(_ notification: NSNotification) {
-		#if targetEnvironment(macCatalyst)
 		let reminded = self.reminderTarget?.libraryAttributes?.reminderStatus == .reminded
 		self.toggleReminderTouchBarItem?.image = UIImage(systemName: reminded ? "bell.fill" : "bell")
 		#endif
@@ -372,7 +365,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		guard let indexPath = self.collectionView.indexPath(for: cell),
 		      let show = self.reminderTarget(at: indexPath) else { return }
 		await show.toggleReminder(on: self)
-		cell.configureReminderButton(for: show.attributes.library?.reminderStatus)
+		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
 	}
 
 	// MARK: BaseDetailHeaderCollectionViewCellDelegate
@@ -628,9 +621,12 @@ extension DetailsCollectionViewController {
 					guard let self = self else { return }
 					do {
 						let response = try await KService.addToLibrary(libraryKind, status: value, itemIDs: [modelID]).response()
-						target.updateLibrary(using: response.data)
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.apply(response.data.relationships.libraries, forUserSlug: slug, kind: libraryKind)
+						}
+
 						didAdd(value, title)
-						NotificationCenter.default.post(name: Notification.Name("AddTo\(value.sectionValue)Section"), object: nil)
 						self.configureNavBarButtons()
 						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 					} catch let error as APIError {
@@ -646,10 +642,13 @@ extension DetailsCollectionViewController {
 				Task { [weak self] in
 					guard let self = self else { return }
 					do {
-						let response = try await KService.removeFromLibrary(libraryKind, itemIDs: [modelID]).response()
-						target.updateLibrary(using: response.data)
+						_ = try await KService.removeFromLibrary(libraryKind, itemIDs: [modelID]).response()
+
+						if let slug = User.current?.attributes.slug {
+							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: libraryKind)
+						}
+
 						didRemove(oldLibraryStatus)
-						NotificationCenter.default.post(name: Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section"), object: nil)
 						self.configureNavBarButtons()
 					} catch let error as APIError {
 						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)

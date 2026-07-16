@@ -20,6 +20,16 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	// MARK: - Properties
 	var songIdentity: SongIdentity?
+
+	/// The authenticated user's library state for the song.
+	var libraryAttributes: LibraryAttributes?
+
+	/// The entity tag of the last applied favorites overlay.
+	var favoritesOverlayETag: String?
+
+	/// The entity tag of the last applied reviews overlay.
+	var reviewsOverlayETag: String?
+
 	var song: KKSong! {
 		didSet {
 			self.title = self.song.attributes.title
@@ -137,8 +147,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		self.updateDataSource()
 	}
 
-	/// Fetches the auth user's favorite and review overlay for the current song
-	/// in parallel and applies the result to the song's library attributes.
+	/// Fetches the auth user's favorite and review overlays for the current song.
 	private func fetchUserOverlays() async {
 		guard
 			let songID = self.song?.id,
@@ -146,48 +155,36 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		else { return }
 		let userIdentity = UserIdentity(id: userID)
 
-		async let isFavorited: Bool? = {
-			do {
-				let response = try await KService
-					.favoritesOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
-					.response()
-				return !response.data.isEmpty
-			} catch {
-				print("favoritesOverlay fetch failed: \(error.localizedDescription)")
-				return nil
+		do {
+			let overlayResult = try await KService
+				.favoritesOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
+				.response(ifNoneMatch: self.favoritesOverlayETag)
+
+			if case .modified(let response, let etag) = overlayResult {
+				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
+				libraryAttributes.isFavorited = !response.data.isEmpty
+				self.libraryAttributes = libraryAttributes
+				self.favoritesOverlayETag = etag
 			}
-		}()
-
-		async let reviewEntry: ReviewsOverlayAttributes? = {
-			do {
-				let response = try await KService
-					.reviewsOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
-					.response()
-				return response.data.first?.attributes
-			} catch {
-				print("reviewsOverlay fetch failed: \(error.localizedDescription)")
-				return nil
-			}
-		}()
-
-		let (favorited, review) = await (isFavorited, reviewEntry)
-
-		// Song favorites and reviews aren't library-gated server-side, so the
-		// overlays may return state for a song that has no embedded library row.
-		// Materialise a fresh `LibraryAttributes` to hold the overlay results.
-		if self.song.attributes.library == nil, favorited == true || review != nil {
-			self.song.attributes.library = LibraryAttributes()
+		} catch {
+			print("favoritesOverlay fetch failed: \(error.localizedDescription)")
 		}
 
-		if let favorited = favorited {
-			self.song.attributes.library?.isFavorited = favorited
-		}
-		if let review = review {
-			self.song.attributes.library?.rating = review.score
-			self.song.attributes.library?.review = review.description
-		} else {
-			self.song.attributes.library?.rating = nil
-			self.song.attributes.library?.review = nil
+		do {
+			let overlayResult = try await KService
+				.reviewsOverlay(forUser: userIdentity, kind: .songs, itemIDs: [songID])
+				.response(ifNoneMatch: self.reviewsOverlayETag)
+
+			if case .modified(let response, let etag) = overlayResult {
+				let reviewEntry = response.data.first?.attributes
+				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
+				libraryAttributes.rating = reviewEntry?.score
+				libraryAttributes.review = reviewEntry?.description
+				self.libraryAttributes = libraryAttributes
+				self.reviewsOverlayETag = etag
+			}
+		} catch {
+			print("reviewsOverlay fetch failed: \(error.localizedDescription)")
 		}
 
 		await MainActor.run { [weak self] in
@@ -206,7 +203,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let song = self.song else { return nil }
-		return (.song(song), song.attributes.library?.rating, song.attributes.library?.review)
+		return (.song(song), self.libraryAttributes?.rating, self.libraryAttributes?.review)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -218,8 +215,8 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func didDeleteReview(at indexPath: IndexPath?) {
-		self.song?.attributes.library?.rating = nil
-		self.song?.attributes.library?.review = nil
+		self.libraryAttributes?.rating = nil
+		self.libraryAttributes?.review = nil
 	}
 
 	// MARK: - SectionFetchable
@@ -248,6 +245,8 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		case .reviewsListSegue:
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .song(self.song)
+			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
+			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }

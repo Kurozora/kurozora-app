@@ -25,6 +25,13 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 
 	// MARK: - Properties
 	var episodeIdentity: EpisodeIdentity?
+
+	/// The authenticated user's rating state for the episode.
+	var libraryAttributes: LibraryAttributes?
+
+	/// The entity tag of the last applied reviews overlay.
+	var reviewsOverlayETag: String?
+
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title
@@ -110,6 +117,16 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KUserStateDidChangeRemotely, object: nil)
+	}
+
+	/// Re-fetches the user overlays when another device or the website changes the user's state.
+	@objc func handleUserStateDidChangeRemotely(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			await self.fetchUserOverlays()
+			self.configureNavBarButtons()
+		}
 	}
 
 	// MARK: - Functions
@@ -130,6 +147,8 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			self.configureNavBarButtons()
 		}
 
+		await self.fetchUserOverlays()
+
 		do {
 			let reviewIdentityResponse = try await KService.reviews(for: episodeIdentity).cursor(nil).limit(10).response()
 			self.reviews = reviewIdentityResponse.data
@@ -149,6 +168,51 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		}
 	}
 
+	/// Fetches the auth user's watched and review overlays for the current episode.
+	private func fetchUserOverlays() async {
+		guard
+			let episodeID = self.episode?.id,
+			let userID = User.current?.id
+		else { return }
+		let userIdentity = UserIdentity(id: userID)
+
+		do {
+			let requestedIDs = [episodeID.rawValue]
+			let cachedETag = await WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
+			let overlayResult = try await KService
+				.watchedOverlay(forUser: userIdentity, episodes: [episodeID])
+				.response(ifNoneMatch: cachedETag)
+
+			if case .modified(let watchedResponse, let etag) = overlayResult {
+				await WatchedStore.shared.apply(watchedResponse.data, requestedIDs: requestedIDs)
+				await WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
+			}
+		} catch {
+			print("watchedOverlay fetch failed: \(error.localizedDescription)")
+		}
+
+		do {
+			let overlayResult = try await KService
+				.reviewsOverlay(forUser: userIdentity, kind: .episodes, itemIDs: [episodeID])
+				.response(ifNoneMatch: self.reviewsOverlayETag)
+
+			if case .modified(let response, let etag) = overlayResult {
+				let reviewEntry = response.data.first?.attributes
+				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
+				libraryAttributes.rating = reviewEntry?.score
+				libraryAttributes.review = reviewEntry?.description
+				self.libraryAttributes = libraryAttributes
+				self.reviewsOverlayETag = etag
+			}
+		} catch {
+			print("reviewsOverlay fetch failed: \(error.localizedDescription)")
+		}
+
+		await MainActor.run { [weak self] in
+			self?.updateDataSource()
+		}
+	}
+
 	override func makeMoreMenu() -> UIMenu? {
 		return self.episode?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
@@ -160,7 +224,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 
 	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
 		guard let episode = self.episode else { return nil }
-		return (.episode(episode), episode.attributes.givenRating, nil)
+		return (.episode(episode), self.libraryAttributes?.rating, self.libraryAttributes?.review)
 	}
 
 	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
@@ -188,8 +252,8 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	}
 
 	override func didDeleteReview(at indexPath: IndexPath?) {
-		self.episode?.attributes.givenRating = nil
-		self.episode?.attributes.givenReview = nil
+		self.libraryAttributes?.rating = nil
+		self.libraryAttributes?.review = nil
 	}
 
 	// MARK: - Segue
@@ -216,6 +280,8 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		case .reviewsListSegue:
 			guard let reviewsCollectionViewController = destination as? ReviewsListCollectionViewController else { return }
 			reviewsCollectionViewController.listType = .episode(self.episode)
+			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
+			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {

@@ -96,7 +96,7 @@ extension StudioDetailsCollectionViewController {
 					switch itemKind {
 					case .studio(let studio, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: studio.attributes.library?.rating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 					default: break
 					}
 				case .writeAReview:

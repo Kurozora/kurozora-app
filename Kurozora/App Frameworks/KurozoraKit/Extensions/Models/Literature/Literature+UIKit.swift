@@ -15,6 +15,11 @@ extension Literature {
 		return "https://kurozora.app/manga/\(self.attributes.slug)"
 	}
 
+	/// The authenticated user's library state for the literature.
+	@MainActor var libraryAttributes: LibraryAttributes? {
+		return LibraryStore.shared.effectiveLibrary(forTrackableID: self.id.rawValue, kind: .literatures)
+	}
+
 	/// Create a context menu configuration for the literature.
 	///
 	/// - Parameters:
@@ -29,11 +34,9 @@ extension Literature {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
-			guard let self = self else { return nil }
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 			return LiteratureDetailsCollectionViewController()(with: self.id)
-		}) { [weak self] _ in
-			guard let self = self else { return nil }
+		}) { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 	}
@@ -49,9 +52,10 @@ extension Literature {
 	/// - Returns: A `UIMenu` representing the context menu for the literature.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
-		let libraryStatus = self.attributes.library?.status ?? .none
+		let libraryStatus = self.libraryAttributes?.status ?? .none
 
 		if User.isSignedIn {
 			// Create "add to library" element
@@ -63,19 +67,16 @@ extension Literature {
 		var shareMenuChildren: [UIMenuElement] = []
 
 		// Create "copy" action
-		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.title
 		}
-		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { _ in
 			UIPasteboard.general.string = self.webpageURLString
 		}
 		let copyMenu = UIMenu(title: L10n.copy, image: UIImage(systemName: "doc.on.doc.fill"), children: [copyTitleAction, copyLinkAction])
 
 		// Create "share" action
-		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
 		shareMenuChildren.append(copyMenu)
@@ -87,8 +88,7 @@ extension Literature {
 		// Create "remove from library" menu
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: L10n.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
-					guard let self = self else { return }
+				let removeFromLibraryAction = UIAction(title: L10n.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 
 					Task {
 						await self.removeFromLibrary()
@@ -132,14 +132,14 @@ extension Literature {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	@MainActor
 	func addToLibrary() -> UIMenu {
-		let libraryStatus = self.attributes.library?.status ?? .none
+		let libraryStatus = self.libraryAttributes?.status ?? .none
 		let addToLibraryMenuTitle = libraryStatus == .none ? L10n.addToLibrary : L10n.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
-		LibraryStatus.all.forEach { [weak self] actionLibraryStatus in
-			guard let self = self else { return }
+		LibraryStatus.all.forEach { actionLibraryStatus in
 			let selectedLibraryStatus = libraryStatus == actionLibraryStatus
 
 			menuElements.append(UIAction(title: actionLibraryStatus.literatureStringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
@@ -154,15 +154,16 @@ extension Literature {
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
+	@MainActor
 	fileprivate func addToLibrary(status: LibraryStatus) async {
 		do {
 			let libraryUpdateResponse = try await KService.addToLibrary(.literatures, status: status, itemIDs: [self.id]).response()
 
-			// Update entry in library
-			self.attributes.library?.update(using: libraryUpdateResponse.data)
 
-			let libraryAddToNotificationName = Notification.Name("AddTo\(status.sectionValue)Section")
-			NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+			// Apply the freshly-created rows into the local store immediately.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .literatures)
+			}
 
 			// Request review
 			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
@@ -174,16 +175,15 @@ extension Literature {
 		}
 	}
 
+	@MainActor
 	func removeFromLibrary() async {
 		do {
 			let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, itemIDs: [self.id]).response()
 
-			// Update entry in library
-			self.attributes.library?.update(using: libraryUpdateResponse.data)
 
-			if let oldLibraryStatus = self.attributes.library?.status {
-				let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-				NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+			// Optimistic local write — drop the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
 			}
 		} catch let error as APIError {
 			print("----- Remove from library failed", error.message)
@@ -200,10 +200,14 @@ extension Literature {
 		do {
 			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .literatures, itemIDs: [self.id]).response()
 
-			self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
-			NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
-				"favoriteStatus": favoriteResponse.data.favoriteStatus,
-			])
+
+			// Optimistic local write — flip the cached isFavorited flag.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyFavorite(favoriteResponse.data.favoriteStatus == .favorited, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+			}
+
+			// The favorites list covers kinds outside the local library store; refresh via notification.
+			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 		} catch let error as APIError {
 			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.message)
 			print("----- Toggle favorite failed:", error.message)
@@ -221,16 +225,20 @@ extension Literature {
 
 		if await WorkflowController.shared.isSubscribed(on: viewController) {
 			do {
-				if self.attributes.library?.status == nil {
+				if self.libraryAttributes?.status == nil {
 					await self.addToLibrary(status: .planning)
 				}
 
 				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .literatures, itemIDs: [self.id]).response()
 
-				self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
-				NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
-					"reminderStatus": updateReminderResponse.data.reminderStatus,
-				])
+
+				// Optimistic local write — flip the cached isReminded flag.
+				if let slug = User.current?.attributes.slug {
+					LibraryStore.shared.applyReminder(updateReminderResponse.data.reminderStatus == .reminded, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+				}
+
+				// The reminders list fetches from the network; refresh via notification.
+				NotificationCenter.default.post(name: .KReminderModelsListDidChange, object: nil)
 			} catch let error as APIError {
 				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.message)
 				print("----- Toggle reminder failed:", error.localizedDescription)
@@ -248,6 +256,7 @@ extension Literature {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the literature if rated successfully.
+	@MainActor
 	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
 		let literatureIdentity = LiteratureIdentity(id: self.id)
@@ -255,12 +264,10 @@ extension Literature {
 		do {
 			_ = try await KService.rate(literatureIdentity, score: rating).description(description).response()
 
-			// Update current rating for the user.
-			self.attributes.library?.rating = rating
 
-			// Update review only if the user removes it explicitly.
-			if description != nil {
-				self.attributes.library?.review = description
+			// Optimistic local write — mirror the rate/review onto the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRating(score: rating, description: description, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
 			}
 
 			return rating
@@ -276,26 +283,50 @@ extension Literature {
 	/// Delete the user's rating and review for this literature.
 	///
 	/// - Returns: `true` if the backend accepted the deletion.
+	@MainActor
 	func deleteRating() async throws(APIError) -> Bool {
-		// TODO: wire up once KurozoraKit exposes deleteRating(_:) for literatures.
-		print("deleteRating placeholder — Literature endpoint not yet available")
-		return false
+		let literatureIdentity = LiteratureIdentity(id: self.id)
+
+		do {
+			_ = try await KService.deleteRating(literatureIdentity).response()
+
+			// Optimistic local write — clear the rate/review on the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyRatingRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+			}
+
+			return true
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return false
+		}
 	}
 
 	/// Update the hidden status of the literature.
 	///
 	/// - Parameters:
 	///    - hidden: The boolean value determining whether to hide the literature in the user's library.
+	@MainActor
 	func markAsHidden(_ hidden: Bool) async {
 		guard await self.validateIsInLibrary() else { return }
 
 		do {
 			_ = try await KService.updateInLibrary(.literatures, itemIDs: [self.id]).hidden(hidden).response()
 
-			self.attributes.library?.isHidden = hidden
-			self.attributes.library?.hiddenStatus = HiddenStatus(hidden)
+
+			// Optimistic local write — mirror the hidden state onto the cached entry.
+			if let slug = User.current?.attributes.slug {
+				LibraryStore.shared.applyHidden(hidden, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+			}
+		} catch let error as APIError {
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
+			print("----- Update hidden status failed:", error.message)
 		} catch {
-			print(error.localizedDescription)
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.localizedDescription)
+			print("----- Update hidden status failed:", error.localizedDescription)
 		}
 	}
 
@@ -304,13 +335,14 @@ extension Literature {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		guard self.attributes.library?.hiddenStatus != .disabled else { return }
-		let isHidden = self.attributes.library?.isHidden ?? false
+		guard self.libraryAttributes?.hiddenStatus != .disabled else { return }
+		let isHidden = self.libraryAttributes?.isHidden ?? false
 		await self.markAsHidden(!isHidden)
 	}
 
+	@MainActor
 	private func validateIsInLibrary() async -> Bool {
-		if self.attributes.library?.status == nil {
+		if self.libraryAttributes?.status == nil {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
