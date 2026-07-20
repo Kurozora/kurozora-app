@@ -15,7 +15,6 @@ import FLEX
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 	var authenticationCount = 0
-	var isUnreachable = false
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		print("----- Scene will connect to session.")
@@ -55,15 +54,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			self.isUnreachable = true
 		}
 
-		// Check network availability
-		if self.isUnreachable {
-			KurozoraDelegate.shared.showOfflineView(for: self.window)
-			return
-		}
-
-		// Initiate app
+		// Splash animation plays on cold launch only.
 		self.window?.rootViewController = SplashscreenViewController()
-		KurozoraDelegate.shared.initiateApp(window: self.window)
+		KurozoraDelegate.shared.startInterface(in: self.window, animatesSplash: true)
 
 		/// Call `updateAppShortcutParameters` on `ShortcutsProvider` so that the system updates the App Shortcut phrases with any changes to
 		/// the app's intent parameters. The app needs to call this function during its launch, in addition to any time the parameter values for
@@ -172,6 +165,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		if User.isSignedIn {
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		}
+
+		if User.isSignedIn, let slug = User.current?.attributes.slug {
+			Task.detached(priority: .utility) {
+				await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
+			}
+		}
 	}
 
 	func sceneDidBecomeActive(_ scene: UIScene) {
@@ -222,30 +221,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		print("----- Succeeded to restore from \(userActivity)")
-	}
-
-	static func createTwoColumnSplitViewController() -> UISplitViewController {
-		let navigationController = KNavigationController(rootViewController: SidebarViewController())
-		#if targetEnvironment(macCatalyst)
-		navigationController.extendedLayoutIncludesOpaqueBars = true
-		navigationController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
-		#endif
-		navigationController.navigationItem.largeTitleDisplayMode = .never
-
-		let tabBarController = KTabBarController()
-		let splitViewController = UISplitViewController(style: .doubleColumn)
-		splitViewController.primaryBackgroundStyle = .sidebar
-		splitViewController.preferredSplitBehavior = .tile
-		splitViewController.preferredDisplayMode = .oneBesideSecondary
-		#if targetEnvironment(macCatalyst)
-		splitViewController.extendedLayoutIncludesOpaqueBars = true
-		splitViewController.displayModeButtonVisibility = .never
-		splitViewController.minimumPrimaryColumnWidth = 220.0
-		splitViewController.maximumPrimaryColumnWidth = 220.0
-		splitViewController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
-		#endif
-		splitViewController.setViewController(navigationController, for: .primary)
-		splitViewController.setViewController(tabBarController, for: .compact)
-		return splitViewController
 	}
 }

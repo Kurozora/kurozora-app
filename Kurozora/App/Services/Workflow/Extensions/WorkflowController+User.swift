@@ -168,6 +168,8 @@ extension WorkflowController {
 		do {
 			_ = try await KService.signOut()
 			AccountManager.shared.remove(slug: slug)
+			await LibraryStore.shared.clear(forUserSlug: slug)
+			await WatchedStore.shared.clear()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
 		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.cantSignOutTitle, message: error.message)
@@ -190,6 +192,8 @@ extension WorkflowController {
 		do {
 			_ = try await KService.deleteAccount(password: password).response()
 			AccountManager.shared.remove(slug: slug)
+			await LibraryStore.shared.clear(forUserSlug: slug)
+			await WatchedStore.shared.clear()
 			return true
 		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.cantDeleteAccountTitle, message: error.message)

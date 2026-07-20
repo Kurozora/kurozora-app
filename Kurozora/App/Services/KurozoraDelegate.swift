@@ -91,15 +91,12 @@ final class KurozoraDelegate {
 			WatchSessionManager.shared.sendAuthState(slug: accountKey, token: account.authenticationToken)
 		}
 
-		// Done pre-init
-		return true
-	}
-
-	func initiateApp(window: UIWindow?) {
-		Task {
-			if await !KurozoraDelegate.shared.preInitiateApp(window: window) {
-				return
+		// Library sync once per launch
+		if User.isSignedIn, let slug = User.current?.attributes.slug {
+			Task.detached(priority: .utility) {
+				await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
 			}
+		}
 
 			// Register Home Screen shortcut items
 			await self.registerHomeScreenShortcutItems()

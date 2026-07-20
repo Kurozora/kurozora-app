@@ -37,6 +37,19 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Library
+extension Notification.Name {
+	/// A notification posted when the library store finishes hydrating its overlay cache.
+	static var KLibraryStoreDidHydrate: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	/// A notification posted when the library sync progress changes.
+	static var KLibrarySyncProgressDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Seasons
 extension Notification.Name {
 	/// A notification posted when the watch status of an season changes.

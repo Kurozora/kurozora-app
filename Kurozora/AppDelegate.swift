@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Observer notifications
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleSignInDidChangeForLibrarySync), name: .KUserIsSignedInDidChange, object: nil)
 
 		return true
 	}
@@ -91,6 +92,17 @@ extension AppDelegate {
 		}
 
 		return true
+	}
+}
+
+// MARK: - Library Sync
+extension AppDelegate {
+	/// Triggers a library sync when the signed-in state flips to signed-in.
+	@objc func handleSignInDidChangeForLibrarySync() {
+		guard User.isSignedIn, let slug = User.current?.attributes.slug else { return }
+		Task.detached(priority: .utility) {
+			await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
+		}
 	}
 }
 

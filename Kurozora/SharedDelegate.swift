@@ -49,12 +49,8 @@ struct SharedDelegate {
 			fatalError("Failed to get AppIdentifierPrefix from Info.plist")
 		}
 
-		#if DEBUG
-		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared.debug"
-		#else
 		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared"
-		#endif
-		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(accessGroup)").synchronizable(true).accessibility(.afterFirstUnlock)
-		self.services = KKServices(keychain: self.keychain)
+		self.keychain = Keychain(service: "Kurozora", accessGroup: accessGroup).synchronizable(true).accessibility(.afterFirstUnlock)
+		self.services = KKServices(keychain: self.keychain, webSocketAppKey: "8qrx4dilbbnlxuovxke8")
 	}
 }
