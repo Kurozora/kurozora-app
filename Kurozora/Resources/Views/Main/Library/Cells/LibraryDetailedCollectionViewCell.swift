@@ -32,66 +32,22 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configure(using show: Show, showSelectionIcon: Bool) {
-		super.configure(using: show, showSelectionIcon: showSelectionIcon)
+	override func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool) {
+		super.configure(using: entry, showSelectionIcon: showSelectionIcon)
 
-		// Configure title
 		self.primaryLabel.textColor = .white
+		self.userProgressLabel.text = entry.informationStringShort
+		entry.bannerImage(imageView: self.episodeImageView)
 
-		// Configure user progress
-		self.userProgressLabel.text = show.attributes.informationStringShort
-
-		// Configure episode preview
-		if let episodeBackgroundColor = show.attributes.banner?.backgroundColor {
-			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
-		}
-		show.attributes.bannerImage(imageView: self.episodeImageView)
-
-		// Configure poster
 		self.posterShadowView?.applyShadow()
-		self.posterImageView?.applyCornerRadius(12.0)
-		self.posterBorderView?.cornerRadius = 12.0
-		self.posterBorderView?.isHidden = false
-	}
 
-	override func configure(using literature: Literature, showSelectionIcon: Bool) {
-		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
-
-		// Configure title
-		self.primaryLabel.textColor = .white
-
-		// Configure user progress
-		self.userProgressLabel.text = literature.attributes.informationStringShort
-
-		// Configure episode preview
-		if let episodeBackgroundColor = literature.attributes.banner?.backgroundColor {
-			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
+		switch entry.kind {
+		case .shows, .games:
+			self.posterImageView?.applyCornerRadius(12.0)
+			self.posterBorderView?.cornerRadius = 12.0
+			self.posterBorderView?.isHidden = false
+		case .literatures:
+			break
 		}
-		literature.attributes.bannerImage(imageView: self.episodeImageView)
-
-		// Configure poster
-		self.posterShadowView?.applyShadow()
-	}
-
-	override func configure(using game: Game, showSelectionIcon: Bool) {
-		super.configure(using: game, showSelectionIcon: showSelectionIcon)
-
-		// Configure title
-		self.primaryLabel.textColor = .white
-
-		// Configure user progress
-		self.userProgressLabel.text = game.attributes.informationStringShort
-
-		// Configure episode preview
-		if let episodeBackgroundColor = game.attributes.banner?.backgroundColor {
-			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
-		}
-		game.attributes.bannerImage(imageView: self.episodeImageView)
-
-		// Configure poster
-		self.posterShadowView?.applyShadow()
-		self.posterImageView?.applyCornerRadius(12.0)
-		self.posterBorderView?.cornerRadius = 12.0
-		self.posterBorderView?.isHidden = false
 	}
 }

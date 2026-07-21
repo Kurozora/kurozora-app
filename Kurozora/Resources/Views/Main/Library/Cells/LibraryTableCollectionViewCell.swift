@@ -66,7 +66,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private var rowDividerLeadingConstraint: NSLayoutConstraint?
 
 	private lazy var literatureMask: UIImageView = {
-		UIImageView(image: UIImage(named: "book_mask"))
+		UIImageView(image: .bookMask)
 	}()
 
 	private var posterBoundsObservation: NSKeyValueObservation?
@@ -408,7 +408,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			posterImageView.bottomAnchor.constraint(equalTo: posterContainerView.bottomAnchor),
 		])
 
-		let overlayImageView = UIImageView(image: UIImage(named: "book_texture_overlay"))
+		let overlayImageView = UIImageView(image: .bookTextureOverlay)
 		overlayImageView.contentMode = .scaleAspectFill
 		overlayImageView.isUserInteractionEnabled = false
 		overlayImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -696,16 +696,10 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 
 		guard showPoster else { return }
+		guard case let .entry(entry) = item else { return }
 
 		if let posterImageView = self.posterImageView {
-			switch item {
-			case .show(let show):
-				show.attributes.posterImage(imageView: posterImageView)
-			case .literature(let literature):
-				literature.attributes.posterImage(imageView: posterImageView)
-			case .game(let game):
-				game.attributes.posterImage(imageView: posterImageView)
-			}
+			entry.posterImage(imageView: posterImageView)
 		}
 
 		if let cosmosView = self.inlineCosmosView {
@@ -812,118 +806,60 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Model accessors
 	private func isFavorited(_ item: LibraryListCollectionViewController.ItemKind) -> Bool {
-		switch item {
-		case .show(let show):
-			return show.attributes.library?.favoriteStatus == .favorited
-		case .literature(let literature):
-			return literature.attributes.library?.favoriteStatus == .favorited
-		case .game(let game):
-			return game.attributes.library?.favoriteStatus == .favorited
-		}
+		guard case let .entry(entry) = item else { return false }
+		return entry.isFavorited
 	}
 
 	private func hasReminder(_ item: LibraryListCollectionViewController.ItemKind) -> Bool {
-		switch item {
-		case .show(let show):
-			return show.attributes.library?.reminderStatus == .reminded
-		case .literature(let literature):
-			return literature.attributes.library?.reminderStatus == .reminded
-		case .game(let game):
-			return game.attributes.library?.reminderStatus == .reminded
-		}
+		guard case let .entry(entry) = item else { return false }
+		return entry.isReminded
 	}
 
 	private func hiddenStatus(for item: LibraryListCollectionViewController.ItemKind) -> HiddenStatus {
-		switch item {
-		case .show(let show):
-			return show.attributes.library?.hiddenStatus ?? .notHidden
-		case .literature(let literature):
-			return literature.attributes.library?.hiddenStatus ?? .notHidden
-		case .game(let game):
-			return game.attributes.library?.hiddenStatus ?? .notHidden
+		guard case let .entry(entry) = item else { return .notHidden }
+		// Visibility is only meaningful for shows; other kinds keep the affordance disabled.
+		switch entry.kind {
+		case .shows: return entry.isHidden ? .hidden : .notHidden
+		case .literatures, .games: return .disabled
 		}
 	}
 
 	private func rating(for item: LibraryListCollectionViewController.ItemKind) -> Double? {
-		switch item {
-		case .show(let show):
-			return show.attributes.library?.rating
-		case .literature(let literature):
-			return literature.attributes.library?.rating
-		case .game(let game):
-			return game.attributes.library?.rating
-		}
+		guard case let .entry(entry) = item else { return nil }
+		return entry.reviewScore?.doubleValue
 	}
 
+	/// Returns the rendered text for the given column of the supplied item.
+	///
+	/// - Parameters:
+	///    - column: The column whose value to render.
+	///    - item: The list item wrapping the local library entry.
+	///
+	/// - Returns: The rendered string.
 	static func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
-		switch item {
-		case .show(let show):
-			return self.text(for: column, show: show)
-		case .literature(let literature):
-			return self.text(for: column, literature: literature)
-		case .game(let game):
-			return self.text(for: column, game: game)
-		}
+		guard case let .entry(entry) = item else { return "" }
+		return self.text(for: column, entry: entry)
 	}
 
 	private func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
 		return Self.text(for: column, item: item)
 	}
 
-	private static func text(for column: LibraryColumn, show: Show) -> String {
-		let attributes = show.attributes
+	/// Returns the rendered text for the given column of the supplied entry.
+	///
+	/// - Parameters:
+	///    - column: The column whose value to render.
+	///    - entry: The local library entry whose value to read.
+	///
+	/// - Returns: The rendered string.
+	static func text(for column: LibraryColumn, entry: LocalLibraryEntry) -> String {
 		switch column {
-		case .title: return attributes.title
-		case .type: return attributes.type.name
-		case .status: return attributes.status.name
-		case .genres: return attributes.genres?.localizedJoined() ?? ""
-		case .year: return Self.formatYear(attributes.startedAt)
-		case .studio: return attributes.studio ?? ""
-		case .tvRating: return attributes.tvRating.name
-		case .episodes: return "\(attributes.episodeCount)"
-		case .dateAdded, .progress: return "" // TODO: Add support in API response
-		case .rating, .favorite, .reminder, .visibility, .chapters, .volumes, .editions: return ""
+		case .title: return entry.title ?? ""
+		case .type: return entry.mediaTypeName ?? ""
+		case .status: return entry.statusName ?? ""
+		case .genres: return entry.genresLocalized ?? ""
+		case .year, .studio, .tvRating, .episodes, .chapters, .volumes, .editions, .dateAdded, .progress: return ""
+		case .rating, .favorite, .reminder, .visibility: return ""
 		}
-	}
-
-	private static func text(for column: LibraryColumn, literature: Literature) -> String {
-		let attributes = literature.attributes
-		switch column {
-		case .title: return attributes.title
-		case .type: return attributes.type.name
-		case .status: return attributes.status.name
-		case .genres: return attributes.genres?.localizedJoined() ?? ""
-		case .year: return Self.formatYear(attributes.startedAt)
-		case .studio: return attributes.studio ?? ""
-		case .tvRating: return attributes.tvRating.name
-		case .chapters: return "\(attributes.chapterCount)"
-		case .volumes: return "\(attributes.volumeCount)"
-		case .dateAdded, .progress: return ""
-		case .rating, .favorite, .reminder, .visibility, .episodes, .editions: return ""
-		}
-	}
-
-	private static func text(for column: LibraryColumn, game: Game) -> String {
-		let attributes = game.attributes
-		switch column {
-		case .title: return attributes.title
-		case .type: return attributes.type.name
-		case .status: return attributes.status.name
-		case .genres: return attributes.genres?.localizedJoined() ?? ""
-		case .year: return Self.formatYear(attributes.startedAt)
-		case .studio: return attributes.studio ?? ""
-		case .tvRating: return attributes.tvRating.name
-		case .editions: return "\(attributes.editionCount)"
-		case .dateAdded, .progress: return ""
-		case .rating, .favorite, .reminder, .visibility, .episodes, .chapters, .volumes: return ""
-		}
-	}
-
-	private static func formatYear(_ date: Date?) -> String {
-		guard let date = date else {
-			return ""
-		}
-
-		return "\(Calendar.current.component(.year, from: date))"
 	}
 }

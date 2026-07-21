@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - Compact Layout Title Visibility
 extension LibraryListCollectionViewController {
-	/// Persists the given compact-layout title visibility, 
+	/// Persists the given compact-layout title visibility,
 	///
 	/// - Parameter visibility: The newly selected compact-layout title visibility.
 	func applyCompactTitleVisibility(_ visibility: LibraryCompactTitleVisibility) {
@@ -33,66 +33,116 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDelegate {
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleFavoriteAt indexPath: IndexPath) {
 		Task { [weak self] in
-			guard let self = self, let item = self.libraryItem(at: indexPath) else { return }
+			guard let self = self, let entry = self.entries[safe: indexPath.item] else { return }
 
-			await item.toggleFavorite(on: self)
+			await self.toggleFavorite(for: entry)
 			self.reconfigureAllSnapshotItems()
 		}
 	}
 
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleReminderAt indexPath: IndexPath) {
 		Task { [weak self] in
-			guard let self = self, let item = self.libraryItem(at: indexPath) else { return }
+			guard let self = self, let entry = self.entries[safe: indexPath.item] else { return }
 
-			await item.toggleReminder(on: self)
+			await self.toggleReminder(for: entry)
 			self.reconfigureAllSnapshotItems()
 		}
 	}
 
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didToggleVisibilityAt indexPath: IndexPath) {
 		Task { [weak self] in
-			guard let self = self, let item = self.libraryItem(at: indexPath) else { return }
+			guard let self = self, let entry = self.entries[safe: indexPath.item] else { return }
 
-			await item.toggleVisibility(on: self)
+			await self.toggleVisibility(for: entry)
 			self.reconfigureAllSnapshotItems()
 		}
 	}
 
 	func libraryTableCell(_ cell: LibraryTableCollectionViewCell, didUpdateRating rating: Double, at indexPath: IndexPath) {
 		Task { [weak self] in
-			guard let self = self else { return }
+			guard let self = self, let entry = self.entries[safe: indexPath.item] else { return }
 
-			do {
-				switch self.libraryKind {
-				case .shows:
-					guard let show = self.shows[safe: indexPath.item] else { return }
-					_ = try await show.rate(using: rating, description: nil)
-				case .literatures:
-					guard let literature = self.literatures[safe: indexPath.item] else { return }
-					_ = try await literature.rate(using: rating, description: nil)
-				case .games:
-					guard let game = self.games[safe: indexPath.item] else { return }
-					_ = try await game.rate(using: rating, description: nil)
-				}
-			} catch {
-				print("Rating update failed: \(error.localizedDescription)")
-			}
-
+			await self.rate(entry, score: rating)
 			self.reconfigureAllSnapshotItems()
 		}
 	}
 
 	// MARK: - Helpers
-	/// Returns the library item at the given index path, typed as ``Libraryable``.
+	/// Calls the toggle-favorite endpoint for the given entry and mirrors the result into the local store.
 	///
-	/// - Parameter indexPath: The index path whose item to resolve.
+	/// - Parameter entry: The local library entry to toggle.
+	private func toggleFavorite(for entry: LocalLibraryEntry) async {
+		guard let slug = User.current?.attributes.slug else { return }
+		let itemID = KurozoraItemID(entry.trackableID)
+		let kind = entry.kind
+
+		do {
+			let response = try await KService.toggleFavorite(inLibrary: kind, itemIDs: [itemID]).response()
+			let isFavorited = response.data.favoriteStatus == .favorited
+			LibraryStore.shared.applyFavorite(isFavorited, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
+		} catch {
+			print("Toggle favorite failed: \(error.localizedDescription)")
+		}
+	}
+
+	/// Calls the toggle-reminder endpoint for the given entry and mirrors the result into the local store.
 	///
-	/// - Returns: The show, literature, or game at `indexPath`, or `nil` if none exists.
-	fileprivate func libraryItem(at indexPath: IndexPath) -> Libraryable? {
-		switch self.libraryKind {
-		case .shows: return self.shows[safe: indexPath.item]
-		case .literatures: return self.literatures[safe: indexPath.item]
-		case .games: return self.games[safe: indexPath.item]
+	/// - Parameter entry: The local library entry to toggle.
+	private func toggleReminder(for entry: LocalLibraryEntry) async {
+		guard let slug = User.current?.attributes.slug else { return }
+		let itemID = KurozoraItemID(entry.trackableID)
+		let kind = entry.kind
+
+		do {
+			let response = try await KService.toggleReminder(inLibrary: kind, itemIDs: [itemID]).response()
+			let isReminded = response.data.reminderStatus == .reminded
+			LibraryStore.shared.applyReminder(isReminded, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
+		} catch {
+			print("Toggle reminder failed: \(error.localizedDescription)")
+		}
+	}
+
+	/// Flips the entry's hidden flag against the network and mirrors the result into the local store.
+	///
+	/// - Parameter entry: The local library entry to toggle.
+	private func toggleVisibility(for entry: LocalLibraryEntry) async {
+		guard let slug = User.current?.attributes.slug else { return }
+		let itemID = KurozoraItemID(entry.trackableID)
+		let kind = entry.kind
+		let nextHidden = !entry.isHidden
+
+		do {
+			_ = try await KService.updateInLibrary(kind, itemIDs: [itemID]).hidden(nextHidden).response()
+			entry.isHidden = nextHidden
+			entry.updatedAt = Date()
+			PersistenceController.shared.save(PersistenceController.shared.viewContext)
+		} catch {
+			print("Toggle visibility failed: \(error.localizedDescription)")
+		}
+	}
+
+	/// Submits a rating for the given entry and mirrors the result into the local store.
+	///
+	/// - Parameters:
+	///    - entry: The local library entry being rated.
+	///    - score: The star rating from `0` to `5`.
+	private func rate(_ entry: LocalLibraryEntry, score: Double) async {
+		guard let slug = User.current?.attributes.slug else { return }
+		let itemID = KurozoraItemID(entry.trackableID)
+		let kind = entry.kind
+
+		do {
+			switch kind {
+			case .shows:
+				_ = try await KService.rate(ShowIdentity(id: itemID), score: score).description(nil).response()
+			case .literatures:
+				_ = try await KService.rate(LiteratureIdentity(id: itemID), score: score).description(nil).response()
+			case .games:
+				_ = try await KService.rate(GameIdentity(id: itemID), score: score).description(nil).response()
+			}
+			LibraryStore.shared.applyRating(score: score, description: nil, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
+		} catch {
+			print("Rating update failed: \(error.localizedDescription)")
 		}
 	}
 }
@@ -145,32 +195,16 @@ extension LibraryListCollectionViewController: LibraryTableHeaderReusableViewDel
 			maxContentWidth = max(maxContentWidth, cell.contentWidth(for: column))
 		}
 
-		// Measure every loaded model
+		// Measure every loaded entry
 		let showPoster = self.libraryColumnPreferences.showPoster
-		let count = self.loadedItemCount
 
-		for index in 0 ..< count {
-			guard let item = self.itemKind(at: index) else { continue }
-			let text = LibraryTableCollectionViewCell.text(for: column, item: item)
+		for entry in self.entries {
+			let text = LibraryTableCollectionViewCell.text(for: column, entry: entry)
 			guard !text.isEmpty else { continue }
 			maxContentWidth = max(maxContentWidth, LibraryTableCollectionViewCell.fittedWidth(forText: text, column: column, showPoster: showPoster))
 		}
 
 		return maxContentWidth
-	}
-
-	// MARK: - Helpers
-	/// Returns the loaded item at the given offset, typed as ``LibraryListCollectionViewController/ItemKind``.
-	///
-	/// - Parameter index: The zero-based offset into the active library kind's loaded items.
-	///
-	/// - Returns: The wrapped item, or `nil` if the offset is out of range.
-	fileprivate func itemKind(at index: Int) -> ItemKind? {
-		switch self.libraryKind {
-		case .shows: return self.shows[safe: index].map { .show($0) }
-		case .literatures: return self.literatures[safe: index].map { .literature($0) }
-		case .games: return self.games[safe: index].map { .game($0) }
-		}
 	}
 }
 

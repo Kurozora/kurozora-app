@@ -11,10 +11,8 @@ import UIKit
 
 class LibraryListCollectionViewController: KCollectionViewController, TypedSegueHandling {
 	// MARK: - Properties
-	var shows: [Show] = []
-	var literatures: [Literature] = []
-	var games: [Game] = []
-	var nextPageCursor: PageCursor?
+	/// The local library entries currently loaded for the active kind and status.
+	var entries: [LocalLibraryEntry] = []
 	var sectionIndex: Int?
 	var totalLibraryItemsCount: Int = 0
 	var libraryKind: LibraryKind = UserSettings.libraryKind
@@ -22,7 +20,6 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	var librarySortType: LibrarySortType = .none
 	var librarySortTypeOption: LibrarySortOption = .none {
 		didSet {
-			self.nextPageCursor = nil
 			self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
 		}
 	}
@@ -36,14 +33,16 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 	/// The number of items currently loaded for the active library kind.
 	var loadedItemCount: Int {
-		switch self.libraryKind {
-		case .shows: return self.shows.count
-		case .literatures: return self.literatures.count
-		case .games: return self.games.count
-		}
+		return self.entries.count
 	}
 
 	private var lastEffectiveCellStyle: LibraryCellStyle?
+
+	/// Observes local library mutations to keep the list current.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
+	/// Whether a full refetch is already scheduled.
+	private var refetchScheduled = false
 
 	weak var delegate: LibraryListViewControllerDelegate?
 
@@ -90,11 +89,6 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if self.viewedUser == User.current {
-			NotificationCenter.default.addObserver(self, selector: #selector(addToLibrary(_:)), name: Notification.Name("AddTo\(self.libraryStatus.sectionValue)Section"), object: nil)
-			NotificationCenter.default.addObserver(self, selector: #selector(removeFromLibrary(_:)), name: Notification.Name("RemoveFrom\(self.libraryStatus.sectionValue)Section"), object: nil)
-		}
-
 		// Add bottom inset to avoid the tabbar obscuring the view
 		self.collectionView.contentInset.top = 50
 		self.collectionView.contentInset.bottom = 60
@@ -132,12 +126,76 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
 
 		self.configureDataSource()
+		self.rebindLibraryObserver()
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
 			await self.fetchLibrary()
 		}
+	}
+
+	/// Re-subscribes the library observer to the active `(userSlug, libraryKind)` pair.
+	func rebindLibraryObserver() {
+		guard self.viewedUser == User.current, let slug = User.current?.attributes.slug else {
+			self.libraryObserver = nil
+			return
+		}
+
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug, kind: self.libraryKind),
+			onChange: { [weak self] entry in
+				self?.handleLibraryEntryChange(entry)
+			},
+			onRemove: { [weak self] removed in
+				self?.handleLibraryEntryRemoval(removed)
+			}
+		)
+	}
+
+	/// Reacts to a library insert or update by reconfiguring, removing, or refetching as appropriate.
+	private func handleLibraryEntryChange(_ entry: LocalLibraryEntry) {
+		if entry.libraryStatus != self.libraryStatus {
+			// Match on trackable identity as well — a resynced row carries a new object ID.
+			guard let index = self.entries.firstIndex(where: { $0.objectID == entry.objectID || $0.trackableID == entry.trackableID }) else { return }
+			self.entries.remove(at: index)
+			self.totalLibraryItemsCount = max(0, self.totalLibraryItemsCount - 1)
+			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
+			self.updateDataSource()
+			return
+		}
+
+		var currentSnapshot = self.dataSource.snapshot()
+		let item = ItemKind.entry(entry)
+
+		if currentSnapshot.itemIdentifiers.contains(item) {
+			currentSnapshot.reconfigureItems([item])
+			self.dataSource.apply(currentSnapshot, animatingDifferences: false)
+		} else {
+			self.scheduleRefetch()
+		}
+	}
+
+	/// Schedules a coalesced full refetch from the local store.
+	private func scheduleRefetch() {
+		guard !self.refetchScheduled else { return }
+		self.refetchScheduled = true
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			self.refetchScheduled = false
+			self.entries = []
+			await self.fetchLibrary()
+		}
+	}
+
+	/// Removes a deleted entry from the list and decrements the displayed total count.
+	private func handleLibraryEntryRemoval(_ removed: LocalLibraryEntryObserver.RemovedEntry) {
+		guard let index = self.entries.firstIndex(where: { $0.objectID == removed.objectID || $0.trackableID == removed.trackableID }) else { return }
+		self.entries.remove(at: index)
+		self.totalLibraryItemsCount = max(0, self.totalLibraryItemsCount - 1)
+		self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
+		self.updateDataSource()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -151,13 +209,10 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 		if self.user == nil, self.libraryKind != UserSettings.libraryKind {
 			self.libraryKind = UserSettings.libraryKind
-			self.nextPageCursor = nil
 			self.libraryCellStyle = UserSettings.libraryCellStyle(for: self.libraryKind, status: self.libraryStatus)
 			self.libraryColumnPreferences = UserSettings.libraryColumnPreferences(for: self.libraryKind, status: self.libraryStatus)
 			self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
-			self.shows = []
-			self.literatures = []
-			self.games = []
+			self.entries = []
 			self.updateDataSource()
 
 			Task { [weak self] in
@@ -210,7 +265,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageCursor = nil
+		self.entries = []
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -259,11 +314,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	/// - Returns: The resolved item identifiers, preserving input order.
 	func selectedItemIDs(at indexPaths: [IndexPath]) -> [KurozoraItemID] {
 		return indexPaths.compactMap { indexPath in
-			switch self.libraryKind {
-			case .shows: return self.shows[safe: indexPath.item]?.id
-			case .literatures: return self.literatures[safe: indexPath.item]?.id
-			case .games: return self.games[safe: indexPath.item]?.id
-			}
+			self.entries[safe: indexPath.item].map { KurozoraItemID($0.trackableID) }
 		}
 	}
 
@@ -274,11 +325,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	/// - Returns: `true` if at least one item is not currently favorited; otherwise, `false`.
 	func anySelectedIsUnfavorited(at indexPaths: [IndexPath]) -> Bool {
 		return indexPaths.contains { indexPath in
-			switch self.libraryKind {
-			case .shows: return self.shows[safe: indexPath.item]?.attributes.library?.isFavorited != true
-			case .literatures: return self.literatures[safe: indexPath.item]?.attributes.library?.isFavorited != true
-			case .games: return self.games[safe: indexPath.item]?.attributes.library?.isFavorited != true
-			}
+			self.entries[safe: indexPath.item]?.isFavorited != true
 		}
 	}
 
@@ -289,11 +336,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	/// - Returns: `true` if at least one item has no reminder set; otherwise, `false`.
 	func anySelectedIsUnreminded(at indexPaths: [IndexPath]) -> Bool {
 		return indexPaths.contains { indexPath in
-			switch self.libraryKind {
-			case .shows: return self.shows[safe: indexPath.item]?.attributes.library?.isReminded != true
-			case .literatures: return self.literatures[safe: indexPath.item]?.attributes.library?.isReminded != true
-			case .games: return self.games[safe: indexPath.item]?.attributes.library?.isReminded != true
-			}
+			self.entries[safe: indexPath.item]?.isReminded != true
 		}
 	}
 
@@ -304,11 +347,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	/// - Returns: `true` if at least one item is not currently hidden; otherwise, `false`.
 	func anySelectedIsVisible(at indexPaths: [IndexPath]) -> Bool {
 		return indexPaths.contains { indexPath in
-			switch self.libraryKind {
-			case .shows: return self.shows[safe: indexPath.item]?.attributes.library?.isHidden != true
-			case .literatures: return self.literatures[safe: indexPath.item]?.attributes.library?.isHidden != true
-			case .games: return self.games[safe: indexPath.item]?.attributes.library?.isHidden != true
-			}
+			self.entries[safe: indexPath.item]?.isHidden != true
 		}
 	}
 
@@ -320,13 +359,8 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	func removeItems(at indexPaths: [IndexPath]) {
 		let sortedIndices = indexPaths.map { $0.item }.sorted(by: >)
 
-		switch self.libraryKind {
-		case .shows:
-			for index in sortedIndices where index < self.shows.count { self.shows.remove(at: index) }
-		case .literatures:
-			for index in sortedIndices where index < self.literatures.count { self.literatures.remove(at: index) }
-		case .games:
-			for index in sortedIndices where index < self.games.count { self.games.remove(at: index) }
+		for index in sortedIndices where index < self.entries.count {
+			self.entries.remove(at: index)
 		}
 
 		self.totalLibraryItemsCount = max(0, self.totalLibraryItemsCount - sortedIndices.count)
@@ -334,37 +368,20 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		self.updateDataSource()
 	}
 
-	/// Mutates the library attributes of the items at the given index paths in place.
+	/// Mutates the library attributes of the entries at the given index paths via the local store.
 	///
 	/// Reconfigures the affected cells without animating differences after the mutation.
 	///
 	/// - Parameters:
 	///    - indexPaths: The index paths of the items whose library attributes should change.
-	///    - mutate: A closure that receives the current attributes by reference for in-place mutation.
-	func mutateLibraryAttributes(at indexPaths: [IndexPath], _ mutate: (inout LibraryAttributes) -> Void) {
+	///    - mutate: A closure invoked with each entry for direct mutation.
+	func mutateLibraryAttributes(at indexPaths: [IndexPath], _ mutate: (LocalLibraryEntry) -> Void) {
 		var changedItems: [ItemKind] = []
 
 		for indexPath in indexPaths {
-			switch self.libraryKind {
-			case .shows:
-				if var library = self.shows[safe: indexPath.item]?.attributes.library {
-					mutate(&library)
-					self.shows[indexPath.item].attributes.library = library
-					changedItems.append(.show(self.shows[indexPath.item]))
-				}
-			case .literatures:
-				if var library = self.literatures[safe: indexPath.item]?.attributes.library {
-					mutate(&library)
-					self.literatures[indexPath.item].attributes.library = library
-					changedItems.append(.literature(self.literatures[indexPath.item]))
-				}
-			case .games:
-				if var library = self.games[safe: indexPath.item]?.attributes.library {
-					mutate(&library)
-					self.games[indexPath.item].attributes.library = library
-					changedItems.append(.game(self.games[indexPath.item]))
-				}
-			}
+			guard let entry = self.entries[safe: indexPath.item] else { continue }
+			mutate(entry)
+			changedItems.append(.entry(entry))
 		}
 
 		guard !changedItems.isEmpty else { return }
@@ -375,20 +392,19 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
+		guard let entry = sender as? LocalLibraryEntry else { return }
+		let itemID = KurozoraItemID(entry.trackableID)
 
 		switch identifier {
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.show = show
+			showDetailsCollectionViewController.showIdentity = ShowIdentity(id: itemID)
 		case .literatureDetailsSegue:
 			guard let literatureDetailCollectionViewController = destination as? LiteratureDetailsCollectionViewController else { return }
-			guard let literature = sender as? Literature else { return }
-			literatureDetailCollectionViewController.literature = literature
+			literatureDetailCollectionViewController.literatureIdentity = LiteratureIdentity(id: itemID)
 		case .gameDetailsSegue:
 			guard let gameDetailCollectionViewController = destination as? GameDetailsCollectionViewController else { return }
-			guard let game = sender as? Game else { return }
-			gameDetailCollectionViewController.game = game
+			gameDetailCollectionViewController.gameIdentity = GameIdentity(id: itemID)
 		}
 	}
 }

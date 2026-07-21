@@ -16,16 +16,12 @@ extension LibraryListCollectionViewController {
 			return
 		}
 
+		guard let entry = self.entries[safe: indexPath.item] else { return }
+
 		switch self.libraryKind {
-		case .shows:
-			guard let show = self.shows[safe: indexPath.item] else { return }
-			self.show(.showDetailsSegue, sender: show)
-		case .literatures:
-			guard let literature = self.literatures[safe: indexPath.item] else { return }
-			self.show(.literatureDetailsSegue, sender: literature)
-		case .games:
-			guard let game = self.games[safe: indexPath.item] else { return }
-			self.show(.gameDetailsSegue, sender: game)
+		case .shows: self.show(.showDetailsSegue, sender: entry)
+		case .literatures: self.show(.literatureDetailsSegue, sender: entry)
+		case .games: self.show(.gameDetailsSegue, sender: entry)
 		}
 	}
 
@@ -37,27 +33,10 @@ extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		guard !self.isEditing else { return }
 
-		switch self.libraryKind {
-		case .shows:
-			if indexPath.item == self.shows.count - 20 && self.nextPageCursor != nil {
-				Task { [weak self] in
-					guard let self = self else { return }
-					await self.fetchLibrary()
-				}
-			}
-		case .literatures:
-			if indexPath.item == self.literatures.count - 20 && self.nextPageCursor != nil {
-				Task { [weak self] in
-					guard let self = self else { return }
-					await self.fetchLibrary()
-				}
-			}
-		case .games:
-			if indexPath.item == self.games.count - 20 && self.nextPageCursor != nil {
-				Task { [weak self] in
-					guard let self = self else { return }
-					await self.fetchLibrary()
-				}
+		if self.entries.count - 20 < indexPath.item && self.entries.count < self.totalLibraryItemsCount {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchLibrary()
 			}
 		}
 	}
@@ -95,16 +74,7 @@ extension LibraryListCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard !self.isEditing else { return nil }
-
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-
-		switch self.libraryKind {
-		case .shows:
-			return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .literatures:
-			return self.literatures[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .games:
-			return self.games[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		}
+		return self.entries[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

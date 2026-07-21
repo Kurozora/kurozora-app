@@ -10,14 +10,12 @@ import KurozoraKit
 import UIKit
 
 extension LibraryListCollectionViewController {
-	/// Fetches the library items for the current user and applies them to the data source.
+	/// Fetches the library entries for the current user from the local store and applies them to the data source.
 	func fetchLibrary() async {
-		guard let user = self.viewedUser else {
+		guard self.viewedUser != nil else {
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
-				self.shows.removeAll()
-				self.literatures.removeAll()
-				self.games.removeAll()
+				self.entries.removeAll()
 				self.collectionView.reloadData {
 					self.toggleEmptyDataView()
 				}
@@ -49,48 +47,7 @@ extension LibraryListCollectionViewController {
 			#endif
 		}
 
-		let userIdentity = UserIdentity(id: user.id)
-
-		let isFirstPage = self.nextPageCursor == nil
-
-		do {
-			let libraryResponse = try await KService
-				.library(forUser: userIdentity, kind: self.libraryKind, status: self.libraryStatus)
-				.sorted(by: self.librarySortType, self.librarySortTypeOption)
-				.cursor(self.nextPageCursor)
-				.limit(isFirstPage ? 25 : 100)
-				.response()
-
-			self.totalLibraryItemsCount = libraryResponse.total ?? 0
-
-			if self.isPageVisible {
-				self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
-			}
-
-			if isFirstPage {
-				switch self.libraryKind {
-				case .shows:
-					self.shows = []
-				case .literatures:
-					self.literatures = []
-				case .games:
-					self.games = []
-				}
-			}
-
-			self.nextPageCursor = libraryResponse.nextCursor
-			if let shows = libraryResponse.data.shows {
-				self.shows.appendDistinct(contentsOf: shows)
-			}
-			if let literatures = libraryResponse.data.literatures {
-				self.literatures.appendDistinct(contentsOf: literatures)
-			}
-			if let games = libraryResponse.data.games {
-				self.games.appendDistinct(contentsOf: games)
-			}
-		} catch {
-			print(error.localizedDescription)
-		}
+		self.fetchLibraryFromLocalStore()
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
@@ -109,25 +66,37 @@ extension LibraryListCollectionViewController {
 		#endif
 	}
 
-	/// Refetches the library in response to an "AddTo<Status>Section" notification.
-	///
-	/// - Parameter notification: The broadcast notification that triggered the refetch.
-	@objc func addToLibrary(_ notification: NSNotification) {
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchLibrary()
+	/// Reads a page of library entries from the local store and appends them to ``entries``.
+	private func fetchLibraryFromLocalStore() {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		let isFirstPage = self.entries.isEmpty
+		let pageSize = isFirstPage ? 25 : 100
+		let offset = self.entries.count
+
+		let page = LibraryStore.shared.entries(
+			forUserSlug: slug,
+			kind: self.libraryKind,
+			status: self.libraryStatus,
+			sortType: self.librarySortType,
+			sortOption: self.librarySortTypeOption,
+			offset: offset,
+			limit: pageSize
+		)
+		let total = LibraryStore.shared.count(forUserSlug: slug, kind: self.libraryKind, status: self.libraryStatus)
+		self.totalLibraryItemsCount = total
+
+		if self.isPageVisible {
+			self.delegate?.libraryListViewController(updateTotalCount: total)
+		}
+
+		if isFirstPage {
+			self.entries = page
+		} else {
+			self.entries.append(contentsOf: page)
 		}
 	}
 
-	/// Refetches the library in response to a "RemoveFrom<Status>Section" notification.
-	///
-	/// - Parameter notification: The broadcast notification that triggered the refetch.
-	@objc func removeFromLibrary(_ notification: NSNotification) {
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchLibrary()
-		}
-	}
 }
 
 // MARK: - Empty Data View

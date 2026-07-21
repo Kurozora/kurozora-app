@@ -24,42 +24,23 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configure(using show: Show, showSelectionIcon: Bool) {
-		super.configure(using: show, showSelectionIcon: showSelectionIcon)
+	override func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool) {
+		super.configure(using: entry, showSelectionIcon: showSelectionIcon)
 
-		self.informationLabel.text = show.attributes.informationStringShort
+		self.informationLabel.text = entry.informationStringShort
 		self.estimatedAiringLabel.text = ""
-		self.secondaryLabel.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
 
-		if show.attributes.status.name == "Currently Airing",
-		   let nextBroadcastAt = show.attributes.nextBroadcastAt {
-			self.estimatedAiringLabel.startCountdown(to: nextBroadcastAt, duration: show.attributes.durationCount)
+		let tagline = entry.tagline ?? ""
+		self.secondaryLabel.text = tagline.isEmpty ? entry.genresLocalized : tagline
+
+		let isAiring: Bool
+		switch entry.kind {
+		case .shows: isAiring = entry.statusName == "Currently Airing"
+		case .literatures, .games: isAiring = entry.statusName == "Currently Publishing"
 		}
-	}
 
-	override func configure(using literature: Literature, showSelectionIcon: Bool) {
-		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
-
-		self.informationLabel.text = literature.attributes.informationStringShort
-		self.estimatedAiringLabel.text = ""
-		self.secondaryLabel.text = (literature.attributes.tagline ?? "").isEmpty ? literature.attributes.genres?.localizedJoined() : literature.attributes.tagline
-
-		if literature.attributes.status.name == "Currently Publishing",
-		   let publicationDate = literature.attributes.publicationDate {
-			self.estimatedAiringLabel.startCountdown(to: publicationDate, duration: literature.attributes.durationCount)
-		}
-	}
-
-	override func configure(using game: Game, showSelectionIcon: Bool) {
-		super.configure(using: game, showSelectionIcon: showSelectionIcon)
-
-		self.informationLabel.text = game.attributes.informationStringShort
-		self.estimatedAiringLabel.text = ""
-		self.secondaryLabel.text = (game.attributes.tagline ?? "").isEmpty ? game.attributes.genres?.localizedJoined() : game.attributes.tagline
-
-		if game.attributes.status.name == "Currently Publishing",
-		   let publicationDate = game.attributes.publicationDate {
-			self.estimatedAiringLabel.startCountdown(to: publicationDate, duration: game.attributes.durationCount)
+		if isAiring, let airingDate = entry.airingDate, let durationCount = entry.durationCount {
+			self.estimatedAiringLabel.startCountdown(to: airingDate, duration: durationCount.intValue)
 		}
 	}
 }

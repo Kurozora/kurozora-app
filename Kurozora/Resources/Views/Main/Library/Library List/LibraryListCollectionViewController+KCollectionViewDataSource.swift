@@ -6,6 +6,7 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import CoreData
 import KurozoraKit
 import UIKit
 
@@ -35,26 +36,12 @@ extension LibraryListCollectionViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(effectiveStyle.identifierString)")
 			}
 
-			if let compact = libraryBaseCollectionViewCell as? LibraryCompactCollectionViewCell {
-				let titleVisibility = self.libraryCompactTitleVisibility
+			guard case let .entry(entry) = item else { return libraryBaseCollectionViewCell }
 
-				switch item {
-				case .show(let show):
-					compact.configure(using: show, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
-				case .literature(let literature):
-					compact.configure(using: literature, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
-				case .game(let game):
-					compact.configure(using: game, showSelectionIcon: self.isEditing, titleVisibility: titleVisibility)
-				}
+			if let compact = libraryBaseCollectionViewCell as? LibraryCompactCollectionViewCell {
+				compact.configure(using: entry, showSelectionIcon: self.isEditing, titleVisibility: self.libraryCompactTitleVisibility)
 			} else {
-				switch item {
-				case .show(let show):
-					libraryBaseCollectionViewCell.configure(using: show, showSelectionIcon: self.isEditing)
-				case .literature(let literature):
-					libraryBaseCollectionViewCell.configure(using: literature, showSelectionIcon: self.isEditing)
-				case .game(let game):
-					libraryBaseCollectionViewCell.configure(using: game, showSelectionIcon: self.isEditing)
-				}
+				libraryBaseCollectionViewCell.configure(using: entry, showSelectionIcon: self.isEditing)
 			}
 
 			return libraryBaseCollectionViewCell
@@ -79,23 +66,13 @@ extension LibraryListCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		self.snapshot.appendSections([.main])
 
-		switch self.libraryKind {
-		case .shows:
-			let shows: [ItemKind] = self.shows.map { show in
-				.show(show)
-			}
-			self.snapshot.appendItems(shows, toSection: .main)
-		case .literatures:
-			let literatures: [ItemKind] = self.literatures.map { literature in
-				.literature(literature)
-			}
-			self.snapshot.appendItems(literatures, toSection: .main)
-		case .games:
-			let games: [ItemKind] = self.games.map { game in
-				.game(game)
-			}
-			self.snapshot.appendItems(games, toSection: .main)
+		// Dedup objectIDs; overlapping paged reads during a sync batch can duplicate rows.
+		var seenObjectIDs = Set<NSManagedObjectID>()
+		let items: [ItemKind] = self.entries.compactMap { entry in
+			guard seenObjectIDs.insert(entry.objectID).inserted else { return nil }
+			return .entry(entry)
 		}
+		self.snapshot.appendItems(items, toSection: .main)
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}

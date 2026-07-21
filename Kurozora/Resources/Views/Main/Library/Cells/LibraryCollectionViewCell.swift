@@ -65,76 +65,42 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given show's details.
+	/// Configures the cell with the given local library entry.
 	///
 	/// - Parameters:
-	///    - show: The show to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
-	func configure(using show: Show, showSelectionIcon: Bool) {
-		// Configure selection icon
+	///    - entry: The local library entry to render.
+	///    - showSelectionIcon: A boolean value that indicates whether the selection icon is visible.
+	func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool) {
 		self.showSelectionIcon = showSelectionIcon
+		self.primaryLabel.text = entry.title
+		entry.posterImage(imageView: self.posterImageView)
 
-		// Configure title
-		self.primaryLabel.text = show.attributes.title
-
-		// Configure poster
-		show.attributes.posterImage(imageView: self.posterImageView)
-
-		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
-		self.posterContainerView?.layer.cornerRadius = 22
-		self.posterImageView?.applyCornerRadius(22.0)
-		self.posterImageView?.layer.borderWidth = 0
-		self.posterImageView?.mask = nil
-		self.posterImageOverlayView.isHidden = true
-		self.posterBorderView?.isHidden = false
-	}
-
-	/// Configure the cell with the given literature's details.
-	///
-	/// - Parameters:
-	///    - literature: The literature to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
-	func configure(using literature: Literature, showSelectionIcon: Bool) {
-		// Configure selection icon
-		self.showSelectionIcon = showSelectionIcon
-
-		// Configure title
-		self.primaryLabel.text = literature.attributes.title
-
-		// Configure poster
-		literature.attributes.posterImage(imageView: self.posterImageView)
-
-		self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
-		self.posterContainerView?.layer.cornerRadius = 0
-		self.posterImageView?.applyCornerRadius(0.0)
-		self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
-		self.posterImageView?.mask = self.literatureMask
-		self.posterImageOverlayView.isHidden = false
-		self.posterBorderView?.isHidden = true
-	}
-
-	/// Configure the cell with the given game's details.
-	///
-	/// - Parameters:
-	///    - game: The game to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
-	func configure(using game: Game, showSelectionIcon: Bool) {
-		// Configure selection icon
-		self.showSelectionIcon = showSelectionIcon
-
-		// Configure title
-		self.primaryLabel.text = game.attributes.title
-
-		// Configure poster
-		game.attributes.posterImage(imageView: self.posterImageView)
-
-		self.applyPosterAspectRatio(widthToHeight: 1.0)
-		self.posterContainerView?.layer.cornerRadius = 22
-		self.posterImageView?.applyCornerRadius(22.0)
-		self.posterImageView?.layer.borderWidth = 0
-		self.posterImageView?.mask = nil
-		self.posterImageOverlayView.isHidden = true
-		self.posterBorderView?.isHidden = false
+		switch entry.kind {
+		case .shows:
+			self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
+			self.posterContainerView?.layer.cornerRadius = 22
+			self.posterImageView?.applyCornerRadius(22.0)
+			self.posterImageView?.layer.borderWidth = 0
+			self.posterImageView?.mask = nil
+			self.posterImageOverlayView.isHidden = true
+			self.posterBorderView?.isHidden = false
+		case .literatures:
+			self.applyPosterAspectRatio(widthToHeight: 2.0 / 3.0)
+			self.posterContainerView?.layer.cornerRadius = 0
+			self.posterImageView?.applyCornerRadius(0.0)
+			self.literatureMask.frame = self.posterImageView?.bounds ?? .zero
+			self.posterImageView?.mask = self.literatureMask
+			self.posterImageOverlayView.isHidden = false
+			self.posterBorderView?.isHidden = true
+		case .games:
+			self.applyPosterAspectRatio(widthToHeight: 1.0)
+			self.posterContainerView?.layer.cornerRadius = 22
+			self.posterImageView?.applyCornerRadius(22.0)
+			self.posterImageView?.layer.borderWidth = 0
+			self.posterImageView?.mask = nil
+			self.posterImageOverlayView.isHidden = true
+			self.posterBorderView?.isHidden = false
+		}
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {

@@ -315,9 +315,14 @@ extension LibraryViewController {
 			do {
 				_ = try await KService.addToLibrary(self.libraryKind, status: newStatus, itemIDs: itemIDs).response()
 
+				if let slug = User.current?.attributes.slug {
+					for indexPath in selectedIndexPaths {
+						guard let entry = currentSection.entries[safe: indexPath.item] else { continue }
+						LibraryStore.shared.applyStatus(newStatus, forTrackableID: entry.trackableID, userSlug: slug, kind: self.libraryKind)
+					}
+				}
+
 				if newStatus != oldStatus {
-					NotificationCenter.default.post(name: Notification.Name("AddTo\(newStatus.sectionValue)Section"), object: nil)
-					NotificationCenter.default.post(name: Notification.Name("RemoveFrom\(oldStatus.sectionValue)Section"), object: nil)
 					currentSection.removeItems(at: selectedIndexPaths)
 				}
 
@@ -341,12 +346,7 @@ extension LibraryViewController {
 	///    - favorited: The target favorite state to apply to the items.
 	private func performBatchFavoriteUpdate(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath], favorited: Bool) {
 		let targetIndexPaths = selectedIndexPaths.filter { indexPath in
-			let isFavorited: Bool
-			switch self.libraryKind {
-			case .shows: isFavorited = currentSection.shows[safe: indexPath.item]?.attributes.library?.isFavorited == true
-			case .literatures: isFavorited = currentSection.literatures[safe: indexPath.item]?.attributes.library?.isFavorited == true
-			case .games: isFavorited = currentSection.games[safe: indexPath.item]?.attributes.library?.isFavorited == true
-			}
+			let isFavorited = currentSection.entries[safe: indexPath.item]?.isFavorited == true
 			return isFavorited != favorited
 		}
 		guard !targetIndexPaths.isEmpty else { return }
@@ -359,10 +359,12 @@ extension LibraryViewController {
 			do {
 				_ = try await KService.toggleFavorite(inLibrary: self.libraryKind, itemIDs: itemIDs).response()
 
-				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { library in
-					library.isFavorited = favorited
-					library.favoriteStatus = FavoriteStatus(favorited)
+				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { entry in
+					entry.isFavorited = favorited
+					entry.favoritedAt = favorited ? (entry.favoritedAt ?? Date()) : nil
+					entry.updatedAt = Date()
 				}
+				PersistenceController.shared.save(PersistenceController.shared.viewContext)
 
 				self.setEditing(false, animated: true)
 			} catch let error as APIError {
@@ -384,12 +386,7 @@ extension LibraryViewController {
 	///    - reminded: The target reminder state to apply to the items.
 	private func performBatchReminderUpdate(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath], reminded: Bool) {
 		let targetIndexPaths = selectedIndexPaths.filter { indexPath in
-			let isReminded: Bool
-			switch self.libraryKind {
-			case .shows: isReminded = currentSection.shows[safe: indexPath.item]?.attributes.library?.isReminded == true
-			case .literatures: isReminded = currentSection.literatures[safe: indexPath.item]?.attributes.library?.isReminded == true
-			case .games: isReminded = currentSection.games[safe: indexPath.item]?.attributes.library?.isReminded == true
-			}
+			let isReminded = currentSection.entries[safe: indexPath.item]?.isReminded == true
 			return isReminded != reminded
 		}
 		guard !targetIndexPaths.isEmpty else { return }
@@ -402,10 +399,12 @@ extension LibraryViewController {
 			do {
 				_ = try await KService.toggleReminder(inLibrary: self.libraryKind, itemIDs: itemIDs).response()
 
-				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { library in
-					library.isReminded = reminded
-					library.reminderStatus = ReminderStatus(reminded)
+				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { entry in
+					entry.isReminded = reminded
+					entry.remindedAt = reminded ? (entry.remindedAt ?? Date()) : nil
+					entry.updatedAt = Date()
 				}
+				PersistenceController.shared.save(PersistenceController.shared.viewContext)
 
 				self.setEditing(false, animated: true)
 			} catch let error as APIError {
@@ -432,10 +431,11 @@ extension LibraryViewController {
 			do {
 				_ = try await KService.updateInLibrary(self.libraryKind, itemIDs: itemIDs).hidden(hide).response()
 
-				currentSection.mutateLibraryAttributes(at: selectedIndexPaths) { library in
-					library.isHidden = hide
-					library.hiddenStatus = HiddenStatus(hide)
+				currentSection.mutateLibraryAttributes(at: selectedIndexPaths) { entry in
+					entry.isHidden = hide
+					entry.updatedAt = Date()
 				}
+				PersistenceController.shared.save(PersistenceController.shared.viewContext)
 
 				self.setEditing(false, animated: true)
 			} catch let error as APIError {
@@ -460,6 +460,14 @@ extension LibraryViewController {
 
 			do {
 				_ = try await KService.removeFromLibrary(self.libraryKind, itemIDs: itemIDs).response()
+
+				if let slug = User.current?.attributes.slug {
+					for indexPath in selectedIndexPaths {
+						guard let entry = currentSection.entries[safe: indexPath.item] else { continue }
+						LibraryStore.shared.applyRemoved(forTrackableID: entry.trackableID, userSlug: slug, kind: self.libraryKind)
+					}
+				}
+
 				currentSection.removeItems(at: selectedIndexPaths)
 				self.setEditing(false, animated: true)
 			} catch let error as APIError {

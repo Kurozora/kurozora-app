@@ -150,7 +150,7 @@ extension LibraryViewController {
 	func populateSortActions() {
 		var menuItems: [UIMenuElement] = []
 
-		LibrarySortType.allCases.forEach { [weak self] sortType in
+		LibrarySortType.all.forEach { [weak self] sortType in
 			guard let self = self else {
 				return
 			}
@@ -229,10 +229,28 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 	}
 
 	func libraryListViewController(updateTotalCount totalCount: Int) {
+		self.lastReportedTotalCount = totalCount
+		self.updateNavigationSubtitle()
+	}
+
+	/// Renders the item count as the navigation subtitle, or the sync progress while a sync round is applying rows.
+	func updateNavigationSubtitle() {
+		let syncProgress = LibrarySyncProgress.shared
+		let syncingCount = syncProgress.isSyncing ? (syncProgress.expectedCount ?? syncProgress.appliedCount) : 0
+		let totalCount = self.lastReportedTotalCount
+
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 9.0, *) {
-			self.navigationItem.subtitle = totalCount > 0 ? L10n.itemsCount(totalCount) : nil
+			if syncingCount > 0 {
+				self.navigationItem.subtitle = L10n.syncingItemsCount(syncingCount)
+			} else {
+				self.navigationItem.subtitle = totalCount > 0 ? L10n.itemsCount(totalCount) : nil
+			}
 		} else {
-			self.navigationItem.title = "\(L10n.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+			if syncingCount > 0 {
+				self.navigationItem.title = "\(L10n.library) (\(L10n.syncingItemsCount(syncingCount)))"
+			} else {
+				self.navigationItem.title = "\(L10n.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+			}
 		}
 	}
 }

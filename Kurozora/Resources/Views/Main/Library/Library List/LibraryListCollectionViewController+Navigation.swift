@@ -21,30 +21,15 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [] }
-		var userActivity: NSUserActivity
-		var localObject: Any?
+		guard let selectedEntry = self.entries[safe: indexPath.row] else { return [] }
 
-		switch self.libraryKind {
-		case .shows:
-			guard let selectedShow = self.shows[safe: indexPath.row] else { return [] }
-			userActivity = selectedShow.openDetailUserActivity
-			localObject = selectedShow
-		case .literatures:
-			guard let selectedLiterature = self.literatures[safe: indexPath.row] else { return [] }
-			userActivity = selectedLiterature.openDetailUserActivity
-			localObject = selectedLiterature
-		case .games:
-			guard let selectedGame = self.games[safe: indexPath.row] else { return [] }
-			userActivity = selectedGame.openDetailUserActivity
-			localObject = selectedGame
-		}
-
+		let userActivity = selectedEntry.openDetailUserActivity
 		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? .Placeholders.showPoster)
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.primaryLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 
 		let dragItem = UIDragItem(itemProvider: itemProvider)
-		dragItem.localObject = localObject
+		dragItem.localObject = selectedEntry
 
 		return [dragItem]
 	}

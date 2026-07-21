@@ -63,6 +63,9 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		return self.user ?? User.current
 	}
 
+	/// The most recent total item count reported by the visible list.
+	var lastReportedTotalCount: Int = 0
+
 	weak var libraryViewControllerDataSource: LibraryViewControllerDataSource?
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
@@ -89,6 +92,16 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		self.configureView()
 
 		self.enableActions()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibrarySyncProgressDidChange), name: .KLibrarySyncProgressDidChange, object: nil)
+	}
+
+	/// Re-renders the navigation subtitle when sync progress changes.
+	@objc private func handleLibrarySyncProgressDidChange() {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.updateNavigationSubtitle()
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

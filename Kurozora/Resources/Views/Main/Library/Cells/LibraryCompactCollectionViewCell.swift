@@ -23,43 +23,17 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given show's details.
+	/// Configures the cell with the given local library entry.
 	///
 	/// - Parameters:
-	///    - show: The show to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
+	///    - entry: The local library entry to render.
+	///    - showSelectionIcon: A boolean value that indicates whether the selection icon is visible.
 	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using show: Show, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
-		super.configure(using: show, showSelectionIcon: showSelectionIcon)
+	func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
+		super.configure(using: entry, showSelectionIcon: showSelectionIcon)
 
-		let hasRealPoster = !(show.attributes.poster?.url.isEmpty ?? true)
-		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: show.attributes.title)
-	}
-
-	/// Configure the cell with the given literature's details.
-	///
-	/// - Parameters:
-	///    - literature: The literature to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
-	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using literature: Literature, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
-		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
-
-		let hasRealPoster = !(literature.attributes.poster?.url.isEmpty ?? true)
-		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: literature.attributes.title)
-	}
-
-	/// Configure the cell with the given game's details.
-	///
-	/// - Parameters:
-	///    - game: The game to configure the cell with.
-	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
-	///    - titleVisibility: The compact-layout title visibility to apply.
-	func configure(using game: Game, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
-		super.configure(using: game, showSelectionIcon: showSelectionIcon)
-
-		let hasRealPoster = !(game.attributes.poster?.url.isEmpty ?? true)
-		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: game.attributes.title)
+		let hasRealPoster = !(entry.posterURL?.isEmpty ?? true)
+		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: entry.title)
 	}
 
 	// MARK: - Helpers

@@ -56,37 +56,21 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController {
 	/// The list of available library list item kinds.
 	enum ItemKind: Hashable {
-		/// The item contains a ``Show`` value.
-		case show(_: Show)
-
-		/// The item contains a ``Literature`` value.
-		case literature(_: Literature)
-
-		/// The item contains a ``Game`` value.
-		case game(_: Game)
+		/// The item contains a ``LocalLibraryEntry`` row from the local store.
+		case entry(_: LocalLibraryEntry)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .show(let show):
-				hasher.combine(show)
-			case .literature(let literature):
-				hasher.combine(literature)
-			case .game(let game):
-				hasher.combine(game)
+			case .entry(let entry):
+				hasher.combine(entry.objectID)
 			}
 		}
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.show(let show1), .show(let show2)):
-				return show1 == show2
-			case (.literature(let literature1), .literature(let literature2)):
-				return literature1 == literature2
-			case (.game(let game1), .game(let game2)):
-				return game1 == game2
-			default:
-				return false
+			case (.entry(let lhsEntry), .entry(let rhsEntry)):
+				return lhsEntry.objectID == rhsEntry.objectID
 			}
 		}
 	}
@@ -128,10 +112,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: libraryKind, status: self.libraryStatus)
 
 		// Reset data and refetch
-		self.nextPageCursor = nil
-		self.shows = []
-		self.literatures = []
-		self.games = []
+		self.entries = []
 		self.updateDataSource()
 
 		// Refresh view
@@ -140,6 +121,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 
 		self.sortLibrary(by: sortType, option: sortOption)
 		self.configureEmptyDataView()
+		self.rebindLibraryObserver()
 	}
 
 	/// Applies a new sort selection and refetches the library in the background.
@@ -150,6 +132,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func sortLibrary(by sortType: LibrarySortType, option: LibrarySortOption) {
 		self.librarySortType = sortType
 		self.librarySortTypeOption = option
+		self.entries = []
 
 		Task { [weak self] in
 			guard let self = self else { return }
