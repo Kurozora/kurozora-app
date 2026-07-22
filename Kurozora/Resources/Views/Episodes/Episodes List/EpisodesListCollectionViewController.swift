@@ -103,6 +103,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSeasonWatchStatusDidUpdate(_:)), name: .KSeasonWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserStateDidChangeRemotely(_:)), name: .KUserStateDidChangeRemotely, object: nil)
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.episodes.lowercased(with: Locale.current)))
@@ -277,6 +278,21 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	}
 
 	// MARK: - Watch status observers
+	/// Re-fetches the watched overlay when another device or the website changes the user's state.
+	@objc func handleUserStateDidChangeRemotely(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			switch self.episodesListFetchType {
+			case .season, .search:
+				await self.fetchWatchedOverlay()
+			case .upNext:
+				self.nextPageCursor = nil
+				await self.fetchItems()
+			}
+		}
+	}
+
 	@objc func handleSeasonWatchStatusDidUpdate(_ notification: NSNotification) {
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }

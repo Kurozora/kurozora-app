@@ -8,6 +8,14 @@
 
 import Foundation
 
+// MARK: - User State
+extension Notification.Name {
+	/// A notification posted when another device or the website changes the user's state.
+	static var KUserStateDidChangeRemotely: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - User Profile
 extension Notification.Name {
 	/// A notification posted when the current user's profile metadata (slug, display name, or profile image) changes.
@@ -65,18 +73,8 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
-	/// A notification posted when the favorite button is toggled.
-	static var KModelFavoriteIsToggled: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
 	/// A notification posted when the reminders list changes.
 	static var KReminderModelsListDidChange: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
-	/// A notification posted when the reminder button is toggled.
-	static var KModelReminderIsToggled: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 }
