@@ -309,6 +309,7 @@ class EditProfileViewController: KViewController {
 						)
 						AccountManager.shared.save(newAccount)
 						AccountManager.shared.remove(slug: oldSlug)
+						UserProfileCache.remove(forSlug: oldSlug)
 						UserSettings.set(username, forKey: .selectedAccount)
 						WatchSessionManager.shared.sendAuthState(slug: username, token: oldAccount.authenticationToken)
 					}

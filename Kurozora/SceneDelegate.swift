@@ -48,12 +48,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			KurozoraDelegate.shared.showOfflineView(for: nil)
 		}
 
-		// If the network is unreachable show the offline page
-		KNetworkManager.isUnreachable { [weak self] _ in
-			guard let self = self else { return }
-			self.isUnreachable = true
-		}
-
 		// Splash animation plays on cold launch only.
 		self.window?.rootViewController = SplashscreenViewController()
 		KurozoraDelegate.shared.startInterface(in: self.window, animatesSplash: true)

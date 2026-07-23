@@ -117,10 +117,22 @@ extension WorkflowController {
 					profileImageURL: User.current?.attributes.profile?.url
 				)
 
+				if let currentUser = User.current {
+					UserProfileCache.save(currentUser, forSlug: accountKey)
+				}
+
 				return true
-			} catch {
-				print("-----", error.localizedDescription)
+			} catch let error as APIError where (400..<500).contains(error.statusCode ?? 0) {
+				print("-----", error.message)
 				return false
+			} catch {
+				guard let cachedUser = UserProfileCache.load(forSlug: accountKey) else {
+					print("-----", error.localizedDescription)
+					return false
+				}
+
+				await KService.restoreSession(with: cachedUser)
+				return true
 			}
 		}
 
@@ -168,6 +180,7 @@ extension WorkflowController {
 		do {
 			_ = try await KService.signOut()
 			AccountManager.shared.remove(slug: slug)
+			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
@@ -192,6 +205,7 @@ extension WorkflowController {
 		do {
 			_ = try await KService.deleteAccount(password: password).response()
 			AccountManager.shared.remove(slug: slug)
+			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
 			return true

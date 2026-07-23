@@ -145,6 +145,7 @@ extension SwitchAccountsTableViewController {
 
 			// Remove user's account from keychain and update tableView.
 			AccountManager.shared.remove(slug: account.slug)
+			UserProfileCache.remove(forSlug: account.slug)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 			completion(true)
 		})
