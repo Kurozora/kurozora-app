@@ -183,6 +183,7 @@ extension WorkflowController {
 			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
+			await LibraryArtStore.shared.removeAll()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
 		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.cantSignOutTitle, message: error.message)
@@ -208,6 +209,7 @@ extension WorkflowController {
 			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
+			await LibraryArtStore.shared.removeAll()
 			return true
 		} catch let error as APIError {
 			await UIApplication.topViewController?.presentAlertController(title: L10n.cantDeleteAccountTitle, message: error.message)

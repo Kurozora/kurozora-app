@@ -25,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - AppDelegate
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		print("----- UIApplication finished launching.")
+
+		// Larger cache size for the now-cacheable catalog detail responses.
+		URLCache.shared.memoryCapacity = 50 * 1024 * 1024
+		URLCache.shared.diskCapacity = 200 * 1024 * 1024
+
 		// Override point for customization after application launch.
 		Store.shared.initialize()
 

@@ -34,6 +34,29 @@ extension UIImageView {
 			.set(to: self)
 	}
 
+	/// Sets up the image view with library art from the dedicated store, falling back
+	/// to the shared image pipeline when the art isn't stored yet.
+	///
+	/// - Parameters:
+	///    - urlString: The URL string identifying the art.
+	///    - placeholder: The placeholder to show until the image is loaded or in case the URL is dead.
+	func setLibraryImage(with urlString: String, placeholder: UIImage) {
+		guard let fileURL = LibraryArtStore.storedFileURL(forURLString: urlString) else {
+			self.setImage(with: urlString, placeholder: placeholder)
+			return
+		}
+
+		let provider = LocalFileImageDataProvider(fileURL: fileURL, cacheKey: "library-art://\(urlString)")
+		KF.dataProvider(provider)
+			.cacheMemoryOnly()
+			.transition(.fade(0.2))
+			.onFailure { [weak self] _ in
+				guard let self else { return }
+				self.setImage(with: urlString, placeholder: placeholder)
+			}
+			.set(to: self)
+	}
+
 	/// Loads the image from the given URL string into this image view.
 	///
 	/// - Parameters:

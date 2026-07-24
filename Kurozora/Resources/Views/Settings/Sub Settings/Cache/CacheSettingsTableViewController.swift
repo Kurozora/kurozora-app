@@ -13,6 +13,7 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Properties
 	private var imageCacheSize: String = "—"
 	private var richLinkCacheSize: String = "—"
+	private var libraryArtSize: String = "—"
 
 	/// Callback to notify the parent settings table to refresh the cache size label.
 	var onCacheCleared: (() -> Void)?
@@ -58,7 +59,16 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 			self.imageCacheSize = "—"
 		}
 
-		self.tableView.reloadSections(IndexSet(integer: Section.cacheComponents.rawValue + self.headerSectionOffset), with: .none)
+		let libraryArtBytes = await LibraryArtStore.shared.totalSizeBytes()
+		self.libraryArtSize = self.formatBytes(UInt(clamping: libraryArtBytes))
+
+		self.tableView.reloadSections(
+			IndexSet([
+				Section.libraryArt.rawValue + self.headerSectionOffset,
+				Section.cacheComponents.rawValue + self.headerSectionOffset
+			]),
+			with: .none
+		)
 	}
 
 	/// Formats a byte count into a human-readable MiB string.
@@ -113,7 +123,7 @@ extension CacheSettingsTableViewController {
 		switch section {
 		case .cacheComponents:
 			return CacheComponent.allCases.count
-		case .actions:
+		case .libraryArt, .actions:
 			return 1
 		}
 	}
@@ -127,6 +137,14 @@ extension CacheSettingsTableViewController {
 			  let section = Section(rawValue: contentSection) else { return UITableViewCell() }
 
 		switch section {
+		case .libraryArt:
+			guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
+			}
+			settingsCell.configure(title: L10n.library, detail: self.libraryArtSize)
+			settingsCell.chevronImageView?.isHidden = true
+			settingsCell.detailLabel?.isHidden = false
+			return settingsCell
 		case .cacheComponents:
 			guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
@@ -163,6 +181,8 @@ extension CacheSettingsTableViewController {
 			  let section = Section(rawValue: contentSection) else { return nil }
 
 		switch section {
+		case .libraryArt:
+			return L10n.libraryCacheFooterMessage
 		case .cacheComponents:
 			return L10n.clearCacheFooterMessage
 		case .actions:
@@ -173,13 +193,6 @@ extension CacheSettingsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension CacheSettingsTableViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let contentSection = self.contentSection(for: section) else {
-			return .leastNormalMagnitude
-		}
-		return super.tableView(tableView, heightForHeaderInSection: contentSection)
-	}
-
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 
@@ -187,7 +200,7 @@ extension CacheSettingsTableViewController {
 			  let section = Section(rawValue: contentSection) else { return }
 
 		switch section {
-		case .cacheComponents:
+		case .libraryArt, .cacheComponents:
 			return
 		case .actions:
 			let alertController = self.presentAlertController(title: L10n.clearAllCache, message: nil, defaultActionButtonTitle: L10n.cancel)
@@ -235,6 +248,7 @@ extension CacheSettingsTableViewController {
 // MARK: - Enums
 private extension CacheSettingsTableViewController {
 	enum Section: Int, CaseIterable {
+		case libraryArt
 		case cacheComponents
 		case actions
 	}
