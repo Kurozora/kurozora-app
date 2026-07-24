@@ -22,6 +22,15 @@ class KTabBarController: UITabBarController {
 	/// The now-playing accessory's content view, retained so its container can be sized across size-class changes.
 	private var musicAccessoryContentView: UIView?
 
+	/// The library sync-progress ring.
+	private var syncProgressRingView: SyncProgressRingView?
+
+	/// The constraints currently pinning the sync-progress ring to its host row.
+	private var syncProgressRingConstraints: [NSLayoutConstraint] = []
+
+	/// The pending removal task for the sync-progress ring.
+	private var syncProgressRingRemovalTask: Task<Void, Never>?
+
 	@available(iOS 18.0, *)
 	private var previousTabs: [UITab] {
 		get {
@@ -59,12 +68,14 @@ class KTabBarController: UITabBarController {
 		#if !targetEnvironment(macCatalyst)
 		self.updateMusicAccessorySize()
 		#endif
+		self.updateLibrarySyncIndicator()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotificationsDidUpdate), name: .KUNDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibrarySyncProgressDidChange), name: .KLibrarySyncProgressDidChange, object: nil)
 
 		// Initialize views
 		self.configureTabs()
@@ -84,6 +95,156 @@ class KTabBarController: UITabBarController {
 		} else if !self.previousTabs.isEmpty {
 			self.tabs = self.previousTabs
 		}
+
+		self.updateLibrarySyncIndicator()
+	}
+
+	/// Refreshes the library tab's sync indicator when sync progress changes.
+	@objc private func handleLibrarySyncProgressDidChange() {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.updateLibrarySyncIndicator()
+		}
+	}
+
+	/// Shows a pie progress indicator over the library row's badge slot in the sidebar while syncing.
+	private func updateLibrarySyncIndicator() {
+		guard #available(iOS 18.0, *) else { return }
+
+		let syncProgress = LibrarySyncProgress.shared
+		let sidebarIsVisible = self.traitCollection.horizontalSizeClass == .regular
+		let ringIsVisible = self.syncProgressRingView?.superview != nil
+
+		guard sidebarIsVisible, let libraryRowContentView = self.libraryRowContentView() else {
+			self.cancelSyncProgressRingRemoval()
+			self.syncProgressRingView?.removeFromSuperview()
+			return
+		}
+
+		guard syncProgress.isSyncing else {
+			if ringIsVisible, self.syncProgressRingRemovalTask == nil {
+				self.finishLibrarySyncIndicator()
+			}
+			return
+		}
+
+		// Avoid flashing the pie on empty steady-state rounds until real work is known.
+		guard syncProgress.expectedCount ?? 0 > 0 || ringIsVisible else { return }
+
+		let wasFinishing = self.cancelSyncProgressRingRemoval()
+		let syncProgressRingView = self.makeSyncProgressRingViewIfNeeded()
+		let isNewAppearance = syncProgressRingView.superview == nil || wasFinishing
+		self.attachSyncProgressRingView(syncProgressRingView, to: libraryRowContentView)
+		if isNewAppearance {
+			syncProgressRingView.reset()
+		}
+		syncProgressRingView.setProgress(syncProgress.fractionCompleted ?? 0, animated: true)
+	}
+
+	/// Animates the ring to full, then removes it shortly after.
+	private func finishLibrarySyncIndicator() {
+		self.syncProgressRingView?.setProgress(1.0, animated: true)
+
+		self.syncProgressRingRemovalTask = Task { @MainActor [weak self] in
+			try? await Task.sleep(nanoseconds: 650_000_000)
+			guard let self = self, !Task.isCancelled else { return }
+			self.syncProgressRingView?.removeFromSuperview()
+			self.syncProgressRingRemovalTask = nil
+		}
+	}
+
+	/// Cancels the pending ring-removal task, if any, and reports whether one was in flight.
+	@discardableResult
+	private func cancelSyncProgressRingRemoval() -> Bool {
+		guard self.syncProgressRingRemovalTask != nil else { return false }
+		self.syncProgressRingRemovalTask?.cancel()
+		self.syncProgressRingRemovalTask = nil
+		return true
+	}
+
+	/// Returns the lazily-created sync-progress ring, creating it on first use.
+	private func makeSyncProgressRingViewIfNeeded() -> SyncProgressRingView {
+		if let syncProgressRingView = self.syncProgressRingView {
+			return syncProgressRingView
+		}
+
+		let syncProgressRingView = SyncProgressRingView()
+		syncProgressRingView.translatesAutoresizingMaskIntoConstraints = false
+		self.syncProgressRingView = syncProgressRingView
+		return syncProgressRingView
+	}
+
+	/// Parents the ring in the given row's content view at the trailing badge position, replacing any prior constraints.
+	private func attachSyncProgressRingView(_ syncProgressRingView: SyncProgressRingView, to contentView: UIView) {
+		guard syncProgressRingView.superview !== contentView else { return }
+
+		NSLayoutConstraint.deactivate(self.syncProgressRingConstraints)
+		contentView.addSubview(syncProgressRingView)
+
+		if let trailingBadgeLabel = self.trailingBadgeLabel(in: contentView) {
+			self.syncProgressRingConstraints = [
+				syncProgressRingView.centerXAnchor.constraint(equalTo: trailingBadgeLabel.centerXAnchor),
+				syncProgressRingView.centerYAnchor.constraint(equalTo: trailingBadgeLabel.centerYAnchor)
+			]
+		} else {
+			self.syncProgressRingConstraints = [
+				syncProgressRingView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+				syncProgressRingView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+			]
+		}
+
+		NSLayoutConstraint.activate(self.syncProgressRingConstraints)
+	}
+
+	/// Returns the content view of the sidebar row currently displaying the library tab, if visible.
+	private func libraryRowContentView() -> UIView? {
+		for collectionView in self.collectionViews(in: self.view) {
+			for cell in collectionView.visibleCells {
+				let isLibraryRow = self.labels(in: cell.contentView).contains { $0.text == TabBarItem.library.stringValue }
+				if isLibraryRow {
+					return cell.contentView
+				}
+			}
+		}
+
+		return nil
+	}
+
+	/// Returns the trailing badge-looking label in the given content view, if the row currently shows one.
+	private func trailingBadgeLabel(in contentView: UIView) -> UILabel? {
+		return self.labels(in: contentView).first { label in
+			label.text != TabBarItem.library.stringValue && !(label.text?.isEmpty ?? true)
+		}
+	}
+
+	/// Recursively collects every `UICollectionView` in the given view's hierarchy.
+	private func collectionViews(in view: UIView) -> [UICollectionView] {
+		var collectionViews: [UICollectionView] = []
+
+		if let collectionView = view as? UICollectionView {
+			collectionViews.append(collectionView)
+		}
+
+		for subview in view.subviews {
+			collectionViews.append(contentsOf: self.collectionViews(in: subview))
+		}
+
+		return collectionViews
+	}
+
+	/// Recursively collects every `UILabel` in the given view's hierarchy.
+	private func labels(in view: UIView) -> [UILabel] {
+		var labels: [UILabel] = []
+
+		if let label = view as? UILabel {
+			labels.append(label)
+		}
+
+		for subview in view.subviews {
+			labels.append(contentsOf: self.labels(in: subview))
+		}
+
+		return labels
 	}
 
 	/// Builds the music playback accessory.
@@ -312,12 +473,11 @@ class KTabBarController: UITabBarController {
 
 	/// Handles refreshing the notifications badge when the user notifications change.
 	@objc private func handleNotificationsDidUpdate(_ notification: Notification) {
-		if self.notificationsTableViewController()?.viewIfLoaded != nil {
-			return
-		}
-
 		Task { @MainActor [weak self] in
 			guard let self = self, User.isSignedIn else { return }
+			if self.notificationsTableViewController()?.viewIfLoaded != nil {
+				return
+			}
 			do {
 				let response = try await KService.notifications().response()
 				let unreadCount = response.data.filter { $0.attributes.readStatus == .unread }.count
