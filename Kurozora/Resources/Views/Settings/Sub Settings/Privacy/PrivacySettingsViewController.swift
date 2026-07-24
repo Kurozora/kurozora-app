@@ -123,11 +123,6 @@ extension PrivacySettingsViewController {
 
 // MARK: - UITableViewDelegate
 extension PrivacySettingsViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
-		return super.tableView(tableView, heightForHeaderInSection: contentSection)
-	}
-
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let contentSection = self.contentSection(for: indexPath.section) else { return }
 

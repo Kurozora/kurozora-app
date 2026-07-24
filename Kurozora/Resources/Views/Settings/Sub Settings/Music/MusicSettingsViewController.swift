@@ -138,11 +138,6 @@ extension MusicSettingsViewController {
 		else { return nil }
 		return section.footer
 	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard self.contentSection(for: section) != nil else { return .leastNormalMagnitude }
-		return UITableView.automaticDimension
-	}
 }
 
 // MARK: - UITableViewDelegate

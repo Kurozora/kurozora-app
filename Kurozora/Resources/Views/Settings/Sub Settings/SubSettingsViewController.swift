@@ -93,6 +93,11 @@ extension SubSettingsViewController {
 
 // MARK: - UITableViewDelegate
 extension SubSettingsViewController {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard self.contentSection(for: section) != nil else { return .leastNormalMagnitude }
+		return UITableView.automaticDimension
+	}
+
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
 			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue

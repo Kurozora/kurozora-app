@@ -119,11 +119,6 @@ extension ReminderSubscriptionTableViewController {
 
 // MARK: - UITableViewDelegate
 extension ReminderSubscriptionTableViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
-		return super.tableView(tableView, heightForHeaderInSection: contentSection)
-	}
-
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 

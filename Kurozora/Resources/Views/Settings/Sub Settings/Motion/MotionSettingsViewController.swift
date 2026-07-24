@@ -200,11 +200,6 @@ extension MotionSettingsViewController {
 			return L10n.reduceMotionFooter
 		}
 	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let contentSection = self.contentSection(for: section) else { return .leastNormalMagnitude }
-		return super.tableView(tableView, heightForHeaderInSection: contentSection)
-	}
 }
 
 // MARK: - UITableViewDelegate
