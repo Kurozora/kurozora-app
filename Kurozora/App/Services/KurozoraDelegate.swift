@@ -38,10 +38,13 @@ final class KurozoraDelegate {
 		}
 	}
 
-	func preInitiateApp(window: UIWindow?) async -> Bool {
-		// Show warning view if necessary
-		if await KurozoraDelegate.shared.showWarningView(for: window) {
-			return false
+	/// Performs the app's one-time, process-level startup work.
+	///
+	/// - Returns: `ready` when startup succeeds, or `blocked` when a server-side condition must be resolved first.
+	func performProcessBootstrap() async -> BootstrapOutcome {
+		// Block startup if the server reports maintenance or a required update
+		if let warningType = await self.startupWarning() {
+			return .blocked(warningType)
 		}
 
 		#if DEBUG
@@ -98,37 +101,129 @@ final class KurozoraDelegate {
 			}
 		}
 
-			// Register Home Screen shortcut items
-			await self.registerHomeScreenShortcutItems()
+		// Register Home Screen shortcut items
+		await self.registerHomeScreenShortcutItems()
 
-			// Play chime
-			if UserSettings.startupSoundAllowed {
-				Chime.shared.play()
+		// Play chime
+		if UserSettings.startupSoundAllowed {
+			Chime.shared.play()
+		}
+
+		return .ready
+	}
+
+	/// Determines whether a server-side condition should block startup.
+	///
+	/// - Returns: The blocking warning, or `nil` when startup may proceed.
+	private func startupWarning() async -> WarningType? {
+		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+			return nil
+		}
+
+		do {
+			let meta = try await KService.info().response().meta
+
+			if meta.isMaintenanceModeEnabled {
+				return .maintenance
 			}
 
-			// Initialize split view controller
-			let rootViewController: UIViewController
-
-			if #available(iOS 18.0, macCatalyst 18.0, *) {
-				rootViewController = await KTabBarController()
-			} else {
-				rootViewController = await SceneDelegate.createTwoColumnSplitViewController()
+			if meta.minimumAppVersion.compare(currentAppVersion, options: .numeric) == .orderedDescending {
+				return .forceUpdate
 			}
+		} catch {
+			print("-----", error.localizedDescription)
+		}
 
-			DispatchQueue.main.async {
-				if let splashViewController = window?.rootViewController as? SplashscreenViewController {
-					splashViewController.animateLogo { _ in
-						window?.rootViewController = rootViewController
-						// Check if user should authenticate
-						AuthenticationManager.shared.authenticateIfRequired()
-					}
-				} else {
-					window?.rootViewController = rootViewController
-					// Check if user should authenticate
+		return nil
+	}
+
+	/// Runs the process bootstrap if needed and installs the resulting interface in the given window.
+	///
+	/// The bootstrap runs once per process; later windows reuse the cached outcome and skip the splash animation.
+	///
+	/// - Parameters:
+	///    - window: The window to set up.
+	///    - animatesSplash: Whether the splash animation may play. Honored only on cold launch.
+	func startInterface(in window: UIWindow?, animatesSplash: Bool) {
+		Task { @MainActor in
+			let result = await AppBootstrap.shared.run {
+				await KurozoraDelegate.shared.performProcessBootstrap()
+			}
+			self.installInterface(in: window, animatesSplash: animatesSplash && result.isColdLaunch, outcome: result.outcome)
+		}
+	}
+
+	/// Installs the appropriate interface for the given window based on the bootstrap outcome.
+	///
+	/// - Parameters:
+	///    - window: The window whose root view controller will be set.
+	///    - animatesSplash: Whether to play the splash animation before showing the main interface.
+	///    - outcome: The result of the process bootstrap.
+	@MainActor
+	private func installInterface(in window: UIWindow?, animatesSplash: Bool, outcome: BootstrapOutcome) {
+		guard let window = window else { return }
+
+		switch outcome {
+		case .blocked(let warningType):
+			let warningViewController = WarningViewController()
+			warningViewController.window = window
+			warningViewController.warningType = warningType
+			window.rootViewController = warningViewController
+
+		case .ready:
+			let rootViewController = self.makeRootViewController()
+
+			if animatesSplash, let splashViewController = window.rootViewController as? SplashscreenViewController {
+				splashViewController.animateLogo { _ in
+					window.rootViewController = rootViewController
 					AuthenticationManager.shared.authenticateIfRequired()
 				}
+			} else {
+				window.rootViewController = rootViewController
+				AuthenticationManager.shared.authenticateIfRequired()
 			}
 		}
+	}
+
+	/// Builds the main interface's root view controller for the current platform.
+	///
+	/// - Returns: A `KTabBarController` on supported systems, or a two-column split view controller otherwise.
+	@MainActor
+	private func makeRootViewController() -> UIViewController {
+		if #available(iOS 18.0, macCatalyst 18.0, *) {
+			return KTabBarController()
+		}
+
+		return self.makeTwoColumnSplitViewController()
+	}
+
+	/// Builds the pre-iOS 18 sidebar and tab bar split view controller.
+	///
+	/// - Returns: A configured two-column split view controller.
+	@MainActor
+	private func makeTwoColumnSplitViewController() -> UISplitViewController {
+		let navigationController = KNavigationController(rootViewController: SidebarViewController())
+		#if targetEnvironment(macCatalyst)
+		navigationController.extendedLayoutIncludesOpaqueBars = true
+		navigationController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
+		#endif
+		navigationController.navigationItem.largeTitleDisplayMode = .never
+
+		let tabBarController = KTabBarController()
+		let splitViewController = UISplitViewController(style: .doubleColumn)
+		splitViewController.primaryBackgroundStyle = .sidebar
+		splitViewController.preferredSplitBehavior = .tile
+		splitViewController.preferredDisplayMode = .oneBesideSecondary
+		#if targetEnvironment(macCatalyst)
+		splitViewController.extendedLayoutIncludesOpaqueBars = true
+		splitViewController.displayModeButtonVisibility = .never
+		splitViewController.minimumPrimaryColumnWidth = 220.0
+		splitViewController.maximumPrimaryColumnWidth = 220.0
+		splitViewController.additionalSafeAreaInsets.top = -28 // roughly the titlebar height
+		#endif
+		splitViewController.setViewController(navigationController, for: .primary)
+		splitViewController.setViewController(tabBarController, for: .compact)
+		return splitViewController
 	}
 
 	// MARK: - Functions
@@ -139,8 +234,8 @@ final class KurozoraDelegate {
 	///    - viewController: The view controller that should be dismissed.
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if let warningViewController = window?.rootViewController as? WarningViewController, warningViewController.warningType == .noSignal {
-			// Initialize app
-			KurozoraDelegate.shared.initiateApp(window: window)
+			// Re-run startup for this window
+			KurozoraDelegate.shared.startInterface(in: window, animatesSplash: false)
 		} else if let warningViewController = viewController as? WarningViewController, warningViewController.warningType == .noSignal {
 			viewController.dismiss(animated: true, completion: nil)
 		}
@@ -149,45 +244,6 @@ final class KurozoraDelegate {
 			// Check if user should authenticate
 			AuthenticationManager.shared.authenticateIfRequired()
 		}
-	}
-
-	/// Show a warning view if necessary.
-	///
-	/// - Parameter window: The window on which the warning view will be shown.
-	///
-	/// - Returns: a boolean indicating whether a warning view was presented.
-	@MainActor
-	func showWarningView(for window: UIWindow?) async -> Bool {
-		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return false }
-
-		do {
-			let metaResponse = try await KService.info().response()
-			let meta = metaResponse.meta
-			let topViewController = UIApplication.topViewController
-			let warningViewController = WarningViewController()
-			warningViewController.window = window
-
-			if meta.isMaintenanceModeEnabled {
-				warningViewController.warningType = .maintenance
-			} else if meta.minimumAppVersion.compare(currentAppVersion, options: .numeric) == .orderedDescending {
-				warningViewController.warningType = .forceUpdate
-			} else {
-				return false
-			}
-
-			if window != nil {
-				window?.rootViewController = warningViewController
-			} else {
-				warningViewController.modalPresentationStyle = .fullScreen
-				topViewController?.present(warningViewController, animated: true)
-			}
-
-			return true
-		} catch {
-			print("-----", error.localizedDescription)
-		}
-
-		return false
 	}
 
 	/// Show the forced update view when the API version isn't supported.

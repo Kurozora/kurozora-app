@@ -110,13 +110,19 @@ extension UIApplication {
 		return UIApplication.topViewController(base)
 	}
 
-	/// The shared key window of the application.
+	/// The key window of the user's active scene.
 	static var sharedKeyWindow: UIWindow? {
-		guard let scene = UIApplication.shared.connectedScenes.first,
-			  let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate,
-			  let window = windowSceneDelegate.window else {
-				  return nil
-			  }
+		let windowScenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+		let scene = windowScenes.first { $0.activationState == .foregroundActive }
+			?? windowScenes.first { $0.activationState == .foregroundInactive }
+			?? windowScenes.first
+
+		guard
+			let windowSceneDelegate = scene?.delegate as? UIWindowSceneDelegate,
+			let window = windowSceneDelegate.window
+		else {
+			return nil
+		}
 		return window
 	}
 }

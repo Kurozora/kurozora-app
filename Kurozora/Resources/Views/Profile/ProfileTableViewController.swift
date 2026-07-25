@@ -255,8 +255,6 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 	}
 
 	override func configureEmptyDataView() {
-		// TODO: Refactor for proper centering
-		let verticalOffset = (self.tableView.tableHeaderView?.frame.size.height ?? 0 - self.view.frame.size.height) / 2
 		var detailString: String
 
 		if self.userIdentity?.id == User.current?.id {
@@ -267,7 +265,6 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 		emptyBackgroundView.configureImageView(image: .Empty.comment)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.posts), detail: detailString)
-		emptyBackgroundView.verticalOffset = verticalOffset
 
 		tableView.backgroundView?.alpha = 0
 	}
