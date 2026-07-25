@@ -3674,16 +3674,16 @@ extension L10n {
 			)
 		}
 	}
-	/// The Home quick link to the personalisation article.
+	/// The Home quick link to the personalization article.
 	///
-	/// - Tag: L10n-quickLinkPersonalisation
-	static var quickLinkPersonalisation: String {
+	/// - Tag: L10n-quickLinkPersonalization
+	static var quickLinkPersonalization: String {
 		L10n.resolve {
 			String(
-				localized: "About Personalisation",
+				localized: "About Personalization",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The Home quick link to the personalisation article."
+				comment: "The Home quick link to the personalization article."
 			)
 		}
 	}

@@ -912,6 +912,20 @@ extension L10n {
 			)
 		}
 	}
+	/// The message string for the library cache section footer.
+	///
+	/// - Tag: L10n-libraryCacheFooterMessage
+	static var libraryCacheFooterMessage: String {
+		L10n.resolve {
+			String(
+				localized: "Artwork for titles in your library is stored separately and managed automatically, so your library can be viewed offline. Clearing the cache doesn't affect it.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message string for the library cache section footer."
+			)
+		}
+	}
 	/// The title string for the 'Clear All' destructive button.
 	///
 	/// - Tag: L10n-clearAll
@@ -1661,6 +1675,86 @@ extension L10n {
 	static var whenSongChanges: String {
 		L10n.resolve {
 			String(localized: "When song changes", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the song change notifications setting.")
+		}
+	}
+
+	// MARK: - Library Sync
+	/// The 'Sync' settings section header.
+	static var sync: String {
+		L10n.resolve {
+			String(localized: "Sync", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Sync' settings section header.")
+		}
+	}
+	/// The 'Default Sorting' settings section header.
+	static var defaultSorting: String {
+		L10n.resolve {
+			String(localized: "Default Sorting", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Default Sorting' settings section header.")
+		}
+	}
+	/// The row title shown when the last sync happened moments ago.
+	static var syncedJustNow: String {
+		L10n.resolve {
+			String(localized: "Synced just now", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row title shown when the last sync happened moments ago.")
+		}
+	}
+	/// The row title showing how many minutes ago the library last synced.
+	///
+	/// - Parameter count: The number of minutes since the last sync.
+	static func lastSyncedMinutesAgo(_ count: Int) -> String {
+		String(
+			localized: "Last synced ^[\(count) minutes](inflect: true) ago",
+			table: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The row title showing how many minutes ago the library last synced."
+		)
+	}
+	/// The row title showing how many hours ago the library last synced.
+	///
+	/// - Parameter count: The number of hours since the last sync.
+	static func lastSyncedHoursAgo(_ count: Int) -> String {
+		String(
+			localized: "Last synced ^[\(count) hours](inflect: true) ago",
+			table: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The row title showing how many hours ago the library last synced."
+		)
+	}
+	/// The row title showing the date the library last synced.
+	///
+	/// - Parameter formattedDate: The formatted last sync date.
+	static func lastSyncedOnDate(_ formattedDate: String) -> String {
+		String(
+			localized: "Last synced on \(formattedDate)",
+			table: "Settings",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The row title showing the date the library last synced."
+		)
+	}
+	/// The row title shown when the library has never synced.
+	static var neverSynced: String {
+		L10n.resolve {
+			String(localized: "Never synced", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row title shown when the library has never synced.")
+		}
+	}
+	/// The action row title that forces an immediate library sync.
+	static var syncNow: String {
+		L10n.resolve {
+			String(localized: "Sync now", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action row title that forces an immediate library sync.")
+		}
+	}
+	/// The detail value shown on the sync-now row while a sync is in progress.
+	static var syncingNow: String {
+		L10n.resolve {
+			String(localized: "Syncing…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The detail value shown on the sync-now row while a sync is in progress.")
+		}
+	}
+	/// The footer message explaining what the sync section does.
+	static var librarySyncFooterMessage: String {
+		L10n.resolve {
+			String(localized: "Kurozora syncs your library automatically in the background. Use Sync now to fetch changes immediately.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer message explaining what the sync section does.")
 		}
 	}
 }

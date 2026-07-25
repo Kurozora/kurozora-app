@@ -214,12 +214,6 @@
             "value": "%1$@ (%2$@)"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ (%2$@)"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -233,6 +227,12 @@
           }
         },
         "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ (%2$@)"
+          }
+        },
+        "nb": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ (%2$@)"
@@ -447,12 +447,6 @@
             "value": "%@ jelenleg fel van függesztve."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ er for øyeblikket utestengt."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -469,6 +463,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@-ը ներկայումս կասեցված է։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ er for øyeblikket utestengt."
           }
         }
       }
@@ -680,12 +680,6 @@
             "value": "%@ véglegesen fel van függesztve."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ er permanent utestengt."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -702,6 +696,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@-ը մշտապես կասեցված է։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ er permanent utestengt."
           }
         }
       }
@@ -913,12 +913,6 @@
             "value": "1 óra"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 time"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -935,6 +929,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 ժամ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 time"
           }
         }
       }
@@ -1146,12 +1146,6 @@
             "value": "3 nap"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 dager"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -1168,6 +1162,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "3 օր"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 dager"
           }
         }
       }
@@ -1379,12 +1379,6 @@
             "value": "7 nap"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7 dager"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -1401,6 +1395,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "7 օր"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 dager"
           }
         }
       }
@@ -1612,12 +1612,6 @@
             "value": "24 óra"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24 timer"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -1634,6 +1628,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "24 ժամ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 timer"
           }
         }
       }
@@ -1845,12 +1845,6 @@
             "value": "30 nap"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "30 dager"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -1867,6 +1861,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "30 օր"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 dager"
           }
         }
       }
@@ -2078,12 +2078,6 @@
             "value": "Fiók felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kontoen er utestengt"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -2100,6 +2094,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Հաշիվը կասեցված է"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontoen er utestengt"
           }
         }
       }
@@ -2311,12 +2311,6 @@
             "value": "Tartalmi figyelmeztetés hozzáadása"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Legg til en innholdsadvarsel"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -2333,6 +2327,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ավելացրեք բովանդակության նախազգուշացում"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legg til en innholdsadvarsel"
           }
         }
       }
@@ -2544,12 +2544,6 @@
             "value": "%@ fellebbezése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Klage fra %@"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -2566,6 +2560,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Բողոք %@-ից"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klage fra %@"
           }
         }
       }
@@ -2777,12 +2777,6 @@
             "value": "Időtartam kiválasztása"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Velg varighet"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -2799,6 +2793,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ընտրեք տևողությունը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velg varighet"
           }
         }
       }
@@ -3010,12 +3010,6 @@
             "value": "Indok kiválasztása"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Velg årsak"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -3032,6 +3026,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ընտրեք պատճառը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velg årsak"
           }
         }
       }
@@ -3243,12 +3243,6 @@
             "value": "Válaszd ki a közzétett tartalomra vonatkozó saját címkéket. Ha egyet sem jelölsz ki, a bejegyzés minden közönség számára alkalmas."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Velg selvmerkingene som gjelder for mediet du publiserer. Hvis ingen er valgt, er dette innlegget egnet for alle målgrupper."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -3265,6 +3259,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ընտրեք ինքնապիտակները, որոնք կիրառելի են ձեր հրապարակվող մեդիայի համար։ Եթե ոչ մեկը ընտրված չէ, ապա այս հրապարակումը հարմար է բոլոր լսարանների համար։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velg selvmerkingene som gjelder for mediet du publiserer. Hvis ingen er valgt, er dette innlegget egnet for alle målgrupper."
           }
         }
       }
@@ -3476,12 +3476,6 @@
             "value": "Közösségi irányelvek"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Retningslinjer for fellesskapet"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -3498,6 +3492,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Համայնքի կանոնները"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retningslinjer for fellesskapet"
           }
         }
       }
@@ -3709,12 +3709,6 @@
             "value": "Felfüggesztés megfellebbezése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bestrid utestengelsen"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -3731,6 +3725,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Բողոքարկել կասեցումը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bestrid utestengelsen"
           }
         }
       }
@@ -3942,12 +3942,6 @@
             "value": "A felfüggesztés megfellebbezése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bestrid denne utestengelsen"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -3964,6 +3958,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Բողոքարկել այս կասեցումը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bestrid denne utestengelsen"
           }
         }
       }
@@ -4175,12 +4175,6 @@
             "value": "Időtartam"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Varighet"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -4197,6 +4191,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Տևողություն"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Varighet"
           }
         }
       }
@@ -4408,12 +4408,6 @@
             "value": "Fellebbezés szerkesztése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rediger klage"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -4430,6 +4424,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Խմբագրել բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rediger klage"
           }
         }
       }
@@ -4641,12 +4641,6 @@
             "value": "Fellebbezés szerkesztése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rediger klage"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -4663,6 +4657,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Խմբագրել բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rediger klage"
           }
         }
       }
@@ -4874,12 +4874,6 @@
             "value": "Vége"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Slutter"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -4896,6 +4890,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ավարտվում է"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slutter"
           }
         }
       }
@@ -5107,12 +5107,6 @@
             "value": "Indokolja meg, miért gondolja, hogy a felfüggesztését fel kellene oldani. Egy moderátor át fogja nézni az üzenetét."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Forklar hvorfor du mener utestengelsen din bør oppheves. En moderator vil gjennomgå meldingen din."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -5129,6 +5123,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Բացատրեք, թե ինչու եք կարծում, որ ձեր կասեցումը պետք է հանվի։ Մոդերատորը կքննարկի ձեր հաղորդագրությունը։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forklar hvorfor du mener utestengelsen din bør oppheves. En moderator vil gjennomgå meldingen din."
           }
         }
       }
@@ -5340,12 +5340,6 @@
             "value": "Beküldve: %@"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Innsendt %@"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -5362,6 +5356,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ներկայացվել է %@"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Innsendt %@"
           }
         }
       }
@@ -5573,12 +5573,6 @@
             "value": "Zaklatás"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trakassering"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -5595,6 +5589,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ոտնձգություն"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trakassering"
           }
         }
       }
@@ -5806,12 +5806,6 @@
             "value": "Gyűlöletkeltés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hat"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -5828,6 +5822,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ատելություն"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hat"
           }
         }
       }
@@ -6039,12 +6039,6 @@
             "value": "Megszemélyesítés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Identitetsetterligning"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -6061,6 +6055,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ինքնության կեղծում"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identitetsetterligning"
           }
         }
       }
@@ -6272,12 +6272,6 @@
             "value": "Felfüggesztés kiadása"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gi utestengelse"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -6294,6 +6288,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Սահմանել ժամանակավոր արգելք"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gi utestengelse"
           }
         }
       }
@@ -6505,12 +6505,6 @@
             "value": "Moderátori megjegyzés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Moderatornotat"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -6527,6 +6521,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Մոդերատորի նշում"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moderatornotat"
           }
         }
       }
@@ -6738,12 +6738,6 @@
             "value": "Nincs lejárati dátum"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingen sluttdato"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -6760,6 +6754,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ավարտի ամսաթիվ չկա"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingen sluttdato"
           }
         }
       }
@@ -6971,12 +6971,6 @@
             "value": "Megjegyzés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notat"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -6993,6 +6987,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Նշում"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notat"
           }
         }
       }
@@ -7204,12 +7204,6 @@
             "value": "Megjegyzés a felhasználónak"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notat til brukeren"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -7226,6 +7220,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Նշում օգտատիրոջ համար"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notat til brukeren"
           }
         }
       }
@@ -7437,12 +7437,6 @@
             "value": "NSFW"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -7456,6 +7450,12 @@
           }
         },
         "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NSFW"
+          }
+        },
+        "nb": {
           "stringUnit": {
             "state": "translated",
             "value": "NSFW"
@@ -7670,12 +7670,6 @@
             "value": "Egyéb"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Annet"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -7692,6 +7686,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Այլ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annet"
           }
         }
       }
@@ -7903,12 +7903,6 @@
             "value": "Végleges"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Permanent"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -7925,6 +7919,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Մշտական"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permanent"
           }
         }
       }
@@ -8136,12 +8136,6 @@
             "value": "Indok"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Årsak"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -8158,6 +8152,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Պատճառ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Årsak"
           }
         }
       }
@@ -8369,12 +8369,6 @@
             "value": "Felfüggesztés visszavonása"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Opphev utestengelse"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -8391,6 +8385,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Չեղարկել ժամանակավոր արգելքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opphev utestengelse"
           }
         }
       }
@@ -8602,12 +8602,6 @@
             "value": "Visszavonja %@ felfüggesztését?"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oppheve utestengelsen av %@?"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -8624,6 +8618,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Չեղարկե՞լ %@-ի ժամանակավոր արգելքը։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oppheve utestengelsen av %@?"
           }
         }
       }
@@ -8835,12 +8835,6 @@
             "value": "Spam"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Spam"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -8857,6 +8851,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Սպամ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spam"
           }
         }
       }
@@ -9068,12 +9068,6 @@
             "value": "Beküldés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send inn"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -9090,6 +9084,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ուղարկել"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send inn"
           }
         }
       }
@@ -9301,12 +9301,6 @@
             "value": "Fellebbezés beküldése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send inn klage"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -9323,6 +9317,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ուղարկել բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send inn klage"
           }
         }
       }
@@ -9534,12 +9534,6 @@
             "value": "Felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -9556,6 +9550,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt"
           }
         }
       }
@@ -9779,12 +9779,6 @@
             "value": "%lld napra felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt i %lld dag(er)"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -9801,6 +9795,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է %lld օրով"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt i %lld dag(er)"
           }
         }
       }
@@ -10024,12 +10024,6 @@
             "value": "%lld órára felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt i %lld time(r)"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -10046,6 +10040,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է %lld ժամով"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt i %lld time(r)"
           }
         }
       }
@@ -10269,12 +10269,6 @@
             "value": "%lld percre felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt i %lld minutt(er)"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -10291,6 +10285,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է %lld րոպեով"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt i %lld minutt(er)"
           }
         }
       }
@@ -10514,12 +10514,6 @@
             "value": "%lld másodpercre felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt i %lld sekund(er)"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -10536,6 +10530,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է %lld վայրկյանով"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt i %lld sekund(er)"
           }
         }
       }
@@ -10747,12 +10747,6 @@
             "value": "Véglegesen felfüggesztve"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengt permanent"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -10769,6 +10763,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցված է մշտապես"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengt permanent"
           }
         }
       }
@@ -10980,12 +10980,6 @@
             "value": "Felfüggesztés részletei"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detaljer om utestengelsen"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -11002,6 +10996,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցման մանրամասներ"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detaljer om utestengelsen"
           }
         }
       }
@@ -11213,12 +11213,6 @@
             "value": "Felfüggesztés vége"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengelsen slutter"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -11235,6 +11229,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Կասեցումն ավարտվում է"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengelsen slutter"
           }
         }
       }
@@ -11446,12 +11446,6 @@
             "value": "Ez azonnal feloldja a felfüggesztést. A felhasználó újra tud majd bejegyzést közzétenni, értékelni és tevékenykedni."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dette opphever utestengelsen umiddelbart. Brukeren vil kunne publisere, vurdere og delta igjen."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -11468,6 +11462,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Սա անմիջապես հանում է կասեցումը։ Օգտատերը կրկին կկարողանա հրապարակել, գնահատել և մասնակցել։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dette opphever utestengelsen umiddelbart. Brukeren vil kunne publisere, vurdere og delta igjen."
           }
         }
       }
@@ -11679,12 +11679,6 @@
             "value": "Felfüggesztés"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utestengelse"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -11701,6 +11695,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ժամանակավոր արգելք"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utestengelse"
           }
         }
       }
@@ -11912,12 +11912,6 @@
             "value": "Fellebbezés frissítése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oppdater klage"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -11934,6 +11928,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Թարմացնել բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oppdater klage"
           }
         }
       }
@@ -12145,12 +12145,6 @@
             "value": "Írja meg a fellebbezését"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skriv klagen din"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -12167,6 +12161,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Գրեք ձեր բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skriv klagen din"
           }
         }
       }
@@ -12378,12 +12378,6 @@
             "value": "Az Ön fiókja véglegesen fel van függesztve."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kontoen din er permanent utestengt."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -12400,6 +12394,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ձեր հաշիվը մշտապես կասեցված է։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontoen din er permanent utestengt."
           }
         }
       }
@@ -12611,12 +12611,6 @@
             "value": "Az Ön fiókja ideiglenesen fel van függesztve."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kontoen din er midlertidig utestengt."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -12633,6 +12627,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ձեր հաշիվը ժամանակավորապես կասեցված է։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontoen din er midlertidig utestengt."
           }
         }
       }
@@ -12844,12 +12844,6 @@
             "value": "Az Ön fellebbezése"
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Klagen din"
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -12866,6 +12860,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ձեր բողոքը"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klagen din"
           }
         }
       }
@@ -13077,12 +13077,6 @@
             "value": "A fellebbezésnek legalább 10 karakter hosszúnak kell lennie."
           }
         },
-        "no": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Klagen din må være minst 10 tegn lang."
-          }
-        },
         "ur": {
           "stringUnit": {
             "state": "translated",
@@ -13099,6 +13093,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ձեր բողոքը պետք է լինի առնվազն 10 նիշ երկարությամբ։"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klagen din må være minst 10 tegn lang."
           }
         }
       }

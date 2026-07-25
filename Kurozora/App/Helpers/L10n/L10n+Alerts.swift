@@ -110,6 +110,20 @@ extension L10n {
 			)
 		}
 	}
+	/// The alert title shown when updating a library item fails.
+	///
+	/// - Tag: L10n-cantUpdateLibraryTitle
+	static var cantUpdateLibraryTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Can't Update Your Library 😔",
+				table: "Alerts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The alert title shown when updating a library item fails."
+			)
+		}
+	}
 	/// The alert title shown when removing an item from the library fails.
 	///
 	/// - Tag: L10n-cantRemoveFromLibraryTitle

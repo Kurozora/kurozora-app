@@ -4946,6 +4946,20 @@ extension L10n {
 			comment: "The library item count shown as a navigation subtitle."
 		)
 	}
+	/// The syncing item count shown as a navigation subtitle.
+	///
+	/// - Parameter count: The number of items being synced.
+	///
+	/// - Tag: L10n-syncingItemsCount
+	static func syncingItemsCount(_ count: Int) -> String {
+		String(
+			localized: "Syncing \(count) Items…",
+			table: "Content",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The syncing item count shown as a navigation subtitle."
+		)
+	}
 	/// The label naming the sort type and option in use.
 	///
 	/// - Parameters:

@@ -90415,6 +90415,9 @@
         }
       }
     },
+    "Syncing %lld Items…" : {
+      "comment" : "The syncing item count shown as a navigation subtitle."
+    },
     "Synonyms: %@" : {
       "comment" : "The studio's synonym aliases, where the placeholder is the comma-separated names.",
       "localizations" : {
