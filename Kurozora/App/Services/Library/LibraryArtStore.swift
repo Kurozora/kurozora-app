@@ -11,10 +11,10 @@ import Foundation
 import ImageIO
 import os.log
 import UIKit
+import UniformTypeIdentifiers
 
 private let artStoreLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryArtStore")
 
-/// On-disk store of downsampled library art, independent of the shared image cache.
 actor LibraryArtStore {
 	// MARK: - Properties
 	/// Returns the singleton `LibraryArtStore` instance.
@@ -23,7 +23,7 @@ actor LibraryArtStore {
 	/// The longest edge stored art is downsampled to, in pixels.
 	private static let maxPixelSize: CGFloat = 800.0
 
-	/// The JPEG compression quality of stored art.
+	/// The lossy compression quality of stored art.
 	private static let compressionQuality: CGFloat = 0.75
 
 	/// The maximum number of concurrent downloads per prefetch call.
@@ -127,19 +127,19 @@ actor LibraryArtStore {
 			if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 400 {
 				return
 			}
-			guard let jpegData = Self.downsampledJPEGData(from: imageData) else { return }
+			guard let storableData = Self.storableArtData(from: imageData) else { return }
 
 			let fileURL = try Self.fileURL(forURLString: urlString, creatingDirectory: true)
-			try jpegData.write(to: fileURL, options: .atomic)
+			try storableData.write(to: fileURL, options: .atomic)
 		} catch {
 			artStoreLogger.error("Prefetch failed: \(error.localizedDescription)")
 		}
 	}
 
-	/// Returns the image data re-encoded as a JPEG no larger than ``maxPixelSize`` on its longest edge.
-	private static func downsampledJPEGData(from imageData: Data) -> Data? {
+	/// Returns the image data to store, keeping the original bytes when they're already small and within ``maxPixelSize``.
+	private static func storableArtData(from sourceData: Data) -> Data? {
 		let sourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-		guard let imageSource = CGImageSourceCreateWithData(imageData as CFData, sourceOptions) else { return nil }
+		guard let imageSource = CGImageSourceCreateWithData(sourceData as CFData, sourceOptions) else { return nil }
 
 		let thumbnailOptions = [
 			kCGImageSourceCreateThumbnailFromImageAlways: true,
@@ -148,13 +148,45 @@ actor LibraryArtStore {
 			kCGImageSourceThumbnailMaxPixelSize: Self.maxPixelSize
 		] as CFDictionary
 		guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, thumbnailOptions) else { return nil }
+		guard let encodedData = Self.encodedArtData(from: downsampledImage) else { return nil }
 
-		return UIImage(cgImage: downsampledImage).jpegData(compressionQuality: Self.compressionQuality)
+		if Self.isWithinMaxPixelSize(imageSource), sourceData.count < encodedData.count {
+			return sourceData
+		}
+		return encodedData
+	}
+
+	/// Returns whether the image source's longest edge is already within ``maxPixelSize``.
+	private static func isWithinMaxPixelSize(_ imageSource: CGImageSource) -> Bool {
+		guard let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any],
+		      let pixelWidth = properties[kCGImagePropertyPixelWidth] as? CGFloat,
+		      let pixelHeight = properties[kCGImagePropertyPixelHeight] as? CGFloat else { return false }
+		return max(pixelWidth, pixelHeight) <= Self.maxPixelSize
+	}
+
+	/// Returns the image encoded as HEIC, falling back to JPEG when HEIC encoding is unavailable.
+	private static func encodedArtData(from image: CGImage) -> Data? {
+		if let heicData = Self.heicData(from: image) {
+			return heicData
+		}
+		return UIImage(cgImage: image).jpegData(compressionQuality: Self.compressionQuality)
+	}
+
+	/// Returns the image encoded as HEIC at ``compressionQuality``.
+	private static func heicData(from image: CGImage) -> Data? {
+		let mutableData = NSMutableData()
+		guard let destination = CGImageDestinationCreateWithData(mutableData, UTType.heic.identifier as CFString, 1, nil) else { return nil }
+
+		let destinationOptions = [kCGImageDestinationLossyCompressionQuality: Self.compressionQuality] as CFDictionary
+		CGImageDestinationAddImage(destination, image, destinationOptions)
+		guard CGImageDestinationFinalize(destination) else { return nil }
+
+		return mutableData as Data
 	}
 
 	private static func fileName(forURLString urlString: String) -> String {
 		let digest = SHA256.hash(data: Data(urlString.utf8))
-		return digest.map { String(format: "%02x", $0) }.joined() + ".jpg"
+		return digest.map { String(format: "%02x", $0) }.joined() + ".img"
 	}
 
 	private static func fileURL(forURLString urlString: String, creatingDirectory: Bool) throws -> URL {
