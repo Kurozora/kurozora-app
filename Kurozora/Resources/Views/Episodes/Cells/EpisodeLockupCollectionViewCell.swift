@@ -85,7 +85,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.seasonButton.setTitle(seasonEpisodeLabel, for: .normal)
 
 		// Configure watch button
-		let watchStatusButtonTitle = episode.attributes.watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
+		let watchStatusButtonTitle = episode.watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 
 		// Configure show button
@@ -94,6 +94,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 		self.hideSkeleton()
 	}
+
 
 	// MARK: - IBActions
 	@IBAction func showButtonPressed(_ sender: UIButton) {

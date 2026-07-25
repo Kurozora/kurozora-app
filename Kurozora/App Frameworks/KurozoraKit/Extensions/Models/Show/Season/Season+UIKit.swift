@@ -57,19 +57,17 @@ extension Season {
 			// Create "update watch status" element
 			let watchStatus = self.attributes.watchStatus
 
-			if watchStatus != .disabled {
-				let updateWatchStatusTitle = watchStatus == .watched ? L10n.markAllUnwatched : L10n.markAllWatched
-				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
-				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
+			let updateWatchStatusTitle = watchStatus == .watched ? L10n.markAllUnwatched : L10n.markAllWatched
+			let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
+			let attributes: UIAction.Attributes = watchStatus == .watched ? .destructive : []
 
-				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
-					guard let self = self else { return }
-					Task {
-						await self.updateWatchStatus(userInfo: userInfo)
-					}
+			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
+				guard let self = self else { return }
+				Task {
+					await self.updateWatchStatus(userInfo: userInfo)
 				}
-				menuElements.append(watchAction)
 			}
+			menuElements.append(watchAction)
 		}
 
 		// Create "share" menu

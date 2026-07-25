@@ -347,7 +347,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		}
 
 		if let lastWatchedEpisode = episodes.sorted(by: { $0.value.attributes.number < $1.value.attributes.number }).first(where: { _, episode in
-			episode.attributes.watchStatus == .notWatched
+			episode.watchStatus == .notWatched
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
 			self.configureNavBarButtons()

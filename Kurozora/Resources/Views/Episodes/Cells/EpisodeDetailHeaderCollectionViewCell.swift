@@ -32,7 +32,7 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		// Configure watch status button
-		self.configureWatchButton(with: episode.attributes.watchStatus)
+		self.configureWatchButton(with: episode.watchStatus)
 
 		// Configure title label
 		self.primaryLabel.text = episode.attributes.title
@@ -69,7 +69,7 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 	@objc func handleWatchStatusUpdate(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.configureWatchButton(with: self.episode?.attributes.watchStatus)
+			self.configureWatchButton(with: self.episode?.watchStatus)
 		}
 	}
 
@@ -77,7 +77,7 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 	///
 	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
-		let watchStatusButtonTitle = self.episode?.attributes.watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
+		let watchStatusButtonTitle = watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 	}
 }
