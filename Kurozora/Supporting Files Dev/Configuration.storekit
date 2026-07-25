@@ -20,7 +20,7 @@
       "internalID" : "3536E2E8",
       "localizations" : [
         {
-          "description" : "A tip posing a danger to an unknown degree.",
+          "description" : "A tip with unknown impact.",
           "displayName" : "Wolf tip",
           "locale" : "en_US"
         }
@@ -35,7 +35,7 @@
       "internalID" : "3ACAA777",
       "localizations" : [
         {
-          "description" : "A tip endangering a large number of people.",
+          "description" : "A tip affecting a large number of people.",
           "displayName" : "Tiger tip",
           "locale" : "en_US"
         }
@@ -65,7 +65,7 @@
       "internalID" : "FF0363CC",
       "localizations" : [
         {
-          "description" : "A tip endangering multiple cities.",
+          "description" : "A tip affecting multiple cities.",
           "displayName" : "Dragon tip",
           "locale" : "en_US"
         }
@@ -80,7 +80,7 @@
       "internalID" : "300ABC22",
       "localizations" : [
         {
-          "description" : "A tip endangering the survival of humanity.",
+          "description" : "A tip affecting humanity’s survival.",
           "displayName" : "God tip",
           "locale" : "en_US"
         }
@@ -125,7 +125,7 @@
       "internalID" : "09FAC3F9",
       "localizations" : [
         {
-          "description" : "A tip endangering the survival of universe.",
+          "description" : "A tip affecting the universe’s survival.",
           "displayName" : "Extraterrestrial tip",
           "locale" : "en_US"
         }
@@ -140,7 +140,7 @@
       "internalID" : "BB753F9F",
       "localizations" : [
         {
-          "description" : "A tip endangering the survival of multiverse.",
+          "description" : "A tip affecting the multiverse’s survival.",
           "displayName" : "Eternal tip",
           "locale" : "en_US"
         }
