@@ -163,124 +163,127 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
+		// readers (cell/supplementary providers, the library observer) until it's fully assembled.
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		SectionLayoutKind.allCases.forEach { [weak self] showDetailSection in
 			guard let self = self else { return }
 			switch showDetailSection {
 			case .header:
-				self.snapshot.appendSections([showDetailSection])
-				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				newSnapshot.appendSections([showDetailSection])
+				newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 			case .badges:
-				self.snapshot.appendSections([showDetailSection])
+				newSnapshot.appendSections([showDetailSection])
 				ShowDetail.Badge.allCases.forEach { showDetailBadge in
 					switch showDetailBadge {
 //					case .rating:
 //						return
 					default:
-						self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+						newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 					}
 				}
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendSections([showDetailSection])
+					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
 			case .rating:
-				self.snapshot.appendSections([showDetailSection])
+				newSnapshot.appendSections([showDetailSection])
 				ShowDetail.Rating.allCases.forEach { _ in
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
 			case .rateAndReview:
-				self.snapshot.appendSections([showDetailSection])
+				newSnapshot.appendSections([showDetailSection])
 				ShowDetail.RateAndReview.allCases.forEach { _ in
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
 			case .reviews:
 				if !self.reviews.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
 						.review(review)
 					}
-					self.snapshot.appendItems(reviewItems, toSection: showDetailSection)
+					newSnapshot.appendItems(reviewItems, toSection: showDetailSection)
 				}
 			case .information:
-				self.snapshot.appendSections([showDetailSection])
+				newSnapshot.appendSections([showDetailSection])
 				ShowDetail.Information.allCases.forEach { _ in
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
 			case .seasons:
 				if !self.seasonIdentities.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let seasonIdentityItems: [ItemKind] = self.seasonIdentities.map { seasonIdentity in
 						.seasonIdentity(seasonIdentity)
 					}
-					self.snapshot.appendItems(seasonIdentityItems, toSection: showDetailSection)
+					newSnapshot.appendItems(seasonIdentityItems, toSection: showDetailSection)
 				}
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let castIdentityItems: [ItemKind] = self.castIdentities.map { castIdentity in
 						.castIdentity(castIdentity)
 					}
-					self.snapshot.appendItems(castIdentityItems, toSection: showDetailSection)
+					newSnapshot.appendItems(castIdentityItems, toSection: showDetailSection)
 				}
 			case .songs:
 				if !self.showSongs.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let showSongItems: [ItemKind] = self.showSongs.map { showSong in
 						.showSong(showSong)
 					}
-					self.snapshot.appendItems(showSongItems, toSection: showDetailSection)
+					newSnapshot.appendItems(showSongItems, toSection: showDetailSection)
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
 						.studioIdentity(studioIdentity)
 					}
-					self.snapshot.appendItems(studioIdentityItems, toSection: showDetailSection)
+					newSnapshot.appendItems(studioIdentityItems, toSection: showDetailSection)
 				}
 			case .moreByStudio:
 				if !self.studioShowIdentities.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let studioShowIdentyItems: [ItemKind] = self.studioShowIdentities.map { studioShowIdentity in
 						.showIdentity(studioShowIdentity)
 					}
-					self.snapshot.appendItems(studioShowIdentyItems, toSection: showDetailSection)
+					newSnapshot.appendItems(studioShowIdentyItems, toSection: showDetailSection)
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
 						.relatedShow(relatedShow)
 					}
-					self.snapshot.appendItems(relatedShowItems, toSection: showDetailSection)
+					newSnapshot.appendItems(relatedShowItems, toSection: showDetailSection)
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
 						.relatedLiterature(relatedLiterature)
 					}
-					self.snapshot.appendItems(relatedLiteratureItems, toSection: showDetailSection)
+					newSnapshot.appendItems(relatedLiteratureItems, toSection: showDetailSection)
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					self.snapshot.appendSections([showDetailSection])
+					newSnapshot.appendSections([showDetailSection])
 					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
 						.relatedGame(relatedGame)
 					}
-					self.snapshot.appendItems(relatedGameItems, toSection: showDetailSection)
+					newSnapshot.appendItems(relatedGameItems, toSection: showDetailSection)
 				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
-					self.snapshot.appendSections([showDetailSection])
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendSections([showDetailSection])
+					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
 			}
 		}
 
-		self.dataSource.apply(self.snapshot, animatingDifferences: false)
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 }

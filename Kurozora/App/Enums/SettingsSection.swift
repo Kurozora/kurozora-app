@@ -125,6 +125,9 @@ extension SettingsTableViewController {
 		/// The row representing the keychain cell.
 		case keychain
 
+		/// The row representing the library sync scenarios cell.
+		case syncScenarios
+
 		/// The row representing the browser cell.
 		case browser
 
@@ -207,7 +210,7 @@ extension SettingsTableViewController {
 		/// An array containing all settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.keychain,
+			.keychain, .syncScenarios,
 			.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
@@ -238,7 +241,7 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all debug section settings rows.
-		static let allDebug: [Row] = [.keychain]
+		static let allDebug: [Row] = [.keychain, .syncScenarios]
 
 		/// An array containing all alerts section settings rows.
 		static var allAlerts: [Row] = [.notifications, .soundsAndHaptics, .reminder]
@@ -292,6 +295,8 @@ extension SettingsTableViewController {
 				return .switchAccountSegue
 			case .keychain:
 				return .keysSegue
+			case .syncScenarios:
+				return .syncScenariosSegue
 			case .browser:
 				return .browserSegue
 			case .cache:
@@ -335,6 +340,8 @@ extension SettingsTableViewController {
 			case .switchAccount:
 				return .chevron
 			case .keychain:
+				return .chevron
+			case .syncScenarios:
 				return .chevron
 			case .browser:
 				return .labelAndChevron
@@ -400,6 +407,8 @@ extension SettingsTableViewController {
 				return L10n.switchAccount
 			case .keychain:
 				return L10n.keysManager
+			case .syncScenarios:
+				return "Sync Scenarios"
 			case .browser:
 				return L10n.browser
 			case .cache:
@@ -486,6 +495,8 @@ extension SettingsTableViewController {
                 return .Icons.accountSwitch
 			case .keychain:
                 return .Icons.kDefaults
+			case .syncScenarios:
+				return .Icons.wrenchAndScrewdriverFill
 			case .browser:
                 return .Icons.browser
 			case .cache:

@@ -103,19 +103,14 @@ extension Season {
 	///
 	/// - Parameter userInfo: A dictionary that contains information related to the notification.
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
-		do {
-			let seasonIdentity = SeasonIdentity(id: self.id)
-			let seasonUpdateResponse = try await KService.updateWatchStatus(forSeason: seasonIdentity).response()
-			let watchStatus = seasonUpdateResponse.data.watchStatus
+		guard let slug = User.current?.attributes.slug else { return }
 
-			// Update watch status
-			self.attributes = self.attributes.updated(using: watchStatus)
+		let currentStatus = self.attributes.watchStatus ?? .notWatched
+		let newStatus = await LibraryOutbox.shared.enqueueSeasonWatchToggle(seasonID: self.id.rawValue, userSlug: slug, currentStatus: currentStatus)
+		self.attributes = self.attributes.updated(using: newStatus)
 
-			NotificationCenter.default.post(name: .KSeasonWatchStatusDidUpdate, object: nil, userInfo: userInfo)
-			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
-		} catch {
-			print(error.localizedDescription)
-		}
+		NotificationCenter.default.post(name: .KSeasonWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+		WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 	}
 
 	/// Present share sheet for the season.

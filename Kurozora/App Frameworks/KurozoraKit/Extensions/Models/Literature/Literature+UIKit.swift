@@ -20,6 +20,27 @@ extension Literature {
 		return LibraryStore.shared.effectiveLibrary(forTrackableID: self.id.rawValue, kind: .literatures)
 	}
 
+	/// The denormalized display snapshot used to seed an offline library add.
+	private var outboxSeed: LibraryOutboxSeed {
+		LibraryOutboxSeed(
+			title: self.attributes.title,
+			sortTitle: LocalLibraryEntry.normalizedSortKey(self.attributes.title),
+			tagline: self.attributes.tagline,
+			posterURL: self.attributes.poster?.url,
+			posterBackgroundColor: self.attributes.poster?.backgroundColor,
+			bannerURL: self.attributes.banner?.url,
+			bannerBackgroundColor: self.attributes.banner?.backgroundColor,
+			genresLocalized: self.attributes.genres?.joined(separator: ", "),
+			statusName: self.attributes.status.name,
+			airingDate: self.attributes.nextPublicationAt,
+			durationCount: self.attributes.durationCount,
+			mediaTypeName: self.attributes.type.name,
+			popularityRank: self.attributes.stats?.rankTotal,
+			publicRating: self.attributes.stats?.ratingAverage,
+			slug: self.attributes.slug
+		)
+	}
+
 	/// Create a context menu configuration for the literature.
 	///
 	/// - Parameters:
@@ -154,99 +175,51 @@ extension Literature {
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
+	/// Adds the literature to the user's library with the given status.
+	///
+	/// - Parameter status: The library status to assign.
 	@MainActor
-	fileprivate func addToLibrary(status: LibraryStatus) async {
-		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(.literatures, status: status, itemIDs: [self.id]).response()
+	func addToLibrary(status: LibraryStatus) async {
+		guard let slug = User.current?.attributes.slug else { return }
 
-
-			// Apply the freshly-created rows into the local store immediately.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .literatures)
-			}
-
-			// Request review
-			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
-		} catch let error as APIError {
-//			self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-			print("----- Add to library failed:", error.message)
-		} catch {
-			print("----- Add to library failed with generic error:", error.localizedDescription)
-		}
+		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures, seed: self.outboxSeed)
+		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	@MainActor
 	func removeFromLibrary() async {
-		do {
-			let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, itemIDs: [self.id]).response()
-
-
-			// Optimistic local write — drop the cached entry.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-			}
-		} catch let error as APIError {
-			print("----- Remove from library failed", error.message)
-		} catch {
-			print(error.localizedDescription)
-		}
+		guard let slug = User.current?.attributes.slug else { return }
+		await LibraryOutbox.shared.enqueueRemove(trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
 	}
 
 	@MainActor
 	func toggleFavorite(on viewController: UIViewController? = nil) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
+		guard let slug = User.current?.attributes.slug else { return }
 
-		do {
-			let favoriteResponse = try await KService.toggleFavorite(inLibrary: .literatures, itemIDs: [self.id]).response()
+		let desired = !(self.libraryAttributes?.isFavorited ?? false)
+		await LibraryOutbox.shared.enqueueSetFavorite(desired, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
 
-
-			// Optimistic local write — flip the cached isFavorited flag.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyFavorite(favoriteResponse.data.favoriteStatus == .favorited, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-			}
-
-			// The favorites list covers kinds outside the local library store; refresh via notification.
-			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
-		} catch let error as APIError {
-			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.message)
-			print("----- Toggle favorite failed:", error.message)
-		} catch {
-			viewController?.presentAlertController(title: L10n.cantFavorite, message: error.localizedDescription)
-			print("----- Toggle favorite failed with generic error:", error.localizedDescription)
-		}
+		// The favorites list covers kinds outside the local library store; refresh via notification.
+		NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 	}
 
 	@MainActor
 	func toggleReminder(on viewController: UIViewController? = nil) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
-		let viewController = viewController ?? UIApplication.topViewController
+		guard let slug = User.current?.attributes.slug else { return }
 
-		if await WorkflowController.shared.isSubscribed(on: viewController) {
-			do {
-				if self.libraryAttributes?.status == nil {
-					await self.addToLibrary(status: .planning)
-				}
-
-				let updateReminderResponse = try await KService.toggleReminder(inLibrary: .literatures, itemIDs: [self.id]).response()
-
-
-				// Optimistic local write — flip the cached isReminded flag.
-				if let slug = User.current?.attributes.slug {
-					LibraryStore.shared.applyReminder(updateReminderResponse.data.reminderStatus == .reminded, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-				}
-
-				// The reminders list fetches from the network; refresh via notification.
-				NotificationCenter.default.post(name: .KReminderModelsListDidChange, object: nil)
-			} catch let error as APIError {
-				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.message)
-				print("----- Toggle reminder failed:", error.localizedDescription)
-			} catch {
-				viewController?.presentAlertController(title: L10n.cantAddReminder, message: error.localizedDescription)
-				print("----- Toggle reminder failed with generic error:", error.localizedDescription)
-			}
+		if self.libraryAttributes?.status == nil {
+			await self.addToLibrary(status: .planning)
 		}
+
+		let desired = !(self.libraryAttributes?.isReminded ?? false)
+		await LibraryOutbox.shared.enqueueSetReminder(desired, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+
+		// The reminders list fetches from the network; refresh via notification.
+		NotificationCenter.default.post(name: .KReminderModelsListDidChange, object: nil)
 	}
 
 	/// Rate the literature with the given rating.
@@ -259,25 +232,10 @@ extension Literature {
 	@MainActor
 	func rate(using rating: Double, description: String?) async throws(APIError) -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
-		let literatureIdentity = LiteratureIdentity(id: self.id)
+		guard let slug = User.current?.attributes.slug else { return nil }
 
-		do {
-			_ = try await KService.rate(literatureIdentity, score: rating).description(description).response()
-
-
-			// Optimistic local write — mirror the rate/review onto the cached entry.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyRating(score: rating, description: description, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-			}
-
-			return rating
-		} catch let error as APIError {
-			print(error.localizedDescription)
-			throw error
-		} catch {
-			print(error.localizedDescription)
-			return nil
-		}
+		await LibraryOutbox.shared.enqueueRate(score: rating, description: description, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+		return rating
 	}
 
 	/// Delete the user's rating and review for this literature.
@@ -285,24 +243,9 @@ extension Literature {
 	/// - Returns: `true` if the backend accepted the deletion.
 	@MainActor
 	func deleteRating() async throws(APIError) -> Bool {
-		let literatureIdentity = LiteratureIdentity(id: self.id)
-
-		do {
-			_ = try await KService.deleteRating(literatureIdentity).response()
-
-			// Optimistic local write — clear the rate/review on the cached entry.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyRatingRemoved(forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-			}
-
-			return true
-		} catch let error as APIError {
-			print(error.localizedDescription)
-			throw error
-		} catch {
-			print(error.localizedDescription)
-			return false
-		}
+		guard let slug = User.current?.attributes.slug else { return false }
+		await LibraryOutbox.shared.enqueueDeleteRating(trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
+		return true
 	}
 
 	/// Update the hidden status of the literature.
@@ -312,22 +255,8 @@ extension Literature {
 	@MainActor
 	func markAsHidden(_ hidden: Bool) async {
 		guard await self.validateIsInLibrary() else { return }
-
-		do {
-			_ = try await KService.updateInLibrary(.literatures, itemIDs: [self.id]).hidden(hidden).response()
-
-
-			// Optimistic local write — mirror the hidden state onto the cached entry.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyHidden(hidden, forTrackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
-			}
-		} catch let error as APIError {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
-			print("----- Update hidden status failed:", error.message)
-		} catch {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.localizedDescription)
-			print("----- Update hidden status failed:", error.localizedDescription)
-		}
+		guard let slug = User.current?.attributes.slug else { return }
+		await LibraryOutbox.shared.enqueueSetHidden(hidden, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures)
 	}
 
 	@MainActor

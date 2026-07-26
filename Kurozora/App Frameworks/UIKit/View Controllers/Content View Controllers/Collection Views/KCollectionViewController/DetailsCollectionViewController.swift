@@ -611,7 +611,6 @@ extension DetailsCollectionViewController {
 		didRemove: @escaping @MainActor (_ previousStatus: LibraryStatus) -> Void
 	) {
 		let oldLibraryStatus = currentStatus
-		let modelID = target.id
 
 		let actionSheet = UIAlertController.actionSheetWithItems(
 			items: LibraryStatus.alertControllerItems(for: libraryKind),
@@ -619,20 +618,9 @@ extension DetailsCollectionViewController {
 			action: { title, value in
 				Task { [weak self] in
 					guard let self = self else { return }
-					do {
-						let response = try await KService.addToLibrary(libraryKind, status: value, itemIDs: [modelID]).response()
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.apply(response.data.relationships.libraries, forUserSlug: slug, kind: libraryKind)
-						}
-
-						didAdd(value, title)
-						self.configureNavBarButtons()
-						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-						print("----- Add to library failed", error.message)
-					}
+					await target.addToLibrary(status: value)
+					didAdd(value, title)
+					self.configureNavBarButtons()
 				}
 			}
 		)
@@ -641,19 +629,9 @@ extension DetailsCollectionViewController {
 			actionSheet.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task { [weak self] in
 					guard let self = self else { return }
-					do {
-						_ = try await KService.removeFromLibrary(libraryKind, itemIDs: [modelID]).response()
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: libraryKind)
-						}
-
-						didRemove(oldLibraryStatus)
-						self.configureNavBarButtons()
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
+					await target.removeFromLibrary()
+					didRemove(oldLibraryStatus)
+					self.configureNavBarButtons()
 				}
 			})
 		}

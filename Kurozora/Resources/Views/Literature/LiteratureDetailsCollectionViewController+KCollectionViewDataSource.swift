@@ -156,109 +156,112 @@ extension LiteratureDetailsCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
+		// readers (cell/supplementary providers, the library observer) until it's fully assembled.
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		SectionLayoutKind.allCases.forEach { [weak self] literatureDetailSection in
 			guard let self = self else { return }
 			switch literatureDetailSection {
 			case .header:
-				self.snapshot.appendSections([literatureDetailSection])
-				self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				newSnapshot.appendSections([literatureDetailSection])
+				newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 			case .badge:
-				self.snapshot.appendSections([literatureDetailSection])
+				newSnapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.Badge.allCases.forEach { literatureDetailBadge in
 					switch literatureDetailBadge {
 //					case .rating:
 //						return
 					default:
-						self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+						newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 					}
 				}
 			case .synopsis:
 				if let synopsis = self.literature.attributes.synopsis, !synopsis.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
-					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			case .rating:
-				self.snapshot.appendSections([literatureDetailSection])
+				newSnapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.Rating.allCases.forEach { _ in
-					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			case .rateAndReview:
-				self.snapshot.appendSections([literatureDetailSection])
+				newSnapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.RateAndReview.allCases.forEach { _ in
-					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			case .reviews:
 				if !self.reviews.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
 						.review(review)
 					}
-					self.snapshot.appendItems(reviewItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(reviewItems, toSection: literatureDetailSection)
 				}
 			case .information:
-				self.snapshot.appendSections([literatureDetailSection])
+				newSnapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.Information.allCases.forEach { _ in
-					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let castIdentityItems: [ItemKind] = self.castIdentities.map { castIdentity in
 						.castIdentity(castIdentity)
 					}
-					self.snapshot.appendItems(castIdentityItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(castIdentityItems, toSection: literatureDetailSection)
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
 						.studioIdentity(studioIdentity)
 					}
-					self.snapshot.appendItems(studioIdentityItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(studioIdentityItems, toSection: literatureDetailSection)
 				}
 			case .moreByStudio:
 				if !self.studioLiteratureIdentities.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let studioLiteratureIdentyItems: [ItemKind] = self.studioLiteratureIdentities.map { studioLiteratureIdentity in
 						.literatureIdentity(studioLiteratureIdentity)
 					}
-					self.snapshot.appendItems(studioLiteratureIdentyItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(studioLiteratureIdentyItems, toSection: literatureDetailSection)
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
 						.relatedLiterature(relatedLiterature)
 					}
-					self.snapshot.appendItems(relatedLiteratureItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(relatedLiteratureItems, toSection: literatureDetailSection)
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
 						.relatedShow(relatedShow)
 					}
-					self.snapshot.appendItems(relatedShowItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(relatedShowItems, toSection: literatureDetailSection)
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendSections([literatureDetailSection])
 					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
 						.relatedGame(relatedGame)
 					}
-					self.snapshot.appendItems(relatedGameItems, toSection: literatureDetailSection)
+					newSnapshot.appendItems(relatedGameItems, toSection: literatureDetailSection)
 				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.literature.attributes.copyright?.isEmpty, !copyrightIsEmpty {
-					self.snapshot.appendSections([literatureDetailSection])
-					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			}
 		}
 
-		self.dataSource.apply(self.snapshot, animatingDifferences: false)
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {

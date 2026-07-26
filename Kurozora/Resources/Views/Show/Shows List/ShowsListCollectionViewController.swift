@@ -420,41 +420,18 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.shows, status: value, itemIDs: [show.id]).response()
-
-					if let slug = User.current?.attributes.slug {
-						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .shows)
-					}
-
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as APIError {
-					self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-					print("----- Add to library failed", error.message)
-				}
+				await show.addToLibrary(status: value)
+				cell.libraryStatus = value
+				button.setTitle("\(title) ▾", for: .normal)
 			}
 		})
 
 		if cell.libraryStatus != .none {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, itemIDs: [show.id]).response()
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.applyRemoved(forTrackableID: show.id.rawValue, userSlug: slug, kind: .shows)
-						}
-
-						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
-
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
+					await show.removeFromLibrary()
+					cell.libraryStatus = .none
+					button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 				}
 			})
 		}

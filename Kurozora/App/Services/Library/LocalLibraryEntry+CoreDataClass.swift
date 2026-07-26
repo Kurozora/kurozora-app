@@ -24,6 +24,9 @@ class LocalLibraryEntry: NSManagedObject {
 		set { self.status = Int64(newValue.rawValue) }
 	}
 
+	/// The `remoteID` prefix marking a row created offline, ahead of the server assigning a real identifier.
+	static let localRemoteIDPrefix = "local-"
+
 	// MARK: - Functions
 	/// Upserts an entry from a sync delta row into the given context.
 	///
@@ -92,7 +95,26 @@ class LocalLibraryEntry: NSManagedObject {
 		entry.popularityRank = row.popularityRank.map { NSNumber(value: $0) }
 		entry.publicRating = row.publicRating.map { NSNumber(value: $0) }
 
+		Self.deleteLocalPlaceholder(userSlug: userSlug, kind: kind, trackableID: row.trackableID, excludingRemoteID: row.id, in: context)
+
 		return entry
+	}
+
+	/// Removes an offline-add placeholder row once the server row for the same trackable has landed.
+	private static func deleteLocalPlaceholder(userSlug: String, kind: LibraryKind, trackableID: String, excludingRemoteID: String, in context: NSManagedObjectContext) {
+		let request = LocalLibraryEntry.fetchRequest()
+		request.predicate = NSPredicate(
+			format: "userSlug == %@ AND kindRaw == %d AND trackableID == %@ AND remoteID BEGINSWITH %@ AND remoteID != %@",
+			userSlug,
+			Int64(kind.rawValue),
+			trackableID,
+			LocalLibraryEntry.localRemoteIDPrefix,
+			excludingRemoteID
+		)
+		guard let placeholders = try? context.fetch(request) else { return }
+		for placeholder in placeholders {
+			context.delete(placeholder)
+		}
 	}
 
 	/// Removes the library entry matching the given remote identity, if present.

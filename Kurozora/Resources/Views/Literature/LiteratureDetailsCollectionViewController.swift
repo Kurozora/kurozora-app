@@ -140,9 +140,11 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 
 	/// Reconfigures every item in the current snapshot — header and related literatures/shows/games —
 	/// whose underlying model matches the given trackable identity.
+	///
+	/// No-ops if `updateDataSource()` hasn't produced a snapshot yet, or if the trackable
+	/// identity isn't in it — reconfiguring an item that isn't present would trip a precondition.
 	private func reconfigureLiteratureItems(forTrackableID trackableID: String, kind: LibraryKind) {
-		guard let dataSource = self.dataSource else { return }
-		var snapshot = dataSource.snapshot()
+		guard let dataSource = self.dataSource, var snapshot = self.snapshot else { return }
 		let matchedItems = snapshot.itemIdentifiers.filter { item in
 			switch (item, kind) {
 			case (.literature(let literature, _), .literatures):
@@ -159,6 +161,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 		guard !matchedItems.isEmpty else { return }
 		snapshot.reconfigureItems(matchedItems)
+		self.snapshot = snapshot
 		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 

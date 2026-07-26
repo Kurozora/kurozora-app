@@ -156,109 +156,112 @@ extension GameDetailsCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
+		// readers (cell/supplementary providers, the library observer) until it's fully assembled.
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		SectionLayoutKind.allCases.forEach { [weak self] gameDetailSection in
 			guard let self = self else { return }
 			switch gameDetailSection {
 			case .header:
-				self.snapshot.appendSections([gameDetailSection])
-				self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				newSnapshot.appendSections([gameDetailSection])
+				newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 			case .badge:
-				self.snapshot.appendSections([gameDetailSection])
+				newSnapshot.appendSections([gameDetailSection])
 				GameDetail.Badge.allCases.forEach { gameDetailBadge in
 					switch gameDetailBadge {
 //					case .rating:
 //						return
 					default:
-						self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+						newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 					}
 				}
 			case .synopsis:
 				if let synopsis = self.game.attributes.synopsis, !synopsis.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
-					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendSections([gameDetailSection])
+					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
 			case .rating:
-				self.snapshot.appendSections([gameDetailSection])
+				newSnapshot.appendSections([gameDetailSection])
 				GameDetail.Rating.allCases.forEach { _ in
-					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
 			case .rateAndReview:
-				self.snapshot.appendSections([gameDetailSection])
+				newSnapshot.appendSections([gameDetailSection])
 				GameDetail.RateAndReview.allCases.forEach { _ in
-					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
 			case .reviews:
 				if !self.reviews.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
 						.review(review)
 					}
-					self.snapshot.appendItems(reviewItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(reviewItems, toSection: gameDetailSection)
 				}
 			case .information:
-				self.snapshot.appendSections([gameDetailSection])
+				newSnapshot.appendSections([gameDetailSection])
 				GameDetail.Information.allCases.forEach { _ in
-					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let castIdentityItems: [ItemKind] = self.castIdentities.map { castIdentity in
 						.castIdentity(castIdentity)
 					}
-					self.snapshot.appendItems(castIdentityItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(castIdentityItems, toSection: gameDetailSection)
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
 						.studioIdentity(studioIdentity)
 					}
-					self.snapshot.appendItems(studioIdentityItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(studioIdentityItems, toSection: gameDetailSection)
 				}
 			case .moreByStudio:
 				if !self.studioGameIdentities.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let studioGameIdentyItems: [ItemKind] = self.studioGameIdentities.map { studioGameIdentity in
 						.gameIdentity(studioGameIdentity)
 					}
-					self.snapshot.appendItems(studioGameIdentyItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(studioGameIdentyItems, toSection: gameDetailSection)
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
 						.relatedGame(relatedGame)
 					}
-					self.snapshot.appendItems(relatedGameItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(relatedGameItems, toSection: gameDetailSection)
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
 						.relatedShow(relatedShow)
 					}
-					self.snapshot.appendItems(relatedShowItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(relatedShowItems, toSection: gameDetailSection)
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					self.snapshot.appendSections([gameDetailSection])
+					newSnapshot.appendSections([gameDetailSection])
 					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
 						.relatedLiterature(relatedLiterature)
 					}
-					self.snapshot.appendItems(relatedLiteratureItems, toSection: gameDetailSection)
+					newSnapshot.appendItems(relatedLiteratureItems, toSection: gameDetailSection)
 				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.game.attributes.copyright?.isEmpty, !copyrightIsEmpty {
-					self.snapshot.appendSections([gameDetailSection])
-					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendSections([gameDetailSection])
+					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
 			}
 		}
 
-		self.dataSource.apply(self.snapshot, animatingDifferences: false)
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {

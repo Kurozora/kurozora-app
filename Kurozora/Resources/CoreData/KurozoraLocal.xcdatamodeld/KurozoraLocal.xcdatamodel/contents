@@ -16,6 +16,31 @@
             <fetchIndexElement property="updatedAt" type="Binary" order="descending"/>
         </fetchIndex>
     </entity>
+    <entity name="LocalOutboxOperation" representedClassName="LocalOutboxOperation" syncable="YES">
+        <attribute name="attemptCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="kindRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastAttemptAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastError" optional="YES" attributeType="String"/>
+        <attribute name="operationTypeRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="payload" optional="YES" attributeType="Binary"/>
+        <attribute name="seed" optional="YES" attributeType="Binary"/>
+        <attribute name="targetID" attributeType="String" defaultValueString=""/>
+        <attribute name="trackableID" attributeType="String" defaultValueString=""/>
+        <attribute name="userSlug" attributeType="String"/>
+        <fetchIndex name="byUserSlugCreatedAt">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="createdAt" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserSlugKindTrackableTargetType">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
+            <fetchIndexElement property="trackableID" type="Binary" order="ascending"/>
+            <fetchIndexElement property="targetID" type="Binary" order="ascending"/>
+            <fetchIndexElement property="operationTypeRaw" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <entity name="LocalLibraryEntry" representedClassName="LocalLibraryEntry" syncable="YES">
         <attribute name="airingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="bannerBackgroundColor" optional="YES" attributeType="String"/>

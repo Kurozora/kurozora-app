@@ -63,16 +63,16 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func updateDataSource() {
+		// Dedup objectIDs in `entries` itself — overlapping paged reads during a sync batch
+		// can duplicate rows, and `entries` must stay index-aligned with the applied snapshot.
+		var seenObjectIDs = Set<NSManagedObjectID>()
+		self.entries.removeAll { entry in
+			!seenObjectIDs.insert(entry.objectID).inserted
+		}
+
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		self.snapshot.appendSections([.main])
-
-		// Dedup objectIDs; overlapping paged reads during a sync batch can duplicate rows.
-		var seenObjectIDs = Set<NSManagedObjectID>()
-		let items: [ItemKind] = self.entries.compactMap { entry in
-			guard seenObjectIDs.insert(entry.objectID).inserted else { return nil }
-			return .entry(entry)
-		}
-		self.snapshot.appendItems(items, toSection: .main)
+		self.snapshot.appendItems(self.entries.map { ItemKind.entry($0) }, toSection: .main)
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}

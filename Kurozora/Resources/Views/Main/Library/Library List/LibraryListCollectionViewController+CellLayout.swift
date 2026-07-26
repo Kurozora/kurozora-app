@@ -68,82 +68,41 @@ extension LibraryListCollectionViewController: LibraryTableCollectionViewCellDel
 	}
 
 	// MARK: - Helpers
-	/// Calls the toggle-favorite endpoint for the given entry and mirrors the result into the local store.
+	/// Enqueues a favorite toggle for the given entry.
 	///
 	/// - Parameter entry: The local library entry to toggle.
 	private func toggleFavorite(for entry: LocalLibraryEntry) async {
 		guard let slug = User.current?.attributes.slug else { return }
-		let itemID = KurozoraItemID(entry.trackableID)
-		let kind = entry.kind
-
-		do {
-			let response = try await KService.toggleFavorite(inLibrary: kind, itemIDs: [itemID]).response()
-			let isFavorited = response.data.favoriteStatus == .favorited
-			LibraryStore.shared.applyFavorite(isFavorited, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
-		} catch {
-			print("Toggle favorite failed: \(error.localizedDescription)")
-		}
+		let desired = !entry.isFavorited
+		await LibraryOutbox.shared.enqueueSetFavorite(desired, trackableID: entry.trackableID, userSlug: slug, kind: entry.kind)
 	}
 
-	/// Calls the toggle-reminder endpoint for the given entry and mirrors the result into the local store.
+	/// Enqueues a reminder toggle for the given entry.
 	///
 	/// - Parameter entry: The local library entry to toggle.
 	private func toggleReminder(for entry: LocalLibraryEntry) async {
 		guard let slug = User.current?.attributes.slug else { return }
-		let itemID = KurozoraItemID(entry.trackableID)
-		let kind = entry.kind
-
-		do {
-			let response = try await KService.toggleReminder(inLibrary: kind, itemIDs: [itemID]).response()
-			let isReminded = response.data.reminderStatus == .reminded
-			LibraryStore.shared.applyReminder(isReminded, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
-		} catch {
-			print("Toggle reminder failed: \(error.localizedDescription)")
-		}
+		let desired = !entry.isReminded
+		await LibraryOutbox.shared.enqueueSetReminder(desired, trackableID: entry.trackableID, userSlug: slug, kind: entry.kind)
 	}
 
-	/// Flips the entry's hidden flag against the network and mirrors the result into the local store.
+	/// Enqueues a hidden-flag flip for the given entry.
 	///
 	/// - Parameter entry: The local library entry to toggle.
 	private func toggleVisibility(for entry: LocalLibraryEntry) async {
 		guard let slug = User.current?.attributes.slug else { return }
-		let itemID = KurozoraItemID(entry.trackableID)
-		let kind = entry.kind
-		let nextHidden = !entry.isHidden
-
-		do {
-			_ = try await KService.updateInLibrary(kind, itemIDs: [itemID]).hidden(nextHidden).response()
-			entry.isHidden = nextHidden
-			entry.updatedAt = Date()
-			PersistenceController.shared.save(PersistenceController.shared.viewContext)
-		} catch {
-			print("Toggle visibility failed: \(error.localizedDescription)")
-		}
+		let desired = !entry.isHidden
+		await LibraryOutbox.shared.enqueueSetHidden(desired, trackableID: entry.trackableID, userSlug: slug, kind: entry.kind)
 	}
 
-	/// Submits a rating for the given entry and mirrors the result into the local store.
+	/// Enqueues a rating submission for the given entry.
 	///
 	/// - Parameters:
 	///    - entry: The local library entry being rated.
 	///    - score: The star rating from `0` to `5`.
 	private func rate(_ entry: LocalLibraryEntry, score: Double) async {
 		guard let slug = User.current?.attributes.slug else { return }
-		let itemID = KurozoraItemID(entry.trackableID)
-		let kind = entry.kind
-
-		do {
-			switch kind {
-			case .shows:
-				_ = try await KService.rate(ShowIdentity(id: itemID), score: score).description(nil).response()
-			case .literatures:
-				_ = try await KService.rate(LiteratureIdentity(id: itemID), score: score).description(nil).response()
-			case .games:
-				_ = try await KService.rate(GameIdentity(id: itemID), score: score).description(nil).response()
-			}
-			LibraryStore.shared.applyRating(score: score, description: nil, forTrackableID: itemID.rawValue, userSlug: slug, kind: kind)
-		} catch {
-			print("Rating update failed: \(error.localizedDescription)")
-		}
+		await LibraryOutbox.shared.enqueueRate(score: score, description: nil, trackableID: entry.trackableID, userSlug: slug, kind: entry.kind)
 	}
 }
 
@@ -251,15 +210,17 @@ extension LibraryListCollectionViewController {
 		}
 	}
 
-	/// Reconfigures every item in the current snapshot without animating a reload.
-	func reconfigureAllSnapshotItems() {
+	/// Reconfigures every item in the current snapshot.
+	///
+	/// - Parameter animated: A boolean value that indicates whether applying the snapshot animates differences.
+	func reconfigureAllSnapshotItems(animated: Bool = false) {
 		guard self.dataSource != nil else {
 			return
 		}
 
-		var snapshot = self.dataSource.snapshot()
-		snapshot.reconfigureItems(snapshot.itemIdentifiers)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
+		self.snapshot = self.dataSource.snapshot()
+		self.snapshot.reconfigureItems(self.snapshot.itemIdentifiers)
+		self.dataSource.apply(self.snapshot, animatingDifferences: animated)
 	}
 
 	/// Pushes the current visible columns into the pinned table header.

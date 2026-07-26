@@ -7,10 +7,7 @@
 //
 
 import KurozoraKit
-import os.log
 import UIKit
-
-private let entryLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LocalLibraryEntry")
 
 extension LocalLibraryEntry {
 	// MARK: - Functions
@@ -199,40 +196,17 @@ extension LocalLibraryEntry {
 	/// Adds the entry to the user's library with the given status.
 	@MainActor
 	fileprivate func addToLibrary(status: LibraryStatus) async {
-		do {
-			let libraryUpdateResponse = try await KService.addToLibrary(self.kind, status: status, itemIDs: [KurozoraItemID(self.trackableID)]).response()
+		guard let slug = User.current?.attributes.slug else { return }
 
-			// Apply the freshly-created rows into the local store immediately.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: self.kind)
-			}
-
-			// Request review
-			await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
-		} catch let error as APIError {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-			entryLogger.error("Add to library failed: \(error.message)")
-		} catch {
-			entryLogger.error("Add to library failed: \(error.localizedDescription)")
-		}
+		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.trackableID, userSlug: slug, kind: self.kind, seed: nil)
+		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	/// Removes the entry from the user's library.
 	@MainActor
 	func removeFromLibrary() async {
-		do {
-			_ = try await KService.removeFromLibrary(self.kind, itemIDs: [KurozoraItemID(self.trackableID)]).response()
-
-			// Optimistic local write — drop the cached entry.
-			if let slug = User.current?.attributes.slug {
-				LibraryStore.shared.applyRemoved(forTrackableID: self.trackableID, userSlug: slug, kind: self.kind)
-			}
-		} catch let error as APIError {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-			entryLogger.error("Remove from library failed: \(error.message)")
-		} catch {
-			entryLogger.error("Remove from library failed: \(error.localizedDescription)")
-		}
+		guard let slug = User.current?.attributes.slug else { return }
+		await LibraryOutbox.shared.enqueueRemove(trackableID: self.trackableID, userSlug: slug, kind: self.kind)
 	}
 
 	/// Updates the hidden status of the entry.
@@ -240,18 +214,7 @@ extension LocalLibraryEntry {
 	/// - Parameter hide: `true` to hide the entry from public views of the user's library.
 	@MainActor
 	func markAsHidden(_ hide: Bool) async {
-		do {
-			_ = try await KService.updateInLibrary(self.kind, itemIDs: [KurozoraItemID(self.trackableID)]).hidden(hide).response()
-
-			self.isHidden = hide
-			self.updatedAt = Date()
-			PersistenceController.shared.save(PersistenceController.shared.viewContext)
-		} catch let error as APIError {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
-			entryLogger.error("Update hidden status failed: \(error.message)")
-		} catch {
-			UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.localizedDescription)
-			entryLogger.error("Update hidden status failed: \(error.localizedDescription)")
-		}
+		guard let slug = User.current?.attributes.slug else { return }
+		await LibraryOutbox.shared.enqueueSetHidden(hide, trackableID: self.trackableID, userSlug: slug, kind: self.kind)
 	}
 }

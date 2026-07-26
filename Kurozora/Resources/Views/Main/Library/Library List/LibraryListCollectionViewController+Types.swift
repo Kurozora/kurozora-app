@@ -133,6 +133,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		self.librarySortType = sortType
 		self.librarySortTypeOption = option
 		self.entries = []
+		self.updateDataSource()
 
 		Task { [weak self] in
 			guard let self = self else { return }

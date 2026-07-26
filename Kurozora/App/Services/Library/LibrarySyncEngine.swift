@@ -52,6 +52,7 @@ actor LibrarySyncEngine {
 	/// - Parameter userSlug: The user's account slug.
 	func syncAll(forUserSlug userSlug: String) async {
 		self.installReachabilityBridgeIfNeeded()
+		await LibraryOutbox.shared.flush(force: true)
 
 		if let existing = self.syncAllInFlight[userSlug] {
 			// The in-flight round's delta predates this trigger.
@@ -75,6 +76,7 @@ actor LibrarySyncEngine {
 		self.syncAllInFlight[userSlug] = nil
 
 		await self.refreshLibraryArt(forUserSlug: userSlug)
+		await LibrarySyncDiagnostics.logState(forUserSlug: userSlug, reason: "syncAll")
 
 		if self.syncAllRerunRequested.remove(userSlug) != nil {
 			await self.syncAll(forUserSlug: userSlug)
@@ -136,6 +138,13 @@ actor LibrarySyncEngine {
 	}
 
 	private func runSync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
+		// A kind with unflushed mutations is not reconciled with the server; applying a
+		// delta now would advance the cursor past state the outbox still owns.
+		if await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug, kind: kind) {
+			syncLogger.info("DEFER kind=\(kind.rawValue) reason=pending-ops")
+			return
+		}
+
 		// Initial sync carries no tombstones; the local slice must start empty.
 		if await self.readCursor(forUserSlug: userSlug, kind: kind) == nil {
 			await self.resetLocalState(forUserSlug: userSlug, kind: kind)
@@ -178,6 +187,8 @@ actor LibrarySyncEngine {
 			let expectedCount = response.data.attributes.total.map { appliedCount + $0 }
 			await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: expectedCount)
 
+			syncLogger.info("PULL kind=\(kind.rawValue) since=\(cursor?.updatedAt ?? "nil") batch=\(batch.count) hasMore=\(hasMore) next=\(nextSince?.updatedAt ?? "nil")")
+
 			try await self.applyBatch(batch, nextSince: nextSince, forUserSlug: userSlug, kind: kind)
 
 			appliedCount += batch.count
@@ -204,24 +215,19 @@ actor LibrarySyncEngine {
 			object: nil,
 			queue: nil
 		) { _ in
-			Task { await LibrarySyncEngine.shared.retryPendingIfReachable() }
+			Task { await LibrarySyncEngine.shared.flushAndSyncIfReachable() }
 		}
 	}
 
-	/// Re-attempts every `(userSlug, kind)` that failed since the last successful run,
-	/// provided the device is currently reachable.
-	private func retryPendingIfReachable() async {
-		guard !self.pendingRetries.isEmpty else { return }
+	/// Flushes queued mutations and runs a full sync when the device is reachable and work is pending.
+	private func flushAndSyncIfReachable() async {
 		guard KNetworkManager.shared.reachability?.connection != .unavailable else { return }
+		guard let userSlug = User.current?.attributes.slug else { return }
 
-		for key in self.pendingRetries {
-			guard let (userSlug, kind) = self.split(key: key) else { continue }
-			do {
-				try await self.sync(kind, forUserSlug: userSlug)
-			} catch {
-				syncLogger.error("Retry for \(kind.stringValue) failed: \(error.localizedDescription)")
-			}
-		}
+		let hasPendingOperations = await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug)
+		guard hasPendingOperations || !self.pendingRetries.isEmpty else { return }
+
+		await self.syncAll(forUserSlug: userSlug)
 	}
 
 	// MARK: - Persistence Hops
@@ -298,14 +304,4 @@ actor LibrarySyncEngine {
 	private nonisolated func coalesceKey(userSlug: String, kind: LibraryKind) -> String {
 		return "\(userSlug)::\(kind.rawValue)"
 	}
-
-	private nonisolated func split(key: String) -> (String, LibraryKind)? {
-		let parts = key.split(separator: ":", omittingEmptySubsequences: false).map(String.init)
-		guard parts.count >= 3, let rawKind = Int(parts.last ?? ""), let kind = LibraryKind(rawValue: rawKind) else {
-			return nil
-		}
-		let userSlug = parts.dropLast(2).joined(separator: ":")
-		return (userSlug, kind)
-	}
-
 }

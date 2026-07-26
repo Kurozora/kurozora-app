@@ -182,6 +182,7 @@ extension WorkflowController {
 			AccountManager.shared.remove(slug: slug)
 			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
+			await LibraryOutbox.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
@@ -208,6 +209,7 @@ extension WorkflowController {
 			AccountManager.shared.remove(slug: slug)
 			UserProfileCache.remove(forSlug: slug)
 			await LibraryStore.shared.clear(forUserSlug: slug)
+			await LibraryOutbox.shared.clear(forUserSlug: slug)
 			await WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			return true

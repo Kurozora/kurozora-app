@@ -44,6 +44,9 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	/// Whether a full refetch is already scheduled.
 	private var refetchScheduled = false
 
+	/// Whether a coalesced resync of the currently-loaded window is already scheduled.
+	private var resyncScheduled = false
+
 	weak var delegate: LibraryListViewControllerDelegate?
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -165,15 +168,18 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 			return
 		}
 
-		var currentSnapshot = self.dataSource.snapshot()
-		let item = ItemKind.entry(entry)
-
-		if currentSnapshot.itemIdentifiers.contains(item) {
-			currentSnapshot.reconfigureItems([item])
-			self.dataSource.apply(currentSnapshot, animatingDifferences: false)
-		} else {
+		// Match on trackable identity as well — a resynced row carries a new object ID.
+		guard self.entries.contains(where: { $0.objectID == entry.objectID || $0.trackableID == entry.trackableID }) else {
+			// New to this status page — a full refetch establishes its sorted position.
 			self.scheduleRefetch()
+			return
 		}
+
+		// The write may have moved the entry's sort position (the default sort reacts to
+		// every update), so resync from the store rather than reconfiguring in place — this
+		// keeps `entries` and the applied snapshot's order identical to `LibraryStore`'s
+		// canonical sort.
+		self.scheduleResync()
 	}
 
 	/// Schedules a coalesced full refetch from the local store.
@@ -185,7 +191,20 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 			guard let self = self else { return }
 			self.refetchScheduled = false
 			self.entries = []
+			self.updateDataSource()
 			await self.fetchLibrary()
+		}
+	}
+
+	/// Schedules a coalesced re-read of the currently-loaded window from the local store.
+	private func scheduleResync() {
+		guard !self.resyncScheduled else { return }
+		self.resyncScheduled = true
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			self.resyncScheduled = false
+			self.resyncEntriesFromStore()
 		}
 	}
 
@@ -214,6 +233,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 			self.libraryCompactTitleVisibility = UserSettings.libraryCompactTitleVisibility(for: self.libraryKind, status: self.libraryStatus)
 			self.entries = []
 			self.updateDataSource()
+			self.rebindLibraryObserver()
 
 			Task { [weak self] in
 				guard let self = self else {
@@ -266,6 +286,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.entries = []
+		self.updateDataSource()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -305,19 +326,6 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		self.delegate?.libraryListViewController(self, didUpdateSelection: [])
 	}
 
-	/// Returns the item identifiers for the given index paths.
-	///
-	/// Index paths are visited in the order supplied; missing items are skipped.
-	///
-	/// - Parameter indexPaths: The index paths whose item identifiers to resolve.
-	///
-	/// - Returns: The resolved item identifiers, preserving input order.
-	func selectedItemIDs(at indexPaths: [IndexPath]) -> [KurozoraItemID] {
-		return indexPaths.compactMap { indexPath in
-			self.entries[safe: indexPath.item].map { KurozoraItemID($0.trackableID) }
-		}
-	}
-
 	/// Returns a boolean value that indicates whether any item at the given index paths is not favorited.
 	///
 	/// - Parameter indexPaths: The index paths to test.
@@ -351,19 +359,15 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		}
 	}
 
-	/// Removes the items at the given index paths from the in-memory storage and reapplies the snapshot.
+	/// Removes the entries with the given trackable identities from the list and reapplies the snapshot.
 	///
-	/// Decrements ``totalLibraryItemsCount`` by the number of removed items and notifies the delegate.
-	///
-	/// - Parameter indexPaths: The index paths of the items to remove.
-	func removeItems(at indexPaths: [IndexPath]) {
-		let sortedIndices = indexPaths.map { $0.item }.sorted(by: >)
+	/// - Parameter trackableIDs: The trackable identities of the entries to remove.
+	func removeEntries(withTrackableIDs trackableIDs: Set<String>) {
+		let removedCount = self.entries.filter { trackableIDs.contains($0.trackableID) }.count
+		guard removedCount > 0 else { return }
 
-		for index in sortedIndices where index < self.entries.count {
-			self.entries.remove(at: index)
-		}
-
-		self.totalLibraryItemsCount = max(0, self.totalLibraryItemsCount - sortedIndices.count)
+		self.entries.removeAll { trackableIDs.contains($0.trackableID) }
+		self.totalLibraryItemsCount = max(0, self.totalLibraryItemsCount - removedCount)
 		self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 		self.updateDataSource()
 	}

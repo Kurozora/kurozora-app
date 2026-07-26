@@ -32,6 +32,14 @@ protocol Libraryable {
 	///
 	/// - Parameter viewController: The view controller used to present alerts, or `nil` to fall back to the top view controller.
 	func toggleVisibility(on viewController: UIViewController?) async
+
+	/// Adds the model to the user's library with the given status.
+	///
+	/// - Parameter status: The library status to assign.
+	func addToLibrary(status: LibraryStatus) async
+
+	/// Removes the model from the user's library.
+	func removeFromLibrary() async
 }
 
 extension Show: Libraryable {}

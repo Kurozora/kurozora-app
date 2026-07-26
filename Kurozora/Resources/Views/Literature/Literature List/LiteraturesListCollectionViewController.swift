@@ -420,41 +420,18 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(.literatures, status: value, itemIDs: [literature.id]).response()
-
-					if let slug = User.current?.attributes.slug {
-						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: .literatures)
-					}
-
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as APIError {
-					self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-					print("----- Add to library failed", error.message)
-				}
+				await literature.addToLibrary(status: value)
+				cell.libraryStatus = value
+				button.setTitle("\(title) ▾", for: .normal)
 			}
 		})
 
 		if cell.libraryStatus != .none {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
 				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, itemIDs: [literature.id]).response()
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.applyRemoved(forTrackableID: literature.id.rawValue, userSlug: slug, kind: .literatures)
-						}
-
-						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
-
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
+					await literature.removeFromLibrary()
+					cell.libraryStatus = .none
+					button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 				}
 			})
 		}

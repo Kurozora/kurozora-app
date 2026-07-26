@@ -297,121 +297,81 @@ extension LibraryViewController {
 	// MARK: - Batch operations
 	/// Moves the selected items to the given library status.
 	///
-	/// On success, posts add/remove notifications when the destination differs from the current
-	/// status, removes the items from the current page and exits edit mode.
-	///
 	/// - Parameters:
 	///    - newStatus: The library status to move the selected items to.
 	///    - currentSection: The list view controller that owns the selected items.
 	///    - selectedIndexPaths: The set of currently-selected index paths.
 	private func performBatchStatusChange(to newStatus: LibraryStatus, currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath]) {
-		let itemIDs = currentSection.selectedItemIDs(at: selectedIndexPaths)
-		guard !itemIDs.isEmpty else { return }
-		let oldStatus = currentSection.libraryStatus
+		guard let slug = User.current?.attributes.slug else { return }
+		let currentStatus = currentSection.libraryStatus
+		let trackableIDs = selectedIndexPaths.compactMap { currentSection.entries[safe: $0.item]?.trackableID }
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do {
-				_ = try await KService.addToLibrary(self.libraryKind, status: newStatus, itemIDs: itemIDs).response()
-
-				if let slug = User.current?.attributes.slug {
-					for indexPath in selectedIndexPaths {
-						guard let entry = currentSection.entries[safe: indexPath.item] else { continue }
-						LibraryStore.shared.applyStatus(newStatus, forTrackableID: entry.trackableID, userSlug: slug, kind: self.libraryKind)
-					}
-				}
-
-				if newStatus != oldStatus {
-					currentSection.removeItems(at: selectedIndexPaths)
-				}
-
-				self.setEditing(false, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.localizedDescription)
+			for trackableID in trackableIDs {
+				await LibraryOutbox.shared.enqueueSetStatus(newStatus, trackableID: trackableID, userSlug: slug, kind: self.libraryKind, seed: nil)
 			}
+
+			if newStatus != currentStatus {
+				currentSection.removeEntries(withTrackableIDs: Set(trackableIDs))
+			}
+
+			self.setEditing(false, animated: true)
 		}
 	}
 
 	/// Toggles the favorite state of the selected items to the given value.
 	///
-	/// Items already at the target state are filtered out before the request is made so the
-	/// API only receives items whose state actually changes.
+	/// Items already at the target state are skipped.
 	///
 	/// - Parameters:
 	///    - currentSection: The list view controller that owns the selected items.
 	///    - selectedIndexPaths: The set of currently-selected index paths.
 	///    - favorited: The target favorite state to apply to the items.
 	private func performBatchFavoriteUpdate(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath], favorited: Bool) {
-		let targetIndexPaths = selectedIndexPaths.filter { indexPath in
-			let isFavorited = currentSection.entries[safe: indexPath.item]?.isFavorited == true
-			return isFavorited != favorited
+		let trackableIDs = selectedIndexPaths.compactMap { indexPath -> String? in
+			guard let entry = currentSection.entries[safe: indexPath.item], entry.isFavorited != favorited else { return nil }
+			return entry.trackableID
 		}
-		guard !targetIndexPaths.isEmpty else { return }
-
-		let itemIDs = currentSection.selectedItemIDs(at: targetIndexPaths)
+		guard !trackableIDs.isEmpty else { return }
+		guard let slug = User.current?.attributes.slug else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do {
-				_ = try await KService.toggleFavorite(inLibrary: self.libraryKind, itemIDs: itemIDs).response()
-
-				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { entry in
-					entry.isFavorited = favorited
-					entry.favoritedAt = favorited ? (entry.favoritedAt ?? Date()) : nil
-					entry.updatedAt = Date()
-				}
-				PersistenceController.shared.save(PersistenceController.shared.viewContext)
-
-				self.setEditing(false, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.couldNotUpdateFavorites, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.couldNotUpdateFavorites, message: error.localizedDescription)
+			for trackableID in trackableIDs {
+				await LibraryOutbox.shared.enqueueSetFavorite(favorited, trackableID: trackableID, userSlug: slug, kind: self.libraryKind)
 			}
+
+			self.setEditing(false, animated: true)
 		}
 	}
 
 	/// Toggles the reminder state of the selected items to the given value.
 	///
-	/// Items already at the target state are filtered out before the request is made so the
-	/// API only receives items whose state actually changes.
+	/// Items already at the target state are skipped.
 	///
 	/// - Parameters:
 	///    - currentSection: The list view controller that owns the selected items.
 	///    - selectedIndexPaths: The set of currently-selected index paths.
 	///    - reminded: The target reminder state to apply to the items.
 	private func performBatchReminderUpdate(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath], reminded: Bool) {
-		let targetIndexPaths = selectedIndexPaths.filter { indexPath in
-			let isReminded = currentSection.entries[safe: indexPath.item]?.isReminded == true
-			return isReminded != reminded
+		let trackableIDs = selectedIndexPaths.compactMap { indexPath -> String? in
+			guard let entry = currentSection.entries[safe: indexPath.item], entry.isReminded != reminded else { return nil }
+			return entry.trackableID
 		}
-		guard !targetIndexPaths.isEmpty else { return }
-
-		let itemIDs = currentSection.selectedItemIDs(at: targetIndexPaths)
+		guard !trackableIDs.isEmpty else { return }
+		guard let slug = User.current?.attributes.slug else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do {
-				_ = try await KService.toggleReminder(inLibrary: self.libraryKind, itemIDs: itemIDs).response()
-
-				currentSection.mutateLibraryAttributes(at: targetIndexPaths) { entry in
-					entry.isReminded = reminded
-					entry.remindedAt = reminded ? (entry.remindedAt ?? Date()) : nil
-					entry.updatedAt = Date()
-				}
-				PersistenceController.shared.save(PersistenceController.shared.viewContext)
-
-				self.setEditing(false, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.couldNotUpdateReminders, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.couldNotUpdateReminders, message: error.localizedDescription)
+			for trackableID in trackableIDs {
+				await LibraryOutbox.shared.enqueueSetReminder(reminded, trackableID: trackableID, userSlug: slug, kind: self.libraryKind)
 			}
+
+			self.setEditing(false, animated: true)
 		}
 	}
 
@@ -422,27 +382,18 @@ extension LibraryViewController {
 	///    - selectedIndexPaths: The set of currently-selected index paths.
 	///    - hide: A boolean value that indicates whether the items should be hidden.
 	private func performBatchHideToggle(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath], hide: Bool) {
-		let itemIDs = currentSection.selectedItemIDs(at: selectedIndexPaths)
-		guard !itemIDs.isEmpty else { return }
+		guard let slug = User.current?.attributes.slug else { return }
+		let trackableIDs = selectedIndexPaths.compactMap { currentSection.entries[safe: $0.item]?.trackableID }
+		guard !trackableIDs.isEmpty else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do {
-				_ = try await KService.updateInLibrary(self.libraryKind, itemIDs: itemIDs).hidden(hide).response()
-
-				currentSection.mutateLibraryAttributes(at: selectedIndexPaths) { entry in
-					entry.isHidden = hide
-					entry.updatedAt = Date()
-				}
-				PersistenceController.shared.save(PersistenceController.shared.viewContext)
-
-				self.setEditing(false, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.localizedDescription)
+			for trackableID in trackableIDs {
+				await LibraryOutbox.shared.enqueueSetHidden(hide, trackableID: trackableID, userSlug: slug, kind: self.libraryKind)
 			}
+
+			self.setEditing(false, animated: true)
 		}
 	}
 
@@ -452,29 +403,19 @@ extension LibraryViewController {
 	///    - currentSection: The list view controller that owns the selected items.
 	///    - selectedIndexPaths: The set of currently-selected index paths.
 	private func performBatchDelete(currentSection: LibraryListCollectionViewController, selectedIndexPaths: [IndexPath]) {
-		let itemIDs = currentSection.selectedItemIDs(at: selectedIndexPaths)
-		guard !itemIDs.isEmpty else { return }
+		guard let slug = User.current?.attributes.slug else { return }
+		let trackableIDs = selectedIndexPaths.compactMap { currentSection.entries[safe: $0.item]?.trackableID }
+		guard !trackableIDs.isEmpty else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
 
-			do {
-				_ = try await KService.removeFromLibrary(self.libraryKind, itemIDs: itemIDs).response()
-
-				if let slug = User.current?.attributes.slug {
-					for indexPath in selectedIndexPaths {
-						guard let entry = currentSection.entries[safe: indexPath.item] else { continue }
-						LibraryStore.shared.applyRemoved(forTrackableID: entry.trackableID, userSlug: slug, kind: self.libraryKind)
-					}
-				}
-
-				currentSection.removeItems(at: selectedIndexPaths)
-				self.setEditing(false, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.couldNotUpdateLibrary, message: error.localizedDescription)
+			for trackableID in trackableIDs {
+				await LibraryOutbox.shared.enqueueRemove(trackableID: trackableID, userSlug: slug, kind: self.libraryKind)
 			}
+
+			currentSection.removeEntries(withTrackableIDs: Set(trackableIDs))
+			self.setEditing(false, animated: true)
 		}
 	}
 }

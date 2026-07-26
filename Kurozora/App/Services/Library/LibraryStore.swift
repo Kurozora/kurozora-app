@@ -503,12 +503,49 @@ final class LibraryStore {
 
 	/// Updates the local entry's library status.
 	///
-	/// - Returns: `true` when the entry was updated in place.
+	/// - Parameters:
+	///    - status: The library status to assign.
+	///    - trackableID: The identifier of the anime/manga/game model.
+	///    - userSlug: The user's account slug.
+	///    - kind: The library kind to update.
+	///    - seed: The display snapshot for creating the entry when none exists.
+	///
+	/// - Returns: `true` when the entry was updated or created.
 	@discardableResult
-	func applyStatus(_ status: LibraryStatus, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) -> Bool {
-		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return false }
+	func applyStatus(_ status: LibraryStatus, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, seed: LibraryOutboxSeed? = nil) -> Bool {
+		if let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) {
+			entry.libraryStatus = status
+			entry.updatedAt = Date()
+			PersistenceController.shared.save(self.viewContext)
+			return true
+		}
+
+		guard let seed else { return false }
+
+		let now = Date()
+		let entry = LocalLibraryEntry(context: self.viewContext)
+		entry.userSlug = userSlug
+		entry.kindRaw = Int64(kind.rawValue)
+		entry.remoteID = LocalLibraryEntry.localRemoteIDPrefix + UUID().uuidString
+		entry.trackableID = trackableID
 		entry.libraryStatus = status
-		entry.updatedAt = Date()
+		entry.createdAt = now
+		entry.updatedAt = now
+		entry.title = seed.title
+		entry.sortTitle = seed.sortTitle
+		entry.tagline = seed.tagline
+		entry.posterURL = seed.posterURL
+		entry.posterBackgroundColor = seed.posterBackgroundColor
+		entry.bannerURL = seed.bannerURL
+		entry.bannerBackgroundColor = seed.bannerBackgroundColor
+		entry.genresLocalized = seed.genresLocalized
+		entry.statusName = seed.statusName
+		entry.airingDate = seed.airingDate
+		entry.durationCount = seed.durationCount.map { NSNumber(value: $0) }
+		entry.mediaTypeName = seed.mediaTypeName
+		entry.popularityRank = seed.popularityRank.map { NSNumber(value: $0) }
+		entry.publicRating = seed.publicRating.map { NSNumber(value: $0) }
+		entry.slug = seed.slug
 		PersistenceController.shared.save(self.viewContext)
 		return true
 	}

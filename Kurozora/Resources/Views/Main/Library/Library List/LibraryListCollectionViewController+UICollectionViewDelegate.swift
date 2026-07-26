@@ -49,9 +49,7 @@ extension LibraryListCollectionViewController {
 		self.clearsSelectionOnViewWillAppear = !editing
 
 		// Reload visible items to make sure our collection view cells show their selection indicators.
-		var snapshot = self.dataSource.snapshot()
-		snapshot.reconfigureItems(snapshot.itemIdentifiers)
-		self.dataSource.apply(snapshot, animatingDifferences: true)
+		self.reconfigureAllSnapshotItems(animated: true)
 
 		if !editing {
 			// Clear selection if leaving edit mode.

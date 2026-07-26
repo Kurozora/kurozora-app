@@ -66,6 +66,26 @@ extension LibraryListCollectionViewController {
 		#endif
 	}
 
+	/// Re-reads the currently-loaded window from the local store in its canonical sort order.
+	///
+	/// Used after an in-place data change that could have moved an entry's sort position, so
+	/// the applied snapshot stays identical to `LibraryStore`'s current ordering without
+	/// resetting how many entries are loaded.
+	func resyncEntriesFromStore() {
+		guard let slug = User.current?.attributes.slug, !self.entries.isEmpty else { return }
+
+		self.entries = LibraryStore.shared.entries(
+			forUserSlug: slug,
+			kind: self.libraryKind,
+			status: self.libraryStatus,
+			sortType: self.librarySortType,
+			sortOption: self.librarySortTypeOption,
+			offset: 0,
+			limit: self.entries.count
+		)
+		self.updateDataSource()
+	}
+
 	/// Reads a page of library entries from the local store and appends them to ``entries``.
 	private func fetchLibraryFromLocalStore() {
 		guard let slug = User.current?.attributes.slug else { return }

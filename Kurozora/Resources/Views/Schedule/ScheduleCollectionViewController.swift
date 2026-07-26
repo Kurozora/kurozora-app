@@ -384,79 +384,35 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		let schedule = self.schedules[indexPath.section]
-		let modelID: KurozoraItemID
+		let target: any Libraryable
 
 		switch cell.libraryKind {
 		case .shows:
 			guard let show = schedule.relationships.shows?.data[safe: indexPath.item] else { return }
-			modelID = show.id
+			target = show
 		case .literatures:
 			guard let literature = schedule.relationships.literatures?.data[safe: indexPath.item] else { return }
-			modelID = literature.id
+			target = literature
 		case .games:
 			guard let game = schedule.relationships.games?.data[safe: indexPath.item] else { return }
-			modelID = game.id
+			target = game
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemIDs: [modelID]).response()
-
-					switch cell.libraryKind {
-					case .shows:
-						let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show
-					case .literatures:
-						let literature = schedule.relationships.literatures?.data[safe: indexPath.item] as? Literature
-					case .games:
-						let game = schedule.relationships.games?.data[safe: indexPath.item] as? Game
-					}
-
-					if let slug = User.current?.attributes.slug {
-						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
-					}
-
-					// Update entry in library
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					// Request review
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as APIError {
-					self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-					print("----- Add to library failed", error.message)
-				}
+				await target.addToLibrary(status: value)
+				cell.libraryStatus = value
+				button.setTitle("\(title) ▾", for: .normal)
 			}
 		})
 
 		if cell.libraryStatus != .none {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemIDs: [modelID]).response()
-
-						switch cell.libraryKind {
-						case .shows:
-							let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show
-						case .literatures:
-							let literature = schedule.relationships.literatures?.data[safe: indexPath.item] as? Literature
-						case .games:
-							let game = schedule.relationships.games?.data[safe: indexPath.item] as? Game
-						}
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
-						}
-
-						// Update entry in library
-						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
-
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
+					await target.removeFromLibrary()
+					cell.libraryStatus = .none
+					button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 				}
 			}))
 		}

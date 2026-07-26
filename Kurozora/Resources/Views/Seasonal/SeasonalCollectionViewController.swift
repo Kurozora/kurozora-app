@@ -525,76 +525,35 @@ extension SeasonalCollectionViewController: BaseLockupCollectionViewCellDelegate
 
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let browseSeason = self.filteredBrowseSeasons[safe: indexPath.section] else { return }
-		let modelID: KurozoraItemID
+		let target: any Libraryable
 
 		switch cell.libraryKind {
 		case .shows:
 			guard let show = browseSeason.relationships.shows?.data[safe: indexPath.item] else { return }
-			modelID = show.id
+			target = show
 		case .literatures:
 			guard let literature = browseSeason.relationships.literatures?.data[safe: indexPath.item] else { return }
-			modelID = literature.id
+			target = literature
 		case .games:
 			guard let game = browseSeason.relationships.games?.data[safe: indexPath.item] else { return }
-			modelID = game.id
+			target = game
 		}
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
 			Task {
-				do {
-					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, status: value, itemIDs: [modelID]).response()
-
-					switch cell.libraryKind {
-					case .shows:
-						let show = browseSeason.relationships.shows?.data[safe: indexPath.item] as? Show
-					case .literatures:
-						let literature = browseSeason.relationships.literatures?.data[safe: indexPath.item] as? Literature
-					case .games:
-						let game = browseSeason.relationships.games?.data[safe: indexPath.item] as? Game
-					}
-
-					if let slug = User.current?.attributes.slug {
-						LibraryStore.shared.apply(libraryUpdateResponse.data.relationships.libraries, forUserSlug: slug, kind: cell.libraryKind)
-					}
-
-					cell.libraryStatus = value
-					button.setTitle("\(title) ▾", for: .normal)
-
-					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
-				} catch let error as APIError {
-					self.presentAlertController(title: L10n.cantAddToLibraryTitle, message: error.message)
-					print("----- Add to library failed", error.message)
-				}
+				await target.addToLibrary(status: value)
+				cell.libraryStatus = value
+				button.setTitle("\(title) ▾", for: .normal)
 			}
 		})
 
 		if cell.libraryStatus != .none {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
-					do {
-						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, itemIDs: [modelID]).response()
-
-						switch cell.libraryKind {
-						case .shows:
-							let show = browseSeason.relationships.shows?.data[safe: indexPath.item] as? Show
-						case .literatures:
-							let literature = browseSeason.relationships.literatures?.data[safe: indexPath.item] as? Literature
-						case .games:
-							let game = browseSeason.relationships.games?.data[safe: indexPath.item] as? Game
-						}
-
-						if let slug = User.current?.attributes.slug {
-							LibraryStore.shared.applyRemoved(forTrackableID: modelID.rawValue, userSlug: slug, kind: cell.libraryKind)
-						}
-
-						cell.libraryStatus = .none
-						button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
-
-					} catch let error as APIError {
-						self.presentAlertController(title: L10n.cantRemoveFromLibraryTitle, message: error.message)
-						print("----- Remove from library failed", error.message)
-					}
+					await target.removeFromLibrary()
+					cell.libraryStatus = .none
+					button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
 				}
 			}))
 		}

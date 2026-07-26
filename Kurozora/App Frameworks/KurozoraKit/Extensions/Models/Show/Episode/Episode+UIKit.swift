@@ -104,22 +104,12 @@ extension Episode {
 	/// - Parameter userInfo: A dictionary that contains information related to the notification.
 	@MainActor
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
-		do {
-			let episodeIdentity = EpisodeIdentity(id: self.id)
-			let episodeUpdateResponse = try await KService.updateWatchStatus(forEpisode: episodeIdentity).response()
-			let watchStatus = episodeUpdateResponse.data.watchStatus
+		guard let slug = User.current?.attributes.slug else { return }
 
-			// Record the new status in the cache.
-			WatchedStore.shared.setStatus(watchStatus, forEpisodeID: self.id.rawValue)
+		await LibraryOutbox.shared.enqueueEpisodeWatchToggle(episodeID: self.id.rawValue, userSlug: slug)
 
-			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
-			WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
-		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.cantUpdateLibraryTitle, message: error.message)
-			print("----- Update episode watch status failed", error.message)
-		} catch {
-			print(error.localizedDescription)
-		}
+		NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+		WidgetCenter.shared.reloadTimelines(ofKind: "app.kurozora.tracker.upNextWidget")
 	}
 
 	/// Present share sheet for the episode.
