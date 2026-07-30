@@ -202,3 +202,16 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 }
+
+// MARK: - Kotodama
+extension Notification.Name {
+	/// A notification posted when a Kotodama game reaches an end state.
+	static var KKotodamaGameDidFinish: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	/// A notification posted when the countdown to the next Kotodama daily puzzle reaches zero.
+	static var KKotodamaNextDailyDidUnlock: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}

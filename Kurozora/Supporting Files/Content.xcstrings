@@ -4924,6 +4924,9 @@
         }
       }
     },
+    "%1$@ · %2$@ s" : {
+      "comment" : "The guesses spent followed by the seconds taken."
+    },
     "%1$@ is rated %2$@ for %3$@" : {
       "comment" : "Title-line format for sharing a Parental Guide entry. %1 is the media title, %2 the severity rating, %3 the category name.",
       "localizations" : {
@@ -5389,6 +5392,9 @@
           }
         }
       }
+    },
+    "%1$lld/%2$lld" : {
+      "comment" : "The guesses a player spent out of the guesses allowed."
     },
     "%lld editions" : {
       "comment" : "The edition count shown in a media information line.",
@@ -11188,6 +11194,9 @@
         }
       }
     },
+    "A new puzzle drops every day at midnight. Solve it to keep your streak going, and replay older puzzles from the archive whenever you like." : {
+      "comment" : "The paragraph explaining Kotodama's daily puzzle and archive on the how-to-play screen."
+    },
     "A release date has yet to be announced." : {
       "comment" : "The footnote shown when an episode's release date is unannounced.",
       "localizations" : {
@@ -16553,6 +16562,9 @@
         }
       }
     },
+    "Archive" : {
+      "comment" : "The title of the Kotodama archive of past puzzles."
+    },
     "Are you sure you want to delete this entry?" : {
       "comment" : "The confirmation message shown before deleting a Parental Guide entry.",
       "localizations" : {
@@ -17951,6 +17963,9 @@
         }
       }
     },
+    "Avg guesses: %@" : {
+      "comment" : "The player's average number of Kotodama guesses, shown with its value."
+    },
     "Be the first to contribute." : {
       "comment" : "The empty-state body on the Parental Guide screen when no entries exist yet.",
       "localizations" : {
@@ -19116,6 +19131,9 @@
         }
       }
     },
+    "Be the first to solve today's puzzle." : {
+      "comment" : "The description shown when nobody has solved today's Kotodama puzzle."
+    },
     "Become a Developer" : {
       "comment" : "The action button on the developer badge.",
       "localizations" : {
@@ -19581,6 +19599,9 @@
           }
         }
       }
+    },
+    "Best %1$lld · Current %2$lld" : {
+      "comment" : "A player's longest and current Kotodama streaks."
     },
     "Birth Date" : {
       "comment" : "The 'Birth Date' search filter label.",
@@ -27504,6 +27525,9 @@
         }
       }
     },
+    "Come back tomorrow for a new word." : {
+      "comment" : "The description shown when no Kotodama daily puzzle is scheduled."
+    },
     "Compact" : {
       "comment" : "The display value 'Compact'.",
       "localizations" : {
@@ -27969,6 +27993,9 @@
           }
         }
       }
+    },
+    "Continue" : {
+      "comment" : "The button for resuming a Kotodama puzzle that is already in progress."
     },
     "Country of Origin" : {
       "comment" : "The label for a title's country of origin.",
@@ -28436,6 +28463,9 @@
         }
       }
     },
+    "Current streak" : {
+      "comment" : "The number of consecutive Kotodama dailies the player has solved."
+    },
     "Currently Airing" : {
       "comment" : "The display value 'Currently Airing'.",
       "localizations" : {
@@ -28901,6 +28931,9 @@
           }
         }
       }
+    },
+    "Daily #%lld" : {
+      "comment" : "The title of a Kotodama daily puzzle, followed by its number."
     },
     "Deceased" : {
       "comment" : "The display value 'Deceased'.",
@@ -29600,6 +29633,9 @@
           }
         }
       }
+    },
+    "Delete letter" : {
+      "comment" : "The accessibility label of the Kotodama keyboard key that removes the last letter."
     },
     "Delete Library" : {
       "comment" : "The headline string for the Library Delete view",
@@ -37966,6 +38002,9 @@
         }
       }
     },
+    "Fill every tile before submitting." : {
+      "comment" : "The message shown when a Kotodama guess is submitted with empty tiles."
+    },
     "Fillers" : {
       "comment" : "The 'Fillers' search filter label.",
       "localizations" : {
@@ -43325,6 +43364,9 @@
         }
       }
     },
+    "Games played" : {
+      "comment" : "The number of Kotodama games the player has finished."
+    },
     "Games Played" : {
       "comment" : "The label for the 'games played' milestone.",
       "localizations" : {
@@ -44956,6 +44998,15 @@
         }
       }
     },
+    "Guess distribution" : {
+      "comment" : "The breakdown of how many guesses the player's Kotodama wins took."
+    },
+    "Guess the hidden anime word in six tries." : {
+      "comment" : "The tagline describing how the Kotodama minigame is played."
+    },
+    "Guess the hidden word in six tries. Every answer is five letters long and pulled straight from the Kurozora catalog: anime, manga, game and song titles, plus characters, people and studios." : {
+      "comment" : "The introductory paragraph of the Kotodama how-to-play screen."
+    },
     "Heartbeat" : {
       "comment" : "The display value 'Heartbeat'.",
       "localizations" : {
@@ -46121,6 +46172,9 @@
         }
       }
     },
+    "Hint: %@" : {
+      "comment" : "The hint shown beneath the outcome of a finished Kotodama game."
+    },
     "Hip" : {
       "comment" : "The 'Hip' search filter label.",
       "localizations" : {
@@ -46353,6 +46407,9 @@
           }
         }
       }
+    },
+    "How to Play" : {
+      "comment" : "The title of the Kotodama how-to-play screen."
     },
     "How to Remove" : {
       "comment" : "The alert title explaining how to remove a song from Apple Music.",
@@ -49616,6 +49673,24 @@
         }
       }
     },
+    "Kotodama" : {
+      "comment" : "The name of the Kotodama minigame."
+    },
+    "Kotodama keeps your streak and stats on your account." : {
+      "comment" : "The description shown when Kotodama is opened without being signed in."
+    },
+    "kotodamaPlay" : {
+      "comment" : "The button for starting a Kotodama puzzle.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Play"
+          }
+        }
+      }
+    },
     "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file." : {
       "comment" : "The footer string for the Library Import view.",
       "localizations" : {
@@ -51013,6 +51088,9 @@
           }
         }
       }
+    },
+    "Leaderboards" : {
+      "comment" : "The title of the Kotodama leaderboards."
     },
     "Leo" : {
       "comment" : "The display value 'Leo'.",
@@ -55680,6 +55758,9 @@
         }
       }
     },
+    "Max streak" : {
+      "comment" : "The player's longest run of consecutive Kotodama dailies solved."
+    },
     "Media Type" : {
       "comment" : "The 'Media Type' search filter label.",
       "localizations" : {
@@ -59175,6 +59256,18 @@
         }
       }
     },
+    "My Stats" : {
+      "comment" : "The title of the signed-in player's Kotodama record."
+    },
+    "Need a nudge? A hint shows up after your third guess. From the fifth guess on you also get a picture." : {
+      "comment" : "The paragraph explaining Kotodama's hints on the how-to-play screen."
+    },
+    "New Word" : {
+      "comment" : "The button for starting another Kotodama practice game."
+    },
+    "Next Kotodama in %@" : {
+      "comment" : "The countdown to the next Kotodama daily puzzle, shown on the hub once today's is finished."
+    },
     "No %@" : {
       "comment" : "The generic empty-state title for a list.",
       "localizations" : {
@@ -60573,6 +60666,9 @@
         }
       }
     },
+    "No games yet" : {
+      "comment" : "The title shown when the player has no Kotodama record."
+    },
     "No Parental Guide Yet" : {
       "comment" : "The empty-state title on the Parental Guide screen when no entries exist yet.",
       "localizations" : {
@@ -60806,6 +60902,9 @@
         }
       }
     },
+    "No past puzzles" : {
+      "comment" : "The title shown when the Kotodama archive is empty."
+    },
     "No publication data available at the moment." : {
       "comment" : "The footnote shown when no publication data is available.",
       "localizations" : {
@@ -61038,6 +61137,9 @@
           }
         }
       }
+    },
+    "No puzzle today" : {
+      "comment" : "The title shown when no Kotodama daily puzzle is scheduled."
     },
     "No Quotes" : {
       "comment" : "The empty-state headline for the Quotes tab on the post activity screen.",
@@ -61504,6 +61606,12 @@
           }
         }
       }
+    },
+    "No solves yet" : {
+      "comment" : "The title shown when nobody has solved today's Kotodama puzzle."
+    },
+    "No streaks yet" : {
+      "comment" : "The title shown when no player has a Kotodama streak."
     },
     "No Users" : {
       "comment" : "The empty-state title for a generic users list (search / leaderboard).",
@@ -61977,6 +62085,9 @@
           }
         }
       }
+    },
+    "Nobody has solved today's puzzle yet." : {
+      "comment" : "The message shown when today's Kotodama puzzle has no solves."
     },
     "None" : {
       "comment" : "Placeholder shown for a category with no submissions in the Parental Guide summary.",
@@ -67118,6 +67229,12 @@
         }
       }
     },
+    "Out of guesses" : {
+      "comment" : "The result of a lost Kotodama game."
+    },
+    "Out of guesses. The answer was \"%@\"." : {
+      "comment" : "The result of a lost Kotodama game, showing its uppercased answer."
+    },
     "OVA" : {
       "comment" : "The display value 'OVA'.",
       "localizations" : {
@@ -69914,6 +70031,15 @@
         }
       }
     },
+    "Play Today's Kotodama" : {
+      "comment" : "The button that leaves a Kotodama leaderboard for today's puzzle."
+    },
+    "Play Unlimited" : {
+      "comment" : "The button for starting an unlimited Kotodama practice game from a finished result."
+    },
+    "Played" : {
+      "comment" : "The badge shown on an archive tile for a puzzle already played but not solved."
+    },
     "Playing" : {
       "comment" : "The library status 'Playing' for games.",
       "localizations" : {
@@ -71078,6 +71204,9 @@
           }
         }
       }
+    },
+    "Practice with a random word." : {
+      "comment" : "The description of the Kotodama mode that can be replayed without limit."
     },
     "Premieres" : {
       "comment" : "The 'Premieres' search filter label.",
@@ -73415,6 +73544,9 @@
           }
         }
       }
+    },
+    "Puzzles join the archive the day after they run." : {
+      "comment" : "The description shown when the Kotodama archive is empty."
     },
     "Quick Links" : {
       "comment" : "The Home 'Quick Links' section header.",
@@ -78316,6 +78448,9 @@
         }
       }
     },
+    "Replay past puzzles." : {
+      "comment" : "The description of the Kotodama archive of past puzzles."
+    },
     "Reply" : {
       "comment" : "The string for the 'Reply' context menu option.",
       "localizations" : {
@@ -81578,6 +81713,9 @@
         }
       }
     },
+    "See All" : {
+      "comment" : "The link to the full Kotodama leaderboards."
+    },
     "See Also" : {
       "comment" : "The string for the 'see also' section.",
       "localizations" : {
@@ -81810,6 +81948,9 @@
           }
         }
       }
+    },
+    "See who solved it fastest." : {
+      "comment" : "The description of the Kotodama leaderboards."
     },
     "See your Re:CAP" : {
       "comment" : "The digest momentum button linking to the user's Re:CAP."
@@ -84143,6 +84284,9 @@
           }
         }
       }
+    },
+    "Share Result" : {
+      "comment" : "The button for sharing the outcome of a finished Kotodama game."
     },
     "Share Review" : {
       "comment" : "The string for the 'Share Review' context menu option.",
@@ -87147,6 +87291,18 @@
         }
       }
     },
+    "Sign in to play" : {
+      "comment" : "The title shown when Kotodama is opened without being signed in."
+    },
+    "Solve today's puzzle to start your streak." : {
+      "comment" : "The description shown when the player has no Kotodama record."
+    },
+    "Solved" : {
+      "comment" : "The badge marking a Kotodama archive puzzle the player has solved."
+    },
+    "Solved in %1$lld/%2$lld" : {
+      "comment" : "The result of a won Kotodama game, showing guesses spent out of guesses allowed."
+    },
     "Something went wrong" : {
       "comment" : "Generic error alert title shown when a Parental Guide submission fails.",
       "localizations" : {
@@ -89949,6 +90105,15 @@
         }
       }
     },
+    "Streak: %lld" : {
+      "comment" : "The player's active Kotodama streak, shown with its length."
+    },
+    "Streaks" : {
+      "comment" : "The Kotodama leaderboard of the longest streaks."
+    },
+    "Streaks appear once players start solving dailies." : {
+      "comment" : "The description shown when no player has a Kotodama streak."
+    },
     "Submit" : {
       "comment" : "Submit button title in the Parental Guide report sheet.",
       "localizations" : {
@@ -90181,6 +90346,9 @@
           }
         }
       }
+    },
+    "Submit guess" : {
+      "comment" : "The accessibility label of the Kotodama keyboard key that submits a guess."
     },
     "Summary" : {
       "comment" : "Header for the Parental Guide summary section.",
@@ -93679,6 +93847,15 @@
           }
         }
       }
+    },
+    "The letter is in the word, but somewhere else." : {
+      "comment" : "The legend description of a Kotodama present tile."
+    },
+    "The letter is in the word, right where you put it." : {
+      "comment" : "The legend description of a Kotodama hit tile."
+    },
+    "The letter is not in the word at all." : {
+      "comment" : "The legend description of a Kotodama miss tile."
     },
     "The message contains spoilers - tap to view" : {
       "comment" : "The warning shown over a message that contains spoilers.",
@@ -98821,6 +98998,12 @@
         }
       }
     },
+    "Today" : {
+      "comment" : "The Kotodama leaderboard of today's fastest solves."
+    },
+    "Today's Fastest" : {
+      "comment" : "The heading of the fastest solves of today's Kotodama puzzle."
+    },
     "Top" : {
       "comment" : "The string for the 'Top' sort option on the post activity screen.",
       "localizations" : {
@@ -102083,6 +102266,9 @@
         }
       }
     },
+    "Type a guess and press the return key. The tiles change color after every guess to show how close you are." : {
+      "comment" : "The paragraph explaining how to submit a guess on the Kotodama how-to-play screen."
+    },
     "Unblock" : {
       "comment" : "The string for the word 'unblock'.",
       "localizations" : {
@@ -103947,6 +104133,9 @@
         }
       }
     },
+    "Unlimited" : {
+      "comment" : "The title of the Kotodama mode that can be replayed without limit."
+    },
     "Unpin" : {
       "comment" : "The string for the word 'unpin'.",
       "localizations" : {
@@ -105577,6 +105766,9 @@
           }
         }
       }
+    },
+    "View Result" : {
+      "comment" : "The button for reviewing a finished Kotodama puzzle."
     },
     "Violence & Gore" : {
       "comment" : "The Parental Guide category 'Violence & Gore'.",
@@ -108610,6 +108802,9 @@
         }
       }
     },
+    "What the colors mean" : {
+      "comment" : "The heading introducing the tile color legend on the Kotodama how-to-play screen."
+    },
     "What’s on your mind?" : {
       "comment" : "The placeholder string for creating a new feed message.",
       "localizations" : {
@@ -109308,6 +109503,9 @@
           }
         }
       }
+    },
+    "Win rate" : {
+      "comment" : "The share of Kotodama games the player has won."
     },
     "With a total of %@." : {
       "comment" : "The footnote stating the total duration of a title.",
@@ -112349,6 +112547,9 @@
           }
         }
       }
+    },
+    "Your streak, wins and guess spread." : {
+      "comment" : "The description of the signed-in player's Kotodama record."
     },
     "Your Week" : {
       "comment" : "The title of the weekly digest screen."

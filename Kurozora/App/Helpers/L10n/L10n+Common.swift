@@ -3043,12 +3043,16 @@ extension L10n {
 	/// The string for the word 'Continue'.
 	///
 	/// - Tag: L10n-continue
-	static let `continue`: String = String(
-		localized: "Continue",
-		bundle: LanguageManager.shared.bundle,
-		locale: LanguageManager.shared.locale,
-		comment: "The string for the word 'Continue'."
-	)
+	static var `continue`: String {
+		L10n.resolve {
+			String(
+				localized: "Continue",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Continue'."
+			)
+		}
+	}
 	/// The string for the phrase 'What’s New'.
 	///
 	/// - Tag: L10n-whatsNew

@@ -32,6 +32,11 @@ enum TabBarItem: Int, CaseIterable {
 	/// Representing the settings tab.
 	case settings
 
+	// Appended last so the existing raw values, which `KTabBarController` treats as
+	// tab-bar indices before iOS 18, keep pointing at the same tabs.
+	/// Representing the Kotodama tab.
+	case kotodama
+
 	// MARK: - Initializers
 	@available(iOS 18.0, macCatalyst 18.0, *)
 	init?(identifierValue: String) {
@@ -45,19 +50,19 @@ enum TabBarItem: Int, CaseIterable {
 	// MARK: - Properties
 	static var sideBarCases: [TabBarItem] {
 		#if targetEnvironment(macCatalyst)
-		return [.home, .schedule, .library, .feed, .notifications, .settings]
+		return [.home, .schedule, .kotodama, .library, .feed, .notifications, .settings]
 		#else
-		return [.home, .schedule, .library, .feed, .notifications, .search, .settings]
+		return [.home, .schedule, .kotodama, .library, .feed, .notifications, .search, .settings]
 		#endif
 	}
 
 	static var tabBarCases: [TabBarItem] {
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
 			#if targetEnvironment(macCatalyst)
-			return [.search, .home, .schedule, .library, .feed, .notifications, .settings]
+			return [.search, .home, .schedule, .kotodama, .library, .feed, .notifications, .settings]
 			#else
 			if UIDevice.isPad {
-				return [.search, .home, .schedule, .library, .feed, .notifications, .settings]
+				return [.search, .home, .schedule, .kotodama, .library, .feed, .notifications, .settings]
 			}
 			#endif
 		}
@@ -76,6 +81,8 @@ enum TabBarItem: Int, CaseIterable {
 			return L10n.explore
 		case .schedule:
 			return L10n.schedule
+		case .kotodama:
+			return L10n.kotodama
 		case .library:
 			return L10n.library
 		case .feed:
@@ -96,6 +103,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "house")!
 		case .schedule:
 			return UIImage(systemName: "calendar")!
+		case .kotodama:
+			return UIImage(systemName: "gamecontroller")!
 		case .library:
 			return UIImage(systemName: "rectangle.stack")!
 		case .feed:
@@ -116,6 +125,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "house.fill")!
 		case .schedule:
 			return .Symbols.calendarFill
+		case .kotodama:
+			return UIImage(systemName: "gamecontroller.fill")!
 		case .library:
 			return UIImage(systemName: "rectangle.stack.fill")!
 		case .feed:
@@ -136,6 +147,8 @@ enum TabBarItem: Int, CaseIterable {
 			return HomeCollectionViewController()
 		case .schedule:
 			return ScheduleCollectionViewController()
+		case .kotodama:
+			return KotodamaHubCollectionViewController()
 		case .library:
 			return LibraryViewController()
 		case .feed:
@@ -154,7 +167,7 @@ enum TabBarItem: Int, CaseIterable {
 		let viewController = self.viewControllerValue
 
 		switch self {
-		case .home, .schedule, .library, .feed, .notifications, .search:
+		case .home, .schedule, .kotodama, .library, .feed, .notifications, .search:
 			return KNavigationController(rootViewController: viewController)
 		case .settings:
 			return viewController

@@ -5190,4 +5190,868 @@ extension L10n {
 			)
 		}
 	}
+	// MARK: - Kotodama
+	/// The name of the Kotodama minigame.
+	///
+	/// - Tag: L10n-kotodama
+	static var kotodama: String {
+		L10n.resolve {
+			String(
+				localized: "Kotodama",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the Kotodama minigame."
+			)
+		}
+	}
+	/// The tagline describing how the Kotodama minigame is played.
+	///
+	/// - Tag: L10n-kotodamaTagline
+	static var kotodamaTagline: String {
+		L10n.resolve {
+			String(
+				localized: "Guess the hidden anime word in six tries.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The tagline describing how the Kotodama minigame is played."
+			)
+		}
+	}
+	// MARK: - Kotodama Hub
+	/// The title of a Kotodama daily puzzle, followed by its number.
+	///
+	/// - Tag: L10n-kotodamaDailyPuzzleNumber
+	static var kotodamaDailyPuzzleNumber: String {
+		L10n.resolve {
+			String(
+				localized: "Daily #%lld",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of a Kotodama daily puzzle, followed by its number."
+			)
+		}
+	}
+	/// The button for starting a Kotodama puzzle.
+	///
+	/// - Tag: L10n-kotodamaPlay
+	static var kotodamaPlay: String {
+		L10n.resolve {
+			String(
+				localized: "kotodamaPlay",
+				defaultValue: "Play",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button for starting a Kotodama puzzle."
+			)
+		}
+	}
+	/// The button for reviewing a finished Kotodama puzzle.
+	///
+	/// - Tag: L10n-kotodamaViewResult
+	static var kotodamaViewResult: String {
+		L10n.resolve {
+			String(
+				localized: "View Result",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button for reviewing a finished Kotodama puzzle."
+			)
+		}
+	}
+	/// The countdown to the next Kotodama daily puzzle, shown on the hub once today's is finished.
+	///
+	/// - Tag: L10n-kotodamaNextIn
+	static var kotodamaNextIn: String {
+		L10n.resolve {
+			String(
+				localized: "Next Kotodama in %@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The countdown to the next Kotodama daily puzzle, shown on the hub once today's is finished."
+			)
+		}
+	}
+	/// The title of the Kotodama mode that can be replayed without limit.
+	///
+	/// - Tag: L10n-kotodamaUnlimited
+	static var kotodamaUnlimited: String {
+		L10n.resolve {
+			String(
+				localized: "Unlimited",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the Kotodama mode that can be replayed without limit."
+			)
+		}
+	}
+	/// The description of the Kotodama mode that can be replayed without limit.
+	///
+	/// - Tag: L10n-kotodamaUnlimitedDescription
+	static var kotodamaUnlimitedDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Practice with a random word.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the Kotodama mode that can be replayed without limit."
+			)
+		}
+	}
+	/// The title of the Kotodama archive of past puzzles.
+	///
+	/// - Tag: L10n-kotodamaArchive
+	static var kotodamaArchive: String {
+		L10n.resolve {
+			String(
+				localized: "Archive",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the Kotodama archive of past puzzles."
+			)
+		}
+	}
+	/// The description of the Kotodama archive of past puzzles.
+	///
+	/// - Tag: L10n-kotodamaArchiveDescription
+	static var kotodamaArchiveDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Replay past puzzles.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the Kotodama archive of past puzzles."
+			)
+		}
+	}
+	/// The title of the Kotodama leaderboards.
+	///
+	/// - Tag: L10n-kotodamaLeaderboards
+	static var kotodamaLeaderboards: String {
+		L10n.resolve {
+			String(
+				localized: "Leaderboards",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the Kotodama leaderboards."
+			)
+		}
+	}
+	/// The description of the Kotodama leaderboards.
+	///
+	/// - Tag: L10n-kotodamaLeaderboardsDescription
+	static var kotodamaLeaderboardsDescription: String {
+		L10n.resolve {
+			String(
+				localized: "See who solved it fastest.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the Kotodama leaderboards."
+			)
+		}
+	}
+	/// The title of the signed-in player's Kotodama record.
+	///
+	/// - Tag: L10n-kotodamaStats
+	static var kotodamaStats: String {
+		L10n.resolve {
+			String(
+				localized: "My Stats",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the signed-in player's Kotodama record."
+			)
+		}
+	}
+	/// The description of the signed-in player's Kotodama record.
+	///
+	/// - Tag: L10n-kotodamaStatsDescription
+	static var kotodamaStatsDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Your streak, wins and guess spread.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the signed-in player's Kotodama record."
+			)
+		}
+	}
+	// MARK: - Kotodama Game
+	/// The accessibility label of the Kotodama keyboard key that submits a guess.
+	///
+	/// - Tag: L10n-kotodamaSubmitGuess
+	static var kotodamaSubmitGuess: String {
+		L10n.resolve {
+			String(
+				localized: "Submit guess",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label of the Kotodama keyboard key that submits a guess."
+			)
+		}
+	}
+	/// The accessibility label of the Kotodama keyboard key that removes the last letter.
+	///
+	/// - Tag: L10n-kotodamaDeleteLetter
+	static var kotodamaDeleteLetter: String {
+		L10n.resolve {
+			String(
+				localized: "Delete letter",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label of the Kotodama keyboard key that removes the last letter."
+			)
+		}
+	}
+	/// The message shown when a Kotodama guess is submitted with empty tiles.
+	///
+	/// - Tag: L10n-kotodamaIncompleteGuess
+	static var kotodamaIncompleteGuess: String {
+		L10n.resolve {
+			String(
+				localized: "Fill every tile before submitting.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message shown when a Kotodama guess is submitted with empty tiles."
+			)
+		}
+	}
+	/// The result of a won Kotodama game, showing guesses spent out of guesses allowed.
+	///
+	/// - Tag: L10n-kotodamaSolved
+	static var kotodamaSolved: String {
+		L10n.resolve {
+			String(
+				localized: "Solved in %1$lld/%2$lld",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The result of a won Kotodama game, showing guesses spent out of guesses allowed."
+			)
+		}
+	}
+	/// The result of a lost Kotodama game.
+	///
+	/// - Tag: L10n-kotodamaUnsolved
+	static var kotodamaUnsolved: String {
+		L10n.resolve {
+			String(
+				localized: "Out of guesses",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The result of a lost Kotodama game."
+			)
+		}
+	}
+	/// The result of a lost Kotodama game, showing its uppercased answer.
+	///
+	/// - Tag: L10n-kotodamaUnsolvedAnswer
+	static var kotodamaUnsolvedAnswer: String {
+		L10n.resolve {
+			String(
+				localized: "Out of guesses. The answer was \"%@\".",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The result of a lost Kotodama game, showing its uppercased answer."
+			)
+		}
+	}
+	/// The hint shown beneath the outcome of a finished Kotodama game.
+	///
+	/// - Tag: L10n-kotodamaHintLabel
+	static var kotodamaHintLabel: String {
+		L10n.resolve {
+			String(
+				localized: "Hint: %@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The hint shown beneath the outcome of a finished Kotodama game."
+			)
+		}
+	}
+	/// The button for sharing the outcome of a finished Kotodama game.
+	///
+	/// - Tag: L10n-kotodamaShareResult
+	static var kotodamaShareResult: String {
+		L10n.resolve {
+			String(
+				localized: "Share Result",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button for sharing the outcome of a finished Kotodama game."
+			)
+		}
+	}
+	/// The button for starting another Kotodama practice game.
+	///
+	/// - Tag: L10n-kotodamaNewWord
+	static var kotodamaNewWord: String {
+		L10n.resolve {
+			String(
+				localized: "New Word",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button for starting another Kotodama practice game."
+			)
+		}
+	}
+	/// The button for starting an unlimited Kotodama practice game from a finished result.
+	///
+	/// - Tag: L10n-kotodamaPlayUnlimited
+	static var kotodamaPlayUnlimited: String {
+		L10n.resolve {
+			String(
+				localized: "Play Unlimited",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button for starting an unlimited Kotodama practice game from a finished result."
+			)
+		}
+	}
+	/// The title shown when no Kotodama daily puzzle is scheduled.
+	///
+	/// - Tag: L10n-kotodamaNoPuzzleToday
+	static var kotodamaNoPuzzleToday: String {
+		L10n.resolve {
+			String(
+				localized: "No puzzle today",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when no Kotodama daily puzzle is scheduled."
+			)
+		}
+	}
+	/// The description shown when no Kotodama daily puzzle is scheduled.
+	///
+	/// - Tag: L10n-kotodamaNoPuzzleTodayDescription
+	static var kotodamaNoPuzzleTodayDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Come back tomorrow for a new word.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when no Kotodama daily puzzle is scheduled."
+			)
+		}
+	}
+	// MARK: - Kotodama Stats
+	/// The number of consecutive Kotodama dailies the player has solved.
+	///
+	/// - Tag: L10n-kotodamaCurrentStreak
+	static var kotodamaCurrentStreak: String {
+		L10n.resolve {
+			String(
+				localized: "Current streak",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The number of consecutive Kotodama dailies the player has solved."
+			)
+		}
+	}
+	/// The player's active Kotodama streak, shown with its length.
+	///
+	/// - Tag: L10n-kotodamaStreakValue
+	static var kotodamaStreakValue: String {
+		L10n.resolve {
+			String(
+				localized: "Streak: %lld",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The player's active Kotodama streak, shown with its length."
+			)
+		}
+	}
+	/// The player's longest run of consecutive Kotodama dailies solved.
+	///
+	/// - Tag: L10n-kotodamaBestStreak
+	static var kotodamaBestStreak: String {
+		L10n.resolve {
+			String(
+				localized: "Max streak",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The player's longest run of consecutive Kotodama dailies solved."
+			)
+		}
+	}
+	/// The number of Kotodama games the player has finished.
+	///
+	/// - Tag: L10n-kotodamaGamesPlayed
+	static var kotodamaGamesPlayed: String {
+		L10n.resolve {
+			String(
+				localized: "Games played",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The number of Kotodama games the player has finished."
+			)
+		}
+	}
+	/// The share of Kotodama games the player has won.
+	///
+	/// - Tag: L10n-kotodamaWinRate
+	static var kotodamaWinRate: String {
+		L10n.resolve {
+			String(
+				localized: "Win rate",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The share of Kotodama games the player has won."
+			)
+		}
+	}
+	/// The breakdown of how many guesses the player's Kotodama wins took.
+	///
+	/// - Tag: L10n-kotodamaGuessDistribution
+	static var kotodamaGuessDistribution: String {
+		L10n.resolve {
+			String(
+				localized: "Guess distribution",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The breakdown of how many guesses the player's Kotodama wins took."
+			)
+		}
+	}
+	/// The player's average number of Kotodama guesses, shown with its value.
+	///
+	/// - Tag: L10n-kotodamaAverageGuessesValue
+	static var kotodamaAverageGuessesValue: String {
+		L10n.resolve {
+			String(
+				localized: "Avg guesses: %@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The player's average number of Kotodama guesses, shown with its value."
+			)
+		}
+	}
+	/// The title shown when the player has no Kotodama record.
+	///
+	/// - Tag: L10n-kotodamaNoStats
+	static var kotodamaNoStats: String {
+		L10n.resolve {
+			String(
+				localized: "No games yet",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when the player has no Kotodama record."
+			)
+		}
+	}
+	/// The description shown when the player has no Kotodama record.
+	///
+	/// - Tag: L10n-kotodamaNoStatsDescription
+	static var kotodamaNoStatsDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Solve today's puzzle to start your streak.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when the player has no Kotodama record."
+			)
+		}
+	}
+	// MARK: - Kotodama Leaderboards
+	/// The Kotodama leaderboard of the longest streaks.
+	///
+	/// - Tag: L10n-kotodamaLeaderboardStreaks
+	static var kotodamaLeaderboardStreaks: String {
+		L10n.resolve {
+			String(
+				localized: "Streaks",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The Kotodama leaderboard of the longest streaks."
+			)
+		}
+	}
+	/// The title shown when nobody has solved today's Kotodama puzzle.
+	///
+	/// - Tag: L10n-kotodamaNoSolves
+	static var kotodamaNoSolves: String {
+		L10n.resolve {
+			String(
+				localized: "No solves yet",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when nobody has solved today's Kotodama puzzle."
+			)
+		}
+	}
+	/// The description shown when nobody has solved today's Kotodama puzzle.
+	///
+	/// - Tag: L10n-kotodamaNoSolvesDescription
+	static var kotodamaNoSolvesDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Be the first to solve today's puzzle.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when nobody has solved today's Kotodama puzzle."
+			)
+		}
+	}
+	/// The title shown when no player has a Kotodama streak.
+	///
+	/// - Tag: L10n-kotodamaNoStreaks
+	static var kotodamaNoStreaks: String {
+		L10n.resolve {
+			String(
+				localized: "No streaks yet",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when no player has a Kotodama streak."
+			)
+		}
+	}
+	/// The description shown when no player has a Kotodama streak.
+	///
+	/// - Tag: L10n-kotodamaNoStreaksDescription
+	static var kotodamaNoStreaksDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Streaks appear once players start solving dailies.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when no player has a Kotodama streak."
+			)
+		}
+	}
+	// MARK: - Kotodama Archive
+	/// The title shown when the Kotodama archive is empty.
+	///
+	/// - Tag: L10n-kotodamaNoArchive
+	static var kotodamaNoArchive: String {
+		L10n.resolve {
+			String(
+				localized: "No past puzzles",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when the Kotodama archive is empty."
+			)
+		}
+	}
+	/// The description shown when the Kotodama archive is empty.
+	///
+	/// - Tag: L10n-kotodamaNoArchiveDescription
+	static var kotodamaNoArchiveDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Puzzles join the archive the day after they run.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when the Kotodama archive is empty."
+			)
+		}
+	}
+	/// The badge marking a Kotodama archive puzzle the player has solved.
+	///
+	/// - Tag: L10n-kotodamaSolvedBadge
+	static var kotodamaSolvedBadge: String {
+		L10n.resolve {
+			String(
+				localized: "Solved",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The badge marking a Kotodama archive puzzle the player has solved."
+			)
+		}
+	}
+	// MARK: - Kotodama Access
+	/// The title shown when Kotodama is opened without being signed in.
+	///
+	/// - Tag: L10n-kotodamaSignInRequired
+	static var kotodamaSignInRequired: String {
+		L10n.resolve {
+			String(
+				localized: "Sign in to play",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when Kotodama is opened without being signed in."
+			)
+		}
+	}
+	/// The description shown when Kotodama is opened without being signed in.
+	///
+	/// - Tag: L10n-kotodamaSignInRequiredDescription
+	static var kotodamaSignInRequiredDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Kotodama keeps your streak and stats on your account.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown when Kotodama is opened without being signed in."
+			)
+		}
+	}
+	/// The button that leaves a Kotodama leaderboard for today's puzzle.
+	///
+	/// - Tag: L10n-kotodamaPlayToday
+	static var kotodamaPlayToday: String {
+		L10n.resolve {
+			String(
+				localized: "Play Today's Kotodama",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button that leaves a Kotodama leaderboard for today's puzzle."
+			)
+		}
+	}
+	// MARK: - Kotodama Streak
+	/// The badge shown on an archive tile for a puzzle already played but not solved.
+	///
+	/// - Tag: L10n-kotodamaPlayed
+	static var kotodamaPlayed: String {
+		L10n.resolve {
+			String(
+				localized: "Played",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The badge shown on an archive tile for a puzzle already played but not solved."
+			)
+		}
+	}
+	/// The heading of the fastest solves of today's Kotodama puzzle.
+	///
+	/// - Tag: L10n-kotodamaTodaysFastest
+	static var kotodamaTodaysFastest: String {
+		L10n.resolve {
+			String(
+				localized: "Today's Fastest",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The heading of the fastest solves of today's Kotodama puzzle."
+			)
+		}
+	}
+	/// The message shown when today's Kotodama puzzle has no solves.
+	///
+	/// - Tag: L10n-kotodamaNobodySolvedToday
+	static var kotodamaNobodySolvedToday: String {
+		L10n.resolve {
+			String(
+				localized: "Nobody has solved today's puzzle yet.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message shown when today's Kotodama puzzle has no solves."
+			)
+		}
+	}
+	/// The guesses a player spent out of the guesses allowed.
+	///
+	/// - Tag: L10n-kotodamaGuessesSpent
+	static var kotodamaGuessesSpent: String {
+		L10n.resolve {
+			String(
+				localized: "%1$lld/%2$lld",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The guesses a player spent out of the guesses allowed."
+			)
+		}
+	}
+	/// The guesses spent followed by the seconds taken.
+	///
+	/// - Tag: L10n-kotodamaGuessesAndSeconds
+	static var kotodamaGuessesAndSeconds: String {
+		L10n.resolve {
+			String(
+				localized: "%1$@ · %2$@ s",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The guesses spent followed by the seconds taken."
+			)
+		}
+	}
+	/// A player's longest and current Kotodama streaks.
+	///
+	/// - Tag: L10n-kotodamaStreakDetail
+	static var kotodamaStreakDetail: String {
+		L10n.resolve {
+			String(
+				localized: "Best %1$lld · Current %2$lld",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A player's longest and current Kotodama streaks."
+			)
+		}
+	}
+	// MARK: - Kotodama How to Play
+	/// The title of the Kotodama how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlay
+	static var kotodamaHowToPlay: String {
+		L10n.resolve {
+			String(
+				localized: "How to Play",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the Kotodama how-to-play screen."
+			)
+		}
+	}
+	/// The introductory paragraph of the Kotodama how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayIntro
+	static var kotodamaHowToPlayIntro: String {
+		L10n.resolve {
+			String(
+				localized: "Guess the hidden word in six tries. Every answer is five letters long and pulled straight from the Kurozora catalog: anime, manga, game and song titles, plus characters, people and studios.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The introductory paragraph of the Kotodama how-to-play screen."
+			)
+		}
+	}
+	/// The paragraph explaining how to submit a guess on the Kotodama how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayGuessing
+	static var kotodamaHowToPlayGuessing: String {
+		L10n.resolve {
+			String(
+				localized: "Type a guess and press the return key. The tiles change color after every guess to show how close you are.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The paragraph explaining how to submit a guess on the Kotodama how-to-play screen."
+			)
+		}
+	}
+	/// The heading introducing the tile color legend on the Kotodama how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayColorsTitle
+	static var kotodamaHowToPlayColorsTitle: String {
+		L10n.resolve {
+			String(
+				localized: "What the colors mean",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The heading introducing the tile color legend on the Kotodama how-to-play screen."
+			)
+		}
+	}
+	/// The legend description of a Kotodama hit tile.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayHit
+	static var kotodamaHowToPlayHit: String {
+		L10n.resolve {
+			String(
+				localized: "The letter is in the word, right where you put it.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The legend description of a Kotodama hit tile."
+			)
+		}
+	}
+	/// The legend description of a Kotodama present tile.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayPresent
+	static var kotodamaHowToPlayPresent: String {
+		L10n.resolve {
+			String(
+				localized: "The letter is in the word, but somewhere else.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The legend description of a Kotodama present tile."
+			)
+		}
+	}
+	/// The legend description of a Kotodama miss tile.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayMiss
+	static var kotodamaHowToPlayMiss: String {
+		L10n.resolve {
+			String(
+				localized: "The letter is not in the word at all.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The legend description of a Kotodama miss tile."
+			)
+		}
+	}
+	/// The paragraph explaining Kotodama's hints on the how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayHints
+	static var kotodamaHowToPlayHints: String {
+		L10n.resolve {
+			String(
+				localized: "Need a nudge? A hint shows up after your third guess. From the fifth guess on you also get a picture.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The paragraph explaining Kotodama's hints on the how-to-play screen."
+			)
+		}
+	}
+	/// The paragraph explaining Kotodama's daily puzzle and archive on the how-to-play screen.
+	///
+	/// - Tag: L10n-kotodamaHowToPlayDaily
+	static var kotodamaHowToPlayDaily: String {
+		L10n.resolve {
+			String(
+				localized: "A new puzzle drops every day at midnight. Solve it to keep your streak going, and replay older puzzles from the archive whenever you like.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The paragraph explaining Kotodama's daily puzzle and archive on the how-to-play screen."
+			)
+		}
+	}
 }

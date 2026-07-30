@@ -345,6 +345,27 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			self.navigationItem.leftBarButtonItem = self.apiBarButtonItem
 		}
 		#endif
+
+		self.configureKotodamaBarButtonItem()
+	}
+
+	/// Configures the bar button item that opens Kotodama.
+	///
+	/// The item stands in for the Kotodama tab on layouts that don't carry one.
+	private func configureKotodamaBarButtonItem() {
+		guard self.genre == nil, self.theme == nil else { return }
+		guard !TabBarItem.tabBarCases.contains(.kotodama) else { return }
+
+		let kotodamaBarButtonItem = UIBarButtonItem(
+			image: TabBarItem.kotodama.imageValue,
+			primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.show(KotodamaHubCollectionViewController(), sender: nil)
+			}
+		)
+		kotodamaBarButtonItem.accessibilityLabel = L10n.kotodama
+
+		self.navigationItem.leftBarButtonItems = (self.navigationItem.leftBarButtonItems ?? []) + [kotodamaBarButtonItem]
 	}
 
 	#if DEBUG

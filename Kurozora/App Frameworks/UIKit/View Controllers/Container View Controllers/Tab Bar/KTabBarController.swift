@@ -452,7 +452,7 @@ class KTabBarController: UITabBarController {
 	/// Sets up the badge value on the tab bar item.
 	func setBadgeValue(_ value: String?, for tabBarItem: TabBarItem) {
 		let badgeValue = switch tabBarItem {
-		case .home, .schedule, .library, .feed, .search, .settings:
+		case .home, .schedule, .kotodama, .library, .feed, .search, .settings:
 			value
 		case .notifications:
 			UserSettings.notificationsBadge && User.isSignedIn ? value : nil
@@ -536,7 +536,7 @@ extension KTabBarController: UITabBarControllerDelegate {
 			case .search:
 				let collectionViewController = selectedViewController as? UICollectionViewController
 				collectionViewController?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
-			case .settings: return
+			case .kotodama, .settings: return
 			}
 		}
 	}
@@ -598,7 +598,7 @@ extension KTabBarController {
 				}
 			case .search:
 				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.searchTextField.becomeFirstResponder()
-			case .settings: break
+			case .kotodama, .settings: break
 			}
 		}
 	}

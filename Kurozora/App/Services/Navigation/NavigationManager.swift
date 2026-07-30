@@ -124,6 +124,9 @@ final class NavigationManager: NSObject {
 		case .stickers:
 			guard lastPathComponent == "whatsapp" else { return }
 			await WhatsAppStickerInstaller.shared.install(on: context)
+		case .kotodama:
+			// Pushed rather than selected, since the tab is absent from the compact tab bar.
+			context.show(KotodamaHubCollectionViewController())
 		}
 	}
 
