@@ -96,8 +96,8 @@ final class LyricsLineCollectionViewCell: UITableViewCell {
 	/// Configures the cell for a line.
 	///
 	/// - Parameters:
-	///    - pairs: The original words paired with their transliteration.
-	///    - backgroundPairs: The background vocal words paired with their transliteration.
+	///    - pairs: The timed word pairs of the line.
+	///    - backgroundPairs: The timed word pairs of the line's background vocals.
 	///    - hasWordTiming: Whether the line carries per-word timing.
 	///    - translationText: The line's translation text.
 	///    - offsetMs: The global timing offset applied to every word.

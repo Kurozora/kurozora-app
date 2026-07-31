@@ -30,4 +30,24 @@ enum LyricsLargerText: Int, CaseIterable {
 			return L10n.pronunciation
 		}
 	}
+
+	/// The title of the lyrics menu action that reveals the smaller of the two texts.
+	var showSecondaryTextTitle: String {
+		switch self {
+		case .lyrics:
+			return L10n.showPronunciation
+		case .pronunciation:
+			return L10n.showOriginal
+		}
+	}
+
+	/// The title of the lyrics menu action that hides the smaller of the two texts.
+	var hideSecondaryTextTitle: String {
+		switch self {
+		case .lyrics:
+			return L10n.hidePronunciation
+		case .pronunciation:
+			return L10n.hideOriginal
+		}
+	}
 }

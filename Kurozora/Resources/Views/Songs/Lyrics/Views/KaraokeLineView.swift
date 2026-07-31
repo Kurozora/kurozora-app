@@ -9,13 +9,12 @@
 import SwiftTheme
 import UIKit
 
-/// A word with its transliteration and playback timing.
 struct KaraokeWordPair {
-	/// The original text of the word.
-	let original: String
+	/// The text drawn larger, on the upper row of the word.
+	let primary: String
 
-	/// The transliteration of the word.
-	let romaji: String?
+	/// The text drawn smaller, on the lower row of the word.
+	let secondary: String?
 
 	/// The start time of the word, in milliseconds.
 	let beginMs: Int
@@ -38,10 +37,10 @@ final class KaraokeLineView: UIView {
 	// MARK: - Structs
 	struct WordLayout {
 		let pair: KaraokeWordPair
-		let originalOrigin: CGPoint
-		let originalSize: CGSize
-		let romajiOrigin: CGPoint
-		let romajiSize: CGSize
+		let primaryOrigin: CGPoint
+		let primarySize: CGSize
+		let secondaryOrigin: CGPoint
+		let secondarySize: CGSize
 	}
 
 	// MARK: - Properties
@@ -56,7 +55,7 @@ final class KaraokeLineView: UIView {
 	private var transitionDisplayLink: CADisplayLink?
 	private var transitionStartTimestamp: CFTimeInterval = 0
 
-	/// The duration of the word-layout transition when pronunciation is toggled.
+	/// The duration of the word-layout transition when the secondary text is toggled.
 	private static let layoutTransitionDuration: CFTimeInterval = 0.4
 
 	/// The width the line lays out against.
@@ -84,12 +83,12 @@ final class KaraokeLineView: UIView {
 		}
 	}
 
-	private var originalFont: UIFont {
-		return LyricsLayout.originalFont.withSize(LyricsLayout.originalFont.pointSize * self.fontScale)
+	private var primaryFont: UIFont {
+		return LyricsLayout.primaryFont.withSize(LyricsLayout.primaryFont.pointSize * self.fontScale)
 	}
 
-	private var romajiFont: UIFont {
-		return LyricsLayout.romajiFont.withSize(LyricsLayout.romajiFont.pointSize * self.fontScale)
+	private var secondaryFont: UIFont {
+		return LyricsLayout.secondaryFont.withSize(LyricsLayout.secondaryFont.pointSize * self.fontScale)
 	}
 
 	/// A Boolean value that indicates whether words lift as they fill.
@@ -145,10 +144,10 @@ final class KaraokeLineView: UIView {
 
 		for layout in self.layouts {
 			let fraction = self.fraction(for: layout.pair)
-			self.draw(layout.pair.original, at: layout.originalOrigin, width: layout.originalSize.width, font: self.originalFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			self.draw(layout.pair.primary, at: layout.primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 
-			if let romaji = layout.pair.romaji {
-				self.draw(romaji, at: layout.romajiOrigin, width: layout.romajiSize.width, font: self.romajiFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			if let secondary = layout.pair.secondary {
+				self.draw(secondary, at: layout.secondaryOrigin, width: layout.secondarySize.width, font: self.secondaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 			}
 		}
 	}
@@ -164,40 +163,30 @@ final class KaraokeLineView: UIView {
 	func computeLayouts(pairs: [KaraokeWordPair], width: CGFloat) -> (layouts: [WordLayout], height: CGFloat) {
 		guard width > 0 else { return ([], 0) }
 
-		let originalFont = self.originalFont
-		let romajiFont = self.romajiFont
-		let originalLineHeight = originalFont.lineHeight
-		let hasRomaji = pairs.contains { $0.romaji != nil }
-		let romajiLineHeight = hasRomaji ? romajiFont.lineHeight : 0
-		let rowHeight = originalLineHeight + (hasRomaji ? LyricsLayout.originalToRomajiSpacing + romajiLineHeight : 0)
-		let spaceWidth = (" " as NSString).size(withAttributes: [.font: originalFont]).width
-
-		let pronunciationOnTop = hasRomaji && UserSettings.lyricsLargerText == .pronunciation
+		let primaryFont = self.primaryFont
+		let secondaryFont = self.secondaryFont
+		let primaryLineHeight = primaryFont.lineHeight
+		let hasSecondary = pairs.contains { $0.secondary != nil }
+		let rowHeight = primaryLineHeight + (hasSecondary ? LyricsLayout.primaryToSecondarySpacing + secondaryFont.lineHeight : 0)
+		let spaceWidth = (" " as NSString).size(withAttributes: [.font: primaryFont]).width
 
 		var layouts: [WordLayout] = []
 		var penX: CGFloat = 0
 		var penY: CGFloat = LyricsLayout.activeWordLift
 
 		for pair in pairs {
-			let originalSize = (pair.original as NSString).size(withAttributes: [.font: originalFont])
-			let romajiSize = pair.romaji.map { ($0 as NSString).size(withAttributes: [.font: romajiFont]) } ?? .zero
-			let tileWidth = max(originalSize.width, romajiSize.width)
+			let primarySize = (pair.primary as NSString).size(withAttributes: [.font: primaryFont])
+			let secondarySize = pair.secondary.map { ($0 as NSString).size(withAttributes: [.font: secondaryFont]) } ?? .zero
+			let tileWidth = max(primarySize.width, secondarySize.width)
 
 			if penX > 0, penX + tileWidth > width {
 				penX = 0
 				penY += rowHeight + LyricsLayout.rowSpacing
 			}
 
-			let originalOrigin: CGPoint
-			let romajiOrigin: CGPoint
-			if pronunciationOnTop {
-				romajiOrigin = CGPoint(x: penX, y: penY)
-				originalOrigin = CGPoint(x: penX, y: penY + romajiLineHeight + LyricsLayout.originalToRomajiSpacing)
-			} else {
-				originalOrigin = CGPoint(x: penX, y: penY)
-				romajiOrigin = CGPoint(x: penX, y: penY + originalLineHeight + LyricsLayout.originalToRomajiSpacing)
-			}
-			layouts.append(WordLayout(pair: pair, originalOrigin: originalOrigin, originalSize: originalSize, romajiOrigin: romajiOrigin, romajiSize: romajiSize))
+			let primaryOrigin = CGPoint(x: penX, y: penY)
+			let secondaryOrigin = CGPoint(x: penX, y: penY + primaryLineHeight + LyricsLayout.primaryToSecondarySpacing)
+			layouts.append(WordLayout(pair: pair, primaryOrigin: primaryOrigin, primarySize: primarySize, secondaryOrigin: secondaryOrigin, secondarySize: secondarySize))
 
 			penX += tileWidth + (pair.trailingSpace ? spaceWidth : LyricsLayout.pairSpacing)
 		}
@@ -216,20 +205,20 @@ final class KaraokeLineView: UIView {
 		guard width > 0, !layouts.isEmpty else { return layouts }
 
 		var offsetsByRow: [CGFloat: CGFloat] = [:]
-		for (rowY, words) in Dictionary(grouping: layouts, by: { $0.originalOrigin.y }) {
-			let rowWidth = words.map { $0.originalOrigin.x + max($0.originalSize.width, $0.romajiSize.width) }.max() ?? 0
+		for (rowY, words) in Dictionary(grouping: layouts, by: { $0.primaryOrigin.y }) {
+			let rowWidth = words.map { $0.primaryOrigin.x + max($0.primarySize.width, $0.secondarySize.width) }.max() ?? 0
 			offsetsByRow[rowY] = self.horizontalOffset(rowWidth: rowWidth, width: width)
 		}
 
 		return layouts.map { layout in
-			let offset = offsetsByRow[layout.originalOrigin.y] ?? 0
+			let offset = offsetsByRow[layout.primaryOrigin.y] ?? 0
 			guard offset != 0 else { return layout }
 			return WordLayout(
 				pair: layout.pair,
-				originalOrigin: CGPoint(x: layout.originalOrigin.x + offset, y: layout.originalOrigin.y),
-				originalSize: layout.originalSize,
-				romajiOrigin: CGPoint(x: layout.romajiOrigin.x + offset, y: layout.romajiOrigin.y),
-				romajiSize: layout.romajiSize
+				primaryOrigin: CGPoint(x: layout.primaryOrigin.x + offset, y: layout.primaryOrigin.y),
+				primarySize: layout.primarySize,
+				secondaryOrigin: CGPoint(x: layout.secondaryOrigin.x + offset, y: layout.secondaryOrigin.y),
+				secondarySize: layout.secondarySize
 			)
 		}
 	}
@@ -268,9 +257,9 @@ final class KaraokeLineView: UIView {
 	///    - pairs: The timed word pairs of the line.
 	///    - offsetMs: The global timing offset applied to every word.
 	func configure(pairs: [KaraokeWordPair], offsetMs: Int) {
-		let hadRomaji = self.pairs.contains { $0.romaji != nil }
-		let hasRomaji = pairs.contains { $0.romaji != nil }
-		let animatesTransition = !self.pairs.isEmpty && self.bounds.width > 0 && self.pairs.count == pairs.count && hadRomaji != hasRomaji
+		let hadSecondary = self.pairs.contains { $0.secondary != nil }
+		let hasSecondary = pairs.contains { $0.secondary != nil }
+		let animatesTransition = !self.pairs.isEmpty && self.bounds.width > 0 && self.pairs.count == pairs.count && hadSecondary != hasSecondary
 		let previousLayouts = self.layouts
 
 		self.pairs = pairs
@@ -370,22 +359,22 @@ final class KaraokeLineView: UIView {
 			let from = fromLayouts[index]
 			let fraction = self.fraction(for: layout.pair)
 
-			let originalOrigin = self.interpolate(from.originalOrigin, layout.originalOrigin, progress)
-			self.draw(layout.pair.original, at: originalOrigin, width: layout.originalSize.width, font: self.originalFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			let primaryOrigin = self.interpolate(from.primaryOrigin, layout.primaryOrigin, progress)
+			self.draw(layout.pair.primary, at: primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 
-			let romajiOrigin = self.interpolate(from.romajiOrigin, layout.romajiOrigin, progress)
-			if let romaji = layout.pair.romaji {
-				self.drawRomaji(romaji, at: romajiOrigin, width: layout.romajiSize.width, alpha: progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
-			} else if let romaji = from.pair.romaji {
-				self.drawRomaji(romaji, at: romajiOrigin, width: from.romajiSize.width, alpha: 1 - progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			let secondaryOrigin = self.interpolate(from.secondaryOrigin, layout.secondaryOrigin, progress)
+			if let secondary = layout.pair.secondary {
+				self.drawSecondary(secondary, at: secondaryOrigin, width: layout.secondarySize.width, alpha: progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			} else if let secondary = from.pair.secondary {
+				self.drawSecondary(secondary, at: secondaryOrigin, width: from.secondarySize.width, alpha: 1 - progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 			}
 		}
 	}
 
-	private func drawRomaji(_ text: String, at origin: CGPoint, width: CGFloat, alpha: CGFloat, fraction: CGFloat, sungColor: UIColor, unsungColor: UIColor, in context: CGContext) {
+	private func drawSecondary(_ text: String, at origin: CGPoint, width: CGFloat, alpha: CGFloat, fraction: CGFloat, sungColor: UIColor, unsungColor: UIColor, in context: CGContext) {
 		context.saveGState()
 		context.setAlpha(alpha)
-		self.draw(text, at: origin, width: width, font: self.romajiFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+		self.draw(text, at: origin, width: width, font: self.secondaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 		context.restoreGState()
 	}
 

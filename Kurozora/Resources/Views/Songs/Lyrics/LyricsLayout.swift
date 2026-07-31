@@ -10,17 +10,11 @@ import UIKit
 
 struct LyricsLayout {
 	// MARK: - Properties
-	static var originalFont: UIFont {
-		return UserSettings.lyricsLargerText == .pronunciation
-			? .systemFont(ofSize: 16, weight: .semibold)
-			: .systemFont(ofSize: 26, weight: .bold)
-	}
+	/// The font of the larger text of a line.
+	static let primaryFont = UIFont.systemFont(ofSize: 26, weight: .bold)
 
-	static var romajiFont: UIFont {
-		return UserSettings.lyricsLargerText == .pronunciation
-			? .systemFont(ofSize: 26, weight: .bold)
-			: .systemFont(ofSize: 16, weight: .semibold)
-	}
+	/// The font of the smaller text of a line.
+	static let secondaryFont = UIFont.systemFont(ofSize: 16, weight: .semibold)
 
 	static let translationFont = UIFont.systemFont(ofSize: 15, weight: .regular)
 
@@ -29,7 +23,7 @@ struct LyricsLayout {
 	static let bottomInset: CGFloat = 12
 	static let translationSpacing: CGFloat = 6
 
-	static let originalToRomajiSpacing: CGFloat = 2
+	static let primaryToSecondarySpacing: CGFloat = 2
 	static let rowSpacing: CGFloat = 6
 	static let pairSpacing: CGFloat = 4
 

@@ -65,7 +65,7 @@ final class LyricsViewController: KTableViewController {
 	private var hasPerformedInitialSync = false
 	private var hasLoadedLyrics = false
 
-	private var showsTransliteration = UserSettings.lyricsShowsTransliteration
+	private var showsSecondaryText = UserSettings.lyricsShowsTransliteration
 	private var selectedTranslationLanguage: String? = UserSettings.lyricsTranslationLanguage
 
 	private var offsetMs: Int {
@@ -219,8 +219,8 @@ final class LyricsViewController: KTableViewController {
 	}
 
 	private func updateOptionsButtonAppearance() {
-		let pronunciationActive = self.showsTransliteration && !self.availableTransliterationLanguages.isEmpty
-		self.optionsButton.isActiveState = pronunciationActive || self.selectedTranslationLanguage != nil
+		let secondaryTextActive = self.showsSecondaryText && !self.availableTransliterationLanguages.isEmpty
+		self.optionsButton.isActiveState = secondaryTextActive || self.selectedTranslationLanguage != nil
 	}
 
 	@objc private func themeDidChange() {
@@ -641,14 +641,15 @@ final class LyricsViewController: KTableViewController {
 
 	// MARK: Options
 	private func updateOptionsMenu() {
-		let pronunciationTitle = self.showsTransliteration ? L10n.hidePronunciation : L10n.showPronunciation
-		let pronunciationImage = self.showsTransliteration ? .Symbols.captionsBubbleSlash : UIImage(systemName: "captions.bubble")
-		let pronunciationAction = UIAction(
-			title: pronunciationTitle,
-			image: pronunciationImage,
+		let largerText = UserSettings.lyricsLargerText
+		let secondaryTextTitle = self.showsSecondaryText ? largerText.hideSecondaryTextTitle : largerText.showSecondaryTextTitle
+		let secondaryTextImage = self.showsSecondaryText ? .Symbols.captionsBubbleSlash : UIImage(systemName: "captions.bubble")
+		let secondaryTextAction = UIAction(
+			title: secondaryTextTitle,
+			image: secondaryTextImage,
 			attributes: self.availableTransliterationLanguages.isEmpty ? .disabled : []
 		) { [weak self] _ in
-			self?.showsTransliteration.toggle()
+			self?.showsSecondaryText.toggle()
 			self?.optionsChanged()
 		}
 
@@ -672,12 +673,12 @@ final class LyricsViewController: KTableViewController {
 			translationElement = UIMenu(title: L10n.translation, image: UIImage(systemName: "character.bubble"), options: .singleSelection, children: children)
 		}
 
-		self.optionsButton.menu = UIMenu(children: [translationElement, pronunciationAction])
+		self.optionsButton.menu = UIMenu(children: [translationElement, secondaryTextAction])
 		self.updateOptionsButtonAppearance()
 	}
 
 	private func optionsChanged() {
-		UserSettings.set(self.showsTransliteration, forKey: .lyricsShowsTransliteration)
+		UserSettings.set(self.showsSecondaryText, forKey: .lyricsShowsTransliteration)
 		UserSettings.set(self.selectedTranslationLanguage, forKey: .lyricsTranslationLanguage)
 
 		self.updateOptionsMenu()
@@ -707,12 +708,12 @@ final class LyricsViewController: KTableViewController {
 	// MARK: Mapping
 	private func pairs(for line: Lyrics.Line) -> (main: [KaraokeWordPair], background: [KaraokeWordPair], hasWordTiming: Bool) {
 		let transliteration = line.transliterations.first
-		let showsRomaji = self.showsTransliteration && self.transliterationDiffers(transliteration, from: line.text)
-		let romajiWords = showsRomaji ? transliteration?.words : nil
+		let hasRomaji = self.transliterationDiffers(transliteration, from: line.text)
+		let romajiWords = hasRomaji ? transliteration?.words : nil
 
 		if line.words.isEmpty {
-			let romajiText = showsRomaji ? transliteration?.text : nil
-			let pair = KaraokeWordPair(original: line.text, romaji: romajiText, beginMs: line.beginMs ?? 0, endMs: line.endMs ?? 0, trailingSpace: false)
+			let texts = self.orderedTexts(original: line.text, romaji: hasRomaji ? transliteration?.text : nil)
+			let pair = KaraokeWordPair(primary: texts.primary, secondary: texts.secondary, beginMs: line.beginMs ?? 0, endMs: line.endMs ?? 0, trailingSpace: false)
 			return ([pair], [], false)
 		}
 
@@ -721,7 +722,8 @@ final class LyricsViewController: KTableViewController {
 
 		for (index, word) in line.words.enumerated() {
 			let romaji = (romajiWords?.indices.contains(index) ?? false) ? romajiWords?[index].text : nil
-			let pair = KaraokeWordPair(original: word.text, romaji: romaji, beginMs: word.beginMs, endMs: word.endMs, trailingSpace: word.trailingSpace)
+			let texts = self.orderedTexts(original: word.text, romaji: romaji)
+			let pair = KaraokeWordPair(primary: texts.primary, secondary: texts.secondary, beginMs: word.beginMs, endMs: word.endMs, trailingSpace: word.trailingSpace)
 
 			if word.background {
 				backgroundPairs.append(pair)
@@ -731,6 +733,24 @@ final class LyricsViewController: KTableViewController {
 		}
 
 		return (mainPairs, backgroundPairs, true)
+	}
+
+	/// Orders a word's original text and its pronunciation by size, honoring the larger text setting.
+	///
+	/// - Parameters:
+	///    - original: The original text of the word.
+	///    - romaji: The romanized pronunciation of the word.
+	///
+	/// - Returns: The text drawn larger and the text drawn smaller beneath it.
+	private func orderedTexts(original: String, romaji: String?) -> (primary: String, secondary: String?) {
+		guard let romaji = romaji else { return (original, nil) }
+
+		switch UserSettings.lyricsLargerText {
+		case .lyrics:
+			return (original, self.showsSecondaryText ? romaji : nil)
+		case .pronunciation:
+			return (romaji, self.showsSecondaryText ? original : nil)
+		}
 	}
 
 	private func translationText(for line: Lyrics.Line) -> String? {

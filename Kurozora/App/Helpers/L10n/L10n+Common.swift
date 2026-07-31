@@ -2338,7 +2338,7 @@ extension L10n {
 				localized: "Show Pronunciation",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The title of the lyrics menu action that reveals the romanized pronunciation beneath each word."
+				comment: "The title of the lyrics menu action that reveals the romanized pronunciation of each word."
 			)
 		}
 	}
@@ -2351,7 +2351,33 @@ extension L10n {
 				localized: "Hide Pronunciation",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The title of the lyrics menu action that hides the romanized pronunciation beneath each word."
+				comment: "The title of the lyrics menu action that hides the romanized pronunciation of each word."
+			)
+		}
+	}
+	/// The string for the phrase 'Show Original'.
+	///
+	/// - Tag: L10n-showOriginal
+	static var showOriginal: String {
+		L10n.resolve {
+			String(
+				localized: "Show Original",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the lyrics menu action that reveals the original lyrics alongside the pronunciation."
+			)
+		}
+	}
+	/// The string for the phrase 'Hide Original'.
+	///
+	/// - Tag: L10n-hideOriginal
+	static var hideOriginal: String {
+		L10n.resolve {
+			String(
+				localized: "Hide Original",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the lyrics menu action that hides the original lyrics, leaving only the pronunciation."
 			)
 		}
 	}
