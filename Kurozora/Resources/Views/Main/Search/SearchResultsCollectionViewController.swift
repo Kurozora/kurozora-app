@@ -26,6 +26,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case scheduleSegue
+		case museumSegue
 		case searchSegue
 		case characterDetailsSegue
 		case episodeDetailsSegue
@@ -78,6 +79,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
 		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
+		// TODO: - Replace the system image with a proper Browse photo once one is available.
+		BrowseCategory(title: L10n.museum, image: UIImage(systemName: "building.columns.fill"), segueIdentifier: SegueIdentifiers.museumSegue),
 		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
 		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),
 		BrowseCategory(title: L10n.games, image: .Browse.games, searchType: .games),
@@ -1032,6 +1035,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case .studiosListSegue: return StudiosListCollectionViewController()
 		case .usersListSegue: return UsersListCollectionViewController()
 		case .scheduleSegue: return ScheduleCollectionViewController()
+		case .museumSegue: return MuseumCollectionViewController()
 		}
 	}
 
@@ -1153,6 +1157,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			usersListCollectionViewController.searchQuery = self.searchQuery
 			usersListCollectionViewController.usersListFetchType = .search
 		case .scheduleSegue: break
+		case .museumSegue: break
 		}
 	}
 }

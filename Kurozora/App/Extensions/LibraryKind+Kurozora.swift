@@ -10,6 +10,23 @@ import Foundation
 import KurozoraKit
 
 extension LibraryKind {
+	// MARK: - Initializers
+	/// Creates a library kind from a deep-link path component.
+	///
+	/// - Parameter pathComponent: The path component to parse.
+	init?(pathComponent: String) {
+		switch pathComponent.lowercased() {
+		case "anime", "show", "shows":
+			self = .shows
+		case "manga", "literature", "literatures":
+			self = .literatures
+		case "game", "games":
+			self = .games
+		default:
+			return nil
+		}
+	}
+
 	/// An array containing the string value of all library kinds.
 	static var allString: [String] {
 		return self.allCases.map { libraryKind in

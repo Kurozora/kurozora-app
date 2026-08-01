@@ -105,6 +105,8 @@ final class NavigationManager: NSObject {
 			context.selectTab(.schedule)
 		case .season:
 			self.handleSeasonalBrowseDeeplink(url: url, context: context)
+		case .museum:
+			self.handleMuseumDeeplink(url: url, context: context)
 		case .library, .myLibrary, .list:
 			context.selectTab(.library)
 		case .feed, .timeline:
@@ -152,6 +154,31 @@ final class NavigationManager: NSObject {
 		seasonalCollectionViewController.year = year
 		seasonalCollectionViewController.season = season
 		context.show(seasonalCollectionViewController)
+	}
+
+	/// Handles deeplinking to the museum view.
+	///
+	/// Expected URL shape: `kurozora://museum/{anime|manga|games}` or `kurozora://museum/{anime|manga|games}/{year}`.
+	///
+	/// - Parameters:
+	///    - url: The URL to parse.
+	///    - context: The navigation context to present on.
+	private func handleMuseumDeeplink(url: URL, context: NavigationContext) {
+		let pathComponents = url.pathComponents.filter { $0 != "/" }
+
+		guard
+			let kindSlug = pathComponents.first,
+			let libraryKind = LibraryKind(pathComponent: kindSlug)
+		else { return }
+
+		let museumCollectionViewController = MuseumCollectionViewController()
+		museumCollectionViewController.libraryKind = libraryKind
+
+		if pathComponents.count >= 2, let year = Int(pathComponents[1]) {
+			museumCollectionViewController.initialYear = year
+		}
+
+		context.show(museumCollectionViewController)
 	}
 
 	/// Handles deeplinking to the parental guide view.

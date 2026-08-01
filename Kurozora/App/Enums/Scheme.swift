@@ -21,6 +21,7 @@ import Foundation
 /// case feed, timeline
 /// case notification, notifications
 /// case schedule
+/// case museum
 /// case search
 /// case parentalGuide
 /// case stickers
@@ -39,6 +40,7 @@ enum Scheme: String, CaseIterable {
 	case notification, notifications
 	case schedule
 	case season
+	case museum
 	case search
 	case parentalGuide = "parentalguide"
 	case stickers

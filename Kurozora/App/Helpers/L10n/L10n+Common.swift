@@ -456,6 +456,19 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the word 'now'.
+	///
+	/// - Tag: L10n-now
+	static var now: String {
+		L10n.resolve {
+			String(
+				localized: "Now",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'now'."
+			)
+		}
+	}
 	/// The string for the word 'submitted'.
 	///
 	/// - Tag: L10n-submitted
@@ -1880,6 +1893,17 @@ extension L10n {
 			comment: "The string for the word 'schedule'."
 		)
 	}
+	/// The string for the word 'museum'.
+	///
+	/// - Tag: L10n-museum
+	static var museum: String {
+		String(
+			localized: "Museum",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the word 'museum'."
+		)
+	}
 	/// The string for the word 'feed'.
 	///
 	/// - Tag: L10n-feed
@@ -3207,6 +3231,56 @@ extension L10n {
 			locale: LanguageManager.shared.locale,
 			comment: "The total series count shown on the ReCap year card."
 		)
+	}
+
+	/// The string for the phrase '%@ · %@ titles'.
+	///
+	/// - Tag: L10n-yearTitlesCount
+	static func yearTitlesCount(_ year: Int, _ count: Int) -> String {
+		return String(
+			localized: "\(String(year)) · \(count) titles",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The year and titles count shown in the Museum timeline chip."
+		)
+	}
+
+	/// The string for the phrase '%@ works · %@–%@'.
+	///
+	/// - Tag: L10n-worksCountRange
+	static func worksCountRange(_ count: String, _ startYear: Int, _ endYear: Int) -> String {
+		return String(
+			localized: "\(count) works · \(String(startYear))–\(String(endYear))",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The collection scale shown beneath the Museum title while idle."
+		)
+	}
+
+	/// The string for the phrase '%@ works · %@'.
+	///
+	/// - Tag: L10n-worksCountYear
+	static func worksCountYear(_ count: String, _ year: Int) -> String {
+		return String(
+			localized: "\(count) works · \(String(year))",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The active year's scale shown beneath the Museum title while scrolling."
+		)
+	}
+
+	/// The string for the phrase 'Dim Library'.
+	///
+	/// - Tag: L10n-dimLibrary
+	static var dimLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Dim Library",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of the Museum button that dims entries already in the user's library."
+			)
+		}
 	}
 
 	// MARK: - Library Batch Edit
