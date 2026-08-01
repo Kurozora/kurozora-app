@@ -53,7 +53,6 @@ extension Literature.Attributes {
 //			informationString += " · ✓ \(readChaptersCount)/\(self.episodeCount)"
 //		}
 
-
 		return informationString
 	}
 

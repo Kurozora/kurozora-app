@@ -122,7 +122,6 @@ extension Character {
 		do {
 			_ = try await KService.rate(characterIdentity, score: rating).description(description).response()
 
-
 			return rating
 		} catch let error as APIError {
 			print(error.localizedDescription)

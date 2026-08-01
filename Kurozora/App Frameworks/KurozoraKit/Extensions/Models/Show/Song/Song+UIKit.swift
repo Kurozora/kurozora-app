@@ -232,7 +232,6 @@ extension KKSong {
 		do {
 			_ = try await KService.rate(songIdentity, score: rating).description(description).response()
 
-
 			return rating
 		} catch let error as APIError {
 			print(error.localizedDescription)

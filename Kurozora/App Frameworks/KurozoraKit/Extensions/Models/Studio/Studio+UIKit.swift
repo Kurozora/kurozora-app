@@ -122,7 +122,6 @@ extension Studio {
 		do {
 			_ = try await KService.rate(studioIdentity, score: rating).description(description).response()
 
-
 			return rating
 		} catch let error as APIError {
 			print(error.localizedDescription)

@@ -95,7 +95,6 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 	}
 
-
 	// MARK: - IBActions
 	@IBAction func showButtonPressed(_ sender: UIButton) {
 		Task {

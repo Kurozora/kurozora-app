@@ -53,7 +53,6 @@ extension Show.Attributes {
 //			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
 //		}
 
-
 		return informationString
 	}
 

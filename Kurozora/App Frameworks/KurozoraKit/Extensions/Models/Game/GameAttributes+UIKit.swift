@@ -53,7 +53,6 @@ extension Game.Attributes {
 //			informationString += " · ✓ \(completionPercentage)/\(self.episodeCount)"
 //		}
 
-
 		return informationString
 	}
 
