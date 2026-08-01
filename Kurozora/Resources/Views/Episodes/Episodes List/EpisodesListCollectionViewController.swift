@@ -18,12 +18,34 @@ enum EpisodesListFetchType: Equatable {
 	static func == (_ lhs: EpisodesListFetchType, _ rhs: EpisodesListFetchType) -> Bool {
 		switch (lhs, rhs) {
 		case (.season, .season),
-		     (.search, .search):
+			 (.search, .search):
 			return true
 		case (.upNext(let exploreCategory1), .upNext(exploreCategory: let exploreCategory2)):
 			return exploreCategory1 == exploreCategory2
 		default:
 			return false
+		}
+	}
+}
+
+/// An edge of the list the go-to menu can jump to.
+private enum GoToEdge {
+	case first
+	case last
+
+	/// The name of the system image pointing towards the edge.
+	var systemImageName: String {
+		switch self {
+		case .first: return "chevron.up.circle"
+		case .last: return "chevron.down.circle"
+		}
+	}
+
+	/// The title of the menu action jumping to the edge.
+	var actionTitle: String {
+		switch self {
+		case .first: return L10n.goToFirstEpisode
+		case .last: return L10n.goToLastEpisode
 		}
 	}
 }
@@ -69,6 +91,30 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	/// A Boolean value that indicates whether filler episodes are hidden.
 	var shouldHideFillers: Bool = false
+
+	/// The edge currently reflected by ``goToBarButtonItem``'s image.
+	private var displayedGoToEdge: GoToEdge?
+
+	/// The edge the go-to menu offers.
+	private var goToEdge: GoToEdge? {
+		let visibleIndexPaths = self.collectionView.indexPathsForVisibleItems
+
+		guard !visibleIndexPaths.isEmpty else {
+			return nil
+		}
+
+		guard visibleIndexPaths.contains(IndexPath(item: 0, section: 0)) else {
+			return .first
+		}
+
+		let lastItem = self.dataSource.snapshot().numberOfItems - 1
+
+		guard self.nextPageCursor == nil, visibleIndexPaths.contains(IndexPath(item: lastItem, section: 0)) else {
+			return .last
+		}
+
+		return nil
+	}
 
 	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
@@ -145,7 +191,8 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	/// Creates the go-to bar-button item.
 	private func configureGoToBarButtonItem() {
-		self.goToBarButtonItem = UIBarButtonItem(title: L10n.goTo, image: UIImage(systemName: "chevron.down.circle"))
+		self.displayedGoToEdge = .last
+		self.goToBarButtonItem = UIBarButtonItem(title: L10n.goTo, image: UIImage(systemName: GoToEdge.last.systemImageName))
 		self.navigationItem.rightBarButtonItems?.append(self.goToBarButtonItem)
 	}
 
@@ -167,6 +214,8 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 		self.goToBarButtonItem.menu = self.createGoToEpisodeMenu()
 		self.fillerBarButtonItem.menu = self.createShowFillersMenu()
+
+		self.updateGoToBarButtonItemImage()
 	}
 
 	// MARK: - Fetch
@@ -329,20 +378,20 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	// MARK: - Go-to menu
 	fileprivate func goToFirstEpisode() {
-		self.collectionView.safeScrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		self.goToBarButtonItem.image = UIImage(systemName: "chevron.down.circle")
-		self.configureNavBarButtons()
+		self.collectionView.safeScrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
 	}
 
-	fileprivate func goToLastEpisode() {
-		self.collectionView.safeScrollToItem(at: IndexPath(row: self.dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
-		self.goToBarButtonItem.image = UIImage(systemName: "chevron.up.circle")
-		self.configureNavBarButtons()
+	/// Loads every page that hasn't been fetched yet, then scrolls to the final episode.
+	fileprivate func goToLastEpisode() async {
+		await self.loadRemainingEpisodes()
+
+		let lastItem = self.dataSource.snapshot().numberOfItems - 1
+		self.collectionView.safeScrollToItem(at: IndexPath(item: lastItem, section: 0), at: .centeredVertically, animated: true)
 	}
 
-	fileprivate func goToLastWatchedEpisode() {
+	fileprivate func goToLastWatchedEpisode() async {
 		guard let episodes = self.cache as? [IndexPath: Episode] else {
-			self.goToLastEpisode()
+			await self.goToLastEpisode()
 			return
 		}
 
@@ -350,37 +399,69 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			episode.watchStatus == .notWatched
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
-			self.configureNavBarButtons()
 		} else {
-			self.goToLastEpisode()
+			await self.goToLastEpisode()
+		}
+	}
+
+	/// Requests every remaining page of episodes.
+	private func loadRemainingEpisodes() async {
+		while self.nextPageCursor != nil {
+			let cursor = self.nextPageCursor
+			await self.fetchItems()
+
+			// A cursor that hasn't advanced means the page couldn't be loaded.
+			guard self.nextPageCursor != cursor else { return }
+		}
+	}
+
+	/// Points ``goToBarButtonItem``'s image at the edge the menu offers.
+	private func updateGoToBarButtonItemImage() {
+		guard let goToEdge = self.goToEdge, goToEdge != self.displayedGoToEdge else { return }
+
+		self.displayedGoToEdge = goToEdge
+		self.goToBarButtonItem?.image = UIImage(systemName: goToEdge.systemImageName)
+	}
+
+	/// Creates the action jumping to the given edge of the list.
+	///
+	/// - Parameter edge: The edge to jump to.
+	///
+	/// - Returns: A new `UIAction`.
+	private func makeGoToEdgeEpisodeAction(for edge: GoToEdge) -> UIAction {
+		return UIAction(title: edge.actionTitle, image: nil) { [weak self] _ in
+			guard let self = self else { return }
+
+			switch edge {
+			case .first:
+				self.goToFirstEpisode()
+			case .last:
+				Task {
+					await self.goToLastEpisode()
+				}
+			}
 		}
 	}
 
 	fileprivate func createGoToEpisodeMenu() -> UIMenu {
-		var menuElements: [UIMenuElement] = []
-		let visibleIndexPath = collectionView.indexPathsForVisibleItems
+		let goToEdgeEpisode = UIDeferredMenuElement.uncached { [weak self] completion in
+			guard let self = self, let goToEdge = self.goToEdge else {
+				completion([])
+				return
+			}
 
-		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
-			let goToFirstEpisode = UIAction(title: L10n.goToFirstEpisode, image: nil) { [weak self] _ in
-				guard let self = self else { return }
-				self.goToFirstEpisode()
-			}
-			menuElements.append(goToFirstEpisode)
-		} else {
-			let goToLastEpisode = UIAction(title: L10n.goToLastEpisode, image: nil) { [weak self] _ in
-				guard let self = self else { return }
-				self.goToLastEpisode()
-			}
-			menuElements.append(goToLastEpisode)
+			completion([self.makeGoToEdgeEpisodeAction(for: goToEdge)])
 		}
 
 		let goToLastWatchedEpisode = UIAction(title: L10n.goToLastWatchedEpisode, image: nil) { [weak self] _ in
 			guard let self = self else { return }
-			self.goToLastWatchedEpisode()
-		}
-		menuElements.append(goToLastWatchedEpisode)
 
-		return UIMenu(title: "", children: menuElements)
+			Task {
+				await self.goToLastWatchedEpisode()
+			}
+		}
+
+		return UIMenu(title: "", children: [goToEdgeEpisode, goToLastWatchedEpisode])
 	}
 
 	fileprivate func createShowFillersMenu() -> UIMenu {
@@ -530,6 +611,13 @@ extension EpisodesListCollectionViewController {
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+	}
+}
+
+// MARK: - UIScrollViewDelegate
+extension EpisodesListCollectionViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		self.updateGoToBarButtonItemImage()
 	}
 }
 
