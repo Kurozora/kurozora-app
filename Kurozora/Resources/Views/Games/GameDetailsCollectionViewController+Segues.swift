@@ -14,6 +14,7 @@ extension GameDetailsCollectionViewController {
 		case reviewsListSegue
 		case castListSegue
 		case gamesListSegue
+		case topChartsSegue
 		case showsListSegue
 		case literaturesListSegue
 		case studiosListSegue
@@ -35,6 +36,7 @@ extension GameDetailsCollectionViewController {
 		case .showsListSegue: return ShowsListCollectionViewController()
 		case .literaturesListSegue: return LiteraturesListCollectionViewController()
 		case .gamesListSegue: return GamesListCollectionViewController()
+		case .topChartsSegue: return GamesListCollectionViewController()
 		case .studiosListSegue: return StudiosListCollectionViewController()
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
@@ -75,6 +77,10 @@ extension GameDetailsCollectionViewController {
 				gamesListCollectionViewController.gameIdentity = self.gameIdentity
 				gamesListCollectionViewController.gamesListFetchType = .relatedGame
 			}
+		case .topChartsSegue:
+			// Segue to the games top chart
+			guard let gamesListCollectionViewController = destination as? GamesListCollectionViewController else { return }
+			gamesListCollectionViewController.gamesListFetchType = .charts
 		case .showsListSegue:
 			// Segue to shows list
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }

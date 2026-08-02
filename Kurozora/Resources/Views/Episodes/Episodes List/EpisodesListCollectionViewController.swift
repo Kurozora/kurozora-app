@@ -11,13 +11,15 @@ import UIKit
 
 /// A source of episodes for ``EpisodesListCollectionViewController``.
 enum EpisodesListFetchType: Equatable {
+	case charts
 	case season
 	case search
 	case upNext(exploreCategory: ExploreCategory)
 
 	static func == (_ lhs: EpisodesListFetchType, _ rhs: EpisodesListFetchType) -> Bool {
 		switch (lhs, rhs) {
-		case (.season, .season),
+		case (.charts, .charts),
+			 (.season, .season),
 			 (.search, .search):
 			return true
 		case (.upNext(let exploreCategory1), .upNext(exploreCategory: let exploreCategory2)):
@@ -124,8 +126,20 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.episodes }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.episodes) }
-	override var emptyStateDetail: String { L10n.noItemsYet(L10n.season.lowercased(with: .current), L10n.episodes.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.episodesListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.episodes)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.episodesListFetchType {
+		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.noItemsYet(L10n.season.lowercased(with: .current), L10n.episodes.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.episodeIdentities.isEmpty
@@ -156,6 +170,8 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		#endif
 
 		switch self.episodesListFetchType {
+		case .charts:
+			self.title = L10n.xTopCharts(L10n.episodes)
 		case .season:
 			self.title = self.season?.attributes.title
 		case .search:
@@ -250,6 +266,16 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 		do {
 			switch self.episodesListFetchType {
+			case .charts:
+				let response = try await KService.topEpisodes().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.episodeIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.episodeIdentities.append(contentsOf: response.data)
+				self.episodeIdentities.removeDuplicates()
 			case .season:
 				guard let seasonIdentity = self.seasonIdentity else { return }
 				let response = try await KService.episodes(for: seasonIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
@@ -333,7 +359,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			guard let self = self else { return }
 
 			switch self.episodesListFetchType {
-			case .season, .search:
+			case .charts, .season, .search:
 				await self.fetchWatchedOverlay()
 			case .upNext:
 				self.nextPageCursor = nil
@@ -351,7 +377,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		switch self.episodesListFetchType {
-		case .season, .search:
+		case .charts, .season, .search:
 			Task { @MainActor [weak self] in
 				guard let self = self else { return }
 				guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
@@ -570,7 +596,7 @@ extension EpisodesListCollectionViewController {
 				}
 
 				cell.delegate = self
-				cell.configure(using: episode)
+				cell.configure(using: episode, rank: self.episodesListFetchType == .charts ? indexPath.item + 1 : nil)
 			}
 		}
 	}
@@ -634,7 +660,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 		cell.watchStatusButton.isEnabled = false
 
 		switch self.episodesListFetchType {
-		case .season, .search:
+		case .charts, .season, .search:
 			await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		case .upNext:
 			await episode.updateWatchStatus(userInfo: [:])

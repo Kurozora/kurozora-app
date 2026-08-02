@@ -12,6 +12,7 @@ import UIKit
 /// A source of people for ``PeopleListCollectionViewController``.
 enum PeopleListFetchType {
 	case character
+	case charts
 	case explore
 	case search
 }
@@ -48,8 +49,20 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.people) }
-	override var emptyStateDetail: String { L10n.cantGetListDetail(L10n.people.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.peopleListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.people)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.peopleListFetchType {
+		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.cantGetListDetail(L10n.people.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.personIdentities.isEmpty
@@ -58,7 +71,7 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = L10n.people
+		self.title = self.peopleListFetchType == .charts ? L10n.xTopCharts(L10n.people) : L10n.people
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.people.lowercased(with: Locale.current)))
@@ -86,6 +99,16 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
 				let response = try await KService.people(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.personIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.personIdentities.append(contentsOf: response.data)
+				self.personIdentities.removeDuplicates()
+			case .charts:
+				let response = try await KService.topPeople().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 				if self.nextPageCursor == nil {
 					self.personIdentities = []
@@ -183,7 +206,7 @@ extension PeopleListCollectionViewController {
 					}
 				}
 
-				cell.configure(using: person)
+				cell.configure(using: person, rank: self.peopleListFetchType == .charts ? indexPath.item + 1 : nil)
 			}
 		}
 	}

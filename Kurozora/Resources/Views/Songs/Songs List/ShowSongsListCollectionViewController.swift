@@ -17,6 +17,12 @@ enum SongsListViewType: Int {
 	case showSongs
 }
 
+/// A source of songs for ``ShowSongsListCollectionViewController``.
+enum SongsListFetchType {
+	case show
+	case charts
+}
+
 /// A list of songs for a show, grouped by song type.
 class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
@@ -27,6 +33,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 
 	/// A section layout.
 	enum SectionLayoutKind: Hashable {
+		case main
 		case header(id: UUID = UUID())
 	}
 
@@ -34,12 +41,15 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	enum ItemKind: Hashable {
 		case song(_: Song, id: UUID = UUID())
 		case showSong(_: ShowSong, id: UUID = UUID())
+		case songIdentity(_: SongIdentity)
 	}
 
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 	var songs: [Song] = []
 	var showSongs: [ShowSong] = []
+	var songIdentities: [SongIdentity] = []
+	var songsListFetchType: SongsListFetchType = .show
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
 
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
@@ -62,17 +72,38 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { L10n.noShowSongs }
-	override var emptyStateDetail: String { L10n.cantGetShowSongs }
+
+	override var emptyStateTitle: String {
+		switch self.songsListFetchType {
+		case .show: return L10n.noShowSongs
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.songsListFetchType {
+		case .show: return L10n.cantGetShowSongs
+		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
-		!self.showSongs.isEmpty || !self.songs.isEmpty
+		switch self.songsListFetchType {
+		case .show: return !self.showSongs.isEmpty || !self.songs.isEmpty
+		case .charts: return !self.songIdentities.isEmpty
+		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = L10n.songs
+		switch self.songsListFetchType {
+		case .show:
+			self.title = L10n.songs
+		case .charts:
+			self.title = L10n.xTopCharts(L10n.songs)
+		}
+
 		self.observePlaybackChanges()
 	}
 
@@ -90,7 +121,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
 			guard
 				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = self.showSongs[safe: indexPath.item]?.song ?? self.songs[safe: indexPath.item]
+				let song = self.showSongs[safe: indexPath.item]?.song ?? self.songs[safe: indexPath.item] ?? self.cache[indexPath] as? Song
 			else { continue }
 			cell.updatePlayButton(for: song)
 			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
@@ -103,18 +134,50 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	}
 
 	override func handleRefreshControl() {
-		guard self.showIdentity != nil else { return }
+		switch self.songsListFetchType {
+		case .show:
+			guard self.showIdentity != nil else { return }
 
-		self.nextPageCursor = nil
+			self.nextPageCursor = nil
 
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchShowSongs(forceFetch: true)
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchShowSongs(forceFetch: true)
+			}
+		case .charts:
+			super.handleRefreshControl()
 		}
 	}
 
 	override func fetchItems() async {
-		await self.fetchShowSongs()
+		switch self.songsListFetchType {
+		case .show:
+			await self.fetchShowSongs()
+		case .charts:
+			await self.fetchTopSongs()
+		}
+	}
+
+	/// Fetches the next page of the top ranked songs.
+	func fetchTopSongs() async {
+		guard !self.isRequestInProgress else { return }
+		self.isRequestInProgress = true
+
+		defer { self.endFetch() }
+
+		do {
+			let songIdentityResponse = try await KService.topSongs().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+			if self.nextPageCursor == nil {
+				self.songIdentities = []
+			}
+
+			self.nextPageCursor = songIdentityResponse.nextCursor
+			self.songIdentities.append(contentsOf: songIdentityResponse.data)
+			self.songIdentities.removeDuplicates()
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 	func fetchShowSongs(forceFetch: Bool = false) async {
@@ -151,6 +214,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
+		case .songIdentity(let songIdentity): return songIdentity as? Element
 		case .song, .showSong: return nil
 		}
 	}
@@ -213,7 +277,12 @@ extension ShowSongsListCollectionViewController {
 	override func updateDataSource() {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
-		if self.showIdentity != nil {
+		if self.songsListFetchType == .charts {
+			self.snapshot.appendSections([.main])
+
+			let items: [ItemKind] = self.songIdentities.map { .songIdentity($0) }
+			self.snapshot.appendItems(items, toSection: .main)
+		} else if self.showIdentity != nil {
 			SongType.allCases.forEach { songType in
 				if self.showSongCategories.index(forKey: songType) != nil {
 					let sectionHeader = SectionLayoutKind.header()
@@ -258,6 +327,21 @@ extension ShowSongsListCollectionViewController {
 				let resolvedSong = song.attributes.amID.flatMap { self.resolvedSongs[$0] }
 				cell.configure(using: song, at: indexPath, resolvedSong: resolvedSong)
 				self.resolveMusicSong(song)
+			case .songIdentity:
+				let song: Song? = self.fetchModel(at: indexPath)
+
+				if song == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
+					Task {
+						await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
+					}
+				}
+
+				let resolvedSong = song?.attributes.amID.flatMap { self.resolvedSongs[$0] }
+				cell.configure(using: song, at: indexPath, rank: indexPath.item + 1, resolvedSong: resolvedSong)
+
+				if let song = song {
+					self.resolveMusicSong(song)
+				}
 			}
 		}
 	}
@@ -291,7 +375,11 @@ extension ShowSongsListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension ShowSongsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if !self.showSongs.isEmpty {
+		if self.songsListFetchType == .charts {
+			guard let song = self.cache[indexPath] as? Song else { return }
+
+			self.show(.songDetailsSegue, sender: song)
+		} else if !self.showSongs.isEmpty {
 			guard let showSong = self.showSongs[safe: indexPath.item] else { return }
 
 			self.show(.songDetailsSegue, sender: showSong.song)
@@ -302,10 +390,27 @@ extension ShowSongsListCollectionViewController {
 		}
 	}
 
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		guard self.songsListFetchType == .charts else { return }
+
+		self.paginateIfNeeded(at: indexPath, totalItems: self.songIdentities.count)
+	}
+
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		if !self.showSongs.isEmpty {
+		if self.songsListFetchType == .charts {
+			guard
+				let song = self.cache[indexPath] as? Song,
+				let appleMusicID = song.attributes.amID,
+				let resolvedSong = self.resolvedSongs[appleMusicID]
+			else { return nil }
+
+			return song.contextMenuConfiguration(in: self, userInfo: [
+				"indexPath": indexPath,
+				"song": resolvedSong
+			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		} else if !self.showSongs.isEmpty {
 			guard
 				let showSong = self.showSongs[safe: indexPath.item],
 				let appleMusicID = showSong.song.attributes.amID,
@@ -350,31 +455,62 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 	}
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		let kkSongs = self.showSongs.isEmpty ? self.songs : self.showSongs.map { $0.song }
-		guard kkSongs.indices.contains(indexPath.item) else { return }
-		let tappedItem = indexPath.item
+		switch self.songsListFetchType {
+		case .show:
+			let kkSongs = self.showSongs.isEmpty ? self.songs : self.showSongs.map { $0.song }
+			guard kkSongs.indices.contains(indexPath.item) else { return }
+			let tappedItem = indexPath.item
 
-		Task { [weak self] in
-			guard let self = self else { return }
+			Task { [weak self] in
+				guard self != nil else { return }
 
-			let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
-			let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
+				let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
+				let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
 
-			var queueSongs: [MKSong] = []
-			var queueKKSongs: [KKSong] = []
-			var startIndex = 0
+				var queueSongs: [MKSong] = []
+				var queueKKSongs: [KKSong] = []
+				var startIndex = 0
 
-			for (offset, kkSong) in kkSongs.enumerated() {
-				guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
-				if offset == tappedItem {
-					startIndex = queueSongs.count
+				for (offset, kkSong) in kkSongs.enumerated() {
+					guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
+					if offset == tappedItem {
+						startIndex = queueSongs.count
+					}
+					queueSongs.append(song)
+					queueKKSongs.append(kkSong)
 				}
-				queueSongs.append(song)
-				queueKKSongs.append(kkSong)
-			}
 
-			guard !queueSongs.isEmpty else { return }
-			MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
+				guard !queueSongs.isEmpty else { return }
+				MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
+			}
+		case .charts:
+			let kkSongs: [KKSong] = self.songIdentities.indices.compactMap { index in
+				self.cache[IndexPath(item: index, section: 0)] as? Song
+			}
+			guard let tappedSong = self.cache[indexPath] as? Song else { return }
+
+			Task { [weak self] in
+				guard self != nil else { return }
+
+				let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
+				let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
+
+				var queueSongs: [MKSong] = []
+				var queueKKSongs: [KKSong] = []
+				var startIndex = 0
+
+				for kkSong in kkSongs {
+					guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
+					if kkSong.id == tappedSong.id {
+						startIndex = queueSongs.count
+					}
+					queueSongs.append(song)
+					queueKKSongs.append(kkSong)
+				}
+
+				guard !queueSongs.isEmpty else { return }
+				MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
+			}
 		}
 	}
 }

@@ -27,8 +27,7 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return
 			case .rank:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				self.show(.topChartsSegue, sender: nil)
 				return
 			case .tvRating:
 				guard let literatureIdentity = self.literatureIdentity else { return }

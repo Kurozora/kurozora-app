@@ -3221,6 +3221,33 @@ extension L10n {
 		)
 	}
 
+	/// The string for the phrase 'Top Charts'.
+	///
+	/// - Tag: L10n-topCharts
+	static var topCharts: String {
+		L10n.resolve {
+			String(
+				localized: "Top Charts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Top Charts'."
+			)
+		}
+	}
+	/// The string for the phrase '%@ Top Charts'.
+	///
+	/// - Parameter kind: The localized noun naming the charted resource.
+	///
+	/// - Tag: L10n-xTopCharts
+	static func xTopCharts(_ kind: String) -> String {
+		return String(
+			localized: "\(kind) Top Charts",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The title of a single top chart, naming the charted resource."
+		)
+	}
+
 	/// The string for the phrase '%@ total series'.
 	///
 	/// - Tag: L10n-totalSeries

@@ -11,6 +11,7 @@ import UIKit
 
 /// A source of characters for ``CharactersListCollectionViewController``.
 enum CharactersListFetchType {
+	case charts
 	case person
 	case explore
 	case search
@@ -48,8 +49,20 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.characters) }
-	override var emptyStateDetail: String { L10n.cantGetListDetail(L10n.characters.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.charactersListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.characters)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.charactersListFetchType {
+		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.cantGetListDetail(L10n.characters.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.characterIdentities.isEmpty
@@ -58,7 +71,7 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = L10n.characters
+		self.title = self.charactersListFetchType == .charts ? L10n.xTopCharts(L10n.characters) : L10n.characters
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.characters.lowercased(with: Locale.current)))
@@ -83,6 +96,16 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 
 		do {
 			switch self.charactersListFetchType {
+			case .charts:
+				let response = try await KService.topCharacters().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.characterIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.characterIdentities.append(contentsOf: response.data)
+				self.characterIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
 				let response = try await KService.characters(for: personIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
@@ -183,7 +206,7 @@ extension CharactersListCollectionViewController {
 					}
 				}
 
-				cell.configure(using: character)
+				cell.configure(using: character, rank: self.charactersListFetchType == .charts ? indexPath.item + 1 : nil)
 			}
 		}
 	}

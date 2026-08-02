@@ -14,6 +14,7 @@ enum LiteraturesListFetchType {
 	case show
 	case game
 	case character
+	case charts
 	case explore
 	case person
 	case moreByStudio
@@ -56,9 +57,16 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var searchQuery: String = ""
 	var literaturesListFetchType: LiteraturesListFetchType = .search
 
+	// MARK: - Views
+	/// The bar button item that dims titles already in the user's library.
+	private var dimLibraryBarButtonItem: UIBarButtonItem!
+
 	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	/// Whether titles already in the user's library are dimmed.
+	private var dimsLibraryEntries = false
 
 	/// Observes local library mutations to refresh visible cells.
 	private var libraryObserver: LocalLibraryEntryObserver?
@@ -67,8 +75,20 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.mangaLibrary }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.literatures) }
-	override var emptyStateDetail: String { L10n.cantGetListRefresh(L10n.literatures.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.literaturesListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.literatures)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.literaturesListFetchType {
+		case .charts: return L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.cantGetListRefresh(L10n.literatures.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.literatureIdentities.isEmpty || !self.relatedLiteratures.isEmpty
@@ -76,12 +96,28 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		if self.literaturesListFetchType == .charts {
+			self.title = L10n.xTopCharts(L10n.literatures)
+		}
+
+		self.configureDimLibraryBarButtonItem()
 		self.observeLibraryChanges()
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.handleUserSignedInDidChange),
+			name: .KUserIsSignedInDidChange,
+			object: nil
+		)
 	}
 
 	/// Subscribes to local library mutations affecting the visible cells.
 	private func observeLibraryChanges() {
-		guard let slug = User.current?.attributes.slug else { return }
+		guard let slug = User.current?.attributes.slug else {
+			self.libraryObserver = nil
+			return
+		}
 		self.libraryObserver = LocalLibraryEntryObserver(
 			matching: LocalLibraryEntryObserver.matches(userSlug: slug, kind: .literatures),
 			onChange: { [weak self] entry in
@@ -119,6 +155,85 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
+	/// Creates the bar button item that dims titles already in the user's library.
+	private func configureDimLibraryBarButtonItem() {
+		self.dimLibraryBarButtonItem = UIBarButtonItem(
+			image: UIImage(systemName: "rectangle.stack.fill"),
+			primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.handleDimLibraryButtonPressed()
+			}
+		)
+		self.dimLibraryBarButtonItem.accessibilityLabel = L10n.dimLibrary
+		self.dimLibraryBarButtonItem.accessibilityValue = L10n.off
+
+		self.updateDimLibraryBarButtonItem()
+	}
+
+	/// Shows the dim library button only on the charts list while a user is signed in.
+	private func updateDimLibraryBarButtonItem() {
+		let isAvailable = self.literaturesListFetchType == .charts && User.isSignedIn
+
+		if isAvailable {
+			self.navigationItem.rightBarButtonItem = self.dimLibraryBarButtonItem
+		} else if self.navigationItem.rightBarButtonItem === self.dimLibraryBarButtonItem {
+			self.navigationItem.rightBarButtonItem = nil
+		}
+	}
+
+	/// Handles dim library button pressed.
+	private func handleDimLibraryButtonPressed() {
+		self.dimsLibraryEntries.toggle()
+		self.reflectDimLibraryState()
+	}
+
+	/// Reflects the dim library state on the button and the visible cells.
+	private func reflectDimLibraryState() {
+		self.dimLibraryBarButtonItem.image = UIImage(systemName: self.dimsLibraryEntries ? "rectangle.stack.slash.fill" : "rectangle.stack.fill")
+		self.dimLibraryBarButtonItem.accessibilityValue = self.dimsLibraryEntries ? L10n.on : L10n.off
+		self.refreshVisibleDimming()
+	}
+
+	/// Whether the given literature is in the signed-in user's library.
+	///
+	/// - Parameter literature: The literature to look up.
+	///
+	/// - Returns: `true` when the literature has a local library status.
+	private func isLiteratureInLibrary(_ literature: Literature) -> Bool {
+		let libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)?.status ?? .none
+		return libraryStatus != .none
+	}
+
+	/// Whether the cell at the given index path should be dimmed.
+	///
+	/// - Parameter indexPath: The index path of the cell.
+	///
+	/// - Returns: `true` when dimming is on and the underlying literature is in the user's library.
+	private func isDimmed(at indexPath: IndexPath) -> Bool {
+		guard self.dimsLibraryEntries else { return false }
+		guard let literature = (self.cache[indexPath] as? Literature) ?? self.relatedLiteratures[safe: indexPath.item]?.literature else { return false }
+		return self.isLiteratureInLibrary(literature)
+	}
+
+	/// Re-applies dimming to the visible cells.
+	private func refreshVisibleDimming() {
+		for indexPath in self.collectionView.indexPathsForVisibleItems {
+			guard let cell = self.collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell else { continue }
+			cell.setDimmed(self.isDimmed(at: indexPath))
+		}
+	}
+
+	/// Handles the user's sign-in state changing.
+	@objc private func handleUserSignedInDidChange() {
+		self.updateDimLibraryBarButtonItem()
+		self.observeLibraryChanges()
+
+		if !User.isSignedIn, self.dimsLibraryEntries {
+			self.dimsLibraryEntries = false
+			self.reflectDimLibraryState()
+		}
+	}
+
 	override func fetchItems() async {
 		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
@@ -154,6 +269,16 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
 				let response = try await KService.literatures(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.literatureIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.literatureIdentities.append(contentsOf: response.data)
+				self.literatureIdentities.removeDuplicates()
+			case .charts:
+				let response = try await KService.topLiteratures().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 				if self.nextPageCursor == nil {
 					self.literatureIdentities = []
@@ -324,10 +449,12 @@ extension LiteraturesListCollectionViewController {
 				}
 
 				cell.delegate = self
-				cell.configure(using: literature)
+				cell.configure(using: literature, rank: self.literaturesListFetchType == .charts ? indexPath.item + 1 : nil)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			case .relatedLiterature(let relatedLiterature):
 				cell.delegate = self
 				cell.configure(using: relatedLiterature)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			}
 		}
 	}
@@ -348,6 +475,7 @@ extension LiteraturesListCollectionViewController {
 
 				cell.delegate = self
 				cell.configure(using: literature)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			default: break
 			}
 		}

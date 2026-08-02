@@ -181,6 +181,13 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
+	/// Dims the cell to mark its title as already in the user's library.
+	///
+	/// - Parameter isDimmed: Whether the cell is dimmed.
+	func setDimmed(_ isDimmed: Bool) {
+		self.contentView.alpha = isDimmed ? 0.25 : 1.0
+	}
+
 	func configureLibraryStatus(with libraryStatus: LibraryStatus?) {
 		self.libraryStatus = libraryStatus ?? .none
 

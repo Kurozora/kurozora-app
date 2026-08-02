@@ -11,6 +11,7 @@ import UIKit
 
 /// A source of studios for ``StudiosListCollectionViewController``.
 enum StudiosListFetchType {
+	case charts
 	case game
 	case literature
 	case show
@@ -50,8 +51,20 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.cast }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.studios) }
-	override var emptyStateDetail: String { L10n.cantGetListDetail(L10n.studios.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.studiosListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.studios)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.studiosListFetchType {
+		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.cantGetListDetail(L10n.studios.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.studioIdentities.isEmpty
@@ -60,7 +73,7 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = L10n.studios
+		self.title = self.studiosListFetchType == .charts ? L10n.xTopCharts(L10n.studios) : L10n.studios
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.studios.lowercased(with: Locale.current)))
@@ -85,6 +98,16 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 
 		do {
 			switch self.studiosListFetchType {
+			case .charts:
+				let response = try await KService.topStudios().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.studioIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.studioIdentities.append(contentsOf: response.data)
+				self.studioIdentities.removeDuplicates()
 			case .game:
 				guard let gameIdentity = self.gameIdentity else { return }
 				let response = try await KService.studios(for: gameIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
@@ -196,7 +219,7 @@ extension StudiosListCollectionViewController {
 					}
 				}
 
-				cell.configure(using: studio)
+				cell.configure(using: studio, rank: self.studiosListFetchType == .charts ? indexPath.item + 1 : nil)
 			}
 		}
 	}

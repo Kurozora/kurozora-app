@@ -27,8 +27,7 @@ extension GameDetailsCollectionViewController {
 				}
 				return
 			case .rank:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				self.show(.topChartsSegue, sender: nil)
 				return
 			case .tvRating:
 				guard let gameIdentity = self.gameIdentity else { return }

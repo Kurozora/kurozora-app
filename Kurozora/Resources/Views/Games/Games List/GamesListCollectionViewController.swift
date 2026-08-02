@@ -14,6 +14,7 @@ enum GamesListFetchType {
 	case show
 	case literature
 	case character
+	case charts
 	case explore
 	case person
 	case moreByStudio
@@ -56,9 +57,16 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	var searchQuery: String = ""
 	var gamesListFetchType: GamesListFetchType = .search
 
+	// MARK: - Views
+	/// The bar button item that dims titles already in the user's library.
+	private var dimLibraryBarButtonItem: UIBarButtonItem!
+
 	// MARK: - SectionFetchable
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
+
+	/// Whether titles already in the user's library are dimmed.
+	private var dimsLibraryEntries = false
 
 	/// Observes local library mutations to refresh visible cells.
 	private var libraryObserver: LocalLibraryEntryObserver?
@@ -67,8 +75,20 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	override var emptyStateImage: UIImage { .Empty.gameLibrary }
-	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.games) }
-	override var emptyStateDetail: String { L10n.cantGetListRefresh(L10n.games.lowercased(with: .current)) }
+
+	override var emptyStateTitle: String {
+		switch self.gamesListFetchType {
+		case .charts: return L10n.noItemsTitle(L10n.topCharts)
+		default: return L10n.noItemsTitle(L10n.games)
+		}
+	}
+
+	override var emptyStateDetail: String {
+		switch self.gamesListFetchType {
+		case .charts: return L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current))
+		default: return L10n.cantGetListRefresh(L10n.games.lowercased(with: .current))
+		}
+	}
 
 	override var hasLoadedInitialData: Bool {
 		!self.gameIdentities.isEmpty || !self.relatedGames.isEmpty
@@ -76,12 +96,28 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		if self.gamesListFetchType == .charts {
+			self.title = L10n.xTopCharts(L10n.games)
+		}
+
+		self.configureDimLibraryBarButtonItem()
 		self.observeLibraryChanges()
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(self.handleUserSignedInDidChange),
+			name: .KUserIsSignedInDidChange,
+			object: nil
+		)
 	}
 
 	/// Subscribes to local library mutations affecting the visible cells.
 	private func observeLibraryChanges() {
-		guard let slug = User.current?.attributes.slug else { return }
+		guard let slug = User.current?.attributes.slug else {
+			self.libraryObserver = nil
+			return
+		}
 		self.libraryObserver = LocalLibraryEntryObserver(
 			matching: LocalLibraryEntryObserver.matches(userSlug: slug, kind: .games),
 			onChange: { [weak self] entry in
@@ -119,6 +155,85 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
+	/// Creates the bar button item that dims titles already in the user's library.
+	private func configureDimLibraryBarButtonItem() {
+		self.dimLibraryBarButtonItem = UIBarButtonItem(
+			image: UIImage(systemName: "rectangle.stack.fill"),
+			primaryAction: UIAction { [weak self] _ in
+				guard let self = self else { return }
+				self.handleDimLibraryButtonPressed()
+			}
+		)
+		self.dimLibraryBarButtonItem.accessibilityLabel = L10n.dimLibrary
+		self.dimLibraryBarButtonItem.accessibilityValue = L10n.off
+
+		self.updateDimLibraryBarButtonItem()
+	}
+
+	/// Shows the dim library button only on the charts list while a user is signed in.
+	private func updateDimLibraryBarButtonItem() {
+		let isAvailable = self.gamesListFetchType == .charts && User.isSignedIn
+
+		if isAvailable {
+			self.navigationItem.rightBarButtonItem = self.dimLibraryBarButtonItem
+		} else if self.navigationItem.rightBarButtonItem === self.dimLibraryBarButtonItem {
+			self.navigationItem.rightBarButtonItem = nil
+		}
+	}
+
+	/// Handles dim library button pressed.
+	private func handleDimLibraryButtonPressed() {
+		self.dimsLibraryEntries.toggle()
+		self.reflectDimLibraryState()
+	}
+
+	/// Reflects the dim library state on the button and the visible cells.
+	private func reflectDimLibraryState() {
+		self.dimLibraryBarButtonItem.image = UIImage(systemName: self.dimsLibraryEntries ? "rectangle.stack.slash.fill" : "rectangle.stack.fill")
+		self.dimLibraryBarButtonItem.accessibilityValue = self.dimsLibraryEntries ? L10n.on : L10n.off
+		self.refreshVisibleDimming()
+	}
+
+	/// Whether the given game is in the signed-in user's library.
+	///
+	/// - Parameter game: The game to look up.
+	///
+	/// - Returns: `true` when the game has a local library status.
+	private func isGameInLibrary(_ game: Game) -> Bool {
+		let libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)?.status ?? .none
+		return libraryStatus != .none
+	}
+
+	/// Whether the cell at the given index path should be dimmed.
+	///
+	/// - Parameter indexPath: The index path of the cell.
+	///
+	/// - Returns: `true` when dimming is on and the underlying game is in the user's library.
+	private func isDimmed(at indexPath: IndexPath) -> Bool {
+		guard self.dimsLibraryEntries else { return false }
+		guard let game = (self.cache[indexPath] as? Game) ?? self.relatedGames[safe: indexPath.item]?.game else { return false }
+		return self.isGameInLibrary(game)
+	}
+
+	/// Re-applies dimming to the visible cells.
+	private func refreshVisibleDimming() {
+		for indexPath in self.collectionView.indexPathsForVisibleItems {
+			guard let cell = self.collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell else { continue }
+			cell.setDimmed(self.isDimmed(at: indexPath))
+		}
+	}
+
+	/// Handles the user's sign-in state changing.
+	@objc private func handleUserSignedInDidChange() {
+		self.updateDimLibraryBarButtonItem()
+		self.observeLibraryChanges()
+
+		if !User.isSignedIn, self.dimsLibraryEntries {
+			self.dimsLibraryEntries = false
+			self.reflectDimLibraryState()
+		}
+	}
+
 	override func fetchItems() async {
 		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
@@ -154,6 +269,16 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
 				let response = try await KService.games(for: characterIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+
+				if self.nextPageCursor == nil {
+					self.gameIdentities = []
+				}
+
+				self.nextPageCursor = response.nextCursor
+				self.gameIdentities.append(contentsOf: response.data)
+				self.gameIdentities.removeDuplicates()
+			case .charts:
+				let response = try await KService.topGames().cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
 
 				if self.nextPageCursor == nil {
 					self.gameIdentities = []
@@ -324,10 +449,12 @@ extension GamesListCollectionViewController {
 				}
 
 				cell.delegate = self
-				cell.configure(using: game)
+				cell.configure(using: game, rank: self.gamesListFetchType == .charts ? indexPath.item + 1 : nil)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			case .relatedGame(let relatedGame):
 				cell.delegate = self
 				cell.configure(using: relatedGame)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			}
 		}
 	}
@@ -348,6 +475,7 @@ extension GamesListCollectionViewController {
 
 				cell.delegate = self
 				cell.configure(using: game)
+				cell.setDimmed(self.isDimmed(at: indexPath))
 			default: break
 			}
 		}

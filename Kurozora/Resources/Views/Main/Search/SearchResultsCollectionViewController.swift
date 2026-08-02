@@ -27,6 +27,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case scheduleSegue
 		case museumSegue
+		case topChartsSegue
 		case searchSegue
 		case characterDetailsSegue
 		case episodeDetailsSegue
@@ -81,6 +82,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
 		// TODO: - Replace the system image with a proper Browse photo once one is available.
 		BrowseCategory(title: L10n.museum, image: UIImage(systemName: "building.columns.fill"), segueIdentifier: SegueIdentifiers.museumSegue),
+		// TODO: - Replace the system image with a proper Browse photo once one is available.
+		BrowseCategory(title: L10n.topCharts, image: UIImage(systemName: "chart.bar.fill"), segueIdentifier: SegueIdentifiers.topChartsSegue),
 		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
 		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),
 		BrowseCategory(title: L10n.games, image: .Browse.games, searchType: .games),
@@ -1036,6 +1039,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case .usersListSegue: return UsersListCollectionViewController()
 		case .scheduleSegue: return ScheduleCollectionViewController()
 		case .museumSegue: return MuseumCollectionViewController()
+		case .topChartsSegue: return TopChartsCollectionViewController()
 		}
 	}
 
@@ -1158,6 +1162,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			usersListCollectionViewController.usersListFetchType = .search
 		case .scheduleSegue: break
 		case .museumSegue: break
+		case .topChartsSegue: break
 		}
 	}
 }
