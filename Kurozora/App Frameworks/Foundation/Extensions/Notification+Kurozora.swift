@@ -160,6 +160,11 @@ extension Notification.Name {
 	static var KSPrefersLargeTitlesDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
+
+	/// A notification posted after the value of `forwardNavigationEnabled` in `UserSettings` has changed.
+	static var KSForwardNavigationDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
 }
 
 // MARK: - Review

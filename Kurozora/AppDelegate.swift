@@ -178,6 +178,21 @@ extension AppDelegate {
 		UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
 	}
 
+	/// User chose "Back" from the navigation menu.
+	@objc func handleNavigateBack(_ sender: AnyObject) {
+		self.contentNavigationController?.navigateBack()
+	}
+
+	/// User chose "Forward" from the navigation menu.
+	@objc func handleNavigateForward(_ sender: AnyObject) {
+		self.contentNavigationController?.navigateForward()
+	}
+
+	/// The navigation controller holding the content, which on a wide layout is the split view's secondary column.
+	private var contentNavigationController: KNavigationController? {
+		return UIApplication.topViewController?.navigationController as? KNavigationController
+	}
+
 	/// User chose "Search" from the Application menu.
 	@objc func handleSearch(_ sender: AnyObject) {
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
@@ -312,5 +327,16 @@ extension AppDelegate {
 extension AppDelegate {
 	override func buildMenu(with builder: UIMenuBuilder) {
 		self.menuController = MenuController(with: builder)
+	}
+
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		switch action {
+		case #selector(self.handleNavigateBack(_:)):
+			return (self.contentNavigationController?.viewControllers.count ?? 0) > 1
+		case #selector(self.handleNavigateForward(_:)):
+			return self.contentNavigationController?.forwardNavigationCoordinator.canNavigateForward ?? false
+		default:
+			return super.canPerformAction(action, withSender: sender)
+		}
 	}
 }

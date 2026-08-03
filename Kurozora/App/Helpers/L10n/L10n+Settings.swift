@@ -618,6 +618,20 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the 'Gestures' settings option.
+	///
+	/// - Tag: L10n-gestures
+	static var gestures: String {
+		L10n.resolve {
+			String(
+				localized: "Gestures",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Gestures' settings option."
+			)
+		}
+	}
 	/// The string for the 'Display & Blindness' settings option.
 	///
 	/// - Tag: L10n-displayBlindness
@@ -996,6 +1010,20 @@ extension L10n {
 			)
 		}
 	}
+	/// A short description for the gestures settings header.
+	///
+	/// - Tag: L10n-gesturesHeaderDescription
+	static var gesturesHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Choose which swipes move you around the app, including reopening a screen you just left.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the gestures settings header."
+			)
+		}
+	}
 	/// A short description for the motion settings header.
 	///
 	/// - Tag: L10n-motionHeaderDescription
@@ -1063,6 +1091,78 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "A short description for the privacy settings header."
+			)
+		}
+	}
+
+	// MARK: - Gestures Settings
+	/// The string for the 'Navigation' settings header.
+	///
+	/// - Tag: L10n-navigation
+	static var navigation: String {
+		L10n.resolve {
+			String(
+				localized: "Navigation",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Navigation' settings header."
+			)
+		}
+	}
+	/// The string for the 'Swipe Forward' settings option.
+	///
+	/// - Tag: L10n-swipeForward
+	static var swipeForward: String {
+		L10n.resolve {
+			String(
+				localized: "Swipe Forward",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Swipe Forward' settings option."
+			)
+		}
+	}
+	/// The footer string for the 'Swipe Forward' settings option on touch devices.
+	///
+	/// - Tag: L10n-swipeForwardFooter
+	static var swipeForwardFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Swipe left to reopen a screen you just left.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the 'Swipe Forward' settings option on touch devices."
+			)
+		}
+	}
+	/// The footer string for the 'Swipe Forward' settings option on pointer-driven devices.
+	///
+	/// - Tag: L10n-forwardNavigationPointerFooter
+	static var forwardNavigationPointerFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Swipe left with two fingers to reopen a screen you just left, or press ⌘]. Press ⌘[ to go back.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the 'Swipe Forward' settings option on pointer-driven devices."
+			)
+		}
+	}
+	/// The additional footer sentence naming the keyboard shortcuts on a touch device with a keyboard attached.
+	///
+	/// - Tag: L10n-forwardNavigationShortcutHint
+	static var forwardNavigationShortcutHint: String {
+		L10n.resolve {
+			String(
+				localized: "With a keyboard attached, press ⌘] to go forward and ⌘[ to go back.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The additional footer sentence naming the keyboard shortcuts on a touch device with a keyboard attached."
 			)
 		}
 	}

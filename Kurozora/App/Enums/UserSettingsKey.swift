@@ -74,6 +74,10 @@ enum UserSettingsKey: String, CaseIterable {
 	/// The key to the last selected forums page.
 	case forumsPage
 
+	// Gestures settings keys
+	/// The key indicating whether swiping in from the trailing screen edge reopens the previous screen.
+	case forwardNavigationEnabled
+
 	// Library keys
 	/// The key to the last selected library page.
 	case libraryPage

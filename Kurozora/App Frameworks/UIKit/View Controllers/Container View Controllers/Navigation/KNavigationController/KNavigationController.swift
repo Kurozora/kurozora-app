@@ -10,6 +10,17 @@ import SwiftTheme
 import UIKit
 
 class KNavigationController: UINavigationController {
+	// MARK: - Properties
+	/// The coordinator that reopens screens the user navigated away from.
+	private(set) lazy var forwardNavigationCoordinator = ForwardNavigationCoordinator(navigationController: self)
+
+	override var keyCommands: [UIKeyCommand]? {
+		var keyCommands = super.keyCommands ?? []
+		keyCommands.append(UIKeyCommand(title: L10n.back, action: #selector(self.navigateBack), input: "[", modifierFlags: .command))
+		keyCommands.append(UIKeyCommand(title: L10n.forward, action: #selector(self.navigateForward), input: "]", modifierFlags: .command))
+		return keyCommands
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -24,9 +35,25 @@ class KNavigationController: UINavigationController {
 		}
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.forwardNavigationCoordinator.discardUnreachableScreens()
+	}
+
 	override func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
 		self.configureRootNavigationItemStyle()
+	}
+
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		switch action {
+		case #selector(self.navigateBack):
+			return self.viewControllers.count > 1
+		case #selector(self.navigateForward):
+			return self.forwardNavigationCoordinator.canNavigateForward
+		default:
+			return super.canPerformAction(action, withSender: sender)
+		}
 	}
 
 	// MARK: - Functions
@@ -35,6 +62,26 @@ class KNavigationController: UINavigationController {
 		// Configure theme
 		self.configureNavigationBarStyle()
 		self.configureToolbarStyle()
+
+		self.configureForwardNavigation()
+	}
+
+	/// Configures the navigation controller to track and reopen the screens the user navigates away from.
+	private func configureForwardNavigation() {
+		self.delegate = self.forwardNavigationCoordinator
+		self.forwardNavigationCoordinator.attachGestureRecognizer(to: self.view)
+	}
+
+	// MARK: - Actions
+	/// Returns to the previous screen.
+	@objc func navigateBack() {
+		guard let poppedViewController = self.popViewController(animated: !UserSettings.isReduceMotionEnabled) else { return }
+		self.forwardNavigationCoordinator.bankRemovedScreens([poppedViewController])
+	}
+
+	/// Reopens the screen the user navigated away from.
+	@objc func navigateForward() {
+		self.forwardNavigationCoordinator.navigateForward()
 	}
 
 	/// Configures the root navigation item style based on the current horizontal size class and user preferences.

@@ -5885,6 +5885,239 @@
         }
       }
     },
+    "Choose which swipes move you around the app, including reopening a screen you just left." : {
+      "comment" : "A short description for the gestures settings header.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر الإيماءات التي تنقلك في التطبيق، بما فيها إعادة فتح شاشة تركتها للتو."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অ্যাপে চলাফেরার জন্য কোন সোয়াইপ কাজ করবে তা বেছে নিন, যার মধ্যে সদ্য ছেড়ে আসা স্ক্রিন আবার খোলাও রয়েছে।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyber, která přejetí tě posouvají aplikací, včetně znovuotevření obrazovky, kterou jsi právě opustil."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vælg, hvilke strygninger der flytter dig rundt i appen, inklusive at åbne en skærm, du lige har forladt."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle, welche Wischgesten dich durch die App bewegen, auch das erneute Öffnen eines Bildschirms, den du gerade verlassen hast."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επίλεξε ποιες σαρώσεις σε μετακινούν μέσα στην εφαρμογή, όπως το άνοιγμα μιας οθόνης που μόλις άφησες."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige qué gestos te mueven por la app, incluido volver a abrir una pantalla que acabas de dejar."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige qué gestos te mueven por la app, incluido volver a abrir una pantalla que acabas de dejar."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتخاب کن کدام اشاره‌ها تو را در برنامه جابه‌جا کنند، از جمله باز کردن دوباره صفحه‌ای که همین حالا ترک کردی."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valitse, mitkä pyyhkäisyt liikuttavat sinua sovelluksessa, mukaan lukien juuri jättämäsi näytön avaaminen uudelleen."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piliin kung aling mga swipe ang maggagalaw sa iyo sa app, pati ang pagbukas muli ng screen na kaka-alis mo lang."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisis les balayages qui te déplacent dans l’app, y compris la réouverture d’un écran que tu viens de quitter."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחר אילו החלקות מזיזות אותך באפליקציה, כולל פתיחה מחדש של מסך שיצאת ממנו כרגע."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चुनें कि कौन-से स्वाइप आपको ऐप में घुमाएँ, जिसमें अभी छोड़ी गई स्क्रीन को फिर खोलना भी शामिल है।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Válaszd ki, mely ujjhúzások mozgatnak az appban, beleértve az éppen elhagyott képernyő újranyitását."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ընտրիր, թե որ սահեցումները քեզ կտեղափոխեն հավելվածում, ներառյալ հենց նոր փակած էկրանը նորից բացելը։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih gesekan mana yang memindahkanmu di dalam app, termasuk membuka kembali layar yang baru kamu tinggalkan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli quali gesti ti spostano nell’app, compresa la riapertura di una schermata che hai appena lasciato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリ内の移動に使うスワイプを選びます。直前に離れた画面を開き直す操作も含まれます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱에서 이동할 때 사용할 스와이프를 선택해요. 방금 나온 화면을 다시 여는 동작도 포함돼요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih leretan yang menggerakkan anda dalam app, termasuk membuka kembali skrin yang baru anda tinggalkan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg hvilke sveip som flytter deg rundt i appen, inkludert å åpne en skjerm du nettopp forlot."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies welke veegbewegingen je door de app bewegen, inclusief het opnieuw openen van een scherm dat je net verliet."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz, które przesunięcia przenoszą Cię po aplikacji, w tym ponowne otwarcie ekranu, który właśnie opuściłeś."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha quais gestos te movem pelo app, incluindo reabrir uma tela que você acabou de deixar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolhe quais os gestos que te movem pela app, incluindo reabrir um ecrã que acabaste de deixar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alege care glisări te mișcă prin aplicație, inclusiv redeschiderea unui ecran pe care l-ai părăsit adineauri."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбери, какие жесты перемещают тебя по приложению, включая повторное открытие экрана, который ты только что закрыл."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Välj vilka svep som flyttar dig runt i appen, inklusive att öppna en skärm du precis lämnade."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஆப்பில் நகர்வதற்கான ஸ்வைப்களைத் தேர்ந்தெடுக்கவும், நீங்கள் இப்போது விட்டுவந்த திரையை மீண்டும் திறப்பதும் இதில் அடங்கும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "యాప్‌లో కదలడానికి ఏ స్వైప్‌లు పనిచేయాలో ఎంచుకోండి, ఇప్పుడే విడిచిన స్క్రీన్‌ను తిరిగి తెరవడం కూడా ఇందులో ఉంది."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกว่าการปัดแบบใดจะพาคุณไปมาในแอป รวมถึงการเปิดหน้าจอที่คุณเพิ่งออกมาอีกครั้ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamada gezinmeni sağlayan kaydırmaları seç; az önce çıktığın ekranı yeniden açmak da buna dahil."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибери, які свайпи переміщують тебе в застосунку, зокрема повторне відкриття екрана, який ти щойно закрив."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتخب کریں کہ کون سے سوائپ آپ کو ایپ میں گھمائیں، بشمول ابھی چھوڑی گئی سکرین کو دوبارہ کھولنا۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chọn những cử chỉ quét giúp bạn di chuyển trong app, gồm cả việc mở lại màn hình bạn vừa rời khỏi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择在应用内移动时使用的滑动手势，包括重新打开刚刚离开的界面。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇在應用程式內移動時使用的滑動手勢，包括重新開啟剛剛離開的畫面。"
+          }
+        }
+      }
+    },
     "Clear All" : {
       "comment" : "The title string for the 'Clear All' destructive button.",
       "localizations" : {
@@ -11247,6 +11480,239 @@
         }
       }
     },
+    "Gestures" : {
+      "comment" : "The string for the 'Gestures' settings option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإيماءات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "জেসচার"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesta"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevægelser"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κινήσεις"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشاره‌ها"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eleet"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga Galaw"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestes"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחוות"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जेस्चर"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesztusok"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ժեստեր"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ジェスチャ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제스처"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerak Isyarat"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevegelser"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebaren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesty"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestos"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesturi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жесты"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gester"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சைகைகள்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "సంజ్ఞలు"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ท่าทางสัมผัส"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hareketler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жести"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشارے"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cử chỉ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手势"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手勢"
+          }
+        }
+      }
+    },
     "GET" : {
       "comment" : "The download button title for an unowned theme.",
       "localizations" : {
@@ -16381,6 +16847,239 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "審核"
+          }
+        }
+      }
+    },
+    "Navigation" : {
+      "comment" : "The string for the 'Navigation' settings header.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التنقل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নেভিগেশন"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigace"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigation"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigation"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πλοήγηση"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navegación"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navegación"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ناوبری"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigointi"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nabigasyon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigation"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ניווט"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नेविगेशन"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigáció"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Նավարկում"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigazione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ナビゲーション"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "탐색"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigasi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigering"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigatie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nawigacja"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navegação"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navegação"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Навигация"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigering"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வழிசெலுத்தல்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "నావిగేషన్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนำทาง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gezinme"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Навігація"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نیویگیشن"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Điều hướng"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导航"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "導覽"
           }
         }
       }
@@ -25708,6 +26407,705 @@
         }
       }
     },
+    "Swipe Forward" : {
+      "comment" : "The string for the 'Swipe Forward' settings option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التمرير للأمام"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সোয়াইপ করে সামনে যান"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přejetím vpřed"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stryg fremad"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorwärts wischen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σάρωση προς μπροστά"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar hacia delante"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar hacia adelante"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کشیدن برای رفتن به جلو"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pyyhkäisy eteenpäin"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-swipe Pasulong"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balayer vers l’avant"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "החלקה קדימה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आगे स्वाइप करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujjhúzás előre"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սահեցնել առաջ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geser Maju"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri avanti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スワイプで進む"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스와이프로 앞으로 이동"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leret ke Hadapan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sveip framover"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vooruit vegen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesuń w przód"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar para avançar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar para avançar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glisare înainte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахивание вперёд"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svep framåt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னோக்கி ஸ்வைப் செய்யவும்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ముందుకు స్వైప్ చేయండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปัดไปข้างหน้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleri Kaydırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свайп уперед"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آگے سوائپ کریں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quét để tiến"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滑动前进"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滑動前進"
+          }
+        }
+      }
+    },
+    "Swipe left to reopen a screen you just left." : {
+      "comment" : "The footer string for the 'Swipe Forward' settings option on touch devices.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرّر لليمين لإعادة فتح شاشة تركتها للتو."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সদ্য ছেড়ে আসা স্ক্রিন আবার খুলতে বাঁ দিকে সোয়াইপ কর"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přejetím vlevo znovu otevřeš obrazovku, kterou jsi právě opustil."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stryg mod venstre for at åbne en skærm, du lige har forladt."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wische nach links, um einen Bildschirm wieder zu öffnen, den du gerade verlassen hast."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σάρωσε προς τα αριστερά για να ανοίξεις ξανά μια οθόνη που μόλις άφησες."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza hacia la izquierda para volver a abrir una pantalla que acabas de dejar."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza hacia la izquierda para volver a abrir una pantalla que acabas de dejar."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برای باز کردن دوباره صفحه‌ای که همین حالا ترک کردی، به راست بکش."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pyyhkäise vasemmalle avataksesi näytön, jonka juuri jätit."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-swipe pakaliwa para buksan muli ang screen na kaka-alis mo lang."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balaie vers la gauche pour rouvrir un écran que tu viens de quitter."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "החלק ימינה כדי לפתוח מחדש מסך שיצאת ממנו כרגע."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी छोड़ी गई स्क्रीन फिर खोलने के लिए बाएँ स्वाइप करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Húzz balra egy éppen elhagyott képernyő újranyitásához."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սահեցրու ձախ՝ հենց նոր փակած էկրանը նորից բացելու համար։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geser ke kiri untuk membuka kembali layar yang baru kamu tinggalkan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri verso sinistra per riaprire una schermata che hai appena lasciato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直前に離れた画面を開き直すには左にスワイプします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방금 나온 화면을 다시 열려면 왼쪽으로 스와이프해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leret ke kiri untuk membuka kembali skrin yang baru anda tinggalkan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sveip mot venstre for å åpne en skjerm du nettopp forlot."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veeg naar links om een scherm dat je net verliet weer te openen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesuń w lewo, aby ponownie otworzyć ekran, który właśnie opuściłeś."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslize para a esquerda para reabrir uma tela que você acabou de deixar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para a esquerda para reabrir um ecrã que acabaste de deixar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glisează spre stânga pentru a redeschide un ecran pe care l-ai părăsit adineauri."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахни влево, чтобы снова открыть экран, который ты только что закрыл."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svep åt vänster för att öppna en skärm du precis lämnade."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இப்போது விட்டுவந்த திரையை மீண்டும் திறக்க இடதுபுறம் ஸ்வைப் செய்யவும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఇప్పుడే విడిచిన స్క్రీన్‌ను తిరిగి తెరవడానికి ఎడమవైపు స్వైప్ చేయండి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปัดไปทางซ้ายเพื่อเปิดหน้าจอที่คุณเพิ่งออกมาอีกครั้ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az önce çıktığın ekranı yeniden açmak için sola kaydır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахни ліворуч, щоб знову відкрити екран, який ти щойно закрив."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابھی چھوڑی گئی سکرین دوبارہ کھولنے کے لیے دائیں سوائپ کریں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quét sang trái để mở lại màn hình bạn vừa rời khỏi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向左滑动即可重新打开刚刚离开的界面。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向左滑動即可重新開啟剛剛離開的畫面。"
+          }
+        }
+      }
+    },
+    "Swipe left with two fingers to reopen a screen you just left, or press ⌘]. Press ⌘[ to go back." : {
+      "comment" : "The footer string for the 'Swipe Forward' settings option on pointer-driven devices.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرّر لليمين بإصبعين لإعادة فتح شاشة تركتها للتو، أو اضغط ⌘]. اضغط ⌘[ للرجوع."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সদ্য ছেড়ে আসা স্ক্রিন আবার খুলতে দুই আঙুলে বাঁ দিকে সোয়াইপ করুন, বা ⌘] চাপুন। পিছিয়ে যেতে ⌘[ চাপ"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přejetím dvěma prsty vlevo znovu otevřeš obrazovku, kterou jsi právě opustil, nebo stiskni ⌘]. Zpět se vrátíš pomocí ⌘[."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stryg mod venstre med to fingre for at åbne en skærm, du lige har forladt, eller tryk på ⌘]. Tryk på ⌘[ for at gå tilbage."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wische mit zwei Fingern nach links, um einen Bildschirm wieder zu öffnen, den du gerade verlassen hast, oder drücke ⌘]. Mit ⌘[ gehst du zurück."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σάρωσε προς τα αριστερά με δύο δάχτυλα για να ανοίξεις ξανά μια οθόνη που μόλις άφησες, ή πάτα ⌘]. Πάτα ⌘[ για να γυρίσεις πίσω."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza hacia la izquierda con dos dedos para volver a abrir una pantalla que acabas de dejar, o pulsa ⌘]. Pulsa ⌘[ para volver atrás."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza hacia la izquierda con dos dedos para volver a abrir una pantalla que acabas de dejar, o presiona ⌘]. Presiona ⌘[ para volver atrás."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برای باز کردن دوباره صفحه‌ای که همین حالا ترک کردی، با دو انگشت به راست بکش یا ⌘] را بزن. برای برگشتن ⌘[ را بزن."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pyyhkäise kahdella sormella vasemmalle avataksesi näytön, jonka juuri jätit, tai paina ⌘]. Palaa taakse painamalla ⌘[."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-swipe pakaliwa gamit ang dalawang daliri para buksan muli ang screen na kaka-alis mo lang, o pindutin ang ⌘]. Pindutin ang ⌘[ para bumalik."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balaie vers la gauche avec deux doigts pour rouvrir un écran que tu viens de quitter, ou appuie sur ⌘]. Appuie sur ⌘[ pour revenir en arrière."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "החלק ימינה בשתי אצבעות כדי לפתוח מחדש מסך שיצאת ממנו כרגע, או הקש ⌘]. הקש ⌘[ כדי לחזור."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी छोड़ी गई स्क्रीन फिर खोलने के लिए दो उँगलियों से बाएँ स्वाइप करें, या ⌘] दबाएँ। पीछे जाने के लिए ⌘[ दबाएँ"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Húzz balra két ujjal egy éppen elhagyott képernyő újranyitásához, vagy nyomd meg a ⌘] kombinációt. A ⌘[ visszavisz."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Սահեցրու ձախ երկու մատով՝ հենց նոր փակած էկրանը նորից բացելու համար, կամ սեղմիր ⌘]։ Հետ գնալու համար սեղմիր ⌘[։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geser ke kiri dengan dua jari untuk membuka kembali layar yang baru kamu tinggalkan, atau tekan ⌘]. Tekan ⌘[ untuk kembali."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri verso sinistra con due dita per riaprire una schermata che hai appena lasciato, oppure premi ⌘]. Premi ⌘[ per tornare indietro."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直前に離れた画面を開き直すには2本指で左にスワイプするか、⌘] を押します。戻るには ⌘[ を押します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방금 나온 화면을 다시 열려면 두 손가락으로 왼쪽으로 스와이프하거나 ⌘]를 눌러요. 뒤로 가려면 ⌘[를 눌러요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leret ke kiri dengan dua jari untuk membuka kembali skrin yang baru anda tinggalkan, atau tekan ⌘]. Tekan ⌘[ untuk kembali."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sveip mot venstre med to fingre for å åpne en skjerm du nettopp forlot, eller trykk ⌘]. Trykk ⌘[ for å gå tilbake."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veeg met twee vingers naar links om een scherm dat je net verliet weer te openen, of druk op ⌘]. Druk op ⌘[ om terug te gaan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesuń dwoma palcami w lewo, aby ponownie otworzyć ekran, który właśnie opuściłeś, lub naciśnij ⌘]. Naciśnij ⌘[, aby się cofnąć."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslize para a esquerda com dois dedos para reabrir uma tela que você acabou de deixar, ou pressione ⌘]. Pressione ⌘[ para voltar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para a esquerda com dois dedos para reabrir um ecrã que acabaste de deixar, ou pressiona ⌘]. Pressiona ⌘[ para voltar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glisează spre stânga cu două degete pentru a redeschide un ecran pe care l-ai părăsit adineauri, sau apasă ⌘]. Apasă ⌘[ pentru a te întoarce."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахни двумя пальцами влево, чтобы снова открыть экран, который ты только что закрыл, или нажми ⌘]. Нажми ⌘[, чтобы вернуться."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svep åt vänster med två fingrar för att öppna en skärm du precis lämnade, eller tryck ⌘]. Tryck ⌘[ för att gå tillbaka."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இப்போது விட்டுவந்த திரையை மீண்டும் திறக்க இரு விரல்களால் இடதுபுறம் ஸ்வைப் செய்யவும், அல்லது ⌘] அழுத்தவும். பின்செல்ல ⌘[ அழுத்தவும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఇప్పుడే విడిచిన స్క్రీన్‌ను తిరిగి తెరవడానికి రెండు వేళ్లతో ఎడమవైపు స్వైప్ చేయండి, లేదా ⌘] నొక్కండి. వెనక్కి వెళ్లడానికి ⌘[ నొక్కండి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปัดไปทางซ้ายด้วยสองนิ้วเพื่อเปิดหน้าจอที่คุณเพิ่งออกมาอีกครั้ง หรือกด ⌘] กด ⌘[ เพื่อย้อนกลับ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az önce çıktığın ekranı yeniden açmak için iki parmakla sola kaydır ya da ⌘] tuşlarına bas. Geri dönmek için ⌘[ tuşlarına bas."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахни двома пальцями ліворуч, щоб знову відкрити екран, який ти щойно закрив, або натисни ⌘]. Натисни ⌘[, щоб повернутися."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابھی چھوڑی گئی سکرین دوبارہ کھولنے کے لیے دو انگلیوں سے دائیں سوائپ کریں، یا ⌘] دبائیں۔ واپس جانے کے لیے ⌘[ دبائیں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quét sang trái bằng hai ngón để mở lại màn hình bạn vừa rời khỏi, hoặc nhấn ⌘]. Nhấn ⌘[ để quay lại."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用两指向左滑动即可重新打开刚刚离开的界面，也可以按 ⌘]。按 ⌘[ 可返回。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用兩指向左滑動即可重新開啟剛剛離開的畫面，也可以按 ⌘]。按 ⌘[ 可返回。"
+          }
+        }
+      }
+    },
     "Switch Account" : {
       "comment" : "The string for the 'Switch Account' settings option.",
       "localizations" : {
@@ -32913,6 +34311,239 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "歌曲切換時"
+          }
+        }
+      }
+    },
+    "With a keyboard attached, press ⌘] to go forward and ⌘[ to go back." : {
+      "comment" : "The additional footer sentence naming the keyboard shortcuts on a touch device with a keyboard attached.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند توصيل لوحة مفاتيح، اضغط ⌘] للتقدم و⌘[ للرجوع."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "কীবোর্ড লাগানো থাকলে সামনে যেতে ⌘] এবং পিছিয়ে যেতে ⌘[ চাপুন।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S připojenou klávesnicí stiskni ⌘] pro postup vpřed a ⌘[ pro návrat."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med et tastatur tilsluttet skal du trykke på ⌘] for at gå frem og ⌘[ for at gå tilbage."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit angeschlossener Tastatur drückst du ⌘] zum Vorwärtsgehen und ⌘[ zum Zurückgehen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Με συνδεδεμένο πληκτρολόγιο, πάτα ⌘] για μπροστά και ⌘[ για πίσω."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con un teclado conectado, pulsa ⌘] para avanzar y ⌘[ para volver atrás."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con un teclado conectado, presiona ⌘] para avanzar y ⌘[ para volver atrás."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "با کیبورد متصل، ⌘] را برای رفتن به جلو و ⌘[ را برای برگشتن بزن."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kun näppäimistö on liitetty, paina ⌘] siirtyäksesi eteenpäin ja ⌘[ palataksesi taakse."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapag may nakakabit na keyboard, pindutin ang ⌘] para sumulong at ⌘[ para bumalik."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec un clavier connecté, appuie sur ⌘] pour avancer et ⌘[ pour revenir en arrière."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כשמחוברת מקלדת, הקש ⌘] כדי להתקדם ו-⌘[ כדי לחזור."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कीबोर्ड जुड़ा हो तो आगे जाने के लिए ⌘] और पीछे जाने के लिए ⌘[ दबाएँ।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Csatlakoztatott billentyűzettel a ⌘] előre, a ⌘[ vissza visz."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Միացված ստեղնաշարով սեղմիր ⌘]՝ առաջ գնալու, և ⌘[՝ հետ գնալու համար։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dengan keyboard terpasang, tekan ⌘] untuk maju dan ⌘[ untuk kembali."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con una tastiera collegata, premi ⌘] per andare avanti e ⌘[ per tornare indietro."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードを接続しているときは、⌘] で進み、⌘[ で戻ります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "키보드가 연결되어 있으면 ⌘]로 앞으로, ⌘[로 뒤로 이동해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dengan papan kekunci disambungkan, tekan ⌘] untuk ke hadapan dan ⌘[ untuk kembali."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med tastatur tilkoblet trykker du ⌘] for å gå framover og ⌘[ for å gå tilbake."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Met een toetsenbord aangesloten druk je op ⌘] om vooruit te gaan en ⌘[ om terug te gaan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przy podłączonej klawiaturze naciśnij ⌘], aby przejść w przód, i ⌘[, aby się cofnąć."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com um teclado conectado, pressione ⌘] para avançar e ⌘[ para voltar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com um teclado ligado, pressiona ⌘] para avançar e ⌘[ para voltar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cu o tastatură conectată, apasă ⌘] pentru a merge înainte și ⌘[ pentru a te întoarce."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С подключённой клавиатурой нажимай ⌘], чтобы идти вперёд, и ⌘[, чтобы вернуться."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med ett tangentbord anslutet trycker du ⌘] för att gå framåt och ⌘[ för att gå tillbaka."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசைப்பலகை இணைக்கப்பட்டிருந்தால், முன்செல்ல ⌘] மற்றும் பின்செல்ல ⌘[ அழுத்தவும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "కీబోర్డ్ కనెక్ట్ అయి ఉంటే ముందుకు వెళ్లడానికి ⌘] మరియు వెనక్కి వెళ్లడానికి ⌘[ నొక్కండి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อต่อคีย์บอร์ดไว้ กด ⌘] เพื่อไปข้างหน้า และ ⌘[ เพื่อย้อนกลับ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klavye bağlıyken ileri gitmek için ⌘], geri dönmek için ⌘[ tuşlarına bas."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "З підключеною клавіатурою натискай ⌘], щоб іти вперед, і ⌘[, щоб повернутися."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کی بورڈ لگا ہو تو آگے جانے کے لیے ⌘] اور واپس جانے کے لیے ⌘[ دبائیں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khi có bàn phím kết nối, nhấn ⌘] để tiến và ⌘[ để quay lại."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接键盘后，按 ⌘] 前进，按 ⌘[ 返回。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連接鍵盤後，按 ⌘] 前進，按 ⌘[ 返回。"
           }
         }
       }

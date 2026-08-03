@@ -20,6 +20,7 @@ class MenuController {
 		builder.remove(menu: .format)
 		builder.remove(menu: .toolbar)
 		builder.insertSibling(MenuController.search(), beforeMenu: .fullscreen)
+		builder.insertSibling(MenuController.navigation(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.newScene(), beforeMenu: .bringAllToFront)
 //		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openSettings(), afterMenu: .about)
@@ -61,6 +62,15 @@ class MenuController {
 			}
 		}
 		return UIMenu(title: minimizeAndZoomMenu.title, image: minimizeAndZoomMenu.image, identifier: minimizeAndZoomMenu.identifier, options: minimizeAndZoomMenu.options, children: commands)
+	}
+
+	/// Builds and returns the "Navigation" menu.
+	///
+	/// - Returns: The "Navigation" UIMenu object.
+	class func navigation() -> UIMenu {
+		let backCommand = UIKeyCommand(title: L10n.back, action: #selector(AppDelegate.handleNavigateBack(_:)), input: "[", modifierFlags: .command, discoverabilityTitle: L10n.back)
+		let forwardCommand = UIKeyCommand(title: L10n.forward, action: #selector(AppDelegate.handleNavigateForward(_:)), input: "]", modifierFlags: .command, discoverabilityTitle: L10n.forward)
+		return UIMenu(title: L10n.navigation, identifier: UIMenu.Identifier("app.kurozora.menus.navigation"), options: .displayInline, children: [backCommand, forwardCommand])
 	}
 
 	/// Builds and returns the "Refresh Page" menu.

@@ -30,6 +30,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
 			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
 			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
+			UserSettingsKey.forwardNavigationEnabled.rawValue: true,
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 		])
@@ -220,6 +221,14 @@ extension UserSettings {
 	/// Returns an integer indicating the forum page the user was on last.
 	static var forumsPage: Int {
 		return self.shared.integer(forKey: #function)
+	}
+}
+
+// MARK: - Gestures
+extension UserSettings {
+	/// Returns a boolean indicating whether swiping in from the trailing screen edge reopens the previous screen.
+	static var forwardNavigationEnabled: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 }
 

@@ -194,6 +194,10 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		super.viewDidAppear(animated)
 
 		self.navigationController?.interactivePopGestureRecognizer?.require(toFail: self.timelineView.scrubGestureRecognizer)
+
+		if let kNavigationController = self.navigationController as? KNavigationController {
+			kNavigationController.forwardNavigationCoordinator.panGestureRecognizer?.require(toFail: self.timelineView.scrubGestureRecognizer)
+		}
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

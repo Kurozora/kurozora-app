@@ -3563,6 +3563,32 @@ extension L10n {
 			)
 		}
 	}
+	/// The menu title for the command that returns to the previous screen.
+	///
+	/// - Tag: L10n-back
+	static var back: String {
+		L10n.resolve {
+			String(
+				localized: "Back",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu title for the command that returns to the previous screen."
+			)
+		}
+	}
+	/// The menu title for the command that reopens the screen the user navigated away from.
+	///
+	/// - Tag: L10n-forward
+	static var forward: String {
+		L10n.resolve {
+			String(
+				localized: "Forward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu title for the command that reopens the screen the user navigated away from."
+			)
+		}
+	}
 	/// The menu title for the refresh command.
 	///
 	/// - Tag: L10n-refresh

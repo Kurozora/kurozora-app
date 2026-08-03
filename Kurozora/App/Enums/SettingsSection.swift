@@ -137,6 +137,9 @@ extension SettingsTableViewController {
 		/// The row representing the display and blindness cell.
 		case displayBlindness
 
+		/// The row representing the gestures cell.
+		case gestures
+
 		/// The row representing the icon cell.
 		case icon
 
@@ -211,7 +214,7 @@ extension SettingsTableViewController {
 		static let all: [Row] = [
 			.account, .switchAccount,
 			.keychain, .syncScenarios,
-			.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -222,7 +225,7 @@ extension SettingsTableViewController {
 		/// An array containing all normal user settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -249,9 +252,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.cache, .displayBlindness, .library, .music, .motion, .theme]
+			return [.cache, .displayBlindness, .gestures, .library, .music, .motion, .theme]
 			#else
-			return [.browser, .cache, .displayBlindness, .icon, .library, .music, .motion, .theme]
+			return [.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme]
 			#endif
 		}
 
@@ -303,6 +306,8 @@ extension SettingsTableViewController {
 				return .cacheSegue
 			case .displayBlindness:
 				return .displaySegue
+			case .gestures:
+				return .gesturesSegue
 			case .icon:
 				return .iconSegue
 			case .library:
@@ -348,6 +353,8 @@ extension SettingsTableViewController {
 			case .cache:
 				return .labelAndChevron
 			case .displayBlindness:
+				return .chevron
+			case .gestures:
 				return .chevron
 			case .icon:
 				return .labelAndChevron
@@ -415,6 +422,8 @@ extension SettingsTableViewController {
 				return L10n.cache
 			case .displayBlindness:
 				return L10n.displayBlindness
+			case .gestures:
+				return L10n.gestures
 			case .icon:
 				return L10n.icon
 			case .library:
@@ -503,6 +512,8 @@ extension SettingsTableViewController {
                 return .Icons.clearCache
 			case .displayBlindness:
                 return .Icons.textformatSize
+			case .gestures:
+				return .Icons.handPointUp
 			case .icon:
 				return UIImage(named: UserSettings.appIcon)
 			case .library:
