@@ -74,7 +74,7 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
-	override var emptyStateImage: UIImage { .Empty.animeLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryAnime }
 
 	override var emptyStateTitle: String {
 		switch self.showsListFetchType {

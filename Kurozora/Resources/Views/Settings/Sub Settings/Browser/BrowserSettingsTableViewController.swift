@@ -12,7 +12,7 @@ class BrowserSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.browser
+		self.headerImage = .Icons.compassCircle
 		self.headerTitle = L10n.browser
 		self.headerDescription = L10n.browserHeaderDescription
 	}

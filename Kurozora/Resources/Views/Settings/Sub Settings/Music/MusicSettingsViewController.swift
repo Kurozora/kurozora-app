@@ -20,7 +20,7 @@ class MusicSettingsViewController: SubSettingsViewController, TypedSegueHandling
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.music
+		self.headerImage = .Icons.musicNoteCircle
 		self.headerTitle = L10n.music
 		self.headerDescription = L10n.musicHeaderDescription
 	}

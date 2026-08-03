@@ -43,7 +43,7 @@ enum KCalendarApp: Int, CaseIterable {
 	var image: UIImage? {
 		switch self {
 		case .calendar:
-			return .Calendars.calendar
+			return .Calendars.appleCalendar
 		case .fantastical:
 			return .Calendars.fantastical
 		case .googleCalendar:

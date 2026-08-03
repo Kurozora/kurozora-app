@@ -138,7 +138,7 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.comment)
+		emptyBackgroundView.configureImageView(image: .Empty.message2)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.replies), detail: L10n.noRepliesDetail)
 
 		tableView.backgroundView?.alpha = 0

@@ -38,7 +38,7 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 
 		// Configure product details
 		if let product = product, let status = status, let subscription = product.subscription {
-			self.productImageView.image = UIImage(named: "Promotional/In App Purchases/Subscriptions/\(Store.shared.title(for: product.id))")
+			self.productImageView.image = Store.shared.image(for: product.id)
 			self.productNameLabel.text = product.displayName
 			self.priceLabel.text = L10n.pricePerUnit(product.displayPrice, per: subscription.subscriptionPeriod.displayUnit)
 			self.renewalStatusLabel.text = self.renewalDescription(for: product, status: status)

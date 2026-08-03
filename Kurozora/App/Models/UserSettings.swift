@@ -114,15 +114,13 @@ extension UserSettings {
 		return currentThemeName
 	}
 
-	/// Returns a string indicating the currently used app icon.
+	/// Returns the name of the currently used app icon, as listed in `App Icons.plist`.
 	static var appIcon: String {
-		guard var appIcon = self.shared.string(forKey: #function) else { return self.defaultAppIcon }
-
-		if #available(iOS 18.0, *) {
-			appIcon += " Preview"
+		guard let appIcon = self.shared.string(forKey: #function), appIcon != self.defaultAppIcon else {
+			return self.defaultAppIcon
 		}
 
-		return UIImage(named: appIcon) != nil ? appIcon : self.defaultAppIcon
+		return UIImage(named: "\(appIcon) Preview") != nil ? appIcon : self.defaultAppIcon
 	}
 
 	/// Returns a `KBrowser` type indicating the preferred default browser.

@@ -18,7 +18,7 @@ class SoundSettingsViewController: SubSettingsViewController, TypedSegueHandling
 	init() {
 		super.init(style: .insetGrouped)
 
-		self.headerImage = .Icons.sound
+		self.headerImage = .Icons.speakerWave2
 		#if targetEnvironment(macCatalyst)
 		self.headerTitle = L10n.sound
 		#else

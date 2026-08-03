@@ -162,7 +162,7 @@ struct DateWidgetEntryContentView: View {
 			return Image(uiImage: image)
 				.resizable()
 		}
-		return Image("starry_sky")
+		return Image(.starrySky)
 			.resizable()
 	}
 }

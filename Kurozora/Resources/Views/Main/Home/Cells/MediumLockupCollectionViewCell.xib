@@ -20,7 +20,7 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni9-Cf-IrR" customClass="GradientView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genre_pattern" translatesAutoresizingMaskIntoConstraints="NO" id="1ri-jr-BHw">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pattern.genre" translatesAutoresizingMaskIntoConstraints="NO" id="1ri-jr-BHw">
                                 <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hQ3-se-UId">
@@ -96,7 +96,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="genre_pattern" width="600" height="600"/>
+        <image name="pattern.genre" width="600" height="600"/>
         <image name="grain" width="700" height="700"/>
     </resources>
 </document>

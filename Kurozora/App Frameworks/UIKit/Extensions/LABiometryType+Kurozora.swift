@@ -16,9 +16,9 @@ extension LABiometryType {
 		case .faceID:
             return .Icons.faceid
 		case .touchID:
-            return .Icons.touchID
+            return .Icons.touchid
 		case .opticID:
-            return .Icons.opticID
+            return .Icons.opticid
 		case .none:
 			return .Icons.lock
 		@unknown default:

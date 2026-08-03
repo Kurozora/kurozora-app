@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 enum KBrowser: Int, CaseIterable {
 	// MARK: - Cases
@@ -49,28 +49,6 @@ enum KBrowser: Int, CaseIterable {
 			return L10n.default
 		default:
 			return self.stringValue
-		}
-	}
-
-	/// The image value of the browser.
-	var image: UIImage? {
-		switch self {
-		case .kurozora:
-			return UIImage(named: UserSettings.appIcon)
-		case .safari:
-            return .Browsers.safari
-		case .brave:
-            return .Browsers.brave
-		case .duckduckgo:
-            return .Browsers.duckDuckGo
-		case .firefox:
-            return .Browsers.fireFox
-		case .firefoxFocus:
-            return .Browsers.fireFoxFocus
-		case .googleChrome:
-            return .Browsers.googleChrome
-		case .opera:
-            return .Browsers.opera
 		}
 	}
 

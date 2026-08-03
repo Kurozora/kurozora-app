@@ -125,7 +125,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.episodes }
+	override var emptyStateImage: UIImage { .Empty.tvPhoto }
 
 	override var emptyStateTitle: String {
 		switch self.episodesListFetchType {

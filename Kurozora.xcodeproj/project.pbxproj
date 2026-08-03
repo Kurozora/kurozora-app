@@ -12,9 +12,8 @@
 		660B9DC82F7D575D000FCB8A /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 660B9DC72F7D575D000FCB8A /* PulseUI */; };
 		662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 662A3D302C92433B006F6EDD /* KuroChan.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6691885B2F7BCEAA000B1272 /* Kurozora.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 669188512F7BCEA8000B1272 /* Kurozora.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		66A1B0012F7C000000000001 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66A1B0032F7C000000000003 /* KurozoraKit */; };
 		66A1B0022F7C000000000002 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 66A1B0042F7C000000000004 /* KeychainAccess */; };
+		66AB10012F7E100000000001 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66AB10022F7E100000000002 /* KurozoraKit */; };
 		66CB0EA12E90A0BE00104283 /* WhatsNew in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB0EA02E90A0BE00104283 /* WhatsNew */; };
 		66CB161C2E90AA4800104283 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 66CB161B2E90AA4800104283 /* SwiftyJSON */; };
 		66CBDB1E2E8F215A00104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBDB1D2E8F215A00104283 /* KurozoraKit */; };
@@ -29,10 +28,10 @@
 		66CBF86F2E90277800104283 /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF86E2E90277800104283 /* SPConfetti */; };
 		66CBF8722E90279E00104283 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8712E90279E00104283 /* Tabman */; };
 		66CBF8752E9027FF00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF8742E9027FF00104283 /* SwiftTheme */; };
-		66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBF87C2E902AFC00104283 /* XCDYouTubeKit */; };
 		66CBFFCC2E9045E700104283 /* KurozoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFCB2E9045E700104283 /* KurozoraKit */; };
 		66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD32E904AF500104283 /* Kingfisher */; };
 		66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD52E904B3F00104283 /* SwiftTheme */; };
+		9B7F48222FD7933A00133170 /* Obfuscation in Frameworks */ = {isa = PBXBuildFile; productRef = 9B7F48212FD7933A00133170 /* Obfuscation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,13 +48,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6647B72F2BC0A6DD006BC91C;
 			remoteInfo = BannerWidgetExtension;
-		};
-		669188592F7BCEAA000B1272 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 669188502F7BCEA8000B1272;
-			remoteInfo = "Kurozora Watch Watch App";
 		};
 		66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -85,7 +77,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				6691885B2F7BCEAA000B1272 /* Kurozora.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,7 +103,7 @@
 			membershipExceptions = (
 				"Supporting Files/AppIcon Staging.icon",
 				"Supporting Files/AppIcon.icon",
-				"Supporting Files/Assets.xcassets",
+				"Supporting Files/Shared.xcassets",
 			);
 			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
 		};
@@ -174,7 +165,7 @@
 				App/Services/LanguageManager.swift,
 				Features/Animation/Animation.swift,
 				SharedDelegate.swift,
-				"Supporting Files/Assets.xcassets",
+				"Supporting Files/Shared.xcassets",
 			);
 			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
 		};
@@ -238,7 +229,6 @@
 				66CB161C2E90AA4800104283 /* SwiftyJSON in Frameworks */,
 				66CBDB212E8F221600104283 /* KeychainAccess in Frameworks */,
 				66CBF8722E90279E00104283 /* Tabman in Frameworks */,
-				66CBF87D2E902AFC00104283 /* XCDYouTubeKit in Frameworks */,
 				66CBF86C2E90260F00104283 /* Solar in Frameworks */,
 				66CBF1132E90234D00104283 /* Cosmos in Frameworks */,
 				66CBF8692E90254A00104283 /* Reachability in Frameworks */,
@@ -248,6 +238,7 @@
 				66CBF8752E9027FF00104283 /* SwiftTheme in Frameworks */,
 				66CB0EA12E90A0BE00104283 /* WhatsNew in Frameworks */,
 				66CBF1162E9023AC00104283 /* FLEX in Frameworks */,
+				9B7F48222FD7933A00133170 /* Obfuscation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,10 +246,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66AB10012F7E100000000001 /* KurozoraKit in Frameworks */,
 				660B9DC42F7D575D000FCB8A /* Pulse in Frameworks */,
 				660B9DC82F7D575D000FCB8A /* PulseUI in Frameworks */,
 				660B9DC62F7D575D000FCB8A /* PulseProxy in Frameworks */,
-				66A1B0012F7C000000000001 /* KurozoraKit in Frameworks */,
 				66A1B0022F7C000000000002 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,8 +325,8 @@
 			buildPhases = (
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
-				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				66647B4E2084995500CF624F /* Resources */,
+				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
@@ -349,7 +340,6 @@
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 				6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */,
 				662A3D362C92433F006F6EDD /* PBXTargetDependency */,
-				6691885A2F7BCEAA000B1272 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6615BC102DA296B2005DBB96 /* Kurozora */,
@@ -376,7 +366,7 @@
 			);
 			name = KurozoraWatchApp;
 			packageProductDependencies = (
-				66A1B0032F7C000000000003 /* KurozoraKit */,
+				66AB10022F7E100000000002 /* KurozoraKit */,
 				66A1B0042F7C000000000004 /* KeychainAccess */,
 				660B9DC32F7D575D000FCB8A /* Pulse */,
 				660B9DC52F7D575D000FCB8A /* PulseProxy */,
@@ -482,13 +472,13 @@
 				66CBF86D2E90277800104283 /* XCRemoteSwiftPackageReference "SPConfetti" */,
 				66CBF8702E90279E00104283 /* XCRemoteSwiftPackageReference "Tabman" */,
 				66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */,
-				66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */,
 				66CB161A2E90AA4800104283 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */,
 				6669C5A52E99A5FA009923C0 /* XCRemoteSwiftPackageReference "WhatsNew" */,
 				66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */,
-				9BD86EFC2FCF752700CE9DE9 /* XCRemoteSwiftPackageReference "KurozoraKit" */,
+				9B7F48112FD7933A00133170 /* XCLocalSwiftPackageReference "../KurozoraKit" */,
+				9B7F48202FD7933A00133170 /* XCLocalSwiftPackageReference "Packages/Obfuscation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -564,6 +554,7 @@
 			);
 			inputPaths = (
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${EXECUTABLE_NAME}",
+				"${DSTROOT}/Applications/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}",
 			);
 			name = "Strip Symbols";
 			outputFileListPaths = (
@@ -573,11 +564,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${APP_DIR_PATH}/Frameworks\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' \\;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n";
+			shellScript = "set -e\n\nexit 0\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${APP_DIR_PATH}/Frameworks\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' \\;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -588,11 +579,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist",
+				"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Settings.bundle/Root.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "version=\"${MARKETING_VERSION}\"\ncurrent=$(/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"Print PreferenceSpecifiers:2:DefaultValue\" 2>/dev/null)\n\nif [ \"$version\" != \"$current\" ]; then\n    /usr/libexec/PlistBuddy \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\nfi\n";
+			shellScript = "exit 0\n\nif [ \"${IS_MACCATALYST}\" = \"YES\" ]; then\n    # Mac Catalyst: resources live under Contents/Resources.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/Settings.bundle/Root.plist\"\nelse\n    # iOS: resources live at the app bundle root.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\"\nfi\n\n/usr/libexec/PlistBuddy \"${PLIST}\" -c \"Set PreferenceSpecifiers:2:DefaultValue ${MARKETING_VERSION}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -634,11 +625,6 @@
 			isa = PBXTargetDependency;
 			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
 			targetProxy = 6647B73E2BC0A6E2006BC91C /* PBXContainerItemProxy */;
-		};
-		6691885A2F7BCEAA000B1272 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
-			targetProxy = 669188592F7BCEAA000B1272 /* PBXContainerItemProxy */;
 		};
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1039,7 +1025,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = KurozoraWatchApp/KurozoraWatchApp.entitlements;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;
@@ -1070,7 +1055,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = KurozoraWatchApp/KurozoraWatchApp.entitlements;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;
@@ -1145,6 +1129,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		9B7F48112FD7933A00133170 /* XCLocalSwiftPackageReference "../KurozoraKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../KurozoraKit;
+		};
+		9B7F48202FD7933A00133170 /* XCLocalSwiftPackageReference "Packages/Obfuscation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Obfuscation;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		660592EF2E91CD07002CC46E /* XCRemoteSwiftPackageReference "LicensePlist" */ = {
@@ -1259,28 +1254,12 @@
 				minimumVersion = 0.6.4;
 			};
 		};
-		66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/0xced/XCDYouTubeKit.git";
-			requirement = {
-				kind = revision;
-				revision = 651a6a51c695c5819eb51ba2f98d0b64094315b9;
-			};
-		};
 		66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.62.2;
-			};
-		};
-		9BD86EFC2FCF752700CE9DE9 /* XCRemoteSwiftPackageReference "KurozoraKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Kurozora/KurozoraKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1310,6 +1289,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66CBDB1F2E8F221600104283 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		66AB10022F7E100000000002 /* KurozoraKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KurozoraKit;
 		};
 		66CB0EA02E90A0BE00104283 /* WhatsNew */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1379,11 +1362,6 @@
 			package = 66CBF8732E9027FF00104283 /* XCRemoteSwiftPackageReference "SwiftTheme" */;
 			productName = SwiftTheme;
 		};
-		66CBF87C2E902AFC00104283 /* XCDYouTubeKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66CBF87B2E902AFC00104283 /* XCRemoteSwiftPackageReference "XCDYouTubeKit" */;
-			productName = XCDYouTubeKit;
-		};
 		66CBFFCB2E9045E700104283 /* KurozoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KurozoraKit;
@@ -1407,6 +1385,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66E55B0B2EE453A0009E12A3 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		9B7F48212FD7933A00133170 /* Obfuscation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Obfuscation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

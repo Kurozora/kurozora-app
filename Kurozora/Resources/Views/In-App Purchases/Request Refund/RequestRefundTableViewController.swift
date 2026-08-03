@@ -23,7 +23,7 @@ class RequestRefundTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.refund
+		self.headerImage = .Icons.arrowCirclepathPlus
 		self.headerTitle = L10n.requestRefund
 		self.headerDescription = L10n.requestRefundHeaderDescription
 	}
@@ -57,7 +57,7 @@ class RequestRefundTableViewController: SubSettingsViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Icons.refund)
+		self.emptyBackgroundView.configureImageView(image: .Icons.arrowCirclepathPlus)
 		self.emptyBackgroundView.configureLabels(title: L10n.refundEmptyTitle, detail: L10n.refundEmptyDetail)
 		self.tableView.backgroundView?.alpha = 0
 	}

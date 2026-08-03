@@ -192,7 +192,7 @@ class CharacterSearchViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
+		self.emptyBackgroundView.configureImageView(image: .Empty.personQuestion)
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.characters), detail: L10n.noCharactersSearchDetail)
 
 		self.collectionView.backgroundView?.alpha = 0

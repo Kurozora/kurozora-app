@@ -21,7 +21,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-oSV">
                         <rect key="frame" x="0.0" y="0.0" width="128" height="192"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-img" customClass="CircularImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/person.poster" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-img" customClass="CircularImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cQA-Lc-img" secondAttribute="height" multiplier="1:1" id="cQA-Lc-asp"/>
@@ -81,7 +81,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Person Poster" width="680" height="1000"/>
+        <image name="placeholders/person.poster" width="680" height="1000"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

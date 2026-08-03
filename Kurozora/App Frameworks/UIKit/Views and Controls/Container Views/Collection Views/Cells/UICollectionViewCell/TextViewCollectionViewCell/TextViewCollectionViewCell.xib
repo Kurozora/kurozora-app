@@ -23,7 +23,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCO-kG-JxV">
                         <rect key="frame" x="296" y="216.5" width="118" height="23"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_right" translatesAutoresizingMaskIntoConstraints="NO" id="4Zx-df-6pN">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow.right" translatesAutoresizingMaskIntoConstraints="NO" id="4Zx-df-6pN">
                                 <rect key="frame" x="0.0" y="0.0" width="118" height="23"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -71,6 +71,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="shadow_right" width="30" height="6"/>
+        <image name="shadow.right" width="30" height="6"/>
     </resources>
 </document>

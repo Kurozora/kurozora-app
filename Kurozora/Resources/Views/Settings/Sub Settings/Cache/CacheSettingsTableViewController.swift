@@ -21,7 +21,7 @@ class CacheSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.clearCache
+		self.headerImage = .Icons.broom
 		self.headerTitle = L10n.cache
 		self.headerDescription = L10n.cacheHeaderDescription
 	}

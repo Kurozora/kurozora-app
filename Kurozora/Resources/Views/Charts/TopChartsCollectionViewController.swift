@@ -113,7 +113,7 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.animeLibrary)
+		self.emptyBackgroundView.configureImageView(image: .Empty.libraryAnime)
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.topCharts), detail: L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current)))
 
 		self.collectionView.backgroundView?.alpha = 0

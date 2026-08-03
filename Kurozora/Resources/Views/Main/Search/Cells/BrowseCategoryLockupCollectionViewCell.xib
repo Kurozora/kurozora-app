@@ -23,7 +23,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1ri-jr-BHw">
                                 <rect key="frame" x="0.0" y="0.0" width="57" height="32"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_back" translatesAutoresizingMaskIntoConstraints="NO" id="jvR-Xq-WvW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow.back" translatesAutoresizingMaskIntoConstraints="NO" id="jvR-Xq-WvW">
                                 <rect key="frame" x="0.0" y="0.0" width="57" height="32"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grain" translatesAutoresizingMaskIntoConstraints="NO" id="QHT-Mg-dgm">
@@ -74,6 +74,6 @@
     </objects>
     <resources>
         <image name="grain" width="700" height="700"/>
-        <image name="shadow_back" width="20" height="90"/>
+        <image name="shadow.back" width="20" height="90"/>
     </resources>
 </document>

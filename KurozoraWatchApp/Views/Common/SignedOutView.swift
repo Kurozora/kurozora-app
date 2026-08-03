@@ -15,7 +15,7 @@ struct SignedOutView: View {
 	// MARK: - Body
 	var body: some View {
 		VStack(spacing: 12) {
-			Image("Kurozora")
+			Image(.kurozora)
 				.resizable()
 				.frame(width: 48, height: 48)
 				.clipShape(RoundedRectangle(cornerRadius: 12))

@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-0k-zx2" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/user.profile" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-0k-zx2" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="35" height="35"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -115,7 +115,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/User Profile" width="300" height="300"/>
+        <image name="placeholders/user.profile" width="300" height="300"/>
         <image name="play.fill" catalog="system" width="120" height="128"/>
     </resources>
 </document>

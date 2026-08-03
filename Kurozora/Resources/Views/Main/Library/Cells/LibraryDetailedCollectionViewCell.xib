@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16r-iS-7bZ">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="225"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="CIv-rz-kh7" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.banner" translatesAutoresizingMaskIntoConstraints="NO" id="CIv-rz-kh7" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="225"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
@@ -61,11 +61,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ena-Bt-caq">
                         <rect key="frame" x="10" y="110" width="70" height="105"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="Ewv-Ls-PDt" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.poster" translatesAutoresizingMaskIntoConstraints="NO" id="Ewv-Ls-PDt" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="yHC-Pl-VIJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.texture" translatesAutoresizingMaskIntoConstraints="NO" id="yHC-Pl-VIJ">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                             </imageView>
                             <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lid" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -138,9 +138,9 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
-        <image name="book_texture_overlay" width="160" height="240"/>
+        <image name="placeholders/show.banner" width="1920" height="1080"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
+        <image name="book.texture" width="160" height="240"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="shadow" width="6" height="30"/>
     </resources>

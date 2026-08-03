@@ -387,7 +387,7 @@ extension ShowDetail {
 			switch self {
 			case .airDates:
 				guard self.secondaryInformation(from: show) != nil else { return nil }
-                return .dottedLine
+                return .lineDashed
 			default: return nil
 			}
 		}

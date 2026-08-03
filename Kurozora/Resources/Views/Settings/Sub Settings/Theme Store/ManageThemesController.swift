@@ -110,7 +110,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.themes)
+		emptyBackgroundView.configureImageView(image: .Empty.swatches)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.themes), detail: L10n.noThemesAvailableDetail)
 
 		collectionView.backgroundView?.alpha = 0

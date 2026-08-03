@@ -50,7 +50,7 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateImage: UIImage { .Empty.personQuestion }
 
 	override var emptyStateTitle: String {
 		switch self.studiosListFetchType {

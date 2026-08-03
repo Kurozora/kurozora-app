@@ -37,19 +37,19 @@ extension UserNotificationType {
 	var iconValue: UIImage? {
 		switch self {
 		case .session:
-            return .Icons.session
+            return .Icons.clockArrowCirclepath
 		case .follower:
-            return .Icons.follower
+            return .Icons.person2
 		case .feedMessageReply, .feedMessageReShare, .userMention:
             return .Icons.message
 		case .libraryImportFinished:
             return .Icons.library
 		case .subscriptionStatus:
-            return .Icons.unlock
+            return .Icons.lockOpen
 		case .userTimedOut, .userTimeoutExpired:
             return .Icons.shieldCheckered
 		case .other:
-            return .Icons.notifications
+            return .Icons.appBadge
 		}
 	}
 }

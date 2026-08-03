@@ -98,9 +98,9 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		switch self.usersListFetchType {
 		case .blocked:
 			let configuration = UIImage.SymbolConfiguration(pointSize: 96, weight: .regular)
-			return UIImage(systemName: "xmark.shield", withConfiguration: configuration) ?? .Empty.follow
+			return UIImage(systemName: "xmark.shield", withConfiguration: configuration) ?? .Empty.person3
 		case .follow, .search, .reputation:
-			return .Empty.follow
+			return .Empty.person3
 		}
 	}
 

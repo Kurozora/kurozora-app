@@ -21,7 +21,7 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-at-mZU">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-wj-mpw" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/music.album" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-wj-mpw" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-msc" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -168,7 +168,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Music Album" width="1080" height="1080"/>
+        <image name="placeholders/music.album" width="1080" height="1080"/>
         <image name="play.fill" catalog="system" width="120" height="128"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

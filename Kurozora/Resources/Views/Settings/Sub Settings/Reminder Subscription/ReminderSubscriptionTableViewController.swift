@@ -17,7 +17,7 @@ class ReminderSubscriptionTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.reminder
+		self.headerImage = .Icons.bell
 		self.headerTitle = L10n.subscribeToReminders
 		self.headerDescription = L10n.reminderSubscriptionHeaderDescription
 	}

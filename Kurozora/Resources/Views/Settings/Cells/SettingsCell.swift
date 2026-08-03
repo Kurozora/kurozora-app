@@ -129,8 +129,8 @@ extension SettingsCell {
 
 	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
-		let appIcon = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
-		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
+		let appIcon = UserSettings.appIcon
+		self.iconImageView?.image = .appIconPreview(named: appIcon)
 		self.detailLabel?.text = appIcon == UserSettings.defaultAppIcon ? L10n.`default` : appIcon
 	}
 

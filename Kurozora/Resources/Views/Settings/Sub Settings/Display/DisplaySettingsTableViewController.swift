@@ -16,8 +16,8 @@ class DisplaySettingsTableViewController: SubSettingsViewController, TypedSegueH
 
 	// MARK: - Properties
 	private let appearanceOptions: [DisplaySettingsCell.Option] = [
-		.init(identifier: AppAppearanceOption.light.rawValue, title: L10n.light, image: .Settings.Display.lightOption),
-		.init(identifier: AppAppearanceOption.dark.rawValue, title: L10n.dark, image: .Settings.Display.darkOption)
+		.init(identifier: AppAppearanceOption.light.rawValue, title: L10n.light, image: .Settings.Display.iphoneLight),
+		.init(identifier: AppAppearanceOption.dark.rawValue, title: L10n.dark, image: .Settings.Display.iphoneDark)
 	]
 	private var displayedAppAppearanceOption: AppAppearanceOption = AppAppearanceOption(rawValue: UserSettings.appearanceOption) ?? .light
 

@@ -370,13 +370,16 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: The product's image.
 	func image(for productId: String) -> UIImage? {
-		let title = self.title(for: productId)
-
-		if let subscriptionImage = UIImage(named: "Promotional/In App Purchases/Subscriptions/\(title)") {
-			return subscriptionImage
+		switch self.tier(for: productId) {
+		case .plus1Month:
+			return .Promotional.Purchases.Subscriptions.month1
+		case .plus6Months:
+			return .Promotional.Purchases.Subscriptions.month6
+		case .plus12Months:
+			return .Promotional.Purchases.Subscriptions.month12
+		case .none:
+			return self.title(for: productId).toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.jarHeart)
 		}
-
-		return title.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.tipJar)
 	}
 
 	/// How much money the user saves between subscription tiers.

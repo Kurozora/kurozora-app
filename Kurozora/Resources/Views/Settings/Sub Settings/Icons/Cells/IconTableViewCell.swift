@@ -64,15 +64,7 @@ class IconTableViewCell: SettingsCell {
 		self.detailLabel?.text = nil
 		self.detailLabel?.isHidden = true
 
-		let image: UIImage?
-
-		if alternativeIconsElement.name == "Kurozora" {
-			image = UIImage(named: alternativeIconsElement.name)
-		} else {
-			image = UIImage(named: "\(alternativeIconsElement.name) Preview")
-		}
-
-		self.iconImageView?.image = image
+		self.iconImageView?.image = .appIconPreview(named: alternativeIconsElement.name)
 		self.iconImageView?.preferredSymbolConfiguration = nil
 		self.iconImageView?.contentMode = .scaleAspectFit
 		self.iconImageView?.layerCornerRadius = 12.0

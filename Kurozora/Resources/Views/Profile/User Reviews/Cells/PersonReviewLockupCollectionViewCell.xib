@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E0g-j2-6fU">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PersonImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/person.poster" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PersonImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-prl" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -147,6 +147,6 @@
         </designable>
     </designables>
     <resources>
-        <image name="Placeholders/Person Poster" width="680" height="1000"/>
+        <image name="placeholders/person.poster" width="680" height="1000"/>
     </resources>
 </document>

@@ -146,7 +146,7 @@ class KotodamaLeaderboardsTableViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.achievement)
+		self.emptyBackgroundView.configureImageView(image: .Empty.rosetteStar)
 
 		switch self.board {
 		case .today:

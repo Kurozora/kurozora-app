@@ -199,7 +199,7 @@ final class LyricsViewController: KTableViewController {
 	override func configureEmptyDataView() {
 		guard self.hasLoadedLyrics, self.items.isEmpty else { return }
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.cast)
+		self.emptyBackgroundView.configureImageView(image: .Empty.personQuestion)
 		self.emptyBackgroundView.configureLabels(title: L10n.lyricsUnavailableTitle, detail: L10n.lyricsUnavailableDetail)
 	}
 

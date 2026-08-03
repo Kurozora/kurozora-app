@@ -17,7 +17,7 @@ class MotionSettingsViewController: SubSettingsViewController, TypedSegueHandlin
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.motion
+		self.headerImage = .Icons.circleDottedCircle
 		self.headerTitle = L10n.motion
 		self.headerDescription = L10n.motionHeaderDescription
 	}

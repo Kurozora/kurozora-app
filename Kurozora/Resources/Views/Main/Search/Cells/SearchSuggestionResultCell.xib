@@ -19,7 +19,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NtG-gC-gVV">
                         <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="yp0-Ww-48d" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="placeholders/show.poster" translatesAutoresizingMaskIntoConstraints="NO" id="yp0-Ww-48d" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
                                 <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
@@ -67,6 +67,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
     </resources>
 </document>

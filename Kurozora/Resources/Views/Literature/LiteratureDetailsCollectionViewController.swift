@@ -63,7 +63,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	// TODO: Enable once reminders are supported for Literature.
 //	override var reminderTarget: (any Libraryable)? { self.literature }
 
-	override var emptyStateImage: UIImage { .Empty.mangaLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryManga }
 
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.literature.lowercased(with: .current)) }
 

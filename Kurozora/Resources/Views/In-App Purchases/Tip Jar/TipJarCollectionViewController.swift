@@ -20,13 +20,13 @@ class TipJarCollectionViewController: KCollectionViewController {
 	}
 
 	var productFeatures: [ProductFeature] = [
-		ProductFeature(title: L10n.featureAppIconsTitle, description: L10n.featureAppIconsDescription, image: .Promotional.InAppPurchases.icons),
-		ProductFeature(title: L10n.featureStartupChimesTitle, description: L10n.featureStartupChimesDescription, image: .Promotional.InAppPurchases.chimes),
-		ProductFeature(title: L10n.featureGetAnimatedTitle, description: L10n.featureGetAnimatedDescription, image: .Promotional.InAppPurchases.gifs),
-		ProductFeature(title: L10n.featureChangeIdentityTitle, description: L10n.featureChangeIdentityDescription, image: .Promotional.InAppPurchases.username),
-		ProductFeature(title: L10n.featureUpToCharacters(500), description: L10n.featureTipJarCharacterLimitDescription, image: .Promotional.InAppPurchases.characterCount500),
-		ProductFeature(title: L10n.featureProBadgeTitle, description: L10n.featureProBadgeDescription, image: .Promotional.InAppPurchases.proBadge),
-		ProductFeature(title: L10n.featureSupportCommunityTitle, description: L10n.featureSupportCommunityDescription, image: .Promotional.InAppPurchases.support)
+		ProductFeature(title: L10n.featureAppIconsTitle, description: L10n.featureAppIconsDescription, image: .Promotional.Purchases.icons),
+		ProductFeature(title: L10n.featureStartupChimesTitle, description: L10n.featureStartupChimesDescription, image: .Promotional.Purchases.chimes),
+		ProductFeature(title: L10n.featureGetAnimatedTitle, description: L10n.featureGetAnimatedDescription, image: .Promotional.Purchases.gifs),
+		ProductFeature(title: L10n.featureChangeIdentityTitle, description: L10n.featureChangeIdentityDescription, image: .Promotional.Purchases.username),
+		ProductFeature(title: L10n.featureUpToCharacters(500), description: L10n.featureTipJarCharacterLimitDescription, image: .Promotional.Purchases.characterCount500),
+		ProductFeature(title: L10n.featureProBadgeTitle, description: L10n.featureProBadgeDescription, image: .Promotional.Purchases.badgePro),
+		ProductFeature(title: L10n.featureSupportCommunityTitle, description: L10n.featureSupportCommunityDescription, image: .Promotional.Purchases.support)
 	]
 	var serviceType: ServiceType = .tipJar
 

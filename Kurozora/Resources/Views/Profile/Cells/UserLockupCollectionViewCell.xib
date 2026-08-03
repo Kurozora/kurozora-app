@@ -27,7 +27,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="odr-db-nYm" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="placeholders/user.profile" translatesAutoresizingMaskIntoConstraints="NO" id="odr-db-nYm" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="30" y="17.5" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="TNg-M4-xXa"/>
@@ -108,7 +108,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/User Profile" width="300" height="300"/>
+        <image name="placeholders/user.profile" width="300" height="300"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

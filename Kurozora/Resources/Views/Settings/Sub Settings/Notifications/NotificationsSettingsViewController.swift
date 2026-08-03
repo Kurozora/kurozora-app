@@ -24,7 +24,7 @@ class NotificationsSettingsViewController: SubSettingsViewController, TypedSegue
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.notifications
+		self.headerImage = .Icons.appBadge
 		self.headerTitle = L10n.notifications
 		self.headerDescription = L10n.notificationsHeaderDescription
 	}

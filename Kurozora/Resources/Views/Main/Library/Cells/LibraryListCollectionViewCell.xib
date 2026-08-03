@@ -21,11 +21,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4LN-XX-xBx">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="Awe-wF-sDX" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.poster" translatesAutoresizingMaskIntoConstraints="NO" id="Awe-wF-sDX" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="yQV-eW-YpY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.texture" translatesAutoresizingMaskIntoConstraints="NO" id="yQV-eW-YpY">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-lls" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -119,8 +119,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
-        <image name="book_texture_overlay" width="160" height="240"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
+        <image name="book.texture" width="160" height="240"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

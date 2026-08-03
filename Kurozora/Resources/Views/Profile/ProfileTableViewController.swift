@@ -265,7 +265,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 			detailString = L10n.feedEmptyDetailOther
 		}
 
-		emptyBackgroundView.configureImageView(image: .Empty.comment)
+		emptyBackgroundView.configureImageView(image: .Empty.message2)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.posts), detail: detailString)
 
 		tableView.backgroundView?.alpha = 0

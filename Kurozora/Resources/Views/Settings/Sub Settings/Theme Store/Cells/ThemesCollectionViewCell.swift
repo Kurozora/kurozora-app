@@ -74,7 +74,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				}
 				let screenshotView = self.screenshotViews[index]
 				screenshotView.screenshotImageView.backgroundColor = UIColor(hexString: screenshot.backgroundColor ?? "#333333")
-				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: .Empty.themes)
+				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: .Empty.swatches)
 
 				screenshotView.screenshotImageView.applyCornerRadius(10.0)
 				screenshotView.screenshotImageView.layer.borderWidth = 0

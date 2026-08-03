@@ -50,7 +50,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T9u-p2-Jsh" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
-                                        <imageReference key="image" image="Themes/Default/Screenshot_1"/>
+                                        <imageReference key="image" image="themes/default.1"/>
                                     </imageView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm1" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
@@ -77,7 +77,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RC1-qQ-BiE" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
-                                        <imageReference key="image" image="Themes/Default/Screenshot_2"/>
+                                        <imageReference key="image" image="themes/default.2"/>
                                     </imageView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm2" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
@@ -104,7 +104,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oU7-Gi-IVY" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
-                                        <imageReference key="image" image="Themes/Default/Screenshot_3"/>
+                                        <imageReference key="image" image="themes/default.3"/>
                                     </imageView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-thm3" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="115.33333333333333" height="250"/>
@@ -159,9 +159,9 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Themes/Default/Screenshot_1" width="1170" height="2532"/>
-        <image name="Themes/Default/Screenshot_2" width="1170" height="2532"/>
-        <image name="Themes/Default/Screenshot_3" width="1170" height="2532"/>
+        <image name="themes/default.1" width="1170" height="2532"/>
+        <image name="themes/default.2" width="1170" height="2532"/>
+        <image name="themes/default.3" width="1170" height="2532"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

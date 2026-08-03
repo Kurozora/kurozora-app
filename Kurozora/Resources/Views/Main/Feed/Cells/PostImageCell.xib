@@ -32,7 +32,7 @@
                                     <constraint firstAttribute="height" constant="1" id="pqE-G1-Qyh"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="ZQo-zy-zA0" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/user.profile" translatesAutoresizingMaskIntoConstraints="NO" id="ZQo-zy-zA0" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -174,7 +174,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/User Profile" width="300" height="300"/>
+        <image name="placeholders/user.profile" width="300" height="300"/>
         <image name="play.fill" catalog="system" width="120" height="128"/>
     </resources>
 </document>

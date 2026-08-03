@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQn-aB-52Z">
                         <rect key="frame" x="0.0" y="0.0" width="427" height="160"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="YAl-PY-dJe" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.poster" translatesAutoresizingMaskIntoConstraints="NO" id="YAl-PY-dJe" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="0.0" width="100" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="YAl-PY-dJe" secondAttribute="height" multiplier="2:3" id="MVS-Q1-Ztc"/>
@@ -190,7 +190,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

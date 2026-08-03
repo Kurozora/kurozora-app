@@ -153,7 +153,7 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.comment)
+		emptyBackgroundView.configureImageView(image: .Empty.message2)
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.feed), detail: L10n.cantGetListDetail(L10n.feed.lowercased(with: Locale.current)))
 
 		tableView.backgroundView?.alpha = 0

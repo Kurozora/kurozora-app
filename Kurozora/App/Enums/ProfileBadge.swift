@@ -84,11 +84,11 @@ enum ProfileBadge {
 	var image: UIImage? {
 		switch self {
 		case .newUser:
-            return .Badges.beginnerShield
+            return .Badges.beginner
 		case .developer:
             return .Badges.hammerApp
 		case .earlySupporter:
-            return .Badges.birdTriangle
+            return .Badges.bird
 		case .staff:
             return .Badges.sakuraShield
 		case .pro:
@@ -97,23 +97,23 @@ enum ProfileBadge {
 			let numberOfMonths = Date().months(from: subscribedAt)
 
 			if numberOfMonths >= 24 {
-                return .Badges.twentyFourMonths
+                return .Badges.month24
 			} else if numberOfMonths >= 18 {
-                return .Badges.eighteenMonths
+                return .Badges.month18
 			} else if numberOfMonths >= 15 {
-                return .Badges.fifteenMonths
+                return .Badges.month15
 			} else if numberOfMonths >= 12 {
-                return .Badges.twelveMonths
+                return .Badges.month12
 			} else if numberOfMonths >= 9 {
-                return .Badges.nineMonths
+                return .Badges.month9
 			} else if numberOfMonths >= 6 {
-                return .Badges.sixMonths
+                return .Badges.month6
 			} else if numberOfMonths >= 3 {
-                return .Badges.threeMonths
+                return .Badges.month3
 			} else if numberOfMonths >= 2 {
-                return .Badges.twoMonths
+                return .Badges.month2
 			} else {
-                return .Badges.oneMonth
+                return .Badges.month1
 			}
 		case .verified:
             return .Badges.checkmarkSeal

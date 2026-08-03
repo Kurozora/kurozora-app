@@ -74,7 +74,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.mangaLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryManga }
 
 	override var emptyStateTitle: String {
 		switch self.literaturesListFetchType {

@@ -141,17 +141,17 @@ enum KTheme {
 	var imageValues: [UIImage] {
 		switch self {
 		case .kurozora:
-			return [.Themes.Default.screenshot1, .Themes.Default.screenshot2, .Themes.Default.screenshot3]
+			return [.Themes.default1, .Themes.default2, .Themes.default3]
 		case .day:
-			return [.Themes.Day.screenshot1, .Themes.Day.screenshot2, .Themes.Day.screenshot3]
+			return [.Themes.day1, .Themes.day2, .Themes.day3]
 		case .night:
-			return [.Themes.Night.screenshot1, .Themes.Night.screenshot2, .Themes.Night.screenshot3]
+			return [.Themes.night1, .Themes.night2, .Themes.night3]
 		case .grass:
-			return [.Themes.Grass.screenshot1, .Themes.Grass.screenshot2, .Themes.Grass.screenshot3]
+			return [.Themes.grass1, .Themes.grass2, .Themes.grass3]
 		case .sky:
-			return [.Themes.Sky.screenshot1, .Themes.Sky.screenshot2, .Themes.Sky.screenshot3]
+			return [.Themes.sky1, .Themes.sky2, .Themes.sky3]
 		case .sakura:
-			return [.Themes.Sakura.screenshot1, .Themes.Sakura.screenshot2, .Themes.Sakura.screenshot3]
+			return [.Themes.sakura1, .Themes.sakura2, .Themes.sakura3]
 		case .other:
 			return []
 		}

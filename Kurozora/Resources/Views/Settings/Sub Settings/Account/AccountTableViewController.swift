@@ -235,14 +235,14 @@ class AccountTableViewController: SubSettingsViewController {
 				cell,
 				title: L10n.language,
 				detail: self.selectedLanguage.value,
-				icon: .Icons.language
+				icon: .Icons.characterBubble2
 			)
 		case .tvRating:
 			self.configureSettingsCell(
 				cell,
 				title: L10n.tvRating,
 				detail: self.selectedTVRating.value.replacingOccurrences(of: " - .*", with: "", options: .regularExpression),
-				icon: .Icons.tvRating
+				icon: .Icons.tvPg
 			)
 		case .timezone:
 			self.configureSettingsCell(
@@ -273,7 +273,7 @@ class AccountTableViewController: SubSettingsViewController {
 			self.configureSettingsCell(
 				cell,
 				title: L10n.manageActiveSessions,
-				icon: .Icons.session
+				icon: .Icons.clockArrowCirclepath
 			)
 		case .signOut, .deleteAccount:
 			break

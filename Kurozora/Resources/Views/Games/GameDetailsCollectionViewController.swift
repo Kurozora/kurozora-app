@@ -63,7 +63,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	// TODO: Enable once reminders are supported for Game.
 //	override var reminderTarget: (any Libraryable)? { self.game }
 
-	override var emptyStateImage: UIImage { .Empty.gameLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryGame }
 
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.game.lowercased(with: .current)) }
 

@@ -408,7 +408,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			posterImageView.bottomAnchor.constraint(equalTo: posterContainerView.bottomAnchor),
 		])
 
-		let overlayImageView = UIImageView(image: .bookTextureOverlay)
+		let overlayImageView = UIImageView(image: .bookTexture)
 		overlayImageView.contentMode = .scaleAspectFill
 		overlayImageView.isUserInteractionEnabled = false
 		overlayImageView.translatesAutoresizingMaskIntoConstraints = false

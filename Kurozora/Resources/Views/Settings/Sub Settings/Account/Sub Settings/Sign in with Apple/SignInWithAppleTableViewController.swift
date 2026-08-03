@@ -27,7 +27,7 @@ class SignInWithAppleTableViewController: ServiceTableViewController {
 		self.title = L10n.signInWithApple
 
 		// Configure properties
-		self.previewImage = .Promotional.signInWithApple
+		self.previewImage = .Promotional.signinApple
 		self.serviceType = .signInWithApple
 	}
 }

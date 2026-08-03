@@ -68,7 +68,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	// MARK: - Overridden Properties
-	override var emptyStateImage: UIImage { .Empty.cast }
+	override var emptyStateImage: UIImage { .Empty.personQuestion }
 
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.song.lowercased(with: .current)) }
 

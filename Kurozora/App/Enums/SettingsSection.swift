@@ -485,7 +485,7 @@ extension SettingsTableViewController {
 			case .browser:
 				return UserSettings.defaultBrowser.shortStringValue
 			case .icon:
-				return UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
+				return UserSettings.appIcon
 			case .motion:
 				return UserSettings.currentSplashScreenAnimation.titleValue
 			case .theme:
@@ -501,57 +501,57 @@ extension SettingsTableViewController {
 			case .account:
                 return .Placeholders.userProfile
 			case .switchAccount:
-                return .Icons.accountSwitch
+                return .Icons.personArrow2Circlepath
 			case .keychain:
-                return .Icons.kDefaults
+                return .Icons.key
 			case .syncScenarios:
 				return .Icons.wrenchAndScrewdriverFill
 			case .browser:
-                return .Icons.browser
+                return .Icons.compassCircle
 			case .cache:
-                return .Icons.clearCache
+                return .Icons.broom
 			case .displayBlindness:
                 return .Icons.textformatSize
 			case .gestures:
 				return .Icons.handPointUp
 			case .icon:
-				return UIImage(named: UserSettings.appIcon)
+				return .appIconPreview(named: UserSettings.appIcon)
 			case .library:
                 return .Icons.library
 			case .music:
-                return .Icons.music
+                return .Icons.musicNoteCircle
 			case .motion:
-                return .Icons.motion
+                return .Icons.circleDottedCircle
 			case .theme:
-                return .Icons.theme
+                return .Icons.swatches
 			case .notifications:
-                return .Icons.notifications
+                return .Icons.appBadge
 			case .reminder:
-                return .Icons.reminder
+                return .Icons.bell
 			case .soundsAndHaptics:
-                return .Icons.sound
+                return .Icons.speakerWave2
 			case .signalSticker:
-                return .Icons.kuroChanStickerSignal
+                return .Icons.kurochanStickerSignal
 			case .telegramSticker:
-                return .Icons.kuroChanStickerTelegram
+                return .Icons.kurochanStickerTelegram
 			case .whatsAppSticker:
-				return .Icons.kuroChanStickerWhatsApp
+				return .Icons.kurochanStickerWhatsapp
 			case .biometrics:
 				return UIDevice.supportedBiometric.imageValue
 			case .privacy:
-                return .Icons.privacy
+                return .Icons.handRaised
 			case .unlockFeatures:
-                return .Icons.unlock
+                return .Icons.lockOpen
 			case .tipjar:
-                return .Icons.tipJar
+                return .Icons.jarHeart
 			case .manageSubscriptions:
-                return .Icons.manageSubscriptions
+                return .Icons.gearArrow2Circlepath
 			case .restoreFeatures:
-                return .Icons.restore
+                return .Icons.arrowDownCirclepath
 			case .requestRefund:
-				return .Icons.refund
+				return .Icons.arrowCirclepathPlus
 			case .rate:
-                return .Icons.rate
+                return .Icons.star
 			case .joinDiscord:
                 return .Icons.Brands.discord
 			case .followGitHub:

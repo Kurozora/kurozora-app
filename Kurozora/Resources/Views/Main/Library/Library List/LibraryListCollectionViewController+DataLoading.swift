@@ -149,7 +149,7 @@ extension LibraryListCollectionViewController {
 			} else {
 				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.shows.lowercased(with: .current), libraryStatus.lowercased())
 			}
-			image = .Empty.animeLibrary
+			image = .Empty.libraryAnime
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
 			titleString = L10n.noItemsTitle(L10n.literatures)
@@ -158,7 +158,7 @@ extension LibraryListCollectionViewController {
 			} else {
 				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.literatures.lowercased(with: .current), libraryStatus.lowercased())
 			}
-			image = .Empty.mangaLibrary
+			image = .Empty.libraryManga
 		case .games:
 			libraryStatus = self.libraryStatus.gameStringValue
 			titleString = L10n.noItemsTitle(L10n.games)
@@ -167,7 +167,7 @@ extension LibraryListCollectionViewController {
 			} else {
 				L10n.userHasNoInList(self.viewedUser?.attributes.username ?? "", L10n.games.lowercased(with: .current), libraryStatus.lowercased())
 			}
-			image = .Empty.gameLibrary
+			image = .Empty.libraryGame
 		}
 
 		if self.viewedUser == nil {

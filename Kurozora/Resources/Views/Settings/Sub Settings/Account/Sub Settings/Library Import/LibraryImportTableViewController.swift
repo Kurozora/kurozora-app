@@ -52,7 +52,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 		self.configureNavigationItems()
 
 		// Configure properties
-		self.previewImage = .Promotional.moveToKurozora
+		self.previewImage = .Promotional.moveKurozora
 		self.serviceType = .libraryImport
 
 		self.rightNavigationBarButton.isEnabled = false

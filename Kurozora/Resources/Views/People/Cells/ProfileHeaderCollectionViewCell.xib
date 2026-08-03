@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-010" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.banner" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-010" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-00-020" customClass="CircularImageView" customModule="Kurozora" customModuleProvider="target">
@@ -81,6 +81,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
+        <image name="placeholders/show.banner" width="1920" height="1080"/>
     </resources>
 </document>

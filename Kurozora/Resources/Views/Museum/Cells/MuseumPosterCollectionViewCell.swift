@@ -15,7 +15,7 @@ class MuseumPosterCollectionViewCell: UICollectionViewCell {
 	private let posterImageView = PosterImageView()
 
 	/// The book texture drawn over a literature's poster.
-	private let posterImageOverlayView = UIImageView(image: .bookTextureOverlay)
+	private let posterImageOverlayView = UIImageView(image: .bookTexture)
 
 	// MARK: - Properties
 	/// The book-cover mask applied to a literature's poster.

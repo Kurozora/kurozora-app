@@ -65,7 +65,7 @@ enum WarningType {
 		case .maintenance:
             return .Icons.wrenchAndScrewdriverFill
 		case .noSignal:
-            return .Icons.noSignal
+            return .Icons.wifiExclamationmark
 		}
 	}
 }

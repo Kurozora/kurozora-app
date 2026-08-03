@@ -32,7 +32,7 @@
                                     <constraint firstAttribute="height" constant="1" id="rAv-fg-J1O"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="i5S-Tr-rBn" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/user.profile" translatesAutoresizingMaskIntoConstraints="NO" id="i5S-Tr-rBn" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -211,6 +211,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/User Profile" width="300" height="300"/>
+        <image name="placeholders/user.profile" width="300" height="300"/>
     </resources>
 </document>

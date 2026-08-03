@@ -25,7 +25,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kso-7k-pdi" userLabel="Corner View">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Episode Banner" translatesAutoresizingMaskIntoConstraints="NO" id="Eyp-5T-Wke" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/episode.banner" translatesAutoresizingMaskIntoConstraints="NO" id="Eyp-5T-Wke" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                                     </imageView>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-epi" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -147,7 +147,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Episode Banner" width="1920" height="1080"/>
+        <image name="placeholders/episode.banner" width="1920" height="1080"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

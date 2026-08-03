@@ -79,7 +79,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override var reminderTarget: (any Libraryable)? { self.show }
 
-	override var emptyStateImage: UIImage { .Empty.animeLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryAnime }
 
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.show.lowercased(with: .current)) }
 

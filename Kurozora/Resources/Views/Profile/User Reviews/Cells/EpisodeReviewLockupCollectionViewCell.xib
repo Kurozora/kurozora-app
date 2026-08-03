@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E0g-j2-6fU">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="56.333333333333336"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Episode Banner" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/episode.banner" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="56.333333333333336"/>
                             </imageView>
                             <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-ere" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -147,6 +147,6 @@
         </designable>
     </designables>
     <resources>
-        <image name="Placeholders/Episode Banner" width="1920" height="1080"/>
+        <image name="placeholders/episode.banner" width="1920" height="1080"/>
     </resources>
 </document>

@@ -28,7 +28,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OaM-Zt-L9b">
                         <rect key="frame" x="0.0" y="21" width="1920" height="1080"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="dk2-19-1nB" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.banner" translatesAutoresizingMaskIntoConstraints="NO" id="dk2-19-1nB" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Vvp-mU-buE">
@@ -126,7 +126,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
+        <image name="placeholders/show.banner" width="1920" height="1080"/>
         <image name="shadow" width="6" height="30"/>
         <systemColor name="systemGrayColor">
             <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

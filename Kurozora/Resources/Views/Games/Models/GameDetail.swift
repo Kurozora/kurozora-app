@@ -387,7 +387,7 @@ extension GameDetail {
 			switch self {
 			case .publicationDates:
 				guard self.secondaryInformation(from: game) != nil else { return nil }
-				return .dottedLine
+				return .lineDashed
 			default: return nil
 			}
 		}

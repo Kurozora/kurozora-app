@@ -19,7 +19,7 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.kDefaults
+		self.headerImage = .Icons.key
 		self.headerTitle = L10n.keysManager
 		self.headerDescription = L10n.keysManagerHeaderDescription
 	}
@@ -41,7 +41,7 @@ class DebugSettingsTableViewController: SubSettingsViewController {
 
 	// MARK: - Functions
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.keychain)
+		self.emptyBackgroundView.configureImageView(image: .Empty.keyRing)
 		self.emptyBackgroundView.configureLabels(title: L10n.debugNoKeysTitle, detail: L10n.debugNoKeysDetail)
 
 		self.tableView.backgroundView?.alpha = 0

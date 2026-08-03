@@ -277,13 +277,13 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 
 		switch self.libraryKind {
 		case .shows:
-			emptyStateImage = .Empty.animeLibrary
+			emptyStateImage = .Empty.libraryAnime
 			detailString = L10n.noItemsYet(L10n.museum.lowercased(with: .current), L10n.shows.lowercased(with: .current))
 		case .literatures:
-			emptyStateImage = .Empty.mangaLibrary
+			emptyStateImage = .Empty.libraryManga
 			detailString = L10n.noItemsYet(L10n.museum.lowercased(with: .current), L10n.literatures.lowercased(with: .current))
 		case .games:
-			emptyStateImage = .Empty.gameLibrary
+			emptyStateImage = .Empty.libraryGame
 			detailString = L10n.noItemsYet(L10n.museum.lowercased(with: .current), L10n.games.lowercased(with: .current))
 		}
 

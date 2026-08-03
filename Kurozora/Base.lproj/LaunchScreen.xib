@@ -16,7 +16,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Background.png" translatesAutoresizingMaskIntoConstraints="NO" id="J4c-lr-ccx">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurozora_icon_monotone" translatesAutoresizingMaskIntoConstraints="NO" id="CGz-qn-85c">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurozora.icon.monotone" translatesAutoresizingMaskIntoConstraints="NO" id="CGz-qn-85c">
                     <rect key="frame" x="123.5" y="276.5" width="128" height="134"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -39,6 +39,6 @@
     </objects>
     <resources>
         <image name="Launch Background.png" width="1024" height="1024"/>
-        <image name="kurozora_icon_monotone" width="42" height="44"/>
+        <image name="kurozora.icon.monotone" width="42" height="44"/>
     </resources>
 </document>

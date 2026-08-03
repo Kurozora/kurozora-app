@@ -74,7 +74,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.gameLibrary }
+	override var emptyStateImage: UIImage { .Empty.libraryGame }
 
 	override var emptyStateTitle: String {
 		switch self.gamesListFetchType {

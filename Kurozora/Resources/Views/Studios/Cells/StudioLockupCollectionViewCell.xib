@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ConT-vw-stu" userLabel="Primary Container View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Studio Profile" translatesAutoresizingMaskIntoConstraints="NO" id="br2-r6-Rm3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/studio.profile" translatesAutoresizingMaskIntoConstraints="NO" id="br2-r6-Rm3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-stu" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -43,7 +43,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jhC-Kh-3ho">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Studio Profile" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-ru-aE9" customClass="StudioLogoImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/studio.profile" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-ru-aE9" customClass="StudioLogoImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="123.5" y="41.5" width="128" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="128" id="ZXh-bW-egD"/>
@@ -116,7 +116,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Placeholders/Studio Profile" width="300" height="300"/>
+        <image name="placeholders/studio.profile" width="300" height="300"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

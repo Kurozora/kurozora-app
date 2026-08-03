@@ -38,7 +38,7 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 		self.configureNavigationItems()
 
 		// Confgure properties
-		self.previewImage = .Promotional.deleteLibrary
+		self.previewImage = .Promotional.libraryTrash
 		self.serviceType = .libraryDelete
 
 		self.rightNavigationBarButton.isEnabled = false

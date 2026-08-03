@@ -18,7 +18,7 @@ class PrivacySettingsViewController: SubSettingsViewController, TypedSegueHandli
 	// MARK: - Initializers
 	init() {
 		super.init(style: .insetGrouped)
-		self.headerImage = .Icons.privacy
+		self.headerImage = .Icons.handRaised
 		self.headerTitle = L10n.privacy
 		self.headerDescription = L10n.privacyHeaderDescription
 	}

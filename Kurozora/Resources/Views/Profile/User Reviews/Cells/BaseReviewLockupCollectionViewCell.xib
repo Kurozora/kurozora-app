@@ -20,10 +20,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E0g-j2-6fU">
                         <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholders/show.poster" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="qOc-ew-cig">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.texture" translatesAutoresizingMaskIntoConstraints="NO" id="qOc-ew-cig">
                                 <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
                             </imageView>
                             <view contentMode="scaleToFill" userInteractionEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brd-vw-bre" userLabel="Border View" customClass="BorderView" customModule="Kurozora" customModuleProvider="target">
@@ -155,7 +155,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
-        <image name="book_texture_overlay" width="160" height="240"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
+        <image name="book.texture" width="160" height="240"/>
     </resources>
 </document>

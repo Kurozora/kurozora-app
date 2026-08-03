@@ -66,7 +66,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// MARK: - Overridden Properties
-	override var emptyStateImage: UIImage { .Empty.episodes }
+	override var emptyStateImage: UIImage { .Empty.tvPhoto }
 
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.episode.lowercased(with: .current)) }
 

@@ -70,7 +70,7 @@ final class FeedMessageQuotesViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: .Empty.comment)
+		emptyBackgroundView.configureImageView(image: .Empty.message2)
 		emptyBackgroundView.configureLabels(title: L10n.noQuotesHeadline, detail: L10n.noQuotesSubheadline)
 		emptyBackgroundView.configureButton(title: L10n.quote) { [weak self] in
 			guard let self = self else { return }
