@@ -38,7 +38,13 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	// MARK: - Properties
 	/// The reviews displayed on the detail screen.
-	var reviews: [Review] = []
+	var reviews: [Review] = [] {
+		didSet {
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(self.reviews)
+			}
+		}
+	}
 
 	private var firstCellSize: CGSize = .zero
 
@@ -99,11 +105,32 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
+	}
+
+	/// Re-renders the visible cells whose translation state changed.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func handleTranslationDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			for cell in self.collectionView.visibleCells {
+				guard
+					let reviewCell = cell as? ReviewCollectionViewCell,
+					let indexPath = self.collectionView.indexPath(for: cell),
+					let review = self.reviews[safe: indexPath.item]
+				else { continue }
+
+				reviewCell.configureCell(using: review)
+			}
+		}
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -512,6 +539,26 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 			let review = self.reviews[safe: indexPath.item]
 		else { return }
 		self.presentReviewDetails(for: review)
+	}
+
+	func reviewCollectionViewCellDidTapTranslation(_ cell: ReviewCollectionViewCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+
+		TranslationService.shared.toggleTranslation(for: review)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let review = self.reviews[safe: indexPath.item]
+		else { return }
+
+		TranslationSettingsViewController.present(for: review, from: button, in: self)
 	}
 }
 

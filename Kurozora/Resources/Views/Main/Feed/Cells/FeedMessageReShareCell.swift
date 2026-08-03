@@ -195,7 +195,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	}
 
 	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL, isOPExpanded: Bool) {
-		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
+		let contentMarkdown = feedMessage.attributes.contentMarkdown.removingTrailingURL(url)
 		self.applyOPBodyText(contentMarkdown.markdownAttributedString(), isOPExpanded: isOPExpanded)
 		self.opPostTextViewContainer?.isHidden = contentMarkdown.isEmpty
 	}
@@ -208,17 +208,6 @@ class FeedMessageReShareCell: FeedMessageCell {
 			let linkView = KRichLinkView(metadata: metadata)
 			self.opRichLinkStackView.addArrangedSubview(linkView)
 		}
-	}
-
-	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
-		let urlString = url.absoluteString
-
-		// Remove the URL from the end of the full text
-		if text.hasSuffix(urlString) {
-			return String(text.dropLast(urlString.count)).trimmingCharacters(in: .whitespacesAndNewlines)
-		}
-
-		return text
 	}
 
 	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.

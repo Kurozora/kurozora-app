@@ -13,6 +13,8 @@ protocol ReviewCollectionViewCellDelegate: AnyObject {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject)
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge)
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton)
+	func reviewCollectionViewCellDidTapTranslation(_ cell: ReviewCollectionViewCell)
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapTranslationSettings button: UIButton)
 }
 
 class ReviewCollectionViewCell: KCollectionViewCell {
@@ -30,6 +32,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - Views
 	private(set) var contentTextView: KSelectableTextView!
+	private(set) var translationBarView: TranslationBarView!
 
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
@@ -54,10 +57,16 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		textView.isScrollEnabled = false
 		textView.bounces = false
 
-		self.contentTextViewPlaceholder.addSubview(textView)
-		textView.fillToSuperview()
+		// Stacking inside the placeholder puts the row above the body without every
+		// review nib needing its own layout for it.
+		let contentStackView = UIStackView(arrangedSubviews: [textView])
+		contentStackView.axis = .vertical
+
+		self.contentTextViewPlaceholder.addSubview(contentStackView)
+		contentStackView.fillToSuperview()
 
 		self.contentTextView = textView
+		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
 	}
 
 	/// Configure the cell with the given person details.
@@ -116,7 +125,17 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.cosmosView.rating = review.attributes.score
 
 		// Configure body
-		self.contentTextView.setAttributedText(review.attributes.description?.markdownAttributedString())
+		var translatedBody: NSAttributedString?
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			let translationState = TranslationService.shared.state(for: review)
+			self.translationBarView.configure(using: translationState)
+			translatedBody = translationState.body
+		} else {
+			self.translationBarView.isHidden = true
+		}
+
+		self.contentTextView.setAttributedText(translatedBody ?? review.attributes.description?.markdownAttributedString())
 		self.contentTextView.delegate = self
 		self.contentTextView.layoutManager.delegate = self
 
@@ -195,5 +214,16 @@ extension ReviewCollectionViewCell: NSLayoutManagerDelegate {
 extension ReviewCollectionViewCell: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
 		self.delegate?.reviewCollectionViewCell(self, didPressProfileBadge: button, for: profileBadge)
+	}
+}
+
+// MARK: - TranslationBarViewDelegate
+extension ReviewCollectionViewCell: TranslationBarViewDelegate {
+	func translationBarViewDidTapAction(_ translationBarView: TranslationBarView) {
+		self.delegate?.reviewCollectionViewCellDidTapTranslation(self)
+	}
+
+	func translationBarView(_ translationBarView: TranslationBarView, didTapSettings button: UIButton) {
+		self.delegate?.reviewCollectionViewCell(self, didTapTranslationSettings: button)
 	}
 }

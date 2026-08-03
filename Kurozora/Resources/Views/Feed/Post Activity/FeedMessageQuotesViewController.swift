@@ -53,6 +53,7 @@ final class FeedMessageQuotesViewController: KTableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.sortDidChange(_:)), name: .KFMActivitySortDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.feedMessageDidUpdate(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.feedMessageDidDelete(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.feedMessageTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -107,6 +108,13 @@ final class FeedMessageQuotesViewController: KTableViewController {
 		}
 	}
 
+	@objc private func feedMessageTranslationDidUpdate(_ notification: Notification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.tableView.reloadData()
+		}
+	}
+
 	private func fetch() async {
 		guard !self.isRequestInProgress else { return }
 		self.isRequestInProgress = true
@@ -125,6 +133,12 @@ final class FeedMessageQuotesViewController: KTableViewController {
 
 			self.nextPageCursor = response.nextCursor
 			self.quotes.append(contentsOf: response.data)
+
+			// The table's prefetching never covers the first screen, so start the page
+			// translating here instead of letting it swap in under the reader.
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(response.data)
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -226,6 +240,19 @@ extension FeedMessageQuotesViewController: BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		self.quotes[indexPath.row].visitOriginalPosterProfile(from: self)
+	}
+
+	func baseFeedMessageCellDidTapTranslation(_ cell: BaseFeedMessageCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		TranslationService.shared.toggleTranslation(for: self.quotes[indexPath.row])
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+
+		TranslationSettingsViewController.present(for: self.quotes[indexPath.row], from: button, in: self)
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {}

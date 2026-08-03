@@ -105,6 +105,18 @@ extension ParentalGuideCollectionViewController: ParentalGuideReasonCollectionVi
 		self.expandedEntryIDs.insert(entry.id)
 		self.reloadEntry(at: indexPath)
 	}
+
+	func parentalGuideReasonCollectionViewCell(_ cell: ParentalGuideReasonCollectionViewCell, didTapTranslationFor entry: ParentalGuideEntry) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+
+		TranslationService.shared.toggleTranslation(for: entry)
+	}
+
+	func parentalGuideReasonCollectionViewCell(_ cell: ParentalGuideReasonCollectionViewCell, didTapTranslationSettings button: UIButton, for entry: ParentalGuideEntry) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+
+		TranslationSettingsViewController.present(for: entry, from: button, in: self)
+	}
 }
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate

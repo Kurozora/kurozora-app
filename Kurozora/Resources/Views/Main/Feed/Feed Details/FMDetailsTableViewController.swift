@@ -105,12 +105,14 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -148,6 +150,47 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 			self.tableView.backgroundView?.animateFadeIn()
 		} else {
 			self.tableView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/// Returns the message shown at the given index path.
+	///
+	/// - Parameter indexPath: The index path to resolve.
+	///
+	/// - Returns: The message the row renders.
+	func feedMessage(at indexPath: IndexPath) -> FeedMessage? {
+		guard indexPath.section == 0 else { return self.feedMessageReplies[safe: indexPath.row] }
+
+		// A re-share with nothing added shows the original message's body, so that's
+		// the message whose translation state the row reflects.
+		let isSimpleReShare = self.feedMessage.attributes.isReShare && self.feedMessage.attributes.content.isEmpty
+		guard isSimpleReShare else { return self.feedMessage }
+
+		return self.feedMessage.relationships.parent?.data.first ?? self.feedMessage
+	}
+
+	/// Reloads the rows whose translation state changed.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateFeedMessageTranslation(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			guard let identities = notification.object as? Set<TranslationIdentity> else {
+				self.heightCache.removeAll()
+				self.tableView.reloadData()
+				return
+			}
+
+			let indexPaths = self.tableView.indexPathsForVisibleRows?.filter { indexPath in
+				guard let identity = self.feedMessage(at: indexPath)?.translationIdentity else { return false }
+				return identities.contains(identity)
+			}
+
+			guard let indexPaths = indexPaths, !indexPaths.isEmpty else { return }
+
+			indexPaths.forEach { self.heightCache.removeValue(forKey: $0) }
+			self.tableView.reloadRows(at: indexPaths, with: .none)
 		}
 	}
 
@@ -236,6 +279,12 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 			// Save next page url and append new data
 			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
+
+			// The table's prefetching never covers the first screen, so start the page
+			// translating here instead of letting it swap in under the reader.
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(feedMessageResponse.data + [self.feedMessage].compactMap { $0 })
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -363,6 +412,10 @@ extension FMDetailsTableViewController {
 		if !imageURLs.isEmpty {
 			ImagePrefetcher(urls: imageURLs).start()
 		}
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			TranslationService.shared.prefetch(indexPaths.compactMap { self.feedMessage(at: $0) })
+		}
 	}
 }
 
@@ -467,6 +520,22 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		self.expandedOPIDs.insert(parentID)
 		self.heightCache.removeValue(forKey: indexPath)
 		self.tableView.reloadRows(at: [indexPath], with: .none)
+	}
+
+	func baseFeedMessageCellDidTapTranslation(_ cell: BaseFeedMessageCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard let feedMessage = self.feedMessage(at: indexPath) else { return }
+
+		TranslationService.shared.toggleTranslation(for: feedMessage)
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard let feedMessage = self.feedMessage(at: indexPath) else { return }
+
+		TranslationSettingsViewController.present(for: feedMessage, from: button, in: self)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {

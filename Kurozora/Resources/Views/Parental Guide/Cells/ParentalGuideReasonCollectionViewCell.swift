@@ -30,6 +30,21 @@ protocol ParentalGuideReasonCollectionViewCellDelegate: AnyObject {
 	///
 	/// - Parameter cell: The cell whose reason was expanded.
 	func parentalGuideReasonCollectionViewCellDidTapShowMore(_ cell: ParentalGuideReasonCollectionViewCell)
+
+	/// Tells the delegate the user asked to switch between the original reason and its translation.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose reason was tapped.
+	///    - entry: The entry the reason belongs to.
+	func parentalGuideReasonCollectionViewCell(_ cell: ParentalGuideReasonCollectionViewCell, didTapTranslationFor entry: ParentalGuideEntry)
+
+	/// Tells the delegate the user asked to open the translation settings.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose settings were tapped.
+	///    - button: The button to anchor the settings sheet to.
+	///    - entry: The entry the reason belongs to.
+	func parentalGuideReasonCollectionViewCell(_ cell: ParentalGuideReasonCollectionViewCell, didTapTranslationSettings button: UIButton, for entry: ParentalGuideEntry)
 }
 
 class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
@@ -105,6 +120,11 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: ParentalGuideReasonCollectionViewCellDelegate?
+
+	private var translationBarView: TranslationBarView!
+
+	/// Whether the reader revealed this entry's spoiler.
+	private var isSpoilerRevealed = false
 	private var entry: ParentalGuideEntry?
 
 	/// Whether the reason text is fully expanded.
@@ -147,6 +167,7 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		self.isExpanded = false
+		self.isSpoilerRevealed = false
 	}
 
 	override func layoutSubviews() {
@@ -176,12 +197,22 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		]
 		self.descriptorLabel.text = descriptors.compactMap { $0 }.joined(separator: " · ")
 
-		self.applyReasonText(entry.attributes.reason ?? "", isExpanded: isExpanded)
+		var translatedReason: NSAttributedString?
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			let translationState = TranslationService.shared.state(for: entry)
+			self.translationBarView.configure(using: translationState)
+			translatedReason = translationState.body
+		} else {
+			self.translationBarView.isHidden = true
+		}
+
+		self.applyReasonText(entry.attributes.reason ?? "", translated: translatedReason, isExpanded: isExpanded)
 
 		self.updateHelpfulButton(for: entry)
 		self.updateUnhelpfulButton(for: entry)
 
-		self.spoilerOverlay.isHidden = !(entry.attributes.isSpoiler && !(entry.attributes.reason ?? "").isEmpty)
+		self.spoilerOverlay.isHidden = self.isSpoilerRevealed || !(entry.attributes.isSpoiler && !(entry.attributes.reason ?? "").isEmpty)
 
 		self.moreButton.menu = UIMenu(title: "", children: [
 			UIDeferredMenuElement.uncached { [weak self] completion in
@@ -196,14 +227,14 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		])
 	}
 
-	private func applyReasonText(_ reason: String, isExpanded: Bool) {
+	private func applyReasonText(_ reason: String, translated: NSAttributedString?, isExpanded: Bool) {
 		guard !reason.isEmpty else {
 			self.reasonTextView.setAttributedText(nil)
 			return
 		}
 
 		let font = self.reasonTextView.font ?? .preferredFont(forTextStyle: .body)
-		let attributed = NSAttributedString(string: reason, attributes: [.font: font])
+		let attributed = translated ?? NSAttributedString(string: reason, attributes: [.font: font])
 
 		let final: NSAttributedString
 		if isExpanded {
@@ -269,6 +300,8 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		outerStack.axis = .vertical
 		outerStack.spacing = 8
 
+		self.translationBarView = TranslationBarView.install(in: outerStack, at: 1, delegate: self)
+
 		self.contentView.addSubview(outerStack)
 		self.contentView.addSubview(self.spoilerOverlay)
 
@@ -306,11 +339,28 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 	}
 
 	@objc private func revealSpoiler() {
+		self.isSpoilerRevealed = true
+
 		UIView.animate(withDuration: 0.2) {
 			self.spoilerOverlay.alpha = 0
 		} completion: { _ in
 			self.spoilerOverlay.isHidden = true
 			self.spoilerOverlay.alpha = 1
 		}
+	}
+}
+
+// MARK: - TranslationBarViewDelegate
+extension ParentalGuideReasonCollectionViewCell: TranslationBarViewDelegate {
+	func translationBarViewDidTapAction(_ translationBarView: TranslationBarView) {
+		guard let entry = self.entry else { return }
+
+		self.delegate?.parentalGuideReasonCollectionViewCell(self, didTapTranslationFor: entry)
+	}
+
+	func translationBarView(_ translationBarView: TranslationBarView, didTapSettings button: UIButton) {
+		guard let entry = self.entry else { return }
+
+		self.delegate?.parentalGuideReasonCollectionViewCell(self, didTapTranslationSettings: button, for: entry)
 	}
 }

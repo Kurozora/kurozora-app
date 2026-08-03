@@ -77,6 +77,7 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.entryDidUpdate(_:)), name: .KPGEntryDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.entryDidDelete(_:)), name: .KPGEntryDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.entryTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -125,6 +126,10 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 
 			self.stats = response.data.stats
 			self.entries = response.data.entries
+
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(self.entries)
+			}
 		} catch let error as APIError {
 			let underlying = error.underlying.map { String(reflecting: $0) } ?? "—"
 			print("ParentalGuide fetch failed [HTTP \(error.statusCode ?? -1)]: \(error.message) | server=\(error.errors.map { $0.detail }) | underlying=\(underlying)")
@@ -215,6 +220,21 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 	/// Reloads the cell at `indexPath` without rebuilding the rest of the snapshot.
 	///
 	/// - Parameter indexPath: The index path whose item should be re-rendered.
+	/// Re-renders the entries whose translation state changed.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func entryTranslationDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			// Re-applying the snapshot alone changes nothing: the item identifiers are
+			// unchanged, so the diff is empty and no cell is ever reconfigured.
+			var snapshot = self.dataSource.snapshot()
+			snapshot.reconfigureItems(snapshot.itemIdentifiers)
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
+	}
+
 	func reloadEntry(at indexPath: IndexPath) {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 		var snapshot = self.dataSource.snapshot()

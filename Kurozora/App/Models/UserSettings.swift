@@ -375,6 +375,21 @@ extension UserSettings {
 	}
 }
 
+// MARK: - Translation
+extension UserSettings {
+	/// Returns the language identifier user-generated content is translated into.
+	static var translationLanguage: String? {
+		return self.shared.string(forKey: #function)
+	}
+
+	/// Returns the language identifiers the user does not want translated automatically.
+	///
+	/// Automatic translation is on by default, so this stores only the exceptions.
+	static var autoTranslateExcludedLanguages: [String] {
+		return self.shared.stringArray(forKey: #function) ?? []
+	}
+}
+
 // MARK: - Music
 extension UserSettings {
 	/// Returns a Boolean indicating whether the now-playing accessory shows total time instead of remaining time.

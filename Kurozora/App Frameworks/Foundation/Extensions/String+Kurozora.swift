@@ -132,6 +132,18 @@ extension String {
 		return matches?.compactMap { $0.url } ?? []
 	}
 
+	/// Returns the string with the given URL removed from its end.
+	///
+	/// - Parameter url: The URL to remove.
+	///
+	/// - Returns: The string without its trailing URL.
+	func removingTrailingURL(_ url: URL) -> String {
+		let urlString = url.absoluteString
+		guard self.hasSuffix(urlString) else { return self }
+
+		return String(self.dropLast(urlString.count)).trimmingCharacters(in: .whitespacesAndNewlines)
+	}
+
 	/// Truncated string (limited to a given number of characters).
 	///
 	/// ```swift

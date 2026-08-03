@@ -147,6 +147,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTimeoutDidChange(_:)), name: .KUserTimeoutDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
@@ -192,6 +193,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		NotificationCenter.default.removeObserver(self, name: .KUserProfileDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserTimeoutDidChange, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 
 		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
 			self.sidebarBottomProfileView?.isSelected = false
@@ -302,6 +304,36 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 	fileprivate func configureNavigationItems() {
 		self.configureMoreBarButtonItem()
 		self.configurePostMessageBarButtonItem()
+	}
+
+	/// Reloads the rows whose translation state changed.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateFeedMessageTranslation(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			guard let identities = notification.object as? Set<TranslationIdentity> else {
+				self.heightCache.removeAll()
+				self.tableView.reloadData()
+				return
+			}
+
+			if let user = self.user, identities.contains(user.translationIdentity) {
+				self.profileHeaderView.updateBio(for: user)
+				self.tableView.updateHeaderViewFrame()
+			}
+
+			let indexPaths = self.tableView.indexPathsForVisibleRows?.filter { indexPath in
+				guard let identity = self.feedMessages[safe: indexPath.row]?.translationIdentity else { return false }
+				return identities.contains(identity)
+			}
+
+			guard let indexPaths = indexPaths, !indexPaths.isEmpty else { return }
+
+			indexPaths.forEach { self.heightCache.removeValue(forKey: $0) }
+			self.tableView.reloadRows(at: indexPaths, with: .none)
+		}
 	}
 
 	/// Updates the feed message with the received information.
@@ -421,6 +453,12 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 			// Save next page url and append new data
 			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessages.append(contentsOf: feedMessageResponse.data)
+
+			// The table's prefetching never covers the first screen, so start the page
+			// translating here instead of letting it swap in under the reader.
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(feedMessageResponse.data + [self.user].compactMap { $0 })
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -711,6 +749,10 @@ extension ProfileTableViewController {
 		if !imageURLs.isEmpty {
 			ImagePrefetcher(urls: imageURLs).start()
 		}
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			TranslationService.shared.prefetch(indexPaths.compactMap { self.feedMessages[safe: $0.row] })
+		}
 	}
 }
 
@@ -751,6 +793,19 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		guard let resharer = self.feedMessages[indexPath.row].relationships.users.data.first else { return }
 		let profileTableViewController = ProfileTableViewController()(with: resharer)
 		self.show(profileTableViewController, sender: nil)
+	}
+
+	func baseFeedMessageCellDidTapTranslation(_ cell: BaseFeedMessageCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		TranslationService.shared.toggleTranslation(for: self.feedMessages[indexPath.row])
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+
+		TranslationSettingsViewController.present(for: self.feedMessages[indexPath.row], from: button, in: self)
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {
@@ -900,6 +955,20 @@ extension ProfileTableViewController: ProfileTableHeaderViewDelegate {
 		badgeViewController.popoverPresentationController?.sourceRect = button.bounds
 
 		self.present(badgeViewController, animated: true, completion: nil)
+	}
+
+	func profileTableHeaderViewDidTapBioTranslation(_ headerView: ProfileTableHeaderView) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let user = self.user else { return }
+
+		TranslationService.shared.toggleTranslation(for: user)
+	}
+
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didTapBioTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let user = self.user else { return }
+
+		TranslationSettingsViewController.present(for: user, from: button, in: self)
 	}
 
 	func profileTableHeaderViewDidPressTimeoutBanner(_ headerView: ProfileTableHeaderView) {

@@ -21,6 +21,8 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMore sender: AnyObject)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapShowMoreOnOP sender: AnyObject)
 	func baseFeedMessageCellDidTapAttribution(_ cell: BaseFeedMessageCell)
+	func baseFeedMessageCellDidTapTranslation(_ cell: BaseFeedMessageCell)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapTranslationSettings button: UIButton)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
@@ -59,6 +61,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	// MARK: - Views
 	private(set) var postTextView: KSelectableTextView!
+	private(set) var translationBarView: TranslationBarView!
 
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
@@ -95,6 +98,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.configurePostTextView()
+		self.configureTranslationBarView()
 
 		self.profileImageView.layer.borderWidth = 0
 		self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
@@ -106,13 +110,14 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.warningIsHidden = false
 		self.statusStackView.isHidden = true
 		self.postTextViewContainer?.isHidden = false
+		self.translationBarView?.isHidden = true
 		self.isExpanded = false
 
 		self.richLinkTask?.cancel()
 		self.richLinkTask = nil
 		self.richLinkPlaceholder = nil
 		self.richLinkStackView.arrangedSubviews.forEach { subview in
-			if subview != self.postTextViewContainer {
+			if subview != self.postTextViewContainer, subview != self.translationBarView {
 				self.richLinkStackView.removeArrangedSubview(subview)
 				subview.removeFromSuperview()
 			}
@@ -172,6 +177,11 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.postTextView = textView
 	}
 
+	/// Installs the translation row directly above the body.
+	fileprivate func configureTranslationBarView() {
+		self.translationBarView = TranslationBarView.install(in: self.richLinkStackView, at: 0, delegate: self)
+	}
+
 	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool, isExpanded: Bool = false, attributedTo: User? = nil) {
 		self.isExpanded = isExpanded
 
@@ -222,10 +232,21 @@ class BaseFeedMessageCell: KTableViewCell {
 			self.profileBadgeStackView.configure(for: user)
 		}
 
+		// Configure translation
+		var translatedBody: NSAttributedString?
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			let translationState = TranslationService.shared.state(for: feedMessage)
+			self.translationBarView.configure(using: translationState)
+			translatedBody = translationState.body
+		} else {
+			self.translationBarView.isHidden = true
+		}
+
 		// Configure body and rich link
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
 			// Strip URL from text upfront so the text height is stable
-			self.configurePostTextView(for: feedMessage, byRemovingURL: url, isExpanded: isExpanded)
+			self.configurePostTextView(for: feedMessage, byRemovingURL: url, isExpanded: isExpanded, translatedBody: translatedBody)
 
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
@@ -254,7 +275,7 @@ class BaseFeedMessageCell: KTableViewCell {
 				}
 			}
 		} else {
-			self.applyBodyText(feedMessage.attributes.contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
+			self.applyBodyText(translatedBody ?? feedMessage.attributes.contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
 		}
 		self.postTextView.delegate = self
 		self.postTextView.kkActionHandler = { [weak self] action in
@@ -292,9 +313,9 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.configureWarnings(for: feedMessage)
 	}
 
-	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL, isExpanded: Bool) {
-		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
-		self.applyBodyText(contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
+	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL, isExpanded: Bool, translatedBody: NSAttributedString?) {
+		let contentMarkdown = feedMessage.attributes.contentMarkdown.removingTrailingURL(url)
+		self.applyBodyText(translatedBody ?? contentMarkdown.markdownAttributedString(), isExpanded: isExpanded)
 		self.postTextViewContainer?.isHidden = contentMarkdown.isEmpty
 	}
 
@@ -316,17 +337,6 @@ class BaseFeedMessageCell: KTableViewCell {
 			let linkView = KRichLinkView(metadata: metadata)
 			self.richLinkStackView.addArrangedSubview(linkView)
 		}
-	}
-
-	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
-		let urlString = url.absoluteString
-
-		// Remove the URL from the end of the full text
-		if text.hasSuffix(urlString) {
-			return String(text.dropLast(urlString.count)).trimmingCharacters(in: .whitespacesAndNewlines)
-		}
-
-		return text
 	}
 
 	/// Configures the re-share button.
@@ -489,6 +499,17 @@ extension BaseFeedMessageCell: UITextViewDelegate {
 		}
 
 		return true
+	}
+}
+
+// MARK: - TranslationBarViewDelegate
+extension BaseFeedMessageCell: TranslationBarViewDelegate {
+	func translationBarViewDidTapAction(_ translationBarView: TranslationBarView) {
+		self.delegate?.baseFeedMessageCellDidTapTranslation(self)
+	}
+
+	func translationBarView(_ translationBarView: TranslationBarView, didTapSettings button: UIButton) {
+		self.delegate?.baseFeedMessageCell(self, didTapTranslationSettings: button)
 	}
 }
 

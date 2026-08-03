@@ -97,6 +97,17 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Translation
+extension Notification.Name {
+	/// A notification posted when translated content's state changes.
+	///
+	/// The object is a set of the affected content's identities, or `nil` when everything
+	/// is affected.
+	static var KTranslationDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+}
+
 // MARK: - Notifications
 extension Notification.Name {
 	/// A notification posted when the user notifications are updated.

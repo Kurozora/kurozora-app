@@ -21,6 +21,8 @@ protocol ProfileTableHeaderViewDelegate: AnyObject {
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressReviewsButton button: UIButton)
 	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didPressBadge profileBadge: ProfileBadge, from button: UIButton)
 	func profileTableHeaderViewDidPressTimeoutBanner(_ headerView: ProfileTableHeaderView)
+	func profileTableHeaderViewDidTapBioTranslation(_ headerView: ProfileTableHeaderView)
+	func profileTableHeaderView(_ headerView: ProfileTableHeaderView, didTapBioTranslationSettings button: UIButton)
 }
 
 // MARK: - ProfileTableHeaderView
@@ -60,6 +62,7 @@ class ProfileTableHeaderView: UIView {
 	private let bodyStackView = UIStackView()
 	private let timeoutBannerButton = TimerButton()
 	private let bioTextView = KTextView()
+	private var bioTranslationBarView: TranslationBarView!
 	private let buttonsScrollView = UIScrollView()
 	private let buttonsStackView = UIStackView()
 	private let reputationButton = KButton()
@@ -217,7 +220,7 @@ class ProfileTableHeaderView: UIView {
 		}
 
 		// Configure user bio
-		self.bioTextView.setAttributedText(user.attributes.biographyMarkdown?.markdownAttributedString())
+		self.updateBio(for: user)
 
 		// Configure count buttons
 		self.configureCountButtons(with: user)
@@ -514,6 +517,7 @@ class ProfileTableHeaderView: UIView {
 		// User details body contents
 		self.bodyStackView.addArrangedSubview(self.timeoutBannerButton)
 		self.bodyStackView.addArrangedSubview(self.bioTextView)
+		self.bioTranslationBarView = TranslationBarView.install(in: self.bodyStackView, at: 1, delegate: self)
 		self.userDetailsBodyView.addSubview(self.bodyStackView)
 		self.userDetailsBodyView.addSubview(self.separatorView)
 		self.buttonsScrollView.addSubview(self.buttonsStackView)
@@ -808,6 +812,23 @@ class ProfileTableHeaderView: UIView {
 	}
 
 	/// Configures the count buttons with the given user's stats.
+	/// Renders the bio, showing its translation when one is on screen.
+	///
+	/// - Parameter user: The user whose bio is shown.
+	func updateBio(for user: User) {
+		var translatedBio: NSAttributedString?
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			let translationState = TranslationService.shared.state(for: user)
+			self.bioTranslationBarView.configure(using: translationState)
+			translatedBio = translationState.body
+		} else {
+			self.bioTranslationBarView.isHidden = true
+		}
+
+		self.bioTextView.setAttributedText(translatedBio ?? user.attributes.biographyMarkdown?.markdownAttributedString())
+	}
+
 	private func configureCountButtons(with user: User) {
 		let reputationCount = user.attributes.reputationCount
 		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
@@ -882,5 +903,16 @@ class ProfileTableHeaderView: UIView {
 extension ProfileTableHeaderView: ProfileBadgeStackViewDelegate {
 	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
 		self.delegate?.profileTableHeaderView(self, didPressBadge: profileBadge, from: button)
+	}
+}
+
+// MARK: - TranslationBarViewDelegate
+extension ProfileTableHeaderView: TranslationBarViewDelegate {
+	func translationBarViewDidTapAction(_ translationBarView: TranslationBarView) {
+		self.delegate?.profileTableHeaderViewDidTapBioTranslation(self)
+	}
+
+	func translationBarView(_ translationBarView: TranslationBarView, didTapSettings button: UIButton) {
+		self.delegate?.profileTableHeaderView(self, didTapBioTranslationSettings: button)
 	}
 }

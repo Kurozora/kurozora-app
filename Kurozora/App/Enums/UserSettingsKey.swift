@@ -135,6 +135,12 @@ enum UserSettingsKey: String, CaseIterable {
 	/// The key to the text shown larger when a line and its pronunciation both appear.
 	case lyricsLargerText
 
+	// Translation keys
+	/// The key to the language user-generated content is translated into.
+	case translationLanguage
+	/// The key to the languages the user does not want translated automatically.
+	case autoTranslateExcludedLanguages
+
 	// Music keys
 	/// The key indicating whether the now-playing accessory shows total time instead of remaining time.
 	case musicAccessoryShowsTotalTime

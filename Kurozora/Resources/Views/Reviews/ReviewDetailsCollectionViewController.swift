@@ -43,6 +43,7 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDeleted(_:)), name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -99,6 +100,21 @@ extension ReviewDetailsCollectionViewController {
 		}
 	}
 
+	/// Re-renders the review when its translation state changes.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateReviewTranslation(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			// Re-applying the snapshot alone changes nothing: the item identifiers are
+			// unchanged, so the diff is empty and no cell is ever reconfigured.
+			var snapshot = self.dataSource.snapshot()
+			snapshot.reconfigureItems(snapshot.itemIdentifiers)
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
+	}
+
 	override func updateDataSource() {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		self.snapshot.appendSections([.main])
@@ -142,6 +158,20 @@ extension ReviewDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 	}
 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {}
+
+	func reviewCollectionViewCellDidTapTranslation(_ cell: ReviewCollectionViewCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let review = self.review else { return }
+
+		TranslationService.shared.toggleTranslation(for: review)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let review = self.review else { return }
+
+		TranslationSettingsViewController.present(for: review, from: button, in: self)
+	}
 }
 
 // MARK: - SectionLayoutKind

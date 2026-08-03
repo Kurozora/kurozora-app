@@ -5049,6 +5049,134 @@ extension L10n {
 		}
 	}
 
+	// MARK: - Translation
+	/// The action that translates content into the reader's language.
+	///
+	/// - Tag: L10n-translationShowTranslation
+	static var translationShowTranslation: String {
+		L10n.resolve {
+			String(
+				localized: "Show translation",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action that translates content into the reader's language."
+			)
+		}
+	}
+	/// The action that restores translated content to the language it was written in.
+	///
+	/// - Tag: L10n-translationShowOriginal
+	static var translationShowOriginal: String {
+		L10n.resolve {
+			String(
+				localized: "Show original",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action that restores translated content to the language it was written in."
+			)
+		}
+	}
+	/// The status shown while content is being translated.
+	///
+	/// - Tag: L10n-translationInProgress
+	static var translationInProgress: String {
+		L10n.resolve {
+			String(
+				localized: "Translating…",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The status shown while content is being translated."
+			)
+		}
+	}
+	/// The status shown when content could not be translated.
+	///
+	/// - Tag: L10n-translationFailed
+	static var translationFailed: String {
+		L10n.resolve {
+			String(
+				localized: "Couldn't translate",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The status shown when content could not be translated."
+			)
+		}
+	}
+	/// The status naming the language content was translated from.
+	///
+	/// - Parameter language: The name of the language the content was written in.
+	///
+	/// - Tag: L10n-translationTranslatedFrom
+	static func translationTranslatedFrom(_ language: String) -> String {
+		String(
+			localized: "Translated from \(language)",
+			table: "Content",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The status naming the language content was translated from."
+		)
+	}
+	/// The title of the translation settings sheet.
+	///
+	/// - Tag: L10n-translationSettingsTitle
+	static var translationSettingsTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Translation",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the translation settings sheet."
+			)
+		}
+	}
+	/// The subtitle of the translation settings sheet.
+	///
+	/// - Tag: L10n-translationSettingsSubtitle
+	static var translationSettingsSubtitle: String {
+		L10n.resolve {
+			String(
+				localized: "Content is translated on this device, so nothing is sent anywhere.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subtitle of the translation settings sheet."
+			)
+		}
+	}
+	/// The label of the control choosing which language content is translated into.
+	///
+	/// - Tag: L10n-translationSettingsTranslateInto
+	static var translationSettingsTranslateInto: String {
+		L10n.resolve {
+			String(
+				localized: "Translate into",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of the control choosing which language content is translated into."
+			)
+		}
+	}
+	/// The toggle that translates a language without being asked.
+	///
+	/// - Parameter language: The name of the language to translate automatically.
+	///
+	/// - Tag: L10n-translationSettingsAutomaticallyTranslate
+	static func translationSettingsAutomaticallyTranslate(_ language: String) -> String {
+		String(
+			localized: "Automatically translate \(language)",
+			table: "Content",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The toggle that translates a language without being asked."
+		)
+	}
+
 	// MARK: - Cast
 	/// The label naming the character a cast member voices.
 	///

@@ -83,12 +83,14 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -190,6 +192,31 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 		}
 	}
 
+	/// Reloads the rows whose translation state changed.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateFeedMessageTranslation(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			guard let identities = notification.object as? Set<TranslationIdentity> else {
+				self.heightCache.removeAll()
+				self.tableView.reloadData()
+				return
+			}
+
+			let indexPaths = self.tableView.indexPathsForVisibleRows?.filter { indexPath in
+				guard let identity = self.feedMessages[safe: indexPath.row]?.translationIdentity else { return false }
+				return identities.contains(identity)
+			}
+
+			guard let indexPaths = indexPaths, !indexPaths.isEmpty else { return }
+
+			indexPaths.forEach { self.heightCache.removeValue(forKey: $0) }
+			self.tableView.reloadRows(at: indexPaths, with: .none)
+		}
+	}
+
 	/// Deletes the feed message with the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
@@ -241,6 +268,12 @@ class FeedTableViewController: KTableViewController, ProfileNavigable, TypedSegu
 			// Save next page url and append new data
 			self.nextPageCursor = feedMessageResponse.nextCursor
 			self.feedMessages.append(contentsOf: feedMessageResponse.data)
+
+			// The table's prefetching never covers the first screen, so start the page
+			// translating here instead of letting it swap in under the reader.
+			if #available(iOS 26.4, macCatalyst 26.4, *) {
+				TranslationService.shared.prefetch(feedMessageResponse.data)
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -403,6 +436,10 @@ extension FeedTableViewController {
 		if !imageURLs.isEmpty {
 			ImagePrefetcher(urls: imageURLs).start()
 		}
+
+		if #available(iOS 26.4, macCatalyst 26.4, *) {
+			TranslationService.shared.prefetch(indexPaths.compactMap { self.feedMessages[safe: $0.row] })
+		}
 	}
 }
 
@@ -476,6 +513,19 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 		self.expandedOPIDs.insert(parentID)
 		self.heightCache.removeValue(forKey: indexPath)
 		self.tableView.reloadRows(at: [indexPath], with: .none)
+	}
+
+	func baseFeedMessageCellDidTapTranslation(_ cell: BaseFeedMessageCell) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		TranslationService.shared.toggleTranslation(for: self.feedMessages[indexPath.row])
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didTapTranslationSettings button: UIButton) {
+		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+
+		TranslationSettingsViewController.present(for: self.feedMessages[indexPath.row], from: button, in: self)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
