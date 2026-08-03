@@ -19,6 +19,7 @@ extension StudioDetail {
 		case rank
 		case tvRating
 		case successor
+		case predecessor
 
 		// MARK: - Properties
 		/// The string value of a badge type.
@@ -31,7 +32,9 @@ extension StudioDetail {
 			case .tvRating:
 				return L10n.tvRating
 			case .successor:
-				return L10n.successor
+				return L10n.studioSuccessor
+			case .predecessor:
+				return L10n.studioPredecessor
 			}
 		}
 
@@ -46,6 +49,24 @@ extension StudioDetail {
 		}
 
 		// MARK: - Functions
+		/// Returns the badges to display for the given studio.
+		///
+		/// - Parameter studio: The object used to determine the available badges.
+		///
+		/// - Returns: the badges to display for the given studio.
+		static func cases(for studio: Studio) -> [Badge] {
+			return self.allCases.filter { badge in
+				switch badge {
+				case .successor:
+					return studio.attributes.successor?.isEmpty == false
+				case .predecessor:
+					return studio.attributes.predecessors.contains { !$0.isEmpty }
+				default:
+					return true
+				}
+			}
+		}
+
 		/// Returns the required primary information from the given object.
 		///
 		/// - Parameter studio: The object used to extract the information from.
@@ -62,6 +83,8 @@ extension StudioDetail {
 				return studio.attributes.tvRating.name
 			case .successor:
 				return studio.attributes.successor ?? "-"
+			case .predecessor:
+				return studio.attributes.predecessors.first { !$0.isEmpty } ?? "-"
 			}
 		}
 
@@ -80,7 +103,9 @@ extension StudioDetail {
 			case .tvRating:
 				return L10n.rated
 			case .successor:
-				return L10n.successor
+				return L10n.studioSuccessor
+			case .predecessor:
+				return L10n.studioPredecessor
 			}
 		}
 
@@ -102,6 +127,8 @@ extension StudioDetail {
 				}
 			case .successor:
 				return UIImage(systemName: "building.2.fill")
+			case .predecessor:
+				return UIImage(systemName: "building.fill")
 			}
 		}
 	}

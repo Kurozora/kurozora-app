@@ -20,6 +20,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		case gameDetailsSegue
 		case gamesListSegue
 		case studioDetailsSegue
+		case topChartsSegue
 		case reviewDetailsSegue
 	}
 
@@ -58,6 +59,12 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	var showIdentities: [ShowIdentity] = []
 	var literatureIdentities: [LiteratureIdentity] = []
 	var gameIdentities: [GameIdentity] = []
+
+	/// The badges shown for the current studio.
+	var badges: [StudioDetail.Badge] {
+		guard let studio = self.studio else { return [] }
+		return StudioDetail.Badge.cases(for: studio)
+	}
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -257,6 +264,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		case .literatureDetailsSegue: return LiteratureDetailsCollectionViewController()
 		case .gameDetailsSegue: return GameDetailsCollectionViewController()
 		case .studioDetailsSegue: return StudioDetailsCollectionViewController()
+		case .topChartsSegue: return StudiosListCollectionViewController()
 		case .reviewDetailsSegue: return KNavigationController(rootViewController: ReviewDetailsCollectionViewController())
 		}
 	}
@@ -294,7 +302,13 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 			guard let gamesListCollectionViewController = destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.studioIdentity = self.studioIdentity
 			gamesListCollectionViewController.gamesListFetchType = .studio
-		case .studioDetailsSegue: return
+		case .studioDetailsSegue:
+			guard let studioDetailsCollectionViewController = destination as? StudioDetailsCollectionViewController else { return }
+			guard let studioIdentity = sender as? StudioIdentity else { return }
+			studioDetailsCollectionViewController.studioIdentity = studioIdentity
+		case .topChartsSegue:
+			guard let studiosListCollectionViewController = destination as? StudiosListCollectionViewController else { return }
+			studiosListCollectionViewController.studiosListFetchType = .charts
 		case .reviewDetailsSegue:
 			guard
 				let navigationController = destination as? KNavigationController,

@@ -50,7 +50,7 @@ extension StudioDetailsCollectionViewController {
 				}
 				return profileHeaderCollectionViewCell
 			case .badges:
-				let studioDetailBadge = StudioDetail.Badge(rawValue: indexPath.item) ?? .tvRating
+				let studioDetailBadge = self.badges[safe: indexPath.item] ?? .tvRating
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
 				case .studio(let studio, _):
@@ -156,13 +156,8 @@ extension StudioDetailsCollectionViewController {
 				self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
 			case .badges:
 				self.snapshot.appendSections([studioDetailSection])
-				StudioDetail.Badge.allCases.forEach { studioDetailBadge in
-					switch studioDetailBadge {
-//					case .rating:
-//						return
-					default:
-						self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
-					}
+				self.badges.forEach { _ in
+					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
 				}
 			case .about:
 				if let about = self.studio.attributes.about, !about.isEmpty {

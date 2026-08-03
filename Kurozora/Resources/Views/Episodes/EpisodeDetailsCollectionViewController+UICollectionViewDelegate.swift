@@ -19,12 +19,11 @@ extension EpisodeDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				guard let seasonIdentity = self.episode.relationships?.seasons?.data.first else { return }
-				self.show(.seasonsListSegue, sender: seasonIdentity)
+				guard let showIdentity = self.episode.relationships?.shows?.data.first else { return }
+				self.show(.seasonsListSegue, sender: showIdentity)
 				return
 			case .rank:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: EpisodeDetail.Information.number.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				self.show(.topChartsSegue, sender: nil)
 				return
 			case .previousEpisode:
 				guard let previousEpisode = self.episode.relationships?.previousEpisodes?.data.first else { return }
@@ -35,8 +34,8 @@ extension EpisodeDetailsCollectionViewController {
 				self.show(.episodeDetailsSegue, sender: nextEpisode)
 				return
 			case .show:
-				guard let show = self.episode.relationships?.shows?.data.first else { return }
-				self.show(.showDetailsSegue, sender: show)
+				guard let showIdentity = self.episode.relationships?.shows?.data.first else { return }
+				self.show(.showDetailsSegue, sender: showIdentity)
 				return
 			}
 		case .cast:

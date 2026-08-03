@@ -13,23 +13,26 @@ extension StudioDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .badges:
-			guard let studioDetailBadge = StudioDetail.Badge(rawValue: indexPath.item) else { return }
+			guard let studioDetailBadge = self.badges[safe: indexPath.item] else { return }
 			switch studioDetailBadge {
 			case .rating:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.rating) else { return }
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .rank:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				collectionView.safeScrollToItem(at: IndexPath(row: StudioDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				self.show(.topChartsSegue, sender: nil)
 				return
 			case .tvRating:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 				collectionView.safeScrollToItem(at: IndexPath(row: StudioDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .successor:
-				guard let successor = self.studio.relationships?.successors?.data.first else { return }
-				self.show(.studioDetailsSegue, sender: successor)
+				guard let successorIdentity = self.studio.relationships?.successors?.data.first else { return }
+				self.show(.studioDetailsSegue, sender: successorIdentity)
+				return
+			case .predecessor:
+				guard let predecessorIdentity = self.studio.relationships?.predecessors?.data.first else { return }
+				self.show(.studioDetailsSegue, sender: predecessorIdentity)
 				return
 			}
 		case .shows:

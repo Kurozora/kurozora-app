@@ -2934,19 +2934,6 @@ extension L10n {
 		)
 	}
 
-	/// The string for the word 'successor'.
-	///
-	/// - Tag: L10n-successor
-	static var successor: String {
-		L10n.resolve {
-			String(
-				localized: "Successor",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "The string for the word 'successor'."
-			)
-		}
-	}
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: L10n-cast

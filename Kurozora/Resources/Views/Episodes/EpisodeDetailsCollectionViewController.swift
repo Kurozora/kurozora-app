@@ -16,6 +16,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		case reviewsListSegue
 		case showDetailsSegue
 		case seasonsListSegue
+		case topChartsSegue
 		case episodeDetailsSegue
 		case episodesListSegue
 		case personDetailsSegue
@@ -265,6 +266,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		case .reviewsListSegue: return ReviewsListCollectionViewController()
 		case .showDetailsSegue: return ShowDetailsCollectionViewController()
 		case .seasonsListSegue: return SeasonsListCollectionViewController()
+		case .topChartsSegue: return EpisodesListCollectionViewController()
 		case .episodeDetailsSegue: return EpisodeDetailsCollectionViewController()
 		case .episodesListSegue: return EpisodesListCollectionViewController()
 		case .castListSegue: return CastListCollectionViewController()
@@ -292,8 +294,11 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			}
 		case .seasonsListSegue:
 			guard let seasonsListCollectionViewController = destination as? SeasonsListCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			seasonsListCollectionViewController.showIdentity = ShowIdentity(id: show.id)
+			guard let showIdentity = sender as? ShowIdentity else { return }
+			seasonsListCollectionViewController.showIdentity = showIdentity
+		case .topChartsSegue:
+			guard let episodesListCollectionViewController = destination as? EpisodesListCollectionViewController else { return }
+			episodesListCollectionViewController.episodesListFetchType = .charts
 		case .episodeDetailsSegue:
 			guard let episodeDetailsCollectionViewController = destination as? EpisodeDetailsCollectionViewController else { return }
 			episodeDetailsCollectionViewController.episode = sender as? Episode

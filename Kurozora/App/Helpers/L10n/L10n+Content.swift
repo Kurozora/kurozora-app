@@ -3419,6 +3419,36 @@ extension L10n {
 			String(localized: "Synonyms: \(names)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The studio's synonym aliases, where the placeholder is the comma-separated names.")
 		}
 	}
+	/// The badge label for the company that took over from a studio.
+	///
+	/// - Tag: L10n-studioSuccessor
+	static var studioSuccessor: String {
+		L10n.resolve {
+			String(
+				localized: "studioSuccessor",
+				defaultValue: "Successor",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The badge label for the company that took over from a studio, not a sequel."
+			)
+		}
+	}
+	/// The badge label for the company a studio grew out of.
+	///
+	/// - Tag: L10n-studioPredecessor
+	static var studioPredecessor: String {
+		L10n.resolve {
+			String(
+				localized: "studioPredecessor",
+				defaultValue: "Predecessor",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The badge label for the company a studio grew out of, not a prequel."
+			)
+		}
+	}
 
 	// MARK: - Broadcast Countdown
 	/// The compact month count in a broadcast countdown.

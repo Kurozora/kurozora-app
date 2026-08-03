@@ -17,7 +17,7 @@ extension StudioDetailsCollectionViewController {
 		case .header, .about:
 			return 1
 		case .badges:
-			return width > 414 ? StudioDetail.Badge.allCases.count : Int((width / 132).rounded())
+			return width > 414 ? self.badges.count : Int((width / 132).rounded())
 		case .rating:
 			let columnCount = Int((width / 250).rounded())
 			return columnCount >= 3 ? 3 : 2
