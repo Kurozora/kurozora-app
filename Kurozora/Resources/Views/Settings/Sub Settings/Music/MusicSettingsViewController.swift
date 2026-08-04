@@ -15,6 +15,7 @@ class MusicSettingsViewController: SubSettingsViewController, TypedSegueHandling
 		case songTransitionsSegue
 		case skipDurationSegue
 		case largerTextSegue
+		case floatingLyricsSegue
 	}
 
 	// MARK: - Initializers
@@ -59,6 +60,7 @@ class MusicSettingsViewController: SubSettingsViewController, TypedSegueHandling
 		case .songTransitionsSegue: return SongTransitionsViewController()
 		case .skipDurationSegue: return SkipDurationSettingsViewController()
 		case .largerTextSegue: return LargerTextSettingsViewController()
+		case .floatingLyricsSegue: return FloatingLyricsSettingsViewController()
 		}
 	}
 
@@ -170,7 +172,7 @@ private extension MusicSettingsViewController {
 				return [.songTransitions, .skipDuration]
 				#endif
 			case .lyrics:
-				return [.largerText]
+				return [.largerText, .floatingLyrics]
 			case .notifications:
 				return [.songChangeNotifications]
 			}
@@ -201,6 +203,7 @@ private extension MusicSettingsViewController {
 		case songTransitions
 		case skipDuration
 		case largerText
+		case floatingLyrics
 		case songChangeNotifications
 
 		var title: String {
@@ -211,6 +214,8 @@ private extension MusicSettingsViewController {
 				return L10n.skipDuration
 			case .largerText:
 				return L10n.largerText
+			case .floatingLyrics:
+				return L10n.floatingLyrics
 			case .songChangeNotifications:
 				return L10n.whenSongChanges
 			}
@@ -224,6 +229,8 @@ private extension MusicSettingsViewController {
 				return L10n.secondsCount(UserSettings.musicSkipDuration.rawValue)
 			case .largerText:
 				return UserSettings.lyricsLargerText.stringValue
+			case .floatingLyrics:
+				return ""
 			case .songChangeNotifications:
 				return ""
 			}
@@ -237,6 +244,8 @@ private extension MusicSettingsViewController {
 				return .skipDurationSegue
 			case .largerText:
 				return .largerTextSegue
+			case .floatingLyrics:
+				return .floatingLyricsSegue
 			case .songChangeNotifications:
 				return nil
 			}

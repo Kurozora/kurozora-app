@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import Combine
 import KurozoraKit
 import SwiftTheme
 import UIKit
@@ -49,6 +50,22 @@ final class LyricsViewController: KTableViewController {
 		])
 		return button
 	}()
+
+	private lazy var pictureInPictureButton: KnockoutButton = {
+		let button = KnockoutButton(symbol: UIImage(systemName: "pip.enter"))
+		button.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 44),
+			button.heightAnchor.constraint(equalTo: button.widthAnchor),
+		])
+		button.addAction(UIAction { _ in
+			FloatingLyricsManager.shared.togglePictureInPicture()
+		}, for: .touchUpInside)
+		return button
+	}()
+
+	/// The subscription mirroring the Picture in Picture state onto the button.
+	private var pictureInPictureSubscription: AnyCancellable?
 
 	// MARK: - Properties
 	private var lyrics: Lyrics?
@@ -151,6 +168,8 @@ final class LyricsViewController: KTableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
+		self.updatePictureInPictureButton()
+
 		if self.canTimeSync {
 			self.startDisplayLink()
 		}
@@ -165,6 +184,7 @@ final class LyricsViewController: KTableViewController {
 		super.viewDidLayoutSubviews()
 
 		self.view.bringSubviewToFront(self.optionsButton)
+		self.view.bringSubviewToFront(self.pictureInPictureButton)
 
 		let bottomInset = self.canTimeSync ? self.tableView.bounds.height * 0.8 : 16
 		if self.tableView.contentInset.bottom != bottomInset {
@@ -216,6 +236,27 @@ final class LyricsViewController: KTableViewController {
 
 		self.optionsButton.isHidden = !self.hasLoadedLyrics
 		self.updateOptionsButtonAppearance()
+
+		self.view.addSubview(self.pictureInPictureButton)
+
+		NSLayoutConstraint.activate([
+			self.pictureInPictureButton.trailingAnchor.constraint(equalTo: self.optionsButton.trailingAnchor),
+			self.pictureInPictureButton.bottomAnchor.constraint(equalTo: self.optionsButton.topAnchor, constant: -8),
+		])
+
+		self.updatePictureInPictureButton()
+
+		self.pictureInPictureSubscription = FloatingLyricsManager.shared.$isPictureInPictureActive
+			.receive(on: RunLoop.main)
+			.sink { [weak self] isActive in
+				self?.pictureInPictureButton.isActiveState = isActive
+			}
+	}
+
+	/// Shows the Picture in Picture button only when this song plays time-synced with lyrics.
+	private func updatePictureInPictureButton() {
+		let manager = FloatingLyricsManager.shared
+		self.pictureInPictureButton.isHidden = !(manager.isPictureInPictureSupported && self.canTimeSync && self.isCurrentSong && !self.items.isEmpty)
 	}
 
 	private func updateOptionsButtonAppearance() {
@@ -243,6 +284,7 @@ final class LyricsViewController: KTableViewController {
 		self.updateDataSource()
 		self.updateOptionsMenu()
 		self.optionsButton.isHidden = self.items.isEmpty
+		self.updatePictureInPictureButton()
 		self.configureEmptyDataView()
 
 		self.hasPerformedInitialSync = false

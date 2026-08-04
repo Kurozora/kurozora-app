@@ -17,6 +17,9 @@ struct MusicAccessoryLayout: Equatable {
 	/// Whether the lyrics button is visible.
 	let showsLyricsButton: Bool
 
+	/// Whether the floating lyrics button is visible.
+	let showsFloatingLyricsButton: Bool
+
 	/// Whether the progress bar is visible.
 	let showsProgressBar: Bool
 
@@ -50,9 +53,9 @@ struct MusicAccessoryLayout: Equatable {
 
 		switch environment {
 		case .inline:
-			return MusicAccessoryLayout(showsContextMenuButton: isWide, showsLyricsButton: false, showsProgressBar: false, showsAirPlayButton: false, showsVolumeControl: false, playPauseIsLeading: false, showsSkipForward: false)
+			return MusicAccessoryLayout(showsContextMenuButton: isWide, showsLyricsButton: false, showsFloatingLyricsButton: false, showsProgressBar: false, showsAirPlayButton: false, showsVolumeControl: false, playPauseIsLeading: false, showsSkipForward: false)
 		default:
-			return MusicAccessoryLayout(showsContextMenuButton: isWide, showsLyricsButton: isWide, showsProgressBar: isWide, showsAirPlayButton: isWide, showsVolumeControl: isWide, playPauseIsLeading: isWide, showsSkipForward: true)
+			return MusicAccessoryLayout(showsContextMenuButton: isWide, showsLyricsButton: isWide, showsFloatingLyricsButton: isWide, showsProgressBar: isWide, showsAirPlayButton: isWide, showsVolumeControl: isWide, playPauseIsLeading: isWide, showsSkipForward: true)
 		}
 	}
 }

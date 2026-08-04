@@ -147,6 +147,8 @@
 				App/Enums/CrossfadeDuration.swift,
 				App/Enums/KBrowser.swift,
 				App/Enums/KThemePicker.swift,
+				App/Enums/LyricsFloatingWindowFontSize.swift,
+				App/Enums/LyricsFloatingWindowRows.swift,
 				App/Enums/LyricsLargerText.swift,
 				App/Enums/SkipDuration.swift,
 				App/Enums/SplashScreenAnimation.swift,

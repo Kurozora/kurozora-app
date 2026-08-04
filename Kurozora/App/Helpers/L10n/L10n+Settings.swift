@@ -1778,6 +1778,86 @@ extension L10n {
 		}
 	}
 
+	// MARK: - Floating Lyrics
+	/// The title of the floating lyrics setting.
+	static var floatingLyrics: String {
+		L10n.resolve {
+			String(localized: "Floating Lyrics", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics setting.")
+		}
+	}
+	/// A short description for the floating lyrics settings header.
+	static var floatingLyricsDescription: String {
+		L10n.resolve {
+			String(localized: "Keep lyrics on screen in a small floating window, even when you leave the app.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "A short description for the floating lyrics settings header.")
+		}
+	}
+	/// The title of the floating lyrics font size setting.
+	static var fontSize: String {
+		L10n.resolve {
+			String(localized: "Font Size", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics font size setting.")
+		}
+	}
+	/// The standard font size option.
+	static var fontSizeStandard: String {
+		L10n.resolve {
+			String(localized: "Standard", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The standard font size option.")
+		}
+	}
+	/// The big font size option.
+	static var fontSizeBig: String {
+		L10n.resolve {
+			String(localized: "Big", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The big font size option.")
+		}
+	}
+	/// The title of the floating lyrics display lines setting.
+	static var displayLines: String {
+		L10n.resolve {
+			String(localized: "Display", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics display lines setting.")
+		}
+	}
+	/// The display option showing one lyric line.
+	static var oneLine: String {
+		L10n.resolve {
+			String(localized: "1 Line", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display option showing one lyric line.")
+		}
+	}
+	/// The display option showing two lyric lines.
+	static var twoLines: String {
+		L10n.resolve {
+			String(localized: "2 Lines", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display option showing two lyric lines.")
+		}
+	}
+	/// The title of the floating lyrics second-line setting when it reveals the original lyrics.
+	static var showLyrics: String {
+		L10n.resolve {
+			String(localized: "Show Lyrics", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics second-line setting when it reveals the original lyrics.")
+		}
+	}
+	/// The title of the floating lyrics translation setting.
+	static var showTranslation: String {
+		L10n.resolve {
+			String(localized: "Show Translation", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics translation setting.")
+		}
+	}
+	/// The footer describing the floating lyrics translation setting.
+	static var showTranslationDescription: String {
+		L10n.resolve {
+			String(localized: "Shows your preferred translation or pronunciation on the second line.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the floating lyrics translation setting.")
+		}
+	}
+	/// The title of the floating lyrics auto-open setting.
+	static var openAutomatically: String {
+		L10n.resolve {
+			String(localized: "Open Automatically", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics auto-open setting.")
+		}
+	}
+	/// The footer describing the floating lyrics auto-open setting.
+	static var openAutomaticallyDescription: String {
+		L10n.resolve {
+			String(localized: "Open the floating lyrics window automatically when you leave the app while music is playing.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the floating lyrics auto-open setting.")
+		}
+	}
+
 	// MARK: - Library Sync
 	/// The 'Sync' settings section header.
 	static var sync: String {

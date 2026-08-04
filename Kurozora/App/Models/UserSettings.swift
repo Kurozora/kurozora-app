@@ -33,6 +33,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.forwardNavigationEnabled.rawValue: true,
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
+			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
 		])
 		return shared
 	}
@@ -379,6 +380,28 @@ extension UserSettings {
 	static var lyricsLargerText: LyricsLargerText {
 		guard let largerText = LyricsLargerText(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return largerText
+	}
+
+	/// Returns the font size of the text shown in the floating lyrics window.
+	static var lyricsFloatingWindowFontSize: LyricsFloatingWindowFontSize {
+		guard let fontSize = LyricsFloatingWindowFontSize(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return fontSize
+	}
+
+	/// Returns the number of lyric lines shown in the floating lyrics window.
+	static var lyricsFloatingWindowRows: LyricsFloatingWindowRows {
+		guard let rows = LyricsFloatingWindowRows(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return rows
+	}
+
+	/// Returns a Boolean indicating whether the floating lyrics window shows a translation.
+	static var lyricsFloatingWindowShowsTranslation: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether the floating lyrics window opens automatically when leaving the app.
+	static var lyricsFloatingWindowAutoOpen: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 }
 

@@ -138,6 +138,14 @@ enum UserSettingsKey: String, CaseIterable {
 	case lyricsTranslationLanguage
 	/// The key to the text shown larger when a line and its pronunciation both appear.
 	case lyricsLargerText
+	/// The key to the font size of the text shown in the floating lyrics window.
+	case lyricsFloatingWindowFontSize
+	/// The key to the number of lyric lines shown in the floating lyrics window.
+	case lyricsFloatingWindowRows
+	/// The key indicating whether the floating lyrics window shows a translation.
+	case lyricsFloatingWindowShowsTranslation
+	/// The key indicating whether the floating lyrics window opens automatically when leaving the app.
+	case lyricsFloatingWindowAutoOpen
 
 	// Translation keys
 	/// The key to the language user-generated content is translated into.

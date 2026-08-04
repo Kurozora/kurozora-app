@@ -126,6 +126,15 @@ final class MusicPlaybackControlView: UIView {
 		return control
 	}()
 
+	private let floatingLyricsButton: IconPressControl = {
+		let control = IconPressControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		control.fixedHighlightDiameter = 38
+		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
+		control.symbolImage = UIImage(systemName: "pip.enter", withConfiguration: config)
+		return control
+	}()
+
 	private let labelStack: UIStackView = {
 		let stack = UIStackView()
 		stack.translatesAutoresizingMaskIntoConstraints = false
@@ -233,7 +242,7 @@ final class MusicPlaybackControlView: UIView {
 
 	/// The subviews that handle their own touches, so the accessory's gestures and context menu defer to them.
 	private var interactiveViews: [UIView] {
-		[self.playPauseButton, self.shuffleButton, self.skipBackButton, self.skipForwardButton, self.repeatButton, self.menuButton, self.lyricsButton, self.airPlayView, self.volumeControl, self.progressView]
+		[self.playPauseButton, self.shuffleButton, self.skipBackButton, self.skipForwardButton, self.repeatButton, self.menuButton, self.lyricsButton, self.floatingLyricsButton, self.airPlayView, self.volumeControl, self.progressView]
 	}
 
 	/// Returns whether the given point, in this view's coordinate space, falls on an interactive subview.
@@ -284,6 +293,14 @@ final class MusicPlaybackControlView: UIView {
 		#endif
 	}
 
+	override func didMoveToWindow() {
+		super.didMoveToWindow()
+
+		if self.window != nil {
+			FloatingLyricsManager.shared.sourceView = self
+		}
+	}
+
 	private func sharedInit() {
 		self.configureView()
 		self.configureViewHierarchy()
@@ -317,6 +334,10 @@ final class MusicPlaybackControlView: UIView {
 
 		self.lyricsButton.addAction(UIAction { [weak self] _ in
 			self?.presentLyrics()
+		}, for: .touchUpInside)
+
+		self.floatingLyricsButton.addAction(UIAction { _ in
+			FloatingLyricsManager.shared.togglePictureInPicture()
 		}, for: .touchUpInside)
 
 		self.menuButton.menuProvider = { [weak self] in
@@ -391,6 +412,8 @@ final class MusicPlaybackControlView: UIView {
 			self.menuButton.heightAnchor.constraint(equalToConstant: 44),
 			self.lyricsButton.widthAnchor.constraint(equalToConstant: 44),
 			self.lyricsButton.heightAnchor.constraint(equalToConstant: 44),
+			self.floatingLyricsButton.widthAnchor.constraint(equalToConstant: 44),
+			self.floatingLyricsButton.heightAnchor.constraint(equalToConstant: 44),
 			self.airPlayView.widthAnchor.constraint(equalToConstant: 44),
 			self.airPlayView.heightAnchor.constraint(equalToConstant: 44),
 			self.volumeControl.widthAnchor.constraint(equalToConstant: 44),
@@ -416,6 +439,7 @@ final class MusicPlaybackControlView: UIView {
 			self.progressView.trailingAnchor.constraint(equalTo: self.trailingStack.leadingAnchor, constant: 44),
 			self.progressView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
 		])
+
 
 		self.titleLabel.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
 		self.subtitleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -484,6 +508,16 @@ final class MusicPlaybackControlView: UIView {
 				self.repeatButton.isActive = mode != .off
 			}
 			.store(in: &self.subscriptions)
+
+		FloatingLyricsManager.shared.$isPictureInPictureActive
+			.receive(on: RunLoop.main)
+			.sink { [weak self] isActive in
+				guard let self = self else { return }
+				// Point size must mirror the floatingLyricsButton declaration.
+				let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
+				self.floatingLyricsButton.symbolImage = UIImage(systemName: isActive ? "pip.exit" : "pip.enter", withConfiguration: config)
+			}
+			.store(in: &self.subscriptions)
 	}
 
 	/// Sizes the volume slider so it stops just before the context-menu button.
@@ -511,6 +545,7 @@ final class MusicPlaybackControlView: UIView {
 		self.lastAppliedLayout = layout
 		self.menuButton.isHidden = !layout.showsContextMenuButton
 		self.lyricsButton.isHidden = !layout.showsLyricsButton
+		self.floatingLyricsButton.isHidden = !layout.showsFloatingLyricsButton || !FloatingLyricsManager.shared.canTimeSync || !FloatingLyricsManager.shared.isPictureInPictureSupported
 		self.progressView.isHidden = !layout.showsProgressBar
 		self.airPlayView.isHidden = !layout.showsAirPlayButton
 		self.volumeControl.isHidden = !layout.showsVolumeControl
@@ -520,7 +555,7 @@ final class MusicPlaybackControlView: UIView {
 			? [self.shuffleButton, self.skipBackButton, self.playPauseButton, self.skipForwardButton, self.repeatButton]
 			: []
 
-		var trailingViews: [UIView] = [self.menuButton, self.lyricsButton, self.airPlayView, self.volumeControl]
+		var trailingViews: [UIView] = [self.menuButton, self.lyricsButton, self.floatingLyricsButton, self.airPlayView, self.volumeControl]
 		if !layout.playPauseIsLeading {
 			trailingViews.append(self.playPauseButton)
 			trailingViews.append(self.skipForwardButton)
