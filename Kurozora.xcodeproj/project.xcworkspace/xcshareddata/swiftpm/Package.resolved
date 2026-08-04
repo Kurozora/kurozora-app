@@ -1,5 +1,5 @@
 {
-  "originHash" : "26fc607153ea26f8103204611b91a05bcaa5d45546b552ddb3097e236b794b9d",
+  "originHash" : "4faa91d5fbef64f911cb40d8ed5504cc64b67ed0189d671c2079c93185b2a0b6",
   "pins" : [
     {
       "identity" : "apikit",
@@ -128,15 +128,6 @@
       }
     },
     {
-      "identity" : "kurozorakit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Kurozora/KurozoraKit.git",
-      "state" : {
-        "revision" : "4caab005374ac955e4a73cff535260401c9b10b7",
-        "version" : "2.2.0"
-      }
-    },
-    {
       "identity" : "licenseplist",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mono0926/LicensePlist",
@@ -227,6 +218,15 @@
       }
     },
     {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version" : "603.0.2"
+      }
+    },
+    {
       "identity" : "swiftlintplugins",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins.git",
@@ -269,14 +269,6 @@
       "state" : {
         "revision" : "6cef1ce17803cb73406e0e20f02f405570f499c6",
         "version" : "0.5.1"
-      }
-    },
-    {
-      "identity" : "xcdyoutubekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/0xced/XCDYouTubeKit.git",
-      "state" : {
-        "revision" : "651a6a51c695c5819eb51ba2f98d0b64094315b9"
       }
     },
     {
