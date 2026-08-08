@@ -62,7 +62,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
 	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
 		print("----- UIApplication connecting to scene session.")
+		if connectingSceneSession.userInfo == nil {
+			connectingSceneSession.userInfo = [:]
+		}
 		connectingSceneSession.userInfo?["activity"] = options.userActivities.first?.activityType
+
+		// Restore MiniPlayer activity.
+		if #available(iOS 17.0, macCatalyst 17.0, *) {
+			let isMiniPlayerActivity = options.userActivities.contains { $0.activityType == SceneActivityType.miniPlayer.rawValue }
+
+			if isMiniPlayerActivity || connectingSceneSession.configuration.name == "MiniPlayer Configuration" {
+				let configuration = UISceneConfiguration(name: "MiniPlayer Configuration", sessionRole: connectingSceneSession.role)
+				configuration.delegateClass = MiniPlayerSceneDelegate.self
+				return configuration
+			}
+		}
 
 		// Based on the name of the configuration iOS will initialize the correct SceneDelegate
 		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
@@ -153,9 +167,42 @@ extension AppDelegate {
 extension AppDelegate {
 	/// Used to update your content.
 	@objc func handleNewScene() {
-		if UIApplication.shared.connectedScenes.count == 0 {
+		let mainScenes = UIApplication.shared.connectedScenes.filter { !$0.session.isAuxiliaryScene }
+
+		if mainScenes.isEmpty {
 			UIApplication.shared.requestSceneSessionActivation(nil, userActivity: nil, options: nil)
 		}
+	}
+
+	/// The session of the open MiniPlayer scene.
+	var miniPlayerSession: UISceneSession? {
+		return UIApplication.shared.openSessions.first { session in
+			session.userInfo?["isMiniPlayer"] as? Bool == true
+		}
+	}
+
+	/// User chose "MiniPlayer" from the Window menu.
+	@objc func handleMiniPlayer(_ sender: AnyObject) {
+		guard #available(iOS 17.0, macCatalyst 17.0, *) else { return }
+
+		if let existingSession = self.miniPlayerSession {
+			UIApplication.shared.requestSceneSessionDestruction(existingSession, options: nil)
+		} else {
+			self.openMiniPlayer()
+		}
+	}
+
+	/// Opens the MiniPlayer.
+	func openMiniPlayer() {
+		guard #available(iOS 17.0, macCatalyst 17.0, *) else { return }
+
+		if let existingSession = self.miniPlayerSession {
+			UIApplication.shared.requestSceneSessionActivation(existingSession, userActivity: nil, options: nil)
+			return
+		}
+
+		let miniPlayerActivity = NSUserActivity(activityType: .miniPlayer)
+		UIApplication.shared.requestSceneSessionActivation(nil, userActivity: miniPlayerActivity, options: nil)
 	}
 
 	/// Used to update your content.
@@ -287,7 +334,7 @@ extension AppDelegate {
 		if let existingSession = existingSession {
 			UIApplication.shared.requestSceneSessionActivation(existingSession, userActivity: nil, options: nil)
 		} else {
-			let activity = NSUserActivity(activityType: kFlexDebugSceneActivityType)
+			let activity = NSUserActivity(activityType: .flexDebug)
 			UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil)
 		}
 		#else
@@ -335,6 +382,8 @@ extension AppDelegate {
 			return (self.contentNavigationController?.viewControllers.count ?? 0) > 1
 		case #selector(self.handleNavigateForward(_:)):
 			return self.contentNavigationController?.forwardNavigationCoordinator.canNavigateForward ?? false
+		case #selector(self.handleMiniPlayer(_:)):
+			return UIApplication.shared.supportsMultipleScenes
 		default:
 			return super.canPerformAction(action, withSender: sender)
 		}

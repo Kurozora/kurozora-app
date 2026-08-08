@@ -70,6 +70,15 @@ class KTableViewController: UITableViewController, SegueHandler {
 		return false
 	}
 
+	/// Specifies whether the view controller prefers the themed gradient background to be hidden.
+	///
+	/// By default, this property returns `false`.
+	///
+	/// - Returns: `true` if the gradient background should be hidden or `false` if it should be shown.
+	var prefersGradientBackgroundHidden: Bool {
+		return false
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -127,6 +136,8 @@ class KTableViewController: UITableViewController, SegueHandler {
 
 	/// Configures the gradient view with default values.
 	fileprivate func configureGradientView() {
+		guard !self.prefersGradientBackgroundHidden else { return }
+
 		self.view.addSubview(self.gradientView)
 		self.view.sendSubviewToBack(self.gradientView)
 

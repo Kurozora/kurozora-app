@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Activity types used throughout the Kurozora app.
+/// Activity types that restore a Kurozora item.
 enum ActivityType: String {
 	/// Activity type for opening a show detail.
 	case openShow = "app.kurozora.tracker.user-activity.openShow"
@@ -20,10 +20,16 @@ enum ActivityType: String {
 	case openUser = "app.kurozora.tracker.user-activity.openUser"
 }
 
-#if DEBUG
-/// Activity type used to spawn the FLEX globals window on macOS.
-let kFlexDebugSceneActivityType = "app.kurozora.tracker.user-activity.flexDebug"
-#endif
+/// Activity types that spawn a window of their own.
+enum SceneActivityType: String {
+	/// Activity type for the MiniPlayer window.
+	case miniPlayer = "app.kurozora.tracker.user-activity.miniPlayer"
+
+	#if DEBUG
+	/// Activity type for the FLEX globals window.
+	case flexDebug = "app.kurozora.tracker.user-activity.flexDebug"
+	#endif
+}
 
 extension NSUserActivity {
 	/// Creates a user activity object with the specified type.
@@ -32,6 +38,15 @@ extension NSUserActivity {
 	///
 	/// - Returns: An [NSUserActivity](https://developer.apple.com/documentation/foundation/nsuseractivity) object.
 	convenience init(activityType: ActivityType) {
+		self.init(activityType: activityType.rawValue)
+	}
+
+	/// Creates a user activity object with the specified scene type.
+	///
+	/// - Parameter activityType: The type of the activity.
+	///
+	/// - Returns: An [NSUserActivity](https://developer.apple.com/documentation/foundation/nsuseractivity) object.
+	convenience init(activityType: SceneActivityType) {
 		self.init(activityType: activityType.rawValue)
 	}
 }

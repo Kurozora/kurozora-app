@@ -16,9 +16,12 @@ extension UIImageView {
 	/// - Parameters:
 	///    - urlString: The URL string from where the image should be downloaded.
 	///    - placeholder: The placeholder to show until the image is loaded or in case the URL is dead.
-	func setImage(with urlString: String, placeholder: UIImage) {
+	///    - completion: The closure called with the image the view ends up showing.
+	func setImage(with urlString: String, placeholder: UIImage, completion: ((UIImage) -> Void)? = nil) {
 		guard !urlString.isEmpty, let imageURL = URL(string: urlString) else {
-			self.image = placeholder.withRenderingMode(.alwaysOriginal)
+			let placeholderImage = placeholder.withRenderingMode(.alwaysOriginal)
+			self.image = placeholderImage
+			completion?(placeholderImage)
 			return
 		}
 
@@ -26,10 +29,12 @@ extension UIImageView {
 			.transition(.fade(0.2))
 			.lowDataModeSource(.network(imageURL))
 			.onProgress { _, _ in }
-			.onSuccess { _ in }
+			.onSuccess { completion?($0.image) }
 			.onFailure { [weak self] _ in
 				guard let self else { return }
-				self.image = placeholder.withRenderingMode(.alwaysOriginal)
+				let placeholderImage = placeholder.withRenderingMode(.alwaysOriginal)
+				self.image = placeholderImage
+				completion?(placeholderImage)
 			}
 			.set(to: self)
 	}

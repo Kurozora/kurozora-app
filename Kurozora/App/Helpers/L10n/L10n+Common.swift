@@ -2353,6 +2353,58 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the phrase 'Play a song to see lyrics here.'.
+	///
+	/// - Tag: L10n-playASongToSeeLyrics
+	static var playASongToSeeLyrics: String {
+		L10n.resolve {
+			String(
+				localized: "Play a song to see lyrics here.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The stand-in shown in the player's lyrics pane while nothing is playing."
+			)
+		}
+	}
+	/// The string for the phrase 'Hide Lyrics'.
+	///
+	/// - Tag: L10n-hideLyrics
+	static var hideLyrics: String {
+		L10n.resolve {
+			String(
+				localized: "Hide Lyrics",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the player menu action that dismisses the lyrics pane."
+			)
+		}
+	}
+	/// The string for the phrase 'Show Large Artwork'.
+	///
+	/// - Tag: L10n-showLargeArtwork
+	static var showLargeArtwork: String {
+		L10n.resolve {
+			String(
+				localized: "Show Large Artwork",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the player menu action that grows the window into the artwork card."
+			)
+		}
+	}
+	/// The string for the phrase 'Hide Large Artwork'.
+	///
+	/// - Tag: L10n-hideLargeArtwork
+	static var hideLargeArtwork: String {
+		L10n.resolve {
+			String(
+				localized: "Hide Large Artwork",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the player menu action that shrinks the window to the compact bar."
+			)
+		}
+	}
 	/// The string for the phrase 'Show Pronunciation'.
 	///
 	/// - Tag: L10n-showPronunciation
@@ -3323,6 +3375,28 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the word 'Mute'.
+	static var mute: String {
+		L10n.resolve {
+			String(
+				localized: "Mute",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Mute'."
+			)
+		}
+	}
+	/// The string for the word 'Unmute'.
+	static var unmute: String {
+		L10n.resolve {
+			String(
+				localized: "Unmute",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'Unmute'."
+			)
+		}
+	}
 	/// The string for the word 'Unfavorite'.
 	static var unfavorite: String {
 		L10n.resolve {
@@ -3664,6 +3738,32 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "The menu command that opens the redeem flow."
+			)
+		}
+	}
+	/// The menu command and window title for the MiniPlayer.
+	///
+	/// - Tag: L10n-miniPlayer
+	static var miniPlayer: String {
+		L10n.resolve {
+			String(
+				localized: "MiniPlayer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command and window title for the MiniPlayer."
+			)
+		}
+	}
+	/// The discoverability title for the MiniPlayer menu command.
+	///
+	/// - Tag: L10n-toggleMiniPlayer
+	static var toggleMiniPlayer: String {
+		L10n.resolve {
+			String(
+				localized: "Toggle MiniPlayer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The discoverability title for the MiniPlayer menu command."
 			)
 		}
 	}

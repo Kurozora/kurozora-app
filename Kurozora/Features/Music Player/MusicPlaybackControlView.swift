@@ -32,6 +32,29 @@ final class MusicPlaybackControlView: UIView {
 		return view
 	}()
 
+	/// The app's mark, shown while nothing is playing.
+	private let idleMarkImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .scaleAspectFit
+		imageView.image = .kurozoraIconMonotone
+		imageView.tintColor = .systemGray
+		imageView.isHidden = true
+		return imageView
+	}()
+
+	/// The expand affordance shown over the mark.
+	private let idleExpandImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .center
+		imageView.tintColor = .label
+		imageView.image = UIImage(systemName: "arrow.up.left.and.arrow.down.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+		imageView.alpha = 0
+		imageView.isHidden = true
+		return imageView
+	}()
+
 	private let expandImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -221,7 +244,7 @@ final class MusicPlaybackControlView: UIView {
 	/// The reused context for rendering blurred snapshots.
 	private let blurContext = CIContext()
 
-	/// The padding, in points, added around a snapshot so its blur can feather beyond the source bounds.
+	/// The padding, in points, added around a snapshot before blurring.
 	private let blurInset: CGFloat = 30
 
 	/// The blurred snapshots overlaid on de-emphasized views, keyed by the source view.
@@ -240,7 +263,7 @@ final class MusicPlaybackControlView: UIView {
 		return ["song": mkSong]
 	}
 
-	/// The subviews that handle their own touches, so the accessory's gestures and context menu defer to them.
+	/// The subviews that handle their own touches.
 	private var interactiveViews: [UIView] {
 		[self.playPauseButton, self.shuffleButton, self.skipBackButton, self.skipForwardButton, self.repeatButton, self.menuButton, self.lyricsButton, self.floatingLyricsButton, self.airPlayView, self.volumeControl, self.progressView]
 	}
@@ -355,6 +378,9 @@ final class MusicPlaybackControlView: UIView {
 		let hoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.handleArtworkHover(_:)))
 		self.artworkImageView.addGestureRecognizer(hoverGestureRecognizer)
 
+		let idleHoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.handleIdleMarkHover(_:)))
+		self.metadataContainer.addGestureRecognizer(idleHoverGestureRecognizer)
+
 		let skipBackwardHold = UILongPressGestureRecognizer(target: self, action: #selector(self.handleSkipBackwardHold(_:)))
 		self.skipBackButton.addGestureRecognizer(skipBackwardHold)
 
@@ -373,6 +399,8 @@ final class MusicPlaybackControlView: UIView {
 
 		self.metadataContainer.addSubview(self.artworkImageView)
 		self.metadataContainer.addSubview(self.labelStack)
+		self.metadataContainer.addSubview(self.idleMarkImageView)
+		self.metadataContainer.addSubview(self.idleExpandImageView)
 
 		self.addSubview(self.leadingStack)
 		self.addSubview(self.metadataContainer)
@@ -393,6 +421,14 @@ final class MusicPlaybackControlView: UIView {
 			self.metadataBottomConstraint,
 			self.metadataContainer.leadingAnchor.constraint(equalTo: self.leadingStack.trailingAnchor, constant: 8),
 			self.metadataContainer.trailingAnchor.constraint(equalTo: self.trailingStack.leadingAnchor, constant: -8),
+
+			self.idleMarkImageView.centerXAnchor.constraint(equalTo: self.metadataContainer.centerXAnchor),
+			self.idleMarkImageView.centerYAnchor.constraint(equalTo: self.metadataContainer.centerYAnchor),
+			self.idleMarkImageView.widthAnchor.constraint(equalToConstant: 24),
+			self.idleMarkImageView.heightAnchor.constraint(equalTo: self.idleMarkImageView.widthAnchor),
+
+			self.idleExpandImageView.centerXAnchor.constraint(equalTo: self.idleMarkImageView.centerXAnchor),
+			self.idleExpandImageView.centerYAnchor.constraint(equalTo: self.idleMarkImageView.centerYAnchor),
 
 			self.artworkImageView.topAnchor.constraint(equalTo: self.metadataContainer.topAnchor),
 			self.artworkImageView.bottomAnchor.constraint(equalTo: self.metadataContainer.bottomAnchor),
@@ -464,6 +500,7 @@ final class MusicPlaybackControlView: UIView {
 				self.titleLabel.text = song?.song.title
 				self.subtitleLabel.text = song?.song.artistName
 				self.loadArtwork(for: song)
+				self.setPlaybackAvailable(song != nil)
 			}
 			.store(in: &self.subscriptions)
 
@@ -520,7 +557,7 @@ final class MusicPlaybackControlView: UIView {
 			.store(in: &self.subscriptions)
 	}
 
-	/// Sizes the volume slider so it stops just before the context-menu button.
+	/// Sizes the volume slider to the width available to it.
 	private func updateVolumeSliderExtent() {
 		guard !self.volumeControl.isHidden, !self.menuButton.isHidden else { return }
 		guard let menuSuperview = self.menuButton.superview, let volumeSuperview = self.volumeControl.superview else { return }
@@ -643,8 +680,23 @@ final class MusicPlaybackControlView: UIView {
 		self.playPauseButton.setSymbolImage(image, replace: replace)
 	}
 
-	@objc private func handleTap() {
+	@objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+		guard !gestureRecognizer.modifierFlags.contains(.alternate) else {
+			(UIApplication.shared.delegate as? AppDelegate)?.openMiniPlayer()
+			return
+		}
 		self.presentLyrics()
+	}
+
+	/// The affordance drawn over the artwork.
+	///
+	/// - Parameter optionHeld: Whether the Option key is down.
+	///
+	/// - Returns: The symbol to draw.
+	private func expandSymbol(optionHeld: Bool) -> UIImage? {
+		let configuration = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+		let symbolName = optionHeld ? "arrow.up.forward.square" : "arrow.up.left.and.arrow.down.right"
+		return UIImage(systemName: symbolName, withConfiguration: configuration)
 	}
 
 	/// Shows or hides the artwork's expand overlay as a pointer enters or leaves it.
@@ -652,10 +704,49 @@ final class MusicPlaybackControlView: UIView {
 	/// - Parameter gestureRecognizer: The hover gesture recognizer reporting the pointer state.
 	@objc private func handleArtworkHover(_ gestureRecognizer: UIHoverGestureRecognizer) {
 		let isHovering = gestureRecognizer.state == .began || gestureRecognizer.state == .changed
+		self.expandImageView.image = self.expandSymbol(optionHeld: gestureRecognizer.modifierFlags.contains(.alternate))
 
 		let animations = { [weak self] in
 			guard let self = self else { return }
 			self.artworkOverlayView.alpha = isHovering ? 1 : 0
+		}
+
+		if UIAccessibility.isReduceMotionEnabled {
+			animations()
+		} else {
+			UIView.animate(withDuration: 0.2, animations: animations)
+		}
+	}
+
+	/// Sets whether a song is available to play.
+	///
+	/// - Parameter available: Whether a song is loaded.
+	private func setPlaybackAvailable(_ available: Bool) {
+		self.playPauseButton.isEnabled = available
+		self.skipBackButton.isEnabled = available
+		self.skipForwardButton.isEnabled = available
+
+		self.artworkImageView.isHidden = !available
+		self.labelStack.isHidden = !available
+		self.progressView.isHidden = !available
+		self.progressView.hasContent = available
+		self.idleMarkImageView.isHidden = available
+		self.idleExpandImageView.isHidden = available
+	}
+
+	/// Reveals the expand affordance over the mark as a pointer enters or leaves the middle.
+	///
+	/// - Parameter gestureRecognizer: The hover gesture recognizer reporting the pointer state.
+	@objc private func handleIdleMarkHover(_ gestureRecognizer: UIHoverGestureRecognizer) {
+		guard !self.idleMarkImageView.isHidden else { return }
+
+		let isHovering = gestureRecognizer.state == .began || gestureRecognizer.state == .changed
+		self.idleExpandImageView.image = self.expandSymbol(optionHeld: gestureRecognizer.modifierFlags.contains(.alternate))
+
+		let animations = { [weak self] in
+			guard let self = self else { return }
+			self.idleMarkImageView.alpha = isHovering ? 0.2 : 1
+			self.idleExpandImageView.alpha = isHovering ? 1 : 0
 		}
 
 		if UIAccessibility.isReduceMotionEnabled {
@@ -715,7 +806,7 @@ final class MusicPlaybackControlView: UIView {
 		self.scanTimer = nil
 	}
 
-	/// Scales down and blurs the metadata while the scrubber is expanded.
+	/// Sets whether the metadata recedes behind the scrubber.
 	///
 	/// - Parameter deEmphasized: Whether the metadata should recede.
 	private func setMetadataDeEmphasized(_ deEmphasized: Bool) {

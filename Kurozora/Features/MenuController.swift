@@ -6,8 +6,8 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 /// A class that handles the Kurozora's main (statusbar) menu.
 class MenuController {
@@ -19,12 +19,17 @@ class MenuController {
 		builder.remove(menu: .openRecent)
 		builder.remove(menu: .format)
 		builder.remove(menu: .toolbar)
-		builder.insertSibling(MenuController.search(), beforeMenu: .fullscreen)
-		builder.insertSibling(MenuController.navigation(), beforeMenu: .fullscreen)
-		builder.insertSibling(MenuController.newScene(), beforeMenu: .bringAllToFront)
-//		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
-		builder.insertSibling(MenuController.openSettings(), afterMenu: .about)
-		builder.insertSibling(MenuController.account(), beforeMenu: .window)
+		builder.insertSibling(MenuController.searchMenu(), beforeMenu: .fullscreen)
+		builder.insertSibling(MenuController.navigationMenu(), beforeMenu: .fullscreen)
+		builder.insertSibling(MenuController.windowMenu(), beforeMenu: .bringAllToFront)
+
+		if #available(iOS 17.0, *) {
+			builder.insertSibling(MenuController.miniPlayerShortcutsMenu(), beforeMenu: .bringAllToFront)
+		}
+
+//		builder.insertSibling(MenuController.refreshPageMenu(), beforeMenu: .fullscreen)
+		builder.insertSibling(MenuController.openSettingsMenu(), afterMenu: .about)
+		builder.insertSibling(MenuController.accountMenu(), beforeMenu: .window)
 
 		if let minimizeAndZoom = MenuController.minimizeAndZoom(with: builder) {
 			// Remove and add own menu
@@ -33,8 +38,20 @@ class MenuController {
 		}
 
 		#if DEBUG
-		builder.insertSibling(MenuController.debug(), beforeMenu: .window)
+			builder.insertSibling(MenuController.debugMenu(), beforeMenu: .window)
 		#endif
+	}
+
+	/// Builds and returns the "Window" menu.
+	///
+	/// - Returns: The "Window" UIMenu object.
+	class func windowMenu() -> UIMenu {
+		let newSceneCommand = MenuController.newSceneCommand()
+		let miniPlayerCommand = MenuController.miniPlayerCommand()
+		return UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.newScene"), options: .displayInline, children: [
+			newSceneCommand,
+			miniPlayerCommand
+		])
 	}
 
 	/// Builds and returns the "Home" menu.
@@ -42,9 +59,31 @@ class MenuController {
 	/// - Parameter builder: The [UIMenuBuilder](https://developer.apple.com/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	///
 	/// - Returns: The "Minimize and Zoom" menu.
-	class func newScene() -> UIMenu {
-		let newSceneCommand = UIKeyCommand(title: L10n.home, action: #selector(AppDelegate.handleNewScene), input: "0", modifierFlags: .command, discoverabilityTitle: L10n.toggleHome)
-		return UIMenu(title: L10n.home, identifier: UIMenu.Identifier("app.kurozora.menus.newScene"), options: .displayInline, children: [newSceneCommand])
+	class func newSceneCommand() -> UIKeyCommand {
+		return UIKeyCommand(title: L10n.home, action: #selector(AppDelegate.handleNewScene), input: "0", modifierFlags: .command, discoverabilityTitle: L10n.toggleHome)
+	}
+
+	/// Builds and returns the "MiniPlayer" command.
+	///
+	/// - Returns: The "MiniPlayer" UIKeyCommand object.
+	class func miniPlayerCommand() -> UIKeyCommand {
+		return UIKeyCommand(title: L10n.miniPlayer, action: #selector(AppDelegate.handleMiniPlayer(_:)), input: "M", modifierFlags: [.alternate, .command], discoverabilityTitle: L10n.toggleMiniPlayer)
+	}
+
+	/// Builds and returns the "MiniPlayer" menu.
+	///
+	/// - Returns: the "MiniPlayer" UIMenu object.
+	@available(iOS 17.0, *)
+	class func miniPlayerShortcutsMenu() -> UIMenu {
+		return UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.miniPlayer"), children: MenuController.miniPlayerShortcutsCommands())
+	}
+
+	/// Builds and returns the "MiniPlayer Shortcuts" menu.
+	///
+	/// - Returns: The "MiniPlayer Shortcuts" UIMenu object.
+	@available(iOS 17.0, *)
+	class func miniPlayerShortcutsCommands() -> [UIKeyCommand] {
+		return MiniPlayerViewController.viewOptionCommands()
 	}
 
 	/// Builds and returns the "Minimize and Zoom" menu.
@@ -67,7 +106,7 @@ class MenuController {
 	/// Builds and returns the "Navigation" menu.
 	///
 	/// - Returns: The "Navigation" UIMenu object.
-	class func navigation() -> UIMenu {
+	class func navigationMenu() -> UIMenu {
 		let backCommand = UIKeyCommand(title: L10n.back, action: #selector(AppDelegate.handleNavigateBack(_:)), input: "[", modifierFlags: .command, discoverabilityTitle: L10n.back)
 		let forwardCommand = UIKeyCommand(title: L10n.forward, action: #selector(AppDelegate.handleNavigateForward(_:)), input: "]", modifierFlags: .command, discoverabilityTitle: L10n.forward)
 		return UIMenu(title: L10n.navigation, identifier: UIMenu.Identifier("app.kurozora.menus.navigation"), options: .displayInline, children: [backCommand, forwardCommand])
@@ -76,7 +115,7 @@ class MenuController {
 	/// Builds and returns the "Refresh Page" menu.
 	///
 	/// - Returns: The "Refresh Page" UIMenu object.
-	class func refreshPage() -> UIMenu {
+	class func refreshPageMenu() -> UIMenu {
 		let refreshPageCommand = UIKeyCommand(title: L10n.refreshPage, action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: L10n.refreshPage)
 		return UIMenu(title: L10n.refresh, identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
 	}
@@ -84,7 +123,7 @@ class MenuController {
 	/// Builds and returns the "Settings" menu.
 	///
 	/// - Returns: The "Settings" UIMenu object.
-	class func openSettings() -> UIMenu {
+	class func openSettingsMenu() -> UIMenu {
 		let openSettingsCommand = UIKeyCommand(title: L10n.settingsCommand, action: #selector(AppDelegate.handleSettings(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: L10n.settingsCommand)
 		return UIMenu(title: L10n.settings, identifier: UIMenu.Identifier("app.kurozora.menus.settings"), options: .displayInline, children: [openSettingsCommand])
 	}
@@ -92,12 +131,12 @@ class MenuController {
 	///  Builds and returns the "Search" menu.
 	///
 	///  - Returns: The "Search" UIMenu object.
-	class func search() -> UIMenu {
+	class func searchMenu() -> UIMenu {
 		let searchPageCommand = UIKeyCommand(title: L10n.search, action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: L10n.search)
 		return UIMenu(title: L10n.search, identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [searchPageCommand])
 	}
 
-	class func account() -> UIMenu {
+	class func accountMenu() -> UIMenu {
 		var userMenuChildren: [UIMenuElement] = []
 		if User.isSignedIn, let user = User.current {
 			// Add "username" menu item.
@@ -130,11 +169,11 @@ class MenuController {
 		if User.isSignedIn, let user = User.current {
 			if user.attributes.isSubscribed {
 				// Add "subscribe to reminders" menu item.
-				let subscribeToReminders =  UICommand(title: L10n.subscribeToRemindersCommand, action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: L10n.subscribeToRemindersCommand)
+				let subscribeToReminders = UICommand(title: L10n.subscribeToRemindersCommand, action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: L10n.subscribeToRemindersCommand)
 				subscriptionMenuChildren.append(subscribeToReminders)
 			} else {
 				// Add "updgrade to Kurozora+" menu item.
-				let upgradeToKurozoraPlus =  UICommand(title: L10n.upgradeToKurozoraPlus, action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: L10n.upgradeToKurozoraPlus)
+				let upgradeToKurozoraPlus = UICommand(title: L10n.upgradeToKurozoraPlus, action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: L10n.upgradeToKurozoraPlus)
 				subscriptionMenuChildren.append(upgradeToKurozoraPlus)
 			}
 		}
@@ -152,13 +191,13 @@ class MenuController {
 	}
 
 	#if DEBUG
-	/// Builds and returns the "Debug" menu.
-	///
-	/// - Returns: The "Debug" UIMenu object.
-	class func debug() -> UIMenu {
-		let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
-		let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
-		return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
-	}
+		/// Builds and returns the "Debug" menu.
+		///
+		/// - Returns: The "Debug" UIMenu object.
+		class func debugMenu() -> UIMenu {
+			let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
+			let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
+			return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
+		}
 	#endif
 }

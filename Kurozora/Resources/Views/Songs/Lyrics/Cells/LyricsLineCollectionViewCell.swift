@@ -32,16 +32,31 @@ final class LyricsLineCollectionViewCell: UITableViewCell {
 	private let stackView = UIStackView()
 
 	// MARK: - Properties
+	/// Whether the line and its translation take the label colors instead of the theme's.
+	var prefersSystemColors = false {
+		didSet {
+			guard oldValue != self.prefersSystemColors else { return }
+			self.lineView.prefersSystemColors = self.prefersSystemColors
+			self.backgroundLineView.prefersSystemColors = self.prefersSystemColors
+			self.translationLabel.theme_textColor = self.prefersSystemColors ? nil : KThemePicker.subTextColor.rawValue
+			self.translationLabel.textColor = self.prefersSystemColors ? .secondaryLabel : KThemePicker.subTextColor.colorValue
+		}
+	}
+
 	private var isActiveLine = false
 	private var hasWordTiming = false
 	private var hasBackground = false
 	private var isHovered = false
 	private var isScrollSuppressed = false
 	private var isStatic = false
+
 	private var blurRadius: CGFloat = 0
 
 	private var cachedBlurRadius: CGFloat = -1
 	private var cachedBlurFilter: NSObject?
+
+	private var topInsetConstraint: NSLayoutConstraint!
+	private var bottomInsetConstraint: NSLayoutConstraint!
 
 	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -83,14 +98,29 @@ final class LyricsLineCollectionViewCell: UITableViewCell {
 		self.stackView.addArrangedSubview(self.translationLabel)
 		self.contentView.addSubview(self.stackView)
 
+		self.topInsetConstraint = self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: LyricsLayout.topInset)
+		self.bottomInsetConstraint = self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -LyricsLayout.bottomInset)
 		NSLayoutConstraint.activate([
-			self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: LyricsLayout.topInset),
-			self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -LyricsLayout.bottomInset),
+			self.topInsetConstraint,
+			self.bottomInsetConstraint,
 			self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: LyricsLayout.horizontalInset),
 			self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -LyricsLayout.horizontalInset),
 		])
 
 		self.contentView.addGestureRecognizer(UIHoverGestureRecognizer(target: self, action: #selector(self.handleHover)))
+	}
+
+	/// Scales the line and translation typography down for compact hosts like the MiniPlayer.
+	///
+	/// - Parameter compact: Whether the compact typography applies.
+	func setCompactTypography(_ compact: Bool) {
+		self.lineView.fontScale = compact ? 0.95 : 1
+		self.lineView.secondaryFontScale = compact ? 0.72 : 1
+		self.backgroundLineView.fontScale = compact ? 0.6 : 0.65
+		self.backgroundLineView.secondaryFontScale = compact ? 0.72 : 1
+		self.translationLabel.font = compact ? .systemFont(ofSize: 12, weight: .semibold) : LyricsLayout.translationFont
+		self.topInsetConstraint.constant = compact ? 16 : LyricsLayout.topInset
+		self.bottomInsetConstraint.constant = compact ? -16 : -LyricsLayout.bottomInset
 	}
 
 	/// Configures the cell for a line.
@@ -118,7 +148,7 @@ final class LyricsLineCollectionViewCell: UITableViewCell {
 		self.updateBackgroundVisibility()
 	}
 
-	/// Shows the background vocal line only while the line is active.
+	/// Sets whether the background vocal line is showing.
 	private func updateBackgroundVisibility() {
 		self.backgroundLineView.isHidden = !self.hasBackground || !(self.isActiveLine || self.isStatic)
 	}

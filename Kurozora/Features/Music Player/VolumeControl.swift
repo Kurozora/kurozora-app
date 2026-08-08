@@ -12,6 +12,7 @@ import UIKit
 
 #if targetEnvironment(macCatalyst)
 import CoreAudio
+import Obfuscation
 #endif
 
 final class VolumeControl: UIControl {
@@ -48,6 +49,17 @@ final class VolumeControl: UIControl {
 		return imageView
 	}()
 
+	private let systemSlider: UISlider = {
+		let slider = UISlider()
+		slider.translatesAutoresizingMaskIntoConstraints = false
+		#if !targetEnvironment(macCatalyst)
+		slider.minimumTrackTintColor = .label
+		#endif
+		slider.alpha = 0
+		slider.isHidden = true
+		return slider
+	}()
+
 	private let highlightView = PressHighlightView()
 
 	private let volumeView: MPVolumeView = {
@@ -63,6 +75,20 @@ final class VolumeControl: UIControl {
 	var sliderExtent: CGFloat = 120 {
 		didSet { self.sliderContainerLeadingConstraint.constant = -self.sliderExtent }
 	}
+
+	/// Whether a tap on the glyph toggles the system slider instead of muting.
+	var presentsSliderOnTap = false {
+		didSet {
+			let presentsOnTap = self.presentsSliderOnTap
+			self.systemSlider.isHidden = !presentsOnTap
+			self.sliderTrackView.isHidden = presentsOnTap
+			self.sliderContainer.effect = presentsOnTap ? nil : UIBlurEffect(style: .systemThinMaterial)
+			self.sliderContainer.clipsToBounds = !presentsOnTap
+		}
+	}
+
+	/// Called when the tap-toggled slider is shown or hidden.
+	var onSliderPresentationChange: ((Bool) -> Void)?
 
 	/// The drag distance, in points, that corresponds to the full volume range.
 	private let dragRange: CGFloat = 150
@@ -101,6 +127,9 @@ final class VolumeControl: UIControl {
 	private var volumeObservation: NSObjectProtocol?
 
 	#if targetEnvironment(macCatalyst)
+	/// Whether the hosted AppKit slider has taken its track fill.
+	private var didApplyTrackFill = false
+
 	/// The Core Audio device whose volume is currently being observed.
 	private var observedAudioDeviceID: AudioObjectID?
 
@@ -143,6 +172,10 @@ final class VolumeControl: UIControl {
 		super.layoutSubviews()
 		self.sliderContainer.layer.cornerRadius = self.sliderContainer.bounds.height / 2
 		self.updateSliderFill()
+
+		#if targetEnvironment(macCatalyst)
+		self.applyTrackFill()
+		#endif
 	}
 
 	override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -168,8 +201,13 @@ final class VolumeControl: UIControl {
 		self.sliderContainer.contentView.addSubview(self.sliderTrackView)
 		self.addSubview(self.volumeView)
 		self.addSubview(self.sliderContainer)
+		// The system slider sits beside the container rather than inside it: the container takes
+		// no touches, so the slider has to be reachable on its own while the glyph keeps its taps.
+		self.addSubview(self.systemSlider)
 		self.addSubview(self.highlightView)
 		self.addSubview(self.glyphImageView)
+
+		self.systemSlider.addTarget(self, action: #selector(self.handleSystemSliderChange), for: .valueChanged)
 
 		self.sliderContainerLeadingConstraint = self.sliderContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -self.sliderExtent)
 		self.sliderFillWidthConstraint = self.sliderFillView.widthAnchor.constraint(equalToConstant: 0)
@@ -202,6 +240,12 @@ final class VolumeControl: UIControl {
 			self.sliderFillView.topAnchor.constraint(equalTo: self.sliderTrackView.topAnchor),
 			self.sliderFillView.bottomAnchor.constraint(equalTo: self.sliderTrackView.bottomAnchor),
 			self.sliderFillWidthConstraint,
+
+			// The system slider reserves a few points inside its own edge before the track
+			// starts, so it sits closer in than the drawn track to land on the 12pt inset.
+			self.systemSlider.leadingAnchor.constraint(equalTo: self.sliderContainer.leadingAnchor, constant: 8),
+			self.systemSlider.trailingAnchor.constraint(equalTo: self.glyphImageView.leadingAnchor, constant: -8),
+			self.systemSlider.centerYAnchor.constraint(equalTo: self.sliderContainer.centerYAnchor),
 		])
 
 		let hoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.handleHover(_:)))
@@ -238,7 +282,7 @@ final class VolumeControl: UIControl {
 		self.volumeAtDragStart = self.currentVolume
 		self.didDrag = false
 
-		if self.pointerPress {
+		if self.pointerPress, !self.presentsSliderOnTap {
 			self.setRevealed(true)
 		}
 
@@ -285,6 +329,13 @@ final class VolumeControl: UIControl {
 	override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		self.setPressed(false)
 
+		if self.presentsSliderOnTap {
+			if self.pressedGlyph, !self.didDrag {
+				self.setRevealed(!self.isRevealed)
+			}
+			return
+		}
+
 		if self.pointerPress {
 			if self.pressedGlyph, !self.didDrag, self.wasRevealedAtPressStart {
 				self.toggleMute()
@@ -311,7 +362,8 @@ final class VolumeControl: UIControl {
 			self.isHovering = true
 		default:
 			self.isHovering = false
-			if !self.isTracking {
+			// Pill hosts tie the slider to their own chrome, so it outlives the pointer leaving.
+			if !self.isTracking, !self.presentsSliderOnTap {
 				self.setRevealed(false)
 			}
 		}
@@ -351,6 +403,38 @@ final class VolumeControl: UIControl {
 	}
 
 	#if targetEnvironment(macCatalyst)
+	/// Colors the hosted AppKit slider's filled track.
+	private func applyTrackFill() {
+		guard !self.didApplyTrackFill, let appKitSlider = self.hostedAppKitSlider() else { return }
+
+		let selector = NSSelectorFromString(#obfuscated("setTrackFillColor:"))
+		guard
+			appKitSlider.responds(to: selector),
+			let colorClass = NSClassFromString("NSColor") as? NSObject.Type,
+			let labelColor = colorClass.perform(NSSelectorFromString("labelColor"))?.takeUnretainedValue()
+		else { return }
+
+		appKitSlider.perform(selector, with: labelColor)
+		self.didApplyTrackFill = true
+	}
+
+	/// Returns the AppKit control the system slider hosts.
+	///
+	/// - Returns: The hosted control.
+	private func hostedAppKitSlider() -> NSObject? {
+		let contentKey = #obfuscated("contentNSView")
+		var candidates: [UIView] = [self.systemSlider]
+
+		while let view = candidates.popLast() {
+			if view.responds(to: NSSelectorFromString(contentKey)), let hosted = view.value(forKey: contentKey) as? NSObject {
+				return hosted
+			}
+			candidates.append(contentsOf: view.subviews)
+		}
+
+		return nil
+	}
+
 	/// Reads the default output device's volume scalar through the Core Audio HAL.
 	///
 	/// - Returns: The output volume in the range `0...1`.
@@ -494,9 +578,32 @@ final class VolumeControl: UIControl {
 
 	private func updateSliderFill() {
 		self.sliderFillWidthConstraint.constant = self.sliderTrackView.bounds.width * CGFloat(self.currentVolume)
+
+		if !self.systemSlider.isTracking {
+			self.systemSlider.value = self.currentVolume
+		}
+	}
+
+	@objc private func handleSystemSliderChange() {
+		self.currentVolume = self.systemSlider.value
+		self.updateGlyph()
+		self.setSystemVolume(self.currentVolume)
+	}
+
+	/// Hides a revealed slider, for hosts that tie it to their own chrome.
+	func dismissSlider() {
+		self.setRevealed(false)
 	}
 
 	private func updateGlyph() {
+		let configuration = UIImage.SymbolConfiguration(pointSize: 17, weight: .medium)
+
+		// All three bands stay visible and fill with the volume.
+		if #available(iOS 16.0, *) {
+			self.glyphImageView.image = UIImage(systemName: "speaker.wave.3.fill", variableValue: Double(self.currentVolume), configuration: configuration)
+			return
+		}
+
 		let symbolName: String
 		switch self.currentVolume {
 		case ..<0.001:
@@ -508,8 +615,6 @@ final class VolumeControl: UIControl {
 		default:
 			symbolName = "speaker.wave.3.fill"
 		}
-
-		let configuration = UIImage.SymbolConfiguration(pointSize: 17, weight: .medium)
 		self.glyphImageView.image = UIImage(systemName: symbolName, withConfiguration: configuration)
 	}
 
@@ -533,10 +638,12 @@ final class VolumeControl: UIControl {
 	private func setRevealed(_ revealed: Bool) {
 		guard revealed != self.isRevealed else { return }
 		self.isRevealed = revealed
+		self.onSliderPresentationChange?(revealed)
 
 		let animations = { [weak self] in
 			guard let self = self else { return }
 			self.sliderContainer.alpha = revealed ? 1 : 0
+			self.systemSlider.alpha = revealed ? 1 : 0
 		}
 
 		if UIAccessibility.isReduceMotionEnabled {

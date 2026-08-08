@@ -28,6 +28,17 @@ final class LyricsInterludeView: UIView {
 	private let stackView = UIStackView()
 
 	// MARK: - Properties
+	/// Whether the dots take the label color instead of the theme's text color.
+	var prefersSystemColors = false {
+		didSet {
+			guard oldValue != self.prefersSystemColors else { return }
+			self.dots.forEach { dot in
+				dot.theme_backgroundColor = self.prefersSystemColors ? nil : KThemePicker.textColor.rawValue
+				dot.backgroundColor = self.prefersSystemColors ? .label : KThemePicker.textColor.colorValue
+			}
+		}
+	}
+
 	private var isFinishing = false
 	private var isShowing = false
 

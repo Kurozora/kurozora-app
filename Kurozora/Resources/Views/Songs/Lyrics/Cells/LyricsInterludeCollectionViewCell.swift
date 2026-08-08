@@ -12,6 +12,12 @@ final class LyricsInterludeCollectionViewCell: UITableViewCell {
 	// MARK: - Views
 	private let interludeView = LyricsInterludeView()
 
+	// MARK: - Properties
+	/// Whether the indicator takes the label color instead of the theme's text color.
+	var prefersSystemColors = false {
+		didSet { self.interludeView.prefersSystemColors = self.prefersSystemColors }
+	}
+
 	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

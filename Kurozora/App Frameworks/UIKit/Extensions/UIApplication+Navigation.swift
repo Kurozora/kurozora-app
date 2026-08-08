@@ -35,7 +35,7 @@ extension UIApplication {
 
 	/// Return the top (root) view controller of a given view controller.
 	///
-	/// If no base view controller is specified then this function returms the application root view controller.
+	/// If no base view controller is specified then this function returns the application root view controller.
 	///
 	/// - Parameter base: The base view controller that a view controller will be presented on top of.
 	///
@@ -69,7 +69,7 @@ extension UIApplication {
 
 	/// Return the top (root) view controller of a given view controller.
 	///
-	/// If no base view controller is specified then this function returms the application root view controller.
+	/// If no base view controller is specified then this function returns the application root view controller.
 	///
 	/// - Parameter base: The base view controller that a view controller will be presented on top of.
 	///
@@ -110,9 +110,11 @@ extension UIApplication {
 		return UIApplication.topViewController(base)
 	}
 
-	/// The key window of the user's active scene.
+	/// The key window of the user's active scene, skipping auxiliary scenes.
 	static var sharedKeyWindow: UIWindow? {
-		let windowScenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+		let windowScenes = UIApplication.shared.connectedScenes
+			.compactMap { $0 as? UIWindowScene }
+			.filter { !$0.session.isAuxiliaryScene }
 		let scene = windowScenes.first { $0.activationState == .foregroundActive }
 			?? windowScenes.first { $0.activationState == .foregroundInactive }
 			?? windowScenes.first
@@ -124,5 +126,12 @@ extension UIApplication {
 			return nil
 		}
 		return window
+	}
+}
+
+extension UISceneSession {
+	/// A Boolean value that indicates whether the session hosts an auxiliary window.
+	var isAuxiliaryScene: Bool {
+		return self.userInfo?["isMiniPlayer"] as? Bool == true || self.userInfo?["isFlexDebug"] as? Bool == true
 	}
 }

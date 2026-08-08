@@ -9,7 +9,7 @@
 import AVFoundation
 import UIKit
 
-/// A view backed by an `AVSampleBufferDisplayLayer`, hosting the Picture in Picture content.
+/// A view backed by an `AVSampleBufferDisplayLayer`, hosting the Picture-in-Picture content.
 final class FloatingLyricsHostView: UIView {
 	// MARK: - Properties
 	override static var layerClass: AnyClass {

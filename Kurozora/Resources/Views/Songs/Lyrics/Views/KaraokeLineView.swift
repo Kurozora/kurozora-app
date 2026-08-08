@@ -24,6 +24,18 @@ struct KaraokeWordPair {
 
 	/// A Boolean value that indicates whether a space follows the word.
 	let trailingSpace: Bool
+
+	/// A Boolean value that indicates whether a space follows the word's pronunciation.
+	let secondaryTrailingSpace: Bool
+
+	init(primary: String, secondary: String?, beginMs: Int, endMs: Int, trailingSpace: Bool, secondaryTrailingSpace: Bool = false) {
+		self.primary = primary
+		self.secondary = secondary
+		self.beginMs = beginMs
+		self.endMs = endMs
+		self.trailingSpace = trailingSpace
+		self.secondaryTrailingSpace = secondaryTrailingSpace
+	}
 }
 
 final class KaraokeLineView: UIView {
@@ -83,12 +95,29 @@ final class KaraokeLineView: UIView {
 		}
 	}
 
+	/// Whether the line draws in the label color instead of the theme's text color.
+	var prefersSystemColors = false {
+		didSet {
+			guard oldValue != self.prefersSystemColors else { return }
+			self.setNeedsDisplay()
+		}
+	}
+
+	/// An additional scale applied to the pronunciation row on top of ``fontScale``.
+	var secondaryFontScale: CGFloat = 1 {
+		didSet {
+			guard oldValue != self.secondaryFontScale else { return }
+			self.recomputeIntrinsicHeight()
+			self.setNeedsLayout()
+		}
+	}
+
 	private var primaryFont: UIFont {
 		return LyricsLayout.primaryFont.withSize(LyricsLayout.primaryFont.pointSize * self.fontScale)
 	}
 
 	private var secondaryFont: UIFont {
-		return LyricsLayout.secondaryFont.withSize(LyricsLayout.secondaryFont.pointSize * self.fontScale)
+		return LyricsLayout.secondaryFont.withSize(LyricsLayout.secondaryFont.pointSize * self.fontScale * self.secondaryFontScale)
 	}
 
 	/// A Boolean value that indicates whether words lift as they fill.
@@ -134,7 +163,7 @@ final class KaraokeLineView: UIView {
 	override func draw(_ rect: CGRect) {
 		guard let context = UIGraphicsGetCurrentContext() else { return }
 
-		let sungColor = KThemePicker.textColor.colorValue
+		let sungColor = self.prefersSystemColors ? UIColor.label : KThemePicker.textColor.colorValue
 		let unsungColor = sungColor.withAlphaComponent(LyricsLayout.unsungTextAlpha)
 
 		if let fromLayouts = self.fromLayouts, self.transitionProgress < 1 {
@@ -170,25 +199,50 @@ final class KaraokeLineView: UIView {
 		let rowHeight = primaryLineHeight + (hasSecondary ? LyricsLayout.primaryToSecondarySpacing + secondaryFont.lineHeight : 0)
 		let spaceWidth = (" " as NSString).size(withAttributes: [.font: primaryFont]).width
 
+		let secondarySpaceWidth = (" " as NSString).size(withAttributes: [.font: secondaryFont]).width
+
+		// A space on either row ends a word, and the next word starts past the wider row, so a
+		// word stays column-aligned with its pronunciation.
 		var layouts: [WordLayout] = []
 		var penX: CGFloat = 0
 		var penY: CGFloat = LyricsLayout.activeWordLift
 
-		for pair in pairs {
-			let primarySize = (pair.primary as NSString).size(withAttributes: [.font: primaryFont])
-			let secondarySize = pair.secondary.map { ($0 as NSString).size(withAttributes: [.font: secondaryFont]) } ?? .zero
-			let tileWidth = max(primarySize.width, secondarySize.width)
+		var wordStart = 0
+		while wordStart < pairs.count {
+			var wordEnd = wordStart
+			while wordEnd < pairs.count - 1, !pairs[wordEnd].trailingSpace, !pairs[wordEnd].secondaryTrailingSpace {
+				wordEnd += 1
+			}
+			let word = Array(pairs[wordStart...wordEnd])
 
-			if penX > 0, penX + tileWidth > width {
+			let primarySizes = word.map { ($0.primary as NSString).size(withAttributes: [.font: primaryFont]) }
+			let secondarySizes = word.map { pair in pair.secondary.map { ($0 as NSString).size(withAttributes: [.font: secondaryFont]) } ?? .zero }
+			let primaryRunWidth = primarySizes.reduce(0) { $0 + $1.width }
+			let secondaryRunWidth = secondarySizes.reduce(0) { $0 + $1.width }
+			let wordWidth = max(primaryRunWidth, secondaryRunWidth)
+
+			if penX > 0, penX + wordWidth > width {
 				penX = 0
 				penY += rowHeight + LyricsLayout.rowSpacing
 			}
 
-			let primaryOrigin = CGPoint(x: penX, y: penY)
-			let secondaryOrigin = CGPoint(x: penX, y: penY + primaryLineHeight + LyricsLayout.primaryToSecondarySpacing)
-			layouts.append(WordLayout(pair: pair, primaryOrigin: primaryOrigin, primarySize: primarySize, secondaryOrigin: secondaryOrigin, secondarySize: secondarySize))
+			var primaryPenX = penX
+			var secondaryPenX = penX
+			for (index, pair) in word.enumerated() {
+				let primaryOrigin = CGPoint(x: primaryPenX, y: penY)
+				let secondaryOrigin = CGPoint(x: secondaryPenX, y: penY + primaryLineHeight + LyricsLayout.primaryToSecondarySpacing)
+				layouts.append(WordLayout(pair: pair, primaryOrigin: primaryOrigin, primarySize: primarySizes[index], secondaryOrigin: secondaryOrigin, secondarySize: secondarySizes[index]))
 
-			penX += tileWidth + (pair.trailingSpace ? spaceWidth : LyricsLayout.pairSpacing)
+				primaryPenX += primarySizes[index].width
+				secondaryPenX += secondarySizes[index].width
+			}
+
+			// Each row appends its own trailing space, and the next word starts past the farther pen.
+			let lastPair = word[word.count - 1]
+			let primaryEndX = penX + primaryRunWidth + (lastPair.trailingSpace ? spaceWidth : 0)
+			let secondaryEndX = penX + secondaryRunWidth + (lastPair.secondaryTrailingSpace ? secondarySpaceWidth : 0)
+			penX = max(primaryEndX, secondaryEndX)
+			wordStart = wordEnd + 1
 		}
 
 		return (layouts, layouts.isEmpty ? 0 : penY + rowHeight)
@@ -206,7 +260,7 @@ final class KaraokeLineView: UIView {
 
 		var offsetsByRow: [CGFloat: CGFloat] = [:]
 		for (rowY, words) in Dictionary(grouping: layouts, by: { $0.primaryOrigin.y }) {
-			let rowWidth = words.map { $0.primaryOrigin.x + max($0.primarySize.width, $0.secondarySize.width) }.max() ?? 0
+			let rowWidth = words.map { max($0.primaryOrigin.x + $0.primarySize.width, $0.secondaryOrigin.x + $0.secondarySize.width) }.max() ?? 0
 			offsetsByRow[rowY] = self.horizontalOffset(rowWidth: rowWidth, width: width)
 		}
 

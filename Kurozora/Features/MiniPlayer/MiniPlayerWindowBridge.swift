@@ -1,0 +1,612 @@
+//
+//  MiniPlayerWindowBridge.swift
+//  Kurozora
+//
+//  Created by Khoren Katklian on 05/08/2026.
+//  Copyright © 2026 Kurozora. All rights reserved.
+//
+
+#if targetEnvironment(macCatalyst)
+import Obfuscation
+import UIKit
+
+/// Styles the MiniPlayer's AppKit window through the runtime.
+@available(iOS 17.0, *)
+final class MiniPlayerWindowBridge: NSObject {
+	// MARK: - Properties
+	/// The corner radius of the window shape.
+	static let windowCornerRadius: CGFloat = 25.5
+
+	/// The `NSFloatingWindowLevel` the window floats at.
+	private static let floatingWindowLevel = 3
+
+	/// The `NSWindowStyleMaskFullSizeContentView` bit.
+	private static let fullSizeContentViewMask: UInt = 1 << 15
+
+	/// The identifiers of the close, miniaturize, and zoom buttons, matching `NSWindow.ButtonType`.
+	private static let standardButtonTypes = [0, 1, 2]
+
+	/// The `NSEventTypeLeftMouseDown` identifier.
+	private static let leftMouseDownEventType: UInt = 1
+
+	/// The `NSEventTypeLeftMouseUp` identifier.
+	private static let leftMouseUpEventType: UInt = 2
+
+	/// The `NSEventTypeScrollWheel` identifier.
+	private static let scrollWheelEventType: UInt = 22
+
+	/// The event identifiers that count as pointer activity, matching `NSEventType`.
+	private static let pointerEventTypes: Set<UInt> = [1, 2, 5, 6, 22]
+
+	/// The user defaults key AppKit stores the autosaved frame under.
+	private static let frameAutosaveDefaultsKey = "NSWindow Frame MiniPlayer"
+
+	/// The close button's center, in points from the window's top-leading corner.
+	private static let trafficLightCenter = CGPoint(x: 25.5, y: 25.5)
+
+	/// The center-to-center spacing of the traffic lights.
+	private static let trafficLightSpacing: CGFloat = 20
+
+	/// Called when the user starts a live window resize.
+	var onLiveResizeStart: (() -> Void)?
+
+	/// Called when the user finishes a live window resize.
+	var onLiveResizeEnd: (() -> Void)?
+
+	/// Called when the pointer enters or exits the window.
+	var onHoverChange: ((Bool) -> Void)?
+
+	/// Called for every scroll wheel event the window receives, before AppKit dispatches it.
+	///
+	/// The location is in the window's bottom-left based coordinates. Return `true` to consume it.
+	var onScrollWheel: ((_ locationInWindow: CGPoint, _ deltaY: CGFloat) -> Bool)?
+
+	/// Called to ask whether a press at the given point drags the window.
+	///
+	/// The location is in the window's bottom-left based coordinates.
+	var shouldDragWindow: ((_ locationInWindow: CGPoint) -> Bool)?
+
+	/// Called whenever the pointer moves, presses, or scrolls anywhere in the window.
+	var onPointerActivity: (() -> Void)?
+
+	/// Whether a press is currently being held anywhere in the window.
+	private(set) var isPointerDown = false
+
+	/// The key equivalents to stamp onto bridged menu items, keyed by title.
+	private var menuShortcuts: [String: (key: String, modifiers: UInt)] = [:]
+
+	/// Whether menu tracking is already being observed.
+	private var isObservingMenus = false
+
+	/// Whether an autosaved frame existed and was restored on attach.
+	private(set) var hasRestoredFrame = false
+
+	/// The AppKit window backing the MiniPlayer scene.
+	private weak var appKitWindow: NSObject?
+
+	/// A Boolean value that indicates whether the AppKit window has been resolved.
+	var isAttached: Bool {
+		return self.appKitWindow != nil
+	}
+
+	/// A Boolean value that indicates whether the user is live-resizing the window.
+	var isInLiveResize: Bool {
+		return (self.appKitWindow?.value(forKey: "inLiveResize") as? Bool) ?? false
+	}
+
+	/// A Boolean value that indicates whether the pointer currently lies inside the window.
+	var isPointerInsideWindow: Bool {
+		guard
+			let appKitWindow = self.appKitWindow,
+			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue,
+			let eventClass = NSClassFromString("NSEvent"),
+			let locationMethod = class_getClassMethod(eventClass, NSSelectorFromString("mouseLocation"))
+		else { return false }
+
+		typealias MouseLocationFunction = @convention(c) (AnyClass, Selector) -> CGPoint
+		let location = unsafeBitCast(method_getImplementation(locationMethod), to: MouseLocationFunction.self)(eventClass, NSSelectorFromString("mouseLocation"))
+		return frameValue.cgRectValue.contains(location)
+	}
+
+	/// The associated object key the event relay is stored under.
+	private static var eventRelayKey: UInt8 = 0
+
+	/// Whether `sendEvent:` has been rerouted for this process.
+	private static var didInterceptSendEvent = false
+
+	// MARK: - Initializers
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+
+	// MARK: - Functions
+	/// Styles the AppKit window backing the given window.
+	///
+	/// - Parameter window: The window hosted by the MiniPlayer scene.
+	func attach(to window: UIWindow?) {
+		guard self.appKitWindow == nil, let window = window else { return }
+		guard let appKitWindow = Self.resolveAppKitWindow(for: window) else { return }
+
+		self.appKitWindow = appKitWindow
+
+		if let styleMask = appKitWindow.value(forKey: "styleMask") as? UInt {
+			appKitWindow.setValue(styleMask | Self.fullSizeContentViewMask, forKey: "styleMask")
+		}
+		appKitWindow.setValue(true, forKey: "titlebarAppearsTransparent")
+		appKitWindow.setValue(Self.floatingWindowLevel, forKey: "level")
+
+		// A transparent window would otherwise drag by its body.
+		appKitWindow.setValue(false, forKey: "movableByWindowBackground")
+
+		// Windows drop mouse-moved events by default.
+		appKitWindow.setValue(true, forKey: "acceptsMouseMovedEvents")
+
+		// The material installed below carries the shape and shadow.
+		appKitWindow.setValue(false, forKey: "opaque")
+		if let colorClass = NSClassFromString("NSColor") as? NSObject.Type,
+		   let clearColor = colorClass.perform(NSSelectorFromString("clearColor"))?.takeUnretainedValue() {
+			appKitWindow.setValue(clearColor, forKey: "backgroundColor")
+		}
+		self.installBehindWindowMaterial(in: appKitWindow)
+
+		self.hasRestoredFrame = UserDefaults.standard.object(forKey: Self.frameAutosaveDefaultsKey) != nil
+		appKitWindow.perform(NSSelectorFromString("setFrameAutosaveName:"), with: "MiniPlayer" as NSString)
+
+		self.installHoverTracking(in: appKitWindow)
+		self.neutralizeTitlebarHitTesting(in: appKitWindow)
+		self.installFirstMouseAcceptance(in: appKitWindow)
+		self.installEventIntercept(on: appKitWindow)
+
+		self.setTrafficLightsHidden(true)
+		self.applyTrafficLightPosition()
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+			self?.applyTrafficLightPosition()
+		}
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillStartLiveResize(_:)), name: Notification.Name("NSWindowWillStartLiveResizeNotification"), object: appKitWindow)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidEndLiveResize(_:)), name: Notification.Name("NSWindowDidEndLiveResizeNotification"), object: appKitWindow)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidResize(_:)), name: Notification.Name("NSWindowDidResizeNotification"), object: appKitWindow)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidResize(_:)), name: Notification.Name("NSWindowDidBecomeKeyNotification"), object: appKitWindow)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidResize(_:)), name: Notification.Name("NSWindowDidResignKeyNotification"), object: appKitWindow)
+	}
+
+	/// Resizes the window, keeping its top edge fixed.
+	///
+	/// - Parameters:
+	///    - size: The size to apply.
+	///    - animated: Whether the window animates to the new frame.
+	func setWindowSize(_ size: CGSize, animated: Bool) {
+		guard
+			let appKitWindow = self.appKitWindow,
+			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue
+		else { return }
+
+		// AppKit frames are bottom-left based, so the origin shifts to keep the top edge in place.
+		var frame = frameValue.cgRectValue
+		frame.origin.y += frame.height - size.height
+		frame.size = size
+
+		let selector = NSSelectorFromString("setFrame:display:animate:")
+		guard appKitWindow.responds(to: selector), let method = appKitWindow.method(for: selector) else { return }
+
+		typealias SetFrameFunction = @convention(c) (NSObject, Selector, CGRect, Bool, Bool) -> Void
+		unsafeBitCast(method, to: SetFrameFunction.self)(appKitWindow, selector, frame, true, animated)
+	}
+
+	/// Enables or disables dragging the window by its title bar and background.
+	///
+	/// - Parameter movable: Whether the window can be dragged.
+	func setWindowMovable(_ movable: Bool) {
+		self.appKitWindow?.setValue(movable, forKey: "movable")
+	}
+
+	/// Shows or hides the window's close, miniaturize, and zoom buttons.
+	///
+	/// - Parameter hidden: Whether the buttons are hidden.
+	func setTrafficLightsHidden(_ hidden: Bool) {
+		guard let appKitWindow = self.appKitWindow else { return }
+
+		for buttonType in Self.standardButtonTypes {
+			self.standardWindowButton(buttonType, of: appKitWindow)?.setValue(hidden, forKey: "hidden")
+		}
+
+		if !hidden {
+			self.applyTrafficLightPosition()
+		}
+	}
+
+	/// Handles the start of a live window resize.
+	@objc private func windowWillStartLiveResize(_ notification: Notification) {
+		self.onLiveResizeStart?()
+	}
+
+	/// Handles the end of a live window resize.
+	@objc private func windowDidEndLiveResize(_ notification: Notification) {
+		self.onLiveResizeEnd?()
+	}
+
+	/// Handles a change to the window's frame or key state.
+	@objc private func windowDidResize(_ notification: Notification) {
+		self.applyTrafficLightPosition()
+	}
+
+	/// Repositions the traffic lights.
+	func applyTrafficLightPosition() {
+		guard let appKitWindow = self.appKitWindow else { return }
+
+		for (index, buttonType) in Self.standardButtonTypes.enumerated() {
+			guard
+				let button = self.standardWindowButton(buttonType, of: appKitWindow),
+				let superview = button.value(forKey: "superview") as? NSObject,
+				let superviewFrame = (superview.value(forKey: "frame") as? NSValue)?.cgRectValue,
+				let buttonFrame = (button.value(forKey: "frame") as? NSValue)?.cgRectValue
+			else { continue }
+
+			var frame = buttonFrame
+			frame.origin.x = Self.trafficLightCenter.x + CGFloat(index) * Self.trafficLightSpacing - frame.width / 2
+			frame.origin.y = superviewFrame.height - Self.trafficLightCenter.y - frame.height / 2
+			button.setValue(NSValue(cgRect: frame), forKey: "frame")
+		}
+	}
+
+	/// Limits the title bar to the traffic lights.
+	///
+	/// - Parameter window: The window carrying the title bar.
+	private func neutralizeTitlebarHitTesting(in window: NSObject) {
+		guard
+			let contentView = window.value(forKey: "contentView") as? NSObject,
+			let themeFrame = contentView.value(forKey: "superview") as? NSObject,
+			let themeFrameSubviews = themeFrame.value(forKey: "subviews") as? [NSObject],
+			let containerView = themeFrameSubviews.first(where: { String(describing: type(of: $0)).contains("NSTitlebarContainerView") })
+		else {
+			print("----- MiniPlayer: titlebar container not found; chrome row clicks stay blocked.")
+			return
+		}
+
+		let subclassName = "KZMiniPlayerTitlebarContainerView"
+		if let subclass = NSClassFromString(subclassName) {
+			if object_getClass(containerView) != subclass {
+				object_setClass(containerView, subclass)
+			}
+			return
+		}
+
+		guard
+			let baseClass = object_getClass(containerView),
+			let buttonClass = NSClassFromString("NSButton")
+		else { return }
+
+		let hitTestSelector = NSSelectorFromString("hitTest:")
+		guard
+			let hitTestMethod = class_getInstanceMethod(baseClass, hitTestSelector),
+			let subclass = objc_allocateClassPair(baseClass, subclassName, 0)
+		else { return }
+
+		typealias HitTestFunction = @convention(c) (NSObject, Selector, CGPoint) -> NSObject?
+		let baseHitTest = unsafeBitCast(method_getImplementation(hitTestMethod), to: HitTestFunction.self)
+
+		let hitTestOverride: @convention(block) (NSObject, CGPoint) -> NSObject? = { receiver, point in
+			guard let hitView = baseHitTest(receiver, hitTestSelector, point) else { return nil }
+
+			var candidate: NSObject? = hitView
+			while let view = candidate, view !== receiver {
+				if view.isKind(of: buttonClass) {
+					return hitView
+				}
+				candidate = view.value(forKey: "superview") as? NSObject
+			}
+			return nil
+		}
+
+		class_addMethod(subclass, hitTestSelector, imp_implementationWithBlock(hitTestOverride), method_getTypeEncoding(hitTestMethod))
+		objc_registerClassPair(subclass)
+		object_setClass(containerView, subclass)
+		print("----- MiniPlayer: titlebar hit-testing neutralized.")
+	}
+
+	/// Lets the window's content respond to the first click while the window is inactive.
+	///
+	/// - Parameter window: The window whose content accepts the first click.
+	private func installFirstMouseAcceptance(in window: NSObject) {
+		guard
+			let contentView = window.value(forKey: "contentView") as? NSObject,
+			let contentSubviews = contentView.value(forKey: "subviews") as? [NSObject]
+		else { return }
+
+		let firstMouseSelector = NSSelectorFromString("acceptsFirstMouse:")
+		let canMoveWindowSelector = NSSelectorFromString("mouseDownCanMoveWindow")
+
+		for hostView in contentSubviews {
+			guard let baseClass = object_getClass(hostView) else { continue }
+
+			let baseClassName = NSStringFromClass(baseClass)
+			if baseClassName.contains("VisualEffect") || baseClassName.hasPrefix("KZFirstMouse_") {
+				continue
+			}
+
+			let subclassName = "KZFirstMouse_" + baseClassName
+			if let subclass = NSClassFromString(subclassName) {
+				object_setClass(hostView, subclass)
+				continue
+			}
+
+			guard
+				let firstMouseMethod = class_getInstanceMethod(baseClass, firstMouseSelector),
+				let canMoveWindowMethod = class_getInstanceMethod(baseClass, canMoveWindowSelector),
+				let subclass = objc_allocateClassPair(baseClass, subclassName, 0)
+			else { continue }
+
+			let firstMouseOverride: @convention(block) (NSObject, NSObject?) -> Bool = { _, _ in
+				return true
+			}
+			class_addMethod(subclass, firstMouseSelector, imp_implementationWithBlock(firstMouseOverride), method_getTypeEncoding(firstMouseMethod))
+
+			let canMoveWindowOverride: @convention(block) (NSObject) -> Bool = { _ in
+				return false
+			}
+			class_addMethod(subclass, canMoveWindowSelector, imp_implementationWithBlock(canMoveWindowOverride), method_getTypeEncoding(canMoveWindowMethod))
+
+			objc_registerClassPair(subclass)
+			object_setClass(hostView, subclass)
+			print("----- MiniPlayer: first-mouse acceptance installed on \(baseClassName).")
+		}
+	}
+
+	/// Relays a window's events to the bridge that intercepted them.
+	private final class WindowEventRelay {
+		/// The closure invoked for each intercepted event.
+		let handler: (_ event: NSObject, _ type: UInt) -> Bool
+
+		init(handler: @escaping (_ event: NSObject, _ type: UInt) -> Bool) {
+			self.handler = handler
+		}
+	}
+
+	/// Intercepts scroll wheel and press events before view routing.
+	///
+	/// The method is rerouted on the window's class, never by re-classing the instance.
+	///
+	/// - Parameter window: The window to intercept.
+	private func installEventIntercept(on window: NSObject) {
+		let relay = WindowEventRelay { [weak self] event, type in
+			guard let self = self else { return false }
+
+			switch type {
+			case Self.leftMouseDownEventType:
+				self.isPointerDown = true
+			case Self.leftMouseUpEventType:
+				self.isPointerDown = false
+			default:
+				break
+			}
+
+			self.onPointerActivity?()
+
+			guard
+				type == Self.scrollWheelEventType || type == Self.leftMouseDownEventType,
+				let locationValue = event.value(forKey: "locationInWindow") as? NSValue
+			else { return false }
+
+			let location = locationValue.cgPointValue
+
+			guard type == Self.scrollWheelEventType else {
+				// The press that brings an unfocused window forward belongs to AppKit.
+				guard
+					(self.appKitWindow?.value(forKey: "keyWindow") as? Bool) == true,
+					self.shouldDragWindow?(location) == true,
+					!self.pressLandsOnWindowButton(at: location)
+				else { return false }
+				return self.beginWindowDrag(with: event)
+			}
+
+			guard let onScrollWheel = self.onScrollWheel, let deltaY = event.value(forKey: "scrollingDeltaY") as? CGFloat else { return false }
+
+			let hasPreciseDeltas = (event.value(forKey: "hasPreciseScrollingDeltas") as? Bool) ?? true
+			return onScrollWheel(location, hasPreciseDeltas ? deltaY : deltaY * 10)
+		}
+		objc_setAssociatedObject(window, &Self.eventRelayKey, relay, .OBJC_ASSOCIATION_RETAIN)
+
+		guard !Self.didInterceptSendEvent else { return }
+
+		let sendEventSelector = NSSelectorFromString("sendEvent:")
+		guard
+			let windowClass = object_getClass(window),
+			let sendEventMethod = class_getInstanceMethod(windowClass, sendEventSelector)
+		else { return }
+
+		typealias SendEventFunction = @convention(c) (NSObject, Selector, NSObject) -> Void
+		let baseSendEvent = unsafeBitCast(method_getImplementation(sendEventMethod), to: SendEventFunction.self)
+
+		let sendEventOverride: @convention(block) (NSObject, NSObject) -> Void = { receiver, event in
+			if let type = event.value(forKey: "type") as? UInt,
+			   MiniPlayerWindowBridge.pointerEventTypes.contains(type),
+			   let relay = objc_getAssociatedObject(receiver, &MiniPlayerWindowBridge.eventRelayKey) as? WindowEventRelay,
+			   relay.handler(event, type) {
+				return
+			}
+			baseSendEvent(receiver, sendEventSelector, event)
+		}
+		method_setImplementation(sendEventMethod, imp_implementationWithBlock(sendEventOverride))
+		Self.didInterceptSendEvent = true
+	}
+
+	/// Labels menu items with their keyboard shortcuts.
+	///
+	/// - Parameter shortcuts: The key and modifier mask for each item title.
+	func setMenuShortcuts(_ shortcuts: [String: (key: String, modifiers: UInt)]) {
+		self.menuShortcuts = shortcuts
+
+		guard !self.isObservingMenus else { return }
+		self.isObservingMenus = true
+		NotificationCenter.default.addObserver(self, selector: #selector(self.menuDidBeginTracking(_:)), name: Notification.Name("NSMenuDidBeginTrackingNotification"), object: nil)
+	}
+
+	/// Labels a menu's items as it opens.
+	@objc private func menuDidBeginTracking(_ notification: Notification) {
+		guard
+			let menu = notification.object as? NSObject,
+			let items = menu.value(forKey: "itemArray") as? [NSObject]
+		else { return }
+
+		for item in items {
+			guard
+				let title = item.value(forKey: "title") as? String,
+				let shortcut = self.menuShortcuts[title]
+			else { continue }
+
+			item.setValue(shortcut.key, forKey: "keyEquivalent")
+			item.setValue(shortcut.modifiers, forKey: "keyEquivalentModifierMask")
+		}
+	}
+
+	/// Hands the press to AppKit's window drag.
+	///
+	/// - Parameter event: The press that starts the drag.
+	///
+	/// - Returns: Whether the drag was started.
+	private func beginWindowDrag(with event: NSObject) -> Bool {
+		let selector = NSSelectorFromString("performWindowDragWithEvent:")
+		guard let appKitWindow = self.appKitWindow, appKitWindow.responds(to: selector) else { return false }
+
+		// The press belongs to the content while a slider owns the pointer.
+		guard (appKitWindow.value(forKey: "movable") as? Bool) ?? true else { return false }
+
+		appKitWindow.perform(selector, with: event)
+		return true
+	}
+
+	/// Whether the given window point lands on one of the window's own buttons.
+	///
+	/// - Parameter locationInWindow: The point in the window's bottom-left based coordinates.
+	///
+	/// - Returns: Whether a window button takes the press.
+	private func pressLandsOnWindowButton(at locationInWindow: CGPoint) -> Bool {
+		guard
+			let contentView = self.appKitWindow?.value(forKey: "contentView") as? NSObject,
+			let frameView = contentView.value(forKey: "superview") as? NSObject,
+			let buttonClass = NSClassFromString("NSButton")
+		else { return false }
+
+		let selector = NSSelectorFromString("hitTest:")
+		guard frameView.responds(to: selector), let method = frameView.method(for: selector) else { return false }
+
+		// The frame view spans the whole window, so its hit-testing space is the window's.
+		typealias HitTestFunction = @convention(c) (NSObject, Selector, CGPoint) -> NSObject?
+		var view = unsafeBitCast(method, to: HitTestFunction.self)(frameView, selector, locationInWindow)
+
+		while let candidate = view {
+			if candidate.isKind(of: buttonClass) {
+				return true
+			}
+			view = candidate.value(forKey: "superview") as? NSObject
+		}
+
+		return false
+	}
+
+	/// Installs a tracking area reporting pointer entry and exit over the whole window.
+	///
+	/// - Parameter window: The window to track.
+	private func installHoverTracking(in window: NSObject) {
+		guard
+			let contentView = window.value(forKey: "contentView") as? NSObject,
+			let trackingAreaClass = NSClassFromString("NSTrackingArea") as? NSObject.Type,
+			let allocated = trackingAreaClass.perform(NSSelectorFromString("alloc"))?.takeUnretainedValue() as? NSObject
+		else { return }
+
+		let initSelector = NSSelectorFromString("initWithRect:options:owner:userInfo:")
+		guard allocated.responds(to: initSelector), let initMethod = allocated.method(for: initSelector) else { return }
+
+		// NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingInVisibleRect
+		let options: UInt = 0x01 | 0x80 | 0x200
+
+		typealias InitFunction = @convention(c) (NSObject, Selector, CGRect, UInt, NSObject?, NSObject?) -> NSObject?
+		guard let trackingArea = unsafeBitCast(initMethod, to: InitFunction.self)(allocated, initSelector, .zero, options, self, nil) else { return }
+
+		let addSelector = NSSelectorFromString("addTrackingArea:")
+		guard contentView.responds(to: addSelector) else { return }
+		contentView.perform(addSelector, with: trackingArea)
+	}
+
+	@objc(mouseEntered:) private func mouseEntered(_ event: NSObject) {
+		self.onHoverChange?(true)
+	}
+
+	@objc(mouseExited:) private func mouseExited(_ event: NSObject) {
+		self.onHoverChange?(false)
+	}
+
+	/// Installs the window's background material.
+	///
+	/// - Parameter window: The window to install the material in.
+	private func installBehindWindowMaterial(in window: NSObject) {
+		guard
+			let contentView = window.value(forKey: "contentView") as? NSObject,
+			let effectClass = NSClassFromString("NSVisualEffectView") as? NSObject.Type,
+			let allocated = effectClass.perform(NSSelectorFromString("alloc"))?.takeUnretainedValue() as? NSObject,
+			let effectView = allocated.perform(NSSelectorFromString("init"))?.takeUnretainedValue() as? NSObject
+		else { return }
+
+		// behindWindow blending, popover material, always active.
+		effectView.setValue(0, forKey: "blendingMode")
+		effectView.setValue(6, forKey: "material")
+		effectView.setValue(1, forKey: "state")
+		// width and height sizable
+		effectView.setValue(18, forKey: "autoresizingMask")
+		effectView.setValue(true, forKey: "wantsLayer")
+
+		if let bounds = (contentView.value(forKey: "bounds") as? NSValue)?.cgRectValue {
+			effectView.setValue(NSValue(cgRect: bounds), forKey: "frame")
+		}
+
+		if let layer = effectView.value(forKey: "layer") as? CALayer {
+			layer.cornerRadius = Self.windowCornerRadius
+			layer.cornerCurve = .continuous
+			layer.masksToBounds = true
+		}
+
+		let selector = NSSelectorFromString("addSubview:positioned:relativeTo:")
+		guard contentView.responds(to: selector), let method = contentView.method(for: selector) else { return }
+
+		// NSWindowBelow = -1
+		typealias AddSubviewFunction = @convention(c) (NSObject, Selector, NSObject, Int, NSObject?) -> Void
+		unsafeBitCast(method, to: AddSubviewFunction.self)(contentView, selector, effectView, -1, nil)
+	}
+
+	/// Returns the AppKit window hosting the given window.
+	///
+	/// - Parameter window: The window to match.
+	///
+	/// - Returns: The AppKit window.
+	private static func resolveAppKitWindow(for window: UIWindow) -> NSObject? {
+		guard
+			let applicationClass = NSClassFromString("NSApplication") as? NSObject.Type,
+			let application = applicationClass.perform(NSSelectorFromString("sharedApplication"))?.takeUnretainedValue() as? NSObject,
+			let windows = application.value(forKey: "windows") as? [NSObject]
+		else { return nil }
+
+		let uiWindowsKey = #obfuscated("uiWindows")
+
+		return windows.first { appKitWindow in
+			guard appKitWindow.responds(to: NSSelectorFromString(uiWindowsKey)) else { return false }
+			let uiWindows = appKitWindow.value(forKey: uiWindowsKey) as? [UIWindow]
+			return uiWindows?.contains(window) == true
+		}
+	}
+
+	/// Returns the window's standard button of the given type.
+	///
+	/// - Parameters:
+	///    - buttonType: The button identifier, matching `NSWindow.ButtonType`.
+	///    - window: The window carrying the button.
+	///
+	/// - Returns: The button.
+	private func standardWindowButton(_ buttonType: Int, of window: NSObject) -> NSObject? {
+		let selector = NSSelectorFromString("standardWindowButton:")
+		guard window.responds(to: selector), let method = window.method(for: selector) else { return nil }
+
+		typealias StandardButtonFunction = @convention(c) (NSObject, Selector, Int) -> NSObject?
+		return unsafeBitCast(method, to: StandardButtonFunction.self)(window, selector, buttonType)
+	}
+}
+#endif

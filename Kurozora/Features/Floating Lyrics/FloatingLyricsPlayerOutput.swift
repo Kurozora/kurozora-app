@@ -11,10 +11,10 @@ import AVFoundation
 import CoreImage
 import UIKit
 
-/// Feeds lyric frames into an `AVPlayerLayer` for the Mac Picture in Picture window.
+/// Feeds lyric frames into an `AVPlayerLayer` for the Mac Picture-in-Picture window.
 final class FloatingLyricsPlayerOutput {
 	// MARK: - Properties
-	/// The layer the Picture in Picture controller presents.
+	/// The layer the Picture-in-Picture controller presents.
 	let playerLayer = AVPlayerLayer()
 
 	/// The size of the logical rendering canvas in pixels.

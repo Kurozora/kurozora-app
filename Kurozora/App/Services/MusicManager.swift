@@ -68,10 +68,7 @@ private actor SongCache {
 		self.pending.removeValue(forKey: appleMusicID)
 	}
 
-	/// Registers a batch fetch, coalescing concurrent requests by identifier.
-	///
-	/// For each identifier, an existing pending task is reused when available; otherwise
-	/// a new per-identifier task is registered that awaits `sharedTask`.
+	/// Registers a batch fetch, reusing any task already pending for an identifier.
 	///
 	/// - Parameters:
 	///    - appleMusicIDs: The Apple Music catalog identifiers to register.
@@ -172,6 +169,11 @@ final class MusicManager: NSObject {
 	/// The current MusicKit authorization status.
 	var authorizationState: MusicAuthorization.Status {
 		return MusicAuthorization.currentStatus
+	}
+
+	/// A Boolean value that indicates whether playback can be time-synced to lyrics.
+	var canTimeSync: Bool {
+		return self.authorizationState == .authorized && self.hasAMSubscription
 	}
 
 	/// The current playback position in seconds of the active player.
@@ -396,8 +398,7 @@ final class MusicManager: NSObject {
 
 	/// Returns the songs with the given Apple Music identifiers.
 	///
-	/// Cached songs are returned immediately, in-flight fetches are coalesced, and the
-	/// remaining identifiers are batched into catalog requests.
+	/// Serves cached songs immediately and batches the rest into catalog requests.
 	///
 	/// - Parameter appleMusicIDs: The Apple Music catalog identifiers to fetch.
 	///
@@ -590,7 +591,7 @@ final class MusicManager: NSObject {
 	///    - playButton: The button to reflect the play state on, if any.
 	///    - kkSong: The Kurozora model associated with `song`, if available.
 	///    - restart: Whether to restart from the beginning when `song` is already loaded, instead of toggling play/pause.
-	///    - resumePlayback: Whether to begin playback after loading; when `false`, the song loads paused at its start.
+	///    - resumePlayback: Whether to begin playback after loading. When `false`, the song loads paused at its start.
 	private func playPreview(song: MKSong, playButton: UIButton?, kkSong: KKSong?, restart: Bool = false, resumePlayback: Bool = true) async {
 		guard let songURL = song.song.previewAssets?.first?.url else { return }
 		let playerItem = AVPlayerItem(url: songURL)
@@ -727,7 +728,7 @@ final class MusicManager: NSObject {
 		self.isPlaying = false
 	}
 
-	/// Restarts the current song when more than three seconds have elapsed, otherwise steps to the previous song, honoring the repeat mode.
+	/// Steps to the previous song, restarting the current one when it is already underway.
 	func skipBackward() {
 		Task { [weak self] in
 			guard let self else { return }
@@ -862,9 +863,9 @@ final class MusicManager: NSObject {
 		self.playbackProgress = PlaybackProgress(currentSeconds: self.currentPlaybackSeconds, durationSeconds: safeDuration)
 	}
 
-	/// Publishes a progress snapshot while paused so a skip or restart updates the bar immediately.
+	/// Publishes a progress snapshot while paused.
 	///
-	/// - Parameter position: An explicit position to publish; when `nil`, the live player position is read.
+	/// - Parameter position: The position to publish. Pass `nil` to read the live player position.
 	private func refreshProgressWhilePaused(position: TimeInterval? = nil) {
 		guard !self.isPlaying else { return }
 
@@ -892,7 +893,7 @@ final class MusicManager: NSObject {
 	/// Adds the given song to the user's Apple Music library.
 	///
 	/// - Parameter song: The song to add.
-	/// - Returns: `true` if the song was added successfully; otherwise, `false`.
+	/// - Returns: Whether the song was added.
 	func add(song: MKSong) async -> Bool {
 		guard let url = URL(string: "https://api.music.apple.com/v1/me/library?ids[songs]=\(song.song.id)") else { return false }
 		var urlRequest = URLRequest(url: url)

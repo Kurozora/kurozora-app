@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 
 		#if DEBUG && targetEnvironment(macCatalyst)
-		if connectionOptions.userActivities.first?.activityType == kFlexDebugSceneActivityType {
+		if connectionOptions.userActivities.first?.activityType == SceneActivityType.flexDebug.rawValue {
 			self.configureFlexDebugScene(windowScene, session: session)
 			return
 		}

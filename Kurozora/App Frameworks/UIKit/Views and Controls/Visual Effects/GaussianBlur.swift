@@ -6,9 +6,10 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import Obfuscation
 import QuartzCore
 
-/// A factory for `gaussianBlur` layer filters.
+/// A factory for blur layer filters.
 struct GaussianBlur {
 	// MARK: - Initializers
 	private init() {}
@@ -16,10 +17,12 @@ struct GaussianBlur {
 	// MARK: - Functions
 	/// Creates a `gaussianBlur` filter with the given radius.
 	///
-	/// - Parameter radius: The blur radius in points.
+	/// - Parameters:
+	///    - radius: The blur radius in points.
+	///    - normalizesEdges: Whether the kernel clamps at the layer's bounds.
 	///
 	/// - Returns: The configured filter.
-	static func filter(radius: CGFloat) -> NSObject? {
+	static func filter(radius: CGFloat, normalizesEdges: Bool = false) -> NSObject? {
 		guard let filterClass = NSClassFromString("CAFilter") else { return nil }
 
 		let selector = NSSelectorFromString("filterWithName:")
@@ -27,6 +30,11 @@ struct GaussianBlur {
 		guard let filter = unmanaged.takeUnretainedValue() as? NSObject else { return nil }
 
 		filter.setValue(radius, forKey: "inputRadius")
+
+		if normalizesEdges {
+			filter.setValue(true, forKey: #obfuscated("inputNormalizeEdges"))
+		}
+
 		return filter
 	}
 }

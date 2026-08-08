@@ -9,10 +9,7 @@
 import SwiftTheme
 import UIKit
 
-/// `KnockoutButton` is a specially crafted object that displays a button with a cutout in your interface.
-///
-/// `KnockoutButton` adjusts some options to achieve its design, this includes:
-/// - Knocking the symbol out of a fill when active, revealing the content behind it.
+/// A button that knocks its symbol out of a filled shape, revealing the content behind it.
 final class KnockoutButton: UIButton {
 	// MARK: - Views
 	private let effectView: UIVisualEffectView = {
@@ -60,6 +57,38 @@ final class KnockoutButton: UIButton {
 		}
 	}
 
+	/// Replaces the material with the solid chrome fill used by the transport chips.
+	var prefersSolidChrome = false {
+		didSet {
+			guard self.prefersSolidChrome else { return }
+			self.effectView.effect = nil
+			self.effectView.backgroundColor = .systemFill
+		}
+	}
+
+	/// Draws the symbol and its active-state fill in the label color instead of the theme's.
+	var prefersSystemColors = false {
+		didSet {
+			guard self.prefersSystemColors else { return }
+			self.symbolImageView.theme_tintColor = nil
+			self.symbolImageView.tintColor = .label
+			self.fillView.theme_backgroundColor = nil
+			self.fillView.backgroundColor = .label
+		}
+	}
+
+	/// A fixed corner radius for a rounded-rectangle shape, replacing the default capsule.
+	var cornerRadius: CGFloat? {
+		didSet {
+			guard let cornerRadius = self.cornerRadius else { return }
+			if #available(iOS 26.0, *) {
+				self.effectView.cornerConfiguration = .corners(radius: .fixed(cornerRadius))
+			}
+			self.maskedSize = .zero
+			self.setNeedsLayout()
+		}
+	}
+
 	// MARK: - Initializers
 	/// Creates a knockout button.
 	///
@@ -88,7 +117,7 @@ final class KnockoutButton: UIButton {
 		guard self.bounds.width > 0, self.bounds.height > 0 else { return }
 
 		if #unavailable(iOS 26.0) {
-			self.effectView.layer.cornerRadius = min(self.bounds.width, self.bounds.height) / 2
+			self.effectView.layer.cornerRadius = self.cornerRadius ?? min(self.bounds.width, self.bounds.height) / 2
 		}
 
 		self.fillView.mask = self.knockoutMaskView
@@ -134,7 +163,7 @@ final class KnockoutButton: UIButton {
 		guard size.width > 0, size.height > 0 else { return nil }
 
 		return UIGraphicsImageRenderer(size: size).image { _ in
-			let radius = min(size.width, size.height) / 2
+			let radius = self.cornerRadius ?? min(size.width, size.height) / 2
 			UIColor.white.setFill()
 			UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: radius).fill()
 

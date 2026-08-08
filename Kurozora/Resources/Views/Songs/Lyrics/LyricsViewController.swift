@@ -41,13 +41,24 @@ final class LyricsViewController: KTableViewController {
 
 	// MARK: - Views
 	private lazy var optionsButton: KnockoutButton = {
-		let button = KnockoutButton(symbol: .Symbols.translate)
+		// Compact hosts get the smaller rounded-rectangle form, with the symbol filling it.
+		let button = KnockoutButton(symbol: .Symbols.translate, pointSize: self.isEmbeddedPresentation ? 13 : 18)
 		button.showsMenuAsPrimaryAction = true
 		button.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: 44),
-			button.heightAnchor.constraint(equalTo: button.widthAnchor),
-		])
+		if self.isEmbeddedPresentation {
+			button.cornerRadius = 6
+			button.prefersSolidChrome = true
+			button.prefersSystemColors = true
+			NSLayoutConstraint.activate([
+				button.widthAnchor.constraint(equalToConstant: 30),
+				button.heightAnchor.constraint(equalToConstant: 22),
+			])
+		} else {
+			NSLayoutConstraint.activate([
+				button.widthAnchor.constraint(equalToConstant: 44),
+				button.heightAnchor.constraint(equalTo: button.widthAnchor),
+			])
+		}
 		return button
 	}()
 
@@ -64,10 +75,18 @@ final class LyricsViewController: KTableViewController {
 		return button
 	}()
 
-	/// The subscription mirroring the Picture in Picture state onto the button.
+	/// The subscription mirroring the Picture-in-Picture state onto the button.
 	private var pictureInPictureSubscription: AnyCancellable?
 
 	// MARK: - Properties
+	/// A Boolean value that indicates whether the controller is embedded in a container instead of presented as a sheet.
+	///
+	/// Set before the view loads.
+	var isEmbeddedPresentation = false
+
+	/// Called when scroll interaction suppresses or restores the distance styling.
+	var onScrollInteractionChange: ((Bool) -> Void)?
+
 	private var lyrics: Lyrics?
 	private let songID: KurozoraItemID
 	private let gapThresholdMs = 4000
@@ -77,10 +96,28 @@ final class LyricsViewController: KTableViewController {
 	private var displayLink: CADisplayLink?
 	private var activeIndex = -1
 	private var isUserScrolling = false
+
+	/// The position a scrubber is previewing, driving the sync ahead of the player.
+	private var previewPositionSeconds: TimeInterval?
+
+	/// Whether the scrub that set the previewed position is still in progress.
+	private var isPreviewingScrub = false
+
+	/// How close playback must land to a finished scrub's position before the preview hands back over.
+	private let previewHandoffTolerance: TimeInterval = 1
+
+	/// Whether the controller itself is moving the content offset.
+	private var isAdjustingOffsetProgrammatically = false
+
+	/// Restores auto-scroll after a pause in discrete wheel scrolling.
+	private var wheelScrollResetWorkItem: DispatchWorkItem?
 	private var isBlurSuppressed = false
 	private var wasPlaying = false
 	private var hasPerformedInitialSync = false
 	private var hasLoadedLyrics = false
+
+	/// The viewport height the lines were last anchored for.
+	private var syncedViewportHeight: CGFloat = 0
 
 	private var showsSecondaryText = UserSettings.lyricsShowsTransliteration
 	private var selectedTranslationLanguage: String? = UserSettings.lyricsTranslationLanguage
@@ -96,7 +133,7 @@ final class LyricsViewController: KTableViewController {
 
 	/// A Boolean value that indicates whether playback can be time-synced to the lyrics.
 	private var canTimeSync: Bool {
-		return MusicManager.shared.authorizationState == .authorized && MusicManager.shared.hasAMSubscription
+		return MusicManager.shared.canTimeSync
 	}
 
 	/// The line cells currently on screen, including any still held by an in-flight recenter transform.
@@ -133,6 +170,10 @@ final class LyricsViewController: KTableViewController {
 		return true
 	}
 
+	override var prefersGradientBackgroundHidden: Bool {
+		return self.isEmbeddedPresentation
+	}
+
 	// MARK: - Initializers
 	init(songID: KurozoraItemID, lyrics: Lyrics? = nil) {
 		self.songID = songID
@@ -150,7 +191,13 @@ final class LyricsViewController: KTableViewController {
 		super.viewDidLoad()
 
 		self.title = L10n.lyrics
-		self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissLyrics))
+
+		if self.isEmbeddedPresentation {
+			self.view.theme_backgroundColor = nil
+			self.view.backgroundColor = .clear
+		} else {
+			self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissLyrics))
+		}
 
 		self.configureTableView()
 		self.configureDataSource()
@@ -186,6 +233,7 @@ final class LyricsViewController: KTableViewController {
 		self.view.bringSubviewToFront(self.optionsButton)
 		self.view.bringSubviewToFront(self.pictureInPictureButton)
 
+		self.isAdjustingOffsetProgrammatically = true
 		let bottomInset = self.canTimeSync ? self.tableView.bounds.height * 0.8 : 16
 		if self.tableView.contentInset.bottom != bottomInset {
 			self.tableView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: bottomInset, right: 0)
@@ -193,12 +241,20 @@ final class LyricsViewController: KTableViewController {
 
 		if !self.hasPerformedInitialSync, self.tableView.bounds.height > 0 {
 			self.hasPerformedInitialSync = true
+			self.syncedViewportHeight = self.tableView.bounds.height
 
 			if self.canTimeSync {
 				self.performInitialSync()
 			} else {
 				self.tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.adjustedContentInset.top), animated: false)
 			}
+		}
+		self.isAdjustingOffsetProgrammatically = false
+
+		// A resized pane keeps the line playing now in view.
+		if self.hasPerformedInitialSync, self.canTimeSync, abs(self.tableView.bounds.height - self.syncedViewportHeight) > 1 {
+			self.syncedViewportHeight = self.tableView.bounds.height
+			self.scrollToActiveItem(animated: false)
 		}
 	}
 
@@ -217,25 +273,37 @@ final class LyricsViewController: KTableViewController {
 	}
 
 	override func configureEmptyDataView() {
+		// The background must not take hits, or wheel scrolls between lines never reach the table.
+		self.emptyBackgroundView.isUserInteractionEnabled = false
 		guard self.hasLoadedLyrics, self.items.isEmpty else { return }
 
 		self.emptyBackgroundView.configureImageView(image: .Empty.personQuestion)
 		self.emptyBackgroundView.configureLabels(title: L10n.lyricsUnavailableTitle, detail: L10n.lyricsUnavailableDetail)
 	}
 
+	/// The options button, exposed for hosts that float it outside the embedded pane.
+	var translationOptionsButton: UIView {
+		return self.optionsButton
+	}
+
 	/// Floats the options button over the view's bottom trailing edge.
 	private func presentFloatingOptionsButton() {
-		self.view.addSubview(self.optionsButton)
-
 		let inset: CGFloat = 12
 
-		NSLayoutConstraint.activate([
-			self.optionsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
-			self.optionsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -inset),
-		])
+		// Embedded hosts install the button themselves, outside the pane's edge fade.
+		if !self.isEmbeddedPresentation {
+			self.view.addSubview(self.optionsButton)
+
+			NSLayoutConstraint.activate([
+				self.optionsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
+				self.optionsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -inset),
+			])
+		}
 
 		self.optionsButton.isHidden = !self.hasLoadedLyrics
 		self.updateOptionsButtonAppearance()
+
+		guard !self.isEmbeddedPresentation else { return }
 
 		self.view.addSubview(self.pictureInPictureButton)
 
@@ -253,15 +321,16 @@ final class LyricsViewController: KTableViewController {
 			}
 	}
 
-	/// Shows the Picture in Picture button only when this song plays time-synced with lyrics.
+	/// Updates the Picture-in-Picture button's visibility.
 	private func updatePictureInPictureButton() {
 		let manager = FloatingLyricsManager.shared
-		self.pictureInPictureButton.isHidden = !(manager.isPictureInPictureSupported && self.canTimeSync && self.isCurrentSong && !self.items.isEmpty)
+		self.pictureInPictureButton.isHidden = self.isEmbeddedPresentation || !(manager.isPictureInPictureSupported && self.canTimeSync && self.isCurrentSong && !self.items.isEmpty)
 	}
 
 	private func updateOptionsButtonAppearance() {
+		// Embedded presentations keep the quiet dark style regardless of the active options.
 		let secondaryTextActive = self.showsSecondaryText && !self.availableTransliterationLanguages.isEmpty
-		self.optionsButton.isActiveState = secondaryTextActive || self.selectedTranslationLanguage != nil
+		self.optionsButton.isActiveState = !self.isEmbeddedPresentation && (secondaryTextActive || self.selectedTranslationLanguage != nil)
 	}
 
 	@objc private func themeDidChange() {
@@ -327,7 +396,8 @@ final class LyricsViewController: KTableViewController {
 
 	/// Resolves each line's horizontal alignment from its singing agent.
 	///
-	/// Lines alternate sides whenever the agent changes from the previous line's; consecutive lines by the same agent share a side, and group agents stay on the main side without affecting the alternation.
+	/// Lines alternate sides whenever the agent changes. Consecutive lines by one agent share a side,
+	/// and group agents stay on the main side without affecting the alternation.
 	///
 	/// - Returns: The alignment for each line, keyed by item index.
 	private func computeLineAlignments() -> [Int: NSTextAlignment] {
@@ -432,21 +502,59 @@ final class LyricsViewController: KTableViewController {
 
 		self.tableView.layoutIfNeeded()
 
+		self.isAdjustingOffsetProgrammatically = true
 		if self.activeIndex >= 0 {
 			self.scrollToActiveItem(animated: false)
 		} else {
 			self.tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.adjustedContentInset.top), animated: false)
 		}
+		self.isAdjustingOffsetProgrammatically = false
 
 		self.tableView.layoutIfNeeded()
 		self.updateActiveItem(positionMs: positionMs)
 	}
 
 	private func currentPositionMs() -> Int {
-		return self.isCurrentSong ? Int(MusicManager.shared.currentPlaybackSeconds * 1000) : 0
+		guard self.isCurrentSong else { return 0 }
+		return Int((self.previewPositionSeconds ?? MusicManager.shared.currentPlaybackSeconds) * 1000)
+	}
+
+	/// Re-anchors the lines on the position playing now.
+	func resyncToCurrentPosition() {
+		self.isUserScrolling = false
+		self.wheelScrollResetWorkItem?.cancel()
+
+		guard self.hasPerformedInitialSync else { return }
+		self.scrollToActiveItem(animated: false)
+	}
+
+	/// Syncs the lines to the position a scrubber is dragging to.
+	///
+	/// - Parameter seconds: The previewed playback position, cleared once the drag ends.
+	func setPreviewPosition(_ seconds: TimeInterval?) {
+		self.isPreviewingScrub = seconds != nil
+
+		if let seconds = seconds {
+			self.previewPositionSeconds = seconds
+			// Scrubbing is an explicit request to follow along, overriding a stale scroll grace period.
+			self.wheelScrollResetWorkItem?.cancel()
+			self.isUserScrolling = false
+		}
+
+		guard self.canTimeSync, self.isCurrentSong else { return }
+		self.tick()
+	}
+
+	/// Hands the sync back to the player once it has landed on the position the drag left it at.
+	private func handOffFinishedScrub() {
+		guard !self.isPreviewingScrub, let previewSeconds = self.previewPositionSeconds else { return }
+		guard abs(MusicManager.shared.currentPlaybackSeconds - previewSeconds) < self.previewHandoffTolerance else { return }
+		self.previewPositionSeconds = nil
 	}
 
 	@objc private func tick() {
+		self.handOffFinishedScrub()
+
 		let positionMs = self.currentPositionMs()
 
 		let isPlaying = self.isCurrentSong && MusicManager.shared.isPlaying
@@ -541,6 +649,7 @@ final class LyricsViewController: KTableViewController {
 		guard !self.isBlurSuppressed else { return }
 		self.isBlurSuppressed = true
 		self.setScrollSuppressed(true)
+		self.onScrollInteractionChange?(true)
 	}
 
 	/// Restores the per-line blur.
@@ -548,6 +657,7 @@ final class LyricsViewController: KTableViewController {
 		guard self.isBlurSuppressed else { return }
 		self.isBlurSuppressed = false
 		self.setScrollSuppressed(false)
+		self.onScrollInteractionChange?(false)
 	}
 
 	/// Applies the active or static reveal styling to a line cell.
@@ -584,13 +694,16 @@ final class LyricsViewController: KTableViewController {
 	///
 	/// - Returns: The blur radius in points.
 	private func blurRadius(forRow row: Int) -> CGFloat {
+		// Compact hosts fade lines at the pane's edges instead of blurring them.
+		guard !self.isEmbeddedPresentation else { return 0 }
 		guard self.canTimeSync, self.isCurrentSong, MusicManager.shared.isPlaying, self.activeIndex >= 0 else { return 0 }
 		return LyricsLayout.blurRadius(forDistance: abs(row - self.activeIndex))
 	}
 
 	/// The on-screen Y at which the active line is anchored.
 	private func recenterAnchorScreenY() -> CGFloat {
-		return self.tableView.adjustedContentInset.top + self.tableView.bounds.height * 0.35
+		let anchorFraction: CGFloat = self.isEmbeddedPresentation ? 0.05 : 0.35
+		return self.tableView.adjustedContentInset.top + self.tableView.bounds.height * anchorFraction
 	}
 
 	/// Sets the content offset so the active line's top sits at the given on-screen Y.
@@ -603,7 +716,9 @@ final class LyricsViewController: KTableViewController {
 		let minY = -self.tableView.adjustedContentInset.top
 		let maxY = max(minY, self.tableView.contentSize.height - self.tableView.bounds.height + self.tableView.adjustedContentInset.bottom)
 		let targetY = min(max(self.tableView.rectForRow(at: path).minY - screenY, minY), maxY)
+		self.isAdjustingOffsetProgrammatically = true
 		self.tableView.contentOffset = CGPoint(x: 0, y: targetY)
+		self.isAdjustingOffsetProgrammatically = false
 	}
 
 	/// Applies a height change, holds the active line's top at a target on-screen Y, then glides every other visible row to absorb the change.
@@ -652,14 +767,18 @@ final class LyricsViewController: KTableViewController {
 		let targetY = min(max(rect.minY - anchorScreenY, minY), maxY)
 
 		guard animated else {
+			self.isAdjustingOffsetProgrammatically = true
 			self.tableView.setContentOffset(CGPoint(x: 0, y: targetY), animated: false)
+			self.isAdjustingOffsetProgrammatically = false
 			return
 		}
 
 		let deltaY = targetY - self.tableView.contentOffset.y
 		guard abs(deltaY) > 0.5 else { return }
 
+		self.isAdjustingOffsetProgrammatically = true
 		self.tableView.setContentOffset(CGPoint(x: 0, y: targetY), animated: false)
+		self.isAdjustingOffsetProgrammatically = false
 		self.tableView.layoutIfNeeded()
 
 		var cells = self.tableView.visibleCells.sorted { $0.frame.minY < $1.frame.minY }
@@ -763,9 +882,9 @@ final class LyricsViewController: KTableViewController {
 		var backgroundPairs: [KaraokeWordPair] = []
 
 		for (index, word) in line.words.enumerated() {
-			let romaji = (romajiWords?.indices.contains(index) ?? false) ? romajiWords?[index].text : nil
-			let texts = self.orderedTexts(original: word.text, romaji: romaji)
-			let pair = KaraokeWordPair(primary: texts.primary, secondary: texts.secondary, beginMs: word.beginMs, endMs: word.endMs, trailingSpace: word.trailingSpace)
+			let romajiWord = (romajiWords?.indices.contains(index) ?? false) ? romajiWords?[index] : nil
+			let texts = self.orderedTexts(original: word.text, romaji: romajiWord?.text)
+			let pair = KaraokeWordPair(primary: texts.primary, secondary: texts.secondary, beginMs: word.beginMs, endMs: word.endMs, trailingSpace: word.trailingSpace, secondaryTrailingSpace: romajiWord?.trailingSpace ?? false)
 
 			if word.background {
 				backgroundPairs.append(pair)
@@ -843,6 +962,8 @@ extension LyricsViewController {
 			switch self.items[index] {
 			case .line(let line, _):
 				let mapped = self.pairs(for: line)
+				cell.setCompactTypography(self.isEmbeddedPresentation)
+				cell.prefersSystemColors = self.isEmbeddedPresentation
 				cell.configure(pairs: mapped.main, backgroundPairs: mapped.background, hasWordTiming: mapped.hasWordTiming, translationText: self.translationText(for: line), offsetMs: self.offsetMs, alignment: self.lineAlignments[index] ?? .natural)
 				self.applyPlaybackStyling(to: cell, at: index)
 			case .interlude:
@@ -852,6 +973,7 @@ extension LyricsViewController {
 
 		let interludeRegistration = UITableView.CellRegistration<LyricsInterludeCollectionViewCell, Int> { [weak self] cell, _, index in
 			guard let self = self else { return }
+			cell.prefersSystemColors = self.isEmbeddedPresentation
 			cell.setActive(index == self.activeIndex)
 		}
 
@@ -915,6 +1037,22 @@ extension LyricsViewController {
 	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
 		self.isUserScrolling = true
 		self.suppressBlur()
+	}
+
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		// Discrete wheel scrolls never run the drag cycle, so the grace period stands in for it.
+		guard !self.isAdjustingOffsetProgrammatically, self.hasPerformedInitialSync else { return }
+		guard !scrollView.isTracking, !scrollView.isDragging, !scrollView.isDecelerating else { return }
+
+		self.isUserScrolling = true
+		self.suppressBlur()
+		self.wheelScrollResetWorkItem?.cancel()
+
+		let workItem = DispatchWorkItem { [weak self] in
+			self?.isUserScrolling = false
+		}
+		self.wheelScrollResetWorkItem = workItem
+		DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
 	}
 
 	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

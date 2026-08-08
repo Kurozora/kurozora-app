@@ -8,13 +8,7 @@
 
 import UIKit
 
-/// A label that auto-scrolls horizontally when its text exceeds the available width.
-///
-/// The scroll cycle is:
-/// 1. Pause at the initial position (configurable via ``restartDelay``)
-/// 2. Scroll continuously with a seamless loop (duplicate text trails the original)
-/// 3. Decelerate smoothly near the end of one complete round
-/// 4. Stop precisely at the initial alignment, pause, then repeat
+/// A label that scrolls its text horizontally when the text is wider than the label.
 final class KMarqueeLabel: UIView {
 	// MARK: - Properties
 	/// The text displayed by the label.
@@ -81,6 +75,9 @@ final class KMarqueeLabel: UIView {
 	private var textWidth: CGFloat = 0
 	private var restartWorkItem: DispatchWorkItem?
 	private let animationKey = "marqueeScroll"
+
+	/// Whether the scroll animation is running.
+	private var isScrolling = false
 
 	private var isRTL: Bool {
 		self.effectiveUserInterfaceLayoutDirection == .rightToLeft
@@ -212,8 +209,9 @@ final class KMarqueeLabel: UIView {
 
 			self.fadeMaskLayer.frame = self.bounds
 
-			let leadFade = self.isRTL ? self.trailingFadeWidth : self.leadingFadeWidth
-			let trailFade = self.isRTL ? self.leadingFadeWidth : self.trailingFadeWidth
+			let effectiveLeadingFade = self.isScrolling ? self.leadingFadeWidth : 0
+			let leadFade = self.isRTL ? self.trailingFadeWidth : effectiveLeadingFade
+			let trailFade = self.isRTL ? effectiveLeadingFade : self.trailingFadeWidth
 			let leadStop = leadFade / self.bounds.width
 			let trailStop = 1.0 - trailFade / self.bounds.width
 
@@ -259,16 +257,11 @@ final class KMarqueeLabel: UIView {
 		let distance = self.totalScrollDistance
 		let direction: CGFloat = self.isRTL ? 1 : -1
 
-		// 80% of the duration at constant speed, 20% decelerating.
-		// Phase 1 (linear):  covers 8/9 of the distance in 80% of the time.
-		// Phase 2 (easeOut): covers 1/9 of the distance in 20% of the time.
-		// Total duration = distance / (0.9 × speed).
+		// 80% of the duration covers 8/9 of the distance at constant speed. The rest decelerates.
 		let totalDuration = TimeInterval(distance / (0.9 * self.scrollSpeed))
 		let constantDistance = distance * (8.0 / 9.0)
 
-		// Custom bezier so the speed is continuous at the phase boundary:
-		//   dy/dx|₀ = c1y / c1x = 2  (matches constant-phase speed)
-		//   dy/dx|₁ = (1−c2y) / (1−c2x) = 0  (full stop)
+		// The control points match the constant phase's speed at the start and reach zero at the end.
 		let decelerationTiming = CAMediaTimingFunction(controlPoints: 0.35, 0.7, 0.65, 1.0)
 
 		let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
@@ -288,12 +281,18 @@ final class KMarqueeLabel: UIView {
 		animation.delegate = self
 
 		self.containerView.layer.add(animation, forKey: self.animationKey)
+
+		self.isScrolling = true
+		self.updateFadeMask()
 	}
 
 	private func stopAnimation() {
 		self.restartWorkItem?.cancel()
 		self.restartWorkItem = nil
 		self.containerView.layer.removeAnimation(forKey: self.animationKey)
+
+		self.isScrolling = false
+		self.updateFadeMask()
 	}
 }
 
@@ -307,6 +306,8 @@ extension KMarqueeLabel: CAAnimationDelegate {
 		self.containerView.layer.removeAnimation(forKey: self.animationKey)
 		CATransaction.commit()
 
+		self.isScrolling = false
+		self.updateFadeMask()
 		self.scheduleAnimation()
 	}
 }

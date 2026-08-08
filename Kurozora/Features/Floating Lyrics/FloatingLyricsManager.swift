@@ -15,21 +15,21 @@ import KurozoraKit
 import Obfuscation
 import UIKit
 
-/// A singleton that drives the floating lyrics Picture in Picture window.
+/// A singleton that drives the floating lyrics Picture-in-Picture window.
 final class FloatingLyricsManager: NSObject {
 	// MARK: - Properties
 	/// The shared instance of `FloatingLyricsManager`.
 	static let shared = FloatingLyricsManager()
 
-	/// A Boolean value that indicates whether the Picture in Picture window is showing.
+	/// A Boolean value that indicates whether the Picture-in-Picture window is showing.
 	@Published private(set) var isPictureInPictureActive = false
 
 	/// A Boolean value that indicates whether playback can be time-synced to lyrics.
 	var canTimeSync: Bool {
-		return MusicManager.shared.authorizationState == .authorized && MusicManager.shared.hasAMSubscription
+		return MusicManager.shared.canTimeSync
 	}
 
-	/// A Boolean value that indicates whether the device supports Picture in Picture.
+	/// A Boolean value that indicates whether the device supports Picture-in-Picture.
 	var isPictureInPictureSupported: Bool {
 		return AVPictureInPictureController.isPictureInPictureSupported()
 	}
@@ -40,10 +40,10 @@ final class FloatingLyricsManager: NSObject {
 	/// The context used to average artwork colors.
 	private static let colorContext = CIContext(options: [.workingColorSpace: NSNull()])
 
-	/// The Picture in Picture controller, created once a synced song is available.
+	/// The Picture-in-Picture controller, created once a synced song is available.
 	private var pictureInPictureController: AVPictureInPictureController?
 
-	/// The observation that fires a pending start once Picture in Picture becomes possible.
+	/// The observation that fires a pending start once Picture-in-Picture becomes possible.
 	private var startPossibleObservation: NSKeyValueObservation?
 
 	/// Whether a start request is waiting for the controller to become ready.
@@ -68,7 +68,7 @@ final class FloatingLyricsManager: NSObject {
 	private let videoOutput = FloatingLyricsVideoOutput()
 
 	#if targetEnvironment(macCatalyst)
-	/// The player-backed output feeding the Mac Picture in Picture window.
+	/// The player-backed output feeding the Mac Picture-in-Picture window.
 	private let playerOutput = FloatingLyricsPlayerOutput()
 
 	/// Whether the current window was opened by losing focus.
@@ -119,7 +119,7 @@ final class FloatingLyricsManager: NSObject {
 	// MARK: - Functions
 	/// Starts following the player.
 	///
-	/// Called once per scene connection; safe to call again.
+	/// Called once per scene connection. Safe to call again.
 	func activate() {
 		guard self.subscriptions.isEmpty else { return }
 
@@ -167,7 +167,7 @@ final class FloatingLyricsManager: NSObject {
 	}
 	#endif
 
-	/// Starts or stops the Picture in Picture window.
+	/// Starts or stops the Picture-in-Picture window.
 	func togglePictureInPicture() {
 		if self.isPictureInPictureActive {
 			self.stopPictureInPicture()
@@ -176,7 +176,7 @@ final class FloatingLyricsManager: NSObject {
 		}
 	}
 
-	/// Starts the Picture in Picture window, deferring until the controller is ready.
+	/// Starts the Picture-in-Picture window, deferring until the controller is ready.
 	func startPictureInPicture() {
 		self.ensureControllerIfNeeded()
 		self.positionHostView()
@@ -225,7 +225,7 @@ final class FloatingLyricsManager: NSObject {
 	}
 	#endif
 
-	/// Stops the Picture in Picture window.
+	/// Stops the Picture-in-Picture window.
 	func stopPictureInPicture() {
 		self.isStartPending = false
 		self.suppressesRestoreInterface = true
@@ -263,7 +263,7 @@ final class FloatingLyricsManager: NSObject {
 		self.updateClockState()
 	}
 
-	/// Points the preview at live frames when a synced song has lyrics, or at the canned loop otherwise.
+	/// Updates the preview's source.
 	private func refreshPreviewMode() {
 		guard self.previewView != nil else { return }
 
@@ -495,8 +495,8 @@ final class FloatingLyricsManager: NSObject {
 		)
 	}
 
-	// MARK: Picture in Picture
-	/// Creates the Picture in Picture controller once a synced song is available.
+	// MARK: Picture-in-Picture
+	/// Creates the Picture-in-Picture controller once a synced song is available.
 	private func ensureControllerIfNeeded() {
 		if let controller = self.pictureInPictureController {
 			self.applyAutoOpenSetting(to: controller)
@@ -572,7 +572,7 @@ final class FloatingLyricsManager: NSObject {
 		layer.controlTimebase = timebase
 	}
 
-	/// Hides the window's playback controls, leaving only the close and return-to-app buttons.
+	/// Hides the window's playback controls.
 	///
 	/// - Parameter controller: The controller to strip the controls from.
 	private func hideWindowControls(of controller: AVPictureInPictureController) {
@@ -700,9 +700,10 @@ final class FloatingLyricsManager: NSObject {
 
 		guard let hostView = self.hostView, hostView.window == nil else { return }
 
-		let windowScene = UIApplication.shared.connectedScenes
+		let windowScenes = UIApplication.shared.connectedScenes
 			.compactMap { $0 as? UIWindowScene }
-			.first { $0.activationState == .foregroundActive } ?? UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+			.filter { !$0.session.isAuxiliaryScene }
+		let windowScene = windowScenes.first { $0.activationState == .foregroundActive } ?? windowScenes.first
 
 		guard let window = windowScene?.keyWindow ?? windowScene?.windows.first else { return }
 		window.insertSubview(hostView, at: 0)
@@ -754,7 +755,7 @@ extension FloatingLyricsManager: AVPictureInPictureControllerDelegate {
 		self.isStartPending = false
 		self.isPictureInPictureActive = false
 		self.updateClockState()
-		print("----- Picture in Picture failed to start:", error.localizedDescription)
+		print("----- Picture-in-Picture failed to start:", error.localizedDescription)
 	}
 
 	func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {

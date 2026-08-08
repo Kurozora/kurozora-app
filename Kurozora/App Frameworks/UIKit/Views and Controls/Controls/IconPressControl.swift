@@ -9,13 +9,7 @@
 import SwiftTheme
 import UIKit
 
-/// A control that displays a symbol and reacts to a press by shrinking the symbol while a circular
-/// highlight grows beneath it.
-///
-/// Set ``symbolImage`` and ``restingThemeColor`` for the resting appearance. Subclasses reflect
-/// additional states by overriding ``maintainsHighlight``, ``symbolThemeColor``, and
-/// ``highlightBackgroundColor``, calling ``updateColors()`` and ``updateHighlight(animated:)`` when
-/// that state changes.
+/// A control that shrinks its symbol beneath a growing highlight while pressed.
 @available(iOS 17.0, *)
 class IconPressControl: UIControl {
 	// MARK: - Views
@@ -55,6 +49,11 @@ class IconPressControl: UIControl {
 		didSet { self.setNeedsLayout() }
 	}
 
+	/// A fixed highlight size for oval highlights, taking precedence over ``fixedHighlightDiameter``.
+	var fixedHighlightSize: CGSize? {
+		didSet { self.setNeedsLayout() }
+	}
+
 	/// Whether the highlight stays visible regardless of the press or focus state.
 	var maintainsHighlight: Bool { false }
 
@@ -66,7 +65,8 @@ class IconPressControl: UIControl {
 
 	private var isPressed = false
 	private var isPointerPress = false
-	private var highlightSizeConstraint: NSLayoutConstraint!
+	private var highlightWidthConstraint: NSLayoutConstraint!
+	private var highlightHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -82,11 +82,22 @@ class IconPressControl: UIControl {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		let diameter = self.fixedHighlightDiameter ?? (self.bounds.width + 8)
-		if abs(self.highlightSizeConstraint.constant - diameter) > 0.5 {
-			self.highlightSizeConstraint.constant = diameter
+
+		let highlightSize: CGSize
+		if let fixedHighlightSize = self.fixedHighlightSize {
+			highlightSize = fixedHighlightSize
+		} else {
+			let diameter = self.fixedHighlightDiameter ?? (self.bounds.width + 8)
+			highlightSize = CGSize(width: diameter, height: diameter)
 		}
-		self.highlightView.layer.cornerRadius = diameter / 2
+
+		if abs(self.highlightWidthConstraint.constant - highlightSize.width) > 0.5 {
+			self.highlightWidthConstraint.constant = highlightSize.width
+		}
+		if abs(self.highlightHeightConstraint.constant - highlightSize.height) > 0.5 {
+			self.highlightHeightConstraint.constant = highlightSize.height
+		}
+		self.highlightView.layer.cornerRadius = highlightSize.height / 2
 	}
 
 	override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
@@ -154,12 +165,13 @@ class IconPressControl: UIControl {
 		self.addSubview(self.highlightView)
 		self.addSubview(self.symbolView)
 
-		self.highlightSizeConstraint = self.highlightView.widthAnchor.constraint(equalToConstant: 38)
+		self.highlightWidthConstraint = self.highlightView.widthAnchor.constraint(equalToConstant: 38)
+		self.highlightHeightConstraint = self.highlightView.heightAnchor.constraint(equalToConstant: 38)
 		NSLayoutConstraint.activate([
 			self.highlightView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			self.highlightView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-			self.highlightSizeConstraint,
-			self.highlightView.heightAnchor.constraint(equalTo: self.highlightView.widthAnchor),
+			self.highlightWidthConstraint,
+			self.highlightHeightConstraint,
 
 			self.symbolView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			self.symbolView.centerYAnchor.constraint(equalTo: self.centerYAnchor),

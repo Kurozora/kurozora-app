@@ -11,11 +11,24 @@ import UIKit
 
 @available(iOS 17.0, *)
 final class TransportButton: IconPressControl {
+	// MARK: - Enums
+	/// The rendering of the highlight persisted while the button is active.
+	enum ActiveHighlightStyle {
+		/// A translucent tint highlight beneath a tint-colored symbol.
+		case tinted
+
+		/// A solid tint highlight beneath a white symbol.
+		case solidTint
+
+		/// A translucent white highlight beneath the resting symbol color.
+		case monochrome
+	}
+
 	// MARK: - Properties
 	/// The skip-conveyor glyph, when this button is a skip control.
 	private var skipChevron: SkipChevronView?
 
-	/// Whether the control is in its active (enabled) state, persisting a tinted highlight and symbol.
+	/// Whether the control is in its active state.
 	var isActive: Bool = false {
 		didSet {
 			guard oldValue != self.isActive else { return }
@@ -24,18 +37,57 @@ final class TransportButton: IconPressControl {
 		}
 	}
 
+	/// The rendering of the active state's highlight and symbol.
+	var activeHighlightStyle: ActiveHighlightStyle = .tinted {
+		didSet {
+			guard oldValue != self.activeHighlightStyle else { return }
+			self.updateColors()
+		}
+	}
+
 	override var maintainsHighlight: Bool {
 		self.isActive
 	}
 
+	/// Whether the control is enabled.
+	override var isEnabled: Bool {
+		didSet {
+			guard oldValue != self.isEnabled else { return }
+			self.alpha = self.isEnabled ? 1 : 0.35
+		}
+	}
+
 	override var symbolThemeColor: KThemePicker {
-		self.isActive ? .tintColor : self.restingThemeColor
+		guard self.isActive else { return self.restingThemeColor }
+
+		switch self.activeHighlightStyle {
+		case .tinted, .solidTint:
+			return .tintColor
+		case .monochrome:
+			return self.restingThemeColor
+		}
 	}
 
 	override var highlightBackgroundColor: UIColor {
-		self.isActive
-			? KThemePicker.tintColor.colorValue.withAlphaComponent(0.5)
-			: .black.withAlphaComponent(0.5)
+		guard self.isActive else { return .black.withAlphaComponent(0.5) }
+
+		switch self.activeHighlightStyle {
+		case .tinted:
+			return KThemePicker.tintColor.colorValue.withAlphaComponent(0.5)
+		case .solidTint:
+			return KThemePicker.tintColor.colorValue
+		case .monochrome:
+			return .white.withAlphaComponent(0.12)
+		}
+	}
+
+	override func updateColors() {
+		super.updateColors()
+
+		if self.activeHighlightStyle == .solidTint, self.isActive {
+			self.symbolView.theme_tintColor = nil
+			self.symbolView.tintColor = .white
+		}
 	}
 
 	// MARK: - Initializers
