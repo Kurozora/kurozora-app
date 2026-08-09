@@ -48,6 +48,9 @@ class KTableViewController: UITableViewController, SegueHandler {
 		return EmptyBackgroundView()
 	}()
 
+	/// The object restoring the scroll position after a second status bar tap.
+	private lazy var statusBarScrollRestorer: StatusBarScrollRestorer = StatusBarScrollRestorer()
+
 	/// Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 	///
 	/// If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KTableViewController-setNeedsActivityIndicatorAppearanceUpdate) method.
@@ -116,6 +119,10 @@ class KTableViewController: UITableViewController, SegueHandler {
 
 		// Configure empty view.
 		self.configureEmptyDataView()
+
+		#if !targetEnvironment(macCatalyst)
+		self.statusBarScrollRestorer.install(restoring: self.tableView)
+		#endif
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -196,6 +203,13 @@ class KTableViewController: UITableViewController, SegueHandler {
 // MARK: - UICollectionViewDataSourcePrefetching
 extension KTableViewController: UITableViewDataSourcePrefetching {
 	func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) { }
+}
+
+// MARK: - UIScrollViewDelegate
+extension KTableViewController {
+	override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+		return self.statusBarScrollRestorer.shouldScrollToTop(scrollView)
+	}
 }
 
 // MARK: - Refresh Control

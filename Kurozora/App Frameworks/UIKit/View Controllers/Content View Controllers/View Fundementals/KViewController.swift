@@ -26,6 +26,21 @@ class KViewController: UIViewController, SegueHandler {
 		return gradientView
 	}()
 
+	/// The object restoring the scroll position after a second status bar tap.
+	private lazy var statusBarScrollRestorer: StatusBarScrollRestorer = StatusBarScrollRestorer()
+
+	/// The scroll view returned to its previous position when the status bar is tapped a second time.
+	///
+	/// Subclasses managing their own scroll view return it here and forward
+	/// `scrollViewShouldScrollToTop(_:)` to [statusBarScrollRestorer](x-source-tag://KViewController-statusBarScrollRestorer).
+	///
+	/// By default, this property returns `nil`.
+	///
+	/// - Tag: KViewController-scrollViewForStatusBarRestoration
+	var scrollViewForStatusBarRestoration: UIScrollView? {
+		return nil
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -35,10 +50,26 @@ class KViewController: UIViewController, SegueHandler {
 	}
 
 	// MARK: - Functions
+	/// Returns whether UIKit should perform its own scroll to the top of the given scroll view.
+	///
+	/// - Parameter scrollView: The scroll view UIKit is about to scroll.
+	///
+	/// - Returns: `true` to let UIKit scroll to the top, `false` when the previous position is restored instead.
+	///
+	/// - Tag: KViewController-statusBarScrollRestorer
+	func shouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+		return self.statusBarScrollRestorer.shouldScrollToTop(scrollView)
+	}
 	/// The shared init of the view controller.
 	private func sharedInit() {
 		// Configure the gradient view.
 		self.configureGradientView()
+
+		#if !targetEnvironment(macCatalyst)
+		if let scrollViewForStatusBarRestoration = self.scrollViewForStatusBarRestoration {
+			self.statusBarScrollRestorer.install(restoring: scrollViewForStatusBarRestoration)
+		}
+		#endif
 	}
 
 	/// Configures the gradient view with default values.

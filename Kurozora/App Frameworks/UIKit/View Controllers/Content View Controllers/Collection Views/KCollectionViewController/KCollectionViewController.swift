@@ -44,6 +44,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// The object controlling the empty background view.
 	lazy var emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
 
+	/// The object restoring the scroll position after a second status bar tap.
+	private lazy var statusBarScrollRestorer: StatusBarScrollRestorer = StatusBarScrollRestorer()
+
 	/// Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 	///
 	/// If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate) method.
@@ -130,6 +133,10 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 
 		// Configure empty data view.
 		self.configureEmptyDataView()
+
+		#if !targetEnvironment(macCatalyst)
+		self.statusBarScrollRestorer.install(restoring: self.collectionView)
+		#endif
 	}
 
 	// MARK: - Functions
@@ -231,6 +238,13 @@ extension KCollectionViewController {
 				self.show(previewViewController, sender: self)
 			}
 		}
+	}
+}
+
+// MARK: - UIScrollViewDelegate
+extension KCollectionViewController {
+	override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+		return self.statusBarScrollRestorer.shouldScrollToTop(scrollView)
 	}
 }
 
