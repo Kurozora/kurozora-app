@@ -559,6 +559,11 @@ extension TopChartsCollectionViewController: MusicLockupCollectionViewCellDelega
 	}
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		(self.cache[indexPath] as? Song)?.play()
+		let itemCount = self.collectionView.numberOfItems(inSection: indexPath.section)
+		let kkSongs: [KKSong?] = (0 ..< itemCount).map { item in
+			self.cache[IndexPath(item: item, section: indexPath.section)] as? Song
+		}
+
+		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
 	}
 }

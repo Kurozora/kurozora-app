@@ -107,6 +107,9 @@ extension UserReviewsListCollectionViewController {
 			guard let self = self else { return }
 			guard let review = itemKind.review else { return }
 
+			musicReviewLockupCollectionViewCell.delegate = self
+			musicReviewLockupCollectionViewCell.indexPath = indexPath
+
 			let song: Song? = self.fetchModel(at: indexPath)
 
 			if song == nil {

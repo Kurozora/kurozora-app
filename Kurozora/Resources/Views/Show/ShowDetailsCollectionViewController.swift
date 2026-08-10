@@ -402,7 +402,7 @@ extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDele
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		self.showSongs[safe: indexPath.item]?.song.play()
+		MusicManager.shared.play(kkSongs: self.showSongs.map { $0.song }, startingAt: indexPath.item)
 	}
 
 	/// Resolves and caches the Apple Music song for the given Kurozora song.

@@ -458,59 +458,14 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 		switch self.songsListFetchType {
 		case .show:
 			let kkSongs = self.showSongs.isEmpty ? self.songs : self.showSongs.map { $0.song }
-			guard kkSongs.indices.contains(indexPath.item) else { return }
-			let tappedItem = indexPath.item
 
-			Task { [weak self] in
-				guard self != nil else { return }
-
-				let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
-				let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
-
-				var queueSongs: [MKSong] = []
-				var queueKKSongs: [KKSong] = []
-				var startIndex = 0
-
-				for (offset, kkSong) in kkSongs.enumerated() {
-					guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
-					if offset == tappedItem {
-						startIndex = queueSongs.count
-					}
-					queueSongs.append(song)
-					queueKKSongs.append(kkSong)
-				}
-
-				guard !queueSongs.isEmpty else { return }
-				MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
-			}
+			MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
 		case .charts:
-			let kkSongs: [KKSong] = self.songIdentities.indices.compactMap { index in
+			let kkSongs: [KKSong?] = self.songIdentities.indices.map { index in
 				self.cache[IndexPath(item: index, section: 0)] as? Song
 			}
-			guard let tappedSong = self.cache[indexPath] as? Song else { return }
 
-			Task { [weak self] in
-				guard self != nil else { return }
-
-				let appleMusicIDs = kkSongs.compactMap { $0.attributes.amID }
-				let songsByID = await MusicManager.shared.getSongs(for: appleMusicIDs)
-
-				var queueSongs: [MKSong] = []
-				var queueKKSongs: [KKSong] = []
-				var startIndex = 0
-
-				for kkSong in kkSongs {
-					guard let appleMusicID = kkSong.attributes.amID, let song = songsByID[appleMusicID] else { continue }
-					if kkSong.id == tappedSong.id {
-						startIndex = queueSongs.count
-					}
-					queueSongs.append(song)
-					queueKKSongs.append(kkSong)
-				}
-
-				guard !queueSongs.isEmpty else { return }
-				MusicManager.shared.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: startIndex)
-			}
+			MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
 		}
 	}
 }

@@ -11,6 +11,15 @@ import KurozoraKit
 import MusicKit
 import SwiftyJSON
 
+protocol MusicReviewLockupCollectionViewCellDelegate: AnyObject {
+	/// Tells the delegate the cell's play button was tapped.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose play button was tapped.
+	///    - indexPath: The index path of the cell within the collection view.
+	func musicReviewLockupCollectionViewCell(_ cell: MusicReviewLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath)
+}
+
 class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	/// A button representing the state of the music.
@@ -22,8 +31,11 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	/// A single music item.
 	var song: MKSong?
 
-	/// The Kurozora song model used for context menu actions.
-	var kkSong: KKSong?
+	/// The index path of the cell within the parent collection view.
+	var indexPath: IndexPath?
+
+	/// The object responsible for delegating actions.
+	weak var delegate: MusicReviewLockupCollectionViewCellDelegate?
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -51,7 +63,6 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			return
 		}
 		self.hideSkeleton()
-		self.kkSong = song
 
 		// Configure title
 		self.primaryLabel.text = song.attributes.title
@@ -79,7 +90,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 	/// Updates the play button status.
 	func updatePlayButton() {
-		if MusicManager.shared.currentSong == self.song {
+		if let song = self.song, MusicManager.shared.currentSong == song, MusicManager.shared.isPlaying {
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -117,7 +128,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
-		guard let song = self.song else { return }
-		MusicManager.shared.play(song: song, playButton: sender, kkSong: self.kkSong)
+		guard let indexPath = self.indexPath else { return }
+		self.delegate?.musicReviewLockupCollectionViewCell(self, didTapPlayButtonAt: indexPath)
 	}
 }

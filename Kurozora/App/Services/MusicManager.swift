@@ -543,6 +543,44 @@ final class MusicManager: NSObject {
 		}
 	}
 
+	/// Plays the song at the given index of a queue built from the given Kurozora songs.
+	///
+	/// - Parameters:
+	///    - kkSongs: The Kurozora songs forming the playback queue, aligned by index with the caller's items.
+	///    - index: The index of the song to start playing.
+	func play(kkSongs: [KKSong?], startingAt index: Int) {
+		guard kkSongs.indices.contains(index) else { return }
+
+		Task { [weak self] in
+			guard let self else { return }
+
+			let songsByID = await self.getSongs(for: kkSongs.compactMap { $0?.attributes.amID })
+
+			var queueSongs: [MKSong] = []
+			var queueKKSongs: [KKSong] = []
+			var startIndex = 0
+
+			for (offset, kkSong) in kkSongs.enumerated() {
+				if offset == index {
+					startIndex = queueSongs.count
+				}
+
+				guard
+					let kkSong = kkSong,
+					let appleMusicID = kkSong.attributes.amID,
+					let song = songsByID[appleMusicID]
+				else { continue }
+
+				queueSongs.append(song)
+				queueKKSongs.append(kkSong)
+			}
+
+			guard !queueSongs.isEmpty else { return }
+
+			self.play(songs: queueSongs, kkSongs: queueKKSongs, startingAt: min(startIndex, queueSongs.count - 1))
+		}
+	}
+
 	/// Plays the given song with the application player.
 	///
 	/// - Parameters:

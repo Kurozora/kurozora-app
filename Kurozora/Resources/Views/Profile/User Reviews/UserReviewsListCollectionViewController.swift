@@ -9,6 +9,7 @@
 import UIKit
 import KurozoraKit
 import AVFoundation
+import Combine
 
 class UserReviewsListCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: - Enums
@@ -37,6 +38,9 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?
+
+	/// The subscription to playback state changes.
+	private var playbackObserver: AnyCancellable?
 
 	/// The index path of the song that's currently playing.
 	var currentPlayerIndexPath: IndexPath?
@@ -91,6 +95,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		#endif
 
 		self.configureDataSource()
+		self.observePlaybackChanges()
 
 		// Fetch follow list.
 		if !self.reviews.isEmpty {
@@ -110,6 +115,22 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	}
 
 	// MARK: - Functions
+	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
+	private func observePlaybackChanges() {
+		self.playbackObserver = Publishers.CombineLatest(MusicManager.shared.currentKKSongPublisher, MusicManager.shared.isPlayingPublisher)
+			.receive(on: RunLoop.main)
+			.sink { [weak self] _, _ in
+				self?.refreshVisibleMusicCells()
+			}
+	}
+
+	/// Refreshes the play button glyph of every visible song review cell.
+	private func refreshVisibleMusicCells() {
+		for case let cell as MusicReviewLockupCollectionViewCell in self.collectionView.visibleCells {
+			cell.updatePlayButton()
+		}
+	}
+
 	override func handleRefreshControl() {
 		if self.user != nil {
 			self.nextPageCursor = nil
@@ -347,6 +368,18 @@ extension UserReviewsListCollectionViewController {
 		} catch {
 			print("----- Fetch error for \(typeKey): \(error)")
 		}
+	}
+}
+
+// MARK: - MusicReviewLockupCollectionViewCellDelegate
+extension UserReviewsListCollectionViewController: MusicReviewLockupCollectionViewCellDelegate {
+	func musicReviewLockupCollectionViewCell(_ cell: MusicReviewLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
+		let itemCount = self.collectionView.numberOfItems(inSection: indexPath.section)
+		let kkSongs: [KKSong?] = (0 ..< itemCount).map { item in
+			self.cache[IndexPath(item: item, section: indexPath.section)] as? Song
+		}
+
+		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
 	}
 }
 
