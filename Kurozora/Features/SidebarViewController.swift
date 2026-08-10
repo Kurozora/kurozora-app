@@ -100,6 +100,16 @@ class SidebarViewController: KCollectionViewController {
 		#endif
 	}
 
+	/// Selects the sidebar item matching the given tab bar item.
+	///
+	/// - Parameter tabBarItem: The tab bar item to select.
+	func select(_ tabBarItem: TabBarItem) {
+		guard let indexPath = self.dataSource.indexPath(for: tabBarItem) else { return }
+
+		self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+		self.collectionView(self.collectionView, didSelectItemAt: indexPath)
+	}
+
 	/// Creates and returns a list content configuration for with the given configuration as the basis.
 	///
 	/// - Parameters:

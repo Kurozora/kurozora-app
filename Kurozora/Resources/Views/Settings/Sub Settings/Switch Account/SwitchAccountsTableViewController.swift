@@ -121,22 +121,7 @@ extension SwitchAccountsTableViewController {
 			return
 		}
 
-		// Update user settings for selected account.
-		UserSettings.set(account.slug, forKey: .selectedAccount)
-
-		// Start using the selected user's authentication key.
-		KService.authenticationKey = account.authenticationToken
-
-		// Push auth state to Watch.
-		WatchSessionManager.shared.sendAuthState(slug: account.slug, token: account.authenticationToken)
-
-		// Restore the user's session.
-		Task {
-			if await WorkflowController.shared.restoreCurrentUserSession() {
-				// Notify views the user has changed.
-				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-			}
-		}
+		WorkflowController.shared.switchAccount(to: account)
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -147,6 +132,7 @@ extension SwitchAccountsTableViewController {
 			AccountManager.shared.remove(slug: account.slug)
 			UserProfileCache.remove(forSlug: account.slug)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
+			UIMenuSystem.main.setNeedsRebuild()
 			completion(true)
 		})
 

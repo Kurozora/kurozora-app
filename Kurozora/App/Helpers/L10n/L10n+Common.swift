@@ -2223,6 +2223,18 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the word 'skip'.
+	static var skip: String {
+		L10n.resolve {
+			String(
+				localized: "Skip",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Verb. The action advancing to the next song."
+			)
+		}
+	}
+
 	/// The string for the word 'share'.
 	///
 	/// - Tag: L10n-share
@@ -3689,16 +3701,29 @@ extension L10n {
 			)
 		}
 	}
-	/// The menu command that opens the user's account.
+	/// The menu command that opens the user's account settings.
 	///
-	/// - Tag: L10n-viewMyAccount
-	static var viewMyAccount: String {
+	/// - Tag: L10n-accountSettingsCommand
+	static var accountSettingsCommand: String {
 		L10n.resolve {
 			String(
-				localized: "View My Account…",
+				localized: "Account Settings…",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The menu command that opens the user's account."
+				comment: "The menu command that opens the user's account settings."
+			)
+		}
+	}
+	/// The menu command that opens the user's profile.
+	///
+	/// - Tag: L10n-viewMyProfileCommand
+	static var viewMyProfileCommand: String {
+		L10n.resolve {
+			String(
+				localized: "View My Profile…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that opens the user's profile."
 			)
 		}
 	}

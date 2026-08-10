@@ -44,6 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Activate WatchConnectivity
 		WatchSessionManager.shared.activate()
 
+		#if targetEnvironment(macCatalyst)
+		if UIApplication.shared.supportsMultipleScenes {
+			MiniPlayerGlobalHotKey.shared.register()
+		}
+		#endif
+
 		// Observer notifications
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleSignInDidChangeForLibrarySync), name: .KUserIsSignedInDidChange, object: nil)
@@ -165,7 +171,7 @@ extension AppDelegate {
 
 // MARK: - Menu Actions
 extension AppDelegate {
-	/// Used to update your content.
+	/// User chose "Home" from the Window menu.
 	@objc func handleNewScene() {
 		let mainScenes = UIApplication.shared.connectedScenes.filter { !$0.session.isAuxiliaryScene }
 
@@ -205,7 +211,7 @@ extension AppDelegate {
 		UIApplication.shared.requestSceneSessionActivation(nil, userActivity: miniPlayerActivity, options: nil)
 	}
 
-	/// Used to update your content.
+	/// User chose "Refresh Page" from the View menu.
 	@objc func handleRefreshControl() {}
 
 	/// User chose "Settings…" from the Application menu.
@@ -253,14 +259,35 @@ extension AppDelegate {
 		}
 	}
 
-	/// User chose the "View My Account…" from the account menu.
-	@objc func handleViewMyAccount(_ sender: AnyObject) {
+	/// User chose "View My Profile…" from the Account menu.
+	@objc func handleViewMyProfile(_ sender: AnyObject) {
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn, let user = User.current else { return }
+
+			let profileTableViewController = ProfileTableViewController()(with: user)
+			UIApplication.topViewController?.show(profileTableViewController, sender: nil)
+		}
+	}
+
+	/// User chose "Account Settings…" from the Account menu.
+	@objc func handleAccountSettings(_ sender: AnyObject) {
+		self.presentSettings(showing: .accountSegue)
+	}
+
+	/// Presents the settings interface with the given detail view visible.
+	///
+	/// - Parameter identifier: The identifier of the detail view to show.
+	private func presentSettings(showing identifier: SettingsTableViewController.SegueIdentifiers) {
 		let settingsSplitViewController = SettingsSplitViewController()
 		settingsSplitViewController.modalPresentationStyle = .fullScreen
-		if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
-			settingsTableViewController.showDetailViewController(.accountSegue, sender: nil)
+
+		let navigationController = settingsSplitViewController.viewController(for: .primary) as? KNavigationController
+		let settingsTableViewController = navigationController?.viewControllers.first as? SettingsTableViewController
+
+		UIApplication.topViewController?.present(settingsSplitViewController, animated: true) {
+			settingsTableViewController?.showSecondary(identifier, sender: nil)
 		}
-		UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
 	}
 
 	/// User chose "Username" from the Account menu.
@@ -295,12 +322,7 @@ extension AppDelegate {
 			let topViewController = UIApplication.topViewController
 			guard await WorkflowController.shared.isSubscribed(on: topViewController) else { return }
 
-			let settingsSplitViewController = SettingsSplitViewController()
-			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			if let settingsTableViewController = settingsSplitViewController.navigationController?.visibleViewController as? SettingsTableViewController {
-				settingsTableViewController.showDetailViewController(.reminderSubscriptionSegue, sender: nil)
-			}
-			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+			self.presentSettings(showing: .reminderSubscriptionSegue)
 		}
 	}
 
@@ -312,6 +334,41 @@ extension AppDelegate {
 		UIApplication.topViewController?.show(kNavigationController, sender: nil)
 	}
 
+	/// User chose "Manage Subscriptions" from the Account menu.
+	@objc func handleManageSubscriptions(_ sender: AnyObject) {
+		Task {
+			await Store.shared.manageSubscriptions(in: UIApplication.topViewController?.view.window?.windowScene)
+		}
+	}
+
+	/// User chose "Restore Purchase" from the Account menu.
+	@objc func handleRestorePurchase(_ sender: AnyObject) {
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
+
+			await Store.shared.restore()
+		}
+	}
+
+	/// User chose "Library" from the Account menu.
+	@objc func handleLibrary(_ sender: AnyObject) {
+		if let tabBarController = UIApplication.topViewController?.tabBarController as? KTabBarController {
+			tabBarController.selectTab(.library)
+			return
+		}
+
+		let splitViewController = UIApplication.topViewController?.splitViewController
+		let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
+
+		if let sidebarViewController = navigationController?.topViewController as? SidebarViewController {
+			sidebarViewController.select(.library)
+			return
+		}
+
+		UIApplication.topViewController?.show(LibraryViewController(), sender: nil)
+	}
+
 	/// User chose "Favorites" from the Account menu.
 	@objc func handleFavorites(_ sender: AnyObject) {
 		Task {
@@ -321,6 +378,25 @@ extension AppDelegate {
 			let favoritesCollectionViewController = FavoritesCollectionViewController()
 			UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
 		}
+	}
+
+	/// User chose "Reminders" from the Account menu.
+	@objc func handleReminders(_ sender: AnyObject) {
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
+
+			let remindersCollectionViewController = RemindersCollectionViewController()
+			UIApplication.topViewController?.show(remindersCollectionViewController, sender: nil)
+		}
+	}
+
+	/// User chose an account from the Account menu.
+	@objc func handleSwitchAccount(_ sender: AnyObject) {
+		guard let slug = (sender as? UICommand)?.propertyList as? String, slug != UserSettings.selectedAccount else { return }
+		guard let account = AccountManager.shared.account(forSlug: slug) else { return }
+
+		WorkflowController.shared.switchAccount(to: account)
 	}
 
 	#if DEBUG

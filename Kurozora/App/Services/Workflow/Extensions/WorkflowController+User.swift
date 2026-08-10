@@ -94,9 +94,7 @@ extension WorkflowController {
 
 	/// Repopulates the current user's data.
 	///
-	/// This method can be used to restore the current user's data after the app has been completely closed.
-	///
-	/// - Parameter updateAuthenticationKey: When `true`, sets `KService.authenticationKey` from the stored account before requesting the profile.
+	/// - Parameter updateAuthenticationKey: Whether the authentication key of the active account is applied before the user's data is requested.
 	///
 	/// - Returns: A Boolean indicating whether the user's details were restored successfully.
 	@discardableResult
@@ -137,6 +135,22 @@ extension WorkflowController {
 		}
 
 		return false
+	}
+
+	/// Switches to the given account.
+	///
+	/// - Parameter account: The account to make active.
+	@MainActor
+	func switchAccount(to account: StoredAccount) {
+		UserSettings.set(account.slug, forKey: .selectedAccount)
+		KService.authenticationKey = account.authenticationToken
+		WatchSessionManager.shared.sendAuthState(slug: account.slug, token: account.authenticationToken)
+
+		Task {
+			if await self.restoreCurrentUserSession() {
+				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+			}
+		}
 	}
 
 	/// Presents the user with the sign in view

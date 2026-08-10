@@ -38,7 +38,7 @@ class MenuController {
 		}
 
 		#if DEBUG
-			builder.insertSibling(MenuController.debugMenu(), beforeMenu: .window)
+		builder.insertSibling(MenuController.debugMenu(), beforeMenu: .window)
 		#endif
 	}
 
@@ -54,11 +54,9 @@ class MenuController {
 		])
 	}
 
-	/// Builds and returns the "Home" menu.
+	/// Builds and returns the "Home" command.
 	///
-	/// - Parameter builder: The [UIMenuBuilder](https://developer.apple.com/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
-	///
-	/// - Returns: The "Minimize and Zoom" menu.
+	/// - Returns: The "Home" UIKeyCommand object.
 	class func newSceneCommand() -> UIKeyCommand {
 		return UIKeyCommand(title: L10n.home, action: #selector(AppDelegate.handleNewScene), input: "0", modifierFlags: .command, discoverabilityTitle: L10n.toggleHome)
 	}
@@ -72,15 +70,15 @@ class MenuController {
 
 	/// Builds and returns the "MiniPlayer" menu.
 	///
-	/// - Returns: the "MiniPlayer" UIMenu object.
+	/// - Returns: The "MiniPlayer" UIMenu object.
 	@available(iOS 17.0, *)
 	class func miniPlayerShortcutsMenu() -> UIMenu {
-		return UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.miniPlayer"), children: MenuController.miniPlayerShortcutsCommands())
+		return UIMenu(title: L10n.miniPlayer, identifier: UIMenu.Identifier("app.kurozora.menus.miniPlayer"), options: .displayInline, children: MenuController.miniPlayerShortcutsCommands())
 	}
 
-	/// Builds and returns the "MiniPlayer Shortcuts" menu.
+	/// Builds and returns the "MiniPlayer" commands.
 	///
-	/// - Returns: The "MiniPlayer Shortcuts" UIMenu object.
+	/// - Returns: The "MiniPlayer" UIKeyCommand objects.
 	@available(iOS 17.0, *)
 	class func miniPlayerShortcutsCommands() -> [UIKeyCommand] {
 		return MiniPlayerViewController.viewOptionCommands()
@@ -136,6 +134,9 @@ class MenuController {
 		return UIMenu(title: L10n.search, identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [searchPageCommand])
 	}
 
+	/// Builds and returns the "Account" menu.
+	///
+	/// - Returns: The "Account" UIMenu object.
 	class func accountMenu() -> UIMenu {
 		var userMenuChildren: [UIMenuElement] = []
 		if User.isSignedIn, let user = User.current {
@@ -149,9 +150,13 @@ class MenuController {
 				userMenuChildren.append(emailCommand)
 			}
 
-			// Add "view my account" menu item.
-			let viewMyAccountCommand = UICommand(title: L10n.viewMyAccount, action: #selector(AppDelegate.handleViewMyAccount(_:)), discoverabilityTitle: L10n.viewMyAccount)
-			userMenuChildren.append(viewMyAccountCommand)
+			// Add "view my profile" menu item.
+			let viewMyProfileCommand = UICommand(title: L10n.viewMyProfileCommand, action: #selector(AppDelegate.handleViewMyProfile(_:)), discoverabilityTitle: L10n.viewMyProfileCommand)
+			userMenuChildren.append(viewMyProfileCommand)
+
+			// Add "account settings" menu item.
+			let accountSettingsCommand = UICommand(title: L10n.accountSettingsCommand, action: #selector(AppDelegate.handleAccountSettings(_:)), discoverabilityTitle: L10n.accountSettingsCommand)
+			userMenuChildren.append(accountSettingsCommand)
 
 			// Add "sign out" menu item.
 			let signOutCommand = UICommand(title: L10n.signOut, action: #selector(AppDelegate.handleSignOut(_:)), discoverabilityTitle: L10n.signOut)
@@ -165,39 +170,75 @@ class MenuController {
 		// Create the User group menu.
 		let userMenu = UIMenu(title: "", identifier: UIMenu.Identifier("app.kurozora.menus.user"), options: .displayInline, children: userMenuChildren)
 
-		var subscriptionMenuChildren: [UIMenuElement] = []
+		var membershipMenuChildren: [UIMenuElement] = []
 		if User.isSignedIn, let user = User.current {
 			if user.attributes.isSubscribed {
 				// Add "subscribe to reminders" menu item.
-				let subscribeToReminders = UICommand(title: L10n.subscribeToRemindersCommand, action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: L10n.subscribeToRemindersCommand)
-				subscriptionMenuChildren.append(subscribeToReminders)
+				let subscribeToRemindersCommand = UICommand(title: L10n.subscribeToRemindersCommand, action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: L10n.subscribeToRemindersCommand)
+				membershipMenuChildren.append(subscribeToRemindersCommand)
 			} else {
-				// Add "updgrade to Kurozora+" menu item.
-				let upgradeToKurozoraPlus = UICommand(title: L10n.upgradeToKurozoraPlus, action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: L10n.upgradeToKurozoraPlus)
-				subscriptionMenuChildren.append(upgradeToKurozoraPlus)
+				// Add "upgrade to Kurozora+" menu item.
+				let upgradeToKurozoraPlusCommand = UICommand(title: L10n.upgradeToKurozoraPlus, action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: L10n.upgradeToKurozoraPlus)
+				membershipMenuChildren.append(upgradeToKurozoraPlusCommand)
 			}
 		}
 
-		// Create the Subscription group menu.
-		let subscriptionMenu = UIMenu(title: "", identifier: UIMenu.Identifier("app.kurozora.menus.subscription"), options: .displayInline, children: subscriptionMenuChildren)
-
-		// Create the Redeem command.
+		// Add "redeem" menu item.
 		let redeemCommand = UICommand(title: L10n.redeemCommand, action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: L10n.redeemCommand)
+		membershipMenuChildren.append(redeemCommand)
+
+		// Add "manage subscriptions" menu item. The App Store sheet is unavailable on macOS.
+		#if !targetEnvironment(macCatalyst)
+		if !ProcessInfo.processInfo.isiOSAppOnMac {
+			let manageSubscriptionsCommand = UICommand(title: L10n.manageSubscriptions, action: #selector(AppDelegate.handleManageSubscriptions(_:)), discoverabilityTitle: L10n.manageSubscriptions)
+			membershipMenuChildren.append(manageSubscriptionsCommand)
+		}
+		#endif
+
+		// Add "restore purchase" menu item.
+		let restorePurchaseCommand = UICommand(title: L10n.restorePurchase, action: #selector(AppDelegate.handleRestorePurchase(_:)), discoverabilityTitle: L10n.restorePurchase)
+		membershipMenuChildren.append(restorePurchaseCommand)
+
+		// Create the Membership group menu.
+		let membershipMenu = UIMenu(title: "", identifier: UIMenu.Identifier("app.kurozora.menus.membership"), options: .displayInline, children: membershipMenuChildren)
+
+		// Create the Library command.
+		let libraryCommand = UICommand(title: L10n.library, action: #selector(AppDelegate.handleLibrary(_:)), discoverabilityTitle: L10n.library)
 
 		// Create the Favorites command.
 		let favoritesCommand = UICommand(title: L10n.favorites, action: #selector(AppDelegate.handleFavorites(_:)), discoverabilityTitle: L10n.favorites)
 
-		return UIMenu(title: L10n.account, identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoritesCommand])
+		// Create the Reminders command.
+		let remindersCommand = UICommand(title: L10n.reminders, action: #selector(AppDelegate.handleReminders(_:)), discoverabilityTitle: L10n.reminders)
+
+		// Create the Switch Account group menu.
+		let switchAccountMenu = MenuController.switchAccountMenu()
+
+		return UIMenu(title: L10n.account, identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, membershipMenu, libraryCommand, favoritesCommand, remindersCommand, switchAccountMenu])
+	}
+
+	/// Builds and returns the "Switch Account" menu.
+	///
+	/// - Returns: The "Switch Account" UIMenu object.
+	class func switchAccountMenu() -> UIMenu {
+		let accounts = AccountManager.shared.allAccounts()
+		let selectedSlug = UserSettings.selectedAccount
+		let accountCommands: [UIMenuElement] = accounts.count > 1 ? accounts.map { account in
+			let title = account.username ?? account.slug
+			return UICommand(title: title, action: #selector(AppDelegate.handleSwitchAccount(_:)), propertyList: account.slug, discoverabilityTitle: title, state: account.slug == selectedSlug ? .on : .off)
+		} : []
+
+		return UIMenu(title: L10n.switchAccount, identifier: UIMenu.Identifier("app.kurozora.menus.switchAccount"), options: .displayInline, children: accountCommands)
 	}
 
 	#if DEBUG
-		/// Builds and returns the "Debug" menu.
-		///
-		/// - Returns: The "Debug" UIMenu object.
-		class func debugMenu() -> UIMenu {
-			let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
-			let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
-			return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
-		}
+	/// Builds and returns the "Debug" menu.
+	///
+	/// - Returns: The "Debug" UIMenu object.
+	class func debugMenu() -> UIMenu {
+		let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
+		let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
+		return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
+	}
 	#endif
 }
