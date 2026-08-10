@@ -80,10 +80,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// The collection of browse categories.
 	let browseCategories: [BrowseCategory] = [
 		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
-		// TODO: - Replace the system image with a proper Browse photo once one is available.
-		BrowseCategory(title: L10n.museum, image: UIImage(systemName: "building.columns.fill"), segueIdentifier: SegueIdentifiers.museumSegue),
-		// TODO: - Replace the system image with a proper Browse photo once one is available.
-		BrowseCategory(title: L10n.topCharts, image: UIImage(systemName: "chart.bar.fill"), segueIdentifier: SegueIdentifiers.topChartsSegue),
+		BrowseCategory(title: L10n.museum, image: .Browse.museum, segueIdentifier: SegueIdentifiers.museumSegue),
+		BrowseCategory(title: L10n.topCharts, image: .Browse.charts, segueIdentifier: SegueIdentifiers.topChartsSegue),
 		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
 		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),
 		BrowseCategory(title: L10n.games, image: .Browse.games, searchType: .games),
