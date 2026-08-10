@@ -109,6 +109,7 @@ final class ForwardNavigationCoordinator: NSObject {
 
 		let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
 		panGestureRecognizer.allowedScrollTypesMask = .all
+		panGestureRecognizer.cancelsTouchesInView = false
 		panGestureRecognizer.delegate = self
 		view.addGestureRecognizer(panGestureRecognizer)
 
@@ -253,7 +254,7 @@ final class ForwardNavigationCoordinator: NSObject {
 		var candidate = view.hitTest(location, with: nil)
 
 		while let current = candidate {
-			if let scrollView = current as? UIScrollView, scrollView.contentSize.width > scrollView.bounds.width {
+			if let scrollView = current as? UIScrollView, self.scrollsHorizontally(scrollView) {
 				return true
 			}
 
@@ -261,6 +262,15 @@ final class ForwardNavigationCoordinator: NSObject {
 		}
 
 		return false
+	}
+
+	/// Returns whether the specified scroll view scrolls horizontally.
+	///
+	/// - Parameter scrollView: The scroll view to measure.
+	///
+	/// - Returns: Whether the scroll view scrolls horizontally.
+	private func scrollsHorizontally(_ scrollView: UIScrollView) -> Bool {
+		return scrollView.contentSize.width > scrollView.bounds.width
 	}
 
 	/// Releases the history when forward navigation is turned off.
@@ -322,6 +332,18 @@ final class ForwardNavigationCoordinator: NSObject {
 		}
 	}
 
+	/// Whether the swipe points forward.
+	///
+	/// - Parameters:
+	///    - translation: The swipe's translation.
+	///    - direction: The sign that turns a horizontal translation into forward progress.
+	///
+	/// - Returns: Whether the transition should start.
+	private func pointsForward(translation: CGPoint, direction: CGFloat) -> Bool {
+		return translation.x * direction > 0.0
+			&& abs(translation.x) > abs(translation.y) * Self.horizontalRatio
+	}
+
 	/// Whether the swipe has travelled far enough, and straight enough, to be a deliberate forward one.
 	///
 	/// - Parameters:
@@ -364,7 +386,10 @@ final class ForwardNavigationCoordinator: NSObject {
 
 		switch recognizer.state {
 		case .began:
-			guard self.didBeginAtTrailingEdge else { return }
+			guard
+				self.didBeginAtTrailingEdge,
+				self.pointsForward(translation: translation, direction: direction)
+			else { return }
 
 			self.activationTranslation = 0.0
 			self.suspendCompetingScrollGesture(for: recognizer)
@@ -483,9 +508,10 @@ extension ForwardNavigationCoordinator: UIGestureRecognizerDelegate {
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		guard
 			self.beginsAtTrailingEdge(gestureRecognizer),
-			let scrollView = otherGestureRecognizer.view as? UIScrollView
+			let scrollView = otherGestureRecognizer.view as? UIScrollView,
+			scrollView.panGestureRecognizer === otherGestureRecognizer
 		else { return false }
 
-		return scrollView.panGestureRecognizer === otherGestureRecognizer
+		return self.scrollsHorizontally(scrollView)
 	}
 }
