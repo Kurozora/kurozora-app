@@ -152,10 +152,8 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 						continue
 					}
 
-					let highestTier = Store.shared.tier(for: currentProduct.id)
-					let newTier = Store.shared.tier(for: renewalInfo.currentProductID)
-
-					if newTier > highestTier {
+					// Every tier sits at the same App Store Connect subscription level, so price stands in for the highest level of service.
+					if newSubscription.price > currentProduct.price {
 						highestStatus = status
 						highestProduct = newSubscription
 					}

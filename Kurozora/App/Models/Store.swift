@@ -53,30 +53,13 @@ final class Store: NSObject, ObservableObject {
 	/// The promoted-IAP intent listener `Task` object.
 	var purchaseIntentTask: Task<Void, Never>?
 
-	/// The dictionary containing all `StoreKit` products.
-	private var products: [String: String] = [:]
-
-    /// The shared instance of ``Store``.
+	/// The shared instance of ``Store``.
 	static let shared: Store = Store()
 
 	// MARK: - Initializers
 	private override init() {
 		super.init()
 		print("🧾 StoreKit 2 initialized.")
-
-		// NOTE: Pass `-StoreKitTesting YES` (Edit Scheme -> Run -> Arguments) to load the local `.storekit` catalog.
-		#if DEBUG
-		let plistName = UserDefaults.standard.bool(forKey: "StoreKitTesting") ? "Debug Products" : "Products"
-		#else
-		let plistName = "Products"
-		#endif
-		if let path = Bundle.main.path(forResource: plistName, ofType: "plist"),
-		   let plist = FileManager.default.contents(atPath: path) {
-			self.products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
-		} else {
-			self.products = [:]
-		}
-		print("🧾 Loaded \(self.products.count) product IDs from \(plistName).plist:", Array(self.products.keys).sorted())
 
 		// Initialize empty products then do a product request asynchronously to fill them in.
 		self.tips = []
@@ -132,9 +115,10 @@ final class Store: NSObject, ObservableObject {
 	@MainActor
 	func requestProducts() async {
 		do {
-			// Request products from the App Store using the identifiers defined in the Products.plist file.
-			print("🧾 Requesting \(self.products.count) products from StoreKit:", Array(self.products.keys).sorted())
-			let storeProducts = try await Product.products(for: products.keys)
+			// Request products from the App Store using the identifiers defined in `StoreProduct`.
+			let identifiers = StoreProduct.identifiers
+			print("🧾 Requesting \(identifiers.count) products from StoreKit:", identifiers.sorted())
+			let storeProducts = try await Product.products(for: identifiers)
 			print("🧾 StoreKit returned \(storeProducts.count) products:", storeProducts.map(\.id).sorted())
 
 			var newTips: [Product] = []
@@ -352,34 +336,13 @@ final class Store: NSObject, ObservableObject {
 		}
 	}
 
-	/// Returns the title of a product.
-	///
-	/// - Parameter productId: The id of the product used to determine the title.
-	///
-	/// - Returns: The product's title.
-	func title(for productId: String) -> String {
-		guard let product = self.products[productId] else {
-			return ""
-		}
-		return product
-	}
-
 	/// Returns the image of a product.
 	///
-	/// - Parameter productId: The id of the product used to determine the image.
+	/// - Parameter productID: The id of the product used to determine the image.
 	///
 	/// - Returns: The product's image.
-	func image(for productId: String) -> UIImage? {
-		switch self.tier(for: productId) {
-		case .plus1Month:
-			return .Promotional.Purchases.Subscriptions.month1
-		case .plus6Months:
-			return .Promotional.Purchases.Subscriptions.month6
-		case .plus12Months:
-			return .Promotional.Purchases.Subscriptions.month12
-		case .none:
-			return self.title(for: productId).toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: .Icons.jarHeart)
-		}
+	func image(for productID: String) -> UIImage? {
+		return StoreProduct(rawValue: productID)?.image
 	}
 
 	/// How much money the user saves between subscription tiers.
@@ -400,7 +363,8 @@ final class Store: NSObject, ObservableObject {
 			let subscriptionPeriod = introductoryOffer.period.displayUnit
 			let subscriptionTrialPeriod = L10n.subscriptionTrial(subscriptionPeriod)
 
-			if self.tier(for: product.id) == .plus1Month {
+			// The cheapest subscription is the baseline of the comparison, so it has nothing to save against.
+			if product.id == firstProduct.id {
 				return subscriptionTrialPeriod
 			} else {
 				return """
@@ -427,36 +391,5 @@ final class Store: NSObject, ObservableObject {
 	/// - Returns: a sorted array of the products.
 	func sortByPrice(_ products: [Product]) -> [Product] {
 		products.sorted(by: { return $0.price < $1.price })
-	}
-
-	/// Returns a `SubscriptionTier` object using the given product id.
-	///
-	/// - Parameter productID: The id of the product used to determine the subscription tier.
-	///
-	/// - Returns: a `SubscriptionTier` object.
-	func tier(for productID: String) -> SubscriptionTier {
-		#if DEBUG
-		switch productID {
-		case "app.kurozora.temporary.kurozoraPlus1Month":
-			return .plus1Month
-		case "app.kurozora.temporary.kurozoraPlus6Months":
-			return .plus6Months
-		case "app.kurozora.temporary.kurozoraPlus12Months":
-			return .plus12Months
-		default:
-			return .none
-		}
-		#else
-		switch productID {
-		case "app.kurozora.autoRenewableSubscription.kPlus1Month":
-			return .plus1Month
-		case "app.kurozora.autoRenewableSubscription.kPlus6Months":
-			return .plus6Months
-		case "app.kurozora.autoRenewableSubscription.kPlus12Months":
-			return .plus12Months
-		default:
-			return .none
-		}
-		#endif
 	}
 }

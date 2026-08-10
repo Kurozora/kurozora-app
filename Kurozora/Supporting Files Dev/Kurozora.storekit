@@ -9,60 +9,30 @@
       }
     ]
   },
-  "identifier" : "CA48A3BF",
+  "identifier" : "5F4CA718",
   "nonRenewingSubscriptions" : [
 
   ],
   "products" : [
     {
-      "displayPrice" : "0.99",
+      "displayPrice" : "4.99",
       "familyShareable" : false,
-      "internalID" : "3536E2E8",
+      "internalID" : "1609753429",
       "localizations" : [
         {
           "description" : "A tip with unknown impact.",
-          "displayName" : "Wolf tip",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.wolfTip",
-      "referenceName" : "Wolf Tip 🐺",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "2.99",
-      "familyShareable" : false,
-      "internalID" : "3ACAA777",
-      "localizations" : [
-        {
-          "description" : "A tip affecting a large number of people.",
-          "displayName" : "Tiger tip",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.tigerTip",
-      "referenceName" : "Tiger tip 🐯",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "4.99",
-      "familyShareable" : false,
-      "internalID" : "07C9D797",
-      "localizations" : [
-        {
-          "description" : "A tip endangering a city and its people.",
           "displayName" : "Demon tip",
           "locale" : "en_US"
         }
       ],
-      "productID" : "app.kurozora.temporary.demonTip",
+      "productID" : "app.kurozora.consumable.demonTip",
       "referenceName" : "Demon tip 👺",
       "type" : "Consumable"
     },
     {
       "displayPrice" : "9.99",
       "familyShareable" : false,
-      "internalID" : "FF0363CC",
+      "internalID" : "1609753587",
       "localizations" : [
         {
           "description" : "A tip affecting multiple cities.",
@@ -70,74 +40,14 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "app.kurozora.temporary.dragonTip",
+      "productID" : "app.kurozora.consumable.dragonTip",
       "referenceName" : "Dragon tip 🐲",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "19.99",
-      "familyShareable" : false,
-      "internalID" : "300ABC22",
-      "localizations" : [
-        {
-          "description" : "A tip affecting humanity’s survival.",
-          "displayName" : "God tip",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.godTip",
-      "referenceName" : "God tip 🙏",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "34.99",
-      "familyShareable" : false,
-      "internalID" : "2CDBF8DA",
-      "localizations" : [
-        {
-          "description" : "",
-          "displayName" : "",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.pro",
-      "referenceName" : "Kurozora Pro",
-      "type" : "NonConsumable"
-    },
-    {
-      "displayPrice" : "34.99",
-      "familyShareable" : false,
-      "internalID" : "8F21BBB0",
-      "localizations" : [
-        {
-          "description" : "Unlock all features with a one-time purchase!",
-          "displayName" : "Kurozora One",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.kurozoraOne",
-      "referenceName" : "Kurozora One",
-      "type" : "NonConsumable"
-    },
-    {
-      "displayPrice" : "49.99",
-      "familyShareable" : false,
-      "internalID" : "09FAC3F9",
-      "localizations" : [
-        {
-          "description" : "A tip affecting the universe’s survival.",
-          "displayName" : "Extraterrestrial tip",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "app.kurozora.temporary.extraterrestrialTip",
-      "referenceName" : "Extraterrestrial tip 👽",
       "type" : "Consumable"
     },
     {
       "displayPrice" : "99.99",
       "familyShareable" : false,
-      "internalID" : "BB753F9F",
+      "internalID" : "6448963454",
       "localizations" : [
         {
           "description" : "A tip affecting the multiverse’s survival.",
@@ -145,104 +55,144 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "app.kurozora.temporary.eternalTip",
-      "referenceName" : "Eternal tip ♾️",
+      "productID" : "app.kurozora.consumable.eternalTip",
+      "referenceName" : "Eternal tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "49.99",
+      "familyShareable" : false,
+      "internalID" : "6448963389",
+      "localizations" : [
+        {
+          "description" : "A tip affecting the universe’s survival.",
+          "displayName" : "Extraterrestrial tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.consumable.extraterrestrialTip",
+      "referenceName" : "Extraterrestrial tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "19.99",
+      "familyShareable" : false,
+      "internalID" : "1609753736",
+      "localizations" : [
+        {
+          "description" : "A tip affecting humanity’s survival.",
+          "displayName" : "God tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.consumable.godTip",
+      "referenceName" : "God tip 🙏",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "34.99",
+      "familyShareable" : false,
+      "internalID" : "1598047198",
+      "localizations" : [
+        {
+          "description" : "Unlock all features with a one-time purchase!",
+          "displayName" : "Kurozora One",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Betaal één keer, ontgrendel alles!",
+          "displayName" : "Kurozora One",
+          "locale" : "nl"
+        }
+      ],
+      "productID" : "app.kurozora.nonConsumable.kurozoraOne",
+      "referenceName" : "Kurozora One",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "31.99",
+      "familyShareable" : false,
+      "internalID" : "1598046826",
+      "localizations" : [
+        {
+          "description" : "Unlock all features with a one-time purchase!",
+          "displayName" : "Kurozora One",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Betaal één keer, ontgrendel alles!",
+          "displayName" : "Kurozora One",
+          "locale" : "nl"
+        }
+      ],
+      "productID" : "app.kurozora.nonRenewable.kurozoraOne",
+      "referenceName" : "Kurozora One Backup",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "1609753235",
+      "localizations" : [
+        {
+          "description" : "A tip affecting a large number of people.",
+          "displayName" : "Tiger tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.consumable.tigerTip",
+      "referenceName" : "Tiger tip 🐯",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1609753332",
+      "localizations" : [
+        {
+          "description" : "A tip with unknown impact.",
+          "displayName" : "Wolf tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.consumable.wolfTip",
+      "referenceName" : "Wolf tip 🐺",
       "type" : "Consumable"
     }
   ],
   "settings" : {
+    "_applicationInternalID" : "1476153872",
     "_askToBuyEnabled" : false,
     "_billingGracePeriodEnabled" : false,
     "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "47ZEU5J4BF",
     "_disableDialogs" : false,
     "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 808131797.39082205,
     "_locale" : "en_US",
     "_renewalBillingIssuesEnabled" : false,
     "_storefront" : "USA",
-    "_storeKitError" : 0,
     "_storeKitErrors" : [
-      {
-        "current" : {
-          "index" : 0,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "Purchase"
-      },
-      {
-        "current" : {
-          "index" : 2,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "Load Products"
-      },
-      {
-        "current" : {
-          "index" : 0,
-          "type" : "verification"
-        },
-        "enabled" : false,
-        "name" : "Verification"
-      },
-      {
-        "current" : {
-          "index" : 2,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "App Store Sync"
-      },
-      {
-        "current" : {
-          "index" : 2,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "Subscription Status"
-      },
-      {
-        "current" : {
-          "index" : 3,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "App Transaction"
-      },
-      {
-        "current" : {
-          "index" : 3,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "Manage Subscriptions Sheet"
-      },
-      {
-        "current" : {
-          "index" : 0,
-          "type" : "refund request"
-        },
-        "enabled" : false,
-        "name" : "Refund Request Sheet"
-      },
-      {
-        "current" : {
-          "index" : 4,
-          "type" : "generic"
-        },
-        "enabled" : false,
-        "name" : "Offer Code Redeem Sheet"
-      }
+
     ],
     "_timeRate" : 0
   },
   "subscriptionGroups" : [
     {
-      "id" : "F2B76A02",
+      "id" : "20925299",
       "localizations" : [
-
+        {
+          "description" : "",
+          "displayName" : "Kurozora+ Abonnement",
+          "locale" : "nl"
+        },
+        {
+          "description" : "",
+          "displayName" : "Kurozora+ Subscription",
+          "locale" : "en_US"
+        }
       ],
-      "name" : "Kurozora+",
+      "name" : "app.kurozora.kPlus",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -253,7 +203,7 @@
               "billingPlanType" : "BILLED_UPFRONT",
               "commitmentDisplayPrice" : "3.99",
               "displayPrice" : "3.99",
-              "internalID" : "67BE0D64",
+              "internalID" : "1609754360_BILLED_UPFRONT",
               "isEnabled" : true
             }
           ],
@@ -263,10 +213,10 @@
           "displayPrice" : "3.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "7E106C83",
+          "internalID" : "1609754360",
           "introductoryOffer" : {
             "billingPlanType" : "BILLED_UPFRONT",
-            "internalID" : "0E29D309",
+            "internalID" : "AE53E71A",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -274,7 +224,7 @@
           "introductoryOffers" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "internalID" : "0E29D309",
+              "internalID" : "AE53E71A",
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
               "subscriptionPeriod" : "P1W"
@@ -282,15 +232,20 @@
           ],
           "localizations" : [
             {
-              "description" : "1 month of awesome Kurozora+ features!",
+              "description" : "1 month of amazing Kurozora+ features!",
               "displayName" : "Kurozora+ 1 Month",
               "locale" : "en_US"
+            },
+            {
+              "description" : "1 maand geweldige Kurozora+ functies!",
+              "displayName" : "Kurozora+ 1 Maand",
+              "locale" : "nl"
             }
           ],
-          "productID" : "app.kurozora.temporary.kurozoraPlus1Month",
+          "productID" : "app.kurozora.autoRenewableSubscription.kPlus1Month",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Kurozora+ 1 Month",
-          "subscriptionGroupID" : "F2B76A02",
+          "subscriptionGroupID" : "20925299",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
 
@@ -303,22 +258,22 @@
           "billingPlans" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "commitmentDisplayPrice" : "11.99",
-              "displayPrice" : "11.99",
-              "internalID" : "77136EB0",
+              "commitmentDisplayPrice" : "17.99",
+              "displayPrice" : "17.99",
+              "internalID" : "1609755888_BILLED_UPFRONT",
               "isEnabled" : true
             }
           ],
           "codeOffers" : [
 
           ],
-          "displayPrice" : "11.99",
-          "familyShareable" : false,
+          "displayPrice" : "17.99",
+          "familyShareable" : true,
           "groupNumber" : 1,
-          "internalID" : "89B28DE5",
+          "internalID" : "1609755888",
           "introductoryOffer" : {
             "billingPlanType" : "BILLED_UPFRONT",
-            "internalID" : "0C744557",
+            "internalID" : "79BAB2B2",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P2W"
@@ -326,7 +281,7 @@
           "introductoryOffers" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "internalID" : "0C744557",
+              "internalID" : "79BAB2B2",
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
               "subscriptionPeriod" : "P2W"
@@ -334,15 +289,20 @@
           ],
           "localizations" : [
             {
-              "description" : "6 months of awesome Kurozora+ features!",
-              "displayName" : "Kurozora+ 6 Months",
+              "description" : "12 maanden geweldige Kurozora+ functies!",
+              "displayName" : "Kurozora+ 12 Maanden",
+              "locale" : "nl"
+            },
+            {
+              "description" : "12 months of awesome Kurozora+ features!",
+              "displayName" : "Kurozora+ 12 Months",
               "locale" : "en_US"
             }
           ],
-          "productID" : "app.kurozora.temporary.kurozoraPlus6Months",
-          "recurringSubscriptionPeriod" : "P6M",
-          "referenceName" : "Kurozora+ 6 Months",
-          "subscriptionGroupID" : "F2B76A02",
+          "productID" : "app.kurozora.autoRenewableSubscription.kPlus12Months",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Kurozora+ 12 Months",
+          "subscriptionGroupID" : "20925299",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
 
@@ -355,46 +315,51 @@
           "billingPlans" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "commitmentDisplayPrice" : "18.99",
-              "displayPrice" : "18.99",
-              "internalID" : "CA0993F3",
+              "commitmentDisplayPrice" : "10.99",
+              "displayPrice" : "10.99",
+              "internalID" : "1609755388_BILLED_UPFRONT",
               "isEnabled" : true
             }
           ],
           "codeOffers" : [
 
           ],
-          "displayPrice" : "18.99",
+          "displayPrice" : "10.99",
           "familyShareable" : true,
           "groupNumber" : 1,
-          "internalID" : "F4E48100",
+          "internalID" : "1609755388",
           "introductoryOffer" : {
             "billingPlanType" : "BILLED_UPFRONT",
-            "internalID" : "FF6DB716",
+            "internalID" : "428EFD33",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P1M"
+            "subscriptionPeriod" : "P2W"
           },
           "introductoryOffers" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "internalID" : "FF6DB716",
+              "internalID" : "428EFD33",
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
-              "subscriptionPeriod" : "P1M"
+              "subscriptionPeriod" : "P2W"
             }
           ],
           "localizations" : [
             {
-              "description" : "12 months of awesome Kurozora+ features!",
-              "displayName" : "Kurozora+ 12 Months",
+              "description" : "6 maanden aeweldige Kurozora+ functies!",
+              "displayName" : "Kurozora+ 6 Maanden",
+              "locale" : "nl"
+            },
+            {
+              "description" : "6 months of awesome kurozora+ features!",
+              "displayName" : "Kurozora+ 6 Months",
               "locale" : "en_US"
             }
           ],
-          "productID" : "app.kurozora.temporary.kurozoraPlus12Months",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Kurozora+ 12 Months",
-          "subscriptionGroupID" : "F2B76A02",
+          "productID" : "app.kurozora.autoRenewableSubscription.kPlus6Months",
+          "recurringSubscriptionPeriod" : "P6M",
+          "referenceName" : "Kurozora+ 6 Months",
+          "subscriptionGroupID" : "20925299",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
 
