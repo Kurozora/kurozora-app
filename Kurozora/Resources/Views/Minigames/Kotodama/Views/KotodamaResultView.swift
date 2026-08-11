@@ -34,7 +34,7 @@ class KotodamaResultView: UIView {
 	private let contentStackView = UIStackView()
 	private let outcomeLabel = UILabel()
 	private let hintLabel = UILabel()
-	private let subjectButton = UIButton(type: .system)
+	private let subjectLockupView = KotodamaSubjectLockupView()
 	private let shareGridContainerView = UIView()
 	private let shareGridLabel = UILabel()
 	private let actionsStackView = UIStackView()
@@ -48,18 +48,6 @@ class KotodamaResultView: UIView {
 
 	/// The context-menu interaction used to peek and pop the subject's details.
 	private lazy var subjectContextMenuInteraction = UIContextMenuInteraction(delegate: self)
-
-	/// The subject's image view, rebuilt per game to match the answer kind's display shape.
-	private var subjectImageView: UIImageView?
-
-	/// The themed border drawn around the subject image, sized to match its shape.
-	private var subjectBorderView: BorderView?
-
-	/// The book-cover mask applied to a literature's poster.
-	private var subjectMaskView: UIImageView?
-
-	/// The constraints sizing and positioning the current subject image view and its border.
-	private var subjectImageConstraints: [NSLayoutConstraint] = []
 
 	/// The kind of the revealed subject, used to build its context menu.
 	private var subjectKind: KotodamaSubjectKind?
@@ -102,7 +90,7 @@ class KotodamaResultView: UIView {
 		self.hintLabel.adjustsFontForContentSizeCategory = true
 		self.hintLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 
-		self.configureSubjectButton()
+		self.configureSubjectLockup()
 		self.configureShareGridPreview()
 
 		self.actionsStackView.axis = .horizontal
@@ -128,7 +116,7 @@ class KotodamaResultView: UIView {
 
 		self.contentStackView.addArrangedSubview(self.outcomeLabel)
 		self.contentStackView.addArrangedSubview(self.hintLabel)
-		self.contentStackView.addArrangedSubview(self.subjectButton)
+		self.contentStackView.addArrangedSubview(self.subjectLockupView)
 		self.contentStackView.addArrangedSubview(self.shareGridContainerView)
 		self.contentStackView.addArrangedSubview(self.actionsStackView)
 
@@ -138,16 +126,20 @@ class KotodamaResultView: UIView {
 			self.contentStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.contentStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			self.hintLabel.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
+			self.subjectLockupView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
 			self.shareGridContainerView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
 			self.actionsStackView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor)
 		])
 	}
 
-	/// Builds the button showing the answer's subject.
-	private func configureSubjectButton() {
-		self.subjectButton.translatesAutoresizingMaskIntoConstraints = false
-		self.subjectButton.addTarget(self, action: #selector(self.subjectButtonPressed), for: .touchUpInside)
-		self.subjectButton.addInteraction(self.subjectContextMenuInteraction)
+	/// Builds the lockup showing the answer's subject.
+	private func configureSubjectLockup() {
+		self.subjectLockupView.isHidden = true
+		self.subjectLockupView.isUserInteractionEnabled = true
+		self.subjectLockupView.addInteraction(self.subjectContextMenuInteraction)
+		self.subjectLockupView.addGestureRecognizer(
+			UITapGestureRecognizer(target: self, action: #selector(self.subjectButtonPressed))
+		)
 	}
 
 	/// Builds the rounded box previewing the game's emoji share grid.
@@ -220,123 +212,27 @@ class KotodamaResultView: UIView {
 		self.shareGridLabel.text = nil
 	}
 
-	/// Configures the subject shown alongside the answer.
+	/// Records the identity of the answer's subject.
 	///
 	/// - Parameter word: The revealed word whose subject is shown.
 	private func configureSubject(using word: KotodamaWord?) {
-		guard let posterURL = word?.attributes.poster?.url else {
-			self.subjectButton.isHidden = true
-			self.subjectKind = nil
-			self.subjectID = nil
+		self.subjectLockupView.isHidden = true
+		self.subjectKind = word?.subject?.kind
+		self.subjectID = word?.subject?.id
+		self.subjectLockupView.accessibilityLabel = word?.attributes.answer
+	}
+
+	/// Shows the lockup of the answer's subject.
+	///
+	/// - Parameter subject: The catalog entry behind the answer.
+	func showSubject(_ subject: KotodamaSubject?) {
+		guard let subject = subject else {
+			self.subjectLockupView.isHidden = true
 			return
 		}
 
-		let kind = word?.subjectKind
-		self.subjectButton.isHidden = false
-		self.subjectButton.accessibilityLabel = word?.attributes.answer
-		self.subjectKind = kind
-		self.subjectID = word?.subject?.id
-
-		self.rebuildSubjectImageView(for: kind)
-		self.subjectImageView?.setImage(with: posterURL, placeholder: kind?.placeholderImage ?? .Placeholders.showPoster)
-	}
-
-	/// Rebuilds the subject image view to match the given kind's display shape.
-	///
-	/// - Parameter kind: The kind of the revealed subject.
-	private func rebuildSubjectImageView(for kind: KotodamaSubjectKind?) {
-		NSLayoutConstraint.deactivate(self.subjectImageConstraints)
-		self.subjectImageConstraints.removeAll()
-		self.subjectImageView?.removeFromSuperview()
-		self.subjectBorderView?.removeFromSuperview()
-		self.subjectMaskView = nil
-		self.subjectBorderView = nil
-
-		let imageView: UIImageView
-		var borderCornerRadius: CGFloat?
-		let width: CGFloat
-		let height: CGFloat
-
-		switch kind {
-		case .shows:
-			imageView = PosterImageView()
-			(width, height) = (107, 160)
-			borderCornerRadius = 10
-		case .literatures:
-			let posterImageView = PosterImageView()
-			posterImageView.applyCornerRadius(0)
-			imageView = posterImageView
-			(width, height) = (107, 160)
-		case .games:
-			let posterImageView = PosterImageView()
-			posterImageView.applyCornerRadius(22)
-			imageView = posterImageView
-			(width, height) = (128, 128)
-			borderCornerRadius = 22
-		case .characters:
-			imageView = CharacterImageView(frame: .zero)
-			(width, height) = (128, 128)
-			borderCornerRadius = 64
-		case .people:
-			imageView = PersonImageView(frame: .zero)
-			(width, height) = (128, 128)
-			borderCornerRadius = 64
-		case .studios:
-			imageView = StudioLogoImageView(frame: .zero)
-			(width, height) = (128, 128)
-			borderCornerRadius = 64
-		case .songs:
-			imageView = AlbumImageView()
-			(width, height) = (128, 128)
-			borderCornerRadius = 10
-		case nil:
-			imageView = UIImageView()
-			imageView.clipsToBounds = true
-			imageView.layer.cornerCurve = .continuous
-			imageView.layer.cornerRadius = 8
-			(width, height) = (92, 132)
-			borderCornerRadius = 8
-		}
-
-		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.contentMode = .scaleAspectFill
-		imageView.isUserInteractionEnabled = false
-		self.subjectButton.addSubview(imageView)
-		self.subjectImageView = imageView
-
-		self.subjectImageConstraints.append(contentsOf: [
-			self.subjectButton.widthAnchor.constraint(equalToConstant: width),
-			self.subjectButton.heightAnchor.constraint(equalToConstant: height),
-			imageView.topAnchor.constraint(equalTo: self.subjectButton.topAnchor),
-			imageView.bottomAnchor.constraint(equalTo: self.subjectButton.bottomAnchor),
-			imageView.leadingAnchor.constraint(equalTo: self.subjectButton.leadingAnchor),
-			imageView.trailingAnchor.constraint(equalTo: self.subjectButton.trailingAnchor)
-		])
-
-		if kind == .literatures {
-			let maskView = UIImageView(image: .bookMask)
-			maskView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-			imageView.mask = maskView
-			self.subjectMaskView = maskView
-		}
-
-		if let borderCornerRadius = borderCornerRadius {
-			let borderView = BorderView()
-			borderView.translatesAutoresizingMaskIntoConstraints = false
-			borderView.cornerRadius = borderCornerRadius
-			borderView.isUserInteractionEnabled = false
-			self.subjectButton.addSubview(borderView)
-			self.subjectBorderView = borderView
-
-			self.subjectImageConstraints.append(contentsOf: [
-				borderView.topAnchor.constraint(equalTo: imageView.topAnchor),
-				borderView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
-				borderView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
-				borderView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor)
-			])
-		}
-
-		NSLayoutConstraint.activate(self.subjectImageConstraints)
+		self.subjectLockupView.configure(using: subject)
+		self.subjectLockupView.isHidden = false
 	}
 
 	/// Notifies the delegate that the share button was pressed.

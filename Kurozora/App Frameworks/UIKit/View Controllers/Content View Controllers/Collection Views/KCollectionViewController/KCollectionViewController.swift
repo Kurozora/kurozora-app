@@ -87,6 +87,15 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		return true
 	}
 
+	/// A compositional layout configuration whose sections are inset to the readable content guide.
+	///
+	/// - Tag: KCollectionViewController-readableLayoutConfiguration
+	static var readableLayoutConfiguration: UICollectionViewCompositionalLayoutConfiguration {
+		let configuration = UICollectionViewCompositionalLayoutConfiguration()
+		configuration.contentInsetsReference = .readableContent
+		return configuration
+	}
+
 	// MARK: - Initializers
 	@MainActor required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -144,6 +153,18 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	override func reloadLocalization() {
 		guard self.isViewLoaded else { return }
 		self.collectionView.reloadData()
+	}
+
+	/// Returns the width available to a section's content, before the section's own insets.
+	///
+	/// - Parameter layoutEnvironment: The layout environment of the section.
+	///
+	/// - Returns: The width available to the section's content.
+	func sectionWidth(in layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let readableWidth = self.view.readableContentGuide.layoutFrame.width
+
+		return readableWidth > 0 ? min(containerWidth, readableWidth) : containerWidth
 	}
 
 	/// Configures the gradient view with default values.

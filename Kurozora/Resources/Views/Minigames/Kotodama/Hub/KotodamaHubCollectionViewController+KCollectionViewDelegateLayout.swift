@@ -23,7 +23,7 @@ extension KotodamaHubCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 
 			let estimatedHeight: CGFloat = SectionLayoutKind(rawValue: section) == .daily ? 200 : 72
@@ -43,6 +43,6 @@ extension KotodamaHubCollectionViewController {
 			layoutSection.interGroupSpacing = 12.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
-		}
+		}, configuration: Self.readableLayoutConfiguration)
 	}
 }

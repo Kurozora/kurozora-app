@@ -26,37 +26,12 @@ class KotodamaGameViewController: KViewController {
 		case archive(Date)
 	}
 
-	/// The full model behind a finished game's subject, keyed by kind.
-	private enum SubjectModel {
-		/// The subject is a show.
-		case show(Show)
-
-		/// The subject is a literature.
-		case literature(Literature)
-
-		/// The subject is a game.
-		case game(Game)
-
-		/// The subject is a character.
-		case character(Character)
-
-		/// The subject is a person.
-		case person(Person)
-
-		/// The subject is a studio.
-		case studio(Studio)
-
-		/// The subject is a song.
-		case song(Song)
-	}
-
 	// MARK: - Views
 	private let scrollView = UIScrollView()
 	private let contentStackView = UIStackView()
-	private let hintView = KotodamaHintView()
-	private let imageHintView = KotodamaImageHintView()
+	private let kindLabel = UILabel()
 	private let boardView = KotodamaBoardView()
-	private let messageLabel = UILabel()
+	private let hintRowView = KotodamaHintRowView()
 	private let keyboardView = KotodamaKeyboardView()
 	private let resultView = KotodamaResultView()
 	private let streakView = KotodamaStreakView()
@@ -79,11 +54,8 @@ class KotodamaGameViewController: KViewController {
 	/// The fastest solves of today's puzzle.
 	private var topEntries: [KotodamaLeaderboardEntry]
 
-	/// The full model behind the finished game's subject, used to build its context menu.
-	private var subjectModel: SubjectModel?
-
-	/// Whether the finished game's share grid preview has been fetched.
-	private var didFetchShareGrid = false
+	/// The catalog entry behind the finished game's answer.
+	private var subject: KotodamaSubject?
 
 	/// The letters typed but not yet submitted.
 	private var pendingGuess: String = ""
@@ -200,13 +172,15 @@ class KotodamaGameViewController: KViewController {
 		self.contentStackView.isHidden = self.game == nil
 		self.scrollView.addSubview(self.contentStackView)
 
-		self.messageLabel.textAlignment = .center
-		self.messageLabel.numberOfLines = 2
-		self.messageLabel.font = .preferredFont(forTextStyle: .footnote)
-		self.messageLabel.adjustsFontForContentSizeCategory = true
-		self.messageLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		self.kindLabel.textAlignment = .center
+		self.kindLabel.numberOfLines = 1
+		self.kindLabel.font = UIFontMetrics(forTextStyle: .caption1)
+			.scaledFont(for: .systemFont(ofSize: 12, weight: .semibold))
+		self.kindLabel.adjustsFontForContentSizeCategory = true
+		self.kindLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 
 		self.keyboardView.delegate = self
+		self.hintRowView.delegate = self
 		self.resultView.delegate = self
 		self.leaderboardPeekView.delegate = self
 
@@ -214,13 +188,11 @@ class KotodamaGameViewController: KViewController {
 		self.streakView.isHidden = !self.isDaily
 		self.leaderboardPeekView.isHidden = !self.isDaily
 
-		// The board and keyboard own the top of the screen; the hint slots sit below,
-		// still permanently reserved so revealing a hint never shifts the layout.
+		// The hint row is reserved from the start so a hint arriving mid-game never shifts the layout.
+		self.contentStackView.addArrangedSubview(self.kindLabel)
 		self.contentStackView.addArrangedSubview(self.boardView)
-		self.contentStackView.addArrangedSubview(self.messageLabel)
+		self.contentStackView.addArrangedSubview(self.hintRowView)
 		self.contentStackView.addArrangedSubview(self.keyboardView)
-		self.contentStackView.addArrangedSubview(self.hintView)
-		self.contentStackView.addArrangedSubview(self.imageHintView)
 		self.contentStackView.addArrangedSubview(self.resultView)
 		self.contentStackView.addArrangedSubview(self.streakView)
 		self.contentStackView.addArrangedSubview(self.leaderboardPeekView)
@@ -232,9 +204,10 @@ class KotodamaGameViewController: KViewController {
 		let contentGuide = self.scrollView.contentLayoutGuide
 		let frameGuide = self.scrollView.frameLayoutGuide
 		let safeAreaGuide = self.view.safeAreaLayoutGuide
+		let readableGuide = self.view.readableContentGuide
 
 		NSLayoutConstraint.activate([
-			self.activityIndicatorView.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+			self.activityIndicatorView.centerXAnchor.constraint(equalTo: readableGuide.centerXAnchor),
 			self.activityIndicatorView.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
 			self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -243,12 +216,10 @@ class KotodamaGameViewController: KViewController {
 			contentGuide.widthAnchor.constraint(equalTo: frameGuide.widthAnchor),
 			self.contentStackView.topAnchor.constraint(equalTo: contentGuide.topAnchor, constant: 16),
 			self.contentStackView.bottomAnchor.constraint(equalTo: contentGuide.bottomAnchor, constant: -24),
-			self.contentStackView.centerXAnchor.constraint(equalTo: contentGuide.centerXAnchor),
-			self.contentStackView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor, constant: -32),
-			self.hintView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
-			self.imageHintView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
-			self.messageLabel.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
-			self.messageLabel.heightAnchor.constraint(equalToConstant: 36),
+			self.contentStackView.centerXAnchor.constraint(equalTo: readableGuide.centerXAnchor),
+			self.contentStackView.widthAnchor.constraint(equalTo: readableGuide.widthAnchor),
+			self.kindLabel.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
+			self.hintRowView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
 			self.resultView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
 			self.streakView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
 			self.leaderboardPeekView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
@@ -315,84 +286,38 @@ class KotodamaGameViewController: KViewController {
 
 		self.boardView.configure(using: state.rows, animated: animated)
 		self.keyboardView.configure(using: state.keyboard)
-		self.hintView.configure(using: game.word?.attributes.hint)
+		self.kindLabel.text = game.word?.subjectKind?.stringValue ?? L10n.kotodamaSubjectWord
+		self.hintRowView.configure(
+			hint: game.word?.attributes.hint,
+			secondaryHint: game.word?.attributes.secondaryHint,
+			posterURL: game.word?.attributes.poster?.url,
+			kind: game.word?.subjectKind
+		)
 		self.keyboardView.isHidden = isFinished
-		self.hintView.isHidden = isFinished
+		self.hintRowView.isHidden = isFinished
 		self.resultView.isHidden = !isFinished
-		self.imageHintView.isHidden = isFinished
 
 		if isFinished {
 			self.resultView.configure(using: game)
 
-			if self.subjectModel == nil, let subject = game.word?.subject {
+			if self.subject == nil, let identity = game.word?.subject {
 				Task { [weak self] in
-					await self?.fetchSubjectModel(for: subject)
+					await self?.fetchSubject(for: identity)
 				}
 			}
 
-			if !self.didFetchShareGrid {
-				self.didFetchShareGrid = true
-
-				Task { [weak self] in
-					await self?.fetchShareGrid(gameID: game.id)
-				}
-			}
-		} else {
-			self.imageHintView.configure(using: game.word?.attributes.poster?.url, kind: game.word?.subjectKind)
+			self.resultView.showShareGridPreview(text: KotodamaShareGrid.text(for: game))
 		}
 	}
 
-	/// Fetches the share grid shown as a preview beneath the finished game's outcome.
+	/// Fetches the catalog entry behind the finished game's answer.
 	///
-	/// - Parameter gameID: The id of the finished game.
-	private func fetchShareGrid(gameID: KurozoraItemID) async {
-		do {
-			let response = try await KService.kotodamaShareGrid(gameID: gameID).response()
+	/// - Parameter identity: The identity of the subject to fetch.
+	private func fetchSubject(for identity: KotodamaSubjectIdentity) async {
+		guard let kind = identity.kind else { return }
 
-			guard let shareGrid = response.data.first else {
-				self.resultView.hideShareGridPreview()
-				return
-			}
-
-			self.resultView.showShareGridPreview(text: shareGrid.attributes.text)
-		} catch {
-			self.resultView.hideShareGridPreview()
-		}
-	}
-
-	/// Fetches the full model behind the finished game's subject, used to build its context menu.
-	///
-	/// - Parameter subject: The identity of the subject to fetch.
-	private func fetchSubjectModel(for subject: KotodamaSubjectIdentity) async {
-		do {
-			switch subject.kind {
-			case .shows:
-				guard let show = try await KService.detail(ShowIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .show(show)
-			case .literatures:
-				guard let literature = try await KService.detail(LiteratureIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .literature(literature)
-			case .games:
-				guard let game = try await KService.detail(GameIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .game(game)
-			case .characters:
-				guard let character = try await KService.detail(CharacterIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .character(character)
-			case .people:
-				guard let person = try await KService.detail(PersonIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .person(person)
-			case .studios:
-				guard let studio = try await KService.detail(StudioIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .studio(studio)
-			case .songs:
-				guard let song = try await KService.detail(SongIdentity(id: subject.id)).response().data.first else { return }
-				self.subjectModel = .song(song)
-			case nil:
-				return
-			}
-		} catch {
-			return
-		}
+		self.subject = await KotodamaSubject(kind: kind, subjectID: identity.id)
+		self.resultView.showSubject(self.subject)
 	}
 
 	/// Draws the record and fastest solves shown beneath the board.
@@ -422,20 +347,22 @@ class KotodamaGameViewController: KViewController {
 	///
 	/// - Parameter letter: The letter to append.
 	private func append(letter: Swift.Character) {
+		self.hintRowView.show(message: nil)
+
 		guard let game = self.game else { return }
 		guard !self.isSubmitting, self.pendingGuess.count < (game.word?.attributes.length ?? Kotodama.wordLength) else { return }
 
 		self.pendingGuess.append(letter)
-		self.messageLabel.text = nil
 		self.render(animated: false)
 	}
 
 	/// Removes the last letter from the pending guess.
 	private func deleteLetter() {
+		self.hintRowView.show(message: nil)
+
 		guard !self.isSubmitting, !self.pendingGuess.isEmpty else { return }
 
 		self.pendingGuess.removeLast()
-		self.messageLabel.text = nil
 		self.render(animated: false)
 	}
 
@@ -444,7 +371,7 @@ class KotodamaGameViewController: KViewController {
 		guard let game = self.game, !self.isSubmitting else { return }
 
 		guard self.pendingGuess.count == (game.word?.attributes.length ?? Kotodama.wordLength) else {
-			self.messageLabel.text = L10n.kotodamaIncompleteGuess
+			self.hintRowView.show(message: L10n.kotodamaIncompleteGuess)
 			self.shakeActiveRow()
 			return
 		}
@@ -465,11 +392,13 @@ class KotodamaGameViewController: KViewController {
 
 				self.pendingGuess = ""
 				self.game = game
-				self.messageLabel.text = nil
+				self.hintRowView.show(message: nil)
 				self.render(animated: true)
 
 				if game.attributes.status?.isFinished ?? false {
-					NotificationCenter.default.post(name: .KKotodamaGameDidFinish, object: nil)
+					if game.attributes.mode?.isRanked ?? false {
+						NotificationCenter.default.post(name: .KKotodamaGameDidFinish, object: nil)
+					}
 
 					if game.attributes.mode == .daily {
 						await self.reloadDailySections()
@@ -477,11 +406,11 @@ class KotodamaGameViewController: KViewController {
 				}
 			} catch let error as APIError {
 				self.isSubmitting = false
-				self.messageLabel.text = error.message
+				self.hintRowView.show(message: error.message)
 				self.shakeActiveRow()
 			} catch {
 				self.isSubmitting = false
-				self.messageLabel.text = error.localizedDescription
+				self.hintRowView.show(message: error.localizedDescription)
 				self.shakeActiveRow()
 			}
 		}
@@ -511,9 +440,8 @@ class KotodamaGameViewController: KViewController {
 
 				self.pendingGuess = ""
 				self.game = game
-				self.subjectModel = nil
-				self.didFetchShareGrid = false
-				self.messageLabel.text = nil
+				self.subject = nil
+				self.hintRowView.show(message: nil)
 				self.title = self.screenTitle
 				self.render(animated: false)
 			} catch let error as APIError {
@@ -556,31 +484,47 @@ extension KotodamaGameViewController: KotodamaKeyboardViewDelegate {
 	}
 }
 
+// MARK: - KotodamaHintRowViewDelegate
+extension KotodamaGameViewController: KotodamaHintRowViewDelegate {
+	func kotodamaHintRowViewDidPressThumbnail(_ hintRowView: KotodamaHintRowView) {
+		guard let url = URL(string: self.game?.word?.attributes.poster?.url ?? "") else { return }
+		let item = MediaItem(
+			url: url,
+			type: .image,
+			title: nil,
+			description: nil,
+			author: nil,
+			provider: nil,
+			embedHTML: nil,
+			extraInfo: nil
+		)
+
+		let mediaAlbumViewController = MediaAlbumViewController(items: [item], startIndex: 0)
+		mediaAlbumViewController.transitionDelegateForThumbnail = self
+		self.present(mediaAlbumViewController, animated: true)
+	}
+}
+
+// MARK: - MediaTransitionDelegate
+extension KotodamaGameViewController: MediaTransitionDelegate {
+	func imageViewForMedia(at index: Int) -> UIImageView? {
+		return self.hintRowView.thumbnailView
+	}
+
+	func scrollThumbnailIntoView(for index: Int) {}
+}
+
 // MARK: - KotodamaResultViewDelegate
 extension KotodamaGameViewController: KotodamaResultViewDelegate {
 	func kotodamaResultViewDidPressShare(_ resultView: KotodamaResultView) {
 		guard let game = self.game else { return }
 
-		Task { [weak self] in
-			guard let self = self else { return }
-
-			do {
-				let response = try await KService.kotodamaShareGrid(gameID: game.id).response()
-
-				guard let shareGrid = response.data.first else { return }
-
-				let activityViewController = UIActivityViewController(
-					activityItems: [shareGrid.attributes.text],
-					applicationActivities: nil
-				)
-				activityViewController.popoverPresentationController?.sourceView = resultView
-				self.present(activityViewController, animated: true)
-			} catch let error as APIError {
-				self.presentAlertController(title: L10n.kotodama, message: error.message)
-			} catch {
-				self.presentAlertController(title: L10n.kotodama, message: error.localizedDescription)
-			}
-		}
+		let activityViewController = UIActivityViewController(
+			activityItems: [KotodamaShareGrid.text(for: game)],
+			applicationActivities: nil
+		)
+		activityViewController.popoverPresentationController?.sourceView = resultView
+		self.present(activityViewController, animated: true)
 	}
 
 	func kotodamaResultViewDidPressSubject(_ resultView: KotodamaResultView) {
@@ -602,9 +546,9 @@ extension KotodamaGameViewController: KotodamaResultViewDelegate {
 	}
 
 	func kotodamaResultViewContextMenuConfiguration(_ resultView: KotodamaResultView) -> UIContextMenuConfiguration? {
-		guard let subjectModel = self.subjectModel else { return nil }
+		guard let subject = self.subject else { return nil }
 
-		switch subjectModel {
+		switch subject {
 		case .show(let show):
 			return show.contextMenuConfiguration(in: self, userInfo: nil, sourceView: resultView, barButtonItem: nil)
 		case .literature(let literature):

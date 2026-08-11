@@ -107,6 +107,7 @@ class KotodamaLeaderboardsTableViewController: KTableViewController {
 			self.tableView.contentInset.top = 50
 		}
 		self.tableView.scrollIndicatorInsets = self.tableView.contentInset
+		self.tableView.cellLayoutMarginsFollowReadableWidth = true
 
 		self.configureSegmentedControl()
 		self.configureToolbar()
@@ -140,8 +141,8 @@ class KotodamaLeaderboardsTableViewController: KTableViewController {
 	private func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor),
 		])
 	}
 

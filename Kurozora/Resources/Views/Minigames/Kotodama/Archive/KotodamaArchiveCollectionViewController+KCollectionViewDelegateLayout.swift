@@ -10,7 +10,8 @@ import UIKit
 
 extension KotodamaArchiveCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		let insets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		let width = self.sectionWidth(in: layoutEnvironment) - insets.leading - insets.trailing
 		let cellWidth = UIDevice.isPhone ? 160.0 : 180.0
 		let columnCount = Int((width / cellWidth).rounded())
 		return max(columnCount, 2)
@@ -21,7 +22,7 @@ extension KotodamaArchiveCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(88.0))
@@ -35,6 +36,6 @@ extension KotodamaArchiveCollectionViewController {
 			layoutSection.interGroupSpacing = 8.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
-		}
+		}, configuration: Self.readableLayoutConfiguration)
 	}
 }

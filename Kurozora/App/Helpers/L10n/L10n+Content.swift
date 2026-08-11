@@ -5646,6 +5646,48 @@ extension L10n {
 			)
 		}
 	}
+	/// The category shown above the Kotodama board for an answer that is a term rather than a catalog entry.
+	///
+	/// - Tag: L10n-kotodamaSubjectWord
+	static var kotodamaSubjectWord: String {
+		L10n.resolve {
+			String(
+				localized: "Word",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The category shown above the Kotodama board for an answer that is a term rather than a catalog entry."
+			)
+		}
+	}
+	/// The first line of a shared Kotodama daily result, naming the puzzle and the score.
+	///
+	/// - Tag: L10n-kotodamaShareGridDailyHeader
+	static var kotodamaShareGridDailyHeader: String {
+		L10n.resolve {
+			String(
+				localized: "Kurozora Kotodama #%1$lld %2$@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The first line of a shared Kotodama daily result, naming the puzzle and the score."
+			)
+		}
+	}
+	/// The first line of a shared Kotodama result outside the daily puzzle, naming the score.
+	///
+	/// - Tag: L10n-kotodamaShareGridHeader
+	static var kotodamaShareGridHeader: String {
+		L10n.resolve {
+			String(
+				localized: "Kurozora Kotodama %@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The first line of a shared Kotodama result outside the daily puzzle, naming the score."
+			)
+		}
+	}
 	/// The button for sharing the outcome of a finished Kotodama game.
 	///
 	/// - Tag: L10n-kotodamaShareResult

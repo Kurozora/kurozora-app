@@ -11,6 +11,26 @@ import UIKit
 
 extension KotodamaSubjectKind {
 	// MARK: - Properties
+	/// The name of the kind.
+	var stringValue: String {
+		switch self {
+		case .shows:
+			return L10n.show
+		case .literatures:
+			return L10n.literature
+		case .games:
+			return L10n.game
+		case .characters:
+			return L10n.character
+		case .people:
+			return L10n.person
+		case .studios:
+			return L10n.studio
+		case .songs:
+			return L10n.song
+		}
+	}
+
 	/// The image shown while the subject's own image loads.
 	var placeholderImage: UIImage {
 		switch self {

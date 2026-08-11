@@ -55911,6 +55911,12 @@
         }
       }
     },
+    "Kurozora Kotodama #%1$lld %2$@" : {
+      "comment" : "The first line of a shared Kotodama daily result, naming the puzzle and the score."
+    },
+    "Kurozora Kotodama %@" : {
+      "comment" : "The first line of a shared Kotodama result outside the daily puzzle, naming the score."
+    },
     "Language" : {
       "comment" : "The singular label for a title's language.",
       "localizations" : {
@@ -105913,12 +105919,6 @@
       "comment" : "The badge label for the company a studio grew out of, not a prequel.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Predecessor"
-          }
-        },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
@@ -105953,6 +105953,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Προκάτοχος"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Predecessor"
           }
         },
         "es" : {
@@ -106153,12 +106159,6 @@
       "comment" : "The badge label for the company that took over from a studio, not a sequel.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Successor"
-          }
-        },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
@@ -106193,6 +106193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Διάδοχος"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Successor"
           }
         },
         "es" : {
@@ -130449,6 +130455,9 @@
           }
         }
       }
+    },
+    "Word" : {
+      "comment" : "The category shown above the Kotodama board for an answer that is a term rather than a catalog entry."
     },
     "Write a comment…" : {
       "comment" : "The placeholder string for creating a new comment.",

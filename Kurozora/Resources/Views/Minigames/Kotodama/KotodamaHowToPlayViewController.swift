@@ -143,6 +143,8 @@ class KotodamaHowToPlayViewController: KViewController {
 
 	/// Activates the screen's layout constraints.
 	private func configureViewConstraints() {
+		let readableGuide = self.view.readableContentGuide
+
 		NSLayoutConstraint.activate([
 			self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -153,8 +155,8 @@ class KotodamaHowToPlayViewController: KViewController {
 
 			self.contentStackView.topAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.topAnchor, constant: 16),
 			self.contentStackView.bottomAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.bottomAnchor, constant: -24),
-			self.contentStackView.centerXAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.centerXAnchor),
-			self.contentStackView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor, constant: -32)
+			self.contentStackView.centerXAnchor.constraint(equalTo: readableGuide.centerXAnchor),
+			self.contentStackView.widthAnchor.constraint(equalTo: readableGuide.widthAnchor)
 		])
 	}
 

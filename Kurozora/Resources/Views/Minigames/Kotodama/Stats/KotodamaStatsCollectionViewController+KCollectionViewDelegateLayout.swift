@@ -13,7 +13,8 @@ extension KotodamaStatsCollectionViewController {
 		guard SectionLayoutKind(rawValue: section) == .summary else { return 1 }
 
 		// One row wherever the values fit, then two rows, then a single column.
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		let insets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		let width = self.sectionWidth(in: layoutEnvironment) - insets.leading - insets.trailing
 
 		for columns in [4, 2] {
 			let spacing = CGFloat(columns - 1) * 10
@@ -39,7 +40,7 @@ extension KotodamaStatsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
@@ -58,6 +59,6 @@ extension KotodamaStatsCollectionViewController {
 			layoutSection.interGroupSpacing = SectionLayoutKind(rawValue: section) == .distribution ? 8.0 : 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
-		}
+		}, configuration: Self.readableLayoutConfiguration)
 	}
 }
