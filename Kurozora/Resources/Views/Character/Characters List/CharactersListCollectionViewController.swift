@@ -48,15 +48,13 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
-
+	override var emptyStateImage: UIImage? { UIImage(systemName: "person.crop.circle.badge.questionmark.fill") }
 	override var emptyStateTitle: String {
 		switch self.charactersListFetchType {
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		default: return L10n.noItemsTitle(L10n.characters)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.charactersListFetchType {
 		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))

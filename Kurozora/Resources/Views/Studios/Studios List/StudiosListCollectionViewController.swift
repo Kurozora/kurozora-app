@@ -50,15 +50,13 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
-
+	override var emptyStateImage: UIImage? { UIImage(systemName: "building.2.crop.circle.fill") }
 	override var emptyStateTitle: String {
 		switch self.studiosListFetchType {
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		default: return L10n.noItemsTitle(L10n.studios)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.studiosListFetchType {
 		case .charts: return L10n.cantGetListDetail(L10n.topCharts.lowercased(with: .current))

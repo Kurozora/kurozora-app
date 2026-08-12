@@ -73,8 +73,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	// MARK: - Overridden Properties
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
-
+	override var emptyStateImage: UIImage? { UIImage(systemName: "building.2.crop.circle.fill") }
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.studio.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }

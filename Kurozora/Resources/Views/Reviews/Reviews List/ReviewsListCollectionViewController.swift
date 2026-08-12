@@ -103,7 +103,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	override func configureEmptyDataView() {
 		let detailString = L10n.beFirstToReview
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.bellCircle)
+		if let image = UIImage(systemName: "star.bubble.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.reviews), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

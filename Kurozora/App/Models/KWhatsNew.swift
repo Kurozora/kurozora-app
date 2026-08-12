@@ -37,7 +37,7 @@ class KWhatsNew {
         .image(title: "The Haunting Returns!", subtitle: "Halloween is back with a scare. Celebrate with 『Kur O' Zora』,『John』and new app icons featuring 『Korosensei』 and『Tanjiro』.", image: .Icons.gift),
         .image(title: "Up Next", subtitle: "Stay on top of your anime schedule with the all-new Up Next section on the Home screen and a full ‘See All’ list view.", image: .Icons.tvSparkles),
         .image(title: "Hide & Block", subtitle: "Take control of your space with the new ability to block users directly from their profile page.", image: .Icons.shieldCheckered),
-        .image(title: "The Big Redesign", subtitle: "Refined navigation for iOS 18+ and macOS 26 featuring a sleek new tab bar, glassy sidebar, and unified toolbar design.", image: .Icons.swatches),
+        .image(title: "The Big Redesign", subtitle: "Refined navigation for iOS 18+ and macOS 26 featuring a sleek new tab bar, glassy sidebar, and unified toolbar design.", image: .Icons.swatchplateFill),
         .image(title: "Episode Overhaul", subtitle: "Episodes now look better than ever with a new layout, improved navigation, and cleaner seasonal structure.", image: .Icons.tvSparkles),
         .image(title: "Image Playground", subtitle: "Unleash your creativity when setting your profile picture, now powered by Apple’s Image Playground.", image: .Icons.photoStack),
         .image(title: "The Sound of Mischief", subtitle: "Added the new 『Nuruhuhuhuhu』 app chime to bring some character (and chaos) to your app experience.", image: .Icons.speakerWave2),
@@ -156,7 +156,7 @@ class KWhatsNew {
 	static var v1_5_0: [WhatsNewItem] = [
         .image(title: "Love-Struck", subtitle: "Experience romance with the new charming『Touching Clouds』app icon and the romantic『Love Bug』theme.", image: .Icons.gift),
         .image(title: "Re:CAP", subtitle: "Your personalized year-end review is now available in the app! Reflect on your top series of the year, along with the milestones you've achieved!", image: .Icons.clockArrowCirclepath),
-        .image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: .Icons.swatches),
+        .image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: .Icons.swatchplateFill),
         .image(title: "Sounds & Haptics", subtitle: "A harmonious blend of serene chimes and iconic anime sounds. Whether you seek tranquility or a touch of nostalgia, find the perfect ambiance to accompany your journey.", image: .Icons.speakerWave2),
         .image(title: "Gem Icons", subtitle: "Created under immense pressure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: .Icons.ruby)
 	]

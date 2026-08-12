@@ -113,7 +113,9 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 	override func configureEmptyDataView() {
 		self.collectionView.backgroundView?.alpha = 0
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.rosetteStar)
+		if let image = UIImage(systemName: "square.grid.3x3.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(
 			title: L10n.kotodamaSignInRequired,
 			detail: L10n.kotodamaSignInRequiredDescription

@@ -61,7 +61,7 @@ enum WarningType {
 	var image: UIImage? {
 		switch self {
 		case .forceUpdate:
-            return .Icons.appStore
+			return .Icons.Brands.appStore
 		case .maintenance:
             return .Icons.wrenchAndScrewdriverFill
 		case .noSignal:

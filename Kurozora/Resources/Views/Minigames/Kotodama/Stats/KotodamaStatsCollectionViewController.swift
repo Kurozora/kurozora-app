@@ -46,7 +46,9 @@ class KotodamaStatsCollectionViewController: KCollectionViewController {
 	override func configureEmptyDataView() {
 		self.collectionView.backgroundView?.alpha = 0
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.rosetteStar)
+		if let image = UIImage(systemName: "chart.bar.doc.horizontal") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(
 			title: L10n.kotodamaNoStats,
 			detail: L10n.kotodamaNoStatsDescription

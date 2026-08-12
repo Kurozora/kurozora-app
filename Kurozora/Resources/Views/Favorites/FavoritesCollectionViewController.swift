@@ -176,7 +176,9 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 			}
 		}
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.heartCircle)
+		if let image = UIImage(systemName: "heart.circle.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.favorites), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

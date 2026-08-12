@@ -523,7 +523,7 @@ extension SettingsTableViewController {
 			case .motion:
                 return .Icons.circleDottedCircle
 			case .theme:
-                return .Icons.swatches
+                return .Icons.swatchplateFill
 			case .notifications:
                 return .Icons.appBadge
 			case .reminder:

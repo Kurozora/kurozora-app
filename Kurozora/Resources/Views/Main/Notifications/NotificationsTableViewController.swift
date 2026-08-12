@@ -202,7 +202,9 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 			}
 		}
 
-		emptyBackgroundView.configureImageView(image: .Empty.appBadge)
+		if let image = UIImage(systemName: "app.badge.fill") {
+			emptyBackgroundView.configureImageView(image: image)
+		}
 		emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.notifications), detail: detailString)
 		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 

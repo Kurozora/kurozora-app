@@ -100,9 +100,8 @@ class TranslationBarView: UIView {
 	}
 
 	private func configureGlyphImageView() {
-		let configuration = UIImage.SymbolConfiguration(textStyle: .footnote)
-
-		self.glyphImageView = UIImageView(image: UIImage(systemName: "translate", withConfiguration: configuration))
+		self.glyphImageView = UIImageView(image: .Symbols.translate)
+		self.glyphImageView.preferredSymbolConfiguration = UIImage.SymbolConfiguration(textStyle: .footnote)
 		self.glyphImageView.translatesAutoresizingMaskIntoConstraints = false
 		self.glyphImageView.contentMode = .scaleAspectFit
 		self.glyphImageView.setContentHuggingPriority(.required, for: .horizontal)

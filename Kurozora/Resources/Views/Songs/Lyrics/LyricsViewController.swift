@@ -234,7 +234,9 @@ final class LyricsViewController: KTableViewController {
 		self.view.bringSubviewToFront(self.pictureInPictureButton)
 
 		self.isAdjustingOffsetProgrammatically = true
-		let bottomInset = self.canTimeSync ? self.tableView.bounds.height * 0.8 : 16
+
+		let bottomInset = self.canTimeSync && !self.items.isEmpty ? self.tableView.bounds.height * 0.8 : 16
+
 		if self.tableView.contentInset.bottom != bottomInset {
 			self.tableView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: bottomInset, right: 0)
 		}
@@ -277,7 +279,9 @@ final class LyricsViewController: KTableViewController {
 		self.emptyBackgroundView.isUserInteractionEnabled = false
 		guard self.hasLoadedLyrics, self.items.isEmpty else { return }
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.personQuestion)
+		if let image = UIImage(systemName: "quote.bubble.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: L10n.lyricsUnavailableTitle, detail: L10n.lyricsUnavailableDetail)
 	}
 

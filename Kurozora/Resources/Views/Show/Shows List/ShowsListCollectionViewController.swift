@@ -74,15 +74,13 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
-	override var emptyStateImage: UIImage { .Empty.libraryAnime }
-
+	override var emptyStateImage: UIImage? { .Empty.libraryAnime }
 	override var emptyStateTitle: String {
 		switch self.showsListFetchType {
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		default: return L10n.noItemsTitle(L10n.shows)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.showsListFetchType {
 		case .charts: return L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current))

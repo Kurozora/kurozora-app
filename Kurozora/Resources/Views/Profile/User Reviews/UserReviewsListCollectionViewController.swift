@@ -154,7 +154,9 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 			L10n.reviewsEmptyOtherDetail(username ?? "")
 		}
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.person3)
+		if let image = UIImage(systemName: "person.3.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

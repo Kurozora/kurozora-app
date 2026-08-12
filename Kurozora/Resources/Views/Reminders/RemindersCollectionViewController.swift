@@ -88,7 +88,9 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 			detailString = "Reminded games will show up on this page!"
 		}
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.bellCircle)
+		if let image = UIImage(systemName: "bell.circle.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.reminders), detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

@@ -74,15 +74,13 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.libraryGame }
-
+	override var emptyStateImage: UIImage? { .Empty.libraryGame }
 	override var emptyStateTitle: String {
 		switch self.gamesListFetchType {
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		default: return L10n.noItemsTitle(L10n.games)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.gamesListFetchType {
 		case .charts: return L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current))

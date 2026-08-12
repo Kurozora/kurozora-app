@@ -192,7 +192,9 @@ class CharacterSearchViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.personQuestion)
+		if let image = UIImage(systemName: "person.crop.circle.badge.questionmark.fill") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: L10n.noItemsTitle(L10n.characters), detail: L10n.noCharactersSearchDetail)
 
 		self.collectionView.backgroundView?.alpha = 0

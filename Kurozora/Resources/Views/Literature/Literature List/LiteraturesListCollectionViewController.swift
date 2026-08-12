@@ -74,15 +74,13 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.libraryManga }
-
+	override var emptyStateImage: UIImage? { .Empty.libraryManga }
 	override var emptyStateTitle: String {
 		switch self.literaturesListFetchType {
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		default: return L10n.noItemsTitle(L10n.literatures)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.literaturesListFetchType {
 		case .charts: return L10n.cantGetListRefresh(L10n.topCharts.lowercased(with: .current))

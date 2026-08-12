@@ -106,11 +106,12 @@ class ParentalGuideCategoryEntriesCollectionViewController: KCollectionViewContr
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.bellCircle)
+		self.emptyBackgroundView.configureImageView(image: .Symbols.figureAndChildHoldinghandsCircleFill)
 		self.emptyBackgroundView.configureLabels(
 			title: L10n.noParentalGuideEntries,
 			detail: L10n.noParentalGuideEntriesDetail
 		)
+
 		self.collectionView.backgroundView?.alpha = 0
 	}
 

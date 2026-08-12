@@ -48,7 +48,7 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
+	override var emptyStateImage: UIImage? { UIImage(systemName: "person.crop.circle.badge.questionmark.fill") }
 	override var emptyStateTitle: String { L10n.noItemsTitle(L10n.cast) }
 	override var emptyStateDetail: String { L10n.noCastsYet(self.castKind.rawValue) }
 

@@ -71,15 +71,13 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
-
+	override var emptyStateImage: UIImage? { .Symbols.musicNoteCircleFill }
 	override var emptyStateTitle: String {
 		switch self.songsListFetchType {
 		case .show: return L10n.noShowSongs
 		case .charts: return L10n.noItemsTitle(L10n.topCharts)
 		}
 	}
-
 	override var emptyStateDetail: String {
 		switch self.songsListFetchType {
 		case .show: return L10n.cantGetShowSongs

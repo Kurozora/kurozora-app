@@ -95,11 +95,12 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: .Empty.bellCircle)
+		self.emptyBackgroundView.configureImageView(image: .Symbols.figureAndChildHoldinghandsCircleFill)
 		self.emptyBackgroundView.configureLabels(
 			title: L10n.noParentalGuideYet,
 			detail: L10n.beTheFirstToContribute
 		)
+
 		self.collectionView.backgroundView?.alpha = 0
 	}
 

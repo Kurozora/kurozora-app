@@ -71,8 +71,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// MARK: - Overridden Properties
-	override var emptyStateImage: UIImage { .Empty.personQuestion }
-
+	override var emptyStateImage: UIImage? { UIImage(systemName: "person.crop.circle.badge.questionmark.fill") }
 	override var emptyStateDetail: String { L10n.noDetailsYet(L10n.character.lowercased(with: .current)) }
 
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }

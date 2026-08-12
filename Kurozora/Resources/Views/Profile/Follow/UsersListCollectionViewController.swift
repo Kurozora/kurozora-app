@@ -94,13 +94,13 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
 	// MARK: Empty state
-	override var emptyStateImage: UIImage {
+	override var emptyStateImage: UIImage? {
 		switch self.usersListFetchType {
 		case .blocked:
 			let configuration = UIImage.SymbolConfiguration(pointSize: 96, weight: .regular)
-			return UIImage(systemName: "xmark.shield", withConfiguration: configuration) ?? .Empty.person3
+			return UIImage(systemName: "xmark.shield", withConfiguration: configuration) ?? UIImage(systemName: "person.3.fill")
 		case .follow, .search, .reputation:
-			return .Empty.person3
+			return UIImage(systemName: "person.3.fill")
 		}
 	}
 

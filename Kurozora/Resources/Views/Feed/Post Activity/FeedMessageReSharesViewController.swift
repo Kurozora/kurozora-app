@@ -33,7 +33,7 @@ final class FeedMessageReSharesViewController: ListCollectionViewController {
 	private var snapshot: NSDiffableDataSourceSnapshot<Section, ItemKind>!
 
 	// MARK: - Empty state
-	override var emptyStateImage: UIImage { .Empty.person3 }
+	override var emptyStateImage: UIImage? { UIImage(systemName: "person.3.fill") }
 	override var emptyStateTitle: String { L10n.amplifyPostsHeadline }
 	override var emptyStateDetail: String { L10n.amplifyPostsSubheadline }
 	override var hasLoadedInitialData: Bool { !self.resharers.isEmpty }

@@ -43,7 +43,7 @@ class ListCollectionViewController: KCollectionViewController {
 
 	// Subclass hooks
 	/// The image displayed in the empty-data view.
-	var emptyStateImage: UIImage { UIImage() }
+	var emptyStateImage: UIImage? { UIImage() }
 
 	/// The title displayed in the empty-data view.
 	var emptyStateTitle: String { "" }
@@ -102,7 +102,9 @@ class ListCollectionViewController: KCollectionViewController {
 
 	// Empty state
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: self.emptyStateImage)
+		if let image = self.emptyStateImage {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
 		self.emptyBackgroundView.configureLabels(title: self.emptyStateTitle, detail: self.emptyStateDetail)
 
 		self.collectionView.backgroundView?.alpha = 0

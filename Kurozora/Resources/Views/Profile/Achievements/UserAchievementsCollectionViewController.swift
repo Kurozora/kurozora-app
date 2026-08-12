@@ -89,7 +89,7 @@ class UserAchievementsCollectionViewController: KCollectionViewController {
 			""
 		}
 
-		self.emptyBackgroundView.configureImageView(image: .Empty.rosetteStar)
+		self.emptyBackgroundView.configureImageView(image: .Symbols.rosetteStarFill)
 		self.emptyBackgroundView.configureLabels(title: titleString, detail: detailString)
 
 		self.collectionView.backgroundView?.alpha = 0

@@ -110,6 +110,9 @@ class EmptyBackgroundView: UIView {
 	/// The vertical spacing between the image, label and button views.
 	let verticalSpace = 8
 
+	/// The point size at which symbol images are drawn, matching the placeholder artwork.
+	private let symbolPointSize: CGFloat = 100
+
 	/// The vertical offset applied to the centered content.
 	var verticalOffset: CGFloat = 0.0 {
 		didSet {
@@ -170,15 +173,15 @@ class EmptyBackgroundView: UIView {
 
 	/// Configures the image view with the given image object.
 	///
+	/// Symbols are drawn at the placeholder point size, while artwork keeps its own size.
+	///
 	/// - Parameter image: The object containing the image data to be displayed.
 	func configureImageView(image: UIImage) {
+		// Symbols arrive sized for body text, which is far too small to carry an empty state.
+		self.imageView.preferredSymbolConfiguration = image.isSymbolImage ? UIImage.SymbolConfiguration(pointSize: self.symbolPointSize) : nil
 		self.imageView.image = image
 
-		if self.canShowImage {
-			self.imageView.isHidden = false
-		} else {
-			self.imageView.isHidden = true
-		}
+		self.imageView.isHidden = !self.canShowImage
 	}
 
 	/// Configures the labels with the given strings.
