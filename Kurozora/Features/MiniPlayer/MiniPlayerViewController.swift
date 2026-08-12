@@ -66,7 +66,7 @@ final class MiniPlayerViewController: UIViewController {
 	}()
 
 	/// The clips bounding each blur step to the overlay.
-	private let overlayBlurContainerViews: [UIView] = MiniPlayerViewController.artworkBlurSteps.map { _ in
+	private lazy var overlayBlurContainerViews: [UIView] = self.artworkBlurSteps.map { _ in
 		let view = UIView()
 		view.translatesAutoresizingMaskIntoConstraints = false
 		view.isUserInteractionEnabled = false
@@ -75,7 +75,7 @@ final class MiniPlayerViewController: UIViewController {
 	}
 
 	/// The blurred copies of the artwork, one per step.
-	private let overlayBlurImageViews: [UIImageView] = MiniPlayerViewController.artworkBlurSteps.map { step in
+	private lazy var overlayBlurImageViews: [UIImageView] = self.artworkBlurSteps.map { step in
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFill
@@ -87,8 +87,8 @@ final class MiniPlayerViewController: UIViewController {
 	}
 
 	/// The masks bringing each blur step in over its own band.
-	private let overlayBlurMaskViews: [GradientMaskView] = MiniPlayerViewController.artworkBlurSteps.map { step in
-		.topFade(clearUntil: step.from / MiniPlayerViewController.overlayHeight, solidFrom: step.to / MiniPlayerViewController.overlayHeight)
+	private lazy var overlayBlurMaskViews: [GradientMaskView] = self.artworkBlurSteps.map { step in
+		.topFade(clearUntil: step.from / self.overlayHeight, solidFrom: step.to / self.overlayHeight)
 	}
 
 	/// The scrim darkening the blurred artwork.
@@ -198,6 +198,63 @@ final class MiniPlayerViewController: UIViewController {
 	}()
 
 	#if targetEnvironment(macCatalyst)
+	/// The region of the window the player's body occupies, inside the margins the pull tab grows
+	/// into.
+	private let contentGuide = UILayoutGuide()
+
+	/// The blur veiling the window as the pointer carries it toward a side edge.
+	private let edgeBlurView: UIVisualEffectView = {
+		let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.isUserInteractionEnabled = false
+		view.alpha = 0
+		return view
+	}()
+
+	/// The clips holding each margin's artwork to the margin it belongs to.
+	private lazy var marginArtworkContainerViews: [UIView] = (0..<2).map { _ in
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.isUserInteractionEnabled = false
+		view.clipsToBounds = true
+		return view
+	}
+
+	/// The artwork carried out into the margins, giving the pull tab its color.
+	private lazy var marginArtworkImageViews: [UIImageView] = (0..<2).map { _ in
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .scaleAspectFill
+		imageView.isUserInteractionEnabled = false
+		imageView.image = .Placeholders.musicAlbum
+		if let blurFilter = GaussianBlur.filter(radius: self.marginArtworkBlurRadius, normalizesEdges: true) {
+			imageView.layer.filters = [blurFilter]
+		}
+		return imageView
+	}
+
+	/// The silhouette the window takes while it rests off screen.
+	///
+	/// A mask composites the alpha of what it draws, so the filled silhouette is what the window
+	/// keeps of itself.
+	private let dockMaskView = UIView()
+
+	/// The fill giving the mask its shape.
+	private let dockMaskShapeLayer: CAShapeLayer = {
+		let layer = CAShapeLayer()
+		layer.fillColor = UIColor.white.cgColor
+		return layer
+	}()
+
+	/// The chevron pointing back toward the screen.
+	private let dockTabImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .center
+		imageView.tintColor = .white
+		return imageView
+	}()
+
 	/// The lyrics control in the hover pill.
 	private let lyricsControl: TransportButton = {
 		let control = TransportButton()
@@ -212,54 +269,81 @@ final class MiniPlayerViewController: UIViewController {
 
 	// MARK: - Properties
 	/// The smallest window size.
-	static let minimumWindowSize = CGSize(width: 320, height: 146)
+	static let minimumWindowSize = CGSize(width: 320 + 2 * MiniPlayerViewController.dockTabReach, height: 146)
 
 	/// The widest the window is allowed to grow.
-	static let maximumWindowWidth: CGFloat = 600
+	static let maximumWindowWidth: CGFloat = 600 + 2 * MiniPlayerViewController.dockTabReach
 
 	/// The height of the compact bar.
-	private static let barHeight: CGFloat = 146
+	private let barHeight: CGFloat = 146
 
 	/// The edge length the window opens at when it has no saved frame.
-	private static let defaultSquareSize: CGFloat = 320
+	private let defaultSquareSize: CGFloat = 320
 
 	/// The window height below which the layout is the compact bar.
-	private static let barCeilingHeight: CGFloat = 250
+	private let barCeilingHeight: CGFloat = 250
 
 	/// The smallest lyrics pane height that justifies the expanded regime.
-	private static let lyricsMinimumHeight: CGFloat = 200
+	private let lyricsMinimumHeight: CGFloat = 200
 
 	/// The lyrics pane height requested the first time the lyrics button expands the window.
-	private static let expandedLyricsHeight: CGFloat = 331
+	private let expandedLyricsHeight: CGFloat = 331
 
 	/// The width of the window's resize border.
-	private static let resizeBorderWidth: CGFloat = 6
+	private let resizeBorderWidth: CGFloat = 6
 
 	/// How long the pointer may sit still before the hover chrome settles back out.
-	private static let hoverIdleTimeout: TimeInterval = 3
+	private let hoverIdleTimeout: TimeInterval = 3
 
 	/// The shortest gap between two runs of the same view option.
-	private static let viewOptionRepeatInterval: TimeInterval = 0.4
+	private let viewOptionRepeatInterval: TimeInterval = 0.4
+
+	/// How long a new song holds the metadata on screen before it settles back out.
+	private let songChangeRevealDuration: TimeInterval = 4
+
+	/// How long the artwork takes to crossfade to a new song, matching the image loader's fade.
+	private let artworkCrossfadeDuration: TimeInterval = 0.2
 
 	/// The height of the hover scrim over the artwork's bottom edge.
-	private static let overlayHeight: CGFloat = 195
+	private let overlayHeight: CGFloat = 195
 
 	/// The height of the controls cluster within the hover scrim.
-	private static let overlayControlsHeight: CGFloat = 170
+	private let overlayControlsHeight: CGFloat = 170
 
 	/// The steps of the artwork's progressive blur.
 	///
 	/// Each step names a radius and the depths into the overlay where that radius begins and
 	/// finishes appearing. Steps overlap, so the sharp artwork never meets a fully blurred copy.
-	private static let artworkBlurSteps: [(radius: CGFloat, from: CGFloat, to: CGFloat)] = [
+	private let artworkBlurSteps: [(radius: CGFloat, from: CGFloat, to: CGFloat)] = [
 		(2, 4, 16),
 		(5, 14, 30),
 		(10, 28, 50),
 		(16, 46, 90),
 	]
 
+	/// The blur radius of the artwork carried into the margins.
+	private let marginArtworkBlurRadius: CGFloat = 24
+
 	/// The MiniPlayer currently on screen.
 	private(set) static weak var current: MiniPlayerViewController?
+
+	/// The bounds of the player's body, inside the margin the pull tab grows into.
+	private var contentBounds: CGRect {
+		return self.view.bounds.insetBy(dx: Self.dockTabReach, dy: 0)
+	}
+
+	/// Whether a MiniPlayer is floating above other apps on the Space the user is looking at.
+	///
+	/// Anything else that wants to put a window on screen by itself should stand down while this
+	/// is true, rather than land on top of the MiniPlayer.
+	static var isFloatingOnActiveSpace: Bool {
+		#if targetEnvironment(macCatalyst)
+		guard UserSettings.miniPlayerStaysOnTop, let current = Self.current else { return false }
+		return current.windowBridge.isVisibleOnActiveSpace
+		#else
+		return false
+		#endif
+	}
 
 	/// Whether the lyrics pane is showing.
 	var showsLyricsPane: Bool {
@@ -307,6 +391,12 @@ final class MiniPlayerViewController: UIViewController {
 	/// Whether the hover-revealed overlays are showing.
 	private var overlaysVisible = false
 
+	/// Whether a song change is currently holding the metadata on screen.
+	private var isRevealingForSongChange = false
+
+	/// The pending end of the song change reveal.
+	private var songChangeRevealWorkItem: DispatchWorkItem?
+
 	/// Whether the lyrics pane is presented by the lyrics button.
 	private var isLyricsPresented = false
 
@@ -317,6 +407,48 @@ final class MiniPlayerViewController: UIViewController {
 	private var lyricsBaseIsBar = false
 
 	#if targetEnvironment(macCatalyst)
+	/// The transparent margin the window carries on either side of its body, which the pull tab
+	/// grows into.
+	static let dockTabReach: CGFloat = 24
+
+	/// How much of the window is left on screen once it parks.
+	///
+	/// Slightly less than the tab's reach, so the body clears the edge completely.
+	static let dockedVisibleWidth: CGFloat = 20
+
+	/// The width of the pull tab.
+	///
+	/// The tab is wider than it ever stands out, so the part still behind the body keeps its corners
+	/// out of sight.
+	private let dockTabWidth: CGFloat = 44
+
+	/// The height of the pull tab, independent of the window's own height.
+	private let dockTabHeight: CGFloat = 96
+
+	/// The corner radius of the pull tab.
+	private let dockTabCornerRadius: CGFloat = 11
+
+	/// The radius of the fillet where the pull tab meets the window body.
+	private let dockJunctionRadius: CGFloat = 3
+
+	/// How long the window takes to narrow into the pull tab, and to grow back out of it.
+	private let dockMorphDuration: TimeInterval = 0.25
+
+	/// The constraint pinning the dock tab to the window's leading edge.
+	private var dockTabLeadingConstraint: NSLayoutConstraint?
+
+	/// The constraint pinning the dock tab to the window's trailing edge.
+	private var dockTabTrailingConstraint: NSLayoutConstraint?
+
+	/// Whether the pull tab currently stands in for the window.
+	private var isPullTabPresented = false
+
+	/// Whether the pull tab has grown out to its full reach.
+	private var isTabGrown = false
+
+	/// The edge the window is docked against.
+	private var dockedEdge: DockEdge?
+
 	/// The bridge styling the AppKit window.
 	private let windowBridge = MiniPlayerWindowBridge()
 
@@ -363,6 +495,13 @@ final class MiniPlayerViewController: UIViewController {
 			self.lyricsEdgeMaskView.frame = self.lyricsContainerView.bounds
 		}
 
+		#if targetEnvironment(macCatalyst)
+		// The mask carries the window's shape, so it follows every resize, not just docked ones.
+		if self.windowBridge.isAttached {
+			self.updateDockMaskFrame(tabReach: self.isTabGrown ? Self.dockTabReach : 0)
+		}
+		#endif
+
 		for (index, maskView) in self.overlayBlurMaskViews.enumerated() where maskView.frame != self.overlayBlurContainerViews[index].bounds {
 			maskView.frame = self.overlayBlurContainerViews[index].bounds
 		}
@@ -372,8 +511,8 @@ final class MiniPlayerViewController: UIViewController {
 		}
 
 		if self.isLyricsCollapsing {
-			let baseHeight = self.lyricsBaseIsBar ? Self.barHeight : self.view.bounds.width
-			if self.view.bounds.height <= baseHeight + 1 {
+			let baseHeight = self.lyricsBaseIsBar ? self.barHeight : self.contentBounds.width
+			if self.contentBounds.height <= baseHeight + 1 {
 				self.isLyricsCollapsing = false
 				self.isLyricsPresented = false
 			}
@@ -383,7 +522,8 @@ final class MiniPlayerViewController: UIViewController {
 		if regime != self.appliedRegime {
 			#if targetEnvironment(macCatalyst)
 			let bothBarAndSquare = (regime == .bar || regime == .square) && (self.appliedRegime == .bar || self.appliedRegime == .square)
-			if !(bothBarAndSquare && self.windowBridge.isInLiveResize) {
+			// A parked window is not being resized by the user, so its regime holds.
+			if !(bothBarAndSquare && self.windowBridge.isInLiveResize), self.dockedEdge == nil {
 				self.applyRegime(regime)
 			}
 			#else
@@ -441,19 +581,37 @@ final class MiniPlayerViewController: UIViewController {
 		self.view.addSubview(self.barMenuBackgroundView)
 		self.view.addSubview(self.barMenuControl)
 		self.view.addSubview(self.pillContainerView)
+
+		#if targetEnvironment(macCatalyst)
+		for (index, containerView) in self.marginArtworkContainerViews.enumerated() {
+			containerView.addSubview(self.marginArtworkImageViews[index])
+			self.view.insertSubview(containerView, at: 0)
+		}
+
+		self.view.addSubview(self.edgeBlurView)
+		self.view.addSubview(self.dockTabImageView)
+		self.dockMaskView.layer.addSublayer(self.dockMaskShapeLayer)
+		#endif
 	}
 
 	/// Activates the constraints shared by every regime.
 	private func configureViewConstraints() {
+		self.view.addLayoutGuide(self.contentGuide)
+
 		var constraints = [
+			self.contentGuide.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.contentGuide.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+			self.contentGuide.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: Self.dockTabReach),
+			self.contentGuide.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -Self.dockTabReach),
+		] + [
 			self.backgroundView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.backgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-			self.backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.backgroundView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+			self.backgroundView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 
 			self.artworkOverlayView.leadingAnchor.constraint(equalTo: self.artworkImageView.leadingAnchor),
 			self.artworkOverlayView.trailingAnchor.constraint(equalTo: self.artworkImageView.trailingAnchor),
-			self.artworkOverlayView.heightAnchor.constraint(equalToConstant: Self.overlayHeight),
+			self.artworkOverlayView.heightAnchor.constraint(equalToConstant: self.overlayHeight),
 
 			self.artworkOverlayView.bottomAnchor.constraint(lessThanOrEqualTo: self.artworkImageView.bottomAnchor),
 			self.artworkOverlayView.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor),
@@ -494,7 +652,7 @@ final class MiniPlayerViewController: UIViewController {
 			self.barMenuControl.heightAnchor.constraint(equalToConstant: 44),
 
 			self.pillContainerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
-			self.pillContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+			self.pillContainerView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor, constant: -16),
 			self.pillContainerView.heightAnchor.constraint(equalToConstant: 36),
 
 			self.pillBackgroundView.topAnchor.constraint(equalTo: self.pillContainerView.topAnchor),
@@ -529,9 +687,39 @@ final class MiniPlayerViewController: UIViewController {
 		}
 
 		#if targetEnvironment(macCatalyst)
+		// The tab reaches past the screen edge, so the chevron centers on the half still visible.
+		let exposedCenter = MiniPlayerWindowBridge.dockedTabWidth / 2
+		self.dockTabLeadingConstraint = self.dockTabImageView.centerXAnchor.constraint(equalTo: self.view.leadingAnchor, constant: exposedCenter)
+		self.dockTabTrailingConstraint = self.dockTabImageView.centerXAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -exposedCenter)
+
+		for (index, containerView) in self.marginArtworkContainerViews.enumerated() {
+			let imageView = self.marginArtworkImageViews[index]
+			let isLeading = index == 0
+
+			constraints += [
+				containerView.topAnchor.constraint(equalTo: self.view.topAnchor),
+				containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+				containerView.leadingAnchor.constraint(equalTo: isLeading ? self.view.leadingAnchor : self.contentGuide.trailingAnchor),
+				containerView.trailingAnchor.constraint(equalTo: isLeading ? self.contentGuide.leadingAnchor : self.view.trailingAnchor),
+
+				// The copy spans the whole window, so each margin continues the artwork beside it.
+				imageView.topAnchor.constraint(equalTo: self.view.topAnchor),
+				imageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+				imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+				imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			]
+		}
+
 		constraints += [
 			self.lyricsControl.widthAnchor.constraint(equalToConstant: 38),
 			self.lyricsControl.heightAnchor.constraint(equalToConstant: 36),
+
+			self.edgeBlurView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.edgeBlurView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+			self.edgeBlurView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.edgeBlurView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+
+			self.dockTabImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
 		]
 		#endif
 
@@ -569,6 +757,18 @@ final class MiniPlayerViewController: UIViewController {
 		self.lyricsControl.addAction(UIAction { [weak self] _ in
 			self?.toggleLyricsRegime()
 		}, for: .touchUpInside)
+
+		self.windowBridge.onEdgeOverflowChange = { [weak self] edge, fraction in
+			self?.applyEdgeOverflow(edge, fraction)
+		}
+
+		self.windowBridge.onDockArmChange = { [weak self] edge in
+			self?.applyDockArm(edge)
+		}
+
+		self.windowBridge.onDockedEdgeChange = { [weak self] edge in
+			self?.applyDockedEdge(edge)
+		}
 
 		self.windowBridge.onLiveResizeStart = { [weak self] in
 			self?.setOverlaysVisible(true)
@@ -609,7 +809,18 @@ final class MiniPlayerViewController: UIViewController {
 		self.playbackController.currentSongPublisher
 			.receive(on: RunLoop.main)
 			.sink { [weak self] song in
-				self?.loadArtwork(for: song)
+				guard let self = self else { return }
+				self.loadArtwork(for: song)
+
+				guard self.hasAppeared, song != nil else { return }
+				self.revealForSongChange()
+			}
+			.store(in: &self.subscriptions)
+
+		NotificationCenter.default.publisher(for: .KSMiniPlayerSettingsDidChange)
+			.receive(on: RunLoop.main)
+			.sink { [weak self] _ in
+				self?.applyMiniPlayerSettings()
 			}
 			.store(in: &self.subscriptions)
 
@@ -628,13 +839,41 @@ final class MiniPlayerViewController: UIViewController {
 	private func loadArtwork(for song: MKSong?) {
 		guard let artworkURL = song?.song.artwork?.url(width: 1024, height: 1024)?.absoluteString else {
 			self.artworkImageView.image = .Placeholders.musicAlbum
-			self.overlayBlurImageViews.forEach { $0.image = .Placeholders.musicAlbum }
+			self.setOverlayBlurImage(.Placeholders.musicAlbum)
 			return
 		}
 
 		self.artworkImageView.setImage(with: artworkURL, placeholder: .Placeholders.musicAlbum) { [weak self] image in
-			self?.overlayBlurImageViews.forEach { $0.image = image }
+			self?.setOverlayBlurImage(image)
 		}
+	}
+
+	/// Crossfades the artwork's blurred copies to a new image.
+	///
+	/// The artwork itself arrives on a fade, so the blurred backdrop matches it rather than
+	/// snapping a frame ahead.
+	///
+	/// - Parameter image: The artwork to blur.
+	private func setOverlayBlurImage(_ image: UIImage) {
+		guard !UIAccessibility.isReduceMotionEnabled else {
+			self.blurredArtworkImageViews.forEach { $0.image = image }
+			return
+		}
+
+		for imageView in self.blurredArtworkImageViews {
+			UIView.transition(with: imageView, duration: self.artworkCrossfadeDuration, options: [.transitionCrossDissolve, .allowUserInteraction]) {
+				imageView.image = image
+			}
+		}
+	}
+
+	/// Every blurred copy of the artwork, in the overlay and in the margins alike.
+	private var blurredArtworkImageViews: [UIImageView] {
+		#if targetEnvironment(macCatalyst)
+		return self.overlayBlurImageViews + self.marginArtworkImageViews
+		#else
+		return self.overlayBlurImageViews
+		#endif
 	}
 
 	/// Reveals or hides the volume slider in the pill.
@@ -673,7 +912,7 @@ final class MiniPlayerViewController: UIViewController {
 	private func scrollLyrics(atWindowLocation location: CGPoint, deltaY: CGFloat) -> Bool {
 		guard self.isLyricsViewAttached, !self.lyricsContainerView.isHidden, let tableView = self.lyricsViewController?.tableView else { return false }
 
-		let point = CGPoint(x: location.x, y: self.view.bounds.height - location.y)
+		let point = CGPoint(x: location.x, y: self.contentBounds.height - location.y)
 		guard self.lyricsContainerView.frame.contains(point) else { return false }
 
 		let minY = -tableView.adjustedContentInset.top
@@ -689,8 +928,8 @@ final class MiniPlayerViewController: UIViewController {
 	///
 	/// - Returns: Whether the press starts a window drag.
 	private func dragsWindow(fromWindowLocation location: CGPoint) -> Bool {
-		let point = CGPoint(x: location.x, y: self.view.bounds.height - location.y)
-		guard self.view.bounds.insetBy(dx: Self.resizeBorderWidth, dy: Self.resizeBorderWidth).contains(point) else { return false }
+		let point = CGPoint(x: location.x, y: self.contentBounds.height - location.y)
+		guard self.view.bounds.insetBy(dx: self.resizeBorderWidth, dy: self.resizeBorderWidth).contains(point) else { return false }
 
 		guard let hitView = self.view.hitTest(point, with: nil) else { return true }
 		if hitView === self.view || hitView === self.backgroundView || hitView === self.artworkImageView {
@@ -730,20 +969,20 @@ final class MiniPlayerViewController: UIViewController {
 		case .expanded:
 			return 1
 		default:
-			let height = self.view.bounds.height
-			return max(0, min(1, (height - Self.barHeight) / (Self.barCeilingHeight - Self.barHeight)))
+			let height = self.contentBounds.height
+			return max(0, min(1, (height - self.barHeight) / (self.barCeilingHeight - self.barHeight)))
 		}
 	}
 
 	/// Returns the regime for the current bounds.
 	private func resolveRegime() -> Regime {
-		let size = self.view.bounds.size
+		let size = self.contentBounds.size
 
 		if self.isLyricsPresented {
 			return self.lyricsBaseIsBar ? .barExpanded : .expanded
 		}
 
-		if size.height < Self.barCeilingHeight {
+		if size.height < self.barCeilingHeight {
 			return .bar
 		}
 		if size.height <= size.width {
@@ -766,22 +1005,22 @@ final class MiniPlayerViewController: UIViewController {
 			self.view.addSubview(self.controlsView)
 			self.regimeConstraints = [
 				self.artworkImageView.topAnchor.constraint(equalTo: self.view.topAnchor),
-				self.artworkImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-				self.artworkImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+				self.artworkImageView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+				self.artworkImageView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 				self.artworkImageView.heightAnchor.constraint(equalTo: self.artworkImageView.widthAnchor),
 
 				self.controlsView.topAnchor.constraint(equalTo: self.view.topAnchor),
-				self.controlsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-				self.controlsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+				self.controlsView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+				self.controlsView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 			]
 
 			if regime == .barExpanded {
 				self.regimeConstraints += [
-					self.controlsView.heightAnchor.constraint(equalToConstant: Self.barHeight),
+					self.controlsView.heightAnchor.constraint(equalToConstant: self.barHeight),
 
 					self.lyricsContainerView.topAnchor.constraint(equalTo: self.controlsView.bottomAnchor),
-					self.lyricsContainerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-					self.lyricsContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+					self.lyricsContainerView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+					self.lyricsContainerView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 					self.lyricsContainerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 				]
 			} else {
@@ -792,18 +1031,18 @@ final class MiniPlayerViewController: UIViewController {
 			self.artworkOverlayView.addSubview(self.controlsView)
 			self.regimeConstraints = [
 				self.artworkImageView.topAnchor.constraint(equalTo: self.view.topAnchor),
-				self.artworkImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-				self.artworkImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+				self.artworkImageView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+				self.artworkImageView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 				self.artworkImageView.heightAnchor.constraint(equalTo: self.artworkImageView.widthAnchor),
 
 				self.controlsView.leadingAnchor.constraint(equalTo: self.artworkOverlayView.leadingAnchor),
 				self.controlsView.trailingAnchor.constraint(equalTo: self.artworkOverlayView.trailingAnchor),
 				self.controlsView.bottomAnchor.constraint(equalTo: self.artworkOverlayView.bottomAnchor),
-				self.controlsView.heightAnchor.constraint(equalToConstant: Self.overlayControlsHeight),
+				self.controlsView.heightAnchor.constraint(equalToConstant: self.overlayControlsHeight),
 
 				self.lyricsContainerView.topAnchor.constraint(equalTo: self.artworkImageView.bottomAnchor),
-				self.lyricsContainerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-				self.lyricsContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+				self.lyricsContainerView.leadingAnchor.constraint(equalTo: self.contentGuide.leadingAnchor),
+				self.lyricsContainerView.trailingAnchor.constraint(equalTo: self.contentGuide.trailingAnchor),
 				self.lyricsContainerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			]
 			self.controlsView.form = .overlay
@@ -855,7 +1094,7 @@ final class MiniPlayerViewController: UIViewController {
 			self.setOverlaysVisible(false)
 		}
 		self.hoverIdleWorkItem = workItem
-		DispatchQueue.main.asyncAfter(deadline: .now() + Self.hoverIdleTimeout, execute: workItem)
+		DispatchQueue.main.asyncAfter(deadline: .now() + self.hoverIdleTimeout, execute: workItem)
 	}
 	#endif
 
@@ -863,6 +1102,13 @@ final class MiniPlayerViewController: UIViewController {
 	///
 	/// - Parameter visible: Whether the overlays are showing.
 	private func setOverlaysVisible(_ visible: Bool) {
+		#if targetEnvironment(macCatalyst)
+		// A docked window shows nothing but its tab, traffic lights included.
+		if visible, self.isPullTabPresented {
+			return
+		}
+		#endif
+
 		guard self.overlaysVisible != visible else { return }
 		self.overlaysVisible = visible
 
@@ -881,11 +1127,61 @@ final class MiniPlayerViewController: UIViewController {
 		self.reconcileOverlays(animated: true)
 	}
 
+	/// Whether the chrome shows, resolving the pointer and the song change reveal against the
+	/// user's visibility preference.
+	private var chromeVisible: Bool {
+		switch UserSettings.miniPlayerChromeVisibility {
+		case .always:
+			return true
+		case .never:
+			return false
+		case .onHover:
+			return self.overlaysVisible || self.isRevealingForSongChange
+		}
+	}
+
+	/// Adopts the user's MiniPlayer preferences.
+	private func applyMiniPlayerSettings() {
+		if UserSettings.miniPlayerChromeVisibility != .onHover {
+			self.songChangeRevealWorkItem?.cancel()
+			self.isRevealingForSongChange = false
+		}
+
+		#if targetEnvironment(macCatalyst)
+		self.attachWindowBridge()
+		self.windowBridge.applyWindowBehavior()
+		#endif
+
+		self.reconcileOverlays(animated: true)
+	}
+
+	/// Holds the metadata on screen for a moment so a song that starts while the pointer is
+	/// elsewhere still announces itself.
+	private func revealForSongChange() {
+		guard
+			UserSettings.miniPlayerRevealsOnSongChange,
+			UserSettings.miniPlayerChromeVisibility == .onHover,
+			!self.overlaysVisible
+		else { return }
+
+		self.songChangeRevealWorkItem?.cancel()
+		self.isRevealingForSongChange = true
+		self.reconcileOverlays(animated: true)
+
+		let workItem = DispatchWorkItem { [weak self] in
+			guard let self = self else { return }
+			self.isRevealingForSongChange = false
+			self.reconcileOverlays(animated: true)
+		}
+		self.songChangeRevealWorkItem = workItem
+		DispatchQueue.main.asyncAfter(deadline: .now() + self.songChangeRevealDuration, execute: workItem)
+	}
+
 	/// Applies the hover chrome's visibility for the current regime.
 	///
 	/// - Parameter animated: Whether to animate the fades.
 	private func reconcileOverlays(animated: Bool) {
-		let visible = self.overlaysVisible
+		let visible = self.chromeVisible
 		let isBar = self.appliedRegime == .bar || self.appliedRegime == .barExpanded
 
 		self.controlsView.setMetadataHidden(isBar && visible, animated: animated)
@@ -1045,6 +1341,192 @@ final class MiniPlayerViewController: UIViewController {
 	}
 
 	#if targetEnvironment(macCatalyst)
+	// MARK: Dock
+	/// Veils the window as the pointer carries it toward a side edge.
+	///
+	/// - Parameters:
+	///    - edge: The edge the pointer is heading for.
+	///    - progress: How far the veil has come in.
+	private func applyEdgeOverflow(_ edge: DockEdge?, _ progress: CGFloat) {
+		self.edgeBlurView.alpha = progress
+	}
+
+	/// Slides the pull tab out of the window once the pointer reaches a side edge of the screen.
+	///
+	/// The tab travels its full reach in one movement, and retracts the same way.
+	///
+	/// - Parameter edge: The edge the pointer is holding the window against.
+	private func applyDockArm(_ edge: DockEdge?) {
+		let shouldStandOut = edge != nil
+		guard shouldStandOut != self.isTabGrown else { return }
+		self.isTabGrown = shouldStandOut
+
+		if let edge = edge {
+			self.prepareDockTab(for: edge)
+
+			// Seat the tab behind the body's edge, so the slide starts from there.
+			self.setDockTabReach(0)
+		}
+
+		let duration = UIAccessibility.isReduceMotionEnabled ? 0 : self.dockMorphDuration
+		UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut, .beginFromCurrentState]) {
+			self.setDockTabReach(shouldStandOut ? Self.dockTabReach : 0)
+		} completion: { _ in
+			self.forgetRetractedDockTab()
+		}
+	}
+
+	/// Stands the pull tab out of the body, carrying the chevron with it.
+	///
+	/// - Parameter tabReach: How far the tab stands out of the body.
+	private func setDockTabReach(_ tabReach: CGFloat) {
+		self.updateDockMaskFrame(tabReach: tabReach)
+
+		// The chevron holds its place on the tab, fading in as the tab comes out.
+		let behind = Self.dockTabReach - tabReach
+		self.dockTabImageView.transform = CGAffineTransform(translationX: self.dockedEdge == .left ? -behind : behind, y: 0)
+		self.dockTabImageView.alpha = tabReach / Self.dockTabReach
+	}
+
+	/// Drops the pull tab from the silhouette once it has finished retracting.
+	private func forgetRetractedDockTab() {
+		guard !self.isTabGrown, !self.isPullTabPresented, self.dockedEdge != nil else { return }
+
+		self.dockedEdge = nil
+		self.updateDockMaskFrame(tabReach: 0)
+	}
+
+	/// Points the chevron at the screen and parks it on the edge the window is leaving by.
+	///
+	/// - Parameter edge: The edge the window is crossing.
+	private func prepareDockTab(for edge: DockEdge?) {
+		guard let edge = edge, edge != self.dockedEdge else { return }
+		self.dockedEdge = edge
+
+		self.dockTabLeadingConstraint?.isActive = edge == .right
+		self.dockTabTrailingConstraint?.isActive = edge == .left
+
+		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)
+		let symbolName = edge == .right ? "chevron.compact.left" : "chevron.compact.right"
+		self.dockTabImageView.image = UIImage(systemName: symbolName, withConfiguration: symbolConfiguration)
+	}
+
+	/// Shows the pull tab in place of the window.
+	///
+	/// - Parameters:
+	///    - presented: Whether the tab stands in for the window.
+	///    - edge: The edge the tab sits against.
+	private func setPullTabPresented(_ presented: Bool, at edge: DockEdge?) {
+		guard self.isPullTabPresented != presented else { return }
+		self.isPullTabPresented = presented
+
+		let duration = UIAccessibility.isReduceMotionEnabled ? 0 : self.dockMorphDuration
+
+		guard presented else {
+			self.isTabGrown = false
+			UIView.animate(withDuration: duration) {
+				self.setDockTabReach(0)
+			} completion: { _ in
+				self.forgetRetractedDockTab()
+			}
+			return
+		}
+
+		self.prepareDockTab(for: edge)
+		self.setOverlaysVisible(false)
+
+		self.windowBridge.setTrafficLightsHidden(true)
+
+		guard !self.isTabGrown else { return }
+		self.isTabGrown = true
+
+		UIView.animate(withDuration: duration) {
+			self.setDockTabReach(Self.dockTabReach)
+		}
+	}
+
+	/// Lays out the docked silhouette: the window body, and the tab hanging off its inner edge.
+	///
+	/// - Parameter tabReach: How far the tab currently stands out of the body.
+	private func updateDockMaskFrame(tabReach: CGFloat) {
+		let bounds = self.view.bounds
+		self.dockMaskView.frame = bounds
+
+		// The mask is always in place, since it is what gives the window its shape.
+		let path = self.silhouettePath(body: self.contentBounds, tabEdge: self.dockedEdge, tabCenterY: bounds.midY, tabReach: tabReach)
+		let duration = UIView.inheritedAnimationDuration
+
+		CATransaction.begin()
+		CATransaction.setDisableActions(true)
+
+		self.dockMaskShapeLayer.frame = bounds
+		MiniPlayerWindowBridge.setSilhouette(path, in: self.dockMaskShapeLayer, duration: duration)
+
+		// The material carries the border and the shadow, so it takes the same silhouette.
+		self.windowBridge.setSilhouette(path, duration: duration)
+
+		CATransaction.commit()
+	}
+
+	/// The outline of the player: its body, and the pull tab standing out of the side that faces the
+	/// screen.
+	///
+	/// The tab keeps its size and slides out from behind the body, so its corners hold their radius
+	/// however far out it stands. A fillet at each junction leaves the two reading as one shape
+	/// rather than a rectangle notched into another.
+	///
+	/// - Parameters:
+	///    - body: The player's rect, in the window's coordinates.
+	///    - tabEdge: The screen edge the window docks against.
+	///    - tabCenterY: The vertical center of the pull tab.
+	///    - tabReach: How far the tab stands out of the body.
+	///
+	/// - Returns: The outline of the body and the tab together.
+	private func silhouettePath(body: CGRect, tabEdge: DockEdge?, tabCenterY: CGFloat, tabReach: CGFloat) -> CGPath {
+		let path = CGMutablePath()
+		let bodyRadius = min(MiniPlayerWindowBridge.windowCornerRadius, min(body.width, body.height) / 2)
+		path.addRoundedRect(in: body, cornerWidth: bodyRadius, cornerHeight: bodyRadius)
+
+		guard let tabEdge = tabEdge else { return path }
+
+		let junctionRadius = max(min(self.dockJunctionRadius, tabReach - self.dockTabCornerRadius), 0.01)
+		let tabHeight = min(self.dockTabHeight, max(body.height - 2 * (bodyRadius + junctionRadius), 2 * self.dockTabCornerRadius))
+		let tabTop = tabCenterY - tabHeight / 2
+		let tabBottom = tabCenterY + tabHeight / 2
+
+		let bodyEdgeX = tabEdge == .right ? body.minX : body.maxX
+		let inward: CGFloat = tabEdge == .right ? 1 : -1
+		let tabOriginX = tabEdge == .right ? bodyEdgeX - tabReach : bodyEdgeX + tabReach - self.dockTabWidth
+
+		let tab = CGRect(x: tabOriginX, y: tabTop, width: self.dockTabWidth, height: tabHeight)
+		path.addRoundedRect(in: tab, cornerWidth: self.dockTabCornerRadius, cornerHeight: self.dockTabCornerRadius)
+
+		for (edgeY, away) in [(tabTop, CGFloat(-1)), (tabBottom, CGFloat(1))] {
+			let center = CGPoint(x: bodyEdgeX - inward * junctionRadius, y: edgeY + away * junctionRadius)
+			let start = CGPoint(x: center.x, y: edgeY)
+
+			path.move(to: start)
+			path.addArc(
+				center: center,
+				radius: junctionRadius,
+				startAngle: atan2(start.y - center.y, start.x - center.x),
+				endAngle: atan2(0, inward),
+				clockwise: away * inward < 0
+			)
+			path.addLine(to: CGPoint(x: bodyEdgeX, y: edgeY))
+			path.closeSubpath()
+		}
+
+		return path
+	}
+
+	/// Reacts to the window docking against a side edge or returning to the screen.
+	///
+	/// - Parameter edge: The edge the window is docked against.
+	private func applyDockedEdge(_ edge: DockEdge?) {
+		self.setPullTabPresented(edge != nil, at: edge)
+	}
+
 	// MARK: Window
 	/// Hands the window's chrome over to the AppKit bridge.
 	private func attachWindowBridge() {
@@ -1056,23 +1538,26 @@ final class MiniPlayerViewController: UIViewController {
 		self.backgroundView.effect = nil
 		self.view.backgroundColor = .clear
 		self.view.window?.backgroundColor = .clear
-		self.view.layer.cornerRadius = MiniPlayerWindowBridge.windowCornerRadius
-		self.view.layer.cornerCurve = .continuous
-		self.view.layer.masksToBounds = true
+
+		// The mask carries the window's shape from here on: the body, plus whatever the pull tab
+		// currently reaches into the margin. A corner radius on the view would round the window's
+		// corners instead of the body's, and the margins would read as padding.
+		self.updateDockMaskFrame(tabReach: 0)
+		self.view.mask = self.dockMaskView
 
 		if !self.windowBridge.hasRestoredFrame, !self.didApplyDefaultSize {
 			self.didApplyDefaultSize = true
-			self.requestWindowSize(CGSize(width: Self.defaultSquareSize, height: Self.defaultSquareSize), animated: false)
+			self.requestWindowSize(CGSize(width: self.defaultSquareSize, height: self.defaultSquareSize), animated: false)
 		}
 	}
 
 	/// Snaps the window onto the nearest regime's height.
 	private func snapWindowToRegime() {
-		let size = self.view.bounds.size
+		let size = self.contentBounds.size
 
 		if self.isLyricsPresented {
-			let baseHeight = self.lyricsBaseIsBar ? Self.barHeight : size.width
-			if size.height - baseHeight < Self.lyricsMinimumHeight {
+			let baseHeight = self.lyricsBaseIsBar ? self.barHeight : size.width
+			if size.height - baseHeight < self.lyricsMinimumHeight {
 				self.isLyricsCollapsing = true
 				self.view.setNeedsLayout()
 				self.requestWindowSize(CGSize(width: size.width, height: baseHeight), animated: true)
@@ -1083,9 +1568,9 @@ final class MiniPlayerViewController: UIViewController {
 		}
 
 		var targetHeight = size.height
-		if size.height < Self.barCeilingHeight {
-			targetHeight = Self.barHeight
-		} else if size.height < size.width + Self.lyricsMinimumHeight {
+		if size.height < self.barCeilingHeight {
+			targetHeight = self.barHeight
+		} else if size.height < size.width + self.lyricsMinimumHeight {
 			targetHeight = size.width
 		} else {
 			self.lyricsRestorePaneHeight = size.height - size.width
@@ -1101,7 +1586,7 @@ final class MiniPlayerViewController: UIViewController {
 	/// - Returns: Whether the toggle should run.
 	private func acceptsViewOptionToggle() -> Bool {
 		let now = CACurrentMediaTime()
-		guard now - self.lastViewOptionToggle > Self.viewOptionRepeatInterval else { return false }
+		guard now - self.lastViewOptionToggle > self.viewOptionRepeatInterval else { return false }
 
 		self.lastViewOptionToggle = now
 		return true
@@ -1111,9 +1596,9 @@ final class MiniPlayerViewController: UIViewController {
 	@objc private func toggleLargeArtwork() {
 		guard self.acceptsViewOptionToggle() else { return }
 
-		let width = self.view.bounds.width
+		let width = self.contentBounds.width
 		let showsArtwork = !(self.appliedRegime == .bar || self.appliedRegime == .barExpanded)
-		let paneHeight = max(0, self.view.bounds.height - (showsArtwork ? width : Self.barHeight))
+		let paneHeight = max(0, self.contentBounds.height - (showsArtwork ? width : self.barHeight))
 
 		self.lyricsBaseIsBar = showsArtwork
 		if paneHeight > 0 {
@@ -1121,7 +1606,7 @@ final class MiniPlayerViewController: UIViewController {
 			self.lyricsRestorePaneHeight = paneHeight
 		}
 
-		let baseHeight = showsArtwork ? Self.barHeight : width
+		let baseHeight = showsArtwork ? self.barHeight : width
 		self.requestWindowSize(CGSize(width: width, height: baseHeight + paneHeight), animated: true)
 		self.view.setNeedsLayout()
 	}
@@ -1130,24 +1615,24 @@ final class MiniPlayerViewController: UIViewController {
 	@objc private func toggleLyricsRegime() {
 		guard self.acceptsViewOptionToggle() else { return }
 
-		let width = self.view.bounds.width
-		let baseHeight = self.lyricsBaseIsBar ? Self.barHeight : width
-		let paneHeight = self.lyricsRestorePaneHeight ?? Self.expandedLyricsHeight
+		let width = self.contentBounds.width
+		let baseHeight = self.lyricsBaseIsBar ? self.barHeight : width
+		let paneHeight = self.lyricsRestorePaneHeight ?? self.expandedLyricsHeight
 
 		if self.isLyricsCollapsing {
 			self.isLyricsCollapsing = false
 			self.requestWindowSize(CGSize(width: width, height: baseHeight + paneHeight), animated: true)
 		} else if self.isLyricsPresented {
-			self.lyricsRestorePaneHeight = self.view.bounds.height - baseHeight
+			self.lyricsRestorePaneHeight = self.contentBounds.height - baseHeight
 			self.isLyricsCollapsing = true
 			self.requestWindowSize(CGSize(width: width, height: baseHeight), animated: true)
 		} else if self.appliedRegime == .expanded {
-			self.lyricsRestorePaneHeight = self.view.bounds.height - width
+			self.lyricsRestorePaneHeight = self.contentBounds.height - width
 			self.requestWindowSize(CGSize(width: width, height: width), animated: true)
 		} else {
 			self.lyricsBaseIsBar = self.appliedRegime == .bar
 			self.isLyricsPresented = true
-			let newBaseHeight = self.lyricsBaseIsBar ? Self.barHeight : width
+			let newBaseHeight = self.lyricsBaseIsBar ? self.barHeight : width
 			self.requestWindowSize(CGSize(width: width, height: newBaseHeight + paneHeight), animated: true)
 		}
 
@@ -1160,6 +1645,10 @@ final class MiniPlayerViewController: UIViewController {
 	///    - size: The window size to request.
 	///    - animated: Whether the window animates to the new size.
 	private func requestWindowSize(_ size: CGSize, animated: Bool) {
+		// Callers size the player; the window also carries the margins the pull tab grows into.
+		var size = size
+		size.width += 2 * Self.dockTabReach
+
 		if self.windowBridge.isAttached {
 			self.windowBridge.setWindowSize(size, animated: animated)
 			return
