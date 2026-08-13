@@ -37,7 +37,7 @@ class ReasonTextCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: ReasonTextCollectionViewCellDelegate?
 
-	private static let characterLimit = 500
+	private let characterLimit = 500
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -89,14 +89,14 @@ class ReasonTextCollectionViewCell: KCollectionViewCell {
 	}
 
 	private func updateCounter(for text: String) {
-		self.counterLabel.text = "\(text.count) / \(Self.characterLimit)"
+		self.counterLabel.text = "\(text.count) / \(self.characterLimit)"
 	}
 }
 
 // MARK: - UITextViewDelegate
 extension ReasonTextCollectionViewCell: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		let trimmed = String(textView.text.prefix(Self.characterLimit))
+		let trimmed = String(textView.text.prefix(self.characterLimit))
 		if textView.text != trimmed {
 			textView.text = trimmed
 		}

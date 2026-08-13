@@ -18,13 +18,13 @@ final class FaceDetectionService {
 	/// Returns the singleton `FaceDetectionService` instance.
 	static let shared = FaceDetectionService()
 
-	private static let flushThreshold = 50
-	private static let flushInterval: TimeInterval = 300
-	private static let endpointPath = "face-detections/batch"
-	private static let sentinelDetectorIdentifier = "none"
+	private let flushThreshold = 50
+	private let flushInterval: TimeInterval = 300
+	private let endpointPath = "face-detections/batch"
+	private let sentinelDetectorIdentifier = "none"
 
 	/// The User-Agent string the Kurozora API validates against the registered iOS app client.
-	private static let userAgent: String = {
+	private let userAgent: String = {
 		let info = Bundle.main.infoDictionary
 		let executable = info?["CFBundleExecutable"] as? String ?? "Unknown"
 		let bundle = info?["CFBundleIdentifier"] as? String ?? "Unknown"
@@ -57,7 +57,7 @@ final class FaceDetectionService {
 			}
 
 			self.flushTimer = Timer.scheduledTimer(
-				withTimeInterval: Self.flushInterval,
+				withTimeInterval: self.flushInterval,
 				repeats: true
 			) { [weak self] _ in
 				self?.triggerFlush()
@@ -133,7 +133,7 @@ final class FaceDetectionService {
 				mediaID: mediaID,
 				focalX: nil,
 				focalY: nil,
-				detectorID: Self.sentinelDetectorIdentifier
+				detectorID: self.sentinelDetectorIdentifier
 			)
 		}
 
@@ -146,7 +146,7 @@ final class FaceDetectionService {
 			return self.pendingEntries.count
 		}
 
-		if queueCount >= Self.flushThreshold {
+		if queueCount >= self.flushThreshold {
 			self.triggerFlush()
 		}
 	}
@@ -184,7 +184,7 @@ final class FaceDetectionService {
 
 		let baseURL = KService.apiEndpoint.baseURL
 
-		guard let endpointURL = URL(string: baseURL + Self.endpointPath) else {
+		guard let endpointURL = URL(string: baseURL + self.endpointPath) else {
 			print("----- FaceDetection: invalid endpoint URL from base", baseURL)
 			return
 		}
@@ -194,7 +194,7 @@ final class FaceDetectionService {
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("application/json", forHTTPHeaderField: "Accept")
 		request.setValue(KService.apiKey, forHTTPHeaderField: "X-API-Key")
-		request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
+		request.setValue(self.userAgent, forHTTPHeaderField: "User-Agent")
 
 		let token = KService.authenticationKey
 

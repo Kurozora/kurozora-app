@@ -75,10 +75,10 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	private var lastKind: LibraryKind?
 
 	// MARK: - Properties
-	private static let primaryLabelTag = 1
-	private static let posterTag = 2
-	private static let buttonValueTag = 3
-	private static let cosmosValueTag = 4
+	private let primaryLabelTag = 1
+	private let posterTag = 2
+	private let buttonValueTag = 3
+	private let cosmosValueTag = 4
 
 	/// The vertical padding applied inside every column's container.
 	static let rowVerticalPadding: CGFloat = 10
@@ -87,7 +87,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	static let posterWidth: CGFloat = 80
 
 	/// The horizontal space reserved for the leading selection indicator.
-	private static let selectionIconReservedWidth: CGFloat = 38
+	private let selectionIconReservedWidth: CGFloat = 38
 
 	/// The index path the cell currently represents.
 	private(set) var indexPath: IndexPath?
@@ -99,7 +99,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	var showSelectionIcon: Bool = false {
 		didSet {
 			guard oldValue != self.showSelectionIcon else { return }
-			self.stackLeadingConstraint?.constant = self.showSelectionIcon ? Self.selectionIconReservedWidth : 0
+			self.stackLeadingConstraint?.constant = self.showSelectionIcon ? self.selectionIconReservedWidth : 0
 			self.setNeedsLayout()
 		}
 	}
@@ -248,7 +248,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		default:
 			guard
 				let container = self.columnContainers[column],
-				let label = container.viewWithTag(Self.primaryLabelTag) as? UILabel
+				let label = container.viewWithTag(self.primaryLabelTag) as? UILabel
 			else {
 				return column.defaultWidth
 			}
@@ -373,7 +373,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		label.adjustsFontForContentSizeCategory = true
 		label.lineBreakMode = .byTruncatingTail
 		label.numberOfLines = 1
-		label.tag = Self.primaryLabelTag
+		label.tag = self.primaryLabelTag
 		label.translatesAutoresizingMaskIntoConstraints = false
 		container.addSubview(label)
 
@@ -397,7 +397,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		let posterImageView = PosterImageView()
 		posterImageView.contentMode = .scaleAspectFill
 		posterImageView.clipsToBounds = true
-		posterImageView.tag = Self.posterTag
+		posterImageView.tag = self.posterTag
 		posterImageView.translatesAutoresizingMaskIntoConstraints = false
 		posterContainerView.addSubview(posterImageView)
 
@@ -444,7 +444,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		titleLabel.adjustsFontForContentSizeCategory = true
 		titleLabel.lineBreakMode = .byTruncatingTail
 		titleLabel.numberOfLines = 1
-		titleLabel.tag = Self.primaryLabelTag
+		titleLabel.tag = self.primaryLabelTag
 
 		let cosmosView = KCosmosView()
 		cosmosView.settings.starSize = 16
@@ -534,7 +534,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		label.adjustsFontForContentSizeCategory = true
 		label.lineBreakMode = .byTruncatingTail
 		label.numberOfLines = 1
-		label.tag = Self.primaryLabelTag
+		label.tag = self.primaryLabelTag
 		label.translatesAutoresizingMaskIntoConstraints = false
 		container.addSubview(label)
 
@@ -551,7 +551,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		let container = UIView()
 		let button = self.makeTintButton(action: action, accessibilityLabel: accessibilityLabel, symbolPointSize: 13)
 		button.translatesAutoresizingMaskIntoConstraints = false
-		button.tag = Self.buttonValueTag
+		button.tag = self.buttonValueTag
 		container.addSubview(button)
 
 		NSLayoutConstraint.activate([
@@ -586,7 +586,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		cosmosView.settings.totalStars = 5
 		cosmosView.settings.fillMode = .half
 		cosmosView.settings.updateOnTouch = true
-		cosmosView.tag = Self.cosmosValueTag
+		cosmosView.tag = self.cosmosValueTag
 		cosmosView.translatesAutoresizingMaskIntoConstraints = false
 		cosmosView.didFinishTouchingCosmos = { [weak self] rating in
 			guard let self = self, let indexPath = self.indexPath else {
@@ -683,7 +683,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 			case .rating:
 				self.populateRatingColumn(container: container, item: item)
 			default:
-				if let label = container.viewWithTag(Self.primaryLabelTag) as? UILabel {
+				if let label = container.viewWithTag(self.primaryLabelTag) as? UILabel {
 					label.text = self.text(for: column, item: item)
 				}
 			}
@@ -691,7 +691,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func populateTitle(container: UIView, item: LibraryListCollectionViewController.ItemKind, showPoster: Bool) {
-		if let label = container.viewWithTag(Self.primaryLabelTag) as? UILabel {
+		if let label = container.viewWithTag(self.primaryLabelTag) as? UILabel {
 			label.text = self.text(for: .title, item: item)
 		}
 
@@ -712,22 +712,22 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func populateFavoriteColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
-		guard let button = container.viewWithTag(Self.buttonValueTag) as? UIButton else { return }
+		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
 		self.applyFavoriteState(button: button, item: item)
 	}
 
 	private func populateReminderColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
-		guard let button = container.viewWithTag(Self.buttonValueTag) as? UIButton else { return }
+		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
 		self.applyReminderState(button: button, item: item)
 	}
 
 	private func populateVisibilityColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
-		guard let button = container.viewWithTag(Self.buttonValueTag) as? UIButton else { return }
+		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
 		self.applyVisibilityState(button: button, item: item)
 	}
 
 	private func populateRatingColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
-		guard let cosmosView = container.viewWithTag(Self.cosmosValueTag) as? KCosmosView else { return }
+		guard let cosmosView = container.viewWithTag(self.cosmosValueTag) as? KCosmosView else { return }
 		cosmosView.rating = self.rating(for: item) ?? 0
 	}
 

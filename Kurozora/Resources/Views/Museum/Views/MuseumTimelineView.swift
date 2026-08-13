@@ -29,16 +29,16 @@ class MuseumTimelineView: UIControl {
 
 	// MARK: - Properties
 	/// The height of the tick track.
-	private static let trackHeight: CGFloat = 32.0
+	private let trackHeight: CGFloat = 32.0
 
 	/// The gap between ticks and between decade labels.
-	private static let elementGap: CGFloat = 1.0
+	private let elementGap: CGFloat = 1.0
 
 	/// The spacing between the track and the decade labels row.
-	private static let decadeRowSpacing: CGFloat = 4.0
+	private let decadeRowSpacing: CGFloat = 4.0
 
 	/// The minimum tick height as a share of the track height.
-	private static let minimumTickRatio: CGFloat = 0.08
+	private let minimumTickRatio: CGFloat = 0.08
 
 	/// The years shown on the timeline, ascending.
 	private var years: [MuseumYear] = []
@@ -238,14 +238,14 @@ class MuseumTimelineView: UIControl {
 	private func layoutTicks() {
 		guard !self.tickViews.isEmpty else { return }
 		let tickCount = CGFloat(self.tickViews.count)
-		let tickWidth = max(0.0, (self.bounds.width - Self.elementGap * (tickCount - 1)) / tickCount)
+		let tickWidth = max(0.0, (self.bounds.width - self.elementGap * (tickCount - 1)) / tickCount)
 
 		for (index, tickView) in self.tickViews.enumerated() {
-			let ratio = max(Self.minimumTickRatio, CGFloat(self.years[index].count) / CGFloat(self.maxCount))
-			let tickHeight = (ratio * Self.trackHeight).rounded()
+			let ratio = max(self.minimumTickRatio, CGFloat(self.years[index].count) / CGFloat(self.maxCount))
+			let tickHeight = (ratio * self.trackHeight).rounded()
 			tickView.frame = CGRect(
-				x: CGFloat(index) * (tickWidth + Self.elementGap),
-				y: Self.trackHeight - tickHeight,
+				x: CGFloat(index) * (tickWidth + self.elementGap),
+				y: self.trackHeight - tickHeight,
 				width: tickWidth,
 				height: tickHeight
 			)
@@ -255,7 +255,7 @@ class MuseumTimelineView: UIControl {
 	/// Lays out the decade labels flex-weighted by their year counts.
 	private func layoutDecades() {
 		guard !self.decades.isEmpty, !self.years.isEmpty else { return }
-		let rowTop = Self.trackHeight + Self.decadeRowSpacing
+		let rowTop = self.trackHeight + self.decadeRowSpacing
 		let rowHeight = self.bounds.height - rowTop
 		let totalYears = CGFloat(self.years.count)
 		var slotLeft: CGFloat = 0.0

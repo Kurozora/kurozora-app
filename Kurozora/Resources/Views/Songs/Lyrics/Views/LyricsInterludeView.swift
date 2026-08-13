@@ -43,13 +43,13 @@ final class LyricsInterludeView: UIView {
 	private var isShowing = false
 
 	/// The duration of the closing breath, in seconds.
-	private static let finishDuration: CFTimeInterval = 0.7
+	private let finishDuration: CFTimeInterval = 0.7
 
 	/// The lead before the next line at which the closing breath begins, in milliseconds.
-	private static let finishLeadMs = 800
+	private let finishLeadMs = 800
 
 	/// The gap length that maps to a single breath.
-	private static let breathBucketMs: Double = 9000
+	private let breathBucketMs: Double = 9000
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -110,13 +110,13 @@ final class LyricsInterludeView: UIView {
 	///    - remainingMs: The time left in the gap before the next line, in milliseconds.
 	///    - totalMs: The full duration of the gap, in milliseconds.
 	func setProgress(remainingMs: Int, totalMs: Int) {
-		if !self.isFinishing, remainingMs <= Self.finishLeadMs {
+		if !self.isFinishing, remainingMs <= self.finishLeadMs {
 			self.finishAndDisappear()
 		}
 
 		guard !self.isFinishing else { return }
 
-		let breathSpanMs = max(1, totalMs - Self.finishLeadMs)
+		let breathSpanMs = max(1, totalMs - self.finishLeadMs)
 		let elapsedMs = max(0, totalMs - remainingMs)
 		let progress = min(1, CGFloat(elapsedMs) / CGFloat(breathSpanMs))
 
@@ -125,7 +125,7 @@ final class LyricsInterludeView: UIView {
 			dot.alpha = 0.25 + 0.75 * local
 		}
 
-		let breathCount = max(1, Int((Double(totalMs) / Self.breathBucketMs).rounded(.up)))
+		let breathCount = max(1, Int((Double(totalMs) / self.breathBucketMs).rounded(.up)))
 		let withinBreath = (progress * CGFloat(breathCount)).truncatingRemainder(dividingBy: 1)
 		let scale = self.breathScale(at: withinBreath)
 		self.stackView.transform = CGAffineTransform(scaleX: scale, y: scale)
@@ -177,7 +177,7 @@ final class LyricsInterludeView: UIView {
 
 		let group = CAAnimationGroup()
 		group.animations = [scale, opacity]
-		group.duration = Self.finishDuration
+		group.duration = self.finishDuration
 		group.fillMode = .forwards
 		group.isRemovedOnCompletion = false
 

@@ -41,7 +41,7 @@ class ReportDetailsTextCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: ReportDetailsTextCollectionViewCellDelegate?
 
-	private static let characterLimit = 1000
+	private let characterLimit = 1000
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -95,14 +95,14 @@ class ReportDetailsTextCollectionViewCell: KCollectionViewCell {
 	}
 
 	private func updateCounter(for text: String) {
-		self.counterLabel.text = "\(text.count) / \(Self.characterLimit)"
+		self.counterLabel.text = "\(text.count) / \(self.characterLimit)"
 	}
 }
 
 // MARK: - UITextViewDelegate
 extension ReportDetailsTextCollectionViewCell: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		let trimmed = String(textView.text.prefix(Self.characterLimit))
+		let trimmed = String(textView.text.prefix(self.characterLimit))
 
 		if textView.text != trimmed {
 			textView.text = trimmed

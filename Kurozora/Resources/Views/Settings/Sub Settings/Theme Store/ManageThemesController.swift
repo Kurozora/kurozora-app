@@ -17,7 +17,7 @@ private struct ThemeDownloadHandle {
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	private static let minimumPendingDwell: TimeInterval = 0.5
+	private let minimumPendingDwell: TimeInterval = 0.5
 
 	private var downloads: [KurozoraItemID: ThemeDownloadHandle] = [:]
 
@@ -174,7 +174,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, downloadStateFor appTheme: AppTheme) -> KDownloadButtonState {
 		if let handle = self.downloads[appTheme.id] {
-			let dwellElapsed = Date().timeIntervalSince(handle.startedAt) >= Self.minimumPendingDwell
+			let dwellElapsed = Date().timeIntervalSince(handle.startedAt) >= self.minimumPendingDwell
 			if dwellElapsed && handle.progress > 0 {
 				return .downloading(progress: handle.progress)
 			}
@@ -244,7 +244,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 				try Task.checkCancellation()
 
-				let remaining = Self.minimumPendingDwell - Date().timeIntervalSince(startedAt)
+				let remaining = self.minimumPendingDwell - Date().timeIntervalSince(startedAt)
 				if remaining > 0 {
 					try? await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000))
 				}
@@ -265,8 +265,10 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		self.downloads[themeID] = ThemeDownloadHandle(task: task, startedAt: startedAt, progress: 0)
 		self.refreshCell(for: themeID)
 
+		let minimumPendingDwell = self.minimumPendingDwell
+
 		Task { @MainActor [weak self] in
-			try? await Task.sleep(nanoseconds: UInt64(Self.minimumPendingDwell * 1_000_000_000))
+			try? await Task.sleep(nanoseconds: UInt64(minimumPendingDwell * 1_000_000_000))
 			guard let self = self, self.downloads[themeID] != nil else { return }
 			self.refreshCell(for: themeID)
 		}

@@ -27,7 +27,7 @@ actor LibraryArtStore {
 	private static let compressionQuality: CGFloat = 0.75
 
 	/// The maximum number of concurrent downloads per prefetch call.
-	private static let downloadConcurrency: Int = 4
+	private let downloadConcurrency: Int = 4
 
 	/// URLs currently downloading.
 	private var inFlightURLStrings: Set<String> = []
@@ -78,7 +78,7 @@ actor LibraryArtStore {
 		await withTaskGroup(of: Void.self) { group in
 			var nextIndex = 0
 
-			while nextIndex < min(Self.downloadConcurrency, missingURLStrings.count) {
+			while nextIndex < min(self.downloadConcurrency, missingURLStrings.count) {
 				let urlString = missingURLStrings[nextIndex]
 				group.addTask { await Self.downloadAndStore(urlString) }
 				nextIndex += 1

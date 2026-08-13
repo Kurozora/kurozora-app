@@ -109,7 +109,7 @@ private struct UpNextFetchResult {
 struct UpNextProvider: TimelineProvider {
 	// MARK: - Properties
 	/// Overall deadline for the fan-out batch of episode detail + image calls.
-	private static let fetchEpisodeDetailsDeadline: TimeInterval = 10
+	private let fetchEpisodeDetailsDeadline: TimeInterval = 10
 
 	// MARK: - TimelineProvider
 	func placeholder(in context: Context) -> UpNextEntry {
@@ -247,7 +247,7 @@ struct UpNextProvider: TimelineProvider {
 		let indexed: [(Int, UpNextEpisodeItem)]
 
 		do {
-			indexed = try await withTimeout(seconds: Self.fetchEpisodeDetailsDeadline) { [self] in
+			indexed = try await withTimeout(seconds: self.fetchEpisodeDetailsDeadline) { [self] in
 				await withTaskGroup(of: (Int, UpNextEpisodeItem)?.self) { group in
 					for (index, identity) in identities.enumerated() {
 						group.addTask {

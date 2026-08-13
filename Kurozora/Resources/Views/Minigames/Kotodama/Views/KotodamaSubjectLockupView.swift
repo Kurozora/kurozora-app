@@ -13,10 +13,10 @@ import UIKit
 class KotodamaSubjectLockupView: UIView {
 	// MARK: - Properties
 	/// The width of a lockup laid out as a portrait tile.
-	private static let tileWidth: CGFloat = 140
+	private let tileWidth: CGFloat = 140
 
 	/// The width beyond which a lockup laid out as a row stops growing.
-	private static let rowWidth: CGFloat = 384
+	private let rowWidth: CGFloat = 384
 
 	/// The hosted lockup.
 	private var lockupCell: UICollectionViewCell?
@@ -88,8 +88,8 @@ class KotodamaSubjectLockupView: UIView {
 		self.lockupCell = cell
 
 		let widthConstraint = isRow
-			? cell.widthAnchor.constraint(lessThanOrEqualToConstant: Self.rowWidth)
-			: cell.widthAnchor.constraint(equalToConstant: Self.tileWidth)
+			? cell.widthAnchor.constraint(lessThanOrEqualToConstant: self.rowWidth)
+			: cell.widthAnchor.constraint(equalToConstant: self.tileWidth)
 
 		self.lockupConstraints = [
 			cell.topAnchor.constraint(equalTo: self.topAnchor),

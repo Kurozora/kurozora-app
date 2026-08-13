@@ -18,7 +18,7 @@ actor LibraryOutbox {
 	static let shared = LibraryOutbox()
 
 	/// The attempt count at which a repeatedly-failing operation is abandoned.
-	private static let maximumAttemptCount: Int16 = 5
+	private let maximumAttemptCount: Int16 = 5
 
 	/// In-flight per-user flush tasks.
 	private var inFlight: [String: Task<Void, Never>] = [:]
@@ -246,7 +246,7 @@ actor LibraryOutbox {
 				await self.deleteOps(group)
 			} catch {
 				let nextAttemptCount = (group.map(\.attemptCount).max() ?? 0) + 1
-				if nextAttemptCount >= Self.maximumAttemptCount {
+				if nextAttemptCount >= self.maximumAttemptCount {
 					outboxLogger.error("ABANDON \(label, privacy: .public) attempts=\(nextAttemptCount)")
 					await self.deleteOps(group)
 				} else {

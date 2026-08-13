@@ -93,7 +93,7 @@ final class PlaybackProgressView: UIView {
 	}
 
 	/// The time shown when nothing is loaded.
-	private static let placeholderTime = "--:--"
+	private let placeholderTime = "--:--"
 
 	/// The latest published playback progress.
 	private var progress: PlaybackProgress = .zero
@@ -261,8 +261,8 @@ final class PlaybackProgressView: UIView {
 
 	private func updateLabels() {
 		guard self.hasContent else {
-			self.currentTimeLabel.text = Self.placeholderTime
-			self.remainingTimeLabel.text = Self.placeholderTime
+			self.currentTimeLabel.text = self.placeholderTime
+			self.remainingTimeLabel.text = self.placeholderTime
 			return
 		}
 

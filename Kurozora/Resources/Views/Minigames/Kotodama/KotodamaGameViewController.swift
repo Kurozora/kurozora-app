@@ -40,7 +40,7 @@ class KotodamaGameViewController: KViewController {
 
 	// MARK: - Properties
 	/// The number of fastest solves shown beneath the board.
-	private static let peekLimit = 3
+	private let peekLimit = 3
 
 	/// The puzzle the screen opened with.
 	private let puzzle: Puzzle
@@ -243,7 +243,7 @@ class KotodamaGameViewController: KViewController {
 			case .daily:
 				async let statsResponse = try? await KService.myKotodamaStats().response()
 				async let leaderboardResponse = try? await KService
-					.kotodamaDailyLeaderboard(limit: Self.peekLimit)
+					.kotodamaDailyLeaderboard(limit: self.peekLimit)
 					.response()
 
 				let puzzleResponse = try await KService.kotodamaDaily().response()
@@ -335,7 +335,7 @@ class KotodamaGameViewController: KViewController {
 		}
 
 		if let leaderboardResponse = try? await KService
-			.kotodamaDailyLeaderboard(limit: Self.peekLimit)
+			.kotodamaDailyLeaderboard(limit: self.peekLimit)
 			.response() {
 			self.topEntries = leaderboardResponse.data
 		}

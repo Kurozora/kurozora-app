@@ -84,13 +84,13 @@ final class MiniPlayerControlsView: PassthroughView {
 	}()
 
 	/// The background behind the song menu's chip.
-	private let menuBackgroundView: UIVisualEffectView = MiniPlayerControlsView.makeGlassBackgroundView(cornerRadius: MiniPlayerControlsView.menuChipDiameter / 2)
+	private lazy var menuBackgroundView: UIVisualEffectView = MiniPlayerControlsView.makeGlassBackgroundView(cornerRadius: self.menuChipDiameter / 2)
 
 	/// The song menu.
-	private let menuControl: MenuControl = {
+	private lazy var menuControl: MenuControl = {
 		let control = MenuControl()
 		control.translatesAutoresizingMaskIntoConstraints = false
-		control.fixedHighlightDiameter = MiniPlayerControlsView.menuChipDiameter
+		control.fixedHighlightDiameter = self.menuChipDiameter
 		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .semibold)
 		control.symbolImage = UIImage(systemName: "ellipsis", withConfiguration: config)
 		return control
@@ -155,19 +155,19 @@ final class MiniPlayerControlsView: PassthroughView {
 
 	// MARK: - Properties
 	/// The metadata row's distance from the bottom edge in each arrangement.
-	private static let metadataBottomInset: (bar: CGFloat, overlay: CGFloat) = (88, 111)
+	private let metadataBottomInset: (bar: CGFloat, overlay: CGFloat) = (88, 111)
 
 	/// The progress row's distance from the bottom edge in each arrangement.
-	private static let progressBottomInset: (bar: CGFloat, overlay: CGFloat) = (48, 66)
+	private let progressBottomInset: (bar: CGFloat, overlay: CGFloat) = (48, 66)
 
 	/// The transport row's distance from the bottom edge in each arrangement.
-	private static let transportBottomInset: (bar: CGFloat, overlay: CGFloat) = (11, 12.5)
+	private let transportBottomInset: (bar: CGFloat, overlay: CGFloat) = (11, 12.5)
 
 	/// The diameter of the song menu's chip over the artwork.
-	private static let menuChipDiameter: CGFloat = 27
+	private let menuChipDiameter: CGFloat = 27
 
 	/// The gap between that chip and the window's trailing edge.
-	private static let menuChipTrailingInset: CGFloat = 15
+	private let menuChipTrailingInset: CGFloat = 15
 
 	/// The playback controller that drives this view.
 	weak var playbackController: MediaPlaybackControlling? {
@@ -265,9 +265,9 @@ final class MiniPlayerControlsView: PassthroughView {
 		guard clamped != self.morphProgress else { return }
 		self.morphProgress = clamped
 
-		self.metadataBottomConstraint.constant = -Self.inset(Self.metadataBottomInset, at: clamped)
-		self.progressBottomConstraint.constant = -Self.inset(Self.progressBottomInset, at: clamped)
-		self.transportBottomConstraint.constant = -Self.inset(Self.transportBottomInset, at: clamped)
+		self.metadataBottomConstraint.constant = -Self.inset(self.metadataBottomInset, at: clamped)
+		self.progressBottomConstraint.constant = -Self.inset(self.progressBottomInset, at: clamped)
+		self.transportBottomConstraint.constant = -Self.inset(self.transportBottomInset, at: clamped)
 	}
 
 	/// Returns a row's distance from the bottom edge at the given morph progress.
@@ -356,9 +356,9 @@ final class MiniPlayerControlsView: PassthroughView {
 	/// Activates the constraints shared by both arrangements.
 	private func configureViewConstraints() {
 		self.metadataRowHeightConstraint = self.metadataRow.heightAnchor.constraint(equalToConstant: 42)
-		self.metadataBottomConstraint = self.metadataRow.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Self.metadataBottomInset.bar)
-		self.progressBottomConstraint = self.progressView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Self.progressBottomInset.bar)
-		self.transportBottomConstraint = self.playPauseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Self.transportBottomInset.bar)
+		self.metadataBottomConstraint = self.metadataRow.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.metadataBottomInset.bar)
+		self.progressBottomConstraint = self.progressView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.progressBottomInset.bar)
+		self.transportBottomConstraint = self.playPauseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.transportBottomInset.bar)
 
 		NSLayoutConstraint.activate([
 			self.metadataBottomConstraint,
@@ -376,10 +376,10 @@ final class MiniPlayerControlsView: PassthroughView {
 
 			self.menuBackgroundView.centerXAnchor.constraint(equalTo: self.menuControl.centerXAnchor),
 			self.menuBackgroundView.centerYAnchor.constraint(equalTo: self.menuControl.centerYAnchor),
-			self.menuBackgroundView.widthAnchor.constraint(equalToConstant: Self.menuChipDiameter),
-			self.menuBackgroundView.heightAnchor.constraint(equalToConstant: Self.menuChipDiameter),
+			self.menuBackgroundView.widthAnchor.constraint(equalToConstant: self.menuChipDiameter),
+			self.menuBackgroundView.heightAnchor.constraint(equalToConstant: self.menuChipDiameter),
 
-			self.menuControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -(Self.menuChipTrailingInset - (44 - Self.menuChipDiameter) / 2)),
+			self.menuControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -(self.menuChipTrailingInset - (44 - self.menuChipDiameter) / 2)),
 			self.menuControl.centerYAnchor.constraint(equalTo: self.metadataRow.centerYAnchor),
 			self.menuControl.widthAnchor.constraint(equalToConstant: 44),
 			self.menuControl.heightAnchor.constraint(equalToConstant: 44),

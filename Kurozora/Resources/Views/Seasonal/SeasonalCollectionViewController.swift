@@ -19,7 +19,7 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 
 	/// The earliest browsable year offered by the picker.
-	private static let minYear = 1917
+	private let minYear = 1917
 
 	// MARK: - Views
 	var profileBarButtonItem: ProfileBarButtonItem?
@@ -316,7 +316,7 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 		let actualYear = Calendar.current.component(.year, from: now)
 		let actualSeason = SeasonOfYear(from: now)
 		let maxYear = actualYear + 2
-		let years = Array(Self.minYear...maxYear)
+		let years = Array(self.minYear...maxYear)
 		let decadesByStart = Dictionary(grouping: years, by: { ($0 / 10) * 10 })
 		let sortedDecadeStarts = decadesByStart.keys.sorted(by: >)
 		let selectedDecadeStart = (self.year / 10) * 10

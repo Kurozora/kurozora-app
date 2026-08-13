@@ -25,10 +25,10 @@ class MuseumTitleView: UIView {
 
 	// MARK: - Properties
 	/// The duration of one leg of the caption's cross-fade.
-	private static let captionFadeDuration: TimeInterval = 0.15
+	private let captionFadeDuration: TimeInterval = 0.15
 
 	/// The spacing between the heading label and the year button.
-	private static let headingSpacing: CGFloat = 4.0
+	private let headingSpacing: CGFloat = 4.0
 
 	/// The pending caption cross-fade task.
 	private var captionFadeTask: Task<Void, Never>?
@@ -99,7 +99,7 @@ class MuseumTitleView: UIView {
 		let headingStackView = UIStackView(arrangedSubviews: [self.titleLabel, self.yearButton])
 		headingStackView.axis = .horizontal
 		headingStackView.alignment = .center
-		headingStackView.spacing = Self.headingSpacing
+		headingStackView.spacing = self.headingSpacing
 
 		self.contentStackView.addArrangedSubview(headingStackView)
 		self.contentStackView.addArrangedSubview(self.captionLabel)
@@ -157,7 +157,7 @@ class MuseumTitleView: UIView {
 
 		self.captionFadeTask?.cancel()
 
-		UIView.animate(withDuration: Self.captionFadeDuration) {
+		UIView.animate(withDuration: self.captionFadeDuration) {
 			self.captionLabel.alpha = 0.0
 		}
 
@@ -172,7 +172,7 @@ class MuseumTitleView: UIView {
 			self.captionLabel.text = text
 			self.invalidateIntrinsicContentSize()
 
-			UIView.animate(withDuration: Self.captionFadeDuration) {
+			UIView.animate(withDuration: self.captionFadeDuration) {
 				self.captionLabel.alpha = 1.0
 			}
 		}

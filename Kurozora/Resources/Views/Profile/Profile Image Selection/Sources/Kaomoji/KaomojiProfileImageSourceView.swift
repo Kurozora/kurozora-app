@@ -115,7 +115,7 @@ class KaomojiProfileImageSourceView: UIView {
 		self.updateDataSource()
 	}
 
-	private static let suggestedKaomojis: [String] = [
+	private let suggestedKaomojis: [String] = [
 		"(◕‿◕)", "(≧◡≦)", "(✧ω✧)", "٩(◕‿◕)۶", "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧", "(✯◡✯)", "(●'◡'●)", "(^▽^)",
 		"(˘³˘)♥", "(♡‿♡)", "(✿ ♡‿♡)", "(づ￣³￣)づ", "(♡˙︶˙♡)", "(*˘︶˘*).｡.:*♡", "(◕‿◕)♡", "(♡°▽°♡)",
 		"ʕ•ᴥ•ʔ", "ʕ´•ᴥ•ʔ", "₍ᐢ._.ᐢ₎", "ᓚᘏᗢ", "(=^･ω･^=)", "(=^･ｪ･^=)", "V●ᴥ●V", "∪･ω･∪",
@@ -127,7 +127,7 @@ class KaomojiProfileImageSourceView: UIView {
 
 	private func generatePresets() {
 		let shuffledColors = self.kaomojiBackgroundColors.shuffled()
-		self.presets = Self.suggestedKaomojis.enumerated().map { index, kaomoji in
+		self.presets = self.suggestedKaomojis.enumerated().map { index, kaomoji in
 			KaomojiPreset(
 				id: index,
 				kaomoji: kaomoji,

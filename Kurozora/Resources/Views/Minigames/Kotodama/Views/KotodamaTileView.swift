@@ -23,10 +23,10 @@ class KotodamaTileView: UIView {
 	static let spacing: CGFloat = 4
 
 	/// The inset of the color-blind marker from the tile's top-right corner.
-	private static let markerInset: CGFloat = 3
+	private let markerInset: CGFloat = 3
 
 	/// The width and height of the color-blind marker.
-	private static let markerSide: CGFloat = 8
+	private let markerSide: CGFloat = 8
 
 	private var state: KotodamaTileState = .empty
 
@@ -80,10 +80,10 @@ class KotodamaTileView: UIView {
 			self.letterLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2),
 			self.widthAnchor.constraint(equalToConstant: Self.side),
 			self.heightAnchor.constraint(equalToConstant: Self.side),
-			self.markerImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Self.markerInset),
-			self.markerImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Self.markerInset),
-			self.markerImageView.widthAnchor.constraint(equalToConstant: Self.markerSide),
-			self.markerImageView.heightAnchor.constraint(equalToConstant: Self.markerSide)
+			self.markerImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.markerInset),
+			self.markerImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.markerInset),
+			self.markerImageView.widthAnchor.constraint(equalToConstant: self.markerSide),
+			self.markerImageView.heightAnchor.constraint(equalToConstant: self.markerSide)
 		])
 
 		self.apply(state: .empty)

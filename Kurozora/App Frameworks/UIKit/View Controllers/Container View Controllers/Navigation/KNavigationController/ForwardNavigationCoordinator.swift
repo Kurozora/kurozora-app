@@ -13,19 +13,19 @@ import UIKit
 final class ForwardNavigationCoordinator: NSObject {
 	// MARK: - Properties
 	/// The fraction of the screen's width the gesture travels before the transition commits.
-	private static let commitThreshold: CGFloat = 0.33
+	private let commitThreshold: CGFloat = 0.33
 
 	/// The swipe velocity, in screen widths per second, that commits the transition regardless of progress.
-	private static let commitVelocity: CGFloat = 0.8
+	private let commitVelocity: CGFloat = 0.8
 
 	/// The forward distance the swipe travels before it starts the transition.
-	private static let activationDistance: CGFloat = 12.0
+	private let activationDistance: CGFloat = 12.0
 
 	/// How much more horizontal than vertical the swipe must be to start the transition.
-	private static let horizontalRatio: CGFloat = 1.5
+	private let horizontalRatio: CGFloat = 1.5
 
 	/// How close to the trailing edge a swipe must start to override horizontally scrollable content.
-	private static let edgeBandWidth: CGFloat = 40.0
+	private let edgeBandWidth: CGFloat = 40.0
 
 	/// The navigation controller whose history is tracked.
 	private weak var navigationController: UINavigationController?
@@ -240,7 +240,7 @@ final class ForwardNavigationCoordinator: NSObject {
 			? location.x
 			: view.bounds.maxX - location.x
 
-		return distanceFromTrailingEdge <= Self.edgeBandWidth
+		return distanceFromTrailingEdge <= self.edgeBandWidth
 	}
 
 	/// Returns whether the content under the specified point can scroll horizontally.
@@ -296,7 +296,7 @@ final class ForwardNavigationCoordinator: NSObject {
 	private func commitOrCancelTransition(progress: CGFloat, velocity: CGFloat) {
 		guard let interactionController = self.interactionController else { return }
 
-		let shouldCommit = progress > Self.commitThreshold || velocity > Self.commitVelocity
+		let shouldCommit = progress > self.commitThreshold || velocity > self.commitVelocity
 		let remaining = shouldCommit ? max(1.0 - progress, 0.02) : max(progress, 0.02)
 
 		interactionController.timingCurve = ForwardNavigationAnimator.completionTimingParameters
@@ -341,7 +341,7 @@ final class ForwardNavigationCoordinator: NSObject {
 	/// - Returns: Whether the transition should start.
 	private func pointsForward(translation: CGPoint, direction: CGFloat) -> Bool {
 		return translation.x * direction > 0.0
-			&& abs(translation.x) > abs(translation.y) * Self.horizontalRatio
+			&& abs(translation.x) > abs(translation.y) * self.horizontalRatio
 	}
 
 	/// Whether the swipe has travelled far enough, and straight enough, to be a deliberate forward one.
@@ -352,8 +352,8 @@ final class ForwardNavigationCoordinator: NSObject {
 	///
 	/// - Returns: Whether the transition should start.
 	private func qualifiesAsForwardSwipe(translation: CGPoint, direction: CGFloat) -> Bool {
-		return translation.x * direction > Self.activationDistance
-			&& abs(translation.x) > abs(translation.y) * Self.horizontalRatio
+		return translation.x * direction > self.activationDistance
+			&& abs(translation.x) > abs(translation.y) * self.horizontalRatio
 	}
 
 	/// Whether the swipe ended as a flick fast and straight enough to be a deliberate forward one.
@@ -365,8 +365,8 @@ final class ForwardNavigationCoordinator: NSObject {
 	///
 	/// - Returns: Whether the transition should start.
 	private func qualifiesAsForwardFlick(velocity: CGPoint, direction: CGFloat, width: CGFloat) -> Bool {
-		return velocity.x * direction / width > Self.commitVelocity
-			&& abs(velocity.x) > abs(velocity.y) * Self.horizontalRatio
+		return velocity.x * direction / width > self.commitVelocity
+			&& abs(velocity.x) > abs(velocity.y) * self.horizontalRatio
 	}
 
 	// MARK: - Actions
@@ -419,7 +419,7 @@ final class ForwardNavigationCoordinator: NSObject {
 				self.suspendCompetingScrollGesture(for: recognizer)
 				self.beginRestoringScreen()
 				self.interactionController?.update(0.0)
-				self.commitOrCancelTransition(progress: 0.0, velocity: max(velocity, Self.commitVelocity * 2.0))
+				self.commitOrCancelTransition(progress: 0.0, velocity: max(velocity, self.commitVelocity * 2.0))
 				return
 			}
 
