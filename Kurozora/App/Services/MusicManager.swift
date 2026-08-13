@@ -8,6 +8,7 @@
 
 @preconcurrency import AVFoundation
 import Combine
+import Kingfisher
 import MusicKit
 import StoreKit
 import UIKit
@@ -265,6 +266,19 @@ final class MusicManager: NSObject {
 	/// The current repeat mode.
 	@Published private(set) var repeatMode: PlaybackRepeatMode = .off
 
+	/// The category the song change notification carries when skipping is offered.
+	static let songChangeCategoryIdentifier = "musicSongChange"
+
+	/// The action identifier of the song change notification's skip button.
+	static let skipActionIdentifier = "musicSongChangeSkip"
+
+	/// Whether a different song follows the current one.
+	///
+	/// A single song, or one repeating on its own, has nothing to skip to.
+	var hasNextSong: Bool {
+		return self.repeatMode != .one && self.queueSongs.count > 1
+	}
+
 	/// The songs in the current playback queue.
 	private var queueSongs: [MKSong] = []
 
@@ -334,8 +348,50 @@ final class MusicManager: NSObject {
 		content.title = song.song.title
 		content.body = song.song.artistName
 
-		let request = UNNotificationRequest(identifier: "musicSongChange", content: content, trigger: nil)
-		UNUserNotificationCenter.current().add(request)
+		if self.hasNextSong {
+			content.categoryIdentifier = Self.songChangeCategoryIdentifier
+		}
+
+		let artworkURL = song.song.artwork?.url(width: 512, height: 512)
+
+		Task {
+			if let attachment = await Self.artworkAttachment(for: artworkURL) {
+				content.attachments = [attachment]
+			}
+
+			let request = UNNotificationRequest(identifier: "musicSongChange", content: content, trigger: nil)
+			try? await UNUserNotificationCenter.current().add(request)
+		}
+	}
+
+	/// Fetches the artwork and writes it somewhere the notification can attach it from.
+	///
+	/// - Parameter url: The artwork's address.
+	///
+	/// - Returns: The attachment carrying the artwork.
+	private static func artworkAttachment(for url: URL?) async -> UNNotificationAttachment? {
+		guard let url = url else { return nil }
+
+		return await withCheckedContinuation { continuation in
+			KingfisherManager.shared.retrieveImage(with: url) { result in
+				guard
+					let image = try? result.get().image,
+					let data = image.jpegData(compressionQuality: 0.9)
+				else {
+					continuation.resume(returning: nil)
+					return
+				}
+
+				let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).jpg")
+
+				do {
+					try data.write(to: fileURL)
+					continuation.resume(returning: try UNNotificationAttachment(identifier: "artwork", url: fileURL, options: nil))
+				} catch {
+					continuation.resume(returning: nil)
+				}
+			}
+		}
 	}
 
 	// MARK: - Setup
@@ -384,7 +440,7 @@ final class MusicManager: NSObject {
 
 	// MARK: - Fetching
 	/// The maximum number of identifiers per Apple Music catalog request.
-	private static let batchChunkSize = 300
+	private let batchChunkSize = 300
 
 	/// Returns the song with the given Apple Music identifier.
 	///
@@ -446,7 +502,7 @@ final class MusicManager: NSObject {
 		}
 
 		var result: [Int: MKSong] = [:]
-		let chunkSize = Self.batchChunkSize
+		let chunkSize = self.batchChunkSize
 		for start in stride(from: 0, to: appleMusicIDs.count, by: chunkSize) {
 			let end = min(start + chunkSize, appleMusicIDs.count)
 			let chunk = Array(appleMusicIDs[start..<end])

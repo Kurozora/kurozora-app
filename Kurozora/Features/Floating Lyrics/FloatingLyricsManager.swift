@@ -35,10 +35,10 @@ final class FloatingLyricsManager: NSObject {
 	}
 
 	/// The maximum number of songs kept in the lyrics cache.
-	private static let lyricsCacheLimit = 16
+	private let lyricsCacheLimit = 16
 
 	/// The context used to average artwork colors.
-	private static let colorContext = CIContext(options: [.workingColorSpace: NSNull()])
+	private let colorContext = CIContext(options: [.workingColorSpace: NSNull()])
 
 	/// The Picture-in-Picture controller, created once a synced song is available.
 	private var pictureInPictureController: AVPictureInPictureController?
@@ -73,6 +73,9 @@ final class FloatingLyricsManager: NSObject {
 
 	/// Whether the current window was opened by losing focus.
 	private var didAutoStart = false
+
+	/// Whether the app is the frontmost one.
+	private var isAppActive = true
 	#endif
 
 	/// The resolved lyrics of the current song.
@@ -142,12 +145,54 @@ final class FloatingLyricsManager: NSObject {
 		#if targetEnvironment(macCatalyst)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.appWillResignActive), name: Notification.Name("NSApplicationDidResignActiveNotification"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActive), name: Notification.Name("NSApplicationDidBecomeActiveNotification"), object: nil)
+		self.observeActiveSpaceChanges()
 		#endif
 	}
 
 	#if targetEnvironment(macCatalyst)
+	/// Watches for the user moving to another Space.
+	///
+	/// Sending a window full screen moves the user to a new Space without the app's active state
+	/// changing, so the resign notification alone never sees it.
+	private func observeActiveSpaceChanges() {
+		guard
+			let workspaceClass = NSClassFromString(#obfuscated("NSWorkspace")) as? NSObject.Type,
+			let workspace = workspaceClass.value(forKey: #obfuscated("sharedWorkspace")) as? NSObject,
+			let notificationCenter = workspace.value(forKey: #obfuscated("notificationCenter")) as? NotificationCenter
+		else { return }
+
+		notificationCenter.addObserver(self, selector: #selector(self.activeSpaceDidChange), name: Notification.Name(#obfuscated("NSWorkspaceActiveSpaceDidChangeNotification")), object: nil)
+	}
+
 	/// Opens the window when the app loses focus while a synced song plays.
 	@objc private func appWillResignActive() {
+		self.isAppActive = false
+		self.autoOpenIfNeeded()
+	}
+
+	/// Reconsiders the window when the user lands on another Space.
+	///
+	/// The MiniPlayer travels between Spaces, so arriving somewhere it is on screen retires an
+	/// automatically opened window the same way returning to the app does.
+	@objc private func activeSpaceDidChange() {
+		if #available(iOS 17.0, *), self.didAutoStart, MiniPlayerViewController.isFloatingOnActiveSpace {
+			self.stopPictureInPicture()
+			return
+		}
+
+		guard !self.isAppActive else { return }
+		self.autoOpenIfNeeded()
+	}
+
+	/// Opens the window if every condition for opening it by itself is met.
+	///
+	/// A MiniPlayer already floating on this Space is doing the same job, so the window stays
+	/// closed rather than landing on top of it.
+	private func autoOpenIfNeeded() {
+		if #available(iOS 17.0, *), MiniPlayerViewController.isFloatingOnActiveSpace {
+			return
+		}
+
 		guard
 			UserSettings.lyricsFloatingWindowAutoOpen,
 			!self.isPictureInPictureActive,
@@ -162,6 +207,8 @@ final class FloatingLyricsManager: NSObject {
 
 	/// Closes an automatically opened window when the app regains focus.
 	@objc private func appDidBecomeActive() {
+		self.isAppActive = true
+
 		guard self.didAutoStart else { return }
 		self.stopPictureInPicture()
 	}
@@ -372,7 +419,7 @@ final class FloatingLyricsManager: NSObject {
 		self.lyricsCacheOrder.removeAll { $0 == songID }
 		self.lyricsCacheOrder.append(songID)
 
-		if self.lyricsCacheOrder.count > Self.lyricsCacheLimit {
+		if self.lyricsCacheOrder.count > self.lyricsCacheLimit {
 			let evicted = self.lyricsCacheOrder.removeFirst()
 			self.lyricsCache.removeValue(forKey: evicted)
 		}

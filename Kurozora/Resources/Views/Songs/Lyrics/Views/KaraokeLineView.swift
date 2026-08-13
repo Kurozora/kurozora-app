@@ -49,10 +49,34 @@ final class KaraokeLineView: UIView {
 	// MARK: - Structs
 	struct WordLayout {
 		let pair: KaraokeWordPair
+
+		/// The portion of the pair drawn by this layout.
+		///
+		/// A pair too long for one row is split across several layouts, so the text is carried
+		/// here rather than read back off the pair.
+		let primaryText: String
+
+		/// The portion of the pair's pronunciation drawn by this layout.
+		let secondaryText: String?
+
 		let primaryOrigin: CGPoint
 		let primarySize: CGSize
 		let secondaryOrigin: CGPoint
 		let secondarySize: CGSize
+
+		init(pair: KaraokeWordPair, primaryText: String, secondaryText: String?, primaryOrigin: CGPoint, primarySize: CGSize, secondaryOrigin: CGPoint, secondarySize: CGSize) {
+			self.pair = pair
+			self.primaryText = primaryText
+			self.secondaryText = secondaryText
+			self.primaryOrigin = primaryOrigin
+			self.primarySize = primarySize
+			self.secondaryOrigin = secondaryOrigin
+			self.secondarySize = secondarySize
+		}
+
+		init(pair: KaraokeWordPair, primaryOrigin: CGPoint, primarySize: CGSize, secondaryOrigin: CGPoint, secondarySize: CGSize) {
+			self.init(pair: pair, primaryText: pair.primary, secondaryText: pair.secondary, primaryOrigin: primaryOrigin, primarySize: primarySize, secondaryOrigin: secondaryOrigin, secondarySize: secondarySize)
+		}
 	}
 
 	// MARK: - Properties
@@ -68,7 +92,7 @@ final class KaraokeLineView: UIView {
 	private var transitionStartTimestamp: CFTimeInterval = 0
 
 	/// The duration of the word-layout transition when the secondary text is toggled.
-	private static let layoutTransitionDuration: CFTimeInterval = 0.4
+	private let layoutTransitionDuration: CFTimeInterval = 0.4
 
 	/// The width the line lays out against.
 	var preferredMaxLayoutWidth: CGFloat = 0 {
@@ -173,9 +197,12 @@ final class KaraokeLineView: UIView {
 
 		for layout in self.layouts {
 			let fraction = self.fraction(for: layout.pair)
-			self.draw(layout.pair.primary, at: layout.primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 
-			if let secondary = layout.pair.secondary {
+			if !layout.primaryText.isEmpty {
+				self.draw(layout.primaryText, at: layout.primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			}
+
+			if let secondary = layout.secondaryText, !secondary.isEmpty {
 				self.draw(secondary, at: layout.secondaryOrigin, width: layout.secondarySize.width, font: self.secondaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 			}
 		}
@@ -221,6 +248,61 @@ final class KaraokeLineView: UIView {
 			let secondaryRunWidth = secondarySizes.reduce(0) { $0 + $1.width }
 			let wordWidth = max(primaryRunWidth, secondaryRunWidth)
 
+			let lastPair = word[word.count - 1]
+
+			if word.count == 1, primaryRunWidth > width || secondaryRunWidth > width {
+				// A line timed as a whole arrives as a single pair, so there is no pair boundary
+				// to break at and the text itself has to wrap.
+				let pair = word[0]
+
+				if penX > 0 {
+					penX = 0
+					penY += rowHeight + LyricsLayout.rowSpacing
+				}
+
+				var rowY = penY
+				for segment in self.wrappedSegments(pair.primary, font: primaryFont, width: width) {
+					layouts.append(WordLayout(pair: pair, primaryText: segment.text, secondaryText: nil, primaryOrigin: CGPoint(x: 0, y: rowY), primarySize: CGSize(width: segment.width, height: primaryLineHeight), secondaryOrigin: .zero, secondarySize: .zero))
+					rowY += primaryLineHeight + LyricsLayout.rowSpacing
+				}
+
+				if let secondary = pair.secondary, !secondary.isEmpty {
+					rowY += LyricsLayout.primaryToSecondarySpacing - LyricsLayout.rowSpacing
+					for segment in self.wrappedSegments(secondary, font: secondaryFont, width: width) {
+						layouts.append(WordLayout(pair: pair, primaryText: "", secondaryText: segment.text, primaryOrigin: CGPoint(x: 0, y: rowY), primarySize: .zero, secondaryOrigin: CGPoint(x: 0, y: rowY), secondarySize: CGSize(width: segment.width, height: secondaryFont.lineHeight)))
+						rowY += secondaryFont.lineHeight + LyricsLayout.rowSpacing
+					}
+				}
+
+				penX = 0
+				penY = rowY
+				wordStart = wordEnd + 1
+				continue
+			}
+
+			if wordWidth > width {
+				// Scripts without spaces make the whole line one word, so a run too long for any
+				// row breaks between its pairs instead of running past the edge.
+				for (index, pair) in word.enumerated() {
+					let pairWidth = max(primarySizes[index].width, secondarySizes[index].width)
+
+					if penX > 0, penX + pairWidth > width {
+						penX = 0
+						penY += rowHeight + LyricsLayout.rowSpacing
+					}
+
+					let primaryOrigin = CGPoint(x: penX, y: penY)
+					let secondaryOrigin = CGPoint(x: penX, y: penY + primaryLineHeight + LyricsLayout.primaryToSecondarySpacing)
+					layouts.append(WordLayout(pair: pair, primaryOrigin: primaryOrigin, primarySize: primarySizes[index], secondaryOrigin: secondaryOrigin, secondarySize: secondarySizes[index]))
+
+					penX += pairWidth
+				}
+
+				penX += max(lastPair.trailingSpace ? spaceWidth : 0, lastPair.secondaryTrailingSpace ? secondarySpaceWidth : 0)
+				wordStart = wordEnd + 1
+				continue
+			}
+
 			if penX > 0, penX + wordWidth > width {
 				penX = 0
 				penY += rowHeight + LyricsLayout.rowSpacing
@@ -238,14 +320,92 @@ final class KaraokeLineView: UIView {
 			}
 
 			// Each row appends its own trailing space, and the next word starts past the farther pen.
-			let lastPair = word[word.count - 1]
 			let primaryEndX = penX + primaryRunWidth + (lastPair.trailingSpace ? spaceWidth : 0)
 			let secondaryEndX = penX + secondaryRunWidth + (lastPair.secondaryTrailingSpace ? secondarySpaceWidth : 0)
 			penX = max(primaryEndX, secondaryEndX)
 			wordStart = wordEnd + 1
 		}
 
-		return (layouts, layouts.isEmpty ? 0 : penY + rowHeight)
+		let bottom = layouts.map { layout -> CGFloat in
+			let primaryBottom = layout.primarySize.width > 0 ? layout.primaryOrigin.y + primaryLineHeight : 0
+			let secondaryBottom = layout.secondarySize.width > 0 ? layout.secondaryOrigin.y + secondaryFont.lineHeight : 0
+			return max(primaryBottom, secondaryBottom)
+		}.max() ?? 0
+
+		return (layouts, bottom)
+	}
+
+	/// Splits text into the rows it occupies at the given width.
+	///
+	/// Breaks fall after spaces and after characters in scripts that are written without them,
+	/// so a Japanese line wraps between characters while a Latin word stays whole.
+	///
+	/// - Parameters:
+	///    - text: The text to wrap.
+	///    - font: The font the text is drawn in.
+	///    - width: The available width.
+	///
+	/// - Returns: Each row's text and the width it occupies.
+	private func wrappedSegments(_ text: String, font: UIFont, width: CGFloat) -> [(text: String, width: CGFloat)] {
+		guard width > 0, !text.isEmpty else { return [] }
+
+		let attributes: [NSAttributedString.Key: Any] = [.font: font]
+
+		var tokens: [String] = []
+		var token = ""
+		for character in text {
+			token.append(character)
+
+			if Self.allowsBreakAfter(character) {
+				tokens.append(token)
+				token = ""
+			}
+		}
+		if !token.isEmpty {
+			tokens.append(token)
+		}
+
+		var segments: [(text: String, width: CGFloat)] = []
+		var row = ""
+		var rowWidth: CGFloat = 0
+
+		for token in tokens {
+			let tokenWidth = (token as NSString).size(withAttributes: attributes).width
+
+			if rowWidth + tokenWidth > width, !row.isEmpty {
+				segments.append((row, rowWidth))
+				row = ""
+				rowWidth = 0
+			}
+
+			row += token
+			rowWidth += tokenWidth
+		}
+		if !row.isEmpty {
+			segments.append((row, rowWidth))
+		}
+
+		return segments
+	}
+
+	/// Whether a row may break immediately after the given character.
+	///
+	/// - Parameter character: The character preceding the candidate break.
+	///
+	/// - Returns: Whether the break is allowed.
+	private static func allowsBreakAfter(_ character: Character) -> Bool {
+		if character == " " {
+			return true
+		}
+
+		guard let scalar = character.unicodeScalars.first else { return false }
+
+		switch scalar.value {
+		case 0x3040...0x30FF, 0x3400...0x4DBF, 0x4E00...0x9FFF, 0xF900...0xFAFF, 0xFF66...0xFF9F:
+			return true
+		default:
+			return false
+		}
 	}
 
 	/// Shifts each wrapped row to honor the current alignment.
@@ -414,12 +574,12 @@ final class KaraokeLineView: UIView {
 			let fraction = self.fraction(for: layout.pair)
 
 			let primaryOrigin = self.interpolate(from.primaryOrigin, layout.primaryOrigin, progress)
-			self.draw(layout.pair.primary, at: primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
+			self.draw(layout.primaryText, at: primaryOrigin, width: layout.primarySize.width, font: self.primaryFont, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 
 			let secondaryOrigin = self.interpolate(from.secondaryOrigin, layout.secondaryOrigin, progress)
-			if let secondary = layout.pair.secondary {
+			if let secondary = layout.secondaryText {
 				self.drawSecondary(secondary, at: secondaryOrigin, width: layout.secondarySize.width, alpha: progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
-			} else if let secondary = from.pair.secondary {
+			} else if let secondary = from.secondaryText {
 				self.drawSecondary(secondary, at: secondaryOrigin, width: from.secondarySize.width, alpha: 1 - progress, fraction: fraction, sungColor: sungColor, unsungColor: unsungColor, in: context)
 			}
 		}
@@ -453,7 +613,7 @@ final class KaraokeLineView: UIView {
 		}
 
 		let elapsed = displayLink.timestamp - self.transitionStartTimestamp
-		let raw = max(0, min(1, CGFloat(elapsed / Self.layoutTransitionDuration)))
+		let raw = max(0, min(1, CGFloat(elapsed / self.layoutTransitionDuration)))
 		self.transitionProgress = raw * raw * (3 - 2 * raw)
 		self.setNeedsDisplay()
 
