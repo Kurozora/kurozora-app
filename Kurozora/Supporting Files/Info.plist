@@ -164,6 +164,12 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 				</dict>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>MiniPlayer Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).MiniPlayerSceneDelegate</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>

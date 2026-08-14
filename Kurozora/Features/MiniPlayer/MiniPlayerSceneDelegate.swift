@@ -12,6 +12,9 @@ import UIKit
 @available(iOS 17.0, *)
 final class MiniPlayerSceneDelegate: UIResponder, UIWindowSceneDelegate {
 	// MARK: - Properties
+	/// The name of the scene configuration the MiniPlayer connects under.
+	static let configurationName = "MiniPlayer Configuration"
+
 	/// The window hosting the MiniPlayer.
 	var window: UIWindow?
 
@@ -24,6 +27,17 @@ final class MiniPlayerSceneDelegate: UIResponder, UIWindowSceneDelegate {
 			session.userInfo = [:]
 		}
 		session.userInfo?["isMiniPlayer"] = true
+
+		// A second MiniPlayer steps aside for the one already open.
+		let isDuplicate = UIApplication.shared.openSessions.contains { openSession in
+			openSession !== session && openSession.userInfo?["isMiniPlayer"] as? Bool == true
+		}
+		guard !isDuplicate else {
+			UIApplication.shared.requestSceneSessionDestruction(session, options: nil)
+			return
+		}
+
+		UserSettings.set(true, forKey: .miniPlayerIsShowing)
 
 		KThemeStyle.initAppTheme()
 
@@ -44,5 +58,14 @@ final class MiniPlayerSceneDelegate: UIResponder, UIWindowSceneDelegate {
 		windowScene.titlebar?.titleVisibility = .hidden
 		windowScene.titlebar?.toolbar = nil
 		#endif
+	}
+
+	/// Returns the activity marking the session as the MiniPlayer's.
+	///
+	/// - Parameter scene: The scene the system is saving.
+	///
+	/// - Returns: The activity to save alongside the session.
+	func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+		return NSUserActivity(activityType: .miniPlayer)
 	}
 }

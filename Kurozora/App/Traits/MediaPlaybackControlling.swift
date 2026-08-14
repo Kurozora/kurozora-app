@@ -33,7 +33,7 @@ struct PlaybackProgress: Equatable {
 }
 
 /// The repeat behavior of the playback queue.
-enum PlaybackRepeatMode {
+enum PlaybackRepeatMode: String, Codable {
 	/// Playback stops at the end of the queue.
 	case off
 

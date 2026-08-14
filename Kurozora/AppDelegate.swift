@@ -75,10 +75,12 @@ extension AppDelegate {
 
 		// Restore MiniPlayer activity.
 		if #available(iOS 17.0, macCatalyst 17.0, *) {
-			let isMiniPlayerActivity = options.userActivities.contains { $0.activityType == SceneActivityType.miniPlayer.rawValue }
+			let miniPlayerActivityType = SceneActivityType.miniPlayer.rawValue
+			let isMiniPlayerActivity = options.userActivities.contains { $0.activityType == miniPlayerActivityType }
+				|| connectingSceneSession.stateRestorationActivity?.activityType == miniPlayerActivityType
 
-			if isMiniPlayerActivity || connectingSceneSession.configuration.name == "MiniPlayer Configuration" {
-				let configuration = UISceneConfiguration(name: "MiniPlayer Configuration", sessionRole: connectingSceneSession.role)
+			if isMiniPlayerActivity || connectingSceneSession.configuration.name == MiniPlayerSceneDelegate.configurationName {
+				let configuration = UISceneConfiguration(name: MiniPlayerSceneDelegate.configurationName, sessionRole: connectingSceneSession.role)
 				configuration.delegateClass = MiniPlayerSceneDelegate.self
 				return configuration
 			}
@@ -90,6 +92,14 @@ extension AppDelegate {
 
 	func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
 		print("----- UIApplication discarded scene session.")
+	}
+
+	/// Shows the MiniPlayer again when it was showing at the last quit.
+	func restoreMiniPlayerIfNeeded() {
+		guard #available(iOS 17.0, macCatalyst 17.0, *) else { return }
+		guard UIApplication.shared.supportsMultipleScenes, UserSettings.miniPlayerIsShowing else { return }
+
+		self.openMiniPlayer()
 	}
 }
 
@@ -192,6 +202,7 @@ extension AppDelegate {
 		guard #available(iOS 17.0, macCatalyst 17.0, *) else { return }
 
 		if let existingSession = self.miniPlayerSession {
+			UserSettings.set(false, forKey: .miniPlayerIsShowing)
 			UIApplication.shared.requestSceneSessionDestruction(existingSession, options: nil)
 		} else {
 			self.openMiniPlayer()
@@ -201,6 +212,8 @@ extension AppDelegate {
 	/// Opens the MiniPlayer.
 	func openMiniPlayer() {
 		guard #available(iOS 17.0, macCatalyst 17.0, *) else { return }
+
+		UserSettings.set(true, forKey: .miniPlayerIsShowing)
 
 		if let existingSession = self.miniPlayerSession {
 			UIApplication.shared.requestSceneSessionActivation(existingSession, userActivity: nil, options: nil)

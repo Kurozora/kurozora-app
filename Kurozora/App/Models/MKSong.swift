@@ -18,7 +18,7 @@ struct MKLibraryResponse: Codable {
 	let data: [MKLibrary]
 }
 
-struct MKSong: Equatable {
+struct MKSong: Equatable, Codable {
 	// MARK: - Properties
 	/// The song object.
 	let song: MusicKit.Song

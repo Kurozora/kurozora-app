@@ -204,6 +204,9 @@ final class MiniPlayerWindowBridge: NSObject {
 	/// Called whenever the pointer moves, presses, or scrolls anywhere in the window.
 	var onPointerActivity: (() -> Void)?
 
+	/// Called when the user presses the window's close button.
+	var onClosePress: (() -> Void)?
+
 	/// Whether a press is currently being held anywhere in the window.
 	private(set) var isPointerDown = false
 
@@ -285,6 +288,12 @@ final class MiniPlayerWindowBridge: NSObject {
 
 		self.hasRestoredFrame = UserDefaults.standard.object(forKey: self.frameAutosaveDefaultsKey) != nil
 		appKitWindow.perform(NSSelectorFromString("setFrameAutosaveName:"), with: "MiniPlayer" as NSString)
+
+		// A window opened for a fresh session starts wherever the scene puts it.
+		if self.hasRestoredFrame {
+			appKitWindow.perform(NSSelectorFromString("setFrameUsingName:"), with: "MiniPlayer" as NSString)
+		}
+		self.restoreFrameOnScreen()
 
 		self.applyWindowBehavior()
 
@@ -403,6 +412,20 @@ final class MiniPlayerWindowBridge: NSObject {
 		origin.y = min(max(origin.y, visibleFrame.minY), max(visibleFrame.maxY - frame.height, visibleFrame.minY))
 
 		return CGRect(origin: origin, size: frame.size)
+	}
+
+	/// Places a window that comes back parked against an edge fully on screen.
+	private func restoreFrameOnScreen() {
+		guard
+			let appKitWindow = self.appKitWindow,
+			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue
+		else { return }
+
+		let frame = frameValue.cgRectValue
+		let corrected = self.frameWithinScreen(frame)
+		guard corrected != frame else { return }
+
+		self.setWindowFrame(corrected, animated: false)
 	}
 
 	/// Settles the window once it comes to rest, either docking it against a side edge or
@@ -984,10 +1007,13 @@ final class MiniPlayerWindowBridge: NSObject {
 			let location = locationValue.cgPointValue
 
 			guard type == self.scrollWheelEventType else {
-				guard
-					self.shouldDragWindow?(location) == true,
-					!self.pressLandsOnWindowButton(at: location)
-				else { return false }
+				let pressedButton = self.windowButton(at: location)
+
+				if let pressedButton = pressedButton, pressedButton === self.standardWindowButton(0, of: window) {
+					self.onClosePress?()
+				}
+
+				guard self.shouldDragWindow?(location) == true, pressedButton == nil else { return false }
 				return self.beginWindowDrag(with: event)
 			}
 
@@ -1177,20 +1203,20 @@ final class MiniPlayerWindowBridge: NSObject {
 		unsafeBitCast(method, to: SetOriginFunction.self)(appKitWindow, selector, origin)
 	}
 
-	/// Whether the given window point lands on one of the window's own buttons.
+	/// Returns the window's own button lying under the given point.
 	///
 	/// - Parameter locationInWindow: The point in the window's bottom-left based coordinates.
 	///
-	/// - Returns: Whether a window button takes the press.
-	private func pressLandsOnWindowButton(at locationInWindow: CGPoint) -> Bool {
+	/// - Returns: The button that takes the press.
+	private func windowButton(at locationInWindow: CGPoint) -> NSObject? {
 		guard
 			let contentView = self.appKitWindow?.value(forKey: "contentView") as? NSObject,
 			let frameView = contentView.value(forKey: "superview") as? NSObject,
 			let buttonClass = NSClassFromString("NSButton")
-		else { return false }
+		else { return nil }
 
 		let selector = NSSelectorFromString("hitTest:")
-		guard frameView.responds(to: selector), let method = frameView.method(for: selector) else { return false }
+		guard frameView.responds(to: selector), let method = frameView.method(for: selector) else { return nil }
 
 		// The frame view spans the whole window, so its hit-testing space is the window's.
 		typealias HitTestFunction = @convention(c) (NSObject, Selector, CGPoint) -> NSObject?
@@ -1198,12 +1224,12 @@ final class MiniPlayerWindowBridge: NSObject {
 
 		while let candidate = view {
 			if candidate.isKind(of: buttonClass) {
-				return true
+				return candidate
 			}
 			view = candidate.value(forKey: "superview") as? NSObject
 		}
 
-		return false
+		return nil
 	}
 
 	/// Installs a tracking area reporting pointer entry and exit over the whole window.

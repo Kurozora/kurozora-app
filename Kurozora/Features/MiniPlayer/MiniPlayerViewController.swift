@@ -377,7 +377,15 @@ final class MiniPlayerViewController: UIViewController {
 	private var isLyricsCollapsing = false
 
 	/// The height the lyrics pane last occupied.
-	private var lyricsRestorePaneHeight: CGFloat?
+	private var lyricsRestorePaneHeight: CGFloat? {
+		get {
+			let height = UserSettings.miniPlayerLyricsPaneHeight
+			return height > 0 ? CGFloat(height) : nil
+		}
+		set {
+			UserSettings.set(Int((newValue ?? 0).rounded()), forKey: .miniPlayerLyricsPaneHeight)
+		}
+	}
 
 	/// The regime the layout currently reflects.
 	private var appliedRegime: Regime?
@@ -791,6 +799,11 @@ final class MiniPlayerViewController: UIViewController {
 
 		self.windowBridge.onHoverChange = { [weak self] hovering in
 			self?.setOverlaysVisible(hovering)
+		}
+
+		// Closing the window puts the MiniPlayer away; quitting with it open does not.
+		self.windowBridge.onClosePress = {
+			UserSettings.set(false, forKey: .miniPlayerIsShowing)
 		}
 
 		self.windowBridge.onPointerActivity = { [weak self] in

@@ -34,6 +34,8 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
+			UserSettingsKey.miniPlayerStaysOnTop.rawValue: true,
+			UserSettingsKey.miniPlayerShowsOnAllSpaces.rawValue: true,
 		])
 		return shared
 	}
@@ -447,6 +449,34 @@ extension UserSettings {
 	/// Returns a Boolean indicating whether a notification is posted when the song changes.
 	static var musicSongChangeNotificationsEnabled: Bool {
 		return self.shared.bool(forKey: #function)
+	}
+}
+
+// MARK: - MiniPlayer
+extension UserSettings {
+	/// Returns a Boolean indicating whether the MiniPlayer reveals its metadata briefly when the song changes.
+	static var miniPlayerRevealsOnSongChange: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether the MiniPlayer floats above the windows of other apps.
+	static var miniPlayerStaysOnTop: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether the MiniPlayer appears on every Space.
+	static var miniPlayerShowsOnAllSpaces: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether the MiniPlayer is showing.
+	static var miniPlayerIsShowing: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns the height the MiniPlayer's lyrics pane opens to.
+	static var miniPlayerLyricsPaneHeight: Int {
+		return self.shared.integer(forKey: #function)
 	}
 }
 

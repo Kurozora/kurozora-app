@@ -164,4 +164,18 @@ enum UserSettingsKey: String, CaseIterable {
 	case musicSkipDuration
 	/// The key indicating whether a notification is posted when the song changes.
 	case musicSongChangeNotificationsEnabled
+
+	// MiniPlayer keys
+	/// The key to the conditions under which the MiniPlayer reveals its metadata and controls.
+	case miniPlayerChromeVisibility
+	/// The key indicating whether the MiniPlayer reveals its metadata briefly when the song changes.
+	case miniPlayerRevealsOnSongChange
+	/// The key indicating whether the MiniPlayer floats above the windows of other apps.
+	case miniPlayerStaysOnTop
+	/// The key indicating whether the MiniPlayer appears on every Space.
+	case miniPlayerShowsOnAllSpaces
+	/// The key indicating whether the MiniPlayer is showing.
+	case miniPlayerIsShowing
+	/// The key to the height the MiniPlayer's lyrics pane opens to.
+	case miniPlayerLyricsPaneHeight
 }

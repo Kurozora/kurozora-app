@@ -42,6 +42,37 @@ final class KurozoraDelegate {
 	///
 	/// - Returns: `ready` when startup succeeds, or `blocked` when a server-side condition must be resolved first.
 	func performProcessBootstrap() async -> BootstrapOutcome {
+		// Migrate UserDefaults to shared App Group suite for widget access
+		UserSettings.migrateToSharedSuiteIfNeeded()
+
+		// Restore selected API endpoint
+		#if DEBUG
+		if let savedEndpoint = UserSettings.apiEndpoint, let endpoint = APIEndpoints.first(where: { $0.baseURL == savedEndpoint.baseURL }) ?? APIEndpoints.first {
+			KService.apiEndpoint(endpoint)
+		}
+		#endif
+
+		// Migrate legacy keychain entries to the new account storage
+		AccountManager.shared.migrateIfNeeded()
+
+		// Resolve the selected account
+		let accountKey = UserSettings.selectedAccount
+		let account = AccountManager.shared.account(forSlug: accountKey)
+
+		if let account = account {
+			KService.authenticationKey = account.authenticationToken
+		}
+
+		// The restored queue asks for its own lyrics, so it follows the endpoint and the key above
+		// and precedes everything the server has to answer.
+		await MainActor.run {
+			MusicManager.shared.restoreQueue()
+
+			#if targetEnvironment(macCatalyst)
+			(UIApplication.shared.delegate as? AppDelegate)?.restoreMiniPlayerIfNeeded()
+			#endif
+		}
+
 		// Block startup if the server reports maintenance or a required update
 		if let warningType = await self.startupWarning() {
 			return .blocked(warningType)
@@ -56,27 +87,6 @@ final class KurozoraDelegate {
 
 		// Initialize the local Core Data store
 		_ = PersistenceController.shared
-
-		// Migrate UserDefaults to shared App Group suite for widget access
-		UserSettings.migrateToSharedSuiteIfNeeded()
-
-		// Restore selected API endpoint
-		#if DEBUG
-		if let savedEndpoint = UserSettings.apiEndpoint, let endpoint = APIEndpoints.first(where: { $0.baseURL == savedEndpoint.baseURL }) ?? APIEndpoints.first {
-            KService.apiEndpoint(endpoint)
-		}
-		#endif
-
-		// Migrate legacy keychain entries to the new account storage
-		AccountManager.shared.migrateIfNeeded()
-
-		// Resolve the selected account
-		let accountKey = UserSettings.selectedAccount
-		let account = AccountManager.shared.account(forSlug: accountKey)
-
-		if let account = account {
-			KService.authenticationKey = account.authenticationToken
-		}
 
 		// Get settings and restore the user session concurrently
 		async let settings: Void = WorkflowController.shared.getSettings()

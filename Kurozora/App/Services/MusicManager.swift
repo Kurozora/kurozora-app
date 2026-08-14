@@ -179,6 +179,8 @@ final class MusicManager: NSObject {
 
 	/// The current playback position in seconds of the active player.
 	var currentPlaybackSeconds: TimeInterval {
+		guard !self.isQueueDormant else { return self.dormantPositionSeconds }
+
 		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 		case (.authorized, true):
 			return self.applicationPlayer.playbackTime
@@ -190,6 +192,8 @@ final class MusicManager: NSObject {
 
 	/// The total duration in seconds of the active player's current item.
 	var currentDurationSeconds: TimeInterval {
+		guard !self.isQueueDormant else { return self.currentSong?.song.duration ?? 0 }
+
 		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 		case (.authorized, true):
 			return self.currentSong?.song.duration ?? 0
@@ -204,6 +208,12 @@ final class MusicManager: NSObject {
 	/// - Parameter seconds: The position to seek to.
 	func seek(toSeconds seconds: TimeInterval) {
 		let target = max(0, seconds)
+
+		guard !self.isQueueDormant else {
+			self.dormantPositionSeconds = target
+			self.refreshProgressWhilePaused(position: target)
+			return
+		}
 
 		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 		case (.authorized, true):
@@ -288,6 +298,12 @@ final class MusicManager: NSObject {
 	/// The index of the current song in the preview queue.
 	private var previewQueueIndex: Int = 0
 
+	/// Whether the queue was restored from a previous session and no player holds it yet.
+	private var isQueueDormant = false
+
+	/// Where a dormant queue resumes from, in seconds.
+	private var dormantPositionSeconds: TimeInterval = 0
+
 	/// The subscription to the application player's queue changes.
 	private var queueSubscription: AnyCancellable?
 
@@ -329,9 +345,14 @@ final class MusicManager: NSObject {
 			.receive(on: RunLoop.main)
 			.removeDuplicates()
 			.sink { [weak self] song in
-				self?.postSongChangeNotificationIfNeeded(for: song)
+				guard let self = self else { return }
+				self.postSongChangeNotificationIfNeeded(for: song)
+				self.saveQueue()
 			}
 			.store(in: &self.subscriptions)
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.saveQueue), name: UIApplication.willTerminateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.saveQueue), name: UIApplication.didEnterBackgroundNotification, object: nil)
 	}
 
 	/// Posts a local notification announcing the given song while the app is in the background.
@@ -596,6 +617,10 @@ final class MusicManager: NSObject {
 			default:
 				await self.playPreview(song: song, playButton: playButton, kkSong: self.kkSong(at: index))
 			}
+
+			// A queue a player now holds is no longer the restored one.
+			self.isQueueDormant = false
+			self.dormantPositionSeconds = 0
 		}
 	}
 
@@ -643,7 +668,8 @@ final class MusicManager: NSObject {
 	///    - song: The song to play.
 	///    - index: The index in the queue at which playback should begin.
 	private func playWithMusicKit(song: MKSong, startingAt index: Int) async {
-		if self.currentSong == song {
+		// A dormant queue has no player to toggle.
+		if self.currentSong == song, !self.isQueueDormant {
 			do {
 				if self.applicationPlayer.state.playbackStatus == .playing {
 					self.applicationPlayer.pause()
@@ -785,6 +811,12 @@ final class MusicManager: NSObject {
 	func skipForward() {
 		Task { [weak self] in
 			guard let self else { return }
+
+			guard !self.isQueueDormant else {
+				self.moveDormantQueue(by: 1)
+				return
+			}
+
 			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 			case (.authorized, true):
 				let wasPlaying = self.isPlaying
@@ -830,6 +862,11 @@ final class MusicManager: NSObject {
 			if self.currentPlaybackSeconds > 3 {
 				self.seek(toSeconds: 0)
 				self.refreshProgressWhilePaused(position: 0)
+				return
+			}
+
+			guard !self.isQueueDormant else {
+				self.moveDormantQueue(by: -1)
 				return
 			}
 
@@ -925,6 +962,102 @@ final class MusicManager: NSObject {
 			index < self.queueKKSongs.count
 		else { return nil }
 		return self.queueKKSongs[index]
+	}
+
+	// MARK: - Session
+	/// Saves the queue so the next launch picks it up where this one left off.
+	@objc private func saveQueue() {
+		// Nothing has played yet, which is not a queue worth forgetting.
+		guard !self.queueSongs.isEmpty else { return }
+
+		guard self.queueKKSongs.count == self.queueSongs.count else {
+			MusicQueueStore.clear()
+			return
+		}
+
+		let index = self.currentSong.flatMap { song in self.queueSongs.firstIndex(of: song) } ?? self.previewQueueIndex
+		let snapshot = MusicQueueStore.Snapshot(
+			songs: self.queueSongs,
+			kkSongs: self.queueKKSongs,
+			index: index,
+			positionSeconds: self.currentPlaybackSeconds,
+			shuffleEnabled: self.shuffleEnabled,
+			repeatMode: self.repeatMode
+		)
+
+		MusicQueueStore.save(snapshot)
+	}
+
+	/// Loads the queue the previous session left behind.
+	///
+	/// Playback begins only once it is asked for.
+	func restoreQueue() {
+		guard self.queueSongs.isEmpty, self.currentSong == nil else { return }
+		guard
+			let snapshot = MusicQueueStore.load(),
+			snapshot.songs.indices.contains(snapshot.index),
+			snapshot.kkSongs.count == snapshot.songs.count
+		else { return }
+
+		self.queueSongs = snapshot.songs
+		self.queueKKSongs = snapshot.kkSongs
+		self.previewQueueIndex = snapshot.index
+		self.shuffleEnabled = snapshot.shuffleEnabled
+		self.repeatMode = snapshot.repeatMode
+		self.dormantPositionSeconds = snapshot.positionSeconds
+		self.isQueueDormant = true
+		self.currentSong = snapshot.songs[snapshot.index]
+		self.currentKKSong = self.kkSong(at: snapshot.index)
+		self.refreshProgressWhilePaused(position: snapshot.positionSeconds)
+	}
+
+	/// Hands the dormant queue to a player and resumes it where the last session left off.
+	private func wakeQueue() async {
+		guard self.queueSongs.indices.contains(self.previewQueueIndex) else { return }
+
+		let index = self.previewQueueIndex
+		let position = self.dormantPositionSeconds
+
+		await self.ensureSetup()
+
+		switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
+		case (.authorized, true):
+			await self.playWithMusicKit(song: self.queueSongs[index], startingAt: index)
+		default:
+			await self.playPreview(song: self.queueSongs[index], playButton: nil, kkSong: self.kkSong(at: index))
+		}
+
+		self.isQueueDormant = false
+		self.dormantPositionSeconds = 0
+
+		guard position > 0 else { return }
+		self.seek(toSeconds: position)
+	}
+
+	/// Steps the dormant queue by the given offset, leaving the player asleep.
+	///
+	/// - Parameter offset: The signed number of songs to move by.
+	private func moveDormantQueue(by offset: Int) {
+		guard !self.queueSongs.isEmpty else { return }
+
+		var index = self.previewQueueIndex
+
+		// A song repeating on its own has nowhere to move to, so it starts over instead.
+		if self.repeatMode != .one {
+			index += offset
+
+			if index >= self.queueSongs.count {
+				index = self.repeatMode == .all ? 0 : self.queueSongs.count - 1
+			} else if index < 0 {
+				index = self.repeatMode == .all ? self.queueSongs.count - 1 : 0
+			}
+		}
+
+		self.previewQueueIndex = index
+		self.dormantPositionSeconds = 0
+		self.currentSong = self.queueSongs[index]
+		self.currentKKSong = self.kkSong(at: index)
+		self.refreshProgressWhilePaused(position: 0)
 	}
 
 	// MARK: - Progress
@@ -1040,6 +1173,12 @@ extension MusicManager: MediaPlaybackControlling {
 
 		Task { [weak self] in
 			guard let self else { return }
+
+			guard !self.isQueueDormant else {
+				await self.wakeQueue()
+				return
+			}
+
 			switch (MusicAuthorization.currentStatus, self.hasAMSubscription) {
 			case (.authorized, true):
 				if self.applicationPlayer.state.playbackStatus == .playing {
