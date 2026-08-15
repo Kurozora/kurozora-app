@@ -92,6 +92,20 @@ extension WorkflowController {
 		}
 	}
 
+	/// Fetches the authenticated user's account settings.
+	func fetchMySettings() async {
+		do {
+			let settingsResponse = try await KService.mySettings().response()
+
+			guard let settings = settingsResponse.data.first else { return }
+
+			UserSettings.set(settings.attributes.ratingStyle.rawValue, forKey: .ratingStyle)
+			NotificationCenter.default.post(name: .KSRatingStyleDidChange, object: nil)
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+	}
+
 	/// Repopulates the current user's data.
 	///
 	/// - Parameter updateAuthenticationKey: Whether the authentication key of the active account is applied before the user's data is requested.
@@ -117,6 +131,10 @@ extension WorkflowController {
 
 				if let currentUser = User.current {
 					UserProfileCache.save(currentUser, forSlug: accountKey)
+				}
+
+				Task { [weak self] in
+					await self?.fetchMySettings()
 				}
 
 				return true

@@ -102,8 +102,8 @@ class KTextView: UITextView {
 	/// The shared settings used to initialize the label.
 	func sharedInit() {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateAttributedText), name: .ThemeUpdateNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: self)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidEndEditing), name: UITextView.textDidEndEditingNotification, object: self)
 
 		self.configureView()
 		self.configureViewHierarchy()

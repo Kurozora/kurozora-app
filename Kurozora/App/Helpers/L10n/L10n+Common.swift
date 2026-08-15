@@ -731,6 +731,29 @@ extension L10n {
 	}
 	/// The string for the word 'characters'.
 	///
+	/// The string for the word 'story'.
+	static var story: String {
+		L10n.resolve {
+			String(
+				localized: "Story",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'story'."
+			)
+		}
+	}
+	/// The star rating a score translates to.
+	static func outOfFiveStars(_ stars: String) -> String {
+		L10n.resolve {
+			String(
+				localized: "outOfFiveStars",
+				defaultValue: "\(stars) out of 5 stars",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The star rating a score translates to."
+			)
+		}
+	}
 	/// - Tag: L10n-characters
 	static var characters: String {
 		L10n.resolve {

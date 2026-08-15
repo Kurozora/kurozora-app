@@ -151,6 +151,11 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
+	/// A notification posted after the value of `ratingStyle` in `UserSettings` has changed.
+	static var KSRatingStyleDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	/// A notification posted after the value of `currentSplashScreenAnimation` in `UserSettings` has changed.
 	static var KSSplashScreenAnimationDidChange: NSNotification.Name {
 		return Notification.Name(#function)

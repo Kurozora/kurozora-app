@@ -37,6 +37,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 	/// The authenticated user's review text for the reviewed item.
 	var givenReview: String?
+
+	/// The authenticated user's private note on the reviewed item.
+	var givenNote: String?
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
@@ -85,11 +88,34 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateRatingStyle(_:)), name: .KSRatingStyleDidChange, object: nil)
+
+		self.reconfigureRatingCells()
+	}
+
+	/// Re-renders the rating cell in the user's new rating style.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateRatingStyle(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			self?.reconfigureRatingCells()
+		}
+	}
+
+	/// Re-renders the rating cell in the user's current rating style.
+	@MainActor
+	func reconfigureRatingCells() {
+		for cell in self.collectionView.visibleCells {
+			guard let tapToRateCell = cell as? TapToRateCollectionViewCell else { continue }
+			tapToRateCell.configure(using: self.givenRating)
+		}
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
 	}
 
 	// MARK: - Functions
@@ -235,6 +261,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 			self.givenRating = nil
 			self.givenReview = nil
+			self.givenNote = nil
 
 			self.updateDataSource()
 		}
@@ -381,7 +408,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 		}
 		let previousRating = self.currentGivenRating()
 
-		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
+		let deleteRating = { [weak self, weak cell] in
 			guard let self = self, let cell = cell else { return }
 			Task {
 				do throws(APIError) {
@@ -397,9 +424,27 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 					self.showRatingFailureAlert(message: error.message)
 				}
 			}
-		}, onCancel: { [weak cell] in
+		}
+
+		guard self.givenReview?.isEmpty == false else {
+			deleteRating()
+			return
+		}
+
+		self.confirmDeleteRating(onConfirm: deleteRating, onCancel: { [weak cell] in
 			cell?.configure(using: previousRating)
 		})
+	}
+
+	func tapToRateCollectionViewCellDidRequestDetailedReview(_ cell: TapToRateCollectionViewCell) {
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn, let kind = self.currentReviewKind() else { return }
+
+			await self.presentReviewEditor(kind: kind, rating: self.currentGivenRating(), review: self.givenReview, note: self.givenNote, delegate: self)
+		}
 	}
 
 	private func currentReviewKind() -> ReviewKind? {
@@ -425,44 +470,9 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn else { return }
+		guard signedIn, let kind = self.currentReviewKind() else { return }
 
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.delegate = self
-		switch self.listType {
-		case .character(let character):
-			reviewTextEditorViewController.kind = .character(character)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .episode(let episode):
-			reviewTextEditorViewController.kind = .episode(episode)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .game(let game):
-			reviewTextEditorViewController.kind = .game(game)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .literature(let literature):
-			reviewTextEditorViewController.kind = .literature(literature)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .person(let person):
-			reviewTextEditorViewController.kind = .person(person)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .show(let show):
-			reviewTextEditorViewController.kind = .show(show)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .song(let song):
-			reviewTextEditorViewController.kind = .song(song)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .studio(let studio):
-			reviewTextEditorViewController.kind = .studio(studio)
-			reviewTextEditorViewController.rating = self.givenRating
-		case .none:
-			reviewTextEditorViewController.kind = nil
-			reviewTextEditorViewController.rating = nil
-		}
-		reviewTextEditorViewController.review = nil
-
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
+		await self.presentReviewEditor(kind: kind, rating: self.currentGivenRating(), review: self.givenReview, note: self.givenNote, delegate: self)
 	}
 }
 
@@ -473,6 +483,17 @@ extension ReviewsListCollectionViewController: ReviewTextEditorViewControllerDel
 	}
 
 	func reviewTextEditorViewControllerDidDeleteReview() {
+		self.collectionView.reloadData()
+	}
+}
+
+// MARK: - DetailedReviewTableViewControllerDelegate
+extension ReviewsListCollectionViewController: DetailedReviewTableViewControllerDelegate {
+	func detailedReviewTableViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+
+	func detailedReviewTableViewControllerDidDeleteReview() {
 		self.collectionView.reloadData()
 	}
 }

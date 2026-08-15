@@ -211,6 +211,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
+				libraryAttributes.note = reviewEntry?.note
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -232,9 +233,9 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return try await studio.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
 		guard let studio = self.studio else { return nil }
-		return (.studio(studio), self.libraryAttributes?.rating, self.libraryAttributes?.review)
+		return (.studio(studio), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -277,6 +278,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 			reviewsCollectionViewController.listType = .studio(self.studio)
 			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
+			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }

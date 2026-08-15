@@ -12,6 +12,7 @@ import KurozoraKit
 protocol ReviewTextEditorViewDelegate: AnyObject {
 	func reviewTextEditorView(_ view: ReviewTextEditorView, rateWith rating: Double)
 	func reviewTextEditorView(_ view: ReviewTextEditorView, textDidChange text: String)
+	func reviewTextEditorView(_ view: ReviewTextEditorView, noteDidChange note: String)
 }
 
 final class ReviewTextEditorView: UIView {
@@ -22,6 +23,27 @@ final class ReviewTextEditorView: UIView {
 
 	// MARK: - Views
 	private(set) var textView: KTextView!
+	private(set) var noteTextView: KTextView!
+
+	private lazy var emojiRatingView: EmojiRatingView = {
+		let emojiRatingView = EmojiRatingView()
+		emojiRatingView.delegate = self
+		emojiRatingView.isHidden = true
+		emojiRatingView.allowsDeselection = false
+		emojiRatingView.translatesAutoresizingMaskIntoConstraints = false
+
+		guard let ratingView = self.cosmosView.superview else { return emojiRatingView }
+		ratingView.addSubview(emojiRatingView)
+
+		NSLayoutConstraint.activate([
+			emojiRatingView.leadingAnchor.constraint(equalTo: self.cosmosView.leadingAnchor),
+			emojiRatingView.centerYAnchor.constraint(equalTo: self.cosmosView.centerYAnchor),
+			ratingView.trailingAnchor.constraint(greaterThanOrEqualTo: emojiRatingView.trailingAnchor),
+			emojiRatingView.heightAnchor.constraint(lessThanOrEqualTo: self.cosmosView.heightAnchor)
+		])
+
+		return emojiRatingView
+	}()
 
 	// MARK: - Properties
 	public weak var delegate: ReviewTextEditorViewDelegate?
@@ -29,33 +51,78 @@ final class ReviewTextEditorView: UIView {
 	// MARK: - XIB loaded
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		self.installTextView()
+		self.installTextViews()
 		self.configure()
 	}
 
 	// MARK: - Display
-	/// Updates the view with the given rating and review.
+	/// Updates the view with the given rating, review and note.
 	///
 	/// - Parameters:
-	///    - rating: The rating to render in the cosmos view.
+	///    - rating: The rating to render, or `nil` when the item is unrated.
 	///    - review: The text to render in the review field.
-	func configure(rating: Double, review: String?) {
-		self.cosmosView.rating = rating
+	///    - note: The text to render in the private note field.
+	func configure(rating: Double?, review: String?, note: String?) {
+		switch UserSettings.ratingStyle {
+		case .quickReaction:
+			self.cosmosView.isHidden = true
+			self.emojiRatingView.isHidden = false
+			self.emojiRatingView.configure(using: rating)
+		default:
+			self.cosmosView.isHidden = false
+			self.emojiRatingView.isHidden = true
+
+			let rating = rating ?? 0.0
+			self.cosmosView.rating = rating > 0 ? rating : 1.0
+		}
+
 		self.textView.text = review
+		self.noteTextView.text = note
 	}
 }
 
 // MARK: - Configuration
 private extension ReviewTextEditorView {
-	func installTextView() {
-		let textView = KTextView()
-		textView.alwaysBounceVertical = true
-		textView.showsHorizontalScrollIndicator = false
+	func installTextViews() {
+		let reviewInputView = TitledTextView(title: nil, placeholder: L10n.whatsOnYourMind)
+		let noteInputView = TitledTextView(title: nil, placeholder: L10n.whatsOnYourMind)
+		let separatorView = SeparatorView()
 
-		self.textViewPlaceholder.addSubview(textView)
-		textView.fillToSuperview()
+		let reviewSectionView = UIStackView(arrangedSubviews: [self.makeSectionLabel(L10n.review), reviewInputView])
+		reviewSectionView.axis = .vertical
+		reviewSectionView.spacing = 8
 
-		self.textView = textView
+		let noteSectionView = UIStackView(arrangedSubviews: [self.makeSectionLabel(L10n.privateNotes), noteInputView])
+		noteSectionView.axis = .vertical
+		noteSectionView.spacing = 8
+
+		let stackView = UIStackView(arrangedSubviews: [reviewSectionView, separatorView, noteSectionView])
+		stackView.axis = .vertical
+		stackView.spacing = 20
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+
+		self.textViewPlaceholder.addSubview(stackView)
+
+		NSLayoutConstraint.activate([
+			stackView.topAnchor.constraint(equalTo: self.textViewPlaceholder.topAnchor),
+			stackView.leadingAnchor.constraint(equalTo: self.textViewPlaceholder.leadingAnchor),
+			stackView.trailingAnchor.constraint(equalTo: self.textViewPlaceholder.trailingAnchor),
+			stackView.bottomAnchor.constraint(equalTo: self.textViewPlaceholder.bottomAnchor, constant: -20),
+
+			separatorView.heightAnchor.constraint(equalToConstant: 1.0),
+			noteInputView.heightAnchor.constraint(equalTo: reviewInputView.heightAnchor)
+		])
+
+		self.textView = reviewInputView.textView
+		self.noteTextView = noteInputView.textView
+	}
+
+	func makeSectionLabel(_ title: String) -> KLabel {
+		let label = KLabel()
+		label.text = title
+		label.font = UIFont.preferredFont(forTextStyle: .headline)
+		label.adjustsFontForContentSizeCategory = true
+		return label
 	}
 
 	func configure() {
@@ -67,7 +134,7 @@ private extension ReviewTextEditorView {
 		self.configureView()
 		self.configurePrimaryLabel()
 		self.configureCosmosView()
-		self.configureTextView()
+		self.configureTextViews()
 	}
 
 	func configureView() {}
@@ -79,6 +146,7 @@ private extension ReviewTextEditorView {
 	func configureCosmosView() {
 		self.cosmosView.settings.starSize = 20
 		self.cosmosView.settings.fillMode = .half
+		self.cosmosView.settings.minTouchRating = 0.5
 		self.cosmosView.didFinishTouchingCosmos = { [weak self] rating in
 			guard let self = self else { return }
 
@@ -86,15 +154,26 @@ private extension ReviewTextEditorView {
 		}
 	}
 
-	func configureTextView() {
-		self.textView.placeholder = L10n.whatsOnYourMind
+	func configureTextViews() {
 		self.textView.delegate = self
+		self.noteTextView.delegate = self
 	}
 }
 
 // MARK: - UITextViewDelegate
 extension ReviewTextEditorView: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		self.delegate?.reviewTextEditorView(self, textDidChange: textView.text)
+		if textView === self.noteTextView {
+			self.delegate?.reviewTextEditorView(self, noteDidChange: textView.text)
+		} else {
+			self.delegate?.reviewTextEditorView(self, textDidChange: textView.text)
+		}
+	}
+}
+
+// MARK: - EmojiRatingViewDelegate
+extension ReviewTextEditorView: EmojiRatingViewDelegate {
+	func emojiRatingView(_ emojiRatingView: EmojiRatingView, rateWith rating: Double) {
+		self.delegate?.reviewTextEditorView(self, rateWith: rating)
 	}
 }

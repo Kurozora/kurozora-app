@@ -206,6 +206,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
+				libraryAttributes.note = reviewEntry?.note
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -227,9 +228,9 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 		return try await character.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
 		guard let character = self.character else { return nil }
-		return (.character(character), self.libraryAttributes?.rating, nil)
+		return (.character(character), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -272,6 +273,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 			reviewsCollectionViewController.listType = .character(self.character)
 			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
+			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 		case .showsListSegue:
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity

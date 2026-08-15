@@ -15,6 +15,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case selectedAccount
 	/// The key indicating whether account storage migration has completed.
 	case accountStorageMigrationCompleted
+	/// The key to the style used to rate and review media.
+	case ratingStyle
 
 	// API keys
 	/// The key to the selected API endpoint.

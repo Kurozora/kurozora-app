@@ -1401,6 +1401,105 @@ extension L10n {
 			)
 		}
 	}
+	/// The heading of the review field.
+	///
+	/// - Tag: L10n-review
+	static var review: String {
+		L10n.resolve {
+			String(
+				localized: "Review",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The heading of the review field."
+			)
+		}
+	}
+	/// The heading of the private note field.
+	///
+	/// - Tag: L10n-privateNotes
+	static var privateNotes: String {
+		L10n.resolve {
+			String(
+				localized: "Private Notes",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The heading of the private note field."
+			)
+		}
+	}
+	/// The destructive action that removes the user's rating.
+	///
+	/// - Tag: L10n-deleteRating
+	static var deleteRating: String {
+		L10n.resolve {
+			String(
+				localized: "Delete Rating",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destructive action that removes the user's rating."
+			)
+		}
+	}
+	/// The label of the negative emoji reaction.
+	///
+	/// - Tag: L10n-emojiScoreDisliked
+	static var emojiScoreDisliked: String {
+		L10n.resolve {
+			String(
+				localized: "Disliked it",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of the negative emoji reaction."
+			)
+		}
+	}
+	/// The label of the indifferent emoji reaction.
+	///
+	/// - Tag: L10n-emojiScoreNeutral
+	static var emojiScoreNeutral: String {
+		L10n.resolve {
+			String(
+				localized: "It was okay",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of the indifferent emoji reaction."
+			)
+		}
+	}
+	/// The label of the positive emoji reaction.
+	///
+	/// - Tag: L10n-emojiScoreLiked
+	static var emojiScoreLiked: String {
+		L10n.resolve {
+			String(
+				localized: "Loved it",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of the positive emoji reaction."
+			)
+		}
+	}
+	/// The score of a rating category out of ten.
+	///
+	/// - Tag: L10n-scoreOutOfTen
+	static func scoreOutOfTen(_ score: String) -> String {
+		L10n.resolve {
+			String(
+				localized: "ratingCategory.scoreOutOfTen",
+				defaultValue: "\(score) / 10.0",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The score of a rating category out of ten."
+			)
+		}
+	}
 	/// The rating denominator shown beneath an average score.
 	///
 	/// - Tag: L10n-outOfFive

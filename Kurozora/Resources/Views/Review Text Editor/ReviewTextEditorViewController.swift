@@ -35,8 +35,24 @@ final class ReviewTextEditorViewController: KViewController {
 	/// The current review text.
 	var review: String?
 
-	/// Whether the user has edited the rating or review since presentation.
-	private var isEdited: Bool = false
+	/// The current private note.
+	var note: String?
+
+	/// The rating the editor opened with.
+	private var originalRating: Double?
+
+	/// The review the editor opened with.
+	private var originalReview: String?
+
+	/// The private note the editor opened with.
+	private var originalNote: String?
+
+	/// Whether the user changed the rating, the review or the note since presentation.
+	private var hasChanges: Bool {
+		return self.rating != self.originalRating
+			|| (self.review ?? "") != (self.originalReview ?? "")
+			|| (self.note ?? "") != (self.originalNote ?? "")
+	}
 
 	private var cancelBarButtonItem: UIBarButtonItem!
 	private var sendBarButtonItem: UIBarButtonItem!
@@ -57,11 +73,13 @@ final class ReviewTextEditorViewController: KViewController {
 		self.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
 		self.sheetPresentationController?.prefersGrabberVisible = true
 
+		self.originalRating = self.rating
+		self.originalReview = self.review
+		self.originalNote = self.note
+
 		self.configureNavigationItems()
 
-		let existing = self.rating ?? 0.0
-		let displayedRating = existing > 0 ? existing : 1.0
-		self.sceneView.configure(rating: displayedRating, review: self.review)
+		self.sceneView.configure(rating: self.rating, review: self.review, note: self.note)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -112,13 +130,15 @@ final class ReviewTextEditorViewController: KViewController {
 	}
 
 	private func updateUnsavedChangesState() {
-		self.navigationItem.rightBarButtonItem?.isEnabled = self.isEdited
-		self.isModalInPresentation = self.isEdited
+		let needsReaction = UserSettings.ratingStyle == .quickReaction && (self.rating ?? 0) <= 0
+
+		self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges && !needsReaction
+		self.isModalInPresentation = self.hasChanges
 	}
 
 	// MARK: - Actions
 	@objc private func cancelButtonPressed(_ sender: UIBarButtonItem) {
-		if self.isEdited {
+		if self.hasChanges {
 			self.presentDiscardConfirmation(showingSend: false)
 		} else {
 			self.dismiss(animated: true)
@@ -126,7 +146,7 @@ final class ReviewTextEditorViewController: KViewController {
 	}
 
 	@objc private func deleteButtonPressed(_ sender: UIBarButtonItem) {
-		self.presentDeleteRatingConfirmation(restoringOnCancel: false)
+		self.presentDeleteRatingConfirmation()
 	}
 
 	@objc private func sendButtonPressed(_ sender: UIBarButtonItem) {
@@ -147,23 +167,11 @@ final class ReviewTextEditorViewController: KViewController {
 	}
 
 	/// Presents the shared delete-rating confirmation dialog.
-	///
-	/// - Parameter restoringOnCancel: When `true`, cosmos view snaps back to the previously stored rating on cancel.
-	private func presentDeleteRatingConfirmation(restoringOnCancel: Bool) {
-		let previousRating = self.rating
-		let previousReview = self.review
-
+	private func presentDeleteRatingConfirmation() {
 		self.confirmDeleteRating(onConfirm: { [weak self] in
 			guard let self = self else { return }
 			self.performDeleteRating()
-		}, onCancel: { [weak self] in
-			guard let self = self else { return }
-
-			if restoringOnCancel {
-				let rating = (previousRating ?? 0) > 0 ? (previousRating ?? 0) : 1.0
-				self.sceneView.configure(rating: rating, review: previousReview)
-			}
-		})
+		}, onCancel: {})
 	}
 
 	private func performDeleteRating() {
@@ -239,7 +247,7 @@ final class ReviewTextEditorViewController: KViewController {
 		}
 
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = self.navigationItem.leftBarButtonItem
+			popoverController.barButtonItem = self.cancelBarButtonItem
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -260,7 +268,7 @@ final class ReviewTextEditorViewController: KViewController {
 		}
 
 		do throws(APIError) {
-			let didSubmit = try await kind.rate(using: rating, description: self.review)
+			let didSubmit = try await kind.rate(using: rating, description: self.review, note: self.note)
 
 			guard didSubmit else {
 				self.presentAlertController(title: L10n.cantSaveReview, message: nil)
@@ -282,19 +290,19 @@ final class ReviewTextEditorViewController: KViewController {
 // MARK: - ReviewTextEditorViewDelegate
 extension ReviewTextEditorViewController: ReviewTextEditorViewDelegate {
 	func reviewTextEditorView(_ view: ReviewTextEditorView, rateWith rating: Double) {
-		if rating == 0 {
-			self.presentDeleteRatingConfirmation(restoringOnCancel: true)
-			return
-		}
+		guard rating > 0 else { return }
 
-		self.isEdited = true
 		self.rating = rating
 		self.updateUnsavedChangesState()
 	}
 
 	func reviewTextEditorView(_ view: ReviewTextEditorView, textDidChange text: String) {
-		self.isEdited = true
 		self.review = text
+		self.updateUnsavedChangesState()
+	}
+
+	func reviewTextEditorView(_ view: ReviewTextEditorView, noteDidChange note: String) {
+		self.note = note
 		self.updateUnsavedChangesState()
 	}
 }

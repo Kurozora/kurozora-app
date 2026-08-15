@@ -266,9 +266,9 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return try await game.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
 		guard let game = self.game else { return nil }
-		return (.game(game), self.libraryAttributes?.rating, nil)
+		return (.game(game), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

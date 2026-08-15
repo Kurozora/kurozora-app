@@ -216,7 +216,7 @@ class AccountTableViewController: SubSettingsViewController {
 	private func rows(for section: Section) -> [Rows] {
 		switch section {
 		case .account:
-			return [.language, .tvRating, .timezone]
+			return [.language, .tvRating, .timezone, .ratingStyle]
 		case .library:
 			return [.importLibrary, .deleteLibrary]
 		case .signInWithApple:
@@ -250,6 +250,13 @@ class AccountTableViewController: SubSettingsViewController {
 				title: L10n.timezone,
 				detail: self.selectedTimezone.value.replacingOccurrences(of: ".*\\/|\\s*\\(.*\\)", with: "", options: .regularExpression),
 				icon: .Icons.globe
+			)
+		case .ratingStyle:
+			self.configureSettingsCell(
+				cell,
+				title: L10n.ratingStyle,
+				detail: UserSettings.ratingStyle.localizedName,
+				icon: .Icons.star
 			)
 		case .importLibrary:
 			self.configureSettingsCell(
@@ -363,6 +370,9 @@ extension AccountTableViewController {
 			viewController.title = L10n.timeZone
 			viewController.delegate = self
 			self.show(viewController, sender: nil)
+		case .ratingStyle:
+			let viewController = RatingStyleTableViewController()
+			self.show(viewController, sender: nil)
 		case .importLibrary:
 			let viewController = LibraryImportTableViewController()
 			self.show(viewController, sender: nil)
@@ -459,6 +469,8 @@ extension AccountTableViewController {
 		case tvRating
 		/// The row for the timezone settings.
 		case timezone
+		/// The row for the rating style settings.
+		case ratingStyle
 		/// The row for the import library settings.
 		case importLibrary
 		/// The row for the delete library settings.

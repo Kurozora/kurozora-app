@@ -334,9 +334,9 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return try await show.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? {
+	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
 		guard let show = self.show else { return nil }
-		return (.show(show), self.libraryAttributes?.rating, self.libraryAttributes?.review)
+		return (.show(show), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

@@ -36,6 +36,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
 			UserSettingsKey.miniPlayerStaysOnTop.rawValue: true,
 			UserSettingsKey.miniPlayerShowsOnAllSpaces.rawValue: true,
+			UserSettingsKey.ratingStyle.rawValue: RatingStyle.standard.rawValue,
 		])
 		return shared
 	}
@@ -71,6 +72,12 @@ extension UserSettings {
 	/// Returns a boolean indicating whether account storage migration has completed.
 	static var accountStorageMigrationCompleted: Bool {
 		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns the style used to rate and review media.
+	static var ratingStyle: RatingStyle {
+		guard let ratingStyle = RatingStyle(rawValue: self.shared.integer(forKey: #function)) else { return .standard }
+		return ratingStyle
 	}
 }
 

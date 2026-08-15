@@ -1937,4 +1937,102 @@ extension L10n {
 			String(localized: "Kurozora syncs your library automatically in the background. Use Sync now to fetch changes immediately.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer message explaining what the sync section does.")
 		}
 	}
+
+	// MARK: - Rating Style
+	/// The title of the 'Rating Style' settings.
+	static var ratingStyle: String {
+		L10n.resolve {
+			String(localized: "Rating Style", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the 'Rating Style' settings.")
+		}
+	}
+	/// The 'Rating Style' section header.
+	static var ratingStyles: String {
+		L10n.resolve {
+			String(localized: "Styles", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Rating Style' section header.")
+		}
+	}
+	/// The header description of the 'Rating Style' settings.
+	static var ratingStyleHeaderDescription: String {
+		L10n.resolve {
+			String(localized: "Choose how much detail you want to give when you rate.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The header description of the 'Rating Style' settings.")
+		}
+	}
+	/// The caption of the quick reaction preview.
+	static var ratingStyleQuickReactionCaption: String {
+		L10n.resolve {
+			String(localized: "Quick and simple. Just tap an emoji to rate.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the quick reaction preview.")
+		}
+	}
+	/// The caption of the standard preview.
+	static var ratingStyleStandardCaption: String {
+		L10n.resolve {
+			String(localized: "The classic 5-star rating you know and love.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the standard preview.")
+		}
+	}
+	/// The caption of the detailed preview.
+	static var ratingStyleDetailedCaption: String {
+		L10n.resolve {
+			String(localized: "Score every aspect, such as story and characters, for a detailed review.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the detailed preview.")
+		}
+	}
+	/// The introduction to the emoji to star conversion list.
+	static var emojiConversionIntro: String {
+		L10n.resolve {
+			String(localized: "Each reaction is automatically saved as a star rating:", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The introduction to the emoji to star conversion list.")
+		}
+	}
+	/// The quip shown for the negative reaction.
+	static var emojiScoreDislikedQuip: String {
+		L10n.resolve {
+			String(localized: "The exact feeling of watching a legendary manga get ruined by a bad studio.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the negative reaction.")
+		}
+	}
+	/// The quip shown for the indifferent reaction.
+	static var emojiScoreNeutralQuip: String {
+		L10n.resolve {
+			String(localized: "The only good thing about the entire show was the opening song.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the indifferent reaction.")
+		}
+	}
+	/// The quip shown for the positive reaction.
+	static var emojiScoreLikedQuip: String {
+		L10n.resolve {
+			String(localized: "The rare 10/10 that actually lives up to the massive internet hype.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the positive reaction.")
+		}
+	}
+	/// The trailing row of the detailed preview's category list.
+	static var andMore: String {
+		L10n.resolve {
+			String(localized: "…and more", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The trailing row of the detailed preview's category list.")
+		}
+	}
+	/// The message shown when the rating style could not be saved.
+	static var ratingStyleUpdateFailed: String {
+		L10n.resolve {
+			String(localized: "Your rating style could not be saved. Please try again.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The message shown when the rating style could not be saved.")
+		}
+	}
+	/// The name of the quick reaction rating style.
+	static var ratingStyleQuickReaction: String {
+		L10n.resolve {
+			String(localized: "Quick Reaction", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the quick reaction rating style.")
+		}
+	}
+	/// The name of the standard rating style.
+	static var ratingStyleStandard: String {
+		L10n.resolve {
+			String(localized: "Standard", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the standard rating style.")
+		}
+	}
+	/// The name of the detailed rating style.
+	static var ratingStyleDetailed: String {
+		L10n.resolve {
+			String(localized: "Detailed Review", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the detailed rating style.")
+		}
+	}
+	/// The footer explaining how the rating style is applied.
+	static var ratingStyleFooter: String {
+		L10n.resolve {
+			String(localized: "Every style is stored on the same five star scale, so you can switch whenever you like without losing your ratings.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining how the rating style is applied.")
+		}
+	}
 }

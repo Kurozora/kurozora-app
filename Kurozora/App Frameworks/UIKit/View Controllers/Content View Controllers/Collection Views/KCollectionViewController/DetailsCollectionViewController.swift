@@ -106,12 +106,36 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleRatingStyleDidChange(_:)), name: .KSRatingStyleDidChange, object: nil)
+
+		self.reconfigureRatingCells()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
+	}
+
+	/// Re-renders the rating cell in the user's new rating style.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func handleRatingStyleDidChange(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			self?.reconfigureRatingCells()
+		}
+	}
+
+	/// Re-renders the rating cell in the user's current rating style.
+	@MainActor
+	func reconfigureRatingCells() {
+		let rating = self.writeAReviewContext()?.rating
+
+		for cell in self.collectionView.visibleCells {
+			guard let tapToRateCell = cell as? TapToRateCollectionViewCell else { continue }
+			tapToRateCell.configure(using: rating)
+		}
 	}
 
 	/// Re-renders the visible cells whose translation state changed.
@@ -326,7 +350,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	/// Returns the editor configuration for the active model.
 	///
 	/// - Returns: A tuple containing the editor kind, the existing rating, and the existing review, or `nil` to disable the review flow.
-	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?)? { nil }
+	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? { nil }
 
 	/// Presents the review details screen for the given review.
 	///
@@ -456,6 +480,17 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 		}
 	}
 
+	func tapToRateCollectionViewCellDidRequestDetailedReview(_ cell: TapToRateCollectionViewCell) {
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn, let context = self.writeAReviewContext() else { return }
+
+			await self.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: self)
+		}
+	}
+
 	private func handleTapToRateDeletion(on cell: TapToRateCollectionViewCell) {
 		guard let context = self.writeAReviewContext() else {
 			// No context means no existing rating to clear; snap the cell back to empty.
@@ -465,7 +500,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 		let previousRating = context.rating
 		let kind = context.kind
 
-		self.confirmDeleteRating(onConfirm: { [weak self, weak cell] in
+		let deleteRating = { [weak self, weak cell] in
 			guard let self = self, let cell = cell else { return }
 			Task {
 				do throws(APIError) {
@@ -482,7 +517,14 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 					self.showRatingFailureAlert(message: error.message)
 				}
 			}
-		}, onCancel: { [weak cell] in
+		}
+
+		guard context.review?.isEmpty == false else {
+			deleteRating()
+			return
+		}
+
+		self.confirmDeleteRating(onConfirm: deleteRating, onCancel: { [weak cell] in
 			cell?.configure(using: previousRating)
 		})
 	}
@@ -494,15 +536,7 @@ extension DetailsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn, let context = self.writeAReviewContext() else { return }
 
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.delegate = self
-		reviewTextEditorViewController.kind = context.kind
-		reviewTextEditorViewController.rating = context.rating
-		reviewTextEditorViewController.review = context.review
-
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
+		await self.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: self)
 	}
 }
 
@@ -513,6 +547,17 @@ extension DetailsCollectionViewController: ReviewTextEditorViewControllerDelegat
 	}
 
 	func reviewTextEditorViewControllerDidDeleteReview() {
+		self.didDeleteReview(at: nil)
+	}
+}
+
+// MARK: - DetailedReviewTableViewControllerDelegate
+extension DetailsCollectionViewController: DetailedReviewTableViewControllerDelegate {
+	func detailedReviewTableViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+
+	func detailedReviewTableViewControllerDidDeleteReview() {
 		self.didDeleteReview(at: nil)
 	}
 }
