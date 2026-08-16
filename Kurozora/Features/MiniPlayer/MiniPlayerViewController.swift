@@ -289,9 +289,6 @@ final class MiniPlayerViewController: UIViewController {
 	/// The lyrics pane height requested the first time the lyrics button expands the window.
 	private let expandedLyricsHeight: CGFloat = 331
 
-	/// The width of the window's resize border.
-	private let resizeBorderWidth: CGFloat = 6
-
 	/// How long the pointer may sit still before the hover chrome settles back out.
 	private let hoverIdleTimeout: TimeInterval = 3
 
@@ -797,8 +794,19 @@ final class MiniPlayerViewController: UIViewController {
 			return self?.dragsWindow(fromWindowLocation: locationInWindow) ?? false
 		}
 
+		// The artwork card is the player's own shape, so the window keeps it while it is resized.
+		self.windowBridge.holdsSquarePlayer = { [weak self] in
+			return self?.appliedRegime == .square
+		}
+
 		self.windowBridge.onHoverChange = { [weak self] hovering in
-			self?.setOverlaysVisible(hovering)
+			guard let self = self else { return }
+
+			// A window moving under the pointer reports the pointer leaving it, which is no reason
+			// to put the chrome away while the user is still holding it.
+			guard hovering || !self.windowBridge.isPointerDown else { return }
+
+			self.setOverlaysVisible(hovering)
 		}
 
 		// Closing the window puts the MiniPlayer away; quitting with it open does not.
@@ -941,8 +949,7 @@ final class MiniPlayerViewController: UIViewController {
 	///
 	/// - Returns: Whether the press starts a window drag.
 	private func dragsWindow(fromWindowLocation location: CGPoint) -> Bool {
-		let point = CGPoint(x: location.x, y: self.contentBounds.height - location.y)
-		guard self.view.bounds.insetBy(dx: self.resizeBorderWidth, dy: self.resizeBorderWidth).contains(point) else { return false }
+		let point = CGPoint(x: location.x, y: self.view.bounds.height - location.y)
 
 		guard let hitView = self.view.hitTest(point, with: nil) else { return true }
 		if hitView === self.view || hitView === self.backgroundView || hitView === self.artworkImageView {
@@ -1361,7 +1368,17 @@ final class MiniPlayerViewController: UIViewController {
 	///    - edge: The edge the pointer is heading for.
 	///    - progress: How far the veil has come in.
 	private func applyEdgeOverflow(_ edge: DockEdge?, _ progress: CGFloat) {
-		self.edgeBlurView.alpha = progress
+		// A window pulled off its parked place drops the veil in one step, so that step is carried
+		// rather than cut.
+		guard progress == 0, self.edgeBlurView.alpha > 0, !UIAccessibility.isReduceMotionEnabled else {
+			self.edgeBlurView.layer.removeAllAnimations()
+			self.edgeBlurView.alpha = progress
+			return
+		}
+
+		UIView.animate(withDuration: self.dockMorphDuration, delay: 0, options: [.beginFromCurrentState, .allowUserInteraction]) {
+			self.edgeBlurView.alpha = 0
+		}
 	}
 
 	/// Slides the pull tab out of the window once the pointer reaches a side edge of the screen.

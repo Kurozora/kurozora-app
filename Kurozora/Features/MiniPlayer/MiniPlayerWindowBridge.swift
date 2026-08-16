@@ -20,6 +20,31 @@ enum DockEdge {
 	case right
 }
 
+/// The edges of the player the pointer takes hold of to resize the window.
+@available(iOS 17.0, *)
+struct ResizeEdges: OptionSet {
+	// MARK: - Properties
+	let rawValue: Int
+
+	/// The player's leading edge.
+	static let left = ResizeEdges(rawValue: 1 << 0)
+
+	/// The player's trailing edge.
+	static let right = ResizeEdges(rawValue: 1 << 1)
+
+	/// The player's upper edge.
+	static let top = ResizeEdges(rawValue: 1 << 2)
+
+	/// The player's lower edge.
+	static let bottom = ResizeEdges(rawValue: 1 << 3)
+
+	/// The edges running along the window's width.
+	static let horizontal: ResizeEdges = [.left, .right]
+
+	/// The edges running along the window's height.
+	static let vertical: ResizeEdges = [.top, .bottom]
+}
+
 /// Styles the MiniPlayer's AppKit window through the runtime.
 @available(iOS 17.0, *)
 final class MiniPlayerWindowBridge: NSObject {
@@ -182,6 +207,33 @@ final class MiniPlayerWindowBridge: NSObject {
 	/// The center-to-center spacing of the traffic lights.
 	private let trafficLightSpacing: CGFloat = 20
 
+	/// How far inside the player's edge the pointer reaches to take hold of it.
+	private let resizeGrabInset: CGFloat = 8
+
+	/// How far a corner reaches along the edges meeting there.
+	private let resizeCornerReach: CGFloat = 16
+
+	/// The edges the pointer is resizing the window by.
+	private var activeResizeEdges: ResizeEdges?
+
+	/// The window's frame when the resize began.
+	private var resizeStartFrame: CGRect = .zero
+
+	/// Where the pointer stood on screen when the resize began.
+	private var resizePointerStart: CGPoint = .zero
+
+	/// Whether the resize in progress holds the player square.
+	private var resizeHoldsSquare = false
+
+	/// Whether the pointer currently wears a resize shape.
+	private var showsResizeCursor = false
+
+	/// The cursors already looked up, keyed by name.
+	private var cursorCache: [String: NSObject] = [:]
+
+	/// Called to ask whether the player holds a square body as it is resized.
+	var holdsSquarePlayer: (() -> Bool)?
+
 	/// Called when the user starts a live window resize.
 	var onLiveResizeStart: (() -> Void)?
 
@@ -229,21 +281,38 @@ final class MiniPlayerWindowBridge: NSObject {
 
 	/// A Boolean value that indicates whether the user is live-resizing the window.
 	var isInLiveResize: Bool {
+		guard self.activeResizeEdges == nil else { return true }
 		return (self.appKitWindow?.value(forKey: "inLiveResize") as? Bool) ?? false
 	}
 
 	/// A Boolean value that indicates whether the pointer currently lies inside the window.
 	var isPointerInsideWindow: Bool {
+		guard let frame = self.windowFrame, let pointer = Self.pointerLocation else { return false }
+		return frame.contains(pointer)
+	}
+
+	/// The window's frame, in AppKit's bottom-left based screen coordinates.
+	private var windowFrame: CGRect? {
+		return (self.appKitWindow?.value(forKey: "frame") as? NSValue)?.cgRectValue
+	}
+
+	/// The player's rect in the window, inside the margins the pull tab grows into.
+	private var playerBounds: CGRect? {
+		guard let frame = self.windowFrame else { return nil }
+
+		let reach = MiniPlayerViewController.dockTabReach
+		return CGRect(x: reach, y: 0, width: frame.width - 2 * reach, height: frame.height)
+	}
+
+	/// Where the pointer stands on screen.
+	private static var pointerLocation: CGPoint? {
 		guard
-			let appKitWindow = self.appKitWindow,
-			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue,
 			let eventClass = NSClassFromString("NSEvent"),
 			let locationMethod = class_getClassMethod(eventClass, NSSelectorFromString("mouseLocation"))
-		else { return false }
+		else { return nil }
 
 		typealias MouseLocationFunction = @convention(c) (AnyClass, Selector) -> CGPoint
-		let location = unsafeBitCast(method_getImplementation(locationMethod), to: MouseLocationFunction.self)(eventClass, NSSelectorFromString("mouseLocation"))
-		return frameValue.cgRectValue.contains(location)
+		return unsafeBitCast(method_getImplementation(locationMethod), to: MouseLocationFunction.self)(eventClass, NSSelectorFromString("mouseLocation"))
 	}
 
 	/// The associated object key the event relay is stored under.
@@ -652,7 +721,6 @@ final class MiniPlayerWindowBridge: NSObject {
 		self.onDockedEdgeChange?(edge)
 	}
 
-
 	/// Enables or disables dragging the window by its title bar and background.
 	///
 	/// - Parameter movable: Whether the window can be dragged.
@@ -969,6 +1037,16 @@ final class MiniPlayerWindowBridge: NSObject {
 				self.isPointerDown = false
 				self.dragGrabOffset = nil
 
+				// A resize is a gesture of its own: nothing docks, and the layout settles onto the
+				// size the pointer left behind.
+				if self.activeResizeEdges != nil {
+					self.activeResizeEdges = nil
+					self.pointerDownFrame = nil
+					self.onLiveResizeEnd?()
+					self.scheduleFrameSettle()
+					break
+				}
+
 				let startFrame = self.pointerDownFrame
 				self.pointerDownFrame = nil
 
@@ -994,9 +1072,16 @@ final class MiniPlayerWindowBridge: NSObject {
 
 			self.onPointerActivity?()
 
-			if type == self.leftMouseDraggedEventType, let grabOffset = self.dragGrabOffset {
-				self.dragWindow(with: event, grabOffset: grabOffset)
-				return true
+			if type == self.leftMouseDraggedEventType {
+				if let edges = self.activeResizeEdges {
+					self.resizeWindow(by: edges)
+					return true
+				}
+
+				if let grabOffset = self.dragGrabOffset {
+					self.dragWindow(grabOffset: grabOffset)
+					return true
+				}
 			}
 
 			guard
@@ -1012,9 +1097,19 @@ final class MiniPlayerWindowBridge: NSObject {
 				if let pressedButton = pressedButton, pressedButton === self.standardWindowButton(0, of: window) {
 					self.onClosePress?()
 				}
+				guard pressedButton == nil else { return false }
 
-				guard self.shouldDragWindow?(location) == true, pressedButton == nil else { return false }
-				return self.beginWindowDrag(with: event)
+				// The player's own edges resize the window, ahead of anything they lie over.
+				if let edges = self.resizeEdges(at: location) {
+					return self.beginWindowResize(by: edges)
+				}
+
+				// The margins carry nothing but the pull tab, so unless the tab is out a press there
+				// is spent where it lands rather than reaching the window's own border.
+				guard self.dockedEdge != nil || self.playerBounds?.contains(location) != false else { return true }
+
+				guard self.shouldDragWindow?(location) == true else { return false }
+				return self.beginWindowDrag()
 			}
 
 			guard let onScrollWheel = self.onScrollWheel, let deltaY = event.value(forKey: "scrollingDeltaY") as? CGFloat else { return false }
@@ -1082,16 +1177,14 @@ final class MiniPlayerWindowBridge: NSObject {
 	/// AppKit's own drag offers to tile the window against either side of the screen, claiming the
 	/// gesture docking needs.
 	///
-	/// - Parameter event: The press that starts the drag.
-	///
 	/// - Returns: Whether the drag was started.
-	private func beginWindowDrag(with event: NSObject) -> Bool {
+	private func beginWindowDrag() -> Bool {
 		guard
 			let appKitWindow = self.appKitWindow,
 			// The press belongs to the content while a slider owns the pointer.
 			(appKitWindow.value(forKey: "movable") as? Bool) ?? true,
-			let locationValue = event.value(forKey: "locationInWindow") as? NSValue,
-			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue
+			let frame = self.windowFrame,
+			let pointer = Self.pointerLocation
 		else { return false }
 
 		// Taking hold of the window brings it forward, so no click is spent on focusing it first.
@@ -1099,13 +1192,9 @@ final class MiniPlayerWindowBridge: NSObject {
 			appKitWindow.perform(NSSelectorFromString("makeKeyAndOrderFront:"), with: nil)
 		}
 
-		let grabOffset = locationValue.cgPointValue
-		let frame = frameValue.cgRectValue
-
-		let pointer = CGPoint(x: frame.minX + grabOffset.x, y: frame.minY + grabOffset.y)
 		let nearest = self.nearestEdge(to: pointer)
 
-		self.dragGrabOffset = grabOffset
+		self.dragGrabOffset = CGPoint(x: pointer.x - frame.minX, y: pointer.y - frame.minY)
 
 		// A parked window starts armed against its edge, so the ordinary threshold governs the way
 		// back out.
@@ -1122,25 +1211,18 @@ final class MiniPlayerWindowBridge: NSObject {
 
 	/// Moves the window so the point it was taken hold of stays under the pointer.
 	///
-	/// - Parameters:
-	///    - event: The drag carrying the pointer's new position.
-	///    - grabOffset: Where inside the window the pointer took hold of it.
-	private func dragWindow(with event: NSObject, grabOffset: CGPoint) {
-		guard
-			let appKitWindow = self.appKitWindow,
-			let frameValue = appKitWindow.value(forKey: "frame") as? NSValue,
-			let locationValue = event.value(forKey: "locationInWindow") as? NSValue
-		else { return }
+	/// The window follows where the pointer stands rather than where the event says it stood, so a
+	/// window already on its way somewhere never carries that move into the next one.
+	///
+	/// - Parameter grabOffset: Where inside the window the pointer took hold of it.
+	private func dragWindow(grabOffset: CGPoint) {
+		guard let pointer = Self.pointerLocation, let frame = self.windowFrame else { return }
 
-		// The window and the screen share an orientation, so the pointer's place on screen is its
-		// place in the window offset by the window's own.
-		let frame = frameValue.cgRectValue
-		let location = locationValue.cgPointValue
-		let origin = CGPoint(x: frame.minX + location.x - grabOffset.x, y: frame.minY + location.y - grabOffset.y)
+		self.updateDockGesture(for: pointer)
 
-		self.updateDockGesture(for: CGPoint(x: frame.minX + location.x, y: frame.minY + location.y))
-
+		let origin = CGPoint(x: pointer.x - grabOffset.x, y: pointer.y - grabOffset.y)
 		guard origin != frame.origin else { return }
+
 		self.setWindowOrigin(origin)
 	}
 
@@ -1150,30 +1232,35 @@ final class MiniPlayerWindowBridge: NSObject {
 	private func updateDockGesture(for pointer: CGPoint) {
 		guard let nearest = self.nearestEdge(to: pointer) else { return }
 
-		let span = self.veilPointerStart - self.dockPointerThreshold
-		let veil = min(max((self.veilPointerStart - nearest.distance) / span, 0), 1)
-		self.onEdgeOverflowChange?(veil > 0 ? nearest.edge : nil, veil)
-
 		// Once the pointer has carried the window clear of the edge it was picked up beside, that
 		// edge behaves like any other again.
-		if nearest.distance > self.dockPointerThreshold {
+		if nearest.distance > self.veilPointerStart {
 			self.grabbedNearEdge = nil
 		}
 
 		// The edge the window was picked up beside only arms once the pointer reaches it outright.
-		let threshold = nearest.edge == self.grabbedNearEdge ? self.grabbedEdgePointerThreshold : self.dockPointerThreshold
+		let isGrabbedEdge = nearest.edge == self.grabbedNearEdge
+		let threshold = isGrabbedEdge ? self.grabbedEdgePointerThreshold : self.dockPointerThreshold
 		let armed = nearest.distance <= threshold ? nearest.edge : nil
 
-		guard armed != self.armedEdge else { return }
-		self.armedEdge = armed
+		if armed != self.armedEdge {
+			self.armedEdge = armed
 
-		// A parked window carried back past the threshold is on its way onto the screen again.
-		if armed == nil, self.dockedEdge != nil {
-			self.setDockedEdge(nil)
-			return
+			// A parked window carried back past the threshold is on its way onto the screen again,
+			// and keeps its hold on the edge it leaves until the pointer takes it back there.
+			if armed == nil, let dockedEdge = self.dockedEdge {
+				self.grabbedNearEdge = dockedEdge
+				self.setDockedEdge(nil)
+			} else {
+				self.onDockArmChange?(armed)
+			}
 		}
 
-		self.onDockArmChange?(armed)
+		// The edge the window is being carried away from keeps the veil out of the way, so a window
+		// moving about near it is not veiled over and over.
+		let span = self.veilPointerStart - self.dockPointerThreshold
+		let veil = nearest.edge == self.grabbedNearEdge ? 0 : min(max((self.veilPointerStart - nearest.distance) / span, 0), 1)
+		self.onEdgeOverflowChange?(veil > 0 ? nearest.edge : nil, veil)
 	}
 
 	/// The side edge of the screen the pointer stands nearest.
@@ -1201,6 +1288,166 @@ final class MiniPlayerWindowBridge: NSObject {
 
 		typealias SetOriginFunction = @convention(c) (NSObject, Selector, CGPoint) -> Void
 		unsafeBitCast(method, to: SetOriginFunction.self)(appKitWindow, selector, origin)
+	}
+
+	/// Returns the player's edges lying under the given point.
+	///
+	/// The player wears the window's margins, so its side edges reach out through them and the
+	/// window resizes from the shape the user sees rather than the space around it.
+	///
+	/// - Parameter locationInWindow: The point in the window's bottom-left based coordinates.
+	///
+	/// - Returns: The edges the point takes hold of.
+	private func resizeEdges(at locationInWindow: CGPoint) -> ResizeEdges? {
+		guard
+			// A parked window is pulled back out rather than resized.
+			self.dockedEdge == nil,
+			(self.appKitWindow?.value(forKey: "movable") as? Bool) ?? true,
+			let bounds = self.playerBounds,
+			bounds.contains(locationInWindow)
+		else { return nil }
+
+		var edges: ResizeEdges = []
+
+		if locationInWindow.x <= bounds.minX + self.resizeGrabInset {
+			edges.insert(.left)
+		} else if locationInWindow.x >= bounds.maxX - self.resizeGrabInset {
+			edges.insert(.right)
+		}
+
+		// A corner is easier to take hold of than either edge meeting there.
+		let verticalReach = edges.isEmpty ? self.resizeGrabInset : self.resizeCornerReach
+
+		if locationInWindow.y <= bounds.minY + verticalReach {
+			edges.insert(.bottom)
+		} else if locationInWindow.y >= bounds.maxY - verticalReach {
+			edges.insert(.top)
+		}
+
+		return edges.isEmpty ? nil : edges
+	}
+
+	/// Takes hold of the player's edges, resizing the window until the pointer lets go.
+	///
+	/// - Parameter edges: The edges the pointer took hold of.
+	///
+	/// - Returns: Whether the resize was started.
+	private func beginWindowResize(by edges: ResizeEdges) -> Bool {
+		guard let frame = self.windowFrame, let pointer = Self.pointerLocation else { return false }
+
+		if (self.appKitWindow?.value(forKey: "keyWindow") as? Bool) != true {
+			self.appKitWindow?.perform(NSSelectorFromString("makeKeyAndOrderFront:"), with: nil)
+		}
+
+		self.activeResizeEdges = edges
+		self.resizeStartFrame = frame
+		self.resizePointerStart = pointer
+
+		// A square player follows its width, so only an edge carrying one holds the shape.
+		self.resizeHoldsSquare = !edges.isDisjoint(with: .horizontal) && self.holdsSquarePlayer?() == true
+
+		self.onLiveResizeStart?()
+		return true
+	}
+
+	/// Resizes the window to follow the pointer.
+	///
+	/// - Parameter edges: The edges the pointer is holding.
+	private func resizeWindow(by edges: ResizeEdges) {
+		guard let pointer = Self.pointerLocation else { return }
+
+		let start = self.resizeStartFrame
+		let margins = 2 * MiniPlayerViewController.dockTabReach
+		let minimumSize = MiniPlayerViewController.minimumWindowSize
+		let maximumHeight = self.screenVisibleFrame?.height ?? .greatestFiniteMagnitude
+
+		var width = start.width
+		if edges.contains(.left) {
+			width = start.width - (pointer.x - self.resizePointerStart.x)
+		} else if edges.contains(.right) {
+			width = start.width + (pointer.x - self.resizePointerStart.x)
+		}
+		width = min(max(width, minimumSize.width), MiniPlayerViewController.maximumWindowWidth)
+
+		var height = start.height
+		if self.resizeHoldsSquare {
+			height = width - margins
+		} else if edges.contains(.bottom) {
+			height = start.height - (pointer.y - self.resizePointerStart.y)
+		} else if edges.contains(.top) {
+			height = start.height + (pointer.y - self.resizePointerStart.y)
+		}
+		height = min(max(height, minimumSize.height), maximumHeight)
+
+		// A height the screen cut short carries the width back with it.
+		if self.resizeHoldsSquare {
+			width = min(max(height + margins, minimumSize.width), MiniPlayerViewController.maximumWindowWidth)
+		}
+
+		// The edge the pointer holds is the one that moves, so the opposite edge stays where it is.
+		var frame = CGRect(origin: start.origin, size: CGSize(width: width, height: height))
+		frame.origin.x = edges.contains(.left) ? start.maxX - width : start.minX
+		frame.origin.y = edges.contains(.top) ? start.minY : start.maxY - height
+
+		self.applyResizeCursor(for: edges)
+		self.setWindowFrame(frame, animated: false)
+	}
+
+	/// Shapes the pointer for the edges it stands over.
+	///
+	/// - Parameter edges: The edges under the pointer.
+	private func applyResizeCursor(for edges: ResizeEdges?) {
+		// UIKit sets a cursor of its own as the pointer moves, so the shape is reapplied for as long
+		// as the pointer stands over an edge.
+		if let edges = edges {
+			self.resizeCursor(for: edges)?.perform(NSSelectorFromString("set"))
+		} else if self.showsResizeCursor {
+			self.cursor(named: "arrowCursor")?.perform(NSSelectorFromString("set"))
+		}
+
+		self.showsResizeCursor = edges != nil
+	}
+
+	/// Returns the cursor naming the given edges.
+	///
+	/// - Parameter edges: The edges to name.
+	///
+	/// - Returns: The cursor the pointer wears over them.
+	private func resizeCursor(for edges: ResizeEdges) -> NSObject? {
+		guard !edges.isDisjoint(with: .horizontal) else {
+			return self.cursor(named: "resizeUpDownCursor")
+		}
+		guard !edges.isDisjoint(with: .vertical) else {
+			return self.cursor(named: "resizeLeftRightCursor")
+		}
+
+		// The leading edge falls toward the lower trailing corner, and so does the trailing edge
+		// toward the upper leading one.
+		let falls = edges.contains(.left) == edges.contains(.top)
+		let name = falls ? #obfuscated("_windowResizeNorthWestSouthEastCursor") : #obfuscated("_windowResizeNorthEastSouthWestCursor")
+
+		return self.cursor(named: name) ?? self.cursor(named: "resizeLeftRightCursor")
+	}
+
+	/// Returns the cursor of the given name.
+	///
+	/// - Parameter name: The name of the cursor's class method.
+	///
+	/// - Returns: The cursor.
+	private func cursor(named name: String) -> NSObject? {
+		if let cursor = self.cursorCache[name] {
+			return cursor
+		}
+
+		let selector = NSSelectorFromString(name)
+		guard
+			let cursorClass = NSClassFromString("NSCursor") as? NSObject.Type,
+			cursorClass.responds(to: selector),
+			let cursor = cursorClass.perform(selector)?.takeUnretainedValue() as? NSObject
+		else { return nil }
+
+		self.cursorCache[name] = cursor
+		return cursor
 	}
 
 	/// Returns the window's own button lying under the given point.
@@ -1245,8 +1492,9 @@ final class MiniPlayerWindowBridge: NSObject {
 		let initSelector = NSSelectorFromString("initWithRect:options:owner:userInfo:")
 		guard allocated.responds(to: initSelector), let initMethod = allocated.method(for: initSelector) else { return }
 
-		// NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingInVisibleRect
-		let options: UInt = 0x01 | 0x80 | 0x200
+		// NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveAlways |
+		// NSTrackingInVisibleRect
+		let options: UInt = 0x01 | 0x02 | 0x80 | 0x200
 
 		typealias InitFunction = @convention(c) (NSObject, Selector, CGRect, UInt, NSObject?, NSObject?) -> NSObject?
 		guard let trackingArea = unsafeBitCast(initMethod, to: InitFunction.self)(allocated, initSelector, .zero, options, self, nil) else { return }
@@ -1261,7 +1509,17 @@ final class MiniPlayerWindowBridge: NSObject {
 	}
 
 	@objc(mouseExited:) private func mouseExited(_ event: NSObject) {
+		self.applyResizeCursor(for: nil)
 		self.onHoverChange?(false)
+	}
+
+	@objc(mouseMoved:) private func mouseMoved(_ event: NSObject) {
+		guard
+			self.activeResizeEdges == nil,
+			let locationValue = event.value(forKey: "locationInWindow") as? NSValue
+		else { return }
+
+		self.applyResizeCursor(for: self.resizeEdges(at: locationValue.cgPointValue))
 	}
 
 	/// Installs the window's background material.
