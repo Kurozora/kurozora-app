@@ -1858,6 +1858,68 @@ extension L10n {
 		}
 	}
 
+	// MARK: - MiniPlayer
+	/// The title of the MiniPlayer chrome visibility setting.
+	static var showControls: String {
+		L10n.resolve {
+			String(localized: "Show Controls", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer chrome visibility setting.")
+		}
+	}
+	/// The chrome visibility option revealing the controls while the pointer rests over the window.
+	static var onHover: String {
+		L10n.resolve {
+			String(localized: "On Hover", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option revealing the controls while the pointer rests over the window.")
+		}
+	}
+	/// The chrome visibility option keeping the controls visible.
+	static var alwaysVisible: String {
+		L10n.resolve {
+			String(localized: "Always", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option keeping the controls visible.")
+		}
+	}
+	/// The chrome visibility option keeping the controls hidden.
+	static var neverVisible: String {
+		L10n.resolve {
+			String(localized: "Never", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option keeping the controls hidden.")
+		}
+	}
+	/// The footer describing the MiniPlayer chrome visibility setting.
+	static var showControlsDescription: String {
+		L10n.resolve {
+			String(localized: "Choose when the title, artist and playback controls appear over the artwork.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer chrome visibility setting.")
+		}
+	}
+	/// The title of the MiniPlayer song change reveal setting.
+	static var revealOnSongChange: String {
+		L10n.resolve {
+			String(localized: "Reveal on Song Change", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer song change reveal setting.")
+		}
+	}
+	/// The footer describing the MiniPlayer song change reveal setting.
+	static var revealOnSongChangeDescription: String {
+		L10n.resolve {
+			String(localized: "Briefly show the title and artist when a new song starts, then fade them away.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer song change reveal setting.")
+		}
+	}
+	/// The title of the MiniPlayer keep on top setting.
+	static var keepOnTop: String {
+		L10n.resolve {
+			String(localized: "Keep on Top", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer keep on top setting.")
+		}
+	}
+	/// The title of the MiniPlayer all Spaces setting.
+	static var showOnAllSpaces: String {
+		L10n.resolve {
+			String(localized: "Show on All Spaces", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer all Spaces setting.")
+		}
+	}
+	/// The footer describing the MiniPlayer window setting.
+	static var miniPlayerWindowDescription: String {
+		L10n.resolve {
+			String(localized: "Float the MiniPlayer above other apps, and let it follow you between Spaces and full screen apps.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer window setting.")
+		}
+	}
+
 	// MARK: - Library Sync
 	/// The 'Sync' settings section header.
 	static var sync: String {

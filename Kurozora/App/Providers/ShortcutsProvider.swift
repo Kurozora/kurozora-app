@@ -21,6 +21,17 @@ final class ShortcutsProvider: AppShortcutsProvider {
 	/// localized in a string catalog named `AppShortcuts.xcstrings`.
 	static var appShortcuts: [AppShortcut] {
 		AppShortcut(
+			intent: ToggleMiniPlayerIntent(),
+			phrases: [
+				"Toggle \(.applicationName) MiniPlayer",
+				"Open \(.applicationName) MiniPlayer",
+				"Show \(.applicationName) MiniPlayer"
+			],
+			shortTitle: "Toggle MiniPlayer",
+			systemImageName: "macwindow.on.rectangle"
+		)
+
+		AppShortcut(
 			intent: LaunchAppIntent(),
 			phrases: [
 				"Open \(\.$target) in \(.applicationName)",

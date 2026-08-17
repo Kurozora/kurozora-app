@@ -16,6 +16,13 @@ class MusicSettingsViewController: SubSettingsViewController, TypedSegueHandling
 		case skipDurationSegue
 		case largerTextSegue
 		case floatingLyricsSegue
+		case miniPlayerSegue
+	}
+
+	// MARK: - Properties
+	/// The sections available on the current device.
+	private var sections: [Section] {
+		return Section.allCases.filter { $0.isAvailable }
 	}
 
 	// MARK: - Initializers
@@ -61,6 +68,7 @@ class MusicSettingsViewController: SubSettingsViewController, TypedSegueHandling
 		case .skipDurationSegue: return SkipDurationSettingsViewController()
 		case .largerTextSegue: return LargerTextSettingsViewController()
 		case .floatingLyricsSegue: return FloatingLyricsSettingsViewController()
+		case .miniPlayerSegue: return MiniPlayerSettingsViewController()
 		}
 	}
 
@@ -80,13 +88,13 @@ extension MusicSettingsViewController {
 // MARK: - UITableViewDataSource
 extension MusicSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count + self.headerSectionOffset
+		return self.sections.count + self.headerSectionOffset
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard
 			let contentSection = self.contentSection(for: section),
-			let section = Section(rawValue: contentSection)
+			let section = self.sections[safe: contentSection]
 		else { return 1 }
 		return section.rows.count
 	}
@@ -98,7 +106,7 @@ extension MusicSettingsViewController {
 
 		guard
 			let contentSection = self.contentSection(for: indexPath.section),
-			let section = Section(rawValue: contentSection),
+			let section = self.sections[safe: contentSection],
 			let row = section.rows[safe: indexPath.row]
 		else {
 			return UITableViewCell()
@@ -128,7 +136,7 @@ extension MusicSettingsViewController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		guard
 			let contentSection = self.contentSection(for: section),
-			let section = Section(rawValue: contentSection)
+			let section = self.sections[safe: contentSection]
 		else { return nil }
 		return section.header
 	}
@@ -136,7 +144,7 @@ extension MusicSettingsViewController {
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		guard
 			let contentSection = self.contentSection(for: section),
-			let section = Section(rawValue: contentSection)
+			let section = self.sections[safe: contentSection]
 		else { return nil }
 		return section.footer
 	}
@@ -147,7 +155,7 @@ extension MusicSettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard
 			let contentSection = self.contentSection(for: indexPath.section),
-			let section = Section(rawValue: contentSection),
+			let section = self.sections[safe: contentSection],
 			let row = section.rows[safe: indexPath.row],
 			let segueIdentifier = row.segueIdentifier
 		else { return }
@@ -161,7 +169,18 @@ private extension MusicSettingsViewController {
 	enum Section: Int, CaseIterable {
 		case playback = 0
 		case lyrics
+		case miniPlayer
 		case notifications
+
+		/// Whether the section applies to the current device.
+		var isAvailable: Bool {
+			switch self {
+			case .miniPlayer:
+				return UIApplication.shared.supportsMultipleScenes
+			default:
+				return true
+			}
+		}
 
 		var rows: [Row] {
 			switch self {
@@ -173,6 +192,8 @@ private extension MusicSettingsViewController {
 				#endif
 			case .lyrics:
 				return [.largerText, .floatingLyrics]
+			case .miniPlayer:
+				return [.miniPlayer]
 			case .notifications:
 				return [.songChangeNotifications]
 			}
@@ -184,6 +205,8 @@ private extension MusicSettingsViewController {
 				return L10n.audio
 			case .lyrics:
 				return L10n.lyrics
+			case .miniPlayer:
+				return L10n.miniPlayer
 			case .notifications:
 				return L10n.notifications
 			}
@@ -204,6 +227,7 @@ private extension MusicSettingsViewController {
 		case skipDuration
 		case largerText
 		case floatingLyrics
+		case miniPlayer
 		case songChangeNotifications
 
 		var title: String {
@@ -216,6 +240,8 @@ private extension MusicSettingsViewController {
 				return L10n.largerText
 			case .floatingLyrics:
 				return L10n.floatingLyrics
+			case .miniPlayer:
+				return L10n.miniPlayer
 			case .songChangeNotifications:
 				return L10n.whenSongChanges
 			}
@@ -229,7 +255,7 @@ private extension MusicSettingsViewController {
 				return L10n.secondsCount(UserSettings.musicSkipDuration.rawValue)
 			case .largerText:
 				return UserSettings.lyricsLargerText.stringValue
-			case .floatingLyrics:
+			case .floatingLyrics, .miniPlayer:
 				return ""
 			case .songChangeNotifications:
 				return ""
@@ -246,6 +272,8 @@ private extension MusicSettingsViewController {
 				return .largerTextSegue
 			case .floatingLyrics:
 				return .floatingLyricsSegue
+			case .miniPlayer:
+				return .miniPlayerSegue
 			case .songChangeNotifications:
 				return nil
 			}

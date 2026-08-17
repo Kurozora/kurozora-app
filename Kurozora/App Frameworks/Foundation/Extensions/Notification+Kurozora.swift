@@ -172,6 +172,14 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - MiniPlayer settings
+extension Notification.Name {
+	/// A notification posted after the value of a MiniPlayer option in `UserSettings` has changed.
+	static var KSMiniPlayerSettingsDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Review
 extension Notification.Name {
 	/// A notification posted when the review is updated.

@@ -279,9 +279,11 @@ final class LyricsViewController: KTableViewController {
 		self.emptyBackgroundView.isUserInteractionEnabled = false
 		guard self.hasLoadedLyrics, self.items.isEmpty else { return }
 
-		if let image = UIImage(systemName: "quote.bubble.fill") {
+		// An embedded pane is too small to carry a symbol alongside the text.
+		if !self.isEmbeddedPresentation, let image = UIImage(systemName: "quote.bubble.fill") {
 			self.emptyBackgroundView.configureImageView(image: image)
 		}
+
 		self.emptyBackgroundView.configureLabels(title: L10n.lyricsUnavailableTitle, detail: L10n.lyricsUnavailableDetail)
 	}
 

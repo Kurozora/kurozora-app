@@ -233,10 +233,7 @@ final class MiniPlayerViewController: UIViewController {
 		return imageView
 	}
 
-	/// The silhouette the window takes while it rests off screen.
-	///
-	/// A mask composites the alpha of what it draws, so the filled silhouette is what the window
-	/// keeps of itself.
+	/// The mask carrying the window's silhouette.
 	private let dockMaskView = UIView()
 
 	/// The fill giving the mask its shape.
@@ -269,10 +266,10 @@ final class MiniPlayerViewController: UIViewController {
 
 	// MARK: - Properties
 	/// The smallest window size.
-	static let minimumWindowSize = CGSize(width: 320 + 2 * MiniPlayerViewController.dockTabReach, height: 146)
+	static let minimumWindowSize = CGSize(width: 320, height: 146)
 
 	/// The widest the window is allowed to grow.
-	static let maximumWindowWidth: CGFloat = 600 + 2 * MiniPlayerViewController.dockTabReach
+	static let maximumWindowWidth: CGFloat = 600
 
 	/// The height of the compact bar.
 	private let barHeight: CGFloat = 146
@@ -326,13 +323,24 @@ final class MiniPlayerViewController: UIViewController {
 
 	/// The bounds of the player's body, inside the margin the pull tab grows into.
 	private var contentBounds: CGRect {
-		return self.view.bounds.insetBy(dx: Self.dockTabReach, dy: 0)
+		var bounds = self.view.bounds
+
+		switch self.tabMarginSide {
+		case .left:
+			bounds.origin.x += Self.dockTabReach
+			bounds.size.width -= Self.dockTabReach
+		case .right:
+			bounds.size.width -= Self.dockTabReach
+		case nil:
+			break
+		}
+
+		return bounds
 	}
 
-	/// Whether a MiniPlayer is floating above other apps on the Space the user is looking at.
+	/// Whether a MiniPlayer is floating above other apps on the active Space.
 	///
-	/// Anything else that wants to put a window on screen by itself should stand down while this
-	/// is true, rather than land on top of the MiniPlayer.
+	/// Other self-presenting windows should stand down while this is `true`.
 	static var isFloatingOnActiveSpace: Bool {
 		#if targetEnvironment(macCatalyst)
 		guard UserSettings.miniPlayerStaysOnTop, let current = Self.current else { return false }
@@ -454,6 +462,15 @@ final class MiniPlayerViewController: UIViewController {
 	/// The edge the window is docked against.
 	private var dockedEdge: DockEdge?
 
+	/// The side of the body the pull tab's margin lies on.
+	private var tabMarginSide: DockEdge?
+
+	/// The constraint holding the body clear of the leading margin.
+	private var contentLeadingConstraint: NSLayoutConstraint?
+
+	/// The constraint holding the body clear of the trailing margin.
+	private var contentTrailingConstraint: NSLayoutConstraint?
+
 	/// The bridge styling the AppKit window.
 	private let windowBridge = MiniPlayerWindowBridge()
 
@@ -496,12 +513,16 @@ final class MiniPlayerViewController: UIViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 
+		// Bring the masked views current before their masks take the same size.
+		self.artworkOverlayView.layoutIfNeeded()
+		self.lyricsContainerView.layoutIfNeeded()
+
 		if self.lyricsEdgeMaskView.frame != self.lyricsContainerView.bounds {
 			self.lyricsEdgeMaskView.frame = self.lyricsContainerView.bounds
 		}
 
 		#if targetEnvironment(macCatalyst)
-		// The mask carries the window's shape, so it follows every resize, not just docked ones.
+		// The mask carries the window's shape, so it follows every resize.
 		if self.windowBridge.isAttached {
 			self.updateDockMaskFrame(tabReach: self.isTabGrown ? Self.dockTabReach : 0)
 		}
@@ -527,7 +548,7 @@ final class MiniPlayerViewController: UIViewController {
 		if regime != self.appliedRegime {
 			#if targetEnvironment(macCatalyst)
 			let bothBarAndSquare = (regime == .bar || regime == .square) && (self.appliedRegime == .bar || self.appliedRegime == .square)
-			// A parked window is not being resized by the user, so its regime holds.
+			// A docked window keeps its regime.
 			if !(bothBarAndSquare && self.windowBridge.isInLiveResize), self.dockedEdge == nil {
 				self.applyRegime(regime)
 			}
@@ -603,11 +624,16 @@ final class MiniPlayerViewController: UIViewController {
 	private func configureViewConstraints() {
 		self.view.addLayoutGuide(self.contentGuide)
 
+		let contentLeadingConstraint = self.contentGuide.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+		let contentTrailingConstraint = self.contentGuide.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+		self.contentLeadingConstraint = contentLeadingConstraint
+		self.contentTrailingConstraint = contentTrailingConstraint
+
 		var constraints = [
 			self.contentGuide.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.contentGuide.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-			self.contentGuide.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: Self.dockTabReach),
-			self.contentGuide.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -Self.dockTabReach),
+			contentLeadingConstraint,
+			contentTrailingConstraint,
 		] + [
 			self.backgroundView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			self.backgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -794,7 +820,7 @@ final class MiniPlayerViewController: UIViewController {
 			return self?.dragsWindow(fromWindowLocation: locationInWindow) ?? false
 		}
 
-		// The artwork card is the player's own shape, so the window keeps it while it is resized.
+		// The window holds the artwork card's square shape through a resize.
 		self.windowBridge.holdsSquarePlayer = { [weak self] in
 			return self?.appliedRegime == .square
 		}
@@ -802,8 +828,7 @@ final class MiniPlayerViewController: UIViewController {
 		self.windowBridge.onHoverChange = { [weak self] hovering in
 			guard let self = self else { return }
 
-			// A window moving under the pointer reports the pointer leaving it, which is no reason
-			// to put the chrome away while the user is still holding it.
+			// A dragged window reports spurious pointer exits; ignore them while the press holds.
 			guard hovering || !self.windowBridge.isPointerDown else { return }
 
 			self.setOverlaysVisible(hovering)
@@ -856,7 +881,9 @@ final class MiniPlayerViewController: UIViewController {
 			.store(in: &self.subscriptions)
 	}
 
-	/// Loads the artwork card for the given song.
+	/// Loads the artwork for the given song.
+	///
+	/// - Parameter song: The song whose artwork to show.
 	private func loadArtwork(for song: MKSong?) {
 		guard let artworkURL = song?.song.artwork?.url(width: 1024, height: 1024)?.absoluteString else {
 			self.artworkImageView.image = .Placeholders.musicAlbum
@@ -871,8 +898,7 @@ final class MiniPlayerViewController: UIViewController {
 
 	/// Crossfades the artwork's blurred copies to a new image.
 	///
-	/// The artwork itself arrives on a fade, so the blurred backdrop matches it rather than
-	/// snapping a frame ahead.
+	/// The crossfade matches the artwork's own loading fade.
 	///
 	/// - Parameter image: The artwork to blur.
 	private func setOverlayBlurImage(_ image: UIImage) {
@@ -977,6 +1003,11 @@ final class MiniPlayerViewController: UIViewController {
 		self.artworkImageView.alpha = progress
 		self.overlayBlurGroupView.alpha = progress
 		self.controlsView.setMorphProgress(progress)
+
+		// The overlay's fade follows the morph rather than waiting for the regime to change.
+		if self.appliedRegime == .bar, self.chromeVisible {
+			self.artworkOverlayView.alpha = progress
+		}
 	}
 
 	/// How far the layout has morphed from the compact bar towards the artwork card.
@@ -1175,8 +1206,7 @@ final class MiniPlayerViewController: UIViewController {
 		self.reconcileOverlays(animated: true)
 	}
 
-	/// Holds the metadata on screen for a moment so a song that starts while the pointer is
-	/// elsewhere still announces itself.
+	/// Reveals the chrome briefly when a new song starts while the pointer is elsewhere.
 	private func revealForSongChange() {
 		guard
 			UserSettings.miniPlayerRevealsOnSongChange,
@@ -1368,8 +1398,7 @@ final class MiniPlayerViewController: UIViewController {
 	///    - edge: The edge the pointer is heading for.
 	///    - progress: How far the veil has come in.
 	private func applyEdgeOverflow(_ edge: DockEdge?, _ progress: CGFloat) {
-		// A window pulled off its parked place drops the veil in one step, so that step is carried
-		// rather than cut.
+		// A window pulled off its parked place drops the veil in one animated step.
 		guard progress == 0, self.edgeBlurView.alpha > 0, !UIAccessibility.isReduceMotionEnabled else {
 			self.edgeBlurView.layer.removeAllAnimations()
 			self.edgeBlurView.alpha = progress
@@ -1423,6 +1452,7 @@ final class MiniPlayerViewController: UIViewController {
 		guard !self.isTabGrown, !self.isPullTabPresented, self.dockedEdge != nil else { return }
 
 		self.dockedEdge = nil
+		self.setTabMargin(on: nil)
 		self.updateDockMaskFrame(tabReach: 0)
 	}
 
@@ -1433,12 +1463,30 @@ final class MiniPlayerViewController: UIViewController {
 		guard let edge = edge, edge != self.dockedEdge else { return }
 		self.dockedEdge = edge
 
+		// The tab protrudes from the side that faces the screen.
+		self.setTabMargin(on: edge == .right ? .left : .right)
+
 		self.dockTabLeadingConstraint?.isActive = edge == .right
 		self.dockTabTrailingConstraint?.isActive = edge == .left
 
 		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)
 		let symbolName = edge == .right ? "chevron.compact.left" : "chevron.compact.right"
 		self.dockTabImageView.image = UIImage(systemName: symbolName, withConfiguration: symbolConfiguration)
+	}
+
+	/// Makes room for the pull tab on the given side of the body, or takes the room back.
+	///
+	/// The window carries the margin, so the body holds its place on screen either way.
+	///
+	/// - Parameter side: The side of the body the tab protrudes from.
+	private func setTabMargin(on side: DockEdge?) {
+		guard side != self.tabMarginSide else { return }
+		self.tabMarginSide = side
+
+		self.contentLeadingConstraint?.constant = side == .left ? Self.dockTabReach : 0
+		self.contentTrailingConstraint?.constant = side == .right ? -Self.dockTabReach : 0
+		self.windowBridge.setTabMargin(on: side)
+		self.view.layoutIfNeeded()
 	}
 
 	/// Shows the pull tab in place of the window.
@@ -1482,9 +1530,10 @@ final class MiniPlayerViewController: UIViewController {
 		let bounds = self.view.bounds
 		self.dockMaskView.frame = bounds
 
-		// The mask is always in place, since it is what gives the window its shape.
 		let path = self.silhouettePath(body: self.contentBounds, tabEdge: self.dockedEdge, tabCenterY: bounds.midY, tabReach: tabReach)
-		let duration = UIView.inheritedAnimationDuration
+
+		// Animating during a live resize would trail the pointer, so only the tab's morph is carried.
+		let duration = self.windowBridge.isInLiveResize ? 0 : UIView.inheritedAnimationDuration
 
 		CATransaction.begin()
 		CATransaction.setDisableActions(true)
@@ -1498,12 +1547,10 @@ final class MiniPlayerViewController: UIViewController {
 		CATransaction.commit()
 	}
 
-	/// The outline of the player: its body, and the pull tab standing out of the side that faces the
-	/// screen.
+	/// Returns the outline of the player's body and pull tab.
 	///
-	/// The tab keeps its size and slides out from behind the body, so its corners hold their radius
-	/// however far out it stands. A fillet at each junction leaves the two reading as one shape
-	/// rather than a rectangle notched into another.
+	/// The tab slides out from behind the body at a fixed size, and a fillet at each junction joins
+	/// the two into one shape.
 	///
 	/// - Parameters:
 	///    - body: The player's rect, in the window's coordinates.
@@ -1569,9 +1616,7 @@ final class MiniPlayerViewController: UIViewController {
 		self.view.backgroundColor = .clear
 		self.view.window?.backgroundColor = .clear
 
-		// The mask carries the window's shape from here on: the body, plus whatever the pull tab
-		// currently reaches into the margin. A corner radius on the view would round the window's
-		// corners instead of the body's, and the margins would read as padding.
+		// The mask shapes the window; a corner radius on the view would round the margins too.
 		self.updateDockMaskFrame(tabReach: 0)
 		self.view.mask = self.dockMaskView
 
@@ -1611,7 +1656,7 @@ final class MiniPlayerViewController: UIViewController {
 		}
 	}
 
-	/// Whether a view option may run now.
+	/// Returns whether a view option may run now.
 	///
 	/// - Returns: Whether the toggle should run.
 	private func acceptsViewOptionToggle() -> Bool {
@@ -1675,9 +1720,11 @@ final class MiniPlayerViewController: UIViewController {
 	///    - size: The window size to request.
 	///    - animated: Whether the window animates to the new size.
 	private func requestWindowSize(_ size: CGSize, animated: Bool) {
-		// Callers size the player; the window also carries the margins the pull tab grows into.
+		// Callers size the player; the window also carries the pull tab's margin while it is out.
 		var size = size
-		size.width += 2 * Self.dockTabReach
+		if self.tabMarginSide != nil {
+			size.width += Self.dockTabReach
+		}
 
 		if self.windowBridge.isAttached {
 			self.windowBridge.setWindowSize(size, animated: animated)
