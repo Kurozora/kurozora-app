@@ -49,6 +49,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
+	/// Whether the reviews flagged as low-effort are shown alongside the rest.
+	var isShowingLowEffortReviews = false
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -154,6 +157,12 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
+	/// Flips whether the reviews flagged as low-effort are shown, then reapplies the snapshot.
+	func toggleLowEffortReviewsVisibility() {
+		self.isShowingLowEffortReviews.toggle()
+		self.updateDataSource()
+	}
+
 	/// Fetches the user's reminder list.
 	var fetchInProgress: Bool = false
 	/// Re-renders the reviews whose translation state changed.
@@ -223,6 +232,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			// Reset data if necessary
 			if self.nextPageCursor == nil {
 				self.reviews = []
+				self.isShowingLowEffortReviews = false
 			}
 
 			// Save next page url and append new data
@@ -564,6 +574,9 @@ extension ReviewsListCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
+		/// Indicates the item kind contains the toggle for revealing or hiding the low-effort reviews.
+		case lowEffortReviewsToggle(isExpanded: Bool)
+
 		/// Indicates the item kind contains a `Character` object.
 		case character(_ character: Character, id: UUID = UUID())
 
@@ -597,6 +610,8 @@ extension ReviewsListCollectionViewController {
 			case .review(let review, let id):
 				hasher.combine(review)
 				hasher.combine(id)
+			case .lowEffortReviewsToggle(let isExpanded):
+				hasher.combine(isExpanded)
 			case .character(let character, let id):
 				hasher.combine(character)
 				hasher.combine(id)
@@ -630,6 +645,8 @@ extension ReviewsListCollectionViewController {
 				return rateAndReview1 == rateAndReview2 && currentRating1 == currentRating2
 			case (.review(let review1, let id1), .review(let review2, let id2)):
 				return review1 == review2 && id1 == id2
+			case (.lowEffortReviewsToggle(let isExpanded1), .lowEffortReviewsToggle(let isExpanded2)):
+				return isExpanded1 == isExpanded2
 			case (.character(let character1, let id1), .character(let character2, let id2)):
 				return character1 == character2 && id1 == id2
 			case (.episode(let episode1, let id1), .episode(let episode2, let id2)):

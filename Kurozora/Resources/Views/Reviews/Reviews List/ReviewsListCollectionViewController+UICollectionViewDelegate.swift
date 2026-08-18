@@ -12,14 +12,26 @@ extension ReviewsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(.reviewDetailsSegue, sender: review)
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+
+			switch itemKind {
+			case .review(let review, _):
+				self.present(.reviewDetailsSegue, sender: review)
+			case .lowEffortReviewsToggle:
+				self.toggleLowEffortReviewsVisibility()
+			default: break
+			}
 		default: break
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.reviews.count - 20, self.nextPageCursor != nil {
+		guard self.snapshot.sectionIdentifiers[safe: indexPath.section] == .reviews else { return }
+
+		// Counted against the rendered rows, since collapsing the low-effort ones shortens the section.
+		let itemCount = collectionView.numberOfItems(inSection: indexPath.section)
+
+		if indexPath.item >= max(itemCount - 20, 0), self.nextPageCursor != nil {
 			Task { [weak self] in
 				guard let self = self else { return }
 				await self.fetchReviews()
@@ -37,7 +49,12 @@ extension ReviewsListCollectionViewController {
 		case .rating:
 			return nil
 		case .reviews:
-			return self.reviews[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard
+				let itemKind = self.dataSource.itemIdentifier(for: indexPath),
+				case .review(let review, _) = itemKind
+			else { return nil }
+
+			return review.contextMenuConfiguration(in: self, userInfo: [:], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
 }

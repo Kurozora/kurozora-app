@@ -4376,6 +4376,34 @@ extension L10n {
 			)
 		}
 	}
+	/// Button that reveals the reviews sorted to the bottom.
+	///
+	/// - Tag: L10n-reviewsShowShort
+	static var reviewsShowShort: String {
+		L10n.resolve {
+			String(
+				localized: "Show short reviews",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Button that reveals the reviews sorted to the bottom."
+			)
+		}
+	}
+	/// Button that hides the reviews sorted to the bottom.
+	///
+	/// - Tag: L10n-reviewsHideShort
+	static var reviewsHideShort: String {
+		L10n.resolve {
+			String(
+				localized: "Hide short reviews",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Button that hides the reviews sorted to the bottom."
+			)
+		}
+	}
 	/// Segment title for a review that recommends the item.
 	///
 	/// - Tag: L10n-reviewRecommended

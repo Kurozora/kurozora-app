@@ -17,7 +17,8 @@ extension ReviewsListCollectionViewController {
 			RatingBarCollectionViewCell.self,
 			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
-			WriteAReviewCollectionViewCell.self
+			WriteAReviewCollectionViewCell.self,
+			LowEffortReviewsToggleCollectionViewCell.self
 		]
 	}
 
@@ -83,14 +84,19 @@ extension ReviewsListCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
+					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 					reviewCollectionViewCell?.delegate = self
 					reviewCollectionViewCell?.configureCell(using: review)
-				default: break
+					return reviewCollectionViewCell
+				case .lowEffortReviewsToggle(let isExpanded):
+					let lowEffortReviewsToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LowEffortReviewsToggleCollectionViewCell.self, for: indexPath)
+					lowEffortReviewsToggleCollectionViewCell?.configure(title: isExpanded ? L10n.reviewsHideShort : L10n.reviewsShowShort)
+					return lowEffortReviewsToggleCollectionViewCell
+				default:
+					return nil
 				}
-				return reviewCollectionViewCell
 			}
 		}
 	}
@@ -152,10 +158,20 @@ extension ReviewsListCollectionViewController {
 			case .reviews:
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([reviewSection])
-					let reviewItems: [ItemKind] = self.reviews.map { review in
+
+					// The server already sorts low-effort reviews last, so filtering
+					// preserves that order without any client-side re-sorting.
+					let hasLowEffortReviews = self.reviews.contains { $0.attributes.isLowEffort }
+					let visibleReviews = self.reviews.filter { !$0.attributes.isLowEffort || self.isShowingLowEffortReviews }
+
+					let reviewItems: [ItemKind] = visibleReviews.map { review in
 						return .review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: reviewSection)
+
+					if hasLowEffortReviews {
+						self.snapshot.appendItems([.lowEffortReviewsToggle(isExpanded: self.isShowingLowEffortReviews)], toSection: reviewSection)
+					}
 				}
 			}
 		}
