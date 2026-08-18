@@ -4432,6 +4432,40 @@ extension L10n {
 			)
 		}
 	}
+	/// Badge showing how far the reviewer had watched when they wrote the review.
+	///
+	/// - Tag: L10n-reviewProgressEpisode
+	static func reviewProgressEpisode(_ progress: String, _ total: String) -> String {
+		L10n.resolve {
+			String(
+				format: String(
+					localized: "Ep %1$@/%2$@",
+					table: "Content",
+					bundle: LanguageManager.shared.bundle,
+					locale: LanguageManager.shared.locale,
+					comment: "Badge showing how far the reviewer had watched when they wrote the review."
+				),
+				progress, total
+			)
+		}
+	}
+	/// Badge showing how far the reviewer had watched, when the total is unknown.
+	///
+	/// - Tag: L10n-reviewProgressEpisodeOnly
+	static func reviewProgressEpisodeOnly(_ progress: String) -> String {
+		L10n.resolve {
+			String(
+				format: String(
+					localized: "Ep %@",
+					table: "Content",
+					bundle: LanguageManager.shared.bundle,
+					locale: LanguageManager.shared.locale,
+					comment: "Badge showing how far the reviewer had watched, when the total is unknown."
+				),
+				progress
+			)
+		}
+	}
 
 	/// Title shown in the navigation bar of the Parental Guide report sheet.
 	///

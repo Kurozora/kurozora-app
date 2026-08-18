@@ -33,7 +33,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private(set) var contentTextView: KSelectableTextView!
 	private(set) var translationBarView: TranslationBarView!
-	private var recommendationLabel: KTintedLabel!
+	private var metadataLabel: KTintedLabel!
 	private var spoilerOverlayView: SpoilerOverlayView!
 
 	// MARK: - Properties
@@ -86,12 +86,12 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.contentTextView = textView
 		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
 
-		let recommendationLabel = KTintedLabel()
-		recommendationLabel.font = .preferredFont(forTextStyle: .caption1).bold
-		recommendationLabel.adjustsFontForContentSizeCategory = true
-		recommendationLabel.numberOfLines = 0
-		contentStackView.insertArrangedSubview(recommendationLabel, at: 0)
-		self.recommendationLabel = recommendationLabel
+		let metadataLabel = KTintedLabel()
+		metadataLabel.font = .preferredFont(forTextStyle: .caption1).bold
+		metadataLabel.adjustsFontForContentSizeCategory = true
+		metadataLabel.numberOfLines = 0
+		contentStackView.insertArrangedSubview(metadataLabel, at: 0)
+		self.metadataLabel = metadataLabel
 
 		let spoilerOverlayView = SpoilerOverlayView()
 		spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
@@ -166,8 +166,9 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.cosmosView.rating = review.attributes.score
 
 		// Configure body
-		self.recommendationLabel.text = review.attributes.recommendation?.localizedName
-		self.recommendationLabel.isHidden = review.attributes.recommendation == nil
+		let metadataText = self.metadataText(for: review)
+		self.metadataLabel.text = metadataText
+		self.metadataLabel.isHidden = metadataText == nil
 
 		var translatedBody: NSAttributedString?
 
@@ -190,6 +191,29 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		// Configure more view
 		self.moreImageView?.theme_tintColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
+	}
+
+	/// Builds the recommendation and progress badge shown above a review's body.
+	///
+	/// - Parameter review: The review to build the badge text from.
+	///
+	/// - Returns: The joined badge text, or `nil` when the review has neither a recommendation nor a progress.
+	private func metadataText(for review: Review) -> String? {
+		var parts: [String] = []
+
+		if let recommendation = review.attributes.recommendation {
+			parts.append(recommendation.localizedName)
+		}
+
+		if let progress = review.attributes.progress {
+			if let progressTotal = review.attributes.progressTotal {
+				parts.append(L10n.reviewProgressEpisode("\(progress)", "\(progressTotal)"))
+			} else {
+				parts.append(L10n.reviewProgressEpisodeOnly("\(progress)"))
+			}
+		}
+
+		return parts.isEmpty ? nil : parts.joined(separator: " · ")
 	}
 
 	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
