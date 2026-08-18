@@ -33,9 +33,21 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private(set) var contentTextView: KSelectableTextView!
 	private(set) var translationBarView: TranslationBarView!
+	private var spoilerOverlayView: SpoilerOverlayView!
 
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
+
+	/// Whether the reader revealed this review's spoiler.
+	private var isSpoilerRevealed = false
+
+	private static var spoilerWarningText: String {
+		#if targetEnvironment(macCatalyst)
+		return L10n.reviewSpoilerClick
+		#else
+		return L10n.reviewSpoilerTap
+		#endif
+	}
 
 	// MARK: - View
 	override func awakeFromNib() {
@@ -49,6 +61,11 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.isSpoilerRevealed = false
 	}
 
 	// MARK: - Functions
@@ -67,6 +84,22 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 		self.contentTextView = textView
 		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
+
+		let spoilerOverlayView = SpoilerOverlayView()
+		spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		spoilerOverlayView.revealHandler = { [weak self] in
+			self?.isSpoilerRevealed = true
+		}
+
+		self.contentTextViewPlaceholder.addSubview(spoilerOverlayView)
+		NSLayoutConstraint.activate([
+			spoilerOverlayView.topAnchor.constraint(equalTo: self.contentTextViewPlaceholder.topAnchor),
+			spoilerOverlayView.bottomAnchor.constraint(equalTo: self.contentTextViewPlaceholder.bottomAnchor),
+			spoilerOverlayView.leadingAnchor.constraint(equalTo: self.contentTextViewPlaceholder.leadingAnchor),
+			spoilerOverlayView.trailingAnchor.constraint(equalTo: self.contentTextViewPlaceholder.trailingAnchor)
+		])
+
+		self.spoilerOverlayView = spoilerOverlayView
 	}
 
 	/// Configure the cell with the given person details.
@@ -136,6 +169,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		}
 
 		self.contentTextView.setAttributedText(translatedBody ?? review.attributes.description?.markdownAttributedString())
+		self.spoilerOverlayView.isHidden = self.isSpoilerRevealed || !(review.attributes.isSpoiler && !(review.attributes.description ?? "").isEmpty)
 		self.contentTextView.delegate = self
 		self.contentTextView.layoutManager.delegate = self
 

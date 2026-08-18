@@ -84,8 +84,8 @@ final class RateCollectionViewCell: KCollectionViewCell {
 		ratingRowWrapperView.translatesAutoresizingMaskIntoConstraints = false
 		ratingRowWrapperView.addSubview(ratingRowStackView)
 
-		let wrapperHeightConstraint = ratingRowWrapperView.heightAnchor.constraint(equalToConstant: Layouts.rateAndReviewRowHeight)
-		wrapperHeightConstraint.priority = .defaultHigh
+		// The row is at least a tap target tall, and grows when the label needs more room.
+		let wrapperHeightConstraint = ratingRowWrapperView.heightAnchor.constraint(greaterThanOrEqualToConstant: Layouts.rateAndReviewRowHeight)
 
 		NSLayoutConstraint.activate([
 			ratingRowStackView.centerXAnchor.constraint(equalTo: ratingRowWrapperView.centerXAnchor),

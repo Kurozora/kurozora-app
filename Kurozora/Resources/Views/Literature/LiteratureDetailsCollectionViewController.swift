@@ -266,9 +266,9 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		return try await literature.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let literature = self.literature else { return nil }
-		return (.literature(literature), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
+		return ReviewEditorContext(kind: .literature(literature), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -286,7 +286,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 	}
 
-	override func didDeleteReview(at indexPath: IndexPath?) {
+	override func didDeleteReview() {
 		self.libraryAttributes?.rating = nil
 		self.libraryAttributes?.review = nil
 	}

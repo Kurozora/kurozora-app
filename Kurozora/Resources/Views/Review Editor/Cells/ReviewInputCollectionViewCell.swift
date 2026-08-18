@@ -18,7 +18,7 @@ final class ReviewInputCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private let separatorView = SeparatorView()
 	private let titleLabel = KLabel()
-	private let titledTextView = TitledTextView(title: nil, placeholder: L10n.whatsOnYourMind)
+	private let titledTextView = TitledTextView(title: nil, placeholder: L10n.whatsOnYourMind, visibleLines: 6)
 
 	// MARK: - Properties
 	override var isSkeletonEnabled: Bool {

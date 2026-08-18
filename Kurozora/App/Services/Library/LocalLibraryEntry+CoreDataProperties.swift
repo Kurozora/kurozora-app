@@ -65,13 +65,16 @@ extension LocalLibraryEntry {
 	@NSManaged var reviewID: String?
 
 	/// The user's review score, from `0` to `5`, or `nil` if no review exists.
-	@NSManaged var reviewScore: NSNumber?
+	@NSManaged var score: NSNumber?
 
 	/// The user's written review text, or `nil`.
 	@NSManaged var reviewDescription: String?
 
 	/// The user's private note on the item. `nil` when none exists.
-	@NSManaged var reviewNote: String?
+	@NSManaged var note: String?
+
+	/// Whether the user's review contains spoiler material. `nil` when no review exists.
+	@NSManaged var isSpoiler: NSNumber?
 
 	/// The date the user's review was first created.
 	@NSManaged var reviewCreatedAt: Date?

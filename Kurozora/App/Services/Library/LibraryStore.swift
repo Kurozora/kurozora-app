@@ -271,7 +271,7 @@ final class LibraryStore {
 		case .rating:
 			return [NSSortDescriptor(key: "publicRating", ascending: option == .worst)]
 		case .myRating:
-			return [NSSortDescriptor(key: "reviewScore", ascending: option == .worst)]
+			return [NSSortDescriptor(key: "score", ascending: option == .worst)]
 		}
 	}
 
@@ -325,9 +325,10 @@ final class LibraryStore {
 		attributes.isHidden = entry.isHidden
 		attributes.status = entry.libraryStatus
 		attributes.rewatchCount = Int(entry.rewatchCount)
-		attributes.rating = entry.reviewScore?.doubleValue
+		attributes.rating = entry.score?.doubleValue
 		attributes.review = entry.reviewDescription
-		attributes.note = entry.reviewNote
+		attributes.note = entry.note
+		attributes.isSpoiler = entry.isSpoiler?.boolValue
 		return attributes
 	}
 
@@ -411,9 +412,10 @@ final class LibraryStore {
 		attributes.isHidden = entry.isHidden
 		attributes.status = entry.libraryStatus
 		attributes.rewatchCount = Int(entry.rewatchCount)
-		attributes.rating = entry.reviewScore?.doubleValue
+		attributes.rating = entry.score?.doubleValue
 		attributes.review = entry.reviewDescription
-		attributes.note = entry.reviewNote
+		attributes.note = entry.note
+		attributes.isSpoiler = entry.isSpoiler?.boolValue
 		return attributes
 	}
 
@@ -476,16 +478,19 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Writes the user's rating, review and note to the local entry.
-	func applyRating(score: Double?, description: String?, note: String?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
+	/// Writes the user's rating, review, note and spoiler flag to the local entry.
+	func applyRating(score: Double?, description: String?, note: String?, isSpoiler: Bool?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		let now = Date()
-		entry.reviewScore = score.map { NSNumber(value: $0) }
+		entry.score = score.map { NSNumber(value: $0) }
 		if description != nil {
 			entry.reviewDescription = description
 		}
 		if note != nil {
-			entry.reviewNote = note
+			entry.note = note
+		}
+		if let isSpoiler {
+			entry.isSpoiler = NSNumber(value: isSpoiler)
 		}
 		entry.reviewUpdatedAt = now
 		if entry.reviewCreatedAt == nil, score != nil {
@@ -495,13 +500,14 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Clears the user's rating, review and note from the local entry.
+	/// Clears the user's rating, review, note and spoiler flag from the local entry.
 	func applyRatingRemoved(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		entry.reviewID = nil
-		entry.reviewScore = nil
+		entry.score = nil
 		entry.reviewDescription = nil
-		entry.reviewNote = nil
+		entry.note = nil
+		entry.isSpoiler = nil
 		entry.reviewCreatedAt = nil
 		entry.reviewUpdatedAt = nil
 		entry.updatedAt = Date()

@@ -143,13 +143,14 @@ extension Review {
 
 		// The screen showing the review already holds the item and the private note, so the editor opens without a fetch.
 		if let context = (viewController as? any ReviewEditorContextProviding)?.writeAReviewContext() {
-			await viewController.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: delegate)
+			await viewController.presentReviewEditor(using: context, delegate: delegate)
 			return
 		}
 
 		guard let kind = await self.reviewKind() else { return }
 
-		await viewController.presentReviewEditor(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, delegate: delegate)
+		let context = ReviewEditorContext(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, isSpoiler: self.attributes.isSpoiler)
+		await viewController.presentReviewEditor(using: context, delegate: delegate)
 	}
 
 	/// Fetches the model the review belongs to.

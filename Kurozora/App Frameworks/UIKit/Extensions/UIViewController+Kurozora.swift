@@ -145,23 +145,21 @@ extension UIViewController {
 	/// Presents the review editor matching the user's rating style.
 	///
 	/// - Parameters:
-	///    - kind: The model being reviewed.
-	///    - rating: The user's current rating of the model.
-	///    - review: The user's current review of the model.
-	///    - note: The user's current private note on the model.
+	///    - context: The editor's initial state.
 	///    - delegate: The receiver of the editor's outcome.
 	@MainActor
-	func presentReviewEditor(kind: ReviewKind, rating: Double?, review: String?, note: String?, delegate: (any ReviewEditorCollectionViewControllerDelegate)?) async {
+	func presentReviewEditor(using context: ReviewEditorContext, delegate: (any ReviewEditorCollectionViewControllerDelegate)?) async {
 		let ratingCategories = UserSettings.ratingStyle == .detailed
-			? (try? await kind.ratingCategories()) ?? []
+			? (try? await context.kind.ratingCategories()) ?? []
 			: []
 
 		let reviewEditorCollectionViewController = ReviewEditorCollectionViewController()
 		reviewEditorCollectionViewController.delegate = delegate
-		reviewEditorCollectionViewController.kind = kind
-		reviewEditorCollectionViewController.rating = rating
-		reviewEditorCollectionViewController.review = review
-		reviewEditorCollectionViewController.note = note
+		reviewEditorCollectionViewController.kind = context.kind
+		reviewEditorCollectionViewController.rating = context.rating
+		reviewEditorCollectionViewController.review = context.review
+		reviewEditorCollectionViewController.note = context.note
+		reviewEditorCollectionViewController.isSpoiler = context.isSpoiler
 		reviewEditorCollectionViewController.ratingCategories = ratingCategories
 
 		let navigationController = KNavigationController(rootViewController: reviewEditorCollectionViewController)

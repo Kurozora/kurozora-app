@@ -17,7 +17,7 @@ class SpoilerToggleCollectionViewCell: KCollectionViewCell {
 	private let titleLabel: KLabel = {
 		let label = KLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = L10n.parentalGuideSpoiler
+		label.text = L10n.spoiler
 		label.numberOfLines = 0
 		return label
 	}()
@@ -71,7 +71,9 @@ class SpoilerToggleCollectionViewCell: KCollectionViewCell {
 
 			self.toggle.leadingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 12),
 			self.toggle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-			self.toggle.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor)
+			self.toggle.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor),
+			self.toggle.topAnchor.constraint(greaterThanOrEqualTo: self.contentView.topAnchor, constant: 8),
+			self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.toggle.bottomAnchor, constant: 8)
 		])
 
 		self.toggle.addTarget(self, action: #selector(self.toggleChanged), for: .valueChanged)

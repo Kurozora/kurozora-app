@@ -203,6 +203,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
 				libraryAttributes.note = reviewEntry?.note
+				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -224,9 +225,9 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		return try await episode.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let episode = self.episode else { return nil }
-		return (.episode(episode), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
+		return ReviewEditorContext(kind: .episode(episode), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
 	}
 
 	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
@@ -253,7 +254,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		}
 	}
 
-	override func didDeleteReview(at indexPath: IndexPath?) {
+	override func didDeleteReview() {
 		self.libraryAttributes?.rating = nil
 		self.libraryAttributes?.review = nil
 	}
@@ -286,6 +287,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
+			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {

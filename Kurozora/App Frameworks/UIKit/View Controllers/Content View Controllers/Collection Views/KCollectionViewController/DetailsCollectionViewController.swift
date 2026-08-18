@@ -388,8 +388,8 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	/// Returns the editor configuration for the active model.
 	///
-	/// - Returns: A tuple containing the editor kind, the existing rating, and the existing review, or `nil` to disable the review flow.
-	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? { nil }
+	/// - Returns: The review editor context, or `nil` to disable the review flow.
+	func writeAReviewContext() -> ReviewEditorContext? { nil }
 
 	/// Presents the review details screen for the given review.
 	///
@@ -526,7 +526,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 			guard signedIn, let context = self.writeAReviewContext() else { return }
 
-			await self.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: self)
+			await self.presentReviewEditor(using: context, delegate: self)
 		}
 	}
 
@@ -575,7 +575,7 @@ extension DetailsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn, let context = self.writeAReviewContext() else { return }
 
-		await self.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: self)
+		await self.presentReviewEditor(using: context, delegate: self)
 	}
 }
 

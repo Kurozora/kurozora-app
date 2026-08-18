@@ -826,7 +826,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 	private func rating(for item: LibraryListCollectionViewController.ItemKind) -> Double? {
 		guard case let .entry(entry) = item else { return nil }
-		return entry.reviewScore?.doubleValue
+		return entry.score?.doubleValue
 	}
 
 	/// Returns the rendered text for the given column of the supplied item.

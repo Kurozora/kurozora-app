@@ -91,32 +91,7 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		return button
 	}()
 
-	private lazy var spoilerOverlay: KVisualEffectView = {
-		let view = KVisualEffectView(effect: nil)
-		view.translatesAutoresizingMaskIntoConstraints = false
-		view.isHidden = true
-		view.isUserInteractionEnabled = true
-		view.layerCornerRadius = 10
-
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = Self.spoilerWarningText
-		label.font = .preferredFont(forTextStyle: .footnote).bold
-		label.theme_textColor = KThemePicker.textColor.rawValue
-		label.textAlignment = .center
-		label.numberOfLines = 0
-		view.contentView.addSubview(label)
-
-		NSLayoutConstraint.activate([
-			label.leadingAnchor.constraint(greaterThanOrEqualTo: view.contentView.leadingAnchor, constant: 12),
-			label.trailingAnchor.constraint(lessThanOrEqualTo: view.contentView.trailingAnchor, constant: -12),
-			label.centerXAnchor.constraint(equalTo: view.contentView.centerXAnchor),
-			label.centerYAnchor.constraint(equalTo: view.contentView.centerYAnchor)
-		])
-
-		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.revealSpoiler)))
-		return view
-	}()
+	private let spoilerOverlayView = SpoilerOverlayView()
 
 	// MARK: - Properties
 	weak var delegate: ParentalGuideReasonCollectionViewCellDelegate?
@@ -212,7 +187,7 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		self.updateHelpfulButton(for: entry)
 		self.updateUnhelpfulButton(for: entry)
 
-		self.spoilerOverlay.isHidden = self.isSpoilerRevealed || !(entry.attributes.isSpoiler && !(entry.attributes.reason ?? "").isEmpty)
+		self.spoilerOverlayView.isHidden = self.isSpoilerRevealed || !(entry.attributes.isSpoiler && !(entry.attributes.reason ?? "").isEmpty)
 
 		self.moreButton.menu = UIMenu(title: "", children: [
 			UIDeferredMenuElement.uncached { [weak self] completion in
@@ -302,8 +277,13 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 
 		self.translationBarView = TranslationBarView.install(in: outerStack, at: 1, delegate: self)
 
+		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.revealHandler = { [weak self] in
+			self?.isSpoilerRevealed = true
+		}
+
 		self.contentView.addSubview(outerStack)
-		self.contentView.addSubview(self.spoilerOverlay)
+		self.contentView.addSubview(self.spoilerOverlayView)
 
 		NSLayoutConstraint.activate([
 			outerStack.leadingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leadingAnchor),
@@ -311,10 +291,10 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 			outerStack.topAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.topAnchor),
 			outerStack.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor),
 
-			self.spoilerOverlay.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-			self.spoilerOverlay.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-			self.spoilerOverlay.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-			self.spoilerOverlay.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+			self.spoilerOverlayView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+			self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+			self.spoilerOverlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			self.spoilerOverlayView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
 		])
 
 		self.helpfulButton.addTarget(self, action: #selector(self.helpfulPressed), for: .touchUpInside)
@@ -336,17 +316,6 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 
 	@objc private func unhelpfulPressed() {
 		self.delegate?.parentalGuideReasonCollectionViewCell(self, didTapVote: .unhelpful)
-	}
-
-	@objc private func revealSpoiler() {
-		self.isSpoilerRevealed = true
-
-		UIView.animate(withDuration: 0.2) {
-			self.spoilerOverlay.alpha = 0
-		} completion: { _ in
-			self.spoilerOverlay.isHidden = true
-			self.spoilerOverlay.alpha = 1
-		}
 	}
 }
 

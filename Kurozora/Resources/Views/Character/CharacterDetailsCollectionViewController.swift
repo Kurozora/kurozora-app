@@ -207,6 +207,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
 				libraryAttributes.note = reviewEntry?.note
+				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -228,9 +229,9 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 		return try await character.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let character = self.character else { return nil }
-		return (.character(character), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
+		return ReviewEditorContext(kind: .character(character), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -241,7 +242,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 		return self.cache[indexPath] as? Show
 	}
 
-	override func didDeleteReview(at indexPath: IndexPath?) {
+	override func didDeleteReview() {
 		self.libraryAttributes?.rating = nil
 		self.libraryAttributes?.review = nil
 	}
@@ -274,6 +275,7 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
+			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
 		case .showsListSegue:
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity

@@ -4194,10 +4194,10 @@ extension L10n {
 			)
 		}
 	}
-	/// Label for the spoiler toggle in the Parental Guide editor.
+	/// Label for a spoiler toggle.
 	///
-	/// - Tag: L10n-parentalGuideSpoiler
-	static var parentalGuideSpoiler: String {
+	/// - Tag: L10n-spoiler
+	static var spoiler: String {
 		L10n.resolve {
 			String(
 				localized: "Spoiler",
@@ -4345,6 +4345,34 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
+			)
+		}
+	}
+	/// Spoiler-warning banner overlaid on a review on touch platforms.
+	///
+	/// - Tag: L10n-reviewSpoilerTap
+	static var reviewSpoilerTap: String {
+		L10n.resolve {
+			String(
+				localized: "This review contains spoilers. Tap to view",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Spoiler-warning banner overlaid on a review on touch platforms."
+			)
+		}
+	}
+	/// Spoiler-warning banner overlaid on a review on pointer platforms.
+	///
+	/// - Tag: L10n-reviewSpoilerClick
+	static var reviewSpoilerClick: String {
+		L10n.resolve {
+			String(
+				localized: "This review contains spoilers. Click to view",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Spoiler-warning banner overlaid on a review on pointer platforms."
 			)
 		}
 	}

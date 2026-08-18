@@ -117643,6 +117643,472 @@
         }
       }
     },
+    "This review contains spoilers. Click to view" : {
+      "comment" : "Spoiler-warning banner overlaid on a review on pointer platforms.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذه المراجعة تحتوي على حرق للأحداث. انقر للعرض"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই পর্যালোচনায় স্পয়লার রয়েছে। দেখতে ক্লিক করুন"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato recenze obsahuje spoilery. Klikni pro zobrazení"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne anmeldelse indeholder spoilere. Klik for at se"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Rezension enthält Spoiler. Zum Ansehen klicken"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή η κριτική περιέχει spoilers. Κάνε κλικ για προβολή"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta reseña contiene spoilers. Haz clic para verla"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta reseña contiene spoilers. Haz clic para ver"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "این نقد اسپویلر دارد. برای دیدن کلیک کنید"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tämä arvostelu sisältää spoilereita. Näytä napsauttamalla"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ang review na ito ay may mga spoiler. I-click para tingnan"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette critique contient des spoilers. Clique pour voir"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הביקורת הזאת מכילה ספוילרים. לחץ כדי לצפות"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस समीक्षा में स्पॉइलर हैं। देखने के लिए क्लिक करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ez az értékelés spoilereket tartalmaz. Kattints a megtekintéshez"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Այս կարծիքը պարունակում է սպոյլերներ։ Սեղմիր՝ դիտելու համար"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulasan ini mengandung spoiler. Klik untuk melihat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questa recensione contiene spoiler. Clicca per visualizzare"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このレビューにはネタバレが含まれます。クリックして表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 리뷰에는 스포일러가 포함되어 있어요. 클릭하여 보기"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulasan ini mengandungi spoiler. Klik untuk lihat"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne anmeldelsen inneholder spoilere. Klikk for å vise"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze recensie bevat spoilers. Klik om te bekijken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta recenzja zawiera spoilery. Kliknij, aby wyświetlić"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta avaliação contém spoilers. Clique para ver"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta crítica contém spoilers. Clica para ver"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Această recenzie conține spoilere. Clic pentru a vedea"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот отзыв содержит спойлеры. Нажмите, чтобы посмотреть"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den här recensionen innehåller spoilers. Klicka för att visa"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்த விமர்சனம் spoilers கொண்டது. பார்க்க கிளிக் செய்யவும்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఈ సమీక్షలో స్పాయిలర్‌లు ఉన్నాయి. చూడటానికి క్లిక్ చేయండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีวิวนี้มีสปอยล์ คลิกเพื่อดู"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu inceleme spoiler içeriyor. Görmek için tıkla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей огляд містить спойлери. Натисніть, щоб переглянути"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اس جائزے میں اسپائلرز ہیں۔ دیکھنے کے لیے کلک کریں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đánh giá này chứa spoiler. Nhấp để xem"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此评论含有剧透。点击查看"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此評論含有劇透內容。點按即可查看"
+          }
+        }
+      }
+    },
+    "This review contains spoilers. Tap to view" : {
+      "comment" : "Spoiler-warning banner overlaid on a review on touch platforms.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذه المراجعة تحتوي على حرق للأحداث. اضغط للعرض"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই পর্যালোচনায় স্পয়লার রয়েছে। দেখতে ট্যাপ করুন"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato recenze obsahuje spoilery. Klepnutím zobrazíš"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne anmeldelse indeholder spoilere. Tryk for at se"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Rezension enthält Spoiler. Zum Ansehen tippen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή η κριτική περιέχει spoilers. Πάτησε για προβολή"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta reseña contiene spoilers. Toca para verla"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta reseña contiene spoilers. Toca para ver"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "این نقد اسپویلر دارد. برای دیدن ضربه بزنید"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tämä arvostelu sisältää spoilereita. Näytä napauttamalla"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ang review na ito ay may mga spoiler. I-tap para tingnan"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette critique contient des spoilers. Appuie pour voir"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הביקורת הזאת מכילה ספוילרים. הקש כדי לצפות"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस समीक्षा में स्पॉइलर हैं। देखने के लिए टैप करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ez az értékelés spoilereket tartalmaz. Koppints a megtekintéshez"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Այս կարծիքը պարունակում է սպոյլերներ։ Հպիր՝ դիտելու համար"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulasan ini mengandung spoiler. Ketuk untuk melihat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questa recensione contiene spoiler. Tocca per visualizzare"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このレビューにはネタバレが含まれます。タップして表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 리뷰에는 스포일러가 포함되어 있어요. 탭하여 보기"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulasan ini mengandungi spoiler. Ketik untuk lihat"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne anmeldelsen inneholder spoilere. Trykk for å vise"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze recensie bevat spoilers. Tik om te bekijken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta recenzja zawiera spoilery. Dotknij, aby wyświetlić"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta avaliação contém spoilers. Toque para ver"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta crítica contém spoilers. Toca para ver"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Această recenzie conține spoilere. Atinge pentru a vedea"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот отзыв содержит спойлеры. Нажмите, чтобы посмотреть"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den här recensionen innehåller spoilers. Tryck för att visa"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்த விமர்சனம் spoilers கொண்டது. பார்க்க தட்டவும்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఈ సమీక్షలో స్పాయిలర్‌లు ఉన్నాయి. చూడటానికి ట్యాప్ చేయండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีวิวนี้มีสปอยล์ แตะเพื่อดู"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu inceleme spoiler içeriyor. Görmek için dokun"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей огляд містить спойлери. Торкніться, щоб переглянути"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اس جائزے میں اسپائلرز ہیں۔ دیکھنے کے لیے تھپتھپائیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đánh giá này chứa spoiler. Chạm để xem"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此评论含有剧透。点按查看"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此評論含有劇透內容。輕觸即可查看"
+          }
+        }
+      }
+    },
     "This user" : {
       "comment" : "Fallback used in place of a user's display name when one is unavailable.",
       "localizations" : {

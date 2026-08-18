@@ -21,6 +21,9 @@ extension ReviewEditorCollectionViewController {
 		/// Indicates the section holds the rating category at the given index.
 		case category(index: Int)
 
+		/// Indicates the section holds the spoiler toggle.
+		case spoiler
+
 		/// Indicates the section holds the private note.
 		case privateNote
 	}
@@ -28,10 +31,10 @@ extension ReviewEditorCollectionViewController {
 	/// The sections shown for the user's rating style.
 	var sections: [SectionLayoutKind] {
 		guard self.isDetailed else {
-			return [.rate, .review, .privateNote]
+			return [.rate, .review, .spoiler, .privateNote]
 		}
 
-		return self.ratingCategories.indices.map { .category(index: $0) } + [.privateNote]
+		return self.ratingCategories.indices.map { .category(index: $0) } + [.spoiler, .privateNote]
 	}
 }
 
@@ -41,7 +44,8 @@ extension ReviewEditorCollectionViewController {
 		return [
 			RateCollectionViewCell.self,
 			RatingCategoryCollectionViewCell.self,
-			ReviewInputCollectionViewCell.self
+			ReviewInputCollectionViewCell.self,
+			SpoilerToggleCollectionViewCell.self
 		]
 	}
 }
@@ -75,6 +79,11 @@ extension ReviewEditorCollectionViewController {
 			}
 
 			return ratingCategoryCollectionViewCell
+		case .spoiler:
+			let spoilerToggleCollectionViewCell = collectionView.dequeueReusableCell(withClass: SpoilerToggleCollectionViewCell.self, for: indexPath)
+			spoilerToggleCollectionViewCell.configure(isOn: self.isSpoiler, delegate: self)
+
+			return spoilerToggleCollectionViewCell
 		case .privateNote:
 			let reviewInputCollectionViewCell = collectionView.dequeueReusableCell(withClass: ReviewInputCollectionViewCell.self, for: indexPath)
 			reviewInputCollectionViewCell.delegate = self

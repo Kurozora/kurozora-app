@@ -21,9 +21,27 @@ extension ReviewEditorCollectionViewControllerDelegate {
 	func reviewEditorCollectionViewControllerDidDeleteReview() {}
 }
 
+/// The values a screen hands the review editor for the item it shows.
+struct ReviewEditorContext {
+	/// The model being rated and reviewed.
+	let kind: ReviewKind
+
+	/// The user's rating of the model.
+	let rating: Double?
+
+	/// The user's review of the model.
+	let review: String?
+
+	/// The user's private note on the model.
+	let note: String?
+
+	/// Whether the user's review contains spoiler material.
+	let isSpoiler: Bool
+}
+
 protocol ReviewEditorContextProviding: AnyObject {
 	/// Returns the editor configuration of the item the screen shows.
-	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)?
+	func writeAReviewContext() -> ReviewEditorContext?
 }
 
 /// A review editor that adapts to the user's rating style.
@@ -49,6 +67,9 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// The user's private note on the model.
 	var note: String?
 
+	/// Whether the user's review contains spoiler material.
+	var isSpoiler: Bool = false
+
 	/// The rating categories of the model with the user's scores.
 	var ratingCategories: [RatingCategory] = []
 
@@ -69,6 +90,9 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// The private note the editor opened with.
 	private var originalNote: String?
 
+	/// The spoiler state the editor opened with.
+	private var originalIsSpoiler: Bool = false
+
 	/// The category scores the editor opened with.
 	private var originalScores: [KurozoraItemID: Double] = [:]
 
@@ -81,9 +105,11 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 			return self.rating != self.originalRating
 				|| (self.review ?? "") != (self.originalReview ?? "")
 				|| (self.note ?? "") != (self.originalNote ?? "")
+				|| self.isSpoiler != self.originalIsSpoiler
 		}
 
 		if (self.note ?? "") != (self.originalNote ?? "") { return true }
+		if self.isSpoiler != self.originalIsSpoiler { return true }
 
 		return self.ratingCategories.contains { ratingCategory in
 			ratingCategory.attributes.score != self.originalScores[ratingCategory.id]
@@ -185,6 +211,7 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 		self.originalRating = self.rating
 		self.originalReview = self.review
 		self.originalNote = self.note
+		self.originalIsSpoiler = self.isSpoiler
 
 		for ratingCategory in self.ratingCategories {
 			self.originalScores[ratingCategory.id] = ratingCategory.attributes.score
@@ -302,13 +329,13 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// - Returns: `true` when the submission succeeds.
 	private func submit(using kind: ReviewKind) async throws(APIError) -> Bool {
 		guard !self.isDetailed else {
-			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, note: self.note)
+			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, note: self.note, isSpoiler: self.isSpoiler)
 		}
 
 		let existingRating = self.rating ?? 0.0
 		let rating = existingRating > 0 ? existingRating : Self.defaultRating
 
-		return try await kind.rate(using: rating, description: self.review, note: self.note)
+		return try await kind.rate(using: rating, description: self.review, note: self.note, isSpoiler: self.isSpoiler)
 	}
 
 	/// Presents the off-topic content warning.
@@ -391,6 +418,14 @@ extension ReviewEditorCollectionViewController: ReviewInputCollectionViewCellDel
 			self.review = text
 		}
 
+		self.updateUnsavedChangesState()
+	}
+}
+
+// MARK: - SpoilerToggleCollectionViewCellDelegate
+extension ReviewEditorCollectionViewController: SpoilerToggleCollectionViewCellDelegate {
+	func spoilerToggleCollectionViewCell(_ cell: SpoilerToggleCollectionViewCell, didSet isOn: Bool) {
+		self.isSpoiler = isOn
 		self.updateUnsavedChangesState()
 	}
 }

@@ -104,7 +104,7 @@ enum LibrarySyncDiagnostics {
 			reminded: entry.isReminded ? 1 : 0,
 			hidden: entry.isHidden ? 1 : 0,
 			rewatch: Int(entry.rewatchCount),
-			score: entry.reviewScore?.doubleValue,
+			score: entry.score?.doubleValue,
 			updatedAt: entry.updatedAt.map { Int($0.timeIntervalSince1970) },
 			origin: entry.remoteID.hasPrefix(LocalLibraryEntry.localRemoteIDPrefix) ? "L" : "S"
 		)

@@ -212,6 +212,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
 				libraryAttributes.note = reviewEntry?.note
+				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -233,9 +234,9 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return try await studio.rate(using: rating, description: description)
 	}
 
-	override func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let studio = self.studio else { return nil }
-		return (.studio(studio), self.libraryAttributes?.rating, self.libraryAttributes?.review, self.libraryAttributes?.note)
+		return ReviewEditorContext(kind: .studio(studio), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -246,7 +247,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 		return self.cache[indexPath] as? Show
 	}
 
-	override func didDeleteReview(at indexPath: IndexPath?) {
+	override func didDeleteReview() {
 		self.libraryAttributes?.rating = nil
 		self.libraryAttributes?.review = nil
 	}
@@ -279,6 +280,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 			reviewsCollectionViewController.givenRating = self.libraryAttributes?.rating
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
+			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }

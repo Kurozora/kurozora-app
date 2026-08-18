@@ -65,8 +65,9 @@
         <attribute name="reviewCreatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="reviewDescription" optional="YES" attributeType="String"/>
         <attribute name="reviewID" optional="YES" attributeType="String"/>
-        <attribute name="reviewNote" optional="YES" attributeType="String"/>
-        <attribute name="reviewScore" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="isSpoiler" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="score" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="reviewUpdatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="rewatchCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="slug" optional="YES" attributeType="String"/>

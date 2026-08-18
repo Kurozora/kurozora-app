@@ -67,16 +67,18 @@ class LocalLibraryEntry: NSManagedObject {
 
 		if let review = row.review {
 			entry.reviewID = review.id
-			entry.reviewScore = NSNumber(value: review.score)
+			entry.score = NSNumber(value: review.score)
 			entry.reviewDescription = review.description
-			entry.reviewNote = review.note
+			entry.note = review.note
+			entry.isSpoiler = NSNumber(value: review.isSpoiler)
 			entry.reviewCreatedAt = review.createdAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
 			entry.reviewUpdatedAt = review.updatedAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
 		} else {
 			entry.reviewID = nil
-			entry.reviewScore = nil
+			entry.score = nil
 			entry.reviewDescription = nil
-			entry.reviewNote = nil
+			entry.note = nil
+			entry.isSpoiler = nil
 			entry.reviewCreatedAt = nil
 			entry.reviewUpdatedAt = nil
 		}

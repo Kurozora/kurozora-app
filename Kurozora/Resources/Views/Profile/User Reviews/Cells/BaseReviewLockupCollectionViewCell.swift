@@ -28,12 +28,38 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 	private var posterBoundsObservation: NSKeyValueObservation?
 
+	private let spoilerOverlayView = SpoilerOverlayView()
+
+	/// Whether the reader revealed this review's spoiler.
+	private var isSpoilerRevealed = false
+
+	private static var spoilerWarningText: String {
+		#if targetEnvironment(macCatalyst)
+		return L10n.reviewSpoilerClick
+		#else
+		return L10n.reviewSpoilerTap
+		#endif
+	}
+
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
 		}
+
+		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.revealHandler = { [weak self] in
+			self?.isSpoilerRevealed = true
+		}
+
+		self.contentView.addSubview(self.spoilerOverlayView)
+		NSLayoutConstraint.activate([
+			self.spoilerOverlayView.topAnchor.constraint(equalTo: self.tertiaryLabel.topAnchor),
+			self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.tertiaryLabel.bottomAnchor),
+			self.spoilerOverlayView.leadingAnchor.constraint(equalTo: self.tertiaryLabel.leadingAnchor),
+			self.spoilerOverlayView.trailingAnchor.constraint(equalTo: self.tertiaryLabel.trailingAnchor)
+		])
 	}
 
 	override func layoutSubviews() {
@@ -41,7 +67,23 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.syncLiteratureMaskFrame()
 	}
 
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.isSpoilerRevealed = false
+	}
+
 	// MARK: - Functions
+	/// Renders the parts of `review` shared by every reviewable kind.
+	///
+	/// - Parameter review: The review to display.
+	private func configureReviewDetails(using review: Review) {
+		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
+		self.tertiaryLabel.text = review.attributes.description
+		self.scoreLabel.text = "\(review.attributes.score)"
+		self.scoreView.rating = review.attributes.score
+		self.spoilerOverlayView.isHidden = self.isSpoilerRevealed || !(review.attributes.isSpoiler && !(review.attributes.description ?? "").isEmpty)
+	}
+
 	func configure(using review: Review?, for character: Character?) {
 		guard let review = review, let character = character else {
 			self.showSkeleton()
@@ -50,10 +92,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = character.attributes.name
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		character.attributes.profileImage(imageView: self.posterImageView)
@@ -71,10 +110,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = episode.attributes.title
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure banner
 		episode.attributes.bannerImage(imageView: self.posterImageView)
@@ -94,10 +130,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = game.attributes.title
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		game.attributes.posterImage(imageView: self.posterImageView)
@@ -117,10 +150,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = literature.attributes.title
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		literature.attributes.posterImage(imageView: self.posterImageView)
@@ -139,10 +169,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = person.attributes.fullName
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		person.attributes.profileImage(imageView: self.posterImageView)
@@ -160,10 +187,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = show.attributes.title
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		show.attributes.posterImage(imageView: self.posterImageView)
@@ -183,10 +207,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = song.attributes.title
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure artwork
 		song.attributes.artworkImage(imageView: self.posterImageView)
@@ -206,10 +227,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = studio.attributes.name
-		self.secondaryLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-		self.tertiaryLabel.text = review.attributes.description
-		self.scoreLabel.text = "\(review.attributes.score)"
-		self.scoreView.rating = review.attributes.score
+		self.configureReviewDetails(using: review)
 
 		// Configure poster
 		studio.attributes.profileImage(imageView: self.posterImageView)

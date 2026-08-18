@@ -40,6 +40,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 	/// The authenticated user's private note on the reviewed item.
 	var givenNote: String?
+
+	/// Whether the authenticated user's review of the reviewed item contains spoiler material.
+	var givenIsSpoiler: Bool = false
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
@@ -277,6 +280,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self.givenRating = nil
 			self.givenReview = nil
 			self.givenNote = nil
+			self.givenIsSpoiler = false
 
 			self.updateDataSource()
 			self.toggleEmptyDataView()
@@ -457,9 +461,9 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 			guard let self = self else { return }
 
 			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-			guard signedIn, let kind = self.currentReviewKind() else { return }
+			guard signedIn, let context = self.writeAReviewContext() else { return }
 
-			await self.presentReviewEditor(kind: kind, rating: self.currentGivenRating(), review: self.givenReview, note: self.givenNote, delegate: self)
+			await self.presentReviewEditor(using: context, delegate: self)
 		}
 	}
 
@@ -486,18 +490,18 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
-		guard signedIn, let kind = self.currentReviewKind() else { return }
+		guard signedIn, let context = self.writeAReviewContext() else { return }
 
-		await self.presentReviewEditor(kind: kind, rating: self.currentGivenRating(), review: self.givenReview, note: self.givenNote, delegate: self)
+		await self.presentReviewEditor(using: context, delegate: self)
 	}
 }
 
 // MARK: - ReviewEditorContextProviding
 extension ReviewsListCollectionViewController: ReviewEditorContextProviding {
-	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+	func writeAReviewContext() -> ReviewEditorContext? {
 		guard let kind = self.currentReviewKind() else { return nil }
 
-		return (kind, self.givenRating, self.givenReview, self.givenNote)
+		return ReviewEditorContext(kind: kind, rating: self.givenRating, review: self.givenReview, note: self.givenNote, isSpoiler: self.givenIsSpoiler)
 	}
 }
 
@@ -511,6 +515,7 @@ extension ReviewsListCollectionViewController: ReviewEditorCollectionViewControl
 		self.givenRating = nil
 		self.givenReview = nil
 		self.givenNote = nil
+		self.givenIsSpoiler = false
 
 		if let userID = User.current?.id {
 			self.reviews.removeAll { review in
