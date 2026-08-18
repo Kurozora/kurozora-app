@@ -62,14 +62,6 @@
         <attribute name="publicRating" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="remoteID" attributeType="String" defaultValueString=""/>
         <attribute name="remindedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="reviewCreatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="reviewDescription" optional="YES" attributeType="String"/>
-        <attribute name="reviewID" optional="YES" attributeType="String"/>
-        <attribute name="isSpoiler" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
-        <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="recommendation" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
-        <attribute name="score" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
-        <attribute name="reviewUpdatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="rewatchCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="slug" optional="YES" attributeType="String"/>
         <attribute name="sortTitle" optional="YES" attributeType="String"/>
@@ -81,6 +73,7 @@
         <attribute name="trackableID" attributeType="String" defaultValueString=""/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="userSlug" attributeType="String"/>
+        <relationship name="review" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="LocalReview" inverseName="entry" inverseEntity="LocalReview"/>
         <fetchIndex name="byUserSlugKindUpdatedAt">
             <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
             <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
@@ -104,6 +97,17 @@
                 <constraint value="remoteID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
+    </entity>
+    <entity name="LocalReview" representedClassName="LocalReview" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isSpoiler" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="recommendation" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
+        <attribute name="remoteID" optional="YES" attributeType="String"/>
+        <attribute name="score" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocalLibraryEntry" inverseName="review" inverseEntity="LocalLibraryEntry"/>
     </entity>
     <entity name="LocalSyncCursor" representedClassName="LocalSyncCursor" syncable="YES">
         <attribute name="cursorID" optional="YES" attributeType="String"/>

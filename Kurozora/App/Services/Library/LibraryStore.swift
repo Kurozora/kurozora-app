@@ -271,7 +271,7 @@ final class LibraryStore {
 		case .rating:
 			return [NSSortDescriptor(key: "publicRating", ascending: option == .worst)]
 		case .myRating:
-			return [NSSortDescriptor(key: "score", ascending: option == .worst)]
+			return [NSSortDescriptor(key: "review.score", ascending: option == .worst)]
 		}
 	}
 
@@ -325,11 +325,11 @@ final class LibraryStore {
 		attributes.isHidden = entry.isHidden
 		attributes.status = entry.libraryStatus
 		attributes.rewatchCount = Int(entry.rewatchCount)
-		attributes.rating = entry.score?.doubleValue
-		attributes.review = entry.reviewDescription
-		attributes.note = entry.note
-		attributes.isSpoiler = entry.isSpoiler?.boolValue
-		attributes.recommendation = entry.recommendation.flatMap { ReviewRecommendation(rawValue: $0.intValue) }
+		attributes.rating = entry.review?.score?.doubleValue
+		attributes.review = entry.review?.text
+		attributes.note = entry.review?.note
+		attributes.isSpoiler = entry.review?.isSpoiler?.boolValue
+		attributes.recommendation = entry.review?.reviewRecommendation
 		return attributes
 	}
 
@@ -413,11 +413,11 @@ final class LibraryStore {
 		attributes.isHidden = entry.isHidden
 		attributes.status = entry.libraryStatus
 		attributes.rewatchCount = Int(entry.rewatchCount)
-		attributes.rating = entry.score?.doubleValue
-		attributes.review = entry.reviewDescription
-		attributes.note = entry.note
-		attributes.isSpoiler = entry.isSpoiler?.boolValue
-		attributes.recommendation = entry.recommendation.flatMap { ReviewRecommendation(rawValue: $0.intValue) }
+		attributes.rating = entry.review?.score?.doubleValue
+		attributes.review = entry.review?.text
+		attributes.note = entry.review?.note
+		attributes.isSpoiler = entry.review?.isSpoiler?.boolValue
+		attributes.recommendation = entry.review?.reviewRecommendation
 		return attributes
 	}
 
@@ -480,42 +480,37 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Writes the user's rating, review, note, spoiler flag and recommendation to the local entry.
 	func applyRating(score: Double?, description: String?, note: String?, isSpoiler: Bool?, recommendation: ReviewRecommendation?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		let now = Date()
-		entry.score = score.map { NSNumber(value: $0) }
+		let review = entry.review ?? LocalReview(context: self.viewContext)
+		review.entry = entry
+		review.score = score.map { NSNumber(value: $0) }
 		if description != nil {
-			entry.reviewDescription = description
+			review.text = description
 		}
 		if note != nil {
-			entry.note = note
+			review.note = note
 		}
 		if let isSpoiler {
-			entry.isSpoiler = NSNumber(value: isSpoiler)
+			review.isSpoiler = NSNumber(value: isSpoiler)
 		}
 		if let recommendation {
-			entry.recommendation = NSNumber(value: recommendation.rawValue)
+			review.reviewRecommendation = recommendation
 		}
-		entry.reviewUpdatedAt = now
-		if entry.reviewCreatedAt == nil, score != nil {
-			entry.reviewCreatedAt = now
+		review.updatedAt = now
+		if review.createdAt == nil, score != nil {
+			review.createdAt = now
 		}
 		entry.updatedAt = now
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Clears the user's rating, review, note, spoiler flag and recommendation from the local entry.
 	func applyRatingRemoved(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
-		entry.reviewID = nil
-		entry.score = nil
-		entry.reviewDescription = nil
-		entry.note = nil
-		entry.isSpoiler = nil
-		entry.recommendation = nil
-		entry.reviewCreatedAt = nil
-		entry.reviewUpdatedAt = nil
+		if let review = entry.review {
+			self.viewContext.delete(review)
+		}
 		entry.updatedAt = Date()
 		PersistenceController.shared.save(self.viewContext)
 	}

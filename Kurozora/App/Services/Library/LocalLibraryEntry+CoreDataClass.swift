@@ -65,25 +65,7 @@ class LocalLibraryEntry: NSManagedObject {
 		entry.isReminded = row.isReminded
 		entry.remindedAt = row.remindedAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
 
-		if let review = row.review {
-			entry.reviewID = review.id
-			entry.score = NSNumber(value: review.score)
-			entry.reviewDescription = review.description
-			entry.note = review.note
-			entry.isSpoiler = NSNumber(value: review.isSpoiler)
-			entry.recommendation = review.recommendation.map { NSNumber(value: $0.rawValue) }
-			entry.reviewCreatedAt = review.createdAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
-			entry.reviewUpdatedAt = review.updatedAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
-		} else {
-			entry.reviewID = nil
-			entry.score = nil
-			entry.reviewDescription = nil
-			entry.note = nil
-			entry.isSpoiler = nil
-			entry.recommendation = nil
-			entry.reviewCreatedAt = nil
-			entry.reviewUpdatedAt = nil
-		}
+		LocalReview.apply(row.review, to: entry, in: context)
 
 		entry.slug = row.slug
 		entry.title = row.title

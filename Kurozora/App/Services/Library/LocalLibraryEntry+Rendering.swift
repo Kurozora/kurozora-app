@@ -14,7 +14,7 @@ extension LocalLibraryEntry {
 	/// The short information line, composed from the cached media-type label and review score.
 	var informationStringShort: String {
 		var information = self.mediaTypeName ?? ""
-		if let score = self.score?.doubleValue, score > 0 {
+		if let score = self.review?.score?.doubleValue, score > 0 {
 			if !information.isEmpty {
 				information += " · "
 			}

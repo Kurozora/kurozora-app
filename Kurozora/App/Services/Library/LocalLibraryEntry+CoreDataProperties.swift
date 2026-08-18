@@ -61,30 +61,6 @@ extension LocalLibraryEntry {
 	/// The date the user set the reminder.
 	@NSManaged var remindedAt: Date?
 
-	/// The user's review row primary identifier, or `nil` if no review exists.
-	@NSManaged var reviewID: String?
-
-	/// The user's review score, from `0` to `5`, or `nil` if no review exists.
-	@NSManaged var score: NSNumber?
-
-	/// The user's written review text, or `nil`.
-	@NSManaged var reviewDescription: String?
-
-	/// The user's private note on the item. `nil` when none exists.
-	@NSManaged var note: String?
-
-	/// Whether the user's review contains spoiler material. `nil` when no review exists.
-	@NSManaged var isSpoiler: NSNumber?
-
-	/// Raw value of the user's `ReviewRecommendation`, or `nil` when no review exists.
-	@NSManaged var recommendation: NSNumber?
-
-	/// The date the user's review was first created.
-	@NSManaged var reviewCreatedAt: Date?
-
-	/// The date the user's review was last edited.
-	@NSManaged var reviewUpdatedAt: Date?
-
 	/// The trackable's URL-safe slug, used to build canonical webpage links.
 	@NSManaged var slug: String?
 
@@ -129,4 +105,7 @@ extension LocalLibraryEntry {
 
 	/// The public average rating, used for the rating sort axis.
 	@NSManaged var publicRating: NSNumber?
+
+	/// The user's review of the trackable.
+	@NSManaged var review: LocalReview?
 }
