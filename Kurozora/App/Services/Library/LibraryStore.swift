@@ -315,8 +315,9 @@ final class LibraryStore {
 		return "\(userSlug)::\(kind.rawValue)::\(trackableID)"
 	}
 
-	/// Builds a snapshot `LibraryAttributes` from a `LocalLibraryEntry`. Pure projection;
-	/// safe to call from any thread that has a valid reference to the entry's properties.
+	/// Builds a `LibraryAttributes` snapshot from a `LocalLibraryEntry`.
+	///
+	/// - Note: Safe to call from any thread holding a valid reference to the entry's properties.
 	private static func snapshotAttributes(from entry: LocalLibraryEntry) -> LibraryAttributes {
 		var attributes = LibraryAttributes()
 		attributes.isFavorited = entry.isFavorited
@@ -326,6 +327,7 @@ final class LibraryStore {
 		attributes.rewatchCount = Int(entry.rewatchCount)
 		attributes.rating = entry.reviewScore?.doubleValue
 		attributes.review = entry.reviewDescription
+		attributes.note = entry.reviewNote
 		return attributes
 	}
 
@@ -411,6 +413,7 @@ final class LibraryStore {
 		attributes.rewatchCount = Int(entry.rewatchCount)
 		attributes.rating = entry.reviewScore?.doubleValue
 		attributes.review = entry.reviewDescription
+		attributes.note = entry.reviewNote
 		return attributes
 	}
 
@@ -473,13 +476,16 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Updates the local entry's rating and review immediately after a successful server rate call.
-	func applyRating(score: Double?, description: String?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
+	/// Writes the user's rating, review and note to the local entry.
+	func applyRating(score: Double?, description: String?, note: String?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		let now = Date()
 		entry.reviewScore = score.map { NSNumber(value: $0) }
 		if description != nil {
 			entry.reviewDescription = description
+		}
+		if note != nil {
+			entry.reviewNote = note
 		}
 		entry.reviewUpdatedAt = now
 		if entry.reviewCreatedAt == nil, score != nil {
@@ -489,12 +495,13 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Clears the local entry's rating and review immediately after a successful server delete.
+	/// Clears the user's rating, review and note from the local entry.
 	func applyRatingRemoved(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		entry.reviewID = nil
 		entry.reviewScore = nil
 		entry.reviewDescription = nil
+		entry.reviewNote = nil
 		entry.reviewCreatedAt = nil
 		entry.reviewUpdatedAt = nil
 		entry.updatedAt = Date()

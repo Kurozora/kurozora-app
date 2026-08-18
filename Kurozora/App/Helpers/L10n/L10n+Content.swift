@@ -1057,6 +1057,20 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the 'Update Review' context menu option.
+	///
+	/// - Tag: L10n-updateReview
+	static var updateReview: String {
+		L10n.resolve {
+			String(
+				localized: "Update Review",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'Update Review' context menu option."
+			)
+		}
+	}
 	/// The title string for the confirmation dialog when clearing a rating or deleting a review.
 	///
 	/// - Tag: L10n-deleteRatingConfirmationTitle
@@ -4166,17 +4180,17 @@ extension L10n {
 			)
 		}
 	}
-	/// Placeholder for the reason text view in the Parental Guide editor.
+	/// The placeholder string for the reason text view in the Parental Guide editor.
 	///
-	/// - Tag: L10n-parentalGuideReasonPlaceholder
-	static var parentalGuideReasonPlaceholder: String {
+	/// - Tag: L10n-whatStandsOut
+	static var whatStandsOut: String {
 		L10n.resolve {
 			String(
 				localized: "What stands out?",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "Placeholder for the reason text view in the Parental Guide editor."
+				comment: "The placeholder string for the reason text view in the Parental Guide editor."
 			)
 		}
 	}

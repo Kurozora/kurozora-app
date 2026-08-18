@@ -10,10 +10,17 @@ import UIKit
 import KurozoraKit
 
 class KCollectionViewCell: UICollectionViewCell, SkeletonDisplayable {
+	// MARK: - Properties
+	var isSkeletonEnabled: Bool {
+		return true
+	}
+
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		self.showSkeleton()
+		if self.isSkeletonEnabled {
+			self.showSkeleton()
+		}
 	}
 }

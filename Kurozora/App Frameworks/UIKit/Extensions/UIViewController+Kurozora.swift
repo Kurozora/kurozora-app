@@ -151,34 +151,21 @@ extension UIViewController {
 	///    - note: The user's current private note on the model.
 	///    - delegate: The receiver of the editor's outcome.
 	@MainActor
-	func presentReviewEditor<T: ReviewTextEditorViewControllerDelegate & DetailedReviewTableViewControllerDelegate>(kind: ReviewKind, rating: Double?, review: String?, note: String?, delegate: T) async {
+	func presentReviewEditor(kind: ReviewKind, rating: Double?, review: String?, note: String?, delegate: (any ReviewEditorCollectionViewControllerDelegate)?) async {
 		let ratingCategories = UserSettings.ratingStyle == .detailed
 			? (try? await kind.ratingCategories()) ?? []
 			: []
 
-		if ratingCategories.isEmpty {
-			let reviewTextEditorViewController = ReviewTextEditorViewController()
-			reviewTextEditorViewController.delegate = delegate
-			reviewTextEditorViewController.kind = kind
-			reviewTextEditorViewController.rating = rating
-			reviewTextEditorViewController.review = review
-			reviewTextEditorViewController.note = note
+		let reviewEditorCollectionViewController = ReviewEditorCollectionViewController()
+		reviewEditorCollectionViewController.delegate = delegate
+		reviewEditorCollectionViewController.kind = kind
+		reviewEditorCollectionViewController.rating = rating
+		reviewEditorCollectionViewController.review = review
+		reviewEditorCollectionViewController.note = note
+		reviewEditorCollectionViewController.ratingCategories = ratingCategories
 
-			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-			navigationController.presentationController?.delegate = reviewTextEditorViewController
-			self.present(navigationController, animated: true)
-			return
-		}
-
-		let detailedReviewTableViewController = DetailedReviewTableViewController()
-		detailedReviewTableViewController.delegate = delegate
-		detailedReviewTableViewController.kind = kind
-		detailedReviewTableViewController.rating = rating
-		detailedReviewTableViewController.note = note
-		detailedReviewTableViewController.ratingCategories = ratingCategories
-
-		let navigationController = KNavigationController(rootViewController: detailedReviewTableViewController)
-		navigationController.presentationController?.delegate = detailedReviewTableViewController
+		let navigationController = KNavigationController(rootViewController: reviewEditorCollectionViewController)
+		navigationController.presentationController?.delegate = reviewEditorCollectionViewController
 		self.present(navigationController, animated: true)
 	}
 }

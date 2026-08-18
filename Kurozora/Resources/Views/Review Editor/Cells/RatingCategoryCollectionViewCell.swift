@@ -1,40 +1,41 @@
 //
-//  RatingCategoryTableViewCell.swift
+//  RatingCategoryCollectionViewCell.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 13/08/2026.
+//  Created by Khoren Katklian on 18/08/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 import UIKit
 
-protocol RatingCategoryTableViewCellDelegate: AnyObject {
-	func ratingCategoryTableViewCell(_ cell: RatingCategoryTableViewCell, didChangeScore score: Double)
-	func ratingCategoryTableViewCell(_ cell: RatingCategoryTableViewCell, didChangeReview review: String)
+protocol RatingCategoryCollectionViewCellDelegate: AnyObject {
+	func ratingCategoryCollectionViewCell(_ cell: RatingCategoryCollectionViewCell, didChangeScore score: Double)
+	func ratingCategoryCollectionViewCell(_ cell: RatingCategoryCollectionViewCell, didChangeReview review: String)
 }
 
-class RatingCategoryTableViewCell: KTableViewCell {
+/// A cell that scores a single rating category.
+final class RatingCategoryCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private let nameLabel = KLabel()
 	private let scoreLabel = KSecondaryLabel()
 	private let descriptionLabel = KSecondaryLabel()
 	private let slider = UISlider()
-	private let noteInputView = TitledTextView(title: nil, placeholder: L10n.whatsOnYourMind)
+	private let reviewInputView = TitledTextView(title: nil, placeholder: L10n.whatStandsOut)
 
 	// MARK: - Properties
 	override var isSkeletonEnabled: Bool {
 		return false
 	}
 
-	weak var delegate: RatingCategoryTableViewCellDelegate?
+	weak var delegate: RatingCategoryCollectionViewCellDelegate?
 
 	/// The increment the score snaps to.
 	private static let scoreStep: Float = 0.5
 
 	// MARK: - Initializers
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	override init(frame: CGRect) {
+		super.init(frame: frame)
 		self.configureSubviews()
 	}
 
@@ -44,7 +45,7 @@ class RatingCategoryTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
+	/// Configures the cell with the given rating category.
 	func configure(using ratingCategory: RatingCategory) {
 		let score = ratingCategory.attributes.score ?? RatingCategory.Attributes.maximumScore / 2.0
 
@@ -53,16 +54,12 @@ class RatingCategoryTableViewCell: KTableViewCell {
 		self.descriptionLabel.isHidden = ratingCategory.attributes.description?.isEmpty ?? true
 		self.scoreLabel.text = L10n.scoreOutOfTen(ratingCategory.formattedScore)
 		self.slider.value = Float(score)
-		self.noteInputView.textView.text = ratingCategory.attributes.review
+		self.reviewInputView.textView.text = ratingCategory.attributes.review
 	}
 
 	private func configureSubviews() {
-		self.selectionStyle = .none
 		self.backgroundColor = .clear
-		self.contentView.theme_backgroundColor = nil
-		self.contentView.backgroundColor = .clear
-		self.contentView.directionalLayoutMargins.top = 12
-		self.contentView.directionalLayoutMargins.bottom = 12
+		self.contentView.directionalLayoutMargins = .zero
 
 		self.nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
 		self.nameLabel.adjustsFontForContentSizeCategory = true
@@ -83,14 +80,14 @@ class RatingCategoryTableViewCell: KTableViewCell {
 		#endif
 		self.slider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
 
-		self.noteInputView.textView.delegate = self
+		self.reviewInputView.textView.delegate = self
 
 		let titleStackView = UIStackView(arrangedSubviews: [self.nameLabel, self.scoreLabel])
 		titleStackView.axis = .horizontal
 		titleStackView.alignment = .firstBaseline
 		titleStackView.spacing = 8
 
-		let stackView = UIStackView(arrangedSubviews: [titleStackView, self.descriptionLabel, self.slider, self.noteInputView])
+		let stackView = UIStackView(arrangedSubviews: [titleStackView, self.descriptionLabel, self.slider, self.reviewInputView])
 		stackView.axis = .vertical
 		stackView.spacing = 8
 		stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,10 +95,10 @@ class RatingCategoryTableViewCell: KTableViewCell {
 		self.contentView.addSubview(stackView)
 
 		NSLayoutConstraint.activate([
-			stackView.topAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.topAnchor),
-			stackView.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor),
-			stackView.leadingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.trailingAnchor)
+			stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+			stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+			stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
 		])
 	}
 
@@ -116,13 +113,13 @@ class RatingCategoryTableViewCell: KTableViewCell {
 
 		let score = Double(steppedValue)
 		self.scoreLabel.text = L10n.scoreOutOfTen(score.formatted(.number.precision(.fractionLength(1))))
-		self.delegate?.ratingCategoryTableViewCell(self, didChangeScore: score)
+		self.delegate?.ratingCategoryCollectionViewCell(self, didChangeScore: score)
 	}
 }
 
 // MARK: - UITextViewDelegate
-extension RatingCategoryTableViewCell: UITextViewDelegate {
+extension RatingCategoryCollectionViewCell: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		self.delegate?.ratingCategoryTableViewCell(self, didChangeReview: textView.text ?? "")
+		self.delegate?.ratingCategoryCollectionViewCell(self, didChangeReview: textView.text ?? "")
 	}
 }

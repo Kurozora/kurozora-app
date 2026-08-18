@@ -70,6 +70,9 @@ extension LocalLibraryEntry {
 	/// The user's written review text, or `nil`.
 	@NSManaged var reviewDescription: String?
 
+	/// The user's private note on the item. `nil` when none exists.
+	@NSManaged var reviewNote: String?
+
 	/// The date the user's review was first created.
 	@NSManaged var reviewCreatedAt: Date?
 

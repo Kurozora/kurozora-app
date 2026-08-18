@@ -7,6 +7,7 @@
 //
 
 import KurozoraKit
+import SwiftTheme
 import UIKit
 
 protocol EmojiRatingViewDelegate: AnyObject {
@@ -38,20 +39,21 @@ final class EmojiRatingView: UIView {
 	private var buttons: [UIButton] = []
 
 	/// The diameter of an emoji button.
-	private let buttonSize: CGFloat
+	static let buttonSize: CGFloat = 48.0
+
+	/// The space between two emoji buttons.
+	private static let buttonSpacing: CGFloat = 8.0
+
+	/// The point size of an emoji.
+	private static let emojiFontSize: CGFloat = 30.0
 
 	// MARK: - Initializers
-	/// Creates an emoji rating view whose buttons have the given diameter.
-	///
-	/// - Parameter buttonSize: The diameter of an emoji button.
-	init(buttonSize: CGFloat = 20.0) {
-		self.buttonSize = buttonSize
+	init() {
 		super.init(frame: .zero)
 		self.configureSubviews()
 	}
 
 	required init?(coder: NSCoder) {
-		self.buttonSize = 20.0
 		super.init(coder: coder)
 		self.configureSubviews()
 	}
@@ -71,14 +73,14 @@ final class EmojiRatingView: UIView {
 			button.tag = index
 			button.setTitle(emojiScore.emoji, for: .normal)
 			button.accessibilityLabel = emojiScore.localizedDescription
-			button.titleLabel?.font = .systemFont(ofSize: self.buttonSize * 0.6)
-			button.layer.cornerRadius = self.buttonSize / 2.0
+			button.titleLabel?.font = .systemFont(ofSize: Self.emojiFontSize)
+			button.layerCornerRadius = Self.buttonSize / 2.0
 			button.translatesAutoresizingMaskIntoConstraints = false
 			button.addTarget(self, action: #selector(self.buttonPressed(_:)), for: .touchUpInside)
 
 			NSLayoutConstraint.activate([
-				button.widthAnchor.constraint(equalToConstant: self.buttonSize),
-				button.heightAnchor.constraint(equalToConstant: self.buttonSize)
+				button.widthAnchor.constraint(equalToConstant: Self.buttonSize),
+				button.heightAnchor.constraint(equalToConstant: Self.buttonSize)
 			])
 
 			return button
@@ -86,7 +88,7 @@ final class EmojiRatingView: UIView {
 
 		let stackView = UIStackView(arrangedSubviews: self.buttons)
 		stackView.axis = .horizontal
-		stackView.spacing = 4
+		stackView.spacing = Self.buttonSpacing
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 
 		self.addSubview(stackView)
@@ -106,11 +108,22 @@ final class EmojiRatingView: UIView {
 		let selectedEmojiScore = self.selectedEmojiScore
 
 		for (index, button) in self.buttons.enumerated() {
-			let isSelected = self.emojiScores[index] == selectedEmojiScore
-
-			button.backgroundColor = isSelected ? KThemePicker.tintedBackgroundColor.colorValue : .clear
-			button.alpha = selectedEmojiScore == nil || isSelected ? 1.0 : 0.5
+			button.isSelected = self.emojiScores[index] == selectedEmojiScore
+			button.alpha = selectedEmojiScore == nil || button.isSelected ? 1.0 : 0.5
+			self.applyBackground(to: button)
 		}
+	}
+
+	/// Draws the background of the button's current state.
+	private func applyBackground(to button: UIButton) {
+		guard button.isSelected else {
+			button.theme_backgroundColor = nil
+			button.backgroundColor = .clear
+			return
+		}
+
+		button.backgroundColor = nil
+		button.theme_backgroundColor = KThemePicker.tintedBackgroundColor.rawValue
 	}
 
 	// MARK: - Actions

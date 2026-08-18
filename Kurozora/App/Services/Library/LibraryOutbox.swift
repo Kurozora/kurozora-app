@@ -114,7 +114,7 @@ actor LibraryOutbox {
 		let payload = LibraryOutboxPayload(score: score, reviewDescription: description)
 		await self.persistOp(type: .rate, userSlug: userSlug, kind: kind, trackableID: trackableID, targetID: "", payload: payload, seed: nil, coalescing: .replace)
 
-		await LibraryStore.shared.applyRating(score: score, description: description, forTrackableID: trackableID, userSlug: userSlug, kind: kind)
+		await LibraryStore.shared.applyRating(score: score, description: description, note: nil, forTrackableID: trackableID, userSlug: userSlug, kind: kind)
 		self.scheduleFlush()
 	}
 
@@ -335,6 +335,8 @@ actor LibraryOutbox {
 		case .games:
 			_ = try await KService.deleteRating(GameIdentity(id: itemID)).response()
 		}
+
+		NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 	}
 
 	// MARK: - Grouping

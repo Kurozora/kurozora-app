@@ -36,9 +36,10 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 
 		NSLayoutConstraint.activate([
 			emojiRatingView.trailingAnchor.constraint(equalTo: self.cosmosView.trailingAnchor),
-			emojiRatingView.centerYAnchor.constraint(equalTo: self.cosmosView.centerYAnchor),
+			emojiRatingView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
 			emojiRatingView.leadingAnchor.constraint(greaterThanOrEqualTo: self.primaryLabel.trailingAnchor, constant: 8),
-			emojiRatingView.heightAnchor.constraint(lessThanOrEqualTo: self.cosmosView.heightAnchor)
+			emojiRatingView.topAnchor.constraint(greaterThanOrEqualTo: self.contentView.topAnchor),
+			self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: emojiRatingView.bottomAnchor)
 		])
 
 		return emojiRatingView
@@ -47,7 +48,7 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 	private lazy var detailedReviewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cosmosViewTapped))
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
+	/// Configures the cell with the given rating.
 	func configure(using givenRating: Double?) {
 		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? L10n.tapToRate : L10n.clickToRate
 

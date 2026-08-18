@@ -87,6 +87,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(deleteReview(_:)), name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReview(_:)), name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateRatingStyle(_:)), name: .KSRatingStyleDidChange, object: nil)
 
@@ -114,6 +115,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
 	}
@@ -137,9 +139,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		self.collectionView.backgroundView?.alpha = 0
 	}
 
-	/// Fades in and out the empty data view according to the number of sections.
+	/// Fades in and out the empty data view according to the number of reviews.
 	func toggleEmptyDataView() {
-		if self.snapshot.itemIdentifiers.isEmpty {
+		if self.reviews.isEmpty {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -247,6 +249,18 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		self.fetchInProgress = false
 	}
 
+	/// Refetches the reviews from the first page.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateReview(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			self.nextPageCursor = nil
+			await self.fetchReviews()
+		}
+	}
+
 	/// Deletes the review with the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
@@ -254,9 +268,10 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				// Start delete process
-				self.reviews.remove(at: indexPath.item)
+			if let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID {
+				self.reviews.removeAll { review in
+					review.id == reviewID
+				}
 			}
 
 			self.givenRating = nil
@@ -264,6 +279,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self.givenNote = nil
 
 			self.updateDataSource()
+			self.toggleEmptyDataView()
 		}
 	}
 
@@ -476,25 +492,34 @@ extension ReviewsListCollectionViewController: WriteAReviewCollectionViewCellDel
 	}
 }
 
-// MARK: - ReviewTextEditorViewControllerDelegate
-extension ReviewsListCollectionViewController: ReviewTextEditorViewControllerDelegate {
-	func reviewTextEditorViewControllerDidSubmitReview() {
-		self.showRatingSuccessAlert()
-	}
+// MARK: - ReviewEditorContextProviding
+extension ReviewsListCollectionViewController: ReviewEditorContextProviding {
+	func writeAReviewContext() -> (kind: ReviewKind, rating: Double?, review: String?, note: String?)? {
+		guard let kind = self.currentReviewKind() else { return nil }
 
-	func reviewTextEditorViewControllerDidDeleteReview() {
-		self.collectionView.reloadData()
+		return (kind, self.givenRating, self.givenReview, self.givenNote)
 	}
 }
 
-// MARK: - DetailedReviewTableViewControllerDelegate
-extension ReviewsListCollectionViewController: DetailedReviewTableViewControllerDelegate {
-	func detailedReviewTableViewControllerDidSubmitReview() {
+// MARK: - ReviewEditorCollectionViewControllerDelegate
+extension ReviewsListCollectionViewController: ReviewEditorCollectionViewControllerDelegate {
+	func reviewEditorCollectionViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
 	}
 
-	func detailedReviewTableViewControllerDidDeleteReview() {
-		self.collectionView.reloadData()
+	func reviewEditorCollectionViewControllerDidDeleteReview() {
+		self.givenRating = nil
+		self.givenReview = nil
+		self.givenNote = nil
+
+		if let userID = User.current?.id {
+			self.reviews.removeAll { review in
+				review.relationships?.users?.data.first?.id == userID
+			}
+		}
+
+		self.updateDataSource()
+		self.toggleEmptyDataView()
 	}
 }
 

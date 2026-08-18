@@ -23,6 +23,7 @@ class WriteAReviewCollectionViewCell: UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		self.primaryButton.setTitle(L10n.writeAReview, for: .normal)
+		self.primaryButton.heightAnchor.constraint(greaterThanOrEqualToConstant: Layouts.rateAndReviewRowHeight).isActive = true
 	}
 
 	// MARK: - IBActions

@@ -75,6 +75,8 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 	@objc private func handleReviewDeleted(_ notification: NSNotification) {
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
+			guard notification.userInfo?["reviewID"] as? KurozoraItemID == self.review?.id else { return }
+
 			self.dismiss(animated: true, completion: nil)
 		}
 	}

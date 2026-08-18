@@ -9,6 +9,9 @@
 import UIKit
 
 enum Layouts {
+	/// The height of a row in the rate and review section.
+	static let rateAndReviewRowHeight: CGFloat = EmojiRatingView.buttonSize
+
 	static func badgeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var item: NSCollectionLayoutItem!

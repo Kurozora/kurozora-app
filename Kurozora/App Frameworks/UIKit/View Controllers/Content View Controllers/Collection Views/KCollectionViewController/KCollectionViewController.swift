@@ -148,6 +148,15 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		#endif
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		// Center the empty view within the unavailable space
+		let contentInset = self.collectionView.adjustedContentInset
+		let occupiedHeight = self.collectionView.contentSize.height
+		self.emptyBackgroundView.verticalOffset = (contentInset.top + occupiedHeight - contentInset.bottom) / 2
+	}
+
 	// MARK: - Functions
 	/// Re-applies localized strings by reloading the collection's content.
 	override func reloadLocalization() {

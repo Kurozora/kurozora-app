@@ -18,7 +18,7 @@ protocol RatingStylePreviewTableViewCellDelegate: AnyObject {
 class RatingStylePreviewTableViewCell: KTableViewCell {
 	// MARK: - Views
 	private let contentStackView = UIStackView()
-	private let emojiRatingView = EmojiRatingView(buttonSize: 40.0)
+	private let emojiRatingView = EmojiRatingView()
 	private let quipLabel = KLabel()
 
 	// MARK: - Properties
@@ -52,7 +52,7 @@ class RatingStylePreviewTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given rating style.
+	/// Configures the cell with the given rating style.
 	func configure(using ratingStyle: RatingStyle) {
 		self.contentStackView.arrangedSubviews.forEach { arrangedSubview in
 			self.contentStackView.removeArrangedSubview(arrangedSubview)

@@ -45,7 +45,6 @@ extension Review {
 
 		var userMenuElements: [UIMenuElement] = []
 
-		// Username action
 		if let user = self.relationships?.users?.data.first {
 			let username = user.attributes.username
 			let userAction = UIAction(title: L10n.showUserProfile(username), image: UIImage(systemName: "person.crop.circle.fill")) { _ in
@@ -54,16 +53,24 @@ extension Review {
 			userMenuElements.append(userAction)
 		}
 
-		// Delete
+		if User.isSignedIn, User.current?.id == self.relationships?.users?.data.first?.id {
+			let updateAction = UIAction(title: L10n.updateReview, image: UIImage(systemName: "pencil")) { _ in
+				Task { @MainActor in
+					await self.presentUpdateEditor(from: viewController)
+				}
+			}
+
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: [updateAction]))
+		}
+
 		if User.isSignedIn {
 			let reviewUserID = self.relationships?.users?.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
 				User.current?.attributes.role == .admin ||
 				User.current?.id == reviewUserID {
 				var deleteMenuElements: [UIMenuElement] = []
-				// Delete action
 				let deleteAction = UIAction(title: L10n.deleteReview, attributes: .destructive) { _ in
-					self.confirmDelete(via: viewController, userInfo: userInfo)
+					self.confirmDelete(via: viewController)
 				}
 				deleteMenuElements.append(deleteAction)
 
@@ -71,18 +78,14 @@ extension Review {
 			}
 		}
 
-		// Append user menu
 		menuElements.append(UIMenu(title: "", options: .displayInline, children: userMenuElements))
 
-		// Create "share" menu
 		var shareMenuChildren: [UIMenuElement] = []
 
-		// Create "copy" action
 		let copyAction = UIAction(title: L10n.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
 			UIPasteboard.general.string = self.attributes.description
 		}
 
-		// Create "share" action
 		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
 		}
@@ -99,7 +102,6 @@ extension Review {
 //		menuElements.append(helpfulMenu)
 
 		if User.isSignedIn {
-			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
 			let reportAction = UIAction(title: L10n.reportReview, attributes: .destructive) { _ in
 				Task {
@@ -108,12 +110,77 @@ extension Review {
 			}
 			reportMenuElements.append(reportAction)
 
-			// Append report menu
 			menuElements.append(UIMenu(title: L10n.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
-		// Create and return a UIMenu
 		return UIMenu(title: "", children: menuElements)
+	}
+
+	/// Presents the review editor for the review.
+	///
+	/// - Parameter viewController: The view controller showing the review.
+	@MainActor
+	private func presentUpdateEditor(from viewController: UIViewController) async {
+		// The review's own page hands the editor to its presenter, so the two sheets never stack.
+		guard viewController is ReviewDetailsCollectionViewController, let presentingViewController = viewController.presentingViewController else {
+			await self.presentEditor(from: viewController)
+			return
+		}
+
+		viewController.dismiss(animated: true) {
+			Task { @MainActor in
+				await self.presentEditor(from: presentingViewController)
+			}
+		}
+	}
+
+	/// Presents the review editor from the given view controller.
+	///
+	/// - Parameter viewController: The view controller presenting the editor.
+	@MainActor
+	private func presentEditor(from viewController: UIViewController) async {
+		let delegate = viewController as? any ReviewEditorCollectionViewControllerDelegate
+
+		// The screen showing the review already holds the item and the private note, so the editor opens without a fetch.
+		if let context = (viewController as? any ReviewEditorContextProviding)?.writeAReviewContext() {
+			await viewController.presentReviewEditor(kind: context.kind, rating: context.rating, review: context.review, note: context.note, delegate: delegate)
+			return
+		}
+
+		guard let kind = await self.reviewKind() else { return }
+
+		await viewController.presentReviewEditor(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, delegate: delegate)
+	}
+
+	/// Fetches the model the review belongs to.
+	///
+	/// - Returns: The reviewed model. `nil` when it cannot be fetched.
+	private func reviewKind() async -> ReviewKind? {
+		guard let relationships = self.relationships else { return nil }
+
+		do {
+			if let identity = relationships.characters?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .character($0) }
+			} else if let identity = relationships.episodes?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .episode($0) }
+			} else if let identity = relationships.games?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .game($0) }
+			} else if let identity = relationships.literatures?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .literature($0) }
+			} else if let identity = relationships.people?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .person($0) }
+			} else if let identity = relationships.shows?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .show($0) }
+			} else if let identity = relationships.songs?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .song($0) }
+			} else if let identity = relationships.studios?.data.first {
+				return try await KService.detail(identity).response().data.first.map { .studio($0) }
+			}
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		return nil
 	}
 
 	/// Presents the profile view for the review poster.
@@ -169,29 +236,26 @@ extension Review {
 		viewController?.presentAlertController(title: L10n.reviewReportedHeadline, message: L10n.reviewReportedSubheadline)
 	}
 
-	/// Remove the review.
-	///
-	/// - Parameter indexPath: The index path of the review.
-	private func remove(at indexPath: IndexPath) async {
+	/// Removes the review.
+	private func remove() async {
 		let reviewIdentity = ReviewIdentity(id: self.id)
 
 		do {
 			_ = try await KService.deleteReview(reviewIdentity).response()
 
-			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["indexPath": indexPath])
+			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": self.id])
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 		} catch {
 			print(error.localizedDescription)
 		}
 	}
 
-	/// Confirm if the user wants to delete the review.
-	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
+	/// Asks the user to confirm before deleting the review.
+	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController) {
 		let actionSheetAlertController = UIAlertController.alert(title: nil, message: L10n.deleteReviewSubheadline) { alertController in
 			let deleteAction = UIAlertAction(title: L10n.deleteReview, style: .destructive) { _ in
-				if let indexPath = userInfo?["indexPath"] as? IndexPath {
-					Task {
-						await self.remove(at: indexPath)
-					}
+				Task {
+					await self.remove()
 				}
 			}
 			alertController.addAction(deleteAction)

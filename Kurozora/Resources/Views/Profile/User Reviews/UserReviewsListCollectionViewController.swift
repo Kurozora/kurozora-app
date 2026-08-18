@@ -97,6 +97,10 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		self.configureDataSource()
 		self.observePlaybackChanges()
 
+		// Observed for the controller's lifetime: a review can be written or deleted from the item's own page.
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
+
 		// Fetch follow list.
 		if !self.reviews.isEmpty {
 			self.endFetch()
@@ -115,6 +119,34 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	}
 
 	// MARK: - Functions
+	/// Refetches the reviews from the first page.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self, self.user?.id == User.current?.id else { return }
+
+			self.nextPageCursor = nil
+			await self.fetchReviews()
+		}
+	}
+
+	/// Drops the deleted review from the list.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc private func handleReviewDidDelete(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self, let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+			self.reviews.removeAll { review in
+				review.id == reviewID
+			}
+
+			self.updateDataSource()
+			self.toggleEmptyDataView()
+		}
+	}
+
 	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
 	private func observePlaybackChanges() {
 		self.playbackObserver = Publishers.CombineLatest(MusicManager.shared.currentKKSongPublisher, MusicManager.shared.isPlayingPublisher)

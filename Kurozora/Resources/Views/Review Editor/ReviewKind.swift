@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import Foundation
 import KurozoraKit
 
 /// A wrapper around any model that can be rated and reviewed.
@@ -50,6 +51,8 @@ enum ReviewKind {
 				.note(note)
 				.response()
 
+			await self.applyToLocalLibrary(score: rating, description: description, note: note)
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 			return true
 		} catch let error as APIError {
 			print(error.localizedDescription)
@@ -57,6 +60,41 @@ enum ReviewKind {
 		} catch {
 			print(error.localizedDescription)
 			return false
+		}
+	}
+
+	/// Fetches the newest reviews of the wrapped model.
+	///
+	/// - Parameter limit: The maximum number of reviews to fetch.
+	///
+	/// - Returns: The newest reviews of the wrapped model.
+	func reviews(limit: Int) async throws(APIError) -> [Review] {
+		let reviewsRequest: RelationshipRequest<ResourceCollection<Review>>
+
+		switch self {
+		case .character(let character): reviewsRequest = KService.reviews(for: CharacterIdentity(id: character.id))
+		case .episode(let episode): reviewsRequest = KService.reviews(for: EpisodeIdentity(id: episode.id))
+		case .game(let game): reviewsRequest = KService.reviews(for: GameIdentity(id: game.id))
+		case .literature(let literature): reviewsRequest = KService.reviews(for: LiteratureIdentity(id: literature.id))
+		case .person(let person): reviewsRequest = KService.reviews(for: PersonIdentity(id: person.id))
+		case .show(let show): reviewsRequest = KService.reviews(for: ShowIdentity(id: show.id))
+		case .song(let song): reviewsRequest = KService.reviews(for: SongIdentity(id: song.id))
+		case .studio(let studio): reviewsRequest = KService.reviews(for: StudioIdentity(id: studio.id))
+		}
+
+		do {
+			let reviewResponse = try await reviewsRequest
+				.cursor(nil)
+				.limit(limit)
+				.response()
+
+			return reviewResponse.data
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			throw error
+		} catch {
+			print(error.localizedDescription)
+			return []
 		}
 	}
 
@@ -110,6 +148,8 @@ enum ReviewKind {
 				.note(note)
 				.response()
 
+			await self.applyToLocalLibrary(score: score, description: description, note: note)
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 			return true
 		} catch let error as APIError {
 			print(error.localizedDescription)
@@ -118,6 +158,28 @@ enum ReviewKind {
 			print(error.localizedDescription)
 			return false
 		}
+	}
+
+	/// The library kind of the wrapped model. `nil` when the model is not trackable in the library.
+	private var libraryKind: LibraryKind? {
+		switch self {
+		case .game: return .games
+		case .literature: return .literatures
+		case .show: return .shows
+		case .character, .episode, .person, .song, .studio: return nil
+		}
+	}
+
+	/// Writes the submitted rating to the wrapped model's local library entry.
+	///
+	/// - Parameters:
+	///    - score: The submitted rating.
+	///    - description: The submitted review text.
+	///    - note: The submitted private note.
+	private func applyToLocalLibrary(score: Double, description: String?, note: String?) async {
+		guard let libraryKind = self.libraryKind, let userSlug = User.current?.attributes.slug else { return }
+
+		await LibraryStore.shared.applyRating(score: score, description: description, note: note, forTrackableID: self.modelID.rawValue, userSlug: userSlug, kind: libraryKind)
 	}
 
 	/// Returns the rating request of the wrapped model.
@@ -148,6 +210,20 @@ enum ReviewKind {
 	///
 	/// - Returns: `true` when the deletion succeeds.
 	func deleteRating() async throws(APIError) -> Bool {
+		let didDelete = try await self.deleteRatingRequest()
+
+		// A library item's deletion is queued, so the outbox posts once the server confirms it.
+		if didDelete, self.libraryKind == nil {
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+		}
+
+		return didDelete
+	}
+
+	/// Sends the deletion of the user's rating and review for the wrapped model.
+	///
+	/// - Returns: `true` when the deletion succeeds.
+	private func deleteRatingRequest() async throws(APIError) -> Bool {
 		switch self {
 		case .character(let character): return try await character.deleteRating()
 		case .episode(let episode): return try await episode.deleteRating()

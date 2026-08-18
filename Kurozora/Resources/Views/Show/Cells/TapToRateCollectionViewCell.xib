@@ -38,10 +38,11 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="oeu-he-Mob" secondAttribute="bottom" id="6Kl-u1-cHo"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oeu-he-Mob" secondAttribute="bottom" id="6Kl-u1-cHo"/>
                     <constraint firstItem="TaF-SC-EA8" firstAttribute="centerY" secondItem="KYG-Se-jxo" secondAttribute="centerY" id="6xh-kb-Fwf"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TaF-SC-EA8" secondAttribute="bottom" id="EpC-PH-boy"/>
-                    <constraint firstItem="oeu-he-Mob" firstAttribute="top" secondItem="KYG-Se-jxo" secondAttribute="top" id="Xj6-Ab-BWR"/>
+                    <constraint firstItem="oeu-he-Mob" firstAttribute="centerY" secondItem="KYG-Se-jxo" secondAttribute="centerY" id="Wdk-8t-Nq3"/>
+                    <constraint firstItem="oeu-he-Mob" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KYG-Se-jxo" secondAttribute="top" id="Xj6-Ab-BWR"/>
                     <constraint firstItem="TaF-SC-EA8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KYG-Se-jxo" secondAttribute="top" id="fO1-5b-Zk1"/>
                     <constraint firstAttribute="trailing" secondItem="oeu-he-Mob" secondAttribute="trailing" id="gtz-bV-koy"/>
                     <constraint firstItem="oeu-he-Mob" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TaF-SC-EA8" secondAttribute="trailing" constant="8" symbolic="YES" id="nSh-3F-Igj"/>

@@ -37,6 +37,9 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	#endif
 
 	// MARK: - Properties
+	/// The maximum number of reviews displayed on the detail screen.
+	private static let reviewsLimit = 10
+
 	/// The reviews displayed on the detail screen.
 	var reviews: [Review] = [] {
 		didSet {
@@ -94,6 +97,9 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		ProfileHeaderCollectionViewCell.configureTransparentNavigationAppearance(on: self.navigationItem)
+
+		// Observed for the controller's lifetime: a review can be posted from the pushed reviews list.
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -312,12 +318,47 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	@objc private func handleReviewDidDelete(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			let indexPath = notification.userInfo?["indexPath"] as? IndexPath
-			if let indexPath, self.reviews.indices.contains(indexPath.item) {
-				self.reviews.remove(at: indexPath.item)
+
+			if let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID {
+				self.reviews.removeAll { review in
+					review.id == reviewID
+				}
 			}
-			self.didDeleteReview(at: indexPath)
+
+			self.didDeleteReview()
 			self.updateDataSource()
+		}
+	}
+
+	// MARK: Review update observer
+	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			await self?.refreshReviews()
+		}
+	}
+
+	/// Drops the signed in user's review from the reviews section.
+	@MainActor
+	private func removeSignedInUserReview() {
+		guard let userID = User.current?.id else { return }
+
+		self.reviews.removeAll { review in
+			review.relationships?.users?.data.first?.id == userID
+		}
+
+		self.updateDataSource()
+	}
+
+	/// Refetches the newest reviews and re-renders the reviews section.
+	@MainActor
+	private func refreshReviews() async {
+		guard let kind = self.writeAReviewContext()?.kind else { return }
+
+		do throws(APIError) {
+			self.reviews = try await kind.reviews(limit: Self.reviewsLimit)
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -329,9 +370,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	func makeMoreMenu() -> UIMenu? { nil }
 
 	/// Clears any cached rating or review on the model after a review is deleted.
-	///
-	/// - Parameter indexPath: The index path of the removed review, or `nil` if unavailable.
-	func didDeleteReview(at indexPath: IndexPath?) {}
+	func didDeleteReview() {}
 
 	/// Rates the active model with the given value and optional review.
 	///
@@ -507,7 +546,7 @@ extension DetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 					let didDelete = try await kind.deleteRating()
 					if didDelete {
 						cell.configure(using: nil)
-						self.didDeleteReview(at: nil)
+						self.didDeleteReview()
 					} else {
 						cell.configure(using: previousRating)
 						self.presentAlertController(title: L10n.ratingFailed, message: L10n.notAvailableForType)
@@ -540,25 +579,18 @@ extension DetailsCollectionViewController: WriteAReviewCollectionViewCellDelegat
 	}
 }
 
-// MARK: - ReviewTextEditorViewControllerDelegate
-extension DetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
-	func reviewTextEditorViewControllerDidSubmitReview() {
+// MARK: - ReviewEditorContextProviding
+extension DetailsCollectionViewController: ReviewEditorContextProviding {}
+
+// MARK: - ReviewEditorCollectionViewControllerDelegate
+extension DetailsCollectionViewController: ReviewEditorCollectionViewControllerDelegate {
+	func reviewEditorCollectionViewControllerDidSubmitReview() {
 		self.showRatingSuccessAlert()
 	}
 
-	func reviewTextEditorViewControllerDidDeleteReview() {
-		self.didDeleteReview(at: nil)
-	}
-}
-
-// MARK: - DetailedReviewTableViewControllerDelegate
-extension DetailsCollectionViewController: DetailedReviewTableViewControllerDelegate {
-	func detailedReviewTableViewControllerDidSubmitReview() {
-		self.showRatingSuccessAlert()
-	}
-
-	func detailedReviewTableViewControllerDidDeleteReview() {
-		self.didDeleteReview(at: nil)
+	func reviewEditorCollectionViewControllerDidDeleteReview() {
+		self.didDeleteReview()
+		self.removeSignedInUserReview()
 	}
 }
 
