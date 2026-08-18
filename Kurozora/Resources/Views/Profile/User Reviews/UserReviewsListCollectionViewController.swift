@@ -97,7 +97,6 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		self.configureDataSource()
 		self.observePlaybackChanges()
 
-		// Observed for the controller's lifetime: a review can be written or deleted from the item's own page.
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
 

@@ -160,6 +160,7 @@ extension UIViewController {
 		reviewEditorCollectionViewController.review = context.review
 		reviewEditorCollectionViewController.note = context.note
 		reviewEditorCollectionViewController.isSpoiler = context.isSpoiler
+		reviewEditorCollectionViewController.recommendation = context.recommendation
 		reviewEditorCollectionViewController.ratingCategories = ratingCategories
 
 		let navigationController = KNavigationController(rootViewController: reviewEditorCollectionViewController)

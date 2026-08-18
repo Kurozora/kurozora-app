@@ -76,6 +76,9 @@ extension LocalLibraryEntry {
 	/// Whether the user's review contains spoiler material. `nil` when no review exists.
 	@NSManaged var isSpoiler: NSNumber?
 
+	/// Raw value of the user's `ReviewRecommendation`, or `nil` when no review exists.
+	@NSManaged var recommendation: NSNumber?
+
 	/// The date the user's review was first created.
 	@NSManaged var reviewCreatedAt: Date?
 

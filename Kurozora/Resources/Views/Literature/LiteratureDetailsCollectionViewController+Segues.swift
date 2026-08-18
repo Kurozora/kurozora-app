@@ -60,6 +60,7 @@ extension LiteratureDetailsCollectionViewController {
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
+			reviewsCollectionViewController.givenRecommendation = self.libraryAttributes?.recommendation
 		case .castListSegue:
 			// Segue to cast list
 			guard let castListCollectionViewController = destination as? CastListCollectionViewController else { return }

@@ -2,7 +2,7 @@
 //  RatingCategoryCollectionViewCell.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 18/08/2026.
+//  Created by Khoren Katklian on 13/08/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 

@@ -68,6 +68,7 @@ extension ShowDetailsCollectionViewController {
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
+			reviewsCollectionViewController.givenRecommendation = self.libraryAttributes?.recommendation
 		case .seasonsListSegue:
 			// Segue to seasons list
 			guard let seasonsCollectionViewController = destination as? SeasonsListCollectionViewController else { return }

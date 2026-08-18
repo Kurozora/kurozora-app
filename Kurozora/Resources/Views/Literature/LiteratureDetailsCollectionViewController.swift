@@ -268,7 +268,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let literature = self.literature else { return nil }
-		return ReviewEditorContext(kind: .literature(literature), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
+		return ReviewEditorContext(kind: .literature(literature), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

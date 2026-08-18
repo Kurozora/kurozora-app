@@ -204,6 +204,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 				libraryAttributes.review = reviewEntry?.description
 				libraryAttributes.note = reviewEntry?.note
 				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
+				libraryAttributes.recommendation = reviewEntry?.recommendation
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -227,7 +228,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let episode = self.episode else { return nil }
-		return ReviewEditorContext(kind: .episode(episode), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
+		return ReviewEditorContext(kind: .episode(episode), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
 	}
 
 	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
@@ -288,6 +289,7 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
+			reviewsCollectionViewController.givenRecommendation = self.libraryAttributes?.recommendation
 		case .showDetailsSegue:
 			guard let showDetailsCollectionViewController = destination as? ShowDetailsCollectionViewController else { return }
 			if let showIdentity = sender as? ShowIdentity {

@@ -336,7 +336,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let show = self.show else { return nil }
-		return ReviewEditorContext(kind: .show(show), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
+		return ReviewEditorContext(kind: .show(show), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

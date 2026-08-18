@@ -33,6 +33,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private(set) var contentTextView: KSelectableTextView!
 	private(set) var translationBarView: TranslationBarView!
+	private var recommendationLabel: KTintedLabel!
 	private var spoilerOverlayView: SpoilerOverlayView!
 
 	// MARK: - Properties
@@ -84,6 +85,13 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 		self.contentTextView = textView
 		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
+
+		let recommendationLabel = KTintedLabel()
+		recommendationLabel.font = .preferredFont(forTextStyle: .caption1).bold
+		recommendationLabel.adjustsFontForContentSizeCategory = true
+		recommendationLabel.numberOfLines = 0
+		contentStackView.insertArrangedSubview(recommendationLabel, at: 0)
+		self.recommendationLabel = recommendationLabel
 
 		let spoilerOverlayView = SpoilerOverlayView()
 		spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
@@ -158,6 +166,9 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.cosmosView.rating = review.attributes.score
 
 		// Configure body
+		self.recommendationLabel.text = review.attributes.recommendation?.localizedName
+		self.recommendationLabel.isHidden = review.attributes.recommendation == nil
+
 		var translatedBody: NSAttributedString?
 
 		if #available(iOS 26.4, macCatalyst 26.4, *) {

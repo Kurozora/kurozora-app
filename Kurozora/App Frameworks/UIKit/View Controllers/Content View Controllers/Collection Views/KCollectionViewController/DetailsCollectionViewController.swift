@@ -98,7 +98,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		super.viewDidLoad()
 		ProfileHeaderCollectionViewCell.configureTransparentNavigationAppearance(on: self.navigationItem)
 
-		// Observed for the controller's lifetime: a review can be posted from the pushed reviews list.
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
 
 		#if DEBUG

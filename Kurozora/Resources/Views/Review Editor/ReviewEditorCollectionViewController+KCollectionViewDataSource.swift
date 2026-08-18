@@ -18,6 +18,9 @@ extension ReviewEditorCollectionViewController {
 		/// Indicates the section holds the review text.
 		case review
 
+		/// Indicates the section holds the recommendation.
+		case recommendation
+
 		/// Indicates the section holds the rating category at the given index.
 		case category(index: Int)
 
@@ -31,10 +34,10 @@ extension ReviewEditorCollectionViewController {
 	/// The sections shown for the user's rating style.
 	var sections: [SectionLayoutKind] {
 		guard self.isDetailed else {
-			return [.rate, .review, .spoiler, .privateNote]
+			return [.rate, .review, .recommendation, .spoiler, .privateNote]
 		}
 
-		return self.ratingCategories.indices.map { .category(index: $0) } + [.spoiler, .privateNote]
+		return self.ratingCategories.indices.map { .category(index: $0) } + [.recommendation, .spoiler, .privateNote]
 	}
 }
 
@@ -44,6 +47,7 @@ extension ReviewEditorCollectionViewController {
 		return [
 			RateCollectionViewCell.self,
 			RatingCategoryCollectionViewCell.self,
+			RecommendationSegmentedCollectionViewCell.self,
 			ReviewInputCollectionViewCell.self,
 			SpoilerToggleCollectionViewCell.self
 		]
@@ -79,6 +83,11 @@ extension ReviewEditorCollectionViewController {
 			}
 
 			return ratingCategoryCollectionViewCell
+		case .recommendation:
+			let recommendationSegmentedCollectionViewCell = collectionView.dequeueReusableCell(withClass: RecommendationSegmentedCollectionViewCell.self, for: indexPath)
+			recommendationSegmentedCollectionViewCell.configure(selected: self.recommendation, delegate: self)
+
+			return recommendationSegmentedCollectionViewCell
 		case .spoiler:
 			let spoilerToggleCollectionViewCell = collectionView.dequeueReusableCell(withClass: SpoilerToggleCollectionViewCell.self, for: indexPath)
 			spoilerToggleCollectionViewCell.configure(isOn: self.isSpoiler, delegate: self)

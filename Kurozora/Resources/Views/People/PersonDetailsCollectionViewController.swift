@@ -208,6 +208,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 				libraryAttributes.review = reviewEntry?.description
 				libraryAttributes.note = reviewEntry?.note
 				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
+				libraryAttributes.recommendation = reviewEntry?.recommendation
 				self.libraryAttributes = libraryAttributes
 				self.reviewsOverlayETag = etag
 			}
@@ -231,7 +232,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let person = self.person else { return nil }
-		return ReviewEditorContext(kind: .person(person), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
+		return ReviewEditorContext(kind: .person(person), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
@@ -276,6 +277,7 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 			reviewsCollectionViewController.givenReview = self.libraryAttributes?.review
 			reviewsCollectionViewController.givenNote = self.libraryAttributes?.note
 			reviewsCollectionViewController.givenIsSpoiler = self.libraryAttributes?.isSpoiler ?? false
+			reviewsCollectionViewController.givenRecommendation = self.libraryAttributes?.recommendation
 		case .showsListSegue:
 			guard let showsListCollectionViewController = destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.personIdentity = self.personIdentity

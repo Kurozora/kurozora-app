@@ -149,7 +149,7 @@ extension Review {
 
 		guard let kind = await self.reviewKind() else { return }
 
-		let context = ReviewEditorContext(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, isSpoiler: self.attributes.isSpoiler)
+		let context = ReviewEditorContext(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, isSpoiler: self.attributes.isSpoiler, recommendation: self.attributes.recommendation)
 		await viewController.presentReviewEditor(using: context, delegate: delegate)
 	}
 

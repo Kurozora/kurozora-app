@@ -4376,6 +4376,62 @@ extension L10n {
 			)
 		}
 	}
+	/// Segment title for a review that recommends the item.
+	///
+	/// - Tag: L10n-reviewRecommended
+	static var reviewRecommended: String {
+		L10n.resolve {
+			String(
+				localized: "Recommended",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Segment title for a review that recommends the item."
+			)
+		}
+	}
+	/// Segment title for a review with mixed feelings about the item.
+	///
+	/// - Tag: L10n-reviewMixedFeelings
+	static var reviewMixedFeelings: String {
+		L10n.resolve {
+			String(
+				localized: "Mixed Feelings",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Segment title for a review with mixed feelings about the item."
+			)
+		}
+	}
+	/// Segment title for a review that does not recommend the item.
+	///
+	/// - Tag: L10n-reviewNotRecommended
+	static var reviewNotRecommended: String {
+		L10n.resolve {
+			String(
+				localized: "Not Recommended",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Segment title for a review that does not recommend the item."
+			)
+		}
+	}
+	/// Section title for the reviewer's recommendation.
+	///
+	/// - Tag: L10n-reviewRecommendation
+	static var reviewRecommendation: String {
+		L10n.resolve {
+			String(
+				localized: "Recommendation",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Section title for the reviewer's recommendation."
+			)
+		}
+	}
 
 	/// Title shown in the navigation bar of the Parental Guide report sheet.
 	///

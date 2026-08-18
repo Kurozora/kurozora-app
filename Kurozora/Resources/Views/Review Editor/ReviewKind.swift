@@ -43,17 +43,23 @@ enum ReviewKind {
 	///    - description: The optional review text.
 	///    - note: The optional private note.
 	///    - isSpoiler: Whether the review contains spoiler material.
+	///    - recommendation: The reviewer's recommendation.
 	///
 	/// - Returns: `true` when the submission succeeds.
-	func rate(using rating: Double, description: String?, note: String?, isSpoiler: Bool) async throws(APIError) -> Bool {
+	func rate(using rating: Double, description: String?, note: String?, isSpoiler: Bool, recommendation: ReviewRecommendation?) async throws(APIError) -> Bool {
 		do {
-			_ = try await self.rateRequest(score: rating)
+			var rateRequest = self.rateRequest(score: rating)
 				.description(description)
 				.note(note)
 				.isSpoiler(isSpoiler)
-				.response()
 
-			await self.applyToLocalLibrary(score: rating, description: description, note: note, isSpoiler: isSpoiler)
+			if let recommendation {
+				rateRequest = rateRequest.recommendation(recommendation)
+			}
+
+			_ = try await rateRequest.response()
+
+			await self.applyToLocalLibrary(score: rating, description: description, note: note, isSpoiler: isSpoiler, recommendation: recommendation)
 			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 			return true
 		} catch let error as APIError {
@@ -139,20 +145,26 @@ enum ReviewKind {
 	///    - description: The optional review text. Composed from the categories when absent.
 	///    - note: The optional private note.
 	///    - isSpoiler: Whether the review contains spoiler material.
+	///    - recommendation: The reviewer's recommendation.
 	///
 	/// - Returns: `true` when the submission succeeds.
-	func rate(categoryScores ratingCategories: [RatingCategory], description: String?, note: String?, isSpoiler: Bool) async throws(APIError) -> Bool {
+	func rate(categoryScores ratingCategories: [RatingCategory], description: String?, note: String?, isSpoiler: Bool, recommendation: ReviewRecommendation?) async throws(APIError) -> Bool {
 		let score = ratingCategories.weightedStarRating
 
 		do {
-			_ = try await self.rateRequest(score: score)
+			var rateRequest = self.rateRequest(score: score)
 				.categoryScores(ratingCategories)
 				.description(description)
 				.note(note)
 				.isSpoiler(isSpoiler)
-				.response()
 
-			await self.applyToLocalLibrary(score: score, description: description, note: note, isSpoiler: isSpoiler)
+			if let recommendation {
+				rateRequest = rateRequest.recommendation(recommendation)
+			}
+
+			_ = try await rateRequest.response()
+
+			await self.applyToLocalLibrary(score: score, description: description, note: note, isSpoiler: isSpoiler, recommendation: recommendation)
 			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 			return true
 		} catch let error as APIError {
@@ -181,10 +193,11 @@ enum ReviewKind {
 	///    - description: The submitted review text.
 	///    - note: The submitted private note.
 	///    - isSpoiler: Whether the submitted review contains spoiler material.
-	private func applyToLocalLibrary(score: Double, description: String?, note: String?, isSpoiler: Bool) async {
+	///    - recommendation: The submitted recommendation.
+	private func applyToLocalLibrary(score: Double, description: String?, note: String?, isSpoiler: Bool, recommendation: ReviewRecommendation?) async {
 		guard let libraryKind = self.libraryKind, let userSlug = User.current?.attributes.slug else { return }
 
-		await LibraryStore.shared.applyRating(score: score, description: description, note: note, isSpoiler: isSpoiler, forTrackableID: self.modelID.rawValue, userSlug: userSlug, kind: libraryKind)
+		await LibraryStore.shared.applyRating(score: score, description: description, note: note, isSpoiler: isSpoiler, recommendation: recommendation, forTrackableID: self.modelID.rawValue, userSlug: userSlug, kind: libraryKind)
 	}
 
 	/// Returns the rating request of the wrapped model.

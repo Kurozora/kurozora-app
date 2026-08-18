@@ -329,6 +329,7 @@ final class LibraryStore {
 		attributes.review = entry.reviewDescription
 		attributes.note = entry.note
 		attributes.isSpoiler = entry.isSpoiler?.boolValue
+		attributes.recommendation = entry.recommendation.flatMap { ReviewRecommendation(rawValue: $0.intValue) }
 		return attributes
 	}
 
@@ -416,6 +417,7 @@ final class LibraryStore {
 		attributes.review = entry.reviewDescription
 		attributes.note = entry.note
 		attributes.isSpoiler = entry.isSpoiler?.boolValue
+		attributes.recommendation = entry.recommendation.flatMap { ReviewRecommendation(rawValue: $0.intValue) }
 		return attributes
 	}
 
@@ -478,8 +480,8 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Writes the user's rating, review, note and spoiler flag to the local entry.
-	func applyRating(score: Double?, description: String?, note: String?, isSpoiler: Bool?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
+	/// Writes the user's rating, review, note, spoiler flag and recommendation to the local entry.
+	func applyRating(score: Double?, description: String?, note: String?, isSpoiler: Bool?, recommendation: ReviewRecommendation?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		let now = Date()
 		entry.score = score.map { NSNumber(value: $0) }
@@ -492,6 +494,9 @@ final class LibraryStore {
 		if let isSpoiler {
 			entry.isSpoiler = NSNumber(value: isSpoiler)
 		}
+		if let recommendation {
+			entry.recommendation = NSNumber(value: recommendation.rawValue)
+		}
 		entry.reviewUpdatedAt = now
 		if entry.reviewCreatedAt == nil, score != nil {
 			entry.reviewCreatedAt = now
@@ -500,7 +505,7 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	/// Clears the user's rating, review, note and spoiler flag from the local entry.
+	/// Clears the user's rating, review, note, spoiler flag and recommendation from the local entry.
 	func applyRatingRemoved(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		entry.reviewID = nil
@@ -508,6 +513,7 @@ final class LibraryStore {
 		entry.reviewDescription = nil
 		entry.note = nil
 		entry.isSpoiler = nil
+		entry.recommendation = nil
 		entry.reviewCreatedAt = nil
 		entry.reviewUpdatedAt = nil
 		entry.updatedAt = Date()

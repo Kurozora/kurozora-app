@@ -71,6 +71,7 @@ class LocalLibraryEntry: NSManagedObject {
 			entry.reviewDescription = review.description
 			entry.note = review.note
 			entry.isSpoiler = NSNumber(value: review.isSpoiler)
+			entry.recommendation = review.recommendation.map { NSNumber(value: $0.rawValue) }
 			entry.reviewCreatedAt = review.createdAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
 			entry.reviewUpdatedAt = review.updatedAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }
 		} else {
@@ -79,6 +80,7 @@ class LocalLibraryEntry: NSManagedObject {
 			entry.reviewDescription = nil
 			entry.note = nil
 			entry.isSpoiler = nil
+			entry.recommendation = nil
 			entry.reviewCreatedAt = nil
 			entry.reviewUpdatedAt = nil
 		}

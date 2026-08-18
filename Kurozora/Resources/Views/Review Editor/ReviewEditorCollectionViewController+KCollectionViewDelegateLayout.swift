@@ -23,7 +23,6 @@ extension ReviewEditorCollectionViewController {
 	///
 	/// - Parameter layoutEnvironment: The layout environment of the section.
 	private func layoutSection(for layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		// Every cell sizes itself, so the estimate only seeds the first layout pass.
 		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(self.estimatedRowHeight(for: layoutEnvironment)))
 		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])

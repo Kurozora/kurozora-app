@@ -37,6 +37,9 @@ struct ReviewEditorContext {
 
 	/// Whether the user's review contains spoiler material.
 	let isSpoiler: Bool
+
+	/// The reviewer's recommendation.
+	let recommendation: ReviewRecommendation?
 }
 
 protocol ReviewEditorContextProviding: AnyObject {
@@ -70,6 +73,9 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// Whether the user's review contains spoiler material.
 	var isSpoiler: Bool = false
 
+	/// The reviewer's recommendation.
+	var recommendation: ReviewRecommendation?
+
 	/// The rating categories of the model with the user's scores.
 	var ratingCategories: [RatingCategory] = []
 
@@ -93,6 +99,9 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// The spoiler state the editor opened with.
 	private var originalIsSpoiler: Bool = false
 
+	/// The recommendation the editor opened with.
+	private var originalRecommendation: ReviewRecommendation?
+
 	/// The category scores the editor opened with.
 	private var originalScores: [KurozoraItemID: Double] = [:]
 
@@ -106,10 +115,12 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 				|| (self.review ?? "") != (self.originalReview ?? "")
 				|| (self.note ?? "") != (self.originalNote ?? "")
 				|| self.isSpoiler != self.originalIsSpoiler
+				|| self.recommendation != self.originalRecommendation
 		}
 
 		if (self.note ?? "") != (self.originalNote ?? "") { return true }
 		if self.isSpoiler != self.originalIsSpoiler { return true }
+		if self.recommendation != self.originalRecommendation { return true }
 
 		return self.ratingCategories.contains { ratingCategory in
 			ratingCategory.attributes.score != self.originalScores[ratingCategory.id]
@@ -198,12 +209,12 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 
 		guard self.isDetailed else {
 			let needsReaction = UserSettings.ratingStyle == .quickReaction && (self.rating ?? 0) <= 0
-			self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges && !needsReaction
+			self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges && !needsReaction && self.recommendation != nil
 			return
 		}
 
 		let hasSubmittableChanges = self.hasChanges || (self.rating ?? 0) <= 0
-		self.navigationItem.rightBarButtonItem?.isEnabled = hasSubmittableChanges && !self.ratingCategories.isEmpty
+		self.navigationItem.rightBarButtonItem?.isEnabled = hasSubmittableChanges && !self.ratingCategories.isEmpty && self.recommendation != nil
 	}
 
 	/// Stores the values the editor opened with.
@@ -212,6 +223,7 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 		self.originalReview = self.review
 		self.originalNote = self.note
 		self.originalIsSpoiler = self.isSpoiler
+		self.originalRecommendation = self.recommendation
 
 		for ratingCategory in self.ratingCategories {
 			self.originalScores[ratingCategory.id] = ratingCategory.attributes.score
@@ -329,13 +341,13 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// - Returns: `true` when the submission succeeds.
 	private func submit(using kind: ReviewKind) async throws(APIError) -> Bool {
 		guard !self.isDetailed else {
-			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, note: self.note, isSpoiler: self.isSpoiler)
+			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, note: self.note, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
 		}
 
 		let existingRating = self.rating ?? 0.0
 		let rating = existingRating > 0 ? existingRating : Self.defaultRating
 
-		return try await kind.rate(using: rating, description: self.review, note: self.note, isSpoiler: self.isSpoiler)
+		return try await kind.rate(using: rating, description: self.review, note: self.note, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
 	}
 
 	/// Presents the off-topic content warning.
@@ -418,6 +430,14 @@ extension ReviewEditorCollectionViewController: ReviewInputCollectionViewCellDel
 			self.review = text
 		}
 
+		self.updateUnsavedChangesState()
+	}
+}
+
+// MARK: - RecommendationSegmentedCollectionViewCellDelegate
+extension ReviewEditorCollectionViewController: RecommendationSegmentedCollectionViewCellDelegate {
+	func recommendationSegmentedCollectionViewCell(_ cell: RecommendationSegmentedCollectionViewCell, didSelect recommendation: ReviewRecommendation?) {
+		self.recommendation = recommendation
 		self.updateUnsavedChangesState()
 	}
 }

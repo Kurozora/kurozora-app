@@ -268,7 +268,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let game = self.game else { return nil }
-		return ReviewEditorContext(kind: .game(game), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false)
+		return ReviewEditorContext(kind: .game(game), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

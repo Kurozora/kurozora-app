@@ -43,6 +43,9 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 	/// Whether the authenticated user's review of the reviewed item contains spoiler material.
 	var givenIsSpoiler: Bool = false
+
+	/// The authenticated user's recommendation for the reviewed item.
+	var givenRecommendation: ReviewRecommendation?
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
@@ -281,6 +284,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			self.givenReview = nil
 			self.givenNote = nil
 			self.givenIsSpoiler = false
+			self.givenRecommendation = nil
 
 			self.updateDataSource()
 			self.toggleEmptyDataView()
@@ -501,7 +505,7 @@ extension ReviewsListCollectionViewController: ReviewEditorContextProviding {
 	func writeAReviewContext() -> ReviewEditorContext? {
 		guard let kind = self.currentReviewKind() else { return nil }
 
-		return ReviewEditorContext(kind: kind, rating: self.givenRating, review: self.givenReview, note: self.givenNote, isSpoiler: self.givenIsSpoiler)
+		return ReviewEditorContext(kind: kind, rating: self.givenRating, review: self.givenReview, note: self.givenNote, isSpoiler: self.givenIsSpoiler, recommendation: self.givenRecommendation)
 	}
 }
 
@@ -516,6 +520,7 @@ extension ReviewsListCollectionViewController: ReviewEditorCollectionViewControl
 		self.givenReview = nil
 		self.givenNote = nil
 		self.givenIsSpoiler = false
+		self.givenRecommendation = nil
 
 		if let userID = User.current?.id {
 			self.reviews.removeAll { review in
