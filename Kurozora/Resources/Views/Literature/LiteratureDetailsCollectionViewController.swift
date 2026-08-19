@@ -48,6 +48,10 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	var studioIdentities: [StudioIdentity] = []
 	var studioLiteratureIdentities: [LiteratureIdentity] = []
 
+	/// The literature's editorial endorsement, fetched from its dedicated endpoint. `nil` until
+	/// the fetch resolves, or when the literature has none.
+	var editorial: Editorial?
+
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -200,6 +204,14 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		}
 
 		do {
+			let editorialResponse = try await KService.editorial(for: literatureIdentity).response()
+			self.editorial = editorialResponse.data.first
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
 			let castIdentityResponse = try await KService.cast(for: literatureIdentity).limit(10).response()
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
@@ -269,6 +281,19 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let literature = self.literature else { return nil }
 		return ReviewEditorContext(kind: .literature(literature), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
+	}
+
+	/// Resolves the review backing a review cell, accounting for the editorial row that
+	/// precedes the reviews in this controller's reviews section.
+	override func review(at indexPath: IndexPath) -> Review? {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		switch itemKind {
+		case .review(let review, _):
+			return review
+		default:
+			return nil
+		}
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

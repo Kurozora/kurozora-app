@@ -135,6 +135,9 @@ extension ShowDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
+		/// Indicates the item kind contains the show's editorial endorsement.
+		case editorial(_: Editorial, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `SeasonIdentity` object.
 		case seasonIdentity(_: SeasonIdentity, id: UUID = UUID())
 
@@ -173,6 +176,9 @@ extension ShowDetailsCollectionViewController {
 				hasher.combine(id)
 			case .review(let review, let id):
 				hasher.combine(review)
+				hasher.combine(id)
+			case .editorial(let editorial, let id):
+				hasher.combine(editorial)
 				hasher.combine(id)
 			case .seasonIdentity(let seasonIdentity, let id):
 				hasher.combine(seasonIdentity)
@@ -213,6 +219,8 @@ extension ShowDetailsCollectionViewController {
 				return show1 == show2 && id1 == id2
 			case (.review(let review1, let id1), .review(let review2, let id2)):
 				return review1 == review2 && id1 == id2
+			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
+				return editorial1 == editorial2 && id1 == id2
 			case (.seasonIdentity(let seasonIdentity1, let id1), .seasonIdentity(let seasonIdentity2, let id2)):
 				return seasonIdentity1 == seasonIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):

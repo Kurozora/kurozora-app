@@ -115,7 +115,8 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - review: The review details to configure the cell with.
 	///    - showsFullReview: Whether to show the full review text without truncation.
-	func configureCell(using review: Review?, showsFullReview: Bool = false) {
+	///    - isElevated: Whether the review was elevated to Editor's Choice by staff.
+	func configureCell(using review: Review?, showsFullReview: Bool = false, isElevated: Bool = false) {
 		guard let review = review else {
 			self.showSkeleton()
 			return
@@ -166,7 +167,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.cosmosView.rating = review.attributes.score
 
 		// Configure body
-		let metadataText = self.metadataText(for: review)
+		let metadataText = self.metadataText(for: review, isElevated: isElevated)
 		self.metadataLabel.text = metadataText
 		self.metadataLabel.isHidden = metadataText == nil
 
@@ -195,11 +196,17 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 	/// Builds the recommendation and progress badge shown above a review's body.
 	///
-	/// - Parameter review: The review to build the badge text from.
+	/// - Parameters:
+	///    - review: The review to build the badge text from.
+	///    - isElevated: Whether the review was elevated to Editor's Choice by staff.
 	///
-	/// - Returns: The joined badge text, or `nil` when the review has neither a recommendation nor a progress.
-	private func metadataText(for review: Review) -> String? {
+	/// - Returns: The joined badge text, or `nil` when the review has no badge to show.
+	private func metadataText(for review: Review, isElevated: Bool) -> String? {
 		var parts: [String] = []
+
+		if isElevated {
+			parts.append(L10n.communityPick)
+		}
 
 		if let recommendation = review.attributes.recommendation {
 			parts.append(recommendation.localizedName)

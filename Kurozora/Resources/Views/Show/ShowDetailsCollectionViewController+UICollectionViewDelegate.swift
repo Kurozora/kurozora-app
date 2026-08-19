@@ -69,8 +69,12 @@ extension ShowDetailsCollectionViewController {
 			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(.reviewDetailsSegue, sender: review)
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+			switch itemKind {
+			case .review(let review, _):
+				self.present(.reviewDetailsSegue, sender: review)
+			default: break
+			}
 		default: return
 		}
 	}
@@ -81,7 +85,13 @@ extension ShowDetailsCollectionViewController {
 
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+			switch itemKind {
+			case .review(let review, _):
+				return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			default:
+				return nil
+			}
 		case .seasons:
 			guard let season = self.cache[indexPath] as? Season else { return nil }
 			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

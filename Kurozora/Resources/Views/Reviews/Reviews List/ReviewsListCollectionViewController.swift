@@ -49,6 +49,10 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	var reviews: [Review] = []
 	var nextPageCursor: PageCursor?
 
+	/// The item's editorial endorsement, fetched from its dedicated endpoint. `nil` until the
+	/// fetch resolves, or when the item has none.
+	var editorial: Editorial?
+
 	/// Whether the reviews flagged as low-effort are shown alongside the rest.
 	var isShowingLowEffortReviews = false
 
@@ -85,6 +89,11 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchReviews()
+		}
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchEditorial()
 		}
 
 		// Setup refresh control
@@ -131,9 +140,17 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		// The list is reloading from scratch, so drop the stale editorial until the fresh fetch resolves.
+		self.editorial = nil
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchReviews()
+		}
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchEditorial()
 		}
 	}
 
@@ -265,6 +282,37 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		self.fetchInProgress = false
 	}
 
+	/// Fetches the item's editorial endorsement from its dedicated endpoint and applies the
+	/// snapshot once it resolves, so the row appears without blocking the reviews fetch.
+	///
+	/// A no-op for the five kinds that have no editorial relationship.
+	func fetchEditorial() async {
+		do {
+			let editorialResponse: ResourceCollection<Editorial>
+
+			switch self.listType {
+			case .show(let show):
+				editorialResponse = try await KService.editorial(for: ShowIdentity(id: show.id)).response()
+			case .literature(let literature):
+				editorialResponse = try await KService.editorial(for: LiteratureIdentity(id: literature.id)).response()
+			case .game(let game):
+				editorialResponse = try await KService.editorial(for: GameIdentity(id: game.id)).response()
+			case .character, .person, .studio, .song, .episode, .none:
+				return
+			}
+
+			self.editorial = editorialResponse.data.first
+		} catch {
+			print("-----", error.localizedDescription)
+			return
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.updateDataSource()
+		}
+	}
+
 	/// Refetches the reviews from the first page.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
@@ -343,10 +391,26 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 // MARK: - ReviewCollectionViewCellDelegate
 extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate {
+	/// Resolves the review rendered by the cell at `indexPath`.
+	///
+	/// - Parameter indexPath: The index path of the cell.
+	///
+	/// - Returns: The review backing the row.
+	private func review(at indexPath: IndexPath) -> Review? {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		switch itemKind {
+		case .review(let review, _):
+			return review
+		default:
+			return nil
+		}
+	}
+
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 		review.visitOriginalPosterProfile(from: self)
 	}
@@ -363,7 +427,7 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 		self.present(.reviewDetailsSegue, sender: review)
 	}
@@ -372,7 +436,7 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 
 		TranslationService.shared.toggleTranslation(for: review)
@@ -382,7 +446,7 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
@@ -574,6 +638,9 @@ extension ReviewsListCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
+		/// Indicates the item kind contains the item's editorial endorsement.
+		case editorial(_: Editorial, id: UUID = UUID())
+
 		/// Indicates the item kind contains the toggle for revealing or hiding the low-effort reviews.
 		case lowEffortReviewsToggle(isExpanded: Bool)
 
@@ -610,6 +677,9 @@ extension ReviewsListCollectionViewController {
 			case .review(let review, let id):
 				hasher.combine(review)
 				hasher.combine(id)
+			case .editorial(let editorial, let id):
+				hasher.combine(editorial)
+				hasher.combine(id)
 			case .lowEffortReviewsToggle(let isExpanded):
 				hasher.combine(isExpanded)
 			case .character(let character, let id):
@@ -645,6 +715,8 @@ extension ReviewsListCollectionViewController {
 				return rateAndReview1 == rateAndReview2 && currentRating1 == currentRating2
 			case (.review(let review1, let id1), .review(let review2, let id2)):
 				return review1 == review2 && id1 == id2
+			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
+				return editorial1 == editorial2 && id1 == id2
 			case (.lowEffortReviewsToggle(let isExpanded1), .lowEffortReviewsToggle(let isExpanded2)):
 				return isExpanded1 == isExpanded2
 			case (.character(let character1, let id1), .character(let character2, let id2)):

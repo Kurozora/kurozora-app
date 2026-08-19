@@ -4494,6 +4494,62 @@ extension L10n {
 			)
 		}
 	}
+	/// Heading on the app's own editorial endorsement of an item.
+	///
+	/// - Tag: L10n-editorsChoice
+	static var editorsChoice: String {
+		L10n.resolve {
+			String(
+				localized: "Editor’s Choice",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Heading on the app's own editorial endorsement of an item."
+			)
+		}
+	}
+	/// Byline shown when an editorial credits the app itself.
+	///
+	/// - Tag: L10n-kurozoraEditors
+	static var kurozoraEditors: String {
+		L10n.resolve {
+			String(
+				localized: "The Kurozora Editors",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Byline shown when an editorial credits the app itself."
+			)
+		}
+	}
+	/// Marker on a user review the staff elevated.
+	///
+	/// - Tag: L10n-communityPick
+	static var communityPick: String {
+		L10n.resolve {
+			String(
+				localized: "Community Pick",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Marker on a user review the staff elevated."
+			)
+		}
+	}
+	/// Context-menu action that promotes a review to Editor's Choice.
+	///
+	/// - Tag: L10n-elevateReview
+	static var elevateReview: String {
+		L10n.resolve {
+			String(
+				localized: "Elevate Review",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Context-menu action that promotes a review to Editor's Choice."
+			)
+		}
+	}
 
 	/// Title shown in the navigation bar of the Parental Guide report sheet.
 	///

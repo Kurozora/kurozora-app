@@ -69,8 +69,12 @@ extension GameDetailsCollectionViewController {
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
 			self.show(.literatureDetailsSegue, sender: literature)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
-			self.present(.reviewDetailsSegue, sender: review)
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+			switch itemKind {
+			case .review(let review, _):
+				self.present(.reviewDetailsSegue, sender: review)
+			default: break
+			}
 		default: return
 		}
 	}
@@ -83,7 +87,13 @@ extension GameDetailsCollectionViewController {
 		case .header, .badge, .synopsis, .rateAndReview, .rating, .information, .sosumi:
 			return nil
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+			switch itemKind {
+			case .review(let review, _):
+				return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			default:
+				return nil
+			}
 		case .cast:
 			guard let cast = self.cache[indexPath] as? Cast else { return nil }
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

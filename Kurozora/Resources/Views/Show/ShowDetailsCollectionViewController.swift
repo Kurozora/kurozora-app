@@ -51,6 +51,10 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	var studioShowIdentities: [ShowIdentity] = []
 	var showSongs: [ShowSong] = []
 
+	/// The show's editorial endorsement, fetched from its dedicated endpoint. `nil` until the
+	/// fetch resolves, or when the show has none.
+	var editorial: Editorial?
+
 	/// The player that controls song playback.
 	var player: AVPlayer?
 
@@ -248,6 +252,14 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
+			let editorialResponse = try await KService.editorial(for: showIdentity).response()
+			self.editorial = editorialResponse.data.first
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
 			let seasonIdentityResponse = try await KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10).response()
 			self.seasonIdentities = seasonIdentityResponse.data
 			self.updateDataSource()
@@ -337,6 +349,19 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let show = self.show else { return nil }
 		return ReviewEditorContext(kind: .show(show), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
+	}
+
+	/// Resolves the review backing a review cell, accounting for the editorial row that
+	/// precedes the reviews in this controller's reviews section.
+	override func review(at indexPath: IndexPath) -> Review? {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		switch itemKind {
+		case .review(let review, _):
+			return review
+		default:
+			return nil
+		}
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

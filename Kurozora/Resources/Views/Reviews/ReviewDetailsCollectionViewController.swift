@@ -96,7 +96,7 @@ extension ReviewDetailsCollectionViewController {
 			case .review(let review, _):
 				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				reviewCollectionViewCell?.delegate = self
-				reviewCollectionViewCell?.configureCell(using: review, showsFullReview: true)
+				reviewCollectionViewCell?.configureCell(using: review, showsFullReview: true, isElevated: review.attributes.isElevated)
 				return reviewCollectionViewCell
 			}
 		}

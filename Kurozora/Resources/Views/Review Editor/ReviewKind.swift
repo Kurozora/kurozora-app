@@ -95,7 +95,6 @@ enum ReviewKind {
 				.cursor(nil)
 				.limit(limit)
 				.response()
-
 			return reviewResponse.data
 		} catch let error as APIError {
 			print(error.localizedDescription)

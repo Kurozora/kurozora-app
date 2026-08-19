@@ -16,7 +16,7 @@ extension SongDetailsCollectionViewController {
 			guard let show = self.cache[indexPath] as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
+			guard let review = self.review(at: indexPath) else { return }
 			self.present(.reviewDetailsSegue, sender: review)
 		default: break
 		}
@@ -31,8 +31,8 @@ extension SongDetailsCollectionViewController {
 			guard let show = self.cache[indexPath] as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return nil }
-			return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let review = self.review(at: indexPath) else { return nil }
+			return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default: break
 		}
 

@@ -45,7 +45,7 @@ extension EpisodeDetailsCollectionViewController {
 			let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
 			self.show(.episodeDetailsSegue, sender: suggestedEpisode)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
+			guard let review = self.review(at: indexPath) else { return }
 			self.present(.reviewDetailsSegue, sender: review)
 		default: return
 		}
@@ -59,7 +59,8 @@ extension EpisodeDetailsCollectionViewController {
 		case .header, .badge, .synopsis, .rateAndReview, .rating, .information, .sosumi:
 			return nil
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let review = self.review(at: indexPath) else { return nil }
+			return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
 			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .suggestedEpisodes:

@@ -49,12 +49,14 @@ extension ReviewsListCollectionViewController {
 		case .rating:
 			return nil
 		case .reviews:
-			guard
-				let itemKind = self.dataSource.itemIdentifier(for: indexPath),
-				case .review(let review, _) = itemKind
-			else { return nil }
+			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
-			return review.contextMenuConfiguration(in: self, userInfo: [:], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			switch itemKind {
+			case .review(let review, _):
+				return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			default:
+				return nil
+			}
 		}
 	}
 }

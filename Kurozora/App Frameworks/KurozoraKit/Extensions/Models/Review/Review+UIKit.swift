@@ -63,6 +63,16 @@ extension Review {
 			menuElements.append(UIMenu(title: "", options: .displayInline, children: [updateAction]))
 		}
 
+		if User.isSignedIn, let role = User.current?.attributes.role, [.superAdmin, .admin, .mod, .editor].contains(role) {
+			let elevateAction = UIAction(title: L10n.elevateReview, image: UIImage(systemName: "star.circle")) { _ in
+				Task { @MainActor in
+					await self.elevate(via: viewController)
+				}
+			}
+
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: [elevateAction]))
+		}
+
 		if User.isSignedIn {
 			let reviewUserID = self.relationships?.users?.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
@@ -235,6 +245,24 @@ extension Review {
 
 		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.presentAlertController(title: L10n.reviewReportedHeadline, message: L10n.reviewReportedSubheadline)
+	}
+
+	/// Toggles the review's Editor's Choice slot.
+	///
+	/// - Parameter viewController: The view controller presenting the request, used to surface an error.
+	@MainActor
+	private func elevate(via viewController: UIViewController? = UIApplication.topViewController) async {
+		let reviewIdentity = ReviewIdentity(id: self.id)
+
+		do {
+			_ = try await KService.elevateReview(reviewIdentity).response()
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+		} catch let error as APIError {
+			viewController?.presentAlertController(title: nil, message: error.message)
+			print("-----", error.localizedDescription)
+		} catch {
+			print("-----", error.localizedDescription)
+		}
 	}
 
 	/// Removes the review.

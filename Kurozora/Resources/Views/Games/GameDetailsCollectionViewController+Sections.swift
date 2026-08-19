@@ -95,6 +95,9 @@ extension GameDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
+		/// Indicates the item kind contains the game's editorial endorsement.
+		case editorial(_: Editorial, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `GameIdentity` object.
 		case gameIdentity(_: GameIdentity, id: UUID = UUID())
 
@@ -127,6 +130,9 @@ extension GameDetailsCollectionViewController {
 				hasher.combine(id)
 			case .review(let review, let id):
 				hasher.combine(review)
+				hasher.combine(id)
+			case .editorial(let editorial, let id):
+				hasher.combine(editorial)
 				hasher.combine(id)
 			case .gameIdentity(let gameIdentity, let id):
 				hasher.combine(gameIdentity)
@@ -161,6 +167,8 @@ extension GameDetailsCollectionViewController {
 				return game1 == game2 && id1 == id2
 			case (.review(let review1, let id1), .review(let review2, let id2)):
 				return review1 == review2 && id1 == id2
+			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
+				return editorial1 == editorial2 && id1 == id2
 			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
 				return gameIdentity1 == gameIdentity2 && id1 == id2
 			case (.relatedGame(let relatedGame1, let id1), .relatedGame(let relatedGame2, let id2)):

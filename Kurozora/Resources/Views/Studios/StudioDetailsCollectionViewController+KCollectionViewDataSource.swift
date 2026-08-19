@@ -108,7 +108,7 @@ extension StudioDetailsCollectionViewController {
 				switch itemKind {
 				case .review(let review, _):
 					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review)
+					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
 				default: break
 				}
 				return reviewCollectionViewCell

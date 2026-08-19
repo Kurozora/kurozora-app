@@ -62,6 +62,6 @@ extension UserReviewsListCollectionViewController {
 			  case .review(let review) = itemKind else { return nil }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
-		return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 	}
 }

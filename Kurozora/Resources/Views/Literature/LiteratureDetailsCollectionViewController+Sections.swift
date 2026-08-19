@@ -95,6 +95,9 @@ extension LiteratureDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review, id: UUID = UUID())
 
+		/// Indicates the item kind contains the literature's editorial endorsement.
+		case editorial(_: Editorial, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
 
@@ -127,6 +130,9 @@ extension LiteratureDetailsCollectionViewController {
 				hasher.combine(id)
 			case .review(let review, let id):
 				hasher.combine(review)
+				hasher.combine(id)
+			case .editorial(let editorial, let id):
+				hasher.combine(editorial)
 				hasher.combine(id)
 			case .literatureIdentity(let literatureIdentity, let id):
 				hasher.combine(literatureIdentity)
@@ -161,6 +167,8 @@ extension LiteratureDetailsCollectionViewController {
 				return literature1 == literature2 && id1 == id2
 			case (.review(let review1, let id1), .review(let review2, let id2)):
 				return review1 == review2 && id1 == id2
+			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
+				return editorial1 == editorial2 && id1 == id2
 			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
 				return literatureIdentity1 == literatureIdentity2 && id1 == id2
 			case (.relatedLiterature(let relatedLiterature1, let id1), .relatedLiterature(let relatedLiterature2, let id2)):

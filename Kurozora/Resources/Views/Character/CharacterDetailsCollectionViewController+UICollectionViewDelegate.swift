@@ -25,7 +25,7 @@ extension CharacterDetailsCollectionViewController {
 			guard let person = self.cache[indexPath] as? Person else { return }
 			self.show(.personDetailsSegue, sender: person)
 		case .reviews:
-			guard let review = self.reviews[safe: indexPath.item] else { return }
+			guard let review = self.review(at: indexPath) else { return }
 			self.present(.reviewDetailsSegue, sender: review)
 		default: break
 		}
@@ -37,7 +37,8 @@ extension CharacterDetailsCollectionViewController {
 
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			guard let review = self.review(at: indexPath) else { return nil }
+			return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .shows:
 			guard let show = self.cache[indexPath] as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

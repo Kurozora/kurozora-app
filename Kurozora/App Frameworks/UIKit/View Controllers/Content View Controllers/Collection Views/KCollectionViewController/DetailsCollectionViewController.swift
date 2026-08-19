@@ -154,10 +154,10 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 				guard
 					let reviewCell = cell as? ReviewCollectionViewCell,
 					let indexPath = self.collectionView.indexPath(for: cell),
-					let review = self.reviews[safe: indexPath.item]
+					let review = self.review(at: indexPath)
 				else { continue }
 
-				reviewCell.configureCell(using: review)
+				reviewCell.configureCell(using: review, isElevated: review.attributes.isElevated)
 			}
 		}
 	}
@@ -398,6 +398,18 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		self.present(identifier, sender: review)
 	}
 
+	/// Resolves the review backing a ``ReviewCollectionViewCell`` at the given index path.
+	///
+	/// The base implementation treats `indexPath.item` as a direct offset into ``reviews``.
+	/// Subclasses whose reviews section prepends other items — e.g. an editorial row — override
+	/// this to resolve through their diffable data source instead.
+	///
+	/// - Parameter indexPath: The index path of the review cell.
+	/// - Returns: The review backing the cell, or `nil`.
+	func review(at indexPath: IndexPath) -> Review? {
+		return self.reviews[safe: indexPath.item]
+	}
+
 	/// Returns the ``Libraryable`` model backing a lockup cell at the given index path.
 	///
 	/// - Parameters:
@@ -598,7 +610,7 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 		review.visitOriginalPosterProfile(from: self)
 	}
@@ -614,7 +626,7 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 		self.presentReviewDetails(for: review)
 	}
@@ -623,7 +635,7 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 
 		TranslationService.shared.toggleTranslation(for: review)
@@ -633,7 +645,7 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 		guard #available(iOS 26.4, macCatalyst 26.4, *) else { return }
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let review = self.reviews[safe: indexPath.item]
+			let review = self.review(at: indexPath)
 		else { return }
 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)

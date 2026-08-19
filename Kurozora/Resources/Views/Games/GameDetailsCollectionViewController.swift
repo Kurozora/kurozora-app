@@ -48,6 +48,10 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	var studioIdentities: [StudioIdentity] = []
 	var studioGameIdentities: [GameIdentity] = []
 
+	/// The game's editorial endorsement, fetched from its dedicated endpoint. `nil` until the
+	/// fetch resolves, or when the game has none.
+	var editorial: Editorial?
+
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -200,6 +204,14 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
+			let editorialResponse = try await KService.editorial(for: gameIdentity).response()
+			self.editorial = editorialResponse.data.first
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
 			let castIdentityResponse = try await KService.cast(for: gameIdentity).limit(10).response()
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
@@ -269,6 +281,19 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func writeAReviewContext() -> ReviewEditorContext? {
 		guard let game = self.game else { return nil }
 		return ReviewEditorContext(kind: .game(game), rating: self.libraryAttributes?.rating, review: self.libraryAttributes?.review, note: self.libraryAttributes?.note, isSpoiler: self.libraryAttributes?.isSpoiler ?? false, recommendation: self.libraryAttributes?.recommendation)
+	}
+
+	/// Resolves the review backing a review cell, accounting for the editorial row that
+	/// precedes the reviews in this controller's reviews section.
+	override func review(at indexPath: IndexPath) -> Review? {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		switch itemKind {
+		case .review(let review, _):
+			return review
+		default:
+			return nil
+		}
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {

@@ -18,7 +18,8 @@ extension ReviewsListCollectionViewController {
 			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			WriteAReviewCollectionViewCell.self,
-			LowEffortReviewsToggleCollectionViewCell.self
+			LowEffortReviewsToggleCollectionViewCell.self,
+			EditorialCollectionViewCell.self
 		]
 	}
 
@@ -88,8 +89,12 @@ extension ReviewsListCollectionViewController {
 				case .review(let review, _):
 					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review)
+					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
 					return reviewCollectionViewCell
+				case .editorial(let editorial, _):
+					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
+					editorialCollectionViewCell?.configure(using: editorial)
+					return editorialCollectionViewCell
 				case .lowEffortReviewsToggle(let isExpanded):
 					let lowEffortReviewsToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LowEffortReviewsToggleCollectionViewCell.self, for: indexPath)
 					lowEffortReviewsToggleCollectionViewCell?.configure(title: isExpanded ? L10n.reviewsHideShort : L10n.reviewsShowShort)
@@ -156,8 +161,14 @@ extension ReviewsListCollectionViewController {
 					self.snapshot.appendItems([.rateAndReview(rateAndReview, currentRating: rating)], toSection: reviewSection)
 				}
 			case .reviews:
-				if !self.reviews.isEmpty {
+				let hasEditorialContent = self.editorial != nil
+
+				if !self.reviews.isEmpty || hasEditorialContent {
 					self.snapshot.appendSections([reviewSection])
+
+					if let editorial = self.editorial {
+						self.snapshot.appendItems([.editorial(editorial)], toSection: reviewSection)
+					}
 
 					// The server already sorts low-effort reviews last, so filtering
 					// preserves that order without any client-side re-sorting.

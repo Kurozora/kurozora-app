@@ -20,6 +20,7 @@ extension LiteratureDetailsCollectionViewController {
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
 			ReviewCollectionViewCell.self,
+			EditorialCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
@@ -106,14 +107,19 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return rateAndReviewCollectionViewCell
 			case .reviews:
-				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 				switch itemKind {
 				case .review(let review, _):
+					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
 					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review)
-				default: break
+					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
+					return reviewCollectionViewCell
+				case .editorial(let editorial, _):
+					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
+					editorialCollectionViewCell?.configure(using: editorial)
+					return editorialCollectionViewCell
+				default:
+					return nil
 				}
-				return reviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
 				switch itemKind {
@@ -192,8 +198,15 @@ extension LiteratureDetailsCollectionViewController {
 					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
 			case .reviews:
-				if !self.reviews.isEmpty {
+				let hasEditorialContent = self.editorial != nil
+
+				if !self.reviews.isEmpty || hasEditorialContent {
 					newSnapshot.appendSections([literatureDetailSection])
+
+					if let editorial = self.editorial {
+						newSnapshot.appendItems([.editorial(editorial)], toSection: literatureDetailSection)
+					}
+
 					let reviewItems: [ItemKind] = self.reviews.map { review in
 						.review(review)
 					}
