@@ -589,7 +589,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 		}
 	}
 
-	private func currentReviewKind() -> ReviewKind? {
+	private func currentReviewKind() -> ReviewSubject? {
 		switch self.listType {
 		case .character(let character): return .character(character)
 		case .episode(let episode): return .episode(episode)

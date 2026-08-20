@@ -24,7 +24,7 @@ extension ReviewEditorCollectionViewControllerDelegate {
 /// The values a screen hands the review editor for the item it shows.
 struct ReviewEditorContext {
 	/// The model being rated and reviewed.
-	let kind: ReviewKind
+	let kind: ReviewSubject
 
 	/// The user's rating of the model.
 	let rating: Double?
@@ -59,7 +59,7 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	}
 
 	/// The model being rated and reviewed.
-	var kind: ReviewKind?
+	var kind: ReviewSubject?
 
 	/// The user's current rating of the model.
 	var rating: Double?
@@ -339,15 +339,18 @@ final class ReviewEditorCollectionViewController: KCollectionViewController {
 	/// - Parameter kind: The model being rated and reviewed.
 	///
 	/// - Returns: `true` when the submission succeeds.
-	private func submit(using kind: ReviewKind) async throws(APIError) -> Bool {
+	private func submit(using kind: ReviewSubject) async throws(APIError) -> Bool {
+		// The note is its own record, so it is written whether or not a rating is.
+		await kind.setNote(self.note)
+
 		guard !self.isDetailed else {
-			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, note: self.note, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
+			return try await kind.rate(categoryScores: self.ratingCategories, description: nil, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
 		}
 
 		let existingRating = self.rating ?? 0.0
 		let rating = existingRating > 0 ? existingRating : Self.defaultRating
 
-		return try await kind.rate(using: rating, description: self.review, note: self.note, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
+		return try await kind.rate(using: rating, description: self.review, isSpoiler: self.isSpoiler, recommendation: self.recommendation)
 	}
 
 	/// Presents the off-topic content warning.

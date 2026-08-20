@@ -327,7 +327,6 @@ final class LibraryStore {
 		attributes.rewatchCount = Int(entry.rewatchCount)
 		attributes.rating = entry.review?.score?.doubleValue
 		attributes.review = entry.review?.text
-		attributes.note = entry.review?.note
 		attributes.isSpoiler = entry.review?.isSpoiler?.boolValue
 		attributes.recommendation = entry.review?.reviewRecommendation
 		return attributes
@@ -415,7 +414,6 @@ final class LibraryStore {
 		attributes.rewatchCount = Int(entry.rewatchCount)
 		attributes.rating = entry.review?.score?.doubleValue
 		attributes.review = entry.review?.text
-		attributes.note = entry.review?.note
 		attributes.isSpoiler = entry.review?.isSpoiler?.boolValue
 		attributes.recommendation = entry.review?.reviewRecommendation
 		return attributes
@@ -480,7 +478,7 @@ final class LibraryStore {
 		PersistenceController.shared.save(self.viewContext)
 	}
 
-	func applyRating(score: Double?, description: String?, note: String?, isSpoiler: Bool?, recommendation: ReviewRecommendation?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
+	func applyRating(score: Double?, description: String?, isSpoiler: Bool?, recommendation: ReviewRecommendation?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
 		let now = Date()
 		let review = entry.review ?? LocalReview(context: self.viewContext)
@@ -488,9 +486,6 @@ final class LibraryStore {
 		review.score = score.map { NSNumber(value: $0) }
 		if description != nil {
 			review.text = description
-		}
-		if note != nil {
-			review.note = note
 		}
 		if let isSpoiler {
 			review.isSpoiler = NSNumber(value: isSpoiler)

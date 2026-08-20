@@ -39,7 +39,6 @@ class LocalReview: NSManagedObject {
 		localReview.remoteID = review.id
 		localReview.score = NSNumber(value: review.score)
 		localReview.text = review.description
-		localReview.note = review.note
 		localReview.isSpoiler = NSNumber(value: review.isSpoiler)
 		localReview.reviewRecommendation = review.recommendation
 		localReview.createdAt = review.createdAt.map { Date(timeIntervalSince1970: TimeInterval($0)) }

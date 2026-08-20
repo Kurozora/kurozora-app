@@ -16,6 +16,26 @@
             <fetchIndexElement property="updatedAt" type="Binary" order="descending"/>
         </fetchIndex>
     </entity>
+    <entity name="LocalNote" representedClassName="LocalNote" syncable="YES">
+        <attribute name="body" attributeType="String" defaultValueString=""/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="itemID" attributeType="String" defaultValueString=""/>
+        <attribute name="kindRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userSlug" attributeType="String"/>
+        <fetchIndex name="byUserSlugKindItem">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
+            <fetchIndexElement property="itemID" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userSlug"/>
+                <constraint value="kindRaw"/>
+                <constraint value="itemID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="LocalOutboxOperation" representedClassName="LocalOutboxOperation" syncable="YES">
         <attribute name="attemptCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
@@ -101,7 +121,6 @@
     <entity name="LocalReview" representedClassName="LocalReview" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isSpoiler" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
-        <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="recommendation" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <attribute name="remoteID" optional="YES" attributeType="String"/>
         <attribute name="score" optional="YES" attributeType="Double" usesScalarValueType="NO"/>

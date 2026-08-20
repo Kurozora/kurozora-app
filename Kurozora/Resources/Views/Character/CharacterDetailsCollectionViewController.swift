@@ -206,7 +206,9 @@ class CharacterDetailsCollectionViewController: DetailsCollectionViewController,
 				var libraryAttributes = self.libraryAttributes ?? LibraryAttributes()
 				libraryAttributes.rating = reviewEntry?.score
 				libraryAttributes.review = reviewEntry?.description
-				libraryAttributes.note = reviewEntry?.note
+				libraryAttributes.note = try? await KService
+					.notesOverlay(forUser: userIdentity, kind: .characters, itemIDs: [characterID])
+					.response().data.first?.attributes.body
 				libraryAttributes.isSpoiler = reviewEntry?.isSpoiler
 				libraryAttributes.recommendation = reviewEntry?.recommendation
 				self.libraryAttributes = libraryAttributes

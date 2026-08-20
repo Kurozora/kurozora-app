@@ -170,14 +170,16 @@ extension Review {
 
 		guard let kind = await self.reviewKind() else { return }
 
-		let context = ReviewEditorContext(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: self.attributes.note, isSpoiler: self.attributes.isSpoiler, recommendation: self.attributes.recommendation)
+		// The note is no longer carried by the review, so the editor loads it on its own.
+		let note = kind.storedNote()
+		let context = ReviewEditorContext(kind: kind, rating: self.attributes.score, review: self.attributes.description, note: note, isSpoiler: self.attributes.isSpoiler, recommendation: self.attributes.recommendation)
 		await viewController.presentReviewEditor(using: context, delegate: delegate)
 	}
 
 	/// Fetches the model the review belongs to.
 	///
 	/// - Returns: The reviewed model. `nil` when it cannot be fetched.
-	private func reviewKind() async -> ReviewKind? {
+	private func reviewKind() async -> ReviewSubject? {
 		guard let relationships = self.relationships else { return nil }
 
 		do {
