@@ -55,7 +55,7 @@ extension ReviewsListCollectionViewController {
 
 			switch reviewSection {
 			case .rating:
-				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: self.snapshot.numberOfItems(inSection: .rating))
 				sectionLayout = ratingSection
 			case .rateAndReview:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

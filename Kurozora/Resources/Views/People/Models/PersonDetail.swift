@@ -18,6 +18,7 @@ extension PersonDetail {
 	enum Rating: Int, CaseIterable {
 		case average = 0
 		case sentiment
+		case favoriteShare
 		case bar
 
 		// MARK: - Properties
@@ -26,7 +27,7 @@ extension PersonDetail {
 			switch self {
 			case .average:
 				return RatingCollectionViewCell.reuseID
-			case .sentiment:
+			case .sentiment, .favoriteShare:
 				return RatingSentimentCollectionViewCell.reuseID
 			case .bar:
 				return RatingBarCollectionViewCell.reuseID

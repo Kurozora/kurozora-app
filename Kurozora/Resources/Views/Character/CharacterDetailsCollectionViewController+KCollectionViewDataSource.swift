@@ -58,7 +58,7 @@ extension CharacterDetailsCollectionViewController {
 				}
 				return textViewCollectionViewCell
 			case .rating:
-				let characterDetailRating = CharacterDetail.Rating(rawValue: indexPath.item) ?? .average
+				let characterDetailRating = CharacterDetail.Rating.allCases[safe: indexPath.item] ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: characterDetailRating.identifierString, for: indexPath)
 
 				switch itemKind {
@@ -69,6 +69,8 @@ extension CharacterDetailsCollectionViewController {
 							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .favoriteShare:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
 						case .bar:
 							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 						}

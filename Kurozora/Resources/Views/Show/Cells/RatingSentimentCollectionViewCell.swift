@@ -18,13 +18,23 @@ class RatingSentimentCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given `MediaStat` object.
 	func configure(using stats: MediaStat) {
+		self.configure(symbolImage: UIImage(systemName: "star.fill"), percentage: stats.positivePercentage, sentiment: stats.sentiment)
+	}
+
+	/// Configure the cell with the favorite share of the given `MediaStat` object.
+	func configureFavoriteShare(using stats: MediaStat) {
+		self.configure(symbolImage: UIImage(systemName: "heart.fill"), percentage: stats.favoriteShare * 100, sentiment: stats.favoriteSentiment)
+	}
+
+	/// Configure the cell with the given symbol image, percentage and sentiment.
+	private func configure(symbolImage: UIImage?, percentage: Double, sentiment: String) {
 		self.symbolImageView.theme_tintColor = KThemePicker.textColor.rawValue
 
-		self.symbolImageView.image = UIImage(systemName: "star.fill")
+		self.symbolImageView.image = symbolImage
 
-		self.primaryLabel.text = "\(stats.highestRatingPercentage.rounded().withoutTrailingZeros)%"
+		self.primaryLabel.text = "\(percentage.rounded().withoutTrailingZeros)%"
 		self.primaryLabel.font = .systemFont(ofSize: self.primaryLabel.font.pointSize, weight: .bold)
 
-		self.secondaryLabel.text = stats.sentiment
+		self.secondaryLabel.text = sentiment
 	}
 }

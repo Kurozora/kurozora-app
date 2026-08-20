@@ -69,7 +69,7 @@ extension StudioDetailsCollectionViewController {
 				}
 				return textViewCollectionViewCell
 			case .rating:
-				let studioDetailRating = StudioDetail.Rating(rawValue: indexPath.item) ?? .average
+				let studioDetailRating = StudioDetail.Rating.allCases[safe: indexPath.item] ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailRating.identifierString, for: indexPath)
 
 				switch itemKind {
@@ -80,6 +80,8 @@ extension StudioDetailsCollectionViewController {
 							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .favoriteShare:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
 						case .bar:
 							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 						}

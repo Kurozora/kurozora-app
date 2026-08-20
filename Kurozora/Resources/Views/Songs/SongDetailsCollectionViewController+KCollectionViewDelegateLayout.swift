@@ -83,7 +83,7 @@ extension SongDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .rating:
-				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: self.snapshot.numberOfItems(inSection: songDetailSection))
 				sectionLayout = ratingSection
 				hasSectionHeader = true
 			case .rateAndReview:

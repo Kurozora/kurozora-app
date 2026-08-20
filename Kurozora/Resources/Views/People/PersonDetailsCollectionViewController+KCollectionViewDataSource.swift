@@ -58,7 +58,7 @@ extension PersonDetailsCollectionViewController {
 				}
 				return textViewCollectionViewCell
 			case .rating:
-				let personDetailRating = PersonDetail.Rating(rawValue: indexPath.item) ?? .average
+				let personDetailRating = PersonDetail.Rating.allCases[safe: indexPath.item] ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: personDetailRating.identifierString, for: indexPath)
 
 				switch itemKind {
@@ -69,6 +69,8 @@ extension PersonDetailsCollectionViewController {
 							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .favoriteShare:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
 						case .bar:
 							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 						}

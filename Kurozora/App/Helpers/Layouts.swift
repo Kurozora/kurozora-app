@@ -119,14 +119,14 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func ratingSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	static func ratingSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, itemCount: Int = 3) -> NSCollectionLayoutSection {
 		let layoutGroup: NSCollectionLayoutGroup
 		let bottomInset: CGFloat = 20.0
 
 		if columns < 3 {
 			let topItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0)))
 			topItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-			let topGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0)), subitem: topItem, count: 2)
+			let topGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0)), subitem: topItem, count: max(itemCount - 1, 1))
 
 			let bottomItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0)))
 			bottomItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
@@ -135,13 +135,13 @@ enum Layouts {
 			layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [topGroup, bottomItem])
 			layoutGroup.interItemSpacing = .fixed(20.0)
 		} else {
-			// Create item 1/3 of the row width
-			let thirdWidthItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / 3.0), heightDimension: .estimated(1.0))
-			let thirdWidthItem = NSCollectionLayoutItem(layoutSize: thirdWidthItemSize)
+			// Create item an equal fraction of the row width
+			let fractionalWidthItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(max(itemCount, 1))), heightDimension: .estimated(1.0))
+			let fractionalWidthItem = NSCollectionLayoutItem(layoutSize: fractionalWidthItemSize)
 
 			// Add layout group.
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
-			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [thirdWidthItem])
+			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [fractionalWidthItem])
 		}
 
 		// Add layout section.

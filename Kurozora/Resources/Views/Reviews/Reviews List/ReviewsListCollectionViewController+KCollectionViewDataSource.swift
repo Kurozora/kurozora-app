@@ -10,6 +10,18 @@ import UIKit
 import KurozoraKit
 
 extension ReviewsListCollectionViewController {
+	/// The rating components shown for the list's object.
+	var ratingComponents: [CharacterDetail.Rating] {
+		switch self.listType {
+		case .none:
+			return []
+		case .episode:
+			return CharacterDetail.Rating.allCases.filter { $0 != .favoriteShare }
+		default:
+			return CharacterDetail.Rating.allCases
+		}
+	}
+
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
 			RatingCollectionViewCell.self,
@@ -29,9 +41,6 @@ extension ReviewsListCollectionViewController {
 
 			switch reviewSection {
 			case .rating:
-				let characterDetailRating = CharacterDetail.Rating(rawValue: indexPath.item) ?? .average
-				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: characterDetailRating.identifierString, for: indexPath)
-
 				let mediaStat: MediaStat?
 
 				switch itemKind {
@@ -55,12 +64,17 @@ extension ReviewsListCollectionViewController {
 					mediaStat = nil
 				}
 
+				let characterDetailRating = self.ratingComponents[safe: indexPath.item] ?? .average
+				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: characterDetailRating.identifierString, for: indexPath)
+
 				if let stats = mediaStat {
 					switch characterDetailRating {
 					case .average:
 						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 					case .sentiment:
 						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
 					case .bar:
 						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
@@ -118,35 +132,35 @@ extension ReviewsListCollectionViewController {
 
 				switch self.listType {
 				case .character(let character):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.character(character)], toSection: reviewSection)
 					}
 				case .episode(let episode):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.episode(episode)], toSection: reviewSection)
 					}
 				case .game(let game):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.game(game)], toSection: reviewSection)
 					}
 				case .literature(let literature):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.literature(literature)], toSection: reviewSection)
 					}
 				case .person(let person):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.person(person)], toSection: reviewSection)
 					}
 				case .show(let show):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.show(show)], toSection: reviewSection)
 					}
 				case .song(let song):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.song(song)], toSection: reviewSection)
 					}
 				case .studio(let studio):
-					RatingComponent.allCases.forEach { _ in
+					self.ratingComponents.forEach { _ in
 						self.snapshot.appendItems([.studio(studio)], toSection: reviewSection)
 					}
 				case .none:
@@ -190,27 +204,6 @@ extension ReviewsListCollectionViewController {
 		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}
 }
-
-/// List of available show rating types.
-enum RatingComponent: Int, CaseIterable {
-	case average = 0
-	case sentiment
-	case bar
-
-	// MARK: - Properties
-	/// The cell identifier string of a show rating section.
-	var identifierString: String {
-		switch self {
-		case .average:
-			return RatingCollectionViewCell.reuseID
-		case .sentiment:
-			return RatingSentimentCollectionViewCell.reuseID
-		case .bar:
-			return RatingBarCollectionViewCell.reuseID
-		}
-	}
-}
-
 /// List of available show rate & review types.
 enum RateAndReview: Int, CaseIterable {
 	case tapToRate = 0
