@@ -1,15 +1,15 @@
 //
-//  ParentalGuideReportCollectionViewController+KCollectionViewDataSource.swift
+//  ReportCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 07/05/2026.
+//  Created by Khoren Katklian on 20/08/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 import UIKit
 
-extension ParentalGuideReportCollectionViewController {
+extension ReportCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
 			ReportReasonOptionCollectionViewCell.self,
@@ -22,14 +22,14 @@ extension ParentalGuideReportCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		let reasonOptionRegistration = UICollectionView.CellRegistration<ReportReasonOptionCollectionViewCell, ParentalGuideReportReason> { [weak self] cell, _, reason in
-			cell.configure(using: reason, isSelected: self?.selectedReason == reason)
+		let reasonOptionRegistration = UICollectionView.CellRegistration<ReportReasonOptionCollectionViewCell, ReportOption> { [weak self] cell, _, option in
+			cell.configure(title: option.title, isSelected: self?.selectedOption == option)
 		}
 
 		let detailsRegistration = UICollectionView.CellRegistration<ReportDetailsTextCollectionViewCell, AnyHashable> { [weak self] cell, _, _ in
 			guard let self = self else { return }
 
-			let placeholder = self.selectedReason == .other
+			let placeholder = self.selectedOption?.requiresDetails == true
 				? L10n.reportDetailsPlaceholderRequired
 				: L10n.reportDetailsPlaceholder
 
@@ -38,8 +38,8 @@ extension ParentalGuideReportCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, itemKind in
 			switch itemKind {
-			case .reasonOption(let reason):
-				return collectionView.dequeueConfiguredReusableCell(using: reasonOptionRegistration, for: indexPath, item: reason)
+			case .reasonOption(let option):
+				return collectionView.dequeueConfiguredReusableCell(using: reasonOptionRegistration, for: indexPath, item: option)
 			case .detailsEditor:
 				return collectionView.dequeueConfiguredReusableCell(using: detailsRegistration, for: indexPath, item: AnyHashable(ItemKind.detailsEditor))
 			}
@@ -60,7 +60,7 @@ extension ParentalGuideReportCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		self.snapshot.appendSections([.reason])
-		self.snapshot.appendItems(ParentalGuideReportReason.allCases.map { ItemKind.reasonOption($0) }, toSection: .reason)
+		self.snapshot.appendItems((self.subject?.options ?? []).map { ItemKind.reasonOption($0) }, toSection: .reason)
 
 		self.snapshot.appendSections([.details])
 		self.snapshot.appendItems([.detailsEditor], toSection: .details)

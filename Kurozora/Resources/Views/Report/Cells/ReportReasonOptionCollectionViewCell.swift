@@ -6,7 +6,6 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
-import KurozoraKit
 import UIKit
 
 class ReportReasonOptionCollectionViewCell: KCollectionViewCell {
@@ -43,14 +42,14 @@ class ReportReasonOptionCollectionViewCell: KCollectionViewCell {
 	/// Configures the cell for a reason option.
 	///
 	/// - Parameters:
-	///    - reason: The reason this row represents.
+	///    - title: The localized title of the reason this row represents.
 	///    - isSelected: Whether this option is currently selected.
-	func configure(using reason: ParentalGuideReportReason, isSelected: Bool) {
+	func configure(title: String, isSelected: Bool) {
 		self.hideSkeleton()
 		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		self.contentView.layerCornerRadius = 12
 
-		self.titleLabel.text = Self.displayTitle(for: reason)
+		self.titleLabel.text = title
 		self.checkmarkImageView.isHidden = !isSelected
 	}
 
@@ -72,25 +71,5 @@ class ReportReasonOptionCollectionViewCell: KCollectionViewCell {
 			self.checkmarkImageView.widthAnchor.constraint(equalToConstant: 18),
 			self.checkmarkImageView.heightAnchor.constraint(equalToConstant: 18)
 		])
-	}
-
-	/// Returns the localized display title for the given reason.
-	///
-	/// - Parameter reason: The reason whose title to return.
-	///
-	/// - Returns: The localized title.
-	private static func displayTitle(for reason: ParentalGuideReportReason) -> String {
-		switch reason {
-		case .inaccurate:
-			return L10n.reportReasonInaccurate
-		case .spoiler:
-			return L10n.reportReasonSpoiler
-		case .spam:
-			return L10n.reportReasonSpam
-		case .inappropriate:
-			return L10n.reportReasonInappropriate
-		case .other:
-			return L10n.reportReasonOther
-		}
 	}
 }

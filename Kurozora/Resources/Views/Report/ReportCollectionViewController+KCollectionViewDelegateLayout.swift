@@ -1,14 +1,14 @@
 //
-//  ParentalGuideReportCollectionViewController+KCollectionViewDelegateLayout.swift
+//  ReportCollectionViewController+KCollectionViewDelegateLayout.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 07/05/2026.
+//  Created by Khoren Katklian on 20/08/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import UIKit
 
-extension ParentalGuideReportCollectionViewController {
+extension ReportCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		return 1
 	}

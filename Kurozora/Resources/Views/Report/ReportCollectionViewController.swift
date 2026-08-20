@@ -1,21 +1,21 @@
 //
-//  ParentalGuideReportCollectionViewController.swift
+//  ReportCollectionViewController.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 07/05/2026.
+//  Created by Khoren Katklian on 20/08/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 import UIKit
 
-class ParentalGuideReportCollectionViewController: KCollectionViewController {
+class ReportCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	/// The identity of the entry being reported.
-	var entryIdentity: ParentalGuideEntryIdentity!
+	/// The content the report is filed against.
+	var subject: ReportSubject!
 
-	/// The currently selected reason. Defaults to the first case.
-	var selectedReason: ParentalGuideReportReason = ParentalGuideReportReason.allCases.first ?? .inaccurate
+	/// The currently selected reason.
+	var selectedOption: ReportOption?
 
 	/// The current free-text details.
 	var details: String = ""
@@ -50,7 +50,8 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 
 		self._prefersRefreshControlDisabled = true
 
-		self.title = L10n.reportParentalGuideEntry
+		self.title = self.subject?.navigationTitle
+		self.selectedOption = self.selectedOption ?? self.subject?.options.first
 
 		self.configureNavigationItems()
 		self.configureSheetPresentation()
@@ -81,18 +82,18 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 
 	/// Re-evaluates whether "Submit" should be enabled.
 	func updateSubmitEnabled() {
-		guard !self.isSubmitting else {
+		guard !self.isSubmitting, let selectedOption = self.selectedOption else {
 			self.submitBarButtonItem?.isEnabled = false
 			return
 		}
 
-		switch self.selectedReason {
-		case .other:
-			let trimmed = self.details.trimmingCharacters(in: .whitespacesAndNewlines)
-			self.submitBarButtonItem?.isEnabled = !trimmed.isEmpty
-		default:
+		guard selectedOption.requiresDetails else {
 			self.submitBarButtonItem?.isEnabled = true
+			return
 		}
+
+		let trimmed = self.details.trimmingCharacters(in: .whitespacesAndNewlines)
+		self.submitBarButtonItem?.isEnabled = !trimmed.isEmpty
 	}
 
 	// MARK: - Actions
@@ -117,21 +118,22 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 	/// Submits the report.
 	@MainActor
 	private func submit() async {
-		guard let entryIdentity = self.entryIdentity else { return }
+		guard let subject = self.subject, let selectedOption = self.selectedOption else { return }
 
 		let trimmedDetails = self.details.trimmingCharacters(in: .whitespacesAndNewlines)
 		let detailsParameter: String? = trimmedDetails.isEmpty ? nil : trimmedDetails
 
 		do {
-			_ = try await KService.reportParentalGuideEntry(entryIdentity, reason: self.selectedReason, details: detailsParameter).response()
-
-			NotificationCenter.default.post(name: .KPGEntryDidReport, object: nil, userInfo: ["entryID": entryIdentity.id])
+			try await subject.submit(option: selectedOption, details: detailsParameter)
 
 			let presenter = self.presentingViewController
 
 			self.dismiss(animated: true) {
-				presenter?.presentAlertController(title: L10n.reportSuccessTitle, message: L10n.reportSuccessMessage)
+				presenter?.presentAlertController(title: subject.successTitle, message: subject.successMessage)
 			}
+		} catch let error as APIError {
+			print(error.localizedDescription)
+			self.presentErrorAlert(message: error.message)
 		} catch {
 			print(error.localizedDescription)
 			self.presentErrorAlert(message: error.localizedDescription)
@@ -140,7 +142,7 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 
 	/// Presents an error alert.
 	///
-	/// - Parameter message: The message body, or `nil` to omit it.
+	/// - Parameter message: The message body.
 	@MainActor
 	private func presentErrorAlert(message: String?) {
 		let alert = UIAlertController(
@@ -155,7 +157,7 @@ class ParentalGuideReportCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension ParentalGuideReportCollectionViewController {
+extension ReportCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return false }
 
@@ -171,11 +173,11 @@ extension ParentalGuideReportCollectionViewController {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		switch itemKind {
-		case .reasonOption(let reason):
+		case .reasonOption(let option):
 			collectionView.deselectItem(at: indexPath, animated: true)
-			guard self.selectedReason != reason else { return }
+			guard self.selectedOption != option else { return }
 
-			self.selectedReason = reason
+			self.selectedOption = option
 			self.refreshReasonAndDetails()
 			self.updateSubmitEnabled()
 		case .detailsEditor:
@@ -188,7 +190,7 @@ extension ParentalGuideReportCollectionViewController {
 		var current = self.snapshot
 		guard current != nil else { return }
 
-		let reasonItems = ParentalGuideReportReason.allCases.map { ItemKind.reasonOption($0) }
+		let reasonItems = (self.subject?.options ?? []).map { ItemKind.reasonOption($0) }
 		current?.reloadItems(reasonItems)
 		current?.reloadItems([.detailsEditor])
 
@@ -200,7 +202,7 @@ extension ParentalGuideReportCollectionViewController {
 }
 
 // MARK: - ReportDetailsTextCollectionViewCellDelegate
-extension ParentalGuideReportCollectionViewController: ReportDetailsTextCollectionViewCellDelegate {
+extension ReportCollectionViewController: ReportDetailsTextCollectionViewCellDelegate {
 	func reportDetailsTextCollectionViewCell(_ cell: ReportDetailsTextCollectionViewCell, didChange text: String) {
 		self.details = text
 		self.updateSubmitEnabled()

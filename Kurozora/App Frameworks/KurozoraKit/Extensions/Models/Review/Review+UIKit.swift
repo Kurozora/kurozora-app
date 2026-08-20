@@ -248,14 +248,21 @@ extension Review {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	/// Sends a report of the selected review to the mods.
+	/// Presents the report sheet for the review.
+	///
+	/// - Parameter viewController: The view controller presenting the sheet.
 	@MainActor
 	func reportReview(on viewController: UIViewController? = nil) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		let viewController = viewController ?? UIApplication.topViewController
-		viewController?.presentAlertController(title: L10n.reviewReportedHeadline, message: L10n.reviewReportedSubheadline)
+		let reportViewController = ReportCollectionViewController()
+		reportViewController.subject = .review(ReviewIdentity(id: self.id))
+
+		let navigationController = KNavigationController(rootViewController: reportViewController)
+		navigationController.modalPresentationStyle = .formSheet
+
+		(viewController ?? UIApplication.topViewController)?.present(navigationController, animated: true)
 	}
 
 	/// Toggles the review's Editor's Choice slot.

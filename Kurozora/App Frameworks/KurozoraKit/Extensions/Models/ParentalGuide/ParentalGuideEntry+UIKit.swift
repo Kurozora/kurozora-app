@@ -212,8 +212,8 @@ extension ParentalGuideEntry {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		let reportViewController = ParentalGuideReportCollectionViewController()
-		reportViewController.entryIdentity = ParentalGuideEntryIdentity(id: self.id)
+		let reportViewController = ReportCollectionViewController()
+		reportViewController.subject = .parentalGuideEntry(ParentalGuideEntryIdentity(id: self.id))
 
 		let navigationController = KNavigationController(rootViewController: reportViewController)
 		navigationController.modalPresentationStyle = .formSheet

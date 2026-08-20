@@ -4746,6 +4746,126 @@ extension L10n {
 		}
 	}
 
+	/// Display name of the `spam` report reason.
+	///
+	/// - Tag: L10n-reportReasonSpamOrAdvertising
+	static var reportReasonSpamOrAdvertising: String {
+		L10n.resolve {
+			String(
+				localized: "Spam or advertising",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `spam` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `notAReview` report reason.
+	///
+	/// - Tag: L10n-reportReasonNotAReview
+	static var reportReasonNotAReview: String {
+		L10n.resolve {
+			String(
+				localized: "Not a real review",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `notAReview` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `spoiler` report reason.
+	///
+	/// - Tag: L10n-reportReasonUnmarkedSpoilers
+	static var reportReasonUnmarkedSpoilers: String {
+		L10n.resolve {
+			String(
+				localized: "Unmarked spoilers",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `spoiler` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `abuse` report reason.
+	///
+	/// - Tag: L10n-reportReasonAbuse
+	static var reportReasonAbuse: String {
+		L10n.resolve {
+			String(
+				localized: "Hate, harassment or threats",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `abuse` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `inappropriate` report reason.
+	///
+	/// - Tag: L10n-reportReasonInappropriateContent
+	static var reportReasonInappropriateContent: String {
+		L10n.resolve {
+			String(
+				localized: "Inappropriate content",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `inappropriate` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `selfHarm` report reason.
+	///
+	/// - Tag: L10n-reportReasonSelfHarm
+	static var reportReasonSelfHarm: String {
+		L10n.resolve {
+			String(
+				localized: "Suicide or self-harm",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `selfHarm` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `piracy` report reason.
+	///
+	/// - Tag: L10n-reportReasonPiracy
+	static var reportReasonPiracy: String {
+		L10n.resolve {
+			String(
+				localized: "Unauthorized links",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `piracy` report reason."
+			)
+		}
+	}
+
+	/// Display name of the `other` report reason offered for reviews and feed messages.
+	///
+	/// - Tag: L10n-reportReasonSomethingElse
+	static var reportReasonSomethingElse: String {
+		L10n.resolve {
+			String(
+				localized: "Something else",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Display name of the `other` report reason offered for reviews and feed messages."
+			)
+		}
+	}
+
 	// MARK: - TV Rating Descriptions
 	/// The descriptive label for the 'Not Rated' TV rating.
 	///

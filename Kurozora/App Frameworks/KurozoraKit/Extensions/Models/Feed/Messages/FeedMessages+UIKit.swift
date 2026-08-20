@@ -201,7 +201,7 @@ extension FeedMessage {
 			let reportAction = UIAction(title: L10n.reportMessage, attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				Task {
-					await self.reportMessage()
+					await self.reportMessage(on: viewController)
 				}
 			}
 			reportMenuElements.append(reportAction)
@@ -580,17 +580,21 @@ extension FeedMessage {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	/// Sends a report of the selected message to the mods.
+	/// Presents the report sheet for the feed message.
 	///
-	/// - Parameters:
-	///   - viewController: The view controller initiating the report.
+	/// - Parameter viewController: The view controller presenting the sheet.
 	@MainActor
 	func reportMessage(on viewController: UIViewController? = nil) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
 		guard signedIn else { return }
 
-		let viewController = viewController ?? UIApplication.topViewController
-		viewController?.presentAlertController(title: L10n.messageReportedHeadline, message: L10n.messageReportedSubheadline)
+		let reportViewController = ReportCollectionViewController()
+		reportViewController.subject = .feedMessage(FeedMessageIdentity(id: self.id))
+
+		let navigationController = KNavigationController(rootViewController: reportViewController)
+		navigationController.modalPresentationStyle = .formSheet
+
+		(viewController ?? UIApplication.topViewController)?.present(navigationController, animated: true)
 	}
 
 	/// Collects image URLs for Kingfisher prefetching and triggers background RichLink metadata fetches.
