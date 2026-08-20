@@ -187,6 +187,11 @@ extension Notification.Name {
 		return NSNotification.Name(#function)
 	}
 
+	/// A notification posted when the review's helpfulness vote is updated.
+	static var KReviewVoteDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
 	/// A notification posted when the review is deleted.
 	static var KReviewDidDelete: NSNotification.Name {
 		return NSNotification.Name(#function)

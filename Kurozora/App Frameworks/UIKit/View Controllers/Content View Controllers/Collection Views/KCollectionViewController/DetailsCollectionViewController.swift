@@ -99,6 +99,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		ProfileHeaderCollectionViewCell.configureTransparentNavigationAppearance(on: self.navigationItem)
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewVoteDidUpdate(_:)), name: .KReviewVoteDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -330,6 +331,23 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	}
 
 	// MARK: Review update observer
+	/// Applies a helpfulness vote to the review it was cast on.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc private func handleReviewVoteDidUpdate(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+		let isHelpful = notification.userInfo?["isHelpful"] as? Bool
+
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			guard let index = self.reviews.firstIndex(where: { $0.id == reviewID }) else { return }
+
+			// The cell shows the vote already, so only the model it was read from is behind.
+			self.reviews[index].attributes.applyVote(isHelpful)
+		}
+	}
+
 	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
 		Task { @MainActor [weak self] in
 			await self?.refreshReviews()
@@ -649,6 +667,17 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 		else { return }
 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
+		guard
+			let indexPath = self.collectionView.indexPath(for: cell),
+			let review = self.review(at: indexPath)
+		else { return }
+
+		Task {
+			await review.castVote(vote)
+		}
 	}
 }
 

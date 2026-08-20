@@ -174,6 +174,14 @@ extension ReviewDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
 	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
+		guard let review = self.review else { return }
+
+		Task {
+			await review.castVote(vote)
+		}
+	}
 }
 
 // MARK: - SectionLayoutKind

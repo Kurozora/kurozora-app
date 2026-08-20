@@ -106,10 +106,21 @@ extension Review {
 		menuElements.append(shareMenu)
 
 		// Create "helpfulness" menu
-//		let helpfulAction = UIAction(title: "Helpful", image: UIImage(systemName: "hand.thumbsup")) { _ in }
-//		let notHelpfulAction = UIAction(title: "Not Helpful", image: UIImage(systemName: "hand.thumbsdown")) { _ in }
-//		let helpfulMenu = UIMenu(title: "", options: .displayInline, children: [helpfulAction, notHelpfulAction])
-//		menuElements.append(helpfulMenu)
+		if User.isSignedIn, User.current?.id != self.relationships?.users?.data.first?.id {
+			let helpfulAction = UIAction(title: L10n.helpful, image: UIImage(systemName: "hand.thumbsup")) { _ in
+				Task {
+					await self.castVote(.helpful)
+				}
+			}
+
+			let unhelpfulAction = UIAction(title: L10n.unhelpful, image: UIImage(systemName: "hand.thumbsdown")) { _ in
+				Task {
+					await self.castVote(.unhelpful)
+				}
+			}
+
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: [helpfulAction, unhelpfulAction]))
+		}
 
 		if User.isSignedIn {
 			var reportMenuElements: [UIMenuElement] = []
@@ -263,6 +274,32 @@ extension Review {
 		} catch {
 			print("-----", error.localizedDescription)
 		}
+	}
+
+	/// Toggles a helpful or unhelpful vote on the review.
+	///
+	/// - Parameter vote: The vote to cast.
+	func castVote(_ vote: ReviewVote?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: nil)
+		guard signedIn else { return }
+
+		let reviewIdentity = ReviewIdentity(id: self.id)
+		let request = ReviewVoteRequest(vote: vote)
+		var userInfo: [AnyHashable: Any] = ["reviewID": self.id]
+
+		do {
+			let response = try await KService.voteReview(reviewIdentity, request: request).response()
+
+			if let isHelpful = response.data.isHelpful {
+				userInfo["isHelpful"] = isHelpful
+			}
+		} catch {
+			userInfo["isHelpful"] = self.attributes.isHelpful
+			print("-----", error.localizedDescription)
+		}
+
+		// A vote changes one row, so it never asks for the list it sits in to be refetched.
+		NotificationCenter.default.post(name: .KReviewVoteDidUpdate, object: nil, userInfo: userInfo)
 	}
 
 	/// Removes the review.

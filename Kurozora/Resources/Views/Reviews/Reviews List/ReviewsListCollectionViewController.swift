@@ -106,6 +106,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReview(_:)), name: .KReviewDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewVote(_:)), name: .KReviewVoteDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateRatingStyle(_:)), name: .KSRatingStyleDidChange, object: nil)
 
@@ -134,6 +135,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KReviewVoteDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
 	}
@@ -316,6 +318,37 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	/// Refetches the reviews from the first page.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
+	/// Re-renders the voted review without refetching the list.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func updateReviewVote(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+		let isHelpful = notification.userInfo?["isHelpful"] as? Bool
+
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			guard let index = self.reviews.firstIndex(where: { $0.id == reviewID }) else { return }
+
+			self.reviews[index].attributes.applyVote(isHelpful)
+
+			let staleItem = self.snapshot.itemIdentifiers.first {
+				guard case .review(let review, _) = $0 else { return false }
+				return review.id == reviewID
+			}
+
+			guard let staleItem = staleItem else { return }
+
+			// The cell provider resolves an item's section through `self.snapshot`, so the
+			// stored snapshot is the one that gets edited. The item identifier carries the
+			// review by value, so the row is replaced rather than reconfigured, and the
+			// replacement takes a new id to stay distinct from the item it replaces.
+			self.snapshot.insertItems([.review(self.reviews[index])], afterItem: staleItem)
+			self.snapshot.deleteItems([staleItem])
+			self.dataSource.apply(self.snapshot, animatingDifferences: false)
+		}
+	}
+
 	@objc func updateReview(_ notification: NSNotification) {
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
@@ -450,6 +483,17 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 		else { return }
 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
+		guard
+			let indexPath = collectionView.indexPath(for: cell),
+			let review = self.review(at: indexPath)
+		else { return }
+
+		Task {
+			await review.castVote(vote)
+		}
 	}
 }
 

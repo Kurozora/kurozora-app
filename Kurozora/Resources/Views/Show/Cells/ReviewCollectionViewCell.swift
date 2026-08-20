@@ -15,6 +15,13 @@ protocol ReviewCollectionViewCellDelegate: AnyObject {
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressMoreButton button: UIButton)
 	func reviewCollectionViewCellDidTapTranslation(_ cell: ReviewCollectionViewCell)
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapTranslationSettings button: UIButton)
+
+	/// Tells the delegate the user voted on the review rendered by `cell`.
+	///
+	/// - Parameters:
+	///    - cell: The cell that received the vote.
+	///    - vote: The vote cast.
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote)
 }
 
 class ReviewCollectionViewCell: KCollectionViewCell {
@@ -35,12 +42,30 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	private(set) var translationBarView: TranslationBarView!
 	private var metadataLabel: KTintedLabel!
 	private var spoilerOverlayView: SpoilerOverlayView!
+	private var voteRowView: UIStackView!
+
+	private let helpfulButton: CellActionButton = {
+		let button = CellActionButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+		return button
+	}()
+
+	private let unhelpfulButton: CellActionButton = {
+		let button = CellActionButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+		return button
+	}()
 
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
 
 	/// Whether the reader revealed this review's spoiler.
 	private var isSpoilerRevealed = false
+
+	/// The review the cell is showing.
+	private var review: Review?
 
 	private static var spoilerWarningText: String {
 		#if targetEnvironment(macCatalyst)
@@ -67,6 +92,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		self.isSpoilerRevealed = false
+		self.review = nil
 	}
 
 	// MARK: - Functions
@@ -93,6 +119,17 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		contentStackView.insertArrangedSubview(metadataLabel, at: 0)
 		self.metadataLabel = metadataLabel
 
+		let voteRowView = UIStackView(arrangedSubviews: [self.helpfulButton, self.unhelpfulButton, UIView()])
+		voteRowView.axis = .horizontal
+		voteRowView.spacing = UIStackView.spacingUseSystem
+		voteRowView.alignment = .center
+		voteRowView.isHidden = true
+		contentStackView.addArrangedSubview(voteRowView)
+		self.voteRowView = voteRowView
+
+		self.helpfulButton.addTarget(self, action: #selector(self.helpfulButtonPressed), for: .touchUpInside)
+		self.unhelpfulButton.addTarget(self, action: #selector(self.unhelpfulButtonPressed), for: .touchUpInside)
+
 		let spoilerOverlayView = SpoilerOverlayView()
 		spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
 		spoilerOverlayView.revealHandler = { [weak self] in
@@ -101,10 +138,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 		self.contentTextViewPlaceholder.addSubview(spoilerOverlayView)
 		NSLayoutConstraint.activate([
-			spoilerOverlayView.topAnchor.constraint(equalTo: self.contentTextViewPlaceholder.topAnchor),
-			spoilerOverlayView.bottomAnchor.constraint(equalTo: self.contentTextViewPlaceholder.bottomAnchor),
-			spoilerOverlayView.leadingAnchor.constraint(equalTo: self.contentTextViewPlaceholder.leadingAnchor),
-			spoilerOverlayView.trailingAnchor.constraint(equalTo: self.contentTextViewPlaceholder.trailingAnchor)
+			spoilerOverlayView.topAnchor.constraint(equalTo: textView.topAnchor),
+			spoilerOverlayView.bottomAnchor.constraint(equalTo: textView.bottomAnchor),
+			spoilerOverlayView.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
+			spoilerOverlayView.trailingAnchor.constraint(equalTo: textView.trailingAnchor)
 		])
 
 		self.spoilerOverlayView = spoilerOverlayView
@@ -186,6 +223,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		self.contentTextView.delegate = self
 		self.contentTextView.layoutManager.delegate = self
 
+		// Configure votes
+		self.review = review
+		self.updateVoteRow(for: review)
+
 		// Configure date time
 		self.dateTimeLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
 
@@ -223,6 +264,71 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		return parts.isEmpty ? nil : parts.joined(separator: " · ")
 	}
 
+	/// Shows the tapped vote before the server confirms it.
+	///
+	/// - Parameter vote: The vote the reader tapped.
+	private func showVote(_ vote: ReviewVote) {
+		guard var review = self.review else { return }
+
+		let tappedHelpful = vote == .helpful
+		let predicted: Bool? = review.attributes.isHelpful == tappedHelpful ? nil : tappedHelpful
+
+		review.attributes.applyVote(predicted)
+		self.review = review
+		self.updateVoteRow(for: review)
+	}
+
+	/// Shows the vote row and refreshes both buttons for the given review.
+	///
+	/// - Parameter review: The review the row votes on.
+	private func updateVoteRow(for review: Review) {
+		let isOwnReview = User.current?.id == review.relationships?.users?.data.first?.id
+		self.voteRowView.isHidden = !User.isSignedIn || isOwnReview
+
+		guard !self.voteRowView.isHidden else { return }
+
+		self.updateHelpfulButton(for: review)
+		self.updateUnhelpfulButton(for: review)
+	}
+
+	/// Refreshes the helpful button for the given review.
+	///
+	/// - Parameter review: The review the button votes on.
+	private func updateHelpfulButton(for review: Review) {
+		var count: Int? = review.attributes.helpfulCount
+		count = count == 0 ? nil : count
+		self.helpfulButton.setTitle(count?.kkFormatted(precision: 0), for: .normal)
+
+		if review.attributes.isHelpful == true {
+			self.helpfulButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+			self.helpfulButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			self.helpfulButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		} else {
+			self.helpfulButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+			self.helpfulButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
+			self.helpfulButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
+	}
+
+	/// Refreshes the unhelpful button for the given review.
+	///
+	/// - Parameter review: The review the button votes on.
+	private func updateUnhelpfulButton(for review: Review) {
+		var count: Int? = review.attributes.unhelpfulCount
+		count = count == 0 ? nil : count
+		self.unhelpfulButton.setTitle(count?.kkFormatted(precision: 0), for: .normal)
+
+		if review.attributes.isHelpful == false {
+			self.unhelpfulButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+			self.unhelpfulButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			self.unhelpfulButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		} else {
+			self.unhelpfulButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+			self.unhelpfulButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
+			self.unhelpfulButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
+	}
+
 	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
 	///
 	/// - Parameter view: The view to which the tap gesture should be attached.
@@ -253,6 +359,16 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		self.delegate?.reviewCollectionViewCell(self, didPressMoreButton: sender)
+	}
+
+	@objc private func helpfulButtonPressed() {
+		self.showVote(.helpful)
+		self.delegate?.reviewCollectionViewCell(self, didTapVote: .helpful)
+	}
+
+	@objc private func unhelpfulButtonPressed() {
+		self.showVote(.unhelpful)
+		self.delegate?.reviewCollectionViewCell(self, didTapVote: .unhelpful)
 	}
 }
 
