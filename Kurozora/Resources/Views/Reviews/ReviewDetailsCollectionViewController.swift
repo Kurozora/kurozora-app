@@ -49,12 +49,15 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDeleted(_:)), name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -99,6 +102,61 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 
 			self.dismiss(animated: true, completion: nil)
 		}
+	}
+
+	/// Re-renders the review when it changes.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+		let affectsElevation = notification.userInfo?["affectsElevation"] as? Bool ?? false
+
+		Task { @MainActor [weak self] in
+			guard let self = self, let review = self.review else { return }
+
+			// The previous holder loses its badge.
+			let isDemoted = affectsElevation && review.attributes.isElevated
+			guard review.id == reviewID || isDemoted else { return }
+
+			await self.refreshReview()
+		}
+	}
+
+	/// Refetches the review and re-renders its row.
+	@MainActor
+	private func refreshReview() async {
+		guard let reviewID = self.review?.id else { return }
+		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
+
+		self.replaceRow(with: review)
+	}
+
+	/// Replaces the row rendering the review with one rendering its refreshed value.
+	///
+	/// - Parameter review: The refreshed review.
+	@MainActor
+	private func replaceRow(with review: Review) {
+		self.review = review
+		self.revisions = []
+		self.isShowingRevisions = false
+		self.configureMoreBarButtonItem()
+
+		// An item identifier is the review's identity, so the row is replaced rather than reconfigured.
+		self.snapshot.deleteItems(self.snapshot.itemIdentifiers(inSection: .main))
+		self.snapshot.appendItems([.review(review)], toSection: .main)
+
+		if self.snapshot.indexOfSection(.revisions) != nil {
+			self.snapshot.deleteSections([.revisions])
+		}
+
+		// The disclosure is rebuilt from the new count.
+		if self.revisionCount > 0 {
+			self.snapshot.appendSections([.revisions])
+			self.snapshot.appendItems([.revisionsToggle(isExpanded: false)], toSection: .revisions)
+		}
+
+		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}
 }
 

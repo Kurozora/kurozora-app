@@ -118,16 +118,95 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	}
 
 	// MARK: - Functions
-	/// Refetches the reviews from the first page.
+	/// Re-renders the changed review without refetching the list.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
-		Task { @MainActor [weak self] in
-			guard let self = self, self.user?.id == User.current?.id else { return }
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
 
-			self.nextPageCursor = nil
-			await self.fetchReviews()
+		let affectsElevation = notification.userInfo?["affectsElevation"] as? Bool ?? false
+
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			// The previous holder renders without its badge.
+			if affectsElevation, let demoted = self.reviews.first(where: { $0.attributes.isElevated && $0.id != reviewID }) {
+				await self.refreshRow(for: demoted.id)
+			}
+
+			await self.refreshRow(for: reviewID)
 		}
+	}
+
+	/// Refetches one review and swaps it into the loaded list, leaving every other row in place.
+	///
+	/// - Parameter reviewID: The identifier of the changed review.
+	@MainActor
+	private func refreshRow(for reviewID: KurozoraItemID) async {
+		let index = self.reviews.firstIndex { $0.id == reviewID }
+
+		// An unloaded review joins only the reviewer's own list.
+		guard index != nil || self.user?.id == User.current?.id else { return }
+		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
+
+		guard let index = index else {
+			// The list carries only written reviews.
+			guard review.attributes.description?.isEmpty == false else { return }
+
+			self.insertRow(for: review)
+			return
+		}
+
+		self.reviews[index] = review
+		self.replaceRow(for: reviewID, with: review)
+	}
+
+	/// Inserts a newly written review at the top of the loaded list.
+	///
+	/// - Parameter review: The review to insert.
+	@MainActor
+	private func insertRow(for review: Review) {
+		self.reviews.insert(review, at: 0)
+
+		// The insert shifts the index paths the model cache is keyed by.
+		self.cache.removeAll()
+
+		// An empty list has no section to insert into.
+		guard self.snapshot != nil, let firstItem = self.snapshot.itemIdentifiers(inSection: .main).first else {
+			self.updateDataSource()
+			self.toggleEmptyDataView()
+			return
+		}
+
+		self.snapshot.insertItems([.review(review)], beforeItem: firstItem)
+		self.dataSource.apply(self.snapshot, animatingDifferences: true)
+		self.toggleEmptyDataView()
+	}
+
+	/// Replaces the row rendering the given review with one rendering its refreshed value.
+	///
+	/// - Parameters:
+	///    - reviewID: The identifier of the review whose row to replace.
+	///    - review: The refreshed review.
+	@MainActor
+	private func replaceRow(for reviewID: KurozoraItemID, with review: Review) {
+		guard self.snapshot != nil else { return }
+
+		let items = self.snapshot.itemIdentifiers(inSection: .main)
+
+		guard let index = items.firstIndex(where: { $0.review?.id == reviewID }) else { return }
+
+		// The identifier is the review's identity, so the stale row leaves before its replacement.
+		let successor = items.indices.contains(index + 1) ? items[index + 1] : nil
+		self.snapshot.deleteItems([items[index]])
+
+		if let successor = successor {
+			self.snapshot.insertItems([.review(review)], beforeItem: successor)
+		} else {
+			self.snapshot.appendItems([.review(review)], toSection: .main)
+		}
+
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	/// Drops the deleted review from the list.
@@ -141,7 +220,17 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 				review.id == reviewID
 			}
 
-			self.updateDataSource()
+			// The removal shifts the index paths the model cache is keyed by.
+			self.cache.removeAll()
+
+			// One row leaves; the list keeps its scroll position.
+			let staleItem = self.snapshot?.itemIdentifiers.first { $0.review?.id == reviewID }
+
+			if let staleItem = staleItem {
+				self.snapshot.deleteItems([staleItem])
+				self.dataSource.apply(self.snapshot, animatingDifferences: true)
+			}
+
 			self.toggleEmptyDataView()
 		}
 	}

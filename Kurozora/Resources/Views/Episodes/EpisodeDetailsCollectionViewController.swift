@@ -262,6 +262,33 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		self.libraryAttributes?.review = nil
 	}
 
+	override func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {
+		guard self.snapshot != nil else { return }
+
+		let staleItem = self.snapshot.itemIdentifiers.first {
+			guard case .review(let candidate, _) = $0 else { return false }
+			return candidate.id == reviewID
+		}
+
+		guard let staleItem = staleItem else { return }
+
+		let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
+
+		// The identifier carries the review by value, so the row is replaced, not reconfigured.
+		if let review = review {
+			self.snapshot.insertItems([.review(review)], afterItem: staleItem)
+		}
+
+		self.snapshot.deleteItems([staleItem])
+
+		// An emptied section leaves with its row.
+		if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
+			self.snapshot.deleteSections([section])
+		}
+
+		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
+	}
+
 	// MARK: - Segue
 	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
 		guard let identifier = identifier as? SegueIdentifiers else { return nil }

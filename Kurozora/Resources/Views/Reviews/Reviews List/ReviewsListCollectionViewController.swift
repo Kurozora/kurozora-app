@@ -315,9 +315,6 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
-	/// Refetches the reviews from the first page.
-	///
-	/// - Parameter notification: An object containing information broadcast to registered observers.
 	/// Re-renders the voted review without refetching the list.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
@@ -331,55 +328,151 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 			guard let index = self.reviews.firstIndex(where: { $0.id == reviewID }) else { return }
 
 			self.reviews[index].attributes.applyVote(isHelpful)
-
-			let staleItem = self.snapshot.itemIdentifiers.first {
-				guard case .review(let review, _) = $0 else { return false }
-				return review.id == reviewID
-			}
-
-			guard let staleItem = staleItem else { return }
-
-			// The cell provider resolves an item's section through `self.snapshot`, so the
-			// stored snapshot is the one that gets edited. The item identifier carries the
-			// review by value, so the row is replaced rather than reconfigured, and the
-			// replacement takes a new id to stay distinct from the item it replaces.
-			self.snapshot.insertItems([.review(self.reviews[index])], afterItem: staleItem)
-			self.snapshot.deleteItems([staleItem])
-			self.dataSource.apply(self.snapshot, animatingDifferences: false)
+			self.replaceRow(for: reviewID, with: self.reviews[index])
 		}
 	}
 
+	/// Re-renders the changed review without refetching the list.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateReview(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+		let affectsElevation = notification.userInfo?["affectsElevation"] as? Bool ?? false
+
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
-			self.nextPageCursor = nil
-			await self.fetchReviews()
+			// The previous holder renders without its badge.
+			if affectsElevation, let demoted = self.reviews.first(where: { $0.attributes.isElevated && $0.id != reviewID }) {
+				await self.refreshRow(for: demoted.id)
+			}
+
+			await self.refreshRow(for: reviewID)
 		}
+	}
+
+	/// Refetches one review and swaps it into the loaded list, leaving every other row in place.
+	///
+	/// - Parameter reviewID: The identifier of the changed review.
+	@MainActor
+	private func refreshRow(for reviewID: KurozoraItemID) async {
+		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
+
+		if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+			self.reviews[index] = review
+			self.replaceRow(for: reviewID, with: review)
+			return
+		}
+
+		// The list carries only written reviews of the item on screen.
+		guard review.attributes.description?.isEmpty == false else { return }
+		guard review.relationships?.reviewedID == self.currentReviewKind()?.modelID else { return }
+
+		self.insertRow(for: review)
+	}
+
+	/// Inserts a newly written review at the top of the loaded list.
+	///
+	/// - Parameter review: The review to insert.
+	@MainActor
+	private func insertRow(for review: Review) {
+		self.reviews.insert(review, at: 0)
+
+		// An empty list has no section to insert into.
+		guard self.snapshot != nil, self.snapshot.indexOfSection(.reviews) != nil else {
+			self.updateDataSource()
+			self.toggleEmptyDataView()
+			return
+		}
+
+		let firstReviewItem = self.snapshot.itemIdentifiers(inSection: .reviews).first {
+			guard case .review = $0 else { return false }
+			return true
+		}
+
+		if let firstReviewItem = firstReviewItem {
+			self.snapshot.insertItems([.review(review)], beforeItem: firstReviewItem)
+		} else {
+			self.snapshot.appendItems([.review(review)], toSection: .reviews)
+		}
+
+		self.dataSource.apply(self.snapshot, animatingDifferences: true)
+		self.toggleEmptyDataView()
+	}
+
+	/// Replaces the row rendering the given review with one rendering its refreshed value.
+	///
+	/// - Parameters:
+	///    - reviewID: The identifier of the review whose row to replace.
+	///    - review: The refreshed review.
+	@MainActor
+	private func replaceRow(for reviewID: KurozoraItemID, with review: Review) {
+		guard self.snapshot != nil else { return }
+
+		let staleItem = self.snapshot.itemIdentifiers.first {
+			guard case .review(let candidate, _) = $0 else { return false }
+			return candidate.id == reviewID
+		}
+
+		guard let staleItem = staleItem else { return }
+
+		// The cell provider reads the stored snapshot, so that is the one edited.
+		// The identifier carries the review by value, so the row is replaced, not reconfigured.
+		self.snapshot.insertItems([.review(review)], afterItem: staleItem)
+		self.snapshot.deleteItems([staleItem])
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	/// Deletes the review with the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteReview(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
-			if let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID {
-				self.reviews.removeAll { review in
-					review.id == reviewID
-				}
+			// Only the user's own submission is cleared.
+			if self.ownReview()?.id == reviewID {
+				self.clearGivenReview()
 			}
 
-			self.givenRating = nil
-			self.givenReview = nil
-			self.givenNote = nil
-			self.givenIsSpoiler = false
-			self.givenRecommendation = nil
-
-			self.updateDataSource()
-			self.toggleEmptyDataView()
+			self.removeRow(for: reviewID)
 		}
+	}
+
+	/// Drops the row rendering the given review, leaving every other row in place.
+	///
+	/// - Parameter reviewID: The identifier of the review whose row to drop.
+	@MainActor
+	private func removeRow(for reviewID: KurozoraItemID) {
+		self.reviews.removeAll { review in
+			review.id == reviewID
+		}
+
+		// One row leaves; the list keeps its scroll position.
+		let staleItem = self.snapshot?.itemIdentifiers.first {
+			guard case .review(let review, _) = $0 else { return false }
+			return review.id == reviewID
+		}
+
+		if let staleItem = staleItem {
+			self.snapshot.deleteItems([staleItem])
+			self.dataSource.apply(self.snapshot, animatingDifferences: true)
+		}
+
+		self.toggleEmptyDataView()
+	}
+
+	/// Forgets the user's own submission for the reviewed item.
+	@MainActor
+	private func clearGivenReview() {
+		self.givenRating = nil
+		self.givenReview = nil
+		self.givenNote = nil
+		self.givenIsSpoiler = false
+		self.givenRecommendation = nil
 	}
 
 	// MARK: - Segue
@@ -623,7 +716,19 @@ extension ReviewsListCollectionViewController: ReviewEditorContextProviding {
 	func writeAReviewContext() -> ReviewEditorContext? {
 		guard let kind = self.currentReviewKind() else { return nil }
 
+		// The loaded review is the truth; the given values only seed the first render.
+		if let review = self.ownReview() {
+			return ReviewEditorContext(kind: kind, rating: review.attributes.score, review: review.attributes.description, note: kind.storedNote(), isSpoiler: review.attributes.isSpoiler, recommendation: review.attributes.recommendation)
+		}
+
 		return ReviewEditorContext(kind: kind, rating: self.givenRating, review: self.givenReview, note: self.givenNote, isSpoiler: self.givenIsSpoiler, recommendation: self.givenRecommendation)
+	}
+
+	/// Returns the authenticated user's own review in the loaded list.
+	private func ownReview() -> Review? {
+		guard let userID = User.current?.id else { return nil }
+
+		return self.reviews.first { $0.relationships?.users?.data.first?.id == userID }
 	}
 }
 
@@ -634,20 +739,14 @@ extension ReviewsListCollectionViewController: ReviewEditorCollectionViewControl
 	}
 
 	func reviewEditorCollectionViewControllerDidDeleteReview() {
-		self.givenRating = nil
-		self.givenReview = nil
-		self.givenNote = nil
-		self.givenIsSpoiler = false
-		self.givenRecommendation = nil
+		let ownReviewID = self.ownReview()?.id
 
-		if let userID = User.current?.id {
-			self.reviews.removeAll { review in
-				review.relationships?.users?.data.first?.id == userID
-			}
+		self.clearGivenReview()
+
+		// The row leaves before the server confirms the deletion.
+		if let ownReviewID = ownReviewID {
+			self.removeRow(for: ownReviewID)
 		}
-
-		self.updateDataSource()
-		self.toggleEmptyDataView()
 	}
 }
 

@@ -92,10 +92,10 @@ enum ReviewSubject {
 				rateRequest = rateRequest.recommendation(recommendation)
 			}
 
-			_ = try await rateRequest.response()
+			let reviewIdentity = try await rateRequest.response().data.first
 
 			await self.applyToLocalLibrary(score: rating, description: description, isSpoiler: isSpoiler, recommendation: recommendation)
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+			self.postReviewDidUpdate(for: reviewIdentity)
 			return true
 		} catch let error as APIError {
 			print(error.localizedDescription)
@@ -103,40 +103,6 @@ enum ReviewSubject {
 		} catch {
 			print(error.localizedDescription)
 			return false
-		}
-	}
-
-	/// Fetches the newest reviews of the wrapped model.
-	///
-	/// - Parameter limit: The maximum number of reviews to fetch.
-	///
-	/// - Returns: The newest reviews of the wrapped model.
-	func reviews(limit: Int) async throws(APIError) -> [Review] {
-		let reviewsRequest: RelationshipRequest<ResourceCollection<Review>>
-
-		switch self {
-		case .character(let character): reviewsRequest = KService.reviews(for: CharacterIdentity(id: character.id))
-		case .episode(let episode): reviewsRequest = KService.reviews(for: EpisodeIdentity(id: episode.id))
-		case .game(let game): reviewsRequest = KService.reviews(for: GameIdentity(id: game.id))
-		case .literature(let literature): reviewsRequest = KService.reviews(for: LiteratureIdentity(id: literature.id))
-		case .person(let person): reviewsRequest = KService.reviews(for: PersonIdentity(id: person.id))
-		case .show(let show): reviewsRequest = KService.reviews(for: ShowIdentity(id: show.id))
-		case .song(let song): reviewsRequest = KService.reviews(for: SongIdentity(id: song.id))
-		case .studio(let studio): reviewsRequest = KService.reviews(for: StudioIdentity(id: studio.id))
-		}
-
-		do {
-			let reviewResponse = try await reviewsRequest
-				.cursor(nil)
-				.limit(limit)
-				.response()
-			return reviewResponse.data
-		} catch let error as APIError {
-			print(error.localizedDescription)
-			throw error
-		} catch {
-			print(error.localizedDescription)
-			return []
 		}
 	}
 
@@ -194,10 +160,10 @@ enum ReviewSubject {
 				rateRequest = rateRequest.recommendation(recommendation)
 			}
 
-			_ = try await rateRequest.response()
+			let reviewIdentity = try await rateRequest.response().data.first
 
 			await self.applyToLocalLibrary(score: score, description: description, isSpoiler: isSpoiler, recommendation: recommendation)
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+			self.postReviewDidUpdate(for: reviewIdentity)
 			return true
 		} catch let error as APIError {
 			print(error.localizedDescription)
@@ -206,6 +172,15 @@ enum ReviewSubject {
 			print(error.localizedDescription)
 			return false
 		}
+	}
+
+	/// Announces the submitted review so the open lists refresh that one row.
+	///
+	/// - Parameter reviewIdentity: The identity of the submitted review.
+	private func postReviewDidUpdate(for reviewIdentity: ReviewIdentity?) {
+		guard let reviewIdentity = reviewIdentity else { return }
+
+		NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil, userInfo: ["reviewID": reviewIdentity.id])
 	}
 
 	/// The library kind of the wrapped model. `nil` when the model is not trackable in the library.
@@ -257,16 +232,11 @@ enum ReviewSubject {
 
 	/// Deletes the user's rating and review for the wrapped model.
 	///
+	/// The deletion is announced by whichever path learns the review's identity.
+	///
 	/// - Returns: `true` when the deletion succeeds.
 	func deleteRating() async throws(APIError) -> Bool {
-		let didDelete = try await self.deleteRatingRequest()
-
-		// A library item's deletion is queued, so the outbox posts once the server confirms it.
-		if didDelete, self.libraryKind == nil {
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
-		}
-
-		return didDelete
+		return try await self.deleteRatingRequest()
 	}
 
 	/// Sends the deletion of the user's rating and review for the wrapped model.

@@ -272,6 +272,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	///
 	/// - Parameter vote: The vote the reader tapped.
 	private func showVote(_ vote: ReviewVote) {
+		guard User.isSignedIn else { return }
 		guard var review = self.review else { return }
 
 		let tappedHelpful = vote == .helpful
@@ -287,9 +288,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	/// - Parameter review: The review the row votes on.
 	private func updateVoteRow(for review: Review) {
 		let isOwnReview = User.current?.id == review.relationships?.users?.data.first?.id
-		self.voteRowView.isHidden = !User.isSignedIn || isOwnReview
+		self.voteRowView.isHidden = false
 
-		guard !self.voteRowView.isHidden else { return }
+		// The author has a right to their own counts; only the vote is withheld.
+		self.voteRowView.isUserInteractionEnabled = !isOwnReview
 
 		self.updateHelpfulButton(for: review)
 		self.updateUnhelpfulButton(for: review)

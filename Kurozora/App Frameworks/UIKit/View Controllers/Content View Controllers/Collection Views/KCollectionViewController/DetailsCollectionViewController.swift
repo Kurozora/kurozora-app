@@ -37,9 +37,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	#endif
 
 	// MARK: - Properties
-	/// The maximum number of reviews displayed on the detail screen.
-	private static let reviewsLimit = 10
-
 	/// The reviews displayed on the detail screen.
 	var reviews: [Review] = [] {
 		didSet {
@@ -316,17 +313,19 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	// MARK: Review delete observer
 	@objc private func handleReviewDidDelete(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
-			if let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID {
-				self.reviews.removeAll { review in
-					review.id == reviewID
-				}
+			self.reviews.removeAll { review in
+				review.id == reviewID
 			}
 
 			self.didDeleteReview()
-			self.updateDataSource()
+
+			// One row leaves; the page keeps its scroll position.
+			self.applyReviewRow(nil, for: reviewID)
 		}
 	}
 
@@ -343,15 +342,51 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 			guard let self = self else { return }
 			guard let index = self.reviews.firstIndex(where: { $0.id == reviewID }) else { return }
 
-			// The cell shows the vote already, so only the model it was read from is behind.
+			// The row carries the review by value, so the vote survives recycling.
 			self.reviews[index].attributes.applyVote(isHelpful)
+			self.applyReviewRow(self.reviews[index], for: reviewID)
 		}
 	}
 
+	/// Re-renders the changed review without refetching the section.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc private func handleReviewDidUpdate(_ notification: NSNotification) {
+		guard let reviewID = notification.userInfo?["reviewID"] as? KurozoraItemID else { return }
+
+		let affectsElevation = notification.userInfo?["affectsElevation"] as? Bool ?? false
+
 		Task { @MainActor [weak self] in
-			await self?.refreshReviews()
+			guard let self = self else { return }
+
+			// The previous holder renders without its badge.
+			if affectsElevation, let demoted = self.reviews.first(where: { $0.attributes.isElevated && $0.id != reviewID }) {
+				await self.refreshRow(for: demoted.id)
+			}
+
+			await self.refreshRow(for: reviewID)
 		}
+	}
+
+	/// Refetches one review and swaps it into the section, leaving every other row in place.
+	///
+	/// - Parameter reviewID: The identifier of the changed review.
+	@MainActor
+	private func refreshRow(for reviewID: KurozoraItemID) async {
+		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
+
+		if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+			self.reviews[index] = review
+			self.applyReviewRow(review, for: reviewID)
+			return
+		}
+
+		// The section carries only written reviews of the item on screen.
+		guard review.attributes.description?.isEmpty == false else { return }
+		guard review.relationships?.reviewedID == self.writeAReviewContext()?.kind.modelID else { return }
+
+		self.reviews.insert(review, at: 0)
+		self.updateDataSource()
 	}
 
 	/// Drops the signed in user's review from the reviews section.
@@ -359,24 +394,18 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	private func removeSignedInUserReview() {
 		guard let userID = User.current?.id else { return }
 
-		self.reviews.removeAll { review in
+		let ownReview = self.reviews.first { review in
 			review.relationships?.users?.data.first?.id == userID
 		}
 
-		self.updateDataSource()
-	}
+		guard let ownReview = ownReview else { return }
 
-	/// Refetches the newest reviews and re-renders the reviews section.
-	@MainActor
-	private func refreshReviews() async {
-		guard let kind = self.writeAReviewContext()?.kind else { return }
-
-		do throws(APIError) {
-			self.reviews = try await kind.reviews(limit: Self.reviewsLimit)
-			self.updateDataSource()
-		} catch {
-			print(error.localizedDescription)
+		self.reviews.removeAll { review in
+			review.id == ownReview.id
 		}
+
+		// The row leaves before the server confirms the deletion.
+		self.applyReviewRow(nil, for: ownReview.id)
 	}
 
 	// MARK: Subclass hooks
@@ -388,6 +417,14 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	/// Clears any cached rating or review on the model after a review is deleted.
 	func didDeleteReview() {}
+
+	/// Swaps the row rendering the given review, or drops it when the review is gone.
+	///
+	/// - Parameters:
+	///    - review: The refreshed review, or `nil` to drop the row.
+	///    - reviewID: The identifier of the review whose row to apply.
+	@MainActor
+	func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {}
 
 	/// Rates the active model with the given value and optional review.
 	///

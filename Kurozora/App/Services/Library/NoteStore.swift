@@ -11,8 +11,7 @@ import KurozoraKit
 
 /// The local store of the user's private notes.
 ///
-/// A note is keyed by account, kind and item, and belongs to no library entry — which is what lets
-/// it exist for items the user does not track, and for kinds the library never covers.
+/// A note is keyed by account, kind and item, and belongs to no library entry.
 @MainActor
 final class NoteStore {
 	// MARK: - Properties

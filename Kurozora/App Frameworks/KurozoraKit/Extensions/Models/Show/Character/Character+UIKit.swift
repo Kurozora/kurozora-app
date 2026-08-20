@@ -139,7 +139,11 @@ extension Character {
 		let characterIdentity = CharacterIdentity(id: self.id)
 
 		do {
-			_ = try await KService.deleteRating(characterIdentity).response()
+			// The identity lets the open lists drop that one row.
+			if let reviewIdentity = try await KService.deleteRating(characterIdentity).response().data.first {
+				NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+			}
+
 			return true
 		} catch let error as APIError {
 			print(error.localizedDescription)

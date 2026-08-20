@@ -39387,235 +39387,468 @@
         }
       }
     },
-    "Elevate Review" : {
-      "comment" : "Context-menu action that promotes a review to Editor's Choice.",
+    "Mark as Community Pick" : {
+      "comment" : "Context-menu action that makes a review the item's Community Pick.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إبراز المراجعة"
+            "value" : "تعيين كاختيار المجتمع"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "রিভিউ ফিচার করুন"
+            "value" : "কমিউনিটির পছন্দ হিসেবে চিহ্নিত করো"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povýšit recenzi"
+            "value" : "Označit jako Tip komunity"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fremhæv anmeldelse"
+            "value" : "Marker som Fællesskabets valg"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rezension hervorheben"
+            "value" : "Als Community-Tipp markieren"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ανάδειξη Κριτικής"
+            "value" : "Ορισμός ως Επιλογή Κοινότητας"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Destacar reseña"
+            "value" : "Marcar como Selección de la comunidad"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Destacar reseña"
+            "value" : "Marcar como Selección de la comunidad"
           }
         },
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ویژه کردن نقد"
+            "value" : "علامت‌گذاری به‌عنوان انتخاب جامعه"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nosta arvostelu esiin"
+            "value" : "Merkitse Yhteisön valinnaksi"
           }
         },
         "fil" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I-feature ang Review"
+            "value" : "Markahan bilang Pinili ng Komunidad"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mettre en avant l’avis"
+            "value" : "Marquer comme Choix de la communauté"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הבלטת ביקורת"
+            "value" : "סמן כבחירת הקהילה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "समीक्षा को बढ़ावा दें"
+            "value" : "समुदाय की पसंद के रूप में चिह्नित करें"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vélemény kiemelése"
+            "value" : "Megjelölés a Közösség választásaként"
           }
         },
         "hy" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Բարձրացնել կարծիքը"
+            "value" : "Նշել որպես Համայնքի ընտրանի"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unggulkan Ulasan"
+            "value" : "Tandai sebagai Pilihan Komunitas"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evidenzia recensione"
+            "value" : "Segna come Scelta della community"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "レビューを特集"
+            "value" : "コミュニティのおすすめに設定"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "리뷰 선정"
+            "value" : "커뮤니티 추천으로 지정"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ketengahkan Ulasan"
+            "value" : "Tanda sebagai Pilihan Komuniti"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fremhev anmeldelse"
+            "value" : "Merk som Fellesskapets valg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recensie uitlichten"
+            "value" : "Markeren als Communitykeuze"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wyróżnij recenzję"
+            "value" : "Oznacz jako Wybór społeczności"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Destacar review"
+            "value" : "Marcar como Escolha da Comunidade"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Destacar crítica"
+            "value" : "Marcar como Escolha da Comunidade"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Promovează recenzia"
+            "value" : "Marchează ca Alegerea comunității"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выделить отзыв"
+            "value" : "Отметить как Выбор сообщества"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Framhäv recension"
+            "value" : "Markera som Communityns val"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "மதிப்புரையை சிறப்பிக்கவும்"
+            "value" : "சமூகத்தின் தேர்வாகக் குறி"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "రివ్యూను ఫీచర్ చేయి"
+            "value" : "కమ్యూనిటీ ఎంపికగా గుర్తించు"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เน้นรีวิว"
+            "value" : "ทำเครื่องหมายเป็นตัวเลือกของชุมชน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İncelemeyi Öne Çıkar"
+            "value" : "Topluluk Seçimi olarak işaretle"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Виділити відгук"
+            "value" : "Позначити як Вибір спільноти"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تبصرہ نمایاں کریں"
+            "value" : "کمیونٹی کے انتخاب کے طور پر نشان زد کریں"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nổi bật bài đánh giá"
+            "value" : "Đánh dấu là Lựa chọn của cộng đồng"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "精选评论"
+            "value" : "设为社区精选"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "精選評論"
+            "value" : "設為社群精選"
+          }
+        }
+      }
+    },
+    "Remove Community Pick" : {
+      "comment" : "Context-menu action that makes a review the item's Community Pick.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إزالة اختيار المجتمع"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "কমিউনিটির পছন্দ সরাও"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odebrat Tip komunity"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fjern Fællesskabets valg"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Community-Tipp entfernen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση Επιλογής Κοινότητας"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar Selección de la comunidad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar Selección de la comunidad"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف انتخاب جامعه"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poista Yhteisön valinta"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alisin ang Pinili ng Komunidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retirer le Choix de la communauté"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הסר את בחירת הקהילה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "समुदाय की पसंद हटाएं"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Közösség választásának eltávolítása"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հեռացնել Համայնքի ընտրանին"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus Pilihan Komunitas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi Scelta della community"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コミュニティのおすすめを解除"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "커뮤니티 추천 해제"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buang Pilihan Komuniti"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fjern Fellesskapets valg"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Communitykeuze verwijderen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Wybór społeczności"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remover Escolha da Comunidade"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remover Escolha da Comunidade"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină Alegerea comunității"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Убрать Выбор сообщества"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta bort Communityns val"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சமூகத்தின் தேர்வை அகற்று"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "కమ్యూనిటీ ఎంపికను తీసివేయి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นำตัวเลือกของชุมชนออก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Topluluk Seçimini kaldır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити Вибір спільноти"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمیونٹی کا انتخاب ہٹائیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bỏ Lựa chọn của cộng đồng"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消社区精选"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消社群精選"
           }
         }
       }

@@ -43,70 +43,57 @@ extension Review {
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		var userMenuElements: [UIMenuElement] = []
+		let reviewUserID = self.relationships?.users?.data.first?.id
+		let isOwnReview = User.current?.id == reviewUserID
+
+		// The reviewer, the review, and what may be done to it.
+		var primaryElements: [UIMenuElement] = []
 
 		if let user = self.relationships?.users?.data.first {
 			let username = user.attributes.username
 			let userAction = UIAction(title: L10n.showUserProfile(username), image: UIImage(systemName: "person.crop.circle.fill")) { _ in
 				self.visitOriginalPosterProfile(from: viewController)
 			}
-			userMenuElements.append(userAction)
+			primaryElements.append(userAction)
 		}
 
-		if User.isSignedIn, User.current?.id == self.relationships?.users?.data.first?.id {
+		if User.isSignedIn, let role = User.current?.attributes.role, [.superAdmin, .admin, .mod].contains(role) {
+			let isElevated = self.attributes.isElevated
+			let title = isElevated ? L10n.removeCommunityPick : L10n.markAsCommunityPick
+			let image = UIImage(systemName: isElevated ? "star.slash" : "star.circle")
+
+			let elevateAction = UIAction(title: title, image: image) { _ in
+				Task { @MainActor in
+					await self.elevate(via: viewController)
+				}
+			}
+
+			primaryElements.append(elevateAction)
+		}
+
+		if User.isSignedIn, isOwnReview {
 			let updateAction = UIAction(title: L10n.updateReview, image: UIImage(systemName: "pencil")) { _ in
 				Task { @MainActor in
 					await self.presentUpdateEditor(from: viewController)
 				}
 			}
 
-			menuElements.append(UIMenu(title: "", options: .displayInline, children: [updateAction]))
+			primaryElements.append(updateAction)
 		}
 
-		if User.isSignedIn, let role = User.current?.attributes.role, [.superAdmin, .admin, .mod, .editor].contains(role) {
-			let elevateAction = UIAction(title: L10n.elevateReview, image: UIImage(systemName: "star.circle")) { _ in
-				Task { @MainActor in
-					await self.elevate(via: viewController)
-				}
+		if User.isSignedIn, isOwnReview || User.current?.attributes.role == .superAdmin || User.current?.attributes.role == .admin {
+			let deleteAction = UIAction(title: L10n.deleteReview, attributes: .destructive) { _ in
+				self.confirmDelete(via: viewController)
 			}
 
-			menuElements.append(UIMenu(title: "", options: .displayInline, children: [elevateAction]))
+			primaryElements.append(UIMenu(title: L10n.delete, image: UIImage(systemName: "trash"), children: [deleteAction]))
 		}
 
-		if User.isSignedIn {
-			let reviewUserID = self.relationships?.users?.data.first?.id
-			if User.current?.attributes.role == .superAdmin ||
-				User.current?.attributes.role == .admin ||
-				User.current?.id == reviewUserID {
-				var deleteMenuElements: [UIMenuElement] = []
-				let deleteAction = UIAction(title: L10n.deleteReview, attributes: .destructive) { _ in
-					self.confirmDelete(via: viewController)
-				}
-				deleteMenuElements.append(deleteAction)
-
-				menuElements.append(UIMenu(title: L10n.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
-			}
+		if !primaryElements.isEmpty {
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: primaryElements))
 		}
 
-		menuElements.append(UIMenu(title: "", options: .displayInline, children: userMenuElements))
-
-		var shareMenuChildren: [UIMenuElement] = []
-
-		let copyAction = UIAction(title: L10n.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
-			UIPasteboard.general.string = self.attributes.description
-		}
-
-		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
-		}
-		shareMenuChildren.append(copyAction)
-		shareMenuChildren.append(shareAction)
-
-		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
-		menuElements.append(shareMenu)
-
-		// Create "helpfulness" menu
-		if User.isSignedIn, User.current?.id != self.relationships?.users?.data.first?.id {
+		if User.isSignedIn, !isOwnReview {
 			let helpfulAction = UIAction(title: L10n.helpful, image: UIImage(systemName: "hand.thumbsup")) { _ in
 				Task {
 					await self.castVote(.helpful)
@@ -122,16 +109,24 @@ extension Review {
 			menuElements.append(UIMenu(title: "", options: .displayInline, children: [helpfulAction, unhelpfulAction]))
 		}
 
+		let copyAction = UIAction(title: L10n.copyReview, image: UIImage(systemName: "doc.on.doc.fill")) { _ in
+			UIPasteboard.general.string = self.attributes.description
+		}
+
+		let shareAction = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+			self.openShareSheet(on: viewController, sourceView: sourceView, barButtonItem: barButtonItem)
+		}
+
+		menuElements.append(UIMenu(title: "", options: .displayInline, children: [copyAction, shareAction]))
+
 		if User.isSignedIn {
-			var reportMenuElements: [UIMenuElement] = []
 			let reportAction = UIAction(title: L10n.reportReview, attributes: .destructive) { _ in
 				Task {
 					await self.reportReview(on: viewController)
 				}
 			}
-			reportMenuElements.append(reportAction)
 
-			menuElements.append(UIMenu(title: L10n.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
+			menuElements.append(UIMenu(title: L10n.report, image: UIImage(systemName: "exclamationmark.circle"), children: [reportAction]))
 		}
 
 		return UIMenu(title: "", children: menuElements)
@@ -276,7 +271,12 @@ extension Review {
 
 		do {
 			_ = try await KService.elevateReview(reviewIdentity).response()
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+
+			// The previous holder loses its badge with it.
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil, userInfo: [
+				"reviewID": self.id,
+				"affectsElevation": true,
+			])
 		} catch let error as APIError {
 			viewController?.presentAlertController(title: nil, message: error.message)
 			print("-----", error.localizedDescription)
@@ -318,8 +318,8 @@ extension Review {
 		do {
 			_ = try await KService.deleteReview(reviewIdentity).response()
 
+			// A delete removes one row, so it never asks for the list it sits in to be refetched.
 			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": self.id])
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
 		} catch {
 			print(error.localizedDescription)
 		}

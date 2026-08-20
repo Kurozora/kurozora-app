@@ -315,28 +315,40 @@ actor LibraryOutbox {
 
 	private func sendRate(kind: LibraryKind, trackableID: String, score: Double, description: String?) async throws {
 		let itemID = KurozoraItemID(trackableID)
+		let rated: ResourceCollection<ReviewIdentity>
+
 		switch kind {
 		case .shows:
-			_ = try await KService.rate(ShowIdentity(id: itemID), score: score).description(description).response()
+			rated = try await KService.rate(ShowIdentity(id: itemID), score: score).description(description).response()
 		case .literatures:
-			_ = try await KService.rate(LiteratureIdentity(id: itemID), score: score).description(description).response()
+			rated = try await KService.rate(LiteratureIdentity(id: itemID), score: score).description(description).response()
 		case .games:
-			_ = try await KService.rate(GameIdentity(id: itemID), score: score).description(description).response()
+			rated = try await KService.rate(GameIdentity(id: itemID), score: score).description(description).response()
+		}
+
+		// The identity lets the open lists refresh that one row.
+		if let reviewIdentity = rated.data.first {
+			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil, userInfo: ["reviewID": reviewIdentity.id])
 		}
 	}
 
 	private func sendDeleteRating(kind: LibraryKind, trackableID: String) async throws {
 		let itemID = KurozoraItemID(trackableID)
+		let deleted: ResourceCollection<ReviewIdentity>
+
 		switch kind {
 		case .shows:
-			_ = try await KService.deleteRating(ShowIdentity(id: itemID)).response()
+			deleted = try await KService.deleteRating(ShowIdentity(id: itemID)).response()
 		case .literatures:
-			_ = try await KService.deleteRating(LiteratureIdentity(id: itemID)).response()
+			deleted = try await KService.deleteRating(LiteratureIdentity(id: itemID)).response()
 		case .games:
-			_ = try await KService.deleteRating(GameIdentity(id: itemID)).response()
+			deleted = try await KService.deleteRating(GameIdentity(id: itemID)).response()
 		}
 
-		NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil)
+		// The identity lets the open lists drop that one row.
+		if let reviewIdentity = deleted.data.first {
+			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+		}
 	}
 
 	// MARK: - Grouping

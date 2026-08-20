@@ -4581,17 +4581,31 @@ extension L10n {
 			)
 		}
 	}
-	/// Context-menu action that promotes a review to Editor's Choice.
+	/// Context-menu action that makes a review the item's Community Pick.
 	///
-	/// - Tag: L10n-elevateReview
-	static var elevateReview: String {
+	/// - Tag: L10n-markAsCommunityPick
+	static var markAsCommunityPick: String {
 		L10n.resolve {
 			String(
-				localized: "Elevate Review",
+				localized: "Mark as Community Pick",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "Context-menu action that promotes a review to Editor's Choice."
+				comment: "Context-menu action that makes a review the item's Community Pick."
+			)
+		}
+	}
+	/// Context-menu action that takes the Community Pick marker off a review.
+	///
+	/// - Tag: L10n-removeCommunityPick
+	static var removeCommunityPick: String {
+		L10n.resolve {
+			String(
+				localized: "Remove Community Pick",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Context-menu action that makes a review the item's Community Pick."
 			)
 		}
 	}
