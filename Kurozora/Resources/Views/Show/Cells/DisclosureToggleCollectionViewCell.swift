@@ -1,5 +1,5 @@
 //
-//  LowEffortReviewsToggleCollectionViewCell.swift
+//  DisclosureToggleCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 19/08/2026.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// A row that reveals or hides the reviews flagged as low-effort.
-class LowEffortReviewsToggleCollectionViewCell: KCollectionViewCell {
+/// A row that reveals or hides a collapsed group of reviews.
+class DisclosureToggleCollectionViewCell: KCollectionViewCell {
 	// MARK: - Views
 	private let titleLabel: KTintedLabel = {
 		let label = KTintedLabel()

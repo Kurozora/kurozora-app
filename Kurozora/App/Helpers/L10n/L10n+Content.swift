@@ -4404,6 +4404,51 @@ extension L10n {
 			)
 		}
 	}
+	/// Button that reveals the earlier versions of a review.
+	///
+	/// - Tag: L10n-reviewsShowEarlier
+	static func reviewsShowEarlier(_ count: String) -> String {
+		L10n.resolve {
+			String(
+				format: String(
+					localized: "Show earlier versions (%@)",
+					table: "Content",
+					bundle: LanguageManager.shared.bundle,
+					locale: LanguageManager.shared.locale,
+					comment: "Button that reveals the earlier versions of a review."
+				),
+				count
+			)
+		}
+	}
+	/// Button that hides the earlier versions of a review.
+	///
+	/// - Tag: L10n-reviewsHideEarlier
+	static var reviewsHideEarlier: String {
+		L10n.resolve {
+			String(
+				localized: "Hide earlier versions",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Button that hides the earlier versions of a review."
+			)
+		}
+	}
+	/// Marker on a review whose text was rewritten.
+	///
+	/// - Tag: L10n-reviewEdited
+	static var reviewEdited: String {
+		L10n.resolve {
+			String(
+				localized: "Edited",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Marker on a review whose text was rewritten."
+			)
+		}
+	}
 	/// Segment title for a review that recommends the item.
 	///
 	/// - Tag: L10n-reviewRecommended

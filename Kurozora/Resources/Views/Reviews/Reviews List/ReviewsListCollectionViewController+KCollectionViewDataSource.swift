@@ -30,7 +30,7 @@ extension ReviewsListCollectionViewController {
 			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			WriteAReviewCollectionViewCell.self,
-			LowEffortReviewsToggleCollectionViewCell.self,
+			DisclosureToggleCollectionViewCell.self,
 			EditorialCollectionViewCell.self
 		]
 	}
@@ -110,9 +110,9 @@ extension ReviewsListCollectionViewController {
 					editorialCollectionViewCell?.configure(using: editorial)
 					return editorialCollectionViewCell
 				case .lowEffortReviewsToggle(let isExpanded):
-					let lowEffortReviewsToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LowEffortReviewsToggleCollectionViewCell.self, for: indexPath)
-					lowEffortReviewsToggleCollectionViewCell?.configure(title: isExpanded ? L10n.reviewsHideShort : L10n.reviewsShowShort)
-					return lowEffortReviewsToggleCollectionViewCell
+					let disclosureToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DisclosureToggleCollectionViewCell.self, for: indexPath)
+					disclosureToggleCollectionViewCell?.configure(title: isExpanded ? L10n.reviewsHideShort : L10n.reviewsShowShort)
+					return disclosureToggleCollectionViewCell
 				default:
 					return nil
 				}

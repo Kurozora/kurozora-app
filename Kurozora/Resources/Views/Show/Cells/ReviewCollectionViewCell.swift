@@ -261,6 +261,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			}
 		}
 
+		if let revisionCount = review.attributes.revisionCount, revisionCount > 0 {
+			parts.append(L10n.reviewEdited)
+		}
+
 		return parts.isEmpty ? nil : parts.joined(separator: " · ")
 	}
 
