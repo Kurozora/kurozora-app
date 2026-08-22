@@ -168,7 +168,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 		self.updateDimLibraryBarButtonItem()
 	}
 
-	/// Shows the dim library button only on the charts list while a user is signed in.
+	/// Shows the dim library button on the charts list while a user is signed in.
 	private func updateDimLibraryBarButtonItem() {
 		let isAvailable = self.literaturesListFetchType == .charts && User.isSignedIn
 

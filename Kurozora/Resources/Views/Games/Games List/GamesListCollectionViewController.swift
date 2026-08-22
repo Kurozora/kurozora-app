@@ -165,18 +165,18 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 		self.dimLibraryBarButtonItem.accessibilityLabel = L10n.dimLibrary
 		self.dimLibraryBarButtonItem.accessibilityValue = L10n.off
 
-		self.updateDimLibraryBarButtonItem()
+		self.updateRightBarButtonItems()
 	}
 
-	/// Shows the dim library button only on the charts list while a user is signed in.
-	private func updateDimLibraryBarButtonItem() {
-		let isAvailable = self.gamesListFetchType == .charts && User.isSignedIn
+	/// Shows the dim library button on the charts list while a user is signed in.
+	private func updateRightBarButtonItems() {
+		var barButtonItems: [UIBarButtonItem] = []
 
-		if isAvailable {
-			self.navigationItem.rightBarButtonItem = self.dimLibraryBarButtonItem
-		} else if self.navigationItem.rightBarButtonItem === self.dimLibraryBarButtonItem {
-			self.navigationItem.rightBarButtonItem = nil
+		if self.gamesListFetchType == .charts, User.isSignedIn {
+			barButtonItems.append(self.dimLibraryBarButtonItem)
 		}
+
+		self.navigationItem.rightBarButtonItems = barButtonItems.isEmpty ? nil : barButtonItems
 	}
 
 	/// Handles dim library button pressed.
@@ -223,7 +223,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 
 	/// Handles the user's sign-in state changing.
 	@objc private func handleUserSignedInDidChange() {
-		self.updateDimLibraryBarButtonItem()
+		self.updateRightBarButtonItems()
 		self.observeLibraryChanges()
 
 		if !User.isSignedIn, self.dimsLibraryEntries {

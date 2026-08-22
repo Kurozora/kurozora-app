@@ -29,6 +29,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case museumSegue
 		case topChartsSegue
 		case searchSegue
+		case adaptedSegue
+		case trailersSegue
 		case characterDetailsSegue
 		case episodeDetailsSegue
 		case literatureDetailsSegue
@@ -81,6 +83,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	let browseCategories: [BrowseCategory] = [
 		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
 		BrowseCategory(title: L10n.museum, image: .Browse.museum, segueIdentifier: SegueIdentifiers.museumSegue),
+		BrowseCategory(title: L10n.adaptedToAnime, image: .Browse.adaptedToAnime, segueIdentifier: SegueIdentifiers.adaptedSegue),
+		BrowseCategory(title: L10n.trailers, image: UIImage(systemName: "play.rectangle.on.rectangle"), segueIdentifier: SegueIdentifiers.trailersSegue),
 		BrowseCategory(title: L10n.topCharts, image: .Browse.charts, segueIdentifier: SegueIdentifiers.topChartsSegue),
 		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
 		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),
@@ -1033,6 +1037,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case .peopleListSegue: return PeopleListCollectionViewController()
 		case .songsListSegue: return ShowSongsListCollectionViewController()
 		case .showsListSegue: return ShowsListCollectionViewController()
+		case .adaptedSegue: return AdaptedCollectionViewController()
+		case .trailersSegue: return TrailersCollectionViewController()
 		case .studiosListSegue: return StudiosListCollectionViewController()
 		case .usersListSegue: return UsersListCollectionViewController()
 		case .scheduleSegue: return ScheduleCollectionViewController()
@@ -1158,6 +1164,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			guard let usersListCollectionViewController = destination as? UsersListCollectionViewController else { return }
 			usersListCollectionViewController.searchQuery = self.searchQuery
 			usersListCollectionViewController.usersListFetchType = .search
+		case .adaptedSegue: break
+		case .trailersSegue: break
 		case .scheduleSegue: break
 		case .museumSegue: break
 		case .topChartsSegue: break

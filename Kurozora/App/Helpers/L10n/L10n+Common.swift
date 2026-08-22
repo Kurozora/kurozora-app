@@ -1927,6 +1927,39 @@ extension L10n {
 			comment: "The string for the word 'museum'."
 		)
 	}
+	/// The string for the phrase 'Adapted to Anime'.
+	///
+	/// - Tag: L10n-adaptedToAnime
+	static var adaptedToAnime: String {
+		String(
+			localized: "Adapted to Anime",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the phrase 'Adapted to Anime'."
+		)
+	}
+	/// The string for the phrase 'Airing Now'.
+	///
+	/// - Tag: L10n-airingNow
+	static var airingNow: String {
+		String(
+			localized: "Airing Now",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the phrase 'Airing Now'."
+		)
+	}
+	/// The string for the phrase 'Upcoming Anime'.
+	///
+	/// - Tag: L10n-upcomingAnime
+	static var upcomingAnime: String {
+		String(
+			localized: "Upcoming Anime",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The string for the phrase 'Upcoming Anime'."
+		)
+	}
 	/// The string for the word 'feed'.
 	///
 	/// - Tag: L10n-feed
@@ -2635,6 +2668,19 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the phrase 'Play Trailer'.
+	///
+	/// - Tag: L10n-playTrailer
+	static var playTrailer: String {
+		L10n.resolve {
+			String(
+				localized: "Play Trailer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the phrase 'Play Trailer'."
+			)
+		}
+	}
 	/// The string for the word 'pause'.
 	///
 	/// - Tag: L10n-pause
@@ -3293,6 +3339,20 @@ extension L10n {
 			locale: LanguageManager.shared.locale,
 			comment: "The string for the word 'Top %@'."
 		)
+	}
+
+	/// The string for the word 'trailers'.
+	///
+	/// - Tag: L10n-trailers
+	static var trailers: String {
+		L10n.resolve {
+			String(
+				localized: "Trailers",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'trailers'."
+			)
+		}
 	}
 
 	/// The string for the phrase 'Top Charts'.
