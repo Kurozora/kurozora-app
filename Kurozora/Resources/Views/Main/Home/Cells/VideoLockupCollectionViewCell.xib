@@ -185,7 +185,7 @@
                 <outlet property="scoreView" destination="BDZ-sF-j6i" id="cZH-8b-Llk"/>
                 <outlet property="secondaryLabel" destination="Ak8-tP-o1R" id="fgQ-K3-YRQ"/>
                 <outlet property="taglineLabel" destination="xSi-o9-X2G" id="xcb-Dp-jO0"/>
-                <outlet property="videoPlayerContainer" destination="1dl-d0-TOp" id="zxa-GU-fTm"/>
+                <outlet property="trailerPlayerView" destination="1dl-d0-TOp" id="zxa-GU-fTm"/>
             </connections>
             <point key="canvasLocation" x="911.59420289855075" y="229.6875"/>
         </collectionViewCell>

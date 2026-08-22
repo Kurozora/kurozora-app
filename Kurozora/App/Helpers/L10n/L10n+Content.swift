@@ -1255,6 +1255,34 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the 'trending' browse option.
+	///
+	/// - Tag: L10n-trending
+	static var trending: String {
+		L10n.resolve {
+			String(
+				localized: "Trending",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'trending' browse option."
+			)
+		}
+	}
+	/// The string for the 'most anticipated' browse option.
+	///
+	/// - Tag: L10n-mostAnticipated
+	static var mostAnticipated: String {
+		L10n.resolve {
+			String(
+				localized: "Most Anticipated",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'most anticipated' browse option."
+			)
+		}
+	}
 	/// The string for the 'advanced search' browse option.
 	///
 	/// - Tag: L10n-advancedSearch
@@ -3056,6 +3084,12 @@ extension L10n {
 	static func cantGetListRefresh(_ items: String) -> String {
 		L10n.resolve {
 			String(localized: "Can't get \(items) list. Please refresh the page or restart the app and check your WiFi connection.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when a list could not be fetched, asking to refresh.")
+		}
+	}
+	/// The empty-state detail shown when there are no trailers to list.
+	static var noTrailersDetail: String {
+		L10n.resolve {
+			String(localized: "There are no trailers here yet.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when there are no trailers to list.")
 		}
 	}
 	/// The empty-state title for the show songs list.

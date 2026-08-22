@@ -118,4 +118,20 @@ extension Game.Attributes {
 
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: .Placeholders.showBanner)
 	}
+
+	/// The line naming the title's genres and when it lands.
+	var trailerMetaLine: String {
+		var parts: [String] = []
+
+		if let genres = self.genres, !genres.isEmpty {
+			parts.append(genres.prefix(3).joined(separator: ", "))
+		}
+
+		if let startedAt = self.startedAt {
+			parts.append(startedAt.monthAndYear)
+		}
+
+		return parts.joined(separator: " · ")
+	}
+
 }

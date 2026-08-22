@@ -6,11 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
-import AVKit
-import AVFoundation
-import XCDYouTubeKit
+import UIKit
 
 class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -21,16 +18,28 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
 	@IBOutlet weak var taglineLabel: KLabel!
-	@IBOutlet weak var videoPlayerContainer: KTrailerPlayerView!
+	@IBOutlet weak var trailerPlayerView: KTrailerPlayerView!
 
 	// MARK: - Properties
-	var avQueuePlayer: AVQueuePlayer = AVQueuePlayer()
-	private var avPlayerLooper: AVPlayerLooper?
-	var youtubeOperation: XCDYouTubeOperation?
+	/// The poster's height constraint.
+	private var posterHeightConstraint: NSLayoutConstraint?
+
+	/// The poster's aspect ratio constraint.
+	private var posterAspectConstraint: NSLayoutConstraint?
+
+	/// The URL of the preferred trailer.
+	var preferredTrailerURL: String?
 
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
+
+		self.posterHeightConstraint = self.posterContainerView.constraints.first { constraint in
+			constraint.firstAttribute == .height && constraint.secondItem == nil
+		}
+		self.posterAspectConstraint = self.posterContainerView.constraints.first { constraint in
+			constraint.firstAttribute == .width && constraint.secondAttribute == .height
+		}
 
 		self.bannerContainerView.backgroundColor = .clear
 		self.bannerContainerView.layer.cornerRadius = 22
@@ -43,26 +52,21 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.layer.borderWidth = 0
 		self.posterBorderView.cornerRadius = 22
 
-		self.configureVideoPlayerContainer()
+		self.trailerPlayerView.layerCornerRadius = 22
+		self.trailerPlayerView.layer.masksToBounds = true
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		// Cancel and remove youTube operation
-		DispatchQueue.global(qos: .background).async {
-			self.youtubeOperation?.cancel()
-			self.youtubeOperation = nil
-		}
-
-		// Re-configure video player
-		self.avQueuePlayer = AVQueuePlayer()
-		self.configureVideoPlayerContainer()
+		self.preferredTrailerURL = nil
+		self.trailerPlayerView.stopTrailer()
 	}
 
 	// MARK: - Functions
 	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {
 		super.configure(using: show, rank: rank, scheduleIsShown: scheduleIsShown)
+		self.applyPosterShape(height: 150.0, multiplier: 2.0 / 3.0)
 		guard let show = show else { return }
 
 		// Configure genres
@@ -79,54 +83,54 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreView.isHidden = ratingAverage == 0.0
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
-		// Configure video player
-		if self.youtubeOperation == nil {
-//			self.configureVideoPlayer(with: show)
-		}
+		// Configure trailer
+		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? show.attributes.videoUrl)
 	}
 
-	func configureVideoPlayerContainer() {
-		self.videoPlayerContainer.player = self.avQueuePlayer
-		self.videoPlayerContainer.playerLayer.videoGravity = .resizeAspectFill
-		self.avQueuePlayer.actionAtItemEnd = .none
-		self.avQueuePlayer.isMuted = true
+	override func configure(using game: Game?, rank: Int? = nil, scheduleIsShown: Bool = false) {
+		super.configure(using: game, rank: rank, scheduleIsShown: scheduleIsShown)
+		self.applyPosterShape(height: 100.0, multiplier: 1.0)
+		guard let game = game else { return }
+
+		// Configure genres
+		self.secondaryLabel?.text = game.attributes.genres?.localizedJoined()
+
+		// Configure tagline
+		self.taglineLabel?.text = game.attributes.tagline
+
+		// Configure score
+		let ratingAverage = game.attributes.stats?.ratingAverage ?? 0.0
+		self.scoreView.rating = ratingAverage
+		self.scoreLabel.text = "\(ratingAverage)"
+
+		self.scoreView.isHidden = ratingAverage == 0.0
+		self.scoreLabel.isHidden = ratingAverage == 0.0
+
+		// Configure trailer
+		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? game.attributes.videoUrl)
 	}
 
-	/// Configures the video player with the defined settings.
-	func configureVideoPlayer(with show: Show) {
-		if let videoUrlString = show.attributes.videoUrl, !videoUrlString.isEmpty {
-			let videoID = URLComponents(string: videoUrlString)?.queryItems?.first(where: { $0.name == "v" })?.value
+	/// Reshapes the poster.
+	///
+	/// - Parameters:
+	///    - height: The height the poster is pinned to.
+	///    - multiplier: The poster's width relative to its height.
+	private func applyPosterShape(height: CGFloat, multiplier: CGFloat) {
+		self.posterHeightConstraint?.constant = height
 
-			DispatchQueue.global(qos: .background).async {
-				self.youtubeOperation = XCDYouTubeClient.default().getVideoWithIdentifier(videoID) { [weak self] video, error in
-					guard let self = self else { return }
-					if let video = video {
-						let streamURLs = video.streamURLs
-						let streamURL = streamURLs[XCDYouTubeVideoQuality.medium360.rawValue] ?? streamURLs[XCDYouTubeVideoQuality.small240.rawValue]
+		guard let aspectConstraint = self.posterAspectConstraint, aspectConstraint.multiplier != multiplier else { return }
 
-						if let streamURL = streamURL {
-							let options = [AVURLAssetAllowsCellularAccessKey: false]
-							let avURLAsset = AVURLAsset(url: streamURL, options: options)
-
-							// Load needed values asynchronously
-							avURLAsset.loadValuesAsynchronously(forKeys: ["duration", "playable"]) {
-								// UI actions should executed on the main thread
-								DispatchQueue.main.async {
-									let avPlayerItem = AVPlayerItem(asset: avURLAsset)
-									if self.avQueuePlayer.currentItem != avPlayerItem {
-										self.avPlayerLooper = nil
-										self.avPlayerLooper = AVPlayerLooper(player: self.avQueuePlayer, templateItem: avPlayerItem)
-									}
-									self.youtubeOperation = nil
-								}
-							}
-						}
-					} else {
-						print("----- YouTube Error -----")
-						print(error?.localizedDescription ?? "------ No YouTube error even though video not working")
-					}
-				}
-			}
-		}
+		let replacement = NSLayoutConstraint(
+			item: self.posterContainerView as Any,
+			attribute: .width,
+			relatedBy: .equal,
+			toItem: self.posterContainerView,
+			attribute: .height,
+			multiplier: multiplier,
+			constant: 0.0
+		)
+		aspectConstraint.isActive = false
+		replacement.isActive = true
+		self.posterAspectConstraint = replacement
 	}
 }

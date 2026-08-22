@@ -19,6 +19,11 @@ extension Date {
 	/// Locale-aware string representations of a relative date or time.
 	///
 	/// Use the strings that the formatter produces, such as “1 hour ago”, “in 2 weeks”, “yesterday”, and “tomorrow” as standalone strings. Embedding them in other strings may not be grammatically correct.
+	/// The month and year of the date, for example "Aug 2026".
+	var monthAndYear: String {
+		return self.formatted(.dateTime.month(.abbreviated).year())
+	}
+
 	var relativeToNow: String {
 		return self.formatted(.relative(presentation: .numeric, unitsStyle: .narrow))
 	}
