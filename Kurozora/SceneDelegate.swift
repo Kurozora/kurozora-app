@@ -16,6 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 	var authenticationCount = 0
 
+	#if targetEnvironment(macCatalyst)
+	/// The notification AppKit posts after a window leaves full screen.
+	private static let windowDidExitFullScreenNotification = Notification.Name("NSWindowDidExitFullScreenNotification")
+	#endif
+
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		print("----- Scene will connect to session.")
 		guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -73,12 +78,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	#if targetEnvironment(macCatalyst)
+	/// Configures the window's titlebar and size restrictions.
 	func setupNSToolbar() {
-		let toolbar = NSToolbar()
-		toolbar.displayMode = .iconOnly
-		self.window?.windowScene?.titlebar?.toolbar = toolbar
 		self.window?.windowScene?.titlebar?.titleVisibility = .hidden
 		self.window?.windowScene?.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
+		self.installTitlebarToolbar()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidExitFullScreen), name: Self.windowDidExitFullScreenNotification, object: nil)
+
+		FullScreenTitlebarBridge.shared.activate()
+	}
+
+	/// Installs a fresh toolbar on the titlebar.
+	private func installTitlebarToolbar() {
+		guard let titlebar = self.window?.windowScene?.titlebar else { return }
+
+		let toolbar = NSToolbar()
+		toolbar.displayMode = .iconOnly
+
+		// Clearing first tears down the scroll pocket a full screen restore leaves behind.
+		titlebar.toolbar = nil
+		titlebar.toolbar = toolbar
+	}
+
+	/// Rebuilds the titlebar after the window leaves full screen.
+	@objc private func windowDidExitFullScreen() {
+		self.installTitlebarToolbar()
 	}
 	#endif
 
