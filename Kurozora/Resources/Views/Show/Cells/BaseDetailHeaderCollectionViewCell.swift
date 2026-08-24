@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 protocol BaseDetailHeaderCollectionViewCellDelegate: AnyObject {
@@ -26,9 +27,31 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterBorderView: BorderView?
 
+	// MARK: - Views
+	/// The view holding the header's media, hosted by the surround.
+	private var mediaView: UIView?
+
+	/// The view hosting the trailer's controls above the mirrored media.
+	private var controlsOverlayView: PassthroughView?
+
 	// MARK: - Properties
 	weak var delegate: BaseDetailHeaderCollectionViewCellDelegate?
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
+
+	/// The controller hosting the media surround.
+	private var surroundController: UIViewController?
+
+	/// The letterbox gaps the surround fills around the media.
+	private let mediaGapState = HeaderMediaGapState()
+
+	// MARK: - View
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		if #available(iOS 26.0, *) {
+			self.updateMediaGaps()
+		}
+	}
 
 	// MARK: - Functions
 	override func awakeFromNib() {
@@ -59,8 +82,8 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 		}
 	}
 
-	/// Fills the area the sidebar covers with a mirrored, blurred continuation of the
-	/// header's media, leaving the media itself centered in the content area.
+	/// Fills the space around the header's media with a mirrored, blurred continuation of it,
+	/// leaving the media itself centered in the content area.
 	@available(iOS 26.0, *)
 	private func extendHeaderMediaBeyondSafeArea() {
 		guard let container = self.bannerImageView.superview else { return }
@@ -68,33 +91,77 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 		let bannerConstraints = container.constraints.filter { $0.firstItem === self.bannerImageView || $0.secondItem === self.bannerImageView }
 		NSLayoutConstraint.deactivate(bannerConstraints)
 
-		let extensionView = UIBackgroundExtensionView()
-		extensionView.automaticallyPlacesContentView = false
-		extensionView.translatesAutoresizingMaskIntoConstraints = false
-		extensionView.isUserInteractionEnabled = true
-		container.insertSubview(extensionView, at: container.subviews.firstIndex(of: self.bannerImageView) ?? 0)
-
 		let mediaView = UIView()
-		mediaView.translatesAutoresizingMaskIntoConstraints = false
-		extensionView.contentView = mediaView
 		mediaView.addSubview(self.bannerImageView)
+		self.mediaView = mediaView
+
+		let surroundController = UIHostingController(rootView: HeaderMediaSurroundView(mediaView: mediaView, gapState: self.mediaGapState))
+		surroundController.view.backgroundColor = .clear
+		surroundController.view.translatesAutoresizingMaskIntoConstraints = false
+		container.insertSubview(surroundController.view, at: container.subviews.firstIndex(of: self.bannerImageView) ?? 0)
+		self.surroundController = surroundController
+
+		// Above the quick-details wrapper, which would otherwise swallow the buttons' taps.
+		let controlsOverlayView = PassthroughView()
+		controlsOverlayView.translatesAutoresizingMaskIntoConstraints = false
+		(container.superview ?? container).addSubview(controlsOverlayView)
+		self.controlsOverlayView = controlsOverlayView
 
 		NSLayoutConstraint.activate([
-			extensionView.topAnchor.constraint(equalTo: container.topAnchor),
-			extensionView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-			extensionView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-			extensionView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+			surroundController.view.topAnchor.constraint(equalTo: container.topAnchor),
+			surroundController.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+			surroundController.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+			surroundController.view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
 
-			mediaView.topAnchor.constraint(equalTo: extensionView.topAnchor),
-			mediaView.bottomAnchor.constraint(equalTo: extensionView.bottomAnchor),
-			mediaView.leadingAnchor.constraint(equalTo: extensionView.safeAreaLayoutGuide.leadingAnchor),
-			mediaView.trailingAnchor.constraint(equalTo: extensionView.safeAreaLayoutGuide.trailingAnchor),
+			controlsOverlayView.topAnchor.constraint(equalTo: container.topAnchor),
+			controlsOverlayView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+			controlsOverlayView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+			controlsOverlayView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
 
 			self.bannerImageView.topAnchor.constraint(equalTo: mediaView.topAnchor),
 			self.bannerImageView.bottomAnchor.constraint(equalTo: mediaView.bottomAnchor),
 			self.bannerImageView.leadingAnchor.constraint(equalTo: mediaView.leadingAnchor),
 			self.bannerImageView.trailingAnchor.constraint(equalTo: mediaView.trailingAnchor)
 		])
+	}
+
+	/// Sizes the media to the video's aspect ratio while a trailer's picture is on screen.
+	@available(iOS 26.0, *)
+	private func updateMediaGaps() {
+		guard let surroundView = self.surroundController?.viewIfLoaded else { return }
+
+		let trailerView = self.mediaView?.subviews.compactMap { $0 as? KTrailerPlayerView }.first
+		if let trailerView {
+			trailerView.controlsHost = self.controlsOverlayView
+
+			if trailerView.onPictureVisibilityChanged == nil {
+				trailerView.onPictureVisibilityChanged = { [weak self] in
+					self?.setNeedsLayout()
+				}
+			}
+		}
+
+		var gapInsets = EdgeInsets()
+
+		if trailerView?.isShowingPicture == true {
+			let safeAreaInsets = surroundView.safeAreaInsets
+			let areaSize = CGSize(
+				width: surroundView.bounds.width - safeAreaInsets.left - safeAreaInsets.right,
+				height: surroundView.bounds.height - safeAreaInsets.top - safeAreaInsets.bottom
+			)
+
+			if areaSize.width > 0, areaSize.height > 0 {
+				// Rounded to device pixels so the seam between video and mirror stays crisp.
+				let displayScale = max(self.traitCollection.displayScale, 1.0)
+				let scale = min(areaSize.width / 16.0, areaSize.height / 9.0)
+				let horizontalGap = max(((areaSize.width - 16.0 * scale) / 2.0 * displayScale).rounded() / displayScale, 0.0)
+				let verticalGap = max(((areaSize.height - 9.0 * scale) / 2.0 * displayScale).rounded() / displayScale, 0.0)
+				gapInsets = EdgeInsets(top: verticalGap, leading: horizontalGap, bottom: verticalGap, trailing: horizontalGap)
+			}
+		}
+
+		guard self.mediaGapState.gapInsets != gapInsets else { return }
+		self.mediaGapState.gapInsets = gapInsets
 	}
 
 	@objc private func didTapImage(_ sender: UITapGestureRecognizer) {
@@ -118,4 +185,41 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 			await self.delegate?.baseDetailHeaderCollectionViewCell(self, didPressStatus: sender)
 		}
 	}
+}
+
+// MARK: - HeaderMediaGapState
+/// The letterbox gaps the media surround reserves around its content.
+private final class HeaderMediaGapState: ObservableObject {
+	@Published var gapInsets = EdgeInsets()
+}
+
+// MARK: - HeaderMediaSurroundView
+/// A view that mirrors the header's media into the safe area around it.
+@available(iOS 26.0, *)
+private struct HeaderMediaSurroundView: View {
+	/// The view holding the header's media.
+	let mediaView: UIView
+
+	/// The letterbox gaps to reserve around the media.
+	@ObservedObject var gapState: HeaderMediaGapState
+
+	var body: some View {
+		HeaderMediaBox(mediaView: self.mediaView)
+			.backgroundExtensionEffect()
+			.safeAreaPadding(self.gapState.gapInsets)
+	}
+}
+
+// MARK: - HeaderMediaBox
+/// Bridges the header's media view into SwiftUI.
+@available(iOS 26.0, *)
+private struct HeaderMediaBox: UIViewRepresentable {
+	/// The view holding the header's media.
+	let mediaView: UIView
+
+	func makeUIView(context: Context) -> UIView {
+		return self.mediaView
+	}
+
+	func updateUIView(_ uiView: UIView, context: Context) {}
 }

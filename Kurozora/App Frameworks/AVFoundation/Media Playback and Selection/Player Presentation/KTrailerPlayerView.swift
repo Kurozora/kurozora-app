@@ -34,6 +34,42 @@ final class KTrailerPlayerView: UIView {
 	/// A Boolean value indicating whether the sound toggle stays visible while the trailer plays.
 	var showsMuteToggle = false
 
+	/// A Boolean value indicating whether the controls are shown.
+	var showsControls = true {
+		didSet {
+			self.updateControls(animated: false)
+		}
+	}
+
+	/// The view hosting the playback buttons in place of the player.
+	///
+	/// Assign a view outside a mirrored subtree to keep the buttons out of its copies.
+	weak var controlsHost: UIView? {
+		didSet {
+			guard oldValue !== self.controlsHost else { return }
+			self.mountControls()
+		}
+	}
+
+	/// Called when the trailer's picture appears or disappears.
+	var onPictureVisibilityChanged: (() -> Void)?
+
+	/// A Boolean value indicating whether the trailer's picture is on screen.
+	var isShowingPicture: Bool {
+		return self.player?.isShowingPicture ?? false
+	}
+
+	/// The constraints pinning the buttons to the player.
+	private var controlConstraints: [NSLayoutConstraint] = []
+
+	/// A closure called when the trailer's playing state changes.
+	var onPlaybackStateChange: ((Bool) -> Void)?
+
+	/// A Boolean value indicating whether the trailer is currently playing.
+	var isTrailerPlaying: Bool {
+		self.isPlaying
+	}
+
 	/// The YouTube URL of the trailer currently loaded.
 	private(set) var trailerURLString: String?
 
@@ -56,7 +92,12 @@ final class KTrailerPlayerView: UIView {
 	private var isPausedByReader = false
 
 	/// A Boolean value indicating whether the trailer is playing.
-	private var isPlaying = false
+	private var isPlaying = false {
+		didSet {
+			guard self.isPlaying != oldValue else { return }
+			self.onPlaybackStateChange?(self.isPlaying)
+		}
+	}
 
 	/// A Boolean value indicating whether the user revealed the controls.
 	private var areControlsVisible = false
@@ -132,6 +173,10 @@ final class KTrailerPlayerView: UIView {
 			TrailerPlaybackCoordinator.shared.register(self)
 		}
 
+		if self.window != nil {
+			self.mountControls()
+		}
+
 		TrailerPlaybackCoordinator.shared.setNeedsReevaluation()
 	}
 
@@ -199,6 +244,14 @@ final class KTrailerPlayerView: UIView {
 		self.scheduleControlsAutoHide()
 	}
 
+	/// Pauses the loaded trailer at the user's request.
+	func pauseByReader() {
+		guard self.hasTrailer else { return }
+		self.isPausedByReader = true
+		self.player?.pause()
+		self.updateControls(animated: true)
+	}
+
 	/// Stops playback and unloads the trailer.
 	func stopTrailer() {
 		self.isPlaybackAllowed = false
@@ -208,6 +261,7 @@ final class KTrailerPlayerView: UIView {
 		self.player?.detach()
 		self.player = nil
 		self.isPlaying = false
+		self.onPictureVisibilityChanged?()
 
 		self.trailerURLString = nil
 		self.videoID = nil
@@ -228,6 +282,8 @@ final class KTrailerPlayerView: UIView {
 		self.player = player
 		player.attach(to: self, isMuted: self.isMuted, delegate: self)
 		player.play()
+
+		self.onPictureVisibilityChanged?()
 	}
 
 	/// Pauses the trailer while keeping its player warm.
@@ -320,7 +376,7 @@ final class KTrailerPlayerView: UIView {
 	///
 	/// - Parameter animated: Whether the change is animated.
 	private func updateControls(animated: Bool) {
-		let overlayIsVisible: Bool
+		var overlayIsVisible: Bool
 
 		if !self.hasTrailer {
 			overlayIsVisible = false
@@ -331,15 +387,16 @@ final class KTrailerPlayerView: UIView {
 			overlayIsVisible = self.areControlsVisible || self.isPausedByReader || !willStartAutomatically
 		}
 
-		let muteIsVisible = self.isPlaying && (self.showsMuteToggle || self.areControlsVisible)
-		let fullscreenIsVisible = self.isPlaying && self.areControlsVisible
+		overlayIsVisible = overlayIsVisible && self.showsControls
+		let muteIsVisible = self.isPlaying && (self.showsMuteToggle || self.areControlsVisible) && self.showsControls
+		let fullscreenIsVisible = self.isPlaying && self.areControlsVisible && self.showsControls
 
 		self.playPauseButton.setImage(UIImage(systemName: self.isPlaying ? "pause.fill" : "play.fill"), for: .normal)
 		self.playPauseButton.accessibilityLabel = self.isPlaying ? L10n.pause : L10n.play
 		self.muteButton.setImage(UIImage(systemName: self.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill"), for: .normal)
 		self.muteButton.accessibilityLabel = self.isMuted ? L10n.unmute : L10n.mute
 
-		self.tapControl.isUserInteractionEnabled = self.hasTrailer
+		self.tapControl.isUserInteractionEnabled = self.hasTrailer && self.showsControls
 		self.playPauseButton.isUserInteractionEnabled = overlayIsVisible
 		self.muteButton.isUserInteractionEnabled = muteIsVisible
 		self.fullscreenButton.isUserInteractionEnabled = fullscreenIsVisible
@@ -384,11 +441,6 @@ final class KTrailerPlayerView: UIView {
 
 	/// Pins the controls above the trailer.
 	private func configureControls() {
-		self.addSubview(self.tapControl)
-		self.addSubview(self.playPauseButton)
-		self.addSubview(self.muteButton)
-		self.addSubview(self.fullscreenButton)
-
 		self.tapControl.addTarget(self, action: #selector(self.toggleControlsVisibility), for: .touchUpInside)
 		self.playPauseButton.addTarget(self, action: #selector(self.togglePlayPause), for: .primaryActionTriggered)
 		self.muteButton.addTarget(self, action: #selector(self.toggleMute), for: .primaryActionTriggered)
@@ -397,12 +449,34 @@ final class KTrailerPlayerView: UIView {
 		self.fullscreenButton.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
 		self.fullscreenButton.accessibilityLabel = L10n.fullscreen
 
+		self.addSubview(self.tapControl)
 		NSLayoutConstraint.activate([
 			self.tapControl.topAnchor.constraint(equalTo: self.topAnchor),
 			self.tapControl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			self.tapControl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			self.tapControl.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+			self.tapControl.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+		])
 
+		self.mountControls()
+	}
+
+	/// Moves the buttons into the current host, keeping them anchored to the player.
+	private func mountControls() {
+		var host: UIView = self
+
+		if let controlsHost = self.controlsHost, let window = self.window, controlsHost.window === window {
+			host = controlsHost
+		}
+
+		guard self.playPauseButton.superview !== host else { return }
+
+		NSLayoutConstraint.deactivate(self.controlConstraints)
+
+		host.addSubview(self.playPauseButton)
+		host.addSubview(self.muteButton)
+		host.addSubview(self.fullscreenButton)
+
+		self.controlConstraints = [
 			self.playPauseButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			self.playPauseButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 			self.playPauseButton.widthAnchor.constraint(equalToConstant: 52.0),
@@ -417,7 +491,8 @@ final class KTrailerPlayerView: UIView {
 			self.fullscreenButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12.0),
 			self.fullscreenButton.widthAnchor.constraint(equalToConstant: 34.0),
 			self.fullscreenButton.heightAnchor.constraint(equalToConstant: 34.0)
-		])
+		]
+		NSLayoutConstraint.activate(self.controlConstraints)
 	}
 
 	/// Builds a circular, blurred control button matching the app's media controls.
@@ -459,5 +534,10 @@ extension KTrailerPlayerView: TrailerWebPlayerDelegate {
 		self.player = nil
 		self.isPlaying = false
 		self.updateControls(animated: false)
+		self.onPictureVisibilityChanged?()
+	}
+
+	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.onPictureVisibilityChanged?()
 	}
 }

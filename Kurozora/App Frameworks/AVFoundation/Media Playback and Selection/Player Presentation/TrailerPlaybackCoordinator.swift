@@ -187,7 +187,7 @@ final class TrailerPlaybackCoordinator {
 		guard self.scrollObservations[identifier] == nil else { return }
 
 		self.scrollObservations[identifier] = scrollView.observe(\.contentOffset, options: [.new]) { [weak self] _, _ in
-			MainActor.assumeIsolated {
+			Task { @MainActor in
 				self?.setNeedsReevaluation()
 			}
 		}

@@ -268,4 +268,6 @@ extension TrailerFullscreenViewController: TrailerWebPlayerDelegate {
 	func trailerWebPlayerDidFail(_ trailerWebPlayer: TrailerWebPlayer) {
 		self.close()
 	}
+
+	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer) {}
 }

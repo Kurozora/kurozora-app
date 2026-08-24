@@ -26,6 +26,11 @@ protocol TrailerWebPlayerDelegate: AnyObject {
 	///
 	/// - Parameter trailerWebPlayer: The web player reporting the change.
 	func trailerWebPlayerDidFail(_ trailerWebPlayer: TrailerWebPlayer)
+
+	/// Tells the delegate the trailer's picture became visible.
+	///
+	/// - Parameter trailerWebPlayer: The web player reporting the change.
+	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer)
 }
 
 /// A reusable web view that plays one YouTube trailer through the IFrame Player API.
@@ -91,6 +96,17 @@ final class TrailerWebPlayer: NSObject {
 	/// The web view that renders the trailer.
 	private lazy var webView: WKWebView = self.makeWebView()
 
+	/// The fixed size the page lays out at.
+	private static let referenceSize = CGSize(width: 1280.0, height: 720.0)
+
+	/// The view rendering the video at its aspect ratio.
+	private var videoView: TrailerVideoScalingView?
+
+	/// A Boolean value indicating whether the picture is visible in a host.
+	var isShowingPicture: Bool {
+		return self.host != nil && self.hasRevealed
+	}
+
 	// MARK: - Initializers
 	init(videoID: String) {
 		self.videoID = videoID
@@ -109,10 +125,20 @@ final class TrailerWebPlayer: NSObject {
 		self.delegate = delegate
 		self.isMuted = isMuted
 
-		self.webView.frame = host.bounds
-		self.webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		self.webView.alpha = self.hasRevealed ? 1.0 : 0.0
-		host.insertSubview(self.webView, at: 0)
+		if #available(iOS 26.0, *) {
+			let videoView = self.videoView ?? TrailerVideoScalingView(webView: self.webView, referenceSize: Self.referenceSize)
+			self.videoView = videoView
+
+			videoView.frame = host.bounds
+			videoView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+			videoView.alpha = self.hasRevealed ? 1.0 : 0.0
+			host.insertSubview(videoView, at: 0)
+		} else {
+			self.webView.frame = host.bounds
+			self.webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+			self.webView.alpha = self.hasRevealed ? 1.0 : 0.0
+			host.insertSubview(self.webView, at: 0)
+		}
 
 		if self.webView.url == nil {
 			self.webView.loadHTMLString(self.playerHTML(isMuted: isMuted), baseURL: Self.embedOriginURL)
@@ -128,7 +154,11 @@ final class TrailerWebPlayer: NSObject {
 
 		self.pause()
 
-		self.webView.removeFromSuperview()
+		if let videoView = self.videoView {
+			videoView.removeFromSuperview()
+		} else {
+			self.webView.removeFromSuperview()
+		}
 
 		self.host = nil
 		self.delegate = nil
@@ -220,9 +250,13 @@ final class TrailerWebPlayer: NSObject {
 		self.revealTask = nil
 		self.hasRevealed = true
 
+		let revealingView: UIView = self.videoView ?? self.webView
+
 		UIView.animate(withDuration: 0.4) {
-			self.webView.alpha = 1.0
+			revealingView.alpha = 1.0
 		}
+
+		self.delegate?.trailerWebPlayerDidRevealPicture(self)
 	}
 
 	/// Evaluates the given JavaScript in the web view.
