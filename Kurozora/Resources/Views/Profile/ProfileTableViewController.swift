@@ -688,10 +688,8 @@ extension ProfileTableViewController: MediaTransitionDelegate {
 		return index == 0 ? self.profileHeaderView.profileImageView : self.profileHeaderView.bannerImageView
 	}
 
-	func scrollThumbnailIntoView(for index: Int) {
-		// Scroll the collection view to make sure the cell at the given index is visible.
-//		let indexPath = IndexPath(item: index, section: 0)
-//		self.tableView.safeScrollToRow(at: indexPath, at: .middle, animated: true)
+	func scrollThumbnailIntoView(for index: Int, animated: Bool) {
+		// The profile header is always on screen, so there is nothing to scroll into view.
 	}
 }
 

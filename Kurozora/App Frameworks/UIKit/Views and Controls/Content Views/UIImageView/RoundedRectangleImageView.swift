@@ -13,8 +13,8 @@ import UIKit
 /// `RoundedRectangleImageView` adjusts some options to achieve its design, this includes:
 /// - Rounding the image's corners.
 class RoundedRectangleImageView: UIImageView {
-	/// The corner radius value.
-	fileprivate var _cornerRadius: CGFloat = 10.0
+	/// The corner radius applied to the image view.
+	private(set) var appliedCornerRadius: CGFloat = 10.0
 
 	/// The vector mask that clips the imageView to a rounded-rectangle shape.
 	private let cornerMaskLayer: CAShapeLayer = {
@@ -44,22 +44,21 @@ class RoundedRectangleImageView: UIImageView {
 	// MARK: - Functions
 	/// Applies the given corner radius to the image view.
 	///
-	/// - Parameters:
-	///    - cornerRadius: The corner radius value to apply on the image view.
+	/// - Parameter cornerRadius: The corner radius to apply.
 	func applyCornerRadius(_ cornerRadius: CGFloat) {
-		self._cornerRadius = cornerRadius
+		self.appliedCornerRadius = cornerRadius
 		self.refreshCornerMask()
 
 		self.setNeedsLayout()
 	}
 
-	/// Updates the vector mask's path.
+	/// Updates the mask's path.
 	private func refreshCornerMask() {
 		guard self.bounds.width > 0, self.bounds.height > 0 else {
 			return
 		}
 
-		let path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self._cornerRadius)
+		let path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.appliedCornerRadius)
 		self.cornerMaskLayer.path = path.cgPath
 		self.cornerMaskLayer.frame = self.bounds
 

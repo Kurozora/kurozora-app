@@ -8,79 +8,81 @@
 
 import UIKit
 
+/// Shrinks the fullscreen media back into the thumbnail it came from.
 final class MediaDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-	weak var transitionDelegate: MediaTransitionDelegate?
+	// MARK: - Properties
+	private let closeMethod: MediaViewerCloseMethod
+	private weak var transitionDelegate: MediaTransitionDelegate?
 
-	init(transitionDelegate: MediaTransitionDelegate?) {
+	// MARK: - Initializers
+	init(closeMethod: MediaViewerCloseMethod, transitionDelegate: MediaTransitionDelegate?) {
+		self.closeMethod = closeMethod
 		self.transitionDelegate = transitionDelegate
 	}
 
-	func transitionDuration(using ctx: UIViewControllerContextTransitioning?) -> TimeInterval {
-		return 0.16
+	// MARK: - Functions
+	func transitionDuration(using context: UIViewControllerContextTransitioning?) -> TimeInterval {
+		return self.closeMethod.duration
 	}
 
-	func animateTransition(using ctx: UIViewControllerContextTransitioning) {
-		guard
-			let fromVC = ctx.viewController(forKey: .from) as? MediaAlbumViewController,
-			let container = ctx.containerView as UIView?
-		else { ctx.completeTransition(false); return }
-
-		let currentIndex = fromVC.currentIndex
-		self.transitionDelegate?.scrollThumbnailIntoView(for: currentIndex)
-
-		guard
-			let targetThumb = self.transitionDelegate?.imageViewForMedia(at: currentIndex),
-			let mediaView = fromVC.currentMedia?.mediaView as? UIImageView,
-			let snapshot = makeSnapshot(from: mediaView)
-		else {
-			self.fallbackFade(ctx: ctx, fromVC: fromVC)
+	func animateTransition(using context: UIViewControllerContextTransitioning) {
+		guard let albumViewController = context.viewController(forKey: .from) as? MediaAlbumViewController else {
+			context.completeTransition(false)
 			return
 		}
 
-		let startFrame = container.convert(mediaView.bounds, from: mediaView)
-		snapshot.frame = startFrame
-		container.addSubview(snapshot)
+		let containerView = context.containerView
+		let duration = self.transitionDuration(using: context)
+		let currentIndex = albumViewController.currentIndex
+		self.transitionDelegate?.scrollThumbnailIntoView(for: currentIndex, animated: false)
+
+		let mediaView = albumViewController.currentMedia?.mediaView
+		let startFrame = mediaView.map { containerView.convert($0.bounds, from: $0) } ?? .zero
+
+		guard
+			let mediaView = mediaView,
+			let thumbnail = self.transitionDelegate?.imageViewForMedia(at: currentIndex),
+			let image = albumViewController.currentMedia?.mediaImage ?? thumbnail.image,
+			!startFrame.isEmpty
+		else {
+			self.crossFade(from: albumViewController, duration: duration, using: context)
+			return
+		}
+
 		mediaView.isHidden = true
+		thumbnail.isHidden = true
 
-		let targetFrame = container.convert(targetThumb.bounds, from: targetThumb)
-		let fittedTargetFrame = self.aspectFitFrame(for: snapshot.image?.size ?? .zero, in: targetFrame)
+		let proxy = MediaTransitionProxy(image: image, cornerRadius: 0)
+		proxy.frame = startFrame
+		containerView.addSubview(proxy)
 
-		fromVC.view.backgroundColor = .black
+		let targetFrame = containerView.convert(thumbnail.bounds, from: thumbnail)
+		let targetCornerRadius = MediaTransitionProxy.cornerRadius(of: thumbnail)
 
-		UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0, options: [.curveEaseOut], animations: {
-			snapshot.frame = fittedTargetFrame
-			fromVC.view.backgroundColor = .clear
-		}, completion: { _ in
-			snapshot.removeFromSuperview()
+		proxy.animateMaskAndCrop(to: targetCornerRadius, contentsRect: thumbnail.layer.contentsRect, duration: duration)
+
+		UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut]) {
+			proxy.frame = targetFrame
+			albumViewController.setChromeAlpha(0)
+		} completion: { _ in
+			proxy.removeFromSuperview()
+			thumbnail.isHidden = false
 			mediaView.isHidden = false
-			ctx.completeTransition(!ctx.transitionWasCancelled)
-		})
+			context.completeTransition(!context.transitionWasCancelled)
+		}
 	}
 
-	private func fallbackFade(ctx: UIViewControllerContextTransitioning, fromVC: UIViewController) {
-		UIView.animate(withDuration: 0.25, animations: {
-			fromVC.view.alpha = 0
-		}, completion: { _ in
-			ctx.completeTransition(!ctx.transitionWasCancelled)
-		})
-	}
-
-	private func makeSnapshot(from imageView: UIImageView) -> UIImageView? {
-		guard let image = imageView.image else { return nil }
-		let snap = UIImageView(image: image)
-		snap.contentMode = imageView.contentMode
-		snap.clipsToBounds = imageView.clipsToBounds
-		snap.layer.cornerRadius = imageView.layer.cornerRadius
-		return snap
-	}
-
-	private func aspectFitFrame(for imageSize: CGSize, in boundingRect: CGRect) -> CGRect {
-		let scale = min(boundingRect.width / imageSize.width,
-		                boundingRect.height / imageSize.height)
-		let width = imageSize.width * scale
-		let height = imageSize.height * scale
-		let x = boundingRect.midX - width / 2
-		let y = boundingRect.midY - height / 2
-		return CGRect(x: x, y: y, width: width, height: height)
+	/// Fades the viewer out.
+	///
+	/// - Parameters:
+	///    - albumViewController: The viewer being dismissed.
+	///    - duration: The duration of the fade.
+	///    - context: The running transition.
+	private func crossFade(from albumViewController: MediaAlbumViewController, duration: TimeInterval, using context: UIViewControllerContextTransitioning) {
+		UIView.animate(withDuration: duration) {
+			albumViewController.view.alpha = 0
+		} completion: { _ in
+			context.completeTransition(!context.transitionWasCancelled)
+		}
 	}
 }

@@ -9,9 +9,16 @@
 import UIKit
 
 protocol MediaTransitionDelegate: AnyObject {
-	/// Returns the thumbnail view for the specific media index, if visible.
+	/// Returns the thumbnail for the media at the given index.
+	///
+	/// - Parameter index: The zero-based index of the media item.
+	/// - Returns: The thumbnail the viewer grows from and shrinks back into.
 	func imageViewForMedia(at index: Int) -> UIImageView?
 
-	/// Optional: Ensure the thumbnail for this index is visible in the feed.
-	func scrollThumbnailIntoView(for index: Int)
+	/// Brings the thumbnail for the given index on screen.
+	///
+	/// - Parameters:
+	///    - index: The zero-based index of the media item.
+	///    - animated: Whether to animate the scroll. Pass `false` to scroll and lay out immediately.
+	func scrollThumbnailIntoView(for index: Int, animated: Bool)
 }

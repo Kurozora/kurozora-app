@@ -732,9 +732,14 @@ extension DetailsCollectionViewController: MediaTransitionDelegate {
 		return cell.imageView(at: index)
 	}
 
-	func scrollThumbnailIntoView(for index: Int) {
-		let indexPath = IndexPath(item: index, section: 0)
-		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	func scrollThumbnailIntoView(for index: Int, animated: Bool) {
+		// Every thumbnail lives in the header cell, so the media index is not an item index.
+		let indexPath = IndexPath(item: 0, section: 0)
+		self.collectionView.safeScrollToItem(at: indexPath, at: .centeredVertically, animated: animated)
+
+		if !animated {
+			self.collectionView.layoutIfNeeded()
+		}
 	}
 }
 

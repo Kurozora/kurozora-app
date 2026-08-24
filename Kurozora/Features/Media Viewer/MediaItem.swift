@@ -16,8 +16,6 @@ protocol MediaRepresentable {
 	var author: String? { get }
 	var provider: String? { get }
 	var embedHTML: String? { get }
-
-	// Optional info for viewer
 	var extraInfo: [String: Any]? { get }
 }
 

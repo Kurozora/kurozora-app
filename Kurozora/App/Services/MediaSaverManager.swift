@@ -22,9 +22,9 @@ struct MediaSaverManager {
 
 	private init() {}
 
-	/// Requests access to the photo library with `.addOnly` permissions.
+	/// Requests add-only access to the photo library.
 	///
-	/// - Returns: A boolean indicating whether access was granted or not.
+	/// - Returns: `true` if access was granted.
 	private func requestAccess() async -> Bool {
 		let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
 
@@ -39,14 +39,23 @@ struct MediaSaverManager {
 		}
 	}
 
-	/// Saves the image from the given URL to the photo library, after checking for necessary permissions.
+	/// Saves the image at the given URL to the photo library.
 	///
-	/// - Parameter url: The URL of the image to be saved.
+	/// - Parameter url: The URL of the image to save.
 	func saveImage(from url: URL) async throws {
 		guard await self.requestAccess() else {
 			throw SaverError.accessDenied
 		}
 
+		let image = try await self.downloadImage(from: url)
+		try await self.performSave(image: image, originalURL: url)
+	}
+
+	/// Downloads the image at the given URL.
+	///
+	/// - Parameter url: The URL of the image to download.
+	/// - Returns: The downloaded image.
+	func downloadImage(from url: URL) async throws -> UIImage {
 		let data: Data
 		let response: URLResponse
 
@@ -62,12 +71,14 @@ struct MediaSaverManager {
 			throw SaverError.invalidData
 		}
 
-		try await self.performSave(image: image, originalURL: url)
+		return image
 	}
 
-	/// Performs the actual save operation to the photo library, and retries with a PNG conversion if it encounters specific errors that may indicate compatibility issues.
+	/// Saves the given image to the photo library.
 	///
-	/// - Parameter image: The `UIImage` to be saved to the photo library.
+	/// - Parameters:
+	///    - image: The image to save.
+	///    - originalURL: The URL the image was downloaded from.
 	private func performSave(image: UIImage, originalURL: URL) async throws {
 		do {
 			try await PHPhotoLibrary.shared().performChanges {
@@ -87,9 +98,9 @@ struct MediaSaverManager {
 		}
 	}
 
-	/// Retries saving the image after converting it to PNG format, which can help bypass certain compatibility issues.
+	/// Saves the given image to the photo library as PNG.
 	///
-	/// - Parameter image: The original `UIImage` that failed to save, which will be converted to PNG format for the retry attempt.
+	/// - Parameter image: The image to convert and save.
 	private func retrySaveWithConversion(image: UIImage) async throws {
 		guard let pngData = image.pngData(),
 		      let fallbackImage = UIImage(data: pngData)

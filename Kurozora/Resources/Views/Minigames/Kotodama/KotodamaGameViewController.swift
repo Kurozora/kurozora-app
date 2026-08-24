@@ -511,7 +511,9 @@ extension KotodamaGameViewController: MediaTransitionDelegate {
 		return self.hintRowView.thumbnailView
 	}
 
-	func scrollThumbnailIntoView(for index: Int) {}
+	func scrollThumbnailIntoView(for index: Int, animated: Bool) {
+		// The hint row is always on screen, so there is nothing to scroll into view.
+	}
 }
 
 // MARK: - KotodamaResultViewDelegate

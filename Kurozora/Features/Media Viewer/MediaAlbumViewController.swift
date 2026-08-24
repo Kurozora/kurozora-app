@@ -33,7 +33,13 @@ final class MediaAlbumViewController: UIPageViewController {
 
 	// Transition
 	weak var transitionDelegateForThumbnail: MediaTransitionDelegate?
-	private let interactionController = MediaInteractionController()
+	private lazy var dragToDismissController = MediaDragToDismissController(albumViewController: self)
+	private var closeMethod: MediaViewerCloseMethod = .button
+
+	/// The view that dims the presenting screen.
+	var dimmingView: UIView? {
+		return (self.presentationController as? MediaViewerPresentationController)?.dimmingView
+	}
 
 	// Callbacks
 	var onClose: (() -> Void)?
@@ -70,15 +76,15 @@ final class MediaAlbumViewController: UIPageViewController {
 		let initial = MediaRendererFactory.makeRenderer(for: self.items[self.currentIndex])
 		self.setViewControllers([initial], direction: .forward, animated: false)
 
-		self.interactionController.wireToViewController(self)
-
 		self.configureView()
-		self.configureGestureConflictResolution()
+		self.configureDismissGesture()
+		self.configureShareGesture()
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.isDismissing = false
+		self.becomeFirstResponder()
 
 		if let sysOrientation = view.window?.windowScene?.interfaceOrientation {
 			self.effectiveViewerOrientation = self.mask(for: sysOrientation)
@@ -116,7 +122,7 @@ final class MediaAlbumViewController: UIPageViewController {
 
 	// MARK: - Functions
 	private func configureView() {
-		self.view.backgroundColor = .black
+		self.view.backgroundColor = .clear
 		self.dataSource = self
 		self.delegate = self
 
@@ -182,6 +188,76 @@ final class MediaAlbumViewController: UIPageViewController {
 		self.view.addGestureRecognizer(singleTap)
 	}
 
+	private func configureDismissGesture() {
+		let pan = UIPanGestureRecognizer(target: self, action: #selector(self.handleDismissPan(_:)))
+		pan.delegate = self
+		pan.maximumNumberOfTouches = 1
+		self.view.addGestureRecognizer(pan)
+	}
+
+	private func configureShareGesture() {
+		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
+		longPress.delegate = self
+		self.view.addGestureRecognizer(longPress)
+	}
+
+	/// Sets the alpha of every control layered over the media.
+	///
+	/// - Parameter alpha: The alpha to apply, clamped to `0...1`.
+	func setChromeAlpha(_ alpha: CGFloat) {
+		let clampedAlpha = max(0, min(1, alpha))
+
+		self.closeButton.alpha = clampedAlpha
+		self.indexButton.alpha = clampedAlpha
+		self.actionBar.alpha = clampedAlpha
+		self.rotateToastButton?.alpha = clampedAlpha
+	}
+
+	/// Dismisses the viewer.
+	///
+	/// - Parameter closeMethod: The gesture or control that closed the viewer.
+	func close(using closeMethod: MediaViewerCloseMethod) {
+		guard !self.isDismissing else { return }
+		self.isDismissing = true
+		self.closeMethod = closeMethod
+
+		guard self.currentForcedOrientation != nil else {
+			self.dismiss(animated: true) { [weak self] in
+				self?.onClose?()
+			}
+			return
+		}
+
+		self.applyForcedRotation(.portrait)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+			self?.dismiss(animated: true) {
+				self?.onClose?()
+			}
+		}
+	}
+
+	@objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+		guard gesture.state == .began else { return }
+		guard self.items.indices.contains(self.currentIndex) else { return }
+
+		let location = gesture.location(in: self.view)
+		self.share(self.items[self.currentIndex], from: self.view, at: CGRect(origin: location, size: .zero))
+	}
+
+	@objc private func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
+		switch gesture.state {
+		case .began:
+			self.pageViewControllerScrollView?.isScrollEnabled = false
+		case .ended, .cancelled, .failed:
+			self.pageViewControllerScrollView?.isScrollEnabled = true
+		default:
+			break
+		}
+
+		self.dragToDismissController.handlePan(gesture)
+	}
+
 	private func updateIndexButton() {
 		self.indexButton.setTitle(L10n.indexOfTotal(self.currentIndex + 1, self.items.count), for: .normal)
 		self.indexButton.isHidden = self.items.count <= 1
@@ -203,7 +279,6 @@ final class MediaAlbumViewController: UIPageViewController {
 		self.actionBar.onAction = { [weak self] action in
 			guard let self = self else { return }
 			switch action {
-			case .copy: self.onCopy?(item)
 			case .share: self.share(item)
 			case .save: self.save(item)
 			case .more(let menu): self.presentMoreMenu(menu, from: self.actionBar.moreButton)
@@ -211,14 +286,11 @@ final class MediaAlbumViewController: UIPageViewController {
 		}
 	}
 
-	/// Presents the supplied menu as an action sheet anchored to the given source view.
-	///
-	/// Uses as a fallback on Mac Catalyst running macOS 26, where `UIButton.menu` cannot coexist
-	/// with a `.glass()` configuration.
+	/// Presents the given menu as an action sheet anchored to the given view.
 	///
 	/// - Parameters:
 	///    - menu: The menu whose actions to display.
-	///    - sourceView: The view from which the popover anchors.
+	///    - sourceView: The view the popover anchors to.
 	private func presentMoreMenu(_ menu: UIMenu, from sourceView: UIView) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -245,11 +317,9 @@ final class MediaAlbumViewController: UIPageViewController {
 	private func makeMoreMenu(for item: MediaItem) -> UIMenu {
 		var options: [UIAction] = []
 
-		if self.onCopy != nil {
-			options.append(UIAction(title: L10n.copy, image: UIImage(systemName: "doc.on.doc")) { _ in
-				self.onCopy?(item)
-			})
-		}
+		options.append(UIAction(title: L10n.copy, image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+			self?.copyImage(for: item)
+		})
 
 		options.append(UIAction(title: L10n.openInBrowser, image: UIImage(systemName: "safari")) { _ in
 			UIApplication.shared.kOpen(item.url)
@@ -258,17 +328,56 @@ final class MediaAlbumViewController: UIPageViewController {
 		return UIMenu(title: "", children: options)
 	}
 
-	private func share(_ item: MediaItem) {
+	/// Copies the media's image to the pasteboard.
+	///
+	/// - Parameter item: The item to copy.
+	private func copyImage(for item: MediaItem) {
+		if let image = self.currentMedia?.mediaImage {
+			self.write(image, for: item)
+			return
+		}
+
+		Task {
+			do {
+				let image = try await MediaSaverManager.shared.downloadImage(from: item.url)
+				self.write(image, for: item)
+			} catch {
+				self.showToast(L10n.imageDownloadFailed, systemImageName: "xmark.octagon", feedback: .error)
+			}
+		}
+	}
+
+	private func write(_ image: UIImage, for item: MediaItem) {
+		UIPasteboard.general.image = image
+		self.onCopy?(item)
+
+		if UserSettings.hapticsAllowed {
+			UINotificationFeedbackGenerator().notificationOccurred(.success)
+		}
+	}
+
+	/// Presents the share sheet for the given item.
+	///
+	/// - Parameters:
+	///    - item: The item to share.
+	///    - sourceView: The view the popover points at.
+	///    - sourceRect: The rect within `sourceView` the popover points at.
+	private func share(_ item: MediaItem, from sourceView: UIView? = nil, at sourceRect: CGRect? = nil) {
 		var objects: [Any] = []
 		if let onShare = self.onShare {
-			objects.append(onShare(item))
+			objects.append(contentsOf: onShare(item))
 		} else {
 			objects.append(item.url)
 		}
 
-		let activityVC = UIActivityViewController(activityItems: objects, applicationActivities: nil)
-		activityVC.popoverPresentationController?.sourceView = self.actionBar.shareButton
-		self.present(activityVC, animated: true)
+		let activityViewController = UIActivityViewController(activityItems: objects, applicationActivities: nil)
+		activityViewController.popoverPresentationController?.sourceView = sourceView ?? self.actionBar.shareButton
+
+		if let sourceRect = sourceRect {
+			activityViewController.popoverPresentationController?.sourceRect = sourceRect
+		}
+
+		self.present(activityViewController, animated: true)
 	}
 
 	public func save(_ item: MediaItem) {
@@ -292,15 +401,20 @@ final class MediaAlbumViewController: UIPageViewController {
 			outgoing.font = .preferredFont(forTextStyle: .subheadline)
 			return outgoing
 		}
-		button.isHidden = true
+		button.alpha = 0
 		return button
 	}
 
-	/// Presents a toast at the top of the viewer indicating that the media has been saved successfully.
-	private func handleSaveSuccess() {
+	/// Presents a message below the index button.
+	///
+	/// - Parameters:
+	///    - message: The message to present.
+	///    - systemImageName: The name of the symbol shown beside the message.
+	///    - feedback: The haptic played as the message appears.
+	private func showToast(_ message: String, systemImageName: String, feedback: UINotificationFeedbackGenerator.FeedbackType) {
 		let button = self.createToast()
-		button.configuration?.title = L10n.imageSavedToLibrary
-		button.configuration?.image = UIImage(systemName: "checkmark.circle")
+		button.configuration?.title = message
+		button.configuration?.image = UIImage(systemName: systemImageName)
 
 		self.view.addSubview(button)
 
@@ -312,25 +426,26 @@ final class MediaAlbumViewController: UIPageViewController {
 		])
 
 		if UserSettings.hapticsAllowed {
-			UINotificationFeedbackGenerator().notificationOccurred(.success)
+			UINotificationFeedbackGenerator().notificationOccurred(feedback)
 		}
 
 		UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseOut]) {
-			button.isHidden = false
+			button.alpha = 1
 		} completion: { _ in
-			DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-				UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseIn]) {
-					button.isHidden = true
-				} completion: { _ in
-					button.removeFromSuperview()
-				}
+			UIView.animate(withDuration: 0.32, delay: 1.5, options: [.curveEaseIn]) {
+				button.alpha = 0
+			} completion: { _ in
+				button.removeFromSuperview()
 			}
 		}
 	}
 
+	private func handleSaveSuccess() {
+		self.showToast(L10n.imageSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+	}
+
 	private func handleSaveError(_ error: MediaSaverManager.SaverError) {
 		var message = L10n.imageSaveFailed
-		let button = self.createToast()
 
 		switch error {
 		case .accessDenied:
@@ -341,50 +456,11 @@ final class MediaAlbumViewController: UIPageViewController {
 			message = L10n.imageSaveFailedRetry
 		}
 
-		button.configuration?.title = message
-		button.configuration?.image = UIImage(systemName: "xmark.octagon")
-
-		self.view.addSubview(button)
-
-		NSLayoutConstraint.activate([
-			button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-			button.topAnchor.constraint(equalTo: self.indexButton.bottomAnchor, constant: 8),
-			button.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.layoutMarginsGuide.leadingAnchor),
-			button.trailingAnchor.constraint(lessThanOrEqualTo: self.view.layoutMarginsGuide.trailingAnchor)
-		])
-
-		if UserSettings.hapticsAllowed {
-			UINotificationFeedbackGenerator().notificationOccurred(.error)
-		}
-
-		UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseOut]) {
-			button.isHidden = false
-		} completion: { _ in
-			UIView.animate(withDuration: 0.32, delay: 1.5, options: [.curveEaseIn]) {
-				button.isHidden = true
-			} completion: { _ in
-				button.removeFromSuperview()
-			}
-		}
+		self.showToast(message, systemImageName: "xmark.octagon", feedback: .error)
 	}
 
 	@objc private func closeTapped() {
-		guard !self.isDismissing else { return }
-		self.isDismissing = true
-
-		if self.currentForcedOrientation != nil {
-			self.applyForcedRotation(.portrait)
-
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
-				self?.dismiss(animated: true) {
-					self?.onClose?()
-				}
-			}
-		} else {
-			self.dismiss(animated: true) { [weak self] in
-				self?.onClose?()
-			}
-		}
+		self.close(using: .button)
 	}
 
 	@objc private func toggleControls() {
@@ -411,34 +487,29 @@ final class MediaAlbumViewController: UIPageViewController {
 		return self.items.firstIndex(where: { $0.url == renderable.mediaItem.url })
 	}
 
-	private func currentChildScrollView() -> UIScrollView? {
-		guard let currentVC = viewControllers?.first else { return nil }
-		return self.findFirstScrollView(in: currentVC.view)
-	}
-
-	private func findFirstScrollView(in view: UIView) -> UIScrollView? {
-		if let sv = view as? UIScrollView { return sv }
-		for sub in view.subviews {
-			if let found = self.findFirstScrollView(in: sub) { return found }
-		}
-		return nil
-	}
-
 	private var pageViewControllerScrollView: UIScrollView? {
-		return view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
+		return self.view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
 	}
 
-	// Gesture Conflict Resolution
-	private func configureGestureConflictResolution() {
-		guard let gestureRecognizers = self.view.gestureRecognizers else { return }
-		let pageScrollPan = self.pageViewControllerScrollView?.panGestureRecognizer
+	// Hardware Keyboard
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
 
-		for gesture in gestureRecognizers {
-			if let pan = gesture as? UIPanGestureRecognizer, pan !== pageScrollPan {
-				pan.delegate = self
-				break
-			}
-		}
+	override var keyCommands: [UIKeyCommand]? {
+		let close = UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(self.closeKeyCommandInvoked(_:)))
+		let copy = UIKeyCommand(title: L10n.copy, action: #selector(self.copyKeyCommandInvoked(_:)), input: "c", modifierFlags: .command)
+
+		return [close, copy]
+	}
+
+	@objc private func closeKeyCommandInvoked(_ sender: UIKeyCommand) {
+		self.close(using: .button)
+	}
+
+	@objc private func copyKeyCommandInvoked(_ sender: UIKeyCommand) {
+		guard self.items.indices.contains(self.currentIndex) else { return }
+		self.copyImage(for: self.items[self.currentIndex])
 	}
 
 	// Orientation Overrides
@@ -483,33 +554,29 @@ extension MediaAlbumViewController: UIPageViewControllerDelegate {
 
 		self.updateIndexButton()
 		self.bindActions(for: self.items[self.currentIndex])
-		self.transitionDelegateForThumbnail?.scrollThumbnailIntoView(for: self.currentIndex)
+		self.transitionDelegateForThumbnail?.scrollThumbnailIntoView(for: self.currentIndex, animated: true)
 	}
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
 extension MediaAlbumViewController: UIViewControllerTransitioningDelegate {
+	func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+		return MediaViewerPresentationController(presentedViewController: presented, presenting: presenting)
+	}
+
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return MediaPresentAnimator(startIndex: self.startIndex, transitionDelegate: self.transitionDelegateForThumbnail)
 	}
 
-	func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-		return self.interactionController.hasStarted ? self.interactionController : nil
-	}
-
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return MediaDismissAnimator(transitionDelegate: self.transitionDelegateForThumbnail)
-	}
-
-	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-		return self.interactionController.hasStarted ? self.interactionController : nil
+		return MediaDismissAnimator(closeMethod: self.closeMethod, transitionDelegate: self.transitionDelegateForThumbnail)
 	}
 }
 
 // MARK: - UIGestureRecognizerDelegate
 extension MediaAlbumViewController: UIGestureRecognizerDelegate {
 	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		// Tap gesture: exclude taps on UIControl (buttons, menus, etc.)
+		// Tap gesture: exclude taps on controls.
 		if gestureRecognizer is UITapGestureRecognizer {
 			let location = gestureRecognizer.location(in: self.view)
 			if let hitView = self.view.hitTest(location, with: nil), hitView is UIControl {
@@ -518,13 +585,31 @@ extension MediaAlbumViewController: UIGestureRecognizerDelegate {
 			return true
 		}
 
-		// Dismiss pan: require primarily vertical velocity AND zoom scale at 1.0
-		if let pan = gestureRecognizer as? UIPanGestureRecognizer {
-			let velocity = pan.velocity(in: self.view)
+		// Share long press: yield to text and subjects the system claims.
+		if gestureRecognizer is UILongPressGestureRecognizer {
+			let location = gestureRecognizer.location(in: self.view)
+			if let hitView = self.view.hitTest(location, with: nil), hitView is UIControl {
+				return false
+			}
 
+			guard let renderer = self.currentMedia else { return true }
+			guard !renderer.hasActiveTextSelection else { return false }
+
+			return !renderer.hasInteractiveItem(at: renderer.mediaView.convert(location, from: self.view))
+		}
+
+		// Dismiss pan: require a primarily vertical velocity and an unzoomed scroll view.
+		if let pan = gestureRecognizer as? UIPanGestureRecognizer {
+			guard !self.isDismissing else { return false }
+
+			let velocity = pan.velocity(in: self.view)
 			guard abs(velocity.y) > abs(velocity.x) else { return false }
 
-			if let scrollView = self.currentChildScrollView(), scrollView.zoomScale > 1.0 {
+			if let renderer = self.currentMedia, renderer.hasActiveTextSelection {
+				return false
+			}
+
+			if let scrollView = self.currentMedia?.scrollView, scrollView.zoomScale > scrollView.minimumZoomScale {
 				return false
 			}
 

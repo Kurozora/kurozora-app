@@ -9,7 +9,6 @@
 import UIKit
 
 enum MediaAction {
-	case copy
 	case share
 	case save
 	case more(UIMenu)
@@ -20,7 +19,6 @@ final class MediaActionBar: UIView {
 	private(set) var stackView = UIStackView()
 
 	// MARK: - Properties
-	private let copyButton = AdaptiveCornerButton()
 	let shareButton = AdaptiveCornerButton()
 	private let saveButton = AdaptiveCornerButton()
 	let moreButton = AdaptiveCornerButton()
@@ -64,7 +62,6 @@ final class MediaActionBar: UIView {
 
 		for action in actions {
 			switch action {
-			case .copy: self.stackView.addArrangedSubview(self.copyButton)
 			case .share: self.stackView.addArrangedSubview(self.shareButton)
 			case .save: self.stackView.addArrangedSubview(self.saveButton)
 			case .more(let menu):
@@ -90,7 +87,6 @@ final class MediaActionBar: UIView {
 
 	private func configureViews() {
 		self.configureStackView()
-		self.configureCopyButton()
 		self.configureSaveButton()
 		self.configureShareButton()
 		self.configureMoreButton()
@@ -101,15 +97,6 @@ final class MediaActionBar: UIView {
 		self.stackView.axis = .horizontal
 		self.stackView.spacing = 16
 		self.stackView.distribution = .equalSpacing
-	}
-
-	private func configureCopyButton() {
-		self.copyButton.setImage(UIImage(systemName: "doc.on.doc"), for: .normal)
-		self.copyButton.addTarget(self, action: #selector(self.copyTapped), for: .touchUpInside)
-
-		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
-			self.copyButton.backgroundColor = .black.withAlphaComponent(0.4)
-		}
 	}
 
 	private func configureShareButton() {
@@ -154,7 +141,6 @@ final class MediaActionBar: UIView {
 			self.stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
 			self.stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
 
-			self.copyButton.widthAnchor.constraint(equalTo: self.copyButton.heightAnchor),
 			self.shareButton.widthAnchor.constraint(equalTo: self.shareButton.heightAnchor),
 			self.saveButton.widthAnchor.constraint(equalTo: self.saveButton.heightAnchor),
 			self.moreButton.widthAnchor.constraint(equalTo: self.moreButton.heightAnchor)
@@ -162,7 +148,6 @@ final class MediaActionBar: UIView {
 	}
 
 	// MARK: - Handlers
-	@objc private func copyTapped() { self.onAction?(.copy) }
 	@objc private func shareTapped() { self.onAction?(.share) }
 	@objc private func saveTapped() { self.onAction?(.save) }
 
