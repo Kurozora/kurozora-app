@@ -151,10 +151,11 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 
-		// Center the empty view within the unavailable space
+		// The top inset can be negative; the safe area still describes the top chrome.
 		let contentInset = self.collectionView.adjustedContentInset
 		let occupiedHeight = self.collectionView.contentSize.height
-		self.emptyBackgroundView.verticalOffset = (contentInset.top + occupiedHeight - contentInset.bottom) / 2
+		let topChrome = max(contentInset.top, self.collectionView.safeAreaInsets.top)
+		self.emptyBackgroundView.verticalOffset = (topChrome + occupiedHeight - contentInset.bottom) / 2
 	}
 
 	// MARK: - Functions

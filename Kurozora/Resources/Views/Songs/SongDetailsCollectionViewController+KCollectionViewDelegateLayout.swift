@@ -75,6 +75,8 @@ extension SongDetailsCollectionViewController {
 			switch songDetailSection {
 			case .header:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				// The header isn't a banner, so it pays the cancelled top inset back.
+				fullSection.contentInsets.top = self.collectionView.safeAreaInsets.top
 				sectionLayout = fullSection
 			case .lyrics:
 				if self.plainLyrics != nil {
@@ -119,8 +121,8 @@ extension SongDetailsCollectionViewController {
 			}
 
 			if hasBackgroundDecoration {
-				let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
-				sectionLayout?.decorationItems = [sectionBackgroundDecoration]
+				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
 			}
 
 			return sectionLayout

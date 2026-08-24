@@ -73,6 +73,7 @@ class ProfileTableHeaderView: UIView {
 	private let separatorView = SeparatorView()
 	private let leftMirrorImageView = UIImageView()
 	private let rightMirrorImageView = UIImageView()
+	private let bannerExtensionImageView = UIImageView()
 
 	private let bannerSkeletonView = UIView()
 	private let profileSkeletonView = CircularView()
@@ -84,6 +85,8 @@ class ProfileTableHeaderView: UIView {
 	private var blurredBannerImage: UIImage?
 	private var bannerCompactWidthConstraint: NSLayoutConstraint!
 	private var bannerRegularWidthConstraint: NSLayoutConstraint!
+	private var bannerCompactCenterConstraint: NSLayoutConstraint!
+	private var bannerRegularCenterConstraint: NSLayoutConstraint!
 	private var buttonsFillWidthConstraint: NSLayoutConstraint!
 	private var headerBottomLoadedConstraint: NSLayoutConstraint!
 	private var headerBottomSkeletonConstraint: NSLayoutConstraint!
@@ -487,10 +490,21 @@ class ProfileTableHeaderView: UIView {
 		self.rightMirrorImageView.isHidden = true
 		self.rightMirrorImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
 
-		// Generate blurred mirror whenever Kingfisher (or anything else) sets the banner image
+		// Banner extension image view
+		self.bannerExtensionImageView.translatesAutoresizingMaskIntoConstraints = false
+		self.bannerExtensionImageView.contentMode = .scaleAspectFill
+		self.bannerExtensionImageView.clipsToBounds = true
+		self.bannerExtensionImageView.isUserInteractionEnabled = false
+
 		self.bannerImageObservation = self.bannerImageView.observe(\.image, options: [.new]) { [weak self] _, change in
 			guard let self else { return }
-			self.generateBlurredBannerImage(from: change.newValue ?? nil)
+			let bannerImage = change.newValue ?? nil
+
+			if #available(iOS 26.0, *) {
+				self.bannerExtensionImageView.image = bannerImage
+			} else {
+				self.generateBlurredBannerImage(from: bannerImage)
+			}
 		}
 	}
 
@@ -531,6 +545,35 @@ class ProfileTableHeaderView: UIView {
 		self.addSubview(self.userDetailsHeaderView)
 		self.addSubview(self.userDetailsBodyView)
 		self.addSubview(self.buttonsScrollView)
+
+		if #available(iOS 26.0, *) {
+			self.extendBannerBeyondItsWidth()
+		}
+	}
+
+	/// Fills the space beside the banner with a mirrored, blurred continuation of it.
+	///
+	/// A non-interactive twin feeds the effect, keeping the banner and its tap gesture in place.
+	@available(iOS 26.0, *)
+	private func extendBannerBeyondItsWidth() {
+		let extensionView = UIBackgroundExtensionView()
+		extensionView.automaticallyPlacesContentView = false
+		extensionView.translatesAutoresizingMaskIntoConstraints = false
+		extensionView.isUserInteractionEnabled = false
+		self.bannerContainerView.insertSubview(extensionView, at: 0)
+		extensionView.contentView = self.bannerExtensionImageView
+
+		NSLayoutConstraint.activate([
+			extensionView.topAnchor.constraint(equalTo: self.bannerContainerView.topAnchor),
+			extensionView.bottomAnchor.constraint(equalTo: self.bannerContainerView.bottomAnchor),
+			extensionView.leadingAnchor.constraint(equalTo: self.bannerContainerView.leadingAnchor),
+			extensionView.trailingAnchor.constraint(equalTo: self.bannerContainerView.trailingAnchor),
+
+			self.bannerExtensionImageView.topAnchor.constraint(equalTo: self.bannerImageView.topAnchor),
+			self.bannerExtensionImageView.bottomAnchor.constraint(equalTo: self.bannerImageView.bottomAnchor),
+			self.bannerExtensionImageView.leadingAnchor.constraint(equalTo: self.bannerImageView.leadingAnchor),
+			self.bannerExtensionImageView.trailingAnchor.constraint(equalTo: self.bannerImageView.trailingAnchor)
+		])
 	}
 
 	/// Configure the view constraints.
@@ -541,6 +584,9 @@ class ProfileTableHeaderView: UIView {
 		self.bannerCompactWidthConstraint = self.bannerImageView.widthAnchor.constraint(equalTo: self.widthAnchor)
 		self.bannerRegularWidthConstraint = self.bannerImageView.widthAnchor.constraint(equalTo: self.readableContentGuide.widthAnchor)
 
+		self.bannerCompactCenterConstraint = self.bannerImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+		self.bannerRegularCenterConstraint = self.bannerImageView.centerXAnchor.constraint(equalTo: self.readableContentGuide.centerXAnchor)
+
 		NSLayoutConstraint.activate([
 			// Banner container view
 			self.bannerContainerView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -550,7 +596,6 @@ class ProfileTableHeaderView: UIView {
 
 			// Banner image view
 			self.bannerImageView.topAnchor.constraint(equalTo: self.bannerContainerView.topAnchor),
-			self.bannerImageView.centerXAnchor.constraint(equalTo: self.bannerContainerView.centerXAnchor),
 			self.bannerImageView.widthAnchor.constraint(greaterThanOrEqualTo: self.readableContentGuide.widthAnchor),
 			self.bannerImageView.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor),
 			self.bannerImageView.heightAnchor.constraint(equalTo: self.bannerImageView.widthAnchor, multiplier: 1 / 3),
@@ -771,6 +816,8 @@ class ProfileTableHeaderView: UIView {
 
 		self.bannerCompactWidthConstraint.isActive = isCompact
 		self.bannerRegularWidthConstraint.isActive = !isCompact
+		self.bannerCompactCenterConstraint.isActive = isCompact
+		self.bannerRegularCenterConstraint.isActive = !isCompact
 	}
 
 	/// Updates mirror visibility based on the gap between banner and container edges.

@@ -7,82 +7,71 @@
 //
 
 import AVFoundation
+import SwiftTheme
 import UIKit
 
-/// A view that plays a looping, muted YouTube trailer with an optional sound toggle.
-class KTrailerPlayerView: UIView {
+/// A view that plays a looping YouTube trailer inline with play, mute, and fullscreen controls.
+final class KTrailerPlayerView: UIView {
 	// MARK: - Views
-	/// The view whose layer renders the trailer.
-	private let playerView: PlayerView = {
-		let playerView = PlayerView()
-		playerView.isUserInteractionEnabled = false
-		playerView.translatesAutoresizingMaskIntoConstraints = false
-		playerView.alpha = 0.0
-		return playerView
+	/// The transparent control that reveals the playback controls when tapped.
+	private let tapControl: UIControl = {
+		let control = UIControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		control.isUserInteractionEnabled = false
+		return control
 	}()
+
+	/// The button that plays or pauses the trailer.
+	private let playPauseButton = KTrailerPlayerView.makeControlButton(pointSize: 20.0, diameter: 52.0)
 
 	/// The button that toggles the trailer's sound.
-	private let muteToggleButton: UIButton = {
-		var configuration = UIButton.Configuration.filled()
-		configuration.baseBackgroundColor = UIColor.black.withAlphaComponent(0.6)
-		configuration.baseForegroundColor = .white
-		configuration.cornerStyle = .capsule
-		configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12.0, weight: .semibold)
+	private let muteButton = KTrailerPlayerView.makeControlButton(pointSize: 12.0, diameter: 34.0)
 
-		let button = UIButton(configuration: configuration)
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.isHidden = true
-		return button
-	}()
-
-	/// The button that plays the trailer the autoplay policy withholds.
-	private let playButton: UIButton = {
-		var configuration = UIButton.Configuration.filled()
-		configuration.baseBackgroundColor = UIColor.black.withAlphaComponent(0.6)
-		configuration.baseForegroundColor = .white
-		configuration.cornerStyle = .capsule
-		configuration.image = UIImage(systemName: "play.fill")
-		configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 20.0, weight: .semibold)
-
-		let button = UIButton(configuration: configuration)
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.isHidden = true
-		return button
-	}()
+	/// The button that opens the trailer fullscreen.
+	private let fullscreenButton = KTrailerPlayerView.makeControlButton(pointSize: 12.0, diameter: 34.0)
 
 	// MARK: - Properties
-	/// A Boolean value indicating whether the sound toggle is shown while the trailer plays.
+	/// A Boolean value indicating whether the sound toggle stays visible while the trailer plays.
 	var showsMuteToggle = false
 
 	/// The YouTube URL of the trailer currently loaded.
 	private(set) var trailerURLString: String?
 
-	/// The player that plays the trailer.
-	private let queuePlayer = AVQueuePlayer()
+	/// The identifier of the trailer currently loaded.
+	private var videoID: String?
 
-	/// The looper repeating the trailer.
-	private var playerLooper: AVPlayerLooper?
-
-	/// The in-flight trailer resolution and preparation task.
-	private var loadTask: Task<Void, Never>?
-
-	/// The observation of the player layer's readiness.
-	private var readyForDisplayObservation: NSKeyValueObservation?
+	/// The player rendering the trailer.
+	private var player: TrailerWebPlayer?
 
 	/// A Boolean value indicating whether the coordinator granted the play slot.
 	private var isPlaybackAllowed = false
 
-	/// A Boolean value indicating whether the reader asked for this trailer.
+	/// A Boolean value indicating whether the user asked for this trailer.
 	private var isReaderInitiated = false
 
-	/// The associated player layer object.
-	var playerLayer: AVPlayerLayer {
-		self.playerView.playerLayer
+	/// A Boolean value indicating whether the trailer's sound is off.
+	private var isMuted = true
+
+	/// A Boolean value indicating whether the user paused the trailer.
+	private var isPausedByReader = false
+
+	/// A Boolean value indicating whether the trailer is playing.
+	private var isPlaying = false
+
+	/// A Boolean value indicating whether the user revealed the controls.
+	private var areControlsVisible = false
+
+	/// The task that hides the controls after a period of inactivity.
+	private var controlsHideTask: Task<Void, Never>?
+
+	/// A Boolean value indicating whether a trailer is loaded.
+	private var hasTrailer: Bool {
+		self.videoID != nil
 	}
 
-	/// A Boolean value indicating whether the trailer may start without the reader asking.
+	/// A Boolean value indicating whether the trailer may start without the user asking.
 	var isEligibleForAutoplay: Bool {
-		self.trailerURLString != nil && self.autoplayAllowed
+		self.videoID != nil && self.autoplayAllowed
 	}
 
 	/// A Boolean value indicating whether the current autoplay policy and network permit playing a trailer.
@@ -95,6 +84,21 @@ class KTrailerPlayerView: UIView {
 		case .wifiAndCellular:
 			return true
 		}
+	}
+
+	/// The view controller hosting the view.
+	private var owningViewController: UIViewController? {
+		var responder: UIResponder? = self.next
+
+		while let current = responder {
+			if let viewController = current as? UIViewController {
+				return viewController
+			}
+
+			responder = current.next
+		}
+
+		return nil
 	}
 
 	// MARK: - Initializers
@@ -112,18 +116,9 @@ class KTrailerPlayerView: UIView {
 		NotificationCenter.default.removeObserver(self)
 	}
 
-	/// The shared settings used to initialize the view.
+	/// Configures the controls and observes the app-active notification.
 	private func sharedInit() {
-		self.configurePlayerView()
-
-		self.playerLayer.player = self.queuePlayer
-		self.playerLayer.videoGravity = .resizeAspectFill
-		self.queuePlayer.isMuted = true
-		self.queuePlayer.preventsDisplaySleepDuringVideoPlayback = false
-
-		self.configureMuteToggleButton()
-		self.configurePlayButton()
-
+		self.configureControls()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleApplicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 	}
 
@@ -132,15 +127,9 @@ class KTrailerPlayerView: UIView {
 		super.didMoveToWindow()
 
 		if self.window == nil {
-			self.queuePlayer.pause()
-		} else {
-			if self.trailerURLString != nil {
-				TrailerPlaybackCoordinator.shared.register(self)
-			}
-
-			if self.playerLooper != nil {
-				self.queuePlayer.play()
-			}
+			self.setPlaybackAllowed(false)
+		} else if self.hasTrailer {
+			TrailerPlaybackCoordinator.shared.register(self)
 		}
 
 		TrailerPlaybackCoordinator.shared.setNeedsReevaluation()
@@ -148,7 +137,12 @@ class KTrailerPlayerView: UIView {
 
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		let hitView = super.hitTest(point, with: event)
-		return hitView === self ? nil : hitView
+
+		guard self.hasTrailer else {
+			return hitView === self ? nil : hitView
+		}
+
+		return hitView
 	}
 
 	// MARK: - Functions
@@ -156,15 +150,21 @@ class KTrailerPlayerView: UIView {
 	///
 	/// - Parameter urlString: The YouTube URL of the trailer.
 	func loadTrailer(fromURL urlString: String?) {
-		guard let urlString = urlString, !urlString.isEmpty else {
+		let videoID = urlString.flatMap { $0.isEmpty ? nil : TrailerWebPlayer.videoID(fromURL: $0) }
+
+		guard let videoID = videoID else {
 			self.stopTrailer()
 			return
 		}
-		guard urlString != self.trailerURLString else { return }
+		guard videoID != self.videoID else { return }
 
 		self.stopTrailer()
 		self.trailerURLString = urlString
-		self.updatePlayButton()
+		self.videoID = videoID
+		self.isMuted = true
+		self.isReaderInitiated = false
+		self.isPausedByReader = false
+		self.updateControls(animated: false)
 
 		TrailerPlaybackCoordinator.shared.register(self)
 	}
@@ -179,210 +179,190 @@ class KTrailerPlayerView: UIView {
 		if isAllowed {
 			self.beginPlayback()
 		} else {
-			self.suspendPlayback()
+			self.pausePlayback()
 		}
+	}
+
+	/// Plays the loaded trailer at the user's request, ignoring the autoplay policy.
+	func playByReader() {
+		guard self.hasTrailer else { return }
+		self.isPausedByReader = false
+		self.isReaderInitiated = true
+
+		if let player = self.player {
+			player.play()
+		} else {
+			TrailerPlaybackCoordinator.shared.pin(self)
+		}
+
+		self.updateControls(animated: true)
+		self.scheduleControlsAutoHide()
 	}
 
 	/// Stops playback and unloads the trailer.
 	func stopTrailer() {
 		self.isPlaybackAllowed = false
-		self.suspendPlayback()
+		self.controlsHideTask?.cancel()
+		self.controlsHideTask = nil
+
+		self.player?.detach()
+		self.player = nil
+		self.isPlaying = false
+
 		self.trailerURLString = nil
-		self.updatePlayButton()
+		self.videoID = nil
+		self.isReaderInitiated = false
+		self.isPausedByReader = false
+		self.isMuted = true
+		self.areControlsVisible = false
+		self.updateControls(animated: false)
 
 		TrailerPlaybackCoordinator.shared.unregister(self)
 	}
 
-	/// Resolves the trailer's streams and starts looping them.
+	/// Acquires a warm player for the trailer and begins playing.
 	private func beginPlayback() {
-		guard let urlString = self.trailerURLString else { return }
+		guard let videoID = self.videoID, !self.isPausedByReader else { return }
 
-		self.loadTask = Task { @MainActor [weak self] in
-			guard let self = self else { return }
-
-			do {
-				let streams = try await YouTubeStreamResolver.shared.streams(forVideoURL: urlString)
-				guard !Task.isCancelled else { return }
-
-				let asset = try await self.playableAsset(from: streams)
-				let isPlayable = try await asset.load(.isPlayable)
-				guard isPlayable, !Task.isCancelled, self.isPlaybackAllowed else { return }
-
-				self.startPlayback(with: AVPlayerItem(asset: asset))
-			} catch {
-				print("----- Failed to load trailer: \(String(describing: error))")
-			}
-		}
+		let player = TrailerPlayerPool.shared.player(forVideoID: videoID)
+		self.player = player
+		player.attach(to: self, isMuted: self.isMuted, delegate: self)
+		player.play()
 	}
 
-	/// Tears the player down and hides the trailer.
-	private func suspendPlayback() {
-		self.loadTask?.cancel()
-		self.loadTask = nil
-		self.readyForDisplayObservation = nil
+	/// Pauses the trailer while keeping its player warm.
+	private func pausePlayback() {
+		self.controlsHideTask?.cancel()
+		self.controlsHideTask = nil
 
-		self.playerLooper = nil
-		self.queuePlayer.pause()
-		self.queuePlayer.removeAllItems()
-		self.isReaderInitiated = false
+		self.player?.pause()
+		self.isPlaying = false
+		self.areControlsVisible = false
 
-		if !self.queuePlayer.isMuted {
-			self.setMuted(true)
+		if !self.isMuted {
+			self.isMuted = true
+			self.player?.setMuted(true)
+			self.applyAudioSession(muted: true)
 		}
 
-		self.playerView.layer.removeAllAnimations()
-		self.playerView.alpha = 0.0
-		self.muteToggleButton.isHidden = true
-		self.updatePlayButton()
+		self.updateControls(animated: false)
 	}
 
-	/// Builds the asset to play from the given streams.
-	///
-	/// - Parameter streams: The streams resolved for the trailer.
-	///
-	/// - Returns: An asset that `AVPlayer` can play.
-	private func playableAsset(from streams: YouTubeStreamResolver.PlayableStreams) async throws -> AVAsset {
-		let assetOptions = [AVURLAssetAllowsCellularAccessKey: false]
+	/// Toggles playback in response to the play or pause button.
+	@objc private func togglePlayPause() {
+		guard self.hasTrailer else { return }
 
-		if let combinedURL = streams.hlsURL ?? streams.progressiveURL {
-			return AVURLAsset(url: combinedURL, options: assetOptions)
-		}
-
-		if self.wantsSoundToggle, let videoOnlyURL = streams.videoOnlyURL, let audioOnlyURL = streams.audioOnlyURL {
-			return try await self.composition(videoURL: videoOnlyURL, audioURL: audioOnlyURL, options: assetOptions)
-		}
-
-		guard let videoOnlyURL = streams.videoOnlyURL else {
-			throw YouTubeStreamResolver.ResolutionError.streamNotFound
-		}
-		return AVURLAsset(url: videoOnlyURL, options: assetOptions)
-	}
-
-	/// Composes separate adaptive video and audio streams into a single playable asset.
-	///
-	/// - Parameters:
-	///    - videoURL: The video-only stream URL.
-	///    - audioURL: The audio-only stream URL.
-	///    - options: The options applied to the source assets.
-	///
-	/// - Returns: A composition carrying both the video and audio tracks.
-	private func composition(videoURL: URL, audioURL: URL, options: [String: Any]) async throws -> AVAsset {
-		let videoAsset = AVURLAsset(url: videoURL, options: options)
-		let audioAsset = AVURLAsset(url: audioURL, options: options)
-
-		async let videoTracks = videoAsset.loadTracks(withMediaType: .video)
-		async let audioTracks = audioAsset.loadTracks(withMediaType: .audio)
-		async let videoDuration = videoAsset.load(.duration)
-		async let audioDuration = audioAsset.load(.duration)
-
-		guard let videoTrack = try await videoTracks.first, let audioTrack = try await audioTracks.first else {
-			throw YouTubeStreamResolver.ResolutionError.streamNotFound
-		}
-
-		let composition = AVMutableComposition()
-		let compositionVideoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
-		let compositionAudioTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
-
-		let duration = try await min(videoDuration, audioDuration)
-		let timeRange = CMTimeRange(start: .zero, duration: duration)
-		try compositionVideoTrack?.insertTimeRange(timeRange, of: videoTrack, at: .zero)
-		try compositionAudioTrack?.insertTimeRange(timeRange, of: audioTrack, at: .zero)
-
-		return composition
-	}
-
-	/// Starts looping playback of the given item.
-	///
-	/// - Parameter playerItem: The item to loop.
-	private func startPlayback(with playerItem: AVPlayerItem) {
-		self.playerLooper = AVPlayerLooper(player: self.queuePlayer, templateItem: playerItem)
-		self.updatePlayButton()
-
-		self.readyForDisplayObservation = self.playerLayer.observe(\.isReadyForDisplay, options: [.initial, .new]) { [weak self] playerLayer, _ in
-			guard playerLayer.isReadyForDisplay else { return }
-
-			DispatchQueue.main.async {
-				guard let self = self, self.playerLooper != nil else { return }
-				self.readyForDisplayObservation = nil
-				self.muteToggleButton.isHidden = !self.wantsSoundToggle
-
-				UIView.animate(withDuration: 0.5) {
-					self.playerView.alpha = 1.0
-				}
-			}
-		}
-
-		self.queuePlayer.play()
-	}
-
-	/// A Boolean value indicating whether the sound toggle belongs on screen while the trailer plays.
-	private var wantsSoundToggle: Bool {
-		self.showsMuteToggle || self.isReaderInitiated
-	}
-
-	/// Pins the trailer view behind the view's controls.
-	private func configurePlayerView() {
-		self.addSubview(self.playerView)
-
-		NSLayoutConstraint.activate([
-			self.playerView.topAnchor.constraint(equalTo: self.topAnchor),
-			self.playerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			self.playerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			self.playerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-		])
-	}
-
-	/// Configures the sound toggle button.
-	private func configureMuteToggleButton() {
-		self.muteToggleButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.setMuted(!self.queuePlayer.isMuted)
-		}, for: .primaryActionTriggered)
-		self.updateMuteToggleButton()
-
-		self.addSubview(self.muteToggleButton)
-		NSLayoutConstraint.activate([
-			self.muteToggleButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12.0),
-			self.muteToggleButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12.0),
-			self.muteToggleButton.widthAnchor.constraint(equalToConstant: 34.0),
-			self.muteToggleButton.heightAnchor.constraint(equalToConstant: 34.0)
-		])
-	}
-
-	/// Configures the play button.
-	private func configurePlayButton() {
-		self.playButton.accessibilityLabel = L10n.playTrailer
-		self.playButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
+		if self.isPlaying {
+			self.isPausedByReader = true
+			self.player?.pause()
+		} else {
+			self.isPausedByReader = false
 			self.isReaderInitiated = true
-			self.updatePlayButton()
+
+			if let player = self.player {
+				player.play()
+			} else {
+				TrailerPlaybackCoordinator.shared.pin(self)
+			}
+		}
+
+		self.updateControls(animated: true)
+		self.scheduleControlsAutoHide()
+	}
+
+	/// Toggles the trailer's sound in response to the mute button.
+	@objc private func toggleMute() {
+		self.isMuted.toggle()
+		self.player?.setMuted(self.isMuted)
+		self.applyAudioSession(muted: self.isMuted)
+		self.updateControls(animated: false)
+		self.scheduleControlsAutoHide()
+
+		if !self.isMuted {
 			TrailerPlaybackCoordinator.shared.pin(self)
-		}, for: .primaryActionTriggered)
-
-		self.addSubview(self.playButton)
-		NSLayoutConstraint.activate([
-			self.playButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-			self.playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-			self.playButton.widthAnchor.constraint(equalToConstant: 52.0),
-			self.playButton.heightAnchor.constraint(equalToConstant: 52.0)
-		])
+		}
 	}
 
-	/// Shows or hides the play button for the loaded trailer.
-	private func updatePlayButton() {
-		let hasTrailer = self.trailerURLString != nil
-		self.playButton.isHidden = !hasTrailer || self.autoplayAllowed || self.isReaderInitiated || self.playerLooper != nil
+	/// Opens the trailer fullscreen in response to the fullscreen button.
+	@objc private func enterFullscreen() {
+		guard let videoID = self.videoID, let owningViewController = self.owningViewController else { return }
+
+		let fullscreenViewController = TrailerFullscreenViewController(videoID: videoID, isMuted: self.isMuted)
+		fullscreenViewController.modalPresentationStyle = .overFullScreen
+		fullscreenViewController.modalTransitionStyle = .crossDissolve
+		owningViewController.present(fullscreenViewController, animated: true)
 	}
 
-	/// Mutes or unmutes the trailer and updates the audio session.
+	/// Reveals or hides the controls in response to a tap on the trailer.
+	@objc private func toggleControlsVisibility() {
+		guard self.hasTrailer else { return }
+
+		self.areControlsVisible.toggle()
+		self.updateControls(animated: true)
+		self.scheduleControlsAutoHide()
+	}
+
+	/// Hides the controls after a delay while the trailer plays.
+	private func scheduleControlsAutoHide() {
+		self.controlsHideTask?.cancel()
+		guard self.areControlsVisible, self.isPlaying else { return }
+
+		self.controlsHideTask = Task { @MainActor [weak self] in
+			try? await Task.sleep(nanoseconds: 3_000_000_000)
+			guard !Task.isCancelled, let self = self else { return }
+
+			self.areControlsVisible = false
+			self.updateControls(animated: true)
+		}
+	}
+
+	/// Updates the controls' visibility and glyphs for the current state.
 	///
-	/// - Parameter isMuted: Whether the trailer's sound is off.
-	private func setMuted(_ isMuted: Bool) {
-		self.queuePlayer.isMuted = isMuted
-		self.updateMuteToggleButton()
+	/// - Parameter animated: Whether the change is animated.
+	private func updateControls(animated: Bool) {
+		let overlayIsVisible: Bool
 
+		if !self.hasTrailer {
+			overlayIsVisible = false
+		} else if self.isPlaying {
+			overlayIsVisible = self.areControlsVisible
+		} else {
+			let willStartAutomatically = self.isPlaybackAllowed || self.isEligibleForAutoplay
+			overlayIsVisible = self.areControlsVisible || self.isPausedByReader || !willStartAutomatically
+		}
+
+		let muteIsVisible = self.isPlaying && (self.showsMuteToggle || self.areControlsVisible)
+		let fullscreenIsVisible = self.isPlaying && self.areControlsVisible
+
+		self.playPauseButton.setImage(UIImage(systemName: self.isPlaying ? "pause.fill" : "play.fill"), for: .normal)
+		self.playPauseButton.accessibilityLabel = self.isPlaying ? L10n.pause : L10n.play
+		self.muteButton.setImage(UIImage(systemName: self.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill"), for: .normal)
+		self.muteButton.accessibilityLabel = self.isMuted ? L10n.unmute : L10n.mute
+
+		self.tapControl.isUserInteractionEnabled = self.hasTrailer
+		self.playPauseButton.isUserInteractionEnabled = overlayIsVisible
+		self.muteButton.isUserInteractionEnabled = muteIsVisible
+		self.fullscreenButton.isUserInteractionEnabled = fullscreenIsVisible
+
+		let apply = {
+			self.playPauseButton.alpha = overlayIsVisible ? 1.0 : 0.0
+			self.muteButton.alpha = muteIsVisible ? 1.0 : 0.0
+			self.fullscreenButton.alpha = fullscreenIsVisible ? 1.0 : 0.0
+		}
+
+		if animated {
+			UIView.animate(withDuration: 0.25, animations: apply)
+		} else {
+			apply()
+		}
+	}
+
+	/// Updates the audio session for the current sound state.
+	///
+	/// - Parameter muted: Whether the trailer's sound is off.
+	private func applyAudioSession(muted: Bool) {
 		do {
-			if isMuted {
+			if muted {
 				try AVAudioSession.sharedInstance().setCategory(.ambient)
 				try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
 			} else {
@@ -394,32 +374,90 @@ class KTrailerPlayerView: UIView {
 		}
 	}
 
-	/// Updates the sound toggle button's glyph and accessibility label for the current sound state.
-	private func updateMuteToggleButton() {
-		let isMuted = self.queuePlayer.isMuted
-		self.muteToggleButton.configuration?.image = UIImage(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
-		self.muteToggleButton.accessibilityLabel = isMuted ? L10n.unmute : L10n.mute
-	}
-
 	/// Resumes playback when the app returns to the foreground.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc private func handleApplicationDidBecomeActive(_ notification: Notification) {
-		guard self.window != nil, self.playerLooper != nil else { return }
-		self.queuePlayer.play()
+		guard self.window != nil, self.isPlaybackAllowed, !self.isPausedByReader else { return }
+		self.player?.play()
+	}
+
+	/// Pins the controls above the trailer.
+	private func configureControls() {
+		self.addSubview(self.tapControl)
+		self.addSubview(self.playPauseButton)
+		self.addSubview(self.muteButton)
+		self.addSubview(self.fullscreenButton)
+
+		self.tapControl.addTarget(self, action: #selector(self.toggleControlsVisibility), for: .touchUpInside)
+		self.playPauseButton.addTarget(self, action: #selector(self.togglePlayPause), for: .primaryActionTriggered)
+		self.muteButton.addTarget(self, action: #selector(self.toggleMute), for: .primaryActionTriggered)
+		self.fullscreenButton.addTarget(self, action: #selector(self.enterFullscreen), for: .primaryActionTriggered)
+
+		self.fullscreenButton.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
+		self.fullscreenButton.accessibilityLabel = L10n.fullscreen
+
+		NSLayoutConstraint.activate([
+			self.tapControl.topAnchor.constraint(equalTo: self.topAnchor),
+			self.tapControl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			self.tapControl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			self.tapControl.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+
+			self.playPauseButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+			self.playPauseButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+			self.playPauseButton.widthAnchor.constraint(equalToConstant: 52.0),
+			self.playPauseButton.heightAnchor.constraint(equalToConstant: 52.0),
+
+			self.muteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12.0),
+			self.muteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12.0),
+			self.muteButton.widthAnchor.constraint(equalToConstant: 34.0),
+			self.muteButton.heightAnchor.constraint(equalToConstant: 34.0),
+
+			self.fullscreenButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12.0),
+			self.fullscreenButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12.0),
+			self.fullscreenButton.widthAnchor.constraint(equalToConstant: 34.0),
+			self.fullscreenButton.heightAnchor.constraint(equalToConstant: 34.0)
+		])
+	}
+
+	/// Builds a circular, blurred control button matching the app's media controls.
+	///
+	/// - Parameters:
+	///    - pointSize: The point size of the button's symbol.
+	///    - diameter: The button's diameter.
+	///
+	/// - Returns: A configured button.
+	private static func makeControlButton(pointSize: CGFloat, diameter: CGFloat) -> KButton {
+		let button = KButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.highlightBackgroundColorEnabled = false
+		button.springEnabled = true
+		button.addBlurEffect()
+		button.theme_tintColor = KThemePicker.textColor.rawValue
+		button.layerCornerRadius = diameter / 2.0
+		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: pointSize, weight: .semibold), forImageIn: .normal)
+		button.alpha = 0.0
+		return button
 	}
 }
 
-// MARK: - PlayerView
-/// A view whose backing layer renders a player.
-private final class PlayerView: UIView {
-	override static var layerClass: AnyClass { AVPlayerLayer.self }
+// MARK: - TrailerWebPlayerDelegate
+extension KTrailerPlayerView: TrailerWebPlayerDelegate {
+	func trailerWebPlayerDidStartPlaying(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.isPlaying = true
+		self.updateControls(animated: true)
+		self.scheduleControlsAutoHide()
+	}
 
-	/// The associated player layer object.
-	var playerLayer: AVPlayerLayer {
-		guard let layer = self.layer as? AVPlayerLayer else {
-			fatalError("Layer is not of expected type AVPlayerLayer.")
-		}
-		return layer
+	func trailerWebPlayerDidPause(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.isPlaying = false
+		self.updateControls(animated: true)
+	}
+
+	func trailerWebPlayerDidFail(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.player?.detach()
+		self.player = nil
+		self.isPlaying = false
+		self.updateControls(animated: false)
 	}
 }

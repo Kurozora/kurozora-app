@@ -46,8 +46,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		}
 	}
 
-	private var firstCellSize: CGSize = .zero
-
 	var _prefersRefreshControlDisabled = false {
 		didSet {
 			self.setNeedsRefreshControlAppearanceUpdate()
@@ -166,10 +164,14 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
 		self.collectionView.contentInset.bottom = tabBarHeight
 
-		if let firstCell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)),
-		   self.firstCellSize.width != firstCell.frame.size.width {
-			self.firstCellSize = firstCell.frame.size
-		}
+		self.updateFullBleedHeaderInset()
+	}
+
+	override func viewSafeAreaInsetsDidChange() {
+		super.viewSafeAreaInsetsDidChange()
+		self.updateFullBleedHeaderInset()
+
+		self.collectionView.collectionViewLayout.invalidateLayout()
 	}
 
 	override func viewWillReload() {
@@ -207,10 +209,10 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let offset = scrollView.contentOffset.y
+		let firstCellFrame = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0))?.frame
 
 		if self.navigationItem.titleView === self.navigationTitleView,
-		   let firstCellAttributes = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0)) {
-			let firstCellBottomY = firstCellAttributes.frame.maxY
+		   let firstCellBottomY = firstCellFrame?.maxY {
 			let navigationBar = self.navigationController?.navigationBar
 			let navBarBottomY = (navigationBar?.frame.maxY ?? 0) + (navigationBar?.superview?.frame.origin.y ?? 0)
 			let targetAlpha: CGFloat = (offset + navBarBottomY >= firstCellBottomY) ? 1 : 0
@@ -221,35 +223,30 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 			}
 		}
 
-		if let firstCell = self.collectionView.cellForItem(at: [0, 0]), firstCell is any StretchableHeaderCell {
-			if self.firstCellSize.width != firstCell.frame.size.width {
-				self.firstCellSize = firstCell.frame.size
-			}
-			var newFrame = firstCell.frame
-			if offset < 0 {
-				newFrame.origin.y = offset
-				newFrame.size.height = self.firstCellSize.height - offset
-			} else {
-				newFrame.origin.y = 0
-				newFrame.size.height = self.firstCellSize.height
-			}
+		if let firstCell = self.collectionView.cellForItem(at: [0, 0]), firstCell is any StretchableHeaderCell,
+		   let firstCellFrame = firstCellFrame {
+			// Grow only past the resting offset.
+			let overscroll = min(offset + scrollView.adjustedContentInset.top, 0)
+			var newFrame = firstCellFrame
+			newFrame.origin.y += overscroll
+			newFrame.size.height -= overscroll
 			firstCell.frame = newFrame
 		}
+	}
 
-		if let layout = self.collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout,
-		   let attributes = layout.layoutAttributesForElements(in: self.collectionView.bounds) {
-			for attribute in attributes where attribute.representedElementKind == SectionBackgroundDecorationView.elementKindSectionBackground {
-				var newFrame = attribute.frame
-				let section = attribute.indexPath.section
-				let numberOfItemsInSection = self.collectionView.numberOfItems(inSection: section)
-				let lastItemIndexPath = IndexPath(item: numberOfItemsInSection - 1, section: section)
-				if let lastItemAttributes = self.collectionView.layoutAttributesForItem(at: lastItemIndexPath),
-				   offset + scrollView.frame.size.height > (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height) {
-					let difference = (offset + scrollView.frame.size.height) - (lastItemAttributes.frame.origin.y + lastItemAttributes.frame.size.height)
-					newFrame.size.height += difference
-				}
-				attribute.frame = newFrame
-			}
+	/// Extends the collection view's content under the navigation bar.
+	private func updateFullBleedHeaderInset() {
+		let safeAreaTop = self.collectionView.safeAreaInsets.top
+
+		guard self.collectionView.contentInset.top != -safeAreaTop else { return }
+
+		let isAtRest = self.collectionView.contentOffset.y == -self.collectionView.adjustedContentInset.top
+
+		self.collectionView.contentInset.top = -safeAreaTop
+		self.collectionView.verticalScrollIndicatorInsets.top = safeAreaTop
+
+		if isAtRest {
+			self.collectionView.contentOffset.y = -self.collectionView.adjustedContentInset.top
 		}
 	}
 

@@ -71,6 +71,11 @@ enum Layouts {
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: bottomInset, trailing: 0)
+
+		if #available(iOS 26.0, *) {
+			layoutSection.contentInsetsReference = .none
+		}
+
 		return layoutSection
 	}
 
@@ -394,84 +399,6 @@ enum Layouts {
 		return layoutSection
 	}
 
-	/// The width from which the trailer queue is listed beside the hero.
-	static let trailerQueueWidth: CGFloat = 1024.0
-
-	/// The share of the width the hero trailer takes when the queue sits beside it.
-	static let trailerHeroFraction: CGFloat = 0.75
-
-	/// The vertical gap between two queued trailers.
-	static let trailerQueueSpacing: CGFloat = 12.0
-
-	/// The minimum height of a queued trailer.
-	static let trailerQueueRowHeight: CGFloat = 64.0
-
-	/// Returns the number of queued trailers that fit beside the hero at the given width.
-	///
-	/// - Parameter width: The width of the collection.
-	///
-	/// - Returns: the number of queued trailers that fit beside the hero.
-	static func trailerQueueCount(forWidth width: CGFloat) -> Int {
-		let heroHeight = width * trailerHeroFraction * 9.0 / 16.0
-		let queueCount = Int((heroHeight + trailerQueueSpacing) / (trailerQueueRowHeight + trailerQueueSpacing))
-		return min(max(queueCount, 2), 9)
-	}
-
-	/// Returns the section the hero trailer and the queue behind it are laid out in.
-	///
-	/// - Parameters:
-	///    - section: The index of the section.
-	///    - layoutEnvironment: The layout environment of the section.
-	///    - queueCount: The number of trailers listed beside the hero.
-	///    - listsQueue: Whether there is room to list the queue beside the hero.
-	///
-	/// - Returns: the section the hero trailer and the queue behind it are laid out in.
-	static func trailerHeroSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment, queueCount: Int, listsQueue: Bool) -> NSCollectionLayoutSection {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let captionHeight: CGFloat = 96.0
-
-		guard listsQueue, queueCount > 0 else {
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupWidth = (width - 20.0) * 0.90
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .absolute(groupWidth * 9.0 / 16.0 + captionHeight))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-
-			// Add layout section.
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.interGroupSpacing = 20.0
-			layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
-			#if targetEnvironment(macCatalyst)
-			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-			#else
-			layoutSection.orthogonalScrollingBehavior = .groupPaging
-			#endif
-			return layoutSection
-		}
-
-		// Add the hero item.
-		let heroFraction = Layouts.trailerHeroFraction
-		let heroItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(heroFraction), heightDimension: .fractionalHeight(1.0)))
-
-		// Add the queue group.
-		let queueHeight = width * heroFraction * 9.0 / 16.0
-		let rowHeight = (queueHeight - Layouts.trailerQueueSpacing * CGFloat(queueCount - 1)) / CGFloat(queueCount)
-		let queueItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(rowHeight)))
-		let queueGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 - heroFraction), heightDimension: .fractionalHeight(1.0)), subitem: queueItem, count: queueCount)
-		queueGroup.interItemSpacing = .fixed(Layouts.trailerQueueSpacing)
-		queueGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: captionHeight, trailing: 0)
-
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute((width * heroFraction) * 9.0 / 16.0 + captionHeight))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [heroItem, queueGroup])
-
-		// Add layout section.
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
-		return layoutSection
-	}
-
 	static func videoSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
@@ -733,6 +660,22 @@ enum Layouts {
 		layoutSection.interGroupSpacing = 20.0
 		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: maxInset, bottom: 40.0, trailing: maxInset)
 		return layoutSection
+	}
+
+	/// Returns a background decoration that extends past the section's horizontal edges.
+	///
+	/// - Parameters:
+	///    - extendsToBottom: Whether the decoration also extends past the section's bottom edge.
+	///    - layoutEnvironment: The layout environment of the section.
+	///
+	/// - Returns: A background decoration for a section.
+	static func backgroundDecoration(extendsToBottom: Bool, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDecorationItem {
+		let backgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+		let containerSize = layoutEnvironment.container.contentSize
+
+		backgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -containerSize.width, bottom: extendsToBottom ? -containerSize.height : 0, trailing: -containerSize.width)
+
+		return backgroundDecoration
 	}
 
 	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {

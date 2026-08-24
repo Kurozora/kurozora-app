@@ -171,8 +171,8 @@ extension LiteratureDetailsCollectionViewController {
 			}
 
 			if hasBackgroundDecoration {
-				let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
-				sectionLayout?.decorationItems = [sectionBackgroundDecoration]
+				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
 			}
 
 			return sectionLayout

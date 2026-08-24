@@ -359,6 +359,9 @@ class KTabBarController: UITabBarController {
 		if #available(iOS 18.0, *) {
 			self.mode = .tabSidebar
 
+			// Mac Catalyst tiles by default.
+			self.sidebar.preferredLayout = .overlap
+
 			let sidebarBottomProfileView = KSidebarBottomProfileView()
 			sidebarBottomProfileView.delegate = self
 			self.sidebar.bottomBarView = sidebarBottomProfileView

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// Grants the right to play to the trailer the reader is most likely looking at.
+/// Grants the right to play to the trailer the user is most likely looking at.
 @MainActor
 final class TrailerPlaybackCoordinator {
 	// MARK: - Properties
@@ -30,11 +30,14 @@ final class TrailerPlaybackCoordinator {
 	/// The scroll-view observations.
 	private var scrollObservations: [ObjectIdentifier: NSKeyValueObservation] = [:]
 
-	/// The view the reader asked to play.
+	/// The view the user asked to play.
 	private weak var pinnedView: KTrailerPlayerView?
 
 	/// The re-evaluation waiting for scrolling to settle.
 	private var settleTask: Task<Void, Never>?
+
+	/// A Boolean value indicating whether a trailer is playing fullscreen.
+	private var isFullscreenActive = false
 
 	// MARK: - Initializers
 	private init() {}
@@ -67,10 +70,22 @@ final class TrailerPlaybackCoordinator {
 
 	/// Grants the play slot to the given view regardless of the autoplay policy.
 	///
-	/// - Parameter view: The view the reader asked to play.
+	/// - Parameter view: The view the user asked to play.
 	func pin(_ view: KTrailerPlayerView) {
 		self.pinnedView = view
 		self.reevaluate()
+	}
+
+	/// Suspends inline playback while a trailer plays fullscreen.
+	func beginFullscreen() {
+		self.isFullscreenActive = true
+		self.registrations.compactMap(\.view).forEach { $0.setPlaybackAllowed(false) }
+	}
+
+	/// Resumes inline playback after fullscreen ends.
+	func endFullscreen() {
+		self.isFullscreenActive = false
+		self.setNeedsReevaluation()
 	}
 
 	/// Schedules a re-evaluation once scrolling settles.
@@ -85,6 +100,8 @@ final class TrailerPlaybackCoordinator {
 
 	/// Grants the play slot to the most visible eligible views and revokes it from the rest.
 	private func reevaluate() {
+		guard !self.isFullscreenActive else { return }
+
 		self.registrations.removeAll { $0.view == nil }
 		self.pruneScrollObservations()
 
