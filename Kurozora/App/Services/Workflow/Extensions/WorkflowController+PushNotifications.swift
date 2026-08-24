@@ -72,6 +72,10 @@ extension WorkflowController {
 			notificationCategories.insert(notificationCategory)
 		}
 
+		// Skip action
+		let skipAction = UNNotificationAction(identifier: MusicManager.skipActionIdentifier, title: L10n.skip, options: [])
+		notificationCategories.insert(UNNotificationCategory(identifier: MusicManager.songChangeCategoryIdentifier, actions: [skipAction], intentIdentifiers: [], options: []))
+
 		// Register notification categories.
 		UNUserNotificationCenter.current().setNotificationCategories(notificationCategories)
 	}
@@ -96,6 +100,10 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 
 		// Perform the task associated with the action.
 		switch response.actionIdentifier {
+		case MusicManager.skipActionIdentifier:
+			MusicManager.shared.skipForward()
+			completionHandler()
+			return
 		case NotificationKind.Action.viewSessionDetails.identifierValue:
 			self.openSessionsManager()
 		case NotificationKind.Action.viewShowDetails.identifierValue:
