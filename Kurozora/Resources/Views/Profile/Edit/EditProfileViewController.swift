@@ -48,19 +48,14 @@ class EditProfileViewController: KViewController {
 
 	private var formStackView: UIStackView!
 
-	private var usernameContainerView: UIView!
-	private var usernameSectionLabel: KSecondaryLabel!
-	private var usernameTextField: KTextField!
+	private var usernameInputView: TitledTextField!
+	private var usernameTextField: KTextField { self.usernameInputView.textField }
 
-	private var displayNameContainerView: UIView!
-	private var displayNameSectionLabel: KSecondaryLabel!
-	private var displayNameTextField: KTextField!
+	private var displayNameInputView: TitledTextField!
+	private var displayNameTextField: KTextField { self.displayNameInputView.textField }
 
-	private var bioContainerView: UIView!
-	private var bioSectionLabel: KSecondaryLabel!
-	private var bioTextView: KTextView!
-
-	private var containerViews: [UIView]!
+	private var bioInputView: TitledTextView!
+	private var bioTextView: KTextView { self.bioInputView.textView }
 
 	// MARK: - Properties
 	var user: User! = User.current
@@ -92,38 +87,18 @@ class EditProfileViewController: KViewController {
 
 	var editedBioText: String?
 
-	var originalProfileImage: UIImage! = UIImage() {
-		didSet {
-			self.editedProfileImage = self.originalProfileImage
-		}
-	}
+	/// The edit the user made to the profile image.
+	var profileImageEdit: ProfileUpdateImageRequest?
 
-	var editedProfileImage: UIImage! = UIImage()
-	var editedProfileImageURL: URL?
-
-	var originalBannerImage: UIImage! = UIImage() {
-		didSet {
-			self.editedBannerImage = self.originalBannerImage
-		}
-	}
-
-	var editedBannerImage: UIImage! = UIImage()
-	var editedBannerImageURL: URL?
+	/// The edit the user made to the banner image.
+	var bannerImageEdit: ProfileUpdateImageRequest?
 
 	var hasChanges: Bool {
 		return self.originalUsernameText != self.editedUsernameText
 			|| self.originalNicknameText != self.editedNicknameText
 			|| self.originalBioText != self.editedBioText
-			|| self.profileImageHasChanges
-			|| self.bannerImageHasChanges
-	}
-
-	var profileImageHasChanges: Bool {
-		return !self.originalProfileImage.isEqual(to: self.editedProfileImage)
-	}
-
-	var bannerImageHasChanges: Bool {
-		return !self.originalBannerImage.isEqual(to: self.editedBannerImage)
+			|| self.profileImageEdit != nil
+			|| self.bannerImageEdit != nil
 	}
 
 	// MARK: - Initializers
@@ -187,15 +162,10 @@ class EditProfileViewController: KViewController {
 		self.originalUsernameText = self.usernameTextField.text
 		self.originalNicknameText = self.displayNameTextField.text
 		self.originalBioText = self.bioTextView.text
-		self.originalProfileImage = self.profileImageView.image
-		self.originalBannerImage = self.bannerImageView.image
 	}
 
 	func cancelProfileEdit() {
-		// User doesn't want changes to be saved, pute everything back.
 		self.bioTextView.text = self.originalBioText
-		self.profileImageView.image = self.originalProfileImage.copy() as? UIImage
-		self.bannerImageView.image = self.originalBannerImage.copy() as? UIImage
 
 		self.dismiss(animated: true)
 	}
@@ -232,6 +202,20 @@ class EditProfileViewController: KViewController {
 		}
 	}
 
+	/// Returns the request that applies the given image edit.
+	///
+	/// - Parameters:
+	///    - edit: The edit the user made.
+	///    - maxWidth: The width a replacement is resized to fit.
+	///    - maxHeight: The height a replacement is resized to fit.
+	/// - Returns: The request that applies the edit.
+	private func imageRequest(for edit: ProfileUpdateImageRequest?, maxWidth: CGFloat, maxHeight: CGFloat) -> ProfileUpdateImageRequest? {
+		guard case .update(let url) = edit else { return edit }
+		guard let temporaryURL = url?.saveImageToTemporaryFile(maxWidth: maxWidth, maxHeight: maxHeight, compressionQuality: 0.8) else { return .delete }
+
+		return .update(url: temporaryURL)
+	}
+
 	/// Update the user's profile details.
 	///
 	/// Sends `nil` if nothing should be updated.
@@ -242,41 +226,8 @@ class EditProfileViewController: KViewController {
 		let nickname = self.originalNicknameText == self.editedNicknameText ? nil : self.editedNicknameText
 		let biography = self.originalBioText == self.editedBioText ? nil : self.editedBioText
 
-		// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
-		// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
-		// If `editedProfileImage` is equal to the user's placeholder, then the user removed the current profile image: return `UIImage()`
-		let profileImageRequest: ProfileUpdateImageRequest?
-		var profileImageURL: URL? = URL(string: "kurozora://profileimage")
-		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
-			if indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) {
-				profileImageRequest = .delete
-			} else if let originalImageURL = self.editedProfileImageURL {
-				profileImageURL = originalImageURL.saveImageToTemporaryFile(maxWidth: 400, maxHeight: 400, compressionQuality: 0.8)
-				profileImageRequest = profileImageURL == nil ? .delete : .update(url: profileImageURL)
-			} else {
-				profileImageRequest = nil
-			}
-		} else {
-			profileImageRequest = nil
-		}
-
-		// If `originalBannerImage` is equal to `editedBannerImage`, then no change has happened: return `nil`
-		// If `originalBannerImage` is not equal to `editedBannerImage`, then something changed: return `editedBannerImage`
-		// If `editedBannerImage` is equal to the user's placeholder, then the user removed the current banner image: return `UIImage()`
-		let bannerImageRequest: ProfileUpdateImageRequest?
-		var bannerImageURL: URL? = URL(string: "kurozora://bannerimage")
-		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
-			if indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) {
-				bannerImageRequest = .delete
-			} else if let originalBannerURL = self.editedBannerImageURL {
-				bannerImageURL = originalBannerURL.saveImageToTemporaryFile(maxWidth: 1500, maxHeight: 500, compressionQuality: 0.8)
-				bannerImageRequest = bannerImageURL == nil ? .delete : .update(url: bannerImageURL)
-			} else {
-				bannerImageRequest = nil
-			}
-		} else {
-			bannerImageRequest = nil
-		}
+		let profileImageRequest = self.imageRequest(for: self.profileImageEdit, maxWidth: 400, maxHeight: 400)
+		let bannerImageRequest = self.imageRequest(for: self.bannerImageEdit, maxWidth: 1500, maxHeight: 500)
 
 		Task {
 			do {
@@ -326,8 +277,8 @@ class EditProfileViewController: KViewController {
 					name: .KUserProfileDidUpdate,
 					object: nil,
 					userInfo: [
-						"profileImage": self.editedProfileImage as Any,
-						"bannerImage": self.editedBannerImage as Any
+						"profileImage": self.profileImageView.image as Any,
+						"bannerImage": self.bannerImageView.image as Any
 					]
 				)
 
@@ -362,7 +313,7 @@ class EditProfileViewController: KViewController {
 	}
 
 	private func presentBannerImageSelection() {
-		let bannerImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedBannerImage, placeholderImage: self.user.attributes.bannerPlaceholderImage, imageKind: .banner)
+		let bannerImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.bannerImageView.image, placeholderImage: self.user.attributes.bannerPlaceholderImage, imageKind: .banner)
 		bannerImageSelectionVC.delegate = self
 
 		let navController = KNavigationController(rootViewController: bannerImageSelectionVC)
@@ -378,7 +329,7 @@ class EditProfileViewController: KViewController {
 	}
 
 	private func presentProfileImageSelection() {
-		let profileImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.editedProfileImage, placeholderImage: self.user.attributes.profilePlaceholderImage)
+		let profileImageSelectionVC = ProfileImageSelectionViewController(currentImage: self.profileImageView.image, placeholderImage: self.user.attributes.profilePlaceholderImage)
 		profileImageSelectionVC.delegate = self
 
 		let navController = KNavigationController(rootViewController: profileImageSelectionVC)
@@ -419,7 +370,6 @@ private extension EditProfileViewController {
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
 		self.configureBannerImageView()
-		self.configureContainerViews()
 		self.configureProfileBadgeStackView()
 	}
 
@@ -552,64 +502,24 @@ private extension EditProfileViewController {
 		self.formStackView.spacing = UIStackView.spacingUseSystem
 		self.contentView.addSubview(self.formStackView)
 
-		// Username container
-		self.usernameContainerView = UIView()
-		self.usernameContainerView.translatesAutoresizingMaskIntoConstraints = false
-		self.formStackView.addArrangedSubview(self.usernameContainerView)
-
-		self.usernameSectionLabel = KSecondaryLabel()
-		self.usernameSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.usernameSectionLabel.text = L10n.editProfileUsernameLabel.uppercased(with: Locale.current)
-		self.usernameSectionLabel.font = .preferredFont(forTextStyle: .caption1)
-		self.usernameContainerView.addSubview(self.usernameSectionLabel)
-
-		self.usernameTextField = KTextField()
-		self.usernameTextField.translatesAutoresizingMaskIntoConstraints = false
-		self.usernameTextField.font = .systemFont(ofSize: 14)
-		self.usernameTextField.borderStyle = .roundedRect
+		self.usernameInputView = TitledTextField(title: L10n.editProfileUsernameLabel, placeholder: nil)
+		self.usernameInputView.translatesAutoresizingMaskIntoConstraints = false
 		self.usernameTextField.textContentType = .username
 		self.usernameTextField.tag = TextFieldTag.username.rawValue
-		self.usernameContainerView.addSubview(self.usernameTextField)
+		self.formStackView.addArrangedSubview(self.usernameInputView)
 
-		// Display name container
-		self.displayNameContainerView = UIView()
-		self.displayNameContainerView.translatesAutoresizingMaskIntoConstraints = false
-		self.formStackView.addArrangedSubview(self.displayNameContainerView)
-
-		self.displayNameSectionLabel = KSecondaryLabel()
-		self.displayNameSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.displayNameSectionLabel.text = L10n.editProfileDisplayNameLabel.uppercased(with: Locale.current)
-		self.displayNameSectionLabel.font = .preferredFont(forTextStyle: .caption1)
-		self.displayNameContainerView.addSubview(self.displayNameSectionLabel)
-
-		self.displayNameTextField = KTextField()
-		self.displayNameTextField.translatesAutoresizingMaskIntoConstraints = false
-		self.displayNameTextField.font = .systemFont(ofSize: 14)
-		self.displayNameTextField.borderStyle = .roundedRect
+		self.displayNameInputView = TitledTextField(title: L10n.editProfileDisplayNameLabel, placeholder: nil)
+		self.displayNameInputView.translatesAutoresizingMaskIntoConstraints = false
 		self.displayNameTextField.clearButtonMode = .always
 		self.displayNameTextField.textContentType = .username
 		self.displayNameTextField.tag = TextFieldTag.nickname.rawValue
-		self.displayNameContainerView.addSubview(self.displayNameTextField)
+		self.formStackView.addArrangedSubview(self.displayNameInputView)
 
-		// Bio container
-		self.bioContainerView = UIView()
-		self.bioContainerView.translatesAutoresizingMaskIntoConstraints = false
-		self.formStackView.addArrangedSubview(self.bioContainerView)
-
-		self.bioSectionLabel = KSecondaryLabel()
-		self.bioSectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		self.bioSectionLabel.text = L10n.editProfileBioLabel.uppercased(with: Locale.current)
-		self.bioSectionLabel.font = .preferredFont(forTextStyle: .caption1)
-		self.bioContainerView.addSubview(self.bioSectionLabel)
-
-		self.bioTextView = KTextView()
-		self.bioTextView.translatesAutoresizingMaskIntoConstraints = false
+		self.bioInputView = TitledTextView(title: L10n.editProfileBioLabel, placeholder: self.placeholderText)
+		self.bioInputView.translatesAutoresizingMaskIntoConstraints = false
 		self.bioTextView.isScrollEnabled = false
 		self.bioTextView.tag = 2
-		self.bioContainerView.addSubview(self.bioTextView)
-
-		// Container views collection
-		self.containerViews = [self.usernameContainerView, self.displayNameContainerView, self.bioContainerView]
+		self.formStackView.addArrangedSubview(self.bioInputView)
 
 		// Store circular view reference for constraints
 		self._profileCircularView = profileCircularView
@@ -714,51 +624,11 @@ private extension EditProfileViewController {
 			self.formStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
 			self.formStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
 			self.formStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20),
-
-			// Username container
-			self.usernameSectionLabel.topAnchor.constraint(equalTo: self.usernameContainerView.topAnchor, constant: 8),
-			self.usernameSectionLabel.leadingAnchor.constraint(equalTo: self.usernameContainerView.leadingAnchor, constant: 8),
-			self.usernameSectionLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.usernameContainerView.trailingAnchor),
-
-			self.usernameTextField.topAnchor.constraint(equalTo: self.usernameSectionLabel.bottomAnchor, constant: 8),
-			self.usernameTextField.leadingAnchor.constraint(equalTo: self.usernameContainerView.leadingAnchor, constant: 8),
-			self.usernameTextField.trailingAnchor.constraint(equalTo: self.usernameContainerView.trailingAnchor, constant: -8),
-			self.usernameTextField.bottomAnchor.constraint(equalTo: self.usernameContainerView.bottomAnchor, constant: -8),
-			self.usernameTextField.heightAnchor.constraint(equalToConstant: 34),
-
-			// Display name container
-			self.displayNameSectionLabel.topAnchor.constraint(equalTo: self.displayNameContainerView.topAnchor, constant: 8),
-			self.displayNameSectionLabel.leadingAnchor.constraint(equalTo: self.displayNameContainerView.leadingAnchor, constant: 8),
-			self.displayNameSectionLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.displayNameContainerView.trailingAnchor),
-
-			self.displayNameTextField.topAnchor.constraint(equalTo: self.displayNameSectionLabel.bottomAnchor, constant: 8),
-			self.displayNameTextField.leadingAnchor.constraint(equalTo: self.displayNameContainerView.leadingAnchor, constant: 8),
-			self.displayNameTextField.trailingAnchor.constraint(equalTo: self.displayNameContainerView.trailingAnchor, constant: -8),
-			self.displayNameTextField.bottomAnchor.constraint(equalTo: self.displayNameContainerView.bottomAnchor, constant: -8),
-			self.displayNameTextField.heightAnchor.constraint(equalToConstant: 34),
-
-			// Bio container
-			self.bioSectionLabel.topAnchor.constraint(equalTo: self.bioContainerView.topAnchor, constant: 8),
-			self.bioSectionLabel.leadingAnchor.constraint(equalTo: self.bioContainerView.leadingAnchor, constant: 8),
-			self.bioSectionLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.bioContainerView.trailingAnchor),
-
-			self.bioTextView.topAnchor.constraint(equalTo: self.bioSectionLabel.bottomAnchor, constant: 8),
-			self.bioTextView.leadingAnchor.constraint(equalTo: self.bioContainerView.layoutMarginsGuide.leadingAnchor),
-			self.bioTextView.trailingAnchor.constraint(equalTo: self.bioContainerView.layoutMarginsGuide.trailingAnchor),
-			self.bioTextView.bottomAnchor.constraint(equalTo: self.bioContainerView.bottomAnchor, constant: -8),
-			self.bioTextView.heightAnchor.constraint(equalToConstant: 100),
 		])
 	}
 
 	func configureBannerImageView() {
 		self.bannerImageView.theme_backgroundColor = KThemePicker.tintColor.rawValue
-	}
-
-	func configureContainerViews() {
-		self.containerViews.forEach { containerView in
-			containerView.layerCornerRadius = 12.0
-			containerView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
 	}
 
 	func configureProfileBadgeStackView() {
@@ -847,16 +717,28 @@ extension EditProfileViewController: ProfileImageSelectionViewControllerDelegate
 	func profileImageSelectionViewController(_ viewController: ProfileImageSelectionViewController, didSelectImage image: UIImage, imageURL: URL?) {
 		switch self.imageEditKind {
 		case .profile:
-			self.editedProfileImage = image
 			self.profileImageView.image = image
-			self.editedProfileImageURL = imageURL
+			self.profileImageEdit = self.imageEdit(for: image, url: imageURL, placeholder: self.user.attributes.profilePlaceholderImage)
 		case .banner:
-			self.editedBannerImage = image
 			self.bannerImageView.image = image
-			self.editedBannerImageURL = imageURL
+			self.bannerImageEdit = self.imageEdit(for: image, url: imageURL, placeholder: self.user.attributes.bannerPlaceholderImage)
 		case .none:
 			break
 		}
+	}
+
+	/// Returns the edit the given selection stands for.
+	///
+	/// - Parameters:
+	///    - image: The image the user selected.
+	///    - url: The location of the selected image.
+	///    - placeholder: The placeholder that stands for a removed image.
+	/// - Returns: The edit the selection stands for.
+	private func imageEdit(for image: UIImage, url: URL?, placeholder: UIImage) -> ProfileUpdateImageRequest? {
+		guard !image.isEqual(to: placeholder) else { return .delete }
+		guard let url else { return nil }
+
+		return .update(url: url)
 	}
 
 	func profileImageSelectionViewControllerDidCancel(_ viewController: ProfileImageSelectionViewController) {
