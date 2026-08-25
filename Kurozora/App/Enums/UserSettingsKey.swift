@@ -155,6 +155,10 @@ enum UserSettingsKey: String, CaseIterable {
 	/// The key to the languages the user does not want translated automatically.
 	case autoTranslateExcludedLanguages
 
+	// Video keys
+	/// The key to the conditions under which trailers play automatically.
+	case videoAutoplayPolicy
+
 	// Music keys
 	/// The key indicating whether the now-playing accessory shows total time instead of remaining time.
 	case musicAccessoryShowsTotalTime

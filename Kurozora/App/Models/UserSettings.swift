@@ -33,6 +33,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.forwardNavigationEnabled.rawValue: true,
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
+			UserSettingsKey.videoAutoplayPolicy.rawValue: VideoAutoplayPolicy.default.rawValue,
 			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
 			UserSettingsKey.miniPlayerStaysOnTop.rawValue: true,
 			UserSettingsKey.miniPlayerShowsOnAllSpaces.rawValue: true,
@@ -451,6 +452,12 @@ extension UserSettings {
 	static var musicSkipDuration: SkipDuration {
 		guard let duration = SkipDuration(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return duration
+	}
+
+	/// Returns the conditions under which trailers play automatically.
+	static var videoAutoplayPolicy: VideoAutoplayPolicy {
+		guard let policy = VideoAutoplayPolicy(rawValue: self.shared.integer(forKey: #function)) else { return .default }
+		return policy
 	}
 
 	/// Returns a Boolean indicating whether a notification is posted when the song changes.

@@ -64,4 +64,19 @@ class KNetworkManager: NSObject {
 		guard self.shared.reachability.connection == .cellular else { return }
 		completed(self.shared)
 	}
+
+	/// A Boolean value indicating whether the network is currently reachable.
+	static var isConnected: Bool {
+		return self.shared.reachability.connection != .unavailable
+	}
+
+	/// A Boolean value indicating whether the network is currently reachable via Wi-Fi.
+	static var isOnWiFi: Bool {
+		return self.shared.reachability.connection == .wifi
+	}
+
+	/// A Boolean value indicating whether the network is currently reachable via cellular.
+	static var isOnCellular: Bool {
+		return self.shared.reachability.connection == .cellular
+	}
 }

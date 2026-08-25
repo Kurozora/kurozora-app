@@ -2707,6 +2707,101 @@ extension L10n {
 			)
 		}
 	}
+
+	// MARK: - Low Data Mode
+	/// The settings entry grouping options that reduce data usage.
+	///
+	/// - Tag: L10n-lowDataMode
+	static var lowDataMode: String {
+		L10n.resolve {
+			String(
+				localized: "Low Data Mode",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings entry grouping options that reduce data usage."
+			)
+		}
+	}
+	/// The description shown in the Low Data Mode settings header.
+	///
+	/// - Tag: L10n-lowDataModeHeaderDescription
+	static var lowDataModeHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Reduce the data used by trailers and other media.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown in the Low Data Mode settings header."
+			)
+		}
+	}
+
+	// MARK: - Video Autoplay
+	/// The settings entry that controls when trailers play automatically.
+	///
+	/// - Tag: L10n-autoplay
+	static var autoplay: String {
+		L10n.resolve {
+			String(
+				localized: "Autoplay",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings entry that controls when trailers play automatically."
+			)
+		}
+	}
+	/// The autoplay option that plays trailers automatically on any connection.
+	///
+	/// - Tag: L10n-autoplayAlways
+	static var autoplayAlways: String {
+		L10n.resolve {
+			String(
+				localized: "Always",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The autoplay option that plays trailers automatically on any connection."
+			)
+		}
+	}
+	/// The autoplay option that plays trailers automatically only on Wi-Fi.
+	///
+	/// - Tag: L10n-autoplayWiFiOnly
+	static var autoplayWiFiOnly: String {
+		L10n.resolve {
+			String(
+				localized: "Wi-Fi Only",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The autoplay option that plays trailers automatically only on Wi-Fi."
+			)
+		}
+	}
+	/// The autoplay option that never plays trailers automatically.
+	///
+	/// - Tag: L10n-autoplayNever
+	static var autoplayNever: String {
+		L10n.resolve {
+			String(
+				localized: "Never",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The autoplay option that never plays trailers automatically."
+			)
+		}
+	}
+	/// The footer explaining the trailer autoplay options.
+	///
+	/// - Tag: L10n-autoplayFooter
+	static var autoplayFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Choose when trailers play automatically. Playing on cellular uses more data.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the trailer autoplay options."
+			)
+		}
+	}
 	/// The string for the word 'password'.
 	///
 	/// - Tag: L10n-password

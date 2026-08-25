@@ -149,6 +149,9 @@ extension SettingsTableViewController {
 		/// The row representing the music cell.
 		case music
 
+		/// The row representing the low data mode cell.
+		case lowDataMode
+
 		/// The row representing the motion cell.
 		case motion
 
@@ -214,7 +217,7 @@ extension SettingsTableViewController {
 		static let all: [Row] = [
 			.account, .switchAccount,
 			.keychain, .syncScenarios,
-			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -225,7 +228,7 @@ extension SettingsTableViewController {
 		/// An array containing all normal user settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -252,9 +255,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.cache, .displayBlindness, .gestures, .library, .music, .motion, .theme]
+			return [.cache, .displayBlindness, .gestures, .library, .music, .lowDataMode, .motion, .theme]
 			#else
-			return [.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .motion, .theme]
+			return [.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme]
 			#endif
 		}
 
@@ -314,6 +317,8 @@ extension SettingsTableViewController {
 				return .librarySegue
 			case .music:
 				return .musicSegue
+			case .lowDataMode:
+				return .lowDataModeSegue
 			case .motion:
 				return .motionSegue
 			case .theme:
@@ -361,6 +366,8 @@ extension SettingsTableViewController {
 			case .library:
 				return .chevron
 			case .music:
+				return .chevron
+			case .lowDataMode:
 				return .chevron
 			case .motion:
 				return .labelAndChevron
@@ -430,6 +437,8 @@ extension SettingsTableViewController {
 				return L10n.library
 			case .music:
 				return L10n.music
+			case .lowDataMode:
+				return L10n.lowDataMode
 			case .motion:
 				return L10n.motion
 			case .theme:
@@ -520,6 +529,8 @@ extension SettingsTableViewController {
                 return .Icons.library
 			case .music:
                 return .Icons.musicNoteCircle
+			case .lowDataMode:
+                return .Icons.wifiExclamationmark
 			case .motion:
                 return .Icons.circleDottedCircle
 			case .theme:

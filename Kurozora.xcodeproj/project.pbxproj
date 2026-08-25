@@ -153,6 +153,7 @@
 				App/Enums/SkipDuration.swift,
 				App/Enums/SplashScreenAnimation.swift,
 				App/Enums/UserSettingsKey.swift,
+				App/Enums/VideoAutoplayPolicy.swift,
 				"App/Extensions/UIStatusBarStyle+Theme.swift",
 				App/Helpers/L10n/L10n.swift,
 				"App/Helpers/L10n/L10n+Account.swift",
