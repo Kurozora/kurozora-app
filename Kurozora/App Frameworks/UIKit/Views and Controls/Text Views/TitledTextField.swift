@@ -18,7 +18,7 @@ final class TitledTextField: TitledInputView {
 	/// Creates a titled text field.
 	///
 	/// - Parameters:
-	///    - title: The title shown above the field. `nil` omits it.
+	///    - title: The title shown above the field.
 	///    - placeholder: The placeholder shown while the field is empty.
 	///    - height: The smallest height of the field.
 	init(title: String?, placeholder: String?, height: CGFloat = 34.0) {

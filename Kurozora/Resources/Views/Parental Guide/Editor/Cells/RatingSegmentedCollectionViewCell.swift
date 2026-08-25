@@ -40,7 +40,7 @@ class RatingSegmentedCollectionViewCell: KCollectionViewCell {
 	/// Configures the cell with the selected rating.
 	///
 	/// - Parameters:
-	///    - selected: The currently selected rating, or `nil` for no selection.
+	///    - selected: The currently selected rating.
 	///    - delegate: The delegate that receives change events.
 	func configure(selected: ParentalGuideRating?, delegate: RatingSegmentedCollectionViewCellDelegate?) {
 		self.hideSkeleton()

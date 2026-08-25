@@ -40,7 +40,7 @@ class FrequencySegmentedCollectionViewCell: KCollectionViewCell {
 	/// Configures the cell with the selected frequency.
 	///
 	/// - Parameters:
-	///    - selected: The currently selected frequency, or `nil` for no selection.
+	///    - selected: The currently selected frequency.
 	///    - delegate: The delegate that receives change events.
 	func configure(selected: ParentalGuideFrequency?, delegate: FrequencySegmentedCollectionViewCellDelegate?) {
 		self.hideSkeleton()

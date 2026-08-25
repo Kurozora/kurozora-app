@@ -18,7 +18,7 @@ class TitledInputView: UIView {
 	// MARK: - Initializers
 	/// Creates a titled input view.
 	///
-	/// - Parameter title: The title shown above the input. `nil` omits it.
+	/// - Parameter title: The title shown above the input.
 	init(title: String?) {
 		super.init(frame: .zero)
 		self.configureSubviews(title: title)

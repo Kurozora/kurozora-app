@@ -64,7 +64,6 @@ final class TitledTextView: TitledInputView {
 		self.addInputView(self.textView)
 	}
 
-	/// Sizes the text region to the lines it shows at the reader's text size.
 	private func updateMinimumHeight() {
 		let font = self.textView.font ?? .preferredFont(forTextStyle: .body)
 		let textContainerInset = self.textView.textContainerInset
