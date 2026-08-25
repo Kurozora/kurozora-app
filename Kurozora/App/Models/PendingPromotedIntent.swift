@@ -8,28 +8,33 @@
 
 import Foundation
 
-/// Persists a promoted-IAP intent so the consent flow can resume after sign-in or app relaunch.
+/// A promoted in-app purchase intent persisted between launches.
 struct PendingPromotedIntent {
+	/// The key to the persisted product ID.
 	private static let productIDKey = "PendingPromotedIntent.productID"
+
+	/// The key to the time the intent was persisted.
 	private static let savedAtKey = "PendingPromotedIntent.savedAt"
 
-	/// How long a persisted intent stays eligible for resume before it's discarded.
+	/// How long a persisted intent stays valid.
 	private static let timeToLive: TimeInterval = 24 * 60 * 60
 
-	/// Persist the product ID of a promoted-IAP intent.
+	/// Persists the product ID of a promoted intent.
+	///
+	/// - Parameter productID: The product ID to persist.
 	static func save(productID: String) {
 		let defaults = UserDefaults.standard
-		defaults.set(productID, forKey: self.productIDKey)
-		defaults.set(Date().timeIntervalSince1970, forKey: self.savedAtKey)
+		defaults.set(productID, forKey: Self.productIDKey)
+		defaults.set(Date().timeIntervalSince1970, forKey: Self.savedAtKey)
 	}
 
-	/// Return the persisted product ID if it exists and hasn't expired.
+	/// Returns the product ID of the persisted intent.
 	static func peek() -> String? {
 		let defaults = UserDefaults.standard
-		guard let productID = defaults.string(forKey: self.productIDKey) else { return nil }
+		guard let productID = defaults.string(forKey: Self.productIDKey) else { return nil }
 
-		let savedAt = defaults.double(forKey: self.savedAtKey)
-		if Date().timeIntervalSince1970 - savedAt > self.timeToLive {
+		let savedAt = defaults.double(forKey: Self.savedAtKey)
+		if Date().timeIntervalSince1970 - savedAt > Self.timeToLive {
 			self.clear()
 			return nil
 		}
@@ -37,10 +42,10 @@ struct PendingPromotedIntent {
 		return productID
 	}
 
-	/// Forget any persisted intent.
+	/// Clears the persisted intent.
 	static func clear() {
 		let defaults = UserDefaults.standard
-		defaults.removeObject(forKey: self.productIDKey)
-		defaults.removeObject(forKey: self.savedAtKey)
+		defaults.removeObject(forKey: Self.productIDKey)
+		defaults.removeObject(forKey: Self.savedAtKey)
 	}
 }

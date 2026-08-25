@@ -9,11 +9,6 @@
 import Foundation
 
 /// A serializable snapshot of an episode displayed by the Up Next widget.
-///
-/// Persisted to the App Group suite so the widget can re-hydrate the last
-/// successfully rendered timeline when the server is unreachable, without
-/// re-issuing any network calls. Image bytes are not stored — the paired
-/// image URL is looked up in ``ImageFetcher``'s disk cache at render time.
 struct UpNextEpisodeSnapshot: Codable {
 	let id: String
 	let title: String
@@ -27,12 +22,7 @@ struct UpNextEpisodeSnapshot: Codable {
 	let isFiller: Bool
 }
 
-/// App Group–backed cache for the Up Next widget.
-///
-/// Remembers the last successfully fetched timeline plus a count of consecutive
-/// failures, so repeated failures back off exponentially instead of hammering
-/// an unreachable server. Works across widget reloads because it lives in the
-/// shared App Group `UserDefaults` suite used by the main app.
+/// The cache holding the Up Next widget's last timeline and its failure counters.
 enum UpNextWidgetCache {
 	private static let suiteName = "group.settings.app.kurozora.tracker"
 
@@ -44,7 +34,7 @@ enum UpNextWidgetCache {
 	}
 
 	private static var defaults: UserDefaults {
-		UserDefaults(suiteName: self.suiteName) ?? .standard
+		UserDefaults(suiteName: Self.suiteName) ?? .standard
 	}
 
 	// MARK: - Snapshot Persistence
@@ -67,7 +57,7 @@ enum UpNextWidgetCache {
 		return count
 	}
 
-	/// Loads the last successfully persisted snapshot, if any.
+	/// Loads the last persisted snapshot.
 	static func loadLastGoodSnapshot() -> [UpNextEpisodeSnapshot]? {
 		guard let data = self.defaults.data(forKey: Key.lastGoodSnapshot) else { return nil }
 		return try? JSONDecoder().decode([UpNextEpisodeSnapshot].self, from: data)
@@ -88,17 +78,13 @@ enum UpNextWidgetCache {
 	}
 
 	// MARK: - Backoff
-	/// Computes the next-reload interval for the given consecutive failure count.
+	/// Returns the interval to wait before the next reload.
 	///
-	/// Schedule (capped at 4 hours):
-	/// - 1 failure   -> 10 minutes
-	/// - 2 failures  -> 30 minutes
-	/// - 3 failures  -> 1 hour
-	/// - 4 failures  -> 2 hours
-	/// - 5+ failures -> 4 hours
+	/// - Parameter failures: The number of consecutive failures.
+	/// - Returns: The interval to wait before the next reload.
 	static func backoffInterval(forFailures failures: Int) -> TimeInterval {
 		switch failures {
-		case ..<1: return 60 * 60 // Defensive: treat 0 as a normal 1h refresh.
+		case ..<1: return 60 * 60
 		case 1: return 10 * 60
 		case 2: return 30 * 60
 		case 3: return 60 * 60
