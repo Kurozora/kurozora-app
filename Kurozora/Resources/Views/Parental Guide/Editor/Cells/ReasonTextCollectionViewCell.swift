@@ -19,7 +19,7 @@ class ReasonTextCollectionViewCell: KCollectionViewCell {
 		view.translatesAutoresizingMaskIntoConstraints = false
 		view.isScrollEnabled = false
 		view.font = .preferredFont(forTextStyle: .body)
-		view.placeholder = L10n.parentalGuideReasonPlaceholder
+		view.placeholder = L10n.whatStandsOut
 		view.backgroundColor = .clear
 		view.textContainerInset = .zero
 		view.textContainer.lineFragmentPadding = 0
