@@ -25,7 +25,21 @@ final class MediaActionBar: UIView {
 
 	private var moreMenu: UIMenu?
 
-	var onAction: ((MediaAction) -> Void)?
+	/// The menu the save button reveals when held.
+	var saveMenu: UIMenu? {
+		didSet {
+			self.applySaveMenu()
+		}
+	}
+
+	/// Called when the share button is tapped.
+	var onShare: (() -> Void)?
+
+	/// Called when the save button is tapped.
+	var onSave: (() -> Void)?
+
+	/// Called when a menu needs presenting from the given view.
+	var onPresentMenu: ((UIMenu, UIView) -> Void)?
 
 	/// A boolean value that indicates whether `UIButton.menu` composes with a `.glass()`
 	/// configuration on the current platform.
@@ -112,6 +126,13 @@ final class MediaActionBar: UIView {
 		self.saveButton.setImage(UIImage(systemName: "tray.and.arrow.down"), for: .normal)
 		self.saveButton.addTarget(self, action: #selector(self.saveTapped), for: .touchUpInside)
 
+		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.saveHeld(_:)))
+		self.saveButton.addGestureRecognizer(longPress)
+
+		#if targetEnvironment(macCatalyst)
+		self.saveButton.addInteraction(UIContextMenuInteraction(delegate: self))
+		#endif
+
 		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
 			self.saveButton.backgroundColor = .black.withAlphaComponent(0.4)
 		}
@@ -147,12 +168,45 @@ final class MediaActionBar: UIView {
 		])
 	}
 
+	/// Assigns the save menu to the save button.
+	private func applySaveMenu() {
+		guard Self.canUseNativeUIButtonMenu else { return }
+
+		self.saveButton.menu = self.saveMenu
+		self.saveButton.showsMenuAsPrimaryAction = false
+	}
+
 	// MARK: - Handlers
-	@objc private func shareTapped() { self.onAction?(.share) }
-	@objc private func saveTapped() { self.onAction?(.save) }
+	@objc private func shareTapped() {
+		self.onShare?()
+	}
+
+	@objc private func saveTapped() {
+		self.onSave?()
+	}
+
+	@objc private func saveHeld(_ gesture: UILongPressGestureRecognizer) {
+		guard gesture.state == .began, !Self.canUseNativeUIButtonMenu else { return }
+		self.presentSaveMenu()
+	}
+
+	private func presentSaveMenu() {
+		guard let menu = self.saveMenu else { return }
+		self.onPresentMenu?(menu, self.saveButton)
+	}
 
 	@objc private func moreTapped() {
 		guard let menu = self.moreMenu else { return }
-		self.onAction?(.more(menu))
+		self.onPresentMenu?(menu, self.moreButton)
 	}
 }
+
+// MARK: - UIContextMenuInteractionDelegate
+#if targetEnvironment(macCatalyst)
+extension MediaActionBar: UIContextMenuInteractionDelegate {
+	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+		guard let menu = self.saveMenu else { return nil }
+		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in menu }
+	}
+}
+#endif

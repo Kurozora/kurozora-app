@@ -47,6 +47,27 @@ extension URL {
 	/// The Community Guidelines page URL of Kurozora.
 	static let communityGuidelinesURL = URL(string: "https://kurozora.app/kb/guidelines")
 
+	/// The user's home folder.
+	static var userHome: URL {
+		#if targetEnvironment(macCatalyst)
+		guard let home = getpwuid(getuid())?.pointee.pw_dir else {
+			return URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+		}
+
+		return URL(fileURLWithPath: String(cString: home), isDirectory: true)
+		#else
+		return FileManager.default.homeDirectoryForCurrentUser
+		#endif
+	}
+
+	/// The file path with the user's home folder shortened to a tilde.
+	var abbreviatedPath: String {
+		let homePath = URL.userHome.path
+		guard self.path.hasPrefix(homePath + "/") else { return self.path }
+
+		return "~" + self.path.dropFirst(homePath.count)
+	}
+
 	/// The root domain of the URL or domain name.
 	var rootDomain: String? {
 		return self.host?.replacingOccurrences(of: "www.", with: "")

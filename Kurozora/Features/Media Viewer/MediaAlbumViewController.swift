@@ -199,6 +199,10 @@ final class MediaAlbumViewController: UIPageViewController {
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
 		longPress.delegate = self
 		self.view.addGestureRecognizer(longPress)
+
+		#if targetEnvironment(macCatalyst)
+		self.view.addInteraction(UIContextMenuInteraction(delegate: self))
+		#endif
 	}
 
 	/// Sets the alpha of every control layered over the media.
@@ -239,10 +243,26 @@ final class MediaAlbumViewController: UIPageViewController {
 
 	@objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
 		guard gesture.state == .began else { return }
-		guard self.items.indices.contains(self.currentIndex) else { return }
+		self.shareCurrentItem(at: gesture.location(in: self.view))
+	}
 
-		let location = gesture.location(in: self.view)
+	/// Presents the share sheet for the item on display.
+	///
+	/// - Parameter location: The point in the viewer the sheet points at.
+	private func shareCurrentItem(at location: CGPoint) {
+		guard self.items.indices.contains(self.currentIndex) else { return }
 		self.share(self.items[self.currentIndex], from: self.view, at: CGRect(origin: location, size: .zero))
+	}
+
+	/// Returns whether the viewer owns the gesture at the given point.
+	///
+	/// - Parameter location: A point in the viewer's coordinate space.
+	/// - Returns: `true` when no selectable content sits under `location`.
+	private func canClaimGesture(at location: CGPoint) -> Bool {
+		guard let renderer = self.currentMedia else { return true }
+		guard !renderer.hasActiveTextSelection else { return false }
+
+		return !renderer.hasInteractiveItem(at: renderer.mediaView.convert(location, from: self.view))
 	}
 
 	@objc private func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
@@ -275,14 +295,18 @@ final class MediaAlbumViewController: UIPageViewController {
 		}
 
 		self.actionBar.configure(with: actions)
+		self.actionBar.saveMenu = self.makeSaveMenu(for: item)
 
-		self.actionBar.onAction = { [weak self] action in
-			guard let self = self else { return }
-			switch action {
-			case .share: self.share(item)
-			case .save: self.save(item)
-			case .more(let menu): self.presentMoreMenu(menu, from: self.actionBar.moreButton)
-			}
+		self.actionBar.onShare = { [weak self] in
+			self?.share(item)
+		}
+
+		self.actionBar.onSave = { [weak self] in
+			self?.save(item)
+		}
+
+		self.actionBar.onPresentMenu = { [weak self] menu, sourceView in
+			self?.presentMenu(menu, from: sourceView)
 		}
 	}
 
@@ -291,7 +315,7 @@ final class MediaAlbumViewController: UIPageViewController {
 	/// - Parameters:
 	///    - menu: The menu whose actions to display.
 	///    - sourceView: The view the popover anchors to.
-	private func presentMoreMenu(_ menu: UIMenu, from sourceView: UIView) {
+	private func presentMenu(_ menu: UIMenu, from sourceView: UIView) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		for child in menu.children {
@@ -317,8 +341,8 @@ final class MediaAlbumViewController: UIPageViewController {
 	private func makeMoreMenu(for item: MediaItem) -> UIMenu {
 		var options: [UIAction] = []
 
-		options.append(UIAction(title: L10n.copy, image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
-			self?.copyImage(for: item)
+		options.append(UIAction(title: L10n.statsForNerds, image: UIImage(systemName: "info.circle")) { [weak self] _ in
+			self?.presentStats(for: item)
 		})
 
 		options.append(UIAction(title: L10n.openInBrowser, image: UIImage(systemName: "safari")) { _ in
@@ -326,6 +350,45 @@ final class MediaAlbumViewController: UIPageViewController {
 		})
 
 		return UIMenu(title: "", children: options)
+	}
+
+	/// Returns the menu the save button reveals when held.
+	///
+	/// - Parameter item: The item on display.
+	/// - Returns: The menu listing every way to keep the media.
+	private func makeSaveMenu(for item: MediaItem) -> UIMenu {
+		var options: [UIAction] = []
+
+		options.append(UIAction(title: L10n.copyImage, image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+			self?.copyImage(for: item)
+		})
+
+		options.append(UIAction(title: L10n.saveImage, image: UIImage(systemName: "square.and.arrow.down")) { [weak self] _ in
+			self?.save(item)
+		})
+
+		if self.items.count > 1 {
+			options.append(UIAction(title: L10n.saveAlbum, image: UIImage(systemName: "square.and.arrow.down.on.square")) { [weak self] _ in
+				self?.saveAlbum()
+			})
+		}
+
+		options.append(UIAction(title: L10n.saveToFolder, image: UIImage(systemName: "folder")) { [weak self] _ in
+			self?.exportImage(for: item)
+		})
+
+		return UIMenu(title: "", children: options)
+	}
+
+	/// Presents the technical details of the given item.
+	///
+	/// - Parameter item: The item to describe.
+	private func presentStats(for item: MediaItem) {
+		let statsViewController = MediaStatsViewController(mediaItem: item, image: self.currentMedia?.mediaImage)
+		let navigationController = KNavigationController(rootViewController: statsViewController)
+		navigationController.modalPresentationStyle = .formSheet
+
+		self.present(navigationController, animated: true)
 	}
 
 	/// Copies the media's image to the pasteboard.
@@ -380,11 +443,43 @@ final class MediaAlbumViewController: UIPageViewController {
 		self.present(activityViewController, animated: true)
 	}
 
-	public func save(_ item: MediaItem) {
+	/// Saves the given item to the destination chosen in Settings.
+	///
+	/// - Parameter item: The item to save.
+	func save(_ item: MediaItem) {
 		Task {
 			do {
-				try await MediaSaverManager.shared.saveImage(from: item.url)
-				self.handleSaveSuccess()
+				let destination = try await MediaSaverManager.shared.saveImage(from: item.url)
+				self.handleSaveSuccess(at: destination, isAlbum: false)
+			} catch let error as MediaSaverManager.SaverError {
+				self.handleSaveError(error)
+			}
+		}
+	}
+
+	/// Saves every item in the album to the destination chosen in Settings.
+	private func saveAlbum() {
+		Task {
+			do {
+				let destination = try await MediaSaverManager.shared.saveImages(from: self.items.map(\.url))
+				self.handleSaveSuccess(at: destination, isAlbum: true)
+			} catch let error as MediaSaverManager.SaverError {
+				self.handleSaveError(error)
+			}
+		}
+	}
+
+	/// Lets the user pick where to write the given item.
+	///
+	/// - Parameter item: The item to export.
+	private func exportImage(for item: MediaItem) {
+		Task {
+			do {
+				let fileURL = try await MediaSaverManager.shared.stageImage(from: item.url)
+				let documentPicker = UIDocumentPickerViewController(forExporting: [fileURL], asCopy: true)
+				documentPicker.popoverPresentationController?.sourceView = self.actionBar
+
+				self.present(documentPicker, animated: true)
 			} catch let error as MediaSaverManager.SaverError {
 				self.handleSaveError(error)
 			}
@@ -440,8 +535,15 @@ final class MediaAlbumViewController: UIPageViewController {
 		}
 	}
 
-	private func handleSaveSuccess() {
-		self.showToast(L10n.imageSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+	private func handleSaveSuccess(at destination: MediaSaveDestination, isAlbum: Bool) {
+		switch (destination, isAlbum) {
+		case (.photoLibrary, false):
+			self.showToast(L10n.imageSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+		case (.photoLibrary, true):
+			self.showToast(L10n.albumSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+		case (.folder, _):
+			self.showToast(L10n.imageSavedToFolder, systemImageName: "checkmark.circle", feedback: .success)
+		}
 	}
 
 	private func handleSaveError(_ error: MediaSaverManager.SaverError) {
@@ -454,6 +556,8 @@ final class MediaAlbumViewController: UIPageViewController {
 			message = L10n.imageDownloadFailed
 		case .saveFailed:
 			message = L10n.imageSaveFailedRetry
+		case .destinationUnavailable:
+			message = L10n.imageSaveFailed
 		}
 
 		self.showToast(message, systemImageName: "xmark.octagon", feedback: .error)
@@ -504,7 +608,7 @@ final class MediaAlbumViewController: UIPageViewController {
 	}
 
 	@objc private func closeKeyCommandInvoked(_ sender: UIKeyCommand) {
-		self.close(using: .button)
+		self.close(using: .keyboard)
 	}
 
 	@objc private func copyKeyCommandInvoked(_ sender: UIKeyCommand) {
@@ -576,26 +680,17 @@ extension MediaAlbumViewController: UIViewControllerTransitioningDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension MediaAlbumViewController: UIGestureRecognizerDelegate {
 	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		// Tap gesture: exclude taps on controls.
-		if gestureRecognizer is UITapGestureRecognizer {
-			let location = gestureRecognizer.location(in: self.view)
-			if let hitView = self.view.hitTest(location, with: nil), hitView is UIControl {
-				return false
-			}
-			return true
-		}
+		let location = gestureRecognizer.location(in: self.view)
+		let isOverControl = self.view.hitTest(location, with: nil) is UIControl
 
 		// Share long press: yield to text and subjects the system claims.
 		if gestureRecognizer is UILongPressGestureRecognizer {
-			let location = gestureRecognizer.location(in: self.view)
-			if let hitView = self.view.hitTest(location, with: nil), hitView is UIControl {
-				return false
-			}
+			guard !isOverControl else { return false }
+			return self.canClaimGesture(at: location)
+		}
 
-			guard let renderer = self.currentMedia else { return true }
-			guard !renderer.hasActiveTextSelection else { return false }
-
-			return !renderer.hasInteractiveItem(at: renderer.mediaView.convert(location, from: self.view))
+		if gestureRecognizer is UITapGestureRecognizer {
+			return !isOverControl
 		}
 
 		// Dismiss pan: require a primarily vertical velocity and an unzoomed scroll view.
@@ -619,6 +714,28 @@ extension MediaAlbumViewController: UIGestureRecognizerDelegate {
 		return true
 	}
 }
+
+// MARK: - UIContextMenuInteractionDelegate
+#if targetEnvironment(macCatalyst)
+extension MediaAlbumViewController: UIContextMenuInteractionDelegate {
+	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+		guard self.items.indices.contains(self.currentIndex) else { return nil }
+		guard self.canClaimGesture(at: location) else { return nil }
+
+		let item = self.items[self.currentIndex]
+
+		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+			guard let self = self else { return nil }
+
+			let share = UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+				self?.shareCurrentItem(at: location)
+			}
+
+			return UIMenu(children: [share] + self.makeSaveMenu(for: item).children)
+		}
+	}
+}
+#endif
 
 // MARK: - OrientationManagerDelegate
 extension MediaAlbumViewController: OrientationManagerDelegate {

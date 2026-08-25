@@ -36,7 +36,7 @@ class SettingsCell: KTableViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given title.
-	func configure(title: String?, subtitle: String? = nil, detail: String? = nil, icon: UIImage? = nil) {
+	func configure(title: String?, subtitle: String? = nil, detail: String? = nil, icon: UIImage? = nil, isEnabled: Bool = true) {
 		self.primaryLabel?.text = title
 
 		self.secondaryLabel?.text = subtitle
@@ -47,6 +47,10 @@ class SettingsCell: KTableViewCell {
 
 		self.iconImageView?.image = icon
 		self.iconImageViewContainer?.isHidden = icon == nil
+
+		self.primaryLabel?.theme_textColor = isEnabled ? KThemePicker.tableViewCellTitleTextColor.rawValue : KThemePicker.subTextColor.rawValue
+		self.contentView.alpha = isEnabled ? 1.0 : 0.5
+		self.selectionStyle = isEnabled ? .default : .none
 	}
 
 	/// Configure the cell with the given details.

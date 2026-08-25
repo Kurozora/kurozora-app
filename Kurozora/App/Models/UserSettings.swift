@@ -23,6 +23,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.notificationsAllowed.rawValue: true,
 			UserSettingsKey.notificationsSound.rawValue: true,
 			UserSettingsKey.notificationsBadge.rawValue: true,
+			UserSettingsKey.notificationsMirrorWatch.rawValue: true,
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
 			UserSettingsKey.hapticsAllowed.rawValue: true,
@@ -34,6 +35,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 			UserSettingsKey.videoAutoplayPolicy.rawValue: VideoAutoplayPolicy.default.rawValue,
+			UserSettingsKey.liveTextAnalyzerEnabled.rawValue: true,
 			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
 			UserSettingsKey.miniPlayerStaysOnTop.rawValue: true,
 			UserSettingsKey.miniPlayerShowsOnAllSpaces.rawValue: true,
@@ -329,6 +331,11 @@ extension UserSettings {
 	static var notificationsBadge: Bool {
 		return self.shared.bool(forKey: #function)
 	}
+
+	/// Returns a boolean indicating if the Watch should mirror the iPhone's notification grouping.
+	static var notificationsMirrorWatch: Bool {
+		return self.shared.bool(forKey: #function)
+	}
 }
 
 // MARK: - Motion Settings
@@ -458,6 +465,26 @@ extension UserSettings {
 	static var videoAutoplayPolicy: VideoAutoplayPolicy {
 		guard let policy = VideoAutoplayPolicy(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return policy
+	}
+
+	/// Returns the place saved images are written to.
+	static var mediaSaveDestination: Int {
+		return self.shared.integer(forKey: #function)
+	}
+
+	/// Returns the bookmark of the folder saved images are written to.
+	static var mediaSaveDirectoryBookmark: Data? {
+		return self.shared.data(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether saved images are also added to an album named Kurozora.
+	static var mediaSaveToKurozoraAlbum: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a Boolean indicating whether text and subjects inside media are recognized.
+	static var liveTextAnalyzerEnabled: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns a Boolean indicating whether a notification is posted when the song changes.

@@ -110,6 +110,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case notificationsSound
 	/// The key to the selected notification badge option.
 	case notificationsBadge
+	/// The key indicating whether the Watch should mirror the iPhone's notification grouping.
+	case notificationsMirrorWatch
 
 	// Sounds & Haptics settings keys
 	/// The key to the selected chime option.
@@ -158,6 +160,16 @@ enum UserSettingsKey: String, CaseIterable {
 	// Video keys
 	/// The key to the conditions under which trailers play automatically.
 	case videoAutoplayPolicy
+
+	// Media keys
+	/// The key to the place saved images are written to.
+	case mediaSaveDestination
+	/// The key to the bookmark of the folder saved images are written to.
+	case mediaSaveDirectoryBookmark
+	/// The key indicating whether saved images are also added to an album named Kurozora.
+	case mediaSaveToKurozoraAlbum
+	/// The key indicating whether text and subjects inside media are recognized.
+	case liveTextAnalyzerEnabled
 
 	// Music keys
 	/// The key indicating whether the now-playing accessory shows total time instead of remaining time.

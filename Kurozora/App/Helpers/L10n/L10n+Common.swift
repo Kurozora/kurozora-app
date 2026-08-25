@@ -407,6 +407,80 @@ extension L10n {
 		}
 	}
 
+	// MARK: - Media Viewer
+	/// The action that copies the image to the pasteboard.
+	static var copyImage: String {
+		L10n.resolve {
+			String(localized: "Copy Image", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that copies the image to the pasteboard.")
+		}
+	}
+	/// The action that saves the image.
+	static var saveImage: String {
+		L10n.resolve {
+			String(localized: "Save Image", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that saves the image.")
+		}
+	}
+	/// The action that saves every image in the album.
+	static var saveAlbum: String {
+		L10n.resolve {
+			String(localized: "Save Album", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that saves every image in the album.")
+		}
+	}
+	/// The action that saves the image to a folder the user picks.
+	static var saveToFolder: String {
+		L10n.resolve {
+			String(localized: "Save to…", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that saves the image to a folder the user picks.")
+		}
+	}
+	/// The toast shown after every image in an album is saved.
+	static var albumSavedToLibrary: String {
+		L10n.resolve {
+			String(localized: "Album saved to your library!", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toast shown after every image in an album is saved.")
+		}
+	}
+	/// The toast shown after an image is saved to a folder.
+	static var imageSavedToFolder: String {
+		L10n.resolve {
+			String(localized: "Image saved!", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toast shown after an image is saved to a folder.")
+		}
+	}
+	/// The screen listing an image's technical details.
+	static var statsForNerds: String {
+		L10n.resolve {
+			String(localized: "Stats for Nerds", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The screen listing an image's technical details.")
+		}
+	}
+	/// The label for an image's pixel width and height.
+	static var dimensions: String {
+		L10n.resolve {
+			String(localized: "Dimensions", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for an image's pixel width and height.")
+		}
+	}
+	/// The label for an image's width to height ratio.
+	static var aspectRatio: String {
+		L10n.resolve {
+			String(localized: "Aspect Ratio", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for an image's width to height ratio.")
+		}
+	}
+	/// The label for an image's size on disk.
+	static var fileSize: String {
+		L10n.resolve {
+			String(localized: "File Size", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for an image's size on disk.")
+		}
+	}
+	/// The label for an image's format.
+	static var fileType: String {
+		L10n.resolve {
+			String(localized: "File Type", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for an image's format.")
+		}
+	}
+	/// The label for an image's color space.
+	static var colorSpace: String {
+		L10n.resolve {
+			String(localized: "Color Space", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for an image's color space.")
+		}
+	}
+
 	// MARK: - Misc
 	/// The string for the word 'Error'.
 	///
@@ -3584,6 +3658,17 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "The string for the word 'Unmute'."
+			)
+		}
+	}
+	/// The string for the word 'Fullscreen'.
+	static var fullscreen: String {
+		L10n.resolve {
+			String(
+				localized: "Fullscreen",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that opens a trailer fullscreen."
 			)
 		}
 	}

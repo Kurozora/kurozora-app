@@ -146,6 +146,9 @@ extension SettingsTableViewController {
 		/// The row representing the library cell.
 		case library
 
+		/// The row representing the media cell.
+		case media
+
 		/// The row representing the music cell.
 		case music
 
@@ -217,7 +220,7 @@ extension SettingsTableViewController {
 		static let all: [Row] = [
 			.account, .switchAccount,
 			.keychain, .syncScenarios,
-			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -228,7 +231,7 @@ extension SettingsTableViewController {
 		/// An array containing all normal user settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme,
+			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
 			.signalSticker, .telegramSticker, .whatsAppSticker,
@@ -255,9 +258,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.cache, .displayBlindness, .gestures, .library, .music, .lowDataMode, .motion, .theme]
+			return [.cache, .displayBlindness, .gestures, .library, .media, .music, .lowDataMode, .motion, .theme]
 			#else
-			return [.browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme]
+			return [.browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme]
 			#endif
 		}
 
@@ -315,6 +318,8 @@ extension SettingsTableViewController {
 				return .iconSegue
 			case .library:
 				return .librarySegue
+			case .media:
+				return .mediaSegue
 			case .music:
 				return .musicSegue
 			case .lowDataMode:
@@ -364,6 +369,8 @@ extension SettingsTableViewController {
 			case .icon:
 				return .labelAndChevron
 			case .library:
+				return .chevron
+			case .media:
 				return .chevron
 			case .music:
 				return .chevron
@@ -435,6 +442,8 @@ extension SettingsTableViewController {
 				return L10n.icon
 			case .library:
 				return L10n.library
+			case .media:
+				return L10n.media
 			case .music:
 				return L10n.music
 			case .lowDataMode:
@@ -527,6 +536,8 @@ extension SettingsTableViewController {
 				return .appIconPreview(named: UserSettings.appIcon)
 			case .library:
                 return .Icons.library
+			case .media:
+				return .Icons.photoStack
 			case .music:
                 return .Icons.musicNoteCircle
 			case .lowDataMode:

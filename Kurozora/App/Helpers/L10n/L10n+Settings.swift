@@ -2097,4 +2097,72 @@ extension L10n {
 			String(localized: "Every style is stored on the same five star scale, so you can switch whenever you like without losing your ratings.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining how the rating style is applied.")
 		}
 	}
+
+	// MARK: - Media
+	/// The name of the media settings screen.
+	static var media: String {
+		L10n.resolve {
+			String(localized: "Media", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the media settings screen.")
+		}
+	}
+	/// The description of the media settings screen.
+	static var mediaHeaderDescription: String {
+		L10n.resolve {
+			String(localized: "Choose where images are saved and whether the text inside them is recognized.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The description of the media settings screen.")
+		}
+	}
+	/// The section listing where saved images are written to.
+	static var saveLocation: String {
+		L10n.resolve {
+			String(localized: "Save Location", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The section listing where saved images are written to.")
+		}
+	}
+	/// The row choosing where saved images are written to.
+	static var location: String {
+		L10n.resolve {
+			String(localized: "Location", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row choosing where saved images are written to.")
+		}
+	}
+	/// The destination that writes saved images to a folder.
+	static var saveFolder: String {
+		L10n.resolve {
+			String(localized: "Folder", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The destination that writes saved images to a folder.")
+		}
+	}
+	/// The destination that writes saved images to the system photo library.
+	static var savePhotoLibrary: String {
+		L10n.resolve {
+			String(localized: "Photo Library", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The destination that writes saved images to the system photo library.")
+		}
+	}
+	/// The action that picks the folder saved images are written to.
+	static var chooseFolder: String {
+		L10n.resolve {
+			String(localized: "Choose Folder…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that picks the folder saved images are written to.")
+		}
+	}
+	/// The toggle that also adds saved images to an album named Kurozora.
+	static var saveToKurozoraAlbum: String {
+		L10n.resolve {
+			String(localized: "Save to \u{201C}Kurozora\u{201D} Album", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toggle that also adds saved images to an album named Kurozora.")
+		}
+	}
+	/// The footer explaining the Kurozora album toggle.
+	static var saveToKurozoraAlbumFooter: String {
+		L10n.resolve {
+			String(localized: "Saved images are grouped into their own album.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining the Kurozora album toggle.")
+		}
+	}
+	/// The toggle that recognizes text and subjects inside media.
+	static var liveTextAnalyzer: String {
+		L10n.resolve {
+			String(localized: "Live Text Analyzer", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toggle that recognizes text and subjects inside media.")
+		}
+	}
+	/// The footer explaining the Live Text Analyzer toggle.
+	static var liveTextAnalyzerFooter: String {
+		L10n.resolve {
+			String(localized: "Select and copy text inside an image, and touch and hold a subject to lift it from the background.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining the Live Text Analyzer toggle.")
+		}
+	}
 }

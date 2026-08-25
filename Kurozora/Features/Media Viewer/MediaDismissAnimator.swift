@@ -61,7 +61,7 @@ final class MediaDismissAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
 		proxy.animateMaskAndCrop(to: targetCornerRadius, contentsRect: thumbnail.layer.contentsRect, duration: duration)
 
-		UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut]) {
+		UIView.animate(withDuration: duration, delay: 0, options: self.closeMethod.animationOptions) {
 			proxy.frame = targetFrame
 			albumViewController.setChromeAlpha(0)
 		} completion: { _ in

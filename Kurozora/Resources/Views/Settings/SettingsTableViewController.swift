@@ -21,6 +21,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case gesturesSegue
 		case iconSegue
 		case librarySegue
+		case mediaSegue
 		case musicSegue
 		case lowDataModeSegue
 		case motionSegue
@@ -174,6 +175,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case .gesturesSegue: return GesturesSettingsViewController()
 		case .iconSegue: return ManageIconTableViewController()
 		case .librarySegue: return LibrarySettingsViewController()
+		case .mediaSegue: return MediaSettingsViewController()
 		case .musicSegue: return MusicSettingsViewController()
 		case .lowDataModeSegue: return LowDataModeSettingsViewController()
 		case .motionSegue: return MotionSettingsViewController()
@@ -195,7 +197,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		switch identifier {
 		case .accountSegue, .switchAccountSegue, .keysSegue, .syncScenariosSegue,
 		     .browserSegue, .displaySegue, .gesturesSegue, .iconSegue,
-		     .librarySegue, .musicSegue, .lowDataModeSegue, .motionSegue, .themeSegue,
+		     .librarySegue, .mediaSegue, .musicSegue, .lowDataModeSegue, .motionSegue, .themeSegue,
 		     .notificationSegue, .reminderSubscriptionSegue, .soundSegue,
 		     .biometricsSegue, .privacySegue,
 		     .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
@@ -338,7 +340,7 @@ extension SettingsTableViewController {
 		switch sectionRow {
 		case .switchAccount,
 		     .keychain, .syncScenarios,
-		     .browser, .cache, .displayBlindness, .gestures, .icon, .library, .music, .lowDataMode, .motion, .theme,
+		     .browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
 		     .soundsAndHaptics,
 		     .biometrics, .privacy,
 		     .unlockFeatures, .tipjar, .requestRefund:

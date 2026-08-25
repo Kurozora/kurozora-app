@@ -93,7 +93,9 @@ final class ImageRendererViewController: UIViewController, MediaRenderable {
 	}
 
 	private func configureLiveText() {
+		guard UserSettings.liveTextAnalyzerEnabled else { return }
 		guard #available(iOS 16.0, macCatalyst 17.0, *) else { return }
+
 		self.liveTextController = MediaLiveTextController(imageView: self.imageView, hostViewController: self)
 	}
 
