@@ -124,6 +124,12 @@ class EmptyBackgroundView: UIView {
 	/// The constraint centering the content view vertically.
 	private var contentViewCenterYConstraint: NSLayoutConstraint?
 
+	/// The constraints insetting the text from the content view's leading edge.
+	private var leadingInsetConstraints: [NSLayoutConstraint] = []
+
+	/// The constraints insetting the text from the content view's trailing edge.
+	private var trailingInsetConstraints: [NSLayoutConstraint] = []
+
 	/// Whether the constraints are configured.
 	var didConfigureConstraints = false
 
@@ -230,6 +236,25 @@ class EmptyBackgroundView: UIView {
 		self.didTapButtonHandle?()
 	}
 
+	/// Insets the text from the view's horizontal edges.
+	private func updateHorizontalInsets() {
+		let inset = (self.bounds.width / 16.0).rounded()
+		guard self.leadingInsetConstraints.first?.constant != inset else { return }
+
+		for constraint in self.leadingInsetConstraints {
+			constraint.constant = inset
+		}
+
+		for constraint in self.trailingInsetConstraints {
+			constraint.constant = -inset
+		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.updateHorizontalInsets()
+	}
+
 	override func updateConstraints() {
 		if !self.didConfigureConstraints {
 			// Center the content to the layout margins guide, so it responds to sidebars and other insets.
@@ -241,17 +266,20 @@ class EmptyBackgroundView: UIView {
 			contentViewCenterYConstraint.isActive = true
 			self.contentViewCenterYConstraint = contentViewCenterYConstraint
 
-			let width = frame.width > 0 ? frame.width : UIScreen.main.bounds.width
-			let padding = (width / 16.0).rounded()
-
 			// Center the image while the text elements inset from the content view's edges.
 			self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
 
 			let insetSubviews: [UIView] = [self.titleLabel, self.detailLabel, self.button]
 			for subview in insetSubviews {
-				subview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: padding).isActive = true
-				subview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -padding).isActive = true
+				let leadingConstraint = subview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
+				let trailingConstraint = subview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+				NSLayoutConstraint.activate([leadingConstraint, trailingConstraint])
+
+				self.leadingInsetConstraints.append(leadingConstraint)
+				self.trailingInsetConstraints.append(trailingConstraint)
 			}
+
+			self.updateHorizontalInsets()
 
 			// Stack the elements top to bottom, separated by the vertical space.
 			let stackedSubviews: [UIView] = [self.imageView, self.titleLabel, self.detailLabel, self.button]
