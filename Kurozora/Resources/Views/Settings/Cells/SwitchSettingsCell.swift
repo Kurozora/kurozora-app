@@ -19,7 +19,10 @@ class SwitchSettingsCell: SettingsCell {
 		self.toggleSwitch.isOn = isOn
 		self.toggleSwitch.tag = tag
 
-		self.toggleSwitch.removeAction(identifiedBy: action.identifier, for: .valueChanged)
+		self.toggleSwitch.enumerateEventHandlers { existingAction, _, event, _ in
+			guard let existingAction = existingAction, event == .valueChanged else { return }
+			self.toggleSwitch.removeAction(existingAction, for: .valueChanged)
+		}
 		self.toggleSwitch.addAction(action, for: .valueChanged)
 	}
 }
