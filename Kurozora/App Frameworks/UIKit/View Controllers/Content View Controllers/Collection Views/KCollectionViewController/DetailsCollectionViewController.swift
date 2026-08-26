@@ -28,6 +28,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 	var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: L10n.more, image: UIImage(systemName: "ellipsis.circle"))
 
+	/// The button that toggles the header trailer's sound.
+	private lazy var trailerMuteBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "speaker.slash.fill"), style: .plain, target: self, action: #selector(self.toggleTrailerMute))
+
+	/// The button that opens the header trailer fullscreen.
+	private lazy var trailerFullscreenBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), style: .plain, target: self, action: #selector(self.enterTrailerFullscreen))
+
 	#if targetEnvironment(macCatalyst)
 	/// The Touch Bar item that toggles the active model's favorite status.
 	var toggleFavoriteTouchBarItem: NSButtonTouchBarItem?
@@ -57,6 +63,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 			self.setNeedsActivityIndicatorAppearanceUpdate()
 		}
 	}
+
+	/// A Boolean value indicating whether the navigation bar shows the title instead of the header.
+	private var isNavigationTitleVisible = false
+
+	/// The trailer button state already applied to the navigation bar.
+	private var appliedTrailerBarButtonState: (showsItems: Bool, isMuted: Bool)?
 
 	/// The image displayed in the empty-data view.
 	var emptyStateImage: UIImage? { nil }
@@ -165,6 +177,10 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		self.collectionView.contentInset.bottom = tabBarHeight
 
 		self.updateFullBleedHeaderInset()
+
+		// The header cell appears after the navigation chrome is first configured, so the trailer's
+		// buttons are picked up here once it exists.
+		self.updateTrailerBarButtonItems()
 	}
 
 	override func viewSafeAreaInsetsDidChange() {
@@ -220,6 +236,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 				UIView.animate(withDuration: 0.25) {
 					self.navigationTitleLabel.alpha = targetAlpha
 				}
+
+				// The title appears exactly when the header has scrolled out of sight, so it also
+				// marks the point the trailer is no longer worth playing.
+				self.isNavigationTitleVisible = targetAlpha == 1
+				self.headerTrailerPlayerView?.setPlaybackSuspended(self.isNavigationTitleVisible)
+				self.updateTrailerBarButtonItems()
 			}
 		}
 
@@ -254,7 +276,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	/// Installs the custom title view and the "more" bar button on `navigationItem`.
 	func configureNavigationItems() {
 		self.configureNavigationTitleView()
-		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
+		self.updateTrailerBarButtonItems()
 	}
 
 	private func configureNavigationTitleView() {
@@ -278,6 +300,108 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	/// Applies the menu returned by ``makeMoreMenu()`` to ``moreBarButtonItem``.
 	func configureNavBarButtons() {
 		self.moreBarButtonItem.menu = self.makeMoreMenu()
+		self.updateTrailerBarButtonItems()
+	}
+
+	/// The trailer playing in the header, when the screen shows one.
+	private var headerTrailerPlayerView: KTrailerPlayerView? {
+		let headerCell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+		return (headerCell as? BaseDetailHeaderCollectionViewCell)?.hostedTrailerPlayerView
+	}
+
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// The trailer's keyboard and menu commands resolve through the responder chain.
+		self.becomeFirstResponder()
+	}
+
+	override var keyCommands: [UIKeyCommand]? {
+		var commands = super.keyCommands ?? []
+
+		if self.headerTrailerPlayerView?.hasLoadedTrailer == true {
+			let fullscreenCommand = UIKeyCommand(action: #selector(self.toggleTrailerFullscreen), input: "f", modifierFlags: .command)
+			fullscreenCommand.wantsPriorityOverSystemBehavior = true
+			commands.append(fullscreenCommand)
+		}
+
+		return commands
+	}
+
+	/// Opens the header trailer fullscreen in response to the fullscreen command.
+	@objc func toggleTrailerFullscreen() {
+		self.enterTrailerFullscreen()
+	}
+
+	/// Plays or pauses the header trailer in response to the playback command.
+	@objc func togglePlayPause() {
+		guard let headerTrailerPlayerView = self.headerTrailerPlayerView else { return }
+
+		if headerTrailerPlayerView.isTrailerPlaying {
+			headerTrailerPlayerView.pauseByReader()
+		} else {
+			headerTrailerPlayerView.playByReader()
+		}
+	}
+
+	/// Toggles the header trailer's sound in response to the mute command.
+	@objc func muteVolume() {
+		self.toggleTrailerMute()
+	}
+
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		switch action {
+		// Inline, the trailer answers for fullscreen, sound, and play or pause.
+		case #selector(self.toggleTrailerFullscreen), #selector(self.togglePlayPause), #selector(self.muteVolume):
+			return self.headerTrailerPlayerView?.hasLoadedTrailer == true
+		default:
+			return super.canPerformAction(action, withSender: sender)
+		}
+	}
+
+	/// Groups the trailer's sound and fullscreen buttons beside the more button.
+	///
+	/// The pair is offered only while the header trailer is in sight; once the title takes over the
+	/// navigation bar the trailer is off screen and its controls go with it.
+	private func updateTrailerBarButtonItems() {
+		let trailerPlayerView = self.headerTrailerPlayerView
+		let showsTrailerItems = trailerPlayerView?.hasLoadedTrailer == true && !self.isNavigationTitleVisible
+		let isMuted = trailerPlayerView?.isTrailerMuted ?? true
+
+		guard self.appliedTrailerBarButtonState?.showsItems != showsTrailerItems || self.appliedTrailerBarButtonState?.isMuted != isMuted else { return }
+		self.appliedTrailerBarButtonState = (showsTrailerItems, isMuted)
+
+		guard showsTrailerItems else {
+			self.navigationItem.rightBarButtonItems = [self.moreBarButtonItem]
+			return
+		}
+		self.trailerMuteBarButtonItem.image = UIImage(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+		self.trailerMuteBarButtonItem.accessibilityLabel = isMuted ? L10n.unmute : L10n.mute
+		self.trailerFullscreenBarButtonItem.accessibilityLabel = L10n.fullscreen
+
+		if #available(iOS 16.0, macCatalyst 16.0, *) {
+			self.navigationItem.trailingItemGroups = [
+				UIBarButtonItemGroup.fixedGroup(items: [self.trailerMuteBarButtonItem, self.trailerFullscreenBarButtonItem]),
+				UIBarButtonItemGroup.fixedGroup(items: [self.moreBarButtonItem])
+			]
+		} else {
+			self.navigationItem.rightBarButtonItems = [self.moreBarButtonItem, self.trailerFullscreenBarButtonItem, self.trailerMuteBarButtonItem]
+		}
+	}
+
+	/// Toggles the header trailer's sound.
+	@objc private func toggleTrailerMute() {
+		self.headerTrailerPlayerView?.toggleMuteByReader()
+		self.updateTrailerBarButtonItems()
+	}
+
+	/// Opens the header trailer fullscreen.
+	@objc private func enterTrailerFullscreen() {
+		self.headerTrailerPlayerView?.enterFullscreenByReader()
 	}
 
 	// MARK: Favorite / reminder

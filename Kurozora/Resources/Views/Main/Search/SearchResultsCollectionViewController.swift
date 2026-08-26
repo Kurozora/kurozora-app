@@ -84,7 +84,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		BrowseCategory(title: L10n.schedule, image: .Browse.schedule, segueIdentifier: SegueIdentifiers.scheduleSegue),
 		BrowseCategory(title: L10n.museum, image: .Browse.museum, segueIdentifier: SegueIdentifiers.museumSegue),
 		BrowseCategory(title: L10n.adaptedToAnime, image: .Browse.adaptedToAnime, segueIdentifier: SegueIdentifiers.adaptedSegue),
-		BrowseCategory(title: L10n.trailers, image: UIImage(systemName: "play.rectangle.on.rectangle"), segueIdentifier: SegueIdentifiers.trailersSegue),
+		BrowseCategory(title: L10n.trailers, image: .Browse.trailers, segueIdentifier: SegueIdentifiers.trailersSegue),
 		BrowseCategory(title: L10n.topCharts, image: .Browse.charts, segueIdentifier: SegueIdentifiers.topChartsSegue),
 		BrowseCategory(title: L10n.shows, image: .Browse.shows, searchType: .shows),
 		BrowseCategory(title: L10n.literatures, image: .Browse.literatures, searchType: .literatures),

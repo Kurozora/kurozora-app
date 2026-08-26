@@ -24,6 +24,16 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 
+	// MARK: - Views
+	/// The view that auto-plays the show's trailer over the banner.
+	private let trailerPlayerView: KTrailerPlayerView = {
+		let trailerPlayerView = KTrailerPlayerView()
+		// Sound and fullscreen live in the navigation bar on this screen.
+		trailerPlayerView.showsSecondaryControls = false
+		trailerPlayerView.translatesAutoresizingMaskIntoConstraints = false
+		return trailerPlayerView
+	}()
+
 	// MARK: - Properties
 	var libraryStatus: LibraryStatus = .none
 	var libraryKind: LibraryKind = .shows
@@ -51,11 +61,32 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
 			self?.syncLiteratureMaskFrame()
 		}
+
+		self.configureTrailerPlayerView()
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.trailerPlayerView.stopTrailer()
 	}
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		self.syncLiteratureMaskFrame()
+	}
+
+	/// Pins the trailer player view on top of the banner image view.
+	private func configureTrailerPlayerView() {
+		guard let bannerSuperview = self.bannerImageView.superview else { return }
+		bannerSuperview.insertSubview(self.trailerPlayerView, aboveSubview: self.bannerImageView)
+
+		NSLayoutConstraint.activate([
+			self.trailerPlayerView.topAnchor.constraint(equalTo: self.bannerImageView.topAnchor),
+			self.trailerPlayerView.leadingAnchor.constraint(equalTo: self.bannerImageView.leadingAnchor),
+			self.trailerPlayerView.trailingAnchor.constraint(equalTo: self.bannerImageView.trailingAnchor),
+			self.trailerPlayerView.bottomAnchor.constraint(equalTo: self.bannerImageView.bottomAnchor)
+		])
 	}
 }
 
@@ -119,6 +150,12 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		show.attributes.bannerImage(imageView: self.bannerImageView)
 
+		// Configure trailer
+		self.trailerPlayerView.loadTrailer(fromURL: show.attributes.videoUrl)
+		self.trailerPlayerView.shareHandler = { sourceView in
+			show.openShareSheet(sourceView: sourceView, barButtonItem: nil)
+		}
+
 		// Display details
 		self.quickDetailsView.isHidden = false
 	}
@@ -134,7 +171,7 @@ extension ShowDetailHeaderCollectionViewCell {
 
 		self.sharedConfiguration()
 
-		// Configure library status — overlay-first via `updateLibraryActions`.
+		// Configure library status, overlay-first via `updateLibraryActions`.
 		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)?.status ?? .none
 		self.updateLibraryActions(using: literature)
 
@@ -174,6 +211,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 		literature.attributes.bannerImage(imageView: self.bannerImageView)
 
+		self.trailerPlayerView.stopTrailer()
+
 		// Display details
 		self.quickDetailsView.isHidden = false
 	}
@@ -189,7 +228,7 @@ extension ShowDetailHeaderCollectionViewCell {
 
 		self.sharedConfiguration()
 
-		// Configure library status — overlay-first via `updateLibraryActions`.
+		// Configure library status, overlay-first via `updateLibraryActions`.
 		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)?.status ?? .none
 		self.updateLibraryActions(using: game)
 
@@ -228,6 +267,8 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
 		game.attributes.bannerImage(imageView: self.bannerImageView)
+
+		self.trailerPlayerView.stopTrailer()
 
 		// Display details
 		self.quickDetailsView.isHidden = false

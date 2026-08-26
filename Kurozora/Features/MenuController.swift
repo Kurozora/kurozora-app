@@ -21,6 +21,14 @@ class MenuController {
 		builder.remove(menu: .toolbar)
 		builder.insertSibling(MenuController.searchMenu(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.navigationMenu(), beforeMenu: .fullscreen)
+		// The fullscreen group anchors the video commands when the system offers it.
+		if builder.menu(for: .fullscreen) != nil {
+			builder.insertSibling(MenuController.videoViewMenu(), beforeMenu: .fullscreen)
+		} else {
+			builder.insertChild(MenuController.videoViewMenu(), atEndOfMenu: .view)
+		}
+
+		builder.insertSibling(MenuController.playbackMenu(), beforeMenu: .window)
 		builder.insertSibling(MenuController.windowMenu(), beforeMenu: .bringAllToFront)
 
 		if #available(iOS 17.0, *) {
@@ -99,6 +107,85 @@ class MenuController {
 			}
 		}
 		return UIMenu(title: minimizeAndZoomMenu.title, image: minimizeAndZoomMenu.image, identifier: minimizeAndZoomMenu.identifier, options: minimizeAndZoomMenu.options, children: commands)
+	}
+
+	/// Builds and returns the video group of the "View" menu.
+	///
+	/// - Returns: The video "View" UIMenu object.
+	class func videoViewMenu() -> UIMenu {
+		let actualSizeCommand = UIKeyCommand(title: L10n.actualSize, action: #selector(TrailerFullscreenViewController.zoomActualSize), input: "0", modifierFlags: .command, discoverabilityTitle: L10n.actualSize)
+		let increaseSizeCommand = UIKeyCommand(title: L10n.increaseSize, action: #selector(TrailerFullscreenViewController.zoomIn), input: "+", modifierFlags: .command, discoverabilityTitle: L10n.increaseSize)
+		let decreaseSizeCommand = UIKeyCommand(title: L10n.decreaseSize, action: #selector(TrailerFullscreenViewController.zoomOut), input: "-", modifierFlags: .command, discoverabilityTitle: L10n.decreaseSize)
+		let sizeMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.videoView.size"), options: .displayInline, children: [
+			actualSizeCommand,
+			increaseSizeCommand,
+			decreaseSizeCommand
+		])
+
+		let fullscreenCommand = UIKeyCommand(title: L10n.fullscreen, action: #selector(TrailerFullscreenViewController.toggleTrailerFullscreen), input: "F", modifierFlags: .command, discoverabilityTitle: L10n.fullscreen)
+		let pictureInPictureCommand = UIKeyCommand(title: L10n.pictureInPicture, action: #selector(TrailerFullscreenViewController.togglePictureInPicture), input: "P", modifierFlags: [.command, .alternate], discoverabilityTitle: L10n.pictureInPicture)
+		let screenMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.videoView.screen"), options: .displayInline, children: [
+			fullscreenCommand,
+			pictureInPictureCommand
+		])
+
+		return UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.videoView"), options: .displayInline, children: [sizeMenu, screenMenu])
+	}
+
+	/// Builds and returns the "Time Display" menu.
+	///
+	/// - Returns: The "Time Display" UIMenu object.
+	class func timeDisplayMenu() -> UIMenu {
+		let elapsedTimeCommand = UICommand(title: L10n.elapsedTime, action: #selector(TrailerFullscreenViewController.showElapsedTime), discoverabilityTitle: L10n.elapsedTime)
+		let frameCountCommand = UICommand(title: L10n.frameCount, action: #selector(TrailerFullscreenViewController.showFrameCount), discoverabilityTitle: L10n.frameCount)
+		let readingMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.timeDisplay.reading"), options: .displayInline, children: [
+			elapsedTimeCommand,
+			frameCountCommand
+		])
+
+		let goToTimestampCommand = UIKeyCommand(title: "\(L10n.goToTimestamp)…", action: #selector(TrailerFullscreenViewController.goToTimestamp), input: "K", modifierFlags: [.command, .shift], discoverabilityTitle: L10n.goToTimestamp)
+		let goToFrameCommand = UIKeyCommand(title: "\(L10n.goToFrame)…", action: #selector(TrailerFullscreenViewController.goToFrame), input: "I", modifierFlags: [.command, .shift], discoverabilityTitle: L10n.goToFrame)
+		let jumpMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.timeDisplay.jump"), options: .displayInline, children: [
+			goToTimestampCommand,
+			goToFrameCommand
+		])
+
+		return UIMenu(title: L10n.timeDisplay, identifier: UIMenu.Identifier("app.kurozora.menus.timeDisplay"), children: [readingMenu, jumpMenu])
+	}
+
+	/// Builds and returns the "Playback" menu.
+	///
+	/// - Returns: The "Playback" UIMenu object.
+	class func playbackMenu() -> UIMenu {
+		let playPauseCommand = UIKeyCommand(title: L10n.playPause, action: #selector(TrailerFullscreenViewController.togglePlayPause), input: " ", discoverabilityTitle: L10n.playPause)
+		let stepBackwardCommand = UIKeyCommand(title: L10n.stepBackward, action: #selector(TrailerFullscreenViewController.stepBackward), input: UIKeyCommand.inputLeftArrow, discoverabilityTitle: L10n.stepBackward)
+		let stepForwardCommand = UIKeyCommand(title: L10n.stepForward, action: #selector(TrailerFullscreenViewController.stepForward), input: UIKeyCommand.inputRightArrow, discoverabilityTitle: L10n.stepForward)
+		let rewindCommand = UIKeyCommand(title: L10n.rewind, action: #selector(TrailerFullscreenViewController.keyboardRewind), input: UIKeyCommand.inputLeftArrow, modifierFlags: .command, discoverabilityTitle: L10n.rewind)
+		let fastForwardCommand = UIKeyCommand(title: L10n.fastForward, action: #selector(TrailerFullscreenViewController.keyboardFastForward), input: UIKeyCommand.inputRightArrow, modifierFlags: .command, discoverabilityTitle: L10n.fastForward)
+		let goToBeginningCommand = UIKeyCommand(title: L10n.goToBeginning, action: #selector(TrailerFullscreenViewController.jumpToBeginning), input: UIKeyCommand.inputLeftArrow, modifierFlags: .alternate, discoverabilityTitle: L10n.goToBeginning)
+		let goToEndCommand = UIKeyCommand(title: L10n.goToEnd, action: #selector(TrailerFullscreenViewController.jumpToEnd), input: UIKeyCommand.inputRightArrow, modifierFlags: .alternate, discoverabilityTitle: L10n.goToEnd)
+		let transportMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.playback.transport"), options: .displayInline, children: [
+			playPauseCommand,
+			stepBackwardCommand,
+			stepForwardCommand,
+			rewindCommand,
+			fastForwardCommand,
+			goToBeginningCommand,
+			goToEndCommand
+		])
+
+		let increaseVolumeCommand = UIKeyCommand(title: L10n.increaseVolume, action: #selector(TrailerFullscreenViewController.increaseVolume), input: UIKeyCommand.inputUpArrow, discoverabilityTitle: L10n.increaseVolume)
+		let decreaseVolumeCommand = UIKeyCommand(title: L10n.decreaseVolume, action: #selector(TrailerFullscreenViewController.decreaseVolume), input: UIKeyCommand.inputDownArrow, discoverabilityTitle: L10n.decreaseVolume)
+		let fullVolumeCommand = UIKeyCommand(title: L10n.fullVolume, action: #selector(TrailerFullscreenViewController.maximizeVolume), input: UIKeyCommand.inputUpArrow, modifierFlags: .alternate, discoverabilityTitle: L10n.fullVolume)
+		let muteCommand = UIKeyCommand(title: L10n.mute, action: #selector(TrailerFullscreenViewController.muteVolume), input: UIKeyCommand.inputDownArrow, modifierFlags: .alternate, discoverabilityTitle: L10n.mute)
+		let volumeMenu = UIMenu(identifier: UIMenu.Identifier("app.kurozora.menus.playback.volume"), options: .displayInline, children: [
+			increaseVolumeCommand,
+			decreaseVolumeCommand,
+			fullVolumeCommand,
+			muteCommand
+		])
+
+		return UIMenu(title: L10n.playback, identifier: UIMenu.Identifier("app.kurozora.menus.playback"), children: [transportMenu, MenuController.timeDisplayMenu(), volumeMenu])
 	}
 
 	/// Builds and returns the "Navigation" menu.

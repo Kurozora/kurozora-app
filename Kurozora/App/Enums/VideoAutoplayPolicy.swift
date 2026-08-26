@@ -23,4 +23,16 @@ enum VideoAutoplayPolicy: Int, CaseIterable {
 	// MARK: - Properties
 	/// The default autoplay policy.
 	static let `default`: VideoAutoplayPolicy = .wifiOnly
+
+	/// The localized title of the policy.
+	var titleValue: String {
+		switch self {
+		case .never:
+			return L10n.autoplayNever
+		case .wifiOnly:
+			return L10n.autoplayWiFiOnly
+		case .wifiAndCellular:
+			return L10n.autoplayAlways
+		}
+	}
 }

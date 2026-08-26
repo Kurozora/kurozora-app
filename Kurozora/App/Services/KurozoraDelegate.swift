@@ -8,7 +8,6 @@
 
 import KurozoraKit
 import UIKit
-import XCDYouTubeKit
 
 /// A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
 ///
@@ -94,11 +93,6 @@ final class KurozoraDelegate {
 		await settings
 		_ = await sessionRestored
 
-		// Set YouTube API Key
-		if let youtubeAPIKey = KSettings?.youtubeAPIKey {
-			XCDYouTubeClient.setInnertubeApiKey(youtubeAPIKey)
-		}
-
 		// Push auth state to Watch if signed in
 		if let account = account {
 			WatchSessionManager.shared.sendAuthState(slug: accountKey, token: account.authenticationToken)
@@ -149,7 +143,7 @@ final class KurozoraDelegate {
 
 	/// Runs the process bootstrap if needed and installs the resulting interface in the given window.
 	///
-	/// The bootstrap runs once per process; later windows reuse the cached outcome and skip the splash animation.
+	/// The bootstrap runs once per process. Later windows reuse its outcome and skip the splash.
 	///
 	/// - Parameters:
 	///    - window: The window to set up.

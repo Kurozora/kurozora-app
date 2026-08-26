@@ -38,6 +38,14 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 	weak var delegate: BaseDetailHeaderCollectionViewCellDelegate?
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
+	/// The trailer playing over the header's banner, when the screen has one.
+	///
+	/// The player sits beside the banner, whether the media stays in the cell or moves into the
+	/// surround, so it is found through the banner's own superview.
+	var hostedTrailerPlayerView: KTrailerPlayerView? {
+		self.bannerImageView?.superview?.subviews.compactMap { $0 as? KTrailerPlayerView }.first
+	}
+
 	/// The controller hosting the media surround.
 	private var surroundController: UIViewController?
 
@@ -130,7 +138,7 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 	private func updateMediaGaps() {
 		guard let surroundView = self.surroundController?.viewIfLoaded else { return }
 
-		let trailerView = self.mediaView?.subviews.compactMap { $0 as? KTrailerPlayerView }.first
+		let trailerView = self.hostedTrailerPlayerView
 		if let trailerView {
 			trailerView.controlsHost = self.controlsOverlayView
 

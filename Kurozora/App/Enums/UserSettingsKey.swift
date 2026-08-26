@@ -160,6 +160,10 @@ enum UserSettingsKey: String, CaseIterable {
 	// Video keys
 	/// The key to the conditions under which trailers play automatically.
 	case videoAutoplayPolicy
+	/// The key to the quality trailers are held at on Wi-Fi.
+	case wifiVideoQuality
+	/// The key to the quality trailers are held at on cellular.
+	case cellularVideoQuality
 
 	// Media keys
 	/// The key to the place saved images are written to.

@@ -35,6 +35,8 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 			UserSettingsKey.videoAutoplayPolicy.rawValue: VideoAutoplayPolicy.default.rawValue,
+			UserSettingsKey.wifiVideoQuality.rawValue: VideoQuality.defaultWiFi.rawValue,
+			UserSettingsKey.cellularVideoQuality.rawValue: VideoQuality.defaultCellular.rawValue,
 			UserSettingsKey.liveTextAnalyzerEnabled.rawValue: true,
 			UserSettingsKey.lyricsFloatingWindowAutoOpen.rawValue: true,
 			UserSettingsKey.miniPlayerStaysOnTop.rawValue: true,
@@ -465,6 +467,18 @@ extension UserSettings {
 	static var videoAutoplayPolicy: VideoAutoplayPolicy {
 		guard let policy = VideoAutoplayPolicy(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return policy
+	}
+
+	/// Returns the quality trailers are held at on Wi-Fi.
+	static var wifiVideoQuality: VideoQuality {
+		guard let quality = VideoQuality(rawValue: self.shared.integer(forKey: #function)) else { return .defaultWiFi }
+		return quality
+	}
+
+	/// Returns the quality trailers are held at on cellular.
+	static var cellularVideoQuality: VideoQuality {
+		guard let quality = VideoQuality(rawValue: self.shared.integer(forKey: #function)) else { return .defaultCellular }
+		return quality
 	}
 
 	/// Returns the place saved images are written to.

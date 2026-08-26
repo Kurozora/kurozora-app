@@ -2876,6 +2876,39 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the words 'Wi-Fi Quality'.
+	static var wifiQuality: String {
+		L10n.resolve {
+			String(
+				localized: "Wi-Fi Quality",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings entry that chooses the trailer quality on Wi-Fi."
+			)
+		}
+	}
+	/// The string for the words 'Cellular Quality'.
+	static var cellularQuality: String {
+		L10n.resolve {
+			String(
+				localized: "Cellular Quality",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings entry that chooses the trailer quality on cellular."
+			)
+		}
+	}
+	/// The string for the video quality footer.
+	static var videoQualityFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Trailers play at the chosen quality when the video offers it. Automatic adapts to your connection.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the trailer quality options."
+			)
+		}
+	}
 	/// The string for the word 'password'.
 	///
 	/// - Tag: L10n-password
@@ -3669,6 +3702,325 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "The accessibility label for the control that opens a trailer fullscreen."
+			)
+		}
+	}
+	/// The string for the skip backward action.
+	static var skipBackward: String {
+		L10n.resolve {
+			String(
+				localized: "Skip Backward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that jumps back through a video."
+			)
+		}
+	}
+	/// The string for the skip forward action.
+	static var skipForward: String {
+		L10n.resolve {
+			String(
+				localized: "Skip Forward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that jumps forward through a video."
+			)
+		}
+	}
+	/// The string for the word 'AirPlay'.
+	static var airPlay: String {
+		L10n.resolve {
+			String(
+				localized: "AirPlay",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that plays a video on another device. AirPlay is an Apple trademark and stays untranslated."
+			)
+		}
+	}
+	/// The string for the words 'Picture in Picture'.
+	static var pictureInPicture: String {
+		L10n.resolve {
+			String(
+				localized: "Picture in Picture",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that plays a video in a floating window."
+			)
+		}
+	}
+	/// The string for the word 'Playback'.
+	static var playback: String {
+		L10n.resolve {
+			String(
+				localized: "Playback",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu holding video playback commands."
+			)
+		}
+	}
+	/// The string for the play or pause command.
+	static var playPause: String {
+		L10n.resolve {
+			String(
+				localized: "Play/Pause",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that plays or pauses a video."
+			)
+		}
+	}
+	/// The string for the step backward command.
+	static var stepBackward: String {
+		L10n.resolve {
+			String(
+				localized: "Step Backward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that steps a paused video one frame back."
+			)
+		}
+	}
+	/// The string for the step forward command.
+	static var stepForward: String {
+		L10n.resolve {
+			String(
+				localized: "Step Forward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that steps a paused video one frame forward."
+			)
+		}
+	}
+	/// The string for the rewind command.
+	static var rewind: String {
+		L10n.resolve {
+			String(
+				localized: "Rewind",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that runs a video backwards, faster with each press."
+			)
+		}
+	}
+	/// The string for the fast-forward command.
+	static var fastForward: String {
+		L10n.resolve {
+			String(
+				localized: "Fast-Forward",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that runs a video forwards, faster with each press."
+			)
+		}
+	}
+	/// The string for the go to beginning command.
+	static var goToBeginning: String {
+		L10n.resolve {
+			String(
+				localized: "Go to Beginning",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that jumps a video to its beginning."
+			)
+		}
+	}
+	/// The string for the go to end command.
+	static var goToEnd: String {
+		L10n.resolve {
+			String(
+				localized: "Go to End",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that jumps a video to its end."
+			)
+		}
+	}
+	/// The string for the increase volume command.
+	static var increaseVolume: String {
+		L10n.resolve {
+			String(
+				localized: "Increase Volume",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that raises a video's volume a step."
+			)
+		}
+	}
+	/// The string for the decrease volume command.
+	static var decreaseVolume: String {
+		L10n.resolve {
+			String(
+				localized: "Decrease Volume",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that lowers a video's volume a step."
+			)
+		}
+	}
+	/// The string for the full volume command.
+	static var fullVolume: String {
+		L10n.resolve {
+			String(
+				localized: "Full Volume",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that raises a video's volume to its loudest."
+			)
+		}
+	}
+	/// The string for the words 'Time Display'.
+	static var timeDisplay: String {
+		L10n.resolve {
+			String(
+				localized: "Time Display",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu choosing how a video's timeline reads."
+			)
+		}
+	}
+	/// The string for the words 'Elapsed Time'.
+	static var elapsedTime: String {
+		L10n.resolve {
+			String(
+				localized: "Elapsed Time",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu option that reads a video's timeline as time."
+			)
+		}
+	}
+	/// The string for the words 'Frame Count'.
+	static var frameCount: String {
+		L10n.resolve {
+			String(
+				localized: "Frame Count",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu option that reads a video's timeline as frames."
+			)
+		}
+	}
+	/// The string for the go to timestamp command.
+	static var goToTimestamp: String {
+		L10n.resolve {
+			String(
+				localized: "Go To Timestamp",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The command that jumps a video to a time the user writes in."
+			)
+		}
+	}
+	/// The string for the go to frame command.
+	static var goToFrame: String {
+		L10n.resolve {
+			String(
+				localized: "Go To Frame",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The command that jumps a video to a frame the user writes in."
+			)
+		}
+	}
+	/// The string for the word 'Go'.
+	static var go: String {
+		L10n.resolve {
+			String(
+				localized: "Go",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The button that carries out a jump the user wrote in."
+			)
+		}
+	}
+	/// The string for the actual size command.
+	static var actualSize: String {
+		L10n.resolve {
+			String(
+				localized: "Actual Size",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that shows a video at its actual size."
+			)
+		}
+	}
+	/// The string for the increase size command.
+	static var increaseSize: String {
+		L10n.resolve {
+			String(
+				localized: "Increase Size",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that enlarges a video a step."
+			)
+		}
+	}
+	/// The string for the decrease size command.
+	static var decreaseSize: String {
+		L10n.resolve {
+			String(
+				localized: "Decrease Size",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu command that shrinks a video a step."
+			)
+		}
+	}
+	/// The string for the copy subject action.
+	static var copySubject: String {
+		L10n.resolve {
+			String(
+				localized: "Copy Subject",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu action that copies the lifted subject of a picture."
+			)
+		}
+	}
+	/// The string for the share subject action.
+	static var shareSubject: String {
+		L10n.resolve {
+			String(
+				localized: "Share Subject…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu action that shares the lifted subject of a picture."
+			)
+		}
+	}
+	/// The string for the share image action.
+	static var shareImage: String {
+		L10n.resolve {
+			String(
+				localized: "Share Image…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu action that shares a picture."
+			)
+		}
+	}
+	/// The string for the words 'Playback Speed'.
+	static var playbackSpeed: String {
+		L10n.resolve {
+			String(
+				localized: "Playback Speed",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The accessibility label for the control that chooses how fast a video plays."
+			)
+		}
+	}
+	/// The string for the word 'Quality'.
+	static var videoQuality: String {
+		L10n.resolve {
+			String(
+				localized: "Quality",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The menu that chooses which quality a video plays at."
 			)
 		}
 	}

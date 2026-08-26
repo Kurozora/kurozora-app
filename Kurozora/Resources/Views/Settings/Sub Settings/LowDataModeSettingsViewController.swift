@@ -12,6 +12,8 @@ class LowDataModeSettingsViewController: SubSettingsViewController, TypedSegueHa
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case autoplaySegue
+		case wifiQualitySegue
+		case cellularQualitySegue
 	}
 
 	// MARK: - Properties
@@ -53,6 +55,10 @@ class LowDataModeSettingsViewController: SubSettingsViewController, TypedSegueHa
 		switch identifier {
 		case .autoplaySegue:
 			return AutoplaySettingsViewController()
+		case .wifiQualitySegue:
+			return VideoQualitySettingsViewController(isCellular: false)
+		case .cellularQualitySegue:
+			return VideoQualitySettingsViewController(isCellular: true)
 		}
 	}
 
@@ -131,7 +137,7 @@ private extension LowDataModeSettingsViewController {
 		var rows: [Row] {
 			switch self {
 			case .media:
-				return [.autoplay]
+				return [.autoplay, .wifiQuality, .cellularQuality]
 			}
 		}
 
@@ -145,11 +151,17 @@ private extension LowDataModeSettingsViewController {
 
 	enum Row {
 		case autoplay
+		case wifiQuality
+		case cellularQuality
 
 		var title: String {
 			switch self {
 			case .autoplay:
 				return L10n.autoplay
+			case .wifiQuality:
+				return L10n.wifiQuality
+			case .cellularQuality:
+				return L10n.cellularQuality
 			}
 		}
 
@@ -157,6 +169,10 @@ private extension LowDataModeSettingsViewController {
 			switch self {
 			case .autoplay:
 				return UserSettings.videoAutoplayPolicy.titleValue
+			case .wifiQuality:
+				return UserSettings.wifiVideoQuality.titleValue
+			case .cellularQuality:
+				return UserSettings.cellularVideoQuality.titleValue
 			}
 		}
 
@@ -164,6 +180,10 @@ private extension LowDataModeSettingsViewController {
 			switch self {
 			case .autoplay:
 				return .autoplaySegue
+			case .wifiQuality:
+				return .wifiQualitySegue
+			case .cellularQuality:
+				return .cellularQualitySegue
 			}
 		}
 	}

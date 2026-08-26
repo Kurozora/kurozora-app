@@ -85,6 +85,9 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure trailer
 		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? show.attributes.videoUrl)
+		self.trailerPlayerView.shareHandler = { sourceView in
+			show.openShareSheet(sourceView: sourceView, barButtonItem: nil)
+		}
 	}
 
 	override func configure(using game: Game?, rank: Int? = nil, scheduleIsShown: Bool = false) {
@@ -108,6 +111,9 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure trailer
 		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? game.attributes.videoUrl)
+		self.trailerPlayerView.shareHandler = { sourceView in
+			game.openShareSheet(sourceView: sourceView, barButtonItem: nil)
+		}
 	}
 
 	/// Reshapes the poster.

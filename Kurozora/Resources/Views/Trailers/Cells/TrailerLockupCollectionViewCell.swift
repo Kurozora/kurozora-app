@@ -9,7 +9,15 @@
 import KurozoraKit
 import UIKit
 
-/// A cell that leads with the trailer.
+/// Reports interactions with a trailer lockup cell.
+protocol TrailerLockupCollectionViewCellDelegate: AnyObject {
+	/// Tells the delegate the reader tapped the cell's trailer banner.
+	///
+	/// - Parameter cell: The cell whose banner was tapped.
+	func trailerLockupCollectionViewCellDidSelectTrailer(_ cell: TrailerLockupCollectionViewCell)
+}
+
+/// A cell that leads with the trailer's banner and plays it in the featured player when tapped.
 class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Views
 	/// The title's banner.
@@ -21,13 +29,28 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		return imageView
 	}()
 
-	/// The view that plays the trailer.
-	let trailerPlayerView: KTrailerPlayerView = {
-		let trailerPlayerView = KTrailerPlayerView()
-		trailerPlayerView.translatesAutoresizingMaskIntoConstraints = false
-		trailerPlayerView.layerCornerRadius = 12.0
-		trailerPlayerView.layer.masksToBounds = true
-		return trailerPlayerView
+	/// The control that features the trailer when the banner is tapped.
+	private let bannerControl: UIControl = {
+		let control = UIControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		control.layerCornerRadius = 12.0
+		control.layer.masksToBounds = true
+		return control
+	}()
+
+	/// The glyph indicating the banner plays the trailer.
+	private let playGlyphButton: KButton = {
+		let button = KButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.isUserInteractionEnabled = false
+		button.highlightBackgroundColorEnabled = false
+		button.springEnabled = true
+		button.addBlurEffect()
+		button.theme_tintColor = KThemePicker.textColor.rawValue
+		button.layerCornerRadius = 24.0
+		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20.0, weight: .semibold), forImageIn: .normal)
+		button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+		return button
 	}()
 
 	/// The title the trailer belongs to.
@@ -58,8 +81,8 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}()
 
 	// MARK: - Properties
-	/// The URL of the preferred trailer.
-	var preferredTrailerURL: String?
+	/// The object responsible for delegating trailer interactions.
+	weak var trailerDelegate: TrailerLockupCollectionViewCellDelegate?
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -73,14 +96,7 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}
 
 	// MARK: - View
-	override func prepareForReuse() {
-		super.prepareForReuse()
-
-		self.preferredTrailerURL = nil
-		self.trailerPlayerView.stopTrailer()
-	}
-
-	/// The shared settings used to initialize the cell.
+	/// Configures the cell's view hierarchy and layout.
 	private func sharedInit() {
 		self.bannerImageView = self.bannerView
 		self.bannerView.layerCornerRadius = 12.0
@@ -88,6 +104,7 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.secondaryLabel = self.metaLabel
 		self.libraryStatusButton = self.statusButton
 		self.statusButton.addTarget(self, action: #selector(self.chooseStatusButtonPressed(_:)), for: .touchUpInside)
+		self.bannerControl.addTarget(self, action: #selector(self.bannerTapped), for: .touchUpInside)
 
 		let textStackView = UIStackView(arrangedSubviews: [self.titleLabel, self.metaLabel])
 		textStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +112,8 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		textStackView.spacing = 4.0
 
 		self.contentView.addSubview(self.bannerView)
-		self.contentView.addSubview(self.trailerPlayerView)
+		self.contentView.addSubview(self.bannerControl)
+		self.bannerControl.addSubview(self.playGlyphButton)
 		self.contentView.addSubview(textStackView)
 		self.contentView.addSubview(self.statusButton)
 
@@ -103,17 +121,22 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.statusButton.setContentHuggingPriority(.required, for: .horizontal)
 
 		NSLayoutConstraint.activate([
-			self.trailerPlayerView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-			self.trailerPlayerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-			self.trailerPlayerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-			self.trailerPlayerView.heightAnchor.constraint(equalTo: self.trailerPlayerView.widthAnchor, multiplier: 9.0 / 16.0),
+			self.bannerControl.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+			self.bannerControl.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			self.bannerControl.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+			self.bannerControl.heightAnchor.constraint(equalTo: self.bannerControl.widthAnchor, multiplier: 9.0 / 16.0),
 
-			self.bannerView.topAnchor.constraint(equalTo: self.trailerPlayerView.topAnchor),
-			self.bannerView.leadingAnchor.constraint(equalTo: self.trailerPlayerView.leadingAnchor),
-			self.bannerView.trailingAnchor.constraint(equalTo: self.trailerPlayerView.trailingAnchor),
-			self.bannerView.bottomAnchor.constraint(equalTo: self.trailerPlayerView.bottomAnchor),
+			self.bannerView.topAnchor.constraint(equalTo: self.bannerControl.topAnchor),
+			self.bannerView.leadingAnchor.constraint(equalTo: self.bannerControl.leadingAnchor),
+			self.bannerView.trailingAnchor.constraint(equalTo: self.bannerControl.trailingAnchor),
+			self.bannerView.bottomAnchor.constraint(equalTo: self.bannerControl.bottomAnchor),
 
-			textStackView.topAnchor.constraint(equalTo: self.trailerPlayerView.bottomAnchor, constant: 12.0),
+			self.playGlyphButton.centerXAnchor.constraint(equalTo: self.bannerControl.centerXAnchor),
+			self.playGlyphButton.centerYAnchor.constraint(equalTo: self.bannerControl.centerYAnchor),
+			self.playGlyphButton.widthAnchor.constraint(equalToConstant: 48.0),
+			self.playGlyphButton.heightAnchor.constraint(equalToConstant: 48.0),
+
+			textStackView.topAnchor.constraint(equalTo: self.bannerControl.bottomAnchor, constant: 12.0),
 			textStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
 			textStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
@@ -131,7 +154,6 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		guard let show = show else { return }
 
 		self.metaLabel.text = show.attributes.trailerMetaLine
-		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? show.attributes.videoUrl)
 	}
 
 	override func configure(using game: Game?, rank: Int? = nil, scheduleIsShown: Bool = false) {
@@ -139,6 +161,17 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		guard let game = game else { return }
 
 		self.metaLabel.text = game.attributes.trailerMetaLine
-		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? game.attributes.videoUrl)
+	}
+
+	/// Updates the banner glyph to reflect whether the trailer is playing.
+	///
+	/// - Parameter isPlaying: Whether the trailer is playing in the featured player.
+	func setPlaying(_ isPlaying: Bool) {
+		self.playGlyphButton.setImage(UIImage(systemName: isPlaying ? "pause.fill" : "play.fill"), for: .normal)
+	}
+
+	/// Notifies the delegate that the banner was tapped.
+	@objc private func bannerTapped() {
+		self.trailerDelegate?.trailerLockupCollectionViewCellDidSelectTrailer(self)
 	}
 }

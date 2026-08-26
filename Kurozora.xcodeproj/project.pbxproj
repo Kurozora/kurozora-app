@@ -154,6 +154,7 @@
 				App/Enums/SplashScreenAnimation.swift,
 				App/Enums/UserSettingsKey.swift,
 				App/Enums/VideoAutoplayPolicy.swift,
+				App/Enums/VideoQuality.swift,
 				"App/Extensions/UIStatusBarStyle+Theme.swift",
 				App/Helpers/L10n/L10n.swift,
 				"App/Helpers/L10n/L10n+Account.swift",
@@ -328,12 +329,12 @@
 			buildPhases = (
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
-				66647B4E2084995500CF624F /* Resources */,
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
+				66647B4E2084995500CF624F /* Resources */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
-				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
 				6691885F2F7BCEAA000B1272 /* Embed Watch Content */,
+				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
 			);
 			buildRules = (
 			);
@@ -542,7 +543,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
@@ -567,7 +567,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexit 0\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${APP_DIR_PATH}/Frameworks\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' \\;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n";
+			shellScript = "set -e\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${APP_DIR_PATH}/Frameworks\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' ;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -586,7 +586,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "exit 0\n\nif [ \"${IS_MACCATALYST}\" = \"YES\" ]; then\n    # Mac Catalyst: resources live under Contents/Resources.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/Settings.bundle/Root.plist\"\nelse\n    # iOS: resources live at the app bundle root.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\"\nfi\n\n/usr/libexec/PlistBuddy \"${PLIST}\" -c \"Set PreferenceSpecifiers:2:DefaultValue ${MARKETING_VERSION}\"\n";
+			shellScript = "if [ \"${IS_MACCATALYST}\" = \"YES\" ]; then\n    # Mac Catalyst: resources live under Contents/Resources.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/Settings.bundle/Root.plist\"\nelse\n    # iOS: resources live at the app bundle root.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\"\nfi\n\n/usr/libexec/PlistBuddy \"${PLIST}\" -c \"Set PreferenceSpecifiers:2:DefaultValue ${MARKETING_VERSION}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -829,7 +829,7 @@
 				COMPILATION_CACHE_ENABLE_CACHING = YES;
 				COMPILATION_CACHE_ENABLE_PLUGIN = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1274;
+				CURRENT_PROJECT_VERSION = 1275;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
@@ -918,7 +918,7 @@
 				COMPILATION_CACHE_ENABLE_CACHING = YES;
 				COMPILATION_CACHE_ENABLE_PLUGIN = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1274;
+				CURRENT_PROJECT_VERSION = 1275;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_NS_ASSERTIONS = NO;

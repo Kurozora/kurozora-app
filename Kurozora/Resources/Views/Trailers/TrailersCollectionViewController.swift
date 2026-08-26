@@ -34,14 +34,24 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 	/// The section identifier.
 	enum SectionLayoutKind: Int, CaseIterable {
-		case hero = 0
+		case featured = 0
 		case main = 1
 	}
 
 	/// An item displayed in the collection.
 	enum ItemKind: Hashable {
+		case featured
 		case showIdentity(_: ShowIdentity)
 		case gameIdentity(_: GameIdentity)
+
+		/// The identifier the item stands for.
+		var identityID: KurozoraItemID? {
+			switch self {
+			case .featured: return nil
+			case .showIdentity(let identity): return identity.id
+			case .gameIdentity(let identity): return identity.id
+			}
+		}
 	}
 
 	// MARK: - Views
@@ -50,6 +60,55 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 	let toolbar = UIToolbar()
 	let tabBarView = TMBar.KBar()
+
+	/// The player that plays the featured trailer, moved between the featured cell and the floating window.
+	private let featuredPlayerView: KTrailerPlayerView = {
+		let playerView = KTrailerPlayerView()
+		playerView.translatesAutoresizingMaskIntoConstraints = false
+		playerView.showsMuteToggle = true
+		playerView.layerCornerRadius = 16.0
+		playerView.layer.masksToBounds = true
+		return playerView
+	}()
+
+	/// The window that keeps the featured trailer playing in the corner while the reader scrolls.
+	private let floatingWindowView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.layerCornerRadius = 12.0
+		view.applyShadow()
+		view.isHidden = true
+		return view
+	}()
+
+	/// The clipped content of the floating window.
+	private let floatingContentView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.layerCornerRadius = 12.0
+		view.layer.masksToBounds = true
+		return view
+	}()
+
+	/// The control that returns the reader to the featured player.
+	private let floatingReturnControl: UIControl = {
+		let control = UIControl()
+		control.translatesAutoresizingMaskIntoConstraints = false
+		return control
+	}()
+
+	/// The button that dismisses the floating window.
+	private let floatingCloseButton: KButton = {
+		let button = KButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(systemName: "xmark"), for: .normal)
+		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 11.0, weight: .bold), forImageIn: .normal)
+		button.tintColor = .white
+		button.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+		button.layerCornerRadius = 13.0
+		button.accessibilityLabel = L10n.dismiss
+		return button
+	}()
 
 	/// The bar button item presenting the sort order.
 	private var sortBarButtonItem: UIBarButtonItem!
@@ -64,17 +123,17 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	/// The kind currently shown.
 	private var kind: Kind = .shows
 
-	/// Whether the queue is listed beside the hero.
-	private var listsQueue = false
-
 	/// The trailer the feed picked for each title, keyed by the title's identifier.
 	private var trailerURLs: [KurozoraItemID: String] = [:]
 
-	/// The number of trailers the hero pages through when the queue is not beside it.
-	private static let pagedHeroCount = 10
+	/// The identifier of the featured title.
+	private var featuredIdentityID: KurozoraItemID?
 
-	/// The number of trailers the hero section holds at the current width.
-	private var heroCount = TrailersCollectionViewController.pagedHeroCount
+	/// A Boolean value indicating whether the player is in the floating window.
+	private var isPlayerFloating = false
+
+	/// A Boolean value indicating whether the reader dismissed the floating window for the current scroll.
+	private var isFloatingDismissed = false
 
 	/// The order the trailers are listed in.
 	private var sort: TrailerSort = .justAdded
@@ -103,11 +162,40 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		!self.showIdentities.isEmpty || !self.gameIdentities.isEmpty
 	}
 
+	/// The index path of the featured cell.
+	private var featuredIndexPath: IndexPath {
+		IndexPath(item: 0, section: SectionLayoutKind.featured.rawValue)
+	}
+
+	/// The items shown for the current kind.
+	private var currentItems: [ItemKind] {
+		switch self.kind {
+		case .shows: return self.showIdentities.map { .showIdentity($0) }
+		case .games: return self.gameIdentities.map { .gameIdentity($0) }
+		}
+	}
+
+	/// Returns the cached model for the given identifier.
+	///
+	/// - Parameter id: The identifier of the model.
+	///
+	/// - Returns: The cached model.
+	private func cachedModel(withID id: KurozoraItemID) -> KurozoraItem? {
+		return self.cache.values.first { $0.id == id }
+	}
+
 	// MARK: - View
 	override func themeWillReload() {
 		super.themeWillReload()
 
 		self.styleTabBarView()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// The playback menu commands resolve through the responder chain.
+		self.becomeFirstResponder()
 	}
 
 	override func viewDidLoad() {
@@ -120,6 +208,11 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		self.configureNavBarButtons()
 		self.observeLibraryChanges()
 
+		self.featuredPlayerView.onPlaybackStateChange = { [weak self] _ in
+			guard let self = self else { return }
+			self.refreshGlyph(forID: self.featuredIdentityID)
+		}
+
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(self.handleUserSignedInDidChange),
@@ -128,106 +221,10 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		)
 	}
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		if self.dataSource == nil || self.snapshot.itemIdentifiers.isEmpty {
-			_ = self.updateHeroMetrics(forWidth: self.collectionView.bounds.width)
-		}
-	}
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-
-		guard self.dataSource != nil, self.heroMetricsChanged(forWidth: self.collectionView.bounds.width) else { return }
-
-		Task { @MainActor [weak self] in
-			guard let self = self, self.dataSource != nil else { return }
-			guard self.updateHeroMetrics(forWidth: self.collectionView.bounds.width) else { return }
-
-			self.collectionView.collectionViewLayout.invalidateLayout()
-			self.updateSnapshot()
-			self.dataSource.applySnapshotUsingReloadData(self.snapshot)
-		}
-	}
-
-	/// Whether the hero section no longer matches the given width.
-	///
-	/// - Parameter width: The width of the collection.
-	///
-	/// - Returns: `true` when the hero section needs rebuilding.
-	private func heroMetricsChanged(forWidth width: CGFloat) -> Bool {
-		let listsQueue = width >= Layouts.trailerQueueWidth
-		let heroCount = listsQueue ? Layouts.trailerQueueCount(forWidth: width) + 1 : Self.pagedHeroCount
-		return listsQueue != self.listsQueue || heroCount != self.heroCount
-	}
-
-	/// Matches the hero section to the given width.
-	///
-	/// - Parameter width: The width of the collection.
-	///
-	/// - Returns: `true` when the section changed.
-	private func updateHeroMetrics(forWidth width: CGFloat) -> Bool {
-		guard self.heroMetricsChanged(forWidth: width) else { return false }
-
-		let listsQueue = width >= Layouts.trailerQueueWidth
-		let heroCount = listsQueue ? Layouts.trailerQueueCount(forWidth: width) + 1 : Self.pagedHeroCount
-
-		self.listsQueue = listsQueue
-		self.moveCache(from: self.heroCount, to: heroCount)
-		self.heroCount = heroCount
-		return true
-	}
-
-	/// Returns the cached model at the given index path.
-	///
-	/// - Parameter indexPath: The index path of the item.
-	///
-	/// - Returns: the cached model, or `nil` when nothing is cached.
-	private func cachedModel(at indexPath: IndexPath) -> KurozoraItem? {
-		guard let model = self.cache[indexPath] else { return nil }
-
-		let identityID: KurozoraItemID? = switch self.dataSource.itemIdentifier(for: indexPath) {
-		case .showIdentity(let identity): identity.id
-		case .gameIdentity(let identity): identity.id
-		case nil: nil
-		}
-
-		guard model.id == identityID else {
-			self.cache[indexPath] = nil
-			return nil
-		}
-
-		return model
-	}
-
-	/// Moves the cached models to match the new hero size.
-	///
-	/// - Parameters:
-	///    - oldHeroCount: The number of trailers the hero section held.
-	///    - newHeroCount: The number of trailers the hero section holds now.
-	private func moveCache(from oldHeroCount: Int, to newHeroCount: Int) {
-		guard oldHeroCount != newHeroCount, !self.cache.isEmpty else { return }
-
-		var movedCache: [IndexPath: KurozoraItem] = [:]
-
-		for (indexPath, model) in self.cache {
-			let position = indexPath.section == SectionLayoutKind.hero.rawValue ? indexPath.item : indexPath.item + oldHeroCount
-
-			if position < newHeroCount {
-				movedCache[IndexPath(item: position, section: SectionLayoutKind.hero.rawValue)] = model
-			} else {
-				movedCache[IndexPath(item: position - newHeroCount, section: SectionLayoutKind.main.rawValue)] = model
-			}
-		}
-
-		self.cache = movedCache
-	}
-
 	// MARK: - Functions
 	private func configureView() {
 		self.collectionView.contentInset.top = Self.toolbarHeight
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+		self.collectionView.verticalScrollIndicatorInsets.top = Self.toolbarHeight
 
 		self.configureTabBarView()
 		self.configureToolbar()
@@ -288,14 +285,44 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 	private func configureViewHierarchy() {
 		self.view.addSubview(self.toolbar)
+
+		self.floatingWindowView.addSubview(self.floatingContentView)
+		self.floatingWindowView.addSubview(self.floatingReturnControl)
+		self.floatingWindowView.addSubview(self.floatingCloseButton)
+		self.view.addSubview(self.floatingWindowView)
+
+		self.floatingReturnControl.addTarget(self, action: #selector(self.handleFloatingReturn), for: .touchUpInside)
+		self.floatingCloseButton.addTarget(self, action: #selector(self.handleFloatingClose), for: .touchUpInside)
 	}
 
 	private func configureViewConstraints() {
+		let floatingWidth: CGFloat = 360.0
+
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
 			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
 			self.toolbar.heightAnchor.constraint(equalToConstant: Self.toolbarHeight),
+
+			self.floatingWindowView.topAnchor.constraint(equalTo: self.toolbar.bottomAnchor, constant: 12.0),
+			self.floatingWindowView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
+			self.floatingWindowView.widthAnchor.constraint(equalToConstant: floatingWidth),
+			self.floatingWindowView.heightAnchor.constraint(equalTo: self.floatingWindowView.widthAnchor, multiplier: 9.0 / 16.0),
+
+			self.floatingContentView.topAnchor.constraint(equalTo: self.floatingWindowView.topAnchor),
+			self.floatingContentView.leadingAnchor.constraint(equalTo: self.floatingWindowView.leadingAnchor),
+			self.floatingContentView.trailingAnchor.constraint(equalTo: self.floatingWindowView.trailingAnchor),
+			self.floatingContentView.bottomAnchor.constraint(equalTo: self.floatingWindowView.bottomAnchor),
+
+			self.floatingReturnControl.topAnchor.constraint(equalTo: self.floatingContentView.topAnchor),
+			self.floatingReturnControl.leadingAnchor.constraint(equalTo: self.floatingContentView.leadingAnchor),
+			self.floatingReturnControl.trailingAnchor.constraint(equalTo: self.floatingContentView.trailingAnchor),
+			self.floatingReturnControl.bottomAnchor.constraint(equalTo: self.floatingContentView.bottomAnchor),
+
+			self.floatingCloseButton.topAnchor.constraint(equalTo: self.floatingWindowView.topAnchor, constant: 6.0),
+			self.floatingCloseButton.trailingAnchor.constraint(equalTo: self.floatingWindowView.trailingAnchor, constant: -6.0),
+			self.floatingCloseButton.widthAnchor.constraint(equalToConstant: 26.0),
+			self.floatingCloseButton.heightAnchor.constraint(equalToConstant: 26.0),
 		])
 
 		self.tabBarView.fillToSuperview()
@@ -358,6 +385,9 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		self.showIdentities = []
 		self.gameIdentities = []
 		self.cache = [:]
+		self.featuredIdentityID = nil
+		self.dismissFloatingWindow()
+		self.featuredPlayerView.stopTrailer()
 		self.updateDataSource()
 		self._prefersActivityIndicatorHidden = false
 
@@ -412,6 +442,8 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 				self.gameIdentities.append(contentsOf: response.data.compactMap(\.parent))
 				self.gameIdentities.removeDuplicates()
 			}
+
+			self.featureFirstItemIfNeeded()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -424,6 +456,242 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		for trailer in trailers {
 			guard let parent = trailer.parent else { continue }
 			self.trailerURLs[parent.id] = trailer.attributes.url
+		}
+	}
+
+	// MARK: - Featured player
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+
+	/// Plays or pauses the featured trailer in response to the playback command.
+	@objc func togglePlayPause() {
+		if self.featuredPlayerView.isTrailerPlaying {
+			self.featuredPlayerView.pauseByReader()
+		} else {
+			self.featuredPlayerView.playByReader()
+		}
+	}
+
+	/// Opens the featured trailer fullscreen in response to the fullscreen command.
+	@objc func toggleTrailerFullscreen() {
+		self.featuredPlayerView.enterFullscreenByReader()
+	}
+
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		switch action {
+		case #selector(self.togglePlayPause), #selector(self.toggleTrailerFullscreen):
+			return self.featuredPlayerView.hasLoadedTrailer && self.featuredPlayerView.showsControls
+		default:
+			return super.canPerformAction(action, withSender: sender)
+		}
+	}
+
+	/// Features the first title when nothing is featured yet.
+	private func featureFirstItemIfNeeded() {
+		guard self.featuredIdentityID == nil, let first = self.currentItems.first, let identityID = first.identityID, let trailerURL = self.trailerURLs[identityID] else { return }
+
+		self.featuredIdentityID = identityID
+		self.updateDataSource()
+		self.featuredPlayerView.loadTrailer(fromURL: trailerURL)
+	}
+
+	/// Features the given item, playing its trailer in place.
+	///
+	/// - Parameters:
+	///    - item: The item to feature.
+	///    - byReader: Whether the reader asked for the trailer.
+	private func feature(_ item: ItemKind, byReader: Bool) {
+		guard let identityID = item.identityID, let trailerURL = self.trailerURLs[identityID] else { return }
+
+		if identityID == self.featuredIdentityID {
+			guard byReader else { return }
+
+			if self.featuredPlayerView.isTrailerPlaying {
+				self.featuredPlayerView.pauseByReader()
+			} else {
+				self.featuredPlayerView.playByReader()
+			}
+
+			return
+		}
+
+		let previousIdentityID = self.featuredIdentityID
+		self.featuredIdentityID = identityID
+		self.featuredPlayerView.loadTrailer(fromURL: trailerURL)
+		self.refreshFeaturedHeader()
+		self.refreshGlyph(forID: previousIdentityID)
+		self.refreshGlyph(forID: identityID)
+
+		if byReader {
+			self.featuredPlayerView.playByReader()
+		}
+	}
+
+	/// Reconfigures the featured header with the current featured title.
+	private func refreshFeaturedHeader() {
+		guard let cell = self.collectionView.cellForItem(at: self.featuredIndexPath) as? TrailerFeaturedCollectionViewCell else { return }
+		self.configureFeaturedCell(cell)
+	}
+
+	/// Updates the play glyph of the list cell for the given identifier.
+	///
+	/// - Parameter id: The identifier of the cell to update.
+	private func refreshGlyph(forID id: KurozoraItemID?) {
+		guard let id, let item = self.currentItems.first(where: { $0.identityID == id }), let indexPath = self.dataSource.indexPath(for: item), let cell = self.collectionView.cellForItem(at: indexPath) as? TrailerLockupCollectionViewCell else { return }
+		cell.setPlaying(id == self.featuredIdentityID && self.featuredPlayerView.isTrailerPlaying)
+	}
+
+	/// Configures the featured header cell with the featured title.
+	///
+	/// - Parameter cell: The cell to configure.
+	private func configureFeaturedCell(_ cell: TrailerFeaturedCollectionViewCell) {
+		cell.delegate = self
+
+		let model = self.featuredIdentityID.flatMap { self.cachedModel(withID: $0) }
+		switch self.kind {
+		case .shows:
+			let show = model as? Show
+			cell.configure(using: show)
+			self.featuredPlayerView.shareHandler = show.map { show in
+				{ sourceView in show.openShareSheet(sourceView: sourceView, barButtonItem: nil) }
+			}
+		case .games:
+			let game = model as? Game
+			cell.configure(using: game)
+			self.featuredPlayerView.shareHandler = game.map { game in
+				{ sourceView in game.openShareSheet(sourceView: sourceView, barButtonItem: nil) }
+			}
+		}
+
+		if !self.isPlayerFloating {
+			self.attachFeaturedPlayer(to: cell.playerContainer)
+		}
+	}
+
+	/// Places the featured player in the given container.
+	///
+	/// - Parameter container: The view to host the player.
+	private func attachFeaturedPlayer(to container: UIView) {
+		guard self.featuredPlayerView.superview !== container else { return }
+
+		self.featuredPlayerView.removeFromSuperview()
+		container.addSubview(self.featuredPlayerView)
+
+		NSLayoutConstraint.activate([
+			self.featuredPlayerView.topAnchor.constraint(equalTo: container.topAnchor),
+			self.featuredPlayerView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+			self.featuredPlayerView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+			self.featuredPlayerView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+		])
+	}
+
+	/// Moves the featured player into the floating window.
+	private func floatPlayer() {
+		guard !self.isPlayerFloating else { return }
+		self.isPlayerFloating = true
+
+		self.featuredPlayerView.showsControls = false
+		self.attachFeaturedPlayer(to: self.floatingContentView)
+		self.floatingWindowView.isHidden = false
+	}
+
+	/// Moves the featured player back into the featured cell.
+	private func unfloatPlayer() {
+		guard self.isPlayerFloating else { return }
+		self.isPlayerFloating = false
+
+		self.floatingWindowView.isHidden = true
+		self.featuredPlayerView.showsControls = true
+
+		if let featuredCell = self.collectionView.cellForItem(at: self.featuredIndexPath) as? TrailerFeaturedCollectionViewCell {
+			self.attachFeaturedPlayer(to: featuredCell.playerContainer)
+		}
+	}
+
+	/// Hides the floating window without re-arming it for the current scroll.
+	private func dismissFloatingWindow() {
+		self.unfloatPlayer()
+		self.isFloatingDismissed = false
+	}
+
+	/// The height the featured player occupies inline.
+	private var featuredPlayerHeight: CGFloat {
+		let contentWidth = self.collectionView.bounds.width - 20.0
+		let isWide = self.traitCollection.horizontalSizeClass == .regular
+		let playerWidth = isWide ? contentWidth * 0.6 : contentWidth
+		return playerWidth * 9.0 / 16.0
+	}
+
+	/// Floats or restores the player as the featured cell scrolls past the top.
+	private func updateFloatingWindow() {
+		guard let featuredIdentityID = self.featuredIdentityID, self.trailerURLs[featuredIdentityID] != nil else { return }
+		guard let attributes = self.collectionView.collectionViewLayout.layoutAttributesForItem(at: self.featuredIndexPath) else { return }
+
+		let playerTopOnScreen = attributes.frame.minY - self.collectionView.contentOffset.y
+		let visibleTop = self.collectionView.adjustedContentInset.top
+		let hiddenAmount = visibleTop - playerTopOnScreen
+
+		if hiddenAmount >= self.featuredPlayerHeight * (2.0 / 3.0) {
+			if !self.isFloatingDismissed {
+				self.floatPlayer()
+			}
+		} else {
+			self.isFloatingDismissed = false
+			self.unfloatPlayer()
+		}
+	}
+
+	/// Scrolls the collection to the top.
+	private func scrollToTop() {
+		let topOffset = CGPoint(x: 0, y: -self.collectionView.adjustedContentInset.top)
+		self.collectionView.setContentOffset(topOffset, animated: true)
+	}
+
+	/// Returns the reader to the featured player.
+	@objc private func handleFloatingReturn() {
+		self.scrollToTop()
+	}
+
+	/// Dismisses the floating window for the current scroll.
+	@objc private func handleFloatingClose() {
+		self.isFloatingDismissed = true
+		self.unfloatPlayer()
+	}
+
+	// MARK: - Library
+	/// Presents the library action sheet for the given title.
+	///
+	/// - Parameters:
+	///    - target: The title to update.
+	///    - kind: The kind of library the title belongs to.
+	///    - status: The title's current library status.
+	///    - sourceView: The view the sheet points at.
+	///    - onChange: A closure receiving the chosen status.
+	private func presentLibraryActionSheet(for target: Libraryable, kind: LibraryKind, status: LibraryStatus, sourceView: UIView, onChange: @escaping (LibraryStatus) -> Void) {
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: kind), currentSelection: status, action: { _, value in
+			Task {
+				await target.addToLibrary(status: value)
+				onChange(value)
+			}
+		})
+
+		if status != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
+				Task {
+					await target.removeFromLibrary()
+					onChange(.none)
+				}
+			})
+		}
+
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = sourceView
+			popoverController.sourceRect = sourceView.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 
@@ -491,9 +759,24 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
+		case .featured: return nil
 		case .showIdentity(let id): return id as? Element
 		case .gameIdentity(let id): return id as? Element
 		}
+	}
+
+	/// Returns the cached model at the given index path.
+	///
+	/// - Parameter indexPath: The index path of the item.
+	///
+	/// - Returns: The cached model.
+	private func cachedModel(at indexPath: IndexPath) -> KurozoraItem? {
+		guard let model = self.cache[indexPath] else { return nil }
+		guard model.id == self.dataSource.itemIdentifier(for: indexPath)?.identityID else {
+			self.cache[indexPath] = nil
+			return nil
+		}
+		return model
 	}
 
 	// MARK: - Segue
@@ -525,26 +808,19 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 // MARK: - KCollectionViewDataSource
 extension TrailersCollectionViewController {
 	override func configureDataSource() {
+		let featuredCellRegistration = self.getConfiguredFeaturedCell()
 		let lockupCellRegistration = self.getConfiguredLockupCell()
-		let heroCellRegistration = self.getConfiguredHeroCell()
-		let queueCellRegistration = self.getConfiguredQueueCell()
 
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] collectionView, indexPath, itemKind in
-			guard let self = self else { return nil }
-
-			guard SectionLayoutKind(rawValue: indexPath.section) == .hero else {
-				return collectionView.dequeueConfiguredReusableCell(using: lockupCellRegistration, for: indexPath, item: itemKind)
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { collectionView, indexPath, itemKind in
+			if SectionLayoutKind(rawValue: indexPath.section) == .featured {
+				return collectionView.dequeueConfiguredReusableCell(using: featuredCellRegistration, for: indexPath, item: itemKind)
 			}
 
-			if self.listsQueue, indexPath.item > 0 {
-				return collectionView.dequeueConfiguredReusableCell(using: queueCellRegistration, for: indexPath, item: itemKind)
-			}
-
-			return collectionView.dequeueConfiguredReusableCell(using: heroCellRegistration, for: indexPath, item: itemKind)
+			return collectionView.dequeueConfiguredReusableCell(using: lockupCellRegistration, for: indexPath, item: itemKind)
 		}
 
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		self.snapshot.appendSections([.hero, .main])
+		self.snapshot.appendSections([.featured, .main])
 		self.dataSource.apply(self.snapshot)
 	}
 
@@ -557,15 +833,13 @@ extension TrailersCollectionViewController {
 	/// Rebuilds the snapshot from the loaded identities.
 	private func updateSnapshot() {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-		self.snapshot.appendSections([.hero, .main])
+		self.snapshot.appendSections([.featured, .main])
 
-		let items: [ItemKind] = switch self.kind {
-		case .shows: self.showIdentities.map { .showIdentity($0) }
-		case .games: self.gameIdentities.map { .gameIdentity($0) }
+		if self.featuredIdentityID != nil {
+			self.snapshot.appendItems([.featured], toSection: .featured)
 		}
 
-		self.snapshot.appendItems(Array(items.prefix(self.heroCount)), toSection: .hero)
-		self.snapshot.appendItems(Array(items.dropFirst(self.heroCount)), toSection: .main)
+		self.snapshot.appendItems(self.currentItems, toSection: .main)
 	}
 
 	/// Resolves the title an item stands for.
@@ -574,10 +848,12 @@ extension TrailersCollectionViewController {
 	///    - itemKind: The item being configured.
 	///    - indexPath: The index path of the item.
 	///
-	/// - Returns: the title, and the trailer the feed picked for it.
-	private func resolve(_ itemKind: ItemKind, at indexPath: IndexPath) -> (show: Show?, game: Game?, trailerURL: String?) {
+	/// - Returns: The title the item stands for.
+	private func resolve(_ itemKind: ItemKind, at indexPath: IndexPath) -> (show: Show?, game: Game?) {
 		switch itemKind {
-		case .showIdentity(let identity):
+		case .featured:
+			return (nil, nil)
+		case .showIdentity:
 			let show = self.cachedModel(at: indexPath) as? Show
 
 			if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -586,8 +862,8 @@ extension TrailersCollectionViewController {
 				}
 			}
 
-			return (show, nil, self.trailerURLs[identity.id])
-		case .gameIdentity(let identity):
+			return (show, nil)
+		case .gameIdentity:
 			let game = self.cachedModel(at: indexPath) as? Game
 
 			if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
@@ -596,7 +872,14 @@ extension TrailersCollectionViewController {
 				}
 			}
 
-			return (nil, game, self.trailerURLs[identity.id])
+			return (nil, game)
+		}
+	}
+
+	private func getConfiguredFeaturedCell() -> UICollectionView.CellRegistration<TrailerFeaturedCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<TrailerFeaturedCollectionViewCell, ItemKind> { [weak self] cell, _, _ in
+			guard let self = self else { return }
+			self.configureFeaturedCell(cell)
 		}
 	}
 
@@ -606,7 +889,7 @@ extension TrailersCollectionViewController {
 			let resolved = self.resolve(itemKind, at: indexPath)
 
 			cell.delegate = self
-			cell.preferredTrailerURL = resolved.trailerURL
+			cell.trailerDelegate = self
 
 			if case .gameIdentity = itemKind {
 				cell.configure(using: resolved.game)
@@ -615,41 +898,11 @@ extension TrailersCollectionViewController {
 			}
 
 			cell.setDimmed(self.isDimmed(at: indexPath))
-		}
-	}
+			cell.setPlaying(itemKind.identityID == self.featuredIdentityID && self.featuredPlayerView.isTrailerPlaying)
 
-	private func getConfiguredHeroCell() -> UICollectionView.CellRegistration<TrailerHeroCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<TrailerHeroCollectionViewCell, ItemKind> { [weak self] cell, indexPath, itemKind in
-			guard let self = self else { return }
-			let resolved = self.resolve(itemKind, at: indexPath)
-
-			cell.delegate = self
-			cell.preferredTrailerURL = resolved.trailerURL
-
-			if case .gameIdentity = itemKind {
-				cell.configure(using: resolved.game)
-			} else {
-				cell.configure(using: resolved.show)
+			if itemKind.identityID == self.featuredIdentityID, resolved.show != nil || resolved.game != nil {
+				self.refreshFeaturedHeader()
 			}
-
-			cell.setDimmed(self.isDimmed(at: indexPath))
-		}
-	}
-
-	private func getConfiguredQueueCell() -> UICollectionView.CellRegistration<TrailerQueueCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<TrailerQueueCollectionViewCell, ItemKind> { [weak self] cell, indexPath, itemKind in
-			guard let self = self else { return }
-			let resolved = self.resolve(itemKind, at: indexPath)
-
-			cell.delegate = self
-
-			if case .gameIdentity = itemKind {
-				cell.configure(using: resolved.game)
-			} else {
-				cell.configure(using: resolved.show)
-			}
-
-			cell.setDimmed(self.isDimmed(at: indexPath))
 		}
 	}
 }
@@ -666,8 +919,8 @@ extension TrailersCollectionViewController {
 		return UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
 			guard let self = self else { return nil }
 
-			if SectionLayoutKind(rawValue: section) == .hero {
-				return Layouts.trailerHeroSection(section, layoutEnvironment: layoutEnvironment, queueCount: self.heroCount - 1, listsQueue: self.listsQueue)
+			if SectionLayoutKind(rawValue: section) == .featured {
+				return Layouts.fullSection(section, columns: 1, layoutEnvironment: layoutEnvironment)
 			}
 
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
@@ -679,60 +932,26 @@ extension TrailersCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension TrailersCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if SectionLayoutKind(rawValue: indexPath.section) == .hero, self.listsQueue, indexPath.item > 0 {
-			self.featureTrailer(at: indexPath)
-
-			return
+		let model: KurozoraItem?
+		if SectionLayoutKind(rawValue: indexPath.section) == .featured {
+			model = self.featuredIdentityID.flatMap { self.cachedModel(withID: $0) }
+		} else {
+			model = self.cachedModel(at: indexPath)
 		}
 
 		switch self.kind {
 		case .shows:
-			guard let show = self.cachedModel(at: indexPath) as? Show else { return }
+			guard let show = model as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .games:
-			guard let game = self.cachedModel(at: indexPath) as? Game else { return }
+			guard let game = model as? Game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		guard SectionLayoutKind(rawValue: indexPath.section) == .main else { return }
-		self.paginateIfNeeded(at: indexPath, totalItems: self.loadedCount - self.heroCount)
-	}
-
-	/// Plays the trailer at the given index path, sending the one it replaces to the back of the queue.
-	///
-	/// - Parameter indexPath: The index path of the queue entry that was tapped.
-	private func featureTrailer(at indexPath: IndexPath) {
-		let heroCount = self.snapshot.numberOfItems(inSection: .hero)
-
-		guard indexPath.item > 0, indexPath.item < heroCount else { return }
-
-		var order = Array(0..<heroCount)
-		order.insert(order.remove(at: indexPath.item), at: 0)
-		order.append(order.remove(at: 1))
-
-		switch self.kind {
-		case .shows:
-			self.showIdentities.replaceSubrange(0..<heroCount, with: order.map { self.showIdentities[$0] })
-		case .games:
-			self.gameIdentities.replaceSubrange(0..<heroCount, with: order.map { self.gameIdentities[$0] })
-		}
-
-		let models = order.map { self.cache[IndexPath(item: $0, section: indexPath.section)] }
-
-		for (position, model) in models.enumerated() {
-			self.cache[IndexPath(item: position, section: indexPath.section)] = model
-		}
-
-		self.updateDataSource()
-
-		let heroItems = self.snapshot.itemIdentifiers(inSection: .hero)
-
-		if let featured = heroItems.first, let benched = heroItems.last {
-			self.snapshot.reloadItems([featured, benched])
-			self.dataSource.apply(self.snapshot)
-		}
+		self.paginateIfNeeded(at: indexPath, totalItems: self.loadedCount)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -746,6 +965,13 @@ extension TrailersCollectionViewController {
 			guard let game = self.cachedModel(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
+	}
+}
+
+// MARK: - UIScrollViewDelegate
+extension TrailersCollectionViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		self.updateFloatingWindow()
 	}
 }
 
@@ -776,6 +1002,28 @@ extension TrailersCollectionViewController: UIToolbarDelegate {
 	}
 }
 
+// MARK: - TrailerLockupCollectionViewCellDelegate
+extension TrailersCollectionViewController: TrailerLockupCollectionViewCellDelegate {
+	func trailerLockupCollectionViewCellDidSelectTrailer(_ cell: TrailerLockupCollectionViewCell) {
+		guard let indexPath = self.collectionView.indexPath(for: cell), let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		self.feature(itemKind, byReader: true)
+	}
+}
+
+// MARK: - TrailerFeaturedCollectionViewCellDelegate
+extension TrailersCollectionViewController: TrailerFeaturedCollectionViewCellDelegate {
+	func trailerFeaturedCollectionViewCell(_ cell: TrailerFeaturedCollectionViewCell, didPressAdd button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let featuredIdentityID = self.featuredIdentityID, let model = self.cachedModel(withID: featuredIdentityID), let target = model as? Libraryable else { return }
+
+		let status = LibraryStore.shared.effectiveLibrary(forTrackableID: model.id.rawValue, kind: cell.libraryKind)?.status ?? .none
+		self.presentLibraryActionSheet(for: target, kind: cell.libraryKind, status: status, sourceView: button) { [weak cell] newStatus in
+			cell?.updateLibraryButton(status: newStatus)
+		}
+	}
+}
+
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension TrailersCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
@@ -783,32 +1031,8 @@ extension TrailersCollectionViewController: BaseLockupCollectionViewCellDelegate
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell), let target = self.cachedModel(at: indexPath) as? Libraryable else { return }
 
-		let oldLibraryStatus = cell.libraryStatus
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
-			Task {
-				await target.addToLibrary(status: value)
-				cell.libraryStatus = value
-				button.setTitle("\(title) ▾", for: .normal)
-			}
-		})
-
-		if cell.libraryStatus != .none {
-			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
-				Task {
-					await target.removeFromLibrary()
-					cell.libraryStatus = .none
-					button.setTitle(L10n.add.uppercased(with: Locale.current), for: .normal)
-				}
-			})
-		}
-
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
+		self.presentLibraryActionSheet(for: target, kind: cell.libraryKind, status: cell.libraryStatus, sourceView: button) { [weak cell] newStatus in
+			cell?.libraryStatus = newStatus
 		}
 	}
 
