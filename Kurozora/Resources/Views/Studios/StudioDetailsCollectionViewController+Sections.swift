@@ -90,65 +90,42 @@ extension StudioDetailsCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Studio` object.
-		case studio(_: Studio, id: UUID = UUID())
+		case studio(_: Studio)
+
+		/// Indicates the item kind contains a badge row.
+		case badge(_: StudioDetail.Badge)
+
+		/// Indicates the item kind contains the studio's about text.
+		case about
+
+		/// Indicates the item kind contains a rating row.
+		case rating(_: StudioDetail.Rating)
+
+		/// Indicates the item kind contains a rate and review row.
+		case rateAndReview(_: StudioDetail.RateAndReview)
 
 		/// Indicates the item kind contains a `Review` object.
-		case review(_: Review, id: UUID = UUID())
+		case review(_: Review)
+
+		/// Indicates the item kind contains an information row.
+		case information(_: StudioDetail.Information)
 
 		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+		case showIdentity(_: ShowIdentity)
 
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
+		case literatureIdentity(_: LiteratureIdentity)
 
 		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .studio(let studio, let id):
-				hasher.combine(studio)
-				hasher.combine(id)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .showIdentity(let showIdentity, let id):
-				hasher.combine(showIdentity)
-				hasher.combine(id)
-			case .literatureIdentity(let literatureIdentity, let id):
-				hasher.combine(literatureIdentity)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
-				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.studio(let studio1, let id1), .studio(let studio2, let id2)):
-				return studio1 == studio2 && id1 == id2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
-				return literatureIdentity1 == literatureIdentity2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			default:
-				return false
-			}
-		}
+		case gameIdentity(_: GameIdentity)
 	}
 
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
-		case .gameIdentity(let id, _): return id as? Element
-		case .literatureIdentity(let id, _): return id as? Element
-		case .showIdentity(let id, _): return id as? Element
+		case .gameIdentity(let id): return id as? Element
+		case .literatureIdentity(let id): return id as? Element
+		case .showIdentity(let id): return id as? Element
 		default: return nil
 		}
 	}

@@ -35,87 +35,61 @@ extension PersonDetailsCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			guard let personDetailSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
-			switch personDetailSection {
-			case .header:
+			switch itemKind {
+			case .person(let person):
 				let profileHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileHeaderCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .person(let person, _):
-					profileHeaderCollectionViewCell?.configure(using: person)
-					profileHeaderCollectionViewCell?.mediaViewerDelegate = self
-				default: break
-				}
+				profileHeaderCollectionViewCell?.configure(using: person)
+				profileHeaderCollectionViewCell?.mediaViewerDelegate = self
 				return profileHeaderCollectionViewCell
 			case .about:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
-				switch itemKind {
-				case .person(let person, _):
-					textViewCollectionViewCell?.textViewContent = person.attributes.about
-				default: break
-				}
+				textViewCollectionViewCell?.textViewContent = self.person.attributes.about
 				return textViewCollectionViewCell
-			case .rating:
-				let personDetailRating = PersonDetail.Rating.allCases[safe: indexPath.item] ?? .average
+			case .rating(let personDetailRating):
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: personDetailRating.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .person(let person, _):
-					if let stats = person.attributes.stats {
-						switch personDetailRating {
-						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
-						case .sentiment:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
-						case .favoriteShare:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
-						case .bar:
-							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
-						}
+				if let stats = self.person.attributes.stats {
+					switch personDetailRating {
+					case .average:
+						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+					case .sentiment:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
+					case .bar:
+						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
-				default: break
 				}
 				return ratingCollectionViewCell
-			case .rateAndReview:
-				let personDetailRateAndReview = PersonDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+			case .rateAndReview(let personDetailRateAndReview):
 				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: personDetailRateAndReview.identifierString, for: indexPath)
 
 				switch personDetailRateAndReview {
 				case .tapToRate:
-					switch itemKind {
-					case .person(let person, _):
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
-					default: break
-					}
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 				case .writeAReview:
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
 				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .review(let review, _):
-					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
-				default: break
-				}
+				reviewCollectionViewCell?.delegate = self
+				reviewCollectionViewCell?.configureCell(using: currentReview, isElevated: currentReview.attributes.isElevated)
 				return reviewCollectionViewCell
-			case .information:
+			case .information(let personDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .person(let person, _):
-					informationCollectionViewCell?.configure(using: person, for: PersonDetail.Information(rawValue: indexPath.item) ?? .aliases)
-				default: break
-				}
+				informationCollectionViewCell?.configure(using: self.person, for: personDetailInformation)
 				return informationCollectionViewCell
-			case .characters:
+			case .characterIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: itemKind)
-			case .shows, .literatures:
+			case .showIdentity, .literatureIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
-			case .games:
+			case .gameIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: gameCellRegistration, for: indexPath, item: itemKind)
 			}
 		}
@@ -141,18 +115,20 @@ extension PersonDetailsCollectionViewController {
 			case .about:
 				if let about = self.person.attributes.about, !about.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
-					self.snapshot.appendItems([.person(self.person)], toSection: personDetailSection)
+					self.snapshot.appendItems([.about], toSection: personDetailSection)
 				}
 			case .rating:
 				self.snapshot.appendSections([personDetailSection])
-				PersonDetail.Rating.allCases.forEach { _ in
-					self.snapshot.appendItems([.person(self.person)], toSection: personDetailSection)
+				let ratingItems: [ItemKind] = PersonDetail.Rating.allCases.map { personDetailRating in
+					.rating(personDetailRating)
 				}
+				self.snapshot.appendItems(ratingItems, toSection: personDetailSection)
 			case .rateAndReview:
 				self.snapshot.appendSections([personDetailSection])
-				PersonDetail.RateAndReview.allCases.forEach { _ in
-					self.snapshot.appendItems([.person(self.person)], toSection: personDetailSection)
+				let rateAndReviewItems: [ItemKind] = PersonDetail.RateAndReview.allCases.map { personDetailRateAndReview in
+					.rateAndReview(personDetailRateAndReview)
 				}
+				self.snapshot.appendItems(rateAndReviewItems, toSection: personDetailSection)
 			case .reviews:
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([personDetailSection])
@@ -163,9 +139,10 @@ extension PersonDetailsCollectionViewController {
 				}
 			case .information:
 				self.snapshot.appendSections([personDetailSection])
-				PersonDetail.Information.allCases.forEach { _ in
-					self.snapshot.appendItems([.person(self.person)], toSection: personDetailSection)
+				let informationItems: [ItemKind] = PersonDetail.Information.allCases.map { personDetailInformation in
+					.information(personDetailInformation)
 				}
+				self.snapshot.appendItems(informationItems, toSection: personDetailSection)
 			case .characters:
 				if !self.characterIdentities.isEmpty {
 					self.snapshot.appendSections([personDetailSection])

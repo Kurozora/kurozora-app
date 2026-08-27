@@ -42,28 +42,18 @@ extension LiteratureDetailsCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			guard let literatureDetailSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
-			switch literatureDetailSection {
-			case .header:
+			switch itemKind {
+			case .literature(let literature):
 				let literatureDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LiteratureDetailHeaderCollectionViewCell.self, for: indexPath)
 				literatureDetailHeaderCollectionViewCell?.delegate = self
 				literatureDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
-				switch itemKind {
-				case .literature(let literature, _):
-					literatureDetailHeaderCollectionViewCell?.configure(using: literature)
-				default: break
-				}
+				literatureDetailHeaderCollectionViewCell?.configure(using: literature)
 				return literatureDetailHeaderCollectionViewCell
-			case .badge:
-				let literatureDetailBadge = LiteratureDetail.Badge(rawValue: indexPath.item) ?? .rating
+			case .badge(let literatureDetailBadge):
 				let badgeReuseIdentifier = literatureDetailBadge == LiteratureDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
-				switch itemKind {
-				case .literature(let literature, _):
-					badgeCollectionViewCell?.configureCell(with: literature, literatureDetailBadge: literatureDetailBadge)
-				default: break
-				}
+				badgeCollectionViewCell?.configureCell(with: self.literature, literatureDetailBadge: literatureDetailBadge)
 				return badgeCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
@@ -71,83 +61,63 @@ extension LiteratureDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.literature.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let literatureDetailRating = LiteratureDetail.Rating.allCases[safe: indexPath.item] ?? .average
+			case .rating(let literatureDetailRating):
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: literatureDetailRating.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .literature(let literature, _):
-					if let stats = literature.attributes.stats {
-						switch literatureDetailRating {
-						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
-						case .sentiment:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
-						case .favoriteShare:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
-						case .bar:
-							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
-						}
+				if let stats = self.literature.attributes.stats {
+					switch literatureDetailRating {
+					case .average:
+						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+					case .sentiment:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
+					case .bar:
+						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
-				default: break
 				}
 				return ratingCollectionViewCell
-			case .rateAndReview:
-				let literatureDetailRateAndReview = LiteratureDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+			case .rateAndReview(let literatureDetailRateAndReview):
 				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: literatureDetailRateAndReview.identifierString, for: indexPath)
 
 				switch literatureDetailRateAndReview {
 				case .tapToRate:
-					switch itemKind {
-					case .literature(let literature, _):
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
-					default: break
-					}
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 				case .writeAReview:
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
-				switch itemKind {
-				case .review(let review, _):
-					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
-					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
-					return reviewCollectionViewCell
-				case .editorial(let editorial, _):
-					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
-					editorialCollectionViewCell?.configure(using: editorial)
-					return editorialCollectionViewCell
-				default:
-					return nil
-				}
-			case .information:
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
+				reviewCollectionViewCell?.delegate = self
+				reviewCollectionViewCell?.configureCell(using: currentReview, isElevated: currentReview.attributes.isElevated)
+				return reviewCollectionViewCell
+			case .editorial(let editorial):
+				let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
+				editorialCollectionViewCell?.configure(using: editorial)
+				return editorialCollectionViewCell
+			case .information(let literatureDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .literature(let literature, _):
-					informationCollectionViewCell?.configure(using: literature, for: LiteratureDetail.Information(rawValue: indexPath.item) ?? .type)
-				default: break
-				}
+				informationCollectionViewCell?.configure(using: self.literature, for: literatureDetailInformation)
 				return informationCollectionViewCell
-			case .cast:
+			case .castIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
-			case .studios:
+			case .studioIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
-			case .moreByStudio:
+			case .literatureIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioLiteratureCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedLiteratures, .relatedShows:
+			case .relatedLiterature, .relatedShow:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedLiteratureCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedGames:
+			case .relatedGame:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
 				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .literature(let literature, _):
-					sosumiCollectionViewCell?.copyrightText = literature.attributes.copyright
-				default: break
-				}
+				sosumiCollectionViewCell?.copyrightText = self.literature.attributes.copyright
 				return sosumiCollectionViewCell
+			case .characterIdentity, .personIdentity:
+				return nil
 			}
 		}
 
@@ -176,29 +146,27 @@ extension LiteratureDetailsCollectionViewController {
 				newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 			case .badge:
 				newSnapshot.appendSections([literatureDetailSection])
-				LiteratureDetail.Badge.allCases.forEach { literatureDetailBadge in
-					switch literatureDetailBadge {
-//					case .rating:
-//						return
-					default:
-						newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
-					}
+				let badgeItems: [ItemKind] = LiteratureDetail.Badge.allCases.map { literatureDetailBadge in
+					.badge(literatureDetailBadge)
 				}
+				newSnapshot.appendItems(badgeItems, toSection: literatureDetailSection)
 			case .synopsis:
 				if let synopsis = self.literature.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([literatureDetailSection])
-					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendItems([.synopsis], toSection: literatureDetailSection)
 				}
 			case .rating:
 				newSnapshot.appendSections([literatureDetailSection])
-				LiteratureDetail.Rating.allCases.forEach { _ in
-					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				let ratingItems: [ItemKind] = LiteratureDetail.Rating.allCases.map { literatureDetailRating in
+					.rating(literatureDetailRating)
 				}
+				newSnapshot.appendItems(ratingItems, toSection: literatureDetailSection)
 			case .rateAndReview:
 				newSnapshot.appendSections([literatureDetailSection])
-				LiteratureDetail.RateAndReview.allCases.forEach { _ in
-					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				let rateAndReviewItems: [ItemKind] = LiteratureDetail.RateAndReview.allCases.map { literatureDetailRateAndReview in
+					.rateAndReview(literatureDetailRateAndReview)
 				}
+				newSnapshot.appendItems(rateAndReviewItems, toSection: literatureDetailSection)
 			case .reviews:
 				let hasEditorialContent = self.editorial != nil
 
@@ -216,9 +184,10 @@ extension LiteratureDetailsCollectionViewController {
 				}
 			case .information:
 				newSnapshot.appendSections([literatureDetailSection])
-				LiteratureDetail.Information.allCases.forEach { _ in
-					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				let informationItems: [ItemKind] = LiteratureDetail.Information.allCases.map { literatureDetailInformation in
+					.information(literatureDetailInformation)
 				}
+				newSnapshot.appendItems(informationItems, toSection: literatureDetailSection)
 			case .cast:
 				if !self.castIdentities.isEmpty {
 					newSnapshot.appendSections([literatureDetailSection])
@@ -270,7 +239,7 @@ extension LiteratureDetailsCollectionViewController {
 			case .sosumi:
 				if let copyrightIsEmpty = self.literature.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					newSnapshot.appendSections([literatureDetailSection])
-					newSnapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+					newSnapshot.appendItems([.sosumi], toSection: literatureDetailSection)
 				}
 			}
 		}

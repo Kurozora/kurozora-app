@@ -69,8 +69,8 @@ extension LiteratureDetailsCollectionViewController {
 		case .reviews:
 			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 			switch itemKind {
-			case .review(let review, _):
-				self.present(.reviewDetailsSegue, sender: review)
+			case .review(let review):
+				self.present(.reviewDetailsSegue, sender: self.reviews.first { $0.id == review.id } ?? review)
 			default: break
 			}
 		default: return
@@ -85,8 +85,9 @@ extension LiteratureDetailsCollectionViewController {
 		case .reviews:
 			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 			switch itemKind {
-			case .review(let review, _):
-				return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
+				return currentReview.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			default:
 				return nil
 			}

@@ -150,13 +150,15 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		guard let dataSource = self.dataSource, var snapshot = self.snapshot else { return }
 		let matchedItems = snapshot.itemIdentifiers.filter { item in
 			switch (item, kind) {
-			case (.game(let game, _), .games):
+			case (.game(let game), .games):
 				return game.id.rawValue == trackableID
-			case (.relatedGame(let relatedGame, _), .games):
+			case (.rateAndReview, .games):
+				return self.game?.id.rawValue == trackableID
+			case (.relatedGame(let relatedGame), .games):
 				return relatedGame.game.id.rawValue == trackableID
-			case (.relatedShow(let relatedShow, _), .shows):
+			case (.relatedShow(let relatedShow), .shows):
 				return relatedShow.show.id.rawValue == trackableID
-			case (.relatedLiterature(let relatedLiterature, _), .literatures):
+			case (.relatedLiterature(let relatedLiterature), .literatures):
 				return relatedLiterature.literature.id.rawValue == trackableID
 			default:
 				return false
@@ -171,6 +173,15 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	// MARK: - Functions
 	override func fetchDetails() async {
 		guard let gameIdentity = self.gameIdentity else { return }
+
+		async let reviewIdentityResponse = KService.reviews(for: gameIdentity).cursor(nil).limit(10).response()
+		async let editorialResponse = KService.editorial(for: gameIdentity).response()
+		async let castIdentityResponse = KService.cast(for: gameIdentity).limit(10).response()
+		async let studioIdentityResponse = KService.studios(for: gameIdentity).limit(10).response()
+		async let moreByStudioResponse = KService.moreByStudio(for: gameIdentity).limit(10).response()
+		async let relatedGameResponse = KService.relatedGames(for: gameIdentity).limit(10).response()
+		async let relatedShowResponse = KService.relatedShows(for: gameIdentity).limit(10).response()
+		async let relatedLiteratureResponse = KService.relatedLiteratures(for: gameIdentity).limit(10).response()
 
 		if self.game == nil {
 			do {
@@ -195,65 +206,59 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			self.configureNavBarButtons()
 		}
 
+		guard self.game != nil else { return }
+
 		do {
-			let reviewIdentityResponse = try await KService.reviews(for: gameIdentity).cursor(nil).limit(10).response()
-			self.reviews = reviewIdentityResponse.data
+			self.reviews = try await reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let editorialResponse = try await KService.editorial(for: gameIdentity).response()
-			self.editorial = editorialResponse.data.first
+			self.editorial = try await editorialResponse.data.first
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let castIdentityResponse = try await KService.cast(for: gameIdentity).limit(10).response()
-			self.castIdentities = castIdentityResponse.data
+			self.castIdentities = try await castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.studios(for: gameIdentity).limit(10).response()
-			self.studioIdentities = studioIdentityResponse.data
+			self.studioIdentities = try await studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.moreByStudio(for: gameIdentity).limit(10).response()
-			self.studioGameIdentities = gameIdentityResponse.data
+			self.studioGameIdentities = try await moreByStudioResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedGameResponse = try await KService.relatedGames(for: gameIdentity).limit(10).response()
-			self.relatedGames = relatedGameResponse.data
+			self.relatedGames = try await relatedGameResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedShowResponse = try await KService.relatedShows(for: gameIdentity).limit(10).response()
-			self.relatedShows = relatedShowResponse.data
+			self.relatedShows = try await relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedLiteratureResponse = try await KService.relatedLiteratures(for: gameIdentity).limit(10).response()
-			self.relatedLiteratures = relatedLiteratureResponse.data
+			self.relatedLiteratures = try await relatedLiteratureResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
@@ -289,8 +294,8 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
 		switch itemKind {
-		case .review(let review, _):
-			return review
+		case .review(let review):
+			return self.reviews.first { $0.id == review.id } ?? review
 		default:
 			return nil
 		}
@@ -319,25 +324,33 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {
 		guard self.snapshot != nil else { return }
 
-		let staleItem = self.snapshot.itemIdentifiers.first {
-			guard case .review(let candidate, _) = $0 else { return false }
-			return candidate.id == reviewID
+		let staleItem = self.snapshot.itemIdentifiers.first { item in
+			switch item {
+			case .review(let candidate):
+				return candidate.id == reviewID
+			default:
+				return false
+			}
 		}
 
 		guard let staleItem = staleItem else { return }
 
-		let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
-
-		// The identifier carries the review by value, so the row is replaced, not reconfigured.
 		if let review = review {
-			self.snapshot.insertItems([.review(review)], afterItem: staleItem)
-		}
+			if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+				self.reviews[index] = review
+			}
 
-		self.snapshot.deleteItems([staleItem])
+			self.snapshot.reconfigureItems([staleItem])
+		} else {
+			self.reviews.removeAll { $0.id == reviewID }
 
-		// An emptied section leaves with its row.
-		if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
-			self.snapshot.deleteSections([section])
+			let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
+			self.snapshot.deleteItems([staleItem])
+
+			// An emptied section leaves with its row.
+			if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
+				self.snapshot.deleteSections([section])
+			}
 		}
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
@@ -449,9 +462,9 @@ extension GameDetailsCollectionViewController {
 			smallLockupCollectionViewCell.delegate = self
 
 			switch itemKind {
-			case .relatedShow(let relatedShow, _):
+			case .relatedShow(let relatedShow):
 				smallLockupCollectionViewCell.configure(using: relatedShow)
-			case .relatedLiterature(let relatedLiterature, _):
+			case .relatedLiterature(let relatedLiterature):
 				smallLockupCollectionViewCell.configure(using: relatedLiterature)
 			default: return
 			}
@@ -463,7 +476,7 @@ extension GameDetailsCollectionViewController {
 			gameLockupCollectionViewCell.delegate = self
 
 			switch itemKind {
-			case .relatedGame(let relatedGame, _):
+			case .relatedGame(let relatedGame):
 				gameLockupCollectionViewCell.configure(using: relatedGame)
 			default: return
 			}

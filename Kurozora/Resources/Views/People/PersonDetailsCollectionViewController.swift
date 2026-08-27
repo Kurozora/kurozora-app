@@ -121,6 +121,12 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	override func fetchDetails() async {
 		guard let personIdentity = self.personIdentity else { return }
 
+		async let reviewIdentityResponse = KService.reviews(for: personIdentity).cursor(nil).limit(10).response()
+		async let characterIdentityResponse = KService.characters(for: personIdentity).limit(10).response()
+		async let showIdentityResponse = KService.shows(for: personIdentity).limit(10).response()
+		async let literatureIdentityResponse = KService.literatures(for: personIdentity).limit(10).response()
+		async let gameIdentityResponse = KService.games(for: personIdentity).limit(10).response()
+
 		if self.person == nil {
 			do {
 				let personResponse = try await KService.detail(personIdentity).response()
@@ -130,43 +136,40 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 			}
 		}
 
+		guard self.person != nil else { return }
+
 		await self.fetchUserOverlays()
 
 		do {
-			let reviewIdentityResponse = try await KService.reviews(for: personIdentity).cursor(nil).limit(10).response()
-			self.reviews = reviewIdentityResponse.data
+			self.reviews = try await reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let characterIdentityResponse = try await KService.characters(for: personIdentity).limit(10).response()
-			self.characterIdentities = characterIdentityResponse.data
+			self.characterIdentities = try await characterIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let showIdentityResponse = try await KService.shows(for: personIdentity).limit(10).response()
-			self.showIdentities = showIdentityResponse.data
+			self.showIdentities = try await showIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let literatureIdentityResponse = try await KService.literatures(for: personIdentity).limit(10).response()
-			self.literatureIdentities = literatureIdentityResponse.data
+			self.literatureIdentities = try await literatureIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let gameIdentityResponse = try await KService.games(for: personIdentity).limit(10).response()
-			self.gameIdentities = gameIdentityResponse.data
+			self.gameIdentities = try await gameIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
@@ -253,25 +256,33 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	override func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {
 		guard self.snapshot != nil else { return }
 
-		let staleItem = self.snapshot.itemIdentifiers.first {
-			guard case .review(let candidate, _) = $0 else { return false }
-			return candidate.id == reviewID
+		let staleItem = self.snapshot.itemIdentifiers.first { item in
+			switch item {
+			case .review(let candidate):
+				return candidate.id == reviewID
+			default:
+				return false
+			}
 		}
 
 		guard let staleItem = staleItem else { return }
 
-		let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
-
-		// The identifier carries the review by value, so the row is replaced, not reconfigured.
 		if let review = review {
-			self.snapshot.insertItems([.review(review)], afterItem: staleItem)
-		}
+			if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+				self.reviews[index] = review
+			}
 
-		self.snapshot.deleteItems([staleItem])
+			self.snapshot.reconfigureItems([staleItem])
+		} else {
+			self.reviews.removeAll { $0.id == reviewID }
 
-		// An emptied section leaves with its row.
-		if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
-			self.snapshot.deleteSections([section])
+			let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
+			self.snapshot.deleteItems([staleItem])
+
+			// An emptied section leaves with its row.
+			if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
+				self.snapshot.deleteSections([section])
+			}
 		}
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)

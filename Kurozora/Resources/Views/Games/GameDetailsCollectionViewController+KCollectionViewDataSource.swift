@@ -42,28 +42,18 @@ extension GameDetailsCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			guard let gameDetailSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
-			switch gameDetailSection {
-			case .header:
+			switch itemKind {
+			case .game(let game):
 				let gameDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: GameDetailHeaderCollectionViewCell.self, for: indexPath)
 				gameDetailHeaderCollectionViewCell?.delegate = self
 				gameDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
-				switch itemKind {
-				case .game(let game, _):
-					gameDetailHeaderCollectionViewCell?.configure(using: game)
-				default: break
-				}
+				gameDetailHeaderCollectionViewCell?.configure(using: game)
 				return gameDetailHeaderCollectionViewCell
-			case .badge:
-				let gameDetailBadge = GameDetail.Badge(rawValue: indexPath.item) ?? .rating
+			case .badge(let gameDetailBadge):
 				let badgeReuseIdentifier = gameDetailBadge == GameDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
-				switch itemKind {
-				case .game(let game, _):
-					badgeCollectionViewCell?.configureCell(with: game, gameDetailBadge: gameDetailBadge)
-				default: break
-				}
+				badgeCollectionViewCell?.configureCell(with: self.game, gameDetailBadge: gameDetailBadge)
 				return badgeCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
@@ -71,83 +61,63 @@ extension GameDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.game.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let gameDetailRating = GameDetail.Rating.allCases[safe: indexPath.item] ?? .average
+			case .rating(let gameDetailRating):
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: gameDetailRating.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .game(let game, _):
-					if let stats = game.attributes.stats {
-						switch gameDetailRating {
-						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
-						case .sentiment:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
-						case .favoriteShare:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
-						case .bar:
-							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
-						}
+				if let stats = self.game.attributes.stats {
+					switch gameDetailRating {
+					case .average:
+						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+					case .sentiment:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
+					case .bar:
+						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
-				default: break
 				}
 				return ratingCollectionViewCell
-			case .rateAndReview:
-				let gameDetailRateAndReview = GameDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+			case .rateAndReview(let gameDetailRateAndReview):
 				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: gameDetailRateAndReview.identifierString, for: indexPath)
 
 				switch gameDetailRateAndReview {
 				case .tapToRate:
-					switch itemKind {
-					case .game(let game, _):
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
-					default: break
-					}
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 				case .writeAReview:
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
-				switch itemKind {
-				case .review(let review, _):
-					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
-					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
-					return reviewCollectionViewCell
-				case .editorial(let editorial, _):
-					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
-					editorialCollectionViewCell?.configure(using: editorial)
-					return editorialCollectionViewCell
-				default:
-					return nil
-				}
-			case .information:
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
+				reviewCollectionViewCell?.delegate = self
+				reviewCollectionViewCell?.configureCell(using: currentReview, isElevated: currentReview.attributes.isElevated)
+				return reviewCollectionViewCell
+			case .editorial(let editorial):
+				let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
+				editorialCollectionViewCell?.configure(using: editorial)
+				return editorialCollectionViewCell
+			case .information(let gameDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .game(let game, _):
-					informationCollectionViewCell?.configure(using: game, for: GameDetail.Information(rawValue: indexPath.item) ?? .type)
-				default: break
-				}
+				informationCollectionViewCell?.configure(using: self.game, for: gameDetailInformation)
 				return informationCollectionViewCell
-			case .cast:
+			case .castIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
-			case .studios:
+			case .studioIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
-			case .moreByStudio:
+			case .gameIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioGameCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedGames:
+			case .relatedGame:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedShows, .relatedLiteratures:
+			case .relatedShow, .relatedLiterature:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
 				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .game(let game, _):
-					sosumiCollectionViewCell?.copyrightText = game.attributes.copyright
-				default: break
-				}
+				sosumiCollectionViewCell?.copyrightText = self.game.attributes.copyright
 				return sosumiCollectionViewCell
+			case .characterIdentity, .personIdentity:
+				return nil
 			}
 		}
 
@@ -176,29 +146,27 @@ extension GameDetailsCollectionViewController {
 				newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 			case .badge:
 				newSnapshot.appendSections([gameDetailSection])
-				GameDetail.Badge.allCases.forEach { gameDetailBadge in
-					switch gameDetailBadge {
-//					case .rating:
-//						return
-					default:
-						newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
-					}
+				let badgeItems: [ItemKind] = GameDetail.Badge.allCases.map { gameDetailBadge in
+					.badge(gameDetailBadge)
 				}
+				newSnapshot.appendItems(badgeItems, toSection: gameDetailSection)
 			case .synopsis:
 				if let synopsis = self.game.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([gameDetailSection])
-					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendItems([.synopsis], toSection: gameDetailSection)
 				}
 			case .rating:
 				newSnapshot.appendSections([gameDetailSection])
-				GameDetail.Rating.allCases.forEach { _ in
-					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				let ratingItems: [ItemKind] = GameDetail.Rating.allCases.map { gameDetailRating in
+					.rating(gameDetailRating)
 				}
+				newSnapshot.appendItems(ratingItems, toSection: gameDetailSection)
 			case .rateAndReview:
 				newSnapshot.appendSections([gameDetailSection])
-				GameDetail.RateAndReview.allCases.forEach { _ in
-					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				let rateAndReviewItems: [ItemKind] = GameDetail.RateAndReview.allCases.map { gameDetailRateAndReview in
+					.rateAndReview(gameDetailRateAndReview)
 				}
+				newSnapshot.appendItems(rateAndReviewItems, toSection: gameDetailSection)
 			case .reviews:
 				let hasEditorialContent = self.editorial != nil
 
@@ -216,9 +184,10 @@ extension GameDetailsCollectionViewController {
 				}
 			case .information:
 				newSnapshot.appendSections([gameDetailSection])
-				GameDetail.Information.allCases.forEach { _ in
-					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				let informationItems: [ItemKind] = GameDetail.Information.allCases.map { gameDetailInformation in
+					.information(gameDetailInformation)
 				}
+				newSnapshot.appendItems(informationItems, toSection: gameDetailSection)
 			case .cast:
 				if !self.castIdentities.isEmpty {
 					newSnapshot.appendSections([gameDetailSection])
@@ -270,7 +239,7 @@ extension GameDetailsCollectionViewController {
 			case .sosumi:
 				if let copyrightIsEmpty = self.game.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					newSnapshot.appendSections([gameDetailSection])
-					newSnapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+					newSnapshot.appendItems([.sosumi], toSection: gameDetailSection)
 				}
 			}
 		}

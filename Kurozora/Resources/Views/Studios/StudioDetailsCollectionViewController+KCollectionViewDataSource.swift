@@ -37,101 +37,69 @@ extension StudioDetailsCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			guard let studioDetailSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
-			switch studioDetailSection {
-			case .header:
+			switch itemKind {
+			case .studio(let studio):
 				let profileHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileHeaderCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .studio(let studio, _):
-					profileHeaderCollectionViewCell?.configure(using: studio)
-					profileHeaderCollectionViewCell?.mediaViewerDelegate = self
-				default: break
-				}
+				profileHeaderCollectionViewCell?.configure(using: studio)
+				profileHeaderCollectionViewCell?.mediaViewerDelegate = self
 				return profileHeaderCollectionViewCell
-			case .badges:
-				let studioDetailBadge = self.badges[safe: indexPath.item] ?? .tvRating
+			case .badge(let studioDetailBadge):
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
-				switch itemKind {
-				case .studio(let studio, _):
-					badgeCollectionViewCell?.configureCell(with: studio, studioDetailBadge: studioDetailBadge)
-				default: break
-				}
+				badgeCollectionViewCell?.configureCell(with: self.studio, studioDetailBadge: studioDetailBadge)
 				return badgeCollectionViewCell
 			case .about:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.reuseID, for: indexPath) as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
-				switch itemKind {
-				case .studio(let studio, _):
-					textViewCollectionViewCell?.textViewContent = studio.attributes.about
-				default: break
-				}
+				textViewCollectionViewCell?.textViewContent = self.studio.attributes.about
 				return textViewCollectionViewCell
-			case .rating:
-				let studioDetailRating = StudioDetail.Rating.allCases[safe: indexPath.item] ?? .average
+			case .rating(let studioDetailRating):
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailRating.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .studio(let studio, _):
-					if let stats = studio.attributes.stats {
-						switch studioDetailRating {
-						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
-						case .sentiment:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
-						case .favoriteShare:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
-						case .bar:
-							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
-						}
+				if let stats = self.studio.attributes.stats {
+					switch studioDetailRating {
+					case .average:
+						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+					case .sentiment:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
+					case .bar:
+						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
-				default: break
 				}
 				return ratingCollectionViewCell
-			case .rateAndReview:
-				let studioDetailRateAndReview = StudioDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+			case .rateAndReview(let studioDetailRateAndReview):
 				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailRateAndReview.identifierString, for: indexPath)
 
 				switch studioDetailRateAndReview {
 				case .tapToRate:
-					switch itemKind {
-					case .studio(let studio, _):
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
-					default: break
-					}
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 				case .writeAReview:
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
 				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .review(let review, _):
-					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
-				default: break
-				}
+				reviewCollectionViewCell?.delegate = self
+				reviewCollectionViewCell?.configureCell(using: currentReview, isElevated: currentReview.attributes.isElevated)
 				return reviewCollectionViewCell
-			case .information:
-				let studioDetailInformation = StudioDetail.Information(rawValue: indexPath.item) ?? .websites
+			case .information(let studioDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailInformation.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .studio(let studio, _):
-					switch studioDetailInformation {
-					case .socials, .websites:
-						(informationCollectionViewCell as? InformationButtonCollectionViewCell)?.configure(for: studio, using: studioDetailInformation)
-					default:
-						(informationCollectionViewCell as? InformationCollectionViewCell)?.configure(using: studio, for: studioDetailInformation)
-					}
-				default: break
+				switch studioDetailInformation {
+				case .socials, .websites:
+					(informationCollectionViewCell as? InformationButtonCollectionViewCell)?.configure(for: self.studio, using: studioDetailInformation)
+				default:
+					(informationCollectionViewCell as? InformationCollectionViewCell)?.configure(using: self.studio, for: studioDetailInformation)
 				}
 				return informationCollectionViewCell
-			case .shows, .literatures:
+			case .showIdentity, .literatureIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
-			case .games:
+			case .gameIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: gameCellRegistration, for: indexPath, item: itemKind)
 			}
 		}
@@ -147,76 +115,83 @@ extension StudioDetailsCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
+		// readers (cell/supplementary providers) until it's fully assembled.
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		SectionLayoutKind.allCases.forEach { [weak self] studioDetailSection in
 			guard let self = self else { return }
 
 			switch studioDetailSection {
 			case .header:
-				self.snapshot.appendSections([studioDetailSection])
-				self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				newSnapshot.appendSections([studioDetailSection])
+				newSnapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
 			case .badges:
-				self.snapshot.appendSections([studioDetailSection])
-				self.badges.forEach { _ in
-					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				newSnapshot.appendSections([studioDetailSection])
+				let badgeItems: [ItemKind] = self.badges.map { studioDetailBadge in
+					.badge(studioDetailBadge)
 				}
+				newSnapshot.appendItems(badgeItems, toSection: studioDetailSection)
 			case .about:
 				if let about = self.studio.attributes.about, !about.isEmpty {
-					self.snapshot.appendSections([studioDetailSection])
-					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+					newSnapshot.appendSections([studioDetailSection])
+					newSnapshot.appendItems([.about], toSection: studioDetailSection)
 				}
 			case .rating:
-				self.snapshot.appendSections([studioDetailSection])
-				StudioDetail.Rating.allCases.forEach { _ in
-					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				newSnapshot.appendSections([studioDetailSection])
+				let ratingItems: [ItemKind] = StudioDetail.Rating.allCases.map { studioDetailRating in
+					.rating(studioDetailRating)
 				}
+				newSnapshot.appendItems(ratingItems, toSection: studioDetailSection)
 			case .rateAndReview:
-				self.snapshot.appendSections([studioDetailSection])
-				StudioDetail.RateAndReview.allCases.forEach { _ in
-					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				newSnapshot.appendSections([studioDetailSection])
+				let rateAndReviewItems: [ItemKind] = StudioDetail.RateAndReview.allCases.map { studioDetailRateAndReview in
+					.rateAndReview(studioDetailRateAndReview)
 				}
+				newSnapshot.appendItems(rateAndReviewItems, toSection: studioDetailSection)
 			case .reviews:
 				if !self.reviews.isEmpty {
-					self.snapshot.appendSections([studioDetailSection])
+					newSnapshot.appendSections([studioDetailSection])
 					let reviewItems: [ItemKind] = self.reviews.map { review in
 						.review(review)
 					}
-					self.snapshot.appendItems(reviewItems, toSection: studioDetailSection)
+					newSnapshot.appendItems(reviewItems, toSection: studioDetailSection)
 				}
 			case .information:
-				self.snapshot.appendSections([studioDetailSection])
-				StudioDetail.Information.allCases.forEach { _ in
-					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				newSnapshot.appendSections([studioDetailSection])
+				let informationItems: [ItemKind] = StudioDetail.Information.allCases.map { studioDetailInformation in
+					.information(studioDetailInformation)
 				}
+				newSnapshot.appendItems(informationItems, toSection: studioDetailSection)
 			case .shows:
 				if !self.showIdentities.isEmpty {
-					self.snapshot.appendSections([studioDetailSection])
+					newSnapshot.appendSections([studioDetailSection])
 					let showIdentityItems: [ItemKind] = self.showIdentities.map { showIdentity in
 						.showIdentity(showIdentity)
 					}
-					self.snapshot.appendItems(showIdentityItems, toSection: studioDetailSection)
+					newSnapshot.appendItems(showIdentityItems, toSection: studioDetailSection)
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
-					self.snapshot.appendSections([studioDetailSection])
+					newSnapshot.appendSections([studioDetailSection])
 					let literatureIdentityItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
 						.literatureIdentity(literatureIdentity)
 					}
-					self.snapshot.appendItems(literatureIdentityItems, toSection: studioDetailSection)
+					newSnapshot.appendItems(literatureIdentityItems, toSection: studioDetailSection)
 				}
 			case .games:
 				if !self.gameIdentities.isEmpty {
-					self.snapshot.appendSections([studioDetailSection])
+					newSnapshot.appendSections([studioDetailSection])
 					let gameIdentityItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
 						.gameIdentity(gameIdentity)
 					}
-					self.snapshot.appendItems(gameIdentityItems, toSection: studioDetailSection)
+					newSnapshot.appendItems(gameIdentityItems, toSection: studioDetailSection)
 				}
 			}
 		}
 
-		self.dataSource.apply(self.snapshot)
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot)
 	}
 
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {

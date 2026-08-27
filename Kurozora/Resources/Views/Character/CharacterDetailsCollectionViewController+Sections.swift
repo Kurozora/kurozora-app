@@ -74,74 +74,43 @@ extension CharacterDetailsCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Character` object.
-		case character(_: Character, id: UUID = UUID())
+		case character(_: Character)
+
+		/// Indicates the item kind contains the character's about text.
+		case about
+
+		/// Indicates the item kind contains a rating row.
+		case rating(_: CharacterDetail.Rating)
+
+		/// Indicates the item kind contains a rate and review row.
+		case rateAndReview(_: CharacterDetail.RateAndReview)
 
 		/// Indicates the item kind contains a `Review` object.
-		case review(_: Review, id: UUID = UUID())
+		case review(_: Review)
+
+		/// Indicates the item kind contains an information row.
+		case information(_: CharacterDetail.Information)
 
 		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity, id: UUID = UUID())
+		case personIdentity(_: PersonIdentity)
 
 		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+		case showIdentity(_: ShowIdentity)
 
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
+		case literatureIdentity(_: LiteratureIdentity)
 
 		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .character(let character, let id):
-				hasher.combine(character)
-				hasher.combine(id)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .personIdentity(let personIdentity, let id):
-				hasher.combine(personIdentity)
-				hasher.combine(id)
-			case .showIdentity(let showIdentity, let id):
-				hasher.combine(showIdentity)
-				hasher.combine(id)
-			case .literatureIdentity(let literatureIdentity, let id):
-				hasher.combine(literatureIdentity)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
-				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.character(let character1, let id1), .character(let character2, let id2)):
-				return character1 == character2 && id1 == id2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1 == personIdentity2 && id1 == id2
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
-				return literatureIdentity1 == literatureIdentity2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			default:
-				return false
-			}
-		}
+		case gameIdentity(_: GameIdentity)
 	}
 
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
-		case .gameIdentity(let id, _): return id as? Element
-		case .literatureIdentity(let id, _): return id as? Element
-		case .showIdentity(let id, _): return id as? Element
-		case .personIdentity(let id, _): return id as? Element
+		case .gameIdentity(let id): return id as? Element
+		case .literatureIdentity(let id): return id as? Element
+		case .showIdentity(let id): return id as? Element
+		case .personIdentity(let id): return id as? Element
 		default: return nil
 		}
 	}

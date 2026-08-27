@@ -61,8 +61,6 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// The index path of the song that is currently playing.
 	var currentPlayerIndexPath: IndexPath?
 
-	private var firstCellSize: CGSize = .zero
-
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -167,15 +165,17 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		guard let dataSource = self.dataSource, var snapshot = self.snapshot else { return }
 		let matchedItems = snapshot.itemIdentifiers.filter { item in
 			switch (item, kind) {
-			case (.show(let show, _), .shows):
+			case (.show(let show), .shows):
 				return show.id.rawValue == trackableID
-			case (.showIdentity(let showIdentity, _), .shows):
+			case (.rateAndReview, .shows):
+				return self.show?.id.rawValue == trackableID
+			case (.showIdentity(let showIdentity), .shows):
 				return showIdentity.id.rawValue == trackableID
-			case (.relatedShow(let relatedShow, _), .shows):
+			case (.relatedShow(let relatedShow), .shows):
 				return relatedShow.show.id.rawValue == trackableID
-			case (.relatedLiterature(let relatedLiterature, _), .literatures):
+			case (.relatedLiterature(let relatedLiterature), .literatures):
 				return relatedLiterature.literature.id.rawValue == trackableID
-			case (.relatedGame(let relatedGame, _), .games):
+			case (.relatedGame(let relatedGame), .games):
 				return relatedGame.game.id.rawValue == trackableID
 			default:
 				return false
@@ -220,6 +220,17 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func fetchDetails() async {
 		guard let showIdentity = self.showIdentity else { return }
 
+		async let reviewIdentityResponse = KService.reviews(for: showIdentity).cursor(nil).limit(10).response()
+		async let editorialResponse = KService.editorial(for: showIdentity).response()
+		async let seasonIdentityResponse = KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10).response()
+		async let castIdentityResponse = KService.cast(for: showIdentity).limit(10).response()
+		async let showSongResponse = KService.songs(for: showIdentity).limit(10).response()
+		async let studioIdentityResponse = KService.studios(for: showIdentity).limit(10).response()
+		async let moreByStudioResponse = KService.moreByStudio(for: showIdentity).limit(10).response()
+		async let relatedShowResponse = KService.relatedShows(for: showIdentity).limit(10).response()
+		async let relatedLiteraturesResponse = KService.relatedLiteratures(for: showIdentity).limit(10).response()
+		async let relatedGamesResponse = KService.relatedGames(for: showIdentity).limit(10).response()
+
 		if self.show == nil {
 			do {
 				// Catalog-only — per-user state comes from the local store and overlays.
@@ -243,41 +254,38 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			self.configureNavBarButtons()
 		}
 
+		guard self.show != nil else { return }
+
 		do {
-			let reviewIdentityResponse = try await KService.reviews(for: showIdentity).cursor(nil).limit(10).response()
-			self.reviews = reviewIdentityResponse.data
+			self.reviews = try await reviewIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let editorialResponse = try await KService.editorial(for: showIdentity).response()
-			self.editorial = editorialResponse.data.first
+			self.editorial = try await editorialResponse.data.first
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let seasonIdentityResponse = try await KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10).response()
-			self.seasonIdentities = seasonIdentityResponse.data
+			self.seasonIdentities = try await seasonIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let castIdentityResponse = try await KService.cast(for: showIdentity).limit(10).response()
-			self.castIdentities = castIdentityResponse.data
+			self.castIdentities = try await castIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let showSongResponse = try await KService.songs(for: showIdentity).limit(10).response()
-			self.showSongs = showSongResponse.data
+			self.showSongs = try await showSongResponse.data
 
 			let appleMusicIDs = self.showSongs.compactMap { $0.song.attributes.amID }
 			_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
@@ -288,40 +296,35 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		}
 
 		do {
-			let studioIdentityResponse = try await KService.studios(for: showIdentity).limit(10).response()
-			self.studioIdentities = studioIdentityResponse.data
+			self.studioIdentities = try await studioIdentityResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let showIdentityResponse = try await KService.moreByStudio(for: showIdentity).limit(10).response()
-			self.studioShowIdentities = showIdentityResponse.data
+			self.studioShowIdentities = try await moreByStudioResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedShowResponse = try await KService.relatedShows(for: showIdentity).limit(10).response()
-			self.relatedShows = relatedShowResponse.data
+			self.relatedShows = try await relatedShowResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedLiteraturesResponse = try await KService.relatedLiteratures(for: showIdentity).limit(10).response()
-			self.relatedLiteratures = relatedLiteraturesResponse.data
+			self.relatedLiteratures = try await relatedLiteraturesResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let relatedGamesResponse = try await KService.relatedGames(for: showIdentity).limit(10).response()
-			self.relatedGames = relatedGamesResponse.data
+			self.relatedGames = try await relatedGamesResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
@@ -357,8 +360,8 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
 		switch itemKind {
-		case .review(let review, _):
-			return review
+		case .review(let review):
+			return self.reviews.first { $0.id == review.id } ?? review
 		default:
 			return nil
 		}
@@ -387,25 +390,33 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {
 		guard self.snapshot != nil else { return }
 
-		let staleItem = self.snapshot.itemIdentifiers.first {
-			guard case .review(let candidate, _) = $0 else { return false }
-			return candidate.id == reviewID
+		let staleItem = self.snapshot.itemIdentifiers.first { item in
+			switch item {
+			case .review(let candidate):
+				return candidate.id == reviewID
+			default:
+				return false
+			}
 		}
 
 		guard let staleItem = staleItem else { return }
 
-		let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
-
-		// The identifier carries the review by value, so the row is replaced, not reconfigured.
 		if let review = review {
-			self.snapshot.insertItems([.review(review)], afterItem: staleItem)
-		}
+			if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+				self.reviews[index] = review
+			}
 
-		self.snapshot.deleteItems([staleItem])
+			self.snapshot.reconfigureItems([staleItem])
+		} else {
+			self.reviews.removeAll { $0.id == reviewID }
 
-		// An emptied section leaves with its row.
-		if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
-			self.snapshot.deleteSections([section])
+			let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
+			self.snapshot.deleteItems([staleItem])
+
+			// An emptied section leaves with its row.
+			if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
+				self.snapshot.deleteSections([section])
+			}
 		}
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)

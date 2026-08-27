@@ -44,27 +44,17 @@ extension ShowDetailsCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			guard let showDetailSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
-			switch showDetailSection {
-			case .header:
+			switch itemKind {
+			case .show(let show):
 				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowDetailHeaderCollectionViewCell.self, for: indexPath)
 				showDetailHeaderCollectionViewCell?.delegate = self
 				showDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
-				switch itemKind {
-				case .show(let show, _):
-					showDetailHeaderCollectionViewCell?.configure(using: show)
-				default: break
-				}
+				showDetailHeaderCollectionViewCell?.configure(using: show)
 				return showDetailHeaderCollectionViewCell
-			case .badges:
-				let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
+			case .badge(let showDetailBadge):
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
-				switch itemKind {
-				case .show(let show, _):
-					badgeCollectionViewCell?.configureCell(with: show, showDetailBadge: showDetailBadge)
-				default: break
-				}
+				badgeCollectionViewCell?.configureCell(with: self.show, showDetailBadge: showDetailBadge)
 				return badgeCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
@@ -72,89 +62,67 @@ extension ShowDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let showDetailRating = ShowDetail.Rating.allCases[safe: indexPath.item] ?? .average
+			case .rating(let showDetailRating):
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRating.identifierString, for: indexPath)
 
-				switch itemKind {
-				case .show(let show, _):
-					if let stats = show.attributes.stats {
-						switch showDetailRating {
-						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
-						case .sentiment:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
-						case .favoriteShare:
-							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
-						case .bar:
-							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
-						}
+				if let stats = self.show.attributes.stats {
+					switch showDetailRating {
+					case .average:
+						(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+					case .sentiment:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+					case .favoriteShare:
+						(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configureFavoriteShare(using: stats)
+					case .bar:
+						(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
 					}
-				default: break
 				}
 				return ratingCollectionViewCell
-			case .rateAndReview:
-				let showDetailRateAndReview = ShowDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+			case .rateAndReview(let showDetailRateAndReview):
 				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRateAndReview.identifierString, for: indexPath)
 
 				switch showDetailRateAndReview {
 				case .tapToRate:
-					switch itemKind {
-					case .show(let show, _):
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
-					default: break
-					}
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+					(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: self.libraryAttributes?.rating)
 				case .writeAReview:
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
-				switch itemKind {
-				case .review(let review, _):
-					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
-					reviewCollectionViewCell?.delegate = self
-					reviewCollectionViewCell?.configureCell(using: review, isElevated: review.attributes.isElevated)
-					return reviewCollectionViewCell
-				case .editorial(let editorial, _):
-					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
-					editorialCollectionViewCell?.configure(using: editorial)
-					return editorialCollectionViewCell
-				default:
-					return nil
-				}
-			case .information:
+			case .review(let review):
+				let currentReview = self.reviews.first { $0.id == review.id } ?? review
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
+				reviewCollectionViewCell?.delegate = self
+				reviewCollectionViewCell?.configureCell(using: currentReview, isElevated: currentReview.attributes.isElevated)
+				return reviewCollectionViewCell
+			case .editorial(let editorial):
+				let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
+				editorialCollectionViewCell?.configure(using: editorial)
+				return editorialCollectionViewCell
+			case .information(let showDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .show(let show, _):
-					informationCollectionViewCell?.configure(using: show, for: ShowDetail.Information(rawValue: indexPath.item) ?? .type)
-				default: break
-				}
+				informationCollectionViewCell?.configure(using: self.show, for: showDetailInformation)
 				return informationCollectionViewCell
-			case .seasons:
+			case .seasonIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: seasonCellConfiguration, for: indexPath, item: itemKind)
-			case .cast:
+			case .castIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
-			case .songs:
+			case .showSong:
 				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
-			case .studios:
+			case .studioIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
-			case .moreByStudio:
+			case .showIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioShowCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedShows:
+			case .relatedShow, .relatedLiterature:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedLiteratures:
-				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
-			case .relatedGames:
+			case .relatedGame:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
 				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SosumiCollectionViewCell.self, for: indexPath)
-				switch itemKind {
-				case .show(let show, _):
-					sosumiCollectionViewCell?.copyrightText = show.attributes.copyright
-				default: break
-				}
+				sosumiCollectionViewCell?.copyrightText = self.show.attributes.copyright
 				return sosumiCollectionViewCell
+			case .characterIdentity, .personIdentity:
+				return nil
 			}
 		}
 
@@ -183,29 +151,27 @@ extension ShowDetailsCollectionViewController {
 				newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 			case .badges:
 				newSnapshot.appendSections([showDetailSection])
-				ShowDetail.Badge.allCases.forEach { showDetailBadge in
-					switch showDetailBadge {
-//					case .rating:
-//						return
-					default:
-						newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
-					}
+				let badgeItems: [ItemKind] = ShowDetail.Badge.allCases.map { showDetailBadge in
+					.badge(showDetailBadge)
 				}
+				newSnapshot.appendItems(badgeItems, toSection: showDetailSection)
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([showDetailSection])
-					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendItems([.synopsis], toSection: showDetailSection)
 				}
 			case .rating:
 				newSnapshot.appendSections([showDetailSection])
-				ShowDetail.Rating.allCases.forEach { _ in
-					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				let ratingItems: [ItemKind] = ShowDetail.Rating.allCases.map { showDetailRating in
+					.rating(showDetailRating)
 				}
+				newSnapshot.appendItems(ratingItems, toSection: showDetailSection)
 			case .rateAndReview:
 				newSnapshot.appendSections([showDetailSection])
-				ShowDetail.RateAndReview.allCases.forEach { _ in
-					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				let rateAndReviewItems: [ItemKind] = ShowDetail.RateAndReview.allCases.map { showDetailRateAndReview in
+					.rateAndReview(showDetailRateAndReview)
 				}
+				newSnapshot.appendItems(rateAndReviewItems, toSection: showDetailSection)
 			case .reviews:
 				let hasEditorialContent = self.editorial != nil
 
@@ -223,9 +189,10 @@ extension ShowDetailsCollectionViewController {
 				}
 			case .information:
 				newSnapshot.appendSections([showDetailSection])
-				ShowDetail.Information.allCases.forEach { _ in
-					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				let informationItems: [ItemKind] = ShowDetail.Information.allCases.map { showDetailInformation in
+					.information(showDetailInformation)
 				}
+				newSnapshot.appendItems(informationItems, toSection: showDetailSection)
 			case .seasons:
 				if !self.seasonIdentities.isEmpty {
 					newSnapshot.appendSections([showDetailSection])
@@ -293,7 +260,7 @@ extension ShowDetailsCollectionViewController {
 			case .sosumi:
 				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					newSnapshot.appendSections([showDetailSection])
-					newSnapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					newSnapshot.appendItems([.sosumi], toSection: showDetailSection)
 				}
 			}
 		}

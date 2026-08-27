@@ -90,115 +90,65 @@ extension GameDetailsCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Game` object.
-		case game(_: Game, id: UUID = UUID())
+		case game(_: Game)
+
+		/// Indicates the item kind contains a badge row.
+		case badge(_: GameDetail.Badge)
+
+		/// Indicates the item kind contains the game's synopsis.
+		case synopsis
+
+		/// Indicates the item kind contains a rating row.
+		case rating(_: GameDetail.Rating)
+
+		/// Indicates the item kind contains a rate and review row.
+		case rateAndReview(_: GameDetail.RateAndReview)
 
 		/// Indicates the item kind contains a `Review` object.
-		case review(_: Review, id: UUID = UUID())
+		case review(_: Review)
 
 		/// Indicates the item kind contains the game's editorial endorsement.
-		case editorial(_: Editorial, id: UUID = UUID())
+		case editorial(_: Editorial)
+
+		/// Indicates the item kind contains an information row.
+		case information(_: GameDetail.Information)
 
 		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
+		case gameIdentity(_: GameIdentity)
 
 		/// Indicates the item kind contains a `RelatedGame` object.
-		case relatedGame(_: RelatedGame, id: UUID = UUID())
+		case relatedGame(_: RelatedGame)
 
 		/// Indicates the item kind contains a `RelatedShow` object.
-		case relatedShow(_: RelatedShow, id: UUID = UUID())
+		case relatedShow(_: RelatedShow)
 
 		/// Indicates the item kind contains a `RelatedLiterature` object.
-		case relatedLiterature(_: RelatedLiterature, id: UUID = UUID())
+		case relatedLiterature(_: RelatedLiterature)
 
 		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
+		case characterIdentity(_: CharacterIdentity)
 
 		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity, id: UUID = UUID())
+		case personIdentity(_: PersonIdentity)
 
 		/// Indicates the item kind contains a `CastIdentity` object.
-		case castIdentity(_: CastIdentity, id: UUID = UUID())
+		case castIdentity(_: CastIdentity)
 
 		/// Indicates the item kind contains a `StudioIdentity` object.
-		case studioIdentity(_: StudioIdentity, id: UUID = UUID())
+		case studioIdentity(_: StudioIdentity)
 
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .game(let game, let id):
-				hasher.combine(game)
-				hasher.combine(id)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .editorial(let editorial, let id):
-				hasher.combine(editorial)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
-				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			case .relatedGame(let relatedGame, let id):
-				hasher.combine(relatedGame)
-				hasher.combine(id)
-			case .relatedShow(let relatedShow, let id):
-				hasher.combine(relatedShow)
-				hasher.combine(id)
-			case .relatedLiterature(let relatedLiterature, let id):
-				hasher.combine(relatedLiterature)
-				hasher.combine(id)
-			case .characterIdentity(let characterIdentity, let id):
-				hasher.combine(characterIdentity)
-				hasher.combine(id)
-			case .personIdentity(let personIdentity, let id):
-				hasher.combine(personIdentity)
-				hasher.combine(id)
-			case .castIdentity(let castIdentity, let id):
-				hasher.combine(castIdentity)
-				hasher.combine(id)
-			case .studioIdentity(let studioIdentity, let id):
-				hasher.combine(studioIdentity)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.game(let game1, let id1), .game(let game2, let id2)):
-				return game1 == game2 && id1 == id2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
-				return editorial1 == editorial2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			case (.relatedGame(let relatedGame1, let id1), .relatedGame(let relatedGame2, let id2)):
-				return relatedGame1 == relatedGame2 && id1 == id2
-			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
-				return relatedShow1 == relatedShow2 && id1 == id2
-			case (.relatedLiterature(let relatedLiterature1, let id1), .relatedLiterature(let relatedLiterature2, let id2)):
-				return relatedLiterature1 == relatedLiterature2 && id1 == id2
-			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
-				return characterIdentity1 == characterIdentity2 && id1 == id2
-			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1 == personIdentity2 && id1 == id2
-			case (.castIdentity(let castIdentity1, let id1), .castIdentity(let castIdentity2, let id2)):
-				return castIdentity1 == castIdentity2 && id1 == id2
-			case (.studioIdentity(let studioIdentity1, let id1), .studioIdentity(let studioIdentity2, let id2)):
-				return studioIdentity1 == studioIdentity2 && id1 == id2
-			default:
-				return false
-			}
-		}
+		/// Indicates the item kind contains the game's copyright.
+		case sosumi
 	}
 
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
-		case .castIdentity(let id, _): return id as? Element
-		case .characterIdentity(let id, _): return id as? Element
-		case .personIdentity(let id, _): return id as? Element
-		case .gameIdentity(let id, _): return id as? Element
-		case .studioIdentity(let id, _): return id as? Element
+		case .castIdentity(let id): return id as? Element
+		case .characterIdentity(let id): return id as? Element
+		case .personIdentity(let id): return id as? Element
+		case .gameIdentity(let id): return id as? Element
+		case .studioIdentity(let id): return id as? Element
 		default: return nil
 		}
 	}

@@ -107,6 +107,10 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
 
+		async let showIdentityResponse = KService.shows(for: songIdentity).limit(10).response()
+		async let reviewIdentityResponse = KService.reviews(for: songIdentity).cursor(nil).limit(10).response()
+		async let lyricsResponse = KService.lyrics(for: songIdentity).response()
+
 		if self.song == nil {
 			do {
 				let songResponse = try await KService.detail(songIdentity).response()
@@ -114,36 +118,36 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			} catch {
 				print(error.localizedDescription)
 			}
-		} else {
-			self.updateDataSource()
 		}
 
 		self.configureNavBarButtons()
 
+		guard self.song != nil else { return }
+
+		self.updateDataSource()
+
 		await self.fetchUserOverlays()
 
 		do {
-			let showIdentityResponse = try await KService.shows(for: songIdentity).limit(10).response()
-			self.showIdentities = showIdentityResponse.data
+			self.showIdentities = try await showIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let reviewIdentityResponse = try await KService.reviews(for: songIdentity).cursor(nil).limit(10).response()
-			self.reviews = reviewIdentityResponse.data
+			self.reviews = try await reviewIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
 
 		do {
-			let lyricsResponse = try await KService.lyrics(for: songIdentity).response()
-			self.syncedLyrics = lyricsResponse.data.first
+			self.syncedLyrics = try await lyricsResponse.data.first
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
 	/// Fetches the auth user's favorite and review overlays for the current song.
@@ -226,25 +230,33 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func applyReviewRow(_ review: Review?, for reviewID: KurozoraItemID) {
 		guard self.snapshot != nil else { return }
 
-		let staleItem = self.snapshot.itemIdentifiers.first {
-			guard case .review(let candidate, _) = $0 else { return false }
-			return candidate.id == reviewID
+		let staleItem = self.snapshot.itemIdentifiers.first { item in
+			switch item {
+			case .review(let candidate):
+				return candidate.id == reviewID
+			default:
+				return false
+			}
 		}
 
 		guard let staleItem = staleItem else { return }
 
-		let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
-
-		// The identifier carries the review by value, so the row is replaced, not reconfigured.
 		if let review = review {
-			self.snapshot.insertItems([.review(review)], afterItem: staleItem)
-		}
+			if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
+				self.reviews[index] = review
+			}
 
-		self.snapshot.deleteItems([staleItem])
+			self.snapshot.reconfigureItems([staleItem])
+		} else {
+			self.reviews.removeAll { $0.id == reviewID }
 
-		// An emptied section leaves with its row.
-		if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
-			self.snapshot.deleteSections([section])
+			let section = self.snapshot.sectionIdentifier(containingItem: staleItem)
+			self.snapshot.deleteItems([staleItem])
+
+			// An emptied section leaves with its row.
+			if let section = section, self.snapshot.numberOfItems(inSection: section) == 0 {
+				self.snapshot.deleteSections([section])
+			}
 		}
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
@@ -253,7 +265,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	// MARK: - SectionFetchable
 	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
 		switch item {
-		case .showIdentity(let id, _): return id as? Element
+		case .showIdentity(let id): return id as? Element
 		default: return nil
 		}
 	}
@@ -399,41 +411,25 @@ extension SongDetailsCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// An item kind that contains a `KKSong` object.
-		case song(_: KKSong, id: UUID = UUID())
+		case song(_: KKSong)
+
+		/// An item kind that contains the song's lyrics.
+		case lyrics
+
+		/// An item kind that contains a rating row.
+		case rating(_: SongDetail.Rating)
+
+		/// An item kind that contains a rate and review row.
+		case rateAndReview(_: SongDetail.RateAndReview)
 
 		/// An item kind that contains a `Review` object.
-		case review(_: Review, id: UUID = UUID())
+		case review(_: Review)
 
 		/// An item kind that contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+		case showIdentity(_: ShowIdentity)
 
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .song(let song, let id):
-				hasher.combine(song)
-				hasher.combine(id)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .showIdentity(let showIdentity, let id):
-				hasher.combine(showIdentity)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.song(let song1, let id1), .song(let song2, let id2)):
-				return song1 == song2 && id1 == id2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			default:
-				return false
-			}
-		}
+		/// An item kind that contains the song's copyright.
+		case sosumi
 	}
 }
 

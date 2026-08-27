@@ -95,7 +95,7 @@ extension ShowDetailsCollectionViewController {
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { musicLockupCollectionViewCell, indexPath, itemKind in
 			switch itemKind {
-			case .showSong(let showSong, _):
+			case .showSong(let showSong):
 				musicLockupCollectionViewCell.delegate = self
 				let resolvedSong = showSong.song.attributes.amID.flatMap { self.resolvedSongs[$0] }
 				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, resolvedSong: resolvedSong)
@@ -110,9 +110,9 @@ extension ShowDetailsCollectionViewController {
 			smallLockupCollectionViewCell.delegate = self
 
 			switch itemKind {
-			case .relatedShow(let relatedShow, _):
+			case .relatedShow(let relatedShow):
 				smallLockupCollectionViewCell.configure(using: relatedShow)
-			case .relatedLiterature(let relatedLiterature, _):
+			case .relatedLiterature(let relatedLiterature):
 				smallLockupCollectionViewCell.configure(using: relatedLiterature)
 			default: return
 			}
@@ -124,7 +124,7 @@ extension ShowDetailsCollectionViewController {
 			gameLockupCollectionViewCell.delegate = self
 
 			switch itemKind {
-			case .relatedGame(let relatedGame, _):
+			case .relatedGame(let relatedGame):
 				gameLockupCollectionViewCell.configure(using: relatedGame)
 			default: return
 			}
