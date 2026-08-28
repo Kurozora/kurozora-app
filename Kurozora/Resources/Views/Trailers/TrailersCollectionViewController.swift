@@ -66,6 +66,9 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		let playerView = KTrailerPlayerView()
 		playerView.translatesAutoresizingMaskIntoConstraints = false
 		playerView.showsMuteToggle = true
+		playerView.showsCompactControls = true
+		playerView.loopsPlayback = false
+		playerView.reportsNowPlaying = true
 		playerView.layerCornerRadius = 16.0
 		playerView.layer.masksToBounds = true
 		return playerView
@@ -211,6 +214,16 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		self.featuredPlayerView.onPlaybackStateChange = { [weak self] _ in
 			guard let self = self else { return }
 			self.refreshGlyph(forID: self.featuredIdentityID)
+		}
+
+		self.featuredPlayerView.onPlaybackEnded = { [weak self] in
+			guard let self = self else { return }
+			self.featureNextItem()
+		}
+
+		self.featuredPlayerView.onPictureVisibilityChanged = { [weak self] in
+			guard let self = self else { return }
+			self.refreshPlayerSkeleton()
 		}
 
 		NotificationCenter.default.addObserver(
@@ -528,10 +541,26 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		}
 	}
 
-	/// Reconfigures the featured header with the current featured title.
+	/// Features the item after the current one, wrapping back to the first.
+	private func featureNextItem() {
+		guard let featuredIdentityID = self.featuredIdentityID else { return }
+		let items = self.currentItems
+		guard let currentIndex = items.firstIndex(where: { $0.identityID == featuredIdentityID }) else { return }
+
+		let nextItem = items[(currentIndex + 1) % items.count]
+		guard nextItem.identityID != featuredIdentityID else { return }
+
+		self.feature(nextItem, byReader: false)
+		self.featuredPlayerView.playByReader()
+	}
+
+	/// Reconfigures the featured header with the current featured title, re-measuring its height.
 	private func refreshFeaturedHeader() {
-		guard let cell = self.collectionView.cellForItem(at: self.featuredIndexPath) as? TrailerFeaturedCollectionViewCell else { return }
-		self.configureFeaturedCell(cell)
+		var snapshot = self.dataSource.snapshot()
+		guard snapshot.itemIdentifiers.contains(.featured) else { return }
+
+		snapshot.reconfigureItems([.featured])
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Updates the play glyph of the list cell for the given identifier.
@@ -556,17 +585,70 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 			self.featuredPlayerView.shareHandler = show.map { show in
 				{ sourceView in show.openShareSheet(sourceView: sourceView, barButtonItem: nil) }
 			}
+			self.featuredPlayerView.streamMetadata = show.map { show in
+				TrailerStreamMetadata(title: show.attributes.title, synopsis: show.attributes.synopsis, artworkURL: show.attributes.poster?.url)
+			}
 		case .games:
 			let game = model as? Game
 			cell.configure(using: game)
 			self.featuredPlayerView.shareHandler = game.map { game in
 				{ sourceView in game.openShareSheet(sourceView: sourceView, barButtonItem: nil) }
 			}
+			self.featuredPlayerView.streamMetadata = game.map { game in
+				TrailerStreamMetadata(title: game.attributes.title, synopsis: game.attributes.synopsis, artworkURL: game.attributes.poster?.url)
+			}
 		}
+
+		// The feed's models carry no library state, which lives in the local store.
+		if let model = model {
+			let status = LibraryStore.shared.effectiveLibrary(forTrackableID: model.id.rawValue, kind: cell.libraryKind)?.status ?? .none
+			cell.updateLibraryButton(status: status)
+		} else {
+			self.fetchFeaturedModelIfNeeded()
+		}
+
+		cell.setPlayerSkeletonVisible(!self.featuredPlayerView.isShowingPicture && !self.featuredPlayerView.isHoldingLastFrame)
 
 		if !self.isPlayerFloating {
 			self.attachFeaturedPlayer(to: cell.playerContainer)
 		}
+	}
+
+	/// Fetches the featured title's details without waiting for its list cell to come on screen.
+	private func fetchFeaturedModelIfNeeded() {
+		guard
+			let featuredIdentityID = self.featuredIdentityID,
+			let item = self.currentItems.first(where: { $0.identityID == featuredIdentityID }),
+			let indexPath = self.dataSource.indexPath(for: item),
+			let section = self.snapshot.sectionIdentifier(containingItem: item)
+		else { return }
+
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			switch item {
+			case .showIdentity:
+				await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: item)
+			case .gameIdentity:
+				await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: item)
+			case .featured:
+				return
+			}
+
+			// A fetch someone else started returns straight away, so its cache fill is waited out.
+			while self.cachedModel(withID: featuredIdentityID) == nil, self.isFetchingSection.contains(section) {
+				try? await Task.sleep(nanoseconds: 200_000_000)
+			}
+
+			guard self.featuredIdentityID == featuredIdentityID else { return }
+			self.refreshFeaturedHeader()
+		}
+	}
+
+	/// Hides the featured player's placeholder once its picture is up.
+	private func refreshPlayerSkeleton() {
+		guard let cell = self.collectionView.cellForItem(at: self.featuredIndexPath) as? TrailerFeaturedCollectionViewCell else { return }
+		cell.setPlayerSkeletonVisible(!self.featuredPlayerView.isShowingPicture && !self.featuredPlayerView.isHoldingLastFrame)
 	}
 
 	/// Places the featured player in the given container.
@@ -617,8 +699,9 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 	/// The height the featured player occupies inline.
 	private var featuredPlayerHeight: CGFloat {
+		let wideLayoutMinimumWidth: CGFloat = 1200.0
 		let contentWidth = self.collectionView.bounds.width - 20.0
-		let isWide = self.traitCollection.horizontalSizeClass == .regular
+		let isWide = contentWidth >= wideLayoutMinimumWidth
 		let playerWidth = isWide ? contentWidth * 0.6 : contentWidth
 		return playerWidth * 9.0 / 16.0
 	}
@@ -670,7 +753,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	///    - onChange: A closure receiving the chosen status.
 	private func presentLibraryActionSheet(for target: Libraryable, kind: LibraryKind, status: LibraryStatus, sourceView: UIView, onChange: @escaping (LibraryStatus) -> Void) {
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: kind), currentSelection: status, action: { _, value in
-			Task {
+			Task { @MainActor in
 				await target.addToLibrary(status: value)
 				onChange(value)
 			}
@@ -678,7 +761,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 		if status != .none {
 			actionSheetAlertController.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
-				Task {
+				Task { @MainActor in
 					await target.removeFromLibrary()
 					onChange(.none)
 				}
@@ -704,13 +787,29 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		}
 		self.libraryObserver = LocalLibraryEntryObserver(
 			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
-			onChange: { [weak self] _ in
-				self?.refreshVisibleDimming()
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID)
 			},
-			onRemove: { [weak self] _ in
-				self?.refreshVisibleDimming()
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID)
 			}
 		)
+	}
+
+	/// Reconfigures the items showing the given title after its library entry changes.
+	///
+	/// - Parameter trackableID: The identifier of the title whose entry changed.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String) {
+		var snapshot = self.dataSource.snapshot()
+		var matchedItems = snapshot.itemIdentifiers.filter { $0.identityID?.rawValue == trackableID }
+
+		if self.featuredIdentityID?.rawValue == trackableID, snapshot.itemIdentifiers.contains(.featured) {
+			matchedItems.append(.featured)
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		snapshot.reconfigureItems(matchedItems)
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Handles dim library button pressed.
@@ -901,7 +1000,10 @@ extension TrailersCollectionViewController {
 			cell.setPlaying(itemKind.identityID == self.featuredIdentityID && self.featuredPlayerView.isTrailerPlaying)
 
 			if itemKind.identityID == self.featuredIdentityID, resolved.show != nil || resolved.game != nil {
-				self.refreshFeaturedHeader()
+				// The refresh applies a snapshot, which must not land inside this configuration pass.
+				DispatchQueue.main.async {
+					self.refreshFeaturedHeader()
+				}
 			}
 		}
 	}

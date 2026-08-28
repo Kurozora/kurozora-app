@@ -107,7 +107,7 @@ final class LibraryStore {
 	///    - query: The user's typed query. Empty or whitespace-only returns no rows.
 	///    - status: Optional status filter, or `.none` for every status.
 	///    - sortType: Unused; search results are always relevance-ranked.
-	///    - sortOption: Unused — see `sortType`.
+	///    - sortOption: Unused, matching `sortType`.
 	///    - offset: The number of matches to skip after ranking.
 	///    - limit: The maximum number of matches to return after ranking.
 	///
@@ -195,7 +195,7 @@ final class LibraryStore {
 
 		var score = 0
 
-		// Title — strongest signal.
+		// The title is the strongest signal.
 		if title == lowerQuery {
 			score += 1000
 		}
@@ -208,14 +208,14 @@ final class LibraryStore {
 			score += max(50, 200 - distance)
 		}
 
-		// Tagline — weak title-equivalent signal.
+		// The tagline is a weak title-equivalent signal.
 		if tagline.contains(lowerQuery) {
 			score += 50
 		}
 
-		// Genres — taxonomy signal; boost only when the query token is a whole-word match
-		// in the comma-joined list (so "one" matches "Action, Romance" only when it's a
-		// real genre, not as a substring of "one-shot").
+		// Genres boost only when the query token is a whole-word match in the comma-joined
+		// list, so "one" matches "Action, Romance" only when it's a real genre, not as a
+		// substring of "one-shot".
 		let genreList = genres.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
 		if genreList.contains(where: { $0 == lowerQuery }) {
 			score += 100
@@ -390,8 +390,15 @@ final class LibraryStore {
 			      let trackableID = values["trackableID"] as? String else {
 				continue
 			}
+
+			// The sync replaces an outbox row with the server's own, so the deleted row may share
+			// its key with a surviving entry that must stay cached.
 			let key = Self.overlayCacheKey(userSlug: userSlug, kind: kind, trackableID: trackableID)
-			self.overlayCache.removeValue(forKey: key)
+			if let survivor = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) {
+				self.overlayCache[key] = Self.snapshotAttributes(from: survivor)
+			} else {
+				self.overlayCache.removeValue(forKey: key)
+			}
 		}
 	}
 
@@ -444,7 +451,7 @@ final class LibraryStore {
 	}
 
 	// MARK: - Write
-	/// Applies a sync batch — upserting non-tombstones and removing tombstones — and saves.
+	/// Applies a sync batch and saves, upserting non-tombstones and removing tombstones.
 	///
 	/// - Parameters:
 	///    - entries: The rows from a `LibrarySyncResponse.relationships.libraries` batch.
