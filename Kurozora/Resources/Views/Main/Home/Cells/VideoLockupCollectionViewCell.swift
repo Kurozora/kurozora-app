@@ -84,6 +84,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		// Configure trailer
+		self.trailerPlayerView.streamMetadata = TrailerStreamMetadata(title: show.attributes.title, synopsis: show.attributes.synopsis, artworkURL: show.attributes.poster?.url)
 		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? show.attributes.videoUrl)
 		self.trailerPlayerView.shareHandler = { sourceView in
 			show.openShareSheet(sourceView: sourceView, barButtonItem: nil)
@@ -110,6 +111,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		// Configure trailer
+		self.trailerPlayerView.streamMetadata = TrailerStreamMetadata(title: game.attributes.title, synopsis: game.attributes.synopsis, artworkURL: game.attributes.poster?.url)
 		self.trailerPlayerView.loadTrailer(fromURL: self.preferredTrailerURL ?? game.attributes.videoUrl)
 		self.trailerPlayerView.shareHandler = { sourceView in
 			game.openShareSheet(sourceView: sourceView, barButtonItem: nil)

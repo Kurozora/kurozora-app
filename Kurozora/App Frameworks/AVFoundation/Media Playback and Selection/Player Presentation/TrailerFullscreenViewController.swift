@@ -55,6 +55,9 @@ final class TrailerFullscreenViewController: UIViewController {
 		return view
 	}()
 
+	/// The notice covering the picture while the trailer plays on an AirPlay device.
+	private let airPlayNoticeView = TrailerAirPlayNoticeView()
+
 
 	/// The button that dismisses the fullscreen player.
 	private let closeButton = TrailerFullscreenViewController.makeControlButton(pointSize: 14.0, diameter: 40.0)
@@ -110,6 +113,9 @@ final class TrailerFullscreenViewController: UIViewController {
 
 	/// Shares what the trailer belongs to, from the given view.
 	var shareHandler: ((UIView) -> Void)?
+
+	/// Returns the next trailer's player once the queue advances.
+	var advanceHandler: (() -> TrailerWebPlayer?)?
 
 	/// The controls that fade in once the trailer fills the screen.
 	var chromeViews: [UIView] {
@@ -206,7 +212,7 @@ final class TrailerFullscreenViewController: UIViewController {
 	#endif
 
 	/// The identifier of the trailer to play.
-	private let videoID: String
+	private var videoID: String
 
 	/// The player rendering the trailer.
 	private var player: TrailerWebPlayer?
@@ -247,7 +253,7 @@ final class TrailerFullscreenViewController: UIViewController {
 			UIKeyCommand(action: #selector(self.maximizeVolume), input: UIKeyCommand.inputUpArrow, modifierFlags: .alternate),
 			UIKeyCommand(action: #selector(self.muteVolume), input: UIKeyCommand.inputDownArrow, modifierFlags: .alternate),
 			UIKeyCommand(action: #selector(self.zoomIn), input: "+", modifierFlags: .command),
-			// The plus lives on the equals key; both readings work, shifted or not.
+			// The plus lives on the equals key. Both readings work, shifted or not.
 			UIKeyCommand(action: #selector(self.zoomIn), input: "=", modifierFlags: .command),
 			UIKeyCommand(action: #selector(self.zoomOut), input: "-", modifierFlags: .command),
 			UIKeyCommand(action: #selector(self.zoomActualSize), input: "0", modifierFlags: .command),
@@ -301,6 +307,10 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.player = player
 		player.attach(to: self.contentView, isMuted: self.isMuted, delegate: self)
 
+		// Without a queue to advance, fullscreen keeps the trailer running on its own. The host it
+		// came from restores its looping choice when it takes the player back.
+		player.setLooping(self.advanceHandler == nil)
+
 		if self.resumesPlayback {
 			player.play()
 		}
@@ -330,7 +340,7 @@ final class TrailerFullscreenViewController: UIViewController {
 			}
 		}
 
-		// The fullscreen transition clears the window's focus; it is taken back once settled.
+		// The fullscreen transition clears the window's focus. It is taken back once settled.
 		self.macFullscreenEnterObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name("NSWindowDidEnterFullScreenNotification"), object: nil, queue: .main) { [weak self] _ in
 			MainActor.assumeIsolated {
 				_ = self?.becomeFirstResponder()
@@ -762,6 +772,13 @@ final class TrailerFullscreenViewController: UIViewController {
 	///
 	/// - Parameter animated: Whether the change is animated.
 	private func updateControls(animated: Bool) {
+		let isStreamingExternally = TrailerAirPlayStreamer.shared.isStreaming(from: self.player)
+		self.airPlayNoticeView.isHidden = !isStreamingExternally
+
+		if isStreamingExternally {
+			self.airPlayNoticeView.refresh()
+		}
+
 		self.playPauseButton.setImage(UIImage(systemName: self.isPlaying ? "pause.fill" : "play.fill"), for: .normal)
 		self.playPauseButton.accessibilityLabel = self.isPlaying ? L10n.pause : L10n.play
 		self.muteButton.setImage(UIImage(systemName: self.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill"), for: .normal)
@@ -811,7 +828,7 @@ final class TrailerFullscreenViewController: UIViewController {
 		guard self.duration > 0.0, self.view.bounds.width > 0.0 else { return }
 
 		#if targetEnvironment(macCatalyst)
-		// Scroll gestures carry no touches; a pointer drag does, and is left alone.
+		// Scroll gestures carry no touches. A pointer drag does, and is left alone.
 		guard gesture.numberOfTouches == 0 else { return }
 
 		// A swipe over the volume controls belongs to the volume for as long as it lasts.
@@ -1102,6 +1119,33 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.scrubber.value = Float(self.elapsedTime / self.duration)
 	}
 
+	/// Moves the presentation onto the given trailer, continuing the queue.
+	///
+	/// - Parameter player: The player rendering the next trailer.
+	private func switchTo(_ player: TrailerWebPlayer) {
+		self.videoID = player.videoID
+		self.player = player
+
+		player.attach(to: self.contentView, isMuted: self.isMuted, delegate: self)
+		player.setLooping(false)
+		player.setPlaybackRate(self.playbackRate)
+		TrailerAirPlayStreamer.shared.continueStream(with: player)
+		player.play()
+		self.isPlaying = true
+
+		self.duration = 0.0
+		self.elapsedTime = 0.0
+		self.framesPerSecond = nil
+		self.seekSettleDate = nil
+		self.updateProgressControls()
+		self.updateControls(animated: false)
+
+		#if targetEnvironment(macCatalyst)
+		player.setInteractionEnabled(true)
+		self.controlBar.reloadOptionsMenu()
+		#endif
+	}
+
 	/// Pins the player and controls in the view.
 	private func configureViews() {
 		self.view.backgroundColor = .clear
@@ -1109,6 +1153,7 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.view.addSubview(self.zoomWindowView)
 		self.zoomWindowView.addSubview(self.zoomScrollView)
 		self.zoomScrollView.addSubview(self.contentView)
+		self.contentView.addSubview(self.airPlayNoticeView)
 		self.zoomScrollView.delegate = self
 		self.view.addSubview(self.closeButton)
 
@@ -1204,6 +1249,11 @@ final class TrailerFullscreenViewController: UIViewController {
 			self.contentView.bottomAnchor.constraint(equalTo: self.zoomScrollView.contentLayoutGuide.bottomAnchor),
 			self.contentView.widthAnchor.constraint(equalTo: self.zoomScrollView.frameLayoutGuide.widthAnchor),
 			self.contentView.heightAnchor.constraint(equalTo: self.zoomScrollView.frameLayoutGuide.heightAnchor),
+
+			self.airPlayNoticeView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+			self.airPlayNoticeView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+			self.airPlayNoticeView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+			self.airPlayNoticeView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
 			self.closeButton.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
 			self.closeButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
@@ -1393,6 +1443,10 @@ extension TrailerFullscreenViewController: TrailerPlayerControlBarDelegate {
 		}
 	}
 
+	func trailerPlayerControlBarTrailerPlayer(_ controlBar: TrailerPlayerControlBar) -> TrailerWebPlayer? {
+		return self.player
+	}
+
 	/// Runs the given press into the page while the tap gesture looks away.
 	///
 	/// - Parameter press: The closure sending the press.
@@ -1431,6 +1485,10 @@ extension TrailerFullscreenViewController: TrailerPlayerControlBarDelegate {
 				guard let self = self else { return }
 				shareHandler(self.controlBar)
 			})
+		}
+
+		if let downloadMenu = self.player?.downloadMenu() {
+			children.append(downloadMenu)
 		}
 
 		children.append(UIMenu(title: L10n.playbackSpeed, image: UIImage(systemName: "speedometer"), children: speedActions))
@@ -1488,8 +1546,8 @@ extension TrailerFullscreenViewController: UIGestureRecognizerDelegate {
 	}
 
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-		// A press on the bar is the bar's — its buttons, its drag, or the two spots it leaves open for
-		// the page — so only presses on the picture itself toggle the controls.
+		// A press on the bar belongs to its buttons, its drag, or the two spots it leaves open for
+		// the page. Only presses on the picture itself toggle the controls.
 		#if targetEnvironment(macCatalyst)
 		if self.areControlsVisible, self.controlBar.frame.contains(touch.location(in: self.view)) {
 			return false
@@ -1529,6 +1587,31 @@ extension TrailerFullscreenViewController: TrailerWebPlayerDelegate {
 	}
 
 	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer) {}
+
+	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer) {
+		guard self.advanceHandler != nil else { return }
+
+		self.seekSettleDate = Date().addingTimeInterval(5.0)
+
+		let endedVideoID = self.videoID
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			// The trailer ends short of its reported length, so the last stretch sweeps closed
+			// instead of jumping, then holds a beat.
+			let step = max(0.05, (self.duration - self.elapsedTime) / 12.0)
+			while self.videoID == endedVideoID, self.elapsedTime < self.duration {
+				self.elapsedTime = min(self.duration, self.elapsedTime + step)
+				self.updateProgressControls()
+				try? await Task.sleep(nanoseconds: 40_000_000)
+			}
+
+			try? await Task.sleep(nanoseconds: 400_000_000)
+			guard self.videoID == endedVideoID, self.view.window != nil else { return }
+			guard let nextPlayer = self.advanceHandler?() else { return }
+			self.switchTo(nextPlayer)
+		}
+	}
 
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {
 		self.duration = duration

@@ -4487,6 +4487,104 @@ extension L10n {
 			)
 		}
 	}
+	/// The now playing title for the named work's trailer.
+	///
+	/// - Parameter title: The title of the work the trailer belongs to.
+	///
+	/// - Tag: L10n-trailerTitle
+	static func trailerTitle(_ title: String) -> String {
+		L10n.resolve {
+			String(
+				localized: "\(title) Trailer",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The now playing title for the named work's trailer."
+			)
+		}
+	}
+
+	/// The notice shown in the player while its video plays on an AirPlay device.
+	///
+	/// - Tag: L10n-videoPlayingOnTV
+	static var videoPlayingOnTV: String {
+		L10n.resolve {
+			String(
+				localized: "This video is playing on TV.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The notice shown in the player while its video plays on an AirPlay device."
+			)
+		}
+	}
+
+	/// The notice shown in the player while its video plays on the named AirPlay device.
+	///
+	/// - Parameter deviceName: The name of the device the video plays on.
+	///
+	/// - Tag: L10n-videoPlayingOn
+	static func videoPlayingOn(_ deviceName: String) -> String {
+		L10n.resolve {
+			String(
+				localized: "This video is playing on \(deviceName).",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The notice shown in the player while its video plays on the named AirPlay device."
+			)
+		}
+	}
+
+	/// The toast shown while a video downloads.
+	///
+	/// - Tag: L10n-downloadingVideo
+	static var downloadingVideo: String {
+		L10n.resolve {
+			String(
+				localized: "Downloading video…",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown while a video downloads."
+			)
+		}
+	}
+	/// The toast shown after a video is saved to the photo library.
+	///
+	/// - Tag: L10n-videoSavedToLibrary
+	static var videoSavedToLibrary: String {
+		L10n.resolve {
+			String(
+				localized: "Video saved to your library!",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown after a video is saved to the photo library."
+			)
+		}
+	}
+	/// The toast shown after a video is saved to a folder.
+	///
+	/// - Tag: L10n-videoSavedToFolder
+	static var videoSavedToFolder: String {
+		L10n.resolve {
+			String(
+				localized: "Video saved!",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown after a video is saved to a folder."
+			)
+		}
+	}
+	/// The toast shown when a video could not be saved.
+	///
+	/// - Tag: L10n-videoSaveFailed
+	static var videoSaveFailed: String {
+		L10n.resolve {
+			String(
+				localized: "Video could not be saved.",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toast shown when a video could not be saved."
+			)
+		}
+	}
 	/// The button that rotates the media viewer.
 	///
 	/// - Tag: L10n-tapToRotate

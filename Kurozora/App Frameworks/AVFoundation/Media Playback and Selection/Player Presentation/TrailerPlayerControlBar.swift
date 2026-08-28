@@ -69,6 +69,13 @@ protocol TrailerPlayerControlBarDelegate: AnyObject {
 	/// - Parameter controlBar: The bar reporting the request.
 	func trailerPlayerControlBarDidRequestPictureInPicture(_ controlBar: TrailerPlayerControlBar)
 
+	/// Returns the player the AirPlay side-stream takes over.
+	///
+	/// - Parameter controlBar: The bar asking for the player.
+	///
+	/// - Returns: The player showing the trailer.
+	func trailerPlayerControlBarTrailerPlayer(_ controlBar: TrailerPlayerControlBar) -> TrailerWebPlayer?
+
 	/// Returns the menu of extra actions for the trailing control.
 	///
 	/// - Parameter controlBar: The bar asking for the menu.
@@ -123,7 +130,7 @@ final class TrailerPlayerControlBar: UIView {
 	/// The label showing how fast a held fast forward is running.
 	private let forwardRateLabel = TrailerPlayerControlBar.makeRateLabel()
 
-	/// The control asking to play on another device.
+	/// The control that picks the AirPlay device the native side-stream plays on.
 	private let airPlayRoutePickerView: AVRoutePickerView = {
 		let routePickerView = AVRoutePickerView()
 		routePickerView.translatesAutoresizingMaskIntoConstraints = false
@@ -531,6 +538,7 @@ final class TrailerPlayerControlBar: UIView {
 		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidEnd), for: [.touchUpInside, .touchUpOutside, .touchCancel])
 
 		self.pictureInPictureButton.addTarget(self, action: #selector(self.requestPictureInPicture), for: .primaryActionTriggered)
+		self.airPlayRoutePickerView.delegate = self
 
 		self.rewindButton.accessibilityLabel = L10n.skipBackward
 		self.forwardButton.accessibilityLabel = L10n.skipForward
@@ -882,7 +890,7 @@ final class TrailerPlayerControlBar: UIView {
 		let button = UIButton(type: .system)
 		button.translatesAutoresizingMaskIntoConstraints = false
 
-		// Left to itself the Mac renders the button natively — bordered, and dropping the glyph once
+		// Left to itself the Mac renders the button natively, bordered and dropping the glyph once
 		// a menu is attached. `KButton` pins the same style for the same reason.
 		button.preferredBehavioralStyle = .pad
 
@@ -952,6 +960,17 @@ final class TrailerPlayerControlBar: UIView {
 		}
 
 		return String(format: "%02d:%02d", minutes, remainingSeconds)
+	}
+}
+
+// MARK: - AVRoutePickerViewDelegate
+extension TrailerPlayerControlBar: AVRoutePickerViewDelegate {
+	func routePickerViewWillBeginPresentingRoutes(_ routePickerView: AVRoutePickerView) {
+		TrailerAirPlayStreamer.shared.arm(with: self.delegate?.trailerPlayerControlBarTrailerPlayer(self), for: routePickerView)
+	}
+
+	func routePickerViewDidEndPresentingRoutes(_ routePickerView: AVRoutePickerView) {
+		TrailerAirPlayStreamer.shared.probe()
 	}
 }
 

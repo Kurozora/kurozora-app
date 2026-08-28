@@ -54,6 +54,41 @@ struct MediaSaverManager {
 		return destination
 	}
 
+	/// Saves the video file at the given URL to the destination chosen in Settings.
+	///
+	/// - Parameter fileURL: The URL of the video file to save.
+	/// - Returns: The destination the video was written to.
+	@discardableResult
+	func saveVideo(at fileURL: URL) async throws -> MediaSaveDestination {
+		switch MediaSaveDestination.current {
+		case .photoLibrary:
+			try await self.saveVideoToPhotoLibrary(at: fileURL)
+			return .photoLibrary
+		case .folder:
+			try await self.saveVideoToChosenFolder(at: fileURL)
+			return .folder
+		}
+	}
+
+	/// Opens the place saved media is written to.
+	///
+	/// - Parameter destination: The destination to open.
+	func revealDestination(_ destination: MediaSaveDestination) {
+		switch destination {
+		case .photoLibrary:
+			guard let photosURL = URL(string: "photos-redirect://") else { return }
+			UIApplication.shared.open(photosURL)
+		case .folder:
+			guard let directory = MediaSaveDestination.chosenDirectory else { return }
+			#if targetEnvironment(macCatalyst)
+			UIApplication.shared.open(directory)
+			#else
+			guard let filesURL = URL(string: "shareddocuments://\(directory.path)") else { return }
+			UIApplication.shared.open(filesURL)
+			#endif
+		}
+	}
+
 	/// Copies the image at the given URL to a temporary location.
 	///
 	/// - Parameter url: The URL of the image to copy.
@@ -141,6 +176,66 @@ struct MediaSaverManager {
 		}
 
 		try await self.saveImage(from: url, to: directory)
+	}
+
+	/// Writes the video file at the given URL into the folder chosen in Settings.
+	///
+	/// - Parameter fileURL: The URL of the video file to save.
+	private func saveVideoToChosenFolder(at fileURL: URL) async throws {
+		guard let directory = MediaSaveDestination.chosenDirectory else {
+			throw SaverError.destinationUnavailable
+		}
+
+		let isAccessing = directory.startAccessingSecurityScopedResource()
+		defer {
+			if isAccessing {
+				directory.stopAccessingSecurityScopedResource()
+			}
+		}
+
+		do {
+			try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+			try FileManager.default.copyItem(at: fileURL, to: self.availableURL(for: fileURL, in: directory))
+		} catch {
+			throw SaverError.saveFailed(error)
+		}
+	}
+
+	/// Saves the video file at the given URL to the photo library.
+	///
+	/// - Parameter fileURL: The URL of the video file to save.
+	private func saveVideoToPhotoLibrary(at fileURL: URL) async throws {
+		let groupsIntoAlbum = UserSettings.mediaSaveToKurozoraAlbum
+
+		guard await self.requestAccess(for: groupsIntoAlbum ? .readWrite : .addOnly) else {
+			throw SaverError.accessDenied
+		}
+
+		let album = groupsIntoAlbum ? await self.album(named: MediaSaveDestination.folderName) : nil
+		var createdAsset = false
+
+		do {
+			try await PHPhotoLibrary.shared().performChanges {
+				guard let request = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL) else { return }
+				createdAsset = true
+
+				guard
+					let album = album,
+					let placeholder = request.placeholderForCreatedAsset,
+					let albumRequest = PHAssetCollectionChangeRequest(for: album)
+				else {
+					return
+				}
+
+				albumRequest.addAssets([placeholder] as NSFastEnumeration)
+			}
+		} catch {
+			throw SaverError.saveFailed(error)
+		}
+
+		guard createdAsset else {
+			throw SaverError.invalidData
+		}
 	}
 
 	/// Saves the image at the given URL to the photo library.

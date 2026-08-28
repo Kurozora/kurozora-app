@@ -18,6 +18,9 @@ final class TrailerPausedFrameView: UIImageView {
 	/// The task reading the frame for selection and lifting.
 	private var analysisTask: Task<Void, Never>?
 
+	/// Builds the element offering the trailer as a download.
+	var downloadMenuProvider: (() -> UIMenuElement?)?
+
 	// MARK: - Initializers
 	init() {
 		super.init(frame: .zero)
@@ -29,6 +32,7 @@ final class TrailerPausedFrameView: UIImageView {
 		if #available(iOS 17.0, macCatalyst 17.0, *), ImageAnalyzer.isSupported {
 			let analysisInteraction = ImageAnalysisInteraction()
 			analysisInteraction.preferredInteractionTypes = [.textSelection, .imageSubject]
+			analysisInteraction.delegate = self
 			self.addInteraction(analysisInteraction)
 			self.analysisInteraction = analysisInteraction
 		}
@@ -152,6 +156,15 @@ final class TrailerPausedFrameView: UIImageView {
 	}
 }
 
+// MARK: - ImageAnalysisInteractionDelegate
+@available(iOS 17.0, macCatalyst 17.0, *)
+extension TrailerPausedFrameView: ImageAnalysisInteractionDelegate {
+	func interaction(_ interaction: ImageAnalysisInteraction, shouldBeginAt point: CGPoint, for interactionType: ImageAnalysisInteraction.InteractionTypes) -> Bool {
+		// The subject interaction's own menu would replace the frame's.
+		return !interactionType.contains(.imageSubject)
+	}
+}
+
 // MARK: - UIContextMenuInteractionDelegate
 extension TrailerPausedFrameView: UIContextMenuInteractionDelegate {
 	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
@@ -167,6 +180,10 @@ extension TrailerPausedFrameView: UIContextMenuInteractionDelegate {
 			}
 
 			sections.append(UIMenu(options: .displayInline, children: self.makeFrameActions()))
+
+			if let downloadMenu = self.downloadMenuProvider?() {
+				sections.append(UIMenu(options: .displayInline, children: [downloadMenu]))
+			}
 
 			return UIMenu(children: sections)
 		})

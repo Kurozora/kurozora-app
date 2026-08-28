@@ -20,18 +20,21 @@ final class MouseEventSynthesizer {
 	// MARK: - Functions
 	/// Clicks at the given point.
 	///
-	/// - Parameter point: The point to click, in the window's coordinates.
+	/// - Parameters:
+	///    - point: The point to click, in the window's coordinates.
+	///    - window: The window the point is measured in.
 	///
 	/// - Returns: `true` if the click was sent.
 	@discardableResult
-	static func click(at point: CGPoint) -> Bool {
+	static func click(at point: CGPoint, in window: UIWindow) -> Bool {
 		guard
 			let applicationClass = NSClassFromString("NSApplication") as? NSObject.Type,
 			let application = applicationClass.perform(NSSelectorFromString(#obfuscated("sharedApplication")))?.takeUnretainedValue() as? NSObject,
 			let appKitWindow = application.value(forKey: #obfuscated("keyWindow")) as? NSObject,
 			let contentView = appKitWindow.value(forKey: #obfuscated("contentView")) as? NSObject,
 			let windowNumber = appKitWindow.value(forKey: #obfuscated("windowNumber")) as? Int,
-			let contentFrameValue = contentView.value(forKey: "frame") as? NSValue
+			let contentFrameValue = contentView.value(forKey: "frame") as? NSValue,
+			let windowFrameValue = appKitWindow.value(forKey: "frame") as? NSValue
 		else {
 			print("----- [Trailer] Mouse press could not reach the window")
 			return false
@@ -39,9 +42,20 @@ final class MouseEventSynthesizer {
 
 		var contentFrame = CGRect.zero
 		contentFrameValue.getValue(&contentFrame, size: MemoryLayout<CGRect>.size)
+		var windowFrame = CGRect.zero
+		windowFrameValue.getValue(&windowFrame, size: MemoryLayout<CGRect>.size)
 
-		// Top-left content coordinates become the window frame's bottom-left coordinates.
-		let location = CGPoint(x: contentFrame.minX + point.x, y: contentFrame.minY + (contentFrame.height - point.y))
+		// Top-left points become bottom-left window coordinates, measured against whichever frame
+		// the UIKit window actually spans: the content view, or the whole window when the content
+		// runs under the titlebar.
+		let spansFullWindow = abs(window.bounds.height - windowFrame.height) < abs(window.bounds.height - contentFrame.height)
+		let location: CGPoint
+
+		if spansFullWindow {
+			location = CGPoint(x: point.x, y: windowFrame.height - point.y)
+		} else {
+			location = CGPoint(x: contentFrame.minX + point.x, y: contentFrame.minY + (contentFrame.height - point.y))
+		}
 
 		let makerSelector = NSSelectorFromString(#obfuscated("mouseEventWithType:location:modifierFlags:timestamp:windowNumber:context:eventNumber:clickCount:pressure:"))
 		guard

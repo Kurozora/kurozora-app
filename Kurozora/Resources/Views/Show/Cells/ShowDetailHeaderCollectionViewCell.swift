@@ -30,6 +30,7 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 		let trailerPlayerView = KTrailerPlayerView()
 		// Sound and fullscreen live in the navigation bar on this screen.
 		trailerPlayerView.showsSecondaryControls = false
+		trailerPlayerView.reportsNowPlaying = true
 		trailerPlayerView.translatesAutoresizingMaskIntoConstraints = false
 		return trailerPlayerView
 	}()
@@ -151,6 +152,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		show.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure trailer
+		self.trailerPlayerView.streamMetadata = TrailerStreamMetadata(title: show.attributes.title, synopsis: show.attributes.synopsis, artworkURL: show.attributes.poster?.url)
 		self.trailerPlayerView.loadTrailer(fromURL: show.attributes.videoUrl)
 		self.trailerPlayerView.shareHandler = { sourceView in
 			show.openShareSheet(sourceView: sourceView, barButtonItem: nil)

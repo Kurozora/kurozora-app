@@ -44,11 +44,18 @@ protocol TrailerWebPlayerDelegate: AnyObject {
 	///    - currentTime: The seconds played so far.
 	///    - duration: The trailer's length in seconds.
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double)
+
+	/// Tells the delegate the trailer played to its end.
+	///
+	/// - Parameter trailerWebPlayer: The web player reporting the change.
+	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer)
 }
 
 // MARK: - TrailerWebPlayerDelegate
 extension TrailerWebPlayerDelegate {
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {}
+
+	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer) {}
 }
 
 /// A reusable web view that plays one YouTube trailer through the IFrame Player API.
@@ -62,6 +69,9 @@ final class TrailerWebPlayer: NSObject {
 
 	/// The name of the script message channel the page posts events on.
 	private static let messageHandlerName = "trailer"
+
+	/// The name of the script message channel the page asks for the trailer's details on.
+	private static let infoHandlerName = "trailerInfo"
 
 	/// The origin the embed reports to YouTube.
 	private static let embedOriginURL = URL(string: "https://\(Bundle.main.bundleIdentifier ?? "app.kurozora.kurozora")")
@@ -77,7 +87,7 @@ final class TrailerWebPlayer: NSObject {
 		.html5-main-video,video{object-fit:cover!important;pointer-events:none!important;cursor:none!important;}
 		html,body{background:transparent!important;-webkit-user-select:none!important;-webkit-touch-callout:none!important;}
 		/* Identifiers outweigh the hiding rule above. */
-		#kurozora-press-pip,#kurozora-press-airplay{opacity:0!important;pointer-events:auto!important;}
+		#kurozora-press-pip{opacity:0!important;pointer-events:auto!important;}
 		"""
 		let source = """
 		(function() {
@@ -90,7 +100,7 @@ final class TrailerWebPlayer: NSObject {
 		  } catch (error) {}
 		  document.addEventListener('visibilitychange', function(event) { event.stopImmediatePropagation(); }, true);
 		  if (location.hostname.indexOf('youtube') === -1) { return; }
-		  // Only the embed's own frame may answer for the video; nested frames carry none.
+		  // Only the embed's own frame may answer for the video. Nested frames carry none.
 		  var isEmbedRoot = false;
 		  try { isEmbedRoot = (window.parent === window.top); } catch (error) {}
 		  var STYLE_ID = 'kurozora-embed-clean';
@@ -111,6 +121,22 @@ final class TrailerWebPlayer: NSObject {
 		      if (isFinite(video.duration) && video.duration > 0) { video.currentTime = video.duration; }
 		    }
 		  }
+		  // The embed writes its own details over the app's, so the app's are asked for and put back.
+		  window.kurozoraApplyNowPlaying = function() {
+		    if (!navigator.mediaSession || !window.MediaMetadata) { return; }
+		    var handler = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.trailerInfo;
+		    if (!handler) { return; }
+		    var request = handler.postMessage({});
+		    if (!request || !request.then) { return; }
+		    request.then(function(info) {
+		      if (!info || !info.title) { return; }
+		      var current = navigator.mediaSession.metadata;
+		      if (current && current.title === info.title) { return; }
+		      try {
+		        navigator.mediaSession.metadata = new MediaMetadata({ title: info.title, artwork: info.artwork ? [{ src: info.artwork }] : [] });
+		      } catch (error) {}
+		    });
+		  };
 		  function reportPictureInPictureError(error) {
 		    try { window.webkit.messageHandlers.trailer.postMessage({ event: 'pictureInPictureError', message: String(error) }); } catch (postError) {}
 		  }
@@ -137,6 +163,10 @@ final class TrailerWebPlayer: NSObject {
 		  // take those presses for the app's own controls.
 		  window.kurozoraPositionPressTarget = function(name, left, top, width, height) {
 		    var identifier = 'kurozora-press-' + name;
+		    // Only one target may be up at a time, or a stale one swallows the next press.
+		    document.querySelectorAll('.kurozora-press-target').forEach(function(other) {
+		      if (other.id !== identifier) { other.style.display = 'none'; }
+		    });
 		    var target = document.getElementById(identifier);
 		    if (!target) {
 		      target = document.createElement('div');
@@ -148,7 +178,7 @@ final class TrailerWebPlayer: NSObject {
 		      target.addEventListener('click', function(event) {
 		        event.preventDefault();
 		        target.style.display = 'none';
-		        // The player's own button when it exists; the media API otherwise.
+		        // The player's own button when it exists, the media API otherwise.
 		        var playerButton = document.querySelector('.ytp-pip-button, button[class*="pip-button"]');
 		        try { window.webkit.messageHandlers.trailer.postMessage({ event: 'pressTarget', name: name, path: playerButton ? 'player-button' : 'api' }); } catch (postError) {}
 		        if (playerButton) { playerButton.click(); return; }
@@ -156,14 +186,17 @@ final class TrailerWebPlayer: NSObject {
 		      });
 		      (document.body || document.documentElement).appendChild(target);
 		    }
+		    if (target.kurozoraHideTimer) { clearTimeout(target.kurozoraHideTimer); }
 		    if (width <= 0 || height <= 0) { target.style.display = 'none'; return; }
 		    target.style.display = 'block';
 		    target.style.left = left + 'px';
 		    target.style.top = top + 'px';
 		    target.style.width = width + 'px';
 		    target.style.height = height + 'px';
+		    // A missed press must not leave the target up to take the next one.
+		    target.kurozoraHideTimer = setTimeout(function() { target.style.display = 'none'; }, 1500);
 		  };
-		  // The embed must never act on a press itself; only the targets above take theirs.
+		  // The embed must never act on a press itself. Only the targets above take theirs.
 		  ['pointerdown', 'mousedown', 'mouseup', 'click', 'dblclick'].forEach(function(name) {
 		    document.addEventListener(name, function(event) {
 		      var target = event.target;
@@ -201,9 +234,10 @@ final class TrailerWebPlayer: NSObject {
 		  function schedule() {
 		    if (scheduled) { return; }
 		    scheduled = true;
-		    requestAnimationFrame(function() { scheduled = false; ensureStyle(); skipAds(); });
+		    requestAnimationFrame(function() { scheduled = false; ensureStyle(); skipAds(); window.kurozoraApplyNowPlaying(); });
 		  }
 		  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+		  setInterval(window.kurozoraApplyNowPlaying, 1000);
 		})();
 		"""
 		return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: false)
@@ -227,8 +261,31 @@ final class TrailerWebPlayer: NSObject {
 	/// A Boolean value indicating whether the trailer's sound is off.
 	private(set) var isMuted = true
 
+	/// A Boolean value indicating whether the trailer starts over when it ends.
+	private(set) var loopsPlayback = true
+
+	/// The seconds played so far, as last reported by the page.
+	private(set) var lastReportedTime = 0.0
+
+	/// The trailer's length in seconds, as last reported by the page.
+	private(set) var lastReportedDuration = 0.0
+
+	/// A Boolean value indicating whether the trailer stands for the reader's viewing, and so
+	/// belongs on the system's display even while silent.
+	var reportsNowPlaying = false
+
+	/// The details the trailer shows wherever it plays outside the app.
+	var streamMetadata: TrailerStreamMetadata? {
+		didSet {
+			TrailerNowPlayingReporter.shared.refreshMetadata(for: self)
+		}
+	}
+
+	/// How loud the reader last set a trailer to play, carried over to new players.
+	private static var preferredVolume = 1.0
+
 	/// How loud the trailer plays, from silent at `0` to full at `1`.
-	private(set) var volume = 1.0
+	private(set) var volume = TrailerWebPlayer.preferredVolume
 
 	/// The quality levels the current video offers, highest first.
 	private(set) var availableQualityLevels: [String] = []
@@ -244,6 +301,9 @@ final class TrailerWebPlayer: NSObject {
 
 	/// The quality level playback is held at, with `auto` letting the video adapt.
 	private(set) var preferredQualityLevel = (KNetworkManager.isOnCellular ? UserSettings.cellularVideoQuality : UserSettings.wifiVideoQuality).preferredLevel
+
+	/// A Boolean value indicating whether the trailer is being downloaded.
+	private var isDownloadingVideo = false
 
 	/// The embed's own frame, which scripts have to run in to reach the video.
 	private var embedFrameInfo: WKFrameInfo?
@@ -322,6 +382,7 @@ final class TrailerWebPlayer: NSObject {
 	func detach() {
 		self.revealTask?.cancel()
 		self.revealTask = nil
+		TrailerNowPlayingReporter.shared.clear(for: self)
 
 		self.pause()
 
@@ -339,8 +400,12 @@ final class TrailerWebPlayer: NSObject {
 		self.delegate = nil
 	}
 
-	/// Resumes playback.
+	/// Resumes playback, on the device when the trailer is streaming there.
 	func play() {
+		if TrailerAirPlayStreamer.shared.setPlaying(true, from: self) {
+			return
+		}
+
 		self.isPaused = false
 		self.updateAudioSession()
 
@@ -349,13 +414,26 @@ final class TrailerWebPlayer: NSObject {
 		self.scheduleRevealFallback()
 	}
 
-	/// Pauses playback.
+	/// Pauses playback, on the device when the trailer is streaming there.
 	func pause() {
+		if TrailerAirPlayStreamer.shared.setPlaying(false, from: self) {
+			return
+		}
+
 		self.isPaused = true
 		self.updateAudioSession()
 
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.pauseVideo();")
+	}
+
+	/// Starts the trailer over when it ends, or lets it play out.
+	///
+	/// - Parameter loops: Whether the trailer starts over.
+	func setLooping(_ loops: Bool) {
+		self.loopsPlayback = loops
+		guard self.isPlayerReady else { return }
+		self.evaluate("player && player.setLoop(\(loops ? "true" : "false"));")
 	}
 
 	/// Mutes or unmutes the trailer.
@@ -364,6 +442,7 @@ final class TrailerWebPlayer: NSObject {
 	func setMuted(_ isMuted: Bool) {
 		self.isMuted = isMuted
 		self.updateAudioSession()
+		TrailerAirPlayStreamer.shared.setMuted(isMuted, from: self)
 
 		guard self.isPlayerReady else { return }
 		self.evaluate(isMuted ? "player && player.mute();" : "player && player.unMute();")
@@ -372,6 +451,7 @@ final class TrailerWebPlayer: NSObject {
 	/// Claims the audio session while the trailer is audible and releases it otherwise.
 	private func updateAudioSession() {
 		let isAudible = !self.isMuted && !self.isPaused
+		TrailerNowPlayingReporter.shared.update(for: self)
 
 		do {
 			if isAudible {
@@ -386,10 +466,12 @@ final class TrailerWebPlayer: NSObject {
 		}
 	}
 
-	/// Moves playback to the given point.
+	/// Moves playback to the given point, on the device too when the trailer is streaming there.
 	///
 	/// - Parameter seconds: The point to play from.
 	func seek(to seconds: Double) {
+		TrailerAirPlayStreamer.shared.seek(to: seconds, from: self)
+
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.seekTo(\(max(0.0, seconds)), true);")
 
@@ -436,6 +518,8 @@ final class TrailerWebPlayer: NSObject {
 	/// - Parameter volume: The loudness, from silent at `0` to full at `1`.
 	func setVolume(_ volume: Double) {
 		self.volume = volume
+		Self.preferredVolume = volume
+		TrailerAirPlayStreamer.shared.setVolume(volume, from: self)
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.setVolume(\(Int((min(max(0.0, volume), 1.0) * 100.0).rounded())));")
 	}
@@ -522,7 +606,6 @@ final class TrailerWebPlayer: NSObject {
 
 		self.availableQualityLevels = orderedLevels
 		self.qualityVariantURLs = variantURLs
-		print("----- [Trailer] Stream ladder: \(orderedLevels)")
 
 		if self.preferredQualityLevel != "auto" {
 			self.pinPreferredStream()
@@ -543,6 +626,52 @@ final class TrailerWebPlayer: NSObject {
 		return resolvedHeight.map { "\($0)p" }
 	}
 
+	/// Passes the stream's end through as the trailer's own.
+	func handleExternalStreamEnded() {
+		self.delegate?.trailerWebPlayerDidReachEnd(self)
+	}
+
+	/// Passes the stream's progress through as the trailer's own.
+	///
+	/// - Parameters:
+	///    - currentTime: The seconds played so far.
+	///    - duration: The trailer's length in seconds.
+	func handleExternalStreamProgress(currentTime: Double, duration: Double) {
+		self.lastReportedTime = currentTime
+		self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
+	}
+
+	/// Passes the stream's play state through as the trailer's own.
+	///
+	/// - Parameter isPlaying: Whether the stream plays.
+	func handleExternalStreamPlaying(_ isPlaying: Bool) {
+		if isPlaying {
+			self.delegate?.trailerWebPlayerDidStartPlaying(self)
+		} else {
+			self.delegate?.trailerWebPlayerDidPause(self)
+		}
+	}
+
+	/// Returns the trailer's title as the page reports it.
+	///
+	/// - Returns: The title.
+	private func videoTitle() async -> String? {
+		let title = (try? await self.webView.evaluateJavaScript("player && player.getVideoData ? (player.getVideoData().title || '') : ''")) as? String
+		guard let title = title, !title.isEmpty else { return nil }
+		return title
+	}
+
+	/// Returns the address a native player can stream the trailer from.
+	///
+	/// - Returns: The resolved quality variant when one is held, otherwise the adaptive manifest.
+	func nativeStreamURL() -> URL? {
+		if self.preferredQualityLevel != "auto", let resolvedLevel = self.resolvedQualityLevel(), let variantURL = self.qualityVariantURLs[resolvedLevel] {
+			return URL(string: variantURL)
+		}
+
+		return self.masterManifestURL.flatMap(URL.init(string:))
+	}
+
 	/// Points the trailer at the stream matching the held quality level.
 	private func pinPreferredStream() {
 		var streamURL = self.masterManifestURL
@@ -553,6 +682,96 @@ final class TrailerWebPlayer: NSObject {
 
 		guard let streamURL, let embedFrameInfo = self.embedFrameInfo else { return }
 		self.webView.evaluateJavaScript("window.kurozoraPinStream && kurozoraPinStream('\(streamURL)');", in: embedFrameInfo, in: .page, completionHandler: nil)
+	}
+
+	/// Builds the menu offering the trailer as a download.
+	///
+	/// - Returns: A menu with an action per quality level.
+	func downloadMenu() -> UIMenuElement? {
+		guard !self.availableQualityLevels.isEmpty else { return nil }
+
+		let attributes: UIMenuElement.Attributes = self.isDownloadingVideo ? [.disabled] : []
+		let actions = self.availableQualityLevels.map { level in
+			UIAction(title: level, attributes: attributes) { [weak self] _ in
+				self?.downloadVideo(atLevel: level)
+			}
+		}
+
+		return UIMenu(title: L10n.download, image: UIImage(systemName: "arrow.down.circle"), children: actions)
+	}
+
+	/// Downloads the trailer at the given quality level to the destination chosen in Settings.
+	///
+	/// - Parameter level: The quality level to download at.
+	private func downloadVideo(atLevel level: String) {
+		guard !self.isDownloadingVideo, let streamURL = self.qualityVariantURLs[level].flatMap(URL.init(string:)) else { return }
+
+		self.isDownloadingVideo = true
+		self.showDownloadNotice(L10n.downloadingVideo, systemImageName: "arrow.down.circle", feedback: nil)
+
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			do {
+				let name = await self.videoFileName()
+				let videoFileURL = try await TrailerVideoDownloader().downloadVideo(from: streamURL, named: name)
+				let destination = try await MediaSaverManager.shared.saveVideo(at: videoFileURL)
+				try? FileManager.default.removeItem(at: videoFileURL.deletingLastPathComponent())
+
+				let revealAction = {
+					MediaSaverManager.shared.revealDestination(destination)
+				}
+
+				switch destination {
+				case .photoLibrary:
+					self.showDownloadNotice(L10n.videoSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success, action: revealAction)
+				case .folder:
+					self.showDownloadNotice(L10n.videoSavedToFolder, systemImageName: "checkmark.circle", feedback: .success, action: revealAction)
+				}
+			} catch MediaSaverManager.SaverError.accessDenied {
+				self.showDownloadNotice(L10n.photoLibraryAccessDenied, systemImageName: "xmark.octagon", feedback: .error)
+			} catch {
+				print("----- [Trailer] Download failed: \(error.localizedDescription)")
+				self.showDownloadNotice(L10n.videoSaveFailed, systemImageName: "xmark.octagon", feedback: .error)
+			}
+
+			self.isDownloadingVideo = false
+		}
+	}
+
+	/// Reads the trailer's title for the video file's name.
+	///
+	/// - Returns: The title, cleaned for use as a file name.
+	private func videoFileName() async -> String {
+		let cleanedTitle = (await self.videoTitle() ?? "")
+			.components(separatedBy: CharacterSet(charactersIn: "/\\:?%*|\"<>"))
+			.joined(separator: " ")
+			.trimmingCharacters(in: .whitespaces)
+
+		return cleanedTitle.isEmpty ? self.videoID : cleanedTitle
+	}
+
+	/// Presents a brief notice over the picture.
+	///
+	/// - Parameters:
+	///    - message: The message to present.
+	///    - systemImageName: The name of the symbol shown beside the message.
+	///    - feedback: The haptic played as the notice appears.
+	///    - action: The action performed when the notice is tapped.
+	private func showDownloadNotice(_ message: String, systemImageName: String, feedback: UINotificationFeedbackGenerator.FeedbackType?, action: (() -> Void)? = nil) {
+		guard let host = self.host else { return }
+
+		let notice = ToastButton(message: message, systemImageName: systemImageName, tapAction: action)
+
+		host.addSubview(notice)
+		NSLayoutConstraint.activate([
+			notice.centerXAnchor.constraint(equalTo: host.centerXAnchor),
+			notice.topAnchor.constraint(equalTo: host.safeAreaLayoutGuide.topAnchor, constant: 12),
+			notice.leadingAnchor.constraint(greaterThanOrEqualTo: host.layoutMarginsGuide.leadingAnchor),
+			notice.trailingAnchor.constraint(lessThanOrEqualTo: host.layoutMarginsGuide.trailingAnchor)
+		])
+
+		notice.present(feedback: feedback)
 	}
 
 	#if targetEnvironment(macCatalyst)
@@ -570,9 +789,13 @@ final class TrailerWebPlayer: NSObject {
 			return
 		}
 
-		// The stand-in steps out of hit testing so the press falls through to the page.
+		// The stand-in steps out of hit testing so the press falls through to the page, and the
+		// page itself steps in, since inline hosts keep the web view's interaction off.
+		let wasInteractionEnabled = self.webView.isUserInteractionEnabled
+		self.webView.isUserInteractionEnabled = true
 		self.pausedFrameView?.isUserInteractionEnabled = false
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+			self?.webView.isUserInteractionEnabled = wasInteractionEnabled
 			self?.pausedFrameView?.isUserInteractionEnabled = true
 		}
 
@@ -589,13 +812,13 @@ final class TrailerWebPlayer: NSObject {
 			let windowPoint = self.webView.convert(pagePoint, to: window)
 			guard let coveringView = window.hitTest(windowPoint, with: nil), coveringView.isDescendant(of: self.webView) else { continue }
 
-			let script = "window.kurozoraPositionPressTarget && window.kurozoraPositionPressTarget('\(name)', \(pagePoint.x - 60.0), \(pagePoint.y - 60.0), 120.0, 120.0);"
+			let script = "window.kurozoraPositionPressTarget && window.kurozoraPositionPressTarget('\(name)', \(pagePoint.x - 120.0), \(pagePoint.y - 120.0), 240.0, 240.0);"
 			self.webView.evaluateJavaScript(script, in: embedFrameInfo, in: .page) { result in
 				switch result {
 				case .success:
 					// A beat after the reader's own press, so the two never interleave.
 					DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-						MouseEventSynthesizer.click(at: windowPoint)
+						MouseEventSynthesizer.click(at: windowPoint, in: window)
 					}
 				case .failure(let error):
 					print("----- [Trailer] Failed to place press target '\(name)': \(error.localizedDescription)")
@@ -632,7 +855,6 @@ final class TrailerWebPlayer: NSObject {
 
 			MainActor.assumeIsolated {
 				guard let self = self else { return }
-				self.logRenderingState(occlusionVisible: occlusionState & 2 != 0)
 				guard occlusionState & 2 != 0 else { return }
 
 				// Repeated, because a repaint can be dropped while the switch is still settling.
@@ -710,7 +932,6 @@ final class TrailerWebPlayer: NSObject {
 			NotificationCenter.default.post(name: UIScene.willEnterForegroundNotification, object: sceneObject)
 
 			if !self.isPageBackground {
-				print("----- [Trailer] Walked the page back to the front (scene)")
 				return
 			}
 		}
@@ -723,8 +944,6 @@ final class TrailerWebPlayer: NSObject {
 		Self.isPostingSyntheticForeground = true
 		NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: UIApplication.shared)
 		Self.isPostingSyntheticForeground = false
-
-		print("----- [Trailer] Walked the page back to the front (app; page now \(self.isPageBackground ? "background" : "foreground"))")
 	}
 
 	/// A Boolean value indicating whether WebKit put the page in the background.
@@ -736,21 +955,6 @@ final class TrailerWebPlayer: NSObject {
 		return unsafeBitCast(self.webView.method(for: selector), to: StateGetter.self)(self.webView, selector)
 	}
 
-	/// Prints where rendering stands.
-	///
-	/// - Parameter occlusionVisible: Whether the window just became visible.
-	private func logRenderingState(occlusionVisible: Bool) {
-		let sceneState: String
-		switch self.webView.window?.windowScene?.activationState {
-		case .foregroundActive: sceneState = "foreground active"
-		case .foregroundInactive: sceneState = "foreground inactive"
-		case .background: sceneState = "background"
-		case .unattached: sceneState = "unattached"
-		default: sceneState = "unknown"
-		}
-
-		print("----- [Trailer] Window \(occlusionVisible ? "visible" : "occluded"); scene \(sceneState); page \(self.isPageBackground ? "background" : "foreground")")
-	}
 	#endif
 
 	/// Puts the paused frame up in front of the video.
@@ -766,6 +970,9 @@ final class TrailerWebPlayer: NSObject {
 
 			let pausedFrameView = self.pausedFrameView ?? TrailerPausedFrameView()
 			self.pausedFrameView = pausedFrameView
+			pausedFrameView.downloadMenuProvider = { [weak self] in
+				self?.downloadMenu()
+			}
 
 			pausedFrameView.frame = self.webView.bounds
 			pausedFrameView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -892,6 +1099,8 @@ final class TrailerWebPlayer: NSObject {
 		case "ready":
 			self.isPlayerReady = true
 			self.setMuted(self.isMuted)
+			self.setVolume(self.volume)
+			self.setLooping(self.loopsPlayback)
 
 			if self.isPaused {
 				self.evaluate("player && player.pauseVideo();")
@@ -902,7 +1111,7 @@ final class TrailerWebPlayer: NSObject {
 			self.isPaused = false
 			self.collectQualityLevelsIfNeeded()
 
-			// Looping restores the adaptive stream; the held level goes back on.
+			// Looping restores the adaptive stream, so the held level goes back on.
 			if self.preferredQualityLevel != "auto" {
 				self.pinPreferredStream()
 			}
@@ -911,6 +1120,9 @@ final class TrailerWebPlayer: NSObject {
 		case "paused":
 			self.capturePausedFrame()
 			self.delegate?.trailerWebPlayerDidPause(self)
+		case "ended":
+			guard !self.loopsPlayback else { break }
+			self.delegate?.trailerWebPlayerDidReachEnd(self)
 		case "pausedSeekSettled":
 			self.capturePausedFrame()
 		case "error":
@@ -926,6 +1138,7 @@ final class TrailerWebPlayer: NSObject {
 	private func makeWebView() -> WKWebView {
 		let userContentController = WKUserContentController()
 		userContentController.add(self, name: Self.messageHandlerName)
+		userContentController.addScriptMessageHandler(self, contentWorld: .page, name: Self.infoHandlerName)
 		userContentController.addUserScript(Self.chromeHidingScript)
 
 		let configuration = WKWebViewConfiguration()
@@ -1082,6 +1295,8 @@ final class TrailerWebPlayer: NSObject {
 		      post('playing');
 		    } else if (event.data === YT.PlayerState.PAUSED) {
 		      post('paused');
+		    } else if (event.data === YT.PlayerState.ENDED) {
+		      post('ended');
 		    }
 		  }
 		  var tag = document.createElement('script');
@@ -1091,6 +1306,31 @@ final class TrailerWebPlayer: NSObject {
 		</body>
 		</html>
 		"""
+	}
+}
+
+// MARK: - WKScriptMessageHandlerWithReply
+extension TrailerWebPlayer: WKScriptMessageHandlerWithReply {
+	nonisolated func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
+		guard message.name == TrailerWebPlayer.infoHandlerName else {
+			replyHandler(nil, nil)
+			return
+		}
+
+		MainActor.assumeIsolated {
+			guard let metadata = self.streamMetadata else {
+				replyHandler(nil, nil)
+				return
+			}
+
+			var info: [String: Any] = ["title": L10n.trailerTitle(metadata.title)]
+
+			if let artworkURL = metadata.artworkURL {
+				info["artwork"] = artworkURL
+			}
+
+			replyHandler(info, nil)
+		}
 	}
 }
 
@@ -1109,26 +1349,24 @@ extension TrailerWebPlayer: WKScriptMessageHandler {
 			return
 		}
 
-		if event == "pressTarget" {
-			print("----- [Trailer] Press target clicked: \(body["name"] as? String ?? "unknown") via \(body["path"] as? String ?? "unknown")")
-			return
-		}
 
 		if event == "pictureInPictureError" {
 			print("----- [Trailer] Picture in picture refused: \(body["message"] as? String ?? "unknown")")
 			return
 		}
 
-		if event == "pictureInPictureState" {
-			print("----- [Trailer] Picture in picture asked for \(body["requested"] as? String ?? "unknown"), now \(body["mode"] as? String ?? "unknown")")
-			return
-		}
 
 		if event == "progress" {
 			guard let currentTime = body["currentTime"] as? Double, let duration = body["duration"] as? Double else { return }
 
 			MainActor.assumeIsolated {
+				// The stream reports the trailer's position while it plays on a device.
+				guard !TrailerAirPlayStreamer.shared.isStreaming(from: self) else { return }
+
+				self.lastReportedTime = currentTime
+				self.lastReportedDuration = duration
 				self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
+				TrailerNowPlayingReporter.shared.updateProgress(for: self)
 			}
 			return
 		}

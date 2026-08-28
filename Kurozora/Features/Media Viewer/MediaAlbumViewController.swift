@@ -486,63 +486,40 @@ final class MediaAlbumViewController: UIPageViewController {
 		}
 	}
 
-	private func createToast() -> UIButton {
-		let button = AdaptiveCornerButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.configuration?.imagePlacement = .leading
-		button.configuration?.imagePadding = 8
-		button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-			var outgoing = incoming
-			outgoing.font = .preferredFont(forTextStyle: .subheadline)
-			return outgoing
-		}
-		button.alpha = 0
-		return button
-	}
-
 	/// Presents a message below the index button.
 	///
 	/// - Parameters:
 	///    - message: The message to present.
 	///    - systemImageName: The name of the symbol shown beside the message.
 	///    - feedback: The haptic played as the message appears.
-	private func showToast(_ message: String, systemImageName: String, feedback: UINotificationFeedbackGenerator.FeedbackType) {
-		let button = self.createToast()
-		button.configuration?.title = message
-		button.configuration?.image = UIImage(systemName: systemImageName)
+	///    - action: The action performed when the message is tapped.
+	private func showToast(_ message: String, systemImageName: String, feedback: UINotificationFeedbackGenerator.FeedbackType, action: (() -> Void)? = nil) {
+		let toast = ToastButton(message: message, systemImageName: systemImageName, tapAction: action)
 
-		self.view.addSubview(button)
+		self.view.addSubview(toast)
 
 		NSLayoutConstraint.activate([
-			button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-			button.topAnchor.constraint(equalTo: self.indexButton.bottomAnchor, constant: 8),
-			button.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.layoutMarginsGuide.leadingAnchor),
-			button.trailingAnchor.constraint(lessThanOrEqualTo: self.view.layoutMarginsGuide.trailingAnchor)
+			toast.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+			toast.topAnchor.constraint(equalTo: self.indexButton.bottomAnchor, constant: 8),
+			toast.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.layoutMarginsGuide.leadingAnchor),
+			toast.trailingAnchor.constraint(lessThanOrEqualTo: self.view.layoutMarginsGuide.trailingAnchor)
 		])
 
-		if UserSettings.hapticsAllowed {
-			UINotificationFeedbackGenerator().notificationOccurred(feedback)
-		}
-
-		UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseOut]) {
-			button.alpha = 1
-		} completion: { _ in
-			UIView.animate(withDuration: 0.32, delay: 1.5, options: [.curveEaseIn]) {
-				button.alpha = 0
-			} completion: { _ in
-				button.removeFromSuperview()
-			}
-		}
+		toast.present(feedback: feedback)
 	}
 
 	private func handleSaveSuccess(at destination: MediaSaveDestination, isAlbum: Bool) {
+		let revealAction = {
+			MediaSaverManager.shared.revealDestination(destination)
+		}
+
 		switch (destination, isAlbum) {
 		case (.photoLibrary, false):
-			self.showToast(L10n.imageSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+			self.showToast(L10n.imageSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success, action: revealAction)
 		case (.photoLibrary, true):
-			self.showToast(L10n.albumSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success)
+			self.showToast(L10n.albumSavedToLibrary, systemImageName: "checkmark.circle", feedback: .success, action: revealAction)
 		case (.folder, _):
-			self.showToast(L10n.imageSavedToFolder, systemImageName: "checkmark.circle", feedback: .success)
+			self.showToast(L10n.imageSavedToFolder, systemImageName: "checkmark.circle", feedback: .success, action: revealAction)
 		}
 	}
 
@@ -937,7 +914,7 @@ extension MediaAlbumViewController {
 		guard !self.isApplyingRotation else { return }
 		self.isApplyingRotation = true
 
-		// Sync effective orientation immediately — before next OM callback
+		// Sync effective orientation immediately, before the next OM callback
 		self.effectiveViewerOrientation = orientation
 
 		// Clear force when returning to portrait to restore auto-rotation
