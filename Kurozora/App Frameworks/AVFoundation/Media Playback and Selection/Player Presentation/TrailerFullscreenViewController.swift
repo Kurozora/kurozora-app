@@ -191,6 +191,9 @@ final class TrailerFullscreenViewController: UIViewController {
 	/// A Boolean value indicating whether a held seek button runs the trailer forwards.
 	private var isFastSeekingForward = true
 
+	/// A Boolean value indicating whether a fast seek is in progress.
+	private var isFastSeeking = false
+
 	/// The speeds a held seek button climbs through.
 	private let fastSeekRates: [Double] = [2.0, 5.0, 10.0, 30.0, 60.0]
 
@@ -209,6 +212,14 @@ final class TrailerFullscreenViewController: UIViewController {
 	#if targetEnvironment(macCatalyst)
 	/// A Boolean value indicating whether the scrubber's filled track has been colored.
 	private var didApplyTrackFill = false
+	#endif
+
+	/// A Boolean value indicating whether the player has been dismissed.
+	private var hasLeftScreen = false
+
+	#if targetEnvironment(macCatalyst)
+	/// The monitor that handles the Escape key ahead of the responder chain.
+	private var escapeMonitor: MacKeyDownMonitor?
 	#endif
 
 	/// The identifier of the trailer to play.
@@ -238,6 +249,8 @@ final class TrailerFullscreenViewController: UIViewController {
 	}
 
 	override var keyCommands: [UIKeyCommand]? {
+		guard !self.hasLeftScreen else { return nil }
+
 		let commands = [
 			UIKeyCommand(action: #selector(self.close), input: UIKeyCommand.inputEscape),
 			UIKeyCommand(action: #selector(self.close), input: "f", modifierFlags: .command),
@@ -318,7 +331,7 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.isPlaying = self.resumesPlayback
 
 		#if targetEnvironment(macCatalyst)
-		// The floating-window and device-picker requests are pressed into the page itself.
+		// The paused frame's menu and the pressed-through controls both live in the page.
 		player.setInteractionEnabled(true)
 		#endif
 	}
@@ -331,6 +344,13 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.scheduleControlsAutoHide()
 
 		#if targetEnvironment(macCatalyst)
+		// The page's own web view takes Escape for itself, so it never reaches the chain.
+		let escapeMonitor = MacKeyDownMonitor(keyCode: MacKeyDownMonitor.escapeKeyCode) { [weak self] in
+			self?.close()
+		}
+		self.escapeMonitor = escapeMonitor
+		escapeMonitor.start()
+
 		// However the window leaves fullscreen, the player leaves with it.
 		self.macFullscreenObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name("NSWindowDidExitFullScreenNotification"), object: nil, queue: .main) { [weak self] _ in
 			MainActor.assumeIsolated {
@@ -357,6 +377,21 @@ final class TrailerFullscreenViewController: UIViewController {
 		DispatchQueue.main.async { [weak self] in
 			_ = self?.becomeFirstResponder()
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		guard self.isBeingDismissed else { return }
+
+		// A dismissed controller keeps first responder, and the next player would find it taken.
+		self.hasLeftScreen = true
+		self.resignFirstResponder()
+
+		#if targetEnvironment(macCatalyst)
+		self.escapeMonitor?.stop()
+		self.escapeMonitor = nil
+		#endif
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -395,6 +430,9 @@ final class TrailerFullscreenViewController: UIViewController {
 	// MARK: - Functions
 	/// Dismisses the fullscreen player.
 	@objc private func close() {
+		// A close arriving after the player has left would hand the trailer back a second time.
+		guard !self.hasLeftScreen else { return }
+
 		// Let go of any pinch zoom before the zoom-back transforms the same host.
 		self.zoomScrollView.setZoomScale(1.0, animated: false)
 
@@ -446,6 +484,12 @@ final class TrailerFullscreenViewController: UIViewController {
 
 		guard !self.isPlaying else { return }
 
+		// A computed seek lands on whatever the stream allows, and each press cancels the last.
+		if self.player?.stepFrames(forward ? 1 : -1) == true {
+			self.seekSettleDate = nil
+			return
+		}
+
 		let frameDuration = 1.0 / (self.framesPerSecond ?? 24.0)
 		self.seek(to: self.elapsedTime + (forward ? frameDuration : -frameDuration))
 	}
@@ -479,6 +523,7 @@ final class TrailerFullscreenViewController: UIViewController {
 
 		self.isKeyboardFastSeeking = true
 		self.isFastSeekingForward = forward
+		self.isFastSeeking = true
 		self.fastSeekBaseIndex = self.fastSeekRates.firstIndex { $0 > self.playbackRate } ?? 0
 		self.fastSeekRateIndex = self.fastSeekBaseIndex
 		self.runFastSeek()
@@ -931,6 +976,7 @@ final class TrailerFullscreenViewController: UIViewController {
 	private func beginFastSeek(isForward: Bool) {
 		self.wasPlayingBeforeFastSeek = self.isPlaying
 		self.isFastSeekingForward = isForward
+		self.isFastSeeking = true
 		self.fastSeekTask?.cancel()
 
 		// Holding starts above whatever speed is already chosen, so 2× playback begins the climb at 5×.
@@ -946,7 +992,8 @@ final class TrailerFullscreenViewController: UIViewController {
 		let stepCount = self.fastSeekRates.count - 1 - self.fastSeekBaseIndex
 		guard stepCount > 0 else { return }
 
-		let steps = min(stepCount, Int((progression * Double(stepCount)).rounded()))
+		// Rounding would give the lowest rate half a band, which is near impossible to hold.
+		let steps = min(stepCount, Int(progression * Double(stepCount + 1)))
 		let index = self.fastSeekBaseIndex + max(0, steps)
 		guard index != self.fastSeekRateIndex else { return }
 
@@ -971,25 +1018,14 @@ final class TrailerFullscreenViewController: UIViewController {
 		#endif
 
 		self.fastSeekTask?.cancel()
+		self.fastSeekTask = nil
 
 		if self.isFastSeekingForward {
-			self.player?.setPlaybackRate(2.0)
+			// A held rate is not the chosen rate.
+			self.player?.setPlaybackRate(rate, remembers: false)
 			self.player?.play()
-
-			guard rate > 2.0 else {
-				self.fastSeekTask = nil
-				return
-			}
-
-			let tickDuration = 0.25
-			self.fastSeekTask = Task { @MainActor [weak self] in
-				while !Task.isCancelled {
-					try? await Task.sleep(nanoseconds: UInt64(tickDuration * 1_000_000_000.0))
-					guard !Task.isCancelled, let self = self else { return }
-					self.seek(to: self.elapsedTime + rate * tickDuration)
-				}
-			}
 		} else {
+			// A player takes no negative rate, so reverse is seeked.
 			self.player?.pause()
 
 			let tickDuration = 0.1
@@ -1007,6 +1043,7 @@ final class TrailerFullscreenViewController: UIViewController {
 	private func endFastSeek() {
 		self.fastSeekTask?.cancel()
 		self.fastSeekTask = nil
+		self.isFastSeeking = false
 
 		self.player?.setPlaybackRate(self.playbackRate)
 
@@ -1629,6 +1666,11 @@ extension TrailerFullscreenViewController: TrailerWebPlayerDelegate {
 		// while they are moving and briefly after, letting playback catch up instead of fighting them.
 		let isAwaitingSeek = self.seekSettleDate.map { $0 > Date() } ?? false
 		guard !self.isScrubbing, !isAwaitingSeek else { return }
+
+		// A fast run reports its position unevenly, often behind the last report.
+		if self.isFastSeeking {
+			guard self.isFastSeekingForward ? currentTime > self.elapsedTime : currentTime < self.elapsedTime else { return }
+		}
 
 		self.elapsedTime = currentTime
 		self.updateProgressControls()

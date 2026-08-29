@@ -325,7 +325,10 @@ class MenuController {
 	class func debugMenu() -> UIMenu {
 		let showFlexCommand = UIKeyCommand(title: "Show FLEX Menu", action: #selector(AppDelegate.handleShowFlex(_:)), input: "F", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Show FLEX Menu")
 		let toggleFlexOverlayCommand = UIKeyCommand(title: "Toggle FLEX Overlay", action: #selector(AppDelegate.handleToggleFlexOverlay(_:)), input: "E", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Toggle FLEX Overlay")
-		return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand])
+		let nativeVideoCommand = UIKeyCommand(title: "Native Video Playback", action: #selector(AppDelegate.handleToggleNativeVideoPlayback(_:)), input: "V", modifierFlags: [.command, .control, .alternate], discoverabilityTitle: "Native Video Playback")
+		nativeVideoCommand.state = UserSettings.playsVideoNatively ? .on : .off
+
+		return UIMenu(title: "Debug", identifier: UIMenu.Identifier("app.kurozora.menus.debug"), options: [], children: [showFlexCommand, toggleFlexOverlayCommand, nativeVideoCommand])
 	}
 	#endif
 }

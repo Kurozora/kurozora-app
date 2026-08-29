@@ -65,7 +65,7 @@ extension TrailerWebPlayerDelegate {
 final class TrailerWebPlayer: NSObject {
 	// MARK: - Properties
 	/// The identifier of the video this player renders.
-	let videoID: String
+	private(set) var videoID: String
 
 	/// The name of the script message channel the page posts events on.
 	private static let messageHandlerName = "trailer"
@@ -84,7 +84,7 @@ final class TrailerWebPlayer: NSObject {
 		let css = """
 		\(TrailerWebPlayer.hiddenChromeSelector){opacity:0!important;pointer-events:none!important;}
 		.html5-video-player,.html5-video-container{background:transparent!important;}
-		.html5-main-video,video{object-fit:cover!important;pointer-events:none!important;cursor:none!important;}
+		.html5-main-video,video{object-fit:contain!important;pointer-events:none!important;cursor:none!important;}
 		html,body{background:transparent!important;-webkit-user-select:none!important;-webkit-touch-callout:none!important;}
 		/* Identifiers outweigh the hiding rule above. */
 		#kurozora-press-pip{opacity:0!important;pointer-events:auto!important;}
@@ -99,7 +99,48 @@ final class TrailerWebPlayer: NSObject {
 		    Object.defineProperty(document, 'visibilityState', { get: function() { return 'visible'; } });
 		  } catch (error) {}
 		  document.addEventListener('visibilitychange', function(event) { event.stopImmediatePropagation(); }, true);
-		  if (location.hostname.indexOf('youtube') === -1) { return; }
+		  // Only the app writes the metadata. The page's own writes are dropped.
+		  var ownsWrite = false;
+		  try {
+		    var sessionPrototype = navigator.mediaSession ? Object.getPrototypeOf(navigator.mediaSession) : null;
+		    var descriptor = sessionPrototype ? Object.getOwnPropertyDescriptor(sessionPrototype, 'metadata') : null;
+		    if (descriptor && descriptor.get && descriptor.set) {
+		      var nativeGet = descriptor.get;
+		      var nativeSet = descriptor.set;
+		      Object.defineProperty(sessionPrototype, 'metadata', {
+		        configurable: true,
+		        enumerable: descriptor.enumerable,
+		        get: function() { return nativeGet.call(this); },
+		        set: function(value) {
+		          if (!ownsWrite) { return; }
+		          nativeSet.call(this, value);
+		        }
+		      });
+		    }
+		  } catch (error) {}
+		  // The embed overwrites the metadata on every state change.
+		  window.kurozoraApplyNowPlaying = function() {
+		    if (!navigator.mediaSession || !window.MediaMetadata) { return; }
+		    var handler = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.trailerInfo;
+		    if (!handler) { return; }
+		    var request = handler.postMessage({});
+		    if (!request || !request.then) { return; }
+		    request.then(function(info) {
+		      if (!info || !info.title) { return; }
+		      var current = navigator.mediaSession.metadata;
+		      if (current && current.title === info.title) { return; }
+		      try {
+		        ownsWrite = true;
+		        navigator.mediaSession.metadata = new MediaMetadata({ title: info.title });
+		        ownsWrite = false;
+		      } catch (error) { ownsWrite = false; }
+		    });
+		  };
+		  if (location.hostname.indexOf('youtube') === -1) {
+		    // Frames outside the embed have no state to wait on.
+		    setInterval(window.kurozoraApplyNowPlaying, 1000);
+		    return;
+		  }
 		  // Only the embed's own frame may answer for the video. Nested frames carry none.
 		  var isEmbedRoot = false;
 		  try { isEmbedRoot = (window.parent === window.top); } catch (error) {}
@@ -121,22 +162,6 @@ final class TrailerWebPlayer: NSObject {
 		      if (isFinite(video.duration) && video.duration > 0) { video.currentTime = video.duration; }
 		    }
 		  }
-		  // The embed writes its own details over the app's, so the app's are asked for and put back.
-		  window.kurozoraApplyNowPlaying = function() {
-		    if (!navigator.mediaSession || !window.MediaMetadata) { return; }
-		    var handler = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.trailerInfo;
-		    if (!handler) { return; }
-		    var request = handler.postMessage({});
-		    if (!request || !request.then) { return; }
-		    request.then(function(info) {
-		      if (!info || !info.title) { return; }
-		      var current = navigator.mediaSession.metadata;
-		      if (current && current.title === info.title) { return; }
-		      try {
-		        navigator.mediaSession.metadata = new MediaMetadata({ title: info.title, artwork: info.artwork ? [{ src: info.artwork }] : [] });
-		      } catch (error) {}
-		    });
-		  };
 		  function reportPictureInPictureError(error) {
 		    try { window.webkit.messageHandlers.trailer.postMessage({ event: 'pictureInPictureError', message: String(error) }); } catch (postError) {}
 		  }
@@ -284,6 +309,12 @@ final class TrailerWebPlayer: NSObject {
 	/// How loud the reader last set a trailer to play, carried over to new players.
 	private static var preferredVolume = 1.0
 
+	/// The quality level chosen most recently, applied to new players.
+	private static var chosenQualityLevel: String?
+
+	/// The playback rate chosen most recently, applied to new players.
+	private static var preferredPlaybackRate = 1.0
+
 	/// How loud the trailer plays, from silent at `0` to full at `1`.
 	private(set) var volume = TrailerWebPlayer.preferredVolume
 
@@ -296,11 +327,29 @@ final class TrailerWebPlayer: NSObject {
 	/// The stream address the trailer adapts freely on.
 	private var masterManifestURL: String?
 
+	/// The time at which the page last reported its playback position.
+	private var pageTimeAnchor: Date?
+
+	/// A Boolean value indicating whether the trailer's renderer has been logged.
+	private var hasReportedStreamKind = false
+
+	/// A Boolean value indicating whether the page is paused on the trailer's first frame.
+	private var pageHoldsFirstFrame = false
+
+	/// The player that renders the trailer in front of the page.
+	private var nativePlayerView: TrailerNativePlayerView?
+
+	/// A Boolean value indicating whether AVPlayer renders the trailer.
+	private(set) var isPlayingNatively = false
+
 	/// The pinned stream address for each quality level.
 	private var qualityVariantURLs: [String: String] = [:]
 
 	/// The quality level playback is held at, with `auto` letting the video adapt.
-	private(set) var preferredQualityLevel = (KNetworkManager.isOnCellular ? UserSettings.cellularVideoQuality : UserSettings.wifiVideoQuality).preferredLevel
+	private(set) var preferredQualityLevel = TrailerWebPlayer.chosenQualityLevel ?? (KNetworkManager.isOnCellular ? UserSettings.cellularVideoQuality : UserSettings.wifiVideoQuality).preferredLevel
+
+	/// The playback rate, as a multiple of normal speed.
+	private(set) var playbackRate = TrailerWebPlayer.preferredPlaybackRate
 
 	/// A Boolean value indicating whether the trailer is being downloaded.
 	private var isDownloadingVideo = false
@@ -371,6 +420,14 @@ final class TrailerWebPlayer: NSObject {
 			host.insertSubview(self.webView, at: 0)
 		}
 
+		if self.isPlayingNatively {
+			self.pageView.alpha = 0.0
+		}
+
+		if let nativePlayerView = self.nativePlayerView {
+			self.mount(nativePlayerView, in: host)
+		}
+
 		if self.webView.url == nil {
 			self.webView.loadHTMLString(self.playerHTML(isMuted: isMuted), baseURL: Self.embedOriginURL)
 		} else {
@@ -385,6 +442,9 @@ final class TrailerWebPlayer: NSObject {
 		TrailerNowPlayingReporter.shared.clear(for: self)
 
 		self.pause()
+		if self.nativePlayerView?.isFloating == false {
+			self.nativePlayerView?.removeFromSuperview()
+		}
 
 		// Parked offscreen instead of leaving the window, so the video stays loaded and ready.
 		let hostedView: UIView = self.videoView ?? self.webView
@@ -392,6 +452,12 @@ final class TrailerWebPlayer: NSObject {
 		if let warmHost = TrailerPlayerPool.shared.warmHost() {
 			hostedView.autoresizingMask = []
 			warmHost.addSubview(hostedView)
+
+			// Picture in Picture ends when its source view leaves the window.
+			if let nativePlayerView = self.nativePlayerView, nativePlayerView.isFloating {
+				nativePlayerView.autoresizingMask = []
+				warmHost.addSubview(nativePlayerView)
+			}
 		} else {
 			hostedView.removeFromSuperview()
 		}
@@ -409,6 +475,14 @@ final class TrailerWebPlayer: NSObject {
 		self.isPaused = false
 		self.updateAudioSession()
 
+		if self.isPlayingNatively {
+			self.frameCaptureTask?.cancel()
+			self.pausedFrameView?.hideFrame()
+			self.nativePlayerView?.play()
+			self.delegate?.trailerWebPlayerDidStartPlaying(self)
+			return
+		}
+
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.playVideo();")
 		self.scheduleRevealFallback()
@@ -422,6 +496,13 @@ final class TrailerWebPlayer: NSObject {
 
 		self.isPaused = true
 		self.updateAudioSession()
+
+		if self.isPlayingNatively {
+			self.nativePlayerView?.pause()
+			self.capturePausedFrame()
+			self.delegate?.trailerWebPlayerDidPause(self)
+			return
+		}
 
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.pauseVideo();")
@@ -443,6 +524,12 @@ final class TrailerWebPlayer: NSObject {
 		self.isMuted = isMuted
 		self.updateAudioSession()
 		TrailerAirPlayStreamer.shared.setMuted(isMuted, from: self)
+
+		// The page was muted for the handover.
+		if self.isPlayingNatively {
+			self.nativePlayerView?.setMuted(isMuted)
+			return
+		}
 
 		guard self.isPlayerReady else { return }
 		self.evaluate(isMuted ? "player && player.mute();" : "player && player.unMute();")
@@ -466,11 +553,83 @@ final class TrailerWebPlayer: NSObject {
 		}
 	}
 
+	/// Sets the playback rate on the page's video element.
+	///
+	/// The embed's player rejects rates above 2, its video element does not.
+	///
+	/// - Parameter rate: The rate, as a multiple of normal speed.
+	private func setPageVideoRate(_ rate: Double) {
+		guard let embedFrameInfo = self.embedFrameInfo else { return }
+
+		// The embed rewrites playbackRate on every state change, so its setter is overridden.
+		let script = """
+		(function(){
+		  var v = document.querySelector('video');
+		  if (!v) { return -1.0; }
+		  var proto = Object.getPrototypeOf(v);
+		  var descriptor = null;
+		  while (proto && !descriptor) {
+		    descriptor = Object.getOwnPropertyDescriptor(proto, 'playbackRate');
+		    proto = Object.getPrototypeOf(proto);
+		  }
+		  if (!descriptor) {
+		    v.playbackRate = \(rate);
+		    return v.playbackRate;
+		  }
+		  if (!v.kurozoraHoldsRate) {
+		    Object.defineProperty(v, 'playbackRate', {
+		      configurable: true,
+		      get: function() { return descriptor.get.call(this); },
+		      set: function(value) {
+		        if (this.kurozoraHoldsRate) { return; }
+		        descriptor.set.call(this, value);
+		      }
+		    });
+		  }
+		  v.kurozoraHoldsRate = \(rate > 1.0 ? "true" : "false");
+		  v.defaultPlaybackRate = \(rate);
+		  descriptor.set.call(v, \(rate));
+		  return descriptor.get.call(v);
+		})()
+		"""
+		self.webView.evaluateJavaScript(script, in: embedFrameInfo, in: .page) { result in
+			MainActor.assumeIsolated {
+				switch result {
+				case .success:
+					break
+				case .failure(let error):
+					print("----- [Trailer] Page refused the speed: \(error.localizedDescription)")
+				}
+			}
+		}
+	}
+
+	/// Moves the picture on by whole frames.
+	///
+	/// - Parameter count: The frames to move, stepping back when negative.
+	///
+	/// - Returns: `true` if the trailer could step.
+	func stepFrames(_ count: Int) -> Bool {
+		guard self.isPlayingNatively, let nativePlayerView = self.nativePlayerView else { return false }
+
+		return nativePlayerView.stepFrames(count)
+	}
+
 	/// Moves playback to the given point, on the device too when the trailer is streaming there.
 	///
 	/// - Parameter seconds: The point to play from.
 	func seek(to seconds: Double) {
 		TrailerAirPlayStreamer.shared.seek(to: seconds, from: self)
+
+		if self.isPlayingNatively {
+			self.nativePlayerView?.seek(to: seconds)
+
+			guard self.isPaused else { return }
+
+			self.pausedFrameView?.hideFrame()
+			self.capturePausedFrame()
+			return
+		}
 
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.seekTo(\(max(0.0, seconds)), true);")
@@ -507,10 +666,26 @@ final class TrailerWebPlayer: NSObject {
 
 	/// Sets how fast the trailer plays.
 	///
-	/// - Parameter rate: The multiple of normal speed to play at.
-	func setPlaybackRate(_ rate: Double) {
+	/// - Parameters:
+	///    - rate: The rate, as a multiple of normal speed.
+	///    - remembers: Whether the rate carries over to the next trailer.
+	func setPlaybackRate(_ rate: Double, remembers: Bool = true) {
+		self.playbackRate = rate
+
+		if remembers {
+			Self.preferredPlaybackRate = rate
+		}
+
+		if self.isPlayingNatively {
+			self.nativePlayerView?.setPlaybackRate(rate)
+			return
+		}
+
 		guard self.isPlayerReady else { return }
-		self.evaluate("player && player.setPlaybackRate(\(rate));")
+
+		// The embed's player rejects rates above 2.
+		self.evaluate("player && player.setPlaybackRate(\(min(rate, 2.0)));")
+		self.setPageVideoRate(rate)
 	}
 
 	/// Sets how loud the trailer plays.
@@ -520,6 +695,12 @@ final class TrailerWebPlayer: NSObject {
 		self.volume = volume
 		Self.preferredVolume = volume
 		TrailerAirPlayStreamer.shared.setVolume(volume, from: self)
+
+		if self.isPlayingNatively {
+			self.nativePlayerView?.setVolume(volume)
+			return
+		}
+
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.setVolume(\(Int((min(max(0.0, volume), 1.0) * 100.0).rounded())));")
 	}
@@ -529,6 +710,14 @@ final class TrailerWebPlayer: NSObject {
 	/// - Parameter level: The quality level to hold, with `auto` letting the video adapt.
 	func setPreferredQualityLevel(_ level: String) {
 		self.preferredQualityLevel = level
+		Self.chosenQualityLevel = level
+
+		// AVPlayer takes a resolution cap rather than a fixed variant.
+		if self.isPlayingNatively {
+			self.nativePlayerView?.setMaximumHeight(Double(level.dropLast()) ?? 0.0)
+			return
+		}
+
 		self.pinPreferredStream()
 	}
 
@@ -544,18 +733,151 @@ final class TrailerWebPlayer: NSObject {
 
 				switch result {
 				case .success(let value):
-					guard let source = value as? String, source.contains("/hls_variant/"), let manifestURL = URL(string: source) else {
+					guard let source = value as? String, !source.isEmpty else {
 						self.hasCollectedQualityLevels = false
+						self.setMuted(self.isMuted)
+						return
+					}
+
+					guard source.contains("/hls_variant/"), let manifestURL = URL(string: source) else {
+						self.hasCollectedQualityLevels = false
+						self.reportStreamKind("no manifest, stays on the page")
+
+						// Nothing to hand over to, so the page keeps the sound.
+						self.setMuted(self.isMuted)
 						return
 					}
 
 					self.masterManifestURL = source
+					self.reportStreamKind(UserSettings.playsVideoNatively ? "manifest, playing in the app's own player" : "manifest, playing on the page")
 					self.fetchQualityLevels(from: manifestURL)
+					self.beginNativeHandoff()
 				case .failure:
 					self.hasCollectedQualityLevels = false
 				}
 			}
 		}
+	}
+
+	/// The view the page draws the trailer into.
+	private var pageView: UIView {
+		return self.videoView ?? self.webView
+	}
+
+	/// A Boolean value indicating whether the page can change trailers without reloading.
+	var canSwitchVideo: Bool {
+		return self.isPlayerReady
+	}
+
+	/// Plays a different trailer in the page already loaded.
+	///
+	/// - Parameter videoID: The identifier of the trailer to play.
+	func switchTo(videoID: String) {
+		guard self.canSwitchVideo else { return }
+
+		self.endNativeHandoff()
+
+		// The page keeps the picture while the next stream loads, but not the sound. Both playing
+		// the opening seconds is what doubles the audio.
+		if self.isPlayerReady, !self.isMuted {
+			self.evaluate("player && player.mute();")
+		}
+
+		self.videoID = videoID
+		self.masterManifestURL = nil
+		self.qualityVariantURLs = [:]
+		self.availableQualityLevels = []
+		self.hasCollectedQualityLevels = false
+		self.hasReportedStreamKind = false
+		self.pageHoldsFirstFrame = false
+		self.lastReportedTime = 0.0
+		self.lastReportedDuration = 0.0
+		self.pageTimeAnchor = nil
+		self.isPaused = false
+		self.pausedFrameView?.hideFrame()
+
+		self.evaluate("player && player.loadVideoById('\(videoID)');")
+		self.scheduleRevealFallback()
+	}
+
+	/// Hands the trailer over to AVPlayer.
+	private func beginNativeHandoff() {
+		guard UserSettings.playsVideoNatively else { return }
+		guard self.nativePlayerView == nil, !TrailerAirPlayStreamer.shared.isStreaming(from: self) else { return }
+		guard let host = self.host, let streamURL = self.nativeStreamURL() else { return }
+
+		// The handover begins on the frame the page is showing.
+		if self.isPlayerReady {
+			self.pageHoldsFirstFrame = true
+			self.evaluate("player && player.mute();")
+			self.evaluate("player && player.pauseVideo();")
+			self.evaluate("player && player.seekTo(0, true);")
+		}
+
+		// Picture in Picture carries over to this trailer rather than closing.
+		if let floatingPlayerView = TrailerNativePlayerView.floatingPlayerView, floatingPlayerView.isFloating {
+			floatingPlayerView.delegate = self
+			self.nativePlayerView = floatingPlayerView
+			self.mount(floatingPlayerView, in: host)
+			floatingPlayerView.adopt(streamURL, isMuted: self.isMuted, volume: self.volume)
+			return
+		}
+
+		let nativePlayerView = TrailerNativePlayerView(frame: host.bounds)
+		nativePlayerView.delegate = self
+		self.nativePlayerView = nativePlayerView
+		self.mount(nativePlayerView, in: host)
+
+		nativePlayerView.load(streamURL, startingAt: self.lastReportedTime, isMuted: self.isMuted, volume: self.volume, rate: self.playbackRate)
+	}
+
+	/// Inserts the given player in front of the page.
+	///
+	/// - Parameters:
+	///    - nativePlayerView: The player to insert.
+	///    - host: The view that hosts it.
+	private func mount(_ nativePlayerView: TrailerNativePlayerView, in host: UIView) {
+		nativePlayerView.frame = host.bounds
+		nativePlayerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		nativePlayerView.alpha = self.isPlayingNatively ? 1.0 : 0.0
+		host.insertSubview(nativePlayerView, aboveSubview: self.pageView)
+	}
+
+	/// Returns the trailer to the page.
+	private func endNativeHandoff() {
+		guard let nativePlayerView = self.nativePlayerView else { return }
+
+		self.isPlayingNatively = false
+		self.pageHoldsFirstFrame = false
+		self.nativePlayerView = nil
+		self.pageView.alpha = self.hasRevealed ? 1.0 : 0.0
+
+		// Removing the source view from the hierarchy ends Picture in Picture.
+		guard !nativePlayerView.isFloating else {
+			nativePlayerView.alpha = 0.0
+			return
+		}
+
+		nativePlayerView.teardown()
+		nativePlayerView.removeFromSuperview()
+
+		guard self.isPlayerReady, !TrailerAirPlayStreamer.shared.isStreaming(from: self) else { return }
+
+		self.evaluate(self.isMuted ? "player && player.mute();" : "player && player.unMute();")
+
+		guard !self.isPaused else { return }
+
+		self.evaluate("player && player.playVideo();")
+	}
+
+	/// Logs, once, which renderer plays the trailer.
+	///
+	/// - Parameter kind: The renderer to log.
+	private func reportStreamKind(_ kind: String) {
+		guard !self.hasReportedStreamKind else { return }
+		self.hasReportedStreamKind = true
+
+		print("----- [Trailer] Stream \(self.videoID): \(kind)")
 	}
 
 	/// Reads the quality levels out of the stream's manifest.
@@ -645,6 +967,9 @@ final class TrailerWebPlayer: NSObject {
 	///
 	/// - Parameter isPlaying: Whether the stream plays.
 	func handleExternalStreamPlaying(_ isPlaying: Bool) {
+		// AirPlay takes over from whichever renderer was playing.
+		self.endNativeHandoff()
+
 		if isPlaying {
 			self.delegate?.trailerWebPlayerDidStartPlaying(self)
 		} else {
@@ -777,6 +1102,11 @@ final class TrailerWebPlayer: NSObject {
 	#if targetEnvironment(macCatalyst)
 	/// Opens the trailer in a floating window.
 	func requestPictureInPicture() {
+		if self.isPlayingNatively {
+			self.nativePlayerView?.togglePictureInPicture()
+			return
+		}
+
 		self.pressThroughTarget(named: "pip")
 	}
 
@@ -841,6 +1171,21 @@ final class TrailerWebPlayer: NSObject {
 	/// Watches the window's visibility, repainting and rescuing the page around its changes.
 	private func observeWindowVisibility() {
 		let center = NotificationCenter.default
+
+		// A loaded player keeps the renderer it started with, warm players included.
+		self.visibilityObservers.append(center.addObserver(forName: .KTrailerPlaybackModeDidChange, object: nil, queue: .main) { [weak self] _ in
+			MainActor.assumeIsolated {
+				guard let self = self else { return }
+
+				guard UserSettings.playsVideoNatively else {
+					self.endNativeHandoff()
+					return
+				}
+
+				self.hasCollectedQualityLevels = false
+				self.collectQualityLevelsIfNeeded()
+			}
+		})
 
 		self.visibilityObservers.append(center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
 			MainActor.assumeIsolated {
@@ -959,7 +1304,25 @@ final class TrailerWebPlayer: NSObject {
 
 	/// Puts the paused frame up in front of the video.
 	private func capturePausedFrame() {
-		guard self.isPaused, self.hasRevealed else { return }
+		guard self.isPaused else { return }
+
+		// The page is paused on a frame of its own, so only the stream knows this one.
+		if self.isPlayingNatively, let nativePlayerView = self.nativePlayerView {
+			self.frameCaptureTask?.cancel()
+			self.frameCaptureTask = Task { @MainActor [weak self] in
+				try? await Task.sleep(nanoseconds: 300_000_000)
+				guard !Task.isCancelled else { return }
+
+				let pausedFrame = await nativePlayerView.capturePicture()
+				guard !Task.isCancelled, let self = self, let pausedFrame = pausedFrame, self.isPaused else { return }
+
+				self.showPausedFrame(pausedFrame, in: nativePlayerView, contentMode: .scaleAspectFit)
+			}
+
+			return
+		}
+
+		guard self.hasRevealed else { return }
 
 		self.webView.takeSnapshot(with: nil) { [weak self] image, error in
 			if let error = error {
@@ -968,17 +1331,28 @@ final class TrailerWebPlayer: NSObject {
 
 			guard let self = self, let image = image, self.isPaused else { return }
 
-			let pausedFrameView = self.pausedFrameView ?? TrailerPausedFrameView()
-			self.pausedFrameView = pausedFrameView
-			pausedFrameView.downloadMenuProvider = { [weak self] in
-				self?.downloadMenu()
-			}
-
-			pausedFrameView.frame = self.webView.bounds
-			pausedFrameView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-			self.webView.addSubview(pausedFrameView)
-			pausedFrameView.showFrame(image)
+			self.showPausedFrame(image, in: self.webView, contentMode: .scaleToFill)
 		}
+	}
+
+	/// Shows the given frame in front of the video.
+	///
+	/// - Parameters:
+	///    - pausedFrame: The frame to show.
+	///    - parent: The view to add the still to.
+	///    - contentMode: How the frame fills that view.
+	private func showPausedFrame(_ pausedFrame: UIImage, in parent: UIView, contentMode: UIView.ContentMode) {
+		let pausedFrameView = self.pausedFrameView ?? TrailerPausedFrameView()
+		self.pausedFrameView = pausedFrameView
+		pausedFrameView.downloadMenuProvider = { [weak self] in
+			self?.downloadMenu()
+		}
+
+		pausedFrameView.contentMode = contentMode
+		pausedFrameView.frame = parent.bounds
+		pausedFrameView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		parent.addSubview(pausedFrameView)
+		pausedFrameView.showFrame(pausedFrame)
 	}
 
 	/// Asks the paused video behind the stand-in for its current frame again.
@@ -1061,10 +1435,11 @@ final class TrailerWebPlayer: NSObject {
 		self.revealTask = nil
 		self.hasRevealed = true
 
-		let revealingView: UIView = self.videoView ?? self.webView
-
-		UIView.animate(withDuration: 0.4) {
-			revealingView.alpha = 1.0
+		// The page stays hidden while AVPlayer renders the trailer.
+		if !self.isPlayingNatively {
+			UIView.animate(withDuration: 0.4) {
+				self.pageView.alpha = 1.0
+			}
 		}
 
 		self.delegate?.trailerWebPlayerDidRevealPicture(self)
@@ -1095,6 +1470,11 @@ final class TrailerWebPlayer: NSObject {
 	///
 	/// - Parameter event: The event name.
 	private func handle(event: String) {
+		// AVPlayer answers for playback once the handover is done.
+		if self.isPlayingNatively, ["playing", "paused", "ended"].contains(event) {
+			return
+		}
+
 		switch event {
 		case "ready":
 			self.isPlayerReady = true
@@ -1109,6 +1489,7 @@ final class TrailerWebPlayer: NSObject {
 			self.reveal()
 			self.pausedFrameView?.hideFrame()
 			self.isPaused = false
+			self.pageTimeAnchor = Date()
 			self.collectQualityLevelsIfNeeded()
 
 			// Looping restores the adaptive stream, so the held level goes back on.
@@ -1116,9 +1497,14 @@ final class TrailerWebPlayer: NSObject {
 				self.pinPreferredStream()
 			}
 
+			self.setPlaybackRate(self.playbackRate)
 			self.delegate?.trailerWebPlayerDidStartPlaying(self)
 		case "paused":
 			self.capturePausedFrame()
+
+			// An unrequested pause is the handover holding the page on its last frame.
+			guard self.isPaused else { break }
+
 			self.delegate?.trailerWebPlayerDidPause(self)
 		case "ended":
 			guard !self.loopsPlayback else { break }
@@ -1157,6 +1543,7 @@ final class TrailerWebPlayer: NSObject {
 
 		#if targetEnvironment(macCatalyst)
 		Self.keepRenderingWhileHidden(configuration)
+		Self.allowNowPlayingDetails(configuration)
 		#endif
 
 		let webView = WKWebView(frame: .zero, configuration: configuration)
@@ -1170,6 +1557,23 @@ final class TrailerWebPlayer: NSObject {
 	}
 
 	#if targetEnvironment(macCatalyst)
+	/// Allows a non-persistent page to report now playing details to the system.
+	///
+	/// - Parameter configuration: The configuration to allow it on.
+	private static func allowNowPlayingDetails(_ configuration: WKWebViewConfiguration) {
+		let preferences = configuration.preferences
+		let allowSelector = NSSelectorFromString(#obfuscated("_setAllowPrivacySensitiveOperationsInNonPersistentDataStores:"))
+
+		guard preferences.responds(to: allowSelector) else {
+			print("----- [Trailer] WebKit keeps the trailer's details from the system")
+			return
+		}
+
+		typealias AllowSetter = @convention(c) (NSObject, Selector, Bool) -> Void
+		let setAllowed = unsafeBitCast(preferences.method(for: allowSelector), to: AllowSetter.self)
+		setAllowed(preferences, allowSelector, true)
+	}
+
 	/// Keeps the page rendering while its window is out of sight.
 	///
 	/// - Parameter configuration: The configuration of the web view to keep rendering.
@@ -1309,6 +1713,76 @@ final class TrailerWebPlayer: NSObject {
 	}
 }
 
+// MARK: - TrailerNativePlayerViewDelegate
+extension TrailerWebPlayer: TrailerNativePlayerViewDelegate {
+	func trailerNativePlayerViewDidBecomeReady(_ trailerNativePlayerView: TrailerNativePlayerView) {
+		self.isPlayingNatively = true
+		self.pageHoldsFirstFrame = false
+
+		// The page keeps the trailer loaded but stops being the one making sound, which is what
+		// puts a second entry on the system's display.
+		if self.isPlayerReady {
+			self.evaluate("player && player.mute();")
+			self.evaluate("player && player.pauseVideo();")
+		}
+
+		// Both pictures hold the same frame at the same size, so the swap is instant. Crossfading
+		// them dims the trailer instead, each being part way transparent over black.
+		trailerNativePlayerView.alpha = 1.0
+		self.pageView.alpha = 0.0
+
+		self.pausedFrameView?.hideFrame()
+		self.updateAudioSession()
+		self.delegate?.trailerWebPlayerDidRevealPicture(self)
+
+		if self.isPaused {
+			trailerNativePlayerView.pause()
+			self.delegate?.trailerWebPlayerDidPause(self)
+		} else {
+			self.delegate?.trailerWebPlayerDidStartPlaying(self)
+		}
+	}
+
+	func trailerNativePlayerViewResumePoint(_ trailerNativePlayerView: TrailerNativePlayerView) -> Double {
+		// The picture is standing at the trailer's beginning, which is where the takeover belongs.
+		guard !self.pageHoldsFirstFrame else { return 0.0 }
+		guard !self.isPaused, let pageTimeAnchor = self.pageTimeAnchor else { return self.lastReportedTime }
+
+		// The page carries on playing while the stream is made ready, so it can be a second or
+		// more further on than the last point it managed to report.
+		return self.lastReportedTime + Date().timeIntervalSince(pageTimeAnchor)
+	}
+
+	func trailerNativePlayerViewDidFail(_ trailerNativePlayerView: TrailerNativePlayerView) {
+		self.endNativeHandoff()
+	}
+
+	func trailerNativePlayerView(_ trailerNativePlayerView: TrailerNativePlayerView, didPlayTo currentTime: Double, duration: Double) {
+		guard !TrailerAirPlayStreamer.shared.isStreaming(from: self) else { return }
+
+		// The page is paused before it plays far enough to count its own frames, so the stream is
+		// the only one left that knows the frame rate.
+		if self.framesPerSecond == nil {
+			self.framesPerSecond = trailerNativePlayerView.currentFrameRate
+		}
+
+		self.lastReportedTime = currentTime
+		self.lastReportedDuration = duration
+		self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
+		TrailerNowPlayingReporter.shared.updateProgress(for: self)
+	}
+
+	func trailerNativePlayerViewDidReachEnd(_ trailerNativePlayerView: TrailerNativePlayerView) {
+		guard !self.loopsPlayback else {
+			trailerNativePlayerView.seek(to: 0.0)
+			trailerNativePlayerView.play()
+			return
+		}
+
+		self.delegate?.trailerWebPlayerDidReachEnd(self)
+	}
+}
+
 // MARK: - WKScriptMessageHandlerWithReply
 extension TrailerWebPlayer: WKScriptMessageHandlerWithReply {
 	nonisolated func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
@@ -1323,13 +1797,7 @@ extension TrailerWebPlayer: WKScriptMessageHandlerWithReply {
 				return
 			}
 
-			var info: [String: Any] = ["title": L10n.trailerTitle(metadata.title)]
-
-			if let artworkURL = metadata.artworkURL {
-				info["artwork"] = artworkURL
-			}
-
-			replyHandler(info, nil)
+			replyHandler(["title": L10n.trailerTitle(metadata.title)], nil)
 		}
 	}
 }
@@ -1360,11 +1828,13 @@ extension TrailerWebPlayer: WKScriptMessageHandler {
 			guard let currentTime = body["currentTime"] as? Double, let duration = body["duration"] as? Double else { return }
 
 			MainActor.assumeIsolated {
-				// The stream reports the trailer's position while it plays on a device.
-				guard !TrailerAirPlayStreamer.shared.isStreaming(from: self) else { return }
+				// The stream reports the trailer's position while it plays on a device, and the
+				// app's own player reports it while the trailer plays here.
+				guard !TrailerAirPlayStreamer.shared.isStreaming(from: self), !self.isPlayingNatively else { return }
 
 				self.lastReportedTime = currentTime
 				self.lastReportedDuration = duration
+				self.pageTimeAnchor = Date()
 				self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
 				TrailerNowPlayingReporter.shared.updateProgress(for: self)
 			}

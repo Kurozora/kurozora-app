@@ -17,11 +17,11 @@ final class TrackpadPressureMonitor {
 	/// The greatest depth a press can reach: the second stage, fully pressed.
 	private static let maximumDepth = 2.0
 
+	/// The depth at which the scale begins.
+	private static let startingDepth = 0.5
+
 	/// The token identifying the installed event monitor.
 	private var monitorToken: NSObject?
-
-	/// The depth the hold began at, which readings are measured from.
-	private var baselineDepth: Double?
 
 	/// The closure told how far the press has travelled, from `0` at the starting depth to `1` at
 	/// the deepest the trackpad reads.
@@ -39,7 +39,6 @@ final class TrackpadPressureMonitor {
 	/// Begins following the trackpad's pressure.
 	func start() {
 		guard self.monitorToken == nil else { return }
-		self.baselineDepth = nil
 
 		let selector = NSSelectorFromString(#obfuscated("addLocalMonitorForEventsMatchingMask:handler:"))
 		guard
@@ -73,7 +72,6 @@ final class TrackpadPressureMonitor {
 	func stop() {
 		guard let monitorToken = self.monitorToken else { return }
 		self.monitorToken = nil
-		self.baselineDepth = nil
 
 		guard let eventClass = NSClassFromString("NSEvent") as? NSObject.Type else { return }
 		eventClass.perform(NSSelectorFromString(#obfuscated("removeMonitor:")), with: monitorToken)
@@ -106,20 +104,10 @@ final class TrackpadPressureMonitor {
 
 		let depth = Double(max(0, stage - 1)) + min(max(0.0, pressure), 1.0)
 
-		// The first reading anchors the scale.
-		let baseline: Double
-		if let anchoredDepth = self.baselineDepth {
-			baseline = anchoredDepth
-		} else {
-			baseline = depth
-			print("----- [Trailer] Trackpad pressure monitor anchored at depth \(depth)")
-		}
-		self.baselineDepth = baseline
+		// The first reading of a hold varies too widely between presses to anchor the scale.
+		let progression = (depth - Self.startingDepth) / (Self.maximumDepth - Self.startingDepth)
 
-		let headroom = Self.maximumDepth - baseline
-		guard headroom > 0.01 else { return }
-
-		self.progressionHandler(min(max(0.0, (depth - baseline) / headroom), 1.0))
+		self.progressionHandler(min(max(0.0, progression), 1.0))
 	}
 }
 #endif

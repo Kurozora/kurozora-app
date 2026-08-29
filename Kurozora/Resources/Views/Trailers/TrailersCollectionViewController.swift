@@ -138,6 +138,9 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	/// A Boolean value indicating whether the reader dismissed the floating window for the current scroll.
 	private var isFloatingDismissed = false
 
+	/// The inset from the view's leading and trailing edges.
+	private static let contentInset: CGFloat = 10.0
+
 	/// The order the trailers are listed in.
 	private var sort: TrailerSort = .justAdded
 
@@ -304,6 +307,8 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		self.floatingWindowView.addSubview(self.floatingCloseButton)
 		self.view.addSubview(self.floatingWindowView)
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFloatingWindowOpacity), name: .KTrailerFloatingWindowDidChange, object: nil)
+
 		self.floatingReturnControl.addTarget(self, action: #selector(self.handleFloatingReturn), for: .touchUpInside)
 		self.floatingCloseButton.addTarget(self, action: #selector(self.handleFloatingClose), for: .touchUpInside)
 	}
@@ -318,7 +323,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 			self.toolbar.heightAnchor.constraint(equalToConstant: Self.toolbarHeight),
 
 			self.floatingWindowView.topAnchor.constraint(equalTo: self.toolbar.bottomAnchor, constant: 12.0),
-			self.floatingWindowView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
+			self.floatingWindowView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Self.contentInset),
 			self.floatingWindowView.widthAnchor.constraint(equalToConstant: floatingWidth),
 			self.floatingWindowView.heightAnchor.constraint(equalTo: self.floatingWindowView.widthAnchor, multiplier: 9.0 / 16.0),
 
@@ -657,7 +662,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	private func attachFeaturedPlayer(to container: UIView) {
 		guard self.featuredPlayerView.superview !== container else { return }
 
-		self.featuredPlayerView.removeFromSuperview()
+		// Removing the player from the hierarchy, however briefly, ends Picture in Picture.
 		container.addSubview(self.featuredPlayerView)
 
 		NSLayoutConstraint.activate([
@@ -676,6 +681,12 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		self.featuredPlayerView.showsControls = false
 		self.attachFeaturedPlayer(to: self.floatingContentView)
 		self.floatingWindowView.isHidden = false
+		self.updateFloatingWindowOpacity()
+	}
+
+	/// Hides the floating window while the trailer plays in Picture in Picture.
+	@objc private func updateFloatingWindowOpacity() {
+		self.floatingWindowView.alpha = TrailerNativePlayerView.hasFloatingWindow ? 0.0 : 1.0
 	}
 
 	/// Moves the featured player back into the featured cell.

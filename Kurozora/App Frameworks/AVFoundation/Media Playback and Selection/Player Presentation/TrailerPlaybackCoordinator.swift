@@ -79,6 +79,7 @@ final class TrailerPlaybackCoordinator {
 	/// Suspends inline playback while a trailer plays fullscreen.
 	func beginFullscreen() {
 		self.isFullscreenActive = true
+		TrailerNativePlayerView.closeFloatingWindow()
 		self.registrations.compactMap(\.view).forEach { $0.setPlaybackAllowed(false) }
 	}
 
@@ -140,6 +141,11 @@ final class TrailerPlaybackCoordinator {
 	///
 	/// - Returns: A value between `0` and `1`.
 	private func visibleFraction(of view: UIView) -> Double {
+		// A trailer in Picture in Picture is visible wherever its player sits.
+		if let floatingPlayerView = TrailerNativePlayerView.floatingPlayerView, floatingPlayerView.isFloating, floatingPlayerView.isDescendant(of: view) {
+			return 1.0
+		}
+
 		guard let window = view.window, !view.isHidden, view.alpha > 0.0 else { return 0.0 }
 
 		let frame = view.convert(view.bounds, to: window)

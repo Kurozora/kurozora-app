@@ -318,7 +318,12 @@ final class KTrailerPlayerView: UIView {
 		super.didMoveToWindow()
 
 		if self.window == nil {
-			self.setPlaybackAllowed(false)
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self, self.window == nil else { return }
+
+				TrailerNativePlayerView.closeFloatingWindow()
+				self.setPlaybackAllowed(false)
+			}
 		} else if self.hasTrailer {
 			TrailerPlaybackCoordinator.shared.register(self)
 		}
@@ -361,28 +366,42 @@ final class KTrailerPlayerView: UIView {
 		}
 		guard videoID != self.videoID else { return }
 
-		// The outgoing picture holds still until the next trailer's is up, so the swap never
-		// falls back to an empty player.
-		let outgoingSnapshotView = self.isShowingPicture ? self.snapshotView(afterScreenUpdates: false) : nil
+		let isHoldingPicture = self.isShowingPicture && self.webPlayer?.isHosting(self) == true
+		let outgoingSnapshotView = isHoldingPicture ? self.snapshotView(afterScreenUpdates: false) : nil
+
+		if TrailerPlayerPool.shared.warmPlayer(forVideoID: videoID) == nil, let webPlayer = self.webPlayer, webPlayer.canSwitchVideo {
+			self.mountTransitionSnapshot(outgoingSnapshotView)
+
+			self.trailerURLString = urlString
+			self.videoID = videoID
+			self.isReaderInitiated = false
+			self.isPausedByReader = false
+
+			// The next trailer reports its own timeline.
+			self.seekSettleDate = nil
+			self.elapsedTime = 0.0
+			self.duration = 0.0
+			self.updateProgressControls()
+
+			webPlayer.switchTo(videoID: videoID)
+			webPlayer.streamMetadata = self.streamMetadata
+			webPlayer.reportsNowPlaying = self.reportsNowPlaying
+
+			self.updateControls(animated: false)
+			self.onPictureVisibilityChanged?()
+			TrailerPlaybackCoordinator.shared.register(self)
+			return
+		}
 
 		self.stopTrailer()
 
-		if let outgoingSnapshotView = outgoingSnapshotView {
-			outgoingSnapshotView.frame = self.bounds
-			outgoingSnapshotView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-			outgoingSnapshotView.isUserInteractionEnabled = false
-			self.insertSubview(outgoingSnapshotView, belowSubview: self.tapControl)
-			self.transitionSnapshotView = outgoingSnapshotView
-		}
+		self.mountTransitionSnapshot(outgoingSnapshotView)
 
 		self.trailerURLString = urlString
 		self.videoID = videoID
 		self.isReaderInitiated = false
 		self.isPausedByReader = false
 
-		// A trailer that is still warm is put back on screen straight away, paused at the frame the
-		// reader left it on, so returning to it shows the video instead of the banner while the
-		// coordinator decides who may play.
 		if let warmPlayer = TrailerPlayerPool.shared.warmPlayer(forVideoID: videoID) {
 			self.webPlayer = warmPlayer
 			warmPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
@@ -395,6 +414,19 @@ final class KTrailerPlayerView: UIView {
 		self.updateControls(animated: false)
 
 		TrailerPlaybackCoordinator.shared.register(self)
+	}
+
+	/// Shows the given snapshot until the next trailer's picture appears.
+	///
+	/// - Parameter outgoingSnapshotView: The snapshot to show.
+	private func mountTransitionSnapshot(_ outgoingSnapshotView: UIView?) {
+		guard let outgoingSnapshotView = outgoingSnapshotView else { return }
+
+		outgoingSnapshotView.frame = self.bounds
+		outgoingSnapshotView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		outgoingSnapshotView.isUserInteractionEnabled = false
+		self.insertSubview(outgoingSnapshotView, belowSubview: self.tapControl)
+		self.transitionSnapshotView = outgoingSnapshotView
 	}
 
 	/// Starts or suspends the trailer for the given play permission.
@@ -477,6 +509,7 @@ final class KTrailerPlayerView: UIView {
 		self.webPlayer?.detach()
 		self.webPlayer = nil
 		self.isPlaying = false
+		self.backgroundColor = .clear
 		self.onPictureVisibilityChanged?()
 
 		self.trailerURLString = nil
@@ -511,6 +544,9 @@ final class KTrailerPlayerView: UIView {
 	func reclaimPlayerFromFullscreen() {
 		guard let webPlayer = self.webPlayer else { return }
 
+		self.clearTransitionSnapshot(animated: false)
+
+		self.backgroundColor = .black
 		self.isMuted = webPlayer.isMuted
 
 		if !webPlayer.isHosting(self) {
@@ -556,6 +592,8 @@ final class KTrailerPlayerView: UIView {
 	private func startWebPlayback(forVideoID videoID: String) {
 		let webPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
 		self.webPlayer = webPlayer
+
+		self.backgroundColor = .black
 
 		webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
 		webPlayer.setLooping(self.loopsPlayback)

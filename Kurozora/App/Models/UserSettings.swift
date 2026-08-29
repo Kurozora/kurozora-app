@@ -35,6 +35,7 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
 			UserSettingsKey.videoAutoplayPolicy.rawValue: VideoAutoplayPolicy.default.rawValue,
+			UserSettingsKey.playsVideoNatively.rawValue: true,
 			UserSettingsKey.wifiVideoQuality.rawValue: VideoQuality.defaultWiFi.rawValue,
 			UserSettingsKey.cellularVideoQuality.rawValue: VideoQuality.defaultCellular.rawValue,
 			UserSettingsKey.liveTextAnalyzerEnabled.rawValue: true,
@@ -467,6 +468,11 @@ extension UserSettings {
 	static var videoAutoplayPolicy: VideoAutoplayPolicy {
 		guard let policy = VideoAutoplayPolicy(rawValue: self.shared.integer(forKey: #function)) else { return .default }
 		return policy
+	}
+
+	/// Returns a Boolean value indicating whether trailers play with AVPlayer.
+	static var playsVideoNatively: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns the quality trailers are held at on Wi-Fi.

@@ -456,6 +456,16 @@ extension AppDelegate {
 		FLEXManager.shared.showExplorer()
 		#endif
 	}
+
+	/// Toggles whether trailers play with AVPlayer.
+	///
+	/// - Parameter sender: The menu item that sent the action.
+	@objc func handleToggleNativeVideoPlayback(_ sender: AnyObject) {
+		UserSettings.set(!UserSettings.playsVideoNatively, forKey: .playsVideoNatively)
+		NotificationCenter.default.post(name: .KTrailerPlaybackModeDidChange, object: nil)
+
+		UIMenuSystem.main.setNeedsRebuild()
+	}
 	#endif
 }
 

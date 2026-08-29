@@ -164,6 +164,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case wifiVideoQuality
 	/// The key to the quality trailers are held at on cellular.
 	case cellularVideoQuality
+	/// The key to whether trailers play with AVPlayer.
+	case playsVideoNatively
 
 	// Media keys
 	/// The key to the place saved images are written to.

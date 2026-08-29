@@ -1845,6 +1845,9 @@
         }
       }
     },
+    "%@ Trailer" : {
+      "comment" : "The now playing title for the named work's trailer."
+    },
     "%@ works · %@" : {
       "comment" : "The active year's scale shown beneath the Museum title while scrolling.",
       "localizations" : {
@@ -23288,6 +23291,9 @@
           }
         }
       }
+    },
+    "Downloading video…" : {
+      "comment" : "The toast shown while a video downloads."
     },
     "Drafts" : {
       "comment" : "The string for the word 'drafts'.",
@@ -79746,6 +79752,12 @@
         }
       }
     },
+    "This video is playing on %@." : {
+      "comment" : "The notice shown in the player while its video plays on the named AirPlay device."
+    },
+    "This video is playing on TV." : {
+      "comment" : "The notice shown in the player while its video plays on an AirPlay device."
+    },
     "Time Display" : {
       "comment" : "The menu choosing how a video's timeline reads."
     },
@@ -84664,6 +84676,15 @@
           }
         }
       }
+    },
+    "Video could not be saved." : {
+      "comment" : "The toast shown when a video could not be saved."
+    },
+    "Video saved to your library!" : {
+      "comment" : "The toast shown after a video is saved to the photo library."
+    },
+    "Video saved!" : {
+      "comment" : "The toast shown after a video is saved to a folder."
     },
     "View My Profile…" : {
       "comment" : "The menu command that opens the user's profile.",

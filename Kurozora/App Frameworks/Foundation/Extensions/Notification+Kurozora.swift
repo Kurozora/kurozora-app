@@ -29,6 +29,19 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Trailers
+extension Notification.Name {
+	/// A notification posted when a trailer enters or leaves Picture in Picture.
+	static var KTrailerFloatingWindowDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	/// A notification posted when the renderer for trailers changes.
+	static var KTrailerPlaybackModeDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Subscription
 extension Notification.Name {
 	/// A notification posted when the user's subscription status changes.
