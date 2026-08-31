@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,10 +18,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="288" height="366"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="y01-6g-45N">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y01-6g-45N">
                         <rect key="frame" x="8" y="8" width="272" height="350"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zc5-wY-deO">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zc5-wY-deO">
                                 <rect key="frame" x="0.0" y="0.0" width="272" height="350"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Milestone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvZ-ST-ui4" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -37,60 +36,60 @@
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otK-kJ-Dm5">
-                                        <rect key="frame" x="0.0" y="78" width="272" height="272"/>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otK-kJ-Dm5">
+                                <rect key="frame" x="0.0" y="78" width="272" height="272"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzP-Qf-QCL" customClass="KCircularProgressView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="20" width="232" height="232"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="tzP-Qf-QCL" secondAttribute="height" multiplier="1:1" id="aOQ-tg-YBa"/>
+                                            <constraint firstAttribute="width" constant="232" id="mIk-r2-XOw"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naS-51-vUW">
+                                        <rect key="frame" x="97.666666666666657" y="107.33333333333336" width="76.666666666666657" height="57.666666666666671"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzP-Qf-QCL" customClass="KCircularProgressView" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="20" width="232" height="232"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="tzP-Qf-QCL" secondAttribute="height" multiplier="1:1" id="aOQ-tg-YBa"/>
-                                                    <constraint firstAttribute="width" constant="232" id="mIk-r2-XOw"/>
-                                                </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naS-51-vUW">
-                                                <rect key="frame" x="97.666666666666657" y="107.33333333333336" width="76.666666666666657" height="57.666666666666671"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5w-hY-Uo4" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                        <rect key="frame" x="7.9999999999999964" y="0.0" width="60.666666666666657" height="33.666666666666664"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0N-Qv-POQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                        <rect key="frame" x="7.9999999999999964" y="33.666666666666657" width="60.666666666666657" height="24"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="H0N-Qv-POQ" secondAttribute="trailing" constant="8" id="5FG-Gr-jqY"/>
-                                                    <constraint firstAttribute="trailing" secondItem="J5w-hY-Uo4" secondAttribute="trailing" constant="8" id="Ngg-cN-K4u"/>
-                                                    <constraint firstItem="J5w-hY-Uo4" firstAttribute="top" secondItem="naS-51-vUW" secondAttribute="top" id="QM4-FD-Kgz"/>
-                                                    <constraint firstItem="H0N-Qv-POQ" firstAttribute="leading" secondItem="naS-51-vUW" secondAttribute="leading" constant="8" id="Sn5-R2-lyq"/>
-                                                    <constraint firstItem="J5w-hY-Uo4" firstAttribute="leading" secondItem="naS-51-vUW" secondAttribute="leading" constant="8" id="aIU-pt-ihc"/>
-                                                    <constraint firstItem="H0N-Qv-POQ" firstAttribute="top" secondItem="J5w-hY-Uo4" secondAttribute="bottom" id="gxx-xf-fQa"/>
-                                                    <constraint firstAttribute="bottom" secondItem="H0N-Qv-POQ" secondAttribute="bottom" id="mxD-pM-8m7"/>
-                                                </constraints>
-                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5w-hY-Uo4" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="7.9999999999999964" y="0.0" width="60.666666666666657" height="33.666666666666664"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0N-Qv-POQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="7.9999999999999964" y="33.666666666666657" width="60.666666666666657" height="24"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="naS-51-vUW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="leading" id="2z8-Nf-ce6"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tzP-Qf-QCL" secondAttribute="bottom" constant="20" id="ARr-un-Aw4"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tzP-Qf-QCL" secondAttribute="trailing" constant="20" id="DIU-dc-M6q"/>
-                                            <constraint firstItem="naS-51-vUW" firstAttribute="centerX" secondItem="otK-kJ-Dm5" secondAttribute="centerX" id="LdS-wW-mvZ"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="naS-51-vUW" secondAttribute="bottom" id="LhQ-Ii-8Wd"/>
-                                            <constraint firstItem="tzP-Qf-QCL" firstAttribute="centerY" secondItem="otK-kJ-Dm5" secondAttribute="centerY" id="U4h-Rh-60e"/>
-                                            <constraint firstItem="tzP-Qf-QCL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="top" constant="20" id="aGX-Kf-xKx"/>
-                                            <constraint firstItem="naS-51-vUW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="top" id="bfI-FI-5s4"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="naS-51-vUW" secondAttribute="trailing" id="ehv-p5-X4M"/>
-                                            <constraint firstItem="tzP-Qf-QCL" firstAttribute="centerX" secondItem="otK-kJ-Dm5" secondAttribute="centerX" id="fcE-Md-vj6"/>
-                                            <constraint firstItem="tzP-Qf-QCL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="leading" constant="20" id="oU8-oN-K6a"/>
-                                            <constraint firstItem="naS-51-vUW" firstAttribute="centerY" secondItem="otK-kJ-Dm5" secondAttribute="centerY" id="vQa-6x-fFU"/>
+                                            <constraint firstAttribute="trailing" secondItem="H0N-Qv-POQ" secondAttribute="trailing" constant="8" id="5FG-Gr-jqY"/>
+                                            <constraint firstAttribute="trailing" secondItem="J5w-hY-Uo4" secondAttribute="trailing" constant="8" id="Ngg-cN-K4u"/>
+                                            <constraint firstItem="J5w-hY-Uo4" firstAttribute="top" secondItem="naS-51-vUW" secondAttribute="top" id="QM4-FD-Kgz"/>
+                                            <constraint firstItem="H0N-Qv-POQ" firstAttribute="leading" secondItem="naS-51-vUW" secondAttribute="leading" constant="8" id="Sn5-R2-lyq"/>
+                                            <constraint firstItem="J5w-hY-Uo4" firstAttribute="leading" secondItem="naS-51-vUW" secondAttribute="leading" constant="8" id="aIU-pt-ihc"/>
+                                            <constraint firstItem="H0N-Qv-POQ" firstAttribute="top" secondItem="J5w-hY-Uo4" secondAttribute="bottom" id="gxx-xf-fQa"/>
+                                            <constraint firstAttribute="bottom" secondItem="H0N-Qv-POQ" secondAttribute="bottom" id="mxD-pM-8m7"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="naS-51-vUW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="leading" id="2z8-Nf-ce6"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tzP-Qf-QCL" secondAttribute="bottom" constant="20" id="ARr-un-Aw4"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tzP-Qf-QCL" secondAttribute="trailing" constant="20" id="DIU-dc-M6q"/>
+                                    <constraint firstItem="naS-51-vUW" firstAttribute="centerX" secondItem="otK-kJ-Dm5" secondAttribute="centerX" id="LdS-wW-mvZ"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="naS-51-vUW" secondAttribute="bottom" id="LhQ-Ii-8Wd"/>
+                                    <constraint firstItem="tzP-Qf-QCL" firstAttribute="centerY" secondItem="otK-kJ-Dm5" secondAttribute="centerY" id="U4h-Rh-60e"/>
+                                    <constraint firstItem="tzP-Qf-QCL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="top" constant="20" id="aGX-Kf-xKx"/>
+                                    <constraint firstItem="naS-51-vUW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="top" id="bfI-FI-5s4"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="naS-51-vUW" secondAttribute="trailing" id="ehv-p5-X4M"/>
+                                    <constraint firstItem="tzP-Qf-QCL" firstAttribute="centerX" secondItem="otK-kJ-Dm5" secondAttribute="centerX" id="fcE-Md-vj6"/>
+                                    <constraint firstItem="tzP-Qf-QCL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="otK-kJ-Dm5" secondAttribute="leading" constant="20" id="oU8-oN-K6a"/>
+                                    <constraint firstItem="naS-51-vUW" firstAttribute="centerY" secondItem="otK-kJ-Dm5" secondAttribute="centerY" id="vQa-6x-fFU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                     </stackView>
                 </subviews>
