@@ -248,6 +248,7 @@ extension SettingsTableViewController {
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
 			settingsCell.chevronImageView?.isHidden = true
+			settingsCell.selectionStyle = .none
 			settingsCell.selectedView?.layerCornerRadius = (settingsCell.selectedView?.frame.height ?? 44) / 2
 		}
 
@@ -284,12 +285,14 @@ extension SettingsTableViewController {
 			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tintColor.rawValue
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
+				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 				settingsCell.detailLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 			} else {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 				settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 				settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 			}
 		}
@@ -306,6 +309,7 @@ extension SettingsTableViewController {
 			}
 
 			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
@@ -316,6 +320,7 @@ extension SettingsTableViewController {
 			settingsCell.selectedView?.theme_backgroundColor = nil
 			settingsCell.selectedView?.backgroundColor = .clear
 			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
@@ -333,6 +338,7 @@ extension SettingsTableViewController {
 			if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
 				settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tintColor.rawValue
 				settingsCell.primaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
+				settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 				settingsCell.detailLabel?.theme_textColor = KThemePicker.tintedButtonTextColor.rawValue
 			}
 		}
