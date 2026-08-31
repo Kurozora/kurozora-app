@@ -393,12 +393,8 @@ final class TrailerAirPlayStreamer {
 		guard !self.isStreaming, let player = self.player, let sourcePlayer = self.sourcePlayer else { return }
 		self.isStreaming = true
 
-		do {
-			try AVAudioSession.sharedInstance().setCategory(.playback)
-			try AVAudioSession.sharedInstance().setActive(true)
-		} catch {
-			print("----- [Trailer] AirPlay stream could not claim the audio session: \(error.localizedDescription)")
-		}
+		AudioSessionManager.shared.setCategory(.playback)
+		AudioSessionManager.shared.setActive(true)
 
 		let startTime = sourcePlayer.lastReportedTime
 

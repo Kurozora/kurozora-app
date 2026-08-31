@@ -540,16 +540,12 @@ final class TrailerWebPlayer: NSObject {
 		let isAudible = !self.isMuted && !self.isPaused
 		TrailerNowPlayingReporter.shared.update(for: self)
 
-		do {
-			if isAudible {
-				try AVAudioSession.sharedInstance().setCategory(.playback)
-				try AVAudioSession.sharedInstance().setActive(true)
-			} else {
-				try AVAudioSession.sharedInstance().setCategory(.ambient)
-				try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
-			}
-		} catch {
-			print("----- [Trailer] Failed to update the audio session: \(error.localizedDescription)")
+		if isAudible {
+			AudioSessionManager.shared.setCategory(.playback)
+			AudioSessionManager.shared.setActive(true)
+		} else {
+			AudioSessionManager.shared.setCategory(.ambient)
+			AudioSessionManager.shared.setActive(false, options: [.notifyOthersOnDeactivation])
 		}
 	}
 

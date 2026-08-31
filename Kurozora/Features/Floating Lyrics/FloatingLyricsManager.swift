@@ -560,7 +560,7 @@ final class FloatingLyricsManager: NSObject {
 		self.attachHostViewIfNeeded()
 		guard let hostView = self.hostView else { return }
 
-		try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback, options: [.mixWithOthers])
+		AudioSessionManager.shared.setCategory(.playback, mode: .moviePlayback, options: [.mixWithOthers])
 
 		#if targetEnvironment(macCatalyst)
 		self.playerOutput.playerLayer.frame = hostView.bounds
