@@ -359,6 +359,10 @@ class KTabBarController: UITabBarController {
 		if #available(iOS 18.0, *) {
 			self.mode = .tabSidebar
 
+			// Restoring focus to a tab after a modal closes re-runs selection
+			// on that row, which reopens the assigned view on every modal close.
+			self.restoresFocusAfterTransition = false
+
 			// Mac Catalyst tiles by default.
 			self.sidebar.preferredLayout = .overlap
 
