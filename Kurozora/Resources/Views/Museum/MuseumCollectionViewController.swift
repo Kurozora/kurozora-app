@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import Tabman
 import UIKit
 
 class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandling {
@@ -30,7 +29,7 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		static let sectionSpacing: CGFloat = 40.0
 
 		/// The leading inset of the hall.
-		static let hallInset: CGFloat = 16.0
+		static let hallInset: CGFloat = 12.0
 
 		/// The height of the tab bar toolbar.
 		static let toolbarHeight: CGFloat = 49.0
@@ -59,7 +58,9 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 
 	// MARK: - Views
 	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
+
+	/// The picker that switches the hall between library kinds.
+	let libraryKindSegmentedControl = UISegmentedControl()
 
 	/// The density timeline that scrubs the hall through its years.
 	let timelineView = MuseumTimelineView()
@@ -99,6 +100,9 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 
 	/// The year currently at the center of the hall.
 	private(set) var activeYear: Int?
+
+	/// The year the hall holds its resting edge on while sections hydrate around it.
+	private(set) var pinnedYear: Int?
 
 	/// Whether entries already in the user's library are dimmed.
 	private(set) var dimsLibraryEntries = false
@@ -161,7 +165,6 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		self.styleTabBarView()
 		self.timelineView.restyle()
 		self.museumTitleView.restyle()
 	}
@@ -226,6 +229,7 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		super.viewDidLayoutSubviews()
 
 		self.updateHallInsets()
+		self.scrollToInitialYear(animated: false)
 	}
 
 	override func viewSafeAreaInsetsDidChange() {
@@ -303,7 +307,7 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 	}
 
 	func configureView() {
-		self.configureTabBarView()
+		self.configureLibraryKindSegmentedControl()
 		self.configureToolbar()
 		self.configureTimelineView()
 		self.configureViewHierarchy()
@@ -314,49 +318,17 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		self.collectionView.alwaysBounceVertical = false
 		self.updateHallInsets()
 
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
+		let libraryKindBarButtonItem = UIBarButtonItem(customView: self.libraryKindSegmentedControl)
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
+			libraryKindBarButtonItem.hidesSharedBackground = true
 		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+		self.toolbar.setItems([.flexibleSpace(), libraryKindBarButtonItem, .flexibleSpace()], animated: true)
 	}
 
-	func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.updateBar(to: CGFloat(self.libraryKind.rawValue), animated: false, direction: .none)
-		self.styleTabBarView()
-	}
-
-	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: LibraryKind.allCases.count, direction: .forward, animation: animation)
-	}
-
-	fileprivate func styleTabBarView() {
-		// Background view
-		self.tabBarView.backgroundView.style = .clear
-
-		// Indicator
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-
-		// Scrolling
-		self.tabBarView.scrollMode = .interactive
-
-		// State
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
-		}
-
-		// Layout
-		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-
-		// Style
-		self.tabBarView.fadesContentEdges = true
+	func configureLibraryKindSegmentedControl() {
+		self.libraryKindSegmentedControl.segmentTitles = LibraryKind.allString
+		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
+		self.libraryKindSegmentedControl.addTarget(self, action: #selector(self.libraryKindSegmentedControlDidChange(_:)), for: .valueChanged)
 	}
 
 	func configureToolbar() {
@@ -395,16 +367,14 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 	func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
 			self.toolbar.heightAnchor.constraint(equalToConstant: Metrics.toolbarHeight),
 			self.timelineView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Metrics.hallInset),
 			self.timelineView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -Metrics.hallInset),
 			self.timelineView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.timelineBottomPadding),
 			self.timelineView.heightAnchor.constraint(equalToConstant: Metrics.timelineHeight),
 		])
-
-		self.tabBarView.fillToSuperview()
 	}
 
 	/// Configures the title view and the now and dim library bar button items.
@@ -506,6 +476,7 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		self.entriesByYear.removeAll()
 		self.museumYears = []
 		self.activeYear = nil
+		self.pinnedYear = nil
 		self.hasPerformedInitialScroll = false
 		self.isHallReady = false
 		self.hallReadyTask?.cancel()
@@ -520,6 +491,24 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		return self.collectionView.bounds.height
 			- self.collectionView.contentInset.top
 			- self.collectionView.contentInset.bottom
+	}
+
+	/// Schedules loads for every year within a screen of the visible range.
+	func prefetchAdjacentYears() {
+		let bounds = self.collectionView.bounds
+		guard bounds.width > 0.0 else { return }
+
+		let prefetchRect = bounds.insetBy(dx: -bounds.width, dy: 0.0)
+		guard let layoutAttributes = self.collectionView.collectionViewLayout.layoutAttributesForElements(in: prefetchRect) else { return }
+
+		let sections = Set(layoutAttributes.map(\.indexPath.section))
+
+		for section in sections.sorted() where section < self.snapshot.sectionIdentifiers.count {
+			switch self.snapshot.sectionIdentifiers[section] {
+			case .year(let museumYear):
+				self.scheduleYearLoad(for: museumYear.year)
+			}
+		}
 	}
 
 	/// Schedules a year's entries to load.
@@ -601,10 +590,29 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 
 		let minimumOffsetX = -self.collectionView.adjustedContentInset.left
 		let maximumOffsetX = max(minimumOffsetX, self.collectionView.contentSize.width - self.collectionView.bounds.width + self.collectionView.adjustedContentInset.right)
-		let targetOffsetX = min(max(layoutAttributes.frame.minX - Metrics.hallInset, minimumOffsetX), maximumOffsetX)
+		let restingOffsetX = layoutAttributes.frame.minX - Metrics.hallInset + minimumOffsetX
+		let targetOffsetX = min(max(restingOffsetX, minimumOffsetX), maximumOffsetX)
 		let restingOffsetY = -self.collectionView.adjustedContentInset.top
 
+		self.pinnedYear = year
 		self.collectionView.setContentOffset(CGPoint(x: targetOffsetX, y: restingOffsetY), animated: animated)
+	}
+
+	/// Returns the hall to its pinned year after a hydration has moved the sections around it.
+	func restorePinnedYear() {
+		guard let pinnedYear = self.pinnedYear else { return }
+
+		guard !self.collectionView.isDragging, !self.collectionView.isDecelerating else {
+			self.releasePinnedYear()
+			return
+		}
+
+		self.scrollToYear(pinnedYear, animated: false)
+	}
+
+	/// Releases the pinned year so the hall stops following it.
+	func releasePinnedYear() {
+		self.pinnedYear = nil
 	}
 
 	/// Centers the hall on the initial year, the current year, or the last year.
@@ -612,6 +620,11 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 	/// - Parameter animated: Specify [`true`](https://developer.apple.com/documentation/swift/true) to animate the scrolling behavior or [`false`](https://developer.apple.com/documentation/swift/false) to adjust the scroll view’s visible content immediately.
 	func scrollToInitialYear(animated: Bool) {
 		guard !self.hasPerformedInitialScroll, !self.museumYears.isEmpty else { return }
+		guard self.collectionView.bounds.width > 0.0 else { return }
+
+		self.collectionView.layoutIfNeeded()
+		guard self.collectionView.contentSize.width > 0.0 else { return }
+
 		self.hasPerformedInitialScroll = true
 
 		let targetYear: Int
@@ -622,7 +635,6 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 			targetYear = self.currentOrLastYear() ?? self.museumYears[0].year
 		}
 
-		self.collectionView.layoutIfNeeded()
 		self.scrollToYear(targetYear, animated: animated)
 		self.syncActiveYear()
 
@@ -651,32 +663,33 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 		guard !self.isHallTransitioning else { return }
 		guard self.snapshot != nil, !self.snapshot.sectionIdentifiers.isEmpty else { return }
 
-		let centerX = self.collectionView.contentOffset.x + self.collectionView.bounds.width / 2.0
-		var sectionMaxX: CGFloat = 0.0
-		var centermostYear: MuseumYear?
+		let leadingInset = self.collectionView.adjustedContentInset.left
+		let visibleWidth = self.collectionView.bounds.width - leadingInset - self.collectionView.adjustedContentInset.right
+		let centerX = self.collectionView.contentOffset.x + leadingInset + visibleWidth / 2.0
+		let visibleRect = CGRect(
+			x: self.collectionView.contentOffset.x + leadingInset,
+			y: self.collectionView.contentOffset.y,
+			width: visibleWidth,
+			height: self.collectionView.bounds.height
+		)
+		let centermostSection = self.collectionView.collectionViewLayout.layoutAttributesForElements(in: visibleRect)?
+			.min { abs($0.frame.midX - centerX) < abs($1.frame.midX - centerX) }?
+			.indexPath.section
 
-		for (sectionIndex, sectionLayoutKind) in self.snapshot.sectionIdentifiers.enumerated() {
-			let itemCount = self.snapshot.numberOfItems(inSection: sectionLayoutKind)
-			let columns = CGFloat((itemCount + self.hallRowCount - 1) / self.hallRowCount)
-			let columnWidth = self.hallItemSize.width + Metrics.gap
-			let leadingInset = sectionIndex == 0 ? Metrics.hallInset : 0.0
+		guard let section = centermostSection, section < self.snapshot.sectionIdentifiers.count else { return }
 
-			switch sectionLayoutKind {
-			case .year(let museumYear):
-				centermostYear = museumYear
-			}
+		let museumYear: MuseumYear
 
-			sectionMaxX += leadingInset + columns * columnWidth - Metrics.gap + Metrics.sectionSpacing
-
-			if centerX < sectionMaxX {
-				break
-			}
+		switch self.snapshot.sectionIdentifiers[section] {
+		case .year(let centermostYear):
+			museumYear = centermostYear
 		}
 
-		guard let museumYear = centermostYear, museumYear.year != self.activeYear else { return }
+		guard museumYear.year != self.activeYear else { return }
 		self.activeYear = museumYear.year
 		self.museumTitleView.setYear(museumYear.year)
 		self.timelineView.setActiveYear(museumYear.year)
+		self.prefetchAdjacentYears()
 	}
 
 	/// Rebuilds the year button's menu of decade submenus.
@@ -848,8 +861,8 @@ class MuseumCollectionViewController: KCollectionViewController, TypedSegueHandl
 	}
 }
 
-// MARK: - TMBarDataSource
-extension MuseumCollectionViewController: TMBarDataSource {
+// MARK: - Library Kind
+extension MuseumCollectionViewController {
 	func reloadView() {
 		guard !self.museumYears.isEmpty else {
 			self.setShowToolbar(false)
@@ -858,32 +871,10 @@ extension MuseumCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 		self.timelineView.isHidden = false
-
-		self.tabBarView.reloadData(at: 0 ... LibraryKind.allCases.count - 1, context: .full)
 	}
 
-	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		guard let libraryKind = LibraryKind(rawValue: index) else { return TMBarItem(title: "") }
-
-		switch libraryKind {
-		case .shows:
-			return TMBarItem(title: L10n.shows)
-		case .literatures:
-			return TMBarItem(title: L10n.literatures)
-		case .games:
-			return TMBarItem(title: L10n.games)
-		}
-	}
-}
-
-// MARK: - TMBarDelegate
-extension MuseumCollectionViewController: TMBarDelegate {
-	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
-		guard let libraryKind = LibraryKind(rawValue: index) else { return }
-
-		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.libraryKind.rawValue)
-		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
-
+	@objc func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
+		guard let libraryKind = LibraryKind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 
 		self.resetHall()

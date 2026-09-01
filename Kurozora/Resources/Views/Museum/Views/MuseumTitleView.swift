@@ -85,10 +85,12 @@ class MuseumTitleView: UIView {
 		}
 
 		var configuration = UIButton.Configuration.plain()
-		configuration.image = UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 9.0, weight: .bold))
-		configuration.imagePlacement = .trailing
-		configuration.imagePadding = 2.0
 		configuration.contentInsets = .zero
+		if #unavailable(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0) {
+			configuration.image = UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 9.0, weight: .bold))
+			configuration.imagePlacement = .trailing
+			configuration.imagePadding = 2.0
+		}
 		self.yearButton.configuration = configuration
 		self.yearButton.showsMenuAsPrimaryAction = true
 		self.yearButton.isHidden = true

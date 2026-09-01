@@ -74,9 +74,43 @@ extension MuseumCollectionViewController {
 		snapshot.deleteItems(snapshot.itemIdentifiers(inSection: sectionLayoutKind))
 		snapshot.appendItems(itemKinds, toSection: sectionLayoutKind)
 
+		let followingIndexPath = self.indexPathFollowing(sectionLayoutKind, in: snapshot)
+		let followingMinX = followingIndexPath.flatMap { indexPath in
+			self.collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)?.frame.minX
+		}
+
 		self.snapshot = snapshot
 		self.dataSource.apply(snapshot, animatingDifferences: false)
 
+		if self.pinnedYear != nil {
+			self.restorePinnedYear()
+		} else if let followingIndexPath = followingIndexPath, let followingMinX = followingMinX {
+			self.collectionView.layoutIfNeeded()
+
+			if let hydratedMinX = self.collectionView.collectionViewLayout.layoutAttributesForItem(at: followingIndexPath)?.frame.minX {
+				self.collectionView.contentOffset.x += hydratedMinX - followingMinX
+			}
+		}
+
 		self.syncActiveYear()
+	}
+
+	/// The first item of the section after the given one, when that section starts behind the hall's leading edge.
+	///
+	/// - Parameters:
+	///    - sectionLayoutKind: The section about to change width.
+	///    - snapshot: The snapshot the section belongs to.
+	///
+	/// - Returns: The index path the hall anchors on.
+	private func indexPathFollowing(_ sectionLayoutKind: SectionLayoutKind, in snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>) -> IndexPath? {
+		guard let sectionIndex = snapshot.indexOfSection(sectionLayoutKind) else { return nil }
+		guard sectionIndex + 1 < snapshot.numberOfSections else { return nil }
+
+		let leadingEdgeX = self.collectionView.contentOffset.x + self.collectionView.adjustedContentInset.left
+		let sectionIndexPath = IndexPath(item: 0, section: sectionIndex)
+		guard let sectionMinX = self.collectionView.collectionViewLayout.layoutAttributesForItem(at: sectionIndexPath)?.frame.minX else { return nil }
+		guard sectionMinX < leadingEdgeX else { return nil }
+
+		return IndexPath(item: 0, section: sectionIndex + 1)
 	}
 }

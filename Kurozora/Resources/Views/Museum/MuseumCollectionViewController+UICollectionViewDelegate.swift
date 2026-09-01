@@ -51,6 +51,11 @@ extension MuseumCollectionViewController {
 		}
 	}
 
+	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		guard scrollView == self.collectionView else { return }
+		self.releasePinnedYear()
+	}
+
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		guard scrollView == self.collectionView else { return }
 		self.syncActiveYear()

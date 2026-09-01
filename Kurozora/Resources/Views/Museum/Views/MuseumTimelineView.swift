@@ -52,6 +52,9 @@ class MuseumTimelineView: UIControl {
 	/// The index of the currently highlighted tick.
 	private var activeIndex: Int?
 
+	/// The year the timeline highlights, kept so a rebuild can restore it.
+	private var activeYear: Int?
+
 	/// The index of the year last scrubbed to, cleared when the touch ends.
 	private var scrubbedIndex: Int?
 
@@ -138,7 +141,9 @@ class MuseumTimelineView: UIControl {
 	func configure(using years: [MuseumYear]) {
 		self.years = years
 		self.maxCount = max(1, years.map(\.count).max() ?? 1)
-		self.activeIndex = nil
+		self.activeIndex = self.activeYear.flatMap { activeYear in
+			years.firstIndex { $0.year == activeYear }
+		}
 		self.scrubbedIndex = nil
 
 		let decadesByStart = Dictionary(grouping: years) { museumYear in
@@ -158,6 +163,8 @@ class MuseumTimelineView: UIControl {
 	///
 	/// - Parameter year: The year to highlight.
 	func setActiveYear(_ year: Int) {
+		self.activeYear = year
+
 		let index = self.years.firstIndex { $0.year == year }
 		guard index != self.activeIndex else { return }
 
