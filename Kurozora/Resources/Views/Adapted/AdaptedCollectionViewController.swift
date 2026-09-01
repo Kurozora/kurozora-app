@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import Tabman
 import UIKit
 
 /// A collection of the titles adapted to anime.
@@ -48,7 +47,8 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 	private static let toolbarHeight: CGFloat = 49.0
 
 	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
+	/// The picker that switches the page between adapted kinds.
+	let kindSegmentedControl = UISegmentedControl()
 
 	/// The bar button item presenting the adaptation filter.
 	private var filterBarButtonItem: UIBarButtonItem!
@@ -105,12 +105,6 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 	}
 
 	// MARK: - View
-	override func themeWillReload() {
-		super.themeWillReload()
-
-		self.styleTabBarView()
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -141,43 +135,30 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 		self.collectionView.contentInset.top = Self.toolbarHeight
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 
-		self.configureTabBarView()
+		self.configureKindSegmentedControl()
 		self.configureToolbar()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
 
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
+		let kindBarButtonItem = UIBarButtonItem(customView: self.kindSegmentedControl)
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
+			kindBarButtonItem.hidesSharedBackground = true
 		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: false)
+		self.toolbar.setItems([.flexibleSpace(), kindBarButtonItem, .flexibleSpace()], animated: false)
 	}
 
-	private func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.tabBarView.reloadData(at: 0 ... Kind.allCases.count - 1, context: .full)
-		self.updateBar(to: CGFloat(self.kind.rawValue), animated: false)
-		self.styleTabBarView()
+	private func configureKindSegmentedControl() {
+		self.kindSegmentedControl.segmentTitles = Kind.allCases.map(\.title)
+		self.kindSegmentedControl.selectedSegmentIndex = self.kind.rawValue
+		self.kindSegmentedControl.addTarget(self, action: #selector(self.kindSegmentedControlDidChange(_:)), for: .valueChanged)
 	}
 
-	private func updateBar(to position: CGFloat, animated: Bool) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position, capacity: Kind.allCases.count, direction: .forward, animation: animation)
-	}
+	@objc private func kindSegmentedControlDidChange(_ sender: UISegmentedControl) {
+		guard let kind = Kind(rawValue: sender.selectedSegmentIndex), kind != self.kind else { return }
 
-	private func styleTabBarView() {
-		self.tabBarView.backgroundView.style = .clear
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-		self.tabBarView.scrollMode = .interactive
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
-		}
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-		self.tabBarView.fadesContentEdges = true
+		self.kind = kind
+		self.configureEmptyDataView()
+		self.reloadForQueryChange()
 	}
 
 	private func configureToolbar() {
@@ -205,12 +186,10 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 	private func configureViewConstraints() {
 		NSLayoutConstraint.activate([
 			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
 			self.toolbar.heightAnchor.constraint(equalToConstant: Self.toolbarHeight),
 		])
-
-		self.tabBarView.fillToSuperview()
 	}
 
 	/// Configures the filter and dim library bar button items.
@@ -583,26 +562,6 @@ extension AdaptedCollectionViewController {
 			guard let game = self.cache[indexPath] as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
-	}
-}
-
-// MARK: - TMBarDataSource
-extension AdaptedCollectionViewController: TMBarDataSource {
-	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		guard let kind = Kind(rawValue: index) else { return TMBarItem(title: "") }
-		return TMBarItem(title: kind.title)
-	}
-}
-
-// MARK: - TMBarDelegate
-extension AdaptedCollectionViewController: TMBarDelegate {
-	func bar(_ bar: TMBar, didRequestScrollTo index: Int) {
-		guard let kind = Kind(rawValue: index), kind != self.kind else { return }
-
-		self.updateBar(to: CGFloat(index), animated: true)
-		self.kind = kind
-		self.configureEmptyDataView()
-		self.reloadForQueryChange()
 	}
 }
 
