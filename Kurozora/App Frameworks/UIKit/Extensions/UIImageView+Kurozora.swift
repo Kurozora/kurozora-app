@@ -30,8 +30,8 @@ extension UIImageView {
 			.lowDataModeSource(.network(imageURL))
 			.onProgress { _, _ in }
 			.onSuccess { completion?($0.image) }
-			.onFailure { [weak self] _ in
-				guard let self else { return }
+			.onFailure { [weak self] error in
+				guard let self, !error.isTaskCancelled else { return }
 				let placeholderImage = placeholder.withRenderingMode(.alwaysOriginal)
 				self.image = placeholderImage
 				completion?(placeholderImage)
@@ -55,8 +55,8 @@ extension UIImageView {
 		KF.dataProvider(provider)
 			.cacheMemoryOnly()
 			.transition(.fade(0.2))
-			.onFailure { [weak self] _ in
-				guard let self else { return }
+			.onFailure { [weak self] error in
+				guard let self, !error.isTaskCancelled else { return }
 				self.setImage(with: urlString, placeholder: placeholder)
 			}
 			.set(to: self)
@@ -87,8 +87,8 @@ extension UIImageView {
 				)
 				#endif
 			}
-			.onFailure { [weak self] _ in
-				guard let self else { return }
+			.onFailure { [weak self] error in
+				guard let self, !error.isTaskCancelled else { return }
 				self.image = placeholder.withRenderingMode(.alwaysOriginal)
 			}
 			.set(to: self)
