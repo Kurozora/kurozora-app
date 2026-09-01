@@ -10,6 +10,13 @@ import UIKit
 import KurozoraKit
 
 class KSearchController: UISearchController {
+	// MARK: - Views
+	private lazy var kSearchBar = KSearchBar()
+
+	override var searchBar: KSearchBar {
+		return self.kSearchBar
+	}
+
 	// MARK: - Properties
 	weak var viewController: SearchResultsCollectionViewController?
 	var searchScope: SearchScope = .kurozora

@@ -11,7 +11,6 @@ import Combine
 import IQKeyboardManagerSwift
 #endif
 import KurozoraKit
-import Tabman
 import UIKit
 
 /// The list of available search view types.
@@ -53,9 +52,6 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 	// MARK: - Properties
 	var filterBarButtonItem: UIBarButtonItem!
-	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
-	var currentTopContentInset: CGFloat = 0
 	var currentIndex: Int = 0
 
 	/// The search view to be
@@ -210,7 +206,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		self.styleTabBarView()
+		self.kSearchController.searchBar.chipsView.restyle()
 	}
 
 	override func viewDidLoad() {
@@ -433,71 +429,13 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	func configureView() {
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
-		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+		self.configureChipsView()
 	}
 
-	func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.updateBar(to: 0.0, animated: false, direction: .none)
-		self.styleTabBarView()
-	}
-
-	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: self.searchTypes.count, direction: .forward, animation: animation)
-	}
-
-	fileprivate func styleTabBarView() {
-		// Background view
-		self.tabBarView.backgroundView.style = .clear
-
-		// Indicator
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-
-		// Scrolling
-		self.tabBarView.scrollMode = .interactive
-
-		// State
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
-		}
-
-		// Layout
-		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-
-		// Style
-		self.tabBarView.fadesContentEdges = true
-	}
-
-	func configureToolbar() {
-		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
-		self.toolbar.delegate = self
-		self.toolbar.isHidden = true
-		self.toolbar.isTranslucent = false
-		self.toolbar.backgroundColor = .clear
-		self.toolbar.barStyle = .default
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			let interaction = UIScrollEdgeElementContainerInteraction()
-			interaction.scrollView = self.collectionView
-			interaction.edge = .top
-			self.toolbar.addInteraction(interaction)
+	func configureChipsView() {
+		self.kSearchController.searchBar.chipsView.chipSelectedHandler = { [weak self] index in
+			guard let self = self else { return }
+			self.selectSearchType(at: index)
 		}
 	}
 
@@ -520,21 +458,6 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			self.navigationItem.preferredSearchBarPlacement = .stacked
 		}
 		#endif
-	}
-
-	func configureViewHierarchy() {
-		self.view.addSubview(self.toolbar)
-	}
-
-	func configureViewConstraints() {
-		NSLayoutConstraint.activate([
-			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
-		])
-
-		self.tabBarView.fillToSuperview()
 	}
 
 	/// Perform search with the given search text and the search scope.
@@ -986,14 +909,9 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	func setShowToolbar(_ show: Bool) {
-		if show {
-			self.currentTopContentInset = self.collectionView.contentInset.top
+		UIView.animate(withDuration: 0.25) {
+			self.kSearchController.searchBar.showsChips = show
 		}
-
-		self.collectionView.contentInset.top = show ? 62.0 : self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-
-		self.toolbar.isHidden = !show
 	}
 
 	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
@@ -1173,28 +1091,22 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 }
 
-// MARK: - TMBarDataSource
-extension SearchResultsCollectionViewController: TMBarDataSource {
+// MARK: - Chips
+extension SearchResultsCollectionViewController {
 	func reloadView() {
 		guard self.searchTypes.count > 0 else { return }
-		self.tabBarView.reloadData(at: 0 ... self.searchTypes.count - 1, context: .full)
-		// Keep the bar's visual selection in sync with `currentIndex`. A fresh search resets
-		// `currentIndex` to 0 but the bar would otherwise keep its previous selection,
-		// leaving the highlighted tab and the rendered section out of sync.
-		self.updateBar(to: CGFloat(self.currentIndex), animated: false, direction: .none)
+
+		// A fresh search resets `currentIndex` to 0, so the chips are re-selected here to keep the
+		// highlighted chip and the rendered section in sync.
+		let chipsView = self.kSearchController.searchBar.chipsView
+		chipsView.titles = self.searchTypes.map(\.stringValue)
+		chipsView.selectChip(at: self.currentIndex, animated: false)
 	}
 
-	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		return TMBarItem(title: self.searchTypes[index].stringValue)
-	}
-}
-
-// MARK: - TMBarDelegate
-extension SearchResultsCollectionViewController: TMBarDelegate {
-	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
-		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.currentIndex)
-		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
-
+	/// Switches the results to the search type at the given index.
+	///
+	/// - Parameter index: The index of the search type to show.
+	func selectSearchType(at index: Int) {
 		self.currentIndex = index
 
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
@@ -1213,19 +1125,6 @@ extension SearchResultsCollectionViewController: TMBarDelegate {
 
 		self.updateDataSource()
 		Task { [weak self] in await self?.prefetchCurrentSections() }
-	}
-}
-
-extension TMBarUpdateDirection {
-	static func forPage(_ page: Int, previousPage: Int) -> TMBarUpdateDirection {
-		return self.forPosition(CGFloat(page), previous: CGFloat(previousPage))
-	}
-
-	static func forPosition(_ position: CGFloat, previous previousPosition: CGFloat) -> TMBarUpdateDirection {
-		if position == previousPosition {
-			return .none
-		}
-		return position > previousPosition ? .forward : .reverse
 	}
 }
 

@@ -8,7 +8,6 @@
 
 import AVFoundation
 import KurozoraKit
-import Tabman
 import UIKit
 
 struct RecapTabItem {
@@ -52,9 +51,8 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 	var recapTabItems: [RecapTabItem] = []
 
-	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
-	var currentTopContentInset: CGFloat = 0
+	/// The chips that switch the page between the year's months.
+	let chipsView = KChipsView()
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -111,7 +109,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 			let index = self.recapTabItems.firstIndex { recapTabItem in
 				recapTabItem.month?.rawValue == self.month
 			} ?? 0
-			self.bar(self.tabBarView, didRequestScrollTo: index)
+			self.selectMonth(at: index)
 		}
 	}
 
@@ -182,16 +180,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 	func configureView() {
 		self.configureShareBarButtonItem()
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
-		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+		self.configureChipsView()
 	}
 
 	/// Configures the share bar button item.
@@ -203,86 +192,26 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		self.navigationItem.rightBarButtonItem = self.shareBarButtonItem
 	}
 
-	func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.updateBar(to: 0.0, animated: false, direction: .none)
-		self.styleTabBarView()
-	}
-
-	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: self.recapTabItems.count, direction: .forward, animation: animation)
-	}
-
-	fileprivate func styleTabBarView() {
-		// Background view
-		self.tabBarView.backgroundView.style = .clear
-
-		// Indicator
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-
-		// Scrolling
-		self.tabBarView.scrollMode = .interactive
-
-		// State
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
-		}
-
-		// Layout
-		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-
-		// Style
-		self.tabBarView.fadesContentEdges = true
-	}
-
-	func configureToolbar() {
-		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
-		self.toolbar.delegate = self
-		self.toolbar.isHidden = true
-		self.toolbar.isTranslucent = false
-		self.toolbar.backgroundColor = .clear
-		self.toolbar.barStyle = .default
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			let interaction = UIScrollEdgeElementContainerInteraction()
-			interaction.scrollView = self.collectionView
-			interaction.edge = .top
-			self.toolbar.addInteraction(interaction)
+	func configureChipsView() {
+		self.chipsView.chipSelectedHandler = { [weak self] index in
+			guard let self = self else { return }
+			self.selectMonth(at: index)
 		}
 	}
 
-	func configureViewHierarchy() {
-		self.view.addSubview(self.toolbar)
-	}
+	/// Switches the page to the month at the given index.
+	///
+	/// - Parameter index: The index of the month to show.
+	func selectMonth(at index: Int) {
+		guard let recapTabItem = self.recapTabItems[safe: index] else { return }
 
-	func configureViewConstraints() {
-		NSLayoutConstraint.activate([
-			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
-		])
-
-		self.tabBarView.fillToSuperview()
+		self.chipsView.selectChip(at: index, animated: true)
+		self.month = recapTabItem.month?.rawValue ?? 0
+		self.handleRefreshControl()
 	}
 
 	func setShowToolbar(_ show: Bool) {
-		if show {
-			self.currentTopContentInset = self.collectionView.contentInset.top
-		}
-
-		self.collectionView.contentInset.top = show ? 49.0 : self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-
-		self.toolbar.isHidden = !show
+		self.navigationItem.setBottomPalette(contentView: show ? self.chipsView : nil, height: KChipsView.paletteHeight)
 	}
 
 	func fetchMonths() async {
@@ -394,8 +323,8 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	}
 }
 
-// MARK: - TMBarDataSource
-extension ReCapCollectionViewController: TMBarDataSource {
+// MARK: - Chips
+extension ReCapCollectionViewController {
 	func reloadView() {
 		self.recapTabItems = self.recaps.filter { recap in
 			recap.attributes.year == self.year
@@ -414,28 +343,14 @@ extension ReCapCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 
-		self.tabBarView.reloadData(at: 0 ... self.recapTabItems.count - 1, context: .full)
-	}
-
-	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		guard let recapTabItem = self.recapTabItems[safe: index] else {
-			return TMBarItem(title: "")
+		self.chipsView.titles = self.recapTabItems.map { recapTabItem in
+			recapTabItem.month?.name ?? "\(recapTabItem.year)"
 		}
-		let title = recapTabItem.month?.name ?? "\(recapTabItem.year)"
-		return TMBarItem(title: title)
-	}
-}
 
-// MARK: - TMBarDelegate
-extension ReCapCollectionViewController: TMBarDelegate {
-	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
-		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.month - 1)
-		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
-
-		guard let recapTabItem = self.recapTabItems[safe: index] else { return }
-		self.month = recapTabItem.month?.rawValue ?? 0
-
-		self.handleRefreshControl()
+		let selectedIndex = self.recapTabItems.firstIndex { recapTabItem in
+			recapTabItem.month?.rawValue == self.month
+		}
+		self.chipsView.selectChip(at: selectedIndex ?? 0, animated: false)
 	}
 }
 
@@ -518,13 +433,6 @@ extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 		let visibleRect = CGRect(x: 0, y: y, width: savedFrame.width, height: visibleHeight)
 
 		return (data, 0, visibleRect)
-	}
-}
-
-// MARK: - UIToolbarDelegate
-extension ReCapCollectionViewController: UIToolbarDelegate {
-	func position(for bar: UIBarPositioning) -> UIBarPosition {
-		return .topAttached
 	}
 }
 

@@ -45,4 +45,19 @@ extension ScheduleCollectionViewController {
 
 		return nil
 	}
+
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		guard scrollView == self.collectionView else { return }
+		self.syncSelectedDay()
+	}
+
+	override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+		guard scrollView == self.collectionView else { return }
+		self.settleDayScroll()
+	}
+
+	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		guard scrollView == self.collectionView else { return }
+		self.endScrollingToDay()
+	}
 }

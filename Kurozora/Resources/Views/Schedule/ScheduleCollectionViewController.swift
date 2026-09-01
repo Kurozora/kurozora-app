@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import Tabman
 import UIKit
 
 class ScheduleCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable, TypedSegueHandling {
@@ -26,7 +25,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	var week: Int = 0
 	var schedules: [Schedule] = [] {
 		didSet {
-//			self.reloadView()
+			self.reloadView()
 
 			self._prefersActivityIndicatorHidden = true
 
@@ -38,9 +37,11 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 		}
 	}
 
-	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
-	var currentTopContentInset: CGFloat = 0
+	/// The chips that switch the page between the week's days.
+	let chipsView = KChipsView()
+
+	/// The day the list is scrolling to, held until it lands on the section's real top.
+	private var pendingDayScrollIndex: Int?
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -177,16 +178,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	func configureView() {
 		self.configureNavBarButtons()
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
-		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
+		self.configureChipsView()
 	}
 
 	func configureNavBarButtons() {
@@ -194,86 +186,15 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 		self.navigationItem.rightBarButtonItem = self.todayBarButtonItem
 	}
 
-	func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.updateBar(to: 0.0, animated: false, direction: .none)
-		self.styleTabBarView()
-	}
-
-	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: self.schedules.count, direction: .forward, animation: animation)
-	}
-
-	fileprivate func styleTabBarView() {
-		// Background view
-		self.tabBarView.backgroundView.style = .clear
-
-		// Indicator
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-
-		// Scrolling
-		self.tabBarView.scrollMode = .interactive
-
-		// State
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
+	func configureChipsView() {
+		self.chipsView.chipSelectedHandler = { [weak self] index in
+			guard let self = self else { return }
+			self.scrollToDay(at: index, animated: true)
 		}
-
-		// Layout
-		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-
-		// Style
-		self.tabBarView.fadesContentEdges = true
-	}
-
-	func configureToolbar() {
-		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
-		self.toolbar.delegate = self
-		self.toolbar.isHidden = true
-		self.toolbar.isTranslucent = false
-		self.toolbar.backgroundColor = .clear
-		self.toolbar.barStyle = .default
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			let interaction = UIScrollEdgeElementContainerInteraction()
-			interaction.scrollView = self.collectionView
-			interaction.edge = .top
-			self.toolbar.addInteraction(interaction)
-		}
-	}
-
-	func configureViewHierarchy() {
-		self.view.addSubview(self.toolbar)
-	}
-
-	func configureViewConstraints() {
-		NSLayoutConstraint.activate([
-			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0),
-		])
-
-		self.tabBarView.fillToSuperview()
 	}
 
 	func setShowToolbar(_ show: Bool) {
-		if show {
-			self.currentTopContentInset = self.collectionView.contentInset.top
-		}
-
-		self.collectionView.contentInset.top = show ? 49.0 : self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-
-		self.toolbar.isHidden = !show
+		self.navigationItem.setBottomPalette(contentView: show ? self.chipsView : nil, height: KChipsView.paletteHeight)
 	}
 
 	func fetchDetails() async {
@@ -295,7 +216,65 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	///
 	/// - Parameter animated: Specify [`true`](https://developer.apple.com/documentation/swift/true) to animate the scrolling behavior or [`false`](https://developer.apple.com/documentation/swift/false) to adjust the scroll view’s visible content immediately.
 	func scrollToToday(animated: Bool) {
-		self.collectionView.scrollToSection(1, animated: animated)
+		let todayIndex = self.schedules.firstIndex { schedule in
+			Calendar.current.isDateInToday(schedule.attributes.date)
+		} ?? 1
+
+		self.scrollToDay(at: todayIndex, animated: animated)
+	}
+
+	/// Scrolls the day at the given index to the top.
+	///
+	/// - Parameters:
+	///    - index: The index of the day to reveal.
+	///    - animated: Whether the scroll animates.
+	func scrollToDay(at index: Int, animated: Bool) {
+		guard self.schedules.indices.contains(index) else { return }
+
+		self.chipsView.selectChip(at: index, animated: animated)
+		self.pendingDayScrollIndex = index
+		self.collectionView.scrollToSection(index, animated: animated)
+
+		guard !animated else { return }
+		self.settleDayScroll()
+	}
+
+	/// Lands the pending scroll on the section's real top.
+	func settleDayScroll() {
+		// Sections the list has not reached yet are measured from an estimate, so the first pass stops short.
+		guard let index = self.pendingDayScrollIndex else { return }
+		self.pendingDayScrollIndex = nil
+
+		self.collectionView.layoutIfNeeded()
+		self.collectionView.scrollToSection(index, animated: false)
+	}
+
+	/// Hands scrolling back to the user, so the chips follow the list again.
+	func endScrollingToDay() {
+		self.pendingDayScrollIndex = nil
+	}
+
+	/// Reflects the day at the top of the list on the chips.
+	func syncSelectedDay() {
+		guard self.pendingDayScrollIndex == nil else { return }
+		guard !self.schedules.isEmpty else { return }
+
+		let topY = self.collectionView.contentOffset.y + self.collectionView.adjustedContentInset.top
+		var visibleIndex = 0
+
+		for section in self.schedules.indices {
+			let indexPath = IndexPath(item: 0, section: section)
+			guard let headerAttributes = self.collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(
+				ofKind: UICollectionView.elementKindSectionHeader,
+				at: indexPath
+			) else { continue }
+
+			guard headerAttributes.frame.minY <= topY + 1.0 else { break }
+			visibleIndex = section
+		}
+
+		guard visibleIndex != self.chipsView.selectedIndex else { return }
+		self.chipsView.selectChip(at: visibleIndex, animated: true)
 	}
 
 	/// Handles today button pressed.
@@ -343,8 +322,8 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 }
 
-// MARK: - TMBarDataSource
-extension ScheduleCollectionViewController: TMBarDataSource {
+// MARK: - Chips
+extension ScheduleCollectionViewController {
 	func reloadView() {
 		guard self.schedules.count > 0 else {
 			self.setShowToolbar(false)
@@ -352,27 +331,15 @@ extension ScheduleCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 
-		self.tabBarView.reloadData(at: 0 ... self.schedules.count - 1, context: .full)
-	}
+		self.chipsView.titles = self.schedules.map { schedule in
+			let weekday = (schedule.attributes.date.components.weekday ?? 1) - 1
+			return DayOfWeek(rawValue: weekday)?.name ?? schedule.attributes.date.formatted(.dateTime.weekday(.wide))
+		}
 
-	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		guard let date = self.schedules[safe: index]?.attributes.date else { return TMBarItem(title: "") }
-
-		let title = DayOfWeek(rawValue: date.components.weekday ?? 0)?.name ?? "N/A"
-		return TMBarItem(title: title)
-	}
-}
-
-// MARK: - TMBarDelegate
-extension ScheduleCollectionViewController: TMBarDelegate {
-	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
-		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.week - 1)
-		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
-
-		guard let recapTabItem = self.schedules[safe: index] else { return }
-		self.week = recapTabItem.attributes.date.components.weekday ?? 0
-
-		self.handleRefreshControl()
+		let todayIndex = self.schedules.firstIndex { schedule in
+			Calendar.current.isDateInToday(schedule.attributes.date)
+		}
+		self.chipsView.selectChip(at: todayIndex ?? 0, animated: false)
 	}
 }
 
@@ -434,13 +401,6 @@ extension ScheduleCollectionViewController: BaseLockupCollectionViewCellDelegate
 		guard let show = schedule.relationships.shows?.data[safe: indexPath.item] as? Show else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
-	}
-}
-
-// MARK: - UIToolbarDelegate
-extension ScheduleCollectionViewController: UIToolbarDelegate {
-	func position(for bar: UIBarPositioning) -> UIBarPosition {
-		return .topAttached
 	}
 }
 

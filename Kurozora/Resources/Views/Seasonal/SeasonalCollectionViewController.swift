@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import Tabman
 import UIKit
 
 class SeasonalCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable, TypedSegueHandling {
@@ -26,8 +25,8 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 	private var seasonPickerBarButtonItem: UIBarButtonItem!
 	private var shareBarButtonItem: UIBarButtonItem!
 
-	let toolbar = UIToolbar()
-	let tabBarView = TMBar.KBar()
+	/// The chips that filter the page by kind.
+	let chipsView = KChipsView()
 
 	// MARK: - Properties
 	var kind: BrowseSeasonType = .shows
@@ -47,8 +46,6 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 
 	/// `0` represents the All chip; values `1...N` map to `browseSeasons[index - 1]`.
 	var selectedChipIndex: Int = 0
-
-	var currentTopContentInset: CGFloat = 0
 
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -214,90 +211,19 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 
 	func configureView() {
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
+		self.configureChipsView()
+	}
 
-		let tabBarBarButtonItem = UIBarButtonItem(customView: self.tabBarView)
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			tabBarBarButtonItem.hidesSharedBackground = true
+	func configureChipsView() {
+		self.chipsView.chipSelectedHandler = { [weak self] index in
+			guard let self = self else { return }
+			self.selectedChipIndex = index
+			self.updateDataSource()
 		}
-		self.toolbar.setItems([tabBarBarButtonItem], animated: true)
-	}
-
-	func configureTabBarView() {
-		self.tabBarView.delegate = self
-		self.tabBarView.dataSource = self
-		self.updateBar(to: 0.0, animated: false, direction: .none)
-		self.styleTabBarView()
-	}
-
-	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
-		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: self.browseSeasons.count + 1, direction: .forward, animation: animation)
-	}
-
-	fileprivate func styleTabBarView() {
-		self.tabBarView.backgroundView.style = .clear
-		self.tabBarView.indicator.layout(in: self.tabBarView)
-		self.tabBarView.scrollMode = .interactive
-
-		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.textColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
-		}
-
-		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
-		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = .intrinsic
-
-		self.tabBarView.fadesContentEdges = true
-	}
-
-	func configureToolbar() {
-		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
-		self.toolbar.delegate = self
-		self.toolbar.isHidden = true
-		self.toolbar.isTranslucent = false
-		self.toolbar.backgroundColor = .clear
-		self.toolbar.barStyle = .default
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			let interaction = UIScrollEdgeElementContainerInteraction()
-			interaction.scrollView = self.collectionView
-			interaction.edge = .top
-			self.toolbar.addInteraction(interaction)
-		}
-	}
-
-	func configureViewHierarchy() {
-		self.view.addSubview(self.toolbar)
-	}
-
-	func configureViewConstraints() {
-		NSLayoutConstraint.activate([
-			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
-			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0)
-		])
-
-		self.tabBarView.fillToSuperview()
 	}
 
 	func setShowToolbar(_ show: Bool) {
-		if show {
-			self.currentTopContentInset = self.collectionView.contentInset.top
-		}
-
-		self.collectionView.contentInset.top = show ? 49.0 : self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-
-		self.toolbar.isHidden = !show
+		self.navigationItem.setBottomPalette(contentView: show ? self.chipsView : nil, height: KChipsView.paletteHeight)
 	}
 
 	/// Updates the native title and back-button title to match the current season and year.
@@ -481,8 +407,8 @@ class SeasonalCollectionViewController: KCollectionViewController, SectionFetcha
 	}
 }
 
-// MARK: - TMBarDataSource
-extension SeasonalCollectionViewController: TMBarDataSource {
+// MARK: - Chips
+extension SeasonalCollectionViewController {
 	func reloadView() {
 		guard !self.browseSeasons.isEmpty else {
 			self.setShowToolbar(false)
@@ -490,30 +416,10 @@ extension SeasonalCollectionViewController: TMBarDataSource {
 		}
 		self.setShowToolbar(true)
 
-		self.tabBarView.reloadData(at: 0...self.browseSeasons.count, context: .full)
-	}
-
-	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		if index == 0 {
-			return TMBarItem(title: L10n.all)
+		self.chipsView.titles = [L10n.all] + self.browseSeasons.map { browseSeason in
+			browseSeason.attributes.type.name
 		}
-
-		guard let browseSeason = self.browseSeasons[safe: index - 1] else {
-			return TMBarItem(title: "")
-		}
-
-		return TMBarItem(title: browseSeason.attributes.type.name)
-	}
-}
-
-// MARK: - TMBarDelegate
-extension SeasonalCollectionViewController: TMBarDelegate {
-	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
-		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.selectedChipIndex)
-		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
-
-		self.selectedChipIndex = index
-		self.updateDataSource()
+		self.chipsView.selectChip(at: self.selectedChipIndex, animated: false)
 	}
 }
 
@@ -625,13 +531,6 @@ extension SeasonalCollectionViewController: UIScreenshotServiceDelegate {
 
 		let visibleRect = CGRect(x: 0, y: savedContentOffset.y, width: pageWidth, height: chunkHeight)
 		return (data, 0, visibleRect)
-	}
-}
-
-// MARK: - UIToolbarDelegate
-extension SeasonalCollectionViewController: UIToolbarDelegate {
-	func position(for bar: UIBarPositioning) -> UIBarPosition {
-		return .topAttached
 	}
 }
 
