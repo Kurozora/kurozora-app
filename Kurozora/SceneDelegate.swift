@@ -82,6 +82,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func setupNSToolbar() {
 		self.window?.windowScene?.titlebar?.titleVisibility = .hidden
 		self.window?.windowScene?.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
+
+		// From macOS 27 an item-less toolbar leaves the titlebar background painting a flat strip across
+		// the top of the window. The placeholder toolbar and the full screen cleanup it exists for are
+		// both dropped there.
+		guard #unavailable(macCatalyst 27.0) else { return }
+
 		self.installTitlebarToolbar()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidExitFullScreen), name: Self.windowDidExitFullScreenNotification, object: nil)
