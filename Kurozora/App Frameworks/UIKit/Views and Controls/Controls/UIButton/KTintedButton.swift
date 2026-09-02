@@ -26,6 +26,7 @@ class KTintedButton: KButton {
 			self.layer.masksToBounds = false
 
 			self.configuration = .prominentGlass()
+			self.configuration?.titleLineBreakMode = .byTruncatingTail
 			self.configuration?.background.cornerRadius = cornerRadius == .zero ? 10 : cornerRadius
 			self.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
 				var outgoing = incoming
@@ -35,6 +36,7 @@ class KTintedButton: KButton {
 			}
 		} else {
 			self.configuration = .plain()
+			self.configuration?.titleLineBreakMode = .byTruncatingTail
 
 			self.theme_tintColor = KThemePicker.tintedButtonTextColor.rawValue
 			self.theme_backgroundColor = KThemePicker.tintColor.rawValue

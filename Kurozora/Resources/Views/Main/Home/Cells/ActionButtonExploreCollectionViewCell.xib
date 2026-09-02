@@ -21,8 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="310" height="45"/>
                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="310" id="Ymj-VR-obL"/>
-                            <constraint firstAttribute="height" constant="45" id="kk6-8g-XpU"/>
+                                                        <constraint firstAttribute="height" constant="45" id="kk6-8g-XpU"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <state key="normal" title="Redeem"/>
