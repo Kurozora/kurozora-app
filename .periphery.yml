@@ -1,0 +1,5 @@
+project: Kurozora.xcodeproj
+schemes:
+  - Kurozora
+  - Kurozora Pre-Release
+  - Kurozora Staging

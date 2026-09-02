@@ -56,7 +56,7 @@ extension URL {
 
 		return URL(fileURLWithPath: String(cString: home), isDirectory: true)
 		#else
-		return FileManager.default.homeDirectoryForCurrentUser
+		return URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 		#endif
 	}
 

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__xcode__XcodeListWindows",
+      "mcp__xcode__GetBuildLog",
+      "mcp__xcode__XcodeListNavigatorIssues",
+      "Bash(swiftlint lint *)"
+    ]
+  }
+}
