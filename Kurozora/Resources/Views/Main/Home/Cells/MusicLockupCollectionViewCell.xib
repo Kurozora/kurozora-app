@@ -76,7 +76,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strike It Out" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpf-VE-M9t" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strike It Out" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpf-VE-M9t" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20.5" width="90.5" height="22.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -95,7 +95,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dvd-U4-smK">
                                 <rect key="frame" x="0.0" y="43" width="374" height="71.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="MIYAVI" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFU-A7-Z5l" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="MIYAVI" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFU-A7-Z5l" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="23.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
@@ -129,7 +129,7 @@
                             <constraint firstItem="owt-pb-61U" firstAttribute="bottom" secondItem="gpf-VE-M9t" secondAttribute="top" id="7aZ-Sv-rUc"/>
                             <constraint firstItem="dvd-U4-smK" firstAttribute="top" secondItem="gpf-VE-M9t" secondAttribute="bottom" id="CCF-o1-Wem"/>
                             <constraint firstItem="KJq-zE-6q3" firstAttribute="firstBaseline" secondItem="gpf-VE-M9t" secondAttribute="firstBaseline" id="D3E-ye-Nh2"/>
-                            <constraint firstAttribute="bottom" secondItem="dvd-U4-smK" secondAttribute="bottom" id="N4a-gn-sVJ"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dvd-U4-smK" secondAttribute="bottom" id="N4a-gn-sVJ"/>
                             <constraint firstAttribute="trailing" secondItem="dvd-U4-smK" secondAttribute="trailing" id="Pig-m8-TML"/>
                             <constraint firstItem="owt-pb-61U" firstAttribute="top" secondItem="Bcf-Ej-vcv" secondAttribute="top" id="QQ7-B3-I4y"/>
                             <constraint firstAttribute="trailing" secondItem="owt-pb-61U" secondAttribute="trailing" id="RTD-pO-1T4"/>
@@ -148,7 +148,7 @@
                     <constraint firstItem="Bcf-Ej-vcv" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="bottom" constant="8" symbolic="YES" id="emg-KP-IFe"/>
                     <constraint firstAttribute="trailing" secondItem="Bcf-Ej-vcv" secondAttribute="trailing" id="jRW-kA-ZoQ"/>
                     <constraint firstItem="Bcf-Ej-vcv" firstAttribute="leading" secondItem="1pO-cN-qZF" secondAttribute="leading" id="kAZ-wq-ex6"/>
-                    <constraint firstAttribute="bottom" secondItem="Bcf-Ej-vcv" secondAttribute="bottom" id="qzx-FW-Rlf"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Bcf-Ej-vcv" secondAttribute="bottom" id="qzx-FW-Rlf"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

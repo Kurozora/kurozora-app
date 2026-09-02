@@ -35,6 +35,10 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
+		if let stackView = self.secondaryLabel.superview as? UIStackView {
+			stackView.setCustomSpacing(8.0, after: self.secondaryLabel)
+		}
+
 		self.cornerView.layer.cornerRadius = 22
 		self.episodeImageView?.applyCornerRadius(22)
 		self.episodeImageView?.layer.borderWidth = 0
