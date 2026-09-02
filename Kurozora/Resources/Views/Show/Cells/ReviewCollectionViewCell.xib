@@ -43,7 +43,7 @@
                         <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nH-tN-JrJ" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="6nH-tN-JrJ" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="60" y="28" width="306" height="39.5"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="250" constant="40" id="ZmG-qj-jfz"/>
@@ -105,7 +105,6 @@
                     <constraint firstItem="Brd-vw-RVW" firstAttribute="trailing" secondItem="zF2-lp-0cu" secondAttribute="trailing" id="Brd-RVW-r"/>
                     <constraint firstItem="Brd-vw-RVW" firstAttribute="bottom" secondItem="zF2-lp-0cu" secondAttribute="bottom" id="Brd-RVW-b"/>
                     <constraint firstItem="vcF-nr-S1D" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="2" id="2kD-iK-kMW"/>
-                    <constraint firstItem="K1m-Ev-6jb" firstAttribute="bottom" secondItem="T9c-i1-chK" secondAttribute="bottom" id="3my-Do-wmO"/>
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="10" id="6TC-NT-VaQ"/>
                     <constraint firstItem="zF2-lp-0cu" firstAttribute="leading" secondItem="SgI-sl-Z8o" secondAttribute="leading" constant="8" id="A2S-Ps-Cgf"/>
                     <constraint firstItem="jXb-8G-Omv" firstAttribute="leading" secondItem="zF2-lp-0cu" secondAttribute="trailing" constant="8" symbolic="YES" id="AqN-SV-ELa"/>
@@ -117,7 +116,7 @@
                     <constraint firstItem="WKI-z6-jsJ" firstAttribute="centerY" secondItem="jXb-8G-Omv" secondAttribute="centerY" id="Ex0-Lc-x0y"/>
                     <constraint firstItem="zF2-lp-0cu" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="FSU-Yn-mUh"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" id="FV3-NT-ste"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="T9c-i1-chK" secondAttribute="bottom" constant="8" id="LfM-mP-GzB"/>
+                    <constraint firstAttribute="bottom" secondItem="T9c-i1-chK" secondAttribute="bottom" constant="8" id="LfM-mP-GzB"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="leading" id="Q9h-DB-ftj"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zF2-lp-0cu" secondAttribute="bottom" constant="8" id="QWo-sJ-3hc"/>
                     <constraint firstItem="T9c-i1-chK" firstAttribute="top" secondItem="6nH-tN-JrJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Wfl-sI-Zaf"/>

@@ -110,6 +110,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		contentStackView.fillToSuperview()
 
 		self.contentTextView = textView
+
+		// The more button rides the last line of the body text, masking the words beneath it.
+		self.moreButtonView.bottomAnchor.constraint(equalTo: textView.bottomAnchor).isActive = true
+
 		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
 
 		let metadataLabel = KTintedLabel()
@@ -118,6 +122,13 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		metadataLabel.numberOfLines = 0
 		contentStackView.insertArrangedSubview(metadataLabel, at: 0)
 		self.metadataLabel = metadataLabel
+
+		// The spacer soaks up any extra height, so the body stays at the top and the
+		// vote row sits at the bottom with at least the standard gap in between.
+		let spacerView = UIView()
+		spacerView.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
+		spacerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 8.0).isActive = true
+		contentStackView.addArrangedSubview(spacerView)
 
 		let voteRowView = UIStackView(arrangedSubviews: [self.helpfulButton, self.unhelpfulButton, UIView()])
 		voteRowView.axis = .horizontal
