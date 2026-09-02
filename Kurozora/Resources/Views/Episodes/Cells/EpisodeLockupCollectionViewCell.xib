@@ -45,14 +45,14 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" placeholder="YES" id="CeO-DO-DP4"/>
-                            <constraint firstAttribute="width" secondItem="3YY-qy-Rcf" secondAttribute="height" multiplier="16:9" id="ERw-Sc-ead"/>
+                            <constraint firstAttribute="width" secondItem="3YY-qy-Rcf" secondAttribute="height" multiplier="16:9" priority="999" id="ERw-Sc-ead"/>
                             <constraint firstItem="Kso-7k-pdi" firstAttribute="leading" secondItem="3YY-qy-Rcf" secondAttribute="leading" id="IGw-jS-mQa"/>
                             <constraint firstAttribute="trailing" secondItem="Kso-7k-pdi" secondAttribute="trailing" id="Y33-bL-2WH"/>
                             <constraint firstAttribute="bottom" secondItem="Kso-7k-pdi" secondAttribute="bottom" id="mfq-9U-NHU"/>
                             <constraint firstItem="Kso-7k-pdi" firstAttribute="top" secondItem="3YY-qy-Rcf" secondAttribute="top" id="snG-UT-Pyy"/>
                         </constraints>
                     </view>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-3C-ooQ">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-3C-ooQ">
                         <rect key="frame" x="0.0" y="219" width="375" height="193"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="#0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4I-Ev-6Vb" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -72,7 +72,7 @@
                                     <action selector="seasonButtonPressed:" destination="dUR-lC-qNQ" eventType="touchUpInside" id="wWR-bU-Oqe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="The End of the Beginning and the Beginning of the End" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doD-Ch-lqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="The End of the Beginning and the Beginning of the End" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doD-Ch-lqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="57.5" width="358" height="42.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,7 +80,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="fill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-Wy-jTi" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="108" width="375" height="21"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="0.01"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="_test">
@@ -125,7 +125,7 @@
                     <constraint firstItem="3YY-qy-Rcf" firstAttribute="top" secondItem="rIF-v6-2n7" secondAttribute="top" id="SHx-vL-iRV"/>
                     <constraint firstAttribute="trailing" secondItem="6Vr-3C-ooQ" secondAttribute="trailing" id="d2I-Fe-CIP"/>
                     <constraint firstItem="6Vr-3C-ooQ" firstAttribute="leading" secondItem="rIF-v6-2n7" secondAttribute="leading" id="oCB-aq-zYe"/>
-                    <constraint firstAttribute="bottom" secondItem="6Vr-3C-ooQ" secondAttribute="bottom" id="t6P-is-3fM"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6Vr-3C-ooQ" secondAttribute="bottom" id="t6P-is-3fM"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

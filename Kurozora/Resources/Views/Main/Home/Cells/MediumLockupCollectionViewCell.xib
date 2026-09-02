@@ -44,7 +44,7 @@
                             <constraint firstAttribute="bottom" secondItem="1ri-jr-BHw" secondAttribute="bottom" id="GOa-7e-ZlW"/>
                             <constraint firstAttribute="bottom" secondItem="3cC-BS-6hY" secondAttribute="bottom" id="KA5-vy-wHF"/>
                             <constraint firstItem="hQ3-se-UId" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="top" constant="10" id="MkH-Ki-Qjf"/>
-                            <constraint firstAttribute="width" secondItem="ni9-Cf-IrR" secondAttribute="height" multiplier="16:9" id="RjS-aX-sHW"/>
+                            <constraint firstAttribute="width" secondItem="ni9-Cf-IrR" secondAttribute="height" multiplier="16:9" priority="999" id="RjS-aX-sHW"/>
                             <constraint firstAttribute="bottom" secondItem="hQ3-se-UId" secondAttribute="bottom" constant="10" id="TVY-8p-0o0"/>
                             <constraint firstAttribute="trailing" secondItem="QHT-Mg-dgm" secondAttribute="trailing" id="UsT-tp-9yo"/>
                             <constraint firstItem="1ri-jr-BHw" firstAttribute="leading" secondItem="ni9-Cf-IrR" secondAttribute="leading" id="W8a-TI-tkG"/>
@@ -77,7 +77,7 @@
                     <constraint firstItem="Okd-mu-YDE" firstAttribute="leading" secondItem="6WG-5O-kCh" secondAttribute="leading" id="1xA-Ty-7gh"/>
                     <constraint firstItem="ni9-Cf-IrR" firstAttribute="leading" secondItem="6WG-5O-kCh" secondAttribute="leading" id="Mju-20-HBL"/>
                     <constraint firstItem="ni9-Cf-IrR" firstAttribute="top" secondItem="6WG-5O-kCh" secondAttribute="top" id="PyT-hh-wES"/>
-                    <constraint firstAttribute="bottom" secondItem="Okd-mu-YDE" secondAttribute="bottom" id="UPV-Tp-9Ja"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Okd-mu-YDE" secondAttribute="bottom" id="UPV-Tp-9Ja"/>
                     <constraint firstAttribute="trailing" secondItem="Okd-mu-YDE" secondAttribute="trailing" id="Xn1-XV-cDe"/>
                     <constraint firstItem="Okd-mu-YDE" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="bottom" constant="8" symbolic="YES" id="nxx-50-0zy"/>
                     <constraint firstAttribute="trailing" secondItem="ni9-Cf-IrR" secondAttribute="trailing" id="uiT-iC-vPY"/>

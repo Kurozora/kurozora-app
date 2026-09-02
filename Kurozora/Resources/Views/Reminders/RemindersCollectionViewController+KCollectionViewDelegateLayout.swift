@@ -26,6 +26,11 @@ extension RemindersCollectionViewController {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+
+			if self.libraryKind == .games {
+				return Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			}
+
 			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 	}

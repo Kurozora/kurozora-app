@@ -94,7 +94,7 @@ extension SongDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {

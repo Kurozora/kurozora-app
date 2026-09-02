@@ -100,7 +100,7 @@ extension StudioDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -123,7 +123,7 @@ extension StudioDetailsCollectionViewController {
 			case .games:
 				if !self.gameIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}

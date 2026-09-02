@@ -124,7 +124,7 @@ extension ShowDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -170,7 +170,7 @@ extension ShowDetailsCollectionViewController {
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}

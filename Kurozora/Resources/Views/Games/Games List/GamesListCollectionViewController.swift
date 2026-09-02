@@ -497,7 +497,7 @@ extension GamesListCollectionViewController {
 				return Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
-			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			return Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 	}
 }

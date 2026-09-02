@@ -62,7 +62,7 @@ extension ReviewsListCollectionViewController {
 				sectionLayout = fullSection
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+					sectionLayout = Layouts.reviewSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 				}
 			}
 

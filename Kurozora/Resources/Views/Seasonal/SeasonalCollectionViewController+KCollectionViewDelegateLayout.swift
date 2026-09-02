@@ -49,7 +49,11 @@ extension SeasonalCollectionViewController {
 
 			switch browseSeasonSection {
 			case .browseSeason:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+				if self.kind == .games {
+					sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+				} else {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+				}
 			}
 
 			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))

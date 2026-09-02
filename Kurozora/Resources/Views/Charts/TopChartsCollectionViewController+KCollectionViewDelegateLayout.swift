@@ -52,8 +52,10 @@ extension TopChartsCollectionViewController {
 			switch chartSection {
 			case .chart(let chartKind):
 				switch chartKind {
-				case .shows, .literatures, .games:
+				case .shows, .literatures:
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				case .games:
+					sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				case .characters:
 					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				case .people:

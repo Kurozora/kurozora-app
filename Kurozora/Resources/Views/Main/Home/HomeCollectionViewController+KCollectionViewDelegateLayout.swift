@@ -100,8 +100,15 @@ extension HomeCollectionViewController {
 				sectionLayout = Layouts.largeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .medium:
 				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .small:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .small(let exploreCategory):
+				switch exploreCategory.attributes.exploreCategoryType {
+				case .games, .mostPopularGames, .upcomingGames, .newGames, .gamesSeason:
+					sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				case .recap:
+					sectionLayout = Layouts.recapSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				default:
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				}
 			case .video:
 				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .upcoming:
@@ -126,7 +133,7 @@ extension HomeCollectionViewController {
 					}
 				}
 			case .quickActions:
-				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment, collectionView: self.collectionView)
+				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				return sectionLayout
 			case .legal:
 				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

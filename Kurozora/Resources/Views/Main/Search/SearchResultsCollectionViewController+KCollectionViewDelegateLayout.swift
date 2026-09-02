@@ -111,9 +111,12 @@ extension SearchResultsCollectionViewController {
 			case .people:
 				hasHeader = false
 				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-			case .shows, .literatures, .games:
+			case .shows, .literatures:
 				hasHeader = false
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .games:
+				hasHeader = false
+				sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			case .songs:
 				hasHeader = false
 				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)

@@ -73,8 +73,10 @@ extension ReCapCollectionViewController {
 			case .header:
 				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				return sectionLayout
-			case .topShows, .topGames, .topLiteratures:
+			case .topShows, .topLiteratures:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .topGames:
+				sectionLayout = Layouts.gameSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .topGenres, .topThemes:
 				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .milestones(let isFullSection):
