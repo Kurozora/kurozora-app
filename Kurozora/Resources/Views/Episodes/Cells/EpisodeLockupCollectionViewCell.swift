@@ -53,14 +53,27 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	///    - rank: The rank of the episode in a ranked list.
 	func configure(using episode: Episode?, rank: Int? = nil) {
 		guard let episode = episode else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 			self.showSkeleton()
 			return
 		}
 
-		// Configure image view
-		episode.attributes.bannerImage(imageView: self.episodeImageView)
+		UIView.performWithoutAnimation {
+			episode.attributes.bannerImage(imageView: self.episodeImageView)
+			self.applyContent(using: episode, rank: rank)
 
-		// Configure rank
+			self.hideSkeleton()
+			self.contentView.layoutIfNeeded()
+		}
+	}
+
+	/// Applies the given episode's text to the cell.
+	///
+	/// - Parameters:
+	///    - episode: The `Episode` object whose text is applied.
+	///    - rank: The rank of the episode in a ranked list.
+	private func applyContent(using episode: Episode, rank: Int?) {
 		if let rank = rank {
 			self.rankLabel.text = "#\(rank)"
 			self.rankLabel.isHidden = false
@@ -69,16 +82,13 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLabel.isHidden = true
 		}
 
-		// Configure primary label
 		self.primaryLabel.text = episode.attributes.title
 
-		// Configure ternary label
 		let viewCount = episode.attributes.viewCount
 		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
 		let dateText = episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? "TBA"
 		self.secondaryLabel.text = "\(viewCountText) · \(dateText)"
 
-		// Configure season button
 		self.seasonButton.theme_setTitleColor(KThemePicker.subTextColor.rawValue, forState: .normal)
 		self.seasonButton.theme_tintColor = KThemePicker.subTextColor.rawValue
 		self.seasonButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
@@ -88,15 +98,12 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.seasonButton.setTitle(seasonEpisodeLabel, for: .normal)
 
-		// Configure watch button
 		let watchStatusButtonTitle = episode.watchStatus == .watched ? "✓ \(L10n.watched)" : L10n.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 
-		// Configure show button
 		self.showButton.setTitle(episode.attributes.showTitle, for: .normal)
-		self.showButton.titleLabel?.numberOfLines = 0
-
-		self.hideSkeleton()
+		self.showButton.titleLabel?.numberOfLines = 1
+		self.showButton.titleLabel?.lineBreakMode = .byTruncatingTail
 	}
 
 	// MARK: - IBActions
