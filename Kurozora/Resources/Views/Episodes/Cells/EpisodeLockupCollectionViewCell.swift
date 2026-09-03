@@ -53,13 +53,24 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	///    - rank: The rank of the episode in a ranked list.
 	func configure(using episode: Episode?, rank: Int? = nil) {
 		guard let episode = episode else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 			self.showSkeleton()
 			return
 		}
 
 		// Configure image view
 		episode.attributes.bannerImage(imageView: self.episodeImageView)
+		self.applyContent(using: episode, rank: rank)
+		self.hideSkeleton()
+	}
 
+	/// Applies the given episode's text to the cell.
+	///
+	/// - Parameters:
+	///    - episode: The `Episode` object whose text is applied.
+	///    - rank: The rank of the episode in a ranked list.
+	private func applyContent(using episode: Episode, rank: Int?) {
 		// Configure rank
 		if let rank = rank {
 			self.rankLabel.text = "#\(rank)"
@@ -72,7 +83,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		// Configure primary label
 		self.primaryLabel.text = episode.attributes.title
 
-		// Configure ternary label
+		// Configure secondary label
 		let viewCount = episode.attributes.viewCount
 		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
 		let dateText = episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? "TBA"
@@ -94,9 +105,8 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure show button
 		self.showButton.setTitle(episode.attributes.showTitle, for: .normal)
-		self.showButton.titleLabel?.numberOfLines = 0
-
-		self.hideSkeleton()
+		self.showButton.titleLabel?.numberOfLines = 1
+		self.showButton.titleLabel?.lineBreakMode = .byTruncatingTail
 	}
 
 	// MARK: - IBActions
