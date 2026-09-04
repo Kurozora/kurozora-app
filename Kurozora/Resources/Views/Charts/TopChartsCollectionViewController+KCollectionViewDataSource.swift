@@ -216,7 +216,7 @@ extension TopChartsCollectionViewController {
 				}
 			case .pending:
 				let song: Song? = nil
-				cell.configure(using: song, at: indexPath)
+				cell.configure(using: song, at: indexPath, rank: indexPath.item + 1)
 			default: break
 			}
 		}

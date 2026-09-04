@@ -101,15 +101,27 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	func configure(using showSong: ShowSong?, at indexPath: IndexPath, rank: Int? = nil, showEpisodes: Bool = true, showShow: Bool = false, resolvedSong: MKSong? = nil) {
 		guard let showSong = showSong else {
 			self.resetShowSong()
+			self.configureRank(rank)
 			self.showSkeleton()
 			return
 		}
-		self.hideSkeleton()
 
+		self.hideSkeleton()
+		self.applyContent(using: showSong, rank: rank, showEpisodes: showEpisodes, showShow: showShow)
+
+		self.configure(using: showSong.song, at: indexPath, fromShowSong: true, resolvedSong: resolvedSong)
+	}
+
+	/// Applies the given show song's text to the cell.
+	///
+	/// - Parameters:
+	///    - showSong: The `ShowSong` object whose text is applied.
+	///    - rank: The rank of the song in a ranked list.
+	///    - showEpisodes: Whether to show which episodes this song played in.
+	///    - showShow: Whether to show which show this song belongs to.
+	private func applyContent(using showSong: ShowSong, rank: Int?, showEpisodes: Bool, showShow: Bool) {
 		self.tertiaryLabel.isHidden = !showEpisodes
 		self.tertiaryLabel.text = L10n.episodeLabel("\(showSong.attributes.episodes)")
-
-		self.configureRank(rank)
 
 		self.typeButton.isHidden = false
 		self.typeButton.layerCornerRadius = 12.0
@@ -121,7 +133,19 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.showButton.isHidden = !showShow
 		self.showButton.setTitle(showSong.show?.attributes.title, for: .normal)
 
-		self.configure(using: showSong.song, at: indexPath, fromShowSong: true, resolvedSong: resolvedSong)
+		self.applyContent(using: showSong.song, rank: rank)
+	}
+
+	/// Applies the given song's text to the cell.
+	///
+	/// - Parameters:
+	///    - song: The `Song` object whose text is applied.
+	///    - rank: The rank of the song in a ranked list.
+	private func applyContent(using song: KKSong, rank: Int?) {
+		self.primaryLabel.text = song.attributes.title
+		self.secondaryLabel.text = song.attributes.artist
+
+		self.configureRank(rank)
 	}
 
 	/// Resets the `ShowSong` related views.
@@ -145,16 +169,18 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		guard let song = song else {
+			self.configureRank(rank)
 			self.showSkeleton()
 			return
 		}
-		self.hideSkeleton()
 		self.indexPath = indexPath
 
-		self.primaryLabel.text = song.attributes.title
-		self.secondaryLabel.text = song.attributes.artist
+		self.hideSkeleton()
 
-		self.configureRank(rank)
+		if !fromShowSong {
+			self.applyContent(using: song, rank: rank)
+		}
+
 		self.updateArtwork(for: song, resolvedSong: resolvedSong)
 		self.configurePlayButton(for: song)
 	}
