@@ -126,7 +126,7 @@ extension HomeCollectionViewController {
 					}
 				}
 			case .quickActions:
-				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment, collectionView: self.collectionView)
+				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				return sectionLayout
 			case .legal:
 				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

@@ -12,6 +12,9 @@ enum Layouts {
 	/// The height of a row in the rate and review section.
 	static let rateAndReviewRowHeight: CGFloat = EmojiRatingView.buttonSize
 
+	/// The max width constraint of `ActionButtonExploreCollectionViewCell`.
+	static let quickActionButtonMaxWidth: CGFloat = 300.0
+
 	static func badgeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var item: NSCollectionLayoutItem!
@@ -641,24 +644,28 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, collectionView: UICollectionView) -> NSCollectionLayoutSection {
-		let leadingInset = collectionView.directionalLayoutMargins.leading
-		let trailingInset = collectionView.directionalLayoutMargins.trailing
-		let maxInset = max(leadingInset, trailingInset)
+	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let interItemSpacing: CGFloat = 20.0
+		let minimumSideInset: CGFloat = 10.0
+		let totalSpacing = interItemSpacing * CGFloat(columns - 1)
+		let widestFittingItem = (containerWidth - minimumSideInset * 2 - totalSpacing) / CGFloat(columns)
+		let itemWidth = min(self.quickActionButtonMaxWidth, widestFittingItem)
+		let sideInset = (containerWidth - itemWidth * CGFloat(columns) - totalSpacing) / 2
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(1.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20)
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: Array(repeating: item, count: columns))
+		layoutGroup.interItemSpacing = .fixed(interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: maxInset, bottom: 40.0, trailing: maxInset)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: sideInset, bottom: 40.0, trailing: sideInset)
 		return layoutSection
 	}
 
