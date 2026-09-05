@@ -450,8 +450,8 @@ extension HomeCollectionViewController {
 		}
 	}
 
-	func getConfiguredRecapCell() -> UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind>(cellNib: RecapLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+	func getConfiguredRecapCell() -> UICollectionView.CellRegistration<RecapPosterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<RecapPosterLockupCollectionViewCell, ItemKind> { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .recap(let recap, _) = itemKind else { return }
 			self.cache[indexPath] = recap
 
