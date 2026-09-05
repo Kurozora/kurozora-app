@@ -46,10 +46,11 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			return
 		}
 		self.hideSkeleton()
-		// Configure title
+
+		// Configure primary label
 		self.primaryLabel?.text = show.attributes.title
 
-		// Configure genres
+		// Configure secondary label
 		self.secondaryLabel?.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
 
 		// Configure rank
@@ -59,19 +60,19 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
 			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		if self.bannerImageView != nil {
-			show.attributes.bannerImage(imageView: self.bannerImageView!)
+		if let bannerImageView = self.bannerImageView {
+			show.attributes.bannerImage(imageView: bannerImageView)
 		}
 
 		// Configure poster
 		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
 			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		if self.posterImageView != nil {
-			show.attributes.posterImage(imageView: self.posterImageView!)
+		if let posterImageView = self.posterImageView {
+			show.attributes.posterImage(imageView: posterImageView)
 		}
 
-		// Configure library status — overlay-first; the local store is the source of truth.
+		// Configure library status
 		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: show.id.rawValue, kind: .shows)
 		self.configureLibraryStatus(with: library?.status)
 
@@ -92,10 +93,11 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			return
 		}
 		self.hideSkeleton()
-		// Configure title
+
+		// Configure primary label
 		self.primaryLabel?.text = literature.attributes.title
 
-		// Configure genres
+		// Configure secondary label
 		self.secondaryLabel?.text = (literature.attributes.tagline ?? "").isEmpty ? literature.attributes.genres?.localizedJoined() : literature.attributes.tagline
 
 		// Configure rank
@@ -105,19 +107,19 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
 			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		if self.bannerImageView != nil {
-			literature.attributes.bannerImage(imageView: self.bannerImageView!)
+		if let bannerImageView = self.bannerImageView {
+			literature.attributes.bannerImage(imageView: bannerImageView)
 		}
 
 		// Configure poster
 		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
 			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		if self.posterImageView != nil {
-			literature.attributes.posterImage(imageView: self.posterImageView!)
+		if let posterImageView = self.posterImageView {
+			literature.attributes.posterImage(imageView: posterImageView)
 		}
 
-		// Configure library status — see Show overload for the overlay-first rationale.
+		// Configure library status
 		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
 		self.configureLibraryStatus(with: library?.status)
 
@@ -138,10 +140,11 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			return
 		}
 		self.hideSkeleton()
-		// Configure title
+
+		// Configure primary label
 		self.primaryLabel?.text = game.attributes.title
 
-		// Configure genres
+		// Configure secondary label
 		self.secondaryLabel?.text = (game.attributes.tagline ?? "").isEmpty ? game.attributes.genres?.localizedJoined() : game.attributes.tagline
 
 		// Configure rank
@@ -151,19 +154,19 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
 			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		if self.bannerImageView != nil {
-			game.attributes.bannerImage(imageView: self.bannerImageView!)
+		if let bannerImageView = self.bannerImageView {
+			game.attributes.bannerImage(imageView: bannerImageView)
 		}
 
 		// Configure poster
 		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
 			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		if self.posterImageView != nil {
-			game.attributes.posterImage(imageView: self.posterImageView!)
+		if let posterImageView = self.posterImageView {
+			game.attributes.posterImage(imageView: posterImageView)
 		}
 
-		// Configure library status — see Show overload for the overlay-first rationale.
+		// Configure library status
 		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
 		self.configureLibraryStatus(with: library?.status)
 
