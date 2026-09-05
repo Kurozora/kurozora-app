@@ -73,6 +73,8 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+
 		self.title = L10n.digest
 
 		self.configureDataSource()
@@ -153,6 +155,23 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 		var snapshot = currentSnapshot
 		snapshot.reconfigureItems(matchedItems)
 		self.dataSource.apply(snapshot, animatingDifferences: false)
+	}
+
+	/// Used to reload the episode whose watch status has been updated.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			guard
+				let indexPath = notification.userInfo?["indexPath"] as? IndexPath,
+				let updatedEpisode = self.dataSource.itemIdentifier(for: indexPath)
+			else { return }
+
+			var snapshot = self.dataSource.snapshot()
+			snapshot.reconfigureItems([updatedEpisode])
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
 	}
 
 	// MARK: - SectionFetchable

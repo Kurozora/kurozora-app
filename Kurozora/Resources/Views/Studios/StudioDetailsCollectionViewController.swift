@@ -69,6 +69,9 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -123,6 +126,7 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -131,6 +135,54 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	}
 
 	// MARK: - Functions
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, kind: entry.kind)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, kind: removed.kind)
+			}
+		)
+	}
+
+	/// Updates every cached show, literature and game whose identity matches the given trackable identity.
+	///
+	/// - Parameters:
+	///    - trackableID: The trackable identity of the mutated entry.
+	///    - kind: The library kind of the mutated entry.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, kind: LibraryKind) {
+		guard let dataSource = self.dataSource else { return }
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			let matches: Bool
+
+			switch (item, kind) {
+			case (.showIdentity(let identity), .shows):
+				matches = identity.id.rawValue == trackableID
+			case (.literatureIdentity(let identity), .literatures):
+				matches = identity.id.rawValue == trackableID
+			case (.gameIdentity(let identity), .games):
+				matches = identity.id.rawValue == trackableID
+			default:
+				matches = false
+			}
+
+			guard matches, let indexPath = dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
+			matchedItems.append(item)
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		dataSource.apply(snapshot, animatingDifferences: false)
+	}
+
 	override func fetchDetails() async {
 		guard let studioIdentity = self.studioIdentity else { return }
 

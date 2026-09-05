@@ -89,6 +89,8 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
 		#else
@@ -269,6 +271,23 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 		var snapshot = currentSnapshot
 		snapshot.reconfigureItems(matchedItems)
 		self.dataSource.apply(snapshot, animatingDifferences: false)
+	}
+
+	/// Used to reload the episode whose watch status has been updated.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			guard
+				let indexPath = notification.userInfo?["indexPath"] as? IndexPath,
+				let updatedEpisode = self.dataSource.itemIdentifier(for: indexPath)
+			else { return }
+
+			var snapshot = self.dataSource.snapshot()
+			snapshot.reconfigureItems([updatedEpisode])
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
 	}
 
 	/// Subscribes to playback changes so visible song cells reflect the currently playing song.

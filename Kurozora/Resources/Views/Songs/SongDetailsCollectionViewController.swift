@@ -64,6 +64,9 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	var cache: [IndexPath: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// Observes local library mutations to refresh visible cells.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -92,6 +95,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 
 		self.configureDataSource()
 		self.configureNavigationItems()
+		self.observeLibraryChanges()
 
 		#if DEBUG
 		self.installLyricsCaptureButton()
@@ -104,6 +108,50 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	// MARK: - Functions
+	/// Subscribes to local library mutations affecting the visible cells.
+	private func observeLibraryChanges() {
+		guard let slug = User.current?.attributes.slug else { return }
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] entry in
+				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, kind: entry.kind)
+			},
+			onRemove: { [weak self] removed in
+				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, kind: removed.kind)
+			}
+		)
+	}
+
+	/// Updates every cached show whose identity matches the given trackable identity.
+	///
+	/// - Parameters:
+	///    - trackableID: The trackable identity of the mutated entry.
+	///    - kind: The library kind of the mutated entry.
+	private func applyLibraryEntryChange(forTrackableID trackableID: String, kind: LibraryKind) {
+		guard let dataSource = self.dataSource else { return }
+		var matchedItems: [ItemKind] = []
+		let currentSnapshot = dataSource.snapshot()
+
+		for item in currentSnapshot.itemIdentifiers {
+			let matches: Bool
+
+			switch (item, kind) {
+			case (.showIdentity(let identity), .shows):
+				matches = identity.id.rawValue == trackableID
+			default:
+				matches = false
+			}
+
+			guard matches, let indexPath = dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
+			matchedItems.append(item)
+		}
+
+		guard !matchedItems.isEmpty else { return }
+		var snapshot = currentSnapshot
+		snapshot.reconfigureItems(matchedItems)
+		dataSource.apply(snapshot, animatingDifferences: false)
+	}
+
 	override func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
 
