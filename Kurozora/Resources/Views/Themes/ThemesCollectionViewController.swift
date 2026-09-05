@@ -113,9 +113,8 @@ class ThemesCollectionViewController: KCollectionViewController, TypedSegueHandl
 		}
 
 		do {
-			let identityResponse = try await KService.themes().response()
-			let detailedResponse = try await KService.details(identityResponse.data).response()
-			self.themes = detailedResponse.data
+			let themeResponse = try await KService.themes().response()
+			self.themes = themeResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)

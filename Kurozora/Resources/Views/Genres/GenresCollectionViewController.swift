@@ -113,9 +113,8 @@ class GenresCollectionViewController: KCollectionViewController, TypedSegueHandl
 		}
 
 		do {
-			let identityResponse = try await KService.genres().response()
-			let detailedResponse = try await KService.details(identityResponse.data).response()
-			self.genres = detailedResponse.data
+			let genreResponse = try await KService.genres().response()
+			self.genres = genreResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
