@@ -141,6 +141,7 @@ extension DebugSettingsTableViewController {
 			  let contentSection = self.contentSection(for: indexPath.section),
 			  let section = Section(rawValue: contentSection) else { return }
 		let items = self.sectionItems[section] ?? []
+		guard items.indices.contains(indexPath.row) else { return }
 		let key = items[indexPath.row].key
 
 		switch section {
