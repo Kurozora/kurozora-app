@@ -33,8 +33,10 @@ enum LibraryCompactViewOptionsBuilder {
 			apply(visibility)
 		}
 
-		if let subtitle = visibility.subtitle {
-			action.subtitle = subtitle
+		if #available(iOS 16.0, macCatalyst 16.0, *) {
+			if let subtitle = visibility.subtitle {
+				action.subtitle = subtitle
+			}
 		}
 
 		return action
