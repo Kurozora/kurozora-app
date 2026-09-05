@@ -222,11 +222,6 @@ extension Notification.Name {
 	static var KPGEntryDidDelete: NSNotification.Name {
 		return NSNotification.Name(#function)
 	}
-
-	/// A notification posted when a parental guide entry has been reported.
-	static var KPGEntryDidReport: NSNotification.Name {
-		return NSNotification.Name(#function)
-	}
 }
 
 // MARK: - Session settings

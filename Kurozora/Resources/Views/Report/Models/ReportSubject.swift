@@ -140,8 +140,6 @@ enum ReportSubject: Sendable {
 		switch (self, option) {
 		case (.parentalGuideEntry(let entryIdentity), .parentalGuide(let reason)):
 			_ = try await KService.reportParentalGuideEntry(entryIdentity, reason: reason, details: details).response()
-
-			NotificationCenter.default.post(name: .KPGEntryDidReport, object: nil, userInfo: ["entryID": entryIdentity.id])
 		case (.review(let reviewIdentity), .general(let reason)):
 			_ = try await KService.reportReview(reviewIdentity, reason: reason, details: details).response()
 		case (.feedMessage(let messageIdentity), .general(let reason)):
