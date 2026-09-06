@@ -61,7 +61,7 @@ extension UIButton {
 	///    - urlString: The url string from where the image should be downloaded.
 	///    - placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
 	func setImage(with urlString: String, placeholder: UIImage) {
-		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
+		if !urlString.isEmpty, let imageURL = URL(string: urlString), !self.isInSizingCell {
 			KF.url(imageURL)
 				.transition(.fade(0.2))
 				.placeholder(placeholder)

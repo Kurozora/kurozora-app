@@ -55,7 +55,7 @@ class EditorialCollectionViewCell: KCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	/// Renders `editorial` into the cell.
+	/// Configures the cell with the given editorial.
 	///
 	/// - Parameter editorial: The editorial to display.
 	func configure(using editorial: Editorial) {
@@ -81,5 +81,19 @@ class EditorialCollectionViewCell: KCollectionViewCell {
 			outerStack.topAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.topAnchor),
 			outerStack.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor)
 		])
+	}
+}
+
+// MARK: - Measurement
+extension EditorialCollectionViewCell {
+	/// Returns the item that measures the given editorial.
+	///
+	/// - Parameter editorial: The editorial the item measures.
+	///
+	/// - Returns: The item that measures the editorial.
+	static func measurableItem(for editorial: Editorial) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: EditorialCollectionViewCell.self) { cell in
+			cell.configure(using: editorial)
+		}
 	}
 }

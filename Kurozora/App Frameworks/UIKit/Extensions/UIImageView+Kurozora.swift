@@ -17,9 +17,9 @@ extension UIImageView {
 	///    - urlString: The URL string from where the image should be downloaded.
 	///    - placeholder: The placeholder to show until the image is loaded or in case the URL is dead.
 	///    - completion: The closure called with the image the view ends up showing.
-	func setImage(with urlString: String, placeholder: UIImage, completion: ((UIImage) -> Void)? = nil) {
-		guard !urlString.isEmpty, let imageURL = URL(string: urlString) else {
-			let placeholderImage = placeholder.withRenderingMode(.alwaysOriginal)
+	func setImage(with urlString: String, placeholder: @escaping @autoclosure () -> UIImage, completion: ((UIImage) -> Void)? = nil) {
+		guard !urlString.isEmpty, let imageURL = URL(string: urlString), !self.isInSizingCell else {
+			let placeholderImage = placeholder().withRenderingMode(.alwaysOriginal)
 			self.image = placeholderImage
 			completion?(placeholderImage)
 			return
@@ -32,7 +32,7 @@ extension UIImageView {
 			.onSuccess { completion?($0.image) }
 			.onFailure { [weak self] error in
 				guard let self, !error.isTaskCancelled else { return }
-				let placeholderImage = placeholder.withRenderingMode(.alwaysOriginal)
+				let placeholderImage = placeholder().withRenderingMode(.alwaysOriginal)
 				self.image = placeholderImage
 				completion?(placeholderImage)
 			}
@@ -45,9 +45,14 @@ extension UIImageView {
 	/// - Parameters:
 	///    - urlString: The URL string identifying the art.
 	///    - placeholder: The placeholder to show until the image is loaded or in case the URL is dead.
-	func setLibraryImage(with urlString: String, placeholder: UIImage) {
+	func setLibraryImage(with urlString: String, placeholder: @escaping @autoclosure () -> UIImage) {
+		guard !self.isInSizingCell else {
+			self.image = placeholder().withRenderingMode(.alwaysOriginal)
+			return
+		}
+
 		guard let fileURL = LibraryArtStore.storedFileURL(forURLString: urlString) else {
-			self.setImage(with: urlString, placeholder: placeholder)
+			self.setImage(with: urlString, placeholder: placeholder())
 			return
 		}
 
@@ -57,7 +62,7 @@ extension UIImageView {
 			.transition(.fade(0.2))
 			.onFailure { [weak self] error in
 				guard let self, !error.isTaskCancelled else { return }
-				self.setImage(with: urlString, placeholder: placeholder)
+				self.setImage(with: urlString, placeholder: placeholder())
 			}
 			.set(to: self)
 	}
@@ -68,9 +73,9 @@ extension UIImageView {
 	///    - urlString: The URL string from where the image should be downloaded.
 	///    - placeholder: The placeholder to show until the image is loaded or in case the URL is dead.
 	///    - faceDetectionContext: The media kind and CDN URL routed to `FaceDetectionService` on a successful load.
-	func setImage(with urlString: String, placeholder: UIImage, faceDetectionContext: FaceDetectionContext) {
-		guard !urlString.isEmpty, let imageURL = URL(string: urlString) else {
-			self.image = placeholder.withRenderingMode(.alwaysOriginal)
+	func setImage(with urlString: String, placeholder: @escaping @autoclosure () -> UIImage, faceDetectionContext: FaceDetectionContext) {
+		guard !urlString.isEmpty, let imageURL = URL(string: urlString), !self.isInSizingCell else {
+			self.image = placeholder().withRenderingMode(.alwaysOriginal)
 			return
 		}
 
@@ -89,7 +94,7 @@ extension UIImageView {
 			}
 			.onFailure { [weak self] error in
 				guard let self, !error.isTaskCancelled else { return }
-				self.image = placeholder.withRenderingMode(.alwaysOriginal)
+				self.image = placeholder().withRenderingMode(.alwaysOriginal)
 			}
 			.set(to: self)
 	}

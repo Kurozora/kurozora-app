@@ -45,6 +45,8 @@ class GIFView: UIView {
 
 	// MARK: - Functions
 	fileprivate func configureGIF() {
+		guard !self.gifImageView.isInSizingCell else { return }
+
 		self.gifImageView.kf.setImage(with: self.gifURL) { [weak self] result in
 			guard let self = self else { return }
 

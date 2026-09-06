@@ -52,6 +52,22 @@ extension SectionFetchable {
 		self.cache[indexPath] as? M
 	}
 
+	/// Returns the cached models of the given section, keyed by their item index.
+	///
+	/// - Parameter section: The section whose models you want to retrieve.
+	///
+	/// - Returns: The cached models of type `Model`, keyed by their item index.
+	func cachedModels<Model: KurozoraItem>(inSection section: Int) -> [Int: Model] {
+		var models: [Int: Model] = [:]
+
+		for (indexPath, item) in self.cache where indexPath.section == section {
+			guard let model = item as? Model else { continue }
+			models[indexPath.item] = model
+		}
+
+		return models
+	}
+
 	/// Returns the cached model at the given index path, starting a batched section fetch when no model is cached.
 	///
 	/// - Parameters:
@@ -166,5 +182,24 @@ extension SectionFetchable {
 		} catch {
 			print("----- Fetch error for section \(section): \(error)")
 		}
+	}
+}
+
+// MARK: - Measurement
+extension SectionFetchable where Self: KCollectionViewController {
+	/// Returns the height of the tallest cell the given section's cached models render.
+	///
+	/// - Parameters:
+	///    - section: The section to measure.
+	///    - width: The width a single cell is given.
+	///    - layoutEnvironment: The environment the section is laid out in.
+	///    - measurableItem: Returns the item that measures the cached model at an item index.
+	///
+	/// - Returns: The tallest measured height.
+	func maximumCellHeight<Model: KurozoraItem>(inSection section: Int, width: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment, measurableItem: (Int, Model) -> CellHeightMeasurer.Item) -> CGFloat? {
+		let models: [Int: Model] = self.cachedModels(inSection: section)
+		let items = models.map { measurableItem($0.key, $0.value) }
+
+		return self.maximumCellHeight(for: items, width: width, layoutEnvironment: layoutEnvironment)
 	}
 }

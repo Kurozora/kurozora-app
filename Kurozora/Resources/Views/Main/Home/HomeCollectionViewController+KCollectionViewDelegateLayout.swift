@@ -6,6 +6,7 @@
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension HomeCollectionViewController {
@@ -107,9 +108,18 @@ extension HomeCollectionViewController {
 			case .upcoming:
 				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .episode:
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, episode in
+						EpisodeLockupCollectionViewCell.measurableItem(for: episode)
+					}
+				}
 			case .music:
-				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					let showSongs = (self.exploreCategories[safe: section]?.relationships.showSongs?.data ?? []).prefix(Self.exploreCategoryItemLimit)
+					let measurableItems = showSongs.map { MusicLockupCollectionViewCell.measurableItem(for: $0, showEpisodes: false, showShow: true) }
+
+					return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+				}
 			case .profile:
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .quickLinks:

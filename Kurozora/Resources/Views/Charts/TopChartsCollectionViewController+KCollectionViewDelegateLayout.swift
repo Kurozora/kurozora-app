@@ -59,9 +59,17 @@ extension TopChartsCollectionViewController {
 				case .people:
 					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				case .episodes:
-					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { item, episode in
+							EpisodeLockupCollectionViewCell.measurableItem(for: episode, rank: item + 1)
+						}
+					}
 				case .songs:
-					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { item, song in
+							MusicLockupCollectionViewCell.measurableItem(for: song, rank: item + 1)
+						}
+					}
 				case .studios:
 					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				}

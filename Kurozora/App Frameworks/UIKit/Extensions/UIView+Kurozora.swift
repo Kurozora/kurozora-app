@@ -146,6 +146,24 @@ extension UIView {
 	}
 }
 
+// MARK: - Measurement
+extension UIView {
+	/// Whether the view belongs to a cell that exists only to be measured.
+	var isInSizingCell: Bool {
+		var view: UIView? = self
+
+		while let currentView = view {
+			if let cell = currentView as? KCollectionViewCell {
+				return cell.isSizingCell
+			}
+
+			view = currentView.superview
+		}
+
+		return false
+	}
+}
+
 // MARK: - Constraints
 extension UIView {
 	/// Search constraints until we find one for the given view

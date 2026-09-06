@@ -52,7 +52,11 @@ extension DigestCollectionViewController {
 			case .newReleases, .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering, .releasing:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .newEpisodes, .finales, .trending:
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, episode in
+						EpisodeLockupCollectionViewCell.measurableItem(for: episode)
+					}
+				}
 			case .birthdays:
 				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .momentum, .growth:

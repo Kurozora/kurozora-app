@@ -4438,6 +4438,20 @@ extension L10n {
 			)
 		}
 	}
+	/// Title of the section holding the reviews sorted to the bottom.
+	///
+	/// - Tag: L10n-reviewsShort
+	static var reviewsShort: String {
+		L10n.resolve {
+			String(
+				localized: "Short reviews",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "Title of the section holding the reviews sorted to the bottom."
+			)
+		}
+	}
 	/// Button that reveals the earlier versions of a review.
 	///
 	/// - Tag: L10n-reviewsShowEarlier

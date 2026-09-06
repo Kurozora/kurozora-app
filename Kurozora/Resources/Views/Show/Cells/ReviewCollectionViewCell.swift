@@ -209,6 +209,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			// Badges
 			self.profileBadgeStackView.delegate = self
 			self.profileBadgeStackView.configure(for: user)
+		} else {
+			self.usernameLabel.text = nil
+			self.profileImageView.image = nil
+			self.profileBadgeStackView.reset()
 		}
 
 		// Configure rating
@@ -416,6 +420,20 @@ extension ReviewCollectionViewCell: NSLayoutManagerDelegate {
 	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
 		guard self.contentTextView.textContainer.maximumNumberOfLines != 0 else { return }
 		self.moreButtonView?.isHidden = !(self.contentTextView.layoutManager.numberOfLines > 6)
+	}
+}
+
+// MARK: - Measurement
+extension ReviewCollectionViewCell {
+	/// Returns the item that measures the given review.
+	///
+	/// - Parameter review: The review the item measures.
+	///
+	/// - Returns: The item that measures the review.
+	static func measurableItem(for review: Review) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ReviewCollectionViewCell.self) { cell in
+			cell.configureCell(using: review, isElevated: review.attributes.isElevated)
+		}
 	}
 }
 

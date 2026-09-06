@@ -22,8 +22,10 @@ extension ReviewsListCollectionViewController {
 				return 1
 			}
 			return width > 414 ? 2 : 1
-		case .reviews:
+		case .reviews, .shortReviews:
 			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
+		case .shortReviewsToggle:
+			return 1
 		}
 
 		return columnCount > 0 ? columnCount : 1
@@ -60,10 +62,16 @@ extension ReviewsListCollectionViewController {
 			case .rateAndReview:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
-			case .reviews:
-				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .reviews, .shortReviews:
+				sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+
+				if reviewSection == .shortReviews {
+					let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+					let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+					sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 				}
+			case .shortReviewsToggle:
+				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			}
 
 			return sectionLayout

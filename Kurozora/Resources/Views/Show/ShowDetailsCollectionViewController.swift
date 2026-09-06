@@ -55,6 +55,16 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// fetch resolves, or when the show has none.
 	var editorial: Editorial?
 
+	override var reviewMeasurableItems: [CellHeightMeasurer.Item] {
+		var measurableItems = super.reviewMeasurableItems
+
+		if let editorial = self.editorial {
+			measurableItems.append(EditorialCollectionViewCell.measurableItem(for: editorial))
+		}
+
+		return measurableItems
+	}
+
 	/// The player that controls song playback.
 	var player: AVPlayer?
 

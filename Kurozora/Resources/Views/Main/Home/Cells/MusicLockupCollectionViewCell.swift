@@ -259,3 +259,37 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.delegate?.showButtonPressed(sender, indexPath: indexPath)
 	}
 }
+
+// MARK: - Measurement
+extension MusicLockupCollectionViewCell {
+	/// The index path a sizing cell is configured with.
+	private static let measurementIndexPath = IndexPath(item: 0, section: 0)
+
+	/// Returns the item that measures the given show song.
+	///
+	/// - Parameters:
+	///    - showSong: The show song the item measures.
+	///    - rank: The rank of the song in a ranked list.
+	///    - showEpisodes: Whether to show which episodes this song played in.
+	///    - showShow: Whether to show which show this song belongs to.
+	///
+	/// - Returns: The item that measures the show song.
+	static func measurableItem(for showSong: ShowSong, rank: Int? = nil, showEpisodes: Bool = true, showShow: Bool = false) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: MusicLockupCollectionViewCell.self) { cell in
+			cell.configure(using: showSong, at: Self.measurementIndexPath, rank: rank, showEpisodes: showEpisodes, showShow: showShow)
+		}
+	}
+
+	/// Returns the item that measures the given song.
+	///
+	/// - Parameters:
+	///    - song: The song the item measures.
+	///    - rank: The rank of the song in a ranked list.
+	///
+	/// - Returns: The item that measures the song.
+	static func measurableItem(for song: KKSong, rank: Int? = nil) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: MusicLockupCollectionViewCell.self) { cell in
+			cell.configure(using: song, at: Self.measurementIndexPath, rank: rank)
+		}
+	}
+}

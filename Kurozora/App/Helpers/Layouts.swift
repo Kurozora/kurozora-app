@@ -15,6 +15,15 @@ enum Layouts {
 	/// The max width constraint of `ActionButtonExploreCollectionViewCell`.
 	static let quickActionButtonMaxWidth: CGFloat = 300.0
 
+	/// The fraction of a section's width one orthogonally scrolling page occupies.
+	private static let groupWidthFraction: CGFloat = 0.90
+
+	/// The space between two items in a row.
+	private static let interItemSpacing: CGFloat = 20.0
+
+	/// The space between a section and its container's edges.
+	private static let horizontalInset: CGFloat = 10.0
+
 	static func badgeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var item: NSCollectionLayoutItem!
@@ -36,7 +45,7 @@ enum Layouts {
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40.0, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: 40.0, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
@@ -93,12 +102,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
@@ -118,12 +127,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
@@ -141,7 +150,7 @@ enum Layouts {
 
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
 			layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [topGroup, bottomItem])
-			layoutGroup.interItemSpacing = .fixed(20.0)
+			layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 		} else {
 			// Create item an equal fraction of the row width
 			let fractionalWidthItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(max(itemCount, 1))), heightDimension: .estimated(1.0))
@@ -155,12 +164,12 @@ enum Layouts {
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
 	static func charactersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -170,12 +179,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -187,7 +196,7 @@ enum Layouts {
 	}
 
 	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -197,12 +206,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -214,7 +223,7 @@ enum Layouts {
 	}
 
 	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -224,12 +233,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -240,23 +249,21 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 180.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
-		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -268,7 +275,7 @@ enum Layouts {
 	}
 
 	static func smallSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -278,12 +285,82 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	/// Returns the width a single item is given in a section laid out by `heightDimensions`.
+	///
+	/// - Parameters:
+	///    - columns: The number of items in a row.
+	///    - layoutEnvironment: The environment the section is laid out in.
+	///    - isHorizontal: Whether the section scrolls orthogonally.
+	///
+	/// - Returns: The width of one item.
+	private static func itemWidth(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool) -> CGFloat {
+		let columnCount = CGFloat(max(columns, 1))
+		let sectionWidth = layoutEnvironment.container.effectiveContentSize.width - (Self.horizontalInset * 2.0)
+		let groupWidth = isHorizontal ? sectionWidth * Self.groupWidthFraction : sectionWidth
+		let spacing = Self.interItemSpacing * (columnCount - 1.0)
+
+		return max((groupWidth - spacing) / columnCount, 0.0)
+	}
+
+	/// Returns the item and group heights that keep a section's cells level with each other.
+	///
+	/// - Parameters:
+	///    - columns: The number of items in a row.
+	///    - layoutEnvironment: The environment the section is laid out in.
+	///    - isHorizontal: Whether the section scrolls orthogonally, holding one height for its whole length.
+	///    - estimate: The height a row starts out at.
+	///    - maximumHeight: Returns the height of the tallest cell in the section at the given item width.
+	///
+	/// - Returns: The item and group height dimensions.
+	private static func heightDimensions(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool, estimate: CGFloat, maximumHeight: ((CGFloat) -> CGFloat?)?) -> (item: NSCollectionLayoutDimension, group: NSCollectionLayoutDimension) {
+		if isHorizontal {
+			let itemWidth = Self.itemWidth(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal)
+
+			if let height = maximumHeight?(itemWidth) {
+				return (.fractionalHeight(1.0), .absolute(height))
+			}
+
+			return (.estimated(estimate), .estimated(estimate))
+		}
+
+		if #available(iOS 17.0, macCatalyst 17.0, *) {
+			return (.uniformAcrossSiblings(estimate: estimate), .estimated(estimate))
+		}
+
+		return (.estimated(estimate), .estimated(estimate))
+	}
+
+	static func reviewsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 180.0, maximumHeight: maximumHeight)
+
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.item)
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -295,7 +372,7 @@ enum Layouts {
 	}
 
 	static func upcomingSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -305,12 +382,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -322,7 +399,7 @@ enum Layouts {
 	}
 
 	static func mediumSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -332,12 +409,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -349,7 +426,7 @@ enum Layouts {
 	}
 
 	static func largeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -359,12 +436,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -376,7 +453,7 @@ enum Layouts {
 	}
 
 	static func bannerSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -386,12 +463,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -403,7 +480,7 @@ enum Layouts {
 	}
 
 	static func videoSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -413,12 +490,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 //		layoutSection.visibleItemsInvalidationHandler = { [weak self] visibleItems, offset, environment in
 //			guard let self = self else { return }
 //			visibleItems.forEach { item in
@@ -446,7 +523,7 @@ enum Layouts {
 	}
 
 	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -456,12 +533,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -472,23 +549,21 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func episodesSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+	static func episodesSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 180.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
-		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -500,7 +575,7 @@ enum Layouts {
 	}
 
 	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -510,12 +585,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -528,7 +603,7 @@ enum Layouts {
 
 	static func podiumSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
-		let horizontalInset: CGFloat = 10.0
+		let horizontalInset = Self.horizontalInset
 		let groupHeight: CGFloat = 240.0
 		let interItemSpacing: CGFloat = 12.0
 
@@ -601,7 +676,7 @@ enum Layouts {
 	}
 
 	static func usersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -611,12 +686,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20.0)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: bottomInset, trailing: Self.horizontalInset)
 		if isHorizontal {
 			#if targetEnvironment(macCatalyst)
 			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -635,21 +710,19 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: 40, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
 	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
-		let interItemSpacing: CGFloat = 20.0
-		let minimumSideInset: CGFloat = 10.0
-		let totalSpacing = interItemSpacing * CGFloat(columns - 1)
-		let widestFittingItem = (containerWidth - minimumSideInset * 2 - totalSpacing) / CGFloat(columns)
+		let totalSpacing = Self.interItemSpacing * CGFloat(columns - 1)
+		let widestFittingItem = (containerWidth - Self.horizontalInset * 2 - totalSpacing) / CGFloat(columns)
 		let itemWidth = min(self.quickActionButtonMaxWidth, widestFittingItem)
 		let sideInset = (containerWidth - itemWidth * CGFloat(columns) - totalSpacing) / 2
 
@@ -660,7 +733,7 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: Array(repeating: item, count: columns))
-		layoutGroup.interItemSpacing = .fixed(interItemSpacing)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -693,12 +766,12 @@ enum Layouts {
 		// Add layout group.
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(20)
+		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
 		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
-		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: 0, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 }

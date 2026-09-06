@@ -34,12 +34,6 @@ class KImageView: UIImageView {
 		self.sharedInit()
 	}
 
-	init(url: URL) {
-		super.init(frame: .zero)
-
-		self.kf.setImage(with: url)
-	}
-
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	fileprivate func sharedInit() {

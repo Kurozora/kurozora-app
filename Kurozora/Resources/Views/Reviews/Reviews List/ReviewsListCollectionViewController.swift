@@ -578,11 +578,22 @@ extension ReviewsListCollectionViewController: ReviewCollectionViewCellDelegate 
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
 	}
 
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapProfileLink url: URL) {
+		Task {
+			await User.visitProfile(at: url)
+		}
+	}
+
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
 			let review = self.review(at: indexPath)
 		else { return }
+
+		if User.isSignedIn, let index = self.reviews.firstIndex(where: { $0.id == review.id }) {
+			self.reviews[index] = review.applyingPredictedVote(vote)
+			cell.configureCell(using: self.reviews[index], isElevated: self.reviews[index].attributes.isElevated)
+		}
 
 		Task {
 			await review.castVote(vote)
@@ -757,6 +768,8 @@ extension ReviewsListCollectionViewController {
 		case rating = 0
 		case rateAndReview
 		case reviews
+		case shortReviewsToggle
+		case shortReviews
 
 		// MARK: - Properties
 		/// The string value of a review section type.
@@ -768,6 +781,10 @@ extension ReviewsListCollectionViewController {
 				return ""
 			case .reviews:
 				return ""
+			case .shortReviewsToggle:
+				return ""
+			case .shortReviews:
+				return L10n.reviewsShort
 			}
 		}
 	}

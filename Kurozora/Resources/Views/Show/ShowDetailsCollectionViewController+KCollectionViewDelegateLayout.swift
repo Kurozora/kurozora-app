@@ -124,7 +124,9 @@ extension ShowDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.reviewMeasurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -142,7 +144,11 @@ extension ShowDetailsCollectionViewController {
 				}
 			case .songs:
 				if !self.showSongs.isEmpty {
-					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.showSongs.map { MusicLockupCollectionViewCell.measurableItem(for: $0) }
+
+						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 					hasSectionHeader = true
 				}
 			case .studios:

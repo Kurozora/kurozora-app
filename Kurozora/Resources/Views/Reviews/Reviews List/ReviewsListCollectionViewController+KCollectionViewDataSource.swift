@@ -35,6 +35,10 @@ extension ReviewsListCollectionViewController {
 		]
 	}
 
+	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
+		return [TitleHeaderCollectionReusableView.self]
+	}
+
 	override func configureDataSource() {
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let reviewSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
@@ -98,7 +102,7 @@ extension ReviewsListCollectionViewController {
 				default: break
 				}
 				return rateAndReviewCollectionViewCell
-			case .reviews:
+			case .reviews, .shortReviews:
 				switch itemKind {
 				case .review(let review, _):
 					let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.self, for: indexPath)
@@ -109,14 +113,23 @@ extension ReviewsListCollectionViewController {
 					let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
 					editorialCollectionViewCell?.configure(using: editorial)
 					return editorialCollectionViewCell
-				case .lowEffortReviewsToggle(let isExpanded):
-					let disclosureToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DisclosureToggleCollectionViewCell.self, for: indexPath)
-					disclosureToggleCollectionViewCell?.configure(title: isExpanded ? L10n.reviewsHideShort : L10n.reviewsShowShort)
-					return disclosureToggleCollectionViewCell
 				default:
 					return nil
 				}
+			case .shortReviewsToggle:
+				let disclosureToggleCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DisclosureToggleCollectionViewCell.self, for: indexPath)
+				disclosureToggleCollectionViewCell?.configure(title: L10n.reviewsShowShort)
+				return disclosureToggleCollectionViewCell
 			}
+		}
+
+		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+			guard let self = self else { return nil }
+			let reviewSection = self.snapshot.sectionIdentifiers[indexPath.section]
+
+			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+			titleHeaderCollectionReusableView.configure(withTitle: reviewSection.stringValue)
+			return titleHeaderCollectionReusableView
 		}
 	}
 
@@ -186,18 +199,26 @@ extension ReviewsListCollectionViewController {
 
 					// The server already sorts low-effort reviews last, so filtering
 					// preserves that order without any client-side re-sorting.
-					let hasLowEffortReviews = self.reviews.contains { $0.attributes.isLowEffort }
-					let visibleReviews = self.reviews.filter { !$0.attributes.isLowEffort || self.isShowingLowEffortReviews }
-
-					let reviewItems: [ItemKind] = visibleReviews.map { review in
+					let reviewItems: [ItemKind] = self.reviews.filter { !$0.attributes.isLowEffort }.map { review in
 						return .review(review)
 					}
 					self.snapshot.appendItems(reviewItems, toSection: reviewSection)
-
-					if hasLowEffortReviews {
-						self.snapshot.appendItems([.lowEffortReviewsToggle(isExpanded: self.isShowingLowEffortReviews)], toSection: reviewSection)
-					}
 				}
+			case .shortReviewsToggle:
+				guard !self.isShowingLowEffortReviews, self.reviews.contains(where: { $0.attributes.isLowEffort }) else { return }
+
+				self.snapshot.appendSections([reviewSection])
+				self.snapshot.appendItems([.lowEffortReviewsToggle(isExpanded: false)], toSection: reviewSection)
+			case .shortReviews:
+				guard self.isShowingLowEffortReviews else { return }
+
+				let shortReviewItems: [ItemKind] = self.reviews.filter(\.attributes.isLowEffort).map { review in
+					return .review(review)
+				}
+				guard !shortReviewItems.isEmpty else { return }
+
+				self.snapshot.appendSections([reviewSection])
+				self.snapshot.appendItems(shortReviewItems, toSection: reviewSection)
 			}
 		}
 

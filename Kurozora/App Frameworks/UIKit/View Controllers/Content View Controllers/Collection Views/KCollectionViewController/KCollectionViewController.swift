@@ -47,6 +47,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// The object restoring the scroll position after a second status bar tap.
 	private lazy var statusBarScrollRestorer: StatusBarScrollRestorer = StatusBarScrollRestorer()
 
+	/// The object sizing cells so a section can lay them out at one height.
+	let cellHeightMeasurer = CellHeightMeasurer()
+
 	/// Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 	///
 	/// If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate) method.
@@ -116,6 +119,13 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		}
 	}
 
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+
+		guard self.traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else { return }
+		self.collectionView.collectionViewLayout.invalidateLayout()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -162,7 +172,20 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// Re-applies localized strings by reloading the collection's content.
 	override func reloadLocalization() {
 		guard self.isViewLoaded else { return }
+		self.collectionView.collectionViewLayout.invalidateLayout()
 		self.collectionView.reloadData()
+	}
+
+	/// Returns the height of the tallest cell the given items render.
+	///
+	/// - Parameters:
+	///    - items: The items the section lays out.
+	///    - width: The width a single cell is given.
+	///    - layoutEnvironment: The environment the section is laid out in.
+	///
+	/// - Returns: The tallest measured height.
+	func maximumCellHeight(for items: [CellHeightMeasurer.Item], width: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat? {
+		return self.cellHeightMeasurer.maximumHeight(for: items, width: width, contentSizeCategory: layoutEnvironment.traitCollection.preferredContentSizeCategory)
 	}
 
 	/// Returns the width available to a section's content, before the section's own insets.

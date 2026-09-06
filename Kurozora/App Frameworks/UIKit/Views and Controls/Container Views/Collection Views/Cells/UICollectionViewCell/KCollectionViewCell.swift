@@ -15,6 +15,9 @@ class KCollectionViewCell: UICollectionViewCell, SkeletonDisplayable {
 		return true
 	}
 
+	/// Whether the cell exists only to be measured, and is never shown. Media set on such a cell resolves to its placeholder instead of being loaded.
+	var isSizingCell = false
+
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()

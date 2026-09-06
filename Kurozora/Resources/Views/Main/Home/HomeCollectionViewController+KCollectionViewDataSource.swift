@@ -240,31 +240,31 @@ extension HomeCollectionViewController {
 		case .mostPopularGames:
 			return (category.relationships.games?.data ?? []).map { .gameIdentity($0) }
 		case .upcomingShows, .shows, .newShows:
-			return (category.relationships.shows?.data ?? []).prefix(10).map { .showIdentity($0) }
+			return (category.relationships.shows?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .showIdentity($0) }
 		case .upcomingLiteratures, .literatures, .newLiteratures:
-			return (category.relationships.literatures?.data ?? []).prefix(10).map { .literatureIdentity($0) }
+			return (category.relationships.literatures?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .literatureIdentity($0) }
 		case .upcomingGames, .games, .newGames:
-			return (category.relationships.games?.data ?? []).prefix(10).map { .gameIdentity($0) }
+			return (category.relationships.games?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .gameIdentity($0) }
 		case .episodes, .upNextEpisodes:
-			return (category.relationships.episodes?.data ?? []).prefix(10).map { .episodeIdentity($0) }
+			return (category.relationships.episodes?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .episodeIdentity($0) }
 		case .songs:
-			return (category.relationships.showSongs?.data ?? []).prefix(10).map { .showSong($0) }
+			return (category.relationships.showSongs?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .showSong($0) }
 		case .characters:
-			return (category.relationships.characters?.data ?? []).prefix(10).map { .characterIdentity($0) }
+			return (category.relationships.characters?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .characterIdentity($0) }
 		case .people:
-			return (category.relationships.people?.data ?? []).prefix(10).map { .personIdentity($0) }
+			return (category.relationships.people?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .personIdentity($0) }
 		case .genres:
-			return (category.relationships.genres?.data ?? []).prefix(10).map { .genreIdentity($0) }
+			return (category.relationships.genres?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .genreIdentity($0) }
 		case .themes:
-			return (category.relationships.themes?.data ?? []).prefix(10).map { .themeIdentity($0) }
+			return (category.relationships.themes?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .themeIdentity($0) }
 		case .recap:
-			return (category.relationships.recaps?.data ?? []).prefix(10).map { .recap($0) }
+			return (category.relationships.recaps?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .recap($0) }
 		case .showsSeason:
-			return (category.relationships.shows?.data ?? []).prefix(10).map { .showIdentity($0) }
+			return (category.relationships.shows?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .showIdentity($0) }
 		case .literaturesSeason:
-			return (category.relationships.literatures?.data ?? []).prefix(10).map { .literatureIdentity($0) }
+			return (category.relationships.literatures?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .literatureIdentity($0) }
 		case .gamesSeason:
-			return (category.relationships.games?.data ?? []).prefix(10).map { .gameIdentity($0) }
+			return (category.relationships.games?.data ?? []).prefix(Self.exploreCategoryItemLimit).map { .gameIdentity($0) }
 		}
 	}
 

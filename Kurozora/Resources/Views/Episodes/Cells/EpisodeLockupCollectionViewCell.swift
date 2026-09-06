@@ -128,3 +128,19 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 }
+
+// MARK: - Measurement
+extension EpisodeLockupCollectionViewCell {
+	/// Returns the item that measures the given episode.
+	///
+	/// - Parameters:
+	///    - episode: The episode the item measures.
+	///    - rank: The rank of the episode in a ranked list.
+	///
+	/// - Returns: The item that measures the episode.
+	static func measurableItem(for episode: Episode, rank: Int? = nil) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: EpisodeLockupCollectionViewCell.self) { cell in
+			cell.configure(using: episode, rank: rank)
+		}
+	}
+}

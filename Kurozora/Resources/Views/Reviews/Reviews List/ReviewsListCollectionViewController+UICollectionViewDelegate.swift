@@ -11,22 +11,23 @@ import UIKit
 extension ReviewsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
-		case .reviews:
+		case .reviews, .shortReviews:
 			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 			switch itemKind {
 			case .review(let review, _):
 				self.present(.reviewDetailsSegue, sender: review)
-			case .lowEffortReviewsToggle:
-				self.toggleLowEffortReviewsVisibility()
 			default: break
 			}
+		case .shortReviewsToggle:
+			self.toggleLowEffortReviewsVisibility()
 		default: break
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		guard self.snapshot.sectionIdentifiers[safe: indexPath.section] == .reviews else { return }
+		let reviewSection = self.snapshot.sectionIdentifiers[safe: indexPath.section]
+		guard reviewSection == .reviews || reviewSection == .shortReviews else { return }
 
 		// Counted against the rendered rows, since collapsing the low-effort ones shortens the section.
 		let itemCount = collectionView.numberOfItems(inSection: indexPath.section)
@@ -48,7 +49,9 @@ extension ReviewsListCollectionViewController {
 			return nil
 		case .rating:
 			return nil
-		case .reviews:
+		case .shortReviewsToggle:
+			return nil
+		case .reviews, .shortReviews:
 			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
 			switch itemKind {

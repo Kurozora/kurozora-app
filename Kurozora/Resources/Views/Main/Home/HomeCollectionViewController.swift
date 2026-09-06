@@ -89,6 +89,9 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	lazy var quickLinkItemKinds: [ItemKind] = self.quickLinks.map { .quickLink($0) }
 
 	var cache: [IndexPath: KurozoraItem] = [:]
+
+	/// The number of items an explore category shows.
+	static let exploreCategoryItemLimit = 10
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// The resolved Apple Music songs keyed by Apple Music identifier.

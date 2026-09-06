@@ -38,6 +38,18 @@ class ProfileBadgeStackView: UIStackView {
 		self.spacing = 4.0
 	}
 
+	/// Clears the badges the stack view renders.
+	func reset() {
+		guard !self.badgeSignature.isEmpty else { return }
+
+		self.badgeSignature = ""
+		self.profileBadges = []
+
+		for view in self.arrangedSubviews {
+			view.removeFromSuperview()
+		}
+	}
+
 	/// Configures the stack view with the `User` object.
 	///
 	/// - Parameter user: The `User` object used to configure the stack view.
