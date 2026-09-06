@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Cosmos
 import KurozoraKit
 import UIKit
 
@@ -16,6 +17,13 @@ protocol ReviewCollectionViewCellDelegate: AnyObject {
 	func reviewCollectionViewCellDidTapTranslation(_ cell: ReviewCollectionViewCell)
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapTranslationSettings button: UIButton)
 
+	/// Tells the delegate the reader tapped a profile link inside the review's body.
+	///
+	/// - Parameters:
+	///    - cell: The cell whose body carries the link.
+	///    - url: The profile link that was tapped.
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapProfileLink url: URL)
+
 	/// Tells the delegate the user voted on the review rendered by `cell`.
 	///
 	/// - Parameters:
@@ -25,28 +33,128 @@ protocol ReviewCollectionViewCellDelegate: AnyObject {
 }
 
 class ReviewCollectionViewCell: KCollectionViewCell {
-	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var borderView: BorderView!
-	@IBOutlet weak var usernameLabel: KLabel!
-	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
-	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
-	@IBOutlet weak var cosmosView: KCosmosView!
-	@IBOutlet weak var contentTextViewPlaceholder: UIView!
-	@IBOutlet weak var moreButton: KButton!
-	@IBOutlet weak var moreImageView: UIImageView!
-	@IBOutlet weak var moreButtonView: UIView!
-
 	// MARK: - Views
-	private(set) var contentTextView: KSelectableTextView!
-	private(set) var translationBarView: TranslationBarView!
-	private var metadataLabel: KTintedLabel!
-	private var spoilerOverlayView: SpoilerOverlayView!
-	private var voteRowView: UIStackView!
+	private let profileImageView: ProfileImageView = {
+		let imageView = ProfileImageView(frame: .zero)
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.layer.borderWidth = 0
+		return imageView
+	}()
+
+	private let borderView: BorderView = {
+		let borderView = BorderView()
+		borderView.translatesAutoresizingMaskIntoConstraints = false
+		borderView.isUserInteractionEnabled = false
+		return borderView
+	}()
+
+	private let usernameLabel: KLabel = {
+		let label = KLabel()
+		label.font = .preferredFont(forTextStyle: .headline)
+		label.adjustsFontForContentSizeCategory = true
+		label.lineBreakMode = .byTruncatingTail
+		label.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
+		label.setContentCompressionResistancePriority(UILayoutPriority(749), for: .horizontal)
+		return label
+	}()
+
+	private let profileBadgeStackView = ProfileBadgeStackView()
+
+	private let dateTimeLabel: KSecondaryLabel = {
+		let label = KSecondaryLabel()
+		label.font = .preferredFont(forTextStyle: .caption1)
+		label.adjustsFontForContentSizeCategory = true
+		label.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
+		return label
+	}()
+
+	private let cosmosView: KCosmosView = {
+		var settings = CosmosSettings()
+		settings.updateOnTouch = false
+		settings.starSize = 16
+		settings.textFont = settings.textFont.withSize(12)
+
+		let cosmosView = KCosmosView(frame: .zero, settings: settings)
+		cosmosView.setContentHuggingPriority(UILayoutPriority(251), for: .vertical)
+		cosmosView.setContentCompressionResistancePriority(.required, for: .vertical)
+		return cosmosView
+	}()
+
+	private let metadataLabel: KTintedLabel = {
+		let label = KTintedLabel()
+		label.font = .preferredFont(forTextStyle: .caption1).bold
+		label.adjustsFontForContentSizeCategory = true
+		label.numberOfLines = 0
+		return label
+	}()
+
+	private var translationBarView: TranslationBarView!
+
+	/// The container sized to the rendered body, so the overlays track the text instead of the cell.
+	private let bodyView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
+
+	private let bodyTextView: KSelectableTextView = {
+		let textView = KSelectableTextView()
+		textView.translatesAutoresizingMaskIntoConstraints = false
+		textView.isScrollEnabled = false
+		textView.bounces = false
+
+		// Keeps the text view at its rendered height, so its bottom edge is the last line's.
+		textView.setContentHuggingPriority(.required, for: .vertical)
+		return textView
+	}()
+
+	/// Carries one line of the body's font, so the `more` mask can match the line it covers.
+	private let bodyMetricsView: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = .preferredFont(forTextStyle: .body)
+		label.adjustsFontForContentSizeCategory = true
+		label.text = " "
+		label.isHidden = true
+		return label
+	}()
+
+	/// The gradient that fades out the words clipped beneath the `more` button.
+	private let moreGradientImageView: UIImageView = {
+		let imageView = UIImageView(image: UIImage(named: "shadow.right"))
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.clipsToBounds = true
+		imageView.theme_tintColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		return imageView
+	}()
+
+	private let moreButton: KButton = {
+		let button = KButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+
+		// Matches `KButton`'s semibold weight at the body's metrics.
+		button.titleLabel?.font = .preferredFont(forTextStyle: .body).semibold
+		button.titleLabel?.adjustsFontForContentSizeCategory = true
+		button.setTitle(L10n.more.lowercased(with: Locale.current), for: .normal)
+		return button
+	}()
+
+	/// The mask that rides the body's last rendered line.
+	private let moreView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.isHidden = true
+		return view
+	}()
+
+	private let spoilerOverlayView = SpoilerOverlayView()
 
 	private let helpfulButton: CellActionButton = {
 		let button = CellActionButton(type: .system)
 		button.translatesAutoresizingMaskIntoConstraints = false
+		button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+		button.titleLabel?.adjustsFontForContentSizeCategory = true
+		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(textStyle: .body), forImageIn: .normal)
 		button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
 		return button
 	}()
@@ -54,18 +162,32 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	private let unhelpfulButton: CellActionButton = {
 		let button = CellActionButton(type: .system)
 		button.translatesAutoresizingMaskIntoConstraints = false
+		button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+		button.titleLabel?.adjustsFontForContentSizeCategory = true
+		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(textStyle: .body), forImageIn: .normal)
 		button.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
 		return button
+	}()
+
+	private let voteRowView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.axis = .horizontal
+		stackView.spacing = UIStackView.spacingUseSystem
+		stackView.alignment = .center
+		return stackView
 	}()
 
 	// MARK: - Properties
 	weak var delegate: ReviewCollectionViewCellDelegate?
 
+	/// Closes the body container around the text view.
+	private var bodyBottomConstraint: NSLayoutConstraint!
+
 	/// Whether the reader revealed this review's spoiler.
 	private var isSpoilerRevealed = false
 
-	/// The review the cell is showing.
-	private var review: Review?
+	/// The number of body lines shown before the review is clipped behind the `more` button.
+	private static let bodyLineLimit = 6
 
 	private static var spoilerWarningText: String {
 		#if targetEnvironment(macCatalyst)
@@ -75,93 +197,51 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		#endif
 	}
 
-	// MARK: - View
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		self.configureContentTextView()
-
-		self.profileImageView.layer.borderWidth = 0
-		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+	// MARK: - Initializers
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		self.configureSubviews()
 	}
 
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.configureSubviews()
+	}
+
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+
+		self.updateMoreView()
+	}
+
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+
+		guard self.traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else { return }
+
+		// `KTextView` resolves its font once, and the body's attributes pin that font across the whole range.
+		self.bodyTextView.font = .preferredFont(forTextStyle: .body)
+		self.bodyTextView.setAttributedText(self.bodyTextView.attributedText)
+
+		// A button's intrinsic size does not follow its title label's own type size updates.
+		for button in [self.helpfulButton, self.unhelpfulButton] {
+			button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+			button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(textStyle: .body), forImageIn: .normal)
+			button.invalidateIntrinsicContentSize()
+		}
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		self.isSpoilerRevealed = false
-		self.review = nil
 	}
 
 	// MARK: - Functions
-	private func configureContentTextView() {
-		let textView = KSelectableTextView()
-		textView.isScrollEnabled = false
-		textView.bounces = false
-
-		// Stacking inside the placeholder puts the row above the body without every
-		// review nib needing its own layout for it.
-		let contentStackView = UIStackView(arrangedSubviews: [textView])
-		contentStackView.axis = .vertical
-
-		self.contentTextViewPlaceholder.addSubview(contentStackView)
-		contentStackView.fillToSuperview()
-
-		self.contentTextView = textView
-
-		// The more button rides the last line of the body text, masking the words beneath it.
-		self.moreButtonView.bottomAnchor.constraint(equalTo: textView.bottomAnchor).isActive = true
-
-		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 0, delegate: self)
-
-		let metadataLabel = KTintedLabel()
-		metadataLabel.font = .preferredFont(forTextStyle: .caption1).bold
-		metadataLabel.adjustsFontForContentSizeCategory = true
-		metadataLabel.numberOfLines = 0
-		contentStackView.insertArrangedSubview(metadataLabel, at: 0)
-		self.metadataLabel = metadataLabel
-
-		// The spacer soaks up any extra height, so the body stays at the top and the
-		// vote row sits at the bottom with at least the standard gap in between.
-		let spacerView = UIView()
-		spacerView.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-		spacerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 8.0).isActive = true
-		contentStackView.addArrangedSubview(spacerView)
-
-		let voteRowView = UIStackView(arrangedSubviews: [self.helpfulButton, self.unhelpfulButton, UIView()])
-		voteRowView.axis = .horizontal
-		voteRowView.spacing = UIStackView.spacingUseSystem
-		voteRowView.alignment = .center
-		voteRowView.isHidden = true
-		contentStackView.addArrangedSubview(voteRowView)
-		self.voteRowView = voteRowView
-
-		self.helpfulButton.addTarget(self, action: #selector(self.helpfulButtonPressed), for: .touchUpInside)
-		self.unhelpfulButton.addTarget(self, action: #selector(self.unhelpfulButtonPressed), for: .touchUpInside)
-
-		let spoilerOverlayView = SpoilerOverlayView()
-		spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
-		spoilerOverlayView.revealHandler = { [weak self] in
-			self?.isSpoilerRevealed = true
-		}
-
-		self.contentTextViewPlaceholder.addSubview(spoilerOverlayView)
-		NSLayoutConstraint.activate([
-			spoilerOverlayView.topAnchor.constraint(equalTo: textView.topAnchor),
-			spoilerOverlayView.bottomAnchor.constraint(equalTo: textView.bottomAnchor),
-			spoilerOverlayView.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
-			spoilerOverlayView.trailingAnchor.constraint(equalTo: textView.trailingAnchor)
-		])
-
-		self.spoilerOverlayView = spoilerOverlayView
-	}
-
-	/// Configure the cell with the given person details.
+	/// Configures the cell with the given review.
 	///
 	/// - Parameters:
-	///    - review: The review details to configure the cell with.
+	///    - review: The review to configure the cell with.
 	///    - showsFullReview: Whether to show the full review text without truncation.
 	///    - isElevated: Whether the review was elevated to Editor's Choice by staff.
 	func configureCell(using review: Review?, showsFullReview: Bool = false, isElevated: Bool = false) {
@@ -171,42 +251,45 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
+		self.configureAppearance(showsFullReview: showsFullReview)
+		self.configureHeader(for: review)
+		self.configureBody(for: review, isElevated: isElevated)
+		self.configureVoteRow(for: review)
+	}
+
+	/// Lays the cell out for the given presentation.
+	///
+	/// - Parameter showsFullReview: Whether to show the full review text without truncation.
+	private func configureAppearance(showsFullReview: Bool) {
+		self.layer.cornerCurve = .continuous
+
 		if showsFullReview {
-			// Configure view
 			self.layerCornerRadius = 0
-			self.layer.cornerCurve = .continuous
 			self.contentView.theme_backgroundColor = nil
 			self.contentView.backgroundColor = .clear
 
-			// Configure body
-			self.contentTextView.textContainer.maximumNumberOfLines = 0
-			self.contentTextView.isSelectable = true
-			self.contentTextView.allowsFullTextInteraction = true
-
-			// Configure more view
-			self.moreButtonView.isHidden = true
+			self.bodyTextView.textContainer.maximumNumberOfLines = 0
+			self.bodyTextView.isSelectable = true
+			self.bodyTextView.allowsFullTextInteraction = true
 		} else {
-			// Configure view
 			self.layerCornerRadius = 22
-			self.layer.cornerCurve = .continuous
 			self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
-			// Configure body
-			self.contentTextView.textContainer.maximumNumberOfLines = 6
-			self.contentTextView.textContainer.lineBreakMode = .byWordWrapping
-			self.contentTextView.isSelectable = false
-			self.contentTextView.allowsFullTextInteraction = false
+			self.bodyTextView.textContainer.maximumNumberOfLines = Self.bodyLineLimit
+			self.bodyTextView.textContainer.lineBreakMode = .byWordWrapping
+			self.bodyTextView.isSelectable = false
+			self.bodyTextView.allowsFullTextInteraction = false
 		}
+	}
 
+	/// Configures the cell's header with the given review.
+	///
+	/// - Parameter review: The review to configure the header with.
+	private func configureHeader(for review: Review) {
 		if let user = review.relationships?.users?.data.first {
 			self.usernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
 
-			// Attach gestures
-			self.configureProfilePageGesture(for: self.usernameLabel)
-			self.configureProfilePageGesture(for: self.profileImageView)
-
-			// Badges
 			self.profileBadgeStackView.delegate = self
 			self.profileBadgeStackView.configure(for: user)
 		} else {
@@ -215,10 +298,16 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			self.profileBadgeStackView.reset()
 		}
 
-		// Configure rating
 		self.cosmosView.rating = review.attributes.score
+		self.dateTimeLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
+	}
 
-		// Configure body
+	/// Configures the cell's body with the given review.
+	///
+	/// - Parameters:
+	///    - review: The review to configure the body with.
+	///    - isElevated: Whether the review was elevated to Editor's Choice by staff.
+	private func configureBody(for review: Review, isElevated: Bool) {
 		let metadataText = self.metadataText(for: review, isElevated: isElevated)
 		self.metadataLabel.text = metadataText
 		self.metadataLabel.isHidden = metadataText == nil
@@ -233,30 +322,19 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			self.translationBarView.isHidden = true
 		}
 
-		self.contentTextView.setAttributedText(translatedBody ?? review.attributes.description?.markdownAttributedString())
+		self.bodyTextView.setAttributedText(translatedBody ?? review.attributes.description?.markdownAttributedString())
 		self.spoilerOverlayView.isHidden = self.isSpoilerRevealed || !(review.attributes.isSpoiler && !(review.attributes.description ?? "").isEmpty)
-		self.contentTextView.delegate = self
-		self.contentTextView.layoutManager.delegate = self
 
-		// Configure votes
-		self.review = review
-		self.updateVoteRow(for: review)
-
-		// Configure date time
-		self.dateTimeLabel.text = review.attributes.createdAt.formatted(date: .abbreviated, time: .omitted)
-
-		// Configure more view
-		self.moreImageView?.theme_tintColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
+		self.updateMoreView()
 	}
 
-	/// Builds the recommendation and progress badge shown above a review's body.
+	/// Returns the badge text shown above the given review's body.
 	///
 	/// - Parameters:
 	///    - review: The review to build the badge text from.
 	///    - isElevated: Whether the review was elevated to Editor's Choice by staff.
 	///
-	/// - Returns: The joined badge text, or `nil` when the review has no badge to show.
+	/// - Returns: The badge text, or `nil` when the review has no badge to show.
 	private func metadataText(for review: Review, isElevated: Bool) -> String? {
 		var parts: [String] = []
 
@@ -283,29 +361,33 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		return parts.isEmpty ? nil : parts.joined(separator: " · ")
 	}
 
-	/// Shows the tapped vote before the server confirms it.
-	///
-	/// - Parameter vote: The vote the reader tapped.
-	private func showVote(_ vote: ReviewVote) {
-		guard User.isSignedIn else { return }
-		guard var review = self.review else { return }
+	/// Shows the `more` button while the body is clipped.
+	private func updateMoreView() {
+		let textContainer = self.bodyTextView.textContainer
+		let isClipped: Bool
 
-		let tappedHelpful = vote == .helpful
-		let predicted: Bool? = review.attributes.isHelpful == tappedHelpful ? nil : tappedHelpful
+		if textContainer.maximumNumberOfLines > 0, self.bodyTextView.bounds.width > 0 {
+			// Measured against an unbounded height, because the container still carries the reused cell's.
+			let target = CGSize(width: self.bodyTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+			let cappedHeight = self.bodyTextView.sizeThatFits(target).height
+			let fullHeight = self.bodyTextView.attributedText.boundingRect(with: target, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).height
 
-		review.attributes.applyVote(predicted)
-		self.review = review
-		self.updateVoteRow(for: review)
+			isClipped = fullHeight.rounded() > cappedHeight.rounded()
+		} else {
+			isClipped = false
+		}
+
+		guard self.moreView.isHidden == isClipped else { return }
+		self.moreView.isHidden = !isClipped
 	}
 
-	/// Shows the vote row and refreshes both buttons for the given review.
+	/// Refreshes the vote buttons for the given review.
 	///
 	/// - Parameter review: The review the row votes on.
-	private func updateVoteRow(for review: Review) {
+	private func configureVoteRow(for review: Review) {
 		let isOwnReview = User.current?.id == review.relationships?.users?.data.first?.id
-		self.voteRowView.isHidden = false
 
-		// The author has a right to their own counts; only the vote is withheld.
+		// The author keeps their own counts on screen while the vote itself is withheld.
 		self.voteRowView.isUserInteractionEnabled = !isOwnReview
 
 		self.updateHelpfulButton(for: review)
@@ -350,45 +432,152 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		}
 	}
 
-	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
+	/// Adds a `UITapGestureRecognizer` which opens the profile page onto the given view.
 	///
 	/// - Parameter view: The view to which the tap gesture should be attached.
-	fileprivate func configureProfilePageGesture(for view: UIView) {
-		if view.gestureRecognizers?.isEmpty ?? true {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed(_:)))
-			gestureRecognizer.numberOfTouchesRequired = 1
-			gestureRecognizer.numberOfTapsRequired = 1
-			view.addGestureRecognizer(gestureRecognizer)
-			view.isUserInteractionEnabled = true
-		}
+	private func configureProfilePageGesture(for view: UIView) {
+		let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.usernameLabelPressed(_:)))
+		gestureRecognizer.numberOfTouchesRequired = 1
+		gestureRecognizer.numberOfTapsRequired = 1
+
+		view.addGestureRecognizer(gestureRecognizer)
+		view.isUserInteractionEnabled = true
 	}
 
-	fileprivate func getUserIdentity(username: String) async -> UserIdentity? {
-		do {
-			let userIdentityResponse = try await KService.searchUsers(username).response()
-			return userIdentityResponse.data.first
-		} catch {
-			print("-----", error.localizedDescription)
-			return nil
+	private func configureSubviews() {
+		let headerRowView = UIStackView(arrangedSubviews: [self.usernameLabel, self.profileBadgeStackView, self.dateTimeLabel])
+		headerRowView.axis = .horizontal
+		headerRowView.spacing = 8.0
+		headerRowView.alignment = .center
+		headerRowView.setCustomSpacing(2.0, after: self.usernameLabel)
+
+		self.voteRowView.addArrangedSubview(self.helpfulButton)
+		self.voteRowView.addArrangedSubview(self.unhelpfulButton)
+		self.voteRowView.addArrangedSubview(UIView())
+
+		// The spacer soaks up any extra height, so the body stays at the top and the
+		// vote row sits at the bottom.
+		let spacerView = UIView()
+		spacerView.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
+
+
+		let contentStackView = UIStackView(arrangedSubviews: [headerRowView, self.cosmosView, self.metadataLabel, self.bodyView, spacerView, self.voteRowView])
+		contentStackView.translatesAutoresizingMaskIntoConstraints = false
+		contentStackView.axis = .vertical
+		contentStackView.setCustomSpacing(8.0, after: self.cosmosView)
+
+		self.translationBarView = TranslationBarView.install(in: contentStackView, at: 3, delegate: self)
+
+		self.moreView.addSubview(self.moreGradientImageView)
+		self.moreView.addSubview(self.moreButton)
+
+		self.bodyView.addSubview(self.bodyMetricsView)
+		self.bodyView.addSubview(self.bodyTextView)
+		self.bodyView.addSubview(self.moreView)
+		self.bodyView.addSubview(self.spoilerOverlayView)
+
+		self.contentView.addSubview(self.profileImageView)
+		self.contentView.addSubview(self.borderView)
+		self.contentView.addSubview(contentStackView)
+
+		let spacerHeightConstraint = spacerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0.0)
+		let cosmosHeightConstraint = self.cosmosView.heightAnchor.constraint(equalToConstant: 40.0)
+		cosmosHeightConstraint.priority = .defaultLow
+
+		let profileImageDiameter = 44.0
+		self.borderView.cornerRadius = profileImageDiameter / 2.0
+
+		self.bodyBottomConstraint = self.bodyTextView.bottomAnchor.constraint(equalTo: self.bodyView.bottomAnchor)
+
+		NSLayoutConstraint.activate([
+			self.profileImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8.0),
+			self.profileImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0),
+			self.profileImageView.widthAnchor.constraint(equalToConstant: profileImageDiameter),
+			self.profileImageView.heightAnchor.constraint(equalToConstant: profileImageDiameter),
+			self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.profileImageView.bottomAnchor, constant: 8.0),
+
+			self.borderView.topAnchor.constraint(equalTo: self.profileImageView.topAnchor),
+			self.borderView.leadingAnchor.constraint(equalTo: self.profileImageView.leadingAnchor),
+			self.borderView.trailingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor),
+			self.borderView.bottomAnchor.constraint(equalTo: self.profileImageView.bottomAnchor),
+
+			contentStackView.leadingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor, constant: 8.0),
+			contentStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8.0),
+			contentStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0),
+			contentStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+
+			self.profileBadgeStackView.heightAnchor.constraint(equalToConstant: 20.0),
+			spacerHeightConstraint,
+			cosmosHeightConstraint,
+
+			// The HIG's minimum hit target, which the title and symbol grow past on their own.
+			self.helpfulButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
+			self.helpfulButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
+			self.unhelpfulButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
+			self.unhelpfulButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
+
+			self.bodyMetricsView.topAnchor.constraint(equalTo: self.bodyView.topAnchor),
+			self.bodyMetricsView.leadingAnchor.constraint(equalTo: self.bodyView.leadingAnchor),
+			self.bodyMetricsView.trailingAnchor.constraint(equalTo: self.bodyView.trailingAnchor),
+
+			self.bodyTextView.topAnchor.constraint(equalTo: self.bodyView.topAnchor),
+			self.bodyTextView.leadingAnchor.constraint(equalTo: self.bodyView.leadingAnchor),
+			self.bodyTextView.trailingAnchor.constraint(equalTo: self.bodyView.trailingAnchor),
+			// Closes the vertical chain from birth, so the cell self-sizes before it is configured.
+			self.bodyBottomConstraint,
+
+			// The body's last rendered line ends at the text view's bottom edge, because
+			// `KTextView` zeroes both the container inset and the line fragment padding.
+			self.moreView.trailingAnchor.constraint(equalTo: self.bodyTextView.trailingAnchor),
+			self.moreView.bottomAnchor.constraint(equalTo: self.bodyTextView.bottomAnchor),
+
+			self.moreGradientImageView.topAnchor.constraint(equalTo: self.moreView.topAnchor),
+			self.moreGradientImageView.leadingAnchor.constraint(equalTo: self.moreView.leadingAnchor),
+			self.moreGradientImageView.trailingAnchor.constraint(equalTo: self.moreView.trailingAnchor),
+			self.moreGradientImageView.bottomAnchor.constraint(equalTo: self.moreView.bottomAnchor),
+
+			// One line of the body, so the mask covers the last line rather than the button's own height.
+			self.moreView.heightAnchor.constraint(equalTo: self.bodyMetricsView.heightAnchor),
+
+			self.moreButton.centerYAnchor.constraint(equalTo: self.moreGradientImageView.centerYAnchor),
+			self.moreButton.leadingAnchor.constraint(equalTo: self.moreGradientImageView.leadingAnchor, constant: 70.0),
+			self.moreButton.trailingAnchor.constraint(equalTo: self.moreGradientImageView.trailingAnchor, constant: -8.0),
+
+			self.spoilerOverlayView.topAnchor.constraint(equalTo: self.bodyTextView.topAnchor),
+			self.spoilerOverlayView.leadingAnchor.constraint(equalTo: self.bodyTextView.leadingAnchor),
+			self.spoilerOverlayView.trailingAnchor.constraint(equalTo: self.bodyTextView.trailingAnchor),
+			self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.bodyTextView.bottomAnchor)
+		])
+
+		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.revealHandler = { [weak self] in
+			self?.isSpoilerRevealed = true
 		}
+
+		self.bodyTextView.delegate = self
+
+		self.configureProfilePageGesture(for: self.usernameLabel)
+		self.configureProfilePageGesture(for: self.profileImageView)
+
+		self.moreButton.addTarget(self, action: #selector(self.moreButtonPressed(_:)), for: .touchUpInside)
+		self.helpfulButton.addTarget(self, action: #selector(self.helpfulButtonPressed), for: .touchUpInside)
+		self.unhelpfulButton.addTarget(self, action: #selector(self.unhelpfulButtonPressed), for: .touchUpInside)
 	}
 
-	// MARK: - IBActions
-	@objc func usernameLabelPressed(_ sender: AnyObject) {
+	// MARK: - Actions
+	@objc private func usernameLabelPressed(_ sender: AnyObject) {
 		self.delegate?.reviewCollectionViewCell(self, didPressUserName: sender)
 	}
 
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
+	@objc private func moreButtonPressed(_ sender: UIButton) {
 		self.delegate?.reviewCollectionViewCell(self, didPressMoreButton: sender)
 	}
 
 	@objc private func helpfulButtonPressed() {
-		self.showVote(.helpful)
 		self.delegate?.reviewCollectionViewCell(self, didTapVote: .helpful)
 	}
 
 	@objc private func unhelpfulButtonPressed() {
-		self.showVote(.unhelpful)
 		self.delegate?.reviewCollectionViewCell(self, didTapVote: .unhelpful)
 	}
 }
@@ -396,30 +585,10 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 // MARK: - UITextViewDelegate
 extension ReviewCollectionViewCell: UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		if url.absoluteString.starts(with: "https://kurozora.app/profile") {
-			Task { [weak self] in
-				guard let self = self else { return }
-				let username = url.lastPathComponent
-				guard let userIdentity = await self.getUserIdentity(username: username) else { return }
-				let deeplink = url.absoluteString
-					.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
-					.replacingOccurrences(of: username, with: "\(userIdentity.id)")
+		guard url.absoluteString.starts(with: "https://kurozora.app/profile") else { return true }
 
-				UIApplication.shared.kOpen(nil, deepLink: URL(string: deeplink))
-			}
-
-			return false
-		}
-
-		return true
-	}
-}
-
-// MARK: - NSLayoutManagerDelegate
-extension ReviewCollectionViewCell: NSLayoutManagerDelegate {
-	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
-		guard self.contentTextView.textContainer.maximumNumberOfLines != 0 else { return }
-		self.moreButtonView?.isHidden = !(self.contentTextView.layoutManager.numberOfLines > 6)
+		self.delegate?.reviewCollectionViewCell(self, didTapProfileLink: url)
+		return false
 	}
 }
 

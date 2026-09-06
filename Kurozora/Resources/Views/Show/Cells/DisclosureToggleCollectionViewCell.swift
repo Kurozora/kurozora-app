@@ -15,6 +15,7 @@ class DisclosureToggleCollectionViewCell: KCollectionViewCell {
 		let label = KTintedLabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = .preferredFont(forTextStyle: .footnote).bold
+		label.adjustsFontForContentSizeCategory = true
 		label.textAlignment = .center
 		return label
 	}()
