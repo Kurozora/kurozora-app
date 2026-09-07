@@ -55407,6 +55407,7 @@
     },
     "Hide short reviews" : {
       "comment" : "Button that hides the reviews sorted to the bottom.",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

@@ -5834,20 +5834,6 @@ extension L10n {
 			)
 		}
 	}
-	/// Button that hides the reviews sorted to the bottom.
-	///
-	/// - Tag: L10n-reviewsHideShort
-	static var reviewsHideShort: String {
-		L10n.resolve {
-			String(
-				localized: "Hide short reviews",
-				table: "Content",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "Button that hides the reviews sorted to the bottom."
-			)
-		}
-	}
 	/// Title of the section holding the reviews sorted to the bottom.
 	///
 	/// - Tag: L10n-reviewsShort

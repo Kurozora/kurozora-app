@@ -817,8 +817,8 @@ extension ReviewsListCollectionViewController {
 		/// Indicates the item kind contains the item's editorial endorsement.
 		case editorial(_: Editorial, id: UUID = UUID())
 
-		/// Indicates the item kind contains the toggle for revealing or hiding the low-effort reviews.
-		case lowEffortReviewsToggle(isExpanded: Bool)
+		/// Indicates the item kind contains the toggle for revealing the low-effort reviews.
+		case lowEffortReviewsToggle
 
 		/// Indicates the item kind contains a `Character` object.
 		case character(_ character: Character, id: UUID = UUID())
@@ -856,8 +856,8 @@ extension ReviewsListCollectionViewController {
 			case .editorial(let editorial, let id):
 				hasher.combine(editorial)
 				hasher.combine(id)
-			case .lowEffortReviewsToggle(let isExpanded):
-				hasher.combine(isExpanded)
+			case .lowEffortReviewsToggle:
+				break
 			case .character(let character, let id):
 				hasher.combine(character)
 				hasher.combine(id)
@@ -893,8 +893,8 @@ extension ReviewsListCollectionViewController {
 				return review1 == review2 && id1 == id2
 			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
 				return editorial1 == editorial2 && id1 == id2
-			case (.lowEffortReviewsToggle(let isExpanded1), .lowEffortReviewsToggle(let isExpanded2)):
-				return isExpanded1 == isExpanded2
+			case (.lowEffortReviewsToggle, .lowEffortReviewsToggle):
+				return true
 			case (.character(let character1, let id1), .character(let character2, let id2)):
 				return character1 == character2 && id1 == id2
 			case (.episode(let episode1, let id1), .episode(let episode2, let id2)):

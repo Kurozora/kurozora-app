@@ -208,7 +208,7 @@ extension ReviewsListCollectionViewController {
 				guard !self.isShowingLowEffortReviews, self.reviews.contains(where: { $0.attributes.isLowEffort }) else { return }
 
 				self.snapshot.appendSections([reviewSection])
-				self.snapshot.appendItems([.lowEffortReviewsToggle(isExpanded: false)], toSection: reviewSection)
+				self.snapshot.appendItems([.lowEffortReviewsToggle], toSection: reviewSection)
 			case .shortReviews:
 				guard self.isShowingLowEffortReviews else { return }
 
