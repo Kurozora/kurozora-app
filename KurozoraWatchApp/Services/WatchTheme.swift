@@ -10,7 +10,7 @@ import Observation
 import SwiftUI
 
 /// The tint color mirrored from the theme selected on the paired iPhone.
-@Observable
+@MainActor @Observable
 final class WatchTheme {
 	// MARK: - Keys
 	private enum Keys {

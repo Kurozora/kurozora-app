@@ -8,9 +8,8 @@
 
 import CoreData
 import KurozoraKit
+import Network
 import os.log
-import Reachability
-import UIKit
 
 private let syncLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibrarySyncEngine")
 
@@ -40,8 +39,11 @@ actor LibrarySyncEngine {
 	/// becomes reachable again. Keyed by `(userSlug, kind)`.
 	private var pendingRetries: Set<String> = []
 
-	/// Tracks whether the reachability bridge has been installed once.
-	private var reachabilityBridgeInstalled = false
+	/// Watches the network path so failed work retries as soon as connectivity returns.
+	private var pathMonitor: NWPathMonitor?
+
+	/// Whether the most recent network path report was satisfied.
+	private var isNetworkReachable: Bool?
 
 	// MARK: - Initializers
 	private init() {}
@@ -51,7 +53,7 @@ actor LibrarySyncEngine {
 	///
 	/// - Parameter userSlug: The user's account slug.
 	func syncAll(forUserSlug userSlug: String) async {
-		self.installReachabilityBridgeIfNeeded()
+		self.installPathMonitorIfNeeded()
 		await LibraryOutbox.shared.flush(force: true)
 
 		if let existing = self.syncAllInFlight[userSlug] {
@@ -75,7 +77,9 @@ actor LibrarySyncEngine {
 		await task.value
 		self.syncAllInFlight[userSlug] = nil
 
+		#if !os(watchOS)
 		await self.refreshLibraryArt(forUserSlug: userSlug)
+		#endif
 		await LibrarySyncDiagnostics.logState(forUserSlug: userSlug, reason: "syncAll")
 
 		if self.syncAllRerunRequested.remove(userSlug) != nil {
@@ -83,6 +87,7 @@ actor LibrarySyncEngine {
 		}
 	}
 
+	#if !os(watchOS)
 	/// Prunes stored art for removed entries and queues every cached entry's
 	/// poster and banner for download.
 	private func refreshLibraryArt(forUserSlug userSlug: String) async {
@@ -98,6 +103,7 @@ actor LibrarySyncEngine {
 		await LibraryArtStore.shared.prune(keepingURLStrings: Set(artURLStrings))
 		await LibraryArtStore.shared.prefetch(artURLStrings)
 	}
+	#endif
 
 	/// Runs a delta sync for the given library kind, looping until the server reports
 	/// no more rows past the current cursor.
@@ -106,7 +112,7 @@ actor LibrarySyncEngine {
 	///    - kind: The library kind to sync.
 	///    - userSlug: The user's account slug.
 	func sync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
-		self.installReachabilityBridgeIfNeeded()
+		self.installPathMonitorIfNeeded()
 
 		let key = self.coalesceKey(userSlug: userSlug, kind: kind)
 		if let existing = self.inFlight[key] {
@@ -194,8 +200,10 @@ actor LibrarySyncEngine {
 			appliedCount += batch.count
 			await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: expectedCount)
 
+			#if !os(watchOS)
 			let artURLStrings = batch.filter { $0.deletedAt == nil }.flatMap { [$0.posterURL, $0.bannerURL] }.compactMap(\.self)
 			await LibraryArtStore.shared.prefetch(artURLStrings)
+			#endif
 
 			if !hasMore {
 				// Force the fraction to exactly 1.0 before ending.
@@ -205,23 +213,36 @@ actor LibrarySyncEngine {
 		}
 	}
 
-	// MARK: - Reachability Retry
-	/// Hooks the reachability notification on first call. Idempotent.
-	private func installReachabilityBridgeIfNeeded() {
-		guard !self.reachabilityBridgeInstalled else { return }
-		self.reachabilityBridgeInstalled = true
-		NotificationCenter.default.addObserver(
-			forName: .reachabilityChanged,
-			object: nil,
-			queue: nil
-		) { _ in
-			Task { await LibrarySyncEngine.shared.flushAndSyncIfReachable() }
+	// MARK: - Network Retry
+	/// Starts watching the network path on first call. Idempotent.
+	private func installPathMonitorIfNeeded() {
+		guard self.pathMonitor == nil else { return }
+
+		let monitor = NWPathMonitor()
+		monitor.pathUpdateHandler = { path in
+			let isReachable = path.status == .satisfied
+			Task { await LibrarySyncEngine.shared.networkPathDidUpdate(isReachable: isReachable) }
 		}
+		monitor.start(queue: .global(qos: .utility))
+		self.pathMonitor = monitor
+	}
+
+	/// Records the reported path state and retries pending work when connectivity has just returned.
+	///
+	/// - Parameter isReachable: Whether the reported path is satisfied.
+	private func networkPathDidUpdate(isReachable: Bool) async {
+		let wasReachable = self.isNetworkReachable
+		self.isNetworkReachable = isReachable
+
+		// The monitor also reports on start and on every route change while online. Only
+		// the return from offline carries a retry signal.
+		guard isReachable, wasReachable == false else { return }
+		await self.flushAndSyncIfReachable()
 	}
 
 	/// Flushes queued mutations and runs a full sync when the device is reachable and work is pending.
 	private func flushAndSyncIfReachable() async {
-		guard KNetworkManager.shared.reachability?.connection != .unavailable else { return }
+		guard self.isNetworkReachable == true else { return }
 		guard let userSlug = User.current?.attributes.slug else { return }
 
 		let hasPendingOperations = await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug)

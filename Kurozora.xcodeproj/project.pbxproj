@@ -112,6 +112,7 @@
 		660B7BF72F7D2E83000FCB8A /* Exceptions for "Kurozora" folder in "KurozoraWatchApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"App Frameworks/Foundation/Extensions/Notification+Kurozora.swift",
 				"Supporting Files/AppIcon Staging.icon",
 				"Supporting Files/AppIcon.icon",
 				"Supporting Files/Shared.xcassets",
@@ -222,6 +223,11 @@
 			path = KurozoraWatchApp;
 			sourceTree = "<group>";
 		};
+		9BEE1A0130500B0900B09824 /* KurozoraLocal */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KurozoraLocal;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				6615BC102DA296B2005DBB96 /* Kurozora */,
+				9BEE1A0130500B0900B09824 /* KurozoraLocal */,
 				6615A2EE2DA20A5A005DBB96 /* KurozoraWidget */,
 				6615A3012DA20A61005DBB96 /* KuroChan */,
 				669188522F7BCEA8000B1272 /* KurozoraWatchApp */,
@@ -369,6 +376,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				6615BC102DA296B2005DBB96 /* Kurozora */,
+				9BEE1A0130500B0900B09824 /* KurozoraLocal */,
 			);
 			name = Kurozora;
 			productName = Aozora;
@@ -389,6 +397,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				669188522F7BCEA8000B1272 /* KurozoraWatchApp */,
+				9BEE1A0130500B0900B09824 /* KurozoraLocal */,
 			);
 			name = KurozoraWatchApp;
 			packageProductDependencies = (
@@ -1081,7 +1090,6 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1110,7 +1118,6 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				TARGETED_DEVICE_FAMILY = 4;

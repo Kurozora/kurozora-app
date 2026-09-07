@@ -318,7 +318,7 @@ final class LibraryStore {
 	/// Builds a `LibraryAttributes` snapshot from a `LocalLibraryEntry`.
 	///
 	/// - Note: Safe to call from any thread holding a valid reference to the entry's properties.
-	private static func snapshotAttributes(from entry: LocalLibraryEntry) -> LibraryAttributes {
+	private nonisolated static func snapshotAttributes(from entry: LocalLibraryEntry) -> LibraryAttributes {
 		var attributes = LibraryAttributes()
 		attributes.isFavorited = entry.isFavorited
 		attributes.isReminded = entry.isReminded

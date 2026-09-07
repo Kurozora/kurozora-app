@@ -153,20 +153,24 @@ actor LibraryOutbox {
 	// MARK: - Sync guard
 	/// Whether any operation is queued for the given account.
 	func hasPendingOperations(forUserSlug userSlug: String) async -> Bool {
-		return await self.pendingOperationCount(matching: NSPredicate(format: "userSlug == %@", userSlug)) > 0
+		return await self.pendingOperationCount(forUserSlug: userSlug, kind: nil) > 0
 	}
 
 	/// Whether any operation is queued for the given account and kind.
 	func hasPendingOperations(forUserSlug userSlug: String, kind: LibraryKind) async -> Bool {
-		return await self.pendingOperationCount(matching: NSPredicate(format: "userSlug == %@ AND kindRaw == %d", userSlug, Int64(kind.rawValue))) > 0
+		return await self.pendingOperationCount(forUserSlug: userSlug, kind: kind) > 0
 	}
 
-	private func pendingOperationCount(matching predicate: NSPredicate) async -> Int {
+	private func pendingOperationCount(forUserSlug userSlug: String, kind: LibraryKind?) async -> Int {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 
 		return await context.perform {
 			let request = LocalOutboxOperation.fetchRequest()
-			request.predicate = predicate
+			if let kind {
+				request.predicate = NSPredicate(format: "userSlug == %@ AND kindRaw == %d", userSlug, Int64(kind.rawValue))
+			} else {
+				request.predicate = NSPredicate(format: "userSlug == %@", userSlug)
+			}
 			return (try? context.count(for: request)) ?? 0
 		}
 	}

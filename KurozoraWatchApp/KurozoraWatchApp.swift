@@ -39,6 +39,7 @@ struct KurozoraWatchApp: App {
 			.environment(self.theme)
 			.tint(self.theme.tint)
 			.task {
+				_ = PersistenceController.shared
 				WatchSessionManager.shared.restoreAPIEndpoint()
 				WatchSessionManager.shared.activate(
 					authManager: self.authManager,
