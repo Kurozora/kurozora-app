@@ -13,6 +13,8 @@ struct LibraryRowView: View {
 	// MARK: - Properties
 	let item: LibraryItem
 
+	@Environment(WatchTheme.self) private var theme
+
 	// MARK: - Body
 	var body: some View {
 		HStack(spacing: 8) {
@@ -47,6 +49,21 @@ struct LibraryRowView: View {
 				if let broadcastDate = self.countdownDate {
 					Text(broadcastDate, style: .relative)
 						.lineLimit(1)
+				}
+
+				if self.item.isFavorited || self.item.isReminded {
+					HStack(spacing: 6) {
+						if self.item.isFavorited {
+							Image(systemName: "heart.fill")
+								.accessibilityLabel(L10n.favorite)
+						}
+
+						if self.item.isReminded {
+							Image(systemName: "bell.fill")
+								.accessibilityLabel(L10n.reminder)
+						}
+					}
+					.foregroundStyle(self.theme.tint)
 				}
 			}
 			.font(.caption2)

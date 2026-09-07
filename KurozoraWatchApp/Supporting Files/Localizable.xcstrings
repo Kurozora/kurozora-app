@@ -9837,6 +9837,9 @@
         }
       }
     },
+    "Favorite" : {
+      "comment" : "The accessibility label for the favorite indicator on a library row."
+    },
     "Filler" : {
       "comment" : "The marker on an episode that is filler rather than canon.",
       "localizations" : {
@@ -22188,6 +22191,9 @@
           }
         }
       }
+    },
+    "Reminder" : {
+      "comment" : "The accessibility label for the reminder indicator on a library row."
     },
     "Remove from Library" : {
       "comment" : "The button that removes a title from the user's library.",

@@ -483,6 +483,16 @@ struct L10n {
 		String(localized: "Nothing here yet.", comment: "The message shown when a library status holds no shows.")
 	}
 
+	/// The accessibility label for the favorite indicator on a library row.
+	static var favorite: String {
+		String(localized: "Favorite", comment: "The accessibility label for the favorite indicator on a library row.")
+	}
+
+	/// The accessibility label for the reminder indicator on a library row.
+	static var reminder: String {
+		String(localized: "Reminder", comment: "The accessibility label for the reminder indicator on a library row.")
+	}
+
 	/// The library status for a title the user has not tracked.
 	static var libraryNone: String {
 		String(localized: "None", comment: "The library status for a show the user has not tracked.")

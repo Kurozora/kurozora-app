@@ -39,6 +39,10 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 
 	let libraryStatus: LibraryStatus
 
+	let isFavorited: Bool
+
+	let isReminded: Bool
+
 	// MARK: - Initializers
 	/// Snapshots the given entry.
 	///
@@ -54,5 +58,7 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 		self.durationCount = entry.durationCount?.intValue ?? 0
 		self.userScore = entry.review?.score?.doubleValue
 		self.libraryStatus = entry.libraryStatus
+		self.isFavorited = entry.isFavorited
+		self.isReminded = entry.isReminded
 	}
 }
