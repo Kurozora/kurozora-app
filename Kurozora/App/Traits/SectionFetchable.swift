@@ -68,6 +68,17 @@ extension SectionFetchable {
 		return models
 	}
 
+	/// Returns every cached model in the given section, whatever their types.
+	///
+	/// - Parameter section: The section whose models you want to retrieve.
+	///
+	/// - Returns: The cached models.
+	func cachedItems(inSection section: Int) -> [KurozoraItem] {
+		return self.cache.compactMap { indexPath, item in
+			indexPath.section == section ? item : nil
+		}
+	}
+
 	/// Returns the cached model at the given index path, starting a batched section fetch when no model is cached.
 	///
 	/// - Parameters:

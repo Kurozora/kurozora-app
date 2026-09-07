@@ -169,3 +169,28 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.literatureMask.frame = posterImageView.bounds
 	}
 }
+
+// MARK: - Measurement
+extension SmallLockupCollectionViewCell {
+	/// Returns the item that measures the given show.
+	///
+	/// - Parameter show: The show the item measures.
+	///
+	/// - Returns: The item that measures the show.
+	static func measurableItem(for show: Show) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
+			cell.configure(using: show)
+		}
+	}
+
+	/// Returns the item that measures the given literature.
+	///
+	/// - Parameter literature: The literature the item measures.
+	///
+	/// - Returns: The item that measures the literature.
+	static func measurableItem(for literature: Literature) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
+			cell.configure(using: literature)
+		}
+	}
+}

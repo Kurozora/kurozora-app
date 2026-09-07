@@ -297,3 +297,17 @@ class RecapPosterLockupCollectionViewCell: KCollectionViewCell {
 		return wrapped < 0 ? wrapped + 1.0 : wrapped
 	}
 }
+
+// MARK: - Measurement
+extension RecapPosterLockupCollectionViewCell {
+	/// Returns the item that measures the given recap.
+	///
+	/// - Parameter recap: The recap the item measures.
+	///
+	/// - Returns: The item that measures the recap.
+	static func measurableItem(for recap: Recap) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: RecapPosterLockupCollectionViewCell.self) { cell in
+			cell.configure(using: recap)
+		}
+	}
+}

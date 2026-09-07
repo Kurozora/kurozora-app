@@ -74,3 +74,17 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.broadcastLabel.text = nil
 	}
 }
+
+// MARK: - Measurement
+extension GameLockupCollectionViewCell {
+	/// Returns the item that measures the given game.
+	///
+	/// - Parameter game: The game the item measures.
+	///
+	/// - Returns: The item that measures the game.
+	static func measurableItem(for game: Game) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self) { cell in
+			cell.configure(using: game)
+		}
+	}
+}

@@ -145,3 +145,28 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 			&& self.rankLabel.isHidden
 	}
 }
+
+// MARK: - Measurement
+extension ProfileLockupCollectionViewCell {
+	/// Returns the item that measures the given character.
+	///
+	/// - Parameter character: The character the item measures.
+	///
+	/// - Returns: The item that measures the character.
+	static func measurableItem(for character: Character) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
+			cell.configure(using: character)
+		}
+	}
+
+	/// Returns the item that measures the given person.
+	///
+	/// - Parameter person: The person the item measures.
+	///
+	/// - Returns: The item that measures the person.
+	static func measurableItem(for person: Person) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
+			cell.configure(using: person)
+		}
+	}
+}

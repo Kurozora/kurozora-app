@@ -142,3 +142,17 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterAspectConstraint = replacement
 	}
 }
+
+// MARK: - Measurement
+extension VideoLockupCollectionViewCell {
+	/// Returns the item that measures the given show.
+	///
+	/// - Parameter show: The show the item measures.
+	///
+	/// - Returns: The item that measures the show.
+	static func measurableItem(for show: Show) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: VideoLockupCollectionViewCell.self) { cell in
+			cell.configure(using: show)
+		}
+	}
+}

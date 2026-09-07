@@ -49,3 +49,17 @@ class BannerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		}
 	}
 }
+
+// MARK: - Measurement
+extension BannerLockupCollectionViewCell {
+	/// Returns the item that measures the given show.
+	///
+	/// - Parameter show: The show the item measures.
+	///
+	/// - Returns: The item that measures the show.
+	static func measurableItem(for show: Show) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: BannerLockupCollectionViewCell.self) { cell in
+			cell.configure(using: show)
+		}
+	}
+}
