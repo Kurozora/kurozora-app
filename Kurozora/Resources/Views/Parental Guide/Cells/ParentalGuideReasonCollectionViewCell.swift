@@ -119,13 +119,6 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		return Self.cachedReasonWidths[ObjectIdentifier(type(of: self))] ?? 0
 	}
 
-	private static var spoilerWarningText: String {
-		#if targetEnvironment(macCatalyst)
-		return L10n.parentalGuideReasonSpoilerClick
-		#else
-		return L10n.parentalGuideReasonSpoilerTap
-		#endif
-	}
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -277,7 +270,7 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 
 		self.translationBarView = TranslationBarView.install(in: outerStack, at: 1, delegate: self)
 
-		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.configure(warning: L10n.parentalGuideReasonSpoiler, cornerRadius: 10)
 		self.spoilerOverlayView.revealHandler = { [weak self] in
 			self?.isSpoilerRevealed = true
 		}

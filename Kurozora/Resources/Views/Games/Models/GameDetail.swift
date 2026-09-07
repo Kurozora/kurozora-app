@@ -407,9 +407,7 @@ extension GameDetail {
 			case .genres, .themes:
 				return nil
 			case .editions:
-				let editionCount = game.attributes.editionCount <= 1 ? L10n.one : "\(game.attributes.editionCount)"
-				let editionString = game.attributes.editionCount > 1 ? L10n.columnEditions.lowercased(with: .current) : L10n.edition.lowercased(with: .current)
-				return L10n.across("\(editionCount) \(editionString)")
+				return L10n.acrossEditions(game.attributes.editionCount)
 			case .duration:
 				return L10n.withTotalOf(game.attributes.durationTotal)
 			case .publication:

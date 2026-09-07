@@ -33,13 +33,6 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 	/// Whether the reader revealed this review's spoiler.
 	private var isSpoilerRevealed = false
 
-	private static var spoilerWarningText: String {
-		#if targetEnvironment(macCatalyst)
-		return L10n.reviewSpoilerClick
-		#else
-		return L10n.reviewSpoilerTap
-		#endif
-	}
 
 	// MARK: - View
 	override func awakeFromNib() {
@@ -48,7 +41,7 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 			self?.syncLiteratureMaskFrame()
 		}
 
-		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.configure(warning: L10n.reviewSpoiler, cornerRadius: 10)
 		self.spoilerOverlayView.revealHandler = { [weak self] in
 			self?.isSpoilerRevealed = true
 		}

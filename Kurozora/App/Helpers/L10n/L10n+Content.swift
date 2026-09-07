@@ -1401,31 +1401,18 @@ extension L10n {
 			)
 		}
 	}
-	/// The string for the word 'tap to rate'.
+	/// Prompt above the star control inviting the reader to rate.
 	///
-	/// - Tag: L10n-tapToRate
-	static var tapToRate: String {
+	/// - Tag: L10n-ratePrompt
+	static var ratePrompt: String {
 		L10n.resolve {
 			String(
-				localized: "Tap to Rate:",
+				localized: "ratePrompt",
+				defaultValue: "Tap to Rate:",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The string for the word 'tap to rate'."
-			)
-		}
-	}
-	/// The string for the word 'click to rate'.
-	///
-	/// - Tag: L10n-clickToRate
-	static var clickToRate: String {
-		L10n.resolve {
-			String(
-				localized: "Click to Rate:",
-				table: "Content",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "The string for the word 'click to rate'."
+				comment: "Prompt above the star control inviting the reader to rate."
 			)
 		}
 	}
@@ -1591,7 +1578,13 @@ extension L10n {
 	/// - Tag: L10n-source
 	static var source: String {
 		L10n.resolve {
-			String(localized: "Source", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for the source material of a title.")
+			String(
+                localized: "Source",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for the source material of a title."
+            )
 		}
 	}
 	/// The label for a show's broadcast schedule.
@@ -1599,7 +1592,13 @@ extension L10n {
 	/// - Tag: L10n-broadcast
 	static var broadcast: String {
 		L10n.resolve {
-			String(localized: "Broadcast", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for a show's broadcast schedule.")
+			String(
+                localized: "Broadcast",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for a show's broadcast schedule."
+            )
 		}
 	}
 	/// The label for a title's country of origin.
@@ -1607,7 +1606,13 @@ extension L10n {
 	/// - Tag: L10n-countryOfOrigin
 	static var countryOfOrigin: String {
 		L10n.resolve {
-			String(localized: "Country of Origin", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for a title's country of origin.")
+			String(
+                localized: "Country of Origin",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for a title's country of origin."
+            )
 		}
 	}
 	/// The singular label for a title's language.
@@ -1615,7 +1620,13 @@ extension L10n {
 	/// - Tag: L10n-languageSingular
 	static var languageSingular: String {
 		L10n.resolve {
-			String(localized: "Language", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular label for a title's language.")
+			String(
+                localized: "Language",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular label for a title's language."
+            )
 		}
 	}
 	/// The label for a title's publication schedule.
@@ -1623,7 +1634,13 @@ extension L10n {
 	/// - Tag: L10n-publication
 	static var publication: String {
 		L10n.resolve {
-			String(localized: "Publication", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for a title's publication schedule.")
+			String(
+                localized: "Publication",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for a title's publication schedule."
+            )
 		}
 	}
 	/// The label for a title's publication dates.
@@ -1631,7 +1648,13 @@ extension L10n {
 	/// - Tag: L10n-published
 	static var published: String {
 		L10n.resolve {
-			String(localized: "Published", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label for a title's publication dates.")
+			String(
+                localized: "Published",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for a title's publication dates."
+            )
 		}
 	}
 	/// The singular word for a manga volume.
@@ -1639,7 +1662,13 @@ extension L10n {
 	/// - Tag: L10n-volume
 	static var volume: String {
 		L10n.resolve {
-			String(localized: "Volume", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word for a manga volume.")
+			String(
+                localized: "Volume",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word for a manga volume."
+            )
 		}
 	}
 	/// The singular word for a game edition.
@@ -1647,7 +1676,13 @@ extension L10n {
 	/// - Tag: L10n-edition
 	static var edition: String {
 		L10n.resolve {
-			String(localized: "Edition", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word for a game edition.")
+			String(
+                localized: "Edition",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word for a game edition."
+            )
 		}
 	}
 	/// The label shown when one more language is available.
@@ -1655,7 +1690,13 @@ extension L10n {
 	/// - Tag: L10n-oneMoreLanguage
 	static var oneMoreLanguage: String {
 		L10n.resolve {
-			String(localized: "+1 More Language", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label shown when one more language is available.")
+			String(
+                localized: "+1 More Language",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label shown when one more language is available."
+            )
 		}
 	}
 	/// The label shown when several more languages are available.
@@ -1663,15 +1704,55 @@ extension L10n {
 	/// - Tag: L10n-moreLanguages
 	static func moreLanguages(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "+\(count) More Languages", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The label shown when several more languages are available.")
+			String(
+                localized: "+\(count) More Languages",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label shown when several more languages are available."
+            )
 		}
 	}
-	/// The footnote summarizing how content is spread across units.
+	/// The footnote summarizing how many seasons the episodes are spread across.
 	///
-	/// - Tag: L10n-across
-	static func across(_ summary: String) -> String {
+	/// - Tag: L10n-acrossSeasons
+	static func acrossSeasons(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "Across \(summary).", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote summarizing how content is spread across units, as in 'Across 5 seasons.'.")
+			String(
+                localized: "Across \(count) seasons.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote summarizing how many seasons the episodes are spread across."
+            )
+		}
+	}
+	/// The footnote summarizing how many volumes the chapters are spread across.
+	///
+	/// - Tag: L10n-acrossVolumes
+	static func acrossVolumes(_ count: Int) -> String {
+		L10n.resolve {
+			String(
+                localized: "Across \(count) volumes.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote summarizing how many volumes the chapters are spread across."
+            )
+		}
+	}
+	/// The footnote summarizing how many editions the game was released in.
+	///
+	/// - Tag: L10n-acrossEditions
+	static func acrossEditions(_ count: Int) -> String {
+		L10n.resolve {
+			String(
+                localized: "Across \(count) editions.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote summarizing how many editions the game was released in."
+            )
 		}
 	}
 	/// The footnote stating the total duration.
@@ -1679,7 +1760,13 @@ extension L10n {
 	/// - Tag: L10n-withTotalOf
 	static func withTotalOf(_ value: String) -> String {
 		L10n.resolve {
-			String(localized: "With a total of \(value).", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote stating the total duration of a title.")
+			String(
+                localized: "With a total of \(value).",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote stating the total duration of a title."
+            )
 		}
 	}
 	/// The footnote shown when a show has finished broadcasting.
@@ -1687,7 +1774,13 @@ extension L10n {
 	/// - Tag: L10n-broadcastEnded
 	static var broadcastEnded: String {
 		L10n.resolve {
-			String(localized: "The broadcasting of this series has ended.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when a show has finished broadcasting.")
+			String(
+                localized: "The broadcasting of this series has ended.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when a show has finished broadcasting."
+            )
 		}
 	}
 	/// The footnote shown when no broadcast data is available.
@@ -1695,7 +1788,13 @@ extension L10n {
 	/// - Tag: L10n-noBroadcastData
 	static var noBroadcastData: String {
 		L10n.resolve {
-			String(localized: "No broadcast data available at the moment.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when no broadcast data is available.")
+			String(
+                localized: "No broadcast data available at the moment.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when no broadcast data is available."
+            )
 		}
 	}
 	/// The footnote shown when a title has finished publication.
@@ -1703,7 +1802,13 @@ extension L10n {
 	/// - Tag: L10n-publicationEnded
 	static var publicationEnded: String {
 		L10n.resolve {
-			String(localized: "The publication of this series has ended.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when a title has finished publication.")
+			String(
+                localized: "The publication of this series has ended.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when a title has finished publication."
+            )
 		}
 	}
 	/// The footnote shown when no publication data is available.
@@ -1711,7 +1816,13 @@ extension L10n {
 	/// - Tag: L10n-noPublicationData
 	static var noPublicationData: String {
 		L10n.resolve {
-			String(localized: "No publication data available at the moment.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when no publication data is available.")
+			String(
+                localized: "No publication data available at the moment.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when no publication data is available."
+            )
 		}
 	}
 	/// The footnote showing an episode's position in the current season.
@@ -1719,7 +1830,13 @@ extension L10n {
 	/// - Tag: L10n-episodeInCurrentSeason
 	static func episodeInCurrentSeason(_ number: Int) -> String {
 		L10n.resolve {
-			String(localized: "#\(number) in the current season.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote showing an episode's position in the current season.")
+			String(
+                localized: "#\(number) in the current season.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote showing an episode's position in the current season."
+            )
 		}
 	}
 	/// The footnote shown when an episode will air on its announced date.
@@ -1727,7 +1844,13 @@ extension L10n {
 	/// - Tag: L10n-episodeWillAir
 	static var episodeWillAir: String {
 		L10n.resolve {
-			String(localized: "The episode will air on the announced date.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when an episode will air on its announced date.")
+			String(
+                localized: "The episode will air on the announced date.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when an episode will air on its announced date."
+            )
 		}
 	}
 	/// The footnote shown when an episode has finished airing.
@@ -1735,7 +1858,13 @@ extension L10n {
 	/// - Tag: L10n-episodeFinishedAiring
 	static var episodeFinishedAiring: String {
 		L10n.resolve {
-			String(localized: "The episode has finished airing.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when an episode has finished airing.")
+			String(
+                localized: "The episode has finished airing.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when an episode has finished airing."
+            )
 		}
 	}
 	/// The footnote shown when an episode's release date is unannounced.
@@ -1743,7 +1872,13 @@ extension L10n {
 	/// - Tag: L10n-episodeReleaseDateTBA
 	static var episodeReleaseDateTBA: String {
 		L10n.resolve {
-			String(localized: "A release date has yet to be announced.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote shown when an episode's release date is unannounced.")
+			String(
+                localized: "A release date has yet to be announced.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when an episode's release date is unannounced."
+            )
 		}
 	}
 	/// The footnote describing a character's status.
@@ -1751,7 +1886,13 @@ extension L10n {
 	/// - Tag: L10n-characterStatusFootnote
 	static func characterStatusFootnote(_ status: String) -> String {
 		L10n.resolve {
-			String(localized: "The character is \(status).", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footnote describing a character's status, where the placeholder is the localized status.")
+			String(
+                localized: "The character is \(status).",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote describing a character's status, where the placeholder is the localized status."
+            )
 		}
 	}
 
@@ -1761,7 +1902,13 @@ extension L10n {
 	/// - Tag: L10n-nsfw
 	static var nsfw: String {
 		L10n.resolve {
-			String(localized: "NSFW", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'NSFW' search filter label.")
+			String(
+                localized: "NSFW",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'NSFW' search filter label."
+            )
 		}
 	}
 	/// The 'Media Type' search filter label.
@@ -1769,7 +1916,13 @@ extension L10n {
 	/// - Tag: L10n-mediaType
 	static var mediaType: String {
 		L10n.resolve {
-			String(localized: "Media Type", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Media Type' search filter label.")
+			String(
+                localized: "Media Type",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Media Type' search filter label."
+            )
 		}
 	}
 	/// The 'Publication Season' search filter label.
@@ -1777,7 +1930,13 @@ extension L10n {
 	/// - Tag: L10n-publicationSeason
 	static var publicationSeason: String {
 		L10n.resolve {
-			String(localized: "Publication Season", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Publication Season' search filter label.")
+			String(
+                localized: "Publication Season",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Publication Season' search filter label."
+            )
 		}
 	}
 	/// The 'Publication Day' search filter label.
@@ -1785,7 +1944,13 @@ extension L10n {
 	/// - Tag: L10n-publicationDay
 	static var publicationDay: String {
 		L10n.resolve {
-			String(localized: "Publication Day", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Publication Day' search filter label.")
+			String(
+                localized: "Publication Day",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Publication Day' search filter label."
+            )
 		}
 	}
 	/// The 'Last Aired' search filter label.
@@ -1793,7 +1958,13 @@ extension L10n {
 	/// - Tag: L10n-lastAired
 	static var lastAired: String {
 		L10n.resolve {
-			String(localized: "Last Aired", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Last Aired' search filter label.")
+			String(
+                localized: "Last Aired",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Last Aired' search filter label."
+            )
 		}
 	}
 	/// The 'First Published' search filter label.
@@ -1801,7 +1972,13 @@ extension L10n {
 	/// - Tag: L10n-firstPublished
 	static var firstPublished: String {
 		L10n.resolve {
-			String(localized: "First Published", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'First Published' search filter label.")
+			String(
+                localized: "First Published",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'First Published' search filter label."
+            )
 		}
 	}
 	/// The 'First Aired' search filter label.
@@ -1809,7 +1986,13 @@ extension L10n {
 	/// - Tag: L10n-firstAired
 	static var firstAired: String {
 		L10n.resolve {
-			String(localized: "First Aired", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'First Aired' search filter label.")
+			String(
+                localized: "First Aired",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'First Aired' search filter label."
+            )
 		}
 	}
 	/// The 'Astrological Sign' search filter label.
@@ -1817,7 +2000,13 @@ extension L10n {
 	/// - Tag: L10n-astrologicalSign
 	static var astrologicalSign: String {
 		L10n.resolve {
-			String(localized: "Astrological Sign", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Astrological Sign' search filter label.")
+			String(
+                localized: "Astrological Sign",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Astrological Sign' search filter label."
+            )
 		}
 	}
 	/// The 'Weight' search filter label.
@@ -1825,7 +2014,13 @@ extension L10n {
 	/// - Tag: L10n-weight
 	static var weight: String {
 		L10n.resolve {
-			String(localized: "Weight", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Weight' search filter label.")
+			String(
+                localized: "Weight",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Weight' search filter label."
+            )
 		}
 	}
 	/// The 'Waist' search filter label.
@@ -1833,7 +2028,13 @@ extension L10n {
 	/// - Tag: L10n-waist
 	static var waist: String {
 		L10n.resolve {
-			String(localized: "Waist", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Waist' search filter label.")
+			String(
+                localized: "Waist",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Waist' search filter label."
+            )
 		}
 	}
 	/// The 'Specials' search filter label.
@@ -1841,7 +2042,13 @@ extension L10n {
 	/// - Tag: L10n-specials
 	static var specials: String {
 		L10n.resolve {
-			String(localized: "Specials", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Specials' search filter label.")
+			String(
+                localized: "Specials",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Specials' search filter label."
+            )
 		}
 	}
 	/// The 'Publication Time' search filter label.
@@ -1849,7 +2056,13 @@ extension L10n {
 	/// - Tag: L10n-publicationTime
 	static var publicationTime: String {
 		L10n.resolve {
-			String(localized: "Publication Time", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Publication Time' search filter label.")
+			String(
+                localized: "Publication Time",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Publication Time' search filter label."
+            )
 		}
 	}
 	/// The 'Premieres' search filter label.
@@ -1857,7 +2070,13 @@ extension L10n {
 	/// - Tag: L10n-premieres
 	static var premieres: String {
 		L10n.resolve {
-			String(localized: "Premieres", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Premieres' search filter label.")
+			String(
+                localized: "Premieres",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Premieres' search filter label."
+            )
 		}
 	}
 	/// The 'Pages' search filter label.
@@ -1865,7 +2084,13 @@ extension L10n {
 	/// - Tag: L10n-pages
 	static var pages: String {
 		L10n.resolve {
-			String(localized: "Pages", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Pages' search filter label.")
+			String(
+                localized: "Pages",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Pages' search filter label."
+            )
 		}
 	}
 	/// The 'Number Total' search filter label.
@@ -1873,7 +2098,13 @@ extension L10n {
 	/// - Tag: L10n-numberTotal
 	static var numberTotal: String {
 		L10n.resolve {
-			String(localized: "Number Total", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Number Total' search filter label.")
+			String(
+                localized: "Number Total",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Number Total' search filter label."
+            )
 		}
 	}
 	/// The 'Last Published' search filter label.
@@ -1881,7 +2112,13 @@ extension L10n {
 	/// - Tag: L10n-lastPublished
 	static var lastPublished: String {
 		L10n.resolve {
-			String(localized: "Last Published", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Last Published' search filter label.")
+			String(
+                localized: "Last Published",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Last Published' search filter label."
+            )
 		}
 	}
 	/// The 'Hip' search filter label.
@@ -1889,7 +2126,13 @@ extension L10n {
 	/// - Tag: L10n-hip
 	static var hip: String {
 		L10n.resolve {
-			String(localized: "Hip", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Hip' search filter label.")
+			String(
+                localized: "Hip",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Hip' search filter label."
+            )
 		}
 	}
 	/// The 'Height' search filter label.
@@ -1897,7 +2140,13 @@ extension L10n {
 	/// - Tag: L10n-height
 	static var height: String {
 		L10n.resolve {
-			String(localized: "Height", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Height' search filter label.")
+			String(
+                localized: "Height",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Height' search filter label."
+            )
 		}
 	}
 	/// The 'Finales' search filter label.
@@ -1905,7 +2154,13 @@ extension L10n {
 	/// - Tag: L10n-finales
 	static var finales: String {
 		L10n.resolve {
-			String(localized: "Finales", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Finales' search filter label.")
+			String(
+                localized: "Finales",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Finales' search filter label."
+            )
 		}
 	}
 	/// The 'Fillers' search filter label.
@@ -1913,7 +2168,13 @@ extension L10n {
 	/// - Tag: L10n-fillers
 	static var fillers: String {
 		L10n.resolve {
-			String(localized: "Fillers", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Fillers' search filter label.")
+			String(
+                localized: "Fillers",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Fillers' search filter label."
+            )
 		}
 	}
 	/// The 'Deceased Date' search filter label.
@@ -1921,7 +2182,13 @@ extension L10n {
 	/// - Tag: L10n-deceasedDate
 	static var deceasedDate: String {
 		L10n.resolve {
-			String(localized: "Deceased Date", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Deceased Date' search filter label.")
+			String(
+                localized: "Deceased Date",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Deceased Date' search filter label."
+            )
 		}
 	}
 	/// The 'Bust' search filter label.
@@ -1929,7 +2196,13 @@ extension L10n {
 	/// - Tag: L10n-bust
 	static var bust: String {
 		L10n.resolve {
-			String(localized: "Bust", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Bust' search filter label.")
+			String(
+                localized: "Bust",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Bust' search filter label."
+            )
 		}
 	}
 	/// The 'Birth Month' search filter label.
@@ -1937,7 +2210,13 @@ extension L10n {
 	/// - Tag: L10n-birthMonth
 	static var birthMonth: String {
 		L10n.resolve {
-			String(localized: "Birth Month", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Birth Month' search filter label.")
+			String(
+                localized: "Birth Month",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Birth Month' search filter label."
+            )
 		}
 	}
 	/// The 'Birth Day' search filter label.
@@ -1945,7 +2224,13 @@ extension L10n {
 	/// - Tag: L10n-birthDay
 	static var birthDay: String {
 		L10n.resolve {
-			String(localized: "Birth Day", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Birth Day' search filter label.")
+			String(
+                localized: "Birth Day",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Birth Day' search filter label."
+            )
 		}
 	}
 	/// The 'Birth Date' search filter label.
@@ -1953,7 +2238,13 @@ extension L10n {
 	/// - Tag: L10n-birthDate
 	static var birthDate: String {
 		L10n.resolve {
-			String(localized: "Birth Date", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Birth Date' search filter label.")
+			String(
+                localized: "Birth Date",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Birth Date' search filter label."
+            )
 		}
 	}
 	/// The 'Air Time' search filter label.
@@ -1961,7 +2252,13 @@ extension L10n {
 	/// - Tag: L10n-airTime
 	static var airTime: String {
 		L10n.resolve {
-			String(localized: "Air Time", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Air Time' search filter label.")
+			String(
+                localized: "Air Time",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Air Time' search filter label."
+            )
 		}
 	}
 	/// The 'Air Season' search filter label.
@@ -1969,7 +2266,13 @@ extension L10n {
 	/// - Tag: L10n-airSeason
 	static var airSeason: String {
 		L10n.resolve {
-			String(localized: "Air Season", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Air Season' search filter label.")
+			String(
+                localized: "Air Season",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Air Season' search filter label."
+            )
 		}
 	}
 	/// The 'Air Day' search filter label.
@@ -1977,7 +2280,13 @@ extension L10n {
 	/// - Tag: L10n-airDay
 	static var airDay: String {
 		L10n.resolve {
-			String(localized: "Air Day", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Air Day' search filter label.")
+			String(
+                localized: "Air Day",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Air Day' search filter label."
+            )
 		}
 	}
 	/// The 'Age (years)' search filter label.
@@ -1985,7 +2294,12 @@ extension L10n {
 	/// - Tag: L10n-ageYears
 	static var ageYears: String {
 		L10n.resolve {
-			String(localized: "Age (years)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Age (years)' search filter label.")
+			String(
+                localized: "Age (years)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Age (years)' search filter label.")
 		}
 	}
 	/// The 'Address' search filter label.
@@ -1993,7 +2307,13 @@ extension L10n {
 	/// - Tag: L10n-address
 	static var address: String {
 		L10n.resolve {
-			String(localized: "Address", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Address' search filter label.")
+			String(
+                localized: "Address",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Address' search filter label."
+            )
 		}
 	}
 	/// The 'Duration (minutes)' search filter label.
@@ -2001,7 +2321,12 @@ extension L10n {
 	/// - Tag: L10n-durationMinutes
 	static var durationMinutes: String {
 		L10n.resolve {
-			String(localized: "Duration (minutes)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Duration (minutes)' search filter label.")
+			String(
+                localized: "Duration (minutes)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Duration (minutes)' search filter label.")
 		}
 	}
 	/// The 'Shown' filter option label.
@@ -2009,7 +2334,13 @@ extension L10n {
 	/// - Tag: L10n-shown
 	static var shown: String {
 		L10n.resolve {
-			String(localized: "Shown", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Shown' filter option label.")
+			String(
+                localized: "Shown",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Shown' filter option label."
+            )
 		}
 	}
 	/// The 'Hidden' filter option label.
@@ -2017,7 +2348,13 @@ extension L10n {
 	/// - Tag: L10n-hidden
 	static var hidden: String {
 		L10n.resolve {
-			String(localized: "Hidden", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Hidden' filter option label.")
+			String(
+                localized: "Hidden",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Hidden' filter option label."
+            )
 		}
 	}
 
@@ -2027,7 +2364,13 @@ extension L10n {
 	/// - Tag: L10n-toBeAnnounced
 	static var toBeAnnounced: String {
 		L10n.resolve {
-			String(localized: "To Be Announced", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'To Be Announced'.")
+			String(
+                localized: "To Be Announced",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'To Be Announced'."
+            )
 		}
 	}
 	/// The display value 'Not Airing Yet'.
@@ -2035,7 +2378,13 @@ extension L10n {
 	/// - Tag: L10n-notAiringYet
 	static var notAiringYet: String {
 		L10n.resolve {
-			String(localized: "Not Airing Yet", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Not Airing Yet'.")
+			String(
+                localized: "Not Airing Yet",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Not Airing Yet'."
+            )
 		}
 	}
 	/// The display value 'Currently Airing'.
@@ -2043,7 +2392,13 @@ extension L10n {
 	/// - Tag: L10n-currentlyAiring
 	static var currentlyAiring: String {
 		L10n.resolve {
-			String(localized: "Currently Airing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Currently Airing'.")
+			String(
+                localized: "Currently Airing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Currently Airing'."
+            )
 		}
 	}
 	/// The display value 'Finished Airing'.
@@ -2051,7 +2406,13 @@ extension L10n {
 	/// - Tag: L10n-finishedAiring
 	static var finishedAiring: String {
 		L10n.resolve {
-			String(localized: "Finished Airing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Finished Airing'.")
+			String(
+                localized: "Finished Airing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Finished Airing'."
+            )
 		}
 	}
 	/// The display value 'On Hiatus'.
@@ -2059,7 +2420,13 @@ extension L10n {
 	/// - Tag: L10n-onHiatus
 	static var onHiatus: String {
 		L10n.resolve {
-			String(localized: "On Hiatus", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'On Hiatus'.")
+			String(
+                localized: "On Hiatus",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'On Hiatus'."
+            )
 		}
 	}
 	/// The display value 'Discontinued'.
@@ -2067,7 +2434,13 @@ extension L10n {
 	/// - Tag: L10n-discontinued
 	static var discontinued: String {
 		L10n.resolve {
-			String(localized: "Discontinued", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Discontinued'.")
+			String(
+                localized: "Discontinued",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Discontinued'."
+            )
 		}
 	}
 	/// The display value 'Not Published Yet'.
@@ -2075,7 +2448,13 @@ extension L10n {
 	/// - Tag: L10n-notPublishedYet
 	static var notPublishedYet: String {
 		L10n.resolve {
-			String(localized: "Not Published Yet", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Not Published Yet'.")
+			String(
+                localized: "Not Published Yet",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Not Published Yet'."
+            )
 		}
 	}
 	/// The display value 'Currently Publishing'.
@@ -2083,7 +2462,13 @@ extension L10n {
 	/// - Tag: L10n-currentlyPublishing
 	static var currentlyPublishing: String {
 		L10n.resolve {
-			String(localized: "Currently Publishing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Currently Publishing'.")
+			String(
+                localized: "Currently Publishing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Currently Publishing'."
+            )
 		}
 	}
 	/// The display value 'Finished Publishing'.
@@ -2091,7 +2476,13 @@ extension L10n {
 	/// - Tag: L10n-finishedPublishing
 	static var finishedPublishing: String {
 		L10n.resolve {
-			String(localized: "Finished Publishing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Finished Publishing'.")
+			String(
+                localized: "Finished Publishing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Finished Publishing'."
+            )
 		}
 	}
 	/// The display value 'Alive'.
@@ -2099,7 +2490,13 @@ extension L10n {
 	/// - Tag: L10n-alive
 	static var alive: String {
 		L10n.resolve {
-			String(localized: "Alive", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Alive'.")
+			String(
+                localized: "Alive",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Alive'."
+            )
 		}
 	}
 	/// The display value 'Deceased'.
@@ -2107,7 +2504,13 @@ extension L10n {
 	/// - Tag: L10n-deceased
 	static var deceased: String {
 		L10n.resolve {
-			String(localized: "Deceased", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Deceased'.")
+			String(
+                localized: "Deceased",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Deceased'."
+            )
 		}
 	}
 	/// The display value 'Missing'.
@@ -2115,7 +2518,13 @@ extension L10n {
 	/// - Tag: L10n-missing
 	static var missing: String {
 		L10n.resolve {
-			String(localized: "Missing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Missing'.")
+			String(
+                localized: "Missing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Missing'."
+            )
 		}
 	}
 	/// The display value 'TV'.
@@ -2123,7 +2532,13 @@ extension L10n {
 	/// - Tag: L10n-tv
 	static var tv: String {
 		L10n.resolve {
-			String(localized: "TV", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'TV'.")
+			String(
+                localized: "TV",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'TV'."
+            )
 		}
 	}
 	/// The display value 'OVA'.
@@ -2131,7 +2546,13 @@ extension L10n {
 	/// - Tag: L10n-ova
 	static var ova: String {
 		L10n.resolve {
-			String(localized: "OVA", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'OVA'.")
+			String(
+                localized: "OVA",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'OVA'."
+            )
 		}
 	}
 	/// The display value 'Movie'.
@@ -2139,7 +2560,13 @@ extension L10n {
 	/// - Tag: L10n-movie
 	static var movie: String {
 		L10n.resolve {
-			String(localized: "Movie", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Movie'.")
+			String(
+                localized: "Movie",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Movie'."
+            )
 		}
 	}
 	/// The display value 'Special'.
@@ -2147,7 +2574,13 @@ extension L10n {
 	/// - Tag: L10n-special
 	static var special: String {
 		L10n.resolve {
-			String(localized: "Special", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Special'.")
+			String(
+                localized: "Special",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Special'."
+            )
 		}
 	}
 	/// The display value 'ONA'.
@@ -2155,7 +2588,13 @@ extension L10n {
 	/// - Tag: L10n-ona
 	static var ona: String {
 		L10n.resolve {
-			String(localized: "ONA", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'ONA'.")
+			String(
+                localized: "ONA",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'ONA'."
+            )
 		}
 	}
 	/// The display value 'Music'.
@@ -2163,7 +2602,13 @@ extension L10n {
 	/// - Tag: L10n-music
 	static var music: String {
 		L10n.resolve {
-			String(localized: "Music", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Music'.")
+			String(
+                localized: "Music",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Music'."
+            )
 		}
 	}
 	/// The display value 'DLC'.
@@ -2171,7 +2616,13 @@ extension L10n {
 	/// - Tag: L10n-dlc
 	static var dlc: String {
 		L10n.resolve {
-			String(localized: "DLC", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'DLC'.")
+			String(
+                localized: "DLC",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'DLC'."
+            )
 		}
 	}
 	/// The display value 'MOD'.
@@ -2179,7 +2630,13 @@ extension L10n {
 	/// - Tag: L10n-mod
 	static var mod: String {
 		L10n.resolve {
-			String(localized: "MOD", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'MOD'.")
+			String(
+                localized: "MOD",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'MOD'."
+            )
 		}
 	}
 	/// The display value 'Full Game'.
@@ -2187,7 +2644,13 @@ extension L10n {
 	/// - Tag: L10n-fullGame
 	static var fullGame: String {
 		L10n.resolve {
-			String(localized: "Full Game", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Full Game'.")
+			String(
+                localized: "Full Game",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Full Game'."
+            )
 		}
 	}
 	/// The display value 'Manga'.
@@ -2195,7 +2658,13 @@ extension L10n {
 	/// - Tag: L10n-manga
 	static var manga: String {
 		L10n.resolve {
-			String(localized: "Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Manga'.")
+			String(
+                localized: "Manga",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Manga'."
+            )
 		}
 	}
 	/// The display value 'Game'.
@@ -2203,7 +2672,13 @@ extension L10n {
 	/// - Tag: L10n-game
 	static var game: String {
 		L10n.resolve {
-			String(localized: "Game", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Game'.")
+			String(
+                localized: "Game",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Game'."
+            )
 		}
 	}
 	/// The display value 'Act'.
@@ -2211,7 +2686,13 @@ extension L10n {
 	/// - Tag: L10n-act
 	static var act: String {
 		L10n.resolve {
-			String(localized: "Act", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Act'.")
+			String(
+                localized: "Act",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Act'."
+            )
 		}
 	}
 	/// The display value 'Record'.
@@ -2219,7 +2700,13 @@ extension L10n {
 	/// - Tag: L10n-record
 	static var record: String {
 		L10n.resolve {
-			String(localized: "Record", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Record'.")
+			String(
+                localized: "Record",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Record'."
+            )
 		}
 	}
 	/// The display value 'Original'.
@@ -2227,7 +2714,13 @@ extension L10n {
 	/// - Tag: L10n-original
 	static var original: String {
 		L10n.resolve {
-			String(localized: "Original", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Original'.")
+			String(
+                localized: "Original",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Original'."
+            )
 		}
 	}
 	/// The display value 'Book'.
@@ -2235,7 +2728,13 @@ extension L10n {
 	/// - Tag: L10n-book
 	static var book: String {
 		L10n.resolve {
-			String(localized: "Book", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Book'.")
+			String(
+                localized: "Book",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Book'."
+            )
 		}
 	}
 	/// The display value 'Picture Book'.
@@ -2243,7 +2742,13 @@ extension L10n {
 	/// - Tag: L10n-pictureBook
 	static var pictureBook: String {
 		L10n.resolve {
-			String(localized: "Picture Book", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Picture Book'.")
+			String(
+                localized: "Picture Book",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Picture Book'."
+            )
 		}
 	}
 	/// The display value 'Digital Manga'.
@@ -2251,7 +2756,13 @@ extension L10n {
 	/// - Tag: L10n-digitalManga
 	static var digitalManga: String {
 		L10n.resolve {
-			String(localized: "Digital Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Digital Manga'.")
+			String(
+                localized: "Digital Manga",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Digital Manga'."
+            )
 		}
 	}
 	/// The display value '4-Koma Manga'.
@@ -2259,7 +2770,13 @@ extension L10n {
 	/// - Tag: L10n-fourKomaManga
 	static var fourKomaManga: String {
 		L10n.resolve {
-			String(localized: "4-Koma Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value '4-Koma Manga'.")
+			String(
+                localized: "4-Koma Manga",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value '4-Koma Manga'."
+            )
 		}
 	}
 	/// The display value 'Web Manga'.
@@ -2267,7 +2784,13 @@ extension L10n {
 	/// - Tag: L10n-webManga
 	static var webManga: String {
 		L10n.resolve {
-			String(localized: "Web Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Web Manga'.")
+			String(
+                localized: "Web Manga",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Web Manga'."
+            )
 		}
 	}
 	/// The display value 'Novel'.
@@ -2275,7 +2798,13 @@ extension L10n {
 	/// - Tag: L10n-novel
 	static var novel: String {
 		L10n.resolve {
-			String(localized: "Novel", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Novel'.")
+			String(
+                localized: "Novel",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Novel'."
+            )
 		}
 	}
 	/// The display value 'Light Novel'.
@@ -2283,7 +2812,13 @@ extension L10n {
 	/// - Tag: L10n-lightNovel
 	static var lightNovel: String {
 		L10n.resolve {
-			String(localized: "Light Novel", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Light Novel'.")
+			String(
+                localized: "Light Novel",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Light Novel'."
+            )
 		}
 	}
 	/// The display value 'Visual Novel'.
@@ -2291,7 +2826,13 @@ extension L10n {
 	/// - Tag: L10n-visualNovel
 	static var visualNovel: String {
 		L10n.resolve {
-			String(localized: "Visual Novel", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Visual Novel'.")
+			String(
+                localized: "Visual Novel",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Visual Novel'."
+            )
 		}
 	}
 	/// The display value 'Card Game'.
@@ -2299,7 +2840,13 @@ extension L10n {
 	/// - Tag: L10n-cardGame
 	static var cardGame: String {
 		L10n.resolve {
-			String(localized: "Card Game", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Card Game'.")
+			String(
+                localized: "Card Game",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Card Game'."
+            )
 		}
 	}
 	/// The display value 'Radio'.
@@ -2307,7 +2854,13 @@ extension L10n {
 	/// - Tag: L10n-radio
 	static var radio: String {
 		L10n.resolve {
-			String(localized: "Radio", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Radio'.")
+			String(
+                localized: "Radio",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Radio'."
+            )
 		}
 	}
 	/// The display value 'Web novel'.
@@ -2315,7 +2868,13 @@ extension L10n {
 	/// - Tag: L10n-webNovel
 	static var webNovel: String {
 		L10n.resolve {
-			String(localized: "Web novel", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Web novel'.")
+			String(
+                localized: "Web novel",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Web novel'."
+            )
 		}
 	}
 	/// The display value 'Mixed media'.
@@ -2323,7 +2882,13 @@ extension L10n {
 	/// - Tag: L10n-mixedMedia
 	static var mixedMedia: String {
 		L10n.resolve {
-			String(localized: "Mixed media", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Mixed media'.")
+			String(
+                localized: "Mixed media",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Mixed media'."
+            )
 		}
 	}
 	/// The display value 'Aries'.
@@ -2331,7 +2896,13 @@ extension L10n {
 	/// - Tag: L10n-aries
 	static var aries: String {
 		L10n.resolve {
-			String(localized: "Aries", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Aries'.")
+			String(
+                localized: "Aries",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Aries'."
+            )
 		}
 	}
 	/// The display value 'Taurus'.
@@ -2339,7 +2910,13 @@ extension L10n {
 	/// - Tag: L10n-taurus
 	static var taurus: String {
 		L10n.resolve {
-			String(localized: "Taurus", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Taurus'.")
+			String(
+                localized: "Taurus",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Taurus'."
+            )
 		}
 	}
 	/// The display value 'Gemini'.
@@ -2347,7 +2924,13 @@ extension L10n {
 	/// - Tag: L10n-gemini
 	static var gemini: String {
 		L10n.resolve {
-			String(localized: "Gemini", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Gemini'.")
+			String(
+                localized: "Gemini",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Gemini'."
+            )
 		}
 	}
 	/// The display value 'Cancer'.
@@ -2355,7 +2938,13 @@ extension L10n {
 	/// - Tag: L10n-cancer
 	static var cancer: String {
 		L10n.resolve {
-			String(localized: "Cancer", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Cancer'.")
+			String(
+                localized: "Cancer",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Cancer'."
+            )
 		}
 	}
 	/// The display value 'Leo'.
@@ -2363,7 +2952,13 @@ extension L10n {
 	/// - Tag: L10n-leo
 	static var leo: String {
 		L10n.resolve {
-			String(localized: "Leo", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Leo'.")
+			String(
+                localized: "Leo",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Leo'."
+            )
 		}
 	}
 	/// The display value 'Virgo'.
@@ -2371,7 +2966,13 @@ extension L10n {
 	/// - Tag: L10n-virgo
 	static var virgo: String {
 		L10n.resolve {
-			String(localized: "Virgo", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Virgo'.")
+			String(
+                localized: "Virgo",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Virgo'."
+            )
 		}
 	}
 	/// The display value 'Libra'.
@@ -2379,7 +2980,13 @@ extension L10n {
 	/// - Tag: L10n-libra
 	static var libra: String {
 		L10n.resolve {
-			String(localized: "Libra", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Libra'.")
+			String(
+                localized: "Libra",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Libra'."
+            )
 		}
 	}
 	/// The display value 'Scorpio'.
@@ -2387,7 +2994,13 @@ extension L10n {
 	/// - Tag: L10n-scorpio
 	static var scorpio: String {
 		L10n.resolve {
-			String(localized: "Scorpio", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Scorpio'.")
+			String(
+                localized: "Scorpio",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Scorpio'."
+            )
 		}
 	}
 	/// The display value 'Sagittarius'.
@@ -2395,7 +3008,13 @@ extension L10n {
 	/// - Tag: L10n-sagittarius
 	static var sagittarius: String {
 		L10n.resolve {
-			String(localized: "Sagittarius", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Sagittarius'.")
+			String(
+                localized: "Sagittarius",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Sagittarius'."
+            )
 		}
 	}
 	/// The display value 'Capricorn'.
@@ -2403,7 +3022,13 @@ extension L10n {
 	/// - Tag: L10n-capricorn
 	static var capricorn: String {
 		L10n.resolve {
-			String(localized: "Capricorn", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Capricorn'.")
+			String(
+                localized: "Capricorn",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Capricorn'."
+            )
 		}
 	}
 	/// The display value 'Aquarius'.
@@ -2411,7 +3036,13 @@ extension L10n {
 	/// - Tag: L10n-aquarius
 	static var aquarius: String {
 		L10n.resolve {
-			String(localized: "Aquarius", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Aquarius'.")
+			String(
+                localized: "Aquarius",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Aquarius'."
+            )
 		}
 	}
 	/// The display value 'Pisces'.
@@ -2419,7 +3050,13 @@ extension L10n {
 	/// - Tag: L10n-pisces
 	static var pisces: String {
 		L10n.resolve {
-			String(localized: "Pisces", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Pisces'.")
+			String(
+                localized: "Pisces",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Pisces'."
+            )
 		}
 	}
 	/// The display value 'Detailed'.
@@ -2427,7 +3064,13 @@ extension L10n {
 	/// - Tag: L10n-detailed
 	static var detailed: String {
 		L10n.resolve {
-			String(localized: "Detailed", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Detailed'.")
+			String(
+                localized: "Detailed",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Detailed'."
+            )
 		}
 	}
 	/// The display value 'Compact'.
@@ -2435,7 +3078,13 @@ extension L10n {
 	/// - Tag: L10n-compact
 	static var compact: String {
 		L10n.resolve {
-			String(localized: "Compact", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Compact'.")
+			String(
+                localized: "Compact",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Compact'."
+            )
 		}
 	}
 	/// The display value 'List'.
@@ -2443,7 +3092,13 @@ extension L10n {
 	/// - Tag: L10n-list
 	static var list: String {
 		L10n.resolve {
-			String(localized: "List", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'List'.")
+			String(
+                localized: "List",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'List'."
+            )
 		}
 	}
 	/// The display value 'Table'.
@@ -2451,7 +3106,13 @@ extension L10n {
 	/// - Tag: L10n-table
 	static var table: String {
 		L10n.resolve {
-			String(localized: "Table", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Table'.")
+			String(
+                localized: "Table",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Table'."
+            )
 		}
 	}
 	/// The display value 'Disabled'.
@@ -2459,7 +3120,13 @@ extension L10n {
 	/// - Tag: L10n-disabled
 	static var disabled: String {
 		L10n.resolve {
-			String(localized: "Disabled", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Disabled'.")
+			String(
+                localized: "Disabled",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Disabled'."
+            )
 		}
 	}
 	/// The display value 'Shake'.
@@ -2467,7 +3134,13 @@ extension L10n {
 	/// - Tag: L10n-shake
 	static var shake: String {
 		L10n.resolve {
-			String(localized: "Shake", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Shake'.")
+			String(
+                localized: "Shake",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Shake'."
+            )
 		}
 	}
 	/// The display value 'Scale'.
@@ -2475,7 +3148,13 @@ extension L10n {
 	/// - Tag: L10n-scale
 	static var scale: String {
 		L10n.resolve {
-			String(localized: "Scale", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Scale'.")
+			String(
+                localized: "Scale",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Scale'."
+            )
 		}
 	}
 	/// The display value 'Anvil'.
@@ -2483,7 +3162,13 @@ extension L10n {
 	/// - Tag: L10n-anvil
 	static var anvil: String {
 		L10n.resolve {
-			String(localized: "Anvil", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Anvil'.")
+			String(
+                localized: "Anvil",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Anvil'."
+            )
 		}
 	}
 	/// The display value 'Spin'.
@@ -2491,7 +3176,13 @@ extension L10n {
 	/// - Tag: L10n-spin
 	static var spin: String {
 		L10n.resolve {
-			String(localized: "Spin", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Spin'.")
+			String(
+                localized: "Spin",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Spin'."
+            )
 		}
 	}
 	/// The display value 'Heartbeat'.
@@ -2499,7 +3190,13 @@ extension L10n {
 	/// - Tag: L10n-heartbeat
 	static var heartbeat: String {
 		L10n.resolve {
-			String(localized: "Heartbeat", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Heartbeat'.")
+			String(
+                localized: "Heartbeat",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Heartbeat'."
+            )
 		}
 	}
 	/// The display value 'Bounce'.
@@ -2507,7 +3204,13 @@ extension L10n {
 	/// - Tag: L10n-bounce
 	static var bounce: String {
 		L10n.resolve {
-			String(localized: "Bounce", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display value 'Bounce'.")
+			String(
+                localized: "Bounce",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Bounce'."
+            )
 		}
 	}
 
@@ -2515,133 +3218,265 @@ extension L10n {
 	/// The alert title shown when favoriting fails.
 	static var cantFavorite: String {
 		L10n.resolve {
-			String(localized: "Can't Favorite", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert title shown when favoriting fails.")
+			String(
+                localized: "Can't Favorite",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert title shown when favoriting fails."
+            )
 		}
 	}
 	/// The alert title shown when adding a reminder fails.
 	static var cantAddReminder: String {
 		L10n.resolve {
-			String(localized: "Can't Add Reminder", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert title shown when adding a reminder fails.")
+			String(
+                localized: "Can't Add Reminder",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert title shown when adding a reminder fails."
+            )
 		}
 	}
 	/// The context-menu action that removes a notification.
 	static var removeNotification: String {
 		L10n.resolve {
-			String(localized: "Remove Notification", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The context-menu action that removes a notification.")
+			String(
+                localized: "Remove Notification",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The context-menu action that removes a notification."
+            )
 		}
 	}
 	/// The context-menu action that marks a notification as read.
 	static var markNotificationRead: String {
 		L10n.resolve {
-			String(localized: "Mark as Read", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The context-menu action that marks a notification as read.")
+			String(
+                localized: "Mark as Read",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The context-menu action that marks a notification as read."
+            )
 		}
 	}
 	/// The context-menu action that marks a notification as unread.
 	static var markNotificationUnread: String {
 		L10n.resolve {
-			String(localized: "Mark as Unread", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The context-menu action that marks a notification as unread.")
+			String(
+                localized: "Mark as Unread",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The context-menu action that marks a notification as unread."
+            )
 		}
 	}
 	/// The alert title explaining how to remove a song from Apple Music.
 	static var howToRemove: String {
 		L10n.resolve {
-			String(localized: "How to Remove", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert title explaining how to remove a song from Apple Music.")
+			String(
+                localized: "How to Remove",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert title explaining how to remove a song from Apple Music."
+            )
 		}
 	}
 	/// The alert message explaining how to remove a song from Apple Music.
 	static var songRemovalMessage: String {
 		L10n.resolve {
-			String(localized: "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert message explaining how to remove a song from Apple Music.")
+			String(
+                localized: "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert message explaining how to remove a song from Apple Music."
+            )
 		}
 	}
 	/// The menu action shown when a song is already in the Apple Music library.
 	static var inAppleMusicLibrary: String {
 		L10n.resolve {
-			String(localized: "In Apple Music Library", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The menu action shown when a song is already in the Apple Music library.")
+			String(
+                localized: "In Apple Music Library",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The menu action shown when a song is already in the Apple Music library."
+            )
 		}
 	}
 	/// The menu action that adds a song to the Apple Music library.
 	static var addToAppleMusic: String {
 		L10n.resolve {
-			String(localized: "Add to Apple Music", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The menu action that adds a song to the Apple Music library.")
+			String(
+                localized: "Add to Apple Music",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The menu action that adds a song to the Apple Music library."
+            )
 		}
 	}
 	/// The share text for a show.
 	static func shareShow(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "Track your progress of \"\(title)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a show, where the placeholder is the title.")
+			String(
+                localized: "Track your progress of \"\(title)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a show, where the placeholder is the title."
+            )
 		}
 	}
 	/// The share text for a literature.
 	static func shareLiterature(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "Track your reading progress of \"\(title)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a literature, where the placeholder is the title.")
+			String(
+                localized: "Track your reading progress of \"\(title)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a literature, where the placeholder is the title."
+            )
 		}
 	}
 	/// The share text for a game.
 	static func shareGame(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "Track your playing progress of \"\(title)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a game, where the placeholder is the title.")
+			String(
+                localized: "Track your playing progress of \"\(title)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a game, where the placeholder is the title."
+            )
 		}
 	}
 	/// The share text for an episode.
 	static func shareEpisode(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "Track your watch progress of \"\(title)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for an episode, where the placeholder is the title.")
+			String(
+                localized: "Track your watch progress of \"\(title)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for an episode, where the placeholder is the title."
+            )
 		}
 	}
 	/// The share text for a season.
 	static func shareSeason(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "You should watch \"\(title)\" season via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a season, where the placeholder is the title.")
+			String(
+                localized: "You should watch \"\(title)\" season via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a season, where the placeholder is the title."
+            )
 		}
 	}
 	/// The share text for a studio.
 	static func shareStudio(_ name: String) -> String {
 		L10n.resolve {
-			String(localized: "Check out shows made by \"\(name)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a studio, where the placeholder is the name.")
+			String(
+                localized: "Check out shows made by \"\(name)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a studio, where the placeholder is the name."
+            )
 		}
 	}
 	/// The share text for a person.
 	static func sharePerson(_ name: String) -> String {
 		L10n.resolve {
-			String(localized: "Check out \"\(name)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a person, where the placeholder is the name.")
+			String(
+                localized: "Check out \"\(name)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a person, where the placeholder is the name."
+            )
 		}
 	}
 	/// The share text for a character.
 	static func shareCharacter(_ name: String) -> String {
 		L10n.resolve {
-			String(localized: "You should check out \"\(name)\" via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a character, where the placeholder is the name.")
+			String(
+                localized: "You should check out \"\(name)\" via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a character, where the placeholder is the name."
+            )
 		}
 	}
 	/// The share text for a voice actor and the character they voice.
 	static func shareCast(_ person: String, _ character: String) -> String {
 		L10n.resolve {
-			String(localized: "TIL, \(person) is the voice actor of \(character) via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a voice actor and the character they voice.")
+			String(
+                localized: "TIL, \(person) is the voice actor of \(character) via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a voice actor and the character they voice."
+            )
 		}
 	}
 	/// The share text for a song.
 	static func shareSong(_ title: String, _ artist: String) -> String {
 		L10n.resolve {
-			String(localized: "Listen to \"\(title)\" by \"\(artist)\" on @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a song, where the placeholders are the title and the artist.")
+			String(
+                localized: "Listen to \"\(title)\" by \"\(artist)\" on @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a song, where the placeholders are the title and the artist."
+            )
 		}
 	}
 	/// The share text for a genre or theme.
 	static func shareDiscover(_ name: String) -> String {
 		L10n.resolve {
-			String(localized: "Discover \(name) shows via @KurozoraApp.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a genre or theme, where the placeholder is the name.")
+			String(
+                localized: "Discover \(name) shows via @KurozoraApp.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a genre or theme, where the placeholder is the name."
+            )
 		}
 	}
 	/// The share text inviting others to follow a user.
 	static func shareFollowUser(_ username: String) -> String {
 		L10n.resolve {
-			String(localized: "Follow \(username) via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text inviting others to follow a user.")
+			String(
+                localized: "Follow \(username) via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text inviting others to follow a user."
+            )
 		}
 	}
 	/// The share text for a user's library.
 	static func shareUserLibrary(_ username: String) -> String {
 		L10n.resolve {
-			String(localized: "Check out \(username)’s library via @KurozoraApp", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The share text for a user's library.")
+			String(
+                localized: "Check out \(username)’s library via @KurozoraApp",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The share text for a user's library."
+            )
 		}
 	}
 
@@ -3065,79 +3900,157 @@ extension L10n {
 	/// The empty-state detail shown when a screen has no details yet.
 	static func noDetailsYet(_ kind: String) -> String {
 		L10n.resolve {
-			String(localized: "This \(kind) doesn't have details yet. Please check back again later.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when a screen has no details yet.")
+			String(
+                localized: "This \(kind) doesn't have details yet. Please check back again later.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when a screen has no details yet."
+            )
 		}
 	}
 	/// The empty-state detail shown when a container has no items of a kind yet.
 	static func noItemsYet(_ container: String, _ items: String) -> String {
 		L10n.resolve {
-			String(localized: "This \(container) doesn't have \(items) yet. Please check back again later.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when a container has no items of a kind yet.")
+			String(
+                localized: "This \(container) doesn't have \(items) yet. Please check back again later.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when a container has no items of a kind yet."
+            )
 		}
 	}
 	/// The empty-state detail shown when a title has no casts yet.
 	static func noCastsYet(_ kind: String) -> String {
 		L10n.resolve {
-			String(localized: "This \(kind) doesn't have casts yet. Please check back again later.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when a title has no casts yet.")
+			String(
+                localized: "This \(kind) doesn't have casts yet. Please check back again later.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when a title has no casts yet."
+            )
 		}
 	}
 	/// The empty-state detail shown when a list could not be fetched, asking to refresh.
 	static func cantGetListRefresh(_ items: String) -> String {
 		L10n.resolve {
-			String(localized: "Can't get \(items) list. Please refresh the page or restart the app and check your WiFi connection.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when a list could not be fetched, asking to refresh.")
+			String(
+                localized: "Can't get \(items) list. Please refresh the page or restart the app and check your WiFi connection.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when a list could not be fetched, asking to refresh."
+            )
 		}
 	}
 	/// The empty-state detail shown when there are no trailers to list.
 	static var noTrailersDetail: String {
 		L10n.resolve {
-			String(localized: "There are no trailers here yet.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when there are no trailers to list.")
+			String(
+                localized: "There are no trailers here yet.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when there are no trailers to list."
+            )
 		}
 	}
 	/// The empty-state title for the show songs list.
 	static var noShowSongs: String {
 		L10n.resolve {
-			String(localized: "No show songs", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state title for the show songs list.")
+			String(
+                localized: "No show songs",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state title for the show songs list."
+            )
 		}
 	}
 	/// The empty-state detail shown when the show songs list could not be fetched.
 	static var cantGetShowSongs: String {
 		L10n.resolve {
-			String(localized: "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The empty-state detail shown when the show songs list could not be fetched.")
+			String(
+                localized: "Can't get show songs list. Please reload the page or restart the app and check your WiFi connection.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The empty-state detail shown when the show songs list could not be fetched."
+            )
 		}
 	}
 	/// The singular word 'show'.
 	static var show: String {
 		L10n.resolve {
-			String(localized: "Show", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'show' as a media type.")
+			String(
+                localized: "Show",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'show' as a media type."
+            )
 		}
 	}
 	/// The singular word 'literature'.
 	static var literature: String {
 		L10n.resolve {
-			String(localized: "Literature", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'literature' as a media type.")
+			String(
+                localized: "Literature",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'literature' as a media type."
+            )
 		}
 	}
 	/// The singular word 'episode'.
 	static var episode: String {
 		L10n.resolve {
-			String(localized: "Episode", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'episode'.")
+			String(
+                localized: "Episode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'episode'."
+            )
 		}
 	}
 	/// The singular word 'character'.
 	static var character: String {
 		L10n.resolve {
-			String(localized: "Character", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'character'.")
+			String(
+                localized: "Character",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'character'."
+            )
 		}
 	}
 	/// The singular word 'person'.
 	static var person: String {
 		L10n.resolve {
-			String(localized: "Person", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'person'.")
+			String(
+                localized: "Person",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'person'."
+            )
 		}
 	}
 	/// The singular word 'song'.
 	static var song: String {
 		L10n.resolve {
-			String(localized: "Song", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The singular word 'song'.")
+			String(
+                localized: "Song",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The singular word 'song'."
+            )
 		}
 	}
 
@@ -3145,79 +4058,157 @@ extension L10n {
 	/// The notifications empty-state detail when signed in.
 	static var notificationsEmptyDetail: String {
 		L10n.resolve {
-			String(localized: "When you have notifications, you will see them here!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The notifications empty-state detail when signed in.")
+			String(
+                localized: "When you have notifications, you will see them here!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The notifications empty-state detail when signed in."
+            )
 		}
 	}
 	/// The notifications empty-state detail when signed out.
 	static var notificationsSignedOutDetail: String {
 		L10n.resolve {
-			String(localized: "Notifications are only available to registered Kurozora users.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The notifications empty-state detail when signed out.")
+			String(
+                localized: "Notifications are only available to registered Kurozora users.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The notifications empty-state detail when signed out."
+            )
 		}
 	}
 	/// The library empty-state prompt to add an item to a list.
 	static func addItemToList(_ kind: String, _ status: String) -> String {
 		L10n.resolve {
-			String(localized: "Add a \(kind) to your \(status) list and it will show up here.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library empty-state prompt to add an item to a list.")
+			String(
+                localized: "Add a \(kind) to your \(status) list and it will show up here.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library empty-state prompt to add an item to a list."
+            )
 		}
 	}
 	/// The library empty-state detail for another user's empty list.
 	static func userHasNoInList(_ username: String, _ items: String, _ status: String) -> String {
 		L10n.resolve {
-			String(localized: "\(username) has no \(items) in their \(status) list.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library empty-state detail for another user's empty list.")
+			String(
+                localized: "\(username) has no \(items) in their \(status) list.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library empty-state detail for another user's empty list."
+            )
 		}
 	}
 	/// The library empty-state detail shown when signed out.
 	static var librarySignedOutDetail: String {
 		L10n.resolve {
-			String(localized: "Library is currently available to registered Kurozora users only.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library empty-state detail shown when signed out.")
+			String(
+                localized: "Library is currently available to registered Kurozora users only.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library empty-state detail shown when signed out."
+            )
 		}
 	}
 	/// The profile feed empty-state detail for your own profile.
 	static var feedEmptyDetailSelf: String {
 		L10n.resolve {
-			String(localized: "There are no messages on your feed!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The profile feed empty-state detail for your own profile.")
+			String(
+                localized: "There are no messages on your feed!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The profile feed empty-state detail for your own profile."
+            )
 		}
 	}
 	/// The profile feed empty-state detail for another user's profile.
 	static var feedEmptyDetailOther: String {
 		L10n.resolve {
-			String(localized: "There are no messages on this feed!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The profile feed empty-state detail for another user's profile.")
+			String(
+                localized: "There are no messages on this feed!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The profile feed empty-state detail for another user's profile."
+            )
 		}
 	}
 	/// The reviews empty-state detail for your own profile.
 	static var reviewsEmptySelfDetail: String {
 		L10n.resolve {
-			String(localized: "Ratings and reviews you submit will appear here. ", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The reviews empty-state detail for your own profile.")
+			String(
+                localized: "Ratings and reviews you submit will appear here. ",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The reviews empty-state detail for your own profile."
+            )
 		}
 	}
 	/// The reviews empty-state detail for another user's profile.
 	static func reviewsEmptyOtherDetail(_ username: String) -> String {
 		L10n.resolve {
-			String(localized: "\(username) has not submitted any reviews yet. Check back later.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The reviews empty-state detail for another user's profile.")
+			String(
+                localized: "\(username) has not submitted any reviews yet. Check back later.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The reviews empty-state detail for another user's profile."
+            )
 		}
 	}
 	/// The reviews list empty-state detail.
 	static var beFirstToReview: String {
 		L10n.resolve {
-			String(localized: "Be the first to place a review!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The reviews list empty-state detail.")
+			String(
+                localized: "Be the first to place a review!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The reviews list empty-state detail."
+            )
 		}
 	}
 	/// The alert message shown when an action is unavailable for a media type.
 	static var notAvailableForType: String {
 		L10n.resolve {
-			String(localized: "Not available yet for this type.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert message shown when an action is unavailable for a media type.")
+			String(
+                localized: "Not available yet for this type.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert message shown when an action is unavailable for a media type."
+            )
 		}
 	}
 	/// The favorites empty-state detail for your own profile.
 	static func favoritedWillShowUp(_ items: String) -> String {
 		L10n.resolve {
-			String(localized: "Favorited \(items) will show up on this page!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The favorites empty-state detail for your own profile.")
+			String(
+                localized: "Favorited \(items) will show up on this page!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The favorites empty-state detail for your own profile."
+            )
 		}
 	}
 	/// The favorites empty-state detail for another user's profile.
 	static func userHasntFavorited(_ username: String, _ items: String) -> String {
 		L10n.resolve {
-			String(localized: "\(username) hasn't favorited \(items) yet.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The favorites empty-state detail for another user's profile.")
+			String(
+                localized: "\(username) hasn't favorited \(items) yet.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The favorites empty-state detail for another user's profile."
+            )
 		}
 	}
 
@@ -3225,49 +4216,97 @@ extension L10n {
 	/// The title of the weekly digest screen.
 	static var digest: String {
 		L10n.resolve {
-			String(localized: "Your Week", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the weekly digest screen.")
+			String(
+                localized: "Your Week",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The title of the weekly digest screen."
+            )
 		}
 	}
 	/// The digest stat for the user's watch streak.
 	static func digestWeekStreak(_ weeks: Int) -> String {
 		L10n.resolve {
-			String(localized: "On a \(weeks)-week watch streak!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest stat for the user's watch streak.")
+			String(
+                localized: "On a \(weeks)-week watch streak!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest stat for the user's watch streak."
+            )
 		}
 	}
 	/// The digest stat for the user's next watched-episode milestone.
 	static func digestMilestone(_ remaining: Int, _ milestone: Int) -> String {
 		L10n.resolve {
-			String(localized: "Only \(remaining) episodes to \(milestone) watched episodes!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest stat for the user's next watched-episode milestone.")
+			String(
+                localized: "Only \(remaining) episodes to \(milestone) watched episodes!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest stat for the user's next watched-episode milestone."
+            )
 		}
 	}
 	/// The digest momentum caption above the week's stats.
 	static var digestMomentumCaption: String {
 		L10n.resolve {
-			String(localized: "Your week in numbers", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum caption above the week's stats.")
+			String(
+                localized: "Your week in numbers",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest momentum caption above the week's stats."
+            )
 		}
 	}
 	/// The digest momentum label under the watched-episodes count.
 	static var digestMomentumEpisodesLabel: String {
 		L10n.resolve {
-			String(localized: "episodes watched", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the watched-episodes count.")
+			String(
+                localized: "episodes watched",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest momentum label under the watched-episodes count."
+            )
 		}
 	}
 	/// The digest momentum label under the amount of time watched.
 	static var digestMomentumTimeLabel: String {
 		L10n.resolve {
-			String(localized: "watched", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the amount of time watched.")
+			String(
+                localized: "watched",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest momentum label under the amount of time watched."
+            )
 		}
 	}
 	/// The digest momentum label under the finished-titles count.
 	static var digestMomentumFinishedLabel: String {
 		L10n.resolve {
-			String(localized: "titles finished", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum label under the finished-titles count.")
+			String(
+                localized: "titles finished",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest momentum label under the finished-titles count."
+            )
 		}
 	}
 	/// The digest momentum button linking to the user's Re:CAP.
 	static var digestSeeReCap: String {
 		L10n.resolve {
-			String(localized: "See your Re:CAP", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The digest momentum button linking to the user's Re:CAP.")
+			String(
+                localized: "See your Re:CAP",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The digest momentum button linking to the user's Re:CAP."
+            )
 		}
 	}
 
@@ -3275,163 +4314,325 @@ extension L10n {
 	/// The ReCap in-progress header shown in December.
 	static func recapInProgressWeek(_ month: String) -> String {
 		L10n.resolve {
-			String(localized: "\(month) Re:CAP is still in progress. Check back in a week.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap in-progress header shown in December.")
+			String(
+                localized: "\(month) Re:CAP is still in progress. Check back in a week.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap in-progress header shown in December."
+            )
 		}
 	}
 	/// The ReCap in-progress header for a given month.
 	static func recapInProgressMonth(_ month: String, _ next: String) -> String {
 		L10n.resolve {
-			String(localized: "\(month) Re:CAP is still in progress. Check back in early \(next).", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap in-progress header for a given month.")
+			String(
+                localized: "\(month) Re:CAP is still in progress. Check back in early \(next).",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap in-progress header for a given month."
+            )
 		}
 	}
 	/// The generic ReCap in-progress header.
 	static var recapInProgressGeneric: String {
 		L10n.resolve {
-			String(localized: "Re:CAP is still in progress. Check back early next month.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The generic ReCap in-progress header.")
+			String(
+                localized: "Re:CAP is still in progress. Check back early next month.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The generic ReCap in-progress header."
+            )
 		}
 	}
 	/// The ReCap header for the defining series of a month.
 	static func recapDefiningSeries(_ month: String) -> String {
 		L10n.resolve {
-			String(localized: "Series that defined your arc in \(month)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap header for the defining series of a month.")
+			String(
+                localized: "Series that defined your arc in \(month)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap header for the defining series of a month."
+            )
 		}
 	}
 	/// The ReCap header for finale milestones.
 	static var recapFinaleMilestones: String {
 		L10n.resolve {
-			String(localized: "These milestones marked your season finale", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap header for finale milestones.")
+			String(
+                localized: "These milestones marked your season finale",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap header for finale milestones."
+            )
 		}
 	}
 	/// The ReCap milestone noun phrase for shows.
 	static var animeWatchers: String {
 		L10n.resolve {
-			String(localized: "anime watchers", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap milestone noun phrase for shows.")
+			String(
+                localized: "anime watchers",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap milestone noun phrase for shows."
+            )
 		}
 	}
 	/// The ReCap milestone noun phrase for games.
 	static var gamePlayers: String {
 		L10n.resolve {
-			String(localized: "game players", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap milestone noun phrase for games.")
+			String(
+                localized: "game players",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap milestone noun phrase for games."
+            )
 		}
 	}
 	/// The ReCap milestone noun phrase for literatures.
 	static var mangaReaders: String {
 		L10n.resolve {
-			String(localized: "manga readers", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap milestone noun phrase for literatures.")
+			String(
+                localized: "manga readers",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The ReCap milestone noun phrase for literatures."
+            )
 		}
 	}
 	/// The Parental Guide category 'Sex & Nudity'.
 	static var pgSexAndNudity: String {
 		L10n.resolve {
-			String(localized: "Sex & Nudity", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide category 'Sex & Nudity'.")
+			String(
+                localized: "Sex & Nudity",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide category 'Sex & Nudity'."
+            )
 		}
 	}
 	/// The Parental Guide category 'Violence & Gore'.
 	static var pgViolenceAndGore: String {
 		L10n.resolve {
-			String(localized: "Violence & Gore", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide category 'Violence & Gore'.")
+			String(
+                localized: "Violence & Gore",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide category 'Violence & Gore'."
+            )
 		}
 	}
 	/// The Parental Guide category 'Profanity'.
 	static var pgProfanity: String {
 		L10n.resolve {
-			String(localized: "Profanity", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide category 'Profanity'.")
+			String(
+                localized: "Profanity",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide category 'Profanity'."
+            )
 		}
 	}
 	/// The Parental Guide category 'Alcohol, Drugs & Smoking'.
 	static var pgAlcoholDrugsAndSmoking: String {
 		L10n.resolve {
-			String(localized: "Alcohol, Drugs & Smoking", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide category 'Alcohol, Drugs & Smoking'.")
+			String(
+                localized: "Alcohol, Drugs & Smoking",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide category 'Alcohol, Drugs & Smoking'."
+            )
 		}
 	}
 	/// The Parental Guide category 'Frightening & Intense Scenes'.
 	static var pgFrighteningAndIntenseScenes: String {
 		L10n.resolve {
-			String(localized: "Frightening & Intense Scenes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide category 'Frightening & Intense Scenes'.")
+			String(
+                localized: "Frightening & Intense Scenes",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide category 'Frightening & Intense Scenes'."
+            )
 		}
 	}
 	/// The Parental Guide empty-category message.
 	static var pgNoEvaluation: String {
 		L10n.resolve {
-			String(localized: "It looks like we don't have an evaluation for this category yet.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Parental Guide empty-category message.")
+			String(
+                localized: "It looks like we don't have an evaluation for this category yet.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Parental Guide empty-category message."
+            )
 		}
 	}
 	/// The self-label option 'Both'.
 	static var both: String {
 		L10n.resolve {
-			String(localized: "Both", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The self-label option 'Both'.")
+			String(
+                localized: "Both",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The self-label option 'Both'."
+            )
 		}
 	}
 	/// The library status 'Watching' for shows.
 	static var watching: String {
 		L10n.resolve {
-			String(localized: "Watching", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library status 'Watching' for shows.")
+			String(
+                localized: "Watching",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library status 'Watching' for shows."
+            )
 		}
 	}
 	/// The library status 'Reading' for literatures.
 	static var reading: String {
 		L10n.resolve {
-			String(localized: "Reading", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library status 'Reading' for literatures.")
+			String(
+                localized: "Reading",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library status 'Reading' for literatures."
+            )
 		}
 	}
 	/// The library status 'Playing' for games.
 	static var playing: String {
 		L10n.resolve {
-			String(localized: "Playing", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library status 'Playing' for games.")
+			String(
+                localized: "Playing",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library status 'Playing' for games."
+            )
 		}
 	}
 	/// The alert title shown when a hashtag is detected.
 	static func tagDetected(_ tagType: String) -> String {
 		L10n.resolve {
-			String(localized: "\(tagType) tag detected", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The alert title shown when a hashtag is detected.")
+			String(
+                localized: "\(tagType) tag detected",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The alert title shown when a hashtag is detected."
+            )
 		}
 	}
 	/// The Home 'Quick Links' section header.
 	static var quickLinks: String {
 		L10n.resolve {
-			String(localized: "Quick Links", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Home 'Quick Links' section header.")
+			String(
+                localized: "Quick Links",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Home 'Quick Links' section header."
+            )
 		}
 	}
 	/// The re-share attribution for your own repost.
 	static var youReposted: String {
 		L10n.resolve {
-			String(localized: "You reposted this", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The re-share attribution for your own repost.")
+			String(
+                localized: "You reposted this",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The re-share attribution for your own repost."
+            )
 		}
 	}
 	/// The re-share attribution for another user's repost.
 	static func userReposted(_ username: String) -> String {
 		L10n.resolve {
-			String(localized: "\(username) reposted this", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The re-share attribution for another user's repost.")
+			String(
+                localized: "\(username) reposted this",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The re-share attribution for another user's repost."
+            )
 		}
 	}
 	/// The library media-type breakdown line.
 	static func libraryStatsBreakdown(_ tv: Int, _ movie: Int, _ ova: Int, _ other: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(tv) TV · \(movie) Movie · \(ova) OVA · \(other) Music/ONA/Specials", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The library media-type breakdown line.")
+			String(
+                localized: "\(tv) TV · \(movie) Movie · \(ova) OVA · \(other) Music/ONA/Specials",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The library media-type breakdown line."
+            )
 		}
 	}
 	/// The edit-profile bio placeholder.
 	static var describeYourself: String {
 		L10n.resolve {
-			String(localized: "Describe yourself!", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The edit-profile bio placeholder.")
+			String(
+                localized: "Describe yourself!",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The edit-profile bio placeholder."
+            )
 		}
 	}
 	/// The monogram style 'Rounded'.
 	static var rounded: String {
 		L10n.resolve {
-			String(localized: "Rounded", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The monogram style 'Rounded'.")
+			String(
+                localized: "Rounded",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The monogram style 'Rounded'."
+            )
 		}
 	}
 	/// The monogram style 'Serif'.
 	static var serif: String {
 		L10n.resolve {
-			String(localized: "Serif", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The monogram style 'Serif'.")
+			String(
+                localized: "Serif",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The monogram style 'Serif'."
+            )
 		}
 	}
 	/// The monogram style 'Compressed'.
 	static var compressed: String {
 		L10n.resolve {
-			String(localized: "Compressed", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The monogram style 'Compressed'.")
+			String(
+                localized: "Compressed",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The monogram style 'Compressed'."
+            )
 		}
 	}
 
@@ -3439,55 +4640,109 @@ extension L10n {
 	/// The authentication settings name for Face ID.
 	static var lockWithFaceID: String {
 		L10n.resolve {
-			String(localized: "Lock with Face ID & Passcode", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings name for Face ID.")
+			String(
+                localized: "Lock with Face ID & Passcode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings name for Face ID."
+            )
 		}
 	}
 	/// The authentication settings name for Touch ID.
 	static var lockWithTouchID: String {
 		L10n.resolve {
-			String(localized: "Lock with Touch ID & Passcode", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings name for Touch ID.")
+			String(
+                localized: "Lock with Touch ID & Passcode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings name for Touch ID."
+            )
 		}
 	}
 	/// The authentication settings name for Optic ID.
 	static var lockWithOpticID: String {
 		L10n.resolve {
-			String(localized: "Lock with Optic ID & Passcode", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings name for Optic ID.")
+			String(
+                localized: "Lock with Optic ID & Passcode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings name for Optic ID."
+            )
 		}
 	}
 	/// The authentication settings name for passcode only.
 	static var lockWithPasscode: String {
 		L10n.resolve {
-			String(localized: "Lock with Passcode", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings name for passcode only.")
+			String(
+                localized: "Lock with Passcode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings name for passcode only."
+            )
 		}
 	}
 	/// The authentication settings description for Face ID.
 	static var lockDescriptionFaceID: String {
 		L10n.resolve {
-			String(localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings description for Face ID.")
+			String(
+                localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings description for Face ID."
+            )
 		}
 	}
 	/// The authentication settings description for Touch ID.
 	static var lockDescriptionTouchID: String {
 		L10n.resolve {
-			String(localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Touch ID or your device's passcode when you reopen the app.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings description for Touch ID.")
+			String(
+                localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Touch ID or your device's passcode when you reopen the app.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings description for Touch ID."
+            )
 		}
 	}
 	/// The authentication settings description for Optic ID.
 	static var lockDescriptionOpticID: String {
 		L10n.resolve {
-			String(localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Optic ID or your device's passcode when you reopen the app.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings description for Optic ID.")
+			String(
+                localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Optic ID or your device's passcode when you reopen the app.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings description for Optic ID."
+            )
 		}
 	}
 	/// The authentication settings description for passcode only.
 	static var lockDescriptionPasscode: String {
 		L10n.resolve {
-			String(localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The authentication settings description for passcode only.")
+			String(
+                localized: "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The authentication settings description for passcode only."
+            )
 		}
 	}
 	/// The static descriptor label for a voice actor in the cast cell.
 	static var voiceActor: String {
 		L10n.resolve {
-			String(localized: "Voice actor", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The static descriptor label for a voice actor in the cast cell.")
+			String(
+                localized: "Voice actor",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The static descriptor label for a voice actor in the cast cell."
+            )
 		}
 	}
 
@@ -3495,37 +4750,72 @@ extension L10n {
 	/// The literature type 'Doujinshi'.
 	static var doujinshi: String {
 		L10n.resolve {
-			String(localized: "Doujinshi", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The literature type 'Doujinshi'.")
+			String(
+                localized: "Doujinshi",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The literature type 'Doujinshi'."
+            )
 		}
 	}
 	/// The literature type 'Manhwa'.
 	static var manhwa: String {
 		L10n.resolve {
-			String(localized: "Manhwa", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The literature type 'Manhwa'.")
+			String(
+                localized: "Manhwa",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The literature type 'Manhwa'."
+            )
 		}
 	}
 	/// The literature type 'Manhua'.
 	static var manhua: String {
 		L10n.resolve {
-			String(localized: "Manhua", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The literature type 'Manhua'.")
+			String(
+                localized: "Manhua",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The literature type 'Manhua'."
+            )
 		}
 	}
 	/// The literature type 'OEL' (original English-language).
 	static var oel: String {
 		L10n.resolve {
-			String(localized: "OEL", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The literature type 'OEL' (original English-language).")
+			String(
+                localized: "OEL",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The literature type 'OEL' (original English-language).")
 		}
 	}
 	/// The literature type 'One-shot'.
 	static var oneShot: String {
 		L10n.resolve {
-			String(localized: "One-shot", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The literature type 'One-shot'.")
+			String(
+                localized: "One-shot",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The literature type 'One-shot'."
+            )
 		}
 	}
 	/// The Apple Calendar app destination.
 	static var calendar: String {
 		L10n.resolve {
-			String(localized: "Calendar", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The Apple Calendar app destination.")
+			String(
+                localized: "Calendar",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The Apple Calendar app destination."
+            )
 		}
 	}
 
@@ -3533,37 +4823,87 @@ extension L10n {
 	/// The episode count shown in a media information line.
 	static func episodeCount(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count) episodes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The episode count shown in a media information line.")
+			String(
+                localized: "\(count) episodes",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The episode count shown in a media information line."
+            )
+		}
+	}
+	/// The view count shown beneath an episode.
+	///
+	/// - Tag: L10n-viewCount
+	static func viewCount(_ count: Int) -> String {
+		L10n.resolve {
+			String(
+                localized: "\(count) views",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The view count shown beneath an episode."
+            )
 		}
 	}
 	/// The volume count shown in a media information line.
 	static func volumeCount(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count) volumes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The volume count shown in a media information line.")
+			String(
+                localized: "\(count) volumes",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The volume count shown in a media information line."
+            )
 		}
 	}
 	/// The edition count shown in a media information line.
 	static func editionCount(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count) editions", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The edition count shown in a media information line.")
+			String(
+                localized: "\(count) editions",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The edition count shown in a media information line."
+            )
 		}
 	}
 	/// A broadcast or publication schedule line pairing a weekday with a time.
 	static func scheduleDayTime(_ day: String, _ time: String) -> String {
 		L10n.resolve {
-			String(localized: "\(day) at \(time)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "A broadcast or publication schedule line pairing a weekday with a time.")
+			String(
+                localized: "\(day) at \(time)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "A broadcast or publication schedule line pairing a weekday with a time."
+            )
 		}
 	}
 	/// The studio's Japanese name alias.
 	static func studioAliasJapanese(_ name: String) -> String {
 		L10n.resolve {
-			String(localized: "Japanese: \(name)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The studio's Japanese name alias, where the placeholder is the name.")
+			String(
+                localized: "Japanese: \(name)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The studio's Japanese name alias, where the placeholder is the name."
+            )
 		}
 	}
 	/// The studio's synonym aliases.
 	static func studioAliasSynonyms(_ names: String) -> String {
 		L10n.resolve {
-			String(localized: "Synonyms: \(names)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The studio's synonym aliases, where the placeholder is the comma-separated names.")
+			String(
+                localized: "Synonyms: \(names)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The studio's synonym aliases, where the placeholder is the comma-separated names."
+            )
 		}
 	}
 	/// The badge label for the company that took over from a studio.
@@ -3601,43 +4941,85 @@ extension L10n {
 	/// The compact month count in a broadcast countdown.
 	static func countdownMonths(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count)M", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact month count in a broadcast countdown.")
+			String(
+                localized: "\(count)M",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The compact month count in a broadcast countdown."
+            )
 		}
 	}
 	/// The compact day count in a broadcast countdown.
 	static func countdownDays(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count)d", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact day count in a broadcast countdown.")
+			String(
+                localized: "\(count)d",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The compact day count in a broadcast countdown."
+            )
 		}
 	}
 	/// The compact hour count in a broadcast countdown.
 	static func countdownHours(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count)h", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact hour count in a broadcast countdown.")
+			String(
+                localized: "\(count)h",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The compact hour count in a broadcast countdown."
+            )
 		}
 	}
 	/// The compact minute count in a broadcast countdown.
 	static func countdownMinutes(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count)m", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact minute count in a broadcast countdown.")
+			String(
+                localized: "\(count)m",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The compact minute count in a broadcast countdown."
+            )
 		}
 	}
 	/// The compact second count in a broadcast countdown.
 	static func countdownSeconds(_ count: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(count)s", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact second count in a broadcast countdown.")
+			String(
+                localized: "\(count)s",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The compact second count in a broadcast countdown."
+            )
 		}
 	}
 	/// A broadcast countdown ending in the future.
 	static func timeFromNow(_ duration: String) -> String {
 		L10n.resolve {
-			String(localized: "\(duration) from now", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "A broadcast countdown ending in the future, where the placeholder is the remaining duration.")
+			String(
+                localized: "\(duration) from now",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "A broadcast countdown ending in the future, where the placeholder is the remaining duration."
+            )
 		}
 	}
 	/// A broadcast countdown that already started.
 	static func timeAgo(_ duration: String) -> String {
 		L10n.resolve {
-			String(localized: "\(duration) ago", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "A broadcast countdown that already started, where the placeholder is the elapsed duration.")
+			String(
+                localized: "\(duration) ago",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "A broadcast countdown that already started, where the placeholder is the elapsed duration."
+            )
 		}
 	}
 
@@ -3645,13 +5027,25 @@ extension L10n {
 	/// The suggested Siri phrase for opening a title.
 	static func openTitle(_ title: String) -> String {
 		L10n.resolve {
-			String(localized: "Open \(title)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The suggested Siri phrase for opening a title, where the placeholder is the title.")
+			String(
+                localized: "Open \(title)",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The suggested Siri phrase for opening a title, where the placeholder is the title."
+            )
 		}
 	}
 	/// The suggested Siri phrase for opening a user's profile.
 	static func openUserProfile(_ username: String) -> String {
 		L10n.resolve {
-			String(localized: "Open \(username)’s profile", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The suggested Siri phrase for opening a user's profile, where the placeholder is the display name.")
+			String(
+                localized: "Open \(username)’s profile",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The suggested Siri phrase for opening a user's profile, where the placeholder is the display name."
+            )
 		}
 	}
 
@@ -3659,43 +5053,85 @@ extension L10n {
 	/// The accessibility label for the edit initials action.
 	static var editInitials: String {
 		L10n.resolve {
-			String(localized: "Edit Initials", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the edit initials action.")
+			String(
+                localized: "Edit Initials",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the edit initials action."
+            )
 		}
 	}
 	/// The accessibility label for the font and width action.
 	static var fontAndWidth: String {
 		L10n.resolve {
-			String(localized: "Font & Width", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the font and width action.")
+			String(
+                localized: "Font & Width",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the font and width action."
+            )
 		}
 	}
 	/// The accessibility label for the color action.
 	static var color: String {
 		L10n.resolve {
-			String(localized: "Color", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the color action.")
+			String(
+                localized: "Color",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the color action."
+            )
 		}
 	}
 	/// The accessibility label for the character search action.
 	static var characterSearch: String {
 		L10n.resolve {
-			String(localized: "Character Search", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the character search action.")
+			String(
+                localized: "Character Search",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the character search action."
+            )
 		}
 	}
 	/// The accessibility label for the crop action.
 	static var crop: String {
 		L10n.resolve {
-			String(localized: "Crop", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the crop action.")
+			String(
+                localized: "Crop",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the crop action."
+            )
 		}
 	}
 	/// The accessibility label for the change emoji action.
 	static var changeEmoji: String {
 		L10n.resolve {
-			String(localized: "Change Emoji", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the change emoji action.")
+			String(
+                localized: "Change Emoji",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the change emoji action."
+            )
 		}
 	}
 	/// The accessibility label for the change kaomoji action.
 	static var changeKaomoji: String {
 		L10n.resolve {
-			String(localized: "Change Kaomoji", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The accessibility label for the change kaomoji action.")
+			String(
+                localized: "Change Kaomoji",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The accessibility label for the change kaomoji action."
+            )
 		}
 	}
 	/// The empty-state detail for a feed message that has no replies yet.
@@ -4354,59 +5790,33 @@ extension L10n {
 			)
 		}
 	}
-	/// Spoiler-warning banner overlaid on a parental guide entry on touch platforms.
+	/// Spoiler-warning banner overlaid on a parental guide entry.
 	///
-	/// - Tag: L10n-parentalGuideReasonSpoilerTap
-	static var parentalGuideReasonSpoilerTap: String {
+	/// - Tag: L10n-parentalGuideReasonSpoiler
+	static var parentalGuideReasonSpoiler: String {
 		L10n.resolve {
 			String(
-				localized: "This reason contains spoilers — tap to view",
+				localized: "parentalGuideReasonSpoiler",
+				defaultValue: "This reason contains spoilers \u{2014} tap to view",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "Spoiler-warning banner overlaid on a parental guide entry on touch platforms."
+				comment: "Spoiler-warning banner overlaid on a parental guide entry."
 			)
 		}
 	}
-	/// Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst.
+	/// Spoiler-warning banner overlaid on a review.
 	///
-	/// - Tag: L10n-parentalGuideReasonSpoilerClick
-	static var parentalGuideReasonSpoilerClick: String {
+	/// - Tag: L10n-reviewSpoiler
+	static var reviewSpoiler: String {
 		L10n.resolve {
 			String(
-				localized: "This reason contains spoilers — click to view",
+				localized: "reviewSpoiler",
+				defaultValue: "This review contains spoilers. Tap to view",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "Spoiler-warning banner overlaid on a parental guide entry on Mac Catalyst."
-			)
-		}
-	}
-	/// Spoiler-warning banner overlaid on a review on touch platforms.
-	///
-	/// - Tag: L10n-reviewSpoilerTap
-	static var reviewSpoilerTap: String {
-		L10n.resolve {
-			String(
-				localized: "This review contains spoilers. Tap to view",
-				table: "Content",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "Spoiler-warning banner overlaid on a review on touch platforms."
-			)
-		}
-	}
-	/// Spoiler-warning banner overlaid on a review on pointer platforms.
-	///
-	/// - Tag: L10n-reviewSpoilerClick
-	static var reviewSpoilerClick: String {
-		L10n.resolve {
-			String(
-				localized: "This review contains spoilers. Click to view",
-				table: "Content",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "Spoiler-warning banner overlaid on a review on pointer platforms."
+				comment: "Spoiler-warning banner overlaid on a review."
 			)
 		}
 	}
@@ -4494,6 +5904,21 @@ extension L10n {
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
 				comment: "Marker on a review whose text was rewritten."
+			)
+		}
+	}
+	/// The affordance riding the last line of a clipped review that opens the full review.
+	///
+	/// - Tag: L10n-reviewMore
+	static var reviewMore: String {
+		L10n.resolve {
+			String(
+				localized: "reviewMore",
+				defaultValue: "more",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The affordance riding the last line of a clipped review that opens the full review."
 			)
 		}
 	}

@@ -50,13 +50,6 @@ class ReviewRevisionCollectionViewCell: KCollectionViewCell {
 	/// Whether the reader revealed this version's spoiler.
 	private var isSpoilerRevealed = false
 
-	private static var spoilerWarningText: String {
-		#if targetEnvironment(macCatalyst)
-		return L10n.reviewSpoilerClick
-		#else
-		return L10n.reviewSpoilerTap
-		#endif
-	}
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -86,7 +79,7 @@ class ReviewRevisionCollectionViewCell: KCollectionViewCell {
 		self.metadataLabel.text = self.metadataText(for: revision)
 		self.bodyLabel.attributedText = revision.attributes.description.markdownAttributedString()
 
-		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: self.layerCornerRadius)
+		self.spoilerOverlayView.configure(warning: L10n.reviewSpoiler, cornerRadius: self.layerCornerRadius)
 		self.spoilerOverlayView.isHidden = self.isSpoilerRevealed || !revision.attributes.isSpoiler
 	}
 

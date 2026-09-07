@@ -84,8 +84,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.primaryLabel.text = episode.attributes.title
 
 		// Configure secondary label
-		let viewCount = episode.attributes.viewCount
-		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
+		let viewCountText = L10n.viewCount(episode.attributes.viewCount)
 		let dateText = episode.attributes.startedAt?.appFormatted(date: .abbreviated, time: .omitted) ?? "TBA"
 		self.secondaryLabel.text = "\(viewCountText) · \(dateText)"
 

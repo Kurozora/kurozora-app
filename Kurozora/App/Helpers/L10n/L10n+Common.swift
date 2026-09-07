@@ -582,19 +582,6 @@ extension L10n {
 			)
 		}
 	}
-	/// The spelled-out word for a count of one.
-	///
-	/// - Tag: L10n-one
-	static var one: String {
-		L10n.resolve {
-			String(
-				localized: "one",
-				bundle: LanguageManager.shared.bundle,
-				locale: LanguageManager.shared.locale,
-				comment: "The spelled-out word for a count of one, as in 'Across one season.'."
-			)
-		}
-	}
 	/// The string for the word 'add'.
 	///
 	/// - Tag: L10n-add

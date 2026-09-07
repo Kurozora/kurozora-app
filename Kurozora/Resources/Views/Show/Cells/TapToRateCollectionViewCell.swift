@@ -50,7 +50,7 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configures the cell with the given rating.
 	func configure(using givenRating: Double?) {
-		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? L10n.tapToRate : L10n.clickToRate
+		self.primaryLabel.text = L10n.ratePrompt
 
 		switch UserSettings.ratingStyle {
 		case .quickReaction:

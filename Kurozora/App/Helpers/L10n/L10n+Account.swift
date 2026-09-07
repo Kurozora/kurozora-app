@@ -1519,37 +1519,73 @@ extension L10n {
 	/// The thirty seconds interval phrase used in the authentication interval description.
 	static var intervalThirtySeconds: String {
 		L10n.resolve {
-			String(localized: "30 seconds", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The thirty seconds interval phrase used in the authentication interval description.")
+			String(
+				localized: "30 seconds",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The thirty seconds interval phrase used in the authentication interval description."
+			)
 		}
 	}
 	/// The one minute interval phrase used in the authentication interval description.
 	static var intervalOneMinute: String {
 		L10n.resolve {
-			String(localized: "1 minute", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The one minute interval phrase used in the authentication interval description.")
+			String(
+				localized: "1 minute",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The one minute interval phrase used in the authentication interval description."
+			)
 		}
 	}
 	/// The two minutes interval phrase used in the authentication interval description.
 	static var intervalTwoMinutes: String {
 		L10n.resolve {
-			String(localized: "2 minutes", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The two minutes interval phrase used in the authentication interval description.")
+			String(
+				localized: "2 minutes",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The two minutes interval phrase used in the authentication interval description."
+			)
 		}
 	}
 	/// The three minutes interval phrase used in the authentication interval description.
 	static var intervalThreeMinutes: String {
 		L10n.resolve {
-			String(localized: "3 minutes", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The three minutes interval phrase used in the authentication interval description.")
+			String(
+				localized: "3 minutes",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The three minutes interval phrase used in the authentication interval description."
+			)
 		}
 	}
 	/// The four minutes interval phrase used in the authentication interval description.
 	static var intervalFourMinutes: String {
 		L10n.resolve {
-			String(localized: "4 minutes", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The four minutes interval phrase used in the authentication interval description.")
+			String(
+				localized: "4 minutes",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The four minutes interval phrase used in the authentication interval description."
+			)
 		}
 	}
 	/// The five minutes interval phrase used in the authentication interval description.
 	static var intervalFiveMinutes: String {
 		L10n.resolve {
-			String(localized: "5 minutes", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The five minutes interval phrase used in the authentication interval description.")
+			String(
+				localized: "5 minutes",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The five minutes interval phrase used in the authentication interval description."
+			)
 		}
 	}
 
@@ -2109,91 +2145,181 @@ extension L10n {
 	/// The subscription period in days.
 	static func periodWordDays(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value) days", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The subscription period in days.")
+			String(
+				localized: "\(value) days",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subscription period in days."
+			)
 		}
 	}
 	/// The subscription period in weeks.
 	static func periodWordWeeks(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value) weeks", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The subscription period in weeks.")
+			String(
+				localized: "\(value) weeks",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subscription period in weeks."
+			)
 		}
 	}
 	/// The subscription period in months.
 	static func periodWordMonths(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value) months", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The subscription period in months.")
+			String(
+				localized: "\(value) months",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subscription period in months."
+			)
 		}
 	}
 	/// The subscription period in years.
 	static func periodWordYears(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value) years", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The subscription period in years.")
+			String(
+				localized: "\(value) years",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subscription period in years."
+			)
 		}
 	}
 	/// The fallback word for an unknown subscription period unit.
 	static var periodWordDefault: String {
 		L10n.resolve {
-			String(localized: "period", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The fallback word for an unknown subscription period unit.")
+			String(
+				localized: "period",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The fallback word for an unknown subscription period unit."
+			)
 		}
 	}
 	/// The display phrase for a single-day subscription period.
 	static var periodDisplaySingularDay: String {
 		L10n.resolve {
-			String(localized: "a day", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display phrase for a single-day subscription period.")
+			String(
+				localized: "a day",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display phrase for a single-day subscription period."
+			)
 		}
 	}
 	/// The display phrase for a single-week subscription period.
 	static var periodDisplaySingularWeek: String {
 		L10n.resolve {
-			String(localized: "a week", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display phrase for a single-week subscription period.")
+			String(
+				localized: "a week",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display phrase for a single-week subscription period."
+			)
 		}
 	}
 	/// The display phrase for a single-month subscription period.
 	static var periodDisplaySingularMonth: String {
 		L10n.resolve {
-			String(localized: "a month", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display phrase for a single-month subscription period.")
+			String(
+				localized: "a month",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display phrase for a single-month subscription period."
+			)
 		}
 	}
 	/// The display phrase for a single-year subscription period.
 	static var periodDisplaySingularYear: String {
 		L10n.resolve {
-			String(localized: "12 months", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display phrase for a single-year subscription period, shown as twelve months.")
+			String(
+				localized: "12 months",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display phrase for a single-year subscription period, shown as twelve months."
+			)
 		}
 	}
 	/// The compact subscription period in days.
 	static func periodShortDays(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value)d", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact subscription period in days.")
+			String(
+				localized: "\(value)d",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The compact subscription period in days."
+			)
 		}
 	}
 	/// The compact subscription period in weeks.
 	static func periodShortWeeks(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value)w", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact subscription period in weeks.")
+			String(
+				localized: "\(value)w",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The compact subscription period in weeks."
+			)
 		}
 	}
 	/// The compact subscription period in months.
 	static func periodShortMonths(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value)m", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact subscription period in months.")
+			String(
+				localized: "\(value)m",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The compact subscription period in months."
+			)
 		}
 	}
 	/// The compact subscription period in years.
 	static func periodShortYears(_ value: Int) -> String {
 		L10n.resolve {
-			String(localized: "\(value)y", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The compact subscription period in years.")
+			String(
+				localized: "\(value)y",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The compact subscription period in years."
+			)
 		}
 	}
 	/// The subscription saving description comparing a tier against the base price.
 	static func subscriptionSavingDescription(_ unit: String, _ pricePerMonth: String, _ saved: String) -> String {
 		L10n.resolve {
-			String(localized: "\(unit) at \(pricePerMonth)mo. Save \(saved)", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The subscription saving description, where the placeholders are the billing period, the monthly price and the saved percentage.")
+			String(
+				localized: "\(unit) at \(pricePerMonth)mo. Save \(saved)",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The subscription saving description, where the placeholders are the billing period, the monthly price and the saved percentage."
+			)
 		}
 	}
 	/// The introductory free trial description.
 	static func subscriptionTrial(_ period: String) -> String {
 		L10n.resolve {
-			String(localized: "Includes \(period) free trial!", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The introductory free trial description, where the placeholder is the trial period.")
+			String(
+				localized: "Includes \(period) free trial!",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The introductory free trial description, where the placeholder is the trial period."
+			)
 		}
 	}
 
@@ -2351,37 +2477,37 @@ extension L10n {
 	/// The biometric prompt reason shown when returning to the locked app.
 	static var biometricReasonContinue: String {
 		L10n.resolve {
-			String(localized: "Welcome back! Please authenticate to continue.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when returning to the locked app.")
-		}
-	}
-	/// The biometric prompt reason shown when returning to the locked app on Mac.
-	static var biometricReasonContinueMac: String {
-		L10n.resolve {
-			String(localized: "authenticate to continue.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when returning to the locked app on Mac.")
+			String(
+				localized: "biometricReasonContinue", defaultValue: "Welcome back! Please authenticate to continue.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The biometric prompt reason shown when returning to the locked app."
+			)
 		}
 	}
 	/// The biometric prompt reason shown when enabling app lock.
 	static var biometricReasonEnableAppLock: String {
 		L10n.resolve {
-			String(localized: "Authenticate to enable app lock.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when enabling app lock.")
-		}
-	}
-	/// The biometric prompt reason shown when enabling app lock on Mac.
-	static var biometricReasonEnableAppLockMac: String {
-		L10n.resolve {
-			String(localized: "authenticate to enable app lock.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when enabling app lock on Mac.")
+			String(
+				localized: "biometricReasonEnableAppLock", defaultValue: "Authenticate to enable app lock.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The biometric prompt reason shown when enabling app lock."
+			)
 		}
 	}
 	/// The biometric prompt reason shown when disabling app lock.
 	static var biometricReasonDisableAppLock: String {
 		L10n.resolve {
-			String(localized: "Authenticate to disable app lock.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when disabling app lock.")
-		}
-	}
-	/// The biometric prompt reason shown when disabling app lock on Mac.
-	static var biometricReasonDisableAppLockMac: String {
-		L10n.resolve {
-			String(localized: "authenticate to disable app lock.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The biometric prompt reason shown when disabling app lock on Mac.")
+			String(
+				localized: "biometricReasonDisableAppLock", defaultValue: "Authenticate to disable app lock.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The biometric prompt reason shown when disabling app lock."
+			)
 		}
 	}
 
@@ -2389,79 +2515,157 @@ extension L10n {
 	/// The error shown when the device does not support biometric authentication.
 	static var authErrorBiometryNotAvailable: String {
 		L10n.resolve {
-			String(localized: "Authentication could not start because the device does not support biometric authentication.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the device does not support biometric authentication.")
+			String(
+				localized: "Authentication could not start because the device does not support biometric authentication.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the device does not support biometric authentication."
+			)
 		}
 	}
 	/// The error shown when the user is locked out of biometric authentication.
 	static var authErrorBiometryLockout: String {
 		L10n.resolve {
-			String(localized: "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the user is locked out of biometric authentication.")
+			String(
+				localized: "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the user is locked out of biometric authentication."
+			)
 		}
 	}
 	/// The error shown when the user has not enrolled in biometric authentication.
 	static var authErrorBiometryNotEnrolled: String {
 		L10n.resolve {
-			String(localized: "Authentication could not start because the user has not enrolled in biometric authentication.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the user has not enrolled in biometric authentication.")
+			String(
+				localized: "Authentication could not start because the user has not enrolled in biometric authentication.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the user has not enrolled in biometric authentication."
+			)
 		}
 	}
 	/// The error shown when an unrecognized authentication error code is returned.
 	static var authErrorUnknownCode: String {
 		L10n.resolve {
-			String(localized: "Did not find error code on LAError object", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when an unrecognized authentication error code is returned.")
+			String(
+				localized: "Did not find error code on LAError object",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when an unrecognized authentication error code is returned."
+			)
 		}
 	}
 	/// The error shown when the user fails to provide valid credentials.
 	static var authErrorAuthenticationFailed: String {
 		L10n.resolve {
-			String(localized: "The user failed to provide valid credentials", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the user fails to provide valid credentials.")
+			String(
+				localized: "The user failed to provide valid credentials",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the user fails to provide valid credentials."
+			)
 		}
 	}
 	/// The error shown when authentication is cancelled by the app.
 	static var authErrorAppCancel: String {
 		L10n.resolve {
-			String(localized: "Authentication was cancelled by application", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when authentication is cancelled by the app.")
+			String(
+				localized: "Authentication was cancelled by application",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when authentication is cancelled by the app."
+			)
 		}
 	}
 	/// The error shown when the authentication context is invalid.
 	static var authErrorInvalidContext: String {
 		L10n.resolve {
-			String(localized: "The context is invalid", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the authentication context is invalid.")
+			String(
+				localized: "The context is invalid",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the authentication context is invalid."
+			)
 		}
 	}
 	/// The error shown when authentication is not interactive.
 	static var authErrorNotInteractive: String {
 		L10n.resolve {
-			String(localized: "Not interactive", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when authentication is not interactive.")
+			String(
+				localized: "Not interactive",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when authentication is not interactive."
+			)
 		}
 	}
 	/// The error shown when no passcode is set on the device.
 	static var authErrorPasscodeNotSet: String {
 		L10n.resolve {
-			String(localized: "Passcode is not set on the device", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when no passcode is set on the device.")
+			String(
+				localized: "Passcode is not set on the device",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when no passcode is set on the device."
+			)
 		}
 	}
 	/// The error shown when authentication is cancelled by the system.
 	static var authErrorSystemCancel: String {
 		L10n.resolve {
-			String(localized: "Authentication was cancelled by the system", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when authentication is cancelled by the system.")
+			String(
+				localized: "Authentication was cancelled by the system",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when authentication is cancelled by the system."
+			)
 		}
 	}
 	/// The error shown when the user cancels authentication.
 	static var authErrorUserCancel: String {
 		L10n.resolve {
-			String(localized: "The user did cancel", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the user cancels authentication.")
+			String(
+				localized: "The user did cancel",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the user cancels authentication."
+			)
 		}
 	}
 	/// The error shown when the user chooses the fallback option.
 	static var authErrorUserFallback: String {
 		L10n.resolve {
-			String(localized: "The user chose to use the fallback", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The error shown when the user chooses the fallback option.")
+			String(
+				localized: "The user chose to use the fallback",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The error shown when the user chooses the fallback option."
+			)
 		}
 	}
 	/// The confirmation message shown before permanently deleting an account.
 	static var deleteAccountConfirmation: String {
 		L10n.resolve {
-			String(localized: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.", table: "Account", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The confirmation message shown before permanently deleting an account.")
+			String(
+				localized: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+				table: "Account",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The confirmation message shown before permanently deleting an account."
+			)
 		}
 	}
 

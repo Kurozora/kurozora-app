@@ -407,9 +407,7 @@ extension ShowDetail {
 			case .genres, .themes:
 				return nil
 			case .episodes:
-				let seasonCount = show.attributes.seasonCount <= 1 ? L10n.one : "\(show.attributes.seasonCount)"
-				let seasonString = show.attributes.seasonCount > 1 ? L10n.seasons : L10n.season
-				return L10n.across("\(seasonCount) \(seasonString.lowercased(with: .current))")
+				return L10n.acrossSeasons(show.attributes.seasonCount)
 			case .duration:
 				return L10n.withTotalOf(show.attributes.durationTotal)
 			case .broadcast:

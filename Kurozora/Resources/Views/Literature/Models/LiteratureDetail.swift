@@ -403,9 +403,7 @@ extension LiteratureDetail {
 			case .genres, .themes:
 				return nil
 			case .chapters:
-				let chapterCount = literature.attributes.volumeCount <= 1 ? L10n.one : "\(literature.attributes.volumeCount)"
-				let volumeString = literature.attributes.volumeCount > 1 ? L10n.columnVolumes.lowercased(with: .current) : L10n.volume.lowercased(with: .current)
-				return L10n.across("\(chapterCount) \(volumeString)")
+				return L10n.acrossVolumes(literature.attributes.volumeCount)
 			case .duration:
 				return L10n.withTotalOf(literature.attributes.durationTotal)
 			case .publication:

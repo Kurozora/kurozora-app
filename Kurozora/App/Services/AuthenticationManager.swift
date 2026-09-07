@@ -137,11 +137,7 @@ final class AuthenticationManager {
 		let context = LAContext()
 		var authError: NSError?
 
-		#if targetEnvironment(macCatalyst)
-		let reasonString = L10n.biometricReasonContinueMac
-		#else
 		let reasonString = L10n.biometricReasonContinue
-		#endif
 
 		if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
 			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, _ in

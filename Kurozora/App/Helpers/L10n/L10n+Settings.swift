@@ -99,31 +99,61 @@ extension L10n {
 	/// The display name of the Day theme.
 	static var themeDay: String {
 		L10n.resolve {
-			String(localized: "Day", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Day theme.")
+			String(
+				localized: "Day",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display name of the Day theme."
+			)
 		}
 	}
 	/// The display name of the Night theme.
 	static var themeNight: String {
 		L10n.resolve {
-			String(localized: "Night", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Night theme.")
+			String(
+				localized: "Night",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display name of the Night theme."
+			)
 		}
 	}
 	/// The display name of the Grass theme.
 	static var themeGrass: String {
 		L10n.resolve {
-			String(localized: "Grass", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Grass theme.")
+			String(
+				localized: "Grass",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display name of the Grass theme."
+			)
 		}
 	}
 	/// The display name of the Sky theme.
 	static var themeSky: String {
 		L10n.resolve {
-			String(localized: "Sky", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Sky theme.")
+			String(
+				localized: "Sky",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display name of the Sky theme."
+			)
 		}
 	}
 	/// The display name of the Sakura theme.
 	static var themeSakura: String {
 		L10n.resolve {
-			String(localized: "Sakura", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display name of the Sakura theme.")
+			String(
+				localized: "Sakura",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display name of the Sakura theme."
+			)
 		}
 	}
 
@@ -1600,91 +1630,181 @@ extension L10n {
 	/// The footer for the privacy settings option.
 	static var privacySettingsFooter: String {
 		L10n.resolve {
-			String(localized: "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the privacy settings option.")
+			String(
+				localized: "This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the privacy settings option."
+			)
 		}
 	}
 	/// The footer for the browser settings option.
 	static var browserSettingsFooter: String {
 		L10n.resolve {
-			String(localized: "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the browser settings option.")
+			String(
+				localized: "Choose a default browser in which web links will be opened. If you don't have the app installed then the links will open inside Safari as a fallback.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the browser settings option."
+			)
 		}
 	}
 	/// The footer for the appearance schedule option.
 	static var appearanceScheduleFooter: String {
 		L10n.resolve {
-			String(localized: "Automatically transition appearance between light and dark based on time preference.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the appearance schedule option.")
+			String(
+				localized: "Automatically transition appearance between light and dark based on time preference.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the appearance schedule option."
+			)
 		}
 	}
 	/// The footer for the in-app notifications option.
 	static var inAppNotificationsFooter: String {
 		L10n.resolve {
-			String(localized: "Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the in-app notifications option.")
+			String(
+				localized: "Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the in-app notifications option."
+			)
 		}
 	}
 	/// The footer for the true black option.
 	static var trueBlackFooter: String {
 		L10n.resolve {
-			String(localized: "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the true black option.")
+			String(
+				localized: "Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or…",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the true black option."
+			)
 		}
 	}
 	/// The footer for the large titles option.
 	static var largeTitlesFooter: String {
 		L10n.resolve {
-			String(localized: "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer for the large titles option.")
+			String(
+				localized: "Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer for the large titles option."
+			)
 		}
 	}
 	/// The appearance schedule value for dark until sunrise.
 	static var darkUntilSunrise: String {
 		L10n.resolve {
-			String(localized: "Dark Until Sunrise", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for dark until sunrise.")
+			String(
+				localized: "Dark Until Sunrise",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The appearance schedule value for dark until sunrise."
+			)
 		}
 	}
 	/// The appearance schedule value for light until sunset.
 	static var lightUntilSunset: String {
 		L10n.resolve {
-			String(localized: "Light Until Sunset", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for light until sunset.")
+			String(
+				localized: "Light Until Sunset",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The appearance schedule value for light until sunset."
+			)
 		}
 	}
 	/// The appearance schedule value for dark until a specific time.
 	static func darkUntil(_ date: String) -> String {
 		L10n.resolve {
-			String(localized: "Dark Until \(date)", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for dark until a specific time.")
+			String(
+				localized: "Dark Until \(date)",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The appearance schedule value for dark until a specific time."
+			)
 		}
 	}
 	/// The appearance schedule value for light until a specific time.
 	static func lightUntil(_ date: String) -> String {
 		L10n.resolve {
-			String(localized: "Light Until \(date)", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The appearance schedule value for light until a specific time.")
+			String(
+				localized: "Light Until \(date)",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The appearance schedule value for light until a specific time."
+			)
 		}
 	}
 	/// The 'Appearance' settings section header.
 	static var appearance: String {
 		L10n.resolve {
-			String(localized: "Appearance", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Appearance' settings section header.")
+			String(
+				localized: "Appearance",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Appearance' settings section header."
+			)
 		}
 	}
 	/// The 'Blindness' settings section header.
 	static var blindness: String {
 		L10n.resolve {
-			String(localized: "Blindness", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Blindness' settings section header.")
+			String(
+				localized: "Blindness",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Blindness' settings section header."
+			)
 		}
 	}
 	/// The 'Light' appearance option.
 	static var light: String {
 		L10n.resolve {
-			String(localized: "Light", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Light' appearance option.")
+			String(
+				localized: "Light",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Light' appearance option."
+			)
 		}
 	}
 	/// The 'Dark' appearance option.
 	static var dark: String {
 		L10n.resolve {
-			String(localized: "Dark", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Dark' appearance option.")
+			String(
+				localized: "Dark",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Dark' appearance option."
+			)
 		}
 	}
 	/// The about-section credit footer.
 	static func appCreditFooter(_ version: String, _ build: String) -> String {
 		L10n.resolve {
-			String(localized: "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora \(version) (\(build))", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The about-section credit footer.")
+			String(
+				localized: "Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito\nKurozora \(version) (\(build))",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The about-section credit footer."
+			)
 		}
 	}
 
@@ -1692,43 +1812,85 @@ extension L10n {
 	/// The 'On' state value.
 	static var on: String {
 		L10n.resolve {
-			String(localized: "On", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'On' state value.")
+			String(
+				localized: "On",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'On' state value."
+			)
 		}
 	}
 	/// The description of the music settings header.
 	static var musicHeaderDescription: String {
 		L10n.resolve {
-			String(localized: "Customize how your music plays and lyrics appear, from blending songs together with crossfade to how far the skip controls seek while held.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The description of the music settings header.")
+			String(
+				localized: "Customize how your music plays and lyrics appear, from blending songs together with crossfade to how far the skip controls seek while held.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the music settings header."
+			)
 		}
 	}
 	/// The audio section title.
 	static var audio: String {
 		L10n.resolve {
-			String(localized: "Audio", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The audio section title.")
+			String(
+				localized: "Audio",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The audio section title."
+			)
 		}
 	}
 	/// The title of the song transitions setting.
 	static var songTransitions: String {
 		L10n.resolve {
-			String(localized: "Song Transitions", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the song transitions setting.")
+			String(
+				localized: "Song Transitions",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the song transitions setting."
+			)
 		}
 	}
 	/// The footer describing the song transitions setting.
 	static var songTransitionsDescription: String {
 		L10n.resolve {
-			String(localized: "Beginnings and endings of songs blend together seamlessly. Albums and some genres will still play without transitions. Unavailable while using AirPlay.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the song transitions setting.")
+			String(
+				localized: "Beginnings and endings of songs blend together seamlessly. Albums and some genres will still play without transitions. Unavailable while using AirPlay.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the song transitions setting."
+			)
 		}
 	}
 	/// The footer describing the crossfade transition style.
 	static var crossfadeDescription: String {
 		L10n.resolve {
-			String(localized: "Simple song transitions from one to the next for a set duration.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the crossfade transition style.")
+			String(
+				localized: "Simple song transitions from one to the next for a set duration.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the crossfade transition style."
+			)
 		}
 	}
 	/// The title of the crossfade duration setting.
 	static var crossfadeDuration: String {
 		L10n.resolve {
-			String(localized: "Crossfade Duration", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the crossfade duration setting.")
+			String(
+				localized: "Crossfade Duration",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the crossfade duration setting."
+			)
 		}
 	}
 	/// The label showing a duration in seconds in the music settings.
@@ -1744,37 +1906,73 @@ extension L10n {
 	/// The title of the skip duration setting.
 	static var skipDuration: String {
 		L10n.resolve {
-			String(localized: "Skip Duration", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the skip duration setting.")
+			String(
+				localized: "Skip Duration",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the skip duration setting."
+			)
 		}
 	}
 	/// The footer describing the skip duration setting.
 	static var skipDurationDescription: String {
 		L10n.resolve {
-			String(localized: "How far the skip buttons seek when held.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the skip duration setting.")
+			String(
+				localized: "How far the skip buttons seek when held.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the skip duration setting."
+			)
 		}
 	}
 	/// The title of the larger text setting.
 	static var largerText: String {
 		L10n.resolve {
-			String(localized: "Larger Text", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the larger text setting.")
+			String(
+				localized: "Larger Text",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the larger text setting."
+			)
 		}
 	}
 	/// The footer describing the larger text setting.
 	static var largerTextDescription: String {
 		L10n.resolve {
-			String(localized: "Choose whether lyrics or pronunciation is shown larger when both appear.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the larger text setting.")
+			String(
+				localized: "Choose whether lyrics or pronunciation is shown larger when both appear.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the larger text setting."
+			)
 		}
 	}
 	/// The pronunciation larger-text option.
 	static var pronunciation: String {
 		L10n.resolve {
-			String(localized: "Pronunciation", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The pronunciation larger-text option.")
+			String(
+				localized: "Pronunciation",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The pronunciation larger-text option."
+			)
 		}
 	}
 	/// The title of the song change notifications setting.
 	static var whenSongChanges: String {
 		L10n.resolve {
-			String(localized: "When song changes", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the song change notifications setting.")
+			String(
+				localized: "When song changes",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the song change notifications setting."
+			)
 		}
 	}
 
@@ -1782,79 +1980,157 @@ extension L10n {
 	/// The title of the floating lyrics setting.
 	static var floatingLyrics: String {
 		L10n.resolve {
-			String(localized: "Floating Lyrics", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics setting.")
+			String(
+				localized: "Floating Lyrics",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics setting."
+			)
 		}
 	}
 	/// A short description for the floating lyrics settings header.
 	static var floatingLyricsDescription: String {
 		L10n.resolve {
-			String(localized: "Keep lyrics on screen in a small floating window, even when you leave the app.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "A short description for the floating lyrics settings header.")
+			String(
+				localized: "Keep lyrics on screen in a small floating window, even when you leave the app.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the floating lyrics settings header."
+			)
 		}
 	}
 	/// The title of the floating lyrics font size setting.
 	static var fontSize: String {
 		L10n.resolve {
-			String(localized: "Font Size", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics font size setting.")
+			String(
+				localized: "Font Size",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics font size setting."
+			)
 		}
 	}
 	/// The standard font size option.
 	static var fontSizeStandard: String {
 		L10n.resolve {
-			String(localized: "Standard", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The standard font size option.")
+			String(
+				localized: "Standard",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The standard font size option."
+			)
 		}
 	}
 	/// The big font size option.
 	static var fontSizeBig: String {
 		L10n.resolve {
-			String(localized: "Big", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The big font size option.")
+			String(
+				localized: "Big",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The big font size option."
+			)
 		}
 	}
 	/// The title of the floating lyrics display lines setting.
 	static var displayLines: String {
 		L10n.resolve {
-			String(localized: "Display", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics display lines setting.")
+			String(
+				localized: "Display",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics display lines setting."
+			)
 		}
 	}
 	/// The display option showing one lyric line.
 	static var oneLine: String {
 		L10n.resolve {
-			String(localized: "1 Line", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display option showing one lyric line.")
+			String(
+				localized: "1 Line",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display option showing one lyric line."
+			)
 		}
 	}
 	/// The display option showing two lyric lines.
 	static var twoLines: String {
 		L10n.resolve {
-			String(localized: "2 Lines", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The display option showing two lyric lines.")
+			String(
+				localized: "2 Lines",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The display option showing two lyric lines."
+			)
 		}
 	}
 	/// The title of the floating lyrics second-line setting when it reveals the original lyrics.
 	static var showLyrics: String {
 		L10n.resolve {
-			String(localized: "Show Lyrics", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics second-line setting when it reveals the original lyrics.")
+			String(
+				localized: "Show Lyrics",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics second-line setting when it reveals the original lyrics."
+			)
 		}
 	}
 	/// The title of the floating lyrics translation setting.
 	static var showTranslation: String {
 		L10n.resolve {
-			String(localized: "Show Translation", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics translation setting.")
+			String(
+				localized: "Show Translation",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics translation setting."
+			)
 		}
 	}
 	/// The footer describing the floating lyrics translation setting.
 	static var showTranslationDescription: String {
 		L10n.resolve {
-			String(localized: "Shows your preferred translation or pronunciation on the second line.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the floating lyrics translation setting.")
+			String(
+				localized: "Shows your preferred translation or pronunciation on the second line.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the floating lyrics translation setting."
+			)
 		}
 	}
 	/// The title of the floating lyrics auto-open setting.
 	static var openAutomatically: String {
 		L10n.resolve {
-			String(localized: "Open Automatically", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the floating lyrics auto-open setting.")
+			String(
+				localized: "Open Automatically",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the floating lyrics auto-open setting."
+			)
 		}
 	}
 	/// The footer describing the floating lyrics auto-open setting.
 	static var openAutomaticallyDescription: String {
 		L10n.resolve {
-			String(localized: "Open the floating lyrics window automatically when you leave the app while music is playing.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the floating lyrics auto-open setting.")
+			String(
+				localized: "Open the floating lyrics window automatically when you leave the app while music is playing.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the floating lyrics auto-open setting."
+			)
 		}
 	}
 
@@ -1862,61 +2138,121 @@ extension L10n {
 	/// The title of the MiniPlayer chrome visibility setting.
 	static var showControls: String {
 		L10n.resolve {
-			String(localized: "Show Controls", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer chrome visibility setting.")
+			String(
+				localized: "Show Controls",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the MiniPlayer chrome visibility setting."
+			)
 		}
 	}
 	/// The chrome visibility option revealing the controls while the pointer rests over the window.
 	static var onHover: String {
 		L10n.resolve {
-			String(localized: "On Hover", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option revealing the controls while the pointer rests over the window.")
+			String(
+				localized: "On Hover",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The chrome visibility option revealing the controls while the pointer rests over the window."
+			)
 		}
 	}
 	/// The chrome visibility option keeping the controls visible.
 	static var alwaysVisible: String {
 		L10n.resolve {
-			String(localized: "Always", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option keeping the controls visible.")
+			String(
+				localized: "Always",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The chrome visibility option keeping the controls visible."
+			)
 		}
 	}
 	/// The chrome visibility option keeping the controls hidden.
 	static var neverVisible: String {
 		L10n.resolve {
-			String(localized: "Never", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The chrome visibility option keeping the controls hidden.")
+			String(
+				localized: "Never",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The chrome visibility option keeping the controls hidden."
+			)
 		}
 	}
 	/// The footer describing the MiniPlayer chrome visibility setting.
 	static var showControlsDescription: String {
 		L10n.resolve {
-			String(localized: "Choose when the title, artist and playback controls appear over the artwork.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer chrome visibility setting.")
+			String(
+				localized: "Choose when the title, artist and playback controls appear over the artwork.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the MiniPlayer chrome visibility setting."
+			)
 		}
 	}
 	/// The title of the MiniPlayer song change reveal setting.
 	static var revealOnSongChange: String {
 		L10n.resolve {
-			String(localized: "Reveal on Song Change", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer song change reveal setting.")
+			String(
+				localized: "Reveal on Song Change",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the MiniPlayer song change reveal setting."
+			)
 		}
 	}
 	/// The footer describing the MiniPlayer song change reveal setting.
 	static var revealOnSongChangeDescription: String {
 		L10n.resolve {
-			String(localized: "Briefly show the title and artist when a new song starts, then fade them away.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer song change reveal setting.")
+			String(
+				localized: "Briefly show the title and artist when a new song starts, then fade them away.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the MiniPlayer song change reveal setting."
+			)
 		}
 	}
 	/// The title of the MiniPlayer keep on top setting.
 	static var keepOnTop: String {
 		L10n.resolve {
-			String(localized: "Keep on Top", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer keep on top setting.")
+			String(
+				localized: "Keep on Top",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the MiniPlayer keep on top setting."
+			)
 		}
 	}
 	/// The title of the MiniPlayer all Spaces setting.
 	static var showOnAllSpaces: String {
 		L10n.resolve {
-			String(localized: "Show on All Spaces", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the MiniPlayer all Spaces setting.")
+			String(
+				localized: "Show on All Spaces",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the MiniPlayer all Spaces setting."
+			)
 		}
 	}
 	/// The footer describing the MiniPlayer window setting.
 	static var miniPlayerWindowDescription: String {
 		L10n.resolve {
-			String(localized: "Float the MiniPlayer above other apps, and let it follow you between Spaces and full screen apps.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer describing the MiniPlayer window setting.")
+			String(
+				localized: "Float the MiniPlayer above other apps, and let it follow you between Spaces and full screen apps.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer describing the MiniPlayer window setting."
+			)
 		}
 	}
 
@@ -1924,19 +2260,37 @@ extension L10n {
 	/// The 'Sync' settings section header.
 	static var sync: String {
 		L10n.resolve {
-			String(localized: "Sync", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Sync' settings section header.")
+			String(
+				localized: "Sync",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Sync' settings section header."
+			)
 		}
 	}
 	/// The 'Default Sorting' settings section header.
 	static var defaultSorting: String {
 		L10n.resolve {
-			String(localized: "Default Sorting", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Default Sorting' settings section header.")
+			String(
+				localized: "Default Sorting",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Default Sorting' settings section header."
+			)
 		}
 	}
 	/// The row title shown when the last sync happened moments ago.
 	static var syncedJustNow: String {
 		L10n.resolve {
-			String(localized: "Synced just now", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row title shown when the last sync happened moments ago.")
+			String(
+				localized: "Synced just now",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The row title shown when the last sync happened moments ago."
+			)
 		}
 	}
 	/// The row title showing how many minutes ago the library last synced.
@@ -1978,25 +2332,49 @@ extension L10n {
 	/// The row title shown when the library has never synced.
 	static var neverSynced: String {
 		L10n.resolve {
-			String(localized: "Never synced", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row title shown when the library has never synced.")
+			String(
+				localized: "Never synced",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The row title shown when the library has never synced."
+			)
 		}
 	}
 	/// The action row title that forces an immediate library sync.
 	static var syncNow: String {
 		L10n.resolve {
-			String(localized: "Sync now", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action row title that forces an immediate library sync.")
+			String(
+				localized: "Sync now",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action row title that forces an immediate library sync."
+			)
 		}
 	}
 	/// The detail value shown on the sync-now row while a sync is in progress.
 	static var syncingNow: String {
 		L10n.resolve {
-			String(localized: "Syncing…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The detail value shown on the sync-now row while a sync is in progress.")
+			String(
+				localized: "Syncing…",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The detail value shown on the sync-now row while a sync is in progress."
+			)
 		}
 	}
 	/// The footer message explaining what the sync section does.
 	static var librarySyncFooterMessage: String {
 		L10n.resolve {
-			String(localized: "Kurozora syncs your library automatically in the background. Use Sync now to fetch changes immediately.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer message explaining what the sync section does.")
+			String(
+				localized: "Kurozora syncs your library automatically in the background. Use Sync now to fetch changes immediately.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer message explaining what the sync section does."
+			)
 		}
 	}
 
@@ -2004,97 +2382,193 @@ extension L10n {
 	/// The title of the 'Rating Style' settings.
 	static var ratingStyle: String {
 		L10n.resolve {
-			String(localized: "Rating Style", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The title of the 'Rating Style' settings.")
+			String(
+				localized: "Rating Style",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the 'Rating Style' settings."
+			)
 		}
 	}
 	/// The 'Rating Style' section header.
 	static var ratingStyles: String {
 		L10n.resolve {
-			String(localized: "Styles", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The 'Rating Style' section header.")
+			String(
+				localized: "Styles",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The 'Rating Style' section header."
+			)
 		}
 	}
 	/// The header description of the 'Rating Style' settings.
 	static var ratingStyleHeaderDescription: String {
 		L10n.resolve {
-			String(localized: "Choose how much detail you want to give when you rate.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The header description of the 'Rating Style' settings.")
+			String(
+				localized: "Choose how much detail you want to give when you rate.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The header description of the 'Rating Style' settings."
+			)
 		}
 	}
 	/// The caption of the quick reaction preview.
 	static var ratingStyleQuickReactionCaption: String {
 		L10n.resolve {
-			String(localized: "Quick and simple. Just tap an emoji to rate.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the quick reaction preview.")
+			String(
+				localized: "Quick and simple. Just tap an emoji to rate.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The caption of the quick reaction preview."
+			)
 		}
 	}
 	/// The caption of the standard preview.
 	static var ratingStyleStandardCaption: String {
 		L10n.resolve {
-			String(localized: "The classic 5-star rating you know and love.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the standard preview.")
+			String(
+				localized: "The classic 5-star rating you know and love.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The caption of the standard preview."
+			)
 		}
 	}
 	/// The caption of the detailed preview.
 	static var ratingStyleDetailedCaption: String {
 		L10n.resolve {
-			String(localized: "Score every aspect, such as story and characters, for a detailed review.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The caption of the detailed preview.")
+			String(
+				localized: "Score every aspect, such as story and characters, for a detailed review.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The caption of the detailed preview."
+			)
 		}
 	}
 	/// The introduction to the emoji to star conversion list.
 	static var emojiConversionIntro: String {
 		L10n.resolve {
-			String(localized: "Each reaction is automatically saved as a star rating:", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The introduction to the emoji to star conversion list.")
+			String(
+				localized: "Each reaction is automatically saved as a star rating:",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The introduction to the emoji to star conversion list."
+			)
 		}
 	}
 	/// The quip shown for the negative reaction.
 	static var emojiScoreDislikedQuip: String {
 		L10n.resolve {
-			String(localized: "The exact feeling of watching a legendary manga get ruined by a bad studio.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the negative reaction.")
+			String(
+				localized: "The exact feeling of watching a legendary manga get ruined by a bad studio.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The quip shown for the negative reaction."
+			)
 		}
 	}
 	/// The quip shown for the indifferent reaction.
 	static var emojiScoreNeutralQuip: String {
 		L10n.resolve {
-			String(localized: "The only good thing about the entire show was the opening song.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the indifferent reaction.")
+			String(
+				localized: "The only good thing about the entire show was the opening song.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The quip shown for the indifferent reaction."
+			)
 		}
 	}
 	/// The quip shown for the positive reaction.
 	static var emojiScoreLikedQuip: String {
 		L10n.resolve {
-			String(localized: "The rare 10/10 that actually lives up to the massive internet hype.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The quip shown for the positive reaction.")
+			String(
+				localized: "The rare 10/10 that actually lives up to the massive internet hype.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The quip shown for the positive reaction."
+			)
 		}
 	}
 	/// The trailing row of the detailed preview's category list.
 	static var andMore: String {
 		L10n.resolve {
-			String(localized: "…and more", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The trailing row of the detailed preview's category list.")
+			String(
+				localized: "…and more",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The trailing row of the detailed preview's category list."
+			)
 		}
 	}
 	/// The message shown when the rating style could not be saved.
 	static var ratingStyleUpdateFailed: String {
 		L10n.resolve {
-			String(localized: "Your rating style could not be saved. Please try again.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The message shown when the rating style could not be saved.")
+			String(
+				localized: "Your rating style could not be saved. Please try again.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message shown when the rating style could not be saved."
+			)
 		}
 	}
 	/// The name of the quick reaction rating style.
 	static var ratingStyleQuickReaction: String {
 		L10n.resolve {
-			String(localized: "Quick Reaction", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the quick reaction rating style.")
+			String(
+				localized: "Quick Reaction",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the quick reaction rating style."
+			)
 		}
 	}
 	/// The name of the standard rating style.
 	static var ratingStyleStandard: String {
 		L10n.resolve {
-			String(localized: "Standard", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the standard rating style.")
+			String(
+				localized: "Standard",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the standard rating style."
+			)
 		}
 	}
 	/// The name of the detailed rating style.
 	static var ratingStyleDetailed: String {
 		L10n.resolve {
-			String(localized: "Detailed Review", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the detailed rating style.")
+			String(
+				localized: "Detailed Review",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the detailed rating style."
+			)
 		}
 	}
 	/// The footer explaining how the rating style is applied.
 	static var ratingStyleFooter: String {
 		L10n.resolve {
-			String(localized: "Every style is stored on the same five star scale, so you can switch whenever you like without losing your ratings.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining how the rating style is applied.")
+			String(
+				localized: "Every style is stored on the same five star scale, so you can switch whenever you like without losing your ratings.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining how the rating style is applied."
+			)
 		}
 	}
 
@@ -2102,67 +2576,133 @@ extension L10n {
 	/// The name of the media settings screen.
 	static var media: String {
 		L10n.resolve {
-			String(localized: "Media", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The name of the media settings screen.")
+			String(
+				localized: "Media",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The name of the media settings screen."
+			)
 		}
 	}
 	/// The description of the media settings screen.
 	static var mediaHeaderDescription: String {
 		L10n.resolve {
-			String(localized: "Choose where images are saved and whether the text inside them is recognized.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The description of the media settings screen.")
+			String(
+				localized: "Choose where images are saved and whether the text inside them is recognized.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description of the media settings screen."
+			)
 		}
 	}
 	/// The section listing where saved images are written to.
 	static var saveLocation: String {
 		L10n.resolve {
-			String(localized: "Save Location", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The section listing where saved images are written to.")
+			String(
+				localized: "Save Location",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The section listing where saved images are written to."
+			)
 		}
 	}
 	/// The row choosing where saved images are written to.
 	static var location: String {
 		L10n.resolve {
-			String(localized: "Location", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The row choosing where saved images are written to.")
+			String(
+				localized: "Location",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The row choosing where saved images are written to."
+			)
 		}
 	}
 	/// The destination that writes saved images to a folder.
 	static var saveFolder: String {
 		L10n.resolve {
-			String(localized: "Folder", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The destination that writes saved images to a folder.")
+			String(
+				localized: "Folder",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destination that writes saved images to a folder."
+			)
 		}
 	}
 	/// The destination that writes saved images to the system photo library.
 	static var savePhotoLibrary: String {
 		L10n.resolve {
-			String(localized: "Photo Library", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The destination that writes saved images to the system photo library.")
+			String(
+				localized: "Photo Library",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The destination that writes saved images to the system photo library."
+			)
 		}
 	}
 	/// The action that picks the folder saved images are written to.
 	static var chooseFolder: String {
 		L10n.resolve {
-			String(localized: "Choose Folder…", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The action that picks the folder saved images are written to.")
+			String(
+				localized: "Choose Folder…",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The action that picks the folder saved images are written to."
+			)
 		}
 	}
 	/// The toggle that also adds saved images to an album named Kurozora.
 	static var saveToKurozoraAlbum: String {
 		L10n.resolve {
-			String(localized: "Save to \u{201C}Kurozora\u{201D} Album", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toggle that also adds saved images to an album named Kurozora.")
+			String(
+				localized: "Save to \u{201C}Kurozora\u{201D} Album",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toggle that also adds saved images to an album named Kurozora."
+			)
 		}
 	}
 	/// The footer explaining the Kurozora album toggle.
 	static var saveToKurozoraAlbumFooter: String {
 		L10n.resolve {
-			String(localized: "Saved images are grouped into their own album.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining the Kurozora album toggle.")
+			String(
+				localized: "Saved images are grouped into their own album.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the Kurozora album toggle."
+			)
 		}
 	}
 	/// The toggle that recognizes text and subjects inside media.
 	static var liveTextAnalyzer: String {
 		L10n.resolve {
-			String(localized: "Live Text Analyzer", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The toggle that recognizes text and subjects inside media.")
+			String(
+				localized: "Live Text Analyzer",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The toggle that recognizes text and subjects inside media."
+			)
 		}
 	}
 	/// The footer explaining the Live Text Analyzer toggle.
 	static var liveTextAnalyzerFooter: String {
 		L10n.resolve {
-			String(localized: "Select and copy text inside an image, and touch and hold a subject to lift it from the background.", table: "Settings", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The footer explaining the Live Text Analyzer toggle.")
+			String(
+				localized: "Select and copy text inside an image, and touch and hold a subject to lift it from the background.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the Live Text Analyzer toggle."
+			)
 		}
 	}
 }

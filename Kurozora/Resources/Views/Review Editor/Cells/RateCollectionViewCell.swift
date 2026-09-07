@@ -59,7 +59,7 @@ final class RateCollectionViewCell: KCollectionViewCell {
 		self.backgroundColor = .clear
 		self.contentView.directionalLayoutMargins = .zero
 
-		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? L10n.tapToRate : L10n.clickToRate
+		self.primaryLabel.text = L10n.ratePrompt
 
 		self.cosmosView.settings.starSize = 20
 		self.cosmosView.settings.fillMode = .half

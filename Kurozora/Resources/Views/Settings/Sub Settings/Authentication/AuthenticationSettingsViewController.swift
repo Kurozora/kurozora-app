@@ -76,11 +76,7 @@ class AuthenticationSettingsViewController: SubSettingsViewController, TypedSegu
 		case .toggleAuthentication:
 			sender.isEnabled = false
 
-			#if targetEnvironment(macCatalyst)
-			let reasonString = isOn ? L10n.biometricReasonEnableAppLockMac : L10n.biometricReasonDisableAppLockMac
-			#else
 			let reasonString = isOn ? L10n.biometricReasonEnableAppLock : L10n.biometricReasonDisableAppLock
-			#endif
 
 			AuthenticationManager.shared.requestBiometricPermission(for: reasonString) { [weak self] success in
 				guard let self = self else { return }
