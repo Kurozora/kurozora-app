@@ -79,12 +79,25 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 extension GameLockupCollectionViewCell {
 	/// Returns the item that measures the given game.
 	///
-	/// - Parameter game: The game the item measures.
+	/// - Parameters:
+	///    - game: The game the item measures.
+	///    - rank: The rank of the game in a ranked list.
 	///
 	/// - Returns: The item that measures the game.
-	static func measurableItem(for game: Game) -> CellHeightMeasurer.Item {
+	static func measurableItem(for game: Game, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self) { cell in
-			cell.configure(using: game)
+			cell.configure(using: game, rank: rank)
+		}
+	}
+
+	/// Returns the item that measures the given related game.
+	///
+	/// - Parameter relatedGame: The related game the item measures.
+	///
+	/// - Returns: The item that measures the related game.
+	static func measurableItem(for relatedGame: RelatedGame) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self) { cell in
+			cell.configure(using: relatedGame)
 		}
 	}
 }

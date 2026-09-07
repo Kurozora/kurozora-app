@@ -6,6 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension StudioDetailsCollectionViewController {
@@ -111,21 +112,33 @@ extension StudioDetailsCollectionViewController {
 			case .shows:
 				if !self.showIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
+							SmallLockupCollectionViewCell.measurableItem(for: show)
+						}
+					}
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, literature: Literature) in
+							SmallLockupCollectionViewCell.measurableItem(for: literature)
+						}
+					}
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}
 			case .games:
 				if !self.gameIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, game: Game) in
+							GameLockupCollectionViewCell.measurableItem(for: game)
+						}
+					}
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}

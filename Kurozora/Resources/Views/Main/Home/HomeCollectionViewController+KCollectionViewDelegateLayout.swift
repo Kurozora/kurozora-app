@@ -188,7 +188,7 @@ extension HomeCollectionViewController {
 		let recaps = self.exploreCategories[safe: section]?.relationships.recaps?.data ?? []
 		var measurableItems = recaps.prefix(Self.exploreCategoryItemLimit).map { RecapPosterLockupCollectionViewCell.measurableItem(for: $0) }
 
-		measurableItems += self.cachedItems(inSection: section).compactMap { item in
+		measurableItems += self.cachedItems(inSection: section).values.compactMap { item in
 			switch item {
 			case let show as Show:
 				return SmallLockupCollectionViewCell.measurableItem(for: show)
@@ -212,7 +212,7 @@ extension HomeCollectionViewController {
 	///
 	/// - Returns: The items that measure the section's cells.
 	func mediumMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		return self.cachedItems(inSection: section).compactMap { item in
+		return self.cachedItems(inSection: section).values.compactMap { item in
 			switch item {
 			case let genre as Genre:
 				return MediumLockupCollectionViewCell.measurableItem(for: genre)
@@ -230,7 +230,7 @@ extension HomeCollectionViewController {
 	///
 	/// - Returns: The items that measure the section's cells.
 	func profileMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		return self.cachedItems(inSection: section).compactMap { item in
+		return self.cachedItems(inSection: section).values.compactMap { item in
 			switch item {
 			case let character as Character:
 				return ProfileLockupCollectionViewCell.measurableItem(for: character)

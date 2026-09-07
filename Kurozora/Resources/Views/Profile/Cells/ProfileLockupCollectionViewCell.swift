@@ -150,23 +150,27 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 extension ProfileLockupCollectionViewCell {
 	/// Returns the item that measures the given character.
 	///
-	/// - Parameter character: The character the item measures.
+	/// - Parameters:
+	///    - character: The character the item measures.
+	///    - rank: The rank of the character in a ranked list.
 	///
 	/// - Returns: The item that measures the character.
-	static func measurableItem(for character: Character) -> CellHeightMeasurer.Item {
+	static func measurableItem(for character: Character, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
-			cell.configure(using: character)
+			cell.configure(using: character, rank: rank)
 		}
 	}
 
 	/// Returns the item that measures the given person.
 	///
-	/// - Parameter person: The person the item measures.
+	/// - Parameters:
+	///    - person: The person the item measures.
+	///    - rank: The rank of the person in a ranked list.
 	///
 	/// - Returns: The item that measures the person.
-	static func measurableItem(for person: Person) -> CellHeightMeasurer.Item {
+	static func measurableItem(for person: Person, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
-			cell.configure(using: person)
+			cell.configure(using: person, rank: rank)
 		}
 	}
 }

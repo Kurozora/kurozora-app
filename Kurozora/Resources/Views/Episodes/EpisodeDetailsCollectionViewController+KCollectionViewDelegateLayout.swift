@@ -118,7 +118,13 @@ extension EpisodeDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.cast
+							.filter { $0.key.section == section }
+							.map { CastCollectionViewCell.measurableItem(for: $0.value) }
+
+						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 					hasSectionHeader = true
 				}
 			case .suggestedEpisodes:

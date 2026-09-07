@@ -6,6 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 extension PersonDetailsCollectionViewController {
@@ -106,22 +107,38 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .characters:
 				if !self.characterIdentities.isEmpty {
-					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, character: Character) in
+							ProfileLockupCollectionViewCell.measurableItem(for: character)
+						}
+					}
 					hasSectionHeader = true
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
+							SmallLockupCollectionViewCell.measurableItem(for: show)
+						}
+					}
 					hasSectionHeader = true
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, literature: Literature) in
+							SmallLockupCollectionViewCell.measurableItem(for: literature)
+						}
+					}
 					hasSectionHeader = true
 				}
 			case .games:
 				if !self.gameIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, game: Game) in
+							GameLockupCollectionViewCell.measurableItem(for: game)
+						}
+					}
 					hasSectionHeader = true
 				}
 			}

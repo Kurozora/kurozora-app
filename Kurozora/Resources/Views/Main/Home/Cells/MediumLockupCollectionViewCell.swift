@@ -89,23 +89,27 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 extension MediumLockupCollectionViewCell {
 	/// Returns the item that measures the given genre.
 	///
-	/// - Parameter genre: The genre the item measures.
+	/// - Parameters:
+	///    - genre: The genre the item measures.
+	///    - rank: The rank of the genre in a ranked list.
 	///
 	/// - Returns: The item that measures the genre.
-	static func measurableItem(for genre: Genre) -> CellHeightMeasurer.Item {
+	static func measurableItem(for genre: Genre, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: MediumLockupCollectionViewCell.self) { cell in
-			cell.configure(using: genre)
+			cell.configure(using: genre, rank: rank)
 		}
 	}
 
 	/// Returns the item that measures the given theme.
 	///
-	/// - Parameter theme: The theme the item measures.
+	/// - Parameters:
+	///    - theme: The theme the item measures.
+	///    - rank: The rank of the theme in a ranked list.
 	///
 	/// - Returns: The item that measures the theme.
-	static func measurableItem(for theme: Theme) -> CellHeightMeasurer.Item {
+	static func measurableItem(for theme: Theme, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: MediumLockupCollectionViewCell.self) { cell in
-			cell.configure(using: theme)
+			cell.configure(using: theme, rank: rank)
 		}
 	}
 }

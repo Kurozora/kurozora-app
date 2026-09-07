@@ -85,3 +85,17 @@ class CastCollectionViewCell: KCollectionViewCell {
 		self.delegate?.castCollectionViewCell(self, didPressCharacterButton: sender)
 	}
 }
+
+// MARK: - Measurement
+extension CastCollectionViewCell {
+	/// Returns the item that measures the given cast member.
+	///
+	/// - Parameter cast: The cast member the item measures.
+	///
+	/// - Returns: The item that measures the cast member.
+	static func measurableItem(for cast: Cast) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: CastCollectionViewCell.self) { cell in
+			cell.configure(using: cast)
+		}
+	}
+}

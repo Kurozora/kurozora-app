@@ -74,9 +74,13 @@ extension ReCapCollectionViewController {
 				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				return sectionLayout
 			case .topShows, .topGames, .topLiteratures:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+				}
 			case .topGenres, .topThemes:
-				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+				}
 			case .milestones(let isFullSection):
 				if isFullSection {
 					sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -95,6 +99,35 @@ extension ReCapCollectionViewController {
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			sectionLayout?.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return sectionLayout
+		}
+	}
+}
+
+// MARK: - Measurement
+extension ReCapCollectionViewController {
+	/// Returns the items that measure the cells of a ranked recap section.
+	///
+	/// - Parameter section: The section to measure.
+	///
+	/// - Returns: The items that measure the section's cells.
+	func recapMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
+		return self.cachedItems(inSection: section).compactMap { item, model in
+			let rank = item + 1
+
+			switch model {
+			case let show as Show:
+				return SmallLockupCollectionViewCell.measurableItem(for: show, rank: rank)
+			case let literature as Literature:
+				return SmallLockupCollectionViewCell.measurableItem(for: literature, rank: rank)
+			case let game as Game:
+				return GameLockupCollectionViewCell.measurableItem(for: game, rank: rank)
+			case let genre as Genre:
+				return MediumLockupCollectionViewCell.measurableItem(for: genre, rank: rank)
+			case let theme as Theme:
+				return MediumLockupCollectionViewCell.measurableItem(for: theme, rank: rank)
+			default:
+				return nil
+			}
 		}
 	}
 }

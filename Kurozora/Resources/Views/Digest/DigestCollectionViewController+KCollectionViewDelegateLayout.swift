@@ -50,7 +50,11 @@ extension DigestCollectionViewController {
 			case .hero:
 				sectionLayout = self.heroSectionLayout(layoutEnvironment)
 			case .newReleases, .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering, .releasing:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
+						SmallLockupCollectionViewCell.measurableItem(for: show)
+					}
+				}
 			case .newEpisodes, .finales, .trending:
 				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, episode in
@@ -58,7 +62,11 @@ extension DigestCollectionViewController {
 					}
 				}
 			case .birthdays:
-				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, person: Person) in
+						ProfileLockupCollectionViewCell.measurableItem(for: person)
+					}
+				}
 			case .momentum, .growth:
 				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			}

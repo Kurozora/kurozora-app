@@ -65,3 +65,17 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 		self.ratingLabel.text = "\(season.attributes.ratingAverage)"
 	}
 }
+
+// MARK: - Measurement
+extension SeasonLockupCollectionViewCell {
+	/// Returns the item that measures the given season.
+	///
+	/// - Parameter season: The season the item measures.
+	///
+	/// - Returns: The item that measures the season.
+	static func measurableItem(for season: Season) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: SeasonLockupCollectionViewCell.self) { cell in
+			cell.configure(using: season)
+		}
+	}
+}

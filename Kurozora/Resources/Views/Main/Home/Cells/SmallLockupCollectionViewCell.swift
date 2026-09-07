@@ -174,23 +174,49 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 extension SmallLockupCollectionViewCell {
 	/// Returns the item that measures the given show.
 	///
-	/// - Parameter show: The show the item measures.
+	/// - Parameters:
+	///    - show: The show the item measures.
+	///    - rank: The rank of the show in a ranked list.
 	///
 	/// - Returns: The item that measures the show.
-	static func measurableItem(for show: Show) -> CellHeightMeasurer.Item {
+	static func measurableItem(for show: Show, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
-			cell.configure(using: show)
+			cell.configure(using: show, rank: rank)
 		}
 	}
 
 	/// Returns the item that measures the given literature.
 	///
-	/// - Parameter literature: The literature the item measures.
+	/// - Parameters:
+	///    - literature: The literature the item measures.
+	///    - rank: The rank of the literature in a ranked list.
 	///
 	/// - Returns: The item that measures the literature.
-	static func measurableItem(for literature: Literature) -> CellHeightMeasurer.Item {
+	static func measurableItem(for literature: Literature, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
-			cell.configure(using: literature)
+			cell.configure(using: literature, rank: rank)
+		}
+	}
+
+	/// Returns the item that measures the given related show.
+	///
+	/// - Parameter relatedShow: The related show the item measures.
+	///
+	/// - Returns: The item that measures the related show.
+	static func measurableItem(for relatedShow: RelatedShow) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
+			cell.configure(using: relatedShow)
+		}
+	}
+
+	/// Returns the item that measures the given related literature.
+	///
+	/// - Parameter relatedLiterature: The related literature the item measures.
+	///
+	/// - Returns: The item that measures the related literature.
+	static func measurableItem(for relatedLiterature: RelatedLiterature) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self) { cell in
+			cell.configure(using: relatedLiterature)
 		}
 	}
 }

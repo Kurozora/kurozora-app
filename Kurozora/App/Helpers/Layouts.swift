@@ -194,16 +194,15 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
@@ -221,16 +220,15 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
@@ -518,16 +516,15 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
@@ -570,16 +567,15 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 

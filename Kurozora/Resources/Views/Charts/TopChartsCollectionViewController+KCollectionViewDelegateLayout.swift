@@ -53,11 +53,17 @@ extension TopChartsCollectionViewController {
 			case .chart(let chartKind):
 				switch chartKind {
 				case .shows, .literatures, .games:
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					}
 				case .characters:
-					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					}
 				case .people:
-					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					}
 				case .episodes:
 					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { item, episode in
@@ -71,7 +77,9 @@ extension TopChartsCollectionViewController {
 						}
 					}
 				case .studios:
-					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					}
 				}
 			}
 
@@ -83,6 +91,37 @@ extension TopChartsCollectionViewController {
 			)
 			sectionLayout.boundarySupplementaryItems = [sectionHeader]
 			return sectionLayout
+		}
+	}
+}
+
+// MARK: - Measurement
+extension TopChartsCollectionViewController {
+	/// Returns the items that measure the cells of a ranked chart section.
+	///
+	/// - Parameter section: The section to measure.
+	///
+	/// - Returns: The items that measure the section's cells.
+	func chartMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
+		return self.cachedItems(inSection: section).compactMap { item, model in
+			let rank = item + 1
+
+			switch model {
+			case let show as Show:
+				return SmallLockupCollectionViewCell.measurableItem(for: show, rank: rank)
+			case let literature as Literature:
+				return SmallLockupCollectionViewCell.measurableItem(for: literature, rank: rank)
+			case let game as Game:
+				return GameLockupCollectionViewCell.measurableItem(for: game, rank: rank)
+			case let character as Character:
+				return ProfileLockupCollectionViewCell.measurableItem(for: character, rank: rank)
+			case let person as Person:
+				return ProfileLockupCollectionViewCell.measurableItem(for: person, rank: rank)
+			case let studio as Studio:
+				return StudioLockupCollectionViewCell.measurableItem(for: studio, rank: rank)
+			default:
+				return nil
+			}
 		}
 	}
 }

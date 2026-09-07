@@ -78,3 +78,19 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 		}
 	}
 }
+
+// MARK: - Measurement
+extension StudioLockupCollectionViewCell {
+	/// Returns the item that measures the given studio.
+	///
+	/// - Parameters:
+	///    - studio: The studio the item measures.
+	///    - rank: The rank of the studio in a ranked list.
+	///
+	/// - Returns: The item that measures the studio.
+	static func measurableItem(for studio: Studio, rank: Int? = nil) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: StudioLockupCollectionViewCell.self) { cell in
+			cell.configure(using: studio, rank: rank)
+		}
+	}
+}

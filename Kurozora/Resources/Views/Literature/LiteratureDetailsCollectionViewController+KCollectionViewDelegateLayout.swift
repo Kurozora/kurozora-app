@@ -6,6 +6,7 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 // MARK: - KCollectionViewDelegateLayout
@@ -123,35 +124,59 @@ extension LiteratureDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, cast in
+							CastCollectionViewCell.measurableItem(for: cast)
+						}
+					}
 					hasSectionHeader = true
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, studio in
+							StudioLockupCollectionViewCell.measurableItem(for: studio)
+						}
+					}
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
 				if !self.studioLiteratureIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, literature: Literature) in
+							SmallLockupCollectionViewCell.measurableItem(for: literature)
+						}
+					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.relatedLiteratures.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
+
+						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.relatedShows.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
+
+						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.relatedGames.map { GameLockupCollectionViewCell.measurableItem(for: $0) }
+
+						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
