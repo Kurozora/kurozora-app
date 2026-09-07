@@ -15,11 +15,13 @@ struct LibraryEntryDetailView: View {
 	@State private var viewModel: LibraryEntryDetailViewModel
 
 	// MARK: - Initializers
-	/// Opens the detail screen for a library entry.
+	/// Opens the detail screen for a library entry or catalog item.
 	///
-	/// - Parameter item: The entry's snapshot.
-	init(item: LibraryItem) {
-		self._viewModel = State(initialValue: LibraryEntryDetailViewModel(item: item))
+	/// - Parameters:
+	///    - item: The item's snapshot.
+	///    - details: The server fields, when the caller already fetched the item.
+	init(item: LibraryItem, details: LibraryEntryDetails? = nil) {
+		self._viewModel = State(initialValue: LibraryEntryDetailViewModel(item: item, details: details))
 	}
 
 	// MARK: - Body

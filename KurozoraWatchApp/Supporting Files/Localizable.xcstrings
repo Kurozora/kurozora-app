@@ -19755,6 +19755,9 @@
         }
       }
     },
+    "No results for “%@”." : {
+      "comment" : "The message shown when a search query matches nothing. The placeholder is the query."
+    },
     "None" : {
       "comment" : "The library status for a show the user has not tracked.",
       "localizations" : {
@@ -28142,6 +28145,9 @@
           }
         }
       }
+    },
+    "See All" : {
+      "comment" : "The row that opens the rest of a search results section."
     },
     "Shown" : {
       "comment" : "The filter option that includes the matching episodes.",

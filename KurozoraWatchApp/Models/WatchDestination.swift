@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A screen reachable from the watch app's root list.
+/// A screen the watch app's navigation stack can push.
 enum WatchDestination: Hashable, Identifiable {
 	/// The Up Next queue, pushed automatically on launch.
 	case home
@@ -16,16 +16,13 @@ enum WatchDestination: Hashable, Identifiable {
 	/// The signed in user's library.
 	case library
 
-	/// Catalog search.
-	case search
+	/// The matches for a submitted search query.
+	case searchResults(query: String)
 
 	/// The signed in user's profile.
 	case profile
 
 	// MARK: - Properties
-	/// The destinations listed as rows on the root screen.
-	static let rows: [WatchDestination] = [.home, .library, .search]
-
 	var id: Self {
 		return self
 	}
@@ -37,8 +34,8 @@ enum WatchDestination: Hashable, Identifiable {
 			return L10n.home
 		case .library:
 			return L10n.library
-		case .search:
-			return L10n.search
+		case .searchResults(let query):
+			return query
 		case .profile:
 			return L10n.profile
 		}
@@ -51,7 +48,7 @@ enum WatchDestination: Hashable, Identifiable {
 			return "house.fill"
 		case .library:
 			return "rectangle.stack.fill"
-		case .search:
+		case .searchResults:
 			return "magnifyingglass"
 		case .profile:
 			return "person.crop.circle.fill"

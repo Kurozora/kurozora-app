@@ -29,8 +29,12 @@ struct WatchFilterAttribute: Identifiable {
 // MARK: - SearchFilterView
 struct SearchFilterView: View {
 	// MARK: - Properties
-	let viewModel: SearchViewModel
+	let kind: LibraryKind
 	@Binding var isPresented: Bool
+
+	/// Receives the built filter on apply, or `nil` on reset.
+	let onApply: (SearchFilter?) -> Void
+
 	@State private var attributes: [WatchFilterAttribute] = []
 
 	// MARK: - Body
@@ -58,24 +62,20 @@ struct SearchFilterView: View {
 			}
 			.navigationTitle(L10n.filters)
 			.onAppear {
-				self.attributes = Self.filterAttributes(for: self.viewModel.selectedTab)
+				self.attributes = Self.filterAttributes(for: self.kind.searchType)
 			}
 		}
 	}
 
 	// MARK: - Private
 	private func applyFilter() {
-		if let filter = Self.buildFilter(from: self.attributes, for: self.viewModel.selectedTab) {
-			self.viewModel.activeFilters[self.viewModel.selectedTab] = filter
-		}
 		self.isPresented = false
-		Task { await self.viewModel.submitSearch() }
+		self.onApply(Self.buildFilter(from: self.attributes, for: self.kind.searchType))
 	}
 
 	private func resetFilter() {
-		self.viewModel.activeFilters.removeValue(forKey: self.viewModel.selectedTab)
 		self.isPresented = false
-		Task { await self.viewModel.submitSearch() }
+		self.onApply(nil)
 	}
 
 	// MARK: - Filter Attribute Definitions

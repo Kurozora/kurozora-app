@@ -10,8 +10,6 @@ import SwiftUI
 
 struct ContentView: View {
 	// MARK: - Properties
-	@Environment(WatchTheme.self) private var theme
-
 	@State private var path: [WatchDestination] = [.home]
 	@State private var upNextViewModel = UpNextViewModel()
 	@State private var libraryViewModel = LibraryViewModel()
@@ -19,14 +17,19 @@ struct ContentView: View {
 	// MARK: - Body
 	var body: some View {
 		NavigationStack(path: self.$path) {
-			List(WatchDestination.rows) { destination in
-				NavigationLink(value: destination) {
-					Label {
-						Text(destination.title)
-					} icon: {
-						Image(systemName: destination.symbolName)
-							.foregroundStyle(self.theme.tint)
-					}
+			List {
+				NavigationLink(value: WatchDestination.home) {
+					DestinationRowLabel(destination: .home)
+				}
+
+				NavigationLink(value: WatchDestination.library) {
+					DestinationRowLabel(destination: .library)
+				}
+
+				TextFieldLink(prompt: Text(L10n.searchPlaceholder)) {
+					DestinationRowLabel(title: L10n.search, symbolName: "magnifyingglass")
+				} onSubmit: { query in
+					self.search(query)
 				}
 			}
 			.themedNavigationTitle(L10n.kurozora)
@@ -47,6 +50,16 @@ struct ContentView: View {
 	}
 
 	// MARK: - Functions
+	/// Pushes the results for the submitted text, ignoring blank input.
+	///
+	/// - Parameter query: The text entered on the system input sheet.
+	private func search(_ query: String) {
+		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+		guard !trimmed.isEmpty else { return }
+
+		self.path.append(.searchResults(query: trimmed))
+	}
+
 	@ViewBuilder
 	private func destinationView(for destination: WatchDestination) -> some View {
 		switch destination {
@@ -54,8 +67,8 @@ struct ContentView: View {
 			HomeView(viewModel: self.upNextViewModel)
 		case .library:
 			LibraryView(viewModel: self.libraryViewModel)
-		case .search:
-			SearchView()
+		case .searchResults(let query):
+			SearchResultsView(query: query)
 		case .profile:
 			ProfileView()
 		}

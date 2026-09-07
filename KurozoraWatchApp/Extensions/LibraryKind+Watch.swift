@@ -53,4 +53,16 @@ extension LibraryKind {
 			return "Currently Publishing"
 		}
 	}
+
+	/// The search type that returns this kind's catalog entries.
+	var searchType: SearchType {
+		switch self {
+		case .shows:
+			return .shows
+		case .literatures:
+			return .literatures
+		case .games:
+			return .games
+		}
+	}
 }

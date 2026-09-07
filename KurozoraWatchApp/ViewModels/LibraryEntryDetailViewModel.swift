@@ -26,8 +26,14 @@ final class LibraryEntryDetailViewModel {
 	private var entryObserver: LocalLibraryEntryObserver?
 
 	// MARK: - Initializers
-	init(item: LibraryItem) {
+	/// Creates the view model, taking the server fields up front when the caller already holds them.
+	///
+	/// - Parameters:
+	///    - item: The snapshot the detail screen was opened with.
+	///    - details: The server fields, when the caller already fetched the item.
+	init(item: LibraryItem, details: LibraryEntryDetails? = nil) {
 		self.item = item
+		self.details = details
 		self.libraryStatus = item.libraryStatus
 	}
 

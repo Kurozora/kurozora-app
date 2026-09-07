@@ -38,6 +38,18 @@ struct L10n {
 		String(localized: "Search", comment: "The title of the search destination.")
 	}
 
+	/// The row that opens the rest of a results section.
+	static var seeAll: String {
+		String(localized: "See All", comment: "The row that opens the rest of a search results section.")
+	}
+
+	/// The message shown when a query matches nothing in the library or the catalog.
+	///
+	/// - Parameter query: The text the user searched for.
+	static func noResults(for query: String) -> String {
+		String(localized: "No results for \u{201C}\(query)\u{201D}.", comment: "The message shown when a search query matches nothing. The placeholder is the query.")
+	}
+
 	/// The title of the profile destination.
 	static var profile: String {
 		String(localized: "Profile", comment: "The title of the profile destination.")
