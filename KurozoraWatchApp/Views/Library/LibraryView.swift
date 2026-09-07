@@ -9,36 +9,30 @@
 import KurozoraKit
 import SwiftUI
 
+/// Lists the library statuses with the number of shows each holds.
 struct LibraryView: View {
 	// MARK: - Properties
 	let viewModel: LibraryViewModel
 
 	// MARK: - Body
 	var body: some View {
-		Group {
-			switch self.viewModel.loadState {
-			case .idle, .loading:
-				LoadingView()
-			case .error(let message):
-				ErrorView(systemImage: "exclamationmark.triangle", message: message) {
-					Task { await self.viewModel.refresh() }
-				}
-			case .loaded:
-				if self.viewModel.shows.isEmpty {
-					EmptyStateView(systemImage: "rectangle.stack", message: "No shows in progress.\nStart watching on your iPhone!")
-				} else {
-					List(self.viewModel.shows, id: \.id) { show in
-						NavigationLink(destination: ShowDetailView(show: show, initialLibraryStatus: .inProgress)) {
-							LibraryRowView(show: show)
-						}
-						.listRowInsets(EdgeInsets(top: 2, leading: 6, bottom: 2, trailing: 6))
-					}
+		List(LibraryStatus.all, id: \.rawValue) { status in
+			NavigationLink {
+				LibraryStatusListView(status: status, viewModel: self.viewModel)
+			} label: {
+				HStack {
+					Text(status.watchTitle)
+
+					Spacer()
+
+					Text(self.viewModel.items(for: status).count, format: .number)
+						.foregroundStyle(.secondary)
 				}
 			}
 		}
 		.themedNavigationTitle(WatchDestination.library.title)
 		.task {
-			await self.viewModel.fetchIfNeeded()
+			self.viewModel.start()
 		}
 	}
 }

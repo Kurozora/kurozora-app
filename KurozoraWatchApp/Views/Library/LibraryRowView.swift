@@ -11,33 +11,38 @@ import SwiftUI
 
 struct LibraryRowView: View {
 	// MARK: - Properties
-	let show: Show
+	let item: LibraryItem
 
 	// MARK: - Body
 	var body: some View {
 		HStack(spacing: 8) {
 			ArtworkView(
-				media: self.show.attributes.poster,
+				url: self.item.posterURL,
+				backgroundColor: self.item.posterBackgroundColor,
 				shape: .poster,
 				targetWidth: 44
 			)
 			.frame(width: 44)
 
 			VStack(alignment: .leading, spacing: 1) {
-				Text(self.show.attributes.title)
+				Text(self.item.title)
 					.font(.headline)
 					.lineLimit(1)
 
-				Text(self.kindAndRating)
-					.lineLimit(1)
-
-				if let lengths = self.lengths {
-					Text(lengths)
+				if let information = self.information {
+					Text(information)
 						.lineLimit(1)
 				}
 
-				Text(self.show.attributes.status.name)
-					.lineLimit(1)
+				if let duration = self.abbreviatedDuration {
+					Text(duration)
+						.lineLimit(1)
+				}
+
+				if let statusName = self.item.statusName {
+					Text(statusName)
+						.lineLimit(1)
+				}
 
 				if let broadcastDate = self.countdownDate {
 					Text(broadcastDate, style: .relative)
@@ -53,23 +58,24 @@ struct LibraryRowView: View {
 	}
 
 	// MARK: - Computed
-	private var kindAndRating: String {
-		return "\(self.show.attributes.type.name) · \(self.show.attributes.tvRating.name)"
-	}
+	/// The media type and the user's score, on the same terms as the iOS cells' short information line.
+	private var information: String? {
+		var parts: [String] = []
 
-	private var lengths: String? {
-		let duration = self.abbreviatedDuration
-		let episodeCount = self.show.attributes.episodeCount
+		if let mediaTypeName = self.item.mediaTypeName, !mediaTypeName.isEmpty {
+			parts.append(mediaTypeName)
+		}
 
-		guard episodeCount > 0 else { return duration }
-		guard let duration else { return L10n.episodeCount(episodeCount) }
+		if let score = self.item.userScore, score > 0 {
+			parts.append("☆ \(score)")
+		}
 
-		return "\(episodeCount) ep · \(duration)"
+		return parts.isEmpty ? nil : parts.joined(separator: " · ")
 	}
 
 	private var abbreviatedDuration: String? {
 		// durationCount is seconds, so 1440 is a 24 minute episode.
-		let minutes = self.show.attributes.durationCount / 60
+		let minutes = self.item.durationCount / 60
 
 		guard minutes > 0 else { return nil }
 		guard minutes >= 60 else { return "\(minutes)m" }
@@ -82,10 +88,8 @@ struct LibraryRowView: View {
 
 	/// The next broadcast date, shown on the same terms as the iOS list cell.
 	private var countdownDate: Date? {
-		guard self.show.attributes.status.name == "Currently Airing",
-			  self.show.attributes.durationCount > 0
-		else { return nil }
+		guard self.item.statusName == "Currently Airing", self.item.durationCount > 0 else { return nil }
 
-		return self.show.attributes.nextBroadcastAt
+		return self.item.airingDate
 	}
 }

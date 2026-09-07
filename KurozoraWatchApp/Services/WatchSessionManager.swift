@@ -91,6 +91,14 @@ final class WatchSessionManager: NSObject {
 
 	private func handleApplicationContext(_ context: [String: Any]) {
 		if context["upNextDidChange"] as? Bool == true {
+			// The phone sends this after any library or watch status change, so the local
+			// store is pulled up to date alongside the Up Next refetch.
+			if let slug = User.current?.attributes.slug {
+				Task.detached(priority: .utility) {
+					await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
+				}
+			}
+
 			Task { @MainActor in
 				NotificationCenter.default.post(name: .upNextDidChangeRemotely, object: nil)
 			}

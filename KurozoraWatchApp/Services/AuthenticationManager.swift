@@ -11,7 +11,7 @@ import KeychainAccess
 import KurozoraKit
 import Observation
 
-@Observable
+@MainActor @Observable
 final class AuthenticationManager {
 	// MARK: - Properties
 	var isSignedIn = false
@@ -81,6 +81,7 @@ final class AuthenticationManager {
 
 		do {
 			_ = try await KService.profileDetails().response()
+			self.syncLibrary()
 		} catch let error as APIError where error.response?.statusCode == 401 || error.response?.statusCode == 403 {
 			NSLog("Session revalidation: token rejected (%d), signing out.", error.response?.statusCode ?? 0)
 			self.signOut()
@@ -92,11 +93,29 @@ final class AuthenticationManager {
 
 	/// Signs out the current user on the watch (clears local state only).
 	func signOut() {
+		if let slug = User.current?.attributes.slug {
+			LibraryStore.shared.clear(forUserSlug: slug)
+			WatchedStore.shared.clear()
+
+			Task {
+				await LibraryOutbox.shared.clear(forUserSlug: slug)
+			}
+		}
+
 		KService.authenticationKey = ""
 		self.isSignedIn = false
 	}
 
 	// MARK: - Private
+	/// Pulls the signed in user's library into the local store.
+	private func syncLibrary() {
+		guard let slug = User.current?.attributes.slug else { return }
+
+		Task.detached(priority: .utility) {
+			await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
+		}
+	}
+
 	/// Decodes a token from the new `Kurozora.Accounts` keychain entry for the given slug.
 	private func token(fromAccountsKeychain slug: String) -> String? {
 		guard let jsonString = try? WatchShared.accountsKeychain.get(slug),
@@ -112,6 +131,7 @@ final class AuthenticationManager {
 		do {
 			_ = try await KService.profileDetails().response()
 			self.isSignedIn = true
+			self.syncLibrary()
 		} catch {
 			NSLog("Watch auth restore failed: %@", error.localizedDescription)
 			self.isSignedIn = false

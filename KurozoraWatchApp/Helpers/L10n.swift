@@ -478,6 +478,11 @@ struct L10n {
 		String(localized: "Remove from Library", comment: "The button that removes a title from the user's library.")
 	}
 
+	/// The message shown when a library status holds no shows.
+	static var libraryStatusEmpty: String {
+		String(localized: "Nothing here yet.", comment: "The message shown when a library status holds no shows.")
+	}
+
 	/// The library status for a title the user has not tracked.
 	static var libraryNone: String {
 		String(localized: "None", comment: "The library status for a show the user has not tracked.")

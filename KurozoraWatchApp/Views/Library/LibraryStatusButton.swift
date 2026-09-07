@@ -13,7 +13,6 @@ import SwiftUI
 struct LibraryStatusButton: View {
 	// MARK: - Properties
 	let status: LibraryStatus?
-	let isUpdating: Bool
 	let onSelect: (LibraryStatus) -> Void
 	let onRemove: () -> Void
 
@@ -39,7 +38,6 @@ struct LibraryStatusButton: View {
 			.background(self.theme.tint, in: Capsule())
 		}
 		.buttonStyle(.plain)
-		.disabled(self.isUpdating)
 		.confirmationDialog(L10n.libraryStatus, isPresented: self.$isChoosing) {
 			ForEach(LibraryStatus.all, id: \.rawValue) { status in
 				Button(status.watchTitle) {

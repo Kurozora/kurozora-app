@@ -17526,6 +17526,9 @@
         }
       }
     },
+    "Nothing here yet." : {
+      "comment" : "The message shown when a library status holds no shows."
+    },
     "Novel" : {
       "comment" : "The media type for a novel.",
       "localizations" : {
