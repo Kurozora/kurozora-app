@@ -18,6 +18,14 @@ final class CellHeightMeasurer {
 	/// The environment the sizing cells were built for.
 	private var environment: Environment?
 
+	#if DEBUG
+	/// The width each cell type was last measured at.
+	private var measuredWidths: [ObjectIdentifier: CGFloat] = [:]
+
+	/// The cell types already reported for rendering at the wrong width.
+	private var reportedWidthMismatches: Set<ObjectIdentifier> = []
+	#endif
+
 	// MARK: - Functions
 	/// Returns the height of the tallest cell the given items render.
 	///
@@ -45,6 +53,10 @@ final class CellHeightMeasurer {
 			item.configure(sizingCell)
 
 			maximumHeight = max(maximumHeight, self.fittingHeight(of: sizingCell, width: width))
+
+			#if DEBUG
+			self.measuredWidths[ObjectIdentifier(item.cellType)] = width
+			#endif
 		}
 
 		return maximumHeight > 0.0 ? maximumHeight : nil
@@ -109,6 +121,23 @@ final class CellHeightMeasurer {
 
 		return size.height.rounded(.up)
 	}
+
+	#if DEBUG
+	/// Reports every cell rendering at a different width than the one its height was measured at.
+	///
+	/// - Parameter cells: The cells currently on screen.
+	func validateWidths(of cells: [UICollectionViewCell]) {
+		for cell in cells {
+			let cellType = ObjectIdentifier(type(of: cell))
+
+			guard let measuredWidth = self.measuredWidths[cellType] else { continue }
+			guard abs(cell.bounds.width - measuredWidth) > 0.5 else { continue }
+			guard self.reportedWidthMismatches.insert(cellType).inserted else { continue }
+
+			print("ERROR: \(type(of: cell)) was measured at width \(measuredWidth) but renders at \(cell.bounds.width). Its measured height is wrong by every constraint that depends on width.")
+		}
+	}
+	#endif
 }
 
 // MARK: - Item

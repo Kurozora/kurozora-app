@@ -311,8 +311,11 @@ enum Layouts {
 	/// - Returns: The width of one item.
 	private static func itemWidth(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool) -> CGFloat {
 		let columnCount = CGFloat(max(columns, 1))
-		let sectionWidth = layoutEnvironment.container.effectiveContentSize.width - (Self.horizontalInset * 2.0)
-		let groupWidth = isHorizontal ? sectionWidth * Self.groupWidthFraction : sectionWidth
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+
+		// An orthogonally scrolling group takes its fraction of the container before the section's
+		// insets are applied, so those insets only narrow a section that scrolls with the collection.
+		let groupWidth = isHorizontal ? containerWidth * Self.groupWidthFraction : containerWidth - (Self.horizontalInset * 2.0)
 		let spacing = Self.interItemSpacing * (columnCount - 1.0)
 
 		return max((groupWidth - spacing) / columnCount, 0.0)

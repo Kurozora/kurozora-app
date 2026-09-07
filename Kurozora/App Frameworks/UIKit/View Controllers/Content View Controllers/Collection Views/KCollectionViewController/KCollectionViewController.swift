@@ -161,7 +161,11 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 
-		// The top inset can be negative; the safe area still describes the top chrome.
+		#if DEBUG
+		self.cellHeightMeasurer.validateWidths(of: self.collectionView.visibleCells)
+		#endif
+
+		// The top inset can be negative, but the safe area still describes the top chrome.
 		let contentInset = self.collectionView.adjustedContentInset
 		let occupiedHeight = self.collectionView.contentSize.height
 		let topChrome = max(contentInset.top, self.collectionView.safeAreaInsets.top)
