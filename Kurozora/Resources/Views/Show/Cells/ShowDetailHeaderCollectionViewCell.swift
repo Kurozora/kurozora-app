@@ -361,7 +361,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
 		self.updateLibraryStatus(library?.status)
 		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(library?.reminderStatus, animated: animated)
+		// The server accepts reminders on shows only.
+		self.updateReminderStatus(.disabled, animated: animated)
 	}
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
@@ -373,7 +374,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
 		self.updateLibraryStatus(library?.status)
 		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(library?.reminderStatus, animated: animated)
+		// The server accepts reminders on shows only.
+		self.updateReminderStatus(.disabled, animated: animated)
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {
