@@ -19,20 +19,19 @@ struct ShowDetailView: View {
 	@State private var libraryStatus: LibraryStatus?
 	@State private var isUpdatingStatus = false
 
-	private let statuses = LibraryStatus.all
 
 	// MARK: - Body
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 10) {
-				// Poster
-				CachedAsyncImage(url: self.posterURL) {
-					RoundedRectangle(cornerRadius: 8)
-						.fill(Color.gray.opacity(0.3))
-				}
-				.frame(height: 120)
+				ArtworkView(
+					media: self.show.attributes.poster,
+					shape: .poster,
+					targetWidth: 80,
+					cornerRadius: 8
+				)
+				.frame(width: 80)
 				.frame(maxWidth: .infinity)
-				.clipShape(RoundedRectangle(cornerRadius: 8))
 
 				// Title
 				Text(self.show.attributes.title)
@@ -47,38 +46,29 @@ struct ShowDetailView: View {
 				}
 				.font(.caption2)
 
-				// Genre tags
+				LibraryStatusButton(
+					status: self.libraryStatus,
+					isUpdating: self.isUpdatingStatus,
+					onSelect: { newStatus in
+						Task { await self.updateLibraryStatus(to: newStatus) }
+					},
+					onRemove: {
+						Task { await self.removeFromLibrary() }
+					}
+				)
+
+				Divider()
+
 				if let genres = show.attributes.genres, !genres.isEmpty {
 					Text(genres.joined(separator: " \u{2022} "))
 						.font(.caption2)
 						.foregroundStyle(.secondary)
 				}
 
-				// Synopsis
 				if let synopsis = show.attributes.synopsis, !synopsis.isEmpty {
 					Text(synopsis)
 						.font(.caption2)
 						.foregroundStyle(.secondary)
-				}
-
-				Divider()
-
-				// Library status picker
-				VStack(alignment: .leading, spacing: 4) {
-					Text("Library Status")
-						.font(.caption.bold())
-
-					Picker("Status", selection: self.$libraryStatus) {
-						Text("None").tag(LibraryStatus?.none)
-						ForEach(self.statuses, id: \.rawValue) { status in
-							Text(status.stringValue).tag(Optional(status))
-						}
-					}
-					.disabled(self.isUpdatingStatus)
-					.onChange(of: self.libraryStatus) { _, newValue in
-						guard let newStatus = newValue else { return }
-						Task { await self.updateLibraryStatus(to: newStatus) }
-					}
 				}
 			}
 			.padding(.horizontal)
@@ -107,6 +97,18 @@ struct ShowDetailView: View {
 			NSLog("Library status update failed: %@", error.localizedDescription)
 			// Revert on failure
 			self.libraryStatus = self.initialLibraryStatus
+		}
+	}
+
+	private func removeFromLibrary() async {
+		self.isUpdatingStatus = true
+		defer { isUpdatingStatus = false }
+
+		do {
+			_ = try await KService.removeFromLibrary(.shows, itemIDs: [self.show.id]).response()
+			self.libraryStatus = LibraryStatus.none
+		} catch {
+			NSLog("Library removal failed: %@", error.localizedDescription)
 		}
 	}
 }

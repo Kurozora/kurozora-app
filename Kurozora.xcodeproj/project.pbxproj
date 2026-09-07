@@ -32,6 +32,9 @@
 		66CBFFD42E904AF500104283 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD32E904AF500104283 /* Kingfisher */; };
 		66CBFFD62E904B3F00104283 /* SwiftTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 66CBFFD52E904B3F00104283 /* SwiftTheme */; };
 		9B7F48222FD7933A00133170 /* Obfuscation in Frameworks */ = {isa = PBXBuildFile; productRef = 9B7F48212FD7933A00133170 /* Obfuscation */; };
+		9BE0475C304E0DC800B09824 /* Kurozora.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 669188512F7BCEA8000B1272 /* Kurozora.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9BE04771304EC9C900B09824 /* libwebp in Frameworks */ = {isa = PBXBuildFile; productRef = 9BE04770304EC9C900B09824 /* libwebp */; };
+		9BE04776304ED3B900B09824 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9BE04775304ED3B900B09824 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,13 @@
 			remoteGlobalIDString = 66C6A53C23FB0567000A6617;
 			remoteInfo = XMLImport;
 		};
+		9BE0475D304E0DFC00B09824 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66647B482084995500CF624F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 669188502F7BCEA8000B1272;
+			remoteInfo = KurozoraWatchApp;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -77,6 +87,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
+				9BE0475C304E0DC800B09824 /* Kurozora.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,7 +261,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BE04771304EC9C900B09824 /* libwebp in Frameworks */,
 				66AB10012F7E100000000001 /* KurozoraKit in Frameworks */,
+				9BE04776304ED3B900B09824 /* Kingfisher in Frameworks */,
 				660B9DC42F7D575D000FCB8A /* Pulse in Frameworks */,
 				660B9DC82F7D575D000FCB8A /* PulseUI in Frameworks */,
 				660B9DC62F7D575D000FCB8A /* PulseProxy in Frameworks */,
@@ -268,6 +281,7 @@
 				6615A2EE2DA20A5A005DBB96 /* KurozoraWidget */,
 				6615A3012DA20A61005DBB96 /* KuroChan */,
 				669188522F7BCEA8000B1272 /* KurozoraWatchApp */,
+				9BE04774304ED3B900B09824 /* Frameworks */,
 				66647B512084995500CF624F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -282,6 +296,13 @@
 				669188512F7BCEA8000B1272 /* Kurozora.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9BE04774304ED3B900B09824 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +360,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BE0475E304E0DFC00B09824 /* PBXTargetDependency */,
 				66E55B132EE453CC009E12A3 /* PBXTargetDependency */,
 				660593072E91CE80002CC46E /* PBXTargetDependency */,
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
@@ -375,6 +397,8 @@
 				660B9DC32F7D575D000FCB8A /* Pulse */,
 				660B9DC52F7D575D000FCB8A /* PulseProxy */,
 				660B9DC72F7D575D000FCB8A /* PulseUI */,
+				9BE04770304EC9C900B09824 /* libwebp */,
+				9BE04775304ED3B900B09824 /* Kingfisher */,
 			);
 			productName = "Kurozora Watch Watch App";
 			productReference = 669188512F7BCEA8000B1272 /* Kurozora.app */;
@@ -483,6 +507,7 @@
 				660B9DC22F7D575D000FCB8A /* XCRemoteSwiftPackageReference "Pulse" */,
 				9B7F48112FD7933A00133170 /* XCLocalSwiftPackageReference "../KurozoraKit" */,
 				9B7F48202FD7933A00133170 /* XCLocalSwiftPackageReference "Packages/Obfuscation" */,
+				9BE0476F304EC9C900B09824 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66647B512084995500CF624F /* Products */;
@@ -640,6 +665,12 @@
 		66E55B152EE453DB009E12A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 66E55B142EE453DB009E12A3 /* SwiftLintBuildToolPlugin */;
+		};
+		9BE0475E304E0DFC00B09824 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 669188502F7BCEA8000B1272 /* KurozoraWatchApp */;
+			targetProxy = 9BE0475D304E0DFC00B09824 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1043,7 +1074,7 @@
 					"@executable_path/Frameworks",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watch;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watchkitapp;
 				PRODUCT_NAME = Kurozora;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1072,7 +1103,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watch;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.watchkitapp;
 				PRODUCT_NAME = Kurozora;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1268,6 +1299,14 @@
 				minimumVersion = 0.62.2;
 			};
 		};
+		9BE0476F304EC9C900B09824 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/libwebp-Xcode";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1395,6 +1434,16 @@
 		9B7F48212FD7933A00133170 /* Obfuscation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Obfuscation;
+		};
+		9BE04770304EC9C900B09824 /* libwebp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9BE0476F304EC9C900B09824 /* XCRemoteSwiftPackageReference "libwebp-Xcode" */;
+			productName = libwebp;
+		};
+		9BE04775304ED3B900B09824 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66CBF10E2E9022F600104283 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

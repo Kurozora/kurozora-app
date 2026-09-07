@@ -15,68 +15,66 @@ struct ProfileView: View {
 
 	// MARK: - Body
 	var body: some View {
-		NavigationStack {
-			if let user = User.current {
-				List {
-					Section {
-						VStack(spacing: 8) {
-							CachedAsyncImage(url: self.profileImageURL(for: user)) {
-								Image(systemName: "person.circle.fill")
-									.resizable()
-									.foregroundStyle(.secondary)
-							}
-							.frame(width: 50, height: 50)
-							.clipShape(Circle())
-
-							Text(user.attributes.username)
-								.font(.headline)
-						}
-						.frame(maxWidth: .infinity)
-						.listRowBackground(Color.clear)
-					}
-
-					Section {
-						HStack {
-							Label("Followers", systemImage: "person.2")
-								.font(.caption)
-							Spacer()
-							Text("\(user.attributes.followerCount)")
-								.font(.caption)
+		if let user = User.current {
+			List {
+				Section {
+					VStack(spacing: 8) {
+						CachedAsyncImage(url: self.profileImageURL(for: user), targetWidth: 50) {
+							Image(systemName: "person.circle.fill")
+								.resizable()
 								.foregroundStyle(.secondary)
 						}
+						.frame(width: 50, height: 50)
+						.clipShape(Circle())
 
-						HStack {
-							Label("Following", systemImage: "person.2.fill")
-								.font(.caption)
-							Spacer()
-							Text("\(user.attributes.followingCount)")
-								.font(.caption)
-								.foregroundStyle(.secondary)
-						}
+						Text(user.attributes.username)
+							.font(.headline)
 					}
-
-					Section {
-						Button(role: .destructive) {
-							self.authManager.signOut()
-						} label: {
-							Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
-								.font(.caption)
-						}
-					}
+					.frame(maxWidth: .infinity)
+					.listRowBackground(Color.clear)
 				}
-				.navigationTitle("Profile")
-				#if DEBUG
-				.toolbar {
-					ToolbarItemGroup(placement: .bottomBar) {
-						DebugAPIEndpointButton()
+
+				Section {
+					HStack {
+						Label("Followers", systemImage: "person.2")
+							.font(.caption)
 						Spacer()
-						DebugConsoleButton()
+						Text("\(user.attributes.followerCount)")
+							.font(.caption)
+							.foregroundStyle(.secondary)
+					}
+
+					HStack {
+						Label("Following", systemImage: "person.2.fill")
+							.font(.caption)
+						Spacer()
+						Text("\(user.attributes.followingCount)")
+							.font(.caption)
+							.foregroundStyle(.secondary)
 					}
 				}
-				#endif
-			} else {
-				ErrorView(systemImage: "person.crop.circle.badge.questionmark", message: "Unable to load profile.")
+
+				Section {
+					Button(role: .destructive) {
+						self.authManager.signOut()
+					} label: {
+						Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+							.font(.caption)
+					}
+				}
 			}
+			.navigationTitle("Profile")
+			#if DEBUG
+			.toolbar {
+				ToolbarItemGroup(placement: .bottomBar) {
+					DebugAPIEndpointButton()
+					Spacer()
+					DebugConsoleButton()
+				}
+			}
+			#endif
+		} else {
+			ErrorView(systemImage: "person.crop.circle.badge.questionmark", message: "Unable to load profile.")
 		}
 	}
 

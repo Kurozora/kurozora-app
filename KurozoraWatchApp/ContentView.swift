@@ -10,26 +10,54 @@ import SwiftUI
 
 struct ContentView: View {
 	// MARK: - Properties
-	@State private var exploreViewModel = ExploreViewModel()
+	@Environment(WatchTheme.self) private var theme
+
+	@State private var path: [WatchDestination] = [.home]
+	@State private var upNextViewModel = UpNextViewModel()
 	@State private var libraryViewModel = LibraryViewModel()
 
 	// MARK: - Body
 	var body: some View {
-		TabView {
-			ExploreView(viewModel: self.exploreViewModel)
-				.tabItem {
-					Label("Explore", systemImage: "house.fill")
+		NavigationStack(path: self.$path) {
+			List(WatchDestination.rows) { destination in
+				NavigationLink(value: destination) {
+					Label {
+						Text(destination.title)
+					} icon: {
+						Image(systemName: destination.symbolName)
+							.foregroundStyle(self.theme.tint)
+					}
 				}
+			}
+			.themedNavigationTitle("Kurozora")
+			.toolbar {
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						self.path.append(.profile)
+					} label: {
+						ProfileAvatarView()
+					}
+					.buttonStyle(.plain)
+				}
+			}
+			.navigationDestination(for: WatchDestination.self) { destination in
+				self.destinationView(for: destination)
+			}
+		}
+	}
 
+	// MARK: - Functions
+	@ViewBuilder
+	private func destinationView(for destination: WatchDestination) -> some View {
+		switch destination {
+		case .home:
+			HomeView(viewModel: self.upNextViewModel)
+		case .library:
 			LibraryView(viewModel: self.libraryViewModel)
-				.tabItem {
-					Label("Library", systemImage: "rectangle.stack.fill")
-				}
-
+		case .search:
+			SearchView()
+		case .profile:
 			ProfileView()
-				.tabItem {
-					Label("Profile", systemImage: "person.crop.circle.fill")
-				}
 		}
 	}
 }

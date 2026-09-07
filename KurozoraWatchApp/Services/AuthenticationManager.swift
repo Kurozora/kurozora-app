@@ -58,6 +58,7 @@ final class AuthenticationManager {
 		}
 
 		self.isSignedIn = false
+		WatchSessionManager.shared.requestAuthState()
 	}
 
 	/// Authenticates with a slug and token received from WatchConnectivity.

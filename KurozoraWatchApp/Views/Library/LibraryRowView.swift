@@ -16,47 +16,76 @@ struct LibraryRowView: View {
 	// MARK: - Body
 	var body: some View {
 		HStack(spacing: 8) {
-			CachedAsyncImage(url: self.posterURL) {
-				RoundedRectangle(cornerRadius: 4)
-					.fill(Color.gray.opacity(0.3))
-			}
-			.frame(width: 36, height: 52)
-			.clipShape(RoundedRectangle(cornerRadius: 4))
+			ArtworkView(
+				media: self.show.attributes.poster,
+				shape: .poster,
+				targetWidth: 44
+			)
+			.frame(width: 44)
 
-			VStack(alignment: .leading, spacing: 2) {
+			VStack(alignment: .leading, spacing: 1) {
 				Text(self.show.attributes.title)
-					.font(.caption)
-					.lineLimit(2)
+					.font(.headline)
+					.lineLimit(1)
 
-				HStack(spacing: 4) {
-					if self.show.attributes.episodeCount > 0 {
-						Text("\(self.show.attributes.episodeCount) ep")
-							.font(.caption2)
-							.foregroundStyle(.secondary)
-					}
+				Text(self.kindAndRating)
+					.lineLimit(1)
 
-					Text(self.show.attributes.status.name)
-						.font(.caption2)
-						.foregroundStyle(self.airingStatusColor)
+				if let lengths = self.lengths {
+					Text(lengths)
+						.lineLimit(1)
+				}
+
+				Text(self.show.attributes.status.name)
+					.lineLimit(1)
+
+				if let broadcastDate = self.countdownDate {
+					Text(broadcastDate, style: .relative)
+						.lineLimit(1)
 				}
 			}
+			.font(.caption2)
+			.foregroundStyle(.secondary)
+
+			Spacer(minLength: 0)
 		}
+		.padding(.vertical, 4)
 	}
 
 	// MARK: - Computed
-	private var posterURL: URL? {
-		guard let urlString = show.attributes.poster?.url else { return nil }
-		return URL(string: urlString)
+	private var kindAndRating: String {
+		return "\(self.show.attributes.type.name) · \(self.show.attributes.tvRating.name)"
 	}
 
-	private var airingStatusColor: Color {
-		switch self.show.attributes.status.color.lowercased() {
-		case let hex where hex.contains("green"):
-			return .green
-		case let hex where hex.contains("blue"):
-			return .blue
-		default:
-			return .secondary
-		}
+	private var lengths: String? {
+		let duration = self.abbreviatedDuration
+		let episodeCount = self.show.attributes.episodeCount
+
+		guard episodeCount > 0 else { return duration }
+		guard let duration else { return "\(episodeCount) ep" }
+
+		return "\(episodeCount) ep · \(duration)"
+	}
+
+	private var abbreviatedDuration: String? {
+		// durationCount is seconds, so 1440 is a 24 minute episode.
+		let minutes = self.show.attributes.durationCount / 60
+
+		guard minutes > 0 else { return nil }
+		guard minutes >= 60 else { return "\(minutes)m" }
+
+		let hours = minutes / 60
+		let remainder = minutes % 60
+
+		return remainder == 0 ? "\(hours)h" : "\(hours)h \(remainder)m"
+	}
+
+	/// The next broadcast date, shown on the same terms as the iOS list cell.
+	private var countdownDate: Date? {
+		guard self.show.attributes.status.name == "Currently Airing",
+			  self.show.attributes.durationCount > 0
+		else { return nil }
+
+		return self.show.attributes.nextBroadcastAt
 	}
 }

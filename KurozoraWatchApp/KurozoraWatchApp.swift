@@ -15,6 +15,8 @@ import Pulse
 struct KurozoraWatchApp: App {
 	// MARK: - Properties
 	@State private var authManager = AuthenticationManager()
+	@State private var notificationSettings = WatchNotificationSettings()
+	@State private var theme = WatchTheme()
 	@State private var hasRestoredSession = false
 	@Environment(\.scenePhase) private var scenePhase
 
@@ -33,8 +35,16 @@ struct KurozoraWatchApp: App {
 				}
 			}
 			.environment(self.authManager)
+			.environment(self.notificationSettings)
+			.environment(self.theme)
+			.tint(self.theme.tint)
 			.task {
-				WatchSessionManager.shared.activate(authManager: self.authManager)
+				WatchSessionManager.shared.restoreAPIEndpoint()
+				WatchSessionManager.shared.activate(
+					authManager: self.authManager,
+					notificationSettings: self.notificationSettings,
+					theme: self.theme
+				)
 				await self.authManager.restoreSession()
 				self.hasRestoredSession = true
 			}
