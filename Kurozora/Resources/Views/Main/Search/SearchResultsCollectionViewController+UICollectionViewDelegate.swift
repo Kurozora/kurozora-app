@@ -118,16 +118,15 @@ extension SearchResultsCollectionViewController {
 		switch itemKind {
 		case .discoverSuggestion:
 			return nil
-		case .browseCategory:
-			let browseCategory = self.browseCategories[indexPath.item]
+		case .browseCategory(let browseCategory):
 			let identifier = indexPath as NSCopying
+			let segueIdentifier = browseCategory.segueIdentifier ?? SegueIdentifiers.searchSegue
 
-			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-				guard let searchType = browseCategory.searchType else { return nil }
-				let searchResultsCollectionViewController = SearchResultsCollectionViewController()
-				searchResultsCollectionViewController.title = browseCategory.title
-				searchResultsCollectionViewController.searchViewKind = .single(searchType)
-				return searchResultsCollectionViewController
+			return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
+				guard let self = self else { return nil }
+				guard let destination = self.makeDestination(for: segueIdentifier) else { return nil }
+				self.prepare(for: segueIdentifier, destination: destination, sender: browseCategory)
+				return destination
 			}, actionProvider: nil)
 		case .characterIdentity:
 			return (self.fetchModel(at: indexPath) as Character?)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
