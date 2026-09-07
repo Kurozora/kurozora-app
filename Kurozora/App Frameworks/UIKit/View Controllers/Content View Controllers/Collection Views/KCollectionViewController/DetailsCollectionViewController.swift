@@ -163,6 +163,8 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
+			var didRenderTranslation = false
+
 			for cell in self.collectionView.visibleCells {
 				guard
 					let reviewCell = cell as? ReviewCollectionViewCell,
@@ -171,6 +173,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 				else { continue }
 
 				reviewCell.configureCell(using: review, isElevated: review.attributes.isElevated)
+				didRenderTranslation = true
+			}
+
+			// A translated body is a different length, so the section's measured height no longer holds.
+			if didRenderTranslation {
+				self.collectionView.collectionViewLayout.invalidateLayout()
 			}
 		}
 	}
