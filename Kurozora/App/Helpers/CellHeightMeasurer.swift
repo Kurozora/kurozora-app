@@ -134,7 +134,7 @@ final class CellHeightMeasurer {
 			guard abs(cell.bounds.width - measuredWidth) > 0.5 else { continue }
 			guard self.reportedWidthMismatches.insert(cellType).inserted else { continue }
 
-			print("ERROR: \(type(of: cell)) was measured at width \(measuredWidth) but renders at \(cell.bounds.width). Its measured height is wrong by every constraint that depends on width.")
+			fatalError("ERROR: \(type(of: cell)) was measured at width \(measuredWidth) but renders at \(cell.bounds.width). Its measured height is wrong by every constraint that depends on width.")
 		}
 	}
 	#endif
