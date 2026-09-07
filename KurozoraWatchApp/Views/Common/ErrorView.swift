@@ -27,7 +27,7 @@ struct ErrorView: View {
 				.multilineTextAlignment(.center)
 
 			if let onRetry = onRetry {
-				Button("Try Again", action: onRetry)
+				Button(L10n.tryAgain, action: onRetry)
 					.font(.caption)
 			}
 		}

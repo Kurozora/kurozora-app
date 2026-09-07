@@ -62,7 +62,7 @@ struct LibraryRowView: View {
 		let episodeCount = self.show.attributes.episodeCount
 
 		guard episodeCount > 0 else { return duration }
-		guard let duration else { return "\(episodeCount) ep" }
+		guard let duration else { return L10n.episodeCount(episodeCount) }
 
 		return "\(episodeCount) ep · \(duration)"
 	}

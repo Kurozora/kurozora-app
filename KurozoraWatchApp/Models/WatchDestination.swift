@@ -34,13 +34,13 @@ enum WatchDestination: Hashable, Identifiable {
 	var title: String {
 		switch self {
 		case .home:
-			return "Home"
+			return L10n.home
 		case .library:
-			return "Library"
+			return L10n.library
 		case .search:
-			return "Search"
+			return L10n.search
 		case .profile:
-			return "Profile"
+			return L10n.profile
 		}
 	}
 

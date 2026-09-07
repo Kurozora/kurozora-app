@@ -39,7 +39,7 @@ struct ShowDetailView: View {
 
 				// Metadata
 				HStack(spacing: 6) {
-					Label("\(self.show.attributes.episodeCount) ep", systemImage: "film")
+					Label(L10n.episodeCount(self.show.attributes.episodeCount), systemImage: "film")
 					Spacer()
 					Text(self.show.attributes.status.name)
 						.foregroundStyle(.secondary)

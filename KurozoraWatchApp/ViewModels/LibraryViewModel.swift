@@ -43,7 +43,7 @@ final class LibraryViewModel {
 			self.loadState = .loaded
 		} catch {
 			self.hasFetchedOnce = false
-			self.loadState = .error("Failed to load library.")
+			self.loadState = .error(L10n.failedToLoadLibrary)
 			NSLog("Library fetch error: %@", error.localizedDescription)
 		}
 	}

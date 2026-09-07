@@ -24,11 +24,11 @@ enum WatchGroupStyle: Int, CaseIterable {
 	var label: String {
 		switch self {
 		case .automatic:
-			return "Automatic"
+			return L10n.groupingAutomatic
 		case .byType:
-			return "By Type"
+			return L10n.groupingByType
 		case .off:
-			return "Off"
+			return L10n.groupingOff
 		}
 	}
 }
@@ -39,7 +39,7 @@ enum WatchGroupStyle: Int, CaseIterable {
 ///
 /// - Important: Mutate only through the setter methods. `@Observable` replaces the stored
 /// property accessors, so `didSet` never fires.
-@Observable
+@MainActor @Observable
 final class WatchNotificationSettings {
 	// MARK: - Keys
 	private enum Keys {

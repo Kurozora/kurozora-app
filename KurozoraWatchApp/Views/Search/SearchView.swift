@@ -52,7 +52,7 @@ struct SearchView: View {
 	// MARK: - Private
 	private var searchBar: some View {
 		HStack(spacing: 4) {
-			TextField("Search…", text: self.$viewModel.searchText)
+			TextField(L10n.searchPlaceholder, text: self.$viewModel.searchText)
 				.font(.caption)
 				.onSubmit {
 					Task { await self.viewModel.submitSearch() }

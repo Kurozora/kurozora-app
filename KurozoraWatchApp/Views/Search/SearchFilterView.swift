@@ -39,7 +39,7 @@ struct SearchFilterView: View {
 			List {
 				ForEach(self.$attributes) { $attribute in
 					Picker(attribute.name, selection: $attribute.selectedValue) {
-						Text("Any").tag(nil as Int?)
+						Text(L10n.any).tag(nil as Int?)
 						ForEach(attribute.options) { option in
 							Text(option.label).tag(option.value as Int?)
 						}
@@ -48,15 +48,15 @@ struct SearchFilterView: View {
 				}
 
 				Section {
-					Button("Apply") {
+					Button(L10n.apply) {
 						self.applyFilter()
 					}
-					Button("Reset", role: .destructive) {
+					Button(L10n.reset, role: .destructive) {
 						self.resetFilter()
 					}
 				}
 			}
-			.navigationTitle("Filters")
+			.navigationTitle(L10n.filters)
 			.onAppear {
 				self.attributes = Self.filterAttributes(for: self.viewModel.selectedTab)
 			}
@@ -84,52 +84,52 @@ struct SearchFilterView: View {
 		switch type {
 		case .shows:
 			return [
-				WatchFilterAttribute(id: "mediaType", name: "Media Type", options: showTypeOptions),
-				WatchFilterAttribute(id: "status", name: "Status", options: showStatusOptions),
-				WatchFilterAttribute(id: "tvRating", name: "TV Rating", options: tvRatingOptions),
-				WatchFilterAttribute(id: "source", name: "Source", options: sourceTypeOptions),
-				WatchFilterAttribute(id: "airDay", name: "Air Day", options: dayOfWeekOptions),
-				WatchFilterAttribute(id: "airSeason", name: "Air Season", options: seasonOfYearOptions),
+				WatchFilterAttribute(id: "mediaType", name: L10n.mediaType, options: showTypeOptions),
+				WatchFilterAttribute(id: "status", name: L10n.status, options: showStatusOptions),
+				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
+				WatchFilterAttribute(id: "source", name: L10n.source, options: sourceTypeOptions),
+				WatchFilterAttribute(id: "airDay", name: L10n.airDay, options: dayOfWeekOptions),
+				WatchFilterAttribute(id: "airSeason", name: L10n.airSeason, options: seasonOfYearOptions),
 			]
 		case .literatures:
 			return [
-				WatchFilterAttribute(id: "mediaType", name: "Media Type", options: literatureTypeOptions),
-				WatchFilterAttribute(id: "status", name: "Status", options: literatureStatusOptions),
-				WatchFilterAttribute(id: "tvRating", name: "TV Rating", options: tvRatingOptions),
-				WatchFilterAttribute(id: "source", name: "Source", options: sourceTypeOptions),
-				WatchFilterAttribute(id: "publicationDay", name: "Publication Day", options: dayOfWeekOptions),
-				WatchFilterAttribute(id: "publicationSeason", name: "Publication Season", options: seasonOfYearOptions),
+				WatchFilterAttribute(id: "mediaType", name: L10n.mediaType, options: literatureTypeOptions),
+				WatchFilterAttribute(id: "status", name: L10n.status, options: literatureStatusOptions),
+				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
+				WatchFilterAttribute(id: "source", name: L10n.source, options: sourceTypeOptions),
+				WatchFilterAttribute(id: "publicationDay", name: L10n.publicationDay, options: dayOfWeekOptions),
+				WatchFilterAttribute(id: "publicationSeason", name: L10n.publicationSeason, options: seasonOfYearOptions),
 			]
 		case .games:
 			return [
-				WatchFilterAttribute(id: "mediaType", name: "Media Type", options: gameTypeOptions),
-				WatchFilterAttribute(id: "status", name: "Status", options: gameStatusOptions),
-				WatchFilterAttribute(id: "tvRating", name: "TV Rating", options: tvRatingOptions),
-				WatchFilterAttribute(id: "source", name: "Source", options: sourceTypeOptions),
-				WatchFilterAttribute(id: "publicationDay", name: "Publication Day", options: dayOfWeekOptions),
-				WatchFilterAttribute(id: "publicationSeason", name: "Publication Season", options: seasonOfYearOptions),
+				WatchFilterAttribute(id: "mediaType", name: L10n.mediaType, options: gameTypeOptions),
+				WatchFilterAttribute(id: "status", name: L10n.status, options: gameStatusOptions),
+				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
+				WatchFilterAttribute(id: "source", name: L10n.source, options: sourceTypeOptions),
+				WatchFilterAttribute(id: "publicationDay", name: L10n.publicationDay, options: dayOfWeekOptions),
+				WatchFilterAttribute(id: "publicationSeason", name: L10n.publicationSeason, options: seasonOfYearOptions),
 			]
 		case .episodes:
 			return [
-				WatchFilterAttribute(id: "tvRating", name: "TV Rating", options: tvRatingOptions),
-				WatchFilterAttribute(id: "isFiller", name: "Fillers", options: shownHiddenOptions),
-				WatchFilterAttribute(id: "isPremiere", name: "Premieres", options: shownHiddenOptions),
-				WatchFilterAttribute(id: "isFinale", name: "Finales", options: shownHiddenOptions),
-				WatchFilterAttribute(id: "isSpecial", name: "Specials", options: shownHiddenOptions),
+				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
+				WatchFilterAttribute(id: "isFiller", name: L10n.fillers, options: shownHiddenOptions),
+				WatchFilterAttribute(id: "isPremiere", name: L10n.premieres, options: shownHiddenOptions),
+				WatchFilterAttribute(id: "isFinale", name: L10n.finales, options: shownHiddenOptions),
+				WatchFilterAttribute(id: "isSpecial", name: L10n.specials, options: shownHiddenOptions),
 			]
 		case .characters:
 			return [
-				WatchFilterAttribute(id: "status", name: "Status", options: characterStatusOptions),
-				WatchFilterAttribute(id: "astrologicalSign", name: "Astrological Sign", options: astrologicalSignOptions),
+				WatchFilterAttribute(id: "status", name: L10n.status, options: characterStatusOptions),
+				WatchFilterAttribute(id: "astrologicalSign", name: L10n.astrologicalSign, options: astrologicalSignOptions),
 			]
 		case .people:
 			return [
-				WatchFilterAttribute(id: "astrologicalSign", name: "Astrological Sign", options: astrologicalSignOptions),
+				WatchFilterAttribute(id: "astrologicalSign", name: L10n.astrologicalSign, options: astrologicalSignOptions),
 			]
 		case .studios:
 			return [
-				WatchFilterAttribute(id: "type", name: "Type", options: studioTypeOptions),
-				WatchFilterAttribute(id: "tvRating", name: "TV Rating", options: tvRatingOptions),
+				WatchFilterAttribute(id: "type", name: L10n.type, options: studioTypeOptions),
+				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
 			]
 		case .songs, .users:
 			return []
@@ -206,108 +206,107 @@ struct SearchFilterView: View {
 // MARK: - Filter Option Constants
 private extension SearchFilterView {
 	static let showTypeOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "TV", value: 0),
-		WatchFilterOption(id: 1, label: "OVA", value: 1),
-		WatchFilterOption(id: 2, label: "ONA", value: 2),
-		WatchFilterOption(id: 3, label: "Special", value: 3),
-		WatchFilterOption(id: 4, label: "Movie", value: 4),
+		WatchFilterOption(id: 0, label: L10n.tv, value: 0),
+		WatchFilterOption(id: 1, label: L10n.ova, value: 1),
+		WatchFilterOption(id: 2, label: L10n.ona, value: 2),
+		WatchFilterOption(id: 3, label: L10n.special, value: 3),
+		WatchFilterOption(id: 4, label: L10n.movie, value: 4),
 	]
 
 	static let showStatusOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Currently Airing", value: 0),
-		WatchFilterOption(id: 1, label: "Finished Airing", value: 1),
-		WatchFilterOption(id: 2, label: "Not Yet Aired", value: 2),
+		WatchFilterOption(id: 0, label: L10n.currentlyAiring, value: 0),
+		WatchFilterOption(id: 1, label: L10n.finishedAiring, value: 1),
+		WatchFilterOption(id: 2, label: L10n.notYetAired, value: 2),
 	]
 
 	static let literatureTypeOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Manga", value: 0),
-		WatchFilterOption(id: 1, label: "Light Novel", value: 1),
-		WatchFilterOption(id: 2, label: "One Shot", value: 2),
+		WatchFilterOption(id: 0, label: L10n.manga, value: 0),
+		WatchFilterOption(id: 1, label: L10n.lightNovel, value: 1),
+		WatchFilterOption(id: 2, label: L10n.oneShot, value: 2),
 	]
 
 	static let literatureStatusOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Currently Publishing", value: 0),
-		WatchFilterOption(id: 1, label: "Finished Publishing", value: 1),
-		WatchFilterOption(id: 2, label: "Not Yet Published", value: 2),
+		WatchFilterOption(id: 0, label: L10n.currentlyPublishing, value: 0),
+		WatchFilterOption(id: 1, label: L10n.finishedPublishing, value: 1),
+		WatchFilterOption(id: 2, label: L10n.notYetPublished, value: 2),
 	]
 
 	static let gameTypeOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Console", value: 0),
-		WatchFilterOption(id: 1, label: "PC", value: 1),
-		WatchFilterOption(id: 2, label: "Mobile", value: 2),
+		WatchFilterOption(id: 0, label: L10n.console, value: 0),
+		WatchFilterOption(id: 1, label: L10n.pc, value: 1),
+		WatchFilterOption(id: 2, label: L10n.mobile, value: 2),
 	]
 
 	static let gameStatusOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Currently Publishing", value: 0),
-		WatchFilterOption(id: 1, label: "Finished Publishing", value: 1),
-		WatchFilterOption(id: 2, label: "Not Yet Published", value: 2),
+		WatchFilterOption(id: 0, label: L10n.currentlyPublishing, value: 0),
+		WatchFilterOption(id: 1, label: L10n.finishedPublishing, value: 1),
+		WatchFilterOption(id: 2, label: L10n.notYetPublished, value: 2),
 	]
 
 	static let tvRatingOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "G", value: 1),
-		WatchFilterOption(id: 2, label: "PG", value: 2),
-		WatchFilterOption(id: 3, label: "PG-13", value: 3),
-		WatchFilterOption(id: 4, label: "R - 17+", value: 4),
-		WatchFilterOption(id: 5, label: "R+", value: 5),
+		WatchFilterOption(id: 1, label: L10n.ratingG, value: 1),
+		WatchFilterOption(id: 2, label: L10n.ratingPG, value: 2),
+		WatchFilterOption(id: 3, label: L10n.ratingPG13, value: 3),
+		WatchFilterOption(id: 4, label: L10n.ratingR17, value: 4),
+		WatchFilterOption(id: 5, label: L10n.ratingRPlus, value: 5),
 	]
 
 	static let sourceTypeOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Original", value: 1),
-		WatchFilterOption(id: 2, label: "Manga", value: 2),
-		WatchFilterOption(id: 3, label: "Light Novel", value: 3),
-		WatchFilterOption(id: 4, label: "Visual Novel", value: 4),
-		WatchFilterOption(id: 5, label: "Game", value: 5),
-		WatchFilterOption(id: 6, label: "Novel", value: 6),
-		WatchFilterOption(id: 7, label: "Other", value: 7),
+		WatchFilterOption(id: 1, label: L10n.original, value: 1),
+		WatchFilterOption(id: 2, label: L10n.manga, value: 2),
+		WatchFilterOption(id: 3, label: L10n.lightNovel, value: 3),
+		WatchFilterOption(id: 4, label: L10n.visualNovel, value: 4),
+		WatchFilterOption(id: 5, label: L10n.game, value: 5),
+		WatchFilterOption(id: 6, label: L10n.novel, value: 6),
+		WatchFilterOption(id: 7, label: L10n.other, value: 7),
 	]
 
-	static let dayOfWeekOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Monday", value: 1),
-		WatchFilterOption(id: 2, label: "Tuesday", value: 2),
-		WatchFilterOption(id: 3, label: "Wednesday", value: 3),
-		WatchFilterOption(id: 4, label: "Thursday", value: 4),
-		WatchFilterOption(id: 5, label: "Friday", value: 5),
-		WatchFilterOption(id: 6, label: "Saturday", value: 6),
-		WatchFilterOption(id: 7, label: "Sunday", value: 7),
-	]
+	static var dayOfWeekOptions: [WatchFilterOption] {
+		// The API numbers days Monday through Sunday, while the calendar's symbols start on Sunday.
+		let symbols = Calendar.current.standaloneWeekdaySymbols
+
+		return (1...7).map { day in
+			WatchFilterOption(id: day, label: symbols[day % 7], value: day)
+		}
+	}
 
 	static let seasonOfYearOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 0, label: "Winter", value: 0),
-		WatchFilterOption(id: 1, label: "Spring", value: 1),
-		WatchFilterOption(id: 2, label: "Summer", value: 2),
-		WatchFilterOption(id: 3, label: "Fall", value: 3),
+		WatchFilterOption(id: 0, label: L10n.winter, value: 0),
+		WatchFilterOption(id: 1, label: L10n.spring, value: 1),
+		WatchFilterOption(id: 2, label: L10n.summer, value: 2),
+		WatchFilterOption(id: 3, label: L10n.fall, value: 3),
 	]
 
 	static let characterStatusOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Alive", value: 1),
-		WatchFilterOption(id: 2, label: "Deceased", value: 2),
-		WatchFilterOption(id: 3, label: "Missing", value: 3),
-		WatchFilterOption(id: 4, label: "Unknown", value: 4),
+		WatchFilterOption(id: 1, label: L10n.alive, value: 1),
+		WatchFilterOption(id: 2, label: L10n.deceased, value: 2),
+		WatchFilterOption(id: 3, label: L10n.missing, value: 3),
+		WatchFilterOption(id: 4, label: L10n.unknown, value: 4),
 	]
 
 	static let astrologicalSignOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Aries ♈", value: 1),
-		WatchFilterOption(id: 2, label: "Taurus ♉", value: 2),
-		WatchFilterOption(id: 3, label: "Gemini ♊", value: 3),
-		WatchFilterOption(id: 4, label: "Cancer ♋", value: 4),
-		WatchFilterOption(id: 5, label: "Leo ♌", value: 5),
-		WatchFilterOption(id: 6, label: "Virgo ♍", value: 6),
-		WatchFilterOption(id: 7, label: "Libra ♎", value: 7),
-		WatchFilterOption(id: 8, label: "Scorpio ♏", value: 8),
-		WatchFilterOption(id: 9, label: "Sagittarius ♐", value: 9),
-		WatchFilterOption(id: 10, label: "Capricorn ♑", value: 10),
-		WatchFilterOption(id: 11, label: "Aquarius ♒", value: 11),
-		WatchFilterOption(id: 12, label: "Pisces ♓", value: 12),
+		WatchFilterOption(id: 1, label: L10n.aries, value: 1),
+		WatchFilterOption(id: 2, label: L10n.taurus, value: 2),
+		WatchFilterOption(id: 3, label: L10n.gemini, value: 3),
+		WatchFilterOption(id: 4, label: L10n.cancer, value: 4),
+		WatchFilterOption(id: 5, label: L10n.leo, value: 5),
+		WatchFilterOption(id: 6, label: L10n.virgo, value: 6),
+		WatchFilterOption(id: 7, label: L10n.libra, value: 7),
+		WatchFilterOption(id: 8, label: L10n.scorpio, value: 8),
+		WatchFilterOption(id: 9, label: L10n.sagittarius, value: 9),
+		WatchFilterOption(id: 10, label: L10n.capricorn, value: 10),
+		WatchFilterOption(id: 11, label: L10n.aquarius, value: 11),
+		WatchFilterOption(id: 12, label: L10n.pisces, value: 12),
 	]
 
 	static let shownHiddenOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Shown", value: 1),
-		WatchFilterOption(id: 0, label: "Hidden", value: 0),
+		WatchFilterOption(id: 1, label: L10n.shown, value: 1),
+		WatchFilterOption(id: 0, label: L10n.hidden, value: 0),
 	]
 
 	static let studioTypeOptions: [WatchFilterOption] = [
-		WatchFilterOption(id: 1, label: "Anime Studio", value: 1),
-		WatchFilterOption(id: 2, label: "Sound Studio", value: 2),
-		WatchFilterOption(id: 3, label: "Network", value: 3),
+		WatchFilterOption(id: 1, label: L10n.animeStudio, value: 1),
+		WatchFilterOption(id: 2, label: L10n.soundStudio, value: 2),
+		WatchFilterOption(id: 3, label: L10n.network, value: 3),
 	]
 }

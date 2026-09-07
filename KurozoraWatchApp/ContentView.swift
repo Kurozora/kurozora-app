@@ -29,7 +29,7 @@ struct ContentView: View {
 					}
 				}
 			}
-			.themedNavigationTitle("Kurozora")
+			.themedNavigationTitle(L10n.kurozora)
 			.toolbar {
 				ToolbarItem(placement: .topBarTrailing) {
 					Button {

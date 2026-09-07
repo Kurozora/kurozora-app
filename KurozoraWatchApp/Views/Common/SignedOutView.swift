@@ -20,16 +20,16 @@ struct SignedOutView: View {
 				.frame(width: 48, height: 48)
 				.clipShape(RoundedRectangle(cornerRadius: 12))
 
-			Text("Kurozora")
+			Text(L10n.kurozora)
 				.font(.headline)
 
-			Text("Sign in on your iPhone to get started.")
+			Text(L10n.signInOnIPhone)
 				.font(.caption)
 				.foregroundStyle(.secondary)
 				.multilineTextAlignment(.center)
 
 			Button(action: onRetry) {
-				Label("Retry", systemImage: "arrow.clockwise")
+				Label(L10n.retry, systemImage: "arrow.clockwise")
 			}
 		}
 		.padding()

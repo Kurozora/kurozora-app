@@ -36,19 +36,19 @@ struct ProfileView: View {
 
 				Section {
 					HStack {
-						Label("Followers", systemImage: "person.2")
+						Label(L10n.followers, systemImage: "person.2")
 							.font(.caption)
 						Spacer()
-						Text("\(user.attributes.followerCount)")
+						Text(user.attributes.followerCount, format: .number)
 							.font(.caption)
 							.foregroundStyle(.secondary)
 					}
 
 					HStack {
-						Label("Following", systemImage: "person.2.fill")
+						Label(L10n.following, systemImage: "person.2.fill")
 							.font(.caption)
 						Spacer()
-						Text("\(user.attributes.followingCount)")
+						Text(user.attributes.followingCount, format: .number)
 							.font(.caption)
 							.foregroundStyle(.secondary)
 					}
@@ -58,12 +58,12 @@ struct ProfileView: View {
 					Button(role: .destructive) {
 						self.authManager.signOut()
 					} label: {
-						Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+						Label(L10n.signOut, systemImage: "rectangle.portrait.and.arrow.right")
 							.font(.caption)
 					}
 				}
 			}
-			.navigationTitle("Profile")
+			.navigationTitle(L10n.profile)
 			#if DEBUG
 			.toolbar {
 				ToolbarItemGroup(placement: .bottomBar) {

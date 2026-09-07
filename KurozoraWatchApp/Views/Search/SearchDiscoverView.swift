@@ -16,7 +16,7 @@ struct SearchDiscoverView: View {
 	var body: some View {
 		List {
 			if !self.viewModel.suggestions.isEmpty {
-				Section("Discover") {
+				Section(L10n.discover) {
 					ForEach(self.viewModel.suggestions, id: \.self) { suggestion in
 						Button {
 							self.viewModel.searchText = suggestion
@@ -29,7 +29,7 @@ struct SearchDiscoverView: View {
 				}
 			}
 
-			Section("Browse") {
+			Section(L10n.browse) {
 				ForEach(self.viewModel.browseCategories, id: \.label) { category in
 					Label(category.label, systemImage: category.systemImage)
 						.font(.caption)

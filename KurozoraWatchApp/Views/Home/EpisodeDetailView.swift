@@ -53,7 +53,7 @@ struct EpisodeDetailView: View {
 				.font(.caption2)
 
 				if self.episode.attributes.isFiller {
-					Text("Filler")
+					Text(L10n.filler)
 						.font(.caption2)
 						.foregroundStyle(.orange)
 				}
@@ -63,7 +63,7 @@ struct EpisodeDetailView: View {
 				} label: {
 					// Matches the iOS button, which prefixes a check character when watched
 					// and shows no glyph otherwise.
-					Text(self.isWatched ? "✓ Watched" : "Mark as Watched")
+					Text(self.isWatched ? L10n.watchedMarker : L10n.markAsWatched)
 						.frame(maxWidth: .infinity)
 				}
 				.disabled(self.isUpdating)

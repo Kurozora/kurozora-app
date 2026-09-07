@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import Foundation
 import KurozoraKit
 
 extension LibraryStatus {
@@ -15,21 +16,21 @@ extension LibraryStatus {
 		// wording instead of the kind agnostic stringValue.
 		switch self {
 		case .inProgress:
-			return "Watching"
+			return L10n.watching
 		case .none:
-			return "None"
+			return L10n.libraryNone
 		case .planning:
-			return "Planning"
+			return L10n.planning
 		case .completed:
-			return "Completed"
+			return L10n.completed
 		case .onHold:
-			return "On-Hold"
+			return L10n.onHold
 		case .dropped:
-			return "Dropped"
+			return L10n.dropped
 		case .interested:
-			return "Interested"
+			return L10n.interested
 		case .ignored:
-			return "Ignored"
+			return L10n.ignored
 		}
 	}
 }

@@ -42,14 +42,14 @@ final class SearchViewModel {
 
 	/// Hardcoded browse categories for the pre-search state.
 	let browseCategories: [(label: String, systemImage: String)] = [
-		("Anime", "tv"),
-		("Manga", "book"),
-		("Games", "gamecontroller"),
-		("Songs", "music.note"),
-		("Episodes", "play.rectangle"),
-		("Characters", "person.text.rectangle"),
-		("People", "person"),
-		("Studios", "building.2")
+		(SearchType.shows.watchLabel, "tv"),
+		(SearchType.literatures.watchLabel, "book"),
+		(SearchType.games.watchLabel, "gamecontroller"),
+		(SearchType.songs.watchLabel, "music.note"),
+		(SearchType.episodes.watchLabel, "play.rectangle"),
+		(SearchType.characters.watchLabel, "person.text.rectangle"),
+		(SearchType.people.watchLabel, "person"),
+		(SearchType.studios.watchLabel, "building.2")
 	]
 
 	// MARK: Typed Buckets
@@ -94,7 +94,7 @@ final class SearchViewModel {
 			self.suggestionsLoadState = .loaded
 		} catch {
 			print("Search suggestions fetch error: \(error.localizedDescription)")
-			self.suggestionsLoadState = .error("Failed to load suggestions.")
+			self.suggestionsLoadState = .error(L10n.failedToLoadSuggestions)
 		}
 	}
 
@@ -334,7 +334,7 @@ final class SearchViewModel {
 			}
 			self.showsBucket.loadState = .loaded
 		} catch {
-			self.showsBucket.loadState = .error("Failed to load shows.")
+			self.showsBucket.loadState = .error(L10n.failedToLoadShows)
 			print("Show hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -353,7 +353,7 @@ final class SearchViewModel {
 			}
 			self.literaturesBucket.loadState = .loaded
 		} catch {
-			self.literaturesBucket.loadState = .error("Failed to load manga.")
+			self.literaturesBucket.loadState = .error(L10n.failedToLoadManga)
 			print("Literature hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -372,7 +372,7 @@ final class SearchViewModel {
 			}
 			self.gamesBucket.loadState = .loaded
 		} catch {
-			self.gamesBucket.loadState = .error("Failed to load games.")
+			self.gamesBucket.loadState = .error(L10n.failedToLoadGames)
 			print("Game hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -391,7 +391,7 @@ final class SearchViewModel {
 			}
 			self.episodesBucket.loadState = .loaded
 		} catch {
-			self.episodesBucket.loadState = .error("Failed to load episodes.")
+			self.episodesBucket.loadState = .error(L10n.failedToLoadEpisodes)
 			print("Episode hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -410,7 +410,7 @@ final class SearchViewModel {
 			}
 			self.charactersBucket.loadState = .loaded
 		} catch {
-			self.charactersBucket.loadState = .error("Failed to load characters.")
+			self.charactersBucket.loadState = .error(L10n.failedToLoadCharacters)
 			print("Character hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -429,7 +429,7 @@ final class SearchViewModel {
 			}
 			self.peopleBucket.loadState = .loaded
 		} catch {
-			self.peopleBucket.loadState = .error("Failed to load people.")
+			self.peopleBucket.loadState = .error(L10n.failedToLoadPeople)
 			print("Person hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -448,7 +448,7 @@ final class SearchViewModel {
 			}
 			self.songsBucket.loadState = .loaded
 		} catch {
-			self.songsBucket.loadState = .error("Failed to load songs.")
+			self.songsBucket.loadState = .error(L10n.failedToLoadSongs)
 			print("Song hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -467,7 +467,7 @@ final class SearchViewModel {
 			}
 			self.studiosBucket.loadState = .loaded
 		} catch {
-			self.studiosBucket.loadState = .error("Failed to load studios.")
+			self.studiosBucket.loadState = .error(L10n.failedToLoadStudios)
 			print("Studio hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -486,7 +486,7 @@ final class SearchViewModel {
 			}
 			self.usersBucket.loadState = .loaded
 		} catch {
-			self.usersBucket.loadState = .error("Failed to load users.")
+			self.usersBucket.loadState = .error(L10n.failedToLoadUsers)
 			print("User hydration error: \(error.localizedDescription)")
 		}
 	}
@@ -596,15 +596,15 @@ extension SearchType {
 	/// The short display label for the tab picker on watchOS.
 	var watchLabel: String {
 		switch self {
-		case .shows: return "Anime"
-		case .literatures: return "Manga"
-		case .games: return "Games"
-		case .episodes: return "Episodes"
-		case .characters: return "Characters"
-		case .people: return "People"
-		case .songs: return "Songs"
-		case .studios: return "Studios"
-		case .users: return "Users"
+		case .shows: return L10n.anime
+		case .literatures: return L10n.manga
+		case .games: return L10n.games
+		case .episodes: return L10n.episodes
+		case .characters: return L10n.characters
+		case .people: return L10n.people
+		case .songs: return L10n.songs
+		case .studios: return L10n.studios
+		case .users: return L10n.users
 		}
 	}
 }

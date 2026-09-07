@@ -89,7 +89,7 @@ final class UpNextViewModel {
 			self.loadState = .loaded
 		} catch {
 			self.hasFetchedOnce = false
-			self.loadState = .error("Failed to load Up Next.")
+			self.loadState = .error(L10n.failedToLoadUpNext)
 			print("Up Next fetch error:", error.localizedDescription)
 		}
 	}

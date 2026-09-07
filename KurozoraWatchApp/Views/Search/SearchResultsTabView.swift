@@ -207,7 +207,7 @@ struct SearchResultsTabView: View {
 
 	// MARK: - Tab Picker
 	private var tabPicker: some View {
-		Picker("Type", selection: self.$viewModel.selectedTab) {
+		Picker(L10n.type, selection: self.$viewModel.selectedTab) {
 			ForEach(self.viewModel.availableTabs, id: \.self) { tab in
 				Text(tab.watchLabel).tag(tab)
 			}

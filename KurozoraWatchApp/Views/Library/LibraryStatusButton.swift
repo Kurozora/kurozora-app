@@ -40,7 +40,7 @@ struct LibraryStatusButton: View {
 		}
 		.buttonStyle(.plain)
 		.disabled(self.isUpdating)
-		.confirmationDialog("Library Status", isPresented: self.$isChoosing) {
+		.confirmationDialog(L10n.libraryStatus, isPresented: self.$isChoosing) {
 			ForEach(LibraryStatus.all, id: \.rawValue) { status in
 				Button(status.watchTitle) {
 					self.onSelect(status)
@@ -49,7 +49,7 @@ struct LibraryStatusButton: View {
 
 			// The iOS menu only offers removal once the title is actually in the library.
 			if self.isInLibrary {
-				Button("Remove from Library", role: .destructive) {
+				Button(L10n.removeFromLibrary, role: .destructive) {
 					self.onRemove()
 				}
 			}
@@ -58,14 +58,14 @@ struct LibraryStatusButton: View {
 
 	// MARK: - Computed
 	private var title: String {
-		guard self.isInLibrary, let status = self.status else { return "Add to Library" }
+		guard self.isInLibrary, let status = self.status else { return L10n.addToLibrary }
 
 		return status.watchTitle
 	}
 
 	private var isInLibrary: Bool {
 		switch self.status {
-		case .none, .some(.none):
+		case nil, .some(.none):
 			return false
 		default:
 			return true
