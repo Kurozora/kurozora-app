@@ -245,9 +245,9 @@ actor LibraryOutbox {
 				affectedKinds.insert(kind)
 				outboxLogger.info("OK \(label, privacy: .public)")
 			} catch let error as APIError where Self.isClientRejection(error) {
-				// The server refused the operation; drop it and leave sync to reconcile.
 				outboxLogger.error("REJECT \(label, privacy: .public) msg=\(error.message, privacy: .public)")
 				await self.deleteOps(group)
+				await self.revertFlags(in: group, forUserSlug: userSlug)
 			} catch {
 				let nextAttemptCount = (group.map(\.attemptCount).max() ?? 0) + 1
 				if nextAttemptCount >= self.maximumAttemptCount {
@@ -269,6 +269,24 @@ actor LibraryOutbox {
 
 		for kind in affectedKinds {
 			try? await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
+		}
+	}
+
+	/// Puts a rejected toggle's flag back, since the server row did not change and no later delta carries it.
+	private func revertFlags(in group: [PendingOutboxOp], forUserSlug userSlug: String) async {
+		for op in group {
+			guard let flag = op.payload?.flag else { continue }
+
+			switch op.operationType {
+			case .setFavorite:
+				await LibraryStore.shared.applyFavorite(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
+			case .setReminder:
+				await LibraryStore.shared.applyReminder(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
+			case .setHidden:
+				await LibraryStore.shared.applyHidden(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
+			default:
+				continue
+			}
 		}
 	}
 
