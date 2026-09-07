@@ -30,6 +30,16 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 	/// The token observing app-wide significant time changes, used to refetch across a day rollover.
 	private var significantTimeChangeObserver: NSObjectProtocol?
 
+	private var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
 	private var _prefersActivityIndicatorHidden = false {
 		didSet {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
@@ -43,6 +53,12 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		self.title = L10n.kotodama
 		self.configureNavigationItems()

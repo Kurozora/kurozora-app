@@ -216,6 +216,7 @@ extension KTableViewController {
 extension KTableViewController {
 	/// Configures the refresh control of the table view.
 	private func configureRefreshControl() {
+		guard !self.prefersRefreshControlDisabled else { return }
 		#if targetEnvironment(macCatalyst)
 		#else
 		self.tableView.refreshControl = KRefreshControl()

@@ -37,6 +37,17 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -59,6 +70,12 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		if self.viewedUser == User.current {
 			self.title = L10n.myFavorites

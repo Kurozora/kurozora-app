@@ -310,6 +310,7 @@ extension KCollectionViewController {
 extension KCollectionViewController {
 	/// Configures the refresh control of the collection view.
 	private func configureRefreshControl() {
+		guard !self.prefersRefreshControlDisabled else { return }
 		#if targetEnvironment(macCatalyst)
 		#else
 		self.collectionView.refreshControl = KRefreshControl()

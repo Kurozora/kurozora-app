@@ -20,6 +20,16 @@ class KotodamaStatsCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
+	private var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
 	private var _prefersActivityIndicatorHidden = false {
 		didSet {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
@@ -33,6 +43,12 @@ class KotodamaStatsCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		self.title = L10n.kotodamaStats
 		self.configureDataSource()

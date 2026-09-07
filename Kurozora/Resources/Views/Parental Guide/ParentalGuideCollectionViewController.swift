@@ -41,6 +41,16 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 		return UIBarButtonItem(systemItem: .add, primaryAction: nil, menu: self.makeAddMenu())
 	}()
 
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -54,6 +64,12 @@ class ParentalGuideCollectionViewController: KCollectionViewController, TypedSeg
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		self.title = L10n.parentalGuide
 		self.collectionView.contentInset.top = 20

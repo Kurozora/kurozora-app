@@ -23,6 +23,16 @@ class KotodamaArchiveCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, KotodamaArchiveEntry>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, KotodamaArchiveEntry>!
 
+	private var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
 	private var _prefersActivityIndicatorHidden = false {
 		didSet {
 			self.setNeedsActivityIndicatorAppearanceUpdate()
@@ -36,6 +46,12 @@ class KotodamaArchiveCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		self.title = L10n.kotodamaArchive
 		self.configureDataSource()
