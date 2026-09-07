@@ -73,6 +73,12 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// When `true`, mutations of ``exploreCategories`` skip the full ``updateDataSource()`` rebuild.
 	private var suppressDataSourceUpdate = false
 
+	/// When `true`, an Up Next refresh is in flight and further requests coalesce into one.
+	private var isRefreshingUpNext = false
+
+	/// When `true`, a refresh arrived mid-flight and runs once the current one finishes.
+	private var needsUpNextRefresh = false
+
 	/// Stable identifier for the Quick Links section so it persists across snapshot rebuilds.
 	let quickLinksSectionID = UUID()
 
@@ -171,6 +177,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibraryStoreDidHydrate(_:)), name: .KLibraryStoreDidHydrate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleUpNextDidChangeRemotely(_:)), name: .KUpNextDidChangeRemotely, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidSync(_:)), name: .KEpisodeWatchStatusDidSync, object: nil)
 
 		// Add Refresh Control to Collection View
 		#if DEBUG
@@ -203,9 +211,13 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
 			onChange: { [weak self] entry in
 				self?.applyLibraryEntryChange(forTrackableID: entry.trackableID, userSlug: entry.userSlug, kind: entry.kind, isRemoval: false)
+				self?.refreshUpNext()
+				WatchSessionManager.shared.notifyUpNextDidChange()
 			},
 			onRemove: { [weak self] removed in
 				self?.applyLibraryEntryChange(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind, isRemoval: true)
+				self?.refreshUpNext()
+				WatchSessionManager.shared.notifyUpNextDidChange()
 			}
 		)
 	}
@@ -488,11 +500,49 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
+		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+			self.cache.removeValue(forKey: indexPath)
+		}
+
+		WatchSessionManager.shared.notifyUpNextDidChange()
+	}
+
+	/// Refetches Up Next once the watch status has reached the server.
+	@objc func handleEpisodeWatchStatusDidSync(_ notification: NSNotification) {
+		self.refreshUpNext()
+	}
+
+	/// Handles an Up Next change reported by the paired Watch.
+	@objc func handleUpNextDidChangeRemotely(_ notification: NSNotification) {
+		self.refreshUpNext()
+	}
+
+	/// Rebuilds the Up Next section, which changes whenever a title enters or leaves the library.
+	private func refreshUpNext() {
+		// Marking watched mutates the library and posts a watch status notification, so two
+		// refreshes arrive at once. fetchEpisodes() reassigns upNextCategory while it runs, so a
+		// concurrent second pass bails on a stale index or applies a stale snapshot.
+		guard !self.isRefreshingUpNext else {
+			self.needsUpNextRefresh = true
+			return
+		}
+
+		self.isRefreshingUpNext = true
+
 		Task { @MainActor [weak self] in
 			guard let self = self else { return }
+
 			await self.fetchEpisodes()
+
+			self.isRefreshingUpNext = false
+
+			guard self.needsUpNextRefresh else { return }
+
+			self.needsUpNextRefresh = false
+			self.refreshUpNext()
 		}
 	}
+
 
 	fileprivate func fetchEpisodes() async {
 		guard
@@ -518,15 +568,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 
 			let sectionIdentifier = snapshot.sectionIdentifiers[index]
 			let oldItems = snapshot.itemIdentifiers(inSection: sectionIdentifier)
-			var oldItemsByIdentityID: [KurozoraItemID: ItemKind] = [:]
-
-			for item in oldItems {
-				guard let id = self.identityID(from: item) else { continue }
-				oldItemsByIdentityID[id] = item
-			}
-
 			let newItems: [ItemKind] = (episodeResponse.relationships.episodes?.data.prefix(10) ?? []).map { identity in
-				oldItemsByIdentityID[identity.id] ?? .episodeIdentity(identity)
+				.episodeIdentity(identity)
 			}
 			var oldModelsByIdentityID: [KurozoraItemID: KurozoraItem] = [:]
 

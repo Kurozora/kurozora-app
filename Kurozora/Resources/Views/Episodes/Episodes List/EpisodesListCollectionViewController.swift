@@ -16,6 +16,16 @@ enum EpisodesListFetchType: Equatable {
 	case search
 	case upNext(exploreCategory: ExploreCategory)
 
+	/// Whether the list shows the user's Up Next queue.
+	var isUpNext: Bool {
+		switch self {
+		case .upNext:
+			return true
+		case .charts, .season, .search:
+			return false
+		}
+	}
+
 	static func == (_ lhs: EpisodesListFetchType, _ rhs: EpisodesListFetchType) -> Bool {
 		switch (lhs, rhs) {
 		case (.charts, .charts),
@@ -91,6 +101,9 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	var searchQuery: String = ""
 	var episodesListFetchType: EpisodesListFetchType = .search
 
+	/// Observes local library mutations so the Up Next queue reflects additions and removals.
+	private var libraryObserver: LocalLibraryEntryObserver?
+
 	/// A Boolean value that indicates whether filler episodes are hidden.
 	var shouldHideFillers: Bool = false
 
@@ -162,6 +175,11 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSeasonWatchStatusDidUpdate(_:)), name: .KSeasonWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserStateDidChangeRemotely(_:)), name: .KUserStateDidChangeRemotely, object: nil)
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleUpNextDidChangeRemotely(_:)), name: .KUpNextDidChangeRemotely, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidSync(_:)), name: .KEpisodeWatchStatusDidSync, object: nil)
+
+		self.observeLibraryChanges()
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.episodes.lowercased(with: Locale.current)))
@@ -398,6 +416,47 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
 		self.cache.removeValue(forKey: indexPath)
+	}
+
+	/// Refetches the Up Next queue once the watch status has reached the server.
+	@objc private func handleEpisodeWatchStatusDidSync(_ notification: NSNotification) {
+		guard self.episodesListFetchType.isUpNext else { return }
+
+		self.refreshUpNextQueue()
+	}
+
+	/// Handles an Up Next change reported by the paired Watch.
+	@objc private func handleUpNextDidChangeRemotely(_ notification: NSNotification) {
+		guard self.episodesListFetchType.isUpNext else { return }
+
+		self.refreshUpNextQueue()
+	}
+
+	/// Watches for library mutations while the list is showing the Up Next queue.
+	private func observeLibraryChanges() {
+		guard self.episodesListFetchType.isUpNext, let slug = User.current?.attributes.slug else { return }
+
+		self.libraryObserver = LocalLibraryEntryObserver(
+			matching: LocalLibraryEntryObserver.matches(userSlug: slug),
+			onChange: { [weak self] _ in
+				self?.refreshUpNextQueue()
+			},
+			onRemove: { [weak self] _ in
+				self?.refreshUpNextQueue()
+			}
+		)
+	}
+
+	private func refreshUpNextQueue() {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+
+			// A nil cursor makes the fetch rebuild the queue from the first page.
+			self.nextPageCursor = nil
+			self.cache.removeAll()
+
+			await self.fetchItems()
+		}
 	}
 
 	// MARK: - Go-to menu

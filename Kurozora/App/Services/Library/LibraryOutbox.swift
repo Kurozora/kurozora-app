@@ -305,6 +305,11 @@ actor LibraryOutbox {
 					await WatchedStore.shared.setStatus(status, forEpisodeID: op.targetID)
 				}
 				_ = try await KService.updateWatchStatus(forEpisode: EpisodeIdentity(id: KurozoraItemID(op.targetID))).response()
+				let episodeID = op.targetID
+
+				Task { @MainActor in
+					NotificationCenter.default.post(name: .KEpisodeWatchStatusDidSync, object: nil, userInfo: ["episodeID": episodeID])
+				}
 			}
 		case .setSeasonWatchStatus:
 			for op in group {

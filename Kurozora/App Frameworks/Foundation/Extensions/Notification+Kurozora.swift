@@ -56,6 +56,16 @@ extension Notification.Name {
 	static var KEpisodeWatchStatusDidUpdate: NSNotification.Name {
 		return Notification.Name(#function)
 	}
+
+	/// A notification posted once an episode's watch status reaches the server.
+	static var KEpisodeWatchStatusDidSync: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	/// A notification posted when the Up Next queue changes on the paired Watch.
+	static var KUpNextDidChangeRemotely: NSNotification.Name {
+		return Notification.Name(#function)
+	}
 }
 
 // MARK: - Library
