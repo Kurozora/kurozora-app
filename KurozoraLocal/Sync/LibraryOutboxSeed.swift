@@ -53,3 +53,29 @@ extension LibraryOutboxSeed {
 		)
 	}
 }
+
+// MARK: - Literature
+extension LibraryOutboxSeed {
+	/// Builds the display snapshot for a literature being added to the library.
+	///
+	/// - Parameter literature: The literature the snapshot describes.
+	init(literature: Literature) {
+		self.init(
+			title: literature.attributes.title,
+			sortTitle: LocalLibraryEntry.normalizedSortKey(literature.attributes.title),
+			tagline: literature.attributes.tagline,
+			posterURL: literature.attributes.poster?.url,
+			posterBackgroundColor: literature.attributes.poster?.backgroundColor,
+			bannerURL: literature.attributes.banner?.url,
+			bannerBackgroundColor: literature.attributes.banner?.backgroundColor,
+			genresLocalized: literature.attributes.genres?.joined(separator: ", "),
+			statusName: literature.attributes.status.name,
+			airingDate: literature.attributes.nextPublicationAt,
+			durationCount: literature.attributes.durationCount,
+			mediaTypeName: literature.attributes.type.name,
+			popularityRank: literature.attributes.stats?.rankTotal,
+			publicRating: literature.attributes.stats?.ratingAverage,
+			slug: literature.attributes.slug
+		)
+	}
+}

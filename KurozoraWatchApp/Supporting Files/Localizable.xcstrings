@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld ch" : {
+      "comment" : "The chapter count shown beneath a literature title, abbreviated to fit the watch."
+    },
     "%lld ep" : {
       "comment" : "The episode count shown beneath a title, abbreviated to fit the watch.",
       "localizations" : {
@@ -750,6 +753,12 @@
         }
       }
     },
+    "%lld vol" : {
+      "comment" : "The volume count shown beneath a literature title, abbreviated to fit the watch."
+    },
+    "^[%lld edition](inflect: true)" : {
+      "comment" : "The edition count shown beneath a game title. The markup inflects the noun for the count."
+    },
     "✓ Watched" : {
       "comment" : "The marker on an episode the user has already watched.",
       "localizations" : {
@@ -982,6 +991,12 @@
           }
         }
       }
+    },
+    "Add reminder" : {
+      "comment" : "The swipe action that sets a reminder on a library entry."
+    },
+    "Add to favorites" : {
+      "comment" : "The swipe action that favorites a library entry."
     },
     "Add to Library" : {
       "comment" : "The button that adds a title to the user's library.",
@@ -20794,6 +20809,9 @@
         }
       }
     },
+    "Playing" : {
+      "comment" : "The library status for a game the user is currently playing."
+    },
     "Premieres" : {
       "comment" : "The search filter choosing whether premiere episodes appear.",
       "localizations" : {
@@ -22192,8 +22210,14 @@
         }
       }
     },
+    "Reading" : {
+      "comment" : "The library status for a literature the user is currently reading."
+    },
     "Reminder" : {
       "comment" : "The accessibility label for the reminder indicator on a library row."
+    },
+    "Remove from favorites" : {
+      "comment" : "The swipe action that removes a library entry from favorites."
     },
     "Remove from Library" : {
       "comment" : "The button that removes a title from the user's library.",
@@ -22427,6 +22451,9 @@
           }
         }
       }
+    },
+    "Remove reminder" : {
+      "comment" : "The swipe action that removes the reminder from a library entry."
     },
     "Reset" : {
       "comment" : "The button that clears the chosen search filters.",

@@ -10,13 +10,22 @@ import Foundation
 import KurozoraKit
 
 extension LibraryStatus {
-	/// The status title shown on the Watch.
-	var watchTitle: String {
-		// The Watch library carries shows only, so this matches the iOS app's L10n.watching
-		// wording instead of the kind agnostic stringValue.
+	/// The status title shown on the Watch for the given library kind.
+	///
+	/// - Parameter kind: The library kind the status belongs to.
+	///
+	/// - Returns: The title, using the iOS app's per kind wording for the in progress status.
+	func watchTitle(for kind: LibraryKind) -> String {
 		switch self {
 		case .inProgress:
-			return L10n.watching
+			switch kind {
+			case .shows:
+				return L10n.watching
+			case .literatures:
+				return L10n.reading
+			case .games:
+				return L10n.playing
+			}
 		case .none:
 			return L10n.libraryNone
 		case .planning:

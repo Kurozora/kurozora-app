@@ -1,24 +1,25 @@
 //
-//  ShowDetailView.swift
+//  LibraryEntryDetailView.swift
 //  Kurozora Watch App
 //
-//  Created by Khoren Katklian on 31/03/2026.
+//  Created by Khoren Katklian on 08/09/2026.
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 import SwiftUI
 
-struct ShowDetailView: View {
+/// Shows one library entry with its status control, filled in from the local store and the server.
+struct LibraryEntryDetailView: View {
 	// MARK: - Properties
-	@State private var viewModel: ShowDetailViewModel
+	@State private var viewModel: LibraryEntryDetailViewModel
 
 	// MARK: - Initializers
 	/// Opens the detail screen for a library entry.
 	///
 	/// - Parameter item: The entry's snapshot.
 	init(item: LibraryItem) {
-		self._viewModel = State(initialValue: ShowDetailViewModel(item: item))
+		self._viewModel = State(initialValue: LibraryEntryDetailViewModel(item: item))
 	}
 
 	// MARK: - Body
@@ -28,7 +29,7 @@ struct ShowDetailView: View {
 				ArtworkView(
 					url: self.viewModel.item.posterURL,
 					backgroundColor: self.viewModel.item.posterBackgroundColor,
-					shape: .poster,
+					shape: self.viewModel.item.kind.artworkShape,
 					targetWidth: 80,
 					cornerRadius: 8
 				)
@@ -39,13 +40,13 @@ struct ShowDetailView: View {
 					.font(.headline)
 
 				HStack(spacing: 6) {
-					if let show = self.viewModel.show {
-						Label(L10n.episodeCount(show.attributes.episodeCount), systemImage: "film")
+					if let details = self.viewModel.details, let countLine = details.countLine {
+						Label(countLine, systemImage: details.countSymbolName)
 					}
 
 					Spacer()
 
-					if let statusName = self.viewModel.show?.attributes.status.name ?? self.viewModel.item.statusName {
+					if let statusName = self.viewModel.details?.statusName ?? self.viewModel.item.statusName {
 						Text(statusName)
 							.foregroundStyle(.secondary)
 					}
@@ -53,6 +54,7 @@ struct ShowDetailView: View {
 				.font(.caption2)
 
 				LibraryStatusButton(
+					kind: self.viewModel.item.kind,
 					status: self.viewModel.libraryStatus,
 					onSelect: { status in
 						Task { await self.viewModel.setStatus(status) }
@@ -64,13 +66,13 @@ struct ShowDetailView: View {
 
 				Divider()
 
-				if let genres = self.viewModel.show?.attributes.genres, !genres.isEmpty {
+				if let genres = self.viewModel.details?.genres, !genres.isEmpty {
 					Text(genres.joined(separator: " \u{2022} "))
 						.font(.caption2)
 						.foregroundStyle(.secondary)
 				}
 
-				if let synopsis = self.viewModel.show?.attributes.synopsis, !synopsis.isEmpty {
+				if let synopsis = self.viewModel.details?.synopsis, !synopsis.isEmpty {
 					Text(synopsis)
 						.font(.caption2)
 						.foregroundStyle(.secondary)

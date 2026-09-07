@@ -12,6 +12,7 @@ import SwiftUI
 /// A tinted pill that shows the current library status and offers the rest on tap.
 struct LibraryStatusButton: View {
 	// MARK: - Properties
+	let kind: LibraryKind
 	let status: LibraryStatus?
 	let onSelect: (LibraryStatus) -> Void
 	let onRemove: () -> Void
@@ -40,7 +41,7 @@ struct LibraryStatusButton: View {
 		.buttonStyle(.plain)
 		.confirmationDialog(L10n.libraryStatus, isPresented: self.$isChoosing) {
 			ForEach(LibraryStatus.all, id: \.rawValue) { status in
-				Button(status.watchTitle) {
+				Button(status.watchTitle(for: self.kind)) {
 					self.onSelect(status)
 				}
 			}
@@ -58,7 +59,7 @@ struct LibraryStatusButton: View {
 	private var title: String {
 		guard self.isInLibrary, let status = self.status else { return L10n.addToLibrary }
 
-		return status.watchTitle
+		return status.watchTitle(for: self.kind)
 	}
 
 	private var isInLibrary: Bool {

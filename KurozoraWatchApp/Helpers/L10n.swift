@@ -493,6 +493,36 @@ struct L10n {
 		String(localized: "Reminder", comment: "The accessibility label for the reminder indicator on a library row.")
 	}
 
+	/// The library status for a literature the user is reading.
+	static var reading: String {
+		String(localized: "Reading", comment: "The library status for a literature the user is currently reading.")
+	}
+
+	/// The library status for a game the user is playing.
+	static var playing: String {
+		String(localized: "Playing", comment: "The library status for a game the user is currently playing.")
+	}
+
+	/// The swipe action that favorites a library entry.
+	static var addToFavorites: String {
+		String(localized: "Add to favorites", comment: "The swipe action that favorites a library entry.")
+	}
+
+	/// The swipe action that removes a library entry from favorites.
+	static var removeFromFavorites: String {
+		String(localized: "Remove from favorites", comment: "The swipe action that removes a library entry from favorites.")
+	}
+
+	/// The swipe action that sets a reminder on a library entry.
+	static var addReminder: String {
+		String(localized: "Add reminder", comment: "The swipe action that sets a reminder on a library entry.")
+	}
+
+	/// The swipe action that removes the reminder from a library entry.
+	static var removeReminder: String {
+		String(localized: "Remove reminder", comment: "The swipe action that removes the reminder from a library entry.")
+	}
+
 	/// The library status for a title the user has not tracked.
 	static var libraryNone: String {
 		String(localized: "None", comment: "The library status for a show the user has not tracked.")
@@ -541,6 +571,27 @@ struct L10n {
 	/// - Returns: The abbreviated episode count.
 	static func episodeCount(_ count: Int) -> String {
 		String(localized: "\(count) ep", comment: "The episode count shown beneath a title, abbreviated to fit the watch.")
+	}
+
+	/// The chapter count shown beneath a literature title, abbreviated to fit the watch.
+	///
+	/// - Parameter count: The number of chapters.
+	static func chapterCount(_ count: Int) -> String {
+		String(localized: "\(count) ch", comment: "The chapter count shown beneath a literature title, abbreviated to fit the watch.")
+	}
+
+	/// The volume count shown beneath a literature title, abbreviated to fit the watch.
+	///
+	/// - Parameter count: The number of volumes.
+	static func volumeCount(_ count: Int) -> String {
+		String(localized: "\(count) vol", comment: "The volume count shown beneath a literature title, abbreviated to fit the watch.")
+	}
+
+	/// The edition count shown beneath a game title.
+	///
+	/// - Parameter count: The number of editions.
+	static func editionCount(_ count: Int) -> String {
+		String(localized: "^[\(count) edition](inflect: true)", comment: "The edition count shown beneath a game title. The markup inflects the noun for the count.")
 	}
 
 	/// The marker on an episode that is filler rather than canon.

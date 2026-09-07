@@ -22,23 +22,7 @@ extension Literature {
 
 	/// The denormalized display snapshot used to seed an offline library add.
 	private var outboxSeed: LibraryOutboxSeed {
-		LibraryOutboxSeed(
-			title: self.attributes.title,
-			sortTitle: LocalLibraryEntry.normalizedSortKey(self.attributes.title),
-			tagline: self.attributes.tagline,
-			posterURL: self.attributes.poster?.url,
-			posterBackgroundColor: self.attributes.poster?.backgroundColor,
-			bannerURL: self.attributes.banner?.url,
-			bannerBackgroundColor: self.attributes.banner?.backgroundColor,
-			genresLocalized: self.attributes.genres?.joined(separator: ", "),
-			statusName: self.attributes.status.name,
-			airingDate: self.attributes.nextPublicationAt,
-			durationCount: self.attributes.durationCount,
-			mediaTypeName: self.attributes.type.name,
-			popularityRank: self.attributes.stats?.rankTotal,
-			publicRating: self.attributes.stats?.ratingAverage,
-			slug: self.attributes.slug
-		)
+		return LibraryOutboxSeed(literature: self)
 	}
 
 	/// Create a context menu configuration for the literature.

@@ -9,10 +9,14 @@
 import KurozoraKit
 import SwiftUI
 
-/// Lists the library statuses with the number of shows each holds.
+/// Lists the library statuses of one kind with the number of entries each holds.
 struct LibraryView: View {
 	// MARK: - Properties
 	let viewModel: LibraryViewModel
+
+	@Environment(WatchTheme.self) private var theme
+
+	@State private var isChoosingKind = false
 
 	// MARK: - Body
 	var body: some View {
@@ -21,7 +25,7 @@ struct LibraryView: View {
 				LibraryStatusListView(status: status, viewModel: self.viewModel)
 			} label: {
 				HStack {
-					Text(status.watchTitle)
+					Text(status.watchTitle(for: self.viewModel.selectedKind))
 
 					Spacer()
 
@@ -31,6 +35,24 @@ struct LibraryView: View {
 			}
 		}
 		.themedNavigationTitle(WatchDestination.library.title)
+		.toolbar {
+			ToolbarItem(placement: .topBarTrailing) {
+				Button {
+					self.isChoosingKind = true
+				} label: {
+					Image(systemName: self.viewModel.selectedKind.symbolName)
+						.foregroundStyle(self.theme.tintedButtonText)
+				}
+				.accessibilityLabel(self.viewModel.selectedKind.watchTitle)
+			}
+		}
+		.confirmationDialog(L10n.library, isPresented: self.$isChoosingKind) {
+			ForEach(LibraryKind.allCases, id: \.rawValue) { kind in
+				Button(kind.watchTitle) {
+					self.viewModel.selectKind(kind)
+				}
+			}
+		}
 		.task {
 			self.viewModel.start()
 		}

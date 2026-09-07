@@ -21,7 +21,7 @@ struct LibraryRowView: View {
 			ArtworkView(
 				url: self.item.posterURL,
 				backgroundColor: self.item.posterBackgroundColor,
-				shape: .poster,
+				shape: self.item.kind.artworkShape,
 				targetWidth: 44
 			)
 			.frame(width: 44)
@@ -103,9 +103,9 @@ struct LibraryRowView: View {
 		return remainder == 0 ? "\(hours)h" : "\(hours)h \(remainder)m"
 	}
 
-	/// The next broadcast date, shown on the same terms as the iOS list cell.
+	/// The next broadcast or publication date, shown on the same terms as the iOS list cell.
 	private var countdownDate: Date? {
-		guard self.item.statusName == "Currently Airing", self.item.durationCount > 0 else { return nil }
+		guard self.item.statusName == self.item.kind.airingStatusName, self.item.durationCount > 0 else { return nil }
 
 		return self.item.airingDate
 	}

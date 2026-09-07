@@ -12,8 +12,10 @@ import KurozoraKit
 /// A value snapshot of a `LocalLibraryEntry`, taken on the main thread for SwiftUI to render.
 struct LibraryItem: Hashable, Identifiable, Sendable {
 	// MARK: - Properties
-	/// The identifier of the show the entry tracks.
+	/// The identifier of the tracked show, literature, or game.
 	let id: String
+
+	let kind: LibraryKind
 
 	let title: String
 
@@ -28,13 +30,13 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 	/// The localized airing status, such as "Currently Airing".
 	let statusName: String?
 
-	/// The next broadcast date, used for the on-row countdown.
+	/// The next broadcast or publication date, used for the on-row countdown.
 	let airingDate: Date?
 
-	/// The episode duration in seconds.
+	/// The duration in seconds.
 	let durationCount: Int
 
-	/// The score the user gave the show.
+	/// The score the user gave the entry.
 	let userScore: Double?
 
 	let libraryStatus: LibraryStatus
@@ -49,6 +51,7 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 	/// - Parameter entry: The entry to snapshot, resolved on the main thread.
 	init(entry: LocalLibraryEntry) {
 		self.id = entry.trackableID
+		self.kind = entry.kind
 		self.title = entry.title ?? ""
 		self.posterURL = entry.posterURL
 		self.posterBackgroundColor = entry.posterBackgroundColor
