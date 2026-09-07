@@ -832,11 +832,22 @@ extension DetailsCollectionViewController: ReviewCollectionViewCellDelegate {
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
 	}
 
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapProfileLink url: URL) {
+		Task {
+			await User.visitProfile(at: url)
+		}
+	}
+
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
 			let review = self.review(at: indexPath)
 		else { return }
+
+		if User.isSignedIn, let index = self.reviews.firstIndex(where: { $0.id == review.id }) {
+			self.reviews[index] = review.applyingPredictedVote(vote)
+			cell.configureCell(using: self.reviews[index], isElevated: self.reviews[index].attributes.isElevated)
+		}
 
 		Task {
 			await review.castVote(vote)

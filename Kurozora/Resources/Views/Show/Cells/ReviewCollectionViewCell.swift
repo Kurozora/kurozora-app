@@ -135,7 +135,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		// Matches `KButton`'s semibold weight at the body's metrics.
 		button.titleLabel?.font = .preferredFont(forTextStyle: .body).semibold
 		button.titleLabel?.adjustsFontForContentSizeCategory = true
-		button.setTitle(L10n.more.lowercased(with: Locale.current), for: .normal)
+		button.setTitle(L10n.reviewMore, for: .normal)
 		return button
 	}()
 
@@ -189,13 +189,6 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	/// The number of body lines shown before the review is clipped behind the `more` button.
 	private static let bodyLineLimit = 6
 
-	private static var spoilerWarningText: String {
-		#if targetEnvironment(macCatalyst)
-		return L10n.reviewSpoilerClick
-		#else
-		return L10n.reviewSpoilerTap
-		#endif
-	}
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
@@ -549,7 +542,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 			self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.bodyTextView.bottomAnchor)
 		])
 
-		self.spoilerOverlayView.configure(warning: Self.spoilerWarningText, cornerRadius: 10)
+		self.spoilerOverlayView.configure(warning: L10n.reviewSpoiler, cornerRadius: 10)
 		self.spoilerOverlayView.revealHandler = { [weak self] in
 			self?.isSpoilerRevealed = true
 		}

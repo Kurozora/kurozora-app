@@ -295,8 +295,20 @@ extension ReviewDetailsCollectionViewController: ReviewCollectionViewCellDelegat
 		TranslationSettingsViewController.present(for: review, from: button, in: self)
 	}
 
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapProfileLink url: URL) {
+		Task {
+			await User.visitProfile(at: url)
+		}
+	}
+
 	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didTapVote vote: ReviewVote) {
 		guard let review = self.review else { return }
+
+		if User.isSignedIn {
+			let votedReview = review.applyingPredictedVote(vote)
+			self.review = votedReview
+			cell.configureCell(using: votedReview, showsFullReview: true, isElevated: votedReview.attributes.isElevated)
+		}
 
 		Task {
 			await review.castVote(vote)

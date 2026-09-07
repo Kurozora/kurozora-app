@@ -212,6 +212,21 @@ extension Review {
 		viewController?.show(profileTableViewController, sender: nil)
 	}
 
+	/// Returns the review with the tapped vote applied ahead of the server's answer.
+	///
+	/// - Parameter vote: The vote the reader tapped.
+	///
+	/// - Returns: A copy of the review carrying the predicted vote and counts.
+	func applyingPredictedVote(_ vote: ReviewVote) -> Review {
+		// Tapping the vote already cast withdraws it, which is what the server does with the same request.
+		let tappedHelpful = vote == .helpful
+		let predictedHelpfulness: Bool? = self.attributes.isHelpful == tappedHelpful ? nil : tappedHelpful
+
+		var review = self
+		review.attributes.applyVote(predictedHelpfulness)
+		return review
+	}
+
 	/// Present share sheet for the review.
 	///
 	/// Make sure to send either the view or the bar button item that's sending the request.

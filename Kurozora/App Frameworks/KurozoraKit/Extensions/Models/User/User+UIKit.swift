@@ -508,3 +508,28 @@ extension User {
 		return UIMenu(title: "", children: menuElements)
 	}
 }
+
+// MARK: - Profile Links
+extension User {
+	/// Opens the profile page the given Kurozora profile link points to.
+	///
+	/// - Parameter url: The webpage URL of a profile, ending in the user's slug.
+	@MainActor
+	static func visitProfile(at url: URL) async {
+		let username = url.lastPathComponent
+
+		do {
+			// The webpage URL carries a slug, while the deep link expects an identifier.
+			let userIdentityResponse = try await KService.searchUsers(username).response()
+			guard let userIdentity = userIdentityResponse.data.first else { return }
+
+			let deepLinkString = url.absoluteString
+				.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
+				.replacingOccurrences(of: username, with: "\(userIdentity.id)")
+
+			UIApplication.shared.kOpen(nil, deepLink: URL(string: deepLinkString))
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+	}
+}
