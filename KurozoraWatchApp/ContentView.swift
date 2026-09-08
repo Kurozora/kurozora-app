@@ -31,6 +31,7 @@ struct ContentView: View {
 				} onSubmit: { query in
 					self.search(query)
 				}
+				.submitLabel(.search)
 			}
 			.themedNavigationTitle(L10n.kurozora)
 			.toolbar {
