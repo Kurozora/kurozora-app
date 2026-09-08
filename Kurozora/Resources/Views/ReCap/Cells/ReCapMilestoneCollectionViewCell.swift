@@ -77,3 +77,19 @@ class ReCapMilestoneCollectionViewCell: KCollectionViewCell {
 		self.progressView.updateProgress(100.0)
 	}
 }
+
+// MARK: - Measurement
+extension ReCapMilestoneCollectionViewCell {
+	/// Returns the item that measures the given milestone.
+	///
+	/// - Parameters:
+	///    - recapItem: The recap item the milestone is drawn from.
+	///    - milestoneKind: The kind of milestone the cell reports.
+	///
+	/// - Returns: The item that measures the milestone.
+	static func measurableItem(for recapItem: RecapItem, milestoneKind: MilestoneKind) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ReCapMilestoneCollectionViewCell.self) { cell in
+			cell.configure(using: recapItem, milestoneKind: milestoneKind)
+		}
+	}
+}

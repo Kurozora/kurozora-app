@@ -85,7 +85,11 @@ extension ReCapCollectionViewController {
 				if isFullSection {
 					sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				} else {
-					sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						let measurableItems = self.milestones.map { ReCapMilestoneCollectionViewCell.measurableItem(for: $0.recapItem, milestoneKind: $0.kind) }
+
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					}
 				}
 				return sectionLayout
 			}

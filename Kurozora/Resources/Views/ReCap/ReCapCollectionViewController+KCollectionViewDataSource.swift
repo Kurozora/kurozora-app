@@ -10,6 +10,47 @@ import KurozoraKit
 import UIKit
 
 extension ReCapCollectionViewController {
+	/// The milestones the recap items amount to, each paired with the kind it reports.
+	var milestones: [(recapItem: RecapItem, kind: MilestoneKind)] {
+		var milestones: [(recapItem: RecapItem, kind: MilestoneKind)] = []
+
+		for recapItem in self.recapItems {
+			let hasDuration = recapItem.attributes.totalPartsDuration > 0
+			let hasParts = recapItem.attributes.totalPartsCount > 0
+
+			switch recapItem.attributes.recapItemType {
+			case .shows:
+				if hasDuration {
+					milestones.append((recapItem, .minuetsWatched))
+				}
+
+				if hasParts {
+					milestones.append((recapItem, .episodesWatched))
+				}
+			case .literatures:
+				if hasDuration {
+					milestones.append((recapItem, .minuetsRead))
+				}
+
+				if hasParts {
+					milestones.append((recapItem, .chaptersRead))
+				}
+			case .games:
+				if hasDuration {
+					milestones.append((recapItem, .minutesPlayed))
+				}
+
+				if hasParts {
+					milestones.append((recapItem, .gamesPlayed))
+				}
+			case .genres, .themes:
+				break
+			}
+		}
+
+		return milestones
+	}
+
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return [TitleHeaderCollectionReusableView.self]
 	}
@@ -148,42 +189,7 @@ extension ReCapCollectionViewController {
 			self.snapshot.appendSections([sectionHeader])
 			self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
 
-			var milestoneItems: [ItemKind] = []
-			self.recapItems.forEach { recapItem in
-				switch recapItem.attributes.recapItemType {
-				case .shows:
-					if recapItem.attributes.totalPartsDuration > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsWatched)
-						milestoneItems.append(itemKind)
-					}
-
-					if recapItem.attributes.totalPartsCount > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .episodesWatched)
-						milestoneItems.append(itemKind)
-					}
-				case .literatures:
-					if recapItem.attributes.totalPartsDuration > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsRead)
-						milestoneItems.append(itemKind)
-					}
-
-					if recapItem.attributes.totalPartsCount > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .chaptersRead)
-						milestoneItems.append(itemKind)
-					}
-				case .games:
-					if recapItem.attributes.totalPartsDuration > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minutesPlayed)
-						milestoneItems.append(itemKind)
-					}
-
-					if recapItem.attributes.totalPartsCount > 0 {
-						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .gamesPlayed)
-						milestoneItems.append(itemKind)
-					}
-				case .genres, .themes: break
-				}
-			}
+			let milestoneItems: [ItemKind] = self.milestones.map { .recapItem($0.recapItem, milestoneKind: $0.kind) }
 
 			self.snapshot.appendSections([.milestones(false)])
 			self.snapshot.appendItems(milestoneItems, toSection: .milestones(false))
