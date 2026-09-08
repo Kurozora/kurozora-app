@@ -11,13 +11,15 @@ import Foundation
 import KurozoraKit
 
 /// Bridges save notifications onto a callback fired only for `LocalLibraryEntry` mutations that pass a filter.
-final class LocalLibraryEntryObserver {
+final class LocalLibraryEntryObserver: NSObject {
 	// MARK: - Properties
-	private var saveTask: Task<Void, Never>?
+	private let filter: Filter
+	private let onChange: (LocalLibraryEntry) -> Void
+	private let onRemove: (RemovedEntry) -> Void
+	private let viewContextID: ObjectIdentifier
 
 	// MARK: - Initializers
-	/// Subscribes to the save feed and routes each `LocalLibraryEntry` mutation
-	/// that matches `filter` through the appropriate callback.
+	/// Subscribes to the save feed and routes each matching `LocalLibraryEntry` mutation through the appropriate callback.
 	///
 	/// - Parameters:
 	///    - filter: Which `(userSlug, kind, trackableID)` tuples to act on.
@@ -28,29 +30,17 @@ final class LocalLibraryEntryObserver {
 		onChange: @escaping (LocalLibraryEntry) -> Void,
 		onRemove: @escaping (RemovedEntry) -> Void = { _ in }
 	) {
-		let viewContext = PersistenceController.shared.viewContext
+		self.filter = filter
+		self.onChange = onChange
+		self.onRemove = onRemove
+		self.viewContextID = ObjectIdentifier(PersistenceController.shared.viewContext)
+		super.init()
 
-		self.saveTask = Task { @MainActor in
-			for await notification in NotificationCenter.default.notifications(named: .NSManagedObjectContextDidSave) {
-				guard let userInfo = notification.userInfo else { continue }
-
-				// Handlers read post-save values, so the merge has to land first.
-				if let savingContext = notification.object as? NSManagedObjectContext,
-				   savingContext !== viewContext,
-				   savingContext.persistentStoreCoordinator === viewContext.persistentStoreCoordinator {
-					viewContext.mergeChanges(fromContextDidSave: notification)
-				}
-
-				// The overlay cache has to be current before the handlers run as well.
-				LibraryStore.shared.refreshOverlayCache(from: notification)
-
-				Self.dispatch(userInfo, viewContext: viewContext, filter: filter, onChange: onChange, onRemove: onRemove)
-			}
-		}
+		NotificationCenter.default.addObserver(self, selector: #selector(self.contextDidSave(_:)), name: .NSManagedObjectContextDidSave, object: nil)
 	}
 
 	deinit {
-		self.saveTask?.cancel()
+		NotificationCenter.default.removeObserver(self)
 	}
 
 	// MARK: - Types
@@ -69,72 +59,55 @@ final class LocalLibraryEntryObserver {
 		}
 	}
 
-	/// Snapshot of a deleted entry's identity captured before the managed object's context is detached.
-	struct RemovedEntry: Hashable {
+	/// Snapshot of a deleted entry's identity.
+	nonisolated struct RemovedEntry: Hashable, Sendable {
 		let objectID: NSManagedObjectID
 		let userSlug: String
 		let kind: LibraryKind
 		let trackableID: String
+
+		/// Reads a deleted row's identity from its last committed values.
+		///
+		/// - Parameter deletedObject: A `LocalLibraryEntry` listed under the deleted objects of a did-save notification.
+		init?(deletedObject: NSManagedObject) {
+			let values = deletedObject.committedValues(forKeys: ["userSlug", "kindRaw", "trackableID"])
+			guard let userSlug = values["userSlug"] as? String,
+			      let kindRawNumber = values["kindRaw"] as? NSNumber,
+			      let kind = LibraryKind(rawValue: Int(kindRawNumber.int64Value)),
+			      let trackableID = values["trackableID"] as? String else {
+				return nil
+			}
+
+			self.objectID = deletedObject.objectID
+			self.userSlug = userSlug
+			self.kind = kind
+			self.trackableID = trackableID
+		}
 	}
 
 	// MARK: - Functions
-	private static func dispatch(
-		_ userInfo: [AnyHashable: Any],
-		viewContext: NSManagedObjectContext,
-		filter: Filter,
-		onChange: (LocalLibraryEntry) -> Void,
-		onRemove: (RemovedEntry) -> Void
-	) {
-		let updated = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> ?? []
-		let inserted = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> ?? []
-		let deleted = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject> ?? []
+	/// Captures the save on the posting thread.
+	@objc nonisolated private func contextDidSave(_ notification: Notification) {
+		guard let change = LibraryEntrySaveChange(notification: notification, viewContextID: self.viewContextID) else { return }
 
-		for managedObject in updated.union(inserted) {
-			guard managedObject is LocalLibraryEntry else { continue }
-			guard let entry = Self.resolve(managedObject, in: viewContext) else { continue }
-			guard filter.matches(userSlug: entry.userSlug, kind: entry.kind, trackableID: entry.trackableID) else { continue }
-			onChange(entry)
-		}
-
-		for managedObject in deleted {
-			guard managedObject is LocalLibraryEntry else { continue }
-			guard let snapshot = Self.snapshot(of: managedObject) else { continue }
-			guard let kind = LibraryKind(rawValue: Int(snapshot.kindRaw)) else { continue }
-			guard filter.matches(userSlug: snapshot.userSlug, kind: kind, trackableID: snapshot.trackableID) else { continue }
-			let removed = RemovedEntry(
-				objectID: managedObject.objectID,
-				userSlug: snapshot.userSlug,
-				kind: kind,
-				trackableID: snapshot.trackableID
-			)
-			onRemove(removed)
+		Task { @MainActor in
+			self.dispatch(change)
 		}
 	}
 
-	/// Resolves a managed object to its viewContext representation, falling back to
-	/// the original instance when no viewContext copy is available.
-	private static func resolve(_ managedObject: NSManagedObject, in viewContext: NSManagedObjectContext) -> LocalLibraryEntry? {
-		if managedObject.managedObjectContext === viewContext {
-			return managedObject as? LocalLibraryEntry
-		}
-		return viewContext.object(with: managedObject.objectID) as? LocalLibraryEntry
-	}
+	private func dispatch(_ change: LibraryEntrySaveChange) {
+		LibraryStore.shared.refreshOverlayCache(with: change)
 
-	/// Reads identity fields from a deleted entry via `committedValues(forKeys:)`.
-	private static func snapshot(of managedObject: NSManagedObject) -> EntrySnapshot? {
-		let values = managedObject.committedValues(forKeys: ["userSlug", "kindRaw", "trackableID"])
-		guard let userSlug = values["userSlug"] as? String,
-		      let kindRawNumber = values["kindRaw"] as? NSNumber,
-		      let trackableID = values["trackableID"] as? String else {
-			return nil
-		}
-		return EntrySnapshot(userSlug: userSlug, kindRaw: kindRawNumber.int64Value, trackableID: trackableID)
-	}
+		for objectID in change.changedEntryObjectIDs {
+			guard let entry = LibraryStore.shared.entry(for: objectID) else { continue }
+			guard self.filter.matches(userSlug: entry.userSlug, kind: entry.kind, trackableID: entry.trackableID) else { continue }
 
-	private struct EntrySnapshot {
-		let userSlug: String
-		let kindRaw: Int64
-		let trackableID: String
+			self.onChange(entry)
+		}
+
+		for removed in change.removedEntries where self.filter.matches(userSlug: removed.userSlug, kind: removed.kind, trackableID: removed.trackableID) {
+			self.onRemove(removed)
+		}
 	}
 }
 

@@ -26,15 +26,20 @@ final class LibraryStore {
 	/// Main-thread snapshot of every entry's `LibraryAttributes`, keyed by
 	/// `"{userSlug}::{kindRaw}::{trackableID}"`.
 	private var overlayCache: [String: LibraryAttributes] = [:]
-	private var overlayCacheTask: Task<Void, Never>?
+	private var overlayCacheToken: NSObjectProtocol?
 	private var hydratedUserSlugs: Set<String> = []
 
 	// MARK: - Initializers
 	private init() {
-		// The task is never canceled because the singleton lives for the process.
-		self.overlayCacheTask = Task { @MainActor [weak self] in
-			for await notification in NotificationCenter.default.notifications(named: .NSManagedObjectContextDidSave) {
-				self?.handleStoreSaveForCache(notification)
+		let viewContextID = ObjectIdentifier(PersistenceController.shared.viewContext)
+
+		// The token is never removed because the singleton lives for the process.
+		self.overlayCacheToken = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave, object: nil, queue: nil) { notification in
+			// Deleted rows lose their values once the saving thread moves on, so their identities are read here before hopping to the main actor.
+			guard let change = LibraryEntrySaveChange(notification: notification, viewContextID: viewContextID) else { return }
+
+			Task { @MainActor in
+				LibraryStore.shared.refreshOverlayCache(with: change)
 			}
 		}
 	}
@@ -362,43 +367,23 @@ final class LibraryStore {
 		}
 	}
 
-	/// Applies a save's changes onto the overlay cache.
-	func refreshOverlayCache(from notification: Notification) {
-		self.handleStoreSaveForCache(notification)
-	}
+	/// Merges a save into the view context and applies its changes onto the overlay cache.
+	///
+	/// - Parameter change: The save to apply.
+	func refreshOverlayCache(with change: LibraryEntrySaveChange) {
+		change.merge(into: self.viewContext)
 
-	/// Maintains the cache in lockstep with saves.
-	private func handleStoreSaveForCache(_ notification: Notification) {
-		guard let userInfo = notification.userInfo else { return }
-
-		let inserted = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> ?? []
-		let updated = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> ?? []
-		let deleted = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject> ?? []
-
-		for managedObject in inserted.union(updated) {
-			guard managedObject is LocalLibraryEntry else { continue }
-			let resolved: LocalLibraryEntry? = (managedObject.managedObjectContext === self.viewContext)
-				? managedObject as? LocalLibraryEntry
-				: self.viewContext.object(with: managedObject.objectID) as? LocalLibraryEntry
-			guard let entry = resolved else { continue }
+		for objectID in change.changedEntryObjectIDs {
+			guard let entry = self.entry(for: objectID) else { continue }
 			let key = Self.overlayCacheKey(userSlug: entry.userSlug, kind: entry.kind, trackableID: entry.trackableID)
 			self.overlayCache[key] = Self.snapshotAttributes(from: entry)
 		}
 
-		for managedObject in deleted {
-			guard managedObject is LocalLibraryEntry else { continue }
-			let values = managedObject.committedValues(forKeys: ["userSlug", "kindRaw", "trackableID"])
-			guard let userSlug = values["userSlug"] as? String,
-			      let kindRawNumber = values["kindRaw"] as? NSNumber,
-			      let kind = LibraryKind(rawValue: Int(kindRawNumber.int64Value)),
-			      let trackableID = values["trackableID"] as? String else {
-				continue
-			}
-
+		for removed in change.removedEntries {
 			// The sync replaces an outbox row with the server's own, so the deleted row may share
 			// its key with a surviving entry that must stay cached.
-			let key = Self.overlayCacheKey(userSlug: userSlug, kind: kind, trackableID: trackableID)
-			if let survivor = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) {
+			let key = Self.overlayCacheKey(userSlug: removed.userSlug, kind: removed.kind, trackableID: removed.trackableID)
+			if let survivor = self.entry(forTrackableID: removed.trackableID, userSlug: removed.userSlug, kind: removed.kind) {
 				self.overlayCache[key] = Self.snapshotAttributes(from: survivor)
 			} else {
 				self.overlayCache.removeValue(forKey: key)

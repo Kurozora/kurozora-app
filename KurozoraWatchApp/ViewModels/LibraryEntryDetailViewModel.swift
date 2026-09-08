@@ -43,14 +43,14 @@ final class LibraryEntryDetailViewModel {
 		guard let slug = User.current?.attributes.slug else { return }
 
 		if self.entryObserver == nil {
-			self.libraryStatus = LibraryStore.shared.entry(forTrackableID: self.item.id, userSlug: slug, kind: self.item.kind)?.libraryStatus
+			self.refreshLibraryStatus(forUserSlug: slug)
 			self.entryObserver = LocalLibraryEntryObserver(
 				matching: LocalLibraryEntryObserver.matches(userSlug: slug, kind: self.item.kind, trackableID: self.item.id),
-				onChange: { [weak self] entry in
-					self?.libraryStatus = entry.libraryStatus
+				onChange: { [weak self] _ in
+					self?.refreshLibraryStatus(forUserSlug: slug)
 				},
 				onRemove: { [weak self] _ in
-					self?.libraryStatus = nil
+					self?.refreshLibraryStatus(forUserSlug: slug)
 				}
 			)
 		}
@@ -81,6 +81,13 @@ final class LibraryEntryDetailViewModel {
 	}
 
 	// MARK: - Private
+	/// Reads the status back from the store by trackable identity.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	private func refreshLibraryStatus(forUserSlug userSlug: String) {
+		self.libraryStatus = LibraryStore.shared.entry(forTrackableID: self.item.id, userSlug: userSlug, kind: self.item.kind)?.libraryStatus
+	}
+
 	private func fetchDetails() async throws -> LibraryEntryDetails? {
 		let itemID = KurozoraItemID(self.item.id)
 

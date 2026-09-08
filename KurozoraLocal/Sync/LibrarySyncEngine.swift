@@ -39,6 +39,9 @@ actor LibrarySyncEngine {
 	/// becomes reachable again. Keyed by `(userSlug, kind)`.
 	private var pendingRetries: Set<String> = []
 
+	/// Keys whose next sync drops the cursor first, re-pulling the whole slice and sweeping stale rows.
+	private var fullPullRequested: Set<String> = []
+
 	/// Watches the network path so failed work retries as soon as connectivity returns.
 	private var pathMonitor: NWPathMonitor?
 
@@ -69,7 +72,7 @@ actor LibrarySyncEngine {
 				do {
 					try await self.sync(kind, forUserSlug: userSlug)
 				} catch {
-					syncLogger.error("\(kind.stringValue) sync failed: \(error.localizedDescription)")
+					syncLogger.error("\(kind.stringValue) sync failed: \(Self.describe(error), privacy: .public)")
 				}
 			}
 		}
@@ -143,6 +146,17 @@ actor LibrarySyncEngine {
 		}
 	}
 
+	/// Makes the kind's next sync drop its cursor, re-pull the whole slice, and remove local rows the server no longer has.
+	///
+	/// - Parameters:
+	///    - kind: The library kind to reconcile.
+	///    - userSlug: The user's account slug.
+	func reconcile(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
+		syncLogger.notice("RECONCILE kind=\(kind.rawValue)")
+		self.fullPullRequested.insert(self.coalesceKey(userSlug: userSlug, kind: kind))
+		try await self.sync(kind, forUserSlug: userSlug)
+	}
+
 	private func runSync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
 		// A kind with unflushed mutations is not reconciled with the server; applying a
 		// delta now would advance the cursor past state the outbox still owns.
@@ -151,9 +165,8 @@ actor LibrarySyncEngine {
 			return
 		}
 
-		// Initial sync carries no tombstones; the local slice must start empty.
-		if await self.readCursor(forUserSlug: userSlug, kind: kind) == nil {
-			await self.resetLocalState(forUserSlug: userSlug, kind: kind)
+		if self.fullPullRequested.remove(self.coalesceKey(userSlug: userSlug, kind: kind)) != nil {
+			await self.clearCursor(forUserSlug: userSlug, kind: kind)
 		}
 
 		await LibrarySyncProgress.shared.begin(kind)
@@ -168,6 +181,10 @@ actor LibrarySyncEngine {
 
 	private func pullBatches(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
 		var appliedCount = 0
+		// A pull without a cursor carries no tombstones, so the rows it never mentions are
+		// swept at the end instead of being deleted up front.
+		var isFullPull = await self.readCursor(forUserSlug: userSlug, kind: kind) == nil
+		var seenRemoteIDs: Set<String> = []
 
 		while true {
 			let cursor = await self.readCursor(forUserSlug: userSlug, kind: kind)
@@ -180,9 +197,11 @@ actor LibrarySyncEngine {
 					.limit(self.batchLimit)
 					.response()
 			} catch let error as APIError where error.isCursorExpired {
-				syncLogger.notice("Cursor expired for \(kind.stringValue); restarting initial sync.")
-				await self.resetLocalState(forUserSlug: userSlug, kind: kind)
+				syncLogger.notice("Cursor expired for \(kind.stringValue); restarting as a full pull.")
+				await self.clearCursor(forUserSlug: userSlug, kind: kind)
 				appliedCount = 0
+				isFullPull = true
+				seenRemoteIDs = []
 				continue
 			}
 
@@ -197,6 +216,10 @@ actor LibrarySyncEngine {
 
 			try await self.applyBatch(batch, nextSince: nextSince, forUserSlug: userSlug, kind: kind)
 
+			if isFullPull {
+				seenRemoteIDs.formUnion(batch.filter { $0.deletedAt == nil }.map(\.id))
+			}
+
 			appliedCount += batch.count
 			await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: expectedCount)
 
@@ -206,6 +229,10 @@ actor LibrarySyncEngine {
 			#endif
 
 			if !hasMore {
+				if isFullPull {
+					try await self.sweepEntries(notIn: seenRemoteIDs, forUserSlug: userSlug, kind: kind)
+				}
+
 				// Force the fraction to exactly 1.0 before ending.
 				await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: appliedCount)
 				break
@@ -286,18 +313,11 @@ actor LibrarySyncEngine {
 		}
 	}
 
-	private func resetLocalState(forUserSlug userSlug: String, kind: LibraryKind) async {
+	private func clearCursor(forUserSlug userSlug: String, kind: LibraryKind) async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		await context.perform {
-			let entryRequest = LocalLibraryEntry.fetchRequest()
-			entryRequest.predicate = NSPredicate(
-				format: "userSlug == %@ AND kindRaw == %d",
-				userSlug,
-				Int64(kind.rawValue)
-			)
-
 			let cursorRequest = LocalSyncCursor.fetchRequest()
 			cursorRequest.predicate = NSPredicate(
 				format: "userSlug == %@ AND kindRaw == %d",
@@ -306,9 +326,6 @@ actor LibrarySyncEngine {
 			)
 
 			do {
-				for entry in try context.fetch(entryRequest) {
-					context.delete(entry)
-				}
 				for cursor in try context.fetch(cursorRequest) {
 					context.delete(cursor)
 				}
@@ -316,13 +333,56 @@ actor LibrarySyncEngine {
 					try context.save()
 				}
 			} catch {
-				syncLogger.error("Reset local state failed: \(error.localizedDescription)")
+				syncLogger.error("Clear cursor failed: \(error.localizedDescription)")
 			}
+		}
+	}
+
+	/// Deletes the kind's local rows the full pull never returned, keeping offline placeholders whose add is still queued.
+	private func sweepEntries(notIn seenRemoteIDs: Set<String>, forUserSlug userSlug: String, kind: LibraryKind) async throws {
+		let context = PersistenceController.shared.container.newBackgroundContext()
+		context.automaticallyMergesChangesFromParent = true
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+		try await context.perform {
+			let operationRequest = LocalOutboxOperation.fetchRequest()
+			operationRequest.predicate = NSPredicate(
+				format: "userSlug == %@ AND kindRaw == %d",
+				userSlug,
+				Int64(kind.rawValue)
+			)
+			let queuedTrackableIDs = Set(try context.fetch(operationRequest).map(\.trackableID))
+
+			let entryRequest = LocalLibraryEntry.fetchRequest()
+			entryRequest.predicate = NSPredicate(
+				format: "userSlug == %@ AND kindRaw == %d AND NOT (remoteID IN %@)",
+				userSlug,
+				Int64(kind.rawValue),
+				seenRemoteIDs
+			)
+
+			var sweptCount = 0
+			for entry in try context.fetch(entryRequest) where !queuedTrackableIDs.contains(entry.trackableID) {
+				context.delete(entry)
+				sweptCount += 1
+			}
+
+			if context.hasChanges {
+				try context.save()
+			}
+			syncLogger.info("SWEEP kind=\(kind.rawValue) removed=\(sweptCount)")
 		}
 	}
 
 	// MARK: - Helpers
 	private nonisolated func coalesceKey(userSlug: String, kind: LibraryKind) -> String {
 		return "\(userSlug)::\(kind.rawValue)"
+	}
+
+	/// Names a failure by its HTTP status when the server answered, and by the transport error otherwise.
+	private static func describe(_ error: Error) -> String {
+		if let apiError = error as? APIError, let statusCode = apiError.statusCode {
+			return "HTTP \(statusCode) \(apiError.message)"
+		}
+		return error.localizedDescription
 	}
 }

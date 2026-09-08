@@ -20,14 +20,25 @@ actor LibraryOutbox {
 	/// The attempt count at which a repeatedly-failing operation is abandoned.
 	private let maximumAttemptCount: Int16 = 5
 
-	/// In-flight per-user flush tasks.
-	private var inFlight: [String: Task<Void, Never>] = [:]
-
-	/// Users whose in-flight flush runs once more after it finishes.
-	private var rerunRequested: Set<String> = []
+	/// In-flight per-user drain rounds.
+	private var inFlight: [String: Task<DrainOutcome, Never>] = [:]
 
 	/// The earliest time a failing user's next automatic flush attempt may run.
 	private var nextAttemptAllowed: [String: Date] = [:]
+
+	/// The earliest time a throttled user's sends may resume, honored even by forced flushes.
+	private var throttledUntil: [String: Date] = [:]
+
+	/// Per-user tasks waiting out a throttle window before flushing again.
+	private var throttleRetryTasks: [String: Task<Void, Never>] = [:]
+
+	/// The wait applied when a 429 response carries no `Retry-After` header.
+	private let defaultThrottleInterval: TimeInterval = 60
+
+	#if DEBUG
+	/// Whether every send fails as if the device had no connection.
+	private var simulatesOffline = false
+	#endif
 
 	/// How a repeated enqueue for the same (user, kind, trackable/target, type) is resolved.
 	private enum CoalesceStrategy {
@@ -36,6 +47,18 @@ actor LibraryOutbox {
 
 		/// Cancels the pending operation.
 		case cancelOnRepeat
+	}
+
+	/// What one drain round left behind.
+	private enum DrainOutcome {
+		/// Nothing was queued.
+		case idle
+
+		/// Every fetched operation was resolved, so operations enqueued meanwhile may be waiting.
+		case drained
+
+		/// Sends stopped on a throttle or on failures that wait for their backoff.
+		case blocked
 	}
 
 	/// A value snapshot of a pending `LocalOutboxOperation`.
@@ -73,19 +96,19 @@ actor LibraryOutbox {
 		self.scheduleFlush()
 	}
 
-	/// Enqueues a favorite toggle to the given target state.
+	/// Enqueues a favorite change to the given target state.
 	func enqueueSetFavorite(_ desired: Bool, trackableID: String, userSlug: String, kind: LibraryKind) async {
 		let payload = LibraryOutboxPayload(flag: desired)
-		await self.persistOp(type: .setFavorite, userSlug: userSlug, kind: kind, trackableID: trackableID, targetID: "", payload: payload, seed: nil, coalescing: .cancelOnRepeat)
+		await self.persistOp(type: .setFavorite, userSlug: userSlug, kind: kind, trackableID: trackableID, targetID: "", payload: payload, seed: nil, coalescing: .replace)
 
 		await LibraryStore.shared.applyFavorite(desired, forTrackableID: trackableID, userSlug: userSlug, kind: kind)
 		self.scheduleFlush()
 	}
 
-	/// Enqueues a reminder toggle to the given target state.
+	/// Enqueues a reminder change to the given target state.
 	func enqueueSetReminder(_ desired: Bool, trackableID: String, userSlug: String, kind: LibraryKind) async {
 		let payload = LibraryOutboxPayload(flag: desired)
-		await self.persistOp(type: .setReminder, userSlug: userSlug, kind: kind, trackableID: trackableID, targetID: "", payload: payload, seed: nil, coalescing: .cancelOnRepeat)
+		await self.persistOp(type: .setReminder, userSlug: userSlug, kind: kind, trackableID: trackableID, targetID: "", payload: payload, seed: nil, coalescing: .replace)
 
 		await LibraryStore.shared.applyReminder(desired, forTrackableID: trackableID, userSlug: userSlug, kind: kind)
 		self.scheduleFlush()
@@ -195,7 +218,7 @@ actor LibraryOutbox {
 	}
 
 	// MARK: - Flush
-	/// Drains the current user's pending operations to the server.
+	/// Drains the current user's pending operations to the server until the queue is empty or a throttle or backoff holds the rest.
 	///
 	/// - Parameter force: Whether to bypass the retry backoff gate.
 	func flush(force: Bool = false) async {
@@ -204,57 +227,83 @@ actor LibraryOutbox {
 	}
 
 	private func drain(forUserSlug userSlug: String, force: Bool = false) async {
-		if let existing = self.inFlight[userSlug] {
-			self.rerunRequested.insert(userSlug)
-			await existing.value
-			return
-		}
+		while true {
+			// Operations enqueued after a round started are not in that round, so every caller
+			// keeps going until a round finds the queue empty.
+			if let existing = self.inFlight[userSlug] {
+				_ = await existing.value
+				if self.inFlight[userSlug] == existing {
+					self.inFlight[userSlug] = nil
+				}
+				continue
+			}
 
-		if !force, let gate = self.nextAttemptAllowed[userSlug], gate > Date() {
-			return
-		}
+			if let throttledUntil = self.throttledUntil[userSlug], throttledUntil > Date() {
+				return
+			}
 
-		let task = Task { [weak self] in
-			guard let self else { return }
-			await self.runDrain(forUserSlug: userSlug)
-		}
-		self.inFlight[userSlug] = task
-		await task.value
-		self.inFlight[userSlug] = nil
+			if !force, let gate = self.nextAttemptAllowed[userSlug], gate > Date() {
+				return
+			}
 
-		if self.rerunRequested.remove(userSlug) != nil {
-			await self.drain(forUserSlug: userSlug)
+			let task = Task<DrainOutcome, Never> { [weak self] in
+				guard let self else { return .idle }
+				return await self.runDrain(forUserSlug: userSlug)
+			}
+			self.inFlight[userSlug] = task
+			let outcome = await task.value
+			if self.inFlight[userSlug] == task {
+				self.inFlight[userSlug] = nil
+			}
+
+			guard outcome == .drained else { return }
 		}
 	}
 
-	private func runDrain(forUserSlug userSlug: String) async {
+	private func runDrain(forUserSlug userSlug: String) async -> DrainOutcome {
 		let ops = await self.fetchPendingOps(forUserSlug: userSlug)
-		guard !ops.isEmpty else { return }
+		guard !ops.isEmpty else { return .idle }
 
 		var affectedKinds: Set<LibraryKind> = []
+		var reconcileKinds: Set<LibraryKind> = []
 		var maxFailedAttemptCount: Int16 = 0
+		var isThrottled = false
 
 		for group in Self.consecutiveGroups(ops) {
-			guard let kind = group.first?.kind else { continue }
+			guard let first = group.first else { continue }
+			let kind = first.kind
 			let label = Self.label(for: group)
 
 			do {
 				outboxLogger.info("SEND \(label, privacy: .public)")
-				try await self.send(group)
+				try await self.send(group, forUserSlug: userSlug)
 				await self.deleteOps(group)
 				affectedKinds.insert(kind)
 				outboxLogger.info("OK \(label, privacy: .public)")
+			} catch let error as APIError where error.statusCode == 429 {
+				// Throttling says nothing about the operation itself, so it costs no attempt and
+				// the rest of the queue waits for the window the server announced.
+				let retryAfter = Self.retryAfterInterval(from: error) ?? self.defaultThrottleInterval
+				outboxLogger.notice("THROTTLED \(label, privacy: .public) retryAfter=\(retryAfter)")
+				self.throttle(userSlug: userSlug, for: retryAfter)
+				isThrottled = true
+				break
 			} catch let error as APIError where Self.isClientRejection(error) {
 				outboxLogger.error("REJECT \(label, privacy: .public) msg=\(error.message, privacy: .public)")
 				await self.deleteOps(group)
-				await self.revertFlags(in: group, forUserSlug: userSlug)
+				if first.operationType.mutatesLibraryEntry {
+					reconcileKinds.insert(kind)
+				}
 			} catch {
 				let nextAttemptCount = (group.map(\.attemptCount).max() ?? 0) + 1
 				if nextAttemptCount >= self.maximumAttemptCount {
 					outboxLogger.error("ABANDON \(label, privacy: .public) attempts=\(nextAttemptCount)")
 					await self.deleteOps(group)
+					if first.operationType.mutatesLibraryEntry {
+						reconcileKinds.insert(kind)
+					}
 				} else {
-					outboxLogger.error("FAIL \(label, privacy: .public) attempt=\(nextAttemptCount) err=\(error.localizedDescription, privacy: .public)")
+					outboxLogger.error("FAIL \(label, privacy: .public) attempt=\(nextAttemptCount) err=\(Self.describe(error), privacy: .public)")
 					await self.markFailed(group, error: error)
 					maxFailedAttemptCount = max(maxFailedAttemptCount, nextAttemptCount)
 				}
@@ -267,34 +316,82 @@ actor LibraryOutbox {
 			self.nextAttemptAllowed[userSlug] = nil
 		}
 
-		for kind in affectedKinds {
+		// Pulling now would only meet the same throttle. The retry after the window syncs instead.
+		guard !isThrottled else { return .blocked }
+
+		// A dropped operation leaves the optimistic local row without a server delta to correct
+		// it, since the server row never changed. Reconciling re-pulls the kind from the server.
+		for kind in reconcileKinds {
+			try? await LibrarySyncEngine.shared.reconcile(kind, forUserSlug: userSlug)
+		}
+
+		for kind in affectedKinds.subtracting(reconcileKinds) {
 			try? await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
+		}
+
+		return maxFailedAttemptCount > 0 ? .blocked : .drained
+	}
+
+	/// The seconds left in the user's throttle window, zero once sends may resume.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func throttleRemaining(forUserSlug userSlug: String) -> TimeInterval {
+		guard let throttledUntil = self.throttledUntil[userSlug] else { return 0 }
+		return max(0, throttledUntil.timeIntervalSinceNow)
+	}
+
+	#if DEBUG
+	/// Makes every send fail as if the device had no connection, until turned off again.
+	///
+	/// - Parameter simulatesOffline: Whether sends should fail.
+	func setSimulatesOffline(_ simulatesOffline: Bool) {
+		self.simulatesOffline = simulatesOffline
+	}
+	#endif
+
+	// MARK: - Throttling
+	/// Holds the user's sends until the window passes, then flushes once more.
+	private func throttle(userSlug: String, for interval: TimeInterval) {
+		self.throttledUntil[userSlug] = Date().addingTimeInterval(interval)
+		guard self.throttleRetryTasks[userSlug] == nil else { return }
+
+		self.throttleRetryTasks[userSlug] = Task { [weak self] in
+			try? await Task.sleep(nanoseconds: UInt64((interval + 1) * 1_000_000_000))
+			guard let self else { return }
+			await self.resumeAfterThrottle(forUserSlug: userSlug)
 		}
 	}
 
-	/// Puts a rejected toggle's flag back, since the server row did not change and no later delta carries it.
-	private func revertFlags(in group: [PendingOutboxOp], forUserSlug userSlug: String) async {
-		for op in group {
-			guard let flag = op.payload?.flag else { continue }
+	private func resumeAfterThrottle(forUserSlug userSlug: String) async {
+		self.throttleRetryTasks[userSlug] = nil
+		await self.drain(forUserSlug: userSlug, force: true)
+	}
 
-			switch op.operationType {
-			case .setFavorite:
-				await LibraryStore.shared.applyFavorite(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
-			case .setReminder:
-				await LibraryStore.shared.applyReminder(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
-			case .setHidden:
-				await LibraryStore.shared.applyHidden(!flag, forTrackableID: op.trackableID, userSlug: userSlug, kind: op.kind)
-			default:
-				continue
-			}
+	/// Reads the `Retry-After` header, which the server sends in whole seconds.
+	private static func retryAfterInterval(from error: APIError) -> TimeInterval? {
+		guard let value = error.response?.value(forHTTPHeaderField: "Retry-After") else { return nil }
+		return TimeInterval(value.trimmingCharacters(in: .whitespaces))
+	}
+
+	/// Names a failure by its HTTP status when the server answered, and by the transport error otherwise.
+	private static func describe(_ error: Error) -> String {
+		if let apiError = error as? APIError, let statusCode = apiError.statusCode {
+			return "HTTP \(statusCode) \(apiError.message)"
 		}
+		return error.localizedDescription
 	}
 
 	// MARK: - Transport
-	private func send(_ group: [PendingOutboxOp]) async throws {
+	private func send(_ group: [PendingOutboxOp], forUserSlug userSlug: String) async throws {
 		guard let first = group.first else { return }
 		let kind = first.kind
 		let itemIDs = group.map { KurozoraItemID($0.trackableID) }
+
+		#if DEBUG
+		if self.simulatesOffline {
+			throw URLError(.notConnectedToInternet)
+		}
+		#endif
 
 		switch first.operationType {
 		case .setStatus:
@@ -303,9 +400,20 @@ actor LibraryOutbox {
 		case .remove:
 			_ = try await KService.removeFromLibrary(kind, itemIDs: itemIDs).response()
 		case .setFavorite:
-			_ = try await KService.toggleFavorite(inLibrary: kind, itemIDs: itemIDs).response()
+			guard let flag = first.payload?.flag else { return }
+			let response = try await KService.toggleFavorite(inLibrary: kind, itemIDs: itemIDs).favorited(flag).response()
+			// The answer is the server's resulting state, which a toggling server may have flipped the other way.
+			let isFavorited = response.data.favoriteStatus == .favorited
+			for op in group where isFavorited != flag {
+				await LibraryStore.shared.applyFavorite(isFavorited, forTrackableID: op.trackableID, userSlug: userSlug, kind: kind)
+			}
 		case .setReminder:
-			_ = try await KService.toggleReminder(inLibrary: kind, itemIDs: itemIDs).response()
+			guard let flag = first.payload?.flag else { return }
+			let response = try await KService.toggleReminder(inLibrary: kind, itemIDs: itemIDs).reminded(flag).response()
+			let isReminded = response.data.reminderStatus == .reminded
+			for op in group where isReminded != flag {
+				await LibraryStore.shared.applyReminder(isReminded, forTrackableID: op.trackableID, userSlug: userSlug, kind: kind)
+			}
 		case .setHidden:
 			guard let flag = first.payload?.flag else { return }
 			_ = try await KService.updateInLibrary(kind, itemIDs: itemIDs).hidden(flag).response()
