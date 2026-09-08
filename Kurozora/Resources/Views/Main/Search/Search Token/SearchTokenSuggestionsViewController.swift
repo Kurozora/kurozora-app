@@ -12,7 +12,7 @@ import UIKit
 class SearchTokenSuggestionsTableViewController: KTableViewController {
 	// MARK: - Sections
 	/// The single section hosting the suggestion rows.
-	enum Section: Hashable {
+	enum Section: nonisolated Equatable, nonisolated Hashable {
 		case suggestions
 	}
 
@@ -52,7 +52,7 @@ class SearchTokenSuggestionsTableViewController: KTableViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

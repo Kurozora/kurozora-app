@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 import WidgetKit
 
-extension Season {
+@MainActor extension Season {
 	/// The webpage URL of the season.
 	var webpageURLString: String {
 		return "https://kurozora.app/seasons/\(self.id)"

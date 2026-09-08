@@ -36,7 +36,7 @@ extension LibraryListCollectionViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(effectiveStyle.identifierString)")
 			}
 
-			guard case let .entry(entry) = item else { return libraryBaseCollectionViewCell }
+			guard let entry = LibraryStore.shared.entry(for: item.objectID) else { return libraryBaseCollectionViewCell }
 
 			if let compact = libraryBaseCollectionViewCell as? LibraryCompactCollectionViewCell {
 				compact.configure(using: entry, showSelectionIcon: self.isEditing, titleVisibility: self.libraryCompactTitleVisibility)
@@ -72,7 +72,7 @@ extension LibraryListCollectionViewController {
 
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		self.snapshot.appendSections([.main])
-		self.snapshot.appendItems(self.entries.map { ItemKind.entry($0) }, toSection: .main)
+		self.snapshot.appendItems(self.entries.map { ItemKind.entry($0.objectID) }, toSection: .main)
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: true)
 	}
@@ -110,11 +110,13 @@ extension LibraryListCollectionViewController {
 			fatalError("Cannot dequeue reusable cell with identifier \(LibraryTableCollectionViewCell.reuseID)")
 		}
 
+		guard let entry = LibraryStore.shared.entry(for: item.objectID) else { return cell }
+
 		let totalItems = collectionView.numberOfItems(inSection: indexPath.section)
 		let isLastRow = indexPath.item == totalItems - 1
 
 		cell.configure(
-			using: item,
+			using: entry,
 			kind: self.libraryKind,
 			columns: self.visibleColumnsWithWidths(),
 			showPoster: self.libraryColumnPreferences.showPoster,

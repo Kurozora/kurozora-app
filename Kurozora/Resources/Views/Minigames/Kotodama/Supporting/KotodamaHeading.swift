@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KotodamaHeading: Hashable {
+struct KotodamaHeading: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	/// The text to show.
 	let text: String

@@ -83,26 +83,23 @@ final class AuthenticationManager {
 	/// Requests biometric permission by evaluating the device owner authentication policy.
 	///
 	/// - Parameter completion: A closure called on the main queue with `true` if biometric evaluation succeeds.
-	func requestBiometricPermission(for reason: String, completion: @escaping (Bool) -> Void) {
+	func requestBiometricPermission(for reason: String, completion: @escaping @MainActor (Bool) -> Void) {
 		let context = LAContext()
 		var authError: NSError?
 
 		if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
-			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
-				DispatchQueue.main.async {
-					completion(success)
-				}
+			Task {
+				let success = (try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)) ?? false
+				completion(success)
 			}
 		} else {
-			DispatchQueue.main.async {
-				if let error = authError {
-					UIApplication.topViewController?.presentAlertController(
-						title: L10n.errorAuthenticating,
-						message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
-					)
-				}
-				completion(false)
+			if let error = authError {
+				UIApplication.topViewController?.presentAlertController(
+					title: L10n.errorAuthenticating,
+					message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
+				)
 			}
+			completion(false)
 		}
 	}
 
@@ -133,31 +130,24 @@ final class AuthenticationManager {
 	/// - Parameters:
 	///   - viewController: The `AuthenticationViewController` on which authentication is taking place.
 	///   - completion: A closure called with `true` if the user authenticated successfully.
-	private func evaluateLocalAuthentication(viewController: AuthenticationViewController, completion: @escaping (Bool) -> Void) {
+	private func evaluateLocalAuthentication(viewController: AuthenticationViewController, completion: @escaping @MainActor (Bool) -> Void) {
 		let context = LAContext()
 		var authError: NSError?
 
 		let reasonString = L10n.biometricReasonContinue
 
 		if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
-			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, _ in
-				if success {
-					completion(true)
-				} else {
-					DispatchQueue.main.async {
-						completion(false)
-					}
-				}
+			Task {
+				let success = (try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString)) ?? false
+				completion(success)
 			}
 		} else {
 			guard let error = authError else { return }
 
-			Task { @MainActor in
-				UIApplication.topViewController?.presentAlertController(
-					title: L10n.errorAuthenticating,
-					message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
-				)
-			}
+			UIApplication.topViewController?.presentAlertController(
+				title: L10n.errorAuthenticating,
+				message: Self.evaluateAuthenticationPolicyMessage(forErrorCode: error.code)
+			)
 		}
 	}
 

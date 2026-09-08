@@ -51,19 +51,23 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 	var game: Game?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.statusButton.layerCornerRadius = 6.0
-		self.favoriteButton.layerCornerRadius = 15.0
-		self.reminderButton.layerCornerRadius = 15.0
+		MainActor.assumeIsolated {
+			self.statusButton.layerCornerRadius = 6.0
+			self.favoriteButton.layerCornerRadius = 15.0
+			self.reminderButton.layerCornerRadius = 15.0
 
-		self.posterImageOverlayView.isUserInteractionEnabled = false
-		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
-			self?.syncLiteratureMaskFrame()
+			self.posterImageOverlayView.isUserInteractionEnabled = false
+			self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+				MainActor.assumeIsolated {
+					self?.syncLiteratureMaskFrame()
+				}
+			}
+
+			self.configureTrailerPlayerView()
 		}
-
-		self.configureTrailerPlayerView()
 	}
 
 	override func prepareForReuse() {

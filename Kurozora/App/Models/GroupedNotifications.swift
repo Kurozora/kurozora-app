@@ -10,7 +10,7 @@ import KurozoraKit
 import Foundation
 
 /// List of notification grouping.
-struct GroupedNotifications: Hashable {
+struct GroupedNotifications: nonisolated Hashable {
 	/// The title of the section.
 	var sectionTitle: String
 
@@ -18,11 +18,11 @@ struct GroupedNotifications: Hashable {
 	var sectionNotifications: [UserNotification]
 
 	// MARK: - Functions
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(self.sectionTitle)
 	}
 
-	static func == (lhs: GroupedNotifications, rhs: GroupedNotifications) -> Bool {
+	nonisolated static func == (lhs: GroupedNotifications, rhs: GroupedNotifications) -> Bool {
 		return lhs.sectionTitle == rhs.sectionTitle
 	}
 }

@@ -9,7 +9,7 @@
 @preconcurrency import AVFoundation
 import Combine
 import Kingfisher
-import MusicKit
+@preconcurrency import MusicKit
 import StoreKit
 import UIKit
 import UserNotifications
@@ -104,32 +104,12 @@ private actor SongCache {
 	}
 }
 
-// MARK: - SetupGate
-/// An actor that runs an asynchronous setup block exactly once.
-private actor SetupGate {
-	private var task: Task<Void, Never>?
-
-	/// Runs `work` the first time it is invoked, and awaits the in-flight task on
-	/// subsequent invocations.
-	///
-	/// - Parameter work: The asynchronous setup block to execute.
-	func runOnce(_ work: @Sendable @escaping () async -> Void) async {
-		if let task {
-			await task.value
-			return
-		}
-		let task = Task<Void, Never> { await work() }
-		self.task = task
-		await task.value
-	}
-}
-
 // MARK: - AppleMusicSongResponse
 /// A decoded response from the Apple Music catalog songs endpoint.
-private struct AppleMusicSongResponse: Decodable {
+private nonisolated struct AppleMusicSongResponse: Decodable {
 	let data: [Datum]
 
-	struct Datum: Decodable {
+	nonisolated struct Datum: Decodable {
 		let song: MusicKit.Song
 		let relationships: MKSong.Relationship?
 
@@ -158,8 +138,8 @@ final class MusicManager: NSObject {
 	/// The player used to stream song previews for unauthorized users.
 	var player: AVPlayer?
 
-	/// The observer token for the current preview item's end-of-playback notification.
-	private var endTimeObserver: NSObjectProtocol?
+	/// The task that advances the queue when the current preview item plays to its end.
+	private var endTimeTask: Task<Void, Never>?
 
 	/// The set of Combine subscriptions retained by the manager.
 	private var subscriptions = Set<AnyCancellable>()
@@ -236,27 +216,16 @@ final class MusicManager: NSObject {
 	}
 
 	// MARK: Configuration
-	private let stateLock = NSLock()
-	private var _hasAMSubscription: Bool = false
-	private var _countryCode: String = "us"
-
-	/// A Boolean value that indicates whether the user has an active Apple Music
-	/// subscription.
-	var hasAMSubscription: Bool {
-		self.stateLock.lock()
-		defer { self.stateLock.unlock() }
-		return self._hasAMSubscription
-	}
+	/// A Boolean value that indicates whether the user has an active Apple Music subscription.
+	private(set) var hasAMSubscription = false
 
 	/// The ISO storefront country code used for Apple Music catalog requests.
-	var countryCode: String {
-		self.stateLock.lock()
-		defer { self.stateLock.unlock() }
-		return self._countryCode
-	}
+	private(set) var countryCode = "us"
 
 	private let songCache = SongCache()
-	private let setupGate = SetupGate()
+
+	/// The first setup run, which later callers await instead of starting another.
+	private var setupTask: Task<Void, Never>?
 
 	/// The song currently loaded in the player, or `nil` if no song is loaded.
 	@Published private(set) var currentSong: MKSong?
@@ -390,28 +359,20 @@ final class MusicManager: NSObject {
 	/// - Parameter url: The artwork's address.
 	///
 	/// - Returns: The attachment carrying the artwork.
-	private static func artworkAttachment(for url: URL?) async -> UNNotificationAttachment? {
+	@concurrent private static func artworkAttachment(for url: URL?) async -> UNNotificationAttachment? {
 		guard let url = url else { return nil }
+		guard
+			let image = try? await KingfisherManager.shared.retrieveImage(with: url).image,
+			let data = image.jpegData(compressionQuality: 0.9)
+		else { return nil }
 
-		return await withCheckedContinuation { continuation in
-			KingfisherManager.shared.retrieveImage(with: url) { result in
-				guard
-					let image = try? result.get().image,
-					let data = image.jpegData(compressionQuality: 0.9)
-				else {
-					continuation.resume(returning: nil)
-					return
-				}
+		let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).jpg")
 
-				let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).jpg")
-
-				do {
-					try data.write(to: fileURL)
-					continuation.resume(returning: try UNNotificationAttachment(identifier: "artwork", url: fileURL, options: nil))
-				} catch {
-					continuation.resume(returning: nil)
-				}
-			}
+		do {
+			try data.write(to: fileURL)
+			return try UNNotificationAttachment(identifier: "artwork", url: fileURL, options: nil)
+		} catch {
+			return nil
 		}
 	}
 
@@ -419,44 +380,38 @@ final class MusicManager: NSObject {
 	/// Requests MusicKit authorization and resolves the user's subscription and
 	/// storefront state. Subsequent calls await the original setup.
 	private func ensureSetup() async {
-		await self.setupGate.runOnce { [weak self] in
-			guard let self else { return }
-			_ = await MusicAuthorization.request()
-
-			do {
-				if #available(iOS 18.0, *) {
-					let currentMusicSubscription = try await MusicSubscription.current
-					self.setHasAMSubscription(
-						!currentMusicSubscription.canBecomeSubscriber
-						&& currentMusicSubscription.canPlayCatalogContent
-					)
-				} else {
-					let capabilities = try await SKCloudServiceController().requestCapabilities()
-					self.setHasAMSubscription(
-						!capabilities.contains(.musicCatalogSubscriptionEligible)
-						&& capabilities.contains(.musicCatalogPlayback)
-					)
-				}
-			} catch {
-				print("----- [Error] MusicKit setup failed: \(error.localizedDescription)")
-				self.setHasAMSubscription(false)
-			}
-
-			let countryCode = try? await MusicDataRequest.currentCountryCode
-			self.setCountryCode(countryCode ?? "us")
+		if let setupTask = self.setupTask {
+			await setupTask.value
+			return
 		}
+
+		let setupTask = Task {
+			await self.performSetup()
+		}
+		self.setupTask = setupTask
+		await setupTask.value
 	}
 
-	private func setHasAMSubscription(_ value: Bool) {
-		self.stateLock.lock()
-		defer { self.stateLock.unlock() }
-		self._hasAMSubscription = value
-	}
+	private func performSetup() async {
+		_ = await MusicAuthorization.request()
 
-	private func setCountryCode(_ value: String) {
-		self.stateLock.lock()
-		defer { self.stateLock.unlock() }
-		self._countryCode = value
+		do {
+			if #available(iOS 18.0, *) {
+				let currentMusicSubscription = try await MusicSubscription.current
+				self.hasAMSubscription = !currentMusicSubscription.canBecomeSubscriber
+					&& currentMusicSubscription.canPlayCatalogContent
+			} else {
+				let capabilities = try await SKCloudServiceController().requestCapabilities()
+				self.hasAMSubscription = !capabilities.contains(.musicCatalogSubscriptionEligible)
+					&& capabilities.contains(.musicCatalogPlayback)
+			}
+		} catch {
+			print("----- [Error] MusicKit setup failed: \(error.localizedDescription)")
+			self.hasAMSubscription = false
+		}
+
+		let countryCode = try? await MusicDataRequest.currentCountryCode
+		self.countryCode = countryCode ?? "us"
 	}
 
 	// MARK: - Fetching
@@ -488,7 +443,7 @@ final class MusicManager: NSObject {
 		let missing = uniqueIDs.filter { result[$0] == nil }
 		guard !missing.isEmpty else { return result }
 
-		let sharedTask = Task.detached(priority: nil) { [weak self] () -> [Int: MKSong] in
+		let sharedTask = Task { [weak self] () -> [Int: MKSong] in
 			guard let self else { return [:] }
 			return await self.fetchSongs(for: missing)
 		}
@@ -528,7 +483,7 @@ final class MusicManager: NSObject {
 			let end = min(start + chunkSize, appleMusicIDs.count)
 			let chunk = Array(appleMusicIDs[start..<end])
 			let data = await self.requestSongs(for: chunk, authorized: authorized)
-			let decoded = self.decodeSongs(from: data)
+			let decoded = await Self.decodeSongs(from: data)
 			result.merge(decoded) { _, new in new }
 		}
 		return result
@@ -563,7 +518,7 @@ final class MusicManager: NSObject {
 		}
 	}
 
-	private func decodeSongs(from data: Data?) -> [Int: MKSong] {
+	@concurrent private static func decodeSongs(from data: Data?) async -> [Int: MKSong] {
 		guard
 			let data,
 			let response = try? JSONDecoder().decode(AppleMusicSongResponse.self, from: data)
@@ -716,26 +671,26 @@ final class MusicManager: NSObject {
 		guard let songURL = song.song.previewAssets?.first?.url else { return }
 		let playerItem = AVPlayerItem(url: songURL)
 
-		if await (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+		if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
 			if restart {
 				self.seek(toSeconds: 0)
 				if resumePlayback {
-					await self.player?.play()
+					self.player?.play()
 					self.isPlaying = true
 				} else {
-					await self.player?.pause()
+					self.player?.pause()
 					self.isPlaying = false
 					self.refreshProgressWhilePaused(position: 0)
 				}
 			} else {
 				switch self.player?.timeControlStatus {
 				case .playing:
-					await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
-					await self.player?.pause()
+					playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
+					self.player?.pause()
 					self.isPlaying = false
 				case .paused:
-					await playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-					await self.player?.play()
+					playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+					self.player?.play()
 					self.isPlaying = true
 				default: break
 				}
@@ -752,33 +707,27 @@ final class MusicManager: NSObject {
 		self.currentKKSong = kkSong
 
 		if resumePlayback {
-			await playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-			await player.play()
+			playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+			player.play()
 			self.isPlaying = true
 		} else {
-			await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
+			playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
 			self.isPlaying = false
 			self.refreshProgressWhilePaused(position: 0)
 		}
 
-		self.endTimeObserver = NotificationCenter.default.addObserver(
-			forName: .AVPlayerItemDidPlayToEndTime,
-			object: playerItem,
-			queue: .main
-		) { [weak self] _ in
-			guard let self else { return }
-			Task { @MainActor in
+		self.endTimeTask = Task { @MainActor [weak self] in
+			for await _ in NotificationCenter.default.notifications(named: .AVPlayerItemDidPlayToEndTime, object: playerItem) {
+				guard let self else { return }
 				await self.handlePreviewEnded()
 			}
 		}
 	}
 
 	private func tearDownPreviewPlayer() async {
-		if let token = self.endTimeObserver {
-			NotificationCenter.default.removeObserver(token)
-			self.endTimeObserver = nil
-		}
-		await self.player?.pause()
+		self.endTimeTask?.cancel()
+		self.endTimeTask = nil
+		self.player?.pause()
 		self.player = nil
 		self.currentSong = nil
 		self.currentKKSong = nil
@@ -1096,24 +1045,14 @@ final class MusicManager: NSObject {
 	private func refreshProgressWhilePaused(position: TimeInterval? = nil) {
 		guard !self.isPlaying else { return }
 
-		let publish: () -> Void = { [weak self] in
-			guard let self, !self.isPlaying else { return }
-
-			guard let position = position else {
-				self.updateProgress()
-				return
-			}
-
-			let duration = self.currentDurationSeconds
-			let safeDuration = duration.isFinite && duration > 0 ? duration : 0
-			self.playbackProgress = PlaybackProgress(currentSeconds: max(0, position), durationSeconds: safeDuration)
+		guard let position = position else {
+			self.updateProgress()
+			return
 		}
 
-		if Thread.isMainThread {
-			publish()
-		} else {
-			DispatchQueue.main.async(execute: publish)
-		}
+		let duration = self.currentDurationSeconds
+		let safeDuration = duration.isFinite && duration > 0 ? duration : 0
+		self.playbackProgress = PlaybackProgress(currentSeconds: max(0, position), durationSeconds: safeDuration)
 	}
 
 	// MARK: - Library
@@ -1189,10 +1128,10 @@ extension MusicManager: MediaPlaybackControlling {
 			default:
 				switch self.player?.timeControlStatus {
 				case .playing:
-					await self.player?.pause()
+					self.player?.pause()
 					self.isPlaying = false
 				case .paused:
-					await self.player?.play()
+					self.player?.play()
 					self.isPlaying = true
 				default:
 					break

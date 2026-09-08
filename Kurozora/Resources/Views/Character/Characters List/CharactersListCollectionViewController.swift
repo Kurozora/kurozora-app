@@ -30,7 +30,7 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case characterIdentity(_: CharacterIdentity)
 	}
 

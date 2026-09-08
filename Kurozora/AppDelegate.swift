@@ -151,7 +151,11 @@ extension AppDelegate {
 
 		if User.isSignedIn {
 			Task {
-				_ = try await KService.updateAccessToken(withAPNToken: apnDeviceToken)
+				do {
+					_ = try await KService.updateAccessToken(withAPNToken: apnDeviceToken).response()
+				} catch {
+					print("----- Failed to update the APN token.", error.localizedDescription)
+				}
 			}
 		}
 	}

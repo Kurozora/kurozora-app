@@ -45,7 +45,7 @@ final class MediaLiveTextController: NSObject {
 		imageView.addInteraction(self.interaction)
 	}
 
-	deinit {
+	isolated deinit {
 		self.analysisTask?.cancel()
 	}
 

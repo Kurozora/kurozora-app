@@ -66,7 +66,7 @@ enum ReviewSubject {
 			_ = try await KService.setNote(on: self.modelID, kind: self.noteKind, body: note).response()
 
 			if let userSlug = User.current?.attributes.slug {
-				await NoteStore.shared.apply(note, itemID: self.modelID.rawValue, userSlug: userSlug, kind: self.noteKind)
+				NoteStore.shared.apply(note, itemID: self.modelID.rawValue, userSlug: userSlug, kind: self.noteKind)
 			}
 		} catch {
 			print("-----", error.localizedDescription)
@@ -203,7 +203,7 @@ enum ReviewSubject {
 	private func applyToLocalLibrary(score: Double, description: String?, isSpoiler: Bool, recommendation: ReviewRecommendation?) async {
 		guard let libraryKind = self.libraryKind, let userSlug = User.current?.attributes.slug else { return }
 
-		await LibraryStore.shared.applyRating(score: score, description: description, isSpoiler: isSpoiler, recommendation: recommendation, forTrackableID: self.modelID.rawValue, userSlug: userSlug, kind: libraryKind)
+		LibraryStore.shared.applyRating(score: score, description: description, isSpoiler: isSpoiler, recommendation: recommendation, forTrackableID: self.modelID.rawValue, userSlug: userSlug, kind: libraryKind)
 	}
 
 	/// Returns the rating request of the wrapped model.

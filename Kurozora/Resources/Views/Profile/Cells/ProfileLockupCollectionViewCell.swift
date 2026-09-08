@@ -19,11 +19,13 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var rankLabel: KLabel!
 
 	// MARK: - View Lifecycle
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.imageView.layer.borderWidth = 0
-		self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.imageView.layer.borderWidth = 0
+			self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
+		}
 	}
 
 	override func layoutSubviews() {

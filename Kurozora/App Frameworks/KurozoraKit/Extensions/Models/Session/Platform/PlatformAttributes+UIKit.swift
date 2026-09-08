@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Platform.Attributes {
+@MainActor extension Platform.Attributes {
 	/// An image corresponding to the device model.
 	var deviceImage: UIImage? {
 		guard let deviceModel = self.deviceModel?.lowercased() else {

@@ -41,7 +41,7 @@ final class AudioSessionManager {
 	///    - isActive: Whether the audio session should be active.
 	///    - options: The behaviours applied while the activation state changes.
 	///    - completion: The closure called on the main queue once the change has been attempted.
-	func setActive(_ isActive: Bool, options: AVAudioSession.SetActiveOptions = [], completion: (() -> Void)? = nil) {
+	func setActive(_ isActive: Bool, options: AVAudioSession.SetActiveOptions = [], completion: (@MainActor @Sendable () -> Void)? = nil) {
 		self.sessionQueue.async {
 			do {
 				try AVAudioSession.sharedInstance().setActive(isActive, options: options)

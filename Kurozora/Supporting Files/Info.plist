@@ -139,8 +139,6 @@
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile picture or share your images in the app.</string>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
-	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>app.kurozora.tracker.user-activity.openShow</string>
@@ -148,6 +146,8 @@
 		<string>app.kurozora.tracker.user-activity.openGame</string>
 		<string>app.kurozora.tracker.user-activity.openUser</string>
 	</array>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

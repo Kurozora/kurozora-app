@@ -28,7 +28,7 @@ struct MediaSaverManager {
 	/// - Parameter url: The URL of the image to save.
 	/// - Returns: The destination the image was written to.
 	@discardableResult
-	func saveImage(from url: URL) async throws -> MediaSaveDestination {
+	func saveImage(from url: URL) async throws(SaverError) -> MediaSaveDestination {
 		switch MediaSaveDestination.current {
 		case .photoLibrary:
 			try await self.saveToPhotoLibrary(from: url)
@@ -44,7 +44,7 @@ struct MediaSaverManager {
 	/// - Parameter urls: The URLs of the images to save.
 	/// - Returns: The destination the images were written to.
 	@discardableResult
-	func saveImages(from urls: [URL]) async throws -> MediaSaveDestination {
+	func saveImages(from urls: [URL]) async throws(SaverError) -> MediaSaveDestination {
 		var destination = MediaSaveDestination.current
 
 		for url in urls {
@@ -59,7 +59,7 @@ struct MediaSaverManager {
 	/// - Parameter fileURL: The URL of the video file to save.
 	/// - Returns: The destination the video was written to.
 	@discardableResult
-	func saveVideo(at fileURL: URL) async throws -> MediaSaveDestination {
+	func saveVideo(at fileURL: URL) async throws(SaverError) -> MediaSaveDestination {
 		switch MediaSaveDestination.current {
 		case .photoLibrary:
 			try await self.saveVideoToPhotoLibrary(at: fileURL)
@@ -93,7 +93,7 @@ struct MediaSaverManager {
 	///
 	/// - Parameter url: The URL of the image to copy.
 	/// - Returns: The URL the image was written to.
-	func stageImage(from url: URL) async throws -> URL {
+	func stageImage(from url: URL) async throws(SaverError) -> URL {
 		let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
 		return try await self.saveImage(from: url, to: directory)
 	}
@@ -105,7 +105,7 @@ struct MediaSaverManager {
 	///    - directory: The folder to write into.
 	/// - Returns: The URL the image was written to.
 	@discardableResult
-	func saveImage(from url: URL, to directory: URL) async throws -> URL {
+	func saveImage(from url: URL, to directory: URL) async throws(SaverError) -> URL {
 		let data = try await self.downloadData(from: url)
 
 		do {
@@ -129,7 +129,7 @@ struct MediaSaverManager {
 	///
 	/// - Parameter url: The URL of the image to download.
 	/// - Returns: The downloaded image.
-	func downloadImage(from url: URL) async throws -> UIImage {
+	func downloadImage(from url: URL) async throws(SaverError) -> UIImage {
 		let data = try await self.downloadData(from: url)
 
 		guard let image = UIImage(data: data) else {
@@ -143,7 +143,7 @@ struct MediaSaverManager {
 	///
 	/// - Parameter url: The URL to download.
 	/// - Returns: The downloaded data.
-	func downloadData(from url: URL) async throws -> Data {
+	func downloadData(from url: URL) async throws(SaverError) -> Data {
 		let data: Data
 		let response: URLResponse
 
@@ -163,7 +163,7 @@ struct MediaSaverManager {
 	/// Writes the image at the given URL into the folder chosen in Settings.
 	///
 	/// - Parameter url: The URL of the image to save.
-	private func saveToChosenFolder(from url: URL) async throws {
+	private func saveToChosenFolder(from url: URL) async throws(SaverError) {
 		guard let directory = MediaSaveDestination.chosenDirectory else {
 			throw SaverError.destinationUnavailable
 		}
@@ -181,7 +181,7 @@ struct MediaSaverManager {
 	/// Writes the video file at the given URL into the folder chosen in Settings.
 	///
 	/// - Parameter fileURL: The URL of the video file to save.
-	private func saveVideoToChosenFolder(at fileURL: URL) async throws {
+	private func saveVideoToChosenFolder(at fileURL: URL) async throws(SaverError) {
 		guard let directory = MediaSaveDestination.chosenDirectory else {
 			throw SaverError.destinationUnavailable
 		}
@@ -204,7 +204,7 @@ struct MediaSaverManager {
 	/// Saves the video file at the given URL to the photo library.
 	///
 	/// - Parameter fileURL: The URL of the video file to save.
-	private func saveVideoToPhotoLibrary(at fileURL: URL) async throws {
+	private func saveVideoToPhotoLibrary(at fileURL: URL) async throws(SaverError) {
 		let groupsIntoAlbum = UserSettings.mediaSaveToKurozoraAlbum
 
 		guard await self.requestAccess(for: groupsIntoAlbum ? .readWrite : .addOnly) else {
@@ -241,7 +241,7 @@ struct MediaSaverManager {
 	/// Saves the image at the given URL to the photo library.
 	///
 	/// - Parameter url: The URL of the image to save.
-	private func saveToPhotoLibrary(from url: URL) async throws {
+	private func saveToPhotoLibrary(from url: URL) async throws(SaverError) {
 		let groupsIntoAlbum = UserSettings.mediaSaveToKurozoraAlbum
 
 		guard await self.requestAccess(for: groupsIntoAlbum ? .readWrite : .addOnly) else {
@@ -278,7 +278,7 @@ struct MediaSaverManager {
 	///    - image: The image to save.
 	///    - originalURL: The URL the image was downloaded from.
 	///    - album: The album to add the image to.
-	private func performSave(image: UIImage, originalURL: URL, album: PHAssetCollection?) async throws {
+	private func performSave(image: UIImage, originalURL: URL, album: PHAssetCollection?) async throws(SaverError) {
 		do {
 			try await self.createAsset(from: image, in: album)
 		} catch {
@@ -303,7 +303,7 @@ struct MediaSaverManager {
 	/// Saves the given image to the photo library as PNG.
 	///
 	/// - Parameter image: The image to convert and save.
-	private func retrySaveWithConversion(image: UIImage) async throws {
+	private func retrySaveWithConversion(image: UIImage) async throws(SaverError) {
 		guard let pngData = image.pngData(),
 		      let fallbackImage = UIImage(data: pngData)
 		else {

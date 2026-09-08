@@ -22,8 +22,8 @@ enum SearchTypeAppEnum: String, AppEnum {
     case studios
     case users
 
-    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Search Kind")
-    static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Search Kind")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
         .characters: "Characters",
         .episodes: "Episodes",
         .games: "Games",

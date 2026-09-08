@@ -103,7 +103,7 @@ final class KMarqueeLabel: UIView {
 		self.sharedInit()
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 		self.containerView.layer.removeAllAnimations()
 		self.restartWorkItem?.cancel()

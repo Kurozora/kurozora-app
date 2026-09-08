@@ -75,6 +75,15 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		self.configureViewConstraints()
 	}
 
+	/// Returns the filterable attribute registered under the given key.
+	///
+	/// - Parameter key: The key of the attribute.
+	///
+	/// - Returns: The matching attribute.
+	func attribute(for key: FilterKey) -> FilterableAttribute? {
+		return self.filterableAttributes.first { $0.key == key }?.value
+	}
+
 	private func configureViews() {
 		self.configureView()
 		self.configureCollectionView()
@@ -729,12 +738,8 @@ extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCe
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		switch itemKind {
-		case .searchFilter(let filterableAttribute, _):
-			guard let index = self.filterableAttributes.firstIndex(where: { _, attribute in
-				filterableAttribute.name == attribute.name
-			}) else { return }
-
-			self.filterableAttributes[index].value.selected = value
+		case .searchFilter(let key, _):
+			self.attribute(for: key)?.selected = value
 		}
 	}
 }

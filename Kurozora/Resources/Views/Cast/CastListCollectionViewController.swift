@@ -30,7 +30,7 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case castIdentity(_: CastIdentity)
 	}
 

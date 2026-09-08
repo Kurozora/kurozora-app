@@ -24,7 +24,7 @@ struct LaunchAppIntent: OpenIntent, ControlConfigurationIntent, WidgetConfigurat
 	func perform() async throws -> some IntentResult {
 		guard
 			let url = self.target.deeplink,
-			let application = UIApplication.value(forKeyPath: #keyPath(UIApplication.shared)) as? UIApplication
+			let application = UIApplication.value(forKeyPath: "sharedApplication") as? UIApplication
 		else {
 			return .result()
 		}

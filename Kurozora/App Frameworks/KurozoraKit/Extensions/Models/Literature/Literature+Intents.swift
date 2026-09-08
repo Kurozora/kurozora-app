@@ -11,7 +11,7 @@ import Intents
 import KurozoraKit
 import MobileCoreServices
 
-extension Literature {
+@MainActor extension Literature {
 	// MARK: - Properties
 	/// Create an NSUserActivity from the selected literature.
 	var openDetailUserActivity: NSUserActivity {

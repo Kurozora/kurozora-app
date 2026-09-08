@@ -37,7 +37,7 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 	}
 
 	/// An item displayed in the collection.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case literatureIdentity(_: LiteratureIdentity)
 		case gameIdentity(_: GameIdentity)
 	}

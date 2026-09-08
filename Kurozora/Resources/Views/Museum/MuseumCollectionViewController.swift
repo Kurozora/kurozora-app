@@ -902,7 +902,7 @@ extension MuseumCollectionViewController: UIToolbarDelegate {
 // MARK: - SectionLayoutKind
 extension MuseumCollectionViewController {
 	/// List of available Section Layout Kind types.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates a year section layout type.
 		case year(_: MuseumYear)
@@ -912,7 +912,7 @@ extension MuseumCollectionViewController {
 // MARK: - ItemKind
 extension MuseumCollectionViewController {
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `MuseumEntry` object.
 		case museumEntry(_: MuseumEntry, year: Int)

@@ -38,7 +38,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	}
 
 	/// An item displayed in the collection.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case featured
 		case showIdentity(_: ShowIdentity)
 		case gameIdentity(_: GameIdentity)

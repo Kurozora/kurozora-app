@@ -83,8 +83,10 @@ final class AirPlayControl: UIView {
 		for subview in view.subviews {
 			if subview is UIButton {
 				let observation = subview.observe(\.alpha, options: [.new]) { button, change in
-					if let alpha = change.newValue, alpha < 1 {
-						button.alpha = 1
+					MainActor.assumeIsolated {
+						if let alpha = change.newValue, alpha < 1 {
+							button.alpha = 1
+						}
 					}
 				}
 				self.dimmingObservations.append(observation)

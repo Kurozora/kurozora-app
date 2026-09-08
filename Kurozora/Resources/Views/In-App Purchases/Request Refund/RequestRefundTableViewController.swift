@@ -143,7 +143,7 @@ extension RequestRefundTableViewController {
 		}
 	}
 
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// The settings header cell.
 		case header
@@ -159,27 +159,6 @@ extension RequestRefundTableViewController {
 				return transaction
 			case .header:
 				return nil
-			}
-		}
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .header:
-				hasher.combine("header")
-			case .transaction(let transaction):
-				hasher.combine(transaction)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.header, .header):
-				return true
-			case (.transaction(let a), .transaction(let b)):
-				return a == b
-			default:
-				return false
 			}
 		}
 	}

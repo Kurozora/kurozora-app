@@ -87,14 +87,13 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 
 			Task {
 				do {
-					_ = try await KService.clearLibrary(selectedLibraryKind, password: password)
+					_ = try await KService.clearLibrary(selectedLibraryKind, password: password).response()
 				} catch let error as APIError {
-					await MainActor.run {
-						self.presentAlertController(title: L10n.cantDeleteLibrary, message: error.message)
-						self.rightNavigationBarButton.isEnabled = false
-					}
-
+					self.presentAlertController(title: L10n.cantDeleteLibrary, message: error.message)
+					self.rightNavigationBarButton.isEnabled = false
 					print("----- Library delete failed", error.message)
+				} catch {
+					print("----- Library delete failed", error.localizedDescription)
 				}
 			}
 		})

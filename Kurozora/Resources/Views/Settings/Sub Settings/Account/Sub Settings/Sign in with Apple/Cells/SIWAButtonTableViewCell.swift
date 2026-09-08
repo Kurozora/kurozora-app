@@ -17,9 +17,12 @@ class SIWAButtonTableViewCell: UITableViewCell {
 	weak var onboardingFooterTableViewCellDelegate: OnboardingOptionsTableViewCellDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.setupProviderSignInView()
+
+		MainActor.assumeIsolated {
+			self.setupProviderSignInView()
+		}
 	}
 
 	// MARK: - Functions

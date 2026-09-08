@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Review {
+@MainActor extension Review {
 	/// Create a context menu configuration for the review.
 	///
 	/// - Parameters:
@@ -281,7 +281,7 @@ extension Review {
 	///
 	/// - Parameter viewController: The view controller presenting the request, used to surface an error.
 	@MainActor
-	private func elevate(via viewController: UIViewController? = UIApplication.topViewController) async {
+	private func elevate(via viewController: UIViewController?) async {
 		let reviewIdentity = ReviewIdentity(id: self.id)
 
 		do {

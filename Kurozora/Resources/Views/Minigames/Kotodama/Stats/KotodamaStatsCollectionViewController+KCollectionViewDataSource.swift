@@ -110,7 +110,7 @@ extension KotodamaStatsCollectionViewController {
 // MARK: - ItemKind
 extension KotodamaStatsCollectionViewController {
 	/// The set of available items.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		/// A headline value.
 		case stat(KotodamaStat)
 

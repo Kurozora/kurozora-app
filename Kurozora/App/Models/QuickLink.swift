@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct QuickLink: Hashable {
+struct QuickLink: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	let title: String
 	let image: UIImage?
@@ -22,11 +22,11 @@ struct QuickLink: Hashable {
 	}
 
 	// MARK: - Functions
-	static func == (lhs: QuickLink, rhs: QuickLink) -> Bool {
+	nonisolated static func == (lhs: QuickLink, rhs: QuickLink) -> Bool {
 		lhs.title == rhs.title && lhs.url == rhs.url
 	}
 
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(self.title)
 		hasher.combine(self.url)
 	}

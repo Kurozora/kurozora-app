@@ -11,7 +11,7 @@ import KurozoraKit
 import os.log
 
 /// Emits a deterministic, diffable snapshot of the local library state for divergence debugging.
-enum LibrarySyncDiagnostics {
+nonisolated enum LibrarySyncDiagnostics {
 	private static let logger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryDiag")
 
 	/// The maximum number of snapshots retained in the on-disk diagnostics log.

@@ -31,7 +31,7 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case studioIdentity(_: StudioIdentity)
 	}
 

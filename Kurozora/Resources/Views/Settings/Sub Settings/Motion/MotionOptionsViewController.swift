@@ -66,9 +66,11 @@ class MotionOptionsViewController: SubSettingsViewController {
 			object: nil,
 			queue: .main
 		) { [weak self] _ in
-			guard let self = self else { return }
-			self.previewCell?.configure(animation: self.selectedAnimation, playbackConfiguration: self.previewPlaybackConfiguration)
-			self.restartPreview(forceResume: true)
+			MainActor.assumeIsolated {
+				guard let self = self else { return }
+				self.previewCell?.configure(animation: self.selectedAnimation, playbackConfiguration: self.previewPlaybackConfiguration)
+				self.restartPreview(forceResume: true)
+			}
 		}
 	}
 
@@ -89,7 +91,7 @@ class MotionOptionsViewController: SubSettingsViewController {
 		self.stopPreview()
 	}
 
-	deinit {
+	isolated deinit {
 		if let reduceMotionStatusObserver {
 			NotificationCenter.default.removeObserver(reduceMotionStatusObserver)
 		}

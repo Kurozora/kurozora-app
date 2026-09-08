@@ -40,7 +40,6 @@ final class FaceDetectionService {
 		return "\(executable)/\(appVersion) (\(bundle); build:\(appBuild); \(osNameVersion)) FaceDetection/1.0.0"
 	}()
 
-	private let stateQueue = DispatchQueue(label: "app.kurozora.face-detection.state")
 	private var pendingEntries: [FaceDetectionEntry] = []
 	private var flushTimer: Timer?
 	private var isFlushing = false
@@ -51,15 +50,12 @@ final class FaceDetectionService {
 	// MARK: - Activation
 	/// Starts the periodic flush timer. Idempotent.
 	func activate() {
-		DispatchQueue.main.async {
-			guard self.flushTimer == nil else {
-				return
-			}
+		guard self.flushTimer == nil else {
+			return
+		}
 
-			self.flushTimer = Timer.scheduledTimer(
-				withTimeInterval: self.flushInterval,
-				repeats: true
-			) { [weak self] _ in
+		self.flushTimer = Timer.scheduledTimer(withTimeInterval: self.flushInterval, repeats: true) { [weak self] _ in
+			MainActor.assumeIsolated {
 				self?.triggerFlush()
 			}
 		}
@@ -78,6 +74,8 @@ final class FaceDetectionService {
 			return
 		}
 
+		guard #available(iOS 17.0, *) else { return }
+
 		let detector = FaceDetectorRegistry.detector(for: kind)
 		let dedupKey = "\(mediaID):\(detector.primaryIdentifier)"
 
@@ -85,23 +83,18 @@ final class FaceDetectionService {
 			return
 		}
 
-		Task.detached(priority: .utility) { [weak self] in
-			guard let self else { return }
-
+		Task(priority: .utility) { [weak self] in
 			let result = await detector.detect(in: image)
 
-			self.appendResult(result, mediaID: mediaID, dedupKey: dedupKey)
+			self?.appendResult(result, mediaID: mediaID, dedupKey: dedupKey)
 		}
 	}
 
 	// MARK: - Background Flush
 	/// Forces an immediate flush of the queue, wrapping the request in a background task assertion so it survives suspension.
 	func flushOnBackground() {
-		let snapshot: [FaceDetectionEntry] = self.stateQueue.sync {
-			let entries = self.pendingEntries
-			self.pendingEntries.removeAll(keepingCapacity: true)
-			return entries
-		}
+		let snapshot = self.pendingEntries
+		self.pendingEntries.removeAll(keepingCapacity: true)
 
 		guard !snapshot.isEmpty else {
 			return
@@ -109,12 +102,10 @@ final class FaceDetectionService {
 
 		let backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "FaceDetectionFlush") {}
 
-		Task.detached(priority: .utility) {
+		Task(priority: .utility) {
 			await self.submit(entries: snapshot)
 
-			await MainActor.run {
-				UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
-			}
+			UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
 		}
 	}
 
@@ -141,38 +132,26 @@ final class FaceDetectionService {
 		submitted.insert(dedupKey)
 		UserSettings.set(Array(submitted), forKey: .faceDetectionSubmitted)
 
-		let queueCount: Int = self.stateQueue.sync {
-			self.pendingEntries.append(entry)
-			return self.pendingEntries.count
-		}
+		self.pendingEntries.append(entry)
 
-		if queueCount >= self.flushThreshold {
+		if self.pendingEntries.count >= self.flushThreshold {
 			self.triggerFlush()
 		}
 	}
 
 	private func triggerFlush() {
-		let snapshot: [FaceDetectionEntry]? = self.stateQueue.sync {
-			guard !self.isFlushing, !self.pendingEntries.isEmpty else {
-				return nil
-			}
-
-			self.isFlushing = true
-			let entries = self.pendingEntries
-			self.pendingEntries.removeAll(keepingCapacity: true)
-			return entries
-		}
-
-		guard let entries = snapshot else {
+		guard !self.isFlushing, !self.pendingEntries.isEmpty else {
 			return
 		}
 
-		Task.detached(priority: .utility) {
+		self.isFlushing = true
+		let entries = self.pendingEntries
+		self.pendingEntries.removeAll(keepingCapacity: true)
+
+		Task(priority: .utility) {
 			await self.submit(entries: entries)
 
-			self.stateQueue.sync {
-				self.isFlushing = false
-			}
+			self.isFlushing = false
 		}
 	}
 

@@ -11,7 +11,7 @@ import Intents
 import KurozoraKit
 import MobileCoreServices
 
-public extension Show {
+@MainActor public extension Show {
 	// MARK: - Properties
 	/// Create an NSUserActivity from the selected show.
 	var openDetailUserActivity: NSUserActivity {

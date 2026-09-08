@@ -93,11 +93,10 @@ class LibraryImportTableViewController: ServiceTableViewController {
 			do {
 				_ = try await KService.importLibrary(.shows, service: .mal, behavior: .overwrite, filePath: filePath).response()
 			} catch let error as APIError {
-				_ = await MainActor.run {
-					self.presentAlertController(title: L10n.cantImportToLibraryTitle, message: error.message)
-				}
-
+				self.presentAlertController(title: L10n.cantImportToLibraryTitle, message: error.message)
 				print("----- Library import failed", error.message)
+			} catch {
+				print("----- Library import failed", error.localizedDescription)
 			}
 		}
 	}

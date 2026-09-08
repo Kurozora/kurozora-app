@@ -10,7 +10,7 @@ import UIKit
 
 extension ParentalGuideEditorCollectionViewController {
 	/// The form sections rendered by the editor.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The severity rating section.
 		case rating
@@ -41,7 +41,7 @@ extension ParentalGuideEditorCollectionViewController {
 	}
 
 	/// The set of available item kinds.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The rating segmented picker.
 		case ratingPicker

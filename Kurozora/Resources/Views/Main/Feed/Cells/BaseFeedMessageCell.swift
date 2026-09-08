@@ -95,13 +95,16 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.configurePostTextView()
-		self.configureTranslationBarView()
 
-		self.profileImageView.layer.borderWidth = 0
-		self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.configurePostTextView()
+			self.configureTranslationBarView()
+
+			self.profileImageView.layer.borderWidth = 0
+			self.profileBorderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+		}
 	}
 
 	override func prepareForReuse() {

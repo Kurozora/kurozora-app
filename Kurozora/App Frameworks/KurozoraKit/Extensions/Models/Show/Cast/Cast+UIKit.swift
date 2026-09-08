@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Cast {
+@MainActor extension Cast {
 	/// Create a context menu configuration for the cast.
 	///
 	/// - Parameters:
@@ -64,52 +64,36 @@ extension Cast {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		var activityItems: [Any] = []
+		Task {
+			var activityItems: [Any] = []
 
-		if let person = self.relationships.people?.data.first?.attributes.fullName,
-		   let character = self.relationships.characters.data.first?.attributes.name {
-			activityItems.append(L10n.shareCast(person, character))
-		}
-
-		if let personImageURLString = self.relationships.people?.data.first?.attributes.profile?.url, !personImageURLString.isEmpty,
-		   let characterImageURLString = self.relationships.characters.data.first?.attributes.profile?.url, !characterImageURLString.isEmpty {
-			activityItems.append(ImageActivityItemProvider(placeholder: .Placeholders.userProfile) {
-				guard let personImage = ImageActivityItemProvider.loadImage(for: personImageURLString),
-				      let characterImage = ImageActivityItemProvider.loadImage(for: characterImageURLString) else {
-					return nil
-				}
-				return Cast.mergedImage(leftImage: personImage, rightImage: characterImage)
-			})
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sourceView = sourceView {
-				popoverController.sourceView = sourceView
-				popoverController.sourceRect = sourceView.frame
-			} else {
-				popoverController.barButtonItem = barButtonItem
+			if let person = self.relationships.people?.data.first?.attributes.fullName,
+			   let character = self.relationships.characters.data.first?.attributes.name {
+				activityItems.append(L10n.shareCast(person, character))
 			}
-		}
 
-		viewController?.present(activityViewController, animated: true, completion: nil)
-	}
+			if let personImageURLString = self.relationships.people?.data.first?.attributes.profile?.url, !personImageURLString.isEmpty,
+			   let characterImageURLString = self.relationships.characters.data.first?.attributes.profile?.url, !characterImageURLString.isEmpty {
+				if let personImage = await UIImage.load(from: personImageURLString),
+				   let characterImage = await UIImage.load(from: characterImageURLString) {
+					activityItems.append(personImage.merged(with: characterImage))
+				} else {
+					activityItems.append(UIImage.Placeholders.userProfile)
+				}
+			}
 
-	/// Merges two images side by side into a single image.
-	///
-	/// - Parameters:
-	///    - leftImage: The image drawn on the leading half.
-	///    - rightImage: The image drawn on the trailing half.
-	///
-	/// - Returns: The combined image.
-	private static func mergedImage(leftImage: UIImage, rightImage: UIImage) -> UIImage {
-		let size = CGSize(width: leftImage.size.width + rightImage.size.width, height: max(leftImage.size.height, rightImage.size.height))
-		let renderer = UIGraphicsImageRenderer(size: size)
+			let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
-		return renderer.image { _ in
-			leftImage.draw(in: CGRect(x: 0, y: 0, width: size.width / 2, height: size.height))
-			rightImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width / 2, height: size.height))
+			if let popoverController = activityViewController.popoverPresentationController {
+				if let sourceView = sourceView {
+					popoverController.sourceView = sourceView
+					popoverController.sourceRect = sourceView.frame
+				} else {
+					popoverController.barButtonItem = barButtonItem
+				}
+			}
+
+			viewController?.present(activityViewController, animated: true, completion: nil)
 		}
 	}
 }

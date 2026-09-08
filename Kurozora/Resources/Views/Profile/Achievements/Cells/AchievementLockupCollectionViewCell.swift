@@ -107,7 +107,7 @@ final class AchievementLockupCollectionViewCell: KCollectionViewCell {
 		self.configureSubviews()
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self, name: .ThemeUpdateNotification, object: nil)
 	}
 

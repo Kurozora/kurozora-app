@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Theme {
+@MainActor extension Theme {
 	/// The webpage URL of the genre.
 	var webpageURLString: String {
 		return "https://kurozora.app/themes/\(self.attributes.slug)"

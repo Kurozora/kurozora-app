@@ -16,17 +16,19 @@ class BannerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.bannerContainerView.layer.cornerRadius = 22
-		self.bannerImageView?.applyCornerRadius(22)
-		self.bannerImageView?.layer.borderWidth = 0
-		self.bannerBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.bannerContainerView.layer.cornerRadius = 22
+			self.bannerImageView?.applyCornerRadius(22)
+			self.bannerImageView?.layer.borderWidth = 0
+			self.bannerBorderView.cornerRadius = 22
 
-		self.shadowImageView?.layer.cornerRadius = 22
-		self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-		self.shadowImageView?.layer.masksToBounds = true
+			self.shadowImageView?.layer.cornerRadius = 22
+			self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+			self.shadowImageView?.layer.masksToBounds = true
+		}
 	}
 
 	// MARK: - Functions

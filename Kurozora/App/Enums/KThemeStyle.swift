@@ -176,7 +176,9 @@ enum KThemeStyle: Int {
 
 		if self.automaticDarkThemeSchedule == nil {
 			self.automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-				KThemeStyle.checkAutomaticSchedule()
+				MainActor.assumeIsolated {
+					KThemeStyle.checkAutomaticSchedule()
+				}
 			}
 		}
 	}
@@ -460,7 +462,9 @@ enum ThemeStyleError: LocalizedError {
 	var errorDescription: String? {
 		switch self {
 		case .themeStorageUnavailable:
-			return L10n.themeStorageUnavailable
+			return MainActor.assumeIsolated {
+				L10n.themeStorageUnavailable
+			}
 		}
 	}
 }

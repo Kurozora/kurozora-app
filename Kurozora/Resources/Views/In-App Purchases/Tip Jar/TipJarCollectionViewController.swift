@@ -173,36 +173,9 @@ extension TipJarCollectionViewController {
 		case footer
 	}
 
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case product(Product, id: UUID = UUID())
 		case productFeature(ProductFeature, id: UUID = UUID())
 		case other(id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .product(let product, let id):
-				hasher.combine(product)
-				hasher.combine(id)
-			case .productFeature(let productFeature, let id):
-				hasher.combine(productFeature.title)
-				hasher.combine(id)
-			case .other(let id):
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.product(let product1, let id1), .product(let product2, let id2)):
-				return product1 == product2 && id1 == id2
-			case (.productFeature(let productFeature1, let id1), .productFeature(let productFeature2, let id2)):
-				return productFeature1.title == productFeature2.title && id1 == id2
-			case (.other(let id1), .other(let id2)):
-				return id1 == id2
-			default:
-				return false
-			}
-		}
 	}
 }

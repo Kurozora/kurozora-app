@@ -13,11 +13,13 @@ class AccountSettingsCell: SettingsCell {
 	@IBOutlet weak var profileBorderView: BorderView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.iconImageView?.layer.borderWidth = 0
-		self.profileBorderView.cornerRadius = (self.iconImageView?.bounds.height ?? 0) / 2.0
+		MainActor.assumeIsolated {
+			self.iconImageView?.layer.borderWidth = 0
+			self.profileBorderView.cornerRadius = (self.iconImageView?.bounds.height ?? 0) / 2.0
+		}
 	}
 
 	override func layoutSubviews() {

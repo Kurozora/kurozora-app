@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension UserTimeout.Attributes {
+@MainActor extension UserTimeout.Attributes {
 	// MARK: - Banner
 	/// Returns the profile-banner title for the given remaining time.
 	///

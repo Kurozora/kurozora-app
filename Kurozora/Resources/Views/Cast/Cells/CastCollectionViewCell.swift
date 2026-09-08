@@ -34,20 +34,22 @@ class CastCollectionViewCell: KCollectionViewCell {
 	weak var delegate: CastCollectionViewCellDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.personContainerView.layer.cornerRadius = 22
-		self.personImageView?.applyCornerRadius(22)
-		self.personImageView?.layer.borderWidth = 0
-		self.personBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.personContainerView.layer.cornerRadius = 22
+			self.personImageView?.applyCornerRadius(22)
+			self.personImageView?.layer.borderWidth = 0
+			self.personBorderView.cornerRadius = 22
 
-		self.characterContainerView.layer.cornerRadius = 22
-		self.characterImageView?.applyCornerRadius(22)
-		self.characterImageView?.layer.borderWidth = 0
-		self.characterBorderView.cornerRadius = 22
+			self.characterContainerView.layer.cornerRadius = 22
+			self.characterImageView?.applyCornerRadius(22)
+			self.characterImageView?.layer.borderWidth = 0
+			self.characterBorderView.cornerRadius = 22
 
-		self.voiceActorLabel.text = L10n.voiceActor
+			self.voiceActorLabel.text = L10n.voiceActor
+		}
 	}
 
 	// MARK: - Functions

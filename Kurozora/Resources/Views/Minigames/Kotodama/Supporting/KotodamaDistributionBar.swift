@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KotodamaDistributionBar: Hashable {
+struct KotodamaDistributionBar: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	/// The shortest fill a bucket with wins is drawn at.
 	static let minimumPercent = 4

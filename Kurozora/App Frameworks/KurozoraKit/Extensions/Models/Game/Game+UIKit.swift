@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Game {
+@MainActor extension Game {
 	/// The webpage URL of the game.
 	var webpageURLString: String {
 		return "https://kurozora.app/games/\(self.attributes.slug)"
@@ -184,7 +184,7 @@ extension Game {
 		guard let slug = User.current?.attributes.slug else { return }
 
 		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.id.rawValue, userSlug: slug, kind: .games, seed: self.outboxSeed)
-		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
+		ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	@MainActor
@@ -273,7 +273,7 @@ extension Game {
 	@MainActor
 	private func validateIsInLibrary() async -> Bool {
 		if self.libraryAttributes?.status == nil {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
+			UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}

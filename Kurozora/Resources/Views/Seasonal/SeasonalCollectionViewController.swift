@@ -565,32 +565,17 @@ extension SeasonalCollectionViewController {
 // MARK: - SectionLayoutKind
 extension SeasonalCollectionViewController {
 	/// List of available Section Layout Kind types.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates a browse season section layout type.
 		case browseSeason(_: BrowseSeason)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .browseSeason(let browseSeason):
-				hasher.combine(browseSeason)
-			}
-		}
-
-		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.browseSeason(let browseSeason1), .browseSeason(let browseSeason2)):
-				return browseSeason1 == browseSeason2
-			}
-		}
 	}
 }
 
 // MARK: - ItemKind
 extension SeasonalCollectionViewController {
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show, section: SectionLayoutKind)
@@ -600,33 +585,5 @@ extension SeasonalCollectionViewController {
 
 		/// Indicates the item kind contains a `Game` object.
 		case game(_: Game, section: SectionLayoutKind)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .show(let show, let section):
-				hasher.combine(show)
-				hasher.combine(section)
-			case .literature(let literature, let section):
-				hasher.combine(literature)
-				hasher.combine(section)
-			case .game(let game, let section):
-				hasher.combine(game)
-				hasher.combine(section)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.show(let show1, let section1), .show(let show2, let section2)):
-				return show1 == show2 && section1 == section2
-			case (.literature(let literature1, let section1), .literature(let literature2, let section2)):
-				return literature1 == literature2 && section1 == section2
-			case (.game(let game1, let section1), .game(let game2, let section2)):
-				return game1 == game2 && section1 == section2
-			default:
-				return false
-			}
-		}
 	}
 }

@@ -446,34 +446,13 @@ extension ManageActiveSessionsController {
 		case other
 	}
 
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item is of the `AccessToken` kind.
 		case accessToken(_ accessToken: AccessToken)
 
 		/// Indicates the item is of the `SessionIdentity` kind.
 		case sessionIdentity(_ sessionIdentity: SessionIdentity)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .accessToken(let accessToken):
-				hasher.combine(accessToken)
-			case .sessionIdentity(let sessionIdentity):
-				hasher.combine(sessionIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.accessToken(let accessToken1), .accessToken(let accessToken2)):
-				return accessToken1 == accessToken2
-			case (.sessionIdentity(let sessionIdentity1), .sessionIdentity(let sessionIdentity2)):
-				return sessionIdentity1 == sessionIdentity2
-			default:
-				return false
-			}
-		}
 	}
 }
 

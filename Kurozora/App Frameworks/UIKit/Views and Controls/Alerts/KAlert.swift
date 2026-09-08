@@ -125,8 +125,8 @@ private extension KAlert {
 				self.contentView.alpha = 1
 				self.contentView.transform = .identity
 				self.contentView.applyMaterial()
-			} completion: { _ in
-				DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) { [weak self] in
+			} completion: { [weak self] _ in
+				DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
 					self?.hide(animated: true)
 				}
 			}

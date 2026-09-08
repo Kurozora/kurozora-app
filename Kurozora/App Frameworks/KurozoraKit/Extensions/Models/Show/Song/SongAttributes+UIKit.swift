@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Song.Attributes {
+@MainActor extension Song.Attributes {
 	// MARK: - Functions
 	/// Set the artwork.
 	///

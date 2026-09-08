@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension Session {
+@MainActor extension Session {
 	/// Create a context menu configuration for the session.
 	///
 	/// - Parameters:

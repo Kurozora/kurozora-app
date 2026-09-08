@@ -13,14 +13,19 @@ class PersonReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	private var posterCircleObservation: NSKeyValueObservation?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.posterCircleObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
-			self?.syncPosterBorderRadius()
-		}
 
-		self.posterImageView?.layer.borderWidth = 0
-		self.syncPosterBorderRadius()
+		MainActor.assumeIsolated {
+			self.posterCircleObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+				MainActor.assumeIsolated {
+					self?.syncPosterBorderRadius()
+				}
+			}
+
+			self.posterImageView?.layer.borderWidth = 0
+			self.syncPosterBorderRadius()
+		}
 	}
 
 	override func layoutSubviews() {

@@ -31,29 +31,31 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	var preferredTrailerURL: String?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.posterHeightConstraint = self.posterContainerView.constraints.first { constraint in
-			constraint.firstAttribute == .height && constraint.secondItem == nil
+		MainActor.assumeIsolated {
+			self.posterHeightConstraint = self.posterContainerView.constraints.first { constraint in
+				constraint.firstAttribute == .height && constraint.secondItem == nil
+			}
+			self.posterAspectConstraint = self.posterContainerView.constraints.first { constraint in
+				constraint.firstAttribute == .width && constraint.secondAttribute == .height
+			}
+
+			self.bannerContainerView.backgroundColor = .clear
+			self.bannerContainerView.layer.cornerRadius = 22
+			self.bannerImageView?.applyCornerRadius(22)
+			self.bannerImageView?.layer.borderWidth = 0
+			self.bannerBorderView.cornerRadius = 22
+
+			self.posterContainerView.layer.cornerRadius = 22
+			self.posterImageView?.applyCornerRadius(22)
+			self.posterImageView?.layer.borderWidth = 0
+			self.posterBorderView.cornerRadius = 22
+
+			self.trailerPlayerView.layerCornerRadius = 22
+			self.trailerPlayerView.layer.masksToBounds = true
 		}
-		self.posterAspectConstraint = self.posterContainerView.constraints.first { constraint in
-			constraint.firstAttribute == .width && constraint.secondAttribute == .height
-		}
-
-		self.bannerContainerView.backgroundColor = .clear
-		self.bannerContainerView.layer.cornerRadius = 22
-		self.bannerImageView?.applyCornerRadius(22)
-		self.bannerImageView?.layer.borderWidth = 0
-		self.bannerBorderView.cornerRadius = 22
-
-		self.posterContainerView.layer.cornerRadius = 22
-		self.posterImageView?.applyCornerRadius(22)
-		self.posterImageView?.layer.borderWidth = 0
-		self.posterBorderView.cornerRadius = 22
-
-		self.trailerPlayerView.layerCornerRadius = 22
-		self.trailerPlayerView.layer.masksToBounds = true
 	}
 
 	override func prepareForReuse() {

@@ -231,7 +231,7 @@ private extension KTextView {
 }
 
 // MARK: - NSAttributedString Keys
-extension NSAttributedString.Key {
+nonisolated extension NSAttributedString.Key {
 	static let inlineCode = NSAttributedString.Key("inlineCode")
 	static let spoiler = NSAttributedString.Key("spoiler")
 	static let spoilerHidden = NSAttributedString.Key("spoilerHidden")
@@ -241,7 +241,7 @@ extension NSAttributedString.Key {
 	static let kkAccentColor = NSAttributedString.Key("kkAccentColor")
 }
 
-final class RichTextLayoutManager: NSLayoutManager {
+nonisolated final class RichTextLayoutManager: NSLayoutManager {
 	var cornerRadius: CGFloat = 6
 	var horizontalPadding: CGFloat = 4
 	var verticalPadding: CGFloat = 0

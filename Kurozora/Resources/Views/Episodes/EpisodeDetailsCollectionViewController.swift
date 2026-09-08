@@ -134,8 +134,11 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	override func fetchDetails() async {
 		guard let episodeIdentity = self.episodeIdentity else { return }
 
-		async let reviewIdentityResponse = KService.reviews(for: episodeIdentity).cursor(nil).limit(10).response()
-		async let suggestionsResponse = KService.suggestions(for: episodeIdentity).response()
+		let reviewIdentityRequest = KService.reviews(for: episodeIdentity).cursor(nil).limit(10)
+		let suggestionsRequest = KService.suggestions(for: episodeIdentity)
+
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let suggestionsResponse = suggestionsRequest.response()
 
 		if self.episode == nil {
 			do {
@@ -182,14 +185,14 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 
 		do {
 			let requestedIDs = [episodeID.rawValue]
-			let cachedETag = await WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
+			let cachedETag = WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
 			let overlayResult = try await KService
 				.watchedOverlay(forUser: userIdentity, episodes: [episodeID])
 				.response(ifNoneMatch: cachedETag)
 
 			if case .modified(let watchedResponse, let etag) = overlayResult {
-				await WatchedStore.shared.apply(watchedResponse.data, requestedIDs: requestedIDs)
-				await WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
+				WatchedStore.shared.apply(watchedResponse.data, requestedIDs: requestedIDs)
+				WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
 			}
 		} catch {
 			print("watchedOverlay fetch failed: \(error.localizedDescription)")
@@ -479,7 +482,7 @@ extension EpisodeDetailsCollectionViewController {
 	}
 
 	/// List of available item kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// An item kind that contains an `Episode` object.
 		case episode(_: Episode)

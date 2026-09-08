@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension FeedMessageDraft {
+nonisolated extension FeedMessageDraft {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<FeedMessageDraft> {
 		return NSFetchRequest<FeedMessageDraft>(entityName: "FeedMessageDraft")
 	}

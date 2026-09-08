@@ -24,17 +24,17 @@ enum MonogramFontStyle: Int, CaseIterable {
 	}
 }
 
-struct MonogramPreset: Hashable {
+struct MonogramPreset: nonisolated Hashable, Sendable {
 	let id: Int
 	let fontStyle: MonogramFontStyle
 	let fontWeight: UIFont.Weight
 	let backgroundColor: UIColor
 
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(self.id)
 	}
 
-	static func == (lhs: MonogramPreset, rhs: MonogramPreset) -> Bool {
+	nonisolated static func == (lhs: MonogramPreset, rhs: MonogramPreset) -> Bool {
 		return lhs.id == rhs.id
 	}
 }

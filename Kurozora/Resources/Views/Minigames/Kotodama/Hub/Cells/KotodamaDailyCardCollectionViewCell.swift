@@ -41,7 +41,7 @@ class KotodamaDailyCardCollectionViewCell: UICollectionViewCell {
 		self.sharedInit()
 	}
 
-	deinit {
+	isolated deinit {
 		self.countdownTimer?.invalidate()
 	}
 
@@ -86,7 +86,9 @@ class KotodamaDailyCardCollectionViewCell: UICollectionViewCell {
 		self.nextPuzzleAt = date
 
 		let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-			self?.tickCountdown()
+			MainActor.assumeIsolated {
+				self?.tickCountdown()
+			}
 		}
 		RunLoop.main.add(timer, forMode: .common)
 		self.countdownTimer = timer

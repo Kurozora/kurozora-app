@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct UpNextBannerCardView: View {
 	@Environment(\.widgetFamily) var widgetFamily

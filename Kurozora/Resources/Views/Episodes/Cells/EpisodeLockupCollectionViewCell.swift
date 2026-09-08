@@ -32,17 +32,19 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		if let stackView = self.secondaryLabel.superview as? UIStackView {
-			stackView.setCustomSpacing(8.0, after: self.secondaryLabel)
-		}
+		MainActor.assumeIsolated {
+			if let stackView = self.secondaryLabel.superview as? UIStackView {
+				stackView.setCustomSpacing(8.0, after: self.secondaryLabel)
+			}
 
-		self.cornerView.layer.cornerRadius = 22
-		self.episodeImageView?.applyCornerRadius(22)
-		self.episodeImageView?.layer.borderWidth = 0
-		self.episodeBorderView.cornerRadius = 22
+			self.cornerView.layer.cornerRadius = 22
+			self.episodeImageView?.applyCornerRadius(22)
+			self.episodeImageView?.layer.borderWidth = 0
+			self.episodeBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

@@ -385,7 +385,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		for indexPath in indexPaths {
 			guard let entry = self.entries[safe: indexPath.item] else { continue }
 			mutate(entry)
-			changedItems.append(.entry(entry))
+			changedItems.append(.entry(entry.objectID))
 		}
 
 		guard !changedItems.isEmpty else { return }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct QuickAction: Hashable {
+struct QuickAction: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	let title: String
 	let image: UIImage?
@@ -22,11 +22,11 @@ struct QuickAction: Hashable {
 	}
 
 	// MARK: - Functions
-	static func == (lhs: QuickAction, rhs: QuickAction) -> Bool {
+	nonisolated static func == (lhs: QuickAction, rhs: QuickAction) -> Bool {
 		lhs.title == rhs.title && lhs.segueID.rawValue == rhs.segueID.rawValue
 	}
 
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(self.title)
 		hasher.combine(self.segueID.rawValue)
 	}

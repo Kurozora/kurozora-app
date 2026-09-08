@@ -119,7 +119,6 @@ class ParentalGuideReasonCollectionViewCell: UICollectionViewCell {
 		return Self.cachedReasonWidths[ObjectIdentifier(type(of: self))] ?? 0
 	}
 
-
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

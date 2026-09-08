@@ -22,7 +22,7 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case seasonIdentity(_: SeasonIdentity)
 	}
 

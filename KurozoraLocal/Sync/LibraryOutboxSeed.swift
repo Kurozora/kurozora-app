@@ -10,7 +10,7 @@ import Foundation
 import KurozoraKit
 
 /// A denormalized display snapshot used to seed a placeholder `LocalLibraryEntry` created offline.
-struct LibraryOutboxSeed: Codable, Sendable {
+nonisolated struct LibraryOutboxSeed: Codable, Sendable {
 	var title: String?
 	var sortTitle: String?
 	var tagline: String?

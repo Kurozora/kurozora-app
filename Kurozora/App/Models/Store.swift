@@ -84,7 +84,7 @@ final class Store: NSObject, ObservableObject {
 	/// Empty method to call so the static `shared` property is initialized.
 	func initialize() {}
 
-	deinit {
+	isolated deinit {
 		print("🧾 StoreKit 2 deinitialized.")
 		self.updateListenerTask?.cancel()
 		self.purchaseIntentTask?.cancel()
@@ -95,7 +95,7 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: a `Task` that listens to `StoreKit` transaction requests.
 	func listenForTransactions() -> Task<Void, Error> {
-		return Task.detached { @MainActor in
+		return Task {
 			// Iterate through any transactions which didn't come from a direct call to `purchase()`.
 			for await result in Transaction.updates {
 				do {
@@ -213,7 +213,7 @@ final class Store: NSObject, ObservableObject {
 	/// Observes promoted IAP intents and routes them through the consent flow.
 	@available(iOS 16.4, macCatalyst 16.4, *)
 	private func observePurchaseIntents() -> Task<Void, Never> {
-		Task.detached { @MainActor [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
 			for await intent in PurchaseIntent.intents {
 				PendingPromotedIntent.save(productID: intent.product.id)

@@ -149,21 +149,20 @@ final class AMIDReconcileViewController: UITableViewController {
 		content.text = song.title
 		content.secondaryText = "\(song.artistName) · \(song.albumTitle ?? "—")  ·  \(song.id.rawValue)"
 		content.image = UIImage(systemName: "music.note")
+		cell.contentConfiguration = content
 
 		if let artworkURL = song.artwork?.url(width: 80, height: 80) {
-			KingfisherManager.shared.retrieveImage(with: artworkURL) { result in
-				guard case .success(let value) = result, tableView.indexPath(for: cell) == indexPath else { return }
-				var refreshed = cell.defaultContentConfiguration()
-				refreshed.text = content.text
-				refreshed.secondaryText = content.secondaryText
-				refreshed.image = value.image
+			Task {
+				guard let artwork = try? await KingfisherManager.shared.retrieveImage(with: artworkURL).image else { return }
+				guard tableView.indexPath(for: cell) == indexPath, var refreshed = cell.contentConfiguration as? UIListContentConfiguration else { return }
+
+				refreshed.image = artwork
 				refreshed.imageProperties.maximumSize = CGSize(width: 44, height: 44)
 				refreshed.imageProperties.cornerRadius = 6
 				cell.contentConfiguration = refreshed
 			}
 		}
 
-		cell.contentConfiguration = content
 		return cell
 	}
 

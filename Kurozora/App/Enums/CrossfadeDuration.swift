@@ -26,7 +26,7 @@ enum CrossfadeDuration: Int, CaseIterable {
 
 	// MARK: - Properties
 	/// The default crossfade duration.
-	static let `default`: CrossfadeDuration = .four
+	nonisolated static let `default`: CrossfadeDuration = .four
 
 	/// The shortest selectable duration.
 	static var minimumSeconds: Int {

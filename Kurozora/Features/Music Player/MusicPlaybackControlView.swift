@@ -288,7 +288,7 @@ final class MusicPlaybackControlView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		self.scanTimer?.invalidate()
 	}
 
@@ -475,7 +475,6 @@ final class MusicPlaybackControlView: UIView {
 			self.progressView.trailingAnchor.constraint(equalTo: self.trailingStack.leadingAnchor, constant: 44),
 			self.progressView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
 		])
-
 
 		self.titleLabel.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
 		self.subtitleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -789,14 +788,14 @@ final class MusicPlaybackControlView: UIView {
 	private func startScanning(button: TransportButton, step: TimeInterval) {
 		self.stopScanning()
 
-		let scan: () -> Void = { [weak self, weak button] in
+		let scan: @MainActor @Sendable () -> Void = { [weak self, weak button] in
 			self?.playbackController?.seek(bySeconds: step)
 			button?.animateSkip()
 		}
 
 		scan()
 		self.scanTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-			scan()
+			MainActor.assumeIsolated(scan)
 		}
 	}
 

@@ -21,29 +21,9 @@ class MentionAutocompleteController: NSObject, SectionFetchable {
 		case main = 0
 	}
 
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case userIdentity(_ identity: UserIdentity)
 		case findUser
-
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .userIdentity(let identity):
-				hasher.combine(identity)
-			case .findUser:
-				hasher.combine("findUser")
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.userIdentity(let a), .userIdentity(let b)):
-				return a == b
-			case (.findUser, .findUser):
-				return true
-			default:
-				return false
-			}
-		}
 	}
 
 	// MARK: - Properties

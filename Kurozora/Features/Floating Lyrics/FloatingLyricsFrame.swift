@@ -9,7 +9,7 @@
 import UIKit
 
 /// A single rendered state of the floating lyrics window.
-struct FloatingLyricsFrame {
+struct FloatingLyricsFrame: Sendable {
 	// MARK: - Enums
 	/// The content shown by a frame.
 	enum Content {

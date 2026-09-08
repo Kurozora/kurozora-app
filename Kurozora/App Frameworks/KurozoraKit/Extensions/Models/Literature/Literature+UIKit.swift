@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Literature {
+@MainActor extension Literature {
 	/// The webpage URL of the literature.
 	var webpageURLString: String {
 		return "https://kurozora.app/manga/\(self.attributes.slug)"
@@ -36,6 +36,7 @@ extension Literature {
 	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the literature.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
@@ -167,7 +168,7 @@ extension Literature {
 		guard let slug = User.current?.attributes.slug else { return }
 
 		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.id.rawValue, userSlug: slug, kind: .literatures, seed: self.outboxSeed)
-		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
+		ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	@MainActor
@@ -256,7 +257,7 @@ extension Literature {
 	@MainActor
 	private func validateIsInLibrary() async -> Bool {
 		if self.libraryAttributes?.status == nil {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
+			UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}

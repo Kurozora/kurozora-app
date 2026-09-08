@@ -106,7 +106,7 @@ final class KurozoraDelegate {
 		}
 
 		// Register Home Screen shortcut items
-		await self.registerHomeScreenShortcutItems()
+		self.registerHomeScreenShortcutItems()
 
 		// Play chime
 		if UserSettings.startupSoundAllowed {

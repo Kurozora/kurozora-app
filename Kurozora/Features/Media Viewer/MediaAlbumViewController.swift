@@ -448,10 +448,10 @@ final class MediaAlbumViewController: UIPageViewController {
 	/// - Parameter item: The item to save.
 	func save(_ item: MediaItem) {
 		Task {
-			do {
+			do throws(MediaSaverManager.SaverError) {
 				let destination = try await MediaSaverManager.shared.saveImage(from: item.url)
 				self.handleSaveSuccess(at: destination, isAlbum: false)
-			} catch let error as MediaSaverManager.SaverError {
+			} catch {
 				self.handleSaveError(error)
 			}
 		}
@@ -460,10 +460,10 @@ final class MediaAlbumViewController: UIPageViewController {
 	/// Saves every item in the album to the destination chosen in Settings.
 	private func saveAlbum() {
 		Task {
-			do {
+			do throws(MediaSaverManager.SaverError) {
 				let destination = try await MediaSaverManager.shared.saveImages(from: self.items.map(\.url))
 				self.handleSaveSuccess(at: destination, isAlbum: true)
-			} catch let error as MediaSaverManager.SaverError {
+			} catch {
 				self.handleSaveError(error)
 			}
 		}
@@ -474,13 +474,13 @@ final class MediaAlbumViewController: UIPageViewController {
 	/// - Parameter item: The item to export.
 	private func exportImage(for item: MediaItem) {
 		Task {
-			do {
+			do throws(MediaSaverManager.SaverError) {
 				let fileURL = try await MediaSaverManager.shared.stageImage(from: item.url)
 				let documentPicker = UIDocumentPickerViewController(forExporting: [fileURL], asCopy: true)
 				documentPicker.popoverPresentationController?.sourceView = self.actionBar
 
 				self.present(documentPicker, animated: true)
-			} catch let error as MediaSaverManager.SaverError {
+			} catch {
 				self.handleSaveError(error)
 			}
 		}

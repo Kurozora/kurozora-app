@@ -11,7 +11,8 @@ import Foundation
 
 /// The static registry of `ChainedFaceDetector`s indexed by `FaceDetectionEntityKind`.
 ///
-/// Person images use Apple Vision with the anime detector as fallback; character images flip the order.
+/// Person images use Apple Vision with the anime detector as fallback, and character images flip the order.
+@available(iOS 17.0, *)
 enum FaceDetectorRegistry {
 	// MARK: - Properties
 	private static let animeFaceDetector = AnimeFaceDetector(

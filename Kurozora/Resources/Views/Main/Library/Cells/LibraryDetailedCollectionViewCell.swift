@@ -18,17 +18,19 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	@IBOutlet weak var userProgressLabel: UILabel!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.bannerContainerView.layer.cornerRadius = 22
-		self.episodeImageView?.applyCornerRadius(22)
-		self.episodeImageView?.layer.borderWidth = 0
-		self.episodeBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.bannerContainerView.layer.cornerRadius = 22
+			self.episodeImageView?.applyCornerRadius(22)
+			self.episodeImageView?.layer.borderWidth = 0
+			self.episodeBorderView.cornerRadius = 22
 
-		self.shadowImageView?.layer.cornerRadius = 22
-		self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-		self.shadowImageView?.layer.masksToBounds = true
+			self.shadowImageView?.layer.cornerRadius = 22
+			self.shadowImageView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+			self.shadowImageView?.layer.masksToBounds = true
+		}
 	}
 
 	// MARK: - Functions

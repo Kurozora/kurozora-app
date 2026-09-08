@@ -497,13 +497,15 @@ class ProfileTableHeaderView: UIView {
 		self.bannerExtensionImageView.isUserInteractionEnabled = false
 
 		self.bannerImageObservation = self.bannerImageView.observe(\.image, options: [.new]) { [weak self] _, change in
-			guard let self else { return }
-			let bannerImage = change.newValue ?? nil
+			MainActor.assumeIsolated {
+				guard let self else { return }
+				let bannerImage = change.newValue ?? nil
 
-			if #available(iOS 26.0, *) {
-				self.bannerExtensionImageView.image = bannerImage
-			} else {
-				self.generateBlurredBannerImage(from: bannerImage)
+				if #available(iOS 26.0, *) {
+					self.bannerExtensionImageView.image = bannerImage
+				} else {
+					self.generateBlurredBannerImage(from: bannerImage)
+				}
 			}
 		}
 	}

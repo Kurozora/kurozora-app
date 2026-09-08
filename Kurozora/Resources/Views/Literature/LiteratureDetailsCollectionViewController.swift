@@ -174,14 +174,23 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	override func fetchDetails() async {
 		guard let literatureIdentity = self.literatureIdentity else { return }
 
-		async let reviewIdentityResponse = KService.reviews(for: literatureIdentity).cursor(nil).limit(10).response()
-		async let editorialResponse = KService.editorial(for: literatureIdentity).response()
-		async let castIdentityResponse = KService.cast(for: literatureIdentity).limit(10).response()
-		async let studioIdentityResponse = KService.studios(for: literatureIdentity).limit(10).response()
-		async let moreByStudioResponse = KService.moreByStudio(for: literatureIdentity).limit(10).response()
-		async let relatedLiteratureResponse = KService.relatedLiteratures(for: literatureIdentity).limit(10).response()
-		async let relatedShowResponse = KService.relatedShows(for: literatureIdentity).limit(10).response()
-		async let relatedGameResponse = KService.relatedGames(for: literatureIdentity).limit(10).response()
+		let reviewIdentityRequest = KService.reviews(for: literatureIdentity).cursor(nil).limit(10)
+		let editorialRequest = KService.editorial(for: literatureIdentity)
+		let castIdentityRequest = KService.cast(for: literatureIdentity).limit(10)
+		let studioIdentityRequest = KService.studios(for: literatureIdentity).limit(10)
+		let moreByStudioRequest = KService.moreByStudio(for: literatureIdentity).limit(10)
+		let relatedLiteratureRequest = KService.relatedLiteratures(for: literatureIdentity).limit(10)
+		let relatedShowRequest = KService.relatedShows(for: literatureIdentity).limit(10)
+		let relatedGameRequest = KService.relatedGames(for: literatureIdentity).limit(10)
+
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let editorialResponse = editorialRequest.response()
+		async let castIdentityResponse = castIdentityRequest.response()
+		async let studioIdentityResponse = studioIdentityRequest.response()
+		async let moreByStudioResponse = moreByStudioRequest.response()
+		async let relatedLiteratureResponse = relatedLiteratureRequest.response()
+		async let relatedShowResponse = relatedShowRequest.response()
+		async let relatedGameResponse = relatedGameRequest.response()
 
 		if self.literature == nil {
 			do {

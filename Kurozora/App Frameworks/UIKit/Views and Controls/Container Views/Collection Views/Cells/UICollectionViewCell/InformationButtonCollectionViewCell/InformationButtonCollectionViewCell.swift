@@ -27,10 +27,12 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 		self.sharedInit()
 	}
 
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
+		MainActor.assumeIsolated {
+			self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
+		}
 	}
 
 	// MARK: - Functions

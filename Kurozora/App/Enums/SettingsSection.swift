@@ -22,7 +22,7 @@ extension SettingsTableViewController {
 		case labelAndChevron
 	}
 
-	enum Section {
+	enum Section: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The section representing the account group of cells.
 		case account

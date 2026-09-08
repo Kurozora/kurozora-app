@@ -8,7 +8,6 @@
 
 #if targetEnvironment(macCatalyst)
 import AVFoundation
-import CoreImage
 import UIKit
 
 /// Feeds lyric frames into an `AVPlayerLayer` for the Mac Picture-in-Picture window.
@@ -38,10 +37,10 @@ final class FloatingLyricsPlayerOutput {
 	}
 
 	/// The frames per second of the blank source video.
-	private static let framesPerSecond: Int32 = 30
+	private nonisolated static let framesPerSecond: Int32 = 30
 
 	/// The length of the blank source video loop in seconds.
-	private static let loopSeconds = 4
+	private nonisolated static let loopSeconds = 4
 
 	/// The player looping the blank video.
 	private let player = AVQueuePlayer()
@@ -55,23 +54,8 @@ final class FloatingLyricsPlayerOutput {
 	/// The in-flight loop preparation.
 	private var preparationTask: Task<Void, Never>?
 
-	/// The lock guarding the frame state.
-	private let stateLock = NSLock()
-
-	/// The plan frames derive from.
-	private var plan: FloatingLyricsFrameBuilder.Plan?
-
-	/// The playback position at the anchor, in milliseconds.
-	private var anchorPositionMs = 0
-
-	/// The blank loop's item time at the anchor, in seconds.
-	private var anchorItemSeconds = 0.0
-
-	/// The renderer producing frame images.
-	private var frameRenderer: UIGraphicsImageRenderer?
-
-	/// The pixel size ``frameRenderer`` renders at.
-	private var frameRendererSize: CGSize = .zero
+	/// The frame state shared with the compositor thread.
+	private let frameSource = FloatingLyricsFrameSource(cardSize: FloatingLyricsPlayerOutput.cardSize, loopSeconds: Double(FloatingLyricsPlayerOutput.loopSeconds))
 
 	/// A Boolean value that indicates whether the loop matching the canvas is loaded.
 	var isReady: Bool {
@@ -101,6 +85,7 @@ final class FloatingLyricsPlayerOutput {
 		}
 
 		self.canvasSize = canvasSize
+		self.frameSource.setCanvasSize(canvasSize)
 		self.preparationTask?.cancel()
 
 		let cardSize = Self.cardSize
@@ -111,12 +96,9 @@ final class FloatingLyricsPlayerOutput {
 			guard let self = self, !Task.isCancelled, self.canvasSize == canvasSize else { return }
 
 			let asset = AVURLAsset(url: videoURL)
-			let composition = AVMutableVideoComposition(asset: asset) { [weak self] request in
-				guard let self = self else {
-					request.finish(with: request.sourceImage, context: nil)
-					return
-				}
-				request.finish(with: self.frameImage(for: request), context: nil)
+			let frameSource = self.frameSource
+			let composition = AVMutableVideoComposition(asset: asset) { request in
+				request.finish(with: frameSource.image(for: request), context: nil)
 			}
 			composition.renderScale = Float(Self.outputScale / Self.assetScale)
 
@@ -144,66 +126,14 @@ final class FloatingLyricsPlayerOutput {
 	///
 	/// - Parameter plan: The plan to derive frames from.
 	func stage(plan: FloatingLyricsFrameBuilder.Plan) {
-		self.stateLock.lock()
-		self.plan = plan
-		self.stateLock.unlock()
+		self.frameSource.stage(plan: plan)
 	}
 
 	/// Anchors the playback position against the blank loop's clock.
 	///
 	/// - Parameter positionMs: The playback position in milliseconds.
 	func syncAnchor(positionMs: Int) {
-		let itemSeconds = self.player.currentTime().seconds
-
-		self.stateLock.lock()
-		self.anchorPositionMs = positionMs
-		self.anchorItemSeconds = itemSeconds.isFinite ? itemSeconds : 0
-		self.stateLock.unlock()
-	}
-
-	/// Builds the frame image for a composition request.
-	///
-	/// - Parameter request: The composition request to serve.
-	///
-	/// - Returns: The frame image covering the request's extent.
-	private func frameImage(for request: AVAsynchronousCIImageFilteringRequest) -> CIImage {
-		self.stateLock.lock()
-		defer {
-			self.stateLock.unlock()
-		}
-
-		guard let plan = self.plan, self.canvasSize != .zero else { return request.sourceImage }
-
-		var positionMs = self.anchorPositionMs
-		if plan.isPlaying {
-			var elapsedSeconds = request.compositionTime.seconds - self.anchorItemSeconds
-
-			if elapsedSeconds < -Double(Self.loopSeconds) / 2 {
-				elapsedSeconds += Double(Self.loopSeconds)
-			}
-
-			positionMs += Int(elapsedSeconds * 1000)
-		}
-
-		let frame = FloatingLyricsFrameBuilder.frame(atPositionMs: positionMs, following: plan)
-		let drawingSize = Self.cardSize
-		let targetSize = request.sourceImage.extent.size
-
-		if self.frameRenderer == nil || self.frameRendererSize != targetSize {
-			let format = UIGraphicsImageRendererFormat()
-			format.scale = 1
-			format.opaque = true
-			self.frameRenderer = UIGraphicsImageRenderer(size: targetSize, format: format)
-			self.frameRendererSize = targetSize
-		}
-
-		guard let renderedImage = self.frameRenderer?.image(actions: { rendererContext in
-			let scale = targetSize.width / drawingSize.width
-			rendererContext.cgContext.scaleBy(x: scale, y: scale)
-			FloatingLyricsRenderer.draw(frame, in: rendererContext.cgContext, size: drawingSize)
-		}) else { return request.sourceImage }
-
-		return CIImage(image: renderedImage) ?? request.sourceImage
+		self.frameSource.syncAnchor(positionMs: positionMs, itemSeconds: self.player.currentTime().seconds)
 	}
 
 	// MARK: Blank video
@@ -222,16 +152,14 @@ final class FloatingLyricsPlayerOutput {
 			return videoURL
 		}
 
-		return await Task.detached(priority: .userInitiated) {
-			do {
-				try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-				try self.writeBlankVideo(to: videoURL, size: size)
-				return videoURL
-			} catch {
-				print("----- PiP blank video generation failed:", error.localizedDescription)
-				return nil
-			}
-		}.value
+		do {
+			try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+			try await self.writeBlankVideo(to: videoURL, size: size)
+			return videoURL
+		} catch {
+			print("----- PiP blank video generation failed:", error.localizedDescription)
+			return nil
+		}
 	}
 
 	/// Writes a silent black H.264 loop of ``loopSeconds`` at ``framesPerSecond``.
@@ -239,7 +167,7 @@ final class FloatingLyricsPlayerOutput {
 	/// - Parameters:
 	///    - url: The destination file URL.
 	///    - size: The video size in pixels.
-	private static func writeBlankVideo(to url: URL, size: CGSize) throws {
+	@concurrent private static func writeBlankVideo(to url: URL, size: CGSize) async throws {
 		let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
 
 		let videoSettings: [String: Any] = [
@@ -280,18 +208,13 @@ final class FloatingLyricsPlayerOutput {
 		let frameCount = Self.loopSeconds * Int(Self.framesPerSecond)
 		for frameIndex in 0..<frameCount {
 			while !input.isReadyForMoreMediaData {
-				Thread.sleep(forTimeInterval: 0.005)
+				try await Task.sleep(nanoseconds: 5_000_000)
 			}
 			adaptor.append(blackBuffer, withPresentationTime: CMTime(value: CMTimeValue(frameIndex), timescale: Self.framesPerSecond))
 		}
 
 		input.markAsFinished()
-
-		let finishSemaphore = DispatchSemaphore(value: 0)
-		writer.finishWriting {
-			finishSemaphore.signal()
-		}
-		finishSemaphore.wait()
+		await writer.finishWriting()
 
 		guard writer.status == .completed else {
 			throw writer.error ?? AVError(.unknown)

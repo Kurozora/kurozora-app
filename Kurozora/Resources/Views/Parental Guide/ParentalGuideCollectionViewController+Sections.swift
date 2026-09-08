@@ -11,7 +11,7 @@ import UIKit
 
 extension ParentalGuideCollectionViewController {
 	/// The section layout kind for the parental guide screen.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// The aggregate summary section at the top.
 		case summary
@@ -42,7 +42,7 @@ extension ParentalGuideCollectionViewController {
 	}
 
 	/// The set of available item kinds.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// The aggregated summary card.
 		case summaryCard

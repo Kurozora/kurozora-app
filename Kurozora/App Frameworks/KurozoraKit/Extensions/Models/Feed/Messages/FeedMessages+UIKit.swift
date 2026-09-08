@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension FeedMessage {
+@MainActor extension FeedMessage {
 	/// Create a context menu configuration for the feed message.
 	///
 	/// - Parameters:
@@ -266,7 +266,7 @@ extension FeedMessage {
 							NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 						}
 					} catch let error as APIError {
-						await viewController?.presentAlertController(title: nil, message: error.message)
+						viewController?.presentAlertController(title: nil, message: error.message)
 						print(error.localizedDescription)
 					} catch {
 						print(error.localizedDescription)

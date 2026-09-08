@@ -116,7 +116,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			// Disable user interaction.
 			self.disableUserInteraction(true)
 
-			Task {
+			Task { [weak self] in
+				guard let self = self else { return }
+
 				do {
 					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImageRequest: profileImageRequest, bannerImageRequest: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 

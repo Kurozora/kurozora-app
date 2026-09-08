@@ -33,9 +33,12 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.configureTextView()
+
+		MainActor.assumeIsolated {
+			self.configureTextView()
+		}
 	}
 
 	// MARK: - Functions

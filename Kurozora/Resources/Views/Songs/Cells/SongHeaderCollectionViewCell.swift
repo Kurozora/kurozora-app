@@ -38,17 +38,19 @@ class SongHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell 
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.primaryImageView.tag = 0
-		self.primaryImageView.isUserInteractionEnabled = true
-		let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
-		self.primaryImageView.addGestureRecognizer(primaryTap)
+		MainActor.assumeIsolated {
+			self.primaryImageView.tag = 0
+			self.primaryImageView.isUserInteractionEnabled = true
+			let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+			self.primaryImageView.addGestureRecognizer(primaryTap)
 
-		self.primaryImageView.applyCornerRadius(22.0)
-		self.primaryImageView.layer.borderWidth = 0
-		self.primaryBorderView.cornerRadius = 22.0
+			self.primaryImageView.applyCornerRadius(22.0)
+			self.primaryImageView.layer.borderWidth = 0
+			self.primaryBorderView.cornerRadius = 22.0
+		}
 	}
 
 	// MARK: - MediaViewerHeaderCell

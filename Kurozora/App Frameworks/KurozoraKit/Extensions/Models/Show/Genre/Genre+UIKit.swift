@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Genre {
+@MainActor extension Genre {
 	/// The webpage URL of the genre.
 	var webpageURLString: String {
 		return "https://kurozora.app/genres/\(self.attributes.slug)"

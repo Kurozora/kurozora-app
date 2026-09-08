@@ -66,18 +66,20 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	weak var delegate: MusicLockupCollectionViewCellDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.albumContainerView.layer.cornerRadius = 22
-		(self.albumImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
-		self.albumImageView?.layer.borderWidth = 0
-		self.albumBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.albumContainerView.layer.cornerRadius = 22
+			(self.albumImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
+			self.albumImageView?.layer.borderWidth = 0
+			self.albumBorderView.cornerRadius = 22
 
-		self.playButton.highlightBackgroundColorEnabled = false
-		self.playButton.springEnabled = true
-		self.playButton.addBlurEffect()
-		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
+			self.playButton.highlightBackgroundColorEnabled = false
+			self.playButton.springEnabled = true
+			self.playButton.addBlurEffect()
+			self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
+		}
 	}
 
 	override func prepareForReuse() {

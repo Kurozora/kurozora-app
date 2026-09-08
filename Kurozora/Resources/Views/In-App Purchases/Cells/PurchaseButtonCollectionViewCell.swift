@@ -26,13 +26,15 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 	var product: Product!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.productImageView.layerCornerRadius = 12.0
-		self.productImageView.layer.cornerCurve = .continuous
-		self.productImageView.layer.borderWidth = self.productImageView.hairlineWidth
-		self.productImageView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		MainActor.assumeIsolated {
+			self.productImageView.layerCornerRadius = 12.0
+			self.productImageView.layer.cornerCurve = .continuous
+			self.productImageView.layer.borderWidth = self.productImageView.hairlineWidth
+			self.productImageView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		}
 	}
 
 	// MARK: - Functions

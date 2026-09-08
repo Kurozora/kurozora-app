@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension UserNotification {
+@MainActor extension UserNotification {
 	/// Create a context menu configuration for the user's notification.
 	///
 	/// - Parameters:

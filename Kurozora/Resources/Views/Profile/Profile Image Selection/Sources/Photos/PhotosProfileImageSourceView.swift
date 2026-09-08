@@ -26,6 +26,9 @@ class PhotosProfileImageSourceView: UIView {
 	private(set) var currentImage: UIImage?
 
 	private var photoAssets: [PHAsset] = []
+
+	/// The loaded assets keyed by local identifier, for resolving snapshot items.
+	private var photoAssetsByIdentifier: [String: PHAsset] = [:]
 	private var hasLimitedPhotoAccess: Bool = false
 	private var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 
@@ -118,7 +121,8 @@ class PhotosProfileImageSourceView: UIView {
 			guard let self = self else { return }
 			cell.imageKind = self.imageKind
 			switch itemKind {
-			case .photo(let asset):
+			case .photo(let localIdentifier):
+				guard let asset = self.photoAssetsByIdentifier[localIdentifier] else { return }
 				let scale = UIScreen.main.scale
 				let cellSize = CGSize(width: self.imageKind.layoutCellSize * scale, height: self.imageKind.layoutCellSize * scale)
 				self.loadImage(for: asset, targetSize: cellSize) { image in
@@ -157,7 +161,7 @@ class PhotosProfileImageSourceView: UIView {
 	private func updateDataSource() {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems([.camera] + self.photoAssets.map { .photo($0) }, toSection: .main)
+		snapshot.appendItems([.camera] + self.photoAssets.map { .photo($0.localIdentifier) }, toSection: .main)
 		self.dataSource.apply(snapshot)
 	}
 
@@ -260,6 +264,7 @@ class PhotosProfileImageSourceView: UIView {
 		}
 
 		self.photoAssets = filteredAssets
+		self.photoAssetsByIdentifier = Dictionary(filteredAssets.map { ($0.localIdentifier, $0) }, uniquingKeysWith: { first, _ in first })
 		self.updateDataSource()
 	}
 
@@ -286,29 +291,11 @@ extension PhotosProfileImageSourceView {
 
 // MARK: - ItemKind
 extension PhotosProfileImageSourceView {
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case camera
-		case photo(_ asset: PHAsset)
 
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .camera:
-				hasher.combine("camera")
-			case .photo(let asset):
-				hasher.combine(asset.localIdentifier)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.camera, .camera):
-				return true
-			case (.photo(let lhsAsset), .photo(let rhsAsset)):
-				return lhsAsset.localIdentifier == rhsAsset.localIdentifier
-			default:
-				return false
-			}
-		}
+		/// A photo, identified by its asset's local identifier.
+		case photo(_ localIdentifier: String)
 	}
 }
 
@@ -320,7 +307,8 @@ extension PhotosProfileImageSourceView: UICollectionViewDelegate {
 		switch itemKind {
 		case .camera:
 			break
-		case .photo(let asset):
+		case .photo(let localIdentifier):
+			guard let asset = self.photoAssetsByIdentifier[localIdentifier] else { return }
 			self.loadImage(for: asset, targetSize: PHImageManagerMaximumSize) { [weak self] image in
 				guard let self = self, let image = image else { return }
 				self.originalSelectedImage = image

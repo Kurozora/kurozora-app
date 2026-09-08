@@ -326,7 +326,7 @@ extension FavoritesCollectionViewController {
 	}
 
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show)
@@ -336,30 +336,5 @@ extension FavoritesCollectionViewController {
 
 		/// Indicates the item kind contains a `Game` object.
 		case game(_: Game)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .show(let show):
-				hasher.combine(show)
-			case .literature(let literature):
-				hasher.combine(literature)
-			case .game(let game):
-				hasher.combine(game)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.show(let show1), .show(let show2)):
-				return show1 == show2
-			case (.literature(let literature1), .literature(let literature2)):
-				return literature1 == literature2
-			case (.game(let game1), .game(let game2)):
-				return game1 == game2
-			default:
-				return false
-			}
-		}
 	}
 }

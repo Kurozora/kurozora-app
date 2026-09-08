@@ -275,7 +275,7 @@ final class MiniPlayerWindowBridge: NSObject {
 	private static var didInterceptSendEvent = false
 
 	// MARK: - Initializers
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

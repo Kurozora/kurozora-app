@@ -11,7 +11,7 @@ import UIKit
 
 extension ReportCollectionViewController {
 	/// The form sections rendered by the report sheet.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The reason picker section.
 		case reason
@@ -32,7 +32,7 @@ extension ReportCollectionViewController {
 	}
 
 	/// The set of available item kinds.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// A selectable reason option.
 		case reasonOption(ReportOption)

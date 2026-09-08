@@ -61,7 +61,7 @@ final class KDownloadProgressView: UIView {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppearanceChange), name: .KSAppAppearanceDidChange, object: nil)
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

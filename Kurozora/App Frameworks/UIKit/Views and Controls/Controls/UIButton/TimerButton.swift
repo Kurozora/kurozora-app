@@ -54,7 +54,7 @@ final class TimerButton: KButton {
 		}
 	}
 
-	deinit {
+	isolated deinit {
 		self.stopCountdown()
 	}
 
@@ -91,8 +91,10 @@ final class TimerButton: KButton {
 		let interval: TimeInterval = remaining < 60 ? 1 : (remaining < 3600 ? 30 : 300)
 
 		self.countdownTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-			self?.refreshTitle()
-			self?.scheduleCountdownTimer()
+			MainActor.assumeIsolated {
+				self?.refreshTitle()
+				self?.scheduleCountdownTimer()
+			}
 		}
 	}
 

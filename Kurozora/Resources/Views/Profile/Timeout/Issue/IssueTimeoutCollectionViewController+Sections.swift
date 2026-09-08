@@ -11,7 +11,7 @@ import UIKit
 
 extension IssueTimeoutCollectionViewController {
 	/// The form sections rendered by the issue-timeout sheet.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The section grouping the duration and reason pickers.
 		case timeout
@@ -32,7 +32,7 @@ extension IssueTimeoutCollectionViewController {
 	}
 
 	/// The set of available item kinds.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Equatable, nonisolated Hashable {
 		// MARK: - Cases
 		/// The duration picker row.
 		case durationRow

@@ -9,27 +9,12 @@
 import UIKit
 
 enum SearchFilterDataSource {
-	enum Section {
+	enum Section: nonisolated Equatable, nonisolated Hashable {
 		case main
 	}
 
-	enum ItemKind: Hashable {
-		case searchFilter(attribute: FilterableAttribute, selectedValue: AnyHashable?)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .searchFilter(let attribute, let selectedValue):
-				hasher.combine(attribute.name)
-				hasher.combine(selectedValue)
-			}
-		}
-
-		static func == (lhs: SearchFilterDataSource.ItemKind, rhs: SearchFilterDataSource.ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.searchFilter(let attribute1, let selectedValue1), .searchFilter(let attribute2, let selectedValue2)):
-				return attribute1.name == attribute2.name && selectedValue1 == selectedValue2
-			}
-		}
+	enum ItemKind: nonisolated Hashable {
+		/// A filter row, identified by the attribute's key and its current value.
+		case searchFilter(key: FilterKey, selectedValue: AnyHashable?)
 	}
 }

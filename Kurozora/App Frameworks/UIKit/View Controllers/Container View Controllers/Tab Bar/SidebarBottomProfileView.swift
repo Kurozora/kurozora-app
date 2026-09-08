@@ -39,7 +39,7 @@ final class KSidebarBottomProfileView: UIControl {
 		self.refreshUser()
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

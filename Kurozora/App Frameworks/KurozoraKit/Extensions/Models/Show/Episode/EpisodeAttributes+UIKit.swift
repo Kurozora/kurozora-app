@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Episode.Attributes {
+@MainActor extension Episode.Attributes {
 	// MARK: - Properties
 	/// Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is omitted.
 	///

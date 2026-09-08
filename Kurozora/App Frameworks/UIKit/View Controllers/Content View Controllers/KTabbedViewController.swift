@@ -109,10 +109,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	fileprivate func sharedInit() {
 		self.tabBarDataSource = self
 
-		// Fetch sections.
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.tabBarDataSource?.fetchSections?()
-		}
+		self.tabBarDataSource?.fetchSections?()
 	}
 
 	/// Configure the view.

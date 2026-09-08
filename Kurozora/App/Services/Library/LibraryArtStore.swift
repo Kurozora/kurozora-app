@@ -13,7 +13,7 @@ import os.log
 import UIKit
 import UniformTypeIdentifiers
 
-private let artStoreLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryArtStore")
+private nonisolated let artStoreLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryArtStore")
 
 actor LibraryArtStore {
 	// MARK: - Properties

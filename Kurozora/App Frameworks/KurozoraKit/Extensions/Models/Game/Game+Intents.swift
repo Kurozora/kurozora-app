@@ -11,7 +11,7 @@ import Intents
 import KurozoraKit
 import MobileCoreServices
 
-extension Game {
+@MainActor extension Game {
 	// MARK: - Properties
 	/// Create an NSUserActivity from the selected game.
 	var openDetailUserActivity: NSUserActivity {

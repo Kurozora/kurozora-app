@@ -37,7 +37,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case literatureIdentity(_: LiteratureIdentity)
 		case relatedLiterature(_: RelatedLiterature)
 	}
@@ -137,7 +137,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 			case .literatureIdentity(let identity):
 				if identity.id.rawValue == trackableID,
 				   let index = currentSnapshot.indexOfItem(item),
-				   let literature = self.cache[IndexPath(item: index, section: 0)] as? Literature {
+				   self.cache[IndexPath(item: index, section: 0)] is Literature {
 					matchedItems.append(item)
 				}
 			case .relatedLiterature(let relatedLiterature):

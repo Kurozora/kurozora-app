@@ -13,8 +13,11 @@ class CommentCell: PostCell {
 	@IBOutlet weak var bubbleView: UIView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.bubbleView.layerCornerRadius = 10
+
+		MainActor.assumeIsolated {
+			self.bubbleView.layerCornerRadius = 10
+		}
 	}
 }

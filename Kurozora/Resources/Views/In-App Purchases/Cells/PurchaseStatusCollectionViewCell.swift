@@ -20,11 +20,13 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var purchaseStatusLabel: KLabel!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.contentView.layerCornerRadius = 12.0
-		self.productImageView.layerCornerRadius = 12.0
+		MainActor.assumeIsolated {
+			self.contentView.layerCornerRadius = 12.0
+			self.productImageView.layerCornerRadius = 12.0
+		}
 	}
 
 	// MARK: - Functions

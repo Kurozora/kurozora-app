@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension LocalNote {
+nonisolated extension LocalNote {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<LocalNote> {
 		return NSFetchRequest<LocalNote>(entityName: "LocalNote")
 	}

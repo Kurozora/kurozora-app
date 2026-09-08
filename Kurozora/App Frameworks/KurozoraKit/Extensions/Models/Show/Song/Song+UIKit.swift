@@ -10,7 +10,7 @@ import KurozoraKit
 import MusicKit
 import UIKit
 
-extension KKSong {
+@MainActor extension KKSong {
 	/// The webpage URL of the song.
 	var webpageURLString: String {
 		return "https://kurozora.app/songs/\(self.id)"

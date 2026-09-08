@@ -31,11 +31,13 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.sharedInit()
 	}
 
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
-		self.primaryImageView?.theme_tintColor = KThemePicker.textColor.rawValue
+		MainActor.assumeIsolated {
+			self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
+			self.primaryImageView?.theme_tintColor = KThemePicker.textColor.rawValue
+		}
 	}
 
 	// MARK: - Functions

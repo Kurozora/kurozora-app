@@ -189,7 +189,6 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	/// The number of body lines shown before the review is clipped behind the `more` button.
 	private static let bodyLineLimit = 6
 
-
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -452,7 +451,6 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 		// vote row sits at the bottom.
 		let spacerView = UIView()
 		spacerView.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-
 
 		let contentStackView = UIStackView(arrangedSubviews: [headerRowView, self.cosmosView, self.metadataLabel, self.bodyView, spacerView, self.voteRowView])
 		contentStackView.translatesAutoresizingMaskIntoConstraints = false

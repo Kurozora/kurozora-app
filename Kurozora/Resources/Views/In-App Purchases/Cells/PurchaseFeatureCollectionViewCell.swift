@@ -15,13 +15,15 @@ class PurchaseFeatureCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var productImageView: AspectRatioImageView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.contentView.layerCornerRadius = 22.0
-		self.contentView.layer.cornerCurve = .continuous
-		self.contentView.layer.borderWidth = self.contentView.hairlineWidth
-		self.contentView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		MainActor.assumeIsolated {
+			self.contentView.layerCornerRadius = 22.0
+			self.contentView.layer.cornerCurve = .continuous
+			self.contentView.layer.borderWidth = self.contentView.hairlineWidth
+			self.contentView.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
+		}
 	}
 
 	// MARK: - Functions

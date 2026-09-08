@@ -160,14 +160,20 @@ protocol KStepperDelegate: AnyObject {
 		self.configure()
 	}
 
-	override open func prepareForInterfaceBuilder() {
+	nonisolated override open func prepareForInterfaceBuilder() {
 		super.prepareForInterfaceBuilder()
-		self.updateValueTextField()
+
+		MainActor.assumeIsolated {
+			self.updateValueTextField()
+		}
 	}
 
-	override open func awakeFromNib() {
+	nonisolated override open func awakeFromNib() {
 		super.awakeFromNib()
-		self.updateValueTextField()
+
+		MainActor.assumeIsolated {
+			self.updateValueTextField()
+		}
 	}
 }
 

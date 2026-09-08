@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension LocalOutboxOperation {
+nonisolated extension LocalOutboxOperation {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<LocalOutboxOperation> {
 		return NSFetchRequest<LocalOutboxOperation>(entityName: "LocalOutboxOperation")
 	}

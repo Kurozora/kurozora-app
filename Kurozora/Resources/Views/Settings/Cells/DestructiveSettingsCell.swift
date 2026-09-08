@@ -13,9 +13,12 @@ class DestructiveSettingsCell: SettingsCell {
 	@IBOutlet private var titleLabel: UILabel!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.selectionStyle = .none
+
+		MainActor.assumeIsolated {
+			self.selectionStyle = .none
+		}
 	}
 
 	// MARK: - Functions

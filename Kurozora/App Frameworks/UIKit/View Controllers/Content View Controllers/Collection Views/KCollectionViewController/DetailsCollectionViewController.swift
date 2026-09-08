@@ -968,8 +968,8 @@ extension DetailsCollectionViewController {
 		let actionSheet = UIAlertController.actionSheetWithItems(
 			items: LibraryStatus.alertControllerItems(for: libraryKind),
 			currentSelection: oldLibraryStatus,
-			action: { title, value in
-				Task { [weak self] in
+			action: { [weak self] title, value in
+				Task {
 					guard let self = self else { return }
 					await target.addToLibrary(status: value)
 					didAdd(value, title)
@@ -979,8 +979,8 @@ extension DetailsCollectionViewController {
 		)
 
 		if oldLibraryStatus != .none {
-			actionSheet.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { _ in
-				Task { [weak self] in
+			actionSheet.addAction(UIAlertAction(title: L10n.removeFromLibrary, style: .destructive) { [weak self] _ in
+				Task {
 					guard let self = self else { return }
 					await target.removeFromLibrary()
 					didRemove(oldLibraryStatus)

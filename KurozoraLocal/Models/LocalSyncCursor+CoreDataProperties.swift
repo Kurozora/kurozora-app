@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension LocalSyncCursor {
+nonisolated extension LocalSyncCursor {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<LocalSyncCursor> {
 		return NSFetchRequest<LocalSyncCursor>(entityName: "LocalSyncCursor")
 	}

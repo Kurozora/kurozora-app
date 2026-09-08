@@ -601,32 +601,12 @@ extension NotificationsTableViewController {
 	///
 	/// - `main`: a `main` notifications section.
 	/// - `grouped`: a `grouped` notifications section.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates a main notifications section.
 		case main
 
 		/// Indicates a grouped notifications section.
 		case grouped(_ groupedNotifications: GroupedNotifications)
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .grouped(let groupedNotifications):
-				hasher.combine(groupedNotifications)
-			case .main: break
-			}
-		}
-
-		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.grouped(let groupedNotifications1), .grouped(let groupedNotifications2)):
-				return groupedNotifications1 == groupedNotifications2
-			case (.main, .main):
-				return true
-			default:
-				return false
-			}
-		}
 	}
 }

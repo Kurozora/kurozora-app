@@ -50,7 +50,6 @@ class ReviewRevisionCollectionViewCell: KCollectionViewCell {
 	/// Whether the reader revealed this version's spoiler.
 	private var isSpoilerRevealed = false
 
-
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

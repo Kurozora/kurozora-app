@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Achievement.Attributes {
+@MainActor extension Achievement.Attributes {
 	/// Set the genre's symbol image.
 	///
 	/// If the genre has no symbol image set, then a placeholder image is applied.

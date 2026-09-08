@@ -362,17 +362,17 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				matchedItems.append(item)
 			case (.showIdentity(let identity), .shows) where identity.id.rawValue == trackableID:
 				if let indexPath = self.dataSource.indexPath(for: item),
-				   let show = self.cache[indexPath] as? Show {
+				   self.cache[indexPath] is Show {
 					matchedItems.append(item)
 				}
 			case (.literatureIdentity(let identity), .literatures) where identity.id.rawValue == trackableID:
 				if let indexPath = self.dataSource.indexPath(for: item),
-				   let literature = self.cache[indexPath] as? Literature {
+				   self.cache[indexPath] is Literature {
 					matchedItems.append(item)
 				}
 			case (.gameIdentity(let identity), .games) where identity.id.rawValue == trackableID:
 				if let indexPath = self.dataSource.indexPath(for: item),
-				   let game = self.cache[indexPath] as? Game {
+				   self.cache[indexPath] is Game {
 					matchedItems.append(item)
 				}
 			default:

@@ -18,7 +18,7 @@ extension UIApplication {
 	///    - options: A dictionary of options to use when opening the URL. For a list of possible keys to include in this dictionary, see UIApplication.OpenExternalURLOptionsKey.
 	///    - completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of opening the URL. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
 	///    - success: A Boolean indicating whether the URL was opened successfully.
-	func kOpen(_ url: URL?, deepLink: URL? = nil, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
+	func kOpen(_ url: URL?, deepLink: URL? = nil, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: (@MainActor @Sendable (_ success: Bool) -> Void)? = nil) {
 		if let deepLink = deepLink, UIApplication.shared.canOpenURL(deepLink) {
 			UIApplication.shared.open(deepLink, options: options, completionHandler: completion)
 		}

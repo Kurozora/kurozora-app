@@ -40,10 +40,10 @@ enum VideoQuality: Int, CaseIterable {
 
 	// MARK: - Properties
 	/// The default quality on Wi-Fi.
-	static let defaultWiFi: VideoQuality = .auto
+	nonisolated static let defaultWiFi: VideoQuality = .auto
 
 	/// The default quality on cellular.
-	static let defaultCellular: VideoQuality = .auto
+	nonisolated static let defaultCellular: VideoQuality = .auto
 
 	/// The level requested from the player.
 	var preferredLevel: String {

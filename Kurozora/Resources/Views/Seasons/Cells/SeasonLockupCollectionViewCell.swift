@@ -25,13 +25,15 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.posterContainerView.layer.cornerRadius = 22
-		self.posterImageView?.applyCornerRadius(22)
-		self.posterImageView?.layer.borderWidth = 0
-		self.posterBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.posterContainerView.layer.cornerRadius = 22
+			self.posterImageView?.applyCornerRadius(22)
+			self.posterImageView?.layer.borderWidth = 0
+			self.posterBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

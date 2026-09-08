@@ -49,7 +49,7 @@ final class VideoRendererViewController: UIViewController, MediaRenderable {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		self.presentationSizeObservation?.invalidate()
 	}
 

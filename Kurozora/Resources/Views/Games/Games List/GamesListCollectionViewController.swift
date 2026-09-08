@@ -37,7 +37,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case gameIdentity(_: GameIdentity)
 		case relatedGame(_: RelatedGame)
 	}
@@ -137,7 +137,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 			case .gameIdentity(let identity):
 				if identity.id.rawValue == trackableID,
 				   let index = currentSnapshot.indexOfItem(item),
-				   let game = self.cache[IndexPath(item: index, section: 0)] as? Game {
+				   self.cache[IndexPath(item: index, section: 0)] is Game {
 					matchedItems.append(item)
 				}
 			case .relatedGame(let relatedGame):

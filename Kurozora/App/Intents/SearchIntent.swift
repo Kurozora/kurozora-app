@@ -14,8 +14,8 @@ import UIKit
 struct SearchIntent: AppIntent, CustomIntentMigratedAppIntent, PredictableIntent {
 	static let intentClassName = "SearchIntentIntent"
 
-	static var title: LocalizedStringResource = "Find on Kurozora"
-	static var description = IntentDescription("Search for anime, manga, games, and more in Kurozora")
+	static let title: LocalizedStringResource = "Find on Kurozora"
+	static let description = IntentDescription("Search for anime, manga, games, and more in Kurozora")
 
 	@Parameter(title: "Search in", default: .kurozora)
 	var scope: SearchScopeAppEnum

@@ -15,7 +15,7 @@ final class FeedMessageReSharesViewController: ListCollectionViewController {
 		case main
 	}
 
-	private enum ItemKind: Hashable {
+	private enum ItemKind: nonisolated Hashable {
 		case user(User)
 	}
 

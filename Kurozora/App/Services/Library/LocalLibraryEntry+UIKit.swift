@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension LocalLibraryEntry {
+@MainActor extension LocalLibraryEntry {
 	// MARK: - Functions
 	/// Builds a context-menu configuration for the library entry.
 	///
@@ -199,7 +199,7 @@ extension LocalLibraryEntry {
 		guard let slug = User.current?.attributes.slug else { return }
 
 		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.trackableID, userSlug: slug, kind: self.kind, seed: nil)
-		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
+		ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	/// Removes the entry from the user's library.

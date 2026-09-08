@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension User {
+@MainActor extension User {
 	/// The webpage URL of the user.
 	var webpageURLString: String {
 		return "https://kurozora.app/profile/\(self.attributes.slug)"
@@ -155,26 +155,28 @@ extension User {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(activityItems: [Any], on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		var activityItems: [Any] = []
-		activityItems.append(self.webpageURLString)
-		activityItems.append(L10n.shareFollowUser(self.attributes.username))
+		Task {
+			var activityItems: [Any] = []
+			activityItems.append(self.webpageURLString)
+			activityItems.append(L10n.shareFollowUser(self.attributes.username))
 
-		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
-			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sourceView = sourceView {
-				popoverController.sourceView = sourceView
-				popoverController.sourceRect = sourceView.frame
-			} else {
-				popoverController.barButtonItem = barButtonItem
+			if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
+				activityItems.append(await UIImage.load(from: profileImageURLString) ?? self.attributes.profilePlaceholderImage)
 			}
-		}
 
-		viewController?.present(activityViewController, animated: true, completion: nil)
+			let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
+
+			if let popoverController = activityViewController.popoverPresentationController {
+				if let sourceView = sourceView {
+					popoverController.sourceView = sourceView
+					popoverController.sourceRect = sourceView.frame
+				} else {
+					popoverController.barButtonItem = barButtonItem
+				}
+			}
+
+			viewController?.present(activityViewController, animated: true, completion: nil)
+		}
 	}
 
 	@MainActor
@@ -383,7 +385,7 @@ extension User {
 }
 
 // MARK: - Moderation
-extension User.Attributes {
+@MainActor extension User.Attributes {
 	/// Whether the user currently holds a moderation role.
 	var isModerator: Bool {
 		guard let role = self.role else { return false }
@@ -392,7 +394,7 @@ extension User.Attributes {
 }
 
 // MARK: - Library
-extension User {
+@MainActor extension User {
 	/// Create a context menu for the user's library.
 	///
 	/// - Parameters:
@@ -510,7 +512,7 @@ extension User {
 }
 
 // MARK: - Profile Links
-extension User {
+@MainActor extension User {
 	/// Opens the profile page the given Kurozora profile link points to.
 	///
 	/// - Parameter url: The webpage URL of a profile, ending in the user's slug.

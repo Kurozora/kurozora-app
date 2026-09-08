@@ -485,20 +485,21 @@ class ProfileImagePreviewView: UIView {
 				incomingSharpView.transform = .identity
 			}
 		} completion: { [weak self] _ in
-			guard let self else { return }
-			// Restore real content visibility
-			self.previewImageView.alpha = 1
-			self.monogramInitialsLabel.alpha = 1
-			self.previewImageView.transform = .identity
-			self.monogramInitialsLabel.transform = .identity
+			MainActor.assumeIsolated {
+				guard let self else { return }
+				self.previewImageView.alpha = 1
+				self.monogramInitialsLabel.alpha = 1
+				self.previewImageView.transform = .identity
+				self.monogramInitialsLabel.transform = .identity
 
-			imageSnapshot.removeFromSuperview()
-			labelSnapshot?.removeFromSuperview()
-			outgoingBlurView.removeFromSuperview()
-			incomingBlurView.removeFromSuperview()
-			incomingSharpView.removeFromSuperview()
-			self.activeTransitionSnapshots.removeAll {
-				$0 === imageSnapshot || $0 === labelSnapshot || $0 === outgoingBlurView || $0 === incomingBlurView || $0 === incomingSharpView
+				imageSnapshot.removeFromSuperview()
+				labelSnapshot?.removeFromSuperview()
+				outgoingBlurView.removeFromSuperview()
+				incomingBlurView.removeFromSuperview()
+				incomingSharpView.removeFromSuperview()
+				self.activeTransitionSnapshots.removeAll {
+					$0 === imageSnapshot || $0 === labelSnapshot || $0 === outgoingBlurView || $0 === incomingBlurView || $0 === incomingSharpView
+				}
 			}
 		}
 	}

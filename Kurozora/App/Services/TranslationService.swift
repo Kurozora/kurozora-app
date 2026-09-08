@@ -9,7 +9,7 @@
 import KurozoraKit
 import NaturalLanguage
 import SwiftUI
-import Translation
+@preconcurrency import Translation
 import UIKit
 
 /// Translates ``TranslatableContent`` into the reader's language on device, preserving its inline formatting.
@@ -523,16 +523,18 @@ extension TranslationService {
 	///   - target: The language to translate into.
 	private func translate(_ batch: [PendingTranslation], from source: Locale.Language, to target: Locale.Language) async {
 		let options = AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)
-		let requests = batch.compactMap { pending -> TranslationSession.Request? in
-			guard let markdown = pending.content.translationMarkdown ?? pending.content.translationPlainText else { return nil }
-
-			let body = (try? AttributedString(markdown: markdown, options: options)) ?? AttributedString(markdown)
-			return TranslationSession.Request(sourceText: body, clientIdentifier: pending.content.translationIdentity.rawValue)
-		}
 
 		do {
 			let responses = try await self.withSession(from: source, to: target) { session in
-				try await session.translations(from: requests)
+				var requests: [TranslationSession.Request] = []
+				for pending in batch {
+					guard let markdown = pending.content.translationMarkdown ?? pending.content.translationPlainText else { continue }
+
+					let body = (try? AttributedString(markdown: markdown, options: options)) ?? AttributedString(markdown)
+					requests.append(TranslationSession.Request(sourceText: body, clientIdentifier: pending.content.translationIdentity.rawValue))
+				}
+
+				return try await session.translations(from: requests)
 			}
 
 			for response in responses {
@@ -592,7 +594,7 @@ extension TranslationService {
 	///   - body: The work to perform with the session.
 	///
 	/// - Returns: The result of the work.
-	private func withSession<Result>(from source: Locale.Language, to target: Locale.Language, perform body: @escaping (TranslationSession) async throws -> Result) async throws -> Result {
+	private func withSession<Result>(from source: Locale.Language, to target: Locale.Language, perform body: @escaping @MainActor @Sendable (TranslationSession) async throws -> Result) async throws -> Result {
 		guard let parent = self.rootViewController else { throw TranslationError.noPresentationContext }
 
 		var hostingController: UIHostingController<TranslationSessionHost>?
@@ -763,7 +765,7 @@ private struct TranslationSessionHost: View {
 	let configuration: TranslationSession.Configuration
 
 	/// The work to perform once the session is ready.
-	let perform: (TranslationSession) async -> Void
+	let perform: @MainActor @Sendable (TranslationSession) async -> Void
 
 	// MARK: - View
 	var body: some View {

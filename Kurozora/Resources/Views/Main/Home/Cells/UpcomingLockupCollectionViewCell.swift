@@ -15,14 +15,16 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var bannerBorderView: BorderView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.contentView.layer.cornerRadius = 22
-		self.bannerImageView?.applyCornerRadius(22)
-		(self.shadowImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
-		self.bannerImageView?.layer.borderWidth = 0
-		self.bannerBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.contentView.layer.cornerRadius = 22
+			self.bannerImageView?.applyCornerRadius(22)
+			(self.shadowImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
+			self.bannerImageView?.layer.borderWidth = 0
+			self.bannerBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

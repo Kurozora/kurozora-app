@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension AccessToken {
+@MainActor extension AccessToken {
 	/// Create a context menu configuration for the access token.
 	///
 	/// - Parameters:

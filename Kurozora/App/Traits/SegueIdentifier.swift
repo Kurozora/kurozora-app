@@ -9,10 +9,7 @@
 import Foundation
 
 /// A type that can be used as a key for encoding and decoding.
-protocol SegueIdentifier: Sendable {
-	/// The corresponding string value of the segue identifier.
-	var rawValue: String { get }
-}
+protocol SegueIdentifier: RawRepresentable, Sendable where RawValue == String {}
 
 extension SegueIdentifier {
 	var description: String {

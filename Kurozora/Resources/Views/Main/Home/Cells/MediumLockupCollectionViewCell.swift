@@ -18,11 +18,13 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var symbolImageView: UIImageView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.backgroundColorView.layer.cornerRadius = 22
-		self.mediumBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.backgroundColorView.layer.cornerRadius = 22
+			self.mediumBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

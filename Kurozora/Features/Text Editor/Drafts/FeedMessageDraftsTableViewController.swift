@@ -25,7 +25,7 @@ protocol FeedMessageDraftsTableViewControllerDelegate: AnyObject {
 /// Presents a list of saved feed message drafts with swipe-to-delete support.
 final class FeedMessageDraftsTableViewController: KTableViewController {
 	// MARK: - Enums
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Equatable, nonisolated Hashable {
 		case main
 	}
 

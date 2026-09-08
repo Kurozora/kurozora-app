@@ -87,7 +87,7 @@ extension StudioDetailsCollectionViewController {
 	}
 
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Studio` object.
 		case studio(_: Studio)

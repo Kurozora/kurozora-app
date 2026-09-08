@@ -55,7 +55,7 @@ final class KDownloadArcView: UIView {
 		self.layer.addSublayer(self.arcLayer)
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

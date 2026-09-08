@@ -594,9 +594,9 @@ final class FloatingLyricsManager: NSObject {
 		self.applyAutoOpenSetting(to: controller)
 		self.pictureInPictureController = controller
 
-		self.startPossibleObservation = controller.observe(\.isPictureInPicturePossible, options: [.new]) { [weak self] controller, _ in
+		self.startPossibleObservation = controller.observe(\.isPictureInPicturePossible, options: [.new]) { [weak self] _, _ in
 			DispatchQueue.main.async {
-				guard let self = self, self.isStartPending, controller.isPictureInPicturePossible else { return }
+				guard let self = self, self.isStartPending, let controller = self.pictureInPictureController, controller.isPictureInPicturePossible else { return }
 				self.isStartPending = false
 				controller.startPictureInPicture()
 			}

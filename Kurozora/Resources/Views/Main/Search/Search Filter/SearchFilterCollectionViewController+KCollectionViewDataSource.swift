@@ -23,7 +23,9 @@ extension SearchFilterCollectionViewController {
 
 		self.dataSource = UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return nil }
+
 				switch attribute.type {
 				case .singleSelection:
 					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
@@ -90,7 +92,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .episode(let episodeFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -142,7 +144,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .game(let gameFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -198,7 +200,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .literature(let literatureFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -266,7 +268,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .person(let personFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -290,7 +292,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .show(let showFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -356,7 +358,7 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		case .studio(let studioFilter):
 			itemKind = self.filterableAttributes.map { filterableAttribute in
@@ -390,13 +392,13 @@ extension SearchFilterCollectionViewController {
 
 				filterableAttribute.value.selected = value
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: value)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
 			}
 		default:
 			itemKind = self.filterableAttributes.map { filterableAttribute in
 				filterableAttribute.value.selected = nil
 
-				return .searchFilter(attribute: filterableAttribute.value, selectedValue: nil)
+				return .searchFilter(key: filterableAttribute.key, selectedValue: nil)
 			}
 		}
 
@@ -413,7 +415,8 @@ extension SearchFilterCollectionViewController {
 	UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterDateCollectionViewCell.nib) { searchFilterDateCollectionViewCell, _, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return }
 				searchFilterDateCollectionViewCell.delegate = self
 				searchFilterDateCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Date)
 
@@ -434,7 +437,8 @@ extension SearchFilterCollectionViewController {
 	UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSelectCollectionViewCell.nib) { searchFilterSelectCollectionViewCell, _, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return }
 				guard let options = attribute.options?.map({ key, _ in
 					return key
 				}) else { return }
@@ -452,7 +456,8 @@ extension SearchFilterCollectionViewController {
 	UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSwitchCollectionViewCell.nib) { searchFilterSwitchCollectionViewCell, _, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return }
 				searchFilterSwitchCollectionViewCell.delegate = self
 				searchFilterSwitchCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Bool)
 			}
@@ -463,7 +468,8 @@ extension SearchFilterCollectionViewController {
 	UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterTextCollectionViewCell.nib) { searchFilterTextCollectionViewCell, _, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return }
 				searchFilterTextCollectionViewCell.delegate = self
 				searchFilterTextCollectionViewCell.configureCell(title: attribute.name, placeholder: nil, selected: attribute.selected as? String)
 			}
@@ -474,7 +480,8 @@ extension SearchFilterCollectionViewController {
 	UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterStepperCollectionViewCell.nib) { searchFilterStepperCollectionViewCell, _, item in
 			switch item {
-			case .searchFilter(let attribute, _):
+			case .searchFilter(let key, _):
+				guard let attribute = self.attribute(for: key) else { return }
 				searchFilterStepperCollectionViewCell.delegate = self
 				searchFilterStepperCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Double)
 			}

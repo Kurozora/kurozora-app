@@ -11,7 +11,7 @@ import UIKit
 // MARK: - SectionLayoutKind
 extension ReviewEditorCollectionViewController {
 	/// The sections of the review editor.
-	enum SectionLayoutKind {
+	enum SectionLayoutKind: nonisolated Hashable {
 		/// Indicates the section holds the tap to rate row.
 		case rate
 

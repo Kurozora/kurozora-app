@@ -230,16 +230,27 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func fetchDetails() async {
 		guard let showIdentity = self.showIdentity else { return }
 
-		async let reviewIdentityResponse = KService.reviews(for: showIdentity).cursor(nil).limit(10).response()
-		async let editorialResponse = KService.editorial(for: showIdentity).response()
-		async let seasonIdentityResponse = KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10).response()
-		async let castIdentityResponse = KService.cast(for: showIdentity).limit(10).response()
-		async let showSongResponse = KService.songs(for: showIdentity).limit(10).response()
-		async let studioIdentityResponse = KService.studios(for: showIdentity).limit(10).response()
-		async let moreByStudioResponse = KService.moreByStudio(for: showIdentity).limit(10).response()
-		async let relatedShowResponse = KService.relatedShows(for: showIdentity).limit(10).response()
-		async let relatedLiteraturesResponse = KService.relatedLiteratures(for: showIdentity).limit(10).response()
-		async let relatedGamesResponse = KService.relatedGames(for: showIdentity).limit(10).response()
+		let reviewIdentityRequest = KService.reviews(for: showIdentity).cursor(nil).limit(10)
+		let editorialRequest = KService.editorial(for: showIdentity)
+		let seasonIdentityRequest = KService.seasons(for: showIdentity).reversed(true).cursor(nil).limit(10)
+		let castIdentityRequest = KService.cast(for: showIdentity).limit(10)
+		let showSongRequest = KService.songs(for: showIdentity).limit(10)
+		let studioIdentityRequest = KService.studios(for: showIdentity).limit(10)
+		let moreByStudioRequest = KService.moreByStudio(for: showIdentity).limit(10)
+		let relatedShowRequest = KService.relatedShows(for: showIdentity).limit(10)
+		let relatedLiteraturesRequest = KService.relatedLiteratures(for: showIdentity).limit(10)
+		let relatedGamesRequest = KService.relatedGames(for: showIdentity).limit(10)
+
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let editorialResponse = editorialRequest.response()
+		async let seasonIdentityResponse = seasonIdentityRequest.response()
+		async let castIdentityResponse = castIdentityRequest.response()
+		async let showSongResponse = showSongRequest.response()
+		async let studioIdentityResponse = studioIdentityRequest.response()
+		async let moreByStudioResponse = moreByStudioRequest.response()
+		async let relatedShowResponse = relatedShowRequest.response()
+		async let relatedLiteraturesResponse = relatedLiteraturesRequest.response()
+		async let relatedGamesResponse = relatedGamesRequest.response()
 
 		if self.show == nil {
 			do {

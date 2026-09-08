@@ -58,7 +58,9 @@ class MuseumPosterCollectionViewCell: UICollectionViewCell {
 		self.contentView.addSubview(self.posterImageView)
 
 		self.posterBoundsObservation = self.posterImageView.observe(\.bounds, options: [.new]) { [weak self] _, _ in
-			self?.syncLiteratureMaskFrame()
+			MainActor.assumeIsolated {
+				self?.syncLiteratureMaskFrame()
+			}
 		}
 
 		self.posterImageOverlayView.translatesAutoresizingMaskIntoConstraints = false

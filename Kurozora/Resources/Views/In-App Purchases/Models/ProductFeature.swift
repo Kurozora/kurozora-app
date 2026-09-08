@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ProductFeature {
+struct ProductFeature: nonisolated Hashable, Sendable {
 	let title: String
 	let description: String?
 	let image: UIImage?

@@ -37,7 +37,7 @@ final class SplashscreenViewController: KViewController {
 	/// Plays the splash logo animation.
 	///
 	/// - Parameter completion: Called when the animation finishes, with a flag indicating success.
-	func animateLogo(completion: ((Bool) -> Void)?) {
+	func animateLogo(completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		Animation.shared.playAnimation(on: self.logoImageView, completion: completion)
 	}
 }

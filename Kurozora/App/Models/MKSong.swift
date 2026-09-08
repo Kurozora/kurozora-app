@@ -8,17 +8,17 @@
 
 import MusicKit
 
-struct MKLibrary: Codable, Identifiable {
+nonisolated struct MKLibrary: Codable, Identifiable {
 	let id: String
 	let href: String
 	let type: String
 }
 
-struct MKLibraryResponse: Codable {
+nonisolated struct MKLibraryResponse: Codable {
 	let data: [MKLibrary]
 }
 
-struct MKSong: Equatable, Codable {
+nonisolated struct MKSong: Equatable, Codable {
 	// MARK: - Properties
 	/// The song object.
 	let song: MusicKit.Song
@@ -36,7 +36,7 @@ struct MKSong: Equatable, Codable {
 }
 
 extension MKSong {
-	struct Relationship: Codable {
+	nonisolated struct Relationship: Codable {
 		let library: MKLibraryResponse?
 	}
 }

@@ -303,7 +303,7 @@ final class KTrailerPlayerView: UIView {
 		self.sharedInit()
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

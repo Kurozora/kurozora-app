@@ -186,10 +186,15 @@ class StudioDetailsCollectionViewController: DetailsCollectionViewController, Se
 	override func fetchDetails() async {
 		guard let studioIdentity = self.studioIdentity else { return }
 
-		async let reviewIdentityResponse = KService.reviews(for: studioIdentity).cursor(nil).limit(10).response()
-		async let showIdentityResponse = KService.shows(for: studioIdentity).limit(10).response()
-		async let literatureIdentityResponse = KService.literatures(for: studioIdentity).limit(10).response()
-		async let gameIdentityResponse = KService.games(for: studioIdentity).limit(10).response()
+		let reviewIdentityRequest = KService.reviews(for: studioIdentity).cursor(nil).limit(10)
+		let showIdentityRequest = KService.shows(for: studioIdentity).limit(10)
+		let literatureIdentityRequest = KService.literatures(for: studioIdentity).limit(10)
+		let gameIdentityRequest = KService.games(for: studioIdentity).limit(10)
+
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let showIdentityResponse = showIdentityRequest.response()
+		async let literatureIdentityResponse = literatureIdentityRequest.response()
+		async let gameIdentityResponse = gameIdentityRequest.response()
 
 		if self.studio == nil {
 			do {

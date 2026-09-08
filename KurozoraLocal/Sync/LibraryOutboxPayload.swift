@@ -9,7 +9,7 @@
 import Foundation
 
 /// The mutation-specific value carried by a pending `LocalOutboxOperation`.
-struct LibraryOutboxPayload: Codable, Sendable {
+nonisolated struct LibraryOutboxPayload: Codable, Sendable {
 	/// Raw value of the target `LibraryStatus`, for `setStatus`.
 	var statusRaw: Int?
 

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class UserSettings: UserDefaults {
+nonisolated class UserSettings: UserDefaults {
 	/// The App Group suite name shared between the main app and extensions.
 	static let suiteName = "group.settings.app.kurozora.tracker"
 
@@ -29,7 +29,6 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.hapticsAllowed.rawValue: true,
 			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast,
 			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
-			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
 			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
 			UserSettingsKey.forwardNavigationEnabled.rawValue: true,
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
@@ -343,9 +342,9 @@ extension UserSettings {
 
 // MARK: - Motion Settings
 extension UserSettings {
-	/// Returns a boolean indicating if reduce motion is enabled.
-	static var isReduceMotionEnabled: Bool {
-		return self.shared.bool(forKey: #function)
+	/// Returns a boolean indicating if reduce motion is enabled, following the system setting until the user chooses.
+	@MainActor static var isReduceMotionEnabled: Bool {
+		return self.shared.object(forKey: #function) as? Bool ?? UIAccessibility.isReduceMotionEnabled
 	}
 
 	/// Returns a boolean indicating if reduce motion's "Sync with Device Settings" is enabled.

@@ -23,7 +23,7 @@ struct YOLOv8Box {
 /// Decodes a YOLOv8 single-class face-detection output tensor into bounding boxes.
 ///
 /// The model's `[1, 5, N]` output holds `[centerX, centerY, width, height, confidence]` per anchor in input pixel coordinates.
-enum YOLOv8OutputDecoder {
+nonisolated enum YOLOv8OutputDecoder {
 	// MARK: - Functions
 	/// Decodes the output tensor and returns the surviving boxes after thresholding and non-maximum suppression.
 	///

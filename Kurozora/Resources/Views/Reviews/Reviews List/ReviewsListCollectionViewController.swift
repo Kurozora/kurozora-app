@@ -806,7 +806,7 @@ extension ReviewsListCollectionViewController {
 	}
 
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a rating.
 		case rateAndReview(_: RateAndReview, currentRating: Double?)
@@ -843,77 +843,5 @@ extension ReviewsListCollectionViewController {
 
 		/// Indicates the item kind contains a `Studio` object.
 		case studio(_ studio: Studio, id: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .rateAndReview(let rateAndReview, let currentRating):
-				hasher.combine(rateAndReview)
-				hasher.combine(currentRating)
-			case .review(let review, let id):
-				hasher.combine(review)
-				hasher.combine(id)
-			case .editorial(let editorial, let id):
-				hasher.combine(editorial)
-				hasher.combine(id)
-			case .lowEffortReviewsToggle:
-				break
-			case .character(let character, let id):
-				hasher.combine(character)
-				hasher.combine(id)
-			case .episode(let episode, let id):
-				hasher.combine(episode)
-				hasher.combine(id)
-			case .game(let game, let id):
-				hasher.combine(game)
-				hasher.combine(id)
-			case .literature(let literature, let id):
-				hasher.combine(literature)
-				hasher.combine(id)
-			case .person(let person, let id):
-				hasher.combine(person)
-				hasher.combine(id)
-			case .show(let show, let id):
-				hasher.combine(show)
-				hasher.combine(id)
-			case .song(let song, let id):
-				hasher.combine(song)
-				hasher.combine(id)
-			case .studio(let studio, let id):
-				hasher.combine(studio)
-				hasher.combine(id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.rateAndReview(let rateAndReview1, let currentRating1), .rateAndReview(let rateAndReview2, let currentRating2)):
-				return rateAndReview1 == rateAndReview2 && currentRating1 == currentRating2
-			case (.review(let review1, let id1), .review(let review2, let id2)):
-				return review1 == review2 && id1 == id2
-			case (.editorial(let editorial1, let id1), .editorial(let editorial2, let id2)):
-				return editorial1 == editorial2 && id1 == id2
-			case (.lowEffortReviewsToggle, .lowEffortReviewsToggle):
-				return true
-			case (.character(let character1, let id1), .character(let character2, let id2)):
-				return character1 == character2 && id1 == id2
-			case (.episode(let episode1, let id1), .episode(let episode2, let id2)):
-				return episode1 == episode2 && id1 == id2
-			case (.game(let game1, let id1), .game(let game2, let id2)):
-				return game1 == game2 && id1 == id2
-			case (.literature(let literature1, let id1), .literature(let literature2, let id2)):
-				return literature1 == literature2 && id1 == id2
-			case (.person(let person1, let id1), .person(let person2, let id2)):
-				return person1 == person2 && id1 == id2
-			case (.show(let show1, let id1), .show(let show2, let id2)):
-				return show1 == show2 && id1 == id2
-			case (.song(let song1, let id1), .song(let song2, let id2)):
-				return song1 == song2 && id1 == id2
-			case (.studio(let studio1, let id1), .studio(let studio2, let id2)):
-				return studio1 == studio2 && id1 == id2
-			default:
-				return false
-			}
-		}
 	}
 }

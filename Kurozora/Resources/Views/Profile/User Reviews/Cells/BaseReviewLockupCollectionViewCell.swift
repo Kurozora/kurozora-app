@@ -33,26 +33,30 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 	/// Whether the reader revealed this review's spoiler.
 	private var isSpoilerRevealed = false
 
-
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
-			self?.syncLiteratureMaskFrame()
-		}
 
-		self.spoilerOverlayView.configure(warning: L10n.reviewSpoiler, cornerRadius: 10)
-		self.spoilerOverlayView.revealHandler = { [weak self] in
-			self?.isSpoilerRevealed = true
-		}
+		MainActor.assumeIsolated {
+			self.posterBoundsObservation = self.posterImageView?.observe(\.bounds, options: [.new]) { [weak self] _, _ in
+				MainActor.assumeIsolated {
+					self?.syncLiteratureMaskFrame()
+				}
+			}
 
-		self.contentView.addSubview(self.spoilerOverlayView)
-		NSLayoutConstraint.activate([
-			self.spoilerOverlayView.topAnchor.constraint(equalTo: self.tertiaryLabel.topAnchor),
-			self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.tertiaryLabel.bottomAnchor),
-			self.spoilerOverlayView.leadingAnchor.constraint(equalTo: self.tertiaryLabel.leadingAnchor),
-			self.spoilerOverlayView.trailingAnchor.constraint(equalTo: self.tertiaryLabel.trailingAnchor)
-		])
+			self.spoilerOverlayView.configure(warning: L10n.reviewSpoiler, cornerRadius: 10)
+			self.spoilerOverlayView.revealHandler = { [weak self] in
+				self?.isSpoilerRevealed = true
+			}
+
+			self.contentView.addSubview(self.spoilerOverlayView)
+			NSLayoutConstraint.activate([
+				self.spoilerOverlayView.topAnchor.constraint(equalTo: self.tertiaryLabel.topAnchor),
+				self.spoilerOverlayView.bottomAnchor.constraint(equalTo: self.tertiaryLabel.bottomAnchor),
+				self.spoilerOverlayView.leadingAnchor.constraint(equalTo: self.tertiaryLabel.leadingAnchor),
+				self.spoilerOverlayView.trailingAnchor.constraint(equalTo: self.tertiaryLabel.trailingAnchor)
+			])
+		}
 	}
 
 	override func layoutSubviews() {

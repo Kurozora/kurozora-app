@@ -32,13 +32,15 @@ class MotionSettingsViewController: SubSettingsViewController, TypedSegueHandlin
 		super.viewDidLoad()
 		// Observe changes in the reduce motion setting
 		NotificationCenter.default.addObserver(forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
-			guard let self = self else { return }
-			let section = Motion.Section.reduceMotion
-			guard let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) else { return }
-			let indexPath = IndexPath(row: rowIndex, section: section.rawValue + self.headerSectionOffset)
-			guard let reduceMotionSyncSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else { return }
+			MainActor.assumeIsolated {
+				guard let self = self else { return }
+				let section = Motion.Section.reduceMotion
+				guard let rowIndex = section.rows.firstIndex(of: .toggleReduceMotionSync) else { return }
+				let indexPath = IndexPath(row: rowIndex, section: section.rawValue + self.headerSectionOffset)
+				guard let reduceMotionSyncSwitchSettingsCell = self.tableView.cellForRow(at: indexPath) as? SwitchSettingsCell else { return }
 
-			self.switchTapped(reduceMotionSyncSwitchSettingsCell.toggleSwitch)
+				self.switchTapped(reduceMotionSyncSwitchSettingsCell.toggleSwitch)
+			}
 		}
 
 		self.tableView.cellLayoutMarginsFollowReadableWidth = true

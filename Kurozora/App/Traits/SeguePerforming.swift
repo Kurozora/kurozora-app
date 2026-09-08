@@ -19,35 +19,35 @@ protocol SeguePerforming where Self: UIViewController {
 	/// - Parameters:
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue. If you do not specify a value, the view controller uses itself as the sender.
-	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?)
+	func performSegue(withIdentifier identifier: any SegueIdentifier, sender: Any?)
 
 	/// Displays the view controller identified by the specified segue identifier.
 	///
 	/// - Parameters:
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue.
-	func show(_ identifier: SegueIdentifier, sender: Any?)
+	func show(_ identifier: any SegueIdentifier, sender: Any?)
 
 	/// Presents a view controller in a secondary (or detail) context.
 	///
 	/// - Parameters:
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue.
-	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?)
+	func showDetailViewController(_ identifier: any SegueIdentifier, sender: Any?)
 
 	/// Presents the view controller identified by the specified segue identifier modally.
 	///
 	/// - Parameters:
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue.
-	func present(_ identifier: SegueIdentifier, sender: Any?)
+	func present(_ identifier: any SegueIdentifier, sender: Any?)
 
 	/// Replaces the secondary column's view controller in a split view, or falls back to `show`.
 	///
 	/// - Parameters:
 	///    - identifier: The object that identifies the triggered segue.
 	///    - sender: The object to use as the sender of the segue.
-	func showSecondary(_ identifier: SegueIdentifier, sender: Any?)
+	func showSecondary(_ identifier: any SegueIdentifier, sender: Any?)
 }
 
 /// A protocol that lets a view controller perform segues using a concrete, strongly-typed identifier enum.

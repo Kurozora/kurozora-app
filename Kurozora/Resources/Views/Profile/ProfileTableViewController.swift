@@ -107,7 +107,7 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		self.statusObserver?.cancel()
 	}
 

@@ -10,7 +10,7 @@ import Foundation
 import KurozoraKit
 
 /// A reason offered by the report sheet.
-enum ReportOption: Hashable, Sendable {
+enum ReportOption: nonisolated Hashable, Sendable {
 	// MARK: - Cases
 	/// A reason offered when reporting a parental guide entry.
 	case parentalGuide(ParentalGuideReportReason)

@@ -142,10 +142,10 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Configuration
-	/// Populates the cell with data drawn from the given library item.
+	/// Populates the cell with data drawn from the given library entry.
 	///
 	/// - Parameters:
-	///    - item: The library item to render.
+	///    - entry: The library entry to render.
 	///    - kind: The library kind the item belongs to.
 	///    - columns: The visible columns paired with their current widths, in left-to-right order.
 	///    - showPoster: A Boolean that indicates whether the title cell renders a poster with inline metadata.
@@ -154,7 +154,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	///    - indexPath: The index path of the row. Relayed to the delegate on interactive events.
 	///    - delegate: The object that receives favorite, reminder, and rating callbacks.
 	func configure(
-		using item: LibraryListCollectionViewController.ItemKind,
+		using entry: LocalLibraryEntry,
 		kind: LibraryKind,
 		columns: [(column: LibraryColumn, width: CGFloat)],
 		showPoster: Bool,
@@ -178,7 +178,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		}
 
 		self.applyWidths(columns)
-		self.populate(item: item, kind: kind, columns: columnIdentities, showPoster: showPoster)
+		self.populate(entry: entry, kind: kind, columns: columnIdentities, showPoster: showPoster)
 
 		self.rowDivider.isHidden = isLastRow
 		self.showSelectionIcon = showSelectionIcon
@@ -521,7 +521,9 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.applyPosterChrome(for: kind)
 
 		self.posterBoundsObservation = posterImageView.observe(\.bounds, options: [.new]) { [weak self] _, _ in
-			self?.syncLiteratureMaskFrame()
+			MainActor.assumeIsolated {
+				self?.syncLiteratureMaskFrame()
+			}
 		}
 
 		return container
@@ -665,7 +667,7 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 		self.literatureMask.frame = posterImageView.bounds
 	}
 
-	private func populate(item: LibraryListCollectionViewController.ItemKind, kind: LibraryKind, columns: [LibraryColumn], showPoster: Bool) {
+	private func populate(entry: LocalLibraryEntry, kind: LibraryKind, columns: [LibraryColumn], showPoster: Bool) {
 		for column in columns {
 			guard let container = self.columnContainers[column] else {
 				continue
@@ -673,81 +675,80 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 
 			switch column {
 			case .title:
-				self.populateTitle(container: container, item: item, showPoster: showPoster)
+				self.populateTitle(container: container, entry: entry, showPoster: showPoster)
 			case .favorite:
-				self.populateFavoriteColumn(container: container, item: item)
+				self.populateFavoriteColumn(container: container, entry: entry)
 			case .reminder:
-				self.populateReminderColumn(container: container, item: item)
+				self.populateReminderColumn(container: container, entry: entry)
 			case .visibility:
-				self.populateVisibilityColumn(container: container, item: item)
+				self.populateVisibilityColumn(container: container, entry: entry)
 			case .rating:
-				self.populateRatingColumn(container: container, item: item)
+				self.populateRatingColumn(container: container, entry: entry)
 			default:
 				if let label = container.viewWithTag(self.primaryLabelTag) as? UILabel {
-					label.text = self.text(for: column, item: item)
+					label.text = Self.text(for: column, entry: entry)
 				}
 			}
 		}
 	}
 
-	private func populateTitle(container: UIView, item: LibraryListCollectionViewController.ItemKind, showPoster: Bool) {
+	private func populateTitle(container: UIView, entry: LocalLibraryEntry, showPoster: Bool) {
 		if let label = container.viewWithTag(self.primaryLabelTag) as? UILabel {
-			label.text = self.text(for: .title, item: item)
+			label.text = Self.text(for: .title, entry: entry)
 		}
 
 		guard showPoster else { return }
-		guard case let .entry(entry) = item else { return }
 
 		if let posterImageView = self.posterImageView {
 			entry.posterImage(imageView: posterImageView)
 		}
 
 		if let cosmosView = self.inlineCosmosView {
-			cosmosView.rating = self.rating(for: item) ?? 0
+			cosmosView.rating = self.rating(for: entry) ?? 0
 		}
 
-		self.applyFavoriteState(button: self.inlineFavoriteButton, item: item)
-		self.applyReminderState(button: self.inlineReminderButton, item: item)
-		self.applyVisibilityState(button: self.inlineVisibilityButton, item: item)
+		self.applyFavoriteState(button: self.inlineFavoriteButton, entry: entry)
+		self.applyReminderState(button: self.inlineReminderButton, entry: entry)
+		self.applyVisibilityState(button: self.inlineVisibilityButton, entry: entry)
 	}
 
-	private func populateFavoriteColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
+	private func populateFavoriteColumn(container: UIView, entry: LocalLibraryEntry) {
 		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
-		self.applyFavoriteState(button: button, item: item)
+		self.applyFavoriteState(button: button, entry: entry)
 	}
 
-	private func populateReminderColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
+	private func populateReminderColumn(container: UIView, entry: LocalLibraryEntry) {
 		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
-		self.applyReminderState(button: button, item: item)
+		self.applyReminderState(button: button, entry: entry)
 	}
 
-	private func populateVisibilityColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
+	private func populateVisibilityColumn(container: UIView, entry: LocalLibraryEntry) {
 		guard let button = container.viewWithTag(self.buttonValueTag) as? UIButton else { return }
-		self.applyVisibilityState(button: button, item: item)
+		self.applyVisibilityState(button: button, entry: entry)
 	}
 
-	private func populateRatingColumn(container: UIView, item: LibraryListCollectionViewController.ItemKind) {
+	private func populateRatingColumn(container: UIView, entry: LocalLibraryEntry) {
 		guard let cosmosView = container.viewWithTag(self.cosmosValueTag) as? KCosmosView else { return }
-		cosmosView.rating = self.rating(for: item) ?? 0
+		cosmosView.rating = self.rating(for: entry) ?? 0
 	}
 
-	private func applyFavoriteState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
+	private func applyFavoriteState(button: UIButton?, entry: LocalLibraryEntry) {
 		guard let button = button else { return }
-		let isFavorited = self.isFavorited(item)
+		let isFavorited = entry.isFavorited
 		self.updateButtonImage(button, systemName: isFavorited ? "heart.fill" : "heart")
 		button.accessibilityLabel = isFavorited ? L10n.removeFromFavorites : L10n.addToFavorites
 	}
 
-	private func applyReminderState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
+	private func applyReminderState(button: UIButton?, entry: LocalLibraryEntry) {
 		guard let button = button else { return }
-		let hasReminder = self.hasReminder(item)
+		let hasReminder = entry.isReminded
 		self.updateButtonImage(button, systemName: hasReminder ? "bell.fill" : "bell")
 		button.accessibilityLabel = hasReminder ? L10n.removeReminder : L10n.addReminder
 	}
 
-	private func applyVisibilityState(button: UIButton?, item: LibraryListCollectionViewController.ItemKind) {
+	private func applyVisibilityState(button: UIButton?, entry: LocalLibraryEntry) {
 		guard let button = button else { return }
-		let hiddenStatus = self.hiddenStatus(for: item)
+		let hiddenStatus = self.hiddenStatus(for: entry)
 		let isDisabled = hiddenStatus == .disabled
 
 		button.isHidden = isDisabled
@@ -805,44 +806,16 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Model accessors
-	private func isFavorited(_ item: LibraryListCollectionViewController.ItemKind) -> Bool {
-		guard case let .entry(entry) = item else { return false }
-		return entry.isFavorited
-	}
-
-	private func hasReminder(_ item: LibraryListCollectionViewController.ItemKind) -> Bool {
-		guard case let .entry(entry) = item else { return false }
-		return entry.isReminded
-	}
-
-	private func hiddenStatus(for item: LibraryListCollectionViewController.ItemKind) -> HiddenStatus {
-		guard case let .entry(entry) = item else { return .notHidden }
-		// Visibility is only meaningful for shows; other kinds keep the affordance disabled.
+	private func hiddenStatus(for entry: LocalLibraryEntry) -> HiddenStatus {
+		// Visibility is only meaningful for shows, so other kinds keep the affordance disabled.
 		switch entry.kind {
 		case .shows: return entry.isHidden ? .hidden : .notHidden
 		case .literatures, .games: return .disabled
 		}
 	}
 
-	private func rating(for item: LibraryListCollectionViewController.ItemKind) -> Double? {
-		guard case let .entry(entry) = item else { return nil }
+	private func rating(for entry: LocalLibraryEntry) -> Double? {
 		return entry.review?.score?.doubleValue
-	}
-
-	/// Returns the rendered text for the given column of the supplied item.
-	///
-	/// - Parameters:
-	///    - column: The column whose value to render.
-	///    - item: The list item wrapping the local library entry.
-	///
-	/// - Returns: The rendered string.
-	static func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
-		guard case let .entry(entry) = item else { return "" }
-		return self.text(for: column, entry: entry)
-	}
-
-	private func text(for column: LibraryColumn, item: LibraryListCollectionViewController.ItemKind) -> String {
-		return Self.text(for: column, item: item)
 	}
 
 	/// Returns the rendered text for the given column of the supplied entry.

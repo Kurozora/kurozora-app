@@ -31,10 +31,13 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	weak var delegate: OnboardingOptionsTableViewCellDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.forgotPasswordButton.addTarget(self, action: #selector(self.forgotPasswordButtonPressed), for: .touchUpInside)
-		self.registerPasswordButton.addTarget(self, action: #selector(self.registerButtonPressed), for: .touchUpInside)
+
+		MainActor.assumeIsolated {
+			self.forgotPasswordButton.addTarget(self, action: #selector(self.forgotPasswordButtonPressed), for: .touchUpInside)
+			self.registerPasswordButton.addTarget(self, action: #selector(self.registerButtonPressed), for: .touchUpInside)
+		}
 	}
 
 	// MARK: - Functions

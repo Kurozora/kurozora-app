@@ -87,7 +87,9 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 			object: nil,
 			queue: .main
 		) { [weak self] _ in
-			self?.reloadIfDayChanged()
+			MainActor.assumeIsolated {
+				self?.reloadIfDayChanged()
+			}
 		}
 
 		self.reload()
@@ -99,7 +101,7 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 		self.reloadIfDayChanged()
 	}
 
-	deinit {
+	isolated deinit {
 		if let significantTimeChangeObserver {
 			NotificationCenter.default.removeObserver(significantTimeChangeObserver)
 		}
@@ -216,11 +218,13 @@ class KotodamaHubCollectionViewController: KCollectionViewController {
 
 	/// Fetches today's puzzle, the player's record and the fastest solves together.
 	private func fetchDaily() async {
-		async let puzzleResponse = try? await KService.kotodamaDaily().response()
-		async let statsResponse = try? await KService.myKotodamaStats().response()
-		async let leaderboardResponse = try? await KService
-			.kotodamaDailyLeaderboard(limit: Self.peekLimit)
-			.response()
+		let puzzleRequest = KService.kotodamaDaily()
+		let statsRequest = KService.myKotodamaStats()
+		let leaderboardRequest = KService.kotodamaDailyLeaderboard(limit: Self.peekLimit)
+
+		async let puzzleResponse = try? await puzzleRequest.response()
+		async let statsResponse = try? await statsRequest.response()
+		async let leaderboardResponse = try? await leaderboardRequest.response()
 
 		let game = await puzzleResponse?.data.first
 		let stats = await statsResponse

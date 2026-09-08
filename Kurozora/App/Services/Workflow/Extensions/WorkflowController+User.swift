@@ -147,7 +147,7 @@ extension WorkflowController {
 					return false
 				}
 
-				await KService.restoreSession(with: cachedUser)
+				KService.restoreSession(with: cachedUser)
 				return true
 			}
 		}
@@ -210,16 +210,16 @@ extension WorkflowController {
 		let slug = User.current?.attributes.slug ?? UserSettings.selectedAccount
 
 		do {
-			_ = try await KService.signOut()
+			_ = try await KService.signOut().response()
 			AccountManager.shared.remove(slug: slug)
 			UserProfileCache.remove(forSlug: slug)
-			await LibraryStore.shared.clear(forUserSlug: slug)
+			LibraryStore.shared.clear(forUserSlug: slug)
 			await LibraryOutbox.shared.clear(forUserSlug: slug)
-			await WatchedStore.shared.clear()
+			WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
 		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.cantSignOutTitle, message: error.message)
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantSignOutTitle, message: error.message)
 			print("-----", error.message)
 		} catch {
 			print("-----", error.localizedDescription)
@@ -240,13 +240,13 @@ extension WorkflowController {
 			_ = try await KService.deleteAccount(password: password).response()
 			AccountManager.shared.remove(slug: slug)
 			UserProfileCache.remove(forSlug: slug)
-			await LibraryStore.shared.clear(forUserSlug: slug)
+			LibraryStore.shared.clear(forUserSlug: slug)
 			await LibraryOutbox.shared.clear(forUserSlug: slug)
-			await WatchedStore.shared.clear()
+			WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			return true
 		} catch let error as APIError {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.cantDeleteAccountTitle, message: error.message)
+			UIApplication.topViewController?.presentAlertController(title: L10n.cantDeleteAccountTitle, message: error.message)
 			print("-----", error.message)
 		} catch {
 			print("-----", error.localizedDescription)

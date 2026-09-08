@@ -90,7 +90,7 @@ extension KotodamaHubCollectionViewController {
 // MARK: - ItemKind
 extension KotodamaHubCollectionViewController {
 	/// The set of available items.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		/// Today's puzzle.
 		case daily(KotodamaDaily)
 

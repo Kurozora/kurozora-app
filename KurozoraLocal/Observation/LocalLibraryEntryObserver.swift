@@ -13,7 +13,7 @@ import KurozoraKit
 /// Bridges save notifications onto a callback fired only for `LocalLibraryEntry` mutations that pass a filter.
 final class LocalLibraryEntryObserver {
 	// MARK: - Properties
-	private var saveToken: NSObjectProtocol?
+	private var saveTask: Task<Void, Never>?
 
 	// MARK: - Initializers
 	/// Subscribes to the save feed and routes each `LocalLibraryEntry` mutation
@@ -30,33 +30,27 @@ final class LocalLibraryEntryObserver {
 	) {
 		let viewContext = PersistenceController.shared.viewContext
 
-		self.saveToken = NotificationCenter.default.addObserver(
-			forName: .NSManagedObjectContextDidSave,
-			object: nil,
-			queue: .main
-		) { notification in
-			guard let userInfo = notification.userInfo else { return }
+		self.saveTask = Task { @MainActor in
+			for await notification in NotificationCenter.default.notifications(named: .NSManagedObjectContextDidSave) {
+				guard let userInfo = notification.userInfo else { continue }
 
-			// Merge before dispatch; handlers must read post-save values.
-			if let savingContext = notification.object as? NSManagedObjectContext,
-			   savingContext !== viewContext,
-			   savingContext.persistentStoreCoordinator === viewContext.persistentStoreCoordinator {
-				viewContext.mergeChanges(fromContextDidSave: notification)
-			}
+				// Handlers read post-save values, so the merge has to land first.
+				if let savingContext = notification.object as? NSManagedObjectContext,
+				   savingContext !== viewContext,
+				   savingContext.persistentStoreCoordinator === viewContext.persistentStoreCoordinator {
+					viewContext.mergeChanges(fromContextDidSave: notification)
+				}
 
-			// Refresh the overlay cache before dispatch too.
-			MainActor.assumeIsolated {
+				// The overlay cache has to be current before the handlers run as well.
 				LibraryStore.shared.refreshOverlayCache(from: notification)
-			}
 
-			Self.dispatch(userInfo, viewContext: viewContext, filter: filter, onChange: onChange, onRemove: onRemove)
+				Self.dispatch(userInfo, viewContext: viewContext, filter: filter, onChange: onChange, onRemove: onRemove)
+			}
 		}
 	}
 
 	deinit {
-		if let token = self.saveToken {
-			NotificationCenter.default.removeObserver(token)
-		}
+		self.saveTask?.cancel()
 	}
 
 	// MARK: - Types

@@ -22,11 +22,14 @@ class BaseNotificationCell: KTableViewCell {
 	}
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.selectionStyle = .default
-		self.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.configureSelectionBackground()
+
+		MainActor.assumeIsolated {
+			self.selectionStyle = .default
+			self.theme_tintColor = KThemePicker.tintColor.rawValue
+			self.configureSelectionBackground()
+		}
 	}
 
 	override func setSelected(_ selected: Bool, animated: Bool) {

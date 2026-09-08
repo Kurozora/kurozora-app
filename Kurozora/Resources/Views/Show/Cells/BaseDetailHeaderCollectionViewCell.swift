@@ -62,31 +62,30 @@ class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeade
 	}
 
 	// MARK: - Functions
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		// Configure visual effect
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			self.visualEffectView.effect = UIGlassEffect(style: .clear)
-		}
-		self.visualEffectView.layerCornerRadius = 30.0
+		MainActor.assumeIsolated {
+			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+				self.visualEffectView.effect = UIGlassEffect(style: .clear)
+			}
+			self.visualEffectView.layerCornerRadius = 30.0
 
-		self.rankButton?.layerCornerRadius = 6.0
+			self.rankButton?.layerCornerRadius = 6.0
 
-		// Configure poster
-		self.posterImageView.tag = 0
-		self.posterImageView.isUserInteractionEnabled = true
-		let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
-		self.posterImageView.addGestureRecognizer(posterTap)
+			self.posterImageView.tag = 0
+			self.posterImageView.isUserInteractionEnabled = true
+			let posterTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+			self.posterImageView.addGestureRecognizer(posterTap)
 
-		// Configure banner
-		self.bannerImageView.tag = 1
-		self.bannerImageView.isUserInteractionEnabled = true
-		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
-		self.bannerImageView.addGestureRecognizer(bannerTap)
+			self.bannerImageView.tag = 1
+			self.bannerImageView.isUserInteractionEnabled = true
+			let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+			self.bannerImageView.addGestureRecognizer(bannerTap)
 
-		if #available(iOS 26.0, *) {
-			self.extendHeaderMediaBeyondSafeArea()
+			if #available(iOS 26.0, *) {
+				self.extendHeaderMediaBeyondSafeArea()
+			}
 		}
 	}
 

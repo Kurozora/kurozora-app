@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 
 /// Derives floating lyrics frames as a pure function of playback position.
-struct FloatingLyricsFrameBuilder {
+nonisolated struct FloatingLyricsFrameBuilder {
 	// MARK: - Structs
 	/// A lyric line or instrumental gap on the lyrics timeline.
 	struct TimelineItem {

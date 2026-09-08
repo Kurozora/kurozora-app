@@ -10,7 +10,7 @@
 import UIKit
 
 /// A detected face's normalized focal point and the detector that produced it.
-struct FaceDetectionResult {
+struct FaceDetectionResult: Sendable {
 	// MARK: - Properties
 	/// The normalized focal point in image coordinates.
 	let focalPoint: CGPoint
@@ -20,7 +20,7 @@ struct FaceDetectionResult {
 }
 
 /// A type that locates the most prominent face in an image.
-protocol FaceDetector {
+protocol FaceDetector: Sendable {
 	/// The stable identifier of the detector.
 	var identifier: String { get }
 

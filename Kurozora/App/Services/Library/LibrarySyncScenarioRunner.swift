@@ -59,7 +59,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func runFavoriteFirstFive(forUserSlug userSlug: String) async {
 		await self.logState(forUserSlug: userSlug, step: "baseline")
 
-		let trackableIDs = await Self.targetTrackableIDs(forUserSlug: userSlug, count: 5)
+		let trackableIDs = Self.targetTrackableIDs(forUserSlug: userSlug, count: 5)
 		for trackableID in trackableIDs {
 			await LibraryOutbox.shared.enqueueSetFavorite(true, trackableID: trackableID, userSlug: userSlug, kind: .shows)
 		}
@@ -72,7 +72,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func runCycleStatusFirstThree(forUserSlug userSlug: String) async {
 		await self.logState(forUserSlug: userSlug, step: "baseline")
 
-		let trackableIDs = await Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
+		let trackableIDs = Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
 		for trackableID in trackableIDs {
 			await LibraryOutbox.shared.enqueueSetStatus(.completed, trackableID: trackableID, userSlug: userSlug, kind: .shows, seed: nil)
 		}
@@ -85,7 +85,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func runHideFirstThree(forUserSlug userSlug: String) async {
 		await self.logState(forUserSlug: userSlug, step: "baseline")
 
-		let trackableIDs = await Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
+		let trackableIDs = Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
 		for trackableID in trackableIDs {
 			await LibraryOutbox.shared.enqueueSetHidden(true, trackableID: trackableID, userSlug: userSlug, kind: .shows)
 		}
@@ -98,7 +98,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func runRemoveThenReAddFirstTwo(forUserSlug userSlug: String) async {
 		await self.logState(forUserSlug: userSlug, step: "baseline")
 
-		let trackableIDs = await Self.targetTrackableIDs(forUserSlug: userSlug, count: 2)
+		let trackableIDs = Self.targetTrackableIDs(forUserSlug: userSlug, count: 2)
 		for trackableID in trackableIDs {
 			await LibraryOutbox.shared.enqueueRemove(trackableID: trackableID, userSlug: userSlug, kind: .shows)
 		}
@@ -119,7 +119,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func runReminderFirstThree(forUserSlug userSlug: String) async {
 		await self.logState(forUserSlug: userSlug, step: "baseline")
 
-		let trackableIDs = await Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
+		let trackableIDs = Self.targetTrackableIDs(forUserSlug: userSlug, count: Self.defaultTargetCount)
 		for trackableID in trackableIDs {
 			await LibraryOutbox.shared.enqueueSetReminder(true, trackableID: trackableID, userSlug: userSlug, kind: .shows)
 		}

@@ -87,7 +87,7 @@ extension GameDetailsCollectionViewController {
 	}
 
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Game` object.
 		case game(_: Game)

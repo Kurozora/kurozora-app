@@ -241,7 +241,7 @@ extension MonogramProfileImageSourceView {
 
 // MARK: - ItemKind
 extension MonogramProfileImageSourceView {
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case preset(_ preset: MonogramPreset)
 	}
 }

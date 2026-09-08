@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-struct BrowseCategory: Hashable {
+struct BrowseCategory: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	let title: String
 	let image: UIImage?
@@ -30,11 +30,11 @@ struct BrowseCategory: Hashable {
 	}
 
 	// MARK: - Functions
-	static func == (lhs: BrowseCategory, rhs: BrowseCategory) -> Bool {
+	nonisolated static func == (lhs: BrowseCategory, rhs: BrowseCategory) -> Bool {
 		lhs.title == rhs.title && lhs.searchType == rhs.searchType && lhs.segueIdentifier?.rawValue == rhs.segueIdentifier?.rawValue
 	}
 
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(self.title)
 		hasher.combine(self.searchType)
 		hasher.combine(self.segueIdentifier?.rawValue)

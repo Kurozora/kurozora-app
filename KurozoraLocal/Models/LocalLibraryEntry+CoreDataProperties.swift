@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension LocalLibraryEntry {
+nonisolated extension LocalLibraryEntry {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<LocalLibraryEntry> {
 		return NSFetchRequest<LocalLibraryEntry>(entityName: "LocalLibraryEntry")
 	}

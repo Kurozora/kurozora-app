@@ -37,7 +37,7 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case showIdentity(_: ShowIdentity)
 		case relatedShow(_: RelatedShow)
 	}
@@ -137,7 +137,7 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 			case .showIdentity(let identity):
 				if identity.id.rawValue == trackableID,
 				   let index = currentSnapshot.indexOfItem(item),
-				   let show = self.cache[IndexPath(item: index, section: 0)] as? Show {
+				   self.cache[IndexPath(item: index, section: 0)] is Show {
 					matchedItems.append(item)
 				}
 			case .relatedShow(let relatedShow):

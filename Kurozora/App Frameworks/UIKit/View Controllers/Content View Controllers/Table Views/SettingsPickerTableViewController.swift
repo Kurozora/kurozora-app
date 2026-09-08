@@ -17,12 +17,12 @@ protocol SettingsPickerTableViewControllerDelegate: AnyObject {
 
 class SettingsPickerTableViewController: KTableViewController {
 	// MARK: - Types
-	struct ItemKind: Hashable {
+	struct ItemKind: nonisolated Hashable {
 		let key: String
 		let value: String
 	}
 
-	enum Section {
+	enum Section: nonisolated Equatable, nonisolated Hashable {
 		case main
 	}
 

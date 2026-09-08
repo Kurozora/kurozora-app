@@ -241,10 +241,11 @@ class KotodamaGameViewController: KViewController {
 			case .game:
 				return
 			case .daily:
-				async let statsResponse = try? await KService.myKotodamaStats().response()
-				async let leaderboardResponse = try? await KService
-					.kotodamaDailyLeaderboard(limit: self.peekLimit)
-					.response()
+				let statsRequest = KService.myKotodamaStats()
+				let leaderboardRequest = KService.kotodamaDailyLeaderboard(limit: self.peekLimit)
+
+				async let statsResponse = try? await statsRequest.response()
+				async let leaderboardResponse = try? await leaderboardRequest.response()
 
 				let puzzleResponse = try await KService.kotodamaDaily().response()
 				self.game = puzzleResponse.data.first

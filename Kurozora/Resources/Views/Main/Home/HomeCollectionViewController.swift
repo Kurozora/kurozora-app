@@ -269,11 +269,11 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
 			switch kind {
 			case .shows:
-				guard let show = self.cache[indexPath] as? Show else { continue }
+				guard self.cache[indexPath] is Show else { continue }
 			case .literatures:
-				guard let literature = self.cache[indexPath] as? Literature else { continue }
+				guard self.cache[indexPath] is Literature else { continue }
 			case .games:
-				guard let game = self.cache[indexPath] as? Game else { continue }
+				guard self.cache[indexPath] is Game else { continue }
 			}
 			matchedItems.append(item)
 		}
@@ -542,7 +542,6 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			self.refreshUpNext()
 		}
 	}
-
 
 	fileprivate func fetchEpisodes() async {
 		guard

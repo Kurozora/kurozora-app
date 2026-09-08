@@ -22,30 +22,32 @@ class ProfileHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCe
 	weak var mediaViewerDelegate: MediaViewerViewDelegate?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		// Tap gestures
-		self.primaryImageView.tag = 0
-		self.primaryImageView.isUserInteractionEnabled = true
-		let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
-		self.primaryImageView.addGestureRecognizer(primaryTap)
+		MainActor.assumeIsolated {
+			// Tap gestures
+			self.primaryImageView.tag = 0
+			self.primaryImageView.isUserInteractionEnabled = true
+			let primaryTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
+			self.primaryImageView.addGestureRecognizer(primaryTap)
 
-		self.primaryImageView.layer.borderWidth = 0
-		self.primaryBorderView.cornerRadius = self.primaryImageView.bounds.height / 2.0
+			self.primaryImageView.layer.borderWidth = 0
+			self.primaryBorderView.cornerRadius = self.primaryImageView.bounds.height / 2.0
 
-		self.bannerImageView.tag = 1
-		self.bannerImageView.isUserInteractionEnabled = true
-		self.bannerImageView.layer.borderWidth = 0
-		self.bannerImageView.applyCornerRadius(0)
-		let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
-		self.bannerImageView.addGestureRecognizer(bannerTap)
+			self.bannerImageView.tag = 1
+			self.bannerImageView.isUserInteractionEnabled = true
+			self.bannerImageView.layer.borderWidth = 0
+			self.bannerImageView.applyCornerRadius(0)
+			let bannerTap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewPressed))
+			self.bannerImageView.addGestureRecognizer(bannerTap)
 
-		// Banner fade
-		self.bannerImageView.applyGradientMask(.bottomFade())
+			// Banner fade
+			self.bannerImageView.applyGradientMask(.bottomFade())
 
-		self.primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-		self.secondaryLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+			self.primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+			self.secondaryLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
 	}
 
 	override func layoutSubviews() {

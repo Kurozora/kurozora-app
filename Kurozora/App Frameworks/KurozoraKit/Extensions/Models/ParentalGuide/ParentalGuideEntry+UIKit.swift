@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension ParentalGuideEntry {
+@MainActor extension ParentalGuideEntry {
 	/// Returns the context menu configuration for the entry.
 	///
 	/// - Parameters:
@@ -19,6 +19,7 @@ extension ParentalGuideEntry {
 	///    - barButtonItem: The bar button item anchoring the menu's popover.
 	///
 	/// - Returns: The configuration, or `nil` to suppress the menu.
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["identifier"] as? NSCopying
 
@@ -34,6 +35,7 @@ extension ParentalGuideEntry {
 	///    - userInfo: Caller-supplied context forwarded to action handlers.
 	///
 	/// - Returns: The menu, or `nil` to suppress it.
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu? {
 		return self.makeContextMenu(in: viewController, userInfo: userInfo, sourceView: nil, barButtonItem: nil)
 	}
@@ -47,6 +49,7 @@ extension ParentalGuideEntry {
 	///    - barButtonItem: The bar button item anchoring the menu's popover.
 	///
 	/// - Returns: The menu.
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 

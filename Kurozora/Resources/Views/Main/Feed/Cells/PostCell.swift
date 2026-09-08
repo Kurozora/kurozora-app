@@ -23,11 +23,13 @@ class PostCell: UITableViewCell {
 	@IBOutlet weak public var playButton: UIButton?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.profileImage.layer.borderWidth = 0
-		self.profileBorderView?.cornerRadius = self.profileImage.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.profileImage.layer.borderWidth = 0
+			self.profileBorderView?.cornerRadius = self.profileImage.bounds.height / 2.0
+		}
 	}
 
 	override func layoutSubviews() {

@@ -16,7 +16,7 @@ class LyricsDataSource: UITableViewDiffableDataSource<LyricsViewController.Secti
 
 final class LyricsViewController: KTableViewController {
 	// MARK: - Enums
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Equatable, nonisolated Hashable {
 		case main
 	}
 

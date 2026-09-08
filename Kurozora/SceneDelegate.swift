@@ -162,9 +162,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.configure(scene: scene, with: userActivity)
 	}
 
-	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {
-		await KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
-		return true
+	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+		Task {
+			await KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
+			completionHandler(true)
+		}
 	}
 
 	func sceneDidEnterBackground(_ scene: UIScene) {

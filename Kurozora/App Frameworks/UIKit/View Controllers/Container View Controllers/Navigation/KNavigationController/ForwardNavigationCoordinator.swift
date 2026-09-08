@@ -91,11 +91,13 @@ final class ForwardNavigationCoordinator: NSObject {
 	/// - Parameter aSelector: The selector to test.
 	///
 	/// - Returns: Whether the delegate responds to the selector.
-	override func responds(to aSelector: Selector!) -> Bool {
+	nonisolated override func responds(to aSelector: Selector!) -> Bool {
 		switch aSelector {
 		case #selector(ForwardNavigationCoordinator.navigationController(_:animationControllerFor:from:to:)),
 		     #selector(ForwardNavigationCoordinator.navigationController(_:interactionControllerFor:)):
-			return self.screenBeingRestored != nil
+			return MainActor.assumeIsolated {
+				self.screenBeingRestored != nil
+			}
 		default:
 			return super.responds(to: aSelector)
 		}

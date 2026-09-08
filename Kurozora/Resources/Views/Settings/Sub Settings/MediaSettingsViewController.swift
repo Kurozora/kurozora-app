@@ -226,7 +226,7 @@ extension MediaSettingsViewController: UIDocumentPickerDelegate {
 
 // MARK: - Sections and Rows
 private extension MediaSettingsViewController {
-	enum Section: CaseIterable {
+	enum Section: CaseIterable, nonisolated Equatable, nonisolated Hashable {
 		case saveLocation
 		case kurozoraAlbum
 		case liveText

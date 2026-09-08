@@ -146,11 +146,15 @@ extension UIView {
 		self.mask = maskView
 
 		let observation = self.layer.observe(\.bounds, options: [.new]) { [weak maskView] layer, _ in
-			guard let maskView = maskView else { return }
-			CATransaction.begin()
-			CATransaction.setDisableActions(true)
-			maskView.frame = layer.bounds
-			CATransaction.commit()
+			let bounds = layer.bounds
+
+			MainActor.assumeIsolated {
+				guard let maskView = maskView else { return }
+				CATransaction.begin()
+				CATransaction.setDisableActions(true)
+				maskView.frame = bounds
+				CATransaction.commit()
+			}
 		}
 		objc_setAssociatedObject(self, &AssociatedKeys.gradientMaskObservation, observation, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 	}

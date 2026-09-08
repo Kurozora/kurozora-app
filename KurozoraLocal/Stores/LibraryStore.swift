@@ -26,19 +26,14 @@ final class LibraryStore {
 	/// Main-thread snapshot of every entry's `LibraryAttributes`, keyed by
 	/// `"{userSlug}::{kindRaw}::{trackableID}"`.
 	private var overlayCache: [String: LibraryAttributes] = [:]
-	private var overlayCacheToken: NSObjectProtocol?
+	private var overlayCacheTask: Task<Void, Never>?
 	private var hydratedUserSlugs: Set<String> = []
 
 	// MARK: - Initializers
 	private init() {
-		// The token is never removed; the singleton lives for the process.
-		self.overlayCacheToken = NotificationCenter.default.addObserver(
-			forName: .NSManagedObjectContextDidSave,
-			object: nil,
-			queue: .main
-		) { [weak self] notification in
-			// Delivered on the main queue per the observer registration.
-			MainActor.assumeIsolated {
+		// The task is never canceled because the singleton lives for the process.
+		self.overlayCacheTask = Task { @MainActor [weak self] in
+			for await notification in NotificationCenter.default.notifications(named: .NSManagedObjectContextDidSave) {
 				self?.handleStoreSaveForCache(notification)
 			}
 		}
@@ -293,6 +288,15 @@ final class LibraryStore {
 		)
 		request.fetchLimit = 1
 		return try? self.viewContext.fetch(request).first
+	}
+
+	/// Returns the entry registered in the view context under the given object identifier.
+	///
+	/// - Parameter objectID: The Core Data identifier of the entry.
+	///
+	/// - Returns: The matching `LocalLibraryEntry`.
+	func entry(for objectID: NSManagedObjectID) -> LocalLibraryEntry? {
+		return try? self.viewContext.existingObject(with: objectID) as? LocalLibraryEntry
 	}
 
 	/// Returns the trackable's library attributes from the local store.

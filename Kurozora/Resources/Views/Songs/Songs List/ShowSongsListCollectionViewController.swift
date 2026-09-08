@@ -32,13 +32,13 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	}
 
 	/// A section layout.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		case main
 		case header(id: UUID = UUID())
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case song(_: Song, id: UUID = UUID())
 		case showSong(_: ShowSong, id: UUID = UUID())
 		case songIdentity(_: SongIdentity)

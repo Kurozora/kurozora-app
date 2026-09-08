@@ -1210,10 +1210,10 @@ final class TrailerWebPlayer: NSObject {
 		})
 
 		self.visibilityObservers.append(center.addObserver(forName: UIScene.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] notification in
-			let sceneObject = notification.object
+			let scene = notification.object as? UIScene
 
 			MainActor.assumeIsolated {
-				self?.counterBackgrounding(of: sceneObject)
+				self?.counterBackgrounding(of: scene)
 			}
 		})
 
@@ -1781,73 +1781,54 @@ extension TrailerWebPlayer: TrailerNativePlayerViewDelegate {
 
 // MARK: - WKScriptMessageHandlerWithReply
 extension TrailerWebPlayer: WKScriptMessageHandlerWithReply {
-	nonisolated func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
-		guard message.name == TrailerWebPlayer.infoHandlerName else {
+	func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage, replyHandler: @escaping @MainActor @Sendable (Any?, String?) -> Void) {
+		guard message.name == TrailerWebPlayer.infoHandlerName, let metadata = self.streamMetadata else {
 			replyHandler(nil, nil)
 			return
 		}
 
-		MainActor.assumeIsolated {
-			guard let metadata = self.streamMetadata else {
-				replyHandler(nil, nil)
-				return
-			}
-
-			replyHandler(["title": L10n.trailerTitle(metadata.title)], nil)
-		}
+		replyHandler(["title": L10n.trailerTitle(metadata.title)], nil)
 	}
 }
 
 // MARK: - WKScriptMessageHandler
 extension TrailerWebPlayer: WKScriptMessageHandler {
-	nonisolated func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+	func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 		guard message.name == TrailerWebPlayer.messageHandlerName else { return }
 		guard let body = message.body as? [String: Any], let event = body["event"] as? String else { return }
 
 		if event == "frameReady" {
-			let frameInfo = message.frameInfo
-
-			MainActor.assumeIsolated {
-				self.embedFrameInfo = frameInfo
-			}
+			self.embedFrameInfo = message.frameInfo
 			return
 		}
-
 
 		if event == "pictureInPictureError" {
 			print("----- [Trailer] Picture in picture refused: \(body["message"] as? String ?? "unknown")")
 			return
 		}
 
-
 		if event == "progress" {
 			guard let currentTime = body["currentTime"] as? Double, let duration = body["duration"] as? Double else { return }
 
-			MainActor.assumeIsolated {
-				// The stream reports the trailer's position while it plays on a device, and the
-				// app's own player reports it while the trailer plays here.
-				guard !TrailerAirPlayStreamer.shared.isStreaming(from: self), !self.isPlayingNatively else { return }
+			// The stream reports the trailer's position while it plays on a device, and the
+			// app's own player reports it while the trailer plays here.
+			guard !TrailerAirPlayStreamer.shared.isStreaming(from: self), !self.isPlayingNatively else { return }
 
-				self.lastReportedTime = currentTime
-				self.lastReportedDuration = duration
-				self.pageTimeAnchor = Date()
-				self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
-				TrailerNowPlayingReporter.shared.updateProgress(for: self)
-			}
+			self.lastReportedTime = currentTime
+			self.lastReportedDuration = duration
+			self.pageTimeAnchor = Date()
+			self.delegate?.trailerWebPlayer(self, didPlayTo: currentTime, duration: duration)
+			TrailerNowPlayingReporter.shared.updateProgress(for: self)
 			return
 		}
 
 		if event == "frames" {
 			guard let decodedFrames = body["decodedFrames"] as? Int, let mediaTime = body["mediaTime"] as? Double else { return }
 
-			MainActor.assumeIsolated {
-				self.estimateFramesPerSecond(decodedFrames: decodedFrames, mediaTime: mediaTime)
-			}
+			self.estimateFramesPerSecond(decodedFrames: decodedFrames, mediaTime: mediaTime)
 			return
 		}
 
-		MainActor.assumeIsolated {
-			self.handle(event: event)
-		}
+		self.handle(event: event)
 	}
 }

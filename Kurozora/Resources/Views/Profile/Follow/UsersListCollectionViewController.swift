@@ -51,7 +51,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		/// A user identity rendered as a row in the main section.
 		case userIdentity(_: UserIdentity)
 
@@ -193,7 +193,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 		}
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
 	}
 

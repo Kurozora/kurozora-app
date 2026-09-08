@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 import WidgetKit
 
-extension Episode {
+@MainActor extension Episode {
 	/// The authenticated user's watch status for the episode.
 	@MainActor var watchStatus: WatchStatus? {
 		return WatchedStore.shared.status(forEpisodeID: self.id.rawValue)
@@ -123,27 +123,29 @@ extension Episode {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		var activityItems: [Any] = []
-		activityItems.append(self.webpageURLString)
-		activityItems.append(L10n.shareEpisode(self.attributes.title))
+		Task {
+			var activityItems: [Any] = []
+			activityItems.append(self.webpageURLString)
+			activityItems.append(L10n.shareEpisode(self.attributes.title))
 
-		if let bannerImageURLString = self.attributes.banner?.url ?? self.attributes.poster?.url, !bannerImageURLString.isEmpty {
-			activityItems.append(ImageActivityItemProvider(urlString: bannerImageURLString, placeholder: .Placeholders.episodeBanner))
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sourceView = sourceView {
-				popoverController.sourceView = sourceView
-				popoverController.sourceRect = sourceView.frame
-			} else {
-				popoverController.barButtonItem = barButtonItem
+			if let bannerImageURLString = self.attributes.banner?.url ?? self.attributes.poster?.url, !bannerImageURLString.isEmpty {
+				activityItems.append(await UIImage.load(from: bannerImageURLString) ?? UIImage.Placeholders.episodeBanner)
 			}
-		}
 
-		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			viewController?.present(activityViewController, animated: true, completion: nil)
+			let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
+
+			if let popoverController = activityViewController.popoverPresentationController {
+				if let sourceView = sourceView {
+					popoverController.sourceView = sourceView
+					popoverController.sourceRect = sourceView.frame
+				} else {
+					popoverController.barButtonItem = barButtonItem
+				}
+			}
+
+			if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+				viewController?.present(activityViewController, animated: true, completion: nil)
+			}
 		}
 	}
 
@@ -196,7 +198,7 @@ extension Episode {
 	@MainActor
 	private func validateIsWatched() async -> Bool {
 		if self.watchStatus == nil {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please watch \(self.attributes.title) first.")
+			UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please watch \(self.attributes.title) first.")
 
 			return false
 		}

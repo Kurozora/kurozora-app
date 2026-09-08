@@ -236,16 +236,16 @@ extension KaomojiProfileImageSourceView {
 
 // MARK: - KaomojiPreset
 extension KaomojiProfileImageSourceView {
-	struct KaomojiPreset: Hashable {
+	struct KaomojiPreset: nonisolated Equatable, nonisolated Hashable, Sendable {
 		let id: Int
 		let kaomoji: String
 		let backgroundColor: UIColor
 
-		func hash(into hasher: inout Hasher) {
+		nonisolated func hash(into hasher: inout Hasher) {
 			hasher.combine(self.id)
 		}
 
-		static func == (lhs: KaomojiPreset, rhs: KaomojiPreset) -> Bool {
+		nonisolated static func == (lhs: KaomojiPreset, rhs: KaomojiPreset) -> Bool {
 			return lhs.id == rhs.id
 		}
 	}
@@ -253,7 +253,7 @@ extension KaomojiProfileImageSourceView {
 
 // MARK: - ItemKind
 extension KaomojiProfileImageSourceView {
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case kaomoji(_ preset: KaomojiPreset)
 	}
 }

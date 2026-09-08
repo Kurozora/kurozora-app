@@ -224,8 +224,9 @@ private extension IconTableViewCell {
 
 	func startColorCycling() {
 		self.colorCycleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-			guard let self = self else { return }
-			self.applyRainbowColors()
+			MainActor.assumeIsolated {
+				self?.applyRainbowColors()
+			}
 		}
 		guard let colorCycleTimer = self.colorCycleTimer else { return }
 		RunLoop.main.add(colorCycleTimer, forMode: .common)

@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Character {
+@MainActor extension Character {
 	/// The webpage URL of the character.
 	var webpageURLString: String {
 		return "https://kurozora.app/characters/\(self.attributes.slug)"
@@ -87,26 +87,28 @@ extension Character {
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		var activityItems: [Any] = []
-		activityItems.append(self.webpageURLString)
-		activityItems.append(L10n.shareCharacter(self.attributes.name))
+		Task {
+			var activityItems: [Any] = []
+			activityItems.append(self.webpageURLString)
+			activityItems.append(L10n.shareCharacter(self.attributes.name))
 
-		if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
-			activityItems.append(ImageActivityItemProvider(urlString: profileImageURLString, placeholder: self.attributes.profilePlaceholderImage))
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sourceView = sourceView {
-				popoverController.sourceView = sourceView
-				popoverController.sourceRect = sourceView.frame
-			} else {
-				popoverController.barButtonItem = barButtonItem
+			if let profileImageURLString = self.attributes.profile?.url, !profileImageURLString.isEmpty {
+				activityItems.append(await UIImage.load(from: profileImageURLString) ?? self.attributes.profilePlaceholderImage)
 			}
-		}
 
-		viewController?.present(activityViewController, animated: true, completion: nil)
+			let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
+
+			if let popoverController = activityViewController.popoverPresentationController {
+				if let sourceView = sourceView {
+					popoverController.sourceView = sourceView
+					popoverController.sourceRect = sourceView.frame
+				} else {
+					popoverController.barButtonItem = barButtonItem
+				}
+			}
+
+			viewController?.present(activityViewController, animated: true, completion: nil)
+		}
 	}
 
 	/// Rate the character with the given rating.

@@ -37,9 +37,12 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - Nib
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.configureCell()
+
+		MainActor.assumeIsolated {
+			self.configureCell()
+		}
 	}
 
 	// MARK: - Cell

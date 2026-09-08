@@ -9,12 +9,12 @@
 import CoreData
 import os.log
 
-private let persistenceLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "PersistenceController")
+private nonisolated let persistenceLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "PersistenceController")
 
 /// Manages the Core Data stack for local persistence.
 ///
 /// Initialize early in the app lifecycle via `PersistenceController.shared`.
-final class PersistenceController {
+nonisolated final class PersistenceController: Sendable {
 	// MARK: - Properties
 	/// Returns the singleton `PersistenceController` instance.
 	static let shared = PersistenceController()
@@ -45,7 +45,7 @@ final class PersistenceController {
 		}
 		self.container = container
 		self.container.viewContext.automaticallyMergesChangesFromParent = true
-		self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 	}
 
 	// MARK: - Functions
@@ -58,19 +58,6 @@ final class PersistenceController {
 			try context.save()
 		} catch {
 			persistenceLogger.error("Save failed: \(error.localizedDescription)")
-		}
-	}
-
-	/// Runs the given block on a private background context and awaits its completion.
-	///
-	/// - Parameter block: The work to perform with a background `NSManagedObjectContext`.
-	func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) async {
-		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-			self.container.performBackgroundTask { context in
-				context.automaticallyMergesChangesFromParent = true
-				block(context)
-				continuation.resume()
-			}
 		}
 	}
 }

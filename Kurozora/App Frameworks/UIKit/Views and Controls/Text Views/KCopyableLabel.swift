@@ -29,18 +29,6 @@ class KCopyableLabel: KLabel {
 		self.addInteraction(interaction)
 	}
 
-	/// Shows a menu with the given gesture recognizer object as the source.
-	///
-	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
-	@objc private func showMenu(_ gestureRecognizer: UILongPressGestureRecognizer) {
-		guard let gestureView = gestureRecognizer.view, let superView = gestureView.superview else { return }
-		let menuController = UIMenuController.shared
-		guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else { return }
-
-		gestureView.becomeFirstResponder()
-		menuController.showMenu(from: superView, rect: gestureView.frame)
-	}
-
 	/// Creates and returns a `UIMenu` object with the preconfigured actions.
 	///
 	/// - Returns: a `UIMenu` object with the preconfigured actions.
@@ -58,10 +46,6 @@ class KCopyableLabel: KLabel {
 	override func copy(_ sender: Any?) {
 		// Copy the text to
 		UIPasteboard.general.string = text
-
-		// Hide the menu controller
-		let menuController = UIMenuController.shared
-		menuController.hideMenu()
 	}
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {

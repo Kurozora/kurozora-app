@@ -8,7 +8,7 @@
 
 import KurozoraKit
 
-struct KotodamaDaily: Hashable {
+struct KotodamaDaily: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	/// Today's puzzle.
 	let puzzle: KotodamaDailyPuzzle?

@@ -9,7 +9,7 @@
 import StoreKit
 import UIKit
 import Vision
-import VisionKit
+@preconcurrency import VisionKit
 
 class RedeemTableViewController: ServiceTableViewController {
 	// MARK: - Views
@@ -18,7 +18,6 @@ class RedeemTableViewController: ServiceTableViewController {
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
-	var textRecognitionRequest = VNRecognizeTextRequest()
 	lazy var imagePicker = UIImagePickerController()
 
 	// MARK: - View
@@ -32,21 +31,6 @@ class RedeemTableViewController: ServiceTableViewController {
 		self.serviceType = .redeem
 
 		self.configureNavigationItems()
-
-		// Prepare Vision
-		self.textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
-			guard let self = self else { return }
-			if let results = request.results, !results.isEmpty {
-				if let requestResults = request.results as? [VNRecognizedTextObservation] {
-					DispatchQueue.main.async {
-						self.processRecognizedText(requestResults)
-					}
-				}
-			}
-		})
-		self.textRecognitionRequest.revision = VNRecognizeTextRequestRevision1
-		self.textRecognitionRequest.recognitionLevel = .fast
-		self.textRecognitionRequest.usesLanguageCorrection = false
 	}
 
 	// MARK: - Functions
@@ -88,21 +72,41 @@ class RedeemTableViewController: ServiceTableViewController {
 		}
 	}
 
-	/// Processes the specified image with VNImageRequestHandler.
+	/// Recognizes the text in the given images and feeds every result into the redeem code analysis.
 	///
-	/// - Parameter image: The image specified to be processed
-	func processImage(image: UIImage) {
+	/// - Parameter images: The images to inspect.
+	func processImages(_ images: [UIImage]) async {
+		for image in images {
+			let observations = await Self.recognizeText(in: image)
+			self.processRecognizedText(observations)
+		}
+	}
+
+	/// Runs a fast text recognition request on the given image.
+	///
+	/// - Parameter image: The image to inspect.
+	///
+	/// - Returns: The recognized text observations.
+	@concurrent private static func recognizeText(in image: UIImage) async -> [VNRecognizedTextObservation] {
 		guard let cgImage = image.cgImage else {
 			print("Failed to get cgimage from input image")
-			return
+			return []
 		}
+
+		let request = VNRecognizeTextRequest()
+		request.revision = VNRecognizeTextRequestRevision1
+		request.recognitionLevel = .fast
+		request.usesLanguageCorrection = false
 
 		let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 		do {
-			try handler.perform([self.textRecognitionRequest])
+			try handler.perform([request])
 		} catch {
 			print(error)
+			return []
 		}
+
+		return request.results ?? []
 	}
 
 	/// Shows a string on an alert view controller.
@@ -236,14 +240,10 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 		let alertController = self.presentActivityAlertController(title: L10n.redeemProcessingHeadline, message: nil)
 
 		controller.dismiss(animated: true) {
-			DispatchQueue.global(qos: .userInitiated).async {
-				for pageNumber in 0 ..< scan.pageCount {
-					let image = scan.imageOfPage(at: pageNumber)
-					self.processImage(image: image)
-				}
-				DispatchQueue.main.async {
-					alertController.dismiss(animated: true, completion: nil)
-				}
+			Task {
+				let images = (0 ..< scan.pageCount).map { scan.imageOfPage(at: $0) }
+				await self.processImages(images)
+				alertController.dismiss(animated: true, completion: nil)
 			}
 		}
 	}
@@ -258,14 +258,14 @@ extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		let alertController = self.presentActivityAlertController(title: L10n.redeemProcessingHeadline, message: nil)
 
+		let image = info[.editedImage] as? UIImage
+
 		picker.dismiss(animated: true) {
-			DispatchQueue.global(qos: .userInitiated).async {
-				if let image = info[.editedImage] as? UIImage {
-					self.processImage(image: image)
+			Task {
+				if let image {
+					await self.processImages([image])
 				}
-				DispatchQueue.main.async {
-					alertController.dismiss(animated: true, completion: nil)
-				}
+				alertController.dismiss(animated: true, completion: nil)
 			}
 		}
 	}

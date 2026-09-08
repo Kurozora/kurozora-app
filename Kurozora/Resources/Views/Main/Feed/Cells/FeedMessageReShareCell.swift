@@ -34,12 +34,15 @@ class FeedMessageReShareCell: FeedMessageCell {
 	fileprivate static var cachedOPBodyWidth: CGFloat = 0
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.configureOPPostTextView()
 
-		self.opProfileImageView.layer.borderWidth = 0
-		self.opProfileBorderView.cornerRadius = self.opProfileImageView.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.configureOPPostTextView()
+
+			self.opProfileImageView.layer.borderWidth = 0
+			self.opProfileBorderView.cornerRadius = self.opProfileImageView.bounds.height / 2.0
+		}
 	}
 
 	override func prepareForReuse() {

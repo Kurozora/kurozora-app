@@ -10,7 +10,7 @@ import CoreData
 import KurozoraKit
 import os.log
 
-private let outboxLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryOutbox")
+private nonisolated let outboxLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryOutbox")
 
 actor LibraryOutbox {
 	// MARK: - Properties
@@ -323,13 +323,13 @@ actor LibraryOutbox {
 			}
 		case .setEpisodeWatchStatus:
 			for op in group {
-				if let watchStatusRaw = op.payload?.watchStatusRaw, let status = WatchStatus(rawValue: watchStatusRaw) {
-					await WatchedStore.shared.setStatus(status, forEpisodeID: op.targetID)
-				}
-				_ = try await KService.updateWatchStatus(forEpisode: EpisodeIdentity(id: KurozoraItemID(op.targetID))).response()
 				let episodeID = op.targetID
+				if let watchStatusRaw = op.payload?.watchStatusRaw, let status = WatchStatus(rawValue: watchStatusRaw) {
+					await WatchedStore.shared.setStatus(status, forEpisodeID: episodeID)
+				}
+				_ = try await KService.updateWatchStatus(forEpisode: EpisodeIdentity(id: KurozoraItemID(episodeID))).response()
 
-				Task { @MainActor in
+				await MainActor.run {
 					NotificationCenter.default.post(name: .KEpisodeWatchStatusDidSync, object: nil, userInfo: ["episodeID": episodeID])
 				}
 			}
@@ -355,7 +355,9 @@ actor LibraryOutbox {
 
 		// The identity lets the open lists refresh that one row.
 		if let reviewIdentity = rated.data.first {
-			NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+			await MainActor.run {
+				NotificationCenter.default.post(name: .KReviewDidUpdate, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+			}
 		}
 	}
 
@@ -374,7 +376,9 @@ actor LibraryOutbox {
 
 		// The identity lets the open lists drop that one row.
 		if let reviewIdentity = deleted.data.first {
-			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+			await MainActor.run {
+				NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["reviewID": reviewIdentity.id])
+			}
 		}
 	}
 
@@ -430,7 +434,7 @@ actor LibraryOutbox {
 	private func persistOp(type: LibraryOutboxOperationType, userSlug: String, kind: LibraryKind, trackableID: String, targetID: String, payload: LibraryOutboxPayload?, seed: LibraryOutboxSeed?, coalescing: CoalesceStrategy) async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
-		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
 		let identity = trackableID.isEmpty ? targetID : trackableID
 

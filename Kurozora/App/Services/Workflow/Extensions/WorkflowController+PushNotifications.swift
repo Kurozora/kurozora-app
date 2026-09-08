@@ -51,9 +51,9 @@ extension WorkflowController {
 		print("----- Register for push notifications.")
 		if shouldRegisterForPushNotifications() {
 			UserSettings.set(Date(), forKey: .lastNotificationRegistrationRequest)
-			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .providesAppNotificationSettings]) { [weak self] granted, _ in
-				guard let self = self else { return }
-				guard granted else { return }
+			Task { [weak self] in
+				let granted = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .providesAppNotificationSettings])
+				guard let self = self, granted == true else { return }
 				self.getNotificationSettings()
 			}
 		}

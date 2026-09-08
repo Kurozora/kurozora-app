@@ -10,7 +10,7 @@ import Foundation
 import KurozoraKit
 
 /// A lightweight, Codable snapshot of a feed message used to persist parent context for reply/reshare drafts.
-struct FeedMessageSnapshot: Codable {
+nonisolated struct FeedMessageSnapshot: Codable {
 	/// The feed message's server ID.
 	let messageID: String
 

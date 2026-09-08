@@ -178,16 +178,16 @@ extension EmojiProfileImageSourceView {
 
 // MARK: - EmojiPreset
 extension EmojiProfileImageSourceView {
-	struct EmojiPreset: Hashable {
+	struct EmojiPreset: nonisolated Equatable, nonisolated Hashable, Sendable {
 		let id: Int
 		let emoji: String
 		let backgroundColor: UIColor
 
-		func hash(into hasher: inout Hasher) {
+		nonisolated func hash(into hasher: inout Hasher) {
 			hasher.combine(self.id)
 		}
 
-		static func == (lhs: EmojiPreset, rhs: EmojiPreset) -> Bool {
+		nonisolated static func == (lhs: EmojiPreset, rhs: EmojiPreset) -> Bool {
 			return lhs.id == rhs.id
 		}
 	}
@@ -195,7 +195,7 @@ extension EmojiProfileImageSourceView {
 
 // MARK: - ItemKind
 extension EmojiProfileImageSourceView {
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case emoji(_ preset: EmojiPreset)
 	}
 }

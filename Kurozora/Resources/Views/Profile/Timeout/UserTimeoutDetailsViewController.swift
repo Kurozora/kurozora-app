@@ -69,7 +69,7 @@ final class UserTimeoutDetailsViewController: KViewController {
 		self.startCountdown()
 	}
 
-	deinit {
+	isolated deinit {
 		self.countdownTimer?.invalidate()
 		self.countdownTimer = nil
 	}
@@ -268,7 +268,9 @@ final class UserTimeoutDetailsViewController: KViewController {
 
 		self.countdownTimer?.invalidate()
 		self.countdownTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-			self?.refreshExpiryValue()
+			MainActor.assumeIsolated {
+				self?.refreshExpiryValue()
+			}
 		}
 	}
 

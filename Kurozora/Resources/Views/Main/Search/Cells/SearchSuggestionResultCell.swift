@@ -23,11 +23,13 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	}
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.posterImageView.layer.borderWidth = 0
-		self.borderView.cornerRadius = self.posterImageView.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.posterImageView.layer.borderWidth = 0
+			self.borderView.cornerRadius = self.posterImageView.bounds.height / 2.0
+		}
 	}
 
 	override func layoutSubviews() {

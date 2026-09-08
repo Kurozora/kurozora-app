@@ -19,23 +19,9 @@ class ParentalGuideCategoryEntriesCollectionViewController: KCollectionViewContr
 
 	// MARK: - ItemKind
 	/// The set of available item kinds.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		/// A user-submitted entry card.
 		case entry(ParentalGuideEntry)
-
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .entry(let entry):
-				hasher.combine(entry.id)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.entry(let lhs), .entry(let rhs)):
-				return lhs.id == rhs.id
-			}
-		}
 	}
 
 	// MARK: - Properties

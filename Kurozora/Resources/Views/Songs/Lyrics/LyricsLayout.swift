@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct LyricsLayout {
+nonisolated struct LyricsLayout {
 	// MARK: - Properties
 	/// The font of the larger text of a line.
 	static let primaryFont = UIFont.systemFont(ofSize: 26, weight: .bold)

@@ -426,7 +426,7 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 // MARK: - SectionLayoutKind
 extension TopChartsCollectionViewController {
 	/// List of available Section Layout Kind types.
-	enum SectionLayoutKind: Hashable {
+	enum SectionLayoutKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates a chart section layout type.
 		case chart(_: ChartKind)
@@ -436,7 +436,7 @@ extension TopChartsCollectionViewController {
 // MARK: - ItemKind
 extension TopChartsCollectionViewController {
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity)

@@ -8,6 +8,7 @@
 
 #if targetEnvironment(macCatalyst)
 import Obfuscation
+@preconcurrency import ObjectiveC
 import UIKit
 
 /// Handles a single key press ahead of the responder chain.
@@ -53,17 +54,17 @@ final class MacKeyDownMonitor {
 
 		typealias EventHandler = @convention(block) (NSObject) -> NSObject?
 		let handler: EventHandler = { [weak self] event in
-			MainActor.assumeIsolated {
-				guard
-					let self = self,
-					(event.value(forKey: #obfuscated("keyCode")) as? Int) == self.keyCode
-				else { return event }
+			let pressedKeyCode = event.value(forKey: #obfuscated("keyCode")) as? Int
+
+			let isHandled = MainActor.assumeIsolated {
+				guard let self = self, pressedKeyCode == self.keyCode else { return false }
 
 				self.pressHandler()
-
-				// Returning nil keeps the press from the responder chain.
-				return nil
+				return true
 			}
+
+			// Returning nil keeps the press from the responder chain.
+			return isHandled ? nil : event
 		}
 
 		typealias Installer = @convention(c) (AnyClass, Selector, UInt64, EventHandler) -> NSObject?

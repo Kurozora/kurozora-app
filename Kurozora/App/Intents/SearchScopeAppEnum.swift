@@ -15,8 +15,8 @@ enum SearchScopeAppEnum: String, AppEnum {
     case kurozora
     case library
 
-    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Search Scope")
-    static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Search Scope")
+    static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
         .kurozora: "Kurozora",
         .library: "Library"
     ]

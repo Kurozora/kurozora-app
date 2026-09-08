@@ -47,7 +47,7 @@ final class ProfileBarButtonItem: UIBarButtonItem {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

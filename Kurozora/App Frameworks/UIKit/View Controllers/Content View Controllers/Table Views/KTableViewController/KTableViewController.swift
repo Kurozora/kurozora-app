@@ -287,29 +287,29 @@ extension KTableViewController: UINavigationControllerDelegate {}
 
 // MARK: - SeguePerforming
 extension KTableViewController: SeguePerforming {
-	func performSegue(withIdentifier identifier: SegueIdentifier, sender: Any?) {
+	func performSegue(withIdentifier identifier: any SegueIdentifier, sender: Any?) {
 		self.performSegue(withIdentifier: identifier.rawValue, sender: sender)
 	}
 
-	func show(_ identifier: SegueIdentifier, sender: Any?) {
+	func show(_ identifier: any SegueIdentifier, sender: Any?) {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.show(destination, sender: sender)
 	}
 
-	func showDetailViewController(_ identifier: SegueIdentifier, sender: Any?) {
+	func showDetailViewController(_ identifier: any SegueIdentifier, sender: Any?) {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.showDetailViewController(destination, sender: sender)
 	}
 
-	func present(_ identifier: SegueIdentifier, sender: Any?) {
+	func present(_ identifier: any SegueIdentifier, sender: Any?) {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 		self.present(destination, animated: true)
 	}
 
-	func showSecondary(_ identifier: SegueIdentifier, sender: Any?) {
+	func showSecondary(_ identifier: any SegueIdentifier, sender: Any?) {
 		guard let destination = makeDestination(for: identifier) else { return }
 		self.prepare(for: identifier, destination: destination, sender: sender)
 

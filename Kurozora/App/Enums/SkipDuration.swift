@@ -19,5 +19,5 @@ enum SkipDuration: Int, CaseIterable {
 
 	// MARK: - Properties
 	/// The default skip duration.
-	static let `default`: SkipDuration = .three
+	nonisolated static let `default`: SkipDuration = .three
 }

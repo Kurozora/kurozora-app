@@ -23,9 +23,12 @@ class MotionAnimationPreviewCell: KTableViewCell {
 	}
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.configureView()
+
+		MainActor.assumeIsolated {
+			self.configureView()
+		}
 	}
 
 	override func prepareForReuse() {

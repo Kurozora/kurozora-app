@@ -27,7 +27,7 @@ class BroadcastLabel: KSecondaryLabel {
 	private var targetDuration: Int?
 
 	// MARK: - Initializers
-	deinit {
+	isolated deinit {
 		self.stopCountdown()
 	}
 
@@ -44,8 +44,9 @@ class BroadcastLabel: KSecondaryLabel {
 		self.timer?.invalidate()
 
 		self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-			guard let self = self else { return }
-			self.updateCountdown()
+			MainActor.assumeIsolated {
+				self?.updateCountdown()
+			}
 		}
 
 		// Add the timer to the run loop

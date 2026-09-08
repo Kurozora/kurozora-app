@@ -77,7 +77,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case episodeIdentity(_: EpisodeIdentity)
 	}
 
@@ -344,7 +344,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 		do {
 			let requestedIDs = episodeIDs.map(\.rawValue)
-			let cachedETag = await WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
+			let cachedETag = WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
 			let overlayResult = try await KService
 				.watchedOverlay(forUser: userIdentity, episodes: episodeIDs)
 				.response(ifNoneMatch: cachedETag)
@@ -353,8 +353,8 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 			guard case .modified(let response, let etag) = overlayResult else { return }
 
 			// Record the overlay in the cache.
-			await WatchedStore.shared.apply(response.data, requestedIDs: requestedIDs)
-			await WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
+			WatchedStore.shared.apply(response.data, requestedIDs: requestedIDs)
+			WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
 
 			// `apply(unchanged-snapshot)` is a no-op; mark every item for reconfiguration explicitly.
 			await MainActor.run { [weak self] in

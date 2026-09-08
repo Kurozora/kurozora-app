@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
+import Kingfisher
 import PDFKit
 import UIKit
 
@@ -74,5 +75,33 @@ extension UIImage {
 		pdfDocument.insert(pdfPage, at: 0)
 
 		return pdfDocument.dataRepresentation()
+	}
+
+	/// Loads the image at the given URL through the shared image cache.
+	///
+	/// - Parameter urlString: The URL string of the image to load.
+	///
+	/// - Returns: The loaded image.
+	static func load(from urlString: String?) async -> UIImage? {
+		guard let urlString = urlString, !urlString.isEmpty, let imageURL = URL(string: urlString) else {
+			return nil
+		}
+
+		return try? await KingfisherManager.shared.retrieveImage(with: imageURL).image
+	}
+
+	/// Merges the image with another image side by side into a single image.
+	///
+	/// - Parameter trailingImage: The image drawn on the trailing half.
+	///
+	/// - Returns: The combined image.
+	func merged(with trailingImage: UIImage) -> UIImage {
+		let size = CGSize(width: self.size.width + trailingImage.size.width, height: max(self.size.height, trailingImage.size.height))
+		let renderer = UIGraphicsImageRenderer(size: size)
+
+		return renderer.image { _ in
+			self.draw(in: CGRect(x: 0, y: 0, width: size.width / 2, height: size.height))
+			trailingImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width / 2, height: size.height))
+		}
 	}
 }

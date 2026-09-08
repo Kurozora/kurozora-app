@@ -142,9 +142,9 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
 			switch kind {
 			case .shows:
-				guard let show = self.cache[indexPath] as? Show else { continue }
+				guard self.cache[indexPath] is Show else { continue }
 			case .games:
-				guard let game = self.cache[indexPath] as? Game else { continue }
+				guard self.cache[indexPath] is Game else { continue }
 			case .literatures:
 				continue
 			}
@@ -379,7 +379,7 @@ extension DigestCollectionViewController {
 // MARK: - ItemKind
 extension DigestCollectionViewController {
 	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, section: SectionLayoutKind)
 

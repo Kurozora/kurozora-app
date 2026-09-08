@@ -228,23 +228,9 @@ extension CharacterProfileImageSourceView {
 
 // MARK: - ItemKind
 extension CharacterProfileImageSourceView {
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		case characterIdentity(_: CharacterIdentity)
-
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .characterIdentity(let characterIdentity):
-				hasher.combine(characterIdentity)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.characterIdentity(let characterIdentity1), .characterIdentity(let characterIdentity2)):
-				return characterIdentity1 == characterIdentity2
-			}
-		}
 	}
 }
 

@@ -30,13 +30,15 @@ class RecapLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var gradientView: GradientView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.albumContainerView.layer.cornerRadius = 22
-		self.albumImageView.applyCornerRadius(22)
-		self.albumImageView.layer.borderWidth = 0
-		self.albumBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.albumContainerView.layer.cornerRadius = 22
+			self.albumImageView.applyCornerRadius(22)
+			self.albumImageView.layer.borderWidth = 0
+			self.albumBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

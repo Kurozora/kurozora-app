@@ -42,7 +42,7 @@ class BorderView: UIView {
 		self.sharedInit()
 	}
 
-	deinit {
+	isolated deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 

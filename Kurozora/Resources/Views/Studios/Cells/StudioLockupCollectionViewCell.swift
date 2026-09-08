@@ -21,14 +21,16 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var profileImageContainer: UIView!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.primaryContainerView.layer.cornerRadius = 22
-		self.profileImageContainer.layer.cornerRadius = 22
-		self.primaryImageView?.applyCornerRadius(22)
-		self.primaryImageView?.layer.borderWidth = 0
-		self.primaryBorderView.cornerRadius = 22
+		MainActor.assumeIsolated {
+			self.primaryContainerView.layer.cornerRadius = 22
+			self.profileImageContainer.layer.cornerRadius = 22
+			self.primaryImageView?.applyCornerRadius(22)
+			self.primaryImageView?.layer.borderWidth = 0
+			self.primaryBorderView.cornerRadius = 22
+		}
 	}
 
 	// MARK: - Functions

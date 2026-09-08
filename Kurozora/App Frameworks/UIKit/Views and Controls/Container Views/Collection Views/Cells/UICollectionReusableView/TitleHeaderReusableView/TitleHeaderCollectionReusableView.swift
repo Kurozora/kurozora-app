@@ -25,9 +25,12 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	private(set) var indexPath: IndexPath?
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
-		self.headerButton.setTitle(L10n.seeAll, for: .normal)
+
+		MainActor.assumeIsolated {
+			self.headerButton.setTitle(L10n.seeAll, for: .normal)
+		}
 	}
 
 	// MARK: - Functions

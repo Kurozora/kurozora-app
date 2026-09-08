@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-extension Show {
+@MainActor extension Show {
 	/// The webpage URL of the show.
 	var webpageURLString: String {
 		return "https://kurozora.app/anime/\(self.attributes.slug)"
@@ -36,6 +36,7 @@ extension Show {
 	/// - Returns: A `UIContextMenuConfiguration` representing the context menu for the show.
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` will take precedence.
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?, sourceView: UIView?, barButtonItem: UIBarButtonItem?) -> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
@@ -185,7 +186,7 @@ extension Show {
 		guard let slug = User.current?.attributes.slug else { return }
 
 		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.id.rawValue, userSlug: slug, kind: .shows, seed: self.outboxSeed)
-		await ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
+		ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
 	}
 
 	@MainActor
@@ -285,7 +286,7 @@ extension Show {
 	@MainActor
 	private func validateIsInLibrary() async -> Bool {
 		if self.libraryAttributes?.status == nil {
-			await UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
+			UIApplication.topViewController?.presentAlertController(title: L10n.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}

@@ -520,7 +520,7 @@ extension UserReviewsListCollectionViewController {
 // MARK: - ItemKind
 extension UserReviewsListCollectionViewController {
 	/// List of item layout kind.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Review` object.
 		case review(_: Review)
@@ -531,21 +531,6 @@ extension UserReviewsListCollectionViewController {
 			switch self {
 			case .review(let review):
 				return review
-			}
-		}
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .review(let review):
-				hasher.combine(review)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.review(let review1), .review(let review2)):
-				return review1 == review2
 			}
 		}
 	}

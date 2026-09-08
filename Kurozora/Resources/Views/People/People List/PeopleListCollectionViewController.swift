@@ -30,7 +30,7 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 	}
 
 	/// An item displayed in the list.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		case personIdentity(_: PersonIdentity)
 	}
 

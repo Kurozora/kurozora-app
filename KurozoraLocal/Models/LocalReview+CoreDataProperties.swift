@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension LocalReview {
+nonisolated extension LocalReview {
 	@nonobjc class func fetchRequest() -> NSFetchRequest<LocalReview> {
 		return NSFetchRequest<LocalReview>(entityName: "LocalReview")
 	}

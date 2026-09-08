@@ -39,7 +39,7 @@ enum FilterableType {
 	case `switch`
 }
 
-enum FilterKey {
+enum FilterKey: nonisolated Equatable, nonisolated Hashable, Sendable {
 	// MARK: - Cases
 	case age
 	case astrologicalSign

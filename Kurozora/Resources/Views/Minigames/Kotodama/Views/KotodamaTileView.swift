@@ -46,7 +46,7 @@ class KotodamaTileView: UIView {
 		self.sharedInit()
 	}
 
-	deinit {
+	isolated deinit {
 		if let differentiateWithoutColorObserver {
 			NotificationCenter.default.removeObserver(differentiateWithoutColorObserver)
 		}
@@ -93,7 +93,9 @@ class KotodamaTileView: UIView {
 			object: nil,
 			queue: .main
 		) { [weak self] _ in
-			self?.updateMarker()
+			MainActor.assumeIsolated {
+				self?.updateMarker()
+			}
 		}
 	}
 

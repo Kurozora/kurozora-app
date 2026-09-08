@@ -157,7 +157,7 @@ final class VolumeControl: UIControl {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
+	isolated deinit {
 		#if targetEnvironment(macCatalyst)
 		self.stopObservingSystemVolume()
 		#else
@@ -261,14 +261,18 @@ final class VolumeControl: UIControl {
 			object: nil,
 			queue: .main
 		) { [weak self] notification in
-			guard let self = self, !self.isTracking else { return }
+			let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float
 
-			if let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float {
-				self.currentVolume = volume
-				self.updateSliderFill()
-				self.updateGlyph()
-			} else {
-				self.syncVolumeFromSystem()
+			MainActor.assumeIsolated {
+				guard let self = self, !self.isTracking else { return }
+
+				if let volume {
+					self.currentVolume = volume
+					self.updateSliderFill()
+					self.updateGlyph()
+				} else {
+					self.syncVolumeFromSystem()
+				}
 			}
 		}
 		#endif

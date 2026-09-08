@@ -6,6 +6,7 @@
 //  Copyright © 2026 Kurozora. All rights reserved.
 //
 
+import CoreData
 import KurozoraKit
 import UIKit
 
@@ -55,22 +56,16 @@ extension LibraryListCollectionViewController {
 // MARK: - ItemKind
 extension LibraryListCollectionViewController {
 	/// The list of available library list item kinds.
-	enum ItemKind: Hashable {
-		/// The item contains a ``LocalLibraryEntry`` row from the local store.
-		case entry(_: LocalLibraryEntry)
+	enum ItemKind: nonisolated Hashable {
+		/// The item refers to a ``LocalLibraryEntry`` row in the local store.
+		case entry(_ objectID: NSManagedObjectID)
 
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
+		// MARK: - Properties
+		/// The Core Data identifier of the entry the item refers to.
+		var objectID: NSManagedObjectID {
 			switch self {
-			case .entry(let entry):
-				hasher.combine(entry.objectID)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.entry(let lhsEntry), .entry(let rhsEntry)):
-				return lhsEntry.objectID == rhsEntry.objectID
+			case .entry(let objectID):
+				return objectID
 			}
 		}
 	}

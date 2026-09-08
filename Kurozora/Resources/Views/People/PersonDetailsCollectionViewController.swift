@@ -173,11 +173,17 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	override func fetchDetails() async {
 		guard let personIdentity = self.personIdentity else { return }
 
-		async let reviewIdentityResponse = KService.reviews(for: personIdentity).cursor(nil).limit(10).response()
-		async let characterIdentityResponse = KService.characters(for: personIdentity).limit(10).response()
-		async let showIdentityResponse = KService.shows(for: personIdentity).limit(10).response()
-		async let literatureIdentityResponse = KService.literatures(for: personIdentity).limit(10).response()
-		async let gameIdentityResponse = KService.games(for: personIdentity).limit(10).response()
+		let reviewIdentityRequest = KService.reviews(for: personIdentity).cursor(nil).limit(10)
+		let characterIdentityRequest = KService.characters(for: personIdentity).limit(10)
+		let showIdentityRequest = KService.shows(for: personIdentity).limit(10)
+		let literatureIdentityRequest = KService.literatures(for: personIdentity).limit(10)
+		let gameIdentityRequest = KService.games(for: personIdentity).limit(10)
+
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let characterIdentityResponse = characterIdentityRequest.response()
+		async let showIdentityResponse = showIdentityRequest.response()
+		async let literatureIdentityResponse = literatureIdentityRequest.response()
+		async let gameIdentityResponse = gameIdentityRequest.response()
 
 		if self.person == nil {
 			do {

@@ -16,10 +16,12 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
 	// MARK: - Initializers
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.primaryImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
+		MainActor.assumeIsolated {
+			self.primaryImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
 	}
 
 	// MARK: - Functions

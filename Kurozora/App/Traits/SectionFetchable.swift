@@ -14,9 +14,9 @@ import UIKit
 protocol SectionFetchable: AnyObject {
 	// MARK: - Associated Types
 	/// The type that identifies each section in the data source.
-	associatedtype SectionLayoutKind: Hashable
+	associatedtype SectionLayoutKind: Hashable, Sendable
 	/// The type that identifies each item in the data source.
-	associatedtype ItemKind: Hashable
+	associatedtype ItemKind: Hashable, Sendable
 	/// The diffable data source type keyed by `SectionLayoutKind` and `ItemKind`.
 	associatedtype DataSource: DiffableDataSourceProtocol
 		where DataSource.SectionIdentifierType == SectionLayoutKind,

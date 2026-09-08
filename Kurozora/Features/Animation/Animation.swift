@@ -65,7 +65,7 @@ final class Animation {
 	///    - completion: The completion handler to call when the animation is finished.
 	func playAnimation(
 		on view: UIView,
-		completion: ((Bool) -> Void)?
+		completion: (@MainActor @Sendable (Bool) -> Void)?
 	) {
 		self.playAnimation(on: view, configuration: .default, completion: completion)
 	}
@@ -79,7 +79,7 @@ final class Animation {
 	func playAnimation(
 		on view: UIView,
 		configuration: AnimationPlaybackConfiguration,
-		completion: ((Bool) -> Void)?
+		completion: (@MainActor @Sendable (Bool) -> Void)?
 	) {
 		let playbackID = configuration.playbackID
 		if self.playbackTasks[playbackID] != nil {
@@ -205,7 +205,7 @@ private extension Animation {
 	}
 
 	/// Plays the selected animation once.
-	func playAnimationPass(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playAnimationPass(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		// Check accessibility settings
 		if self.shouldReduceMotion {
 			self.playNoneAnimation(on: view, completion: completion)
@@ -246,7 +246,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playNoneAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playNoneAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		completion?(true)
 	}
 
@@ -255,7 +255,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playDefaultAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playDefaultAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
 		view.alpha = 0.0
 
@@ -304,7 +304,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playSpinAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playSpinAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
 		view.alpha = 0
 
@@ -353,7 +353,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playShakeAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playShakeAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = .identity
 		view.alpha = 1.0
 
@@ -402,7 +402,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playScaleAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playScaleAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
 		view.alpha = 0.0
 
@@ -425,7 +425,9 @@ private extension Animation {
 				view.transform = .identity
 			}
 		}, completion: { finished in
-			completion?(finished)
+			MainActor.assumeIsolated {
+				completion?(finished)
+			}
 		})
 	}
 
@@ -434,7 +436,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playAnvilAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playAnvilAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = CGAffineTransform(translationX: 0, y: -800)
 		view.alpha = 0
 
@@ -475,7 +477,7 @@ private extension Animation {
 	/// - Parameters:
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
-	func playHeartbeatAnimation(on view: UIView, completion: ((Bool) -> Void)?) {
+	func playHeartbeatAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = .identity
 		view.alpha = 1.0
 
@@ -510,7 +512,9 @@ private extension Animation {
 				view.transform = .identity
 			}
 		}, completion: { finished in
-			completion?(finished)
+			MainActor.assumeIsolated {
+				completion?(finished)
+			}
 		})
 	}
 
@@ -520,7 +524,7 @@ private extension Animation {
 	///    - view: The view to animate.
 	///    - velocity: The initial velocity of the bounce (default is 1.0, higher values create a more exaggerated bounce).
 	///    - completion: The completion handler to call when the animation is finished.
-	func playBounceAnimation(on view: UIView, velocity: CGFloat = 1.0, completion: ((Bool) -> Void)?) {
+	func playBounceAnimation(on view: UIView, velocity: CGFloat = 1.0, completion: (@MainActor @Sendable (Bool) -> Void)?) {
 		view.transform = .identity
 		view.alpha = 1.0
 

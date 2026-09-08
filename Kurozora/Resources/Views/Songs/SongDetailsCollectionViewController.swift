@@ -155,9 +155,13 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func fetchDetails() async {
 		guard let songIdentity = self.songIdentity else { return }
 
-		async let showIdentityResponse = KService.shows(for: songIdentity).limit(10).response()
-		async let reviewIdentityResponse = KService.reviews(for: songIdentity).cursor(nil).limit(10).response()
-		async let lyricsResponse = KService.lyrics(for: songIdentity).response()
+		let showIdentityRequest = KService.shows(for: songIdentity).limit(10)
+		let reviewIdentityRequest = KService.reviews(for: songIdentity).cursor(nil).limit(10)
+		let lyricsRequest = KService.lyrics(for: songIdentity)
+
+		async let showIdentityResponse = showIdentityRequest.response()
+		async let reviewIdentityResponse = reviewIdentityRequest.response()
+		async let lyricsResponse = lyricsRequest.response()
 
 		if self.song == nil {
 			do {
@@ -456,7 +460,7 @@ extension SongDetailsCollectionViewController {
 	}
 
 	/// List of available item kind types.
-	enum ItemKind: Hashable {
+	enum ItemKind: nonisolated Hashable {
 		// MARK: - Cases
 		/// An item kind that contains a `KKSong` object.
 		case song(_: KKSong)

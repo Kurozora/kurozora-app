@@ -11,22 +11,23 @@ import CoreML
 import UIKit
 import Vision
 
-/// A face detector backed by an on-device YOLOv8 anime face Core ML model.
-final class AnimeFaceDetector: FaceDetector {
+/// A face detector backed by an on-device YOLOv8 anime face Core ML model, isolated to its own serial dispatch queue.
+@available(iOS 17.0, *)
+final actor AnimeFaceDetector: FaceDetector {
 	// MARK: - Properties
-	let identifier: String
+	nonisolated let identifier: String
 
-	private let modelResourceName: String
+	nonisolated var unownedExecutor: UnownedSerialExecutor {
+		return self.workQueue.asUnownedSerialExecutor()
+	}
+
 	private let outputLabel: String
 	private let inputSize: CGFloat
-	private let model: VNCoreMLModel?
+	private let modelResourceName: String
+	private lazy var model: VNCoreMLModel? = self.loadModel()
 
 	/// See `VisionFaceDetector` for why detection is kept off the cooperative pool.
-	private let workQueue = DispatchQueue(
-		label: "app.kurozora.face-detection.anime",
-		qos: .utility,
-		attributes: .concurrent
-	)
+	private nonisolated let workQueue = DispatchSerialQueue(label: "app.kurozora.face-detection.anime", qos: .utility)
 
 	// MARK: - Initializers
 	/// Creates a detector configured for a specific bundled model.
@@ -37,11 +38,10 @@ final class AnimeFaceDetector: FaceDetector {
 	///   - identifier: The stable identifier sent to the server alongside detection results.
 	///   - inputSize: The pixel size of the square input the model expects.
 	init(modelResourceName: String, outputLabel: String, identifier: String, inputSize: CGFloat = 640) {
-		self.modelResourceName = modelResourceName
 		self.outputLabel = outputLabel
 		self.identifier = identifier
 		self.inputSize = inputSize
-		self.model = Self.loadModel(resourceName: modelResourceName)
+		self.modelResourceName = modelResourceName
 	}
 
 	// MARK: - Functions
@@ -50,49 +50,38 @@ final class AnimeFaceDetector: FaceDetector {
 			return nil
 		}
 
-		let outputLabel = self.outputLabel
-		let inputSize = self.inputSize
+		let request = VNCoreMLRequest(model: model)
+		request.imageCropAndScaleOption = .scaleFill
 
-		return await withCheckedContinuation { continuation in
-			self.workQueue.async {
-				let request = VNCoreMLRequest(model: model)
-				request.imageCropAndScaleOption = .scaleFill
+		let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])
 
-				let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])
-
-				do {
-					try handler.perform([request])
-				} catch {
-					continuation.resume(returning: nil)
-					return
-				}
-
-				guard let results = request.results as? [VNCoreMLFeatureValueObservation] else {
-					continuation.resume(returning: nil)
-					return
-				}
-
-				let observation = results.first(where: { $0.featureName == outputLabel }) ?? results.first
-
-				guard let multiArray = observation?.featureValue.multiArrayValue else {
-					continuation.resume(returning: nil)
-					return
-				}
-
-				let boxes = YOLOv8OutputDecoder.decode(output: multiArray, inputSize: inputSize)
-
-				guard let best = boxes.first else {
-					continuation.resume(returning: nil)
-					return
-				}
-
-				continuation.resume(returning: CGPoint(x: best.rect.midX, y: best.rect.midY))
-			}
+		do {
+			try handler.perform([request])
+		} catch {
+			return nil
 		}
+
+		guard let results = request.results as? [VNCoreMLFeatureValueObservation] else {
+			return nil
+		}
+
+		let observation = results.first(where: { $0.featureName == self.outputLabel }) ?? results.first
+
+		guard let multiArray = observation?.featureValue.multiArrayValue else {
+			return nil
+		}
+
+		let boxes = YOLOv8OutputDecoder.decode(output: multiArray, inputSize: self.inputSize)
+
+		guard let best = boxes.first else {
+			return nil
+		}
+
+		return CGPoint(x: best.rect.midX, y: best.rect.midY)
 	}
 
-	private static func loadModel(resourceName: String) -> VNCoreMLModel? {
-		guard let url = Bundle.main.url(forResource: resourceName, withExtension: "mlmodelc") else {
+	private func loadModel() -> VNCoreMLModel? {
+		guard let url = Bundle.main.url(forResource: self.modelResourceName, withExtension: "mlmodelc") else {
 			return nil
 		}
 

@@ -49,7 +49,7 @@ protocol TrailerNativePlayerViewDelegate: AnyObject {
 @MainActor
 final class TrailerNativePlayerView: UIView {
 	// MARK: - Views
-	override class var layerClass: AnyClass {
+	override static var layerClass: AnyClass {
 		return AVPlayerLayer.self
 	}
 
@@ -59,6 +59,9 @@ final class TrailerNativePlayerView: UIView {
 
 	/// The player that renders the trailer.
 	private var player: AVPlayer?
+
+	/// The nominal frame rate of the current item's video track, in frames per second.
+	private var nominalFrameRate: Double?
 
 	/// The observation of the item's status.
 	private var statusObservation: NSKeyValueObservation?
@@ -122,7 +125,7 @@ final class TrailerNativePlayerView: UIView {
 		let track = self.player?.currentItem?.tracks.first { $0.assetTrack?.mediaType == .video }
 
 		// The live reading ramps up from below the real rate.
-		let readings = [Double(track?.assetTrack?.nominalFrameRate ?? 0.0), Double(track?.currentVideoFrameRate ?? 0.0)]
+		let readings = [self.nominalFrameRate ?? 0.0, Double(track?.currentVideoFrameRate ?? 0.0)]
 
 		return readings.first { $0 >= 10.0 && $0 <= 120.0 }
 	}
@@ -180,6 +183,7 @@ final class TrailerNativePlayerView: UIView {
 		self.observeReadiness(of: item, startingAt: seconds, rate: rate)
 		self.observeProgress(of: player)
 		self.observeItemEnd(of: item)
+		self.loadNominalFrameRate(of: item)
 	}
 
 	/// Resumes playback.
@@ -277,8 +281,8 @@ final class TrailerNativePlayerView: UIView {
 		self.isSeeking = true
 		let wasPlaying = self.isPlaying
 
-		player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
-			DispatchQueue.main.async { [weak self] in
+		player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+			DispatchQueue.main.async {
 				MainActor.assumeIsolated {
 					guard let self = self else { return }
 
@@ -399,6 +403,22 @@ final class TrailerNativePlayerView: UIView {
 
 		self.observeReadiness(of: item, startingAt: 0.0, rate: self.playbackRate)
 		self.observeItemEnd(of: item)
+		self.loadNominalFrameRate(of: item)
+	}
+
+	/// Reads the nominal frame rate of the item's video track once the asset exposes it.
+	///
+	/// - Parameter item: The item whose video track to read.
+	private func loadNominalFrameRate(of item: AVPlayerItem) {
+		self.nominalFrameRate = nil
+
+		Task { [weak self] in
+			let track = try? await item.asset.loadTracks(withMediaType: .video).first
+			let frameRate = try? await track?.load(.nominalFrameRate)
+			guard let self, self.player?.currentItem === item else { return }
+
+			self.nominalFrameRate = frameRate.map(Double.init)
+		}
 	}
 
 	/// Stops playback and removes every observer.
@@ -429,6 +449,7 @@ final class TrailerNativePlayerView: UIView {
 
 		self.player?.pause()
 		self.player = nil
+		self.nominalFrameRate = nil
 		self.playerLayer?.player = nil
 	}
 
@@ -447,12 +468,12 @@ final class TrailerNativePlayerView: UIView {
 	///    - seconds: The time to start from, in seconds.
 	///    - rate: The playback rate, as a multiple of normal speed.
 	private func observeReadiness(of item: AVPlayerItem, startingAt seconds: Double, rate: Double) {
-		self.statusObservation = item.observe(\.status, options: [.initial, .new]) { item, _ in
+		self.statusObservation = item.observe(\.status, options: [.initial, .new]) { [weak self] item, _ in
 			let status = item.status
 			let length = item.duration.seconds
 			let reason = item.error?.localizedDescription ?? "unknown"
 
-			DispatchQueue.main.async { [weak self] in
+			DispatchQueue.main.async {
 				MainActor.assumeIsolated {
 					guard let self = self, !self.hasReportedReady else { return }
 
@@ -484,8 +505,8 @@ final class TrailerNativePlayerView: UIView {
 		self.playbackRate = rate
 
 		// Exact, so the handover neither repeats nor drops the opening seconds.
-		self.player?.seek(to: CMTime(seconds: max(0.0, resumePoint), preferredTimescale: 600), toleranceBefore: .zero, toleranceAfter: .zero) { _ in
-			DispatchQueue.main.async { [weak self] in
+		self.player?.seek(to: CMTime(seconds: max(0.0, resumePoint), preferredTimescale: 600), toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+			DispatchQueue.main.async {
 				MainActor.assumeIsolated {
 					guard let self = self else { return }
 
@@ -531,7 +552,7 @@ final class TrailerNativePlayerView: UIView {
 }
 
 // MARK: - AVPictureInPictureControllerDelegate
-extension TrailerNativePlayerView: AVPictureInPictureControllerDelegate {
+extension TrailerNativePlayerView: @MainActor AVPictureInPictureControllerDelegate {
 	func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
 		guard TrailerNativePlayerView.floatingPlayerView === self else { return }
 

@@ -11,7 +11,7 @@ import KurozoraKit
 import Network
 import os.log
 
-private let syncLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibrarySyncEngine")
+private nonisolated let syncLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibrarySyncEngine")
 
 /// Drives the combined library delta sync into the local store.
 actor LibrarySyncEngine {
@@ -256,7 +256,7 @@ actor LibrarySyncEngine {
 	private func readCursor(forUserSlug userSlug: String, kind: LibraryKind) async -> SyncCursor? {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
-		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		return await context.perform {
 			let row = LocalSyncCursor.upsert(forUserSlug: userSlug, kind: kind, in: context)
 			if context.hasChanges {
@@ -270,7 +270,7 @@ actor LibrarySyncEngine {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		// Server data is authoritative on constraint collisions.
-		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		// Rethrow save failures — the cursor must not advance past an unapplied batch.
 		try await context.perform {
 			for row in batch {
@@ -289,7 +289,7 @@ actor LibrarySyncEngine {
 	private func resetLocalState(forUserSlug userSlug: String, kind: LibraryKind) async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
-		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		await context.perform {
 			let entryRequest = LocalLibraryEntry.fetchRequest()
 			entryRequest.predicate = NSPredicate(

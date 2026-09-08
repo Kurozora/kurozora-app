@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KotodamaStat: Hashable {
+struct KotodamaStat: nonisolated Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the value.
 	let title: String

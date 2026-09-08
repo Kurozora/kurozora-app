@@ -16,11 +16,13 @@ class IconNotificationCell: BasicNotificationCell {
 	@IBOutlet weak var titleLabel: KLabel!
 
 	// MARK: - View
-	override func awakeFromNib() {
+	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
 
-		self.profileImageView.layer.borderWidth = 0
-		self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+		MainActor.assumeIsolated {
+			self.profileImageView.layer.borderWidth = 0
+			self.borderView.cornerRadius = self.profileImageView.bounds.height / 2.0
+		}
 	}
 
 	override func layoutSubviews() {

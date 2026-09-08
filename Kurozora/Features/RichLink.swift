@@ -19,7 +19,7 @@ class RichLink {
 	private let memoryCache = NSCache<NSString, LPLinkMetadata>()
 
 	/// Time-to-live for cached metadata. Defaults to 7 days.
-	var cacheTTL: TimeInterval = 7 * 24 * 60 * 60
+	let cacheTTL: TimeInterval = 7 * 24 * 60 * 60
 
 	/// The subdirectory name used to isolate rich link cache files.
 	private let cacheSubdirectory = "richlink-cache"
@@ -173,7 +173,7 @@ class RichLink {
 	}
 
 	/// Cleans expired files from the disk cache based on TTL, then enforces the size ceiling.
-	@objc func cleanExpiredCache() {
+	@objc nonisolated func cleanExpiredCache() {
 		guard let cacheDirectory = self.cacheDirectoryURL() else { return }
 		guard FileManager.default.fileExists(atPath: cacheDirectory.path) else { return }
 
@@ -279,7 +279,7 @@ class RichLink {
 		}
 
 		Task.detached(priority: .utility) { [weak self] in
-			await self?.cleanExpiredCache()
+			self?.cleanExpiredCache()
 			sharedApplication.endBackgroundTask(backgroundTask)
 			backgroundTask = .invalid
 		}

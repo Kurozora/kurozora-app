@@ -11,7 +11,7 @@ import UIKit
 /// Draws floating lyrics frames into a Core Graphics context.
 ///
 /// The context must use UIKit's flipped coordinate space.
-struct FloatingLyricsRenderer {
+nonisolated struct FloatingLyricsRenderer {
 	// MARK: - Properties
 	/// The width of the rendering canvas in pixels.
 	static let canvasWidth: CGFloat = 1080
