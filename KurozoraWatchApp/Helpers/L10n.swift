@@ -480,9 +480,9 @@ struct L10n {
 		String(localized: "Library Status", comment: "The section header showing where a title sits in the user's library.")
 	}
 
-	/// The button that adds a title to the user's library.
-	static var addToLibrary: String {
-		String(localized: "Add to Library", comment: "The button that adds a title to the user's library.")
+	/// The string for the word 'add', shown on the library status pill of an untracked title.
+	static var add: String {
+		String(localized: "Add", comment: "The string for the word 'add'.")
 	}
 
 	/// The button that removes a title from the user's library.

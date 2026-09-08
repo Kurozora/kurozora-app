@@ -30,8 +30,10 @@ struct LibraryStatusButton: View {
 				Text(self.title)
 					.font(.caption.bold())
 
-				Image(systemName: "chevron.down")
-					.font(.system(size: 9, weight: .bold))
+				if self.isInLibrary {
+					Image(systemName: "chevron.down")
+						.font(.system(size: 9, weight: .bold))
+				}
 			}
 			.foregroundStyle(self.theme.tintedButtonText)
 			.padding(.horizontal, 12)
@@ -57,7 +59,7 @@ struct LibraryStatusButton: View {
 
 	// MARK: - Computed
 	private var title: String {
-		guard self.isInLibrary, let status = self.status else { return L10n.addToLibrary }
+		guard self.isInLibrary, let status = self.status else { return L10n.add.uppercased(with: Locale.current) }
 
 		return status.watchTitle(for: self.kind)
 	}

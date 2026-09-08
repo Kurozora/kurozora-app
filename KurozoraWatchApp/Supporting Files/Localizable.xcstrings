@@ -3212,6 +3212,239 @@
         }
       }
     },
+    "Add" : {
+      "comment" : "The string for the word 'add'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إضافة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যোগ করুন"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilføj"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσθήκη"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افزودن"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisää"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idagdag"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הוסף"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जोड़ें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hozzáadás"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ավելացնել"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추가"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legg til"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voeg toe"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaugă"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lägg till"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சேர்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "జోడించు"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่ม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شامل کریں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thêm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
+          }
+        }
+      }
+    },
     "Add reminder" : {
       "comment" : "The swipe action that sets a reminder on a library entry.",
       "localizations" : {
@@ -3674,239 +3907,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入最愛"
-          }
-        }
-      }
-    },
-    "Add to Library" : {
-      "comment" : "The button that adds a title to the user's library.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "إضافة إلى المكتبة"
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "লাইব্রেরিতে যোগ করো"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Přidat do knihovny"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Føj til bibliotek"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zur Mediathek hinzufügen"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Προσθήκη στη βιβλιοθήκη"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir a la biblioteca"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agregar a la biblioteca"
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "افزودن به کتابخانه"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lisää kirjastoon"
-          }
-        },
-        "fil" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Idagdag sa Library"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajouter à la bibliothèque"
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "הוסף לספרייה"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "लाइब्रेरी में जोड़ें"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hozzáadás a könyvtárhoz"
-          }
-        },
-        "hy" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ավելացնել գրադարան"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tambah ke Pustaka"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aggiungi alla libreria"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ライブラリに追加"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "보관함에 추가"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tambah ke Pustaka"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Legg til i bibliotek"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toevoegen aan bibliotheek"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dodaj do biblioteki"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar à biblioteca"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar à Biblioteca"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaugă în bibliotecă"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Добавить в библиотеку"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lägg till i biblioteket"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "நூலகத்தில் சேர்"
-          }
-        },
-        "te" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "లైబ్రరీకి జోడించు"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เพิ่มลงในคลัง"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kitaplığa Ekle"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Додати до бібліотеки"
-          }
-        },
-        "ur" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "لائبریری میں شامل کریں"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thêm vào Thư viện"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加入资料库"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加入收藏庫"
           }
         }
       }

@@ -65,6 +65,7 @@ struct LibraryEntryDetailView: View {
 						Task { await self.viewModel.removeFromLibrary() }
 					}
 				)
+				.frame(maxWidth: .infinity)
 
 				Divider()
 
