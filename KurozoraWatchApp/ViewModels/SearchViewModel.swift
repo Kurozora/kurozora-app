@@ -48,6 +48,7 @@ final class SearchViewModel {
 	private var userSlug: String?
 	private var entryObserver: LocalLibraryEntryObserver?
 	private var isRefreshScheduled = false
+	private var hasSearched = false
 
 	// MARK: - Initializers
 	init(query: String) {
@@ -55,8 +56,11 @@ final class SearchViewModel {
 	}
 
 	// MARK: - Functions
-	/// Searches the library at once and the catalog over the network.
+	/// Searches the library at once and the catalog over the network, once per results screen.
 	func search() async {
+		guard !self.hasSearched else { return }
+		self.hasSearched = true
+
 		self.userSlug = User.current?.attributes.slug
 		self.observeLibraryIfNeeded()
 		self.refreshLibraryMatches()
@@ -112,6 +116,13 @@ final class SearchViewModel {
 		case .games:
 			return self.gamesBucket.models[itemID].map { LibraryEntryDetails(game: $0) }
 		}
+	}
+
+	/// Returns the filter currently applied to the kind's catalog results.
+	///
+	/// - Parameter kind: The library kind whose filter to read.
+	func filter(for kind: LibraryKind) -> SearchFilter? {
+		return self.activeFilters[kind]
 	}
 
 	/// Whether the server has more catalog results of the given kind.

@@ -60,7 +60,7 @@ struct SearchKindResultsView: View {
 			}
 		}
 		.sheet(isPresented: self.$isFilterPresented) {
-			SearchFilterView(kind: self.kind, isPresented: self.$isFilterPresented) { filter in
+			SearchFilterView(kind: self.kind, filter: self.viewModel.filter(for: self.kind), isPresented: self.$isFilterPresented) { filter in
 				Task { await self.viewModel.applyFilter(filter, for: self.kind) }
 			}
 		}

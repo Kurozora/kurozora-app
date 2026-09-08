@@ -30,6 +30,10 @@ struct WatchFilterAttribute: Identifiable {
 struct SearchFilterView: View {
 	// MARK: - Properties
 	let kind: LibraryKind
+
+	/// The filter currently applied, whose selections the sheet opens with.
+	let filter: SearchFilter?
+
 	@Binding var isPresented: Bool
 
 	/// Receives the built filter on apply, or `nil` on reset.
@@ -62,12 +66,59 @@ struct SearchFilterView: View {
 			}
 			.navigationTitle(L10n.filters)
 			.onAppear {
-				self.attributes = Self.filterAttributes(for: self.kind.searchType)
+				let selectedValues = Self.selectedValues(in: self.filter)
+
+				self.attributes = Self.filterAttributes(for: self.kind.searchType).map { attribute in
+					var attribute = attribute
+					attribute.selectedValue = selectedValues[attribute.id]
+					return attribute
+				}
 			}
 		}
 	}
 
 	// MARK: - Private
+	/// Returns the applied filter's selections keyed by attribute identifier.
+	private static func selectedValues(in filter: SearchFilter?) -> [String: Int] {
+		guard let filter else { return [:] }
+
+		let values: [String: Int?]
+
+		switch filter {
+		case .show(let show):
+			values = [
+				"airDay": show.airDay,
+				"airSeason": show.airSeason,
+				"mediaType": show.mediaType,
+				"source": show.source,
+				"status": show.status,
+				"tvRating": show.tvRating
+			]
+		case .literature(let literature):
+			values = [
+				"publicationDay": literature.publicationDay,
+				"publicationSeason": literature.publicationSeason,
+				"mediaType": literature.mediaType,
+				"source": literature.source,
+				"status": literature.status,
+				"tvRating": literature.tvRating
+			]
+		case .game(let game):
+			values = [
+				"publicationDay": game.publicationDay,
+				"publicationSeason": game.publicationSeason,
+				"mediaType": game.mediaType,
+				"source": game.source,
+				"status": game.status,
+				"tvRating": game.tvRating
+			]
+		default:
+			return [:]
+		}
+
+		return values.compactMapValues { $0 }
+	}
+
 	private func applyFilter() {
 		self.isPresented = false
 		self.onApply(Self.buildFilter(from: self.attributes, for: self.kind.searchType))
