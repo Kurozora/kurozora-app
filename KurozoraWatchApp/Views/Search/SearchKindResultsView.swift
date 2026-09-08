@@ -16,6 +16,8 @@ struct SearchKindResultsView: View {
 
 	let viewModel: SearchViewModel
 
+	@Environment(WatchTheme.self) private var theme
+
 	@State private var isFilterPresented = false
 
 	// MARK: - Body
@@ -47,12 +49,14 @@ struct SearchKindResultsView: View {
 		}
 		.themedNavigationTitle(self.kind.watchTitle)
 		.toolbar {
-			ToolbarItem(placement: .bottomBar) {
+			ToolbarItem(placement: .topBarTrailing) {
 				Button {
 					self.isFilterPresented = true
 				} label: {
-					Label(L10n.filter, systemImage: "line.3.horizontal.decrease.circle")
+					Image(systemName: "line.3.horizontal.decrease")
+						.foregroundStyle(self.theme.tintedButtonText)
 				}
+				.accessibilityLabel(L10n.filter)
 			}
 		}
 		.sheet(isPresented: self.$isFilterPresented) {
