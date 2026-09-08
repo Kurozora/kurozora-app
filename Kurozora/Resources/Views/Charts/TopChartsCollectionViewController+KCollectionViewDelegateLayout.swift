@@ -54,15 +54,15 @@ extension TopChartsCollectionViewController {
 				switch chartKind {
 				case .shows, .literatures, .games:
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				case .characters:
 					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				case .people:
 					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				case .episodes:
 					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
@@ -78,7 +78,7 @@ extension TopChartsCollectionViewController {
 					}
 				case .studios:
 					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				}
 			}

@@ -126,7 +126,7 @@ extension ShowDetailsCollectionViewController {
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
 					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				}
 			case .information:
@@ -156,7 +156,7 @@ extension ShowDetailsCollectionViewController {
 					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 						let measurableItems = self.showSongs.map { MusicLockupCollectionViewCell.measurableItem(for: $0) }
 
-						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 					hasSectionHeader = true
 				}
@@ -184,7 +184,7 @@ extension ShowDetailsCollectionViewController {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 						let measurableItems = self.relatedShows.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
 
-						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
@@ -194,7 +194,7 @@ extension ShowDetailsCollectionViewController {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 						let measurableItems = self.relatedLiteratures.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
 
-						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
@@ -204,7 +204,7 @@ extension ShowDetailsCollectionViewController {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
 						let measurableItems = self.relatedGames.map { GameLockupCollectionViewCell.measurableItem(for: $0) }
 
-						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true

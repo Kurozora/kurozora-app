@@ -162,7 +162,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		super.viewDidLayoutSubviews()
 
 		#if DEBUG
-		self.cellHeightMeasurer.validateWidths(of: self.collectionView.visibleCells)
+		self.cellHeightMeasurer.validateWidths(of: self.collectionView.visibleCells.compactMap { cell in
+			self.collectionView.indexPath(for: cell).map { (cell, $0.section) }
+		})
 		#endif
 
 		// The top inset can be negative, but the safe area still describes the top chrome.
@@ -184,12 +186,13 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	///
 	/// - Parameters:
 	///    - items: The items the section lays out.
+	///    - section: The section the items belong to.
 	///    - width: The width a single cell is given.
 	///    - layoutEnvironment: The environment the section is laid out in.
 	///
 	/// - Returns: The tallest measured height.
-	func maximumCellHeight(for items: [CellHeightMeasurer.Item], width: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat? {
-		return self.cellHeightMeasurer.maximumHeight(for: items, width: width, contentSizeCategory: layoutEnvironment.traitCollection.preferredContentSizeCategory)
+	func maximumCellHeight(for items: [CellHeightMeasurer.Item], inSection section: Int, width: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat? {
+		return self.cellHeightMeasurer.maximumHeight(for: items, inSection: section, width: width, contentSizeCategory: layoutEnvironment.traitCollection.preferredContentSizeCategory)
 	}
 
 	/// Returns the width available to a section's content, before the section's own insets.

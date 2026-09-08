@@ -109,11 +109,11 @@ extension HomeCollectionViewController {
 				}
 			case .medium:
 				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.mediumMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					self.maximumCellHeight(for: self.mediumMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .small:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.smallMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					self.maximumCellHeight(for: self.smallMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .video:
 				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
@@ -138,11 +138,11 @@ extension HomeCollectionViewController {
 					let showSongs = (self.exploreCategories[safe: section]?.relationships.showSongs?.data ?? []).prefix(Self.exploreCategoryItemLimit)
 					let measurableItems = showSongs.map { MusicLockupCollectionViewCell.measurableItem(for: $0, showEpisodes: false, showShow: true) }
 
-					return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+					return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .profile:
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.profileMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					self.maximumCellHeight(for: self.profileMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .quickLinks:
 				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

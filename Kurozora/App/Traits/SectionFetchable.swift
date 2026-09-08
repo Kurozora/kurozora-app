@@ -215,6 +215,6 @@ extension SectionFetchable where Self: KCollectionViewController {
 		let models: [Int: Model] = self.cachedModels(inSection: section)
 		let items = models.map { measurableItem($0.key, $0.value) }
 
-		return self.maximumCellHeight(for: items, width: width, layoutEnvironment: layoutEnvironment)
+		return self.maximumCellHeight(for: items, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 	}
 }

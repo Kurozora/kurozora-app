@@ -19,11 +19,11 @@ final class CellHeightMeasurer {
 	private var environment: Environment?
 
 	#if DEBUG
-	/// The width each cell type was last measured at.
-	private var measuredWidths: [ObjectIdentifier: CGFloat] = [:]
+	/// The width each section was measured at, rounded to the nearest point.
+	private var measuredWidths: [Int: CGFloat] = [:]
 
-	/// The cell types already reported for rendering at the wrong width.
-	private var reportedWidthMismatches: Set<ObjectIdentifier> = []
+	/// The sections already reported for rendering at the wrong width.
+	private var reportedWidthMismatches: Set<Int> = []
 	#endif
 
 	// MARK: - Functions
@@ -31,11 +31,12 @@ final class CellHeightMeasurer {
 	///
 	/// - Parameters:
 	///    - items: The items the section lays out.
+	///    - section: The section the items belong to.
 	///    - width: The width a single cell is given.
 	///    - contentSizeCategory: The type size the section is laid out at.
 	///
 	/// - Returns: The tallest measured height.
-	func maximumHeight(for items: [Item], width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> CGFloat? {
+	func maximumHeight(for items: [Item], inSection section: Int, width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> CGFloat? {
 		guard width > 0.0, !items.isEmpty else { return nil }
 
 		let environment = Environment(contentSizeCategory: contentSizeCategory, locale: LanguageManager.shared.locale)
@@ -53,11 +54,11 @@ final class CellHeightMeasurer {
 			item.configure(sizingCell)
 
 			maximumHeight = max(maximumHeight, self.fittingHeight(of: sizingCell, width: width))
-
-			#if DEBUG
-			self.measuredWidths[ObjectIdentifier(item.cellType)] = width
-			#endif
 		}
+
+		#if DEBUG
+		self.measuredWidths[section] = width.rounded()
+		#endif
 
 		return maximumHeight > 0.0 ? maximumHeight : nil
 	}
@@ -123,18 +124,16 @@ final class CellHeightMeasurer {
 	}
 
 	#if DEBUG
-	/// Reports every cell rendering at a different width than the one its height was measured at.
+	/// Reports every cell rendering at a different width than its section was measured at.
 	///
-	/// - Parameter cells: The cells currently on screen.
-	func validateWidths(of cells: [UICollectionViewCell]) {
-		for cell in cells {
-			let cellType = ObjectIdentifier(type(of: cell))
+	/// - Parameter cells: The cells currently on screen, paired with the section they belong to.
+	func validateWidths(of cells: [(cell: UICollectionViewCell, section: Int)]) {
+		for (cell, section) in cells {
+			guard let measuredWidth = self.measuredWidths[section] else { continue }
+			guard cell.bounds.width.rounded() != measuredWidth else { continue }
+			guard self.reportedWidthMismatches.insert(section).inserted else { continue }
 
-			guard let measuredWidth = self.measuredWidths[cellType] else { continue }
-			guard abs(cell.bounds.width - measuredWidth) > 0.5 else { continue }
-			guard self.reportedWidthMismatches.insert(cellType).inserted else { continue }
-
-			fatalError("ERROR: \(type(of: cell)) was measured at width \(measuredWidth) but renders at \(cell.bounds.width). Its measured height is wrong by every constraint that depends on width.")
+			fatalError("ERROR: \(type(of: cell)) in section \(section) renders at width \(cell.bounds.width) but the section was measured at \(measuredWidth). Its measured height is wrong by every constraint that depends on width.")
 		}
 	}
 	#endif

@@ -75,11 +75,11 @@ extension ReCapCollectionViewController {
 				return sectionLayout
 			case .topShows, .topGames, .topLiteratures:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .topGenres, .topThemes:
 				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), width: width, layoutEnvironment: layoutEnvironment)
+					self.maximumCellHeight(for: self.recapMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 				}
 			case .milestones(let isFullSection):
 				if isFullSection {

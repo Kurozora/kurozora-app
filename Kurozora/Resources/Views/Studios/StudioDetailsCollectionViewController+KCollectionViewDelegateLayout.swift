@@ -102,7 +102,7 @@ extension StudioDetailsCollectionViewController {
 			case .reviews:
 				if !self.reviews.isEmpty {
 					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				}
 			case .information:

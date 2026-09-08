@@ -109,7 +109,7 @@ extension EpisodeDetailsCollectionViewController {
 			case .reviews:
 				if !self.reviews.isEmpty {
 					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 				}
 			case .information:
@@ -123,7 +123,7 @@ extension EpisodeDetailsCollectionViewController {
 							.filter { $0.key.section == section }
 							.map { CastCollectionViewCell.measurableItem(for: $0.value) }
 
-						return self.maximumCellHeight(for: measurableItems, width: width, layoutEnvironment: layoutEnvironment)
+						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 					}
 					hasSectionHeader = true
 				}
