@@ -152,10 +152,12 @@ final class SearchViewModel {
 		defer { self.setLoadingNextPage(false, for: kind) }
 
 		do {
+			// The cursor carries the page size the server paged with. Sending a different
+			// limit makes the server re-page and skip results between the two sizes.
 			let response = try await KService
 				.search(.kurozora, types: [kind.searchType], query: self.query)
 				.cursor(cursor)
-				.limit(100)
+				.limit(Self.pageLimit)
 				.response()
 
 			self.append(response.data, for: kind)
