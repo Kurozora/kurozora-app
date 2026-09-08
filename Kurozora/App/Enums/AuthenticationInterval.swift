@@ -55,45 +55,4 @@ enum AuthenticationInterval: Int, CaseIterable {
 	///
 	/// - Tag: AuthenticationInterval-fiveMinutes
 	case fiveMinutes = 300
-
-	// MARK: - Properties
-	/// The string value of an authentication interval type.
-	var stringValue: String {
-		switch self {
-		case .immediately:
-			return L10n.immediately
-		case .thirtySeconds:
-			return L10n.thirtySeconds
-		case .oneMinute:
-			return L10n.oneMinute
-		case .twoMinutes:
-			return L10n.twoMinutes
-		case .threeMinutes:
-			return L10n.threeMinutes
-		case .fourMinutes:
-			return L10n.fourMinutes
-		case .fiveMinutes:
-			return L10n.fiveMinutes
-		}
-	}
-
-	/// The footer string value of an authentication interval type.
-	var footerStringValue: String {
-		switch self {
-		case .immediately:
-			return L10n.immediateAuthenticationRequired
-		case .thirtySeconds:
-			return L10n.authenticationInterval(L10n.intervalThirtySeconds)
-		case .oneMinute:
-			return L10n.authenticationInterval(L10n.intervalOneMinute)
-		case .twoMinutes:
-			return L10n.authenticationInterval(L10n.intervalTwoMinutes)
-		case .threeMinutes:
-			return L10n.authenticationInterval(L10n.intervalThreeMinutes)
-		case .fourMinutes:
-			return L10n.authenticationInterval(L10n.intervalFourMinutes)
-		case .fiveMinutes:
-			return L10n.authenticationInterval(L10n.intervalFiveMinutes)
-		}
-	}
 }

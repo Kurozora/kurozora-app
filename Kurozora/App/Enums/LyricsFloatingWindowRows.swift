@@ -20,14 +20,4 @@ enum LyricsFloatingWindowRows: Int, CaseIterable {
 	// MARK: - Properties
 	/// The default rows option.
 	static let `default`: LyricsFloatingWindowRows = .one
-
-	/// The title of the option.
-	var stringValue: String {
-		switch self {
-		case .one:
-			return L10n.oneLine
-		case .two:
-			return L10n.twoLines
-		}
-	}
 }

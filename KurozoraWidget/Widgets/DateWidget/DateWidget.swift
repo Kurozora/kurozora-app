@@ -167,8 +167,8 @@ struct DateWidget: Widget {
 					.background()
 			}
 		}
-		.configurationDisplayName("Date")
-		.description("Track the current date with random anime, manga or game images every hour.")
+		.configurationDisplayName(L10n.date)
+		.description(L10n.dateDescription)
 		.contentMarginsDisabled()
 	}
 }

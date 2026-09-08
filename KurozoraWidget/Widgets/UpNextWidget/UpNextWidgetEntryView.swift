@@ -233,7 +233,7 @@ struct UpNextWidgetEntryView: View {
 					.font(.largeTitle)
 					.foregroundStyle(.white)
 
-				Text("Sign in to see your Up Next episodes")
+				Text(L10n.upNextSignInPrompt)
 					.font(.caption)
 					.foregroundStyle(.white.opacity(0.9))
 					.multilineTextAlignment(.center)
@@ -250,11 +250,11 @@ struct UpNextWidgetEntryView: View {
 				.font(.largeTitle)
 				.foregroundStyle(.secondary)
 
-			Text("You're all caught up!")
+			Text(L10n.upNextEmptyTitle)
 				.font(.headline)
 				.foregroundStyle(.primary)
 
-			Text("Start a new anime, manga or game from your library")
+			Text(L10n.upNextEmptyMessage)
 				.font(.caption2)
 				.foregroundStyle(.secondary)
 				.multilineTextAlignment(.center)
@@ -285,7 +285,7 @@ struct UpNextWidgetEntryView: View {
 	///
 	/// - Parameter font: Override font. Defaults to `.footnote`.
 	private func unavailableMessage(font: Font = .footnote) -> some View {
-		Text("Unable to retrieve your Up-Next Episodes")
+		Text(L10n.upNextUnavailable)
 			.font(font)
 			.fontWeight(.medium)
 			.foregroundStyle(.secondary)
@@ -295,7 +295,7 @@ struct UpNextWidgetEntryView: View {
 
 	/// ``unavailableMessage`` styled for placement on top of a banner image.
 	private var unavailableMessageOnBanner: some View {
-		Text("Unable to retrieve your Up-Next Episodes")
+		Text(L10n.upNextUnavailable)
 			.font(.footnote)
 			.fontWeight(.medium)
 			.foregroundStyle(.white)

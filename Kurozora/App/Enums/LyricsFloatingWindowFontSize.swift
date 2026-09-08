@@ -20,14 +20,4 @@ enum LyricsFloatingWindowFontSize: Int, CaseIterable {
 	// MARK: - Properties
 	/// The default font size option.
 	static let `default`: LyricsFloatingWindowFontSize = .standard
-
-	/// The title of the option.
-	var stringValue: String {
-		switch self {
-		case .standard:
-			return L10n.fontSizeStandard
-		case .big:
-			return L10n.fontSizeBig
-		}
-	}
 }

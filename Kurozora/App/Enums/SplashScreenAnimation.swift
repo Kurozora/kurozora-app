@@ -21,27 +21,4 @@ enum SplashScreenAnimation: Int {
 
 	/// A collection of all values of this type.
 	static let allCases: [SplashScreenAnimation] = [.default, .anvil, .bounce, .heartbeat, .scale, .shake, .spin]
-
-	// MARK: Functions
-	/// The title of the animation.
-	var titleValue: String {
-		switch self {
-		case .none:
-			return L10n.disabled
-		case .default:
-			return L10n.default
-		case .shake:
-			return L10n.shake
-		case .scale:
-			return L10n.scale
-		case .anvil:
-			return L10n.anvil
-		case .spin:
-			return L10n.spin
-		case .heartbeat:
-			return L10n.heartbeat
-		case .bounce:
-			return L10n.bounce
-		}
-	}
 }

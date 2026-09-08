@@ -45,16 +45,6 @@ enum VideoQuality: Int, CaseIterable {
 	/// The default quality on cellular.
 	static let defaultCellular: VideoQuality = .auto
 
-	/// The localized title of the quality.
-	var titleValue: String {
-		switch self {
-		case .auto:
-			return L10n.automatic
-		default:
-			return self.preferredLevel
-		}
-	}
-
 	/// The level requested from the player.
 	var preferredLevel: String {
 		switch self {

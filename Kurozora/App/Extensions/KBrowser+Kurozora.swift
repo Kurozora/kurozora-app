@@ -10,6 +10,38 @@ import UIKit
 
 extension KBrowser {
 	// MARK: - Properties
+	/// The string value of the browser.
+	var stringValue: String {
+		switch self {
+		case .kurozora:
+			return L10n.browserInAppDefault
+		case .safari:
+			return "Safari"
+		case .brave:
+			return "Brave"
+		case .duckduckgo:
+			return "DuckDuckGo"
+		case .firefox:
+			return "FireFox"
+		case .firefoxFocus:
+			return "FireFox Focus"
+		case .googleChrome:
+			return "Chrome"
+		case .opera:
+			return "Opera"
+		}
+	}
+
+	/// The short string value of the browser.
+	var shortStringValue: String {
+		switch self {
+		case .kurozora:
+			return L10n.default
+		default:
+			return self.stringValue
+		}
+	}
+
 	/// The image value of the browser.
 	var image: UIImage? {
 		switch self {

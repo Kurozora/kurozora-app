@@ -470,8 +470,8 @@ struct UpNextWidget: Widget {
 					.background()
 			}
 		}
-		.configurationDisplayName("Up Next")
-		.description("Keep up with your upcoming episodes.")
+		.configurationDisplayName(L10n.upNext)
+		.description(L10n.upNextDescription)
 		.supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
 		.contentMarginsDisabled()
 	}
