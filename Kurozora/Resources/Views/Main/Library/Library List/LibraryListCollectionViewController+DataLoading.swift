@@ -10,6 +10,18 @@ import KurozoraKit
 import UIKit
 
 extension LibraryListCollectionViewController {
+	/// The active library status named for the active kind.
+	var localizedLibraryStatus: String {
+		switch self.libraryKind {
+		case .shows:
+			return self.libraryStatus.showStringValue
+		case .literatures:
+			return self.libraryStatus.literatureStringValue
+		case .games:
+			return self.libraryStatus.gameStringValue
+		}
+	}
+
 	/// Fetches the library entries for the current user from the local store and applies them to the data source.
 	func fetchLibrary() async {
 		guard self.viewedUser != nil else {
@@ -24,27 +36,12 @@ extension LibraryListCollectionViewController {
 			return
 		}
 
-		let libraryStatus: String
-
-		switch self.libraryKind {
-		case .shows:
-			libraryStatus = self.libraryStatus.showStringValue
-		case .literatures:
-			libraryStatus = self.libraryStatus.literatureStringValue
-		case .games:
-			libraryStatus = self.libraryStatus.gameStringValue
-		}
-
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 
 			self.collectionView.backgroundView?.alpha = 0
 
 			self._prefersActivityIndicatorHidden = false
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingLibrary(libraryStatus.lowercased()))
-			#endif
 		}
 
 		self.fetchLibraryFromLocalStore()
@@ -55,15 +52,7 @@ extension LibraryListCollectionViewController {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
 			self.toggleEmptyDataView()
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
 		}
-
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(libraryStatus.lowercased()))
-		#endif
 	}
 
 	/// Re-reads the currently-loaded window from the local store in its canonical sort order.

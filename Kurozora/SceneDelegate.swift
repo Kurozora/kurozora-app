@@ -48,11 +48,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
-		// Monitor network availability
-		KNetworkManager.shared.reachability.whenUnreachable = { _ in
-			KurozoraDelegate.shared.showOfflineView(for: nil)
-		}
-
 		// Splash animation plays on cold launch only.
 		self.window?.rootViewController = SplashscreenViewController()
 		KurozoraDelegate.shared.startInterface(in: self.window, animatesSplash: true)

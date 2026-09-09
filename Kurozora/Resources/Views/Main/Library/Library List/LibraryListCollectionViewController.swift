@@ -106,18 +106,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		self.enableRefreshControl()
 
 		#if !targetEnvironment(macCatalyst)
-		let libraryStatus: String
-
-		switch self.libraryKind {
-		case .shows:
-			libraryStatus = self.libraryStatus.showStringValue
-		case .literatures:
-			libraryStatus = self.libraryStatus.literatureStringValue
-		case .games:
-			libraryStatus = self.libraryStatus.gameStringValue
-		}
-
-		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(libraryStatus.lowercased()))
+		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(self.localizedLibraryStatus.lowercased()))
 		#endif
 
 		if let (sortType, sortOption) = UserSettings.librarySortTypes[self.libraryKind]?[self.libraryStatus] {
@@ -291,7 +280,20 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		Task { [weak self] in
 			guard let self = self else { return }
 
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.refreshingLibrary(self.localizedLibraryStatus.lowercased()))
+			#endif
+
 			await self.fetchLibrary()
+
+			if self.viewedUser == User.current, let slug = User.current?.attributes.slug {
+				await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
+			}
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(self.localizedLibraryStatus.lowercased()))
+			#endif
 		}
 	}
 

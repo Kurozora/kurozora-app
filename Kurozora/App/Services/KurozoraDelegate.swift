@@ -249,25 +249,6 @@ final class KurozoraDelegate {
 			AuthenticationManager.shared.authenticateIfRequired()
 		}
 	}
-
-	/// Show the forced update view when the API version isn't supported.
-	///
-	/// - Parameter window: The window on which the force update view will be shown.
-	func showOfflineView(for window: UIWindow?) {
-		let topViewController = UIApplication.topViewController
-		let warningViewController = WarningViewController()
-		warningViewController.window = window
-		warningViewController.warningType = .noSignal
-
-		DispatchQueue.main.async {
-			if window != nil {
-				window?.rootViewController = warningViewController
-			} else {
-				warningViewController.modalPresentationStyle = .fullScreen
-				topViewController?.present(warningViewController, animated: true)
-			}
-		}
-	}
 }
 
 // MARK: - Home Screen Shortcut Item
