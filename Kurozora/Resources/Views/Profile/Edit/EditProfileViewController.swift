@@ -355,7 +355,7 @@ private extension EditProfileViewController {
 	func configureNavigationBarItems() {
 		self.title = L10n.profile
 
-		self.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .stop, primaryAction: UIAction { [weak self] _ in
+		self.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.cancelButtonPressed()
 		})

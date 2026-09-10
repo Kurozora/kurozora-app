@@ -16,9 +16,9 @@ extension KotodamaHubCollectionViewController {
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		switch SectionLayoutKind(rawValue: section) {
 		case .daily:
-			return NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 20, trailing: 16)
+			return NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 20, trailing: 0)
 		case .modes, .none:
-			return NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 40, trailing: 16)
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 40, trailing: 0)
 		}
 	}
 
