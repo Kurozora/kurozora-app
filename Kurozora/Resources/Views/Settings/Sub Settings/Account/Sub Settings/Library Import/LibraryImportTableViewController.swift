@@ -28,18 +28,28 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	var selectedImportService: LibraryImport.Service? {
 		didSet {
 			self.tableView.reloadData()
+			self.updateImportButtonState()
 		}
 	}
 
-	var selectedImpotBehavrior: LibraryImport.Behavior? {
+	var selectedImportBehavior: LibraryImport.Behavior? {
 		didSet {
 			self.tableView.reloadData()
+			self.updateImportButtonState()
 		}
 	}
 
 	var selectedFileURL: URL? {
 		didSet {
 			self.tableView.reloadData()
+			self.updateImportButtonState()
+		}
+	}
+
+	/// Whether an upload is in flight.
+	private var isImporting = false {
+		didSet {
+			self.updateImportButtonState()
 		}
 	}
 
@@ -76,11 +86,17 @@ class LibraryImportTableViewController: ServiceTableViewController {
 		self.dismiss(animated: true, completion: nil)
 	}
 
+	/// Updates the import button's enabled state.
+	private func updateImportButtonState() {
+		let hasEverySelection = self.selectedImportService != nil && self.selectedImportBehavior != nil && self.selectedFileURL != nil
+		self.rightNavigationBarButton.isEnabled = hasEverySelection && !self.isImporting
+	}
+
 	// MARK: - IBActions
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
-		guard let filePath = self.selectedFileURL else { return }
+		guard let filePath = self.selectedFileURL, let service = self.selectedImportService, let behavior = self.selectedImportBehavior else { return }
 
-		self.rightNavigationBarButton.isEnabled = false
+		self.isImporting = true
 
 		Task { [weak self] in
 			// Make sure you release the security-scoped resource when you finish.
@@ -91,11 +107,17 @@ class LibraryImportTableViewController: ServiceTableViewController {
 			guard let self = self else { return }
 
 			do {
-				_ = try await KService.importLibrary(.shows, service: .mal, behavior: .overwrite, filePath: filePath).response()
+				let success = try await KService.importLibrary(.shows, service: service, behavior: behavior, filePath: filePath).response()
+				self.isImporting = false
+				self.presentAlertController(title: L10n.submitted, message: success.message) { [weak self] _ in
+					self?.navigationController?.popViewController(animated: true)
+				}
 			} catch let error as APIError {
+				self.isImporting = false
 				self.presentAlertController(title: L10n.cantImportToLibraryTitle, message: error.message)
 				print("----- Library import failed", error.message)
 			} catch {
+				self.isImporting = false
 				print("----- Library import failed", error.localizedDescription)
 			}
 		}
@@ -138,7 +160,7 @@ extension LibraryImportTableViewController {
 				guard let selectTableViewCell = tableView.dequeueReusableCell(withIdentifier: SelectTableViewCell.self, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(SelectTableViewCell.reuseID)")
 				}
-				selectTableViewCell.configureCell(using: "\(self.selectedImpotBehavrior?.stringValue ?? L10n.selectBehavior) ▾", buttonTag: indexPath.row)
+				selectTableViewCell.configureCell(using: "\(self.selectedImportBehavior?.stringValue ?? L10n.selectBehavior) ▾", buttonTag: indexPath.row)
 				selectTableViewCell.delegate = self
 				return selectTableViewCell
 			default:
@@ -158,11 +180,8 @@ extension LibraryImportTableViewController {
 					actionButtonTableViewCell.actionTextField.placeholder = L10n.libraryXML
 				}
 
-				if self.selectedFileURL != nil {
-					if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
-						actionButtonTableViewCell.actionTextField.text = "…/" + lastPathComponent
-						self.rightNavigationBarButton.isEnabled = true
-					}
+				if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
+					actionButtonTableViewCell.actionTextField.text = "…/" + lastPathComponent
 				}
 
 				self.textFieldArray.append(actionButtonTableViewCell.actionTextField)
@@ -191,19 +210,9 @@ extension LibraryImportTableViewController: UITextFieldDelegate {
 	@objc func editingChanged(_ textField: UITextField) {
 		if textField.text?.count == 1, textField.text?.first == " " {
 			textField.text = ""
-			return
 		}
 
-		var rightNavigationBarButtonIsEnabled = false
-		for item in self.textFieldArray {
-			if let textField = item?.text, !textField.isEmpty {
-				rightNavigationBarButtonIsEnabled = true
-				continue
-			}
-			rightNavigationBarButtonIsEnabled = false
-		}
-
-		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
+		self.updateImportButtonState()
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -241,9 +250,9 @@ extension LibraryImportTableViewController: SelectTableViewCellDelegate {
 				self.present(actionSheetAlertController, animated: true, completion: nil)
 			}
 		case .behavior:
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryImport.Behavior.alertControllerItems, currentSelection: self.selectedImpotBehavrior, action: { [weak self] _, value in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryImport.Behavior.alertControllerItems, currentSelection: self.selectedImportBehavior, action: { [weak self] _, value in
 				guard let self = self else { return }
-				self.selectedImpotBehavrior = value
+				self.selectedImportBehavior = value
 			})
 
 			// Present the controller
