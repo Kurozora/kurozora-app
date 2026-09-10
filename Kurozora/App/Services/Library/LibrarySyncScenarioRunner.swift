@@ -48,6 +48,9 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	/// Syncs with an expired cursor.
 	case expiredCursorRestart
 
+	/// Fires a burst of remote hints.
+	case coalescedRemoteHints
+
 	// MARK: - Types
 	/// A target's fields before the scenario runs.
 	private struct TargetBaseline {
@@ -130,6 +133,8 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 			await self.runRemoteChangeThenSync(forUserSlug: userSlug, report: &report)
 		case .expiredCursorRestart:
 			await self.runExpiredCursorRestart(forUserSlug: userSlug, report: &report)
+		case .coalescedRemoteHints:
+			await self.runCoalescedRemoteHints(forUserSlug: userSlug, report: &report)
 		}
 
 		let result = report.passed ? "PASS" : "FAIL"
@@ -301,7 +306,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 			_ = try await KService.updateInLibrary(.shows, itemIDs: itemIDs).hidden(!baseline.isHidden).response()
 			report.record("remote-change", passed: true, detail: "hidden set to \(!baseline.isHidden) on the server directly")
 		} catch {
-			report.record("remote-change", passed: false, detail: Self.describe(error))
+			report.record("remote-change", passed: false, detail: error.librarySyncDescription)
 			return
 		}
 
@@ -313,7 +318,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		do {
 			_ = try await KService.updateInLibrary(.shows, itemIDs: itemIDs).hidden(baseline.isHidden).response()
 		} catch {
-			report.record("remote-restore", passed: false, detail: Self.describe(error))
+			report.record("remote-restore", passed: false, detail: error.librarySyncDescription)
 		}
 		await self.sync(.shows, userSlug: userSlug)
 		await self.verify("after-remote-restore", kinds: [.shows], userSlug: userSlug, report: &report)
@@ -332,6 +337,20 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		let countAfter = LibraryStore.shared.count(forUserSlug: userSlug, kind: .shows, status: .none)
 		report.record("no-wipe", passed: countAfter == countBefore, detail: "before=\(countBefore) after=\(countAfter)")
 		await self.verify("after-restart", kinds: [.shows], userSlug: userSlug, report: &report)
+	}
+
+	private func runCoalescedRemoteHints(forUserSlug userSlug: String, report: inout LibrarySyncScenarioReport) async {
+		let hintCount = 20
+		let roundsBefore = await LibrarySyncEngine.shared.remoteHintRoundCount(forUserSlug: userSlug)
+
+		for _ in 0 ..< hintCount {
+			await LibrarySyncEngine.shared.serverStateAdvanced(forUserSlug: userSlug)
+		}
+		await LibrarySyncEngine.shared.awaitRemoteHints(forUserSlug: userSlug)
+
+		let rounds = await LibrarySyncEngine.shared.remoteHintRoundCount(forUserSlug: userSlug) - roundsBefore
+		report.record("collapsed", passed: (1 ... 2).contains(rounds), detail: "\(hintCount) hints ran \(rounds) sync rounds")
+		await self.verify("after-hints", kinds: [.shows], userSlug: userSlug, report: &report)
 	}
 
 	// MARK: - Steps
@@ -357,7 +376,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 				report.record(name, passed: verdict.passed, detail: verdict.summary)
 				allPassed = allPassed && verdict.passed
 			} catch {
-				report.record(name, passed: false, detail: "verify failed: \(Self.describe(error))")
+				report.record(name, passed: false, detail: "verify failed: \(error.librarySyncDescription)")
 				allPassed = false
 			}
 		}
@@ -386,15 +405,20 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		}
 	}
 
-	/// Runs the kind's delta sync, retrying once after a throttle window.
+	/// Runs the kind's delta sync.
 	private func sync(_ kind: LibraryKind, userSlug: String) async {
+		let remaining = await LibrarySyncEngine.shared.throttleRemaining(forUserSlug: userSlug)
+		if remaining > 0 {
+			await Self.wait(remaining, reason: "sync window")
+		}
+
 		do {
 			try await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
 		} catch let error as APIError where error.statusCode == 429 {
-			await Self.wait(Self.retryAfterInterval(from: error), reason: "sync throttled")
+			await Self.wait(error.retryAfterInterval ?? Self.defaultThrottleInterval, reason: "sync throttled")
 			try? await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
 		} catch {
-			scenarioLogger.error("sync kind=\(kind.rawValue) failed: \(Self.describe(error), privacy: .public)")
+			scenarioLogger.error("sync kind=\(kind.rawValue) failed: \(error.librarySyncDescription, privacy: .public)")
 		}
 	}
 
@@ -403,7 +427,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		do {
 			return try await LibrarySyncVerifier.verify(kind, forUserSlug: userSlug)
 		} catch let error as APIError where error.statusCode == 429 {
-			await Self.wait(Self.retryAfterInterval(from: error), reason: "verify throttled")
+			await Self.wait(error.retryAfterInterval ?? Self.defaultThrottleInterval, reason: "verify throttled")
 			return try await LibrarySyncVerifier.verify(kind, forUserSlug: userSlug)
 		}
 	}
@@ -412,23 +436,6 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private static func wait(_ interval: TimeInterval, reason: String) async {
 		scenarioLogger.notice("WAIT \(reason, privacy: .public) \(Int(interval.rounded(.up)))s")
 		try? await Task.sleep(nanoseconds: UInt64((interval + 1) * 1_000_000_000))
-	}
-
-	/// Reads the `Retry-After` header, falling back to the default window.
-	private static func retryAfterInterval(from error: APIError) -> TimeInterval {
-		guard let value = error.response?.value(forHTTPHeaderField: "Retry-After"),
-		      let seconds = TimeInterval(value.trimmingCharacters(in: .whitespaces)) else {
-			return Self.defaultThrottleInterval
-		}
-		return seconds
-	}
-
-	/// Names a failure by its HTTP status when the server answered, and by the transport error otherwise.
-	private static func describe(_ error: Error) -> String {
-		if let apiError = error as? APIError, let statusCode = apiError.statusCode {
-			return "HTTP \(statusCode) \(apiError.message)"
-		}
-		return error.localizedDescription
 	}
 
 	/// Restores the targets.

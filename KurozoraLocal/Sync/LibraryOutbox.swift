@@ -283,7 +283,7 @@ actor LibraryOutbox {
 			} catch let error as APIError where error.statusCode == 429 {
 				// Throttling says nothing about the operation itself, so it costs no attempt and
 				// the rest of the queue waits for the window the server announced.
-				let retryAfter = Self.retryAfterInterval(from: error) ?? self.defaultThrottleInterval
+				let retryAfter = error.retryAfterInterval ?? self.defaultThrottleInterval
 				outboxLogger.notice("THROTTLED \(label, privacy: .public) retryAfter=\(retryAfter)")
 				self.throttle(userSlug: userSlug, for: retryAfter)
 				isThrottled = true
@@ -303,7 +303,7 @@ actor LibraryOutbox {
 						reconcileKinds.insert(kind)
 					}
 				} else {
-					outboxLogger.error("FAIL \(label, privacy: .public) attempt=\(nextAttemptCount) err=\(Self.describe(error), privacy: .public)")
+					outboxLogger.error("FAIL \(label, privacy: .public) attempt=\(nextAttemptCount) err=\(error.librarySyncDescription, privacy: .public)")
 					await self.markFailed(group, error: error)
 					maxFailedAttemptCount = max(maxFailedAttemptCount, nextAttemptCount)
 				}
@@ -365,20 +365,6 @@ actor LibraryOutbox {
 	private func resumeAfterThrottle(forUserSlug userSlug: String) async {
 		self.throttleRetryTasks[userSlug] = nil
 		await self.drain(forUserSlug: userSlug, force: true)
-	}
-
-	/// Reads the `Retry-After` header, which the server sends in whole seconds.
-	private static func retryAfterInterval(from error: APIError) -> TimeInterval? {
-		guard let value = error.response?.value(forHTTPHeaderField: "Retry-After") else { return nil }
-		return TimeInterval(value.trimmingCharacters(in: .whitespaces))
-	}
-
-	/// Names a failure by its HTTP status when the server answered, and by the transport error otherwise.
-	private static func describe(_ error: Error) -> String {
-		if let apiError = error as? APIError, let statusCode = apiError.statusCode {
-			return "HTTP \(statusCode) \(apiError.message)"
-		}
-		return error.localizedDescription
 	}
 
 	// MARK: - Transport

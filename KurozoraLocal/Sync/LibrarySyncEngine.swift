@@ -42,6 +42,26 @@ actor LibrarySyncEngine {
 	/// Keys whose next sync drops the cursor first, re-pulling the whole slice and sweeping stale rows.
 	private var fullPullRequested: Set<String> = []
 
+	/// The earliest time a throttled user's pulls may resume.
+	private var throttledUntil: [String: Date] = [:]
+
+	/// The tasks waiting out a throttle window, per user.
+	private var throttleRetryTasks: [String: Task<Void, Never>] = [:]
+
+	/// The throttle wait when the server names none.
+	private let defaultThrottleInterval: TimeInterval = 60
+
+	/// The tasks answering remote hints, per user.
+	private var remoteHintTasks: [String: Task<Void, Never>] = [:]
+
+	/// The users with a remote hint still to answer.
+	private var remoteHintPending: Set<String> = []
+
+	#if DEBUG
+	/// The number of sync rounds run in answer to remote hints, per user.
+	private var remoteHintRoundCounts: [String: Int] = [:]
+	#endif
+
 	/// Watches the network path so failed work retries as soon as connectivity returns.
 	private var pathMonitor: NWPathMonitor?
 
@@ -72,7 +92,7 @@ actor LibrarySyncEngine {
 				do {
 					try await self.sync(kind, forUserSlug: userSlug)
 				} catch {
-					syncLogger.error("\(kind.stringValue) sync failed: \(Self.describe(error), privacy: .public)")
+					syncLogger.error("\(kind.stringValue) sync failed: \(error.librarySyncDescription, privacy: .public)")
 				}
 			}
 		}
@@ -117,6 +137,11 @@ actor LibrarySyncEngine {
 	func sync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
 		self.installPathMonitorIfNeeded()
 
+		if let throttledUntil = self.throttledUntil[userSlug], throttledUntil > Date() {
+			syncLogger.info("THROTTLED skip kind=\(kind.rawValue) resumesIn=\(Int(throttledUntil.timeIntervalSinceNow))s")
+			return
+		}
+
 		let key = self.coalesceKey(userSlug: userSlug, kind: kind)
 		if let existing = self.inFlight[key] {
 			// The in-flight round's delta predates this trigger.
@@ -138,6 +163,9 @@ actor LibrarySyncEngine {
 			self.inFlight[key] = nil
 			self.rerunRequested.remove(key)
 			self.pendingRetries.insert(key)
+			if let apiError = error as? APIError, apiError.statusCode == 429 {
+				self.throttle(userSlug: userSlug, for: apiError.retryAfterInterval ?? self.defaultThrottleInterval)
+			}
 			throw error
 		}
 
@@ -238,6 +266,79 @@ actor LibrarySyncEngine {
 				break
 			}
 		}
+	}
+
+	// MARK: - Remote Hints
+	/// Answers a hint that the server holds newer state.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func serverStateAdvanced(forUserSlug userSlug: String) {
+		self.remoteHintPending.insert(userSlug)
+		guard self.remoteHintTasks[userSlug] == nil else { return }
+
+		self.remoteHintTasks[userSlug] = Task(priority: .utility) { [weak self] in
+			guard let self else { return }
+			await self.drainRemoteHints(forUserSlug: userSlug)
+		}
+	}
+
+	/// Waits until every hint received so far has been answered.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func awaitRemoteHints(forUserSlug userSlug: String) async {
+		while let task = self.remoteHintTasks[userSlug] {
+			await task.value
+		}
+	}
+
+	#if DEBUG
+	/// The number of sync rounds remote hints have caused for the user since launch.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func remoteHintRoundCount(forUserSlug userSlug: String) -> Int {
+		return self.remoteHintRoundCounts[userSlug] ?? 0
+	}
+	#endif
+
+	private func drainRemoteHints(forUserSlug userSlug: String) async {
+		while self.remoteHintPending.remove(userSlug) != nil {
+			await self.syncAll(forUserSlug: userSlug)
+			#if DEBUG
+			self.remoteHintRoundCounts[userSlug, default: 0] += 1
+			#endif
+
+			await MainActor.run {
+				NotificationCenter.default.post(name: .KUserStateDidChangeRemotely, object: nil)
+			}
+		}
+		self.remoteHintTasks[userSlug] = nil
+	}
+
+	// MARK: - Throttling
+	/// The seconds left in the user's throttle window.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func throttleRemaining(forUserSlug userSlug: String) -> TimeInterval {
+		guard let throttledUntil = self.throttledUntil[userSlug] else { return 0 }
+		return max(0, throttledUntil.timeIntervalSinceNow)
+	}
+
+	/// Pauses the user's sync for the given interval.
+	private func throttle(userSlug: String, for interval: TimeInterval) {
+		syncLogger.notice("THROTTLED retryAfter=\(interval)")
+		self.throttledUntil[userSlug] = Date().addingTimeInterval(interval)
+		guard self.throttleRetryTasks[userSlug] == nil else { return }
+
+		self.throttleRetryTasks[userSlug] = Task { [weak self] in
+			try? await Task.sleep(nanoseconds: UInt64((interval + 1) * 1_000_000_000))
+			guard let self else { return }
+			await self.resumeAfterThrottle(forUserSlug: userSlug)
+		}
+	}
+
+	private func resumeAfterThrottle(forUserSlug userSlug: String) async {
+		self.throttleRetryTasks[userSlug] = nil
+		await self.syncAll(forUserSlug: userSlug)
 	}
 
 	// MARK: - Network Retry
@@ -376,13 +477,5 @@ actor LibrarySyncEngine {
 	// MARK: - Helpers
 	private nonisolated func coalesceKey(userSlug: String, kind: LibraryKind) -> String {
 		return "\(userSlug)::\(kind.rawValue)"
-	}
-
-	/// Names a failure by its HTTP status when the server answered, and by the transport error otherwise.
-	private static func describe(_ error: Error) -> String {
-		if let apiError = error as? APIError, let statusCode = apiError.statusCode {
-			return "HTTP \(statusCode) \(apiError.message)"
-		}
-		return error.localizedDescription
 	}
 }

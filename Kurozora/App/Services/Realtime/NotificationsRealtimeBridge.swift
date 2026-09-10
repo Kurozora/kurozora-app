@@ -27,9 +27,6 @@ final class NotificationsRealtimeBridge {
 	/// Highest `stateVersion` observed for the signed-in user.
 	@MainActor private static var lastSeenStateVersion: Int = 0
 
-	/// Pending debounce task for the delta sync.
-	@MainActor private static var pendingSyncTask: Task<Void, Never>?
-
 	// MARK: - Initializers
 	private init() {}
 
@@ -75,7 +72,7 @@ final class NotificationsRealtimeBridge {
 		}
 	}
 
-	/// Triggers a debounced delta sync when the broadcast `stateVersion` is ahead of the last-seen value.
+	/// Hints the sync engine that the server holds newer state.
 	@MainActor
 	private static func handleStateChanged(stateVersion: Int) {
 		bridgeLog("handleStateChanged stateVersion=\(stateVersion) lastSeen=\(Self.lastSeenStateVersion)")
@@ -85,23 +82,14 @@ final class NotificationsRealtimeBridge {
 		}
 		Self.lastSeenStateVersion = stateVersion
 
-		Self.pendingSyncTask?.cancel()
-		Self.pendingSyncTask = Task { @MainActor in
-			try? await Task.sleep(nanoseconds: 250_000_000)
-			guard !Task.isCancelled else { return }
-			guard let slug = User.current?.attributes.slug else {
-				bridgeLog("no current user slug — skipping delta sync")
-				return
-			}
-			bridgeLog("firing delta sync after user.state.changed")
-			// Detach at utility priority to avoid QoS inheritance.
-			Task.detached(priority: .utility) {
-				await LibrarySyncEngine.shared.syncAll(forUserSlug: slug)
-			}
+		guard let slug = User.current?.attributes.slug else {
+			bridgeLog("no current user slug, skipping delta sync")
+			return
+		}
 
-			// Overlay-backed state isn't in the library delta; notify separately.
-			NotificationCenter.default.post(name: .KUserStateDidChangeRemotely, object: nil)
-			Self.pendingSyncTask = nil
+		bridgeLog("server state advanced, hinting the sync engine")
+		Task {
+			await LibrarySyncEngine.shared.serverStateAdvanced(forUserSlug: slug)
 		}
 	}
 
