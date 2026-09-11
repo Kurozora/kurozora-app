@@ -50,6 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		#endif
 
+		// The scheduler must know its identifiers before this method returns.
+		#if !targetEnvironment(macCatalyst)
+		LibraryBackgroundTaskScheduler.shared.registerHandlers()
+		#endif
+
 		// Observer notifications
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleSignInDidChangeForLibrarySync), name: .KUserIsSignedInDidChange, object: nil)

@@ -167,6 +167,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneDidEnterBackground(_ scene: UIScene) {
 		print("----- Scene entered background.")
 		AuthenticationManager.shared.sceneDidEnterBackground()
+		#if !targetEnvironment(macCatalyst)
+		LibraryBackgroundTaskScheduler.shared.scheduleRefresh()
+		Task {
+			await LibraryBackgroundTaskScheduler.shared.scheduleOutboxFlushIfNeeded()
+		}
+		#endif
 		#if DEBUG
 		FaceDetectionService.shared.flushOnBackground()
 		#endif
