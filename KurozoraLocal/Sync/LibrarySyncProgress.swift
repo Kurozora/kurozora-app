@@ -29,19 +29,33 @@ final class LibrarySyncProgress {
 	/// The in-flight sync rounds, keyed by library kind.
 	private(set) var activeRounds: [LibraryKind: RoundProgress] = [:]
 
-	/// Whether any sync round is in flight.
+	/// The import's progress.
+	private(set) var importProgress: RoundProgress?
+
+	/// The work in flight.
+	private var activeWork: [RoundProgress] {
+		var work = Array(self.activeRounds.values)
+
+		if let importProgress = self.importProgress {
+			work.append(importProgress)
+		}
+
+		return work
+	}
+
+	/// Whether any work is in flight.
 	var isSyncing: Bool {
-		return !self.activeRounds.isEmpty
+		return !self.activeWork.isEmpty
 	}
 
-	/// The number of rows applied across all in-flight rounds.
+	/// The number of rows applied across all in-flight work.
 	var appliedCount: Int {
-		return self.activeRounds.values.reduce(0) { $0 + $1.appliedCount }
+		return self.activeWork.reduce(0) { $0 + $1.appliedCount }
 	}
 
-	/// The number of rows expected across all in-flight rounds, or `nil` when unknown.
+	/// The number of rows expected across all in-flight work.
 	var expectedCount: Int? {
-		let expectedCounts = self.activeRounds.values.compactMap(\.expectedCount)
+		let expectedCounts = self.activeWork.compactMap(\.expectedCount)
 		guard !expectedCounts.isEmpty else { return nil }
 		return expectedCounts.reduce(0, +)
 	}
@@ -71,6 +85,19 @@ final class LibrarySyncProgress {
 	/// Marks the end of the given kind's sync round.
 	func end(_ kind: LibraryKind) {
 		self.activeRounds[kind] = nil
+		self.notify()
+	}
+
+	/// Records the import's progress.
+	func updateImport(processedCount: Int, totalCount: Int) {
+		self.importProgress = RoundProgress(appliedCount: processedCount, expectedCount: totalCount)
+		self.notify()
+	}
+
+	/// Marks the import as finished.
+	func endImport() {
+		guard self.importProgress != nil else { return }
+		self.importProgress = nil
 		self.notify()
 	}
 

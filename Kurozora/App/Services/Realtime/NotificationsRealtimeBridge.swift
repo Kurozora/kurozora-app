@@ -65,9 +65,13 @@ final class NotificationsRealtimeBridge {
 			)
 		case .userStateChanged(let stateVersion):
 			Self.handleStateChanged(stateVersion: stateVersion)
+		case .libraryImportProgressed(let processedCount, let totalCount):
+			LibrarySyncProgress.shared.updateImport(processedCount: processedCount, totalCount: totalCount)
+		case .libraryImportFinished, .libraryImportUnsupported, .localLibraryImportFinished:
+			LibrarySyncProgress.shared.endImport()
+			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		case .newSession, .newFollower, .newFeedMessageReply, .newFeedMessageReShare,
-			.newUserMention, .subscriptionStatus, .userTimedOut, .userTimeoutExpired,
-			.libraryImportFinished, .libraryImportUnsupported, .localLibraryImportFinished:
+			.newUserMention, .subscriptionStatus, .userTimedOut, .userTimeoutExpired:
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		}
 	}
