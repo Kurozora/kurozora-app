@@ -2298,7 +2298,7 @@ extension L10n {
 	/// - Parameter count: The number of minutes since the last sync.
 	static func lastSyncedMinutesAgo(_ count: Int) -> String {
 		String(
-			localized: "Last synced ^[\(count) minutes](inflect: true) ago",
+			localized: "Last synced \(count) minutes ago",
 			table: "Settings",
 			bundle: LanguageManager.shared.bundle,
 			locale: LanguageManager.shared.locale,
@@ -2310,7 +2310,7 @@ extension L10n {
 	/// - Parameter count: The number of hours since the last sync.
 	static func lastSyncedHoursAgo(_ count: Int) -> String {
 		String(
-			localized: "Last synced ^[\(count) hours](inflect: true) ago",
+			localized: "Last synced \(count) hours ago",
 			table: "Settings",
 			bundle: LanguageManager.shared.bundle,
 			locale: LanguageManager.shared.locale,

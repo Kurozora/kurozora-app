@@ -20095,7 +20095,7 @@
         }
       }
     },
-    "Last synced ^[%lld hours](inflect: true) ago" : {
+    "Last synced %lld hours ago" : {
       "comment" : "The row title showing how many hours ago the library last synced.",
       "localizations" : {
         "ar" : {
@@ -20132,6 +20132,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Τελευταίος συγχρονισμός πριν από %lld ώρες"
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last synced %lld hour ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last synced %lld hours ago"
+                }
+              }
+            }
           }
         },
         "es" : {
@@ -20328,7 +20346,7 @@
         }
       }
     },
-    "Last synced ^[%lld minutes](inflect: true) ago" : {
+    "Last synced %lld minutes ago" : {
       "comment" : "The row title showing how many minutes ago the library last synced.",
       "localizations" : {
         "ar" : {
@@ -20365,6 +20383,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Τελευταίος συγχρονισμός πριν από %lld λεπτά"
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last synced %lld minute ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Last synced %lld minutes ago"
+                }
+              }
+            }
           }
         },
         "es" : {
