@@ -50,6 +50,10 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case usersListSegue
 	}
 
+	// MARK: - Views
+	/// The chips naming the types the results are split across.
+	let chipsView = KChipsView()
+
 	// MARK: - Properties
 	var filterBarButtonItem: UIBarButtonItem!
 	var currentIndex: Int = 0
@@ -206,7 +210,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		self.kSearchController.searchBar.chipsView.restyle()
+		self.chipsView.restyle()
 	}
 
 	override func viewDidLoad() {
@@ -452,7 +456,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	func configureChipsView() {
-		self.kSearchController.searchBar.chipsView.chipSelectedHandler = { [weak self] index in
+		self.chipsView.chipSelectedHandler = { [weak self] index in
 			guard let self = self else { return }
 			self.selectSearchType(at: index)
 		}
@@ -614,13 +618,13 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 			#if targetEnvironment(macCatalyst)
 			self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
 			#else
-			self.kSearchController.searchBar.setShowsScope(false, animated: true)
 			self.kSearchController.searchBar.showsBookmarkButton = true
 			#endif
-			self.setShowToolbar(true)
 		} else {
 			self.searchTypes = types
 		}
+
+		self.setShowToolbar(!self.searchTypes.isEmpty)
 
 		self.updateDataSource()
 		self._prefersActivityIndicatorHidden = true
@@ -935,9 +939,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	func setShowToolbar(_ show: Bool) {
-		UIView.animate(withDuration: 0.25) {
-			self.kSearchController.searchBar.showsChips = show
-		}
+		self.navigationItem.setBottomPalette(contentView: show ? self.chipsView : nil, height: KChipsView.paletteHeight)
 	}
 
 	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
@@ -1124,9 +1126,8 @@ extension SearchResultsCollectionViewController {
 
 		// A fresh search resets `currentIndex` to 0, so the chips are re-selected here to keep the
 		// highlighted chip and the rendered section in sync.
-		let chipsView = self.kSearchController.searchBar.chipsView
-		chipsView.titles = self.searchTypes.map(\.stringValue)
-		chipsView.selectChip(at: self.currentIndex, animated: false)
+		self.chipsView.titles = self.searchTypes.map(\.stringValue)
+		self.chipsView.selectChip(at: self.currentIndex, animated: false)
 	}
 
 	/// Switches the results to the search type at the given index.
@@ -1213,11 +1214,21 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			#else
 			searchBar.showsBookmarkButton = false
 			#endif
-			self.setShowToolbar(false)
+			self.setShowToolbar(!self.searchTypes.isEmpty)
 		}
 
 		if #available(iOS 16.0, *) {
 			self.refreshTokenSuggestions()
+		}
+	}
+
+	/// Whether the surface is locked to the library.
+	var isLibrarySurface: Bool {
+		switch self.searchViewKind {
+		case .library:
+			return true
+		case .single, .multiple:
+			return false
 		}
 	}
 
@@ -1233,10 +1244,12 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		#if !targetEnvironment(macCatalyst)
-		searchBar.setShowsScope(false, animated: true)
+		if !self.isLibrarySurface {
+			searchBar.setShowsScope(false, animated: true)
+		}
 		#endif
 
-		if self.searchResults != nil {
+		if self.searchResults != nil || !self.searchTypes.isEmpty {
 			switch self.searchViewKind {
 			case .single:
 				break
