@@ -10,9 +10,6 @@ import Combine
 import KurozoraKit
 import SwiftTheme
 import UIKit
-#if DEBUG
-import FLEX
-#endif
 
 class KTabBarController: UITabBarController {
 	// MARK: - Properties
@@ -76,9 +73,11 @@ class KTabBarController: UITabBarController {
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotificationsDidUpdate), name: .KUNDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibrarySyncProgressDidChange), name: .KLibrarySyncProgressDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReachabilityDidChange), name: .reachabilityChanged, object: nil)
 
 		// Initialize views
 		self.configureTabs()
+		self.updateTabAvailability()
 
 		if #available(iOS 18.0, *) {
 			self.registerForTraitChanges([UITraitHorizontalSizeClass.self], action: #selector(handleHorizontalSizeClass))
@@ -97,6 +96,36 @@ class KTabBarController: UITabBarController {
 		}
 
 		self.updateLibrarySyncIndicator()
+	}
+
+	/// The tab currently selected.
+	private var selectedTabBarItem: TabBarItem? {
+		if #available(iOS 18.0, *) {
+			guard let identifier = self.selectedTab?.identifier else { return nil }
+			return TabBarItem(identifierValue: identifier)
+		}
+
+		return TabBarItem.tabBarCases[safe: self.selectedIndex]
+	}
+
+	/// Marks the tabs that need a connection as unavailable.
+	private func updateTabAvailability() {
+		let isConnected = KNetworkManager.isConnected
+
+		self.viewControllers?.enumerated().forEach { index, viewController in
+			guard let tabBarItem = TabBarItem.tabBarCases[safe: index] else { return }
+			viewController.tabBarItem?.isEnabled = isConnected || tabBarItem.isAvailableOffline
+		}
+
+		guard !isConnected, let selectedTabBarItem = self.selectedTabBarItem, !selectedTabBarItem.isAvailableOffline else { return }
+
+		self.selectTab(.library)
+	}
+
+	@objc private func handleReachabilityDidChange() {
+		Task { @MainActor [weak self] in
+			self?.updateTabAvailability()
+		}
 	}
 
 	/// Refreshes the library tab's sync indicator when sync progress changes.
@@ -302,6 +331,7 @@ class KTabBarController: UITabBarController {
 			self.selectTab(.home)
 			self.previousTabs = self.tabs
 		} else {
+			self.delegate = self
 			self.viewControllers = TabBarItem.tabBarCases.map {
 				let rootNavigationController = $0.kViewControllerValue
 				let tabBarItem: UITabBarItem
@@ -347,15 +377,6 @@ class KTabBarController: UITabBarController {
 
 	/// The shared settings used to initialize tab bar view.
 	private func sharedInit() {
-		#if DEBUG
-		let showFlexLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
-		#if targetEnvironment(macCatalyst)
-		showFlexLongPressGestureRecognizer.minimumPressDuration = 2.0
-		#else
-		showFlexLongPressGestureRecognizer.numberOfTouchesRequired = 2
-		#endif
-		#endif
-
 		if #available(iOS 18.0, *) {
 			self.mode = .tabSidebar
 
@@ -374,12 +395,6 @@ class KTabBarController: UITabBarController {
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
 			self.tabBarMinimizeBehavior = .onScrollDown
 			self.observePlayback()
-
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			UIApplication.topViewController?.view.window?.addGestureRecognizer(showFlexLongPressGestureRecognizer)
-			#endif
-			#endif
 		} else {
 			self.tabBar.isTranslucent = true
 			self.tabBar.backgroundColor = .clear
@@ -392,10 +407,6 @@ class KTabBarController: UITabBarController {
 
 			self.tabBar.theme_standardAppearance = ThemeTabBarAppearancePicker(appearances: appearance)
 			self.tabBar.theme_compactAppearance = ThemeTabBarAppearancePicker(appearances: appearance)
-
-			#if DEBUG
-			self.tabBar.addGestureRecognizer(showFlexLongPressGestureRecognizer)
-			#endif
 
 			let showAccountSwitcherLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showAccountSwitcher))
 			showAccountSwitcherLongPressGestureRecognizer.numberOfTouchesRequired = 1
@@ -424,17 +435,6 @@ class KTabBarController: UITabBarController {
 			}
 			.store(in: &self.subscriptions)
 	}
-
-	#if DEBUG
-	/// Show FLEX explorer.
-	///
-	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
-	@objc private func showFlex(_ gestureRecognizer: UILongPressGestureRecognizer) {
-		if FLEXManager.shared.isHidden {
-			FLEXManager.shared.showExplorer()
-		}
-	}
-	#endif
 
 	/// Show Account Switcher.
 	///
@@ -509,6 +509,13 @@ class KTabBarController: UITabBarController {
 
 // MARK: - UITabBarControllerDelegate
 extension KTabBarController: UITabBarControllerDelegate {
+	func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+		guard let index = self.viewControllers?.firstIndex(of: viewController) else { return true }
+		guard let tabBarItem = TabBarItem.tabBarCases[safe: index] else { return true }
+
+		return tabBarItem.isAvailableOffline || KNetworkManager.isConnected
+	}
+
 	@available(iOS 18.0, *)
 	func tabBarController(_ tabBarController: UITabBarController, didSelectTab selectedTab: UITab, previousTab: UITab?) {
 		if UserSettings.hapticsAllowed {
@@ -550,7 +557,8 @@ extension KTabBarController: UITabBarControllerDelegate {
 
 	@available(iOS 18.0, *)
 	func tabBarController(_ tabBarController: UITabBarController, shouldSelectTab tab: UITab) -> Bool {
-		guard let tabBarItem = TabBarItem(identifierValue: tab.identifier) else { return true } // Select by default
+		guard let tabBarItem = TabBarItem(identifierValue: tab.identifier) else { return true }
+		guard tabBarItem.isAvailableOffline || KNetworkManager.isConnected else { return false }
 
 		switch tabBarItem {
 		case .settings:

@@ -64,4 +64,19 @@ class LocalSyncCursor: NSManagedObject {
 		request.fetchLimit = 1
 		return try? context.fetch(request).first
 	}
+
+	/// The most recent sync date across the account's kinds.
+	///
+	/// - Parameters:
+	///    - userSlug: The user's account slug.
+	///    - context: The context to read from.
+	///
+	/// - Returns: The date of the account's most recent sync.
+	static func lastSyncedAt(forUserSlug userSlug: String, in context: NSManagedObjectContext) -> Date? {
+		let request = LocalSyncCursor.fetchRequest()
+		request.predicate = NSPredicate(format: "userSlug == %@ AND syncedAt != nil", userSlug)
+		request.sortDescriptors = [NSSortDescriptor(key: "syncedAt", ascending: false)]
+		request.fetchLimit = 1
+		return try? context.fetch(request).first?.syncedAt
+	}
 }

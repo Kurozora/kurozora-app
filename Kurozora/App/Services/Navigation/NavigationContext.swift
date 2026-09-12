@@ -27,9 +27,10 @@ struct NavigationContext {
 	/// - Parameter scene: The scene to create the navigation context from.
 	init?(scene: UIWindowScene) {
 		guard let window = scene.windows.first(where: { $0.isKeyWindow }) else { return nil }
+		guard let rootViewController = window.rootViewController else { return nil }
 		self.scene = scene
 		self.window = window
-		self.rootViewController = window.rootViewController!
+		self.rootViewController = rootViewController
 	}
 
 	/// The split view controller of the navigation context.
@@ -46,7 +47,11 @@ struct NavigationContext {
 
 	/// The navigation controller of the navigation context.
 	var navigationController: UINavigationController? {
-		self.tabBarController?.selectedViewController as? UINavigationController
+		if let selected = self.tabBarController?.selectedViewController as? UINavigationController {
+			return selected
+		}
+
+		return self.rootViewController as? UINavigationController
 	}
 
 	/// The top view controller of the navigation context.
@@ -62,7 +67,12 @@ struct NavigationContext {
 
 	/// Selects the specified tab.
 	func selectTab(_ tabItem: TabBarItem) {
-		self.tabBarController?.selectTab(tabItem)
+		guard let tabBarController = self.tabBarController else {
+			self.navigationController?.popToRootViewController(animated: true)
+			return
+		}
+
+		tabBarController.selectTab(tabItem)
 	}
 
 	/// Activates the search tab and provides the search results view controller and search controller to the handler.

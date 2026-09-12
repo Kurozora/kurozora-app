@@ -94,6 +94,7 @@ extension LibraryListCollectionViewController {
 		)
 		let total = LibraryStore.shared.count(forUserSlug: slug, kind: self.libraryKind, status: self.libraryStatus)
 		self.totalLibraryItemsCount = total
+		self.refreshSyncStatus()
 
 		if self.isPageVisible {
 			self.delegate?.libraryListViewController(updateTotalCount: total)

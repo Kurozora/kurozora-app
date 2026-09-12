@@ -8,32 +8,41 @@
 
 enum ShowType: Int, CaseIterable {
 	// MARK: - Cases
-	case Unknown = 1
-	case TV = 2
-	case OVA = 3
-	case Movie = 4
-	case Special = 5
-	case ONA = 6
-	case Music = 7
+	case unknown = 1
+	case tv = 2
+	case movie = 4
+	case ova = 3
+	case ona = 6
+	case tvSpecial = 20
+	case special = 5
+	case music = 7
+	case pv = 22
+	case cm = 21
 
 	// MARK: - Properties
 	/// The name value of a show type.
 	var name: String {
 		switch self {
-		case .Unknown:
+		case .unknown:
 			return L10n.unknown
-		case .TV:
+		case .tv:
 			return L10n.tv
-		case .OVA:
-			return L10n.ova
-		case .Movie:
+		case .movie:
 			return L10n.movie
-		case .Special:
-			return L10n.special
-		case .ONA:
+		case .ova:
+			return L10n.ova
+		case .ona:
 			return L10n.ona
-		case .Music:
+		case .tvSpecial:
+			return L10n.tvSpecial
+		case .special:
+			return L10n.special
+		case .music:
 			return L10n.music
+		case .pv:
+			return L10n.pv
+		case .cm:
+			return L10n.cm
 		}
 	}
 }

@@ -189,11 +189,23 @@ final class KurozoraDelegate {
 		}
 	}
 
+	/// Reacts to a connectivity change.
+	///
+	/// - Parameter isConnected: Whether the network is reachable.
+	@MainActor
+	func connectivityDidChange(isConnected: Bool) {
+		guard isConnected, let userSlug = User.current?.attributes.slug else { return }
+
+		Task.detached(priority: .utility) {
+			await LibrarySyncEngine.shared.syncAll(forUserSlug: userSlug)
+		}
+	}
+
 	/// Builds the main interface's root view controller for the current platform.
 	///
 	/// - Returns: A `KTabBarController` on supported systems, or a two-column split view controller otherwise.
 	@MainActor
-	private func makeRootViewController() -> UIViewController {
+	func makeRootViewController() -> UIViewController {
 		if #available(iOS 18.0, macCatalyst 18.0, *) {
 			return KTabBarController()
 		}

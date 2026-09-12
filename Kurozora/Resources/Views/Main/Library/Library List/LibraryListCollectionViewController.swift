@@ -49,6 +49,15 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 	weak var delegate: LibraryListViewControllerDelegate?
 
+	/// The top inset that keeps the kind bar clear of the list.
+	static let baseTopInset: CGFloat = 50.0
+
+	/// The sync status shown above the list.
+	let syncStatusView = LibrarySyncStatusView()
+
+	/// Whether the list has been scrolled past the sync status.
+	var didParkSyncStatus = false
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -93,7 +102,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		super.viewDidLoad()
 
 		// Add bottom inset to avoid the tabbar obscuring the view
-		self.collectionView.contentInset.top = 50
+		self.collectionView.contentInset.top = Self.baseTopInset
 		self.collectionView.contentInset.bottom = 60
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 		self.collectionView.allowsMultipleSelectionDuringEditing = true
@@ -104,6 +113,7 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 		}
 
 		self.enableRefreshControl()
+		self.configureSyncStatusView()
 
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshLibrary(self.localizedLibraryStatus.lowercased()))
@@ -255,6 +265,8 @@ class LibraryListCollectionViewController: KCollectionViewController, TypedSegue
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
+
+		self.layoutSyncStatusView()
 
 		guard self.dataSource != nil else {
 			return

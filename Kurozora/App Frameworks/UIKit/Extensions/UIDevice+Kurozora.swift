@@ -234,6 +234,29 @@ extension UIDevice {
 		return UIDevice.current.userInterfaceIdiom == .unspecified
 	}
 
+	/// The product name of the device's family.
+	static var productName: String {
+		#if targetEnvironment(macCatalyst)
+		return "Mac"
+		#else
+		if ProcessInfo.processInfo.isiOSAppOnMac {
+			return "Mac"
+		}
+		if #available(iOS 17.0, *), UIDevice.current.userInterfaceIdiom == .vision {
+			return "Apple Vision Pro"
+		}
+
+		switch UIDevice.current.userInterfaceIdiom {
+		case .pad:
+			return "iPad"
+		case .tv:
+			return "Apple TV"
+		default:
+			return "iPhone"
+		}
+		#endif
+	}
+
 	/// Returns true if the current device orientation is landscape
 	static var isLandscape: Bool {
 		return UIDevice.current.orientation.isLandscape

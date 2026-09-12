@@ -54,8 +54,8 @@ class SettingsCell: KTableViewCell {
 	}
 
 	/// Configure the cell with the given details.
-	func configure(using sectionRow: SettingsTableViewController.Row?) {
-		self.configure(title: sectionRow?.primaryStringValue, subtitle: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue)
+	func configure(using sectionRow: SettingsTableViewController.Row?, isEnabled: Bool = true) {
+		self.configure(title: sectionRow?.primaryStringValue, subtitle: sectionRow?.secondaryStringValue, icon: sectionRow?.imageValue, isEnabled: isEnabled)
 
 		switch sectionRow {
 		case .account:

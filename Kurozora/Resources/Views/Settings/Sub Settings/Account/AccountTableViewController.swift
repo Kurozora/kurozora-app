@@ -45,6 +45,11 @@ class AccountTableViewController: SubSettingsViewController {
 
 	var selectedAccountSetting: AccountSetting?
 
+	/// Whether the account settings can reach the server.
+	private var isConnected: Bool {
+		return KNetworkManager.isConnected
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -73,6 +78,8 @@ class AccountTableViewController: SubSettingsViewController {
 		self.timezones = self.loadOptions(from: "App Timezones")
 
 		self.configureUserDetails()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReachabilityDidChange), name: .reachabilityChanged, object: nil)
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -290,9 +297,15 @@ class AccountTableViewController: SubSettingsViewController {
 	private func configureSettingsCell(_ cell: SettingsCell, title: String, subtitle: String? = nil, detail: String? = nil, icon: UIImage?) {
 		let hasDetail = !(detail?.isEmpty ?? true)
 
-		cell.configure(title: title, subtitle: subtitle, detail: detail, icon: icon)
+		cell.configure(title: title, subtitle: subtitle, detail: detail, icon: icon, isEnabled: self.isConnected)
 		cell.detailLabel?.isHidden = !hasDetail
 		cell.chevronImageView?.isHidden = false
+	}
+
+	@objc private func handleReachabilityDidChange() {
+		Task { @MainActor [weak self] in
+			self?.tableView.reloadData()
+		}
 	}
 }
 
@@ -319,7 +332,7 @@ extension AccountTableViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(DestructiveSettingsCell.reuseID)")
 			}
 			let title = row == .signOut ? L10n.signOut : L10n.deleteAccount
-			destructiveSettingsCell.configure(title: title)
+			destructiveSettingsCell.configure(title: title, isEnabled: self.isConnected)
 			return destructiveSettingsCell
 		default:
 			guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
@@ -328,6 +341,12 @@ extension AccountTableViewController {
 			self.configureSettingsCell(settingsCell, for: row)
 			return settingsCell
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		guard Section(rawValue: section) == .danger, !self.isConnected else { return nil }
+
+		return L10n.accountActionsOfflineFooter(UIDevice.productName)
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -418,6 +437,10 @@ extension AccountTableViewController {
 
 // MARK: - UITableViewDelegate
 extension AccountTableViewController {
+	override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		return self.isConnected
+	}
+
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		guard let section = Section(rawValue: section) else {
 			return super.tableView(tableView, heightForHeaderInSection: section)
@@ -437,6 +460,9 @@ extension AccountTableViewController {
 
 		if self.rows(for: section).isEmpty {
 			return .leastNormalMagnitude
+		}
+		if self.tableView(tableView, titleForFooterInSection: section.rawValue) != nil {
+			return UITableView.automaticDimension
 		}
 
 		return super.tableView(tableView, heightForFooterInSection: section.rawValue)

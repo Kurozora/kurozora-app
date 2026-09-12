@@ -184,6 +184,11 @@ actor LibraryOutbox {
 		return await self.pendingOperationCount(forUserSlug: userSlug, kind: kind) > 0
 	}
 
+	/// The number of operations queued for the given account.
+	func pendingOperationCount(forUserSlug userSlug: String) async -> Int {
+		return await self.pendingOperationCount(forUserSlug: userSlug, kind: nil)
+	}
+
 	private func pendingOperationCount(forUserSlug userSlug: String, kind: LibraryKind?) async -> Int {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 

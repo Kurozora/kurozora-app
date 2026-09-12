@@ -233,7 +233,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 		self.updateNavigationSubtitle()
 	}
 
-	/// Renders the item count as the navigation subtitle, or the sync progress while a sync round is applying rows.
+	/// Renders the item count as the navigation subtitle.
 	func updateNavigationSubtitle() {
 		let syncProgress = LibrarySyncProgress.shared
 		let syncingCount = syncProgress.isSyncing ? (syncProgress.expectedCount ?? syncProgress.appliedCount) : 0
@@ -243,15 +243,24 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 			if syncingCount > 0 {
 				self.navigationItem.subtitle = L10n.syncingItemsCount(syncingCount)
 			} else {
-				self.navigationItem.subtitle = totalCount > 0 ? L10n.itemsCount(totalCount) : nil
+				self.navigationItem.subtitle = L10n.itemsCount(totalCount)
 			}
 		} else {
 			if syncingCount > 0 {
 				self.navigationItem.title = "\(L10n.library) (\(L10n.syncingItemsCount(syncingCount)))"
 			} else {
-				self.navigationItem.title = "\(L10n.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+				self.navigationItem.title = "\(L10n.library) (\(totalCount))"
 			}
 		}
+	}
+
+	/// Presents the offline settings.
+	func presentOfflineSettings() {
+		let offlineSettingsViewController = OfflineSettingsTableViewController()
+		let navigationController = KNavigationController(rootViewController: offlineSettingsViewController)
+		navigationController.modalPresentationStyle = .formSheet
+
+		self.present(navigationController, animated: true)
 	}
 }
 

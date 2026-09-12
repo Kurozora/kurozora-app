@@ -160,14 +160,23 @@ extension WorkflowController {
 	/// - Parameter account: The account to make active.
 	@MainActor
 	func switchAccount(to account: StoredAccount) {
+		let previousSlug = UserSettings.selectedAccount
+		let previousAuthenticationKey = KService.authenticationKey
+
 		UserSettings.set(account.slug, forKey: .selectedAccount)
 		KService.authenticationKey = account.authenticationToken
 		WatchSessionManager.shared.sendAuthState(slug: account.slug, token: account.authenticationToken)
 
 		Task {
-			if await self.restoreCurrentUserSession() {
-				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+			guard await self.restoreCurrentUserSession() else {
+				UserSettings.set(previousSlug, forKey: .selectedAccount)
+				KService.authenticationKey = previousAuthenticationKey
+				WatchSessionManager.shared.sendAuthState(slug: previousSlug, token: previousAuthenticationKey)
+				UIApplication.topViewController?.presentAlertController(title: L10n.cantSwitchAccountTitle, message: L10n.cantSwitchAccountMessage)
+				return
 			}
+
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}
 	}
 

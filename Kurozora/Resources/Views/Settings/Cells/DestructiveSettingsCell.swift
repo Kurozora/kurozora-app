@@ -22,7 +22,8 @@ class DestructiveSettingsCell: SettingsCell {
 	}
 
 	// MARK: - Functions
-	func configure(title: String) {
+	func configure(title: String, isEnabled: Bool = true) {
 		self.titleLabel.text = title
+		self.contentView.alpha = isEnabled ? 1.0 : 0.5
 	}
 }

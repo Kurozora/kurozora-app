@@ -94,6 +94,15 @@ class LibraryViewController: KTabbedViewController, ProfileNavigable {
 		self.enableActions()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleLibrarySyncProgressDidChange), name: .KLibrarySyncProgressDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReachabilityDidChange), name: .reachabilityChanged, object: nil)
+	}
+
+	/// Re-labels the profile bar button item when connectivity changes.
+	@objc private func handleReachabilityDidChange() {
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.updateProfileBarButtonItemLabel()
+		}
 	}
 
 	/// Re-renders the navigation subtitle when sync progress changes.

@@ -35,7 +35,7 @@ class KNetworkManager: NSObject {
 
 	/// A method to handle the network status change.
 	@objc func networkStatusChanged(_ notification: Notification) {
-		// Do something globally here!
+		KurozoraDelegate.shared.connectivityDidChange(isConnected: Self.isConnected)
 	}
 
 	/// Stop the network status notifier.

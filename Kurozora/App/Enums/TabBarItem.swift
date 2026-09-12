@@ -74,6 +74,16 @@ enum TabBarItem: Int, CaseIterable {
 		return [.home, .library, .feed, .notifications, .search]
 	}
 
+	/// Whether the tab works without a connection.
+	var isAvailableOffline: Bool {
+		switch self {
+		case .library, .settings:
+			return true
+		case .home, .schedule, .kotodama, .feed, .notifications, .search:
+			return false
+		}
+	}
+
 	/// The string value of the tab bar item.
 	var stringValue: String {
 		switch self {

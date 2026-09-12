@@ -2668,6 +2668,19 @@ extension L10n {
 			)
 		}
 	}
+	/// The footer shown below the account actions while the device is offline.
+	///
+	/// - Tag: L10n-accountActionsOfflineFooter
+	static func accountActionsOfflineFooter(_ productName: String) -> String {
+		return String(
+			localized: "account.actionsOfflineFooter",
+			defaultValue: "Your \(productName) must be connected to the Internet to sign out or delete your account.",
+			table: "Account",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The footer shown below the account actions while the device is offline."
+		)
+	}
 
 	// MARK: - Onboarding Placeholders
 	/// The username field placeholder during sign-up.

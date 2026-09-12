@@ -45,6 +45,24 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		return Section.all
 	}
 
+	/// The rows shown in the given section.
+	///
+	/// - Parameter section: The section to list.
+	///
+	/// - Returns: The section's rows.
+	func rows(for section: Section) -> [Row] {
+		return section.rowsValue
+	}
+
+	/// Whether the given row accepts selection.
+	///
+	/// - Parameter row: The row to check.
+	///
+	/// - Returns: `true` when the row is available.
+	func isEnabled(_ row: Row) -> Bool {
+		return true
+	}
+
 	private var selectedIndexPath: IndexPath?
 
 	// Refresh control
@@ -116,7 +134,8 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		if self.selectedIndexPath == nil {
 			if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 				guard let sectionIndex = self.settingsSection.firstIndex(of: .general) else { return }
-				guard let rowIndex = self.settingsSection[safe: sectionIndex]?.rowsValue.firstIndex(of: .displayBlindness) else { return }
+				guard let section = self.settingsSection[safe: sectionIndex] else { return }
+				guard let rowIndex = self.rows(for: section).firstIndex(of: .displayBlindness) else { return }
 
 				let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
 				self.tableView(self.tableView, didSelectRowAt: indexPath)
@@ -219,7 +238,7 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.settingsSection[section].rowsValue.count
+		return self.rows(for: self.settingsSection[section]).count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -229,7 +248,7 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var identifier = SettingsCell.self
-		let settingsRow = self.settingsSection[indexPath.section].rowsValue[safe: indexPath.row]
+		let settingsRow = self.rows(for: self.settingsSection[indexPath.section])[safe: indexPath.row]
 
 		switch settingsRow {
 		case .account:
@@ -240,7 +259,7 @@ extension SettingsTableViewController {
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.reuseID)")
 		}
-		settingsCell.configure(using: settingsRow)
+		settingsCell.configure(using: settingsRow, isEnabled: settingsRow.map { self.isEnabled($0) } ?? true)
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			settingsCell.contentView.theme_backgroundColor = nil
@@ -267,6 +286,12 @@ extension SettingsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension SettingsTableViewController {
+	override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		guard let sectionRow = self.rows(for: self.settingsSection[indexPath.section])[safe: indexPath.row] else { return false }
+
+		return self.isEnabled(sectionRow)
+	}
+
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
 			headerView.textLabel?.font = .systemFont(ofSize: 15)
@@ -326,7 +351,7 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let sectionRow = self.settingsSection[indexPath.section].rowsValue[indexPath.row]
+		let sectionRow = self.rows(for: self.settingsSection[indexPath.section])[indexPath.row]
 
 		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *), !UIDevice.isPhone {
 			if let previousIndexPath = self.selectedIndexPath, previousIndexPath != indexPath {

@@ -185,6 +185,32 @@ final class LibraryStore {
 		}
 	}
 
+	/// The entry count per media type.
+	///
+	/// - Parameters:
+	///    - userSlug: The user's account slug.
+	///    - kind: The library kind.
+	///    - status: The status to filter by, or `.none` to count every status.
+	///
+	/// - Returns: The counts keyed by localized media type name.
+	func mediaTypeCounts(forUserSlug userSlug: String, kind: LibraryKind, status: LibraryStatus) -> [String: Int] {
+		let request = NSFetchRequest<NSDictionary>(entityName: "LocalLibraryEntry")
+		request.predicate = Self.predicate(forUserSlug: userSlug, kind: kind, status: status)
+		request.resultType = .dictionaryResultType
+		request.propertiesToFetch = ["mediaTypeName"]
+
+		do {
+			let rows = try self.viewContext.fetch(request)
+			return rows.reduce(into: [:]) { counts, row in
+				guard let name = row["mediaTypeName"] as? String, !name.isEmpty else { return }
+				counts[name, default: 0] += 1
+			}
+		} catch {
+			storeLogger.error("Media type count failed: \(error.localizedDescription)")
+			return [:]
+		}
+	}
+
 	/// Computes a relevance score for a candidate entry against the query; `0` means no match.
 	private static func relevanceScore(for entry: LocalLibraryEntry, lowerQuery: String) -> Int {
 		guard !lowerQuery.isEmpty else { return 0 }

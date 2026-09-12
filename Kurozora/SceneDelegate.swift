@@ -36,6 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window = UIWindow(windowScene: windowScene)
 		self.window?.makeKeyAndVisible()
 
+		#if DEBUG && !targetEnvironment(macCatalyst)
+		self.installFlexGestureRecognizer()
+		#endif
+
 		NotificationCenter.default.addObserver(self, selector: #selector(self.reloadLocalizationForLanguageChange), name: .appLanguageDidChange, object: nil)
 
 		// Initialize theme
@@ -105,6 +109,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	/// Rebuilds the titlebar after the window leaves full screen.
 	@objc private func windowDidExitFullScreen() {
 		self.installTitlebarToolbar()
+	}
+	#endif
+
+	#if DEBUG && !targetEnvironment(macCatalyst)
+	/// Adds the two-finger long press that reveals the FLEX explorer.
+	private func installFlexGestureRecognizer() {
+		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
+		longPressGestureRecognizer.numberOfTouchesRequired = 2
+		self.window?.addGestureRecognizer(longPressGestureRecognizer)
+	}
+
+	/// Reveals the FLEX explorer.
+	///
+	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
+	@objc private func showFlex(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		guard FLEXManager.shared.isHidden else { return }
+
+		FLEXManager.shared.showExplorer()
 	}
 	#endif
 

@@ -41,39 +41,18 @@ class LibrarySettingsViewController: SubSettingsViewController {
 	}
 
 	// MARK: - Sync
-	/// Fetches the most recent sync timestamp across all library kinds for the given user.
-	private func fetchLastSyncDate(forUserSlug userSlug: String) -> Date? {
-		let fetchRequest = LocalSyncCursor.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "userSlug == %@ AND syncedAt != nil", userSlug)
-		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "syncedAt", ascending: false)]
-		fetchRequest.fetchLimit = 1
-		return try? PersistenceController.shared.viewContext.fetch(fetchRequest).first?.syncedAt
-	}
-
 	/// Refreshes the cached last sync date.
 	private func refreshLastSyncDate() {
 		guard let userSlug = User.current?.attributes.slug else {
 			self.lastSyncDate = nil
 			return
 		}
-		self.lastSyncDate = self.fetchLastSyncDate(forUserSlug: userSlug)
+		self.lastSyncDate = LocalSyncCursor.lastSyncedAt(forUserSlug: userSlug, in: PersistenceController.shared.viewContext)
 	}
 
 	/// Returns a sentence describing how recently the library synced.
 	private func lastSyncSentence(for lastSyncDate: Date?) -> String {
-		guard let lastSyncDate else { return L10n.neverSynced }
-
-		let elapsedMinutes = Int(Date().timeIntervalSince(lastSyncDate) / 60)
-
-		if elapsedMinutes < 10 {
-			return L10n.syncedJustNow
-		} else if elapsedMinutes < 60 {
-			return L10n.lastSyncedMinutesAgo(elapsedMinutes)
-		} else if elapsedMinutes < 60 * 24 {
-			return L10n.lastSyncedHoursAgo(elapsedMinutes / 60)
-		} else {
-			return L10n.lastSyncedOnDate(lastSyncDate.appFormatted(date: .abbreviated, time: .omitted))
-		}
+		return LibrarySyncProgress.lastSyncSentence(for: lastSyncDate)
 	}
 
 	/// Reloads the sync section's rows.
@@ -92,7 +71,7 @@ class LibrarySettingsViewController: SubSettingsViewController {
 
 	/// Starts a library sync for the current user.
 	private func syncNow() {
-		guard !LibrarySyncProgress.shared.isSyncing else { return }
+		guard !LibrarySyncProgress.shared.isSyncing, KNetworkManager.isConnected else { return }
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -282,10 +261,11 @@ extension LibrarySettingsViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
 			}
 			let isSyncing = LibrarySyncProgress.shared.isSyncing
+			let isEnabled = !isSyncing && KNetworkManager.isConnected
 			cell.configure(title: L10n.syncNow, detail: isSyncing ? L10n.syncingNow : nil)
 			cell.primaryLabel?.theme_textColor = KThemePicker.tintColor.rawValue
 			cell.chevronImageView?.isHidden = true
-			cell.contentView.alpha = isSyncing ? 0.5 : 1.0
+			cell.contentView.alpha = isEnabled ? 1.0 : 0.5
 			return cell
 		case .libraryKind:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SegmentedControlSettingsCell.self, for: indexPath) else {

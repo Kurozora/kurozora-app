@@ -214,6 +214,34 @@ extension L10n {
 			)
 		}
 	}
+	/// The alert title shown when switching accounts fails.
+	///
+	/// - Tag: L10n-cantSwitchAccountTitle
+	static var cantSwitchAccountTitle: String {
+		L10n.resolve {
+			String(
+				localized: "Can't Switch Account 😔",
+				table: "Alerts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The alert title shown when switching accounts fails."
+			)
+		}
+	}
+	/// The alert message shown when switching accounts fails.
+	///
+	/// - Tag: L10n-cantSwitchAccountMessage
+	static var cantSwitchAccountMessage: String {
+		L10n.resolve {
+			String(
+				localized: "This account has no saved profile on this device. Connect to the Internet and try again.",
+				table: "Alerts",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The alert message shown when switching accounts fails."
+			)
+		}
+	}
 	/// The alert title shown when deleting the account fails.
 	///
 	/// - Tag: L10n-cantDeleteAccountTitle

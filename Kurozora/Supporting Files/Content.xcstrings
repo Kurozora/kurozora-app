@@ -31665,6 +31665,9 @@
         }
       }
     },
+    "CM" : {
+      "comment" : "The display value 'CM'."
+    },
     "Color" : {
       "comment" : "The accessibility label for the color action.",
       "localizations" : {
@@ -94023,6 +94026,9 @@
         }
       }
     },
+    "PV" : {
+      "comment" : "The display value 'PV'."
+    },
     "Quick Links" : {
       "comment" : "The Home 'Quick Links' section header.",
       "localizations" : {
@@ -133491,6 +133497,9 @@
           }
         }
       }
+    },
+    "TV Special" : {
+      "comment" : "The display value 'TV Special'."
     },
     "Type a guess and press the return key. The tiles change color after every guess to show how close you are." : {
       "comment" : "The paragraph explaining how to submit a guess on the Kotodama how-to-play screen.",

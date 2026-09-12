@@ -2583,6 +2583,20 @@ extension L10n {
             )
 		}
 	}
+	/// The display value 'TV Special'.
+	///
+	/// - Tag: L10n-tvSpecial
+	static var tvSpecial: String {
+		L10n.resolve {
+			String(
+                localized: "TV Special",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'TV Special'."
+            )
+		}
+	}
 	/// The display value 'ONA'.
 	///
 	/// - Tag: L10n-ona
@@ -2608,6 +2622,34 @@ extension L10n {
                 bundle: LanguageManager.shared.bundle,
                 locale: LanguageManager.shared.locale,
                 comment: "The display value 'Music'."
+            )
+		}
+	}
+	/// The display value 'PV'.
+	///
+	/// - Tag: L10n-pv
+	static var pv: String {
+		L10n.resolve {
+			String(
+                localized: "PV",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'PV'."
+            )
+		}
+	}
+	/// The display value 'CM'.
+	///
+	/// - Tag: L10n-cm
+	static var cm: String {
+		L10n.resolve {
+			String(
+                localized: "CM",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'CM'."
             )
 		}
 	}

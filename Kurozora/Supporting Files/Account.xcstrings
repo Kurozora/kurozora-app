@@ -11131,6 +11131,18 @@
         }
       }
     },
+    "account.actionsOfflineFooter" : {
+      "comment" : "The footer shown below the account actions while the device is offline.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your %@ must be connected to the Internet to sign out or delete your account."
+          }
+        }
+      }
+    },
     "Active Sessions" : {
       "comment" : "The title of the active sessions screen.",
       "localizations" : {

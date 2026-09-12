@@ -1166,6 +1166,9 @@
         }
       }
     },
+    "Can't Switch Account 😔" : {
+      "comment" : "The alert title shown when switching accounts fails."
+    },
     "Can't Update Your Library 😔" : {
       "comment" : "The alert title shown when updating a library item fails.",
       "localizations" : {
@@ -2563,6 +2566,9 @@
           }
         }
       }
+    },
+    "This account has no saved profile on this device. Connect to the Internet and try again." : {
+      "comment" : "The alert message shown when switching accounts fails."
     },
     "Update Available" : {
       "comment" : "The string for the force update warning title.",

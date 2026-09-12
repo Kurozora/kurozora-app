@@ -58,16 +58,28 @@ extension LibraryViewController {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 
+			guard KNetworkManager.isConnected else {
+				self.presentOfflineSettings()
+				return
+			}
+
 			Task {
 				await self.segueToProfile()
 			}
 		})
+
+		self.updateProfileBarButtonItemLabel()
 
 		if let profileBarButtonItem = self.profileBarButtonItem {
 			self.navigationItem.rightBarButtonItems?.insert(profileBarButtonItem, at: 0)
 		}
 
 		self.configureUserDetails()
+	}
+
+	/// Labels the profile bar button item for what it opens.
+	func updateProfileBarButtonItemLabel() {
+		self.profileBarButtonItem?.accessibilityLabel = KNetworkManager.isConnected ? L10n.profile : L10n.settings
 	}
 
 	/// Configures the navigation items hosted by the view's navigation bar.
