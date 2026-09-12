@@ -27,6 +27,11 @@ class LocalLibraryEntry: NSManagedObject {
 	/// The `remoteID` prefix marking a row created offline, ahead of the server assigning a real identifier.
 	static let localRemoteIDPrefix = "local-"
 
+	/// The source URLs of the entry's stored art.
+	var artURLStrings: [String] {
+		return [self.posterURL, self.bannerURL].compactMap(\.self)
+	}
+
 	// MARK: - Functions
 	/// Upserts an entry from a sync delta row into the given context.
 	///
@@ -114,7 +119,43 @@ class LocalLibraryEntry: NSManagedObject {
 	///    - context: The managed object context.
 	static func delete(remoteID: String, userSlug: String, kind: LibraryKind, in context: NSManagedObjectContext) {
 		guard let existing = Self.fetch(remoteID: remoteID, userSlug: userSlug, kind: kind, in: context) else { return }
+		let artURLStrings = existing.artURLStrings
+
 		context.delete(existing)
+		Self.purgeUnreferencedArt(artURLStrings, in: context)
+	}
+
+	/// Deletes the stored art for the given URLs no remaining entry uses.
+	///
+	/// - Parameters:
+	///    - urlStrings: The art URLs of a deleted entry.
+	///    - context: The managed object context the entry was deleted from.
+	static func purgeUnreferencedArt(_ urlStrings: [String], in context: NSManagedObjectContext) {
+		#if !os(watchOS)
+		let orphanedURLStrings = Set(urlStrings.filter { urlString in
+			!urlString.isEmpty && !Self.isArtReferenced(urlString, in: context)
+		})
+		guard !orphanedURLStrings.isEmpty else { return }
+
+		Task.detached(priority: .utility) {
+			await LibraryArtStore.shared.remove(urlStrings: orphanedURLStrings)
+		}
+		#endif
+	}
+
+	/// Whether an entry other than the deleted one still uses the given art URL.
+	///
+	/// - Parameters:
+	///    - urlString: The art URL to look for.
+	///    - context: The managed object context to search.
+	///
+	/// - Returns: `true` when a live entry references the URL.
+	private static func isArtReferenced(_ urlString: String, in context: NSManagedObjectContext) -> Bool {
+		let request = LocalLibraryEntry.fetchRequest()
+		request.predicate = NSPredicate(format: "posterURL == %@ OR bannerURL == %@", urlString, urlString)
+		let matches = (try? context.fetch(request)) ?? []
+
+		return matches.contains { !$0.isDeleted }
 	}
 
 	/// Returns a sort key derived from the supplied title, lowercased with the leading English article stripped.

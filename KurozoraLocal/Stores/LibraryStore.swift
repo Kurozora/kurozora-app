@@ -600,8 +600,11 @@ final class LibraryStore {
 	/// Removes the local entry for the trackable immediately after a successful server delete.
 	func applyRemoved(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
 		guard let entry = self.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind) else { return }
+		let artURLStrings = entry.artURLStrings
+
 		self.viewContext.delete(entry)
 		PersistenceController.shared.save(self.viewContext)
+		LocalLibraryEntry.purgeUnreferencedArt(artURLStrings, in: self.viewContext)
 	}
 
 	// MARK: - Delete

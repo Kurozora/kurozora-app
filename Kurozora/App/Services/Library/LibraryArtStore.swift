@@ -112,6 +112,18 @@ actor LibraryArtStore {
 		}
 	}
 
+	/// Removes the stored art for the given source URLs.
+	///
+	/// - Parameter urlStrings: The source URLs of the art to delete.
+	func remove(urlStrings: Set<String>) {
+		guard let directoryURL = try? Self.directoryURL(creatingDirectory: false) else { return }
+
+		for urlString in urlStrings where !urlString.isEmpty {
+			let fileURL = directoryURL.appendingPathComponent(Self.fileName(forURLString: urlString), isDirectory: false)
+			try? FileManager.default.removeItem(at: fileURL)
+		}
+	}
+
 	/// Removes every stored image.
 	func removeAll() {
 		guard let directoryURL = try? Self.directoryURL(creatingDirectory: false) else { return }
