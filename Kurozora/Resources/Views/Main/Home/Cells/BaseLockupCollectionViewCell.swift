@@ -174,6 +174,31 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		self.configureReminderButton(for: library?.reminderStatus)
 	}
 
+	/// Configure the cell with the `LocalLibraryEntry` object.
+	///
+	/// - Parameter entry: The `LocalLibraryEntry` object used to configure the cell.
+	func configure(using entry: LocalLibraryEntry?) {
+		guard let entry = entry else {
+			self.showSkeleton()
+			return
+		}
+
+		self.libraryKind = entry.kind
+		self.hideSkeleton()
+
+		self.primaryLabel?.text = entry.title
+		self.secondaryLabel?.text = (entry.tagline ?? "").isEmpty ? entry.genresLocalized : entry.tagline
+
+		self.configureRank(nil)
+
+		entry.bannerImage(imageView: self.bannerImageView)
+		entry.posterImage(imageView: self.posterImageView)
+
+		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: entry.trackableID, kind: entry.kind)
+		self.configureLibraryStatus(with: library?.status)
+		self.configureReminderButton(for: library?.reminderStatus)
+	}
+
 	func configureRank(_ rank: Int?) {
 		if let rank = rank {
 			self.rankLabel?.text = "# \(rank)"

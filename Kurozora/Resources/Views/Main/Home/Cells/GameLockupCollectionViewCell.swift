@@ -65,6 +65,23 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		}
 	}
 
+	override func configure(using entry: LocalLibraryEntry?) {
+		super.configure(using: entry)
+
+		self.ternaryLabel?.text = nil
+
+		let ratingAverage = entry?.publicRating?.doubleValue ?? 0.0
+		self.scoreView.rating = ratingAverage
+		self.scoreLabel.text = "\(ratingAverage)"
+
+		self.scoreView.isHidden = ratingAverage == 0.0
+		self.scoreLabel.isHidden = ratingAverage == 0.0
+
+		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
+		self.timeLabel.text = ""
+		self.broadcastLabel.text = ""
+	}
+
 	/// Configures the cell using a `RelatedGame` object.
 	///
 	/// - Parameter relatedGame: The `RelatedGame` object used to configure the cell.

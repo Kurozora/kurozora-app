@@ -550,7 +550,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games]
 				}
 
-				await self.searchLocalLibrary(types: searchTypes, query: query, userSlug: userSlug)
+				self.searchLocalLibrary(types: searchTypes, query: query, userSlug: userSlug)
 			}
 		}
 	}
@@ -561,14 +561,11 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - types: The library kinds (`shows`/`literatures`/`games`) to search.
 	///    - query: The trimmed search query.
 	///    - userSlug: The signed-in user's account slug.
-	fileprivate func searchLocalLibrary(types: [SearchType], query: String, userSlug: String) async {
-		guard !self.isRequestInProgress else { return }
-		self.isRequestInProgress = true
+	fileprivate func searchLocalLibrary(types: [SearchType], query: String, userSlug: String) {
 		self.searchQuery = query
 
 		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
 		if trimmed.isEmpty {
-			self.isRequestInProgress = false
 			self._prefersActivityIndicatorHidden = true
 			return
 		}
@@ -626,10 +623,20 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		}
 
 		self.updateDataSource()
-		await self.prefetchCurrentSections()
-
-		self.isRequestInProgress = false
 		self._prefersActivityIndicatorHidden = true
+	}
+
+	/// Returns the local library entry backing the given identity.
+	///
+	/// - Parameters:
+	///    - trackableID: The identifier of the show, literature or game.
+	///    - kind: The library kind the identity belongs to.
+	///
+	/// - Returns: The matching `LocalLibraryEntry`.
+	func libraryEntry(forTrackableID trackableID: String, kind: LibraryKind) -> LocalLibraryEntry? {
+		guard let userSlug = User.current?.attributes.slug else { return nil }
+
+		return LibraryStore.shared.entry(forTrackableID: trackableID, userSlug: userSlug, kind: kind)
 	}
 
 	/// Returns the non-empty library result types after a local search.
@@ -1143,6 +1150,9 @@ extension SearchResultsCollectionViewController {
 		}
 
 		self.updateDataSource()
+
+		guard self.currentScope != .library else { return }
+
 		Task { [weak self] in await self?.prefetchCurrentSections() }
 	}
 }

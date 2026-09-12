@@ -242,9 +242,14 @@ extension SearchResultsCollectionViewController {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			switch itemKind {
-			case .gameIdentity:
+			case .gameIdentity(let identity):
 				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Game?)
+
+				if self.currentScope == .library {
+					gameLockupCollectionViewCell.configure(using: self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .games))
+				} else {
+					gameLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Game?)
+				}
 			default: break
 			}
 		}
@@ -283,12 +288,22 @@ extension SearchResultsCollectionViewController {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			switch itemKind {
-			case .showIdentity:
+			case .showIdentity(let identity):
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Show?)
-			case .literatureIdentity:
+
+				if self.currentScope == .library {
+					smallLockupCollectionViewCell.configure(using: self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .shows))
+				} else {
+					smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Show?)
+				}
+			case .literatureIdentity(let identity):
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Literature?)
+
+				if self.currentScope == .library {
+					smallLockupCollectionViewCell.configure(using: self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .literatures))
+				} else {
+					smallLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Literature?)
+				}
 			default: break
 			}
 		}

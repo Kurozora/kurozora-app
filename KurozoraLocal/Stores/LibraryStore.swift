@@ -98,71 +98,23 @@ final class LibraryStore {
 		}
 	}
 
-	/// Returns a paginated slice of library entries whose title, tagline, or genres
-	/// match the given query, ranked by relevance.
+	/// Returns a paginated slice of library entries matching the given query.
 	///
 	/// - Parameters:
 	///    - userSlug: The user's account slug.
 	///    - kind: The library kind to fetch.
-	///    - query: The user's typed query. Empty or whitespace-only returns no rows.
-	///    - status: Optional status filter, or `.none` for every status.
-	///    - sortType: Unused; search results are always relevance-ranked.
-	///    - sortOption: Unused, matching `sortType`.
+	///    - query: The user's typed query.
+	///    - status: The status to filter by, or `.none` for every status.
+	///    - sortType: Unused.
+	///    - sortOption: Unused.
 	///    - offset: The number of matches to skip after ranking.
 	///    - limit: The maximum number of matches to return after ranking.
 	///
 	/// - Returns: Matching `LocalLibraryEntry` rows in relevance-descending order.
 	func search(forUserSlug userSlug: String, kind: LibraryKind, query: String, status: LibraryStatus = .none, sortType: LibrarySortType = .none, sortOption: LibrarySortOption = .none, offset: Int = 0, limit: Int = 100) -> [LocalLibraryEntry] {
-		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
-		guard !trimmed.isEmpty else { return [] }
+		let matches = LibrarySearchIndex.shared.search(query, forUserSlug: userSlug, kind: kind, status: status)
 
-		let request = LocalLibraryEntry.fetchRequest()
-		request.predicate = Self.searchPredicate(forUserSlug: userSlug, kind: kind, query: trimmed, status: status)
-
-		let matches: [LocalLibraryEntry]
-		do {
-			matches = try self.viewContext.fetch(request)
-		} catch {
-			storeLogger.error("Search failed: \(error.localizedDescription)")
-			return []
-		}
-
-		let lowerQuery = trimmed.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-		let scored = matches
-			.map { (entry: LocalLibraryEntry) -> (LocalLibraryEntry, Int) in
-				(entry, Self.relevanceScore(for: entry, lowerQuery: lowerQuery))
-			}
-			.filter { $0.1 > 0 }
-			.sorted { lhs, rhs in
-				if lhs.1 != rhs.1 { return lhs.1 > rhs.1 }
-				return (lhs.0.sortTitle ?? "").localizedCompare(rhs.0.sortTitle ?? "") == .orderedAscending
-			}
-
-		return Array(scored.dropFirst(offset).prefix(limit)).map { $0.0 }
-	}
-
-	/// Returns the count of search matches for the given query.
-	///
-	/// - Parameters:
-	///    - userSlug: The user's account slug.
-	///    - kind: The library kind.
-	///    - query: The user's typed query.
-	///    - status: Optional status filter.
-	///
-	/// - Returns: The match count, or `0` on failure / empty query.
-	func searchCount(forUserSlug userSlug: String, kind: LibraryKind, query: String, status: LibraryStatus = .none) -> Int {
-		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
-		guard !trimmed.isEmpty else { return 0 }
-
-		let request = LocalLibraryEntry.fetchRequest()
-		request.predicate = Self.searchPredicate(forUserSlug: userSlug, kind: kind, query: trimmed, status: status)
-
-		do {
-			return try self.viewContext.count(for: request)
-		} catch {
-			storeLogger.error("Search count failed: \(error.localizedDescription)")
-			return 0
-		}
+		return Array(matches.dropFirst(offset).prefix(limit))
 	}
 
 	/// Returns the total number of live entries for the given identity and status.
@@ -209,62 +161,6 @@ final class LibraryStore {
 			storeLogger.error("Media type count failed: \(error.localizedDescription)")
 			return [:]
 		}
-	}
-
-	/// Computes a relevance score for a candidate entry against the query; `0` means no match.
-	private static func relevanceScore(for entry: LocalLibraryEntry, lowerQuery: String) -> Int {
-		guard !lowerQuery.isEmpty else { return 0 }
-
-		let title = (entry.title ?? "").folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-		let tagline = (entry.tagline ?? "").folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-		let genres = (entry.genresLocalized ?? "").folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-
-		var score = 0
-
-		// The title is the strongest signal.
-		if title == lowerQuery {
-			score += 1000
-		}
-		if title.hasPrefix(lowerQuery) {
-			score += 500
-		}
-		if let range = title.range(of: lowerQuery), !title.hasPrefix(lowerQuery) {
-			// Mid-string title hit. Earlier hits score slightly higher.
-			let distance = title.distance(from: title.startIndex, to: range.lowerBound)
-			score += max(50, 200 - distance)
-		}
-
-		// The tagline is a weak title-equivalent signal.
-		if tagline.contains(lowerQuery) {
-			score += 50
-		}
-
-		// Genres boost only when the query token is a whole-word match in the comma-joined
-		// list, so "one" matches "Action, Romance" only when it's a real genre, not as a
-		// substring of "one-shot".
-		let genreList = genres.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-		if genreList.contains(where: { $0 == lowerQuery }) {
-			score += 100
-		} else if genres.contains(lowerQuery) {
-			score += 25
-		}
-
-		return score
-	}
-
-	private static func searchPredicate(forUserSlug userSlug: String, kind: LibraryKind, query: String, status: LibraryStatus) -> NSPredicate {
-		var subpredicates: [NSPredicate] = [
-			NSPredicate(format: "userSlug == %@", userSlug),
-			NSPredicate(format: "kindRaw == %d", Int64(kind.rawValue))
-		]
-		if status != .none {
-			subpredicates.append(NSPredicate(format: "status == %d", Int64(status.rawValue)))
-		}
-		subpredicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [
-			NSPredicate(format: "title CONTAINS[cd] %@", query),
-			NSPredicate(format: "genresLocalized CONTAINS[cd] %@", query)
-		]))
-		return NSCompoundPredicate(andPredicateWithSubpredicates: subpredicates)
 	}
 
 	private static func predicate(forUserSlug userSlug: String, kind: LibraryKind, status: LibraryStatus) -> NSPredicate {
@@ -398,6 +294,7 @@ final class LibraryStore {
 	/// - Parameter change: The save to apply.
 	func refreshOverlayCache(with change: LibraryEntrySaveChange) {
 		change.merge(into: self.viewContext)
+		LibrarySearchIndex.shared.apply(change)
 
 		for objectID in change.changedEntryObjectIDs {
 			guard let entry = self.entry(for: objectID) else { continue }
@@ -633,5 +530,7 @@ final class LibraryStore {
 		self.hydratedUserSlugs.remove(userSlug)
 		let prefix = "\(userSlug)::"
 		self.overlayCache = self.overlayCache.filter { !$0.key.hasPrefix(prefix) }
+
+		LibrarySearchIndex.shared.clear(forUserSlug: userSlug)
 	}
 }
