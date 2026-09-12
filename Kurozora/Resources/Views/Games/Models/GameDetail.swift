@@ -362,6 +362,29 @@ extension GameDetail {
 			}
 		}
 
+		/// The information rows a cached library entry can fill.
+		static var localCases: [Information] {
+			return [.type, .genres, .duration]
+		}
+
+		/// Returns the required information from the given cached library entry.
+		///
+		/// - Parameter entry: The entry used to extract the information from.
+		///
+		/// - Returns: the required information from the given entry.
+		func information(from entry: LocalLibraryEntry) -> String? {
+			switch self {
+			case .type:
+				return entry.mediaTypeName ?? "-"
+			case .genres:
+				return entry.genresLocalized ?? "-"
+			case .duration:
+				return entry.durationString
+			default:
+				return nil
+			}
+		}
+
 		/// Returns the required secondary information from the given object.
 		///
 		/// - Parameter game: The object used to extract the information from.

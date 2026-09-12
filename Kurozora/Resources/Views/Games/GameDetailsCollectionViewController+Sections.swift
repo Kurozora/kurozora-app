@@ -92,6 +92,9 @@ extension GameDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Game` object.
 		case game(_: Game)
 
+		/// Indicates the item kind contains the screen's cached library entry.
+		case libraryEntry
+
 		/// Indicates the item kind contains a badge row.
 		case badge(_: GameDetail.Badge)
 

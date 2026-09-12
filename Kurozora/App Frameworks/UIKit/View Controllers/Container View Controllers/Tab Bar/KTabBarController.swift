@@ -117,9 +117,15 @@ class KTabBarController: UITabBarController {
 			viewController.tabBarItem?.isEnabled = isConnected || tabBarItem.isAvailableOffline
 		}
 
-		guard !isConnected, let selectedTabBarItem = self.selectedTabBarItem, !selectedTabBarItem.isAvailableOffline else { return }
+		if let selectedTabBarItem = self.selectedTabBarItem, !isConnected, !selectedTabBarItem.isAvailableOffline {
+			self.selectTab(.library)
+		}
 
-		self.selectTab(.library)
+		if #available(iOS 18.0, *) {
+			self.setTabBarHidden(!isConnected, animated: true)
+		} else {
+			self.tabBar.isHidden = !isConnected
+		}
 	}
 
 	@objc private func handleReachabilityDidChange() {

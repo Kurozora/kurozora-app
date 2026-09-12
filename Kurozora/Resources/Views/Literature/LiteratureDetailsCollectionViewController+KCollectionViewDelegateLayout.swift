@@ -85,7 +85,7 @@ extension LiteratureDetailsCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			guard self.literature != nil else { return nil }
+			guard self.literature != nil || self.libraryEntry != nil else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false

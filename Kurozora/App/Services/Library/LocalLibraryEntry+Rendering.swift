@@ -23,6 +23,35 @@ extension LocalLibraryEntry {
 		return information
 	}
 
+	/// The entry's duration in hours and minutes.
+	var durationString: String {
+		guard let durationCount = self.durationCount?.intValue, durationCount > 0 else { return "-" }
+
+		return Self.durationFormatter.string(from: TimeInterval(durationCount)) ?? "-"
+	}
+
+	/// The weekday and time the entry airs or publishes.
+	var broadcastString: String {
+		guard let airingDate = self.airingDate else { return "-" }
+
+		return airingDate.formatted(.dateTime.weekday(.wide).hour().minute())
+	}
+
+	/// The time until the entry next airs or publishes.
+	var relativeBroadcastString: String? {
+		guard let airingDate = self.airingDate else { return nil }
+
+		return airingDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+	}
+
+	/// The formatter that renders a duration in hours and minutes.
+	private static let durationFormatter: DateComponentsFormatter = {
+		let formatter = DateComponentsFormatter()
+		formatter.allowedUnits = [.hour, .minute]
+		formatter.unitsStyle = .abbreviated
+		return formatter
+	}()
+
 	// MARK: - Functions
 	/// Sets the poster image on the given image view, applying the cached background color
 	/// and falling back to a kind-specific placeholder when the URL is missing.

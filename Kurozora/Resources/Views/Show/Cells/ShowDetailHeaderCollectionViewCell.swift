@@ -46,10 +46,6 @@ class ShowDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell {
 
 	private var posterBoundsObservation: NSKeyValueObservation?
 
-	var show: Show?
-	var literature: Literature?
-	var game: Game?
-
 	// MARK: - View
 	nonisolated override func awakeFromNib() {
 		super.awakeFromNib()
@@ -108,176 +104,90 @@ extension ShowDetailHeaderCollectionViewCell {
 	/// Configure the cell with the given details.
 	///
 	/// - Parameters:
-	///    - show: The `Show` object used to configure the cell.
-	func configure(using show: Show) {
-		self.libraryKind = .shows
-		self.literature = nil
-		self.show = show
+	///    - configuration: The values the header presents.
+	///    - libraryAttributes: The user's library state for the presented item.
+	func configure(using configuration: DetailHeaderConfiguration, libraryAttributes: LibraryAttributes?) {
+		self.libraryKind = configuration.libraryKind
 
 		self.sharedConfiguration()
+		self.updateLibraryActions(using: libraryAttributes)
 
-		// Configure library status
-		self.updateLibraryActions(using: show)
+		self.primaryLabel.text = configuration.title
+		self.secondaryLabel.text = configuration.tags
 
-		// Configure title label
-		self.primaryLabel.text = show.attributes.title
+		self.statusButton.setTitle(configuration.statusName, for: .normal)
+		self.statusButton.backgroundColor = configuration.statusColorHex.flatMap { UIColor(hexString: $0) } ?? .secondarySystemFill
+		self.statusButton.isHidden = configuration.statusName?.isEmpty ?? true
 
-		// Configure tags label
-		self.secondaryLabel.text = show.attributes.informationString
-
-		// Configure airing status label
-		self.statusButton.setTitle(show.attributes.status.name, for: .normal)
-		self.statusButton.backgroundColor = UIColor(hexString: show.attributes.status.color)
-
-		// Configure rank button
-		let rank = show.attributes.stats?.rankTotal ?? 0
-		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
+		let rankLabel = configuration.rank > 0 ? "Rank #\(configuration.rank)" : "Rank -"
 		self.rankButton?.setTitle(rankLabel, for: .normal)
 
-		// Configure poster view
-		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
-		}
-		show.attributes.posterImage(imageView: self.posterImageView)
+		self.configurePoster(using: configuration)
+		self.configureBanner(using: configuration)
+		self.configureTrailer(using: configuration)
 
-		self.posterImageView.applyCornerRadius(22.0)
-		self.posterImageView.layer.borderWidth = 0
-		self.posterImageView.mask = nil
-		self.posterImageOverlayView.isHidden = true
-		self.posterBorderView?.isHidden = false
-		self.posterBorderView?.cornerRadius = 22.0
-
-		self.visualEffectView.layerCornerRadius = 30.0
-
-		// Configure banner view
-		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
-			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
-		}
-		show.attributes.bannerImage(imageView: self.bannerImageView)
-
-		// Configure trailer
-		self.trailerPlayerView.streamMetadata = TrailerStreamMetadata(title: show.attributes.title, synopsis: show.attributes.synopsis, artworkURL: show.attributes.poster?.url)
-		self.trailerPlayerView.loadTrailer(fromURL: show.attributes.videoUrl)
-		self.trailerPlayerView.shareHandler = { sourceView in
-			show.openShareSheet(sourceView: sourceView, barButtonItem: nil)
-		}
-
-		// Display details
 		self.quickDetailsView.isHidden = false
 	}
 
-	/// Configure the cell with the given details.
+	/// Applies the poster and the styling its kind calls for.
 	///
-	/// - Parameters:
-	///    - literature: The `Literature` object used to configure the cell.
-	func configure(using literature: Literature) {
-		self.libraryKind = .literatures
-		self.show = nil
-		self.literature = literature
-
-		self.sharedConfiguration()
-
-		// Configure library status, overlay-first via `updateLibraryActions`.
-		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)?.status ?? .none
-		self.updateLibraryActions(using: literature)
-
-		// Configure title label
-		self.primaryLabel.text = literature.attributes.title
-
-		// Configure tags label
-		self.secondaryLabel.text = literature.attributes.informationString
-
-		// Configure publishing status label
-		self.statusButton.setTitle(literature.attributes.status.name, for: .normal)
-		self.statusButton.backgroundColor = UIColor(hexString: literature.attributes.status.color)
-
-		// Configure rank button
-		let rank = literature.attributes.stats?.rankTotal ?? 0
-		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
-		self.rankButton?.setTitle(rankLabel, for: .normal)
-
-		// Configure poster view
-		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
+	/// - Parameter configuration: The values the header presents.
+	private func configurePoster(using configuration: DetailHeaderConfiguration) {
+		if let posterBackgroundColor = configuration.posterBackgroundColorHex.flatMap({ UIColor(hexString: $0) }) {
+			self.posterImageView.backgroundColor = posterBackgroundColor
+		} else {
+			self.posterImageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
-		literature.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView.applyCornerRadius(0.0)
+		self.posterImageView.setLibraryImage(with: configuration.posterURLString, placeholder: .Placeholders.showPoster)
 		self.posterImageView.layer.borderWidth = 0
-		self.literatureMask.frame = self.posterImageView.bounds
-		self.posterImageView.mask = self.literatureMask
-		self.posterImageOverlayView.isHidden = false
-		self.posterBorderView?.isHidden = true
 
-		self.visualEffectView.layerCornerRadius = 10.0
-
-		// Configure banner view
-		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
-			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		switch configuration.libraryKind {
+		case .literatures:
+			self.posterImageView.applyCornerRadius(0.0)
+			self.literatureMask.frame = self.posterImageView.bounds
+			self.posterImageView.mask = self.literatureMask
+			self.posterImageOverlayView.isHidden = false
+			self.posterBorderView?.isHidden = true
+			self.visualEffectView.layerCornerRadius = 10.0
+		case .shows, .games:
+			self.posterImageView.applyCornerRadius(22.0)
+			self.posterImageView.mask = nil
+			self.posterImageOverlayView.isHidden = true
+			self.posterBorderView?.isHidden = false
+			self.posterBorderView?.cornerRadius = 22.0
+			self.visualEffectView.layerCornerRadius = 30.0
 		}
-		literature.attributes.bannerImage(imageView: self.bannerImageView)
-
-		self.trailerPlayerView.stopTrailer()
-
-		// Display details
-		self.quickDetailsView.isHidden = false
 	}
 
-	/// Configure the cell with the given details.
+	/// Applies the banner.
 	///
-	/// - Parameters:
-	///    - game: The `Game` object used to configure the cell.
-	func configure(using game: Game) {
-		self.libraryKind = .games
-		self.show = nil
-		self.game = game
-
-		self.sharedConfiguration()
-
-		// Configure library status, overlay-first via `updateLibraryActions`.
-		self.libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)?.status ?? .none
-		self.updateLibraryActions(using: game)
-
-		// Configure title label
-		self.primaryLabel.text = game.attributes.title
-
-		// Configure tags label
-		self.secondaryLabel.text = game.attributes.informationString
-
-		// Configure publishing status label
-		self.statusButton.setTitle(game.attributes.status.name, for: .normal)
-		self.statusButton.backgroundColor = UIColor(hexString: game.attributes.status.color)
-
-		// Configure rank button
-		let rank = game.attributes.stats?.rankTotal ?? 0
-		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
-		self.rankButton?.setTitle(rankLabel, for: .normal)
-
-		// Configure poster view
-		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
+	/// - Parameter configuration: The values the header presents.
+	private func configureBanner(using configuration: DetailHeaderConfiguration) {
+		if let bannerBackgroundColor = configuration.bannerBackgroundColorHex.flatMap({ UIColor(hexString: $0) }) {
+			self.bannerImageView.backgroundColor = bannerBackgroundColor
+		} else {
+			self.bannerImageView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
-		game.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView.applyCornerRadius(22.0)
-		self.posterImageView.layer.borderWidth = 0
-		self.posterImageView.mask = nil
-		self.posterImageOverlayView.isHidden = true
-		self.posterBorderView?.isHidden = false
-		self.posterBorderView?.cornerRadius = 22.0
+		self.bannerImageView.setLibraryImage(with: configuration.bannerURLString, placeholder: .Placeholders.showBanner)
+	}
 
-		self.visualEffectView.layerCornerRadius = 30.0
-
-		// Configure banner view
-		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
-			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+	/// Starts the trailer the configuration carries.
+	///
+	/// - Parameter configuration: The values the header presents.
+	private func configureTrailer(using configuration: DetailHeaderConfiguration) {
+		guard let trailerURLString = configuration.trailerURLString, !trailerURLString.isEmpty else {
+			self.trailerPlayerView.stopTrailer()
+			return
 		}
-		game.attributes.bannerImage(imageView: self.bannerImageView)
 
-		self.trailerPlayerView.stopTrailer()
-
-		// Display details
-		self.quickDetailsView.isHidden = false
+		self.trailerPlayerView.streamMetadata = TrailerStreamMetadata(title: configuration.title, synopsis: configuration.synopsis, artworkURL: configuration.posterURLString)
+		self.trailerPlayerView.loadTrailer(fromURL: trailerURLString)
+		self.trailerPlayerView.shareHandler = { [weak self] sourceView in
+			guard let self = self else { return }
+			self.delegate?.baseDetailHeaderCollectionViewCell(self, didPressShare: sourceView)
+		}
 	}
 
 	func updateLibraryStatus(_ libraryStatus: LibraryStatus?) {
@@ -344,42 +254,18 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 	}
 
-	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
+	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the given library state.
 	///
 	/// - Parameters:
-	///    - show: The show object used to update the actions.
+	///    - libraryAttributes: The user's library state for the presented item.
 	///    - animated: A boolean value indicating whether to update changes with animations.
-	func updateLibraryActions(using show: Show, animated: Bool = false) {
-		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: show.id.rawValue, kind: .shows)
-		self.updateLibraryStatus(library?.status)
-		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
-		self.updateReminderStatus(library?.reminderStatus, animated: animated)
-	}
+	func updateLibraryActions(using libraryAttributes: LibraryAttributes?, animated: Bool = false) {
+		self.updateLibraryStatus(libraryAttributes?.status)
+		self.updateFavoriteStatus(libraryAttributes?.favoriteStatus, animated: animated)
 
-	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the literature.
-	///
-	/// - Parameters:
-	///    - literature: The literature object used to update the actions.
-	///    - animated: A boolean value indicating whether to update changes with animations.
-	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
-		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
-		self.updateLibraryStatus(library?.status)
-		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
 		// The server accepts reminders on shows only.
-		self.updateReminderStatus(.disabled, animated: animated)
-	}
-
-	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
-	///
-	/// - Parameters:
-	///    - game: The game object used to update the actions.
-	///    - animated: A boolean value indicating whether to update changes with animations.
-	func updateLibraryActions(using game: Game, animated: Bool = false) {
-		let library = LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
-		self.updateLibraryStatus(library?.status)
-		self.updateFavoriteStatus(library?.favoriteStatus, animated: animated)
-		// The server accepts reminders on shows only.
-		self.updateReminderStatus(.disabled, animated: animated)
+		let reminderStatus = self.libraryKind == .shows ? libraryAttributes?.reminderStatus : .disabled
+		self.updateReminderStatus(reminderStatus, animated: animated)
 	}
 
 	fileprivate func syncLiteratureMaskFrame() {
@@ -393,18 +279,14 @@ extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			await self.show?.toggleFavorite()
-			await self.literature?.toggleFavorite()
-			await self.game?.toggleFavorite()
+			await self.delegate?.baseDetailHeaderCollectionViewCell(self, didPressFavorite: sender)
 		}
 	}
 
 	@IBAction func reminderButtonPressed(_ sender: UIButton) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			await self.show?.toggleReminder()
-//			await self.literature?.toggleReminder(on: self)
-//			await self.game?.toggleReminder(on: self)
+			await self.delegate?.baseDetailHeaderCollectionViewCell(self, didPressReminder: sender)
 		}
 	}
 }

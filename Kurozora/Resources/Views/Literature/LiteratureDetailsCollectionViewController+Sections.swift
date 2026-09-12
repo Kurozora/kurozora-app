@@ -92,6 +92,9 @@ extension LiteratureDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Literature` object.
 		case literature(_: Literature)
 
+		/// Indicates the item kind contains the screen's cached library entry.
+		case libraryEntry
+
 		/// Indicates the item kind contains a badge row.
 		case badge(_: LiteratureDetail.Badge)
 

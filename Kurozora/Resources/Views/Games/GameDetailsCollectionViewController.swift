@@ -19,6 +19,24 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// The authenticated user's library state for the game.
 	var libraryAttributes: LibraryAttributes?
 
+	/// The cached library entry the screen presents while the game can't be fetched.
+	var libraryEntry: LocalLibraryEntry?
+
+	override var headerLibraryTarget: (any Libraryable)? {
+		return self.game ?? self.libraryEntry
+	}
+
+	/// Returns the cached library entry for the given game.
+	///
+	/// - Parameter trackableID: The identifier of the game.
+	///
+	/// - Returns: The matching `LocalLibraryEntry`.
+	private func cachedLibraryEntry(forTrackableID trackableID: String) -> LocalLibraryEntry? {
+		guard let userSlug = User.current?.attributes.slug else { return nil }
+
+		return LibraryStore.shared.entry(forTrackableID: trackableID, userSlug: userSlug, kind: .games)
+	}
+
 	var game: Game! {
 		didSet {
 			self.title = self.game.attributes.title
@@ -27,6 +45,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			}
 			self.navigationTitleLabel.text = self.game.attributes.title
 			self.gameIdentity = GameIdentity(id: self.game.id)
+			AiringStatusStore.shared.record(name: self.game.attributes.status.name, colorHex: self.game.attributes.status.color)
 
 			self._prefersActivityIndicatorHidden = true
 			#if targetEnvironment(macCatalyst)
@@ -73,7 +92,8 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 
 	override var mediaItems: [MediaItem] {
-		guard let game = self.game else { return [] }
+		guard let game = self.game else { return self.cachedMediaItems }
+
 		var items: [MediaItem] = []
 		if let posterURL = URL(string: game.attributes.poster?.url ?? "") {
 			items.append(MediaItem(url: posterURL, type: .image, title: game.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
@@ -81,6 +101,23 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		if let bannerURL = URL(string: game.attributes.banner?.url ?? "") {
 			items.append(MediaItem(url: bannerURL, type: .image, title: game.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
+		return items
+	}
+
+	/// The poster and banner of the cached library entry.
+	private var cachedMediaItems: [MediaItem] {
+		guard let libraryEntry = self.libraryEntry else { return [] }
+
+		let title = libraryEntry.title
+		var items: [MediaItem] = []
+
+		if let posterURL = URL(string: libraryEntry.posterURL ?? "") {
+			items.append(MediaItem(url: posterURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+		if let bannerURL = URL(string: libraryEntry.bannerURL ?? "") {
+			items.append(MediaItem(url: bannerURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+
 		return items
 	}
 
@@ -202,6 +239,11 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 				self.userActivity = self.game.openDetailUserActivity
 			} catch {
 				print(error.localizedDescription)
+				self.libraryEntry = self.cachedLibraryEntry(forTrackableID: gameIdentity.id.rawValue)
+				self.title = self.libraryEntry?.title
+				self.navigationTitleLabel.text = self.libraryEntry?.title
+				self._prefersActivityIndicatorHidden = true
+				self.updateDataSource()
 			}
 
 			self.applyLocalLibraryOverlay()
@@ -284,7 +326,11 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func makeMoreMenu() -> UIMenu? {
-		return self.game?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		if let game = self.game {
+			return game.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		}
+
+		return self.libraryEntry?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {

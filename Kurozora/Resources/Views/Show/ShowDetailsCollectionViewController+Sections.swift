@@ -132,6 +132,9 @@ extension ShowDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show)
 
+		/// Indicates the item kind contains the screen's cached library entry.
+		case libraryEntry
+
 		/// Indicates the item kind contains a badge row.
 		case badge(_: ShowDetail.Badge)
 

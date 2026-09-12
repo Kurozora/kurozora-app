@@ -6,6 +6,7 @@
 //  Copyright © 2025 Kurozora. All rights reserved.
 //
 
+import Kingfisher
 import UIKit
 import VisionKit
 
@@ -100,11 +101,19 @@ final class ImageRendererViewController: UIViewController, MediaRenderable {
 	}
 
 	private func loadImage() {
-		self.imageView.kf.setImage(with: self.mediaItem.url) { [weak self] _ in
+		let completion: (Result<RetrieveImageResult, KingfisherError>) -> Void = { [weak self] _ in
 			guard let self = self else { return }
 			self.layoutImageView()
 			self.analyzeImage()
 		}
+
+		guard let fileURL = LibraryArtStore.storedFileURL(forURLString: self.mediaItem.url.absoluteString) else {
+			self.imageView.kf.setImage(with: self.mediaItem.url, completionHandler: completion)
+			return
+		}
+
+		let provider = LocalFileImageDataProvider(fileURL: fileURL, cacheKey: "library-art://\(self.mediaItem.url.absoluteString)")
+		self.imageView.kf.setImage(with: provider, options: [.cacheMemoryOnly], completionHandler: completion)
 	}
 
 	private func analyzeImage() {

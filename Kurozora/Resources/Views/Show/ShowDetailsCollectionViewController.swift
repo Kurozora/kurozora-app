@@ -20,6 +20,28 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// The authenticated user's library state for the show.
 	var libraryAttributes: LibraryAttributes?
 
+	/// The cached library entry the screen presents while the show can't be fetched.
+	var libraryEntry: LocalLibraryEntry?
+
+	/// Returns the cached library entry for the given show.
+	///
+	/// - Parameter trackableID: The identifier of the show.
+	///
+	/// - Returns: The matching `LocalLibraryEntry`.
+	private func cachedLibraryEntry(forTrackableID trackableID: String) -> LocalLibraryEntry? {
+		guard let userSlug = User.current?.attributes.slug else { return nil }
+
+		return LibraryStore.shared.entry(forTrackableID: trackableID, userSlug: userSlug, kind: .shows)
+	}
+
+	override var headerLibraryTarget: (any Libraryable)? {
+		return self.show ?? self.libraryEntry
+	}
+
+	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressShare sourceView: UIView?) {
+		self.show?.openShareSheet(sourceView: sourceView, barButtonItem: nil)
+	}
+
 	var show: Show! {
 		didSet {
 			self.title = self.show.attributes.title
@@ -28,6 +50,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			}
 			self.navigationTitleLabel.text = self.show.attributes.title
 			self.showIdentity = ShowIdentity(id: self.show.id)
+			AiringStatusStore.shared.record(name: self.show.attributes.status.name, colorHex: self.show.attributes.status.color)
 
 			self._prefersActivityIndicatorHidden = true
 			#if targetEnvironment(macCatalyst)
@@ -97,7 +120,8 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 
 	override var mediaItems: [MediaItem] {
-		guard let show = self.show else { return [] }
+		guard let show = self.show else { return self.cachedMediaItems }
+
 		var items: [MediaItem] = []
 		if let posterURL = URL(string: show.attributes.poster?.url ?? "") {
 			items.append(MediaItem(url: posterURL, type: .image, title: show.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
@@ -105,6 +129,23 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		if let bannerURL = URL(string: show.attributes.banner?.url ?? "") {
 			items.append(MediaItem(url: bannerURL, type: .image, title: show.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
+		return items
+	}
+
+	/// The poster and banner of the cached library entry.
+	private var cachedMediaItems: [MediaItem] {
+		guard let libraryEntry = self.libraryEntry else { return [] }
+
+		let title = libraryEntry.title
+		var items: [MediaItem] = []
+
+		if let posterURL = URL(string: libraryEntry.posterURL ?? "") {
+			items.append(MediaItem(url: posterURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+		if let bannerURL = URL(string: libraryEntry.bannerURL ?? "") {
+			items.append(MediaItem(url: bannerURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+
 		return items
 	}
 
@@ -262,6 +303,11 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 				self.userActivity = self.show.openDetailUserActivity
 			} catch {
 				print(error.localizedDescription)
+				self.libraryEntry = self.cachedLibraryEntry(forTrackableID: showIdentity.id.rawValue)
+				self.title = self.libraryEntry?.title
+				self.navigationTitleLabel.text = self.libraryEntry?.title
+				self._prefersActivityIndicatorHidden = true
+				self.updateDataSource()
 			}
 
 			self.applyLocalLibraryOverlay()
@@ -362,7 +408,11 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func makeMoreMenu() -> UIMenu? {
-		return self.show?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		if let show = self.show {
+			return show.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		}
+
+		return self.libraryEntry?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {

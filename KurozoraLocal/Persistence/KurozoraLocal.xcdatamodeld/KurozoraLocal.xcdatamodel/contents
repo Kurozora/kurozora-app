@@ -141,4 +141,13 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="LocalAiringStatus" representedClassName="LocalAiringStatus" syncable="YES">
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
 </model>

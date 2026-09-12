@@ -95,7 +95,7 @@ extension ShowDetailsCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			guard self.show != nil else { return nil }
+			guard self.show != nil || self.libraryEntry != nil else { return nil }
 			let showDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection?
@@ -110,7 +110,7 @@ extension ShowDetailsCollectionViewController {
 				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection
 			case .synopsis:
-				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
+				if let synopsis = self.show?.attributes.synopsis, !synopsis.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
@@ -210,7 +210,7 @@ extension ShowDetailsCollectionViewController {
 					hasBackgroundDecoration = true
 				}
 			case .sosumi:
-				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
+				if let copyrightIsEmpty = self.show?.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasBackgroundDecoration = true

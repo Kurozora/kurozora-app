@@ -11,6 +11,9 @@ import UIKit
 
 protocol BaseDetailHeaderCollectionViewCellDelegate: AnyObject {
 	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressFavorite button: UIButton) async
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressReminder button: UIButton) async
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressShare sourceView: UIView?)
 }
 
 class BaseDetailHeaderCollectionViewCell: UICollectionViewCell, MediaViewerHeaderCell {

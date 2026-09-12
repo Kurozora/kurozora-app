@@ -249,6 +249,11 @@ extension ShowDetail {
 			}
 		}
 
+		/// The information rows a cached library entry can fill.
+		static var localCases: [Information] {
+			return [.type, .genres, .duration, .broadcast]
+		}
+
 		/// The image value of an information type.
 		var imageValue: UIImage? {
 			switch self {
@@ -359,6 +364,40 @@ extension ShowDetail {
 				guard let nextBroadcastAt = show.attributes.nextBroadcastAt else { return nil }
 				return nextBroadcastAt.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
 			default: return nil
+			}
+		}
+
+		/// Returns the required information from the given cached library entry.
+		///
+		/// - Parameter entry: The entry used to extract the information from.
+		///
+		/// - Returns: the required information from the given entry.
+		func information(from entry: LocalLibraryEntry) -> String? {
+			switch self {
+			case .type:
+				return entry.mediaTypeName ?? "-"
+			case .genres:
+				return entry.genresLocalized ?? "-"
+			case .duration:
+				return entry.durationString
+			case .broadcast:
+				return entry.broadcastString
+			default:
+				return nil
+			}
+		}
+
+		/// Returns the required primary information from the given cached library entry.
+		///
+		/// - Parameter entry: The entry used to extract the information from.
+		///
+		/// - Returns: the required primary information from the given entry.
+		func primaryInformation(from entry: LocalLibraryEntry) -> String? {
+			switch self {
+			case .broadcast:
+				return entry.relativeBroadcastString
+			default:
+				return nil
 			}
 		}
 

@@ -19,6 +19,24 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	/// The authenticated user's library state for the literature.
 	var libraryAttributes: LibraryAttributes?
 
+	/// The cached library entry the screen presents while the literature can't be fetched.
+	var libraryEntry: LocalLibraryEntry?
+
+	override var headerLibraryTarget: (any Libraryable)? {
+		return self.literature ?? self.libraryEntry
+	}
+
+	/// Returns the cached library entry for the given literature.
+	///
+	/// - Parameter trackableID: The identifier of the literature.
+	///
+	/// - Returns: The matching `LocalLibraryEntry`.
+	private func cachedLibraryEntry(forTrackableID trackableID: String) -> LocalLibraryEntry? {
+		guard let userSlug = User.current?.attributes.slug else { return nil }
+
+		return LibraryStore.shared.entry(forTrackableID: trackableID, userSlug: userSlug, kind: .literatures)
+	}
+
 	var literature: Literature! {
 		didSet {
 			self.title = self.literature.attributes.title
@@ -27,6 +45,7 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 			}
 			self.navigationTitleLabel.text = self.literature.attributes.title
 			self.literatureIdentity = LiteratureIdentity(id: self.literature.id)
+			AiringStatusStore.shared.record(name: self.literature.attributes.status.name, colorHex: self.literature.attributes.status.color)
 
 			self._prefersActivityIndicatorHidden = true
 			#if targetEnvironment(macCatalyst)
@@ -73,7 +92,8 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	override var reviewDetailsSegueIdentifier: (any SegueIdentifier)? { SegueIdentifiers.reviewDetailsSegue }
 
 	override var mediaItems: [MediaItem] {
-		guard let literature = self.literature else { return [] }
+		guard let literature = self.literature else { return self.cachedMediaItems }
+
 		var items: [MediaItem] = []
 		if let posterURL = URL(string: literature.attributes.poster?.url ?? "") {
 			items.append(MediaItem(url: posterURL, type: .image, title: literature.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
@@ -81,6 +101,23 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 		if let bannerURL = URL(string: literature.attributes.banner?.url ?? "") {
 			items.append(MediaItem(url: bannerURL, type: .image, title: literature.attributes.title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
+		return items
+	}
+
+	/// The poster and banner of the cached library entry.
+	private var cachedMediaItems: [MediaItem] {
+		guard let libraryEntry = self.libraryEntry else { return [] }
+
+		let title = libraryEntry.title
+		var items: [MediaItem] = []
+
+		if let posterURL = URL(string: libraryEntry.posterURL ?? "") {
+			items.append(MediaItem(url: posterURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+		if let bannerURL = URL(string: libraryEntry.bannerURL ?? "") {
+			items.append(MediaItem(url: bannerURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
+		}
+
 		return items
 	}
 
@@ -202,6 +239,11 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 				self.userActivity = self.literature.openDetailUserActivity
 			} catch {
 				print(error.localizedDescription)
+				self.libraryEntry = self.cachedLibraryEntry(forTrackableID: literatureIdentity.id.rawValue)
+				self.title = self.libraryEntry?.title
+				self.navigationTitleLabel.text = self.libraryEntry?.title
+				self._prefersActivityIndicatorHidden = true
+				self.updateDataSource()
 			}
 
 			self.applyLocalLibraryOverlay()
@@ -284,7 +326,11 @@ class LiteratureDetailsCollectionViewController: DetailsCollectionViewController
 	}
 
 	override func makeMoreMenu() -> UIMenu? {
-		return self.literature?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		if let literature = self.literature {
+			return literature.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		}
+
+		return self.libraryEntry?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
 	}
 
 	override func rateItem(using rating: Double, description: String?) async throws(APIError) -> Double? {

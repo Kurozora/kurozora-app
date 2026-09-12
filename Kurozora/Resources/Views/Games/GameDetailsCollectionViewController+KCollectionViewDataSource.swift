@@ -48,7 +48,10 @@ extension GameDetailsCollectionViewController {
 				let gameDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: GameDetailHeaderCollectionViewCell.self, for: indexPath)
 				gameDetailHeaderCollectionViewCell?.delegate = self
 				gameDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
-				gameDetailHeaderCollectionViewCell?.configure(using: game)
+				gameDetailHeaderCollectionViewCell?.configure(
+					using: DetailHeaderConfiguration(game: game),
+					libraryAttributes: LibraryStore.shared.effectiveLibrary(forTrackableID: game.id.rawValue, kind: .games)
+				)
 				return gameDetailHeaderCollectionViewCell
 			case .badge(let gameDetailBadge):
 				let badgeReuseIdentifier = gameDetailBadge == GameDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
@@ -98,9 +101,26 @@ extension GameDetailsCollectionViewController {
 				let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
 				editorialCollectionViewCell?.configure(using: editorial)
 				return editorialCollectionViewCell
+			case .libraryEntry:
+				let gameDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: GameDetailHeaderCollectionViewCell.self, for: indexPath)
+				gameDetailHeaderCollectionViewCell?.delegate = self
+				gameDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
+
+				if let libraryEntry = self.libraryEntry {
+					gameDetailHeaderCollectionViewCell?.configure(
+						using: DetailHeaderConfiguration(entry: libraryEntry),
+						libraryAttributes: libraryEntry.libraryAttributes
+					)
+				}
+				return gameDetailHeaderCollectionViewCell
 			case .information(let gameDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				informationCollectionViewCell?.configure(using: self.game, for: gameDetailInformation)
+
+				if let game = self.game {
+					informationCollectionViewCell?.configure(using: game, for: gameDetailInformation)
+				} else if let libraryEntry = self.libraryEntry {
+					informationCollectionViewCell?.configure(using: libraryEntry, for: gameDetailInformation)
+				}
 				return informationCollectionViewCell
 			case .castIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
@@ -133,7 +153,28 @@ extension GameDetailsCollectionViewController {
 		}
 	}
 
+	/// Applies the sections the cached library entry can fill.
+	private func applyCachedEntrySnapshot() {
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+
+		newSnapshot.appendSections([.header])
+		newSnapshot.appendItems([.libraryEntry], toSection: .header)
+
+		newSnapshot.appendSections([.information])
+		newSnapshot.appendItems(GameDetail.Information.localCases.map { .information($0) }, toSection: .information)
+
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot, animatingDifferences: false)
+	}
+
 	override func updateDataSource() {
+		guard self.game != nil else {
+			guard self.libraryEntry != nil else { return }
+
+			self.applyCachedEntrySnapshot()
+			return
+		}
+
 		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
 		// readers (cell/supplementary providers, the library observer) until it's fully assembled.
 		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()

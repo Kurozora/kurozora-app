@@ -614,12 +614,12 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	/// - Parameter cell: The header cell whose library model to resolve.
 	/// - Returns: The model whose library state the header represents, or `nil`.
 	func libraryStatusTargetForHeader(_ cell: BaseDetailHeaderCollectionViewCell) -> (any Libraryable)? {
-		guard let cell = cell as? ShowDetailHeaderCollectionViewCell else { return nil }
-		switch cell.libraryKind {
-		case .shows: return cell.show
-		case .literatures: return cell.literature
-		case .games: return cell.game
-		}
+		return self.headerLibraryTarget
+	}
+
+	/// The model whose library state the header represents.
+	var headerLibraryTarget: (any Libraryable)? {
+		return nil
 	}
 
 	/// Returns the show whose reminder status the lockup cell at the given index path represents.
@@ -687,13 +687,19 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	}
 
 	private static func updateHeaderLibraryActions(cell: ShowDetailHeaderCollectionViewCell, target: any Libraryable, animated: Bool) {
-		switch target {
-		case let show as Show: cell.updateLibraryActions(using: show, animated: animated)
-		case let literature as Literature: cell.updateLibraryActions(using: literature, animated: animated)
-		case let game as Game: cell.updateLibraryActions(using: game, animated: animated)
-		default: break
-		}
+		let libraryAttributes = LibraryStore.shared.effectiveLibrary(forTrackableID: target.id.rawValue, kind: cell.libraryKind)
+		cell.updateLibraryActions(using: libraryAttributes, animated: animated)
 	}
+
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressFavorite button: UIButton) async {
+		await self.headerLibraryTarget?.toggleFavorite(on: self)
+	}
+
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressReminder button: UIButton) async {
+		await self.headerLibraryTarget?.toggleReminder(on: self)
+	}
+
+	func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressShare sourceView: UIView?) {}
 }
 
 // MARK: - TapToRateCollectionViewCellDelegate

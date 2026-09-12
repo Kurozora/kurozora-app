@@ -193,15 +193,6 @@ import UIKit
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
-	/// Adds the entry to the user's library with the given status.
-	@MainActor
-	fileprivate func addToLibrary(status: LibraryStatus) async {
-		guard let slug = User.current?.attributes.slug else { return }
-
-		await LibraryOutbox.shared.enqueueSetStatus(status, trackableID: self.trackableID, userSlug: slug, kind: self.kind, seed: nil)
-		ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: status))
-	}
-
 	/// Removes the entry from the user's library.
 	@MainActor
 	func removeFromLibrary() async {

@@ -358,6 +358,45 @@ extension LiteratureDetail {
 			}
 		}
 
+		/// The information rows a cached library entry can fill.
+		static var localCases: [Information] {
+			return [.type, .genres, .duration, .publication]
+		}
+
+		/// Returns the required information from the given cached library entry.
+		///
+		/// - Parameter entry: The entry used to extract the information from.
+		///
+		/// - Returns: the required information from the given entry.
+		func information(from entry: LocalLibraryEntry) -> String? {
+			switch self {
+			case .type:
+				return entry.mediaTypeName ?? "-"
+			case .genres:
+				return entry.genresLocalized ?? "-"
+			case .duration:
+				return entry.durationString
+			case .publication:
+				return entry.broadcastString
+			default:
+				return nil
+			}
+		}
+
+		/// Returns the required primary information from the given cached library entry.
+		///
+		/// - Parameter entry: The entry used to extract the information from.
+		///
+		/// - Returns: the required primary information from the given entry.
+		func primaryInformation(from entry: LocalLibraryEntry) -> String? {
+			switch self {
+			case .publication:
+				return entry.relativeBroadcastString
+			default:
+				return nil
+			}
+		}
+
 		/// Returns the required secondary information from the given object.
 		///
 		/// - Parameter literature: The object used to extract the information from.

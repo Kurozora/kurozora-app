@@ -112,6 +112,51 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	/// Configure the cell with the given cached library entry.
+	func configure(using entry: LocalLibraryEntry, for showDetailInformation: ShowDetail.Information) {
+		self.configureFromCachedEntry(
+			image: showDetailInformation.imageValue,
+			type: showDetailInformation.stringValue,
+			headline: showDetailInformation.information(from: entry),
+			primary: showDetailInformation.primaryInformation(from: entry)
+		)
+	}
+
+	/// Configure the cell with the given cached library entry.
+	func configure(using entry: LocalLibraryEntry, for literatureDetailInformation: LiteratureDetail.Information) {
+		self.configureFromCachedEntry(
+			image: literatureDetailInformation.imageValue,
+			type: literatureDetailInformation.stringValue,
+			headline: literatureDetailInformation.information(from: entry),
+			primary: literatureDetailInformation.primaryInformation(from: entry)
+		)
+	}
+
+	/// Configure the cell with the given cached library entry.
+	func configure(using entry: LocalLibraryEntry, for gameDetailInformation: GameDetail.Information) {
+		self.configureFromCachedEntry(
+			image: gameDetailInformation.imageValue,
+			type: gameDetailInformation.stringValue,
+			headline: gameDetailInformation.information(from: entry),
+			primary: nil
+		)
+	}
+
+	/// Configure the cell with the given values.
+	private func configureFromCachedEntry(image: UIImage?, type: String, headline: String?, primary: String?) {
+		self.typeImageView.image = image
+		self.typeLabel.text = type
+		self.headlineLabel.text = headline
+		self.primaryLabel.text = primary
+		self.primaryImageView.image = nil
+		self.secondaryLabel.text = nil
+		self.footerLabel.text = nil
+
+		self.primaryImageViewHeightConstraint?.isActive = false
+		self.secondaryLabel.textAlignment = .natural
+		self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+	}
+
 	/// Configure the cell with the given literature details.
 	func configure(using literature: Literature, for literatureDetailInformation: LiteratureDetail.Information) {
 		self.typeImageView.image = literatureDetailInformation.imageValue

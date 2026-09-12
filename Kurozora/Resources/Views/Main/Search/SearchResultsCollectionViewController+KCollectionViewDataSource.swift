@@ -158,17 +158,29 @@ extension SearchResultsCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	/// Appends only the currently selected type's section.
+	/// Appends the sections the current scope shows.
 	private func appendCurrentTypeSection() {
-		let selectedType: SearchType
 		switch self.currentScope {
 		case .kurozora:
-			selectedType = self.searchTypes[safe: self.currentIndex] ?? .shows
+			self.appendSection(for: self.searchTypes[safe: self.currentIndex] ?? .shows)
 		case .library:
-			let candidate = self.searchTypes[safe: self.currentIndex] ?? .shows
-			selectedType = [.shows, .literatures, .games].contains(candidate) ? candidate : .shows
+			for searchType in self.libraryResultTypes {
+				self.appendSection(for: searchType)
+			}
 		}
-		self.appendSection(for: selectedType)
+	}
+
+	/// The library kinds the results are grouped into.
+	private var libraryResultTypes: [SearchType] {
+		if #available(iOS 16.0, *) {
+			let taggedTypes = self.typesFromTokens().filter { [.shows, .literatures, .games].contains($0) }
+
+			if !taggedTypes.isEmpty {
+				return taggedTypes
+			}
+		}
+
+		return [.shows, .literatures, .games]
 	}
 
 	/// Appends a section containing identities for the given search type, if any are loaded.

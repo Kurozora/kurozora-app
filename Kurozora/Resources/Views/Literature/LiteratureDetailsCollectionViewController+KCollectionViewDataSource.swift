@@ -48,7 +48,10 @@ extension LiteratureDetailsCollectionViewController {
 				let literatureDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LiteratureDetailHeaderCollectionViewCell.self, for: indexPath)
 				literatureDetailHeaderCollectionViewCell?.delegate = self
 				literatureDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
-				literatureDetailHeaderCollectionViewCell?.configure(using: literature)
+				literatureDetailHeaderCollectionViewCell?.configure(
+					using: DetailHeaderConfiguration(literature: literature),
+					libraryAttributes: LibraryStore.shared.effectiveLibrary(forTrackableID: literature.id.rawValue, kind: .literatures)
+				)
 				return literatureDetailHeaderCollectionViewCell
 			case .badge(let literatureDetailBadge):
 				let badgeReuseIdentifier = literatureDetailBadge == LiteratureDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
@@ -98,9 +101,26 @@ extension LiteratureDetailsCollectionViewController {
 				let editorialCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EditorialCollectionViewCell.self, for: indexPath)
 				editorialCollectionViewCell?.configure(using: editorial)
 				return editorialCollectionViewCell
+			case .libraryEntry:
+				let literatureDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LiteratureDetailHeaderCollectionViewCell.self, for: indexPath)
+				literatureDetailHeaderCollectionViewCell?.delegate = self
+				literatureDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
+
+				if let libraryEntry = self.libraryEntry {
+					literatureDetailHeaderCollectionViewCell?.configure(
+						using: DetailHeaderConfiguration(entry: libraryEntry),
+						libraryAttributes: libraryEntry.libraryAttributes
+					)
+				}
+				return literatureDetailHeaderCollectionViewCell
 			case .information(let literatureDetailInformation):
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.self, for: indexPath)
-				informationCollectionViewCell?.configure(using: self.literature, for: literatureDetailInformation)
+
+				if let literature = self.literature {
+					informationCollectionViewCell?.configure(using: literature, for: literatureDetailInformation)
+				} else if let libraryEntry = self.libraryEntry {
+					informationCollectionViewCell?.configure(using: libraryEntry, for: literatureDetailInformation)
+				}
 				return informationCollectionViewCell
 			case .castIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
@@ -133,7 +153,28 @@ extension LiteratureDetailsCollectionViewController {
 		}
 	}
 
+	/// Applies the sections the cached library entry can fill.
+	private func applyCachedEntrySnapshot() {
+		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+
+		newSnapshot.appendSections([.header])
+		newSnapshot.appendItems([.libraryEntry], toSection: .header)
+
+		newSnapshot.appendSections([.information])
+		newSnapshot.appendItems(LiteratureDetail.Information.localCases.map { .information($0) }, toSection: .information)
+
+		self.snapshot = newSnapshot
+		self.dataSource.apply(newSnapshot, animatingDifferences: false)
+	}
+
 	override func updateDataSource() {
+		guard self.literature != nil else {
+			guard self.libraryEntry != nil else { return }
+
+			self.applyCachedEntrySnapshot()
+			return
+		}
+
 		// Built on a local value so the in-progress snapshot is never visible to `self.snapshot`
 		// readers (cell/supplementary providers, the library observer) until it's fully assembled.
 		var newSnapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
