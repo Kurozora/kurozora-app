@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-final class AudioSessionManager {
+nonisolated final class AudioSessionManager: Sendable {
 	// MARK: - Properties
 	/// Returns the singleton `AudioSessionManager` instance.
 	static let shared = AudioSessionManager()

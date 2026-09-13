@@ -8,14 +8,14 @@
 
 import AVFoundation
 
-class Chime: NSObject {
+final class Chime: NSObject {
 	// MARK: Properties
 	/// The shared instance of `Chime`.
 	static let shared: Chime = Chime()
 
 	/// List of available chime groups.
 	var appChimeGroups: [AppChimeGroup] = []
-	private var player: AVAudioPlayer?
+	private let chimePlayer: ChimePlayer = ChimePlayer()
 
 	// MARK: Initializers
 	private override init() {
@@ -67,22 +67,11 @@ class Chime: NSObject {
 		guard let url = Bundle.main.url(forResource: chimeFileComponents.first, withExtension: chimeFileComponents.last) else { return }
 
 		AudioSessionManager.shared.setActive(true) { [weak self] in
-			self?.startPlayer(for: url)
-		}
-	}
+			guard let self = self else { return }
 
-	/// Starts playback of the chime at the given location.
-	///
-	/// - Parameters:
-	///    - url: The location of the chime file.
-	private func startPlayer(for url: URL) {
-		do {
-			self.player = try AVAudioPlayer(contentsOf: url)
-			self.player?.delegate = self
-			self.player?.prepareToPlay()
-			self.player?.play()
-		} catch {
-			print("----- Failed to play chime audio: \(error.localizedDescription)")
+			Task {
+				await self.chimePlayer.start(for: url, delegate: self)
+			}
 		}
 	}
 
@@ -95,14 +84,13 @@ class Chime: NSObject {
 	func changeChime(to chime: AppChimeElement?) {
 		let chime = chime ?? self.appChimeGroups.first?.chimes.first?.first
 
-		// Save the chime selection
 		UserSettings.set(chime?.name, forKey: .selectedChime)
 	}
 }
 
 // MARK: - AVAudioPlayerDelegate
 extension Chime: AVAudioPlayerDelegate {
-	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+	nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		AudioSessionManager.shared.setActive(false, options: [.notifyOthersOnDeactivation])
 	}
 }
